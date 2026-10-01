@@ -35,7 +35,7 @@ try {
     assert(!readFileSync(new URL('browser/scraper.js', base), 'utf8').includes('node:'));
   `);
   execFileSync(process.execPath, ['smoke.mjs'], { cwd: scratch, stdio: 'inherit' });
-  const cli = execFileSync(process.execPath, ['node_modules/universal-parcel-scraper/dist/cli/index.js','detect','1Z999AA10123456784'], { cwd: scratch, encoding: 'utf8' });
+  const cli = execFileSync(path.join(scratch, 'node_modules/.bin/parcel-scraper'), ['detect','1Z999AA10123456784'], { cwd: scratch, encoding: 'utf8' });
   assert.equal(JSON.parse(cli).carrier, 'ups');
   assert(existsSync(tarball));
   const forbidden = /"(?:next|react|@supabase|@sentry)/;

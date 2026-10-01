@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
 import { createTracker, TrackingError } from '../facade/index.js';
 import type { UniversalSource } from '../providers/types.js';
 import { CARRIER_CATALOG } from '../generated/catalog.js';
@@ -56,7 +57,7 @@ export async function main(argv = process.argv.slice(2), env = process.env): Pro
   return 0;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   try { process.exitCode = await main(); }
   catch (error) {
     console.error(error instanceof TrackingError ? JSON.stringify({ error: error.message, attempts: error.attempts, hint: error.hint })

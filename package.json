@@ -40,8 +40,8 @@
     "./data/*": "./data/*"
   },
   "bin": {
-    "parcel-scraper": "./dist/cli/index.js",
-    "universal-parcel-scraper": "./dist/cli/index.js"
+    "parcel-scraper": "dist/cli/index.js",
+    "universal-parcel-scraper": "dist/cli/index.js"
   },
   "files": [
     "dist",
