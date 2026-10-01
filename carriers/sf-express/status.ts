@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const DELIVERED: ClassifiedStatus = { stage: 'delivered', status: 'delivered' };
 const TRANSIT: ClassifiedStatus = { stage: 'in_transit', status: 'in_transit' };

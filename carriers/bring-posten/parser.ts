@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
-import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { bringStatus, bringWording } from './status';
+import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { bringStatus, bringWording } from './status.js';
 
 export function normalizeBringNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);

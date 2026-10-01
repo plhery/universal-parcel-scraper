@@ -2,7 +2,7 @@
  * The detection golden file.
  *
  * What it is: the corpus replayed through the detection engine and frozen as
- * `contracts/fixtures/detection-golden.json`, so the Swift port can assert the
+ * `data/detection-golden.json`, so the Swift port can assert the
  * same answers, and the same carriers recognition asks, without re-deriving them.
  * What it is not: a second detection implementation. Everything here comes from
  * `core/detection` and `numbers.json`.
@@ -10,9 +10,9 @@
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { recognitionAskedCarriers } from '../catalog/recognition';
-import { detectCarrierMatch } from '../detection';
-import { loadNumberCorpus } from './corpus';
+import { recognitionAskedCarriers } from '../catalog/recognition.js';
+import { detectCarrierMatch } from '../detection/index.js';
+import { loadNumberCorpus } from './corpus.js';
 
 export interface DetectionGoldenEntry {
   readonly input: string;
@@ -27,16 +27,7 @@ export interface DetectionGoldenEntry {
 
 const testingDirectory = path.dirname(fileURLToPath(import.meta.url));
 /** The contract folder is host-owned; the package only writes this one file. */
-export const GOLDEN_PATH = path.resolve(
-  testingDirectory,
-  '..',
-  '..',
-  '..',
-  '..',
-  'contracts',
-  'fixtures',
-  'detection-golden.json',
-);
+export const GOLDEN_PATH = path.resolve(testingDirectory, '../../data/detection-golden.json');
 
 /** One entry per distinct input, sorted, so the file is diffable. */
 export function buildDetectionGolden(): DetectionGoldenEntry[] {

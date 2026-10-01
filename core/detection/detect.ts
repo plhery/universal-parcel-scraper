@@ -9,15 +9,15 @@
  * popularity — only the rules declared in the catalog decide. A `preferred`
  * rule only moves its carrier to the front of the suggestions.
  */
-import type { CarrierId } from '../../generated/catalog';
-import type { DetectionRule } from '../catalog/types';
-import { CARRIER_DEFINITIONS } from '../catalog/definitions';
-import { isValidGlsParcelNumber } from './gls';
-import { isValidHermesParcelNumber } from './hermes';
-import { isValidMondialRelayBarcode } from './mondialRelay';
-import { normalizeTrackingNumber } from './normalize';
-import { isValidS10TrackingNumber } from './s10';
-import type { CarrierDetection } from './types';
+import type { CarrierId } from '../../generated/catalog.js';
+import type { DetectionRule } from '../catalog/types.js';
+import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { isValidGlsParcelNumber } from './gls.js';
+import { isValidHermesParcelNumber } from './hermes.js';
+import { isValidMondialRelayBarcode } from './mondialRelay.js';
+import { normalizeTrackingNumber } from './normalize.js';
+import { isValidS10TrackingNumber } from './s10.js';
+import type { CarrierDetection } from './types.js';
 
 function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   if (rule.checksum === 'mondial-relay') return isValidMondialRelayBarcode(trackingNumber);

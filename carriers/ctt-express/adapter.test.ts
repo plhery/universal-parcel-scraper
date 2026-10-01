@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import fixture from './fixtures/pickup.json';
-import statuses from './statuses.json';
-import { normalizeCarrierResult } from '../../core/result';
-import { CttExpressTracker, adapter } from './adapter';
-import { normalizeCttExpressNumber, parseCttExpress } from './parser';
-import { classifyCttExpressStatus } from './status';
+import fixture from './fixtures/pickup.json' with { type: 'json' };
+import statuses from './statuses.json' with { type: 'json' };
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { CttExpressTracker, adapter } from './adapter.js';
+import { normalizeCttExpressNumber, parseCttExpress } from './parser.js';
+import { classifyCttExpressStatus } from './status.js';
 
 const NUMBER = '0000000000000000000001';
 const OTHER = '0000000000000000000002';

@@ -8,8 +8,7 @@
     ]
   },
   "brand": {
-    "color": "#ed1c24",
-    "decal": "quickpac"
+    "color": "#ed1c24"
   },
   "selectable": true,
   "timezone": "Europe/Zurich",

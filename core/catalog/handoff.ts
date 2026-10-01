@@ -1,8 +1,8 @@
-import type { CarrierResult } from '@carriers/core/result';
-import type { CarrierId } from '@carriers/generated/catalog';
-import { activeRequirements, AUTOMATIC_CARRIER_IDS, carrierAdapter, requiredRequirements } from './carriers';
-import { carrierIdsFromPartnerLinks, nationalPostCandidate } from '@carriers/core/catalog/hints';
-import { detectCarrierMatch, isValidS10TrackingNumber, supportsSwissPostHandoff } from '@carriers/core/detection';
+import type { CarrierResult } from '../result/index.js';
+import type { CarrierId } from '../../generated/catalog.js';
+import { activeRequirements, AUTOMATIC_CARRIER_IDS, carrierAdapter, requiredRequirements } from './index.js';
+import { carrierIdsFromPartnerLinks, nationalPostCandidate } from './hints.js';
+import { detectCarrierMatch, isValidS10TrackingNumber, supportsSwissPostHandoff } from '../detection/index.js';
 
 export interface DeliveryHandoff {
   carrier: string;

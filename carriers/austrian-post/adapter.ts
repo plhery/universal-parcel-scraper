@@ -1,13 +1,12 @@
-import 'server-only';
 
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { austrianPostEventStatus, austrianPostSummaryStatus } from './status';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { austrianPostEventStatus, austrianPostSummaryStatus } from './status.js';
 
 const PROVIDER = 'Austrian Post';
 // Published in the official tracking form's data-sendungsapiurlpublic attribute;

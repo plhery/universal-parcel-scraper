@@ -1,17 +1,16 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { clean, decodeText, fetchBounded, UpstreamHttpError, UpstreamNetworkError } from '../../core/transport';
-import { calendarDay, zonedTime, type ParsedTime } from '../../core/time';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { classifyRelaisColisStatus, comparableText } from './status';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { clean, decodeText, fetchBounded, UpstreamHttpError, UpstreamNetworkError } from '../../core/transport/index.js';
+import { calendarDay, zonedTime, type ParsedTime } from '../../core/time/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { classifyRelaisColisStatus, comparableText } from './status.js';
 
 const TRACKING_PAGE = 'https://www.relaiscolis.com/colis/suivre';
 const DEFAULT_TIMEOUT_MS = 15_000;

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { decodeText, fetchBounded, parseJsonBytes, UpstreamNetworkError } from './boundedFetch';
+import { decodeText, fetchBounded, parseJsonBytes, UpstreamNetworkError } from './boundedFetch.js';
 
 const URL = 'https://carrier.example/tracking';
 const OPTIONS = { provider: 'Carrier tracking', retryTransient: true };

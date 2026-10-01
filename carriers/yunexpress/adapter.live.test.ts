@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { TrawlClient } from '../../core/transport';
-import { YunExpressTracker } from './adapter';
+import { TrawlClient } from '../../core/transport/index.js';
+import { YunExpressTracker } from './adapter.js';
 
 const enabled = Boolean(process.env.FLARESOLVERR_URL || process.env.TRACKING_CHROMIUM_PATH);
 const tracker = () => new YunExpressTracker({ trawl: TrawlClient.fromEnvironment(), executablePath: process.env.TRACKING_CHROMIUM_PATH });

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import contract from '../../contracts/openapi.json';
-import { parcelTrackingLinks } from '../lib/carriers';
-import type { CarrierId } from '../types';
-import { trackingLinkCases, uncheckedTrackingLinks } from './trackingLinkCases';
+import { CARRIER_CATALOG } from '../generated/catalog.js';
+import { parcelTrackingLinks } from '../core/catalog/index.js';
+import type { CarrierId } from '../generated/catalog.js';
+import { trackingLinkCases, uncheckedTrackingLinks } from './trackingLinkCases.js';
 
 function linkHost(carrier: CarrierId, number: string, provider?: string): string | undefined {
   const [link] = parcelTrackingLinks({ carrier, trackingNumber: number, trackingProvider: provider }, 'en');
@@ -12,7 +12,7 @@ function linkHost(carrier: CarrierId, number: string, provider?: string): string
 // People track these carriers on the carrier's own page: they have a dedicated
 // adapter or no automatic tracking. Universal carriers are tracked through
 // shared providers, whose links the provider cases cover.
-const carrierOwned = Object.entries(contract['x-carriers'])
+const carrierOwned = Object.entries(CARRIER_CATALOG)
   .filter(([, carrier]) => carrier.tracking.mode !== 'automatic' || carrier.tracking.adapter !== 'universal')
   .map(([id]) => id as CarrierId);
 const checkedHosts = new Set(trackingLinkCases.map((item) => linkHost(item.carrier, item.number, item.provider)));

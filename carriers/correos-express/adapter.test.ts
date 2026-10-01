@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { CorreosExpressTracker, adapter } from './adapter';
-import { normalizeCorreosExpressNumber, parseCorreosExpress } from './parser';
-import { classifyCorreosExpressStatus } from './status';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { CorreosExpressTracker, adapter } from './adapter.js';
+import { normalizeCorreosExpressNumber, parseCorreosExpress } from './parser.js';
+import { classifyCorreosExpressStatus } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '9900000000000002';
 const OTHER = '9900000000000003';

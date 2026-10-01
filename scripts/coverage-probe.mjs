@@ -1,8 +1,8 @@
 /*
- * Refreshes packages/carriers/providers/coverage.json from live lookups.
+ * Refreshes providers/coverage.json from live lookups.
  *
- *   node packages/carriers/scripts/coverage-probe.mjs probe <cases.json> <results.jsonl>
- *   node packages/carriers/scripts/coverage-probe.mjs summarize <results.jsonl> [--write]
+ *   node scripts/coverage-probe.mjs probe <cases.json> <results.jsonl>
+ *   node scripts/coverage-probe.mjs summarize <results.jsonl> [--write]
  *
  * cases.json lists public references: [{ "carrier": "usps", "number": "…",
  * "postcode": null, "reference": 0 }]. `reference` is the index in the
@@ -29,8 +29,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
-const coveragePath = path.join(repositoryRoot, 'packages', 'carriers', 'providers', 'coverage.json');
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const coveragePath = path.join(repositoryRoot, 'providers', 'coverage.json');
 const PROVIDERS = ['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU'];
 const DAY = 86_400_000;
 const INCONCLUSIVE = new Set(['error', 'blocked', 'unverified']);
@@ -38,7 +38,7 @@ const [command, ...args] = process.argv.slice(2);
 
 function probe([cases, results]) {
   if (!cases || !results) throw new Error('Usage: coverage-probe.mjs probe <cases.json> <results.jsonl>');
-  const result = spawnSync('npx', ['vitest', 'run', '--config', 'packages/carriers/scripts/coverage-probe.config.ts'], {
+  const result = spawnSync('npx', ['vitest', 'run', '--config', 'scripts/coverage-probe.config.ts'], {
     cwd: repositoryRoot, stdio: 'inherit',
     env: { ...process.env, COVERAGE_PROBE_CASES: path.resolve(cases), COVERAGE_PROBE_OUT: path.resolve(results) },
   });
@@ -101,7 +101,7 @@ function summarize([results, flag]) {
   }
   if (flag === '--write') {
     writeFileSync(coveragePath, `${JSON.stringify(coverage, null, 2)}\n`);
-    console.log(`Updated ${path.relative(repositoryRoot, coveragePath)}. Review it, then run node packages/carriers/scripts/coverage-tables.mjs.`);
+    console.log(`Updated ${path.relative(repositoryRoot, coveragePath)}. Review it, then run node scripts/coverage-tables.mjs.`);
   }
 }
 

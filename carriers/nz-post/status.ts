@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // EDIFACT groups used by the official consumer tracking client. Pickup requests
 // are pre-advice; they do not establish that NZ Post has collected the parcel.

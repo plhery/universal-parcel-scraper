@@ -1,9 +1,9 @@
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { isoTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyDelhiveryStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { isoTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyDelhiveryStatus } from './status.js';
 
 function scanTime(value: unknown) {
   const raw = clean(value, 64);

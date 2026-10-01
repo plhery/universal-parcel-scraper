@@ -17,7 +17,8 @@
     "adapter": "korea-post",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError } from '../../core/errors';
+import { NotFoundError } from '../../core/errors/index.js';
 import {
   MondialRelayTracker,
   mondialRelayTrackingUrl,
   normalizeMondialRelayCredential,
   parseMondialRelayTrackingResponse,
-} from './adapter';
-import { classifyStatus } from './status';
+} from './adapter.js';
+import { classifyStatus } from './status.js';
 
 // Public fixture provenance:
 // - 17185966 is the shipment in Mondial Relay's official Permalinks v2.1 PDF:

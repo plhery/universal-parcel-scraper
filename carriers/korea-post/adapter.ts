@@ -1,13 +1,12 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { clean, decodeText, fetchBounded } from '../../core/transport';
-import { koreaPostStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { koreaPostStatus } from './status.js';
 
 const ENDPOINT = 'https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttSVL';
 

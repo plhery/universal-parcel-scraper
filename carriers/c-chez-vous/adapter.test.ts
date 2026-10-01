@@ -2,14 +2,14 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   CChezVousTracker,
   cChezVousTrackingUrl,
   normalizeCChezVousCredential,
   parseCChezVousTrackingHtml,
-} from './adapter';
-import { parcelStep, stepDetails } from './status';
+} from './adapter.js';
+import { parcelStep, stepDetails } from './status.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 // C Chez Vous publishes this identifier as an example on its official tracking

@@ -62,7 +62,7 @@ its published source map).
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/swiss-post-cargo` checks
+`npm run test:carriers:live -- carriers/swiss-post-cargo` checks
 the clean 404 for an unknown number. Set `SWISS_POST_CARGO_TRACKING_NUMBER`
 outside the repository to a current barcode or reference to check a shipment, or
 `SWISS_POST_TRACKING_NUMBER` to a current Swiss Post parcel barcode to check the

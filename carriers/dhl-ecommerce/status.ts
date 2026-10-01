@@ -7,10 +7,10 @@
  * the fallback, except for `delivered`, which is terminal and outranks an
  * intuitive translation of the text.
  */
-import type { CarrierStatus } from '../../core/result';
-import { trackingLanguageStage } from '../../core/status';
-import { clean as cleanText } from '../../core/transport';
-import type { JsonObject } from '../../core/types';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { trackingLanguageStage } from '../../core/status/index.js';
+import { clean as cleanText } from '../../core/transport/index.js';
+import type { JsonObject } from '../../core/types.js';
 
 /** The same tag-stripping cleaner the projection uses (see adapter.ts). */
 function clean(value: unknown, limit = 500): string {

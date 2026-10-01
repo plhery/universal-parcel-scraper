@@ -6,9 +6,9 @@
  * the carrier of a scan and that carrier has a vocabulary, the label's stage and
  * stored wording come from it rather than from the shared wording rules.
  */
-import type { CarrierEvent } from '../../core/result';
-import type { Stage } from '../../core/status';
-import { ytoScan } from '../../carriers/yto/status';
+import type { CarrierEvent } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
+import { ytoScan } from '../../carriers/yto/status.js';
 
 export interface CarrierScan {
   stage: Stage;

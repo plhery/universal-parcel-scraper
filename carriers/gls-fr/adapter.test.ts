@@ -2,15 +2,15 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SchemaError } from '../../core/errors';
+import { SchemaError } from '../../core/errors/index.js';
 import {
   GLSFranceTracker,
   glsFranceTrackingApiUrl,
   glsFranceTrackingUrl,
   normalizeGLSFranceTrackingNumber,
   parseGLSFranceTrackingResponse,
-} from './adapter';
-import { glsFranceStatus } from './status';
+} from './adapter.js';
+import { glsFranceStatus } from './status.js';
 
 const TRACKING_NUMBER = '00AB12CD';
 const NUMERIC_TRACKING_NUMBER = '36631000001';

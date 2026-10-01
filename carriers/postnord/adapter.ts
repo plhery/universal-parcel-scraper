@@ -1,12 +1,11 @@
-import 'server-only';
 import { createHash, randomUUID } from 'node:crypto';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { normalizePostnordNumber, parsePostnord } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { normalizePostnordNumber, parsePostnord } from './parser.js';
 
 const ENDPOINT = 'https://api2.postnord.com/rest/shipment/v1/trackingweb/shipmentInformation';
 const ORIGIN = 'https://tracking.postnord.com';

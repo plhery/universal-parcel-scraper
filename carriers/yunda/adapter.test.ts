@@ -2,12 +2,12 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import sharp from 'sharp';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, YundaTracker } from './adapter';
-import { solveYundaSlider } from './challenge';
-import { normalizeYundaNumber, parseYunda } from './parser';
-import { yundaStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, YundaTracker } from './adapter.js';
+import { solveYundaSlider } from './challenge.js';
+import { normalizeYundaNumber, parseYunda } from './parser.js';
+import { yundaStatus } from './status.js';
 
 const NUMBER = '0000000000001';
 const OTHER = '0000000000002';

@@ -8,11 +8,7 @@
     ]
   },
   "brand": {
-    "color": "#ffbe0c",
-    "palette": {
-      "accent": "#0e2f4b",
-      "brand-light": "#0e2f4b"
-    }
+    "color": "#ffbe0c"
   },
   "selectable": true,
   "timezone": "UTC",
@@ -21,7 +17,8 @@
     "adapter": "ukrposhta",
     "steps": [
       "browser"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

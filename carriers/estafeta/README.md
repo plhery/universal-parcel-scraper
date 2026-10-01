@@ -28,6 +28,6 @@ excluded. Scheduled-date controls retain dates after delivery and are omitted.
 ## Live test
 
 Set `ESTAFETA_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/estafeta/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/estafeta/adapter.live.test.ts`.
 Optionally set `ESTAFETA_UNKNOWN_NUMBER` and `ESTAFETA_MULTIPIECE_NUMBER` to check
 inconclusive unavailable information and multiple-piece guides.

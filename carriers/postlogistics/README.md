@@ -53,7 +53,7 @@ Recognition uses the same lookup and requires a scan before claiming a match.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/postlogistics` checks
+`npm run test:carriers:live -- carriers/postlogistics` checks
 that an unissued barcode returns a clean 404. Set
 `POSTLOGISTICS_LIVE_TRACKING_NUMBER` outside the repository to a current barcode
 or reference to check a shipment, or `SWISS_POST_TRACKING_NUMBER` to check that a

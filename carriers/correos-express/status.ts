@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const labels: Record<string, ClassifiedStatus> = {
   INFORMADO: { status: 'pending', stage: 'registered' },

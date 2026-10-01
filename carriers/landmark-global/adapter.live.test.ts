@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LandmarkTracker } from './adapter';
+import { LandmarkTracker } from './adapter.js';
 
 describe('Landmark live tracking', () => {
   it.skipIf(!process.env.LANDMARK_GLOBAL_TRACKING_NUMBER)('returns identity-bound history', async () => {

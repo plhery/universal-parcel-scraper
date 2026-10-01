@@ -18,7 +18,8 @@
     "steps": [
       "browser",
       "trawl"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

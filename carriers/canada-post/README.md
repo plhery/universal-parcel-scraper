@@ -18,4 +18,4 @@ Empty history, expired history and ambiguous references remain inconclusive. Ref
 
 ## Live test
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/canada-post` with `CANADA_POST_LIVE_TRACKING_NUMBER` supplied outside the repository. `CANADA_POST_LIVE_NOTICE_NUMBER` optionally exercises delivery-notice resolution.
+Run `npm run test:carriers:live -- carriers/canada-post` with `CANADA_POST_LIVE_TRACKING_NUMBER` supplied outside the repository. `CANADA_POST_LIVE_NOTICE_NUMBER` optionally exercises delivery-notice resolution.

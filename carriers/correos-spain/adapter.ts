@@ -1,13 +1,12 @@
-import 'server-only';
 
-import type { AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { ClassifiedStatus } from '../../core/status';
-import { zonedTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyCorreosSpainStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyCorreosSpainStatus } from './status.js';
 
 // Protocol provenance:
 // - Prior art (structure + vocabulary, verified independently below, MIT):

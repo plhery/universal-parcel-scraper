@@ -10,8 +10,7 @@
     ]
   },
   "brand": {
-    "color": "#ffcc00",
-    "family": "swiss-post"
+    "color": "#ffcc00"
   },
   "selectable": true,
   "timezone": "Europe/Zurich",

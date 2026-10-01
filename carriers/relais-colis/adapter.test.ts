@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   adapter,
   RelaisColisTracker,
@@ -10,8 +10,8 @@ import {
   normalizeRelaisColisTrackingNumber,
   parseRelaisColisTrackingHtml,
   relaisColisTrackingUrl,
-} from './adapter';
-import { classifyRelaisColisStatus, comparableText } from './status';
+} from './adapter.js';
+import { classifyRelaisColisStatus, comparableText } from './status.js';
 
 // Synthetic number following the official format.
 const OFFICIAL_EXAMPLE = 'CC200000000401';

@@ -41,5 +41,5 @@ locator form on tip-sa.com also asks for the destination postcode; this page doe
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/tipsa` sends a well-formed
+`npm run test:carriers:live -- carriers/tipsa` sends a well-formed
 unknown reference. Set `TIPSA_TRACKING_NUMBER` to a real reference to read one history.

@@ -1,12 +1,11 @@
-import 'server-only';
 
 import { DateTime } from 'luxon';
-import { recognizeFromLookup, type AdapterFactory } from '../../core/adapter';
-import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { hermesGermanyMilestone, IGNORED_BOOKING_STATUS, type Milestone } from './status';
+import { recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
+import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { hermesGermanyMilestone, IGNORED_BOOKING_STATUS, type Milestone } from './status.js';
 
 // Public recipient protocol inspected 2026-09-08:
 // https://gcp-prd.my-deliveries.de/tnt/bundle/tnt-bundle-v2.js
@@ -23,7 +22,7 @@ export interface HermesGermanyOptions {
   fetcher?: typeof fetch;
 }
 
-export { STATUSES } from './status';
+export { STATUSES } from './status.js';
 
 function etaDate(value: unknown): string | null {
   if (typeof value === 'number' && Number.isFinite(value)) {

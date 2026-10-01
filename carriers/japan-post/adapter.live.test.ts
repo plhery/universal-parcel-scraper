@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { JapanPostTracker } from './adapter';
+import { JapanPostTracker } from './adapter.js';
 
 describe('Japan Post live compatibility', () => {
   it.skipIf(!process.env.JAPAN_POST_TRACKING_NUMBER)('returns identity-bound history without browser state', async () => {

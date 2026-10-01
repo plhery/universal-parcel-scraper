@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // Codes and their labels come from the official tracking widget. EN_ROUTE and
 // OTHER also cover several distinct milestones and administrative notices.

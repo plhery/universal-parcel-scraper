@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * AliExpress / Cainiao tracking.
@@ -14,19 +13,19 @@ import 'server-only';
  * only when `mailNoSource` is `EXTERNAL`; otherwise Cainiao is still waiting
  * for the seller and the parcel is simply pending.
  */
-import type { AdapterFactory } from '../../core/adapter';
-import { normalizeTrackingNumber } from '../../core/detection/normalize';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   CAINIAO_ACTION_STATUS,
   CAINIAO_STATUS,
   cainiaoActionCode,
   cainiaoStageByStatus,
-} from './status';
+} from './status.js';
 
 const PROVIDER = 'Cainiao';
 const UPSTREAM = 'Cainiao tracking';

@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   normalizePosteItalianeTrackingNumber,
   posteItalianeTrackingUrl,
   parsePosteItalianeTrackingResponse,
   PosteItalianeTracker,
-} from './adapter';
-import { classifyPosteItalianeStatus } from './status';
+} from './adapter.js';
+import { classifyPosteItalianeStatus } from './status.js';
 
 // All identifiers and timestamps below are synthetic. Italian status wordings
 // reuse the vendor's fixed texts confirmed against a real parcel by the

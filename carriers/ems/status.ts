@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // English labels from the EMS Cooperative public table. Observed vocabulary
 // and separately reconstructed terminal examples are recorded in statuses.json.

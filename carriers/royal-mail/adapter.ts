@@ -1,16 +1,15 @@
-import 'server-only';
 
 import { DateTime } from 'luxon';
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { clean, cleanScalar, TrawlClient } from '../../core/transport';
-import { explicitOffsetTime } from '../../core/time';
-import { isRecord } from '../../core/types';
-import { royalMailStage, royalMailSummaryStage, statusForStage } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { clean, cleanScalar, TrawlClient } from '../../core/transport/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { isRecord } from '../../core/types.js';
+import { royalMailStage, royalMailSummaryStage, statusForStage } from './status.js';
 
 /** Read the response produced by Royal Mail's form and hCaptcha callback. */
 const TRACKING_BASE = 'https://www.royalmail.com/track-your-item';
@@ -159,7 +158,7 @@ export class RoyalMailTracker {
       throw new TypeError('Royal Mail timeout must be positive');
     }
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.#trawl = options.trawl;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;

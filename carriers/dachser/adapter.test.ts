@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import { DachserTracker, parseDachserTrackingResponse, validateDachserTrackingUrl } from './adapter';
-import { eventLabel, shipmentStatus } from './status';
+import { NotFoundError } from '../../core/errors/index.js';
+import { DachserTracker, parseDachserTrackingResponse, validateDachserTrackingUrl } from './adapter.js';
+import { eventLabel, shipmentStatus } from './status.js';
 
 const WRONG_DACHSER_NUMBER = '12345678';
 const WRONG_DACHSER_URL = 'https://customeriberia.dachser.com/customerarea/'

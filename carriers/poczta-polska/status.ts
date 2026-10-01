@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // The specific scan code takes precedence over its broader state label: an
 // unsuccessful delivery can still carry the state DOR (in delivery).

@@ -7,7 +7,7 @@
  * What it is not: no account state, no eligibility probe, no provider I/O; the
  * server checks public availability separately.
  */
-import { isAmazonTrackingNumber } from '../detection/amazon';
+import { isAmazonTrackingNumber } from '../detection/amazon.js';
 
 export function requiresAmazonAccount(carrier: string, trackingNumber = ''): boolean {
   return carrier !== 'amazon-shipping' && (carrier === 'amazon-logistics' || isAmazonTrackingNumber(trackingNumber));

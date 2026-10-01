@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   HeppnerTracker,
   heppnerDetailUrl,
@@ -12,8 +12,8 @@ import {
   normalizeHeppnerTrackingNumber,
   parseHeppnerCapability,
   parseHeppnerTrackingResponse,
-} from './adapter';
-import { classifyHeppnerEvent, heppnerCode } from './status';
+} from './adapter.js';
+import { classifyHeppnerEvent, heppnerCode } from './status.js';
 
 // Fully synthetic provider-shaped values. Live tests deliberately use only a
 // wrong-number canary because Heppner does not publish a reusable demo shipment.

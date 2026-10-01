@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PaackTracker } from './adapter';
+import { PaackTracker } from './adapter.js';
 
 describe('Paack live anonymous tracking', () => {
   it.each([

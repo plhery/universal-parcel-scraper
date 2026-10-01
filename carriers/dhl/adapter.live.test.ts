@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DHLSessionError, DHLTracker } from './adapter';
+import { DHLSessionError, DHLTracker } from './adapter.js';
 
 describe('DHL public tracking live', () => {
   it('distinguishes an explicit no-data response from a rejected HTTP session', async () => {

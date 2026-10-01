@@ -20,4 +20,4 @@ The adapter retains a bounded history and coarse facility names. It excludes per
 
 ## Testing
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/pos-malaysia`. Set `POS_MALAYSIA_TRACKING_NUMBER` for available history or `POS_MALAYSIA_DELIVERED_TRACKING_NUMBER` for a delivered item. Supply parcel inputs outside the repository.
+Run `npm run test:carriers:live -- carriers/pos-malaysia`. Set `POS_MALAYSIA_TRACKING_NUMBER` for available history or `POS_MALAYSIA_DELIVERED_TRACKING_NUMBER` for a delivered item. Supply parcel inputs outside the repository.

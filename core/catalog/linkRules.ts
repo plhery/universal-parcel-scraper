@@ -6,8 +6,8 @@
  * What it is not: no fetching, no URL following, no provider I/O. Matching a
  * URL against these rules lives in `core/detection`.
  */
-import type { CarrierId } from '../../generated/catalog';
-import { CARRIER_DEFINITIONS } from './definitions';
+import type { CarrierId } from '../../generated/catalog.js';
+import { CARRIER_DEFINITIONS } from './definitions.js';
 
 export interface TrackingLinkRule {
   carrier: CarrierId;

@@ -1,110 +1,44 @@
-/*
- * Generates the overview table in packages/carriers/README.md from the carrier
- * folders, between the GENERATED markers. Everything outside the markers is
- * hand-written. `--check` fails when the committed table is stale.
- */
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const carriersRoot = path.join(packageRoot, 'carriers');
-const providersRoot = path.join(packageRoot, 'providers');
-const readmePath = path.join(packageRoot, 'README.md');
-const START = '<!-- GENERATED:carriers -->';
-const END = '<!-- /GENERATED:carriers -->';
-
-// Editorial prominence order for the overview, not a measured market-share ranking.
-// Keep unfamiliar additions alphabetical after these carriers, before unknowns.
-const carrierOrder = [
-  'dhl', 'ups', 'fedex', 'usps', 'amazon-logistics', 'amazon-shipping',
-  'royal-mail', 'swiss-post', 'la-poste', 'dpd', 'dhl-ecommerce',
-  'aliexpress', 'china-post', 'ems', 'sf-express',
-  'gls-de', 'gls-fr', 'gls-ch', 'hermes-de', 'evri',
-  'chronopost', 'mondial-relay', 'inpost', 'spring-gds',
-  'canada-post', 'australia-post', 'japan-post', 'india-post',
-  'poste-italiane', 'correos-spain', 'bpost', 'austrian-post', 'postnord',
-  'tnt', 'aramex', 'yunexpress', 'four-px', 'yanwen',
-  'j-and-t', 'jd-logistics', 'zto', 'yto', 'yunda', 'sto', 'yamato',
-  'correios-br', 'singapore-post', 'hongkong-post', 'korea-post',
-  'planzer', 'quickpac', 'dpd-fr', 'parcelforce', 'purolator', 'ontrac',
-  'delhivery', 'blue-dart', 'dtdc', 'ninja-van',
-  'packeta', 'poczta-polska', 'bring-posten', 'posti', 'an-post',
-  'ctt', 'ctt-express', 'brt', 'seur', 'correos-express', 'mrw', 'nacex',
-  'colis-prive', 'relais-colis', 'paack', 'asendia', 'landmark-global',
-  'nz-post', 'pos-malaysia', 'thailand-post', 'ukrposhta',
-  'estafeta', 'correos-chile', 'the-courier-guy',
-  'geodis', 'dachser', 'old-dominion', 'swiss-post-cargo', 'postlogistics',
-  'hermes', 'heppner', 'ciblex', 'c-chez-vous', 'colisweb', 'delivengo',
-  'uniuni', 'speedx', 'gofo', 'ecoscooting', 'tipsa', 'canpar', 'spee-dee',
-  'sunyou', 'shipup',
-];
-const carrierRank = new Map(carrierOrder.map((id, index) => [id, index]));
-carrierRank.set('intl-post', Infinity);
-carrierRank.set('unknown', Infinity);
-
-function readJson(file) {
-  return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : null;
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const documents = readdirSync(path.join(root, 'carriers'), { withFileTypes: true }).filter(entry => entry.isDirectory())
+  .map(entry => JSON.parse(readFileSync(path.join(root, 'carriers', entry.name, 'carrier.json'), 'utf8')));
+const coverage = JSON.parse(readFileSync(path.join(root, 'providers/coverage.json'), 'utf8')).carriers;
+if (coverage.length !== 100) throw new Error('Update the reference-set label when the comparison cohort changes');
+const sources = ['ParcelsApp','Postal Ninja','17TRACK','Ship24','UPU'];
+const history = cell => typeof cell === 'number' && cell > 0 || cell === 'history'
+  || cell && typeof cell === 'object' && cell.rows > 0;
+// A leading check mark belongs to the comparison reference; later ones are alternates.
+const direct = entry => /^✓\s*\d+/.test(entry.sample);
+const counts = Object.fromEntries(sources.map(source => [source, coverage.filter(entry => history(entry.references[0].results[source])).length]));
+const union = coverage.filter(entry => direct(entry) || sources.some(source => history(entry.references[0].results[source]))).length;
+const activeAdapters = documents.filter(document => document.tracking.mode === 'automatic' && document.tracking.adapter === document.id
+  && existsSync(path.join(root,'carriers',document.id,'adapter.ts'))).length;
+const countries = new Set(documents.flatMap(document => document.region.countries)).size;
+const summary = { catalog: documents.length, activeAdapters, countries, referenceCarriers: coverage.length,
+  comparison: { combined: union, direct: coverage.filter(direct).length, providers: counts } };
+const blocks = {
+  summary: `**${documents.length} carriers · ${activeAdapters} active dedicated adapters · ${countries} countries represented**`,
+  coverage: [
+    '| Source | Carriers with history |', '| --- | ---: |',
+    `| **Universal Parcel Scraper, all fallbacks enabled** | **${union} / ${coverage.length}** |`,
+    `| Dedicated adapters alone | ${summary.comparison.direct} / ${coverage.length} |`,
+    ...sources.map(source => `| ${source} | ${counts[source]} / ${coverage.length} |`),
+  ].join('\n'),
+};
+const readme = path.join(root,'README.md');
+let next = readFileSync(readme,'utf8');
+for (const [name, content] of Object.entries(blocks)) {
+  const start = `<!-- GENERATED:${name} -->`, end = `<!-- /GENERATED:${name} -->`;
+  if (!next.includes(start) || !next.includes(end)) throw new Error(`Missing README ${name} markers`);
+  next = next.replace(new RegExp(`${start}[\\s\\S]*?${end}`), `${start}\n${content}\n${end}`);
 }
-
-function folders(root) {
-  return existsSync(root)
-    ? readdirSync(root, { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort()
-    : [];
+const outputs = { 'README.md': next, 'data/coverage-summary.json': JSON.stringify(summary,null,2)+'\n' };
+for (const [name, content] of Object.entries(outputs)) {
+  const file = path.join(root,name);
+  if (process.argv.includes('--check')) {
+    if (!existsSync(file) || readFileSync(file,'utf8') !== content) throw new Error(`${name} is stale; run npm run generate`);
+  } else writeFileSync(file,content);
 }
-
-const carrierIds = folders(carriersRoot).sort((a, b) =>
-  (carrierRank.get(a) ?? carrierOrder.length) - (carrierRank.get(b) ?? carrierOrder.length)
-  || a.localeCompare(b));
-const rows = carrierIds.map((id) => {
-  const folder = path.join(carriersRoot, id);
-  const carrier = readJson(path.join(folder, 'carrier.json')) ?? {};
-  const numbers = readJson(path.join(folder, 'numbers.json')) ?? { records: [] };
-  const statuses = readJson(path.join(folder, 'statuses.json')) ?? { entries: [] };
-  const hasAdapter = existsSync(path.join(folder, 'adapter.ts'));
-  const tracking = carrier.tracking ?? {};
-  const route = tracking.mode === 'link-only' ? 'link only'
-    : tracking.adapter === 'universal' ? 'universal providers'
-      : hasAdapter ? 'dedicated'
-        : `via ${tracking.adapter}`;
-  const steps = Array.isArray(tracking.steps) && tracking.steps.length ? tracking.steps.join(' → ') : '';
-  const capabilities = Array.isArray(carrier.capabilities) ? carrier.capabilities.length : 0;
-  const docs = existsSync(path.join(folder, 'README.md')) ? `[README](carriers/${id}/README.md)` : '';
-  return `| \`${id}\` | ${carrier.displayName ?? id} | ${route} | ${steps} | ${capabilities} | ${numbers.records?.length ?? 0} | ${statuses.entries?.length ?? 0} | ${docs} |`;
-});
-
-const providerRows = folders(providersRoot)
-  .filter((id) => existsSync(path.join(providersRoot, id, 'adapter.ts')))
-  .map((id) => `| \`${id}\` | ${existsSync(path.join(providersRoot, id, 'README.md')) ? `[README](providers/${id}/README.md)` : ''} |`);
-
-const dedicated = rows.filter((row) => row.includes('| dedicated |')).length;
-const universal = rows.filter((row) => row.includes('| universal providers |')).length;
-const generated = [
-  START,
-  `${rows.length} carriers: ${dedicated} with a dedicated adapter, ${universal} through the universal providers, the rest through another carrier's adapter or link only. Roughly ordered by prominence. Generated by \`node packages/carriers/scripts/generate-readme.mjs\`.`,
-  '',
-  '| Id | Name | Route | Steps | Capabilities | Sample numbers | Known statuses | Docs |',
-  '| --- | --- | --- | --- | ---: | ---: | ---: | --- |',
-  ...rows,
-  '',
-  providerRows.length ? '### Universal providers' : '',
-  providerRows.length ? '| Id | Docs |' : '',
-  providerRows.length ? '| --- | --- |' : '',
-  ...providerRows,
-  END,
-].filter((line, index, lines) => line !== '' || lines[index - 1] !== '').join('\n');
-
-const current = existsSync(readmePath) ? readFileSync(readmePath, 'utf8') : '';
-const start = current.indexOf(START);
-const end = current.indexOf(END);
-const next = start >= 0 && end > start
-  ? `${current.slice(0, start)}${generated}${current.slice(end + END.length)}`
-  : `${current.trimEnd()}\n\n## Carriers\n\n${generated}\n`;
-
-if (process.argv.includes('--check')) {
-  if (current !== next) throw new Error('packages/carriers/README.md overview is stale. Run node packages/carriers/scripts/generate-readme.mjs.');
-  console.log('Carrier overview is current.');
-} else {
-  writeFileSync(readmePath, next);
-  console.log(`Wrote the overview for ${rows.length} carriers and ${providerRows.length} providers.`);
-}
+console.log('README coverage is generated from the catalog and comparison references.');

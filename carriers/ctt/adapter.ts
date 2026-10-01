@@ -1,11 +1,10 @@
-import 'server-only';
 
-import type { AdapterFactory } from '../../core/adapter';
-import { IndeterminateError, MaintenanceError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { ClassifiedStatus } from '../../core/status';
-import { isValidS10TrackingNumber } from '../../core/detection';
-import { explicitOffsetTime } from '../../core/time';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { IndeterminateError, MaintenanceError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { isValidS10TrackingNumber } from '../../core/detection/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
 import {
   clean,
   decodeText,
@@ -13,9 +12,9 @@ import {
   fetchBounded,
   parseJsonBytes,
   UpstreamHttpError,
-} from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyCttStatus } from './status';
+} from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyCttStatus } from './status.js';
 
 // Protocol provenance:
 // - Prior art (full session mechanics + vocabulary, verified step by step

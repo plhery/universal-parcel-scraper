@@ -11,7 +11,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import Ajv, { type SchemaObject, type ValidateFunction } from 'ajv';
+import { Ajv, type SchemaObject, type ValidateFunction } from 'ajv';
 
 export type NumberRole =
   | 'shipment'

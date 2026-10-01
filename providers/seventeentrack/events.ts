@@ -1,7 +1,7 @@
-import type { CarrierEvent } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
-import { isRecord, type JsonObject } from '../../core/types';
-import { event, text } from '../shared/result';
+import type { CarrierEvent } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { event, text } from '../shared/result.js';
 
 // Official v2 status vocabulary, plus TransportArrived/Departed observed in
 // public China Post histories. Expired describes tracking age, not a scan.

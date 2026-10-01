@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { zonedTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { tipsaStatus } from './status';
+import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { tipsaStatus } from './status.js';
 
 const PROVIDER = 'TIPSA';
 const DETAIL_ORIGIN = 'https://dinapaqweb.tipsa-dinapaq.com';

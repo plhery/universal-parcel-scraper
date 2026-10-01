@@ -17,7 +17,8 @@
     "adapter": "blue-dart",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history"

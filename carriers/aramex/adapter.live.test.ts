@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AramexTracker } from './adapter';
+import { AramexTracker } from './adapter.js';
 
 describe('Aramex live tracking', () => {
   it('returns the explicit no-results page', async () => {

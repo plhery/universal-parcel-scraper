@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import type { JsonObject } from '../../core/types';
-import { parseSwissPostShipment, SwissPostTracker } from './adapter';
-import { EVENT_STAGE_BY_CODE, LETTER_IMPORT_STAGE_BY_CODE, swissPostEventStage } from './status';
+import { NotFoundError } from '../../core/errors/index.js';
+import type { JsonObject } from '../../core/types.js';
+import { parseSwissPostShipment, SwissPostTracker } from './adapter.js';
+import { EVENT_STAGE_BY_CODE, LETTER_IMPORT_STAGE_BY_CODE, swissPostEventStage } from './status.js';
 
 const WRONG_SWISS_POST_NUMBER = '989999999999999999';
 

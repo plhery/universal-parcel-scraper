@@ -1,6 +1,5 @@
 import { parentPort } from 'node:worker_threads';
 import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
 import * as ort from 'onnxruntime-web';
 import sharp from 'sharp';
 
@@ -40,7 +39,7 @@ async function solve(bytes) {
   } catch { throw new Error('unsupported-image'); }
   const input = Float32Array.from(pixels, (pixel) => pixel / 127.5 - 1);
   if (!session) {
-    const model = await readFile(resolve(process.cwd(), 'packages/carriers/carriers/correios-br/model/captcha.onnx'));
+    const model = await readFile(new URL('./model/captcha.onnx', import.meta.url));
     session = await ort.InferenceSession.create(new Uint8Array(model), { executionProviders: ['wasm'], graphOptimizationLevel: 'all' });
   }
   const output = (await session.run({ image: new ort.Tensor('float32', input, [1, 1, 80, 215]) })).logits;

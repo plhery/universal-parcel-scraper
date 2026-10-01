@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CorreiosTracker } from './adapter';
+import { CorreiosTracker } from './adapter.js';
 
 describe('Correios live tracking', () => {
   it.skipIf(!process.env.CORREIOS_BR_TRACKING_NUMBER)('returns matching real history through local OCR', async () => {

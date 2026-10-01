@@ -11,8 +11,8 @@
  * classifies it and records it for review instead of us claiming an order has
  * not started.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface StepDetails {
   status: CarrierStatus;

@@ -44,8 +44,7 @@
     ]
   },
   "brand": {
-    "color": "#ff9900",
-    "family": "amazon-logistics"
+    "color": "#ff9900"
   },
   "selectable": false,
   "timezone": "UTC",

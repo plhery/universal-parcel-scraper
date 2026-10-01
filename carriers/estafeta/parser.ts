@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { normalizeTrackingNumber } from '../../core/detection';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { estafetaStatus } from './status';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { estafetaStatus } from './status.js';
 
 export interface EstafetaLookup {
   number: string;

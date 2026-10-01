@@ -8,8 +8,8 @@
  * An event with no `stage` means "no explicit mapping" (see
  * ARCHITECTURE.md § Status model).
  */
-import { isRecord, type JsonObject } from '../types';
-import { CARRIER_CATALOG, STAGES } from '../../generated/catalog';
+import { isRecord, type JsonObject } from '../types.js';
+import { CARRIER_CATALOG, STAGES } from '../../generated/catalog.js';
 
 export type CarrierStatus =
   | 'pending'

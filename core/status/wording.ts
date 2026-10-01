@@ -7,8 +7,8 @@
  * Rule ids are persisted per event as `raw_data.stage_source` and grouped in
  * `tracking_status_observations`, so renaming one is a data change.
  */
-import type { Stage } from '../../generated/catalog';
-import { trackingLanguageStage } from './language';
+import type { Stage } from '../../generated/catalog.js';
+import { trackingLanguageStage } from './language.js';
 
 export interface ClassifiedWording {
   stage: Stage;

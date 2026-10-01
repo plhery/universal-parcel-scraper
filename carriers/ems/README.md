@@ -39,5 +39,5 @@ accepted. Ordinary postal items (e.g. `LZ…CN`) belong to the national operator
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/ems` with `EMS_TRACKING_NUMBER` set to a
+`npm run test:carriers:live -- carriers/ems` with `EMS_TRACKING_NUMBER` set to a
 real EMS number (kept out of the repo).

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CChezVousTracker } from './adapter';
+import { CChezVousTracker } from './adapter.js';
 
 describe('C Chez Vous live anonymous tracking', () => {
   it.each([

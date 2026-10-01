@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyOntracStatus } from './status';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyOntracStatus } from './status.js';
 
 export function normalizeOntracNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');

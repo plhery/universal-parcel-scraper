@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   IndiaPostChallengeError,
   IndiaPostTracker,
   indiaPostTrackingUrl,
   normalizeIndiaPostTrackingNumber,
   parseIndiaPostTrackingHtml,
-} from './adapter';
-import { classifyIndiaPostEvent } from './status';
+} from './adapter.js';
+import { classifyIndiaPostEvent } from './status.js';
 
 // Every identifier, office, pincode and timestamp below is synthetic; both
 // numbers are recorded in numbers.json as made-up values with valid check

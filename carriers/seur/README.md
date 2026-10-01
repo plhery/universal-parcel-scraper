@@ -27,4 +27,4 @@ inconclusive. Empty replies, redirects and generic HTTP errors do too.
 
 Set `SEUR_TRACKING_NUMBER` to an authorized reference and optionally
 `SEUR_UNKNOWN_NUMBER` to a valid-looking unresolved identifier, then run
-`npm run test:carriers:live -- packages/carriers/carriers/seur`.
+`npm run test:carriers:live -- carriers/seur`.

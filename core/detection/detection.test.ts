@@ -10,7 +10,7 @@ import {
   normalizeTrackingNumber,
   parseTrackingInput,
   supportsSwissPostHandoff,
-} from './index';
+} from './index.js';
 
 /**
  * The per-carrier number expectations live in src/lib/carriers.test.ts until

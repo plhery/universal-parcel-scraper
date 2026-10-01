@@ -7,8 +7,8 @@
  * What it is not: no provider I/O, no HTTP, no application code. Everything
  * here is a pure function of the generated catalog.
  */
-import { CARRIER_CATALOG, type CarrierId } from '../../generated/catalog';
-import type { CarrierDefinition, CarrierRequirementRule } from './types';
+import { CARRIER_CATALOG, type CarrierId } from '../../generated/catalog.js';
+import type { CarrierDefinition, CarrierRequirementRule } from './types.js';
 
 export const CARRIER_DEFINITIONS = CARRIER_CATALOG as unknown as Record<
   CarrierId,

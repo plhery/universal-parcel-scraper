@@ -8,10 +8,10 @@
  * response capture, cookies, user agent) and the legacy `/v1` command API
  * (`request.get`). Both are bounded like every other provider call.
  */
-import { CarrierError, UpstreamHttpError, type CarrierErrorOptions } from '../errors';
-import { decodeText, fetchBounded, parseJsonBytes } from './boundedFetch';
-import { clean } from './text';
-import { isRecord, type JsonObject } from '../types';
+import { CarrierError, UpstreamHttpError, type CarrierErrorOptions } from '../errors/index.js';
+import { decodeText, fetchBounded, parseJsonBytes } from './boundedFetch.js';
+import { clean } from './text.js';
+import { isRecord, type JsonObject } from '../types.js';
 
 export interface TrawlScrapeRequest extends JsonObject {
   url: string;

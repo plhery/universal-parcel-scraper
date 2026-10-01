@@ -1,10 +1,9 @@
-import 'server-only';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { aramexDetailRedirect, aramexDetailUrl, normalizeAramexNumber, parseAramex } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { aramexDetailRedirect, aramexDetailUrl, normalizeAramexNumber, parseAramex } from './parser.js';
 
 export class AramexTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}

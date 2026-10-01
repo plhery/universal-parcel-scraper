@@ -8,8 +8,8 @@
  * Every helper returns `null` rather than guessing.
  */
 import { DateTime } from 'luxon';
-import { REGION_TOWNS } from '../../generated/regionTowns';
-import { clean } from '../transport/text';
+import { REGION_TOWNS } from '../../generated/regionTowns.js';
+import { clean } from '../transport/text.js';
 
 export interface ParsedTime {
   /** ISO 8601 with the source offset preserved and no milliseconds. */

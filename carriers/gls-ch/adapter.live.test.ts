@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GLSSwitzerlandTracker } from './adapter';
+import { GLSSwitzerlandTracker } from './adapter.js';
 
 describe('GLS Switzerland live anonymous tracking', () => {
   it('maps Swiss Post\'s retired official GLS example to a clean 404', async () => {

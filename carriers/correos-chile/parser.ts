@@ -1,10 +1,10 @@
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { calendarDay } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyCorreosChileScan } from './status';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { calendarDay } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyCorreosChileScan } from './status.js';
 
 const ORIGIN = 'https://www.correos.cl';
 const PORTLET = /^cl_cch_seguimiento_portlet_seguimientoenlineaportlet_INSTANCE_[A-Za-z0-9]{8,24}$/;

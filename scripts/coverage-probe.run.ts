@@ -8,18 +8,18 @@
  */
 import { appendFileSync, readFileSync } from 'node:fs';
 import { it } from 'vitest';
-import { AdapterRegistry, type AdapterEnvironment } from '../core/adapter';
-import { carrierErrorKind, NoHistoryError } from '../core/errors';
-import { NOOP_RECORDER } from '../core/telemetry';
-import { TrawlClient } from '../core/transport';
-import { isValidS10TrackingNumber } from '../core/detection/s10';
-import { normalizeTrackingNumber } from '../core/detection/normalize';
-import type { CarrierResult } from '../core/result';
-import { CARRIER_CATALOG } from '../generated/catalog';
-import { REGISTRY } from '../generated/registry';
-import { BROWSER_SOURCES, UniversalTracker } from '../providers/universal';
-import { COVERAGE_SOURCES } from '../providers/coverage';
-import type { UniversalSource } from '../providers/shared/result';
+import { AdapterRegistry, type AdapterEnvironment } from '../core/adapter/index.js';
+import { carrierErrorKind, NoHistoryError } from '../core/errors/index.js';
+import { NOOP_RECORDER } from '../core/telemetry/index.js';
+import { TrawlClient } from '../core/transport/index.js';
+import { isValidS10TrackingNumber } from '../core/detection/s10.js';
+import { normalizeTrackingNumber } from '../core/detection/normalize.js';
+import type { CarrierResult } from '../core/result/index.js';
+import { CARRIER_CATALOG } from '../generated/catalog.js';
+import { REGISTRY } from '../generated/registry.js';
+import { BROWSER_SOURCES, UniversalTracker } from '../providers/universal.js';
+import { COVERAGE_SOURCES } from '../providers/coverage.js';
+import type { UniversalSource } from '../providers/shared/result.js';
 
 interface ProbeCase { carrier: string; number: string; postcode?: string | null; reference?: number }
 type Source = 'direct' | UniversalSource;

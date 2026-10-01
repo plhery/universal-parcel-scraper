@@ -60,5 +60,5 @@ once.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/dhl` (no env vars)
+`npm run test:carriers:live -- carriers/dhl` (no env vars)
 checks that a synthetic number gets a clean no-data answer or a rejected session.

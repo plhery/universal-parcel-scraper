@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ParcelsAppTracker } from './adapter';
+import { ParcelsAppTracker } from './adapter.js';
 
 // Reference identifiers and any recipient data are supplied locally, never
 // committed. This file runs only with vitest.carriers-live.config.ts.

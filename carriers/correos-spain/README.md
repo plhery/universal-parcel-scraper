@@ -50,6 +50,6 @@ Correos de Chile (`correos-chile`) are separate carriers.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/correos-spain`. The unknown-number
+`npm run test:carriers:live -- carriers/correos-spain`. The unknown-number
 check needs no env vars; set `CORREOS_SPAIN_DELIVERED_TRACKING_NUMBER` to also check a real
 delivered parcel.

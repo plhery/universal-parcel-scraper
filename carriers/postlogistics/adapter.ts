@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * PostLogistics tracking.
@@ -20,15 +19,15 @@ import 'server-only';
  * Any other type is refused rather than guessed at. A `Data: null` answer is
  * PostLogistics' explicit "unknown identifier".
  */
-import type { AdapterFactory, Recognition } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { referenceConsignment } from '../swiss-post-cargo/reference';
-import { postlogisticsIdentifier } from './number';
-import { postlogisticsStatus } from './status';
+import type { AdapterFactory, Recognition } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { referenceConsignment } from '../swiss-post-cargo/reference.js';
+import { postlogisticsIdentifier } from './number.js';
+import { postlogisticsStatus } from './status.js';
 
 const PROVIDER = 'PostLogistics';
 const UPSTREAM = 'PostLogistics tracking';

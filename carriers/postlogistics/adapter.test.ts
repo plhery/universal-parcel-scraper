@@ -2,13 +2,13 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { CarrierResult } from '../../core/result';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   fetchPostlogistics,
   parsePostlogisticsTrackingResponse,
   PostlogisticsTracker,
-} from './adapter';
-import { postlogisticsStatus } from './status';
+} from './adapter.js';
+import { postlogisticsStatus } from './status.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(

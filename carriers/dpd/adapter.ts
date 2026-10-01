@@ -1,9 +1,8 @@
-import 'server-only';
 import { setTimeout as delay } from 'node:timers/promises';
 
 import { randomBytes } from 'node:crypto';
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
+import type { AdapterFactory } from '../../core/adapter/index.js';
 import {
   ChallengeError,
   IndeterminateError,
@@ -12,16 +11,16 @@ import {
   carrierErrorKind,
   type CarrierErrorKind,
   type CarrierErrorOptions,
-} from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import type { StepRecorder } from '../../core/telemetry';
-import { isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time';
-import { TrawlClient, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
+} from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
+import { TrawlClient, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   API_LABELS, PROOF_OF_DELIVERY_SCAN, apiStage, apiStatus, scanStage, wordingStatus,
-} from './status';
+} from './status.js';
 
 // Protocol provenance:
 // - The myDPD Android application talks to a guest JSON API: a Firebase
@@ -529,8 +528,8 @@ export class DPDTracker {
   constructor(options: DPDTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.budgetMs = options.budgetMs ?? this.timeoutMs * 2 + SOLVER_ALLOWANCE_MS;
-    this.flaresolverrUrl = (options.flaresolverrUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
-    this.firebaseApiKey = (options.firebaseApiKey ?? process.env.DPD_FIREBASE_API_KEY ?? FIREBASE_API_KEY).trim();
+    this.flaresolverrUrl = (options.flaresolverrUrl ?? '').trim();
+    this.firebaseApiKey = (options.firebaseApiKey ?? FIREBASE_API_KEY).trim();
     this.fetcher = options.fetcher;
     this.trawl = options.trawl;
     this.recorder = options.recorder;

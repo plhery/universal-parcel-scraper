@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 export function estafetaWording(value: string): string {
   return value.normalize('NFD').replace(/\p{Diacritic}/gu, '').trim().toLowerCase();

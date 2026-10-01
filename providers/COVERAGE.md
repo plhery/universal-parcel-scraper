@@ -1,37 +1,15 @@
 # Carrier coverage by tracking source
 
-The first 100 carriers of the [carrier overview](../README.md) are compared using public
-references, with each tracking source called separately. Results describe those
-references, not every number from a carrier. Alternate direct samples are labelled when
-the comparison reference is unavailable or outside the adapter's scope. The results live
-in [coverage.json](coverage.json), and routing orders the universal providers by them
-(see Lookup order below).
+The 100 carriers in [coverage.json](coverage.json) form a curated comparison set, not a
+market-share ranking. Each provider was called separately on the same comparison reference.
+Direct samples name alternatives when that reference is outside the adapter's scope or no
+longer available. The README counts only direct cells beginning with a check mark and the
+first provider reference; it excludes alternate samples.
 
-Numbers are history rows after projection. Operators, translations and repeated reports
-often describe the same milestone more than once, so read the notes below before
-preferring the largest count. A check mark means history was retrieved, not that its
-statuses map correctly.
-
-- **✓ n**: matching history with n rows. **Partial**: history that lacks rows or legs
-  another source has (label only, stops early, no origin or destination leg, condensed)
-  or is mostly undated; the notes below say which. **Intermittent**: retrieved, but other
-  sessions were challenged.
-- **No history**: nothing usable for this reference. **Summary only**: a response with
-  no rows. **Sign-in**: only an account notice. **Postcode prompt**: only a request for
-  the recipient postcode.
-- **Error**: request, capture or identity check failed, so coverage is inconclusive.
-  **Blocked**: the session was challenged. **Wrong carrier**: history of another
-  carrier's parcel with the same number. **Refused**: the provider rejects the carrier's
-  number format.
-- **N/A**: not an S10 number, so UPU is ineligible. **Unverified**: only an illustrative
-  or years-old example exists.
-- Direct support: **Yes**; **Yes (postcode)** needs the recipient postcode (**Not tested
-  (postcode)** when none was public); **Yes (tracking link)** needs the full link the
-  carrier sent (**Not tested (link)** likewise); **Yes (optional postcode)** tracks
-  without it and shows more with it; **Link only**; **Disabled** (universal providers
-  are used instead); **No adapter**.
-
-## Coverage and history size
+A check mark means scan history was retrieved; counts are projected rows, including partial
+histories. Translations, repeated reports and postal exchange-office rows can increase a
+count without adding progress. Summary-only, challenges and failed identity checks do not
+count as history. Expired-reference negatives do not establish current carrier coverage.
 
 <!-- GENERATED:coverage -->
 | Carrier | Direct support | Direct sample | Ship24 | ParcelsApp | 17TRACK | Postal Ninja | UPU |
@@ -138,25 +116,6 @@ statuses map correctly.
 | [Canpar](../carriers/canpar/README.md) | Yes | ✓ 11 | No history | ✓ 11 | No history | ✓ 11 | N/A |
 <!-- /GENERATED:coverage -->
 
-## Lookup order
-
-Routing asks the universal providers in an order derived from these results
-([ROUTING.md](../../../docs/ROUTING.md)). All of a carrier's references count, including
-the extra ones in coverage.json that the notes below describe. Each provider gets one
-tier, asked in this order, HTTP providers first within a tier:
-
-- **Full**: history, never partial, and no reference missed that another provider knew.
-- **Partial**: history, but partial, or a reference missed that another provider knew.
-- **Unknown**: nothing conclusive (errors, challenges, unverified, or negatives only on a
-  reference too old to say anything).
-- **Empty**: answered without history (no history, summary only, a sign-in or postcode
-  prompt).
-- Left out: never had history, and answered with another carrier's parcel or refused the
-  format, unless no other provider would remain.
-
-These tables and the one above are generated from coverage.json with
-`node packages/carriers/scripts/coverage-tables.mjs`.
-
 <!-- GENERATED:lookup-order -->
 | Source | Carriers with history | Full | Partial | Only source |
 | --- | ---: | ---: | ---: | ---: |
@@ -217,319 +176,17 @@ With Postal Ninja enabled, carriers without their own order use ParcelsApp → S
 | Canpar | ParcelsApp → Postal Ninja → Ship24 → 17TRACK |
 <!-- /GENERATED:lookup-order -->
 
-## What the differences mean
+## Retrieval limits
 
-Differing clock times are not counted as missing events: several feeds report local wall
-times or infer offsets.
-
-By source:
-
-- **Direct adapters** keep actionable rows the aggregators drop or mislabel: La Poste
-  pickup-ready, InPost locker-ready, Swiss Post delivery method. Some return local wall
-  times with no verified zone (SF Express, Evri International, overseas Japan Post
-  scans, Aramex, Korea Post, bpost, Purolator, Poczta Polska, Correos Express,
-  Landmark Global, Estafeta, Canpar, EMS and some PostNL, Pos Malaysia, Correios, 4PX,
-  Singapore Post and YunExpress scans). Yamato omits the year. These histories remain
-  available without fabricated scan instants ([ROUTING.md](../../../docs/ROUTING.md)).
-- **Ship24** is sparse for some references: label-only for UPS (a second UPS reference
-  was complete), one old row for DPD, one row for Yanwen, two postal rows for Asendia,
-  and it stops before La Poste's final events. It had nothing for OnTrac, Purolator,
-  Parcelforce, Canpar, SpeedX, the Indian carriers or most Spanish and French networks
-  (BRT, SEUR, TIPSA, Relais Colis, Paack, Colis Privé, GEODIS), its browser recovery
-  timed out twice for Yamato, YTO and Pos Malaysia, and it answered a Colisweb number
-  with a DHL eCommerce parcel. Some histories come back undated (India Post, Japan Post,
-  Austrian Post, PostNord, DPD France).
-- **ParcelsApp** often has the richest destination leg (DHL eCommerce, Canada Post,
-  Japan Post), and was the only aggregator with GLS France, Evri, DTDC, Relais Colis and
-  TIPSA history. It exposes internal labels (`swa_rex_*` for Amazon Shipping pickup),
-  shows Amazon sign-in notices (excluded from counts), repeats a delivery as
-  `Final delivery`, and relays TIPSA's labels written twice (`ENTREGADOENTREGADO`, from
-  each cell's tooltip and its text), which the parser reads once. It asks for a postcode
-  for bpost's 24-digit numbers and for GEODIS and Ciblex numbers, and answered a Yamato
-  number with a FedEx parcel and a Heppner number with another carrier's older parcel.
-  Scans it sends without a date (one in its Asendia reply) are left out of the history.
-- **17TRACK** gives the best multi-operator journeys, naming each operator: China Post
-  plus Correios, Canada Post plus USPS, Japan Post plus Malta Post, and China Post after
-  Singapore Post, Poczta Polska, Bring or Ukrposhta. It was the only aggregator with USPS,
-  SF Express, SpeedX and Correos de Chile history, and the only one still holding a June
-  MRW delivery. It misses some actionable rows (La Poste pickup-ready, InPost
-  locker-ready) and had nothing for OnTrac, DTDC, DPD France, BRT, Correos Express,
-  Landmark Global, Canpar, TIPSA or a domestic Thailand Post item. Its generic transit
-  code also covers Swiss Post's vehicle loading and SpeedX's voided label; their exact
-  wording makes them out for delivery and an exception. Its first poll can stay pending;
-  a second bounded call completed except for Asendia. Chinese domestic scans can carry
-  courier names and phone numbers.
-- **Postal Ninja** often matches ParcelsApp and had the most rows for La Poste and
-  Ecoscooting. It was the only source with Parcelforce rows and with a domestic Aramex
-  delivery. Many rows are undated (PostNL, Australia Post, Japan Post), some codes stay
-  untranslated (`HoldForPickup`), and it refuses Purolator, DTDC, JD, Relais Colis,
-  Heppner, C Chez Vous, Colisweb and The Courier Guy formats.
-- **UPU** usually has final delivery only (DHL, China Post, Canada Post, Japan Post), or
-  posting and exchange-office scans (Singapore Post, where they match Ship24's; Poczta
-  Polska, Bring, NZ Post, CTT Portugal and Asendia). EMS is the exception. For a returned
-  Ukrposhta item it holds two records under one number, which the adapter treats as
-  ambiguous.
-
-By carrier:
-
-- **Amazon:** TBA (Logistics) numbers have no anonymous history anywhere; Amazon requires
-  sign-in. Amazon Shipping works directly and through most aggregators. Amazon's
-  "Expired" reply is its retention limit, not an unsupported number. A TBA number alone
-  does not say whether it is Logistics or Shipping.
-- **USPS:** 17TRACK names the operator (USPS, key 21051) and matches the direct adapter
-  milestone for milestone. For inbound China Post items it separates the China Post and
-  USPS legs under the same number, with no replacement number.
-- **China Post, Canada Post, DHL eCommerce:** the extra rows are the foreign or
-  destination leg, which is the useful part. The rest are overlapping reports.
-- **Canada Post:** the adapter uses the full detail feed rather than its summary feed.
-  Delivery-notice cards and numeric references first need one exact reference-to-PIN
-  match. Explicit scan offsets establish instants; return transport remains separate
-  from completed return. Expired and unknown references share an inconclusive response.
-- **Royal Mail:** sources disagree on the delivery date, and more rows do not settle it.
-- **Correos Spain:** all three successful feeds hold the same 12 scans. The direct adapter
-  and 17TRACK surface the final one (pickup window expired, parcel going back); ParcelsApp
-  still says in transit.
-- **GLS Germany, GLS Switzerland, short Mondial Relay numbers:** direct history needs the
-  recipient postcode, which no public reference had.
-- **Chronopost, Hermes Germany, Mondial Relay, Poste Italiane, GLS France direct,
-  Quickpac, Packeta:** the public references are old, so the negatives say nothing about
-  current coverage.
-- **bpost, Korea Post:** the older domestic references had no aggregator history.
-  bpost's anonymous batch feed returns domestic and S10 history without the postcode
-  required by its single-item lookup. S10 items also appeared in aggregators:
-  a bpost `LD…BE` item through Landmark Global had 20
-  rows in ParcelsApp and 14 in 17TRACK, and a Korea Post EMS item had 15 to 43 in every
-  feed but Postal Ninja. Korea Post's international direct form returns 20 local-time
-  scans; its domestic form is outside the adapter's scope.
-- **J&T Express, Delhivery, Blue Dart, TNT:** no aggregator had history for any of two or
-  three recent references each (J&T in the Philippines and Indonesia, TNT France's
-  16-digit numbers). Blue Dart directly returns a full history. Delhivery's alternate
-  direct sample has a dated current snapshot and one undated scan. TNT's alternate
-  national reference has a booking scan.
-- **Ninja Van:** the original public references had no provider history. A newer
-  Malaysian reference has native history; the public timeline omits internal routing
-  rows and marks a completed return separately from recipient delivery.
-- **JD Logistics, ZTO, STO:** public posts mask Chinese domestic numbers, so only
-  old examples were available.
-- **YTO:** the direct feed and ParcelsApp have the same history;
-  the anonymous direct endpoint accepts reads without the website's slider token.
-  YTO's one public number had 30 rows in ParcelsApp,
-  which relays YTO's own scan labels in Chinese or in its English translation, and 20
-  Chinese rows in 17TRACK. Both show the return
-  ([YTO README](../carriers/yto/README.md)).
-- **Yunda:** the current domestic portal returns matching history after its native
-  slider. The adapter matches a bounded PNG outline to a unique gap and submits once;
-  uncertain matches remain challenges. Anonymous history is partial; the full
-  timeline needs login. Empty identity maps are inconclusive.
-- **Aramex:** a domestic delivery in the UAE had 16 undated rows in Postal Ninja only. An
-  international shipment had the same 26 rows in Ship24, 17TRACK and Postal Ninja, and
-  none in ParcelsApp. The direct portal returns those 26 rows as local wall times.
-- **Planzer:** the direct adapter reads the `reference.shipment` numbers Planzer prints,
-  stored with or without the dot, and returns 4 to 6 rows for the three public
-  references. No aggregator knows Planzer.
-- **Yamato:** ParcelsApp answered with an older FedEx parcel that shares the 12 digits
-  (it reported FedEx and GLS), rather than the Yamato parcel. Routing ignores such a
-  history ([ROUTING.md](../../../docs/ROUTING.md)). The direct form returns seven scans
-  with month and day but no year; no scan year or freshness watermark is inferred.
-- **DPD France:** direct and Ship24 return the same 10 rows, direct with depots and
-  times. ParcelsApp condenses them into 5.
-- **Hongkong Post:** for an AliExpress item, Ship24, ParcelsApp and Postal Ninja include
-  the Cainiao origin leg (26 to 35 rows); 17TRACK keeps the two postal legs (17).
-- **Singapore Post:** for an item to China, 17TRACK adds China Post's leg in Chinese;
-  Ship24 and UPU have only the four exchange-office scans. The direct feed returns nine
-  scans. Its Speedpost response uses local clocks rather than the mail feed's offsets.
-- **PostNord, 4PX, Austrian Post:** the successful feeds hold the same
-  scans, give or take one. Postal Ninja adds a "last day to pickup" row after PostNord's
-  delivery.
-- **Parcelforce:** only Postal Ninja had rows (booking and collection).
-- **DTDC:** MyDTDC's separate consumer feed returns forward and return history for
-  supported consignments. The alternate return sample has eight scans and a dated
-  return snapshot; a delivered sample has five scans. Legacy failures are inconclusive.
-- **YunExpress:** plain HTTP is challenged. Direct retrieval captures the official
-  browser request through Chromium or Trawl. Trawl must retain decoded API response
-  bodies. Interactive verification still requires provider fallback.
-- **Purolator:** the public widget's anonymous API returns matching package history
-  with its client key and browser user agent. AWS WAF can interrupt reads with an
-  image challenge. Scan clocks remain local; ambiguous search matches are inconclusive.
-- **Correios Brazil:** the anonymous portal returns identity-bound history after a
-  text CAPTCHA. A bundled MIT-licensed model reads it locally in a CPU worker, with
-  one fresh-image retry. Event codes and subtypes distinguish delivery from failed
-  dispatches. Only explicit valid scan zones become instants; unbound period errors
-  are inconclusive.
-- **Poczta Polska, Bring, Ukrposhta:** each reference crossed to China. 17TRACK names both
-  posts and adds China Post's leg in Chinese; ParcelsApp and Postal Ninja translate that
-  leg. Poczta Polska's direct feed returns the five Polish-side scans, and a domestic
-  Pocztex parcel had 10 direct rows, 10 in Ship24 and 18 in ParcelsApp. Ukrposhta's
-  domestic reference had 14 rows in Ship24 and none in ParcelsApp. Bring's adapter
-  supports single-piece consignments and Norwegian postal parcels.
-- **Ukrposhta:** the adapter uses the native anonymous browser flow. A barcode-bound
-  overview must agree with the full history's current scan and row count. Return
-  completion stays separate from recipient delivery, and scans keep their local clocks
-  across countries. Empty or unbound replies remain inconclusive.
-- **Posti:** no recent public report ties a number to Posti; Finnish forum users hide
-  their codes. The newest public numbers, a plugin issue's example link and a 2025
-  inbound item, returned no history.
-- **An Post, CTT Portugal, CTT Express, NZ Post:** the successful feeds hold the same
-  scans, give or take UPU exchange-office rows, a repeated scan or ParcelsApp's delivery
-  estimate. CTT Express's anonymous feed returns single-piece Spanish history;
-  multi-piece shipments, empty histories and token errors remain inconclusive.
-- **BRT, SEUR:** the references are DPD-group parcel numbers, and Ship24 had neither. For
-  SEUR, ParcelsApp, 17TRACK and Postal Ninja name DPD and hold the same four rows. For
-  BRT, ParcelsApp's 23 rows add Chronopost's French delivery scans to four DPD rows dated
-  1 January and repeat the delivery; Postal Ninja keeps five DPD milestones. The direct
-  BRT adapter supports fourteen-digit BRTcodes through the linked detailed event portal;
-  the comparison reference is a different DPD-group identifier. SEUR's simplified
-  lookup returns single-piece history without recipient verification; absent, recent
-  and out-of-range histories share an inconclusive response.
-- **Correos Express:** Ship24, ParcelsApp and the direct form hold the same nine scans.
-  A failed-delivery row lacks a status label; the adapter keeps it as a neutral update
-  without exposing the free-form incident note or promoting an older delivery.
-- **MRW:** the newest reference is a June parcel reviewed in September; only 17TRACK
-  still had it, as a single delivery row. A September parcel had 14 rows in Ship24,
-  ParcelsApp and Postal Ninja and none in 17TRACK.
-- **NACEX:** the providers reject the `agency/number` composite before sending it. No
-  aggregator had history for the joined digits or the eight-digit shipment number either.
-  The direct adapter submits the pair in a fresh anonymous session and preserves
-  date-only scans without inventing a delivery time.
-- **Colis Privé, Paack:** direct history needs the recipient postcode, which no public
-  reference had (Colis Privé stores it after the number). No aggregator knew two current
-  references each.
-- **Relais Colis:** the direct adapter binds the result banner and expands grouped scans
-  into the same four rows as ParcelsApp. Invalid sessions and generic endpoint errors do
-  not prove parcel absence; unresolved clocks remain local history.
-- **Asendia:** the A1 feed has the US hub scans of an item with a Swiss postal number;
-  Ship24, UPU and Postal Ninja have two or three postal rows. ParcelsApp has the same
-  scans as A1 plus WNDirect's manifest, and leaves out an Asendia Spain departure it
-  lists without a date. Detection selects Swiss Post, which does not know the item.
-- **Landmark Global:** the direct adapter and detection support eight or nine digits
-  after `LTN`, including the `N1` alias. Ship24 has Landmark's scans; ParcelsApp and
-  Postal Ninja add bpost's. The adapter binds the canonical parcel reference and retains
-  the declared delivery partner for the host's independent handoff check.
-- **Pos Malaysia:** direct, ParcelsApp and 17TRACK hold the same two scans of a March
-  item. The adapter also returns international history. Its offsetless scans remain
-  unresolved unless both endpoints identify a domestic Malaysian route. An undated
-  delivery summary cannot borrow a movement scan's clock.
-- **Thailand Post:** a domestic item had the same eight rows in Ship24, ParcelsApp and
-  Postal Ninja, and none in 17TRACK or UPU.
-- **Estafeta:** the adapter binds the ten-digit code to one full guide and rejects
-  colliding codes and master-piece lists; Mexican clocks remain local. Both forms of the
-  public reference return the same four scans, and no aggregator knew them. Detection
-  selects full guides with a letter in the 13th or 14th place (two-day guides carry a
-  `D` in the 14th); all-digit guides stay a suggestion shared with USPS and Austrian Post.
-- **Correos de Chile:** an older item to China had 13 rows in 17TRACK and none
-  elsewhere. Recent public references return a bound native scan. The adapter keeps
-  wall clocks local and excludes recipient details and the branch directory.
-- **The Courier Guy:** native product references preserve their printed separator and
-  bind the exact custom reference to one canonical shipment. The direct feed returns
-  14 scans for the cancelled collection and 13 for the Pudo delivery. Missing piece
-  counts are accepted only for a single-piece cancelled precollection timeline; one
-  delivered piece cannot complete the shipment. Product formats stay low-confidence
-  candidates until native recognition confirms them.
-- **GEODIS:** the anonymous lookup keeps a delivered May parcel's state and departure
-  date after its scan list is gone. 17TRACK stamps four milestones with the delivery
-  time, and Postal Ninja keeps the departure date.
-- **Dachser, Heppner:** direct history needs Dachser's full link or Heppner's recipient
-  postcode, which no public reference had. No aggregator knew either of two Dachser
-  consignments.
-- **Old Dominion, Swiss Post Cargo, PostLogistics:** no public post ties a number to
-  these freight services. Both eos endpoints answer a Swiss Post parcel barcode with a
-  third response type that relays Swiss Post's own two scans, coded `PST` and without
-  places. The adapters report it as not found, so routing moves the parcel to the
-  Swiss Post adapter, which returns the same scans with Swiss Post's codes and the
-  sorting location.
-- **Hermes Einrichtungs-Service, C Chez Vous:** the number alone opens the order, so their
-  public references stay out of the repository. The Hermes service returns ten
-  appointment updates for a September delivery that no aggregator knows; C Chez Vous
-  knew neither public reference.
-- **Ciblex:** the direct adapter submits the full 24-digit barcode unchanged and binds
-  its exact result banner. It returns seven distinct scans, excludes private annotation and
-  address fields, and preserves unresolved clocks. Shared numeric formats remain
-  low-confidence candidates.
-- **Colisweb:** the direct feed returns an April delivery's confirmation and an undated
-  incident.
-- **Delivengo:** the newest public number is a 2024 parcel; no source still has it.
-- **UniUni:** the anonymous feed returns parcel history, with corrected per-scan seconds
-  rather than the older numeric local clock; unresolved current clocks are kept apart and
-  providers are asked for dated progress. Master shipments are inconclusive. Every
-  feed holds the same six scans; ParcelsApp and Postal Ninja add translated or repeated
-  rows. The compact `UUSC` and `U9999` families are supported by detection and native
-  recognition.
-- **SpeedX:** only 17TRACK knew the reference: a label, then "Parcel Void", which reads
-  as an exception rather than transit because the label was cancelled before shipping.
-  Detection selects both the 18- and the 24-character form: `SPX`, a three-letter hub,
-  then 12 or 18 digits.
-- **GOFO Express:** GOFO counts 15 scans for this reference but lists 14, the same 14
-  the aggregators hold; its page shows the list and ignores the counter. The adapter
-  accepts a larger counter only when the list runs from label creation to the current
-  summary. GOFO's default clocks pair each scan's local time with Pacific's offset:
-  Ship24 relays that offset, putting Mountain, Central and Eastern scans one to three
-  hours late, and ParcelsApp's rows carry the local digits as UTC. The adapter requests
-  Pacific clocks, whose offsets are real.
-- **Ecoscooting:** the direct feed returns six last-mile scans for the Portuguese `CNPRT`
-  reference, with identity-bound completion wording. Postal Ninja adds SunYou's origin
-  leg; Ship24 and ParcelsApp hold the same last-mile history. Spanish numeric references
-  and the older Spanish `CNESP` form are supported too; the published `CNESP` references
-  now get the gateway's inconclusive query error.
-- **TIPSA:** the locator form requires the destination postcode, but the shop link
-  ParcelsApp cites opens the history with the 22-digit reference alone, and the direct
-  adapter reads it. Of the aggregators only ParcelsApp had the Portuguese reference, with
-  the same 13 scans at the same Madrid-time instants; it shortens the delivery to
-  "Delivered".
-- **Canpar:** direct, ParcelsApp and Postal Ninja hold the same 11 scans. The ambiguous
-  clock shift remains local history; empty placeholder packages are inconclusive.
-
-## Direct retrieval gaps
-
-Universal providers remain the route where no anonymous, identity-bound carrier history
-is supported. J&T's Philippine portal uses interactive verification and its Indonesian
-portal asks for a phone suffix. JD Logistics and ZTO gate reads with sessions or
-CAPTCHA; STO's old form redirects away. China Post's ordered-character challenge and
-Hongkong Post's CAPTCHA remain unsupported. Parcelforce forwards to Royal Mail's
-disabled direct route. An Post's consumer query is challenged, MRW's stateful result
-has no usable history, and SpeedX's anonymous endpoints require verification. Old
-Dominion has no adapter yet.
-
-PostNL direct refines its overloaded processing category for the exact out-for-delivery
-label. EMS export cancellation is an exception. Unresolved direct postal clocks remain
-local history rather than inferred scan instants.
-
-Detection selects or suggests the named carrier for the public numbers behind rows
-31–100, with these exceptions. Planzer composites stay undetected on purpose (see the
-[Planzer README](../carriers/planzer/README.md)), and DTDC's `Z` numbers share Packeta's
-shape and stay with Packeta. S10 items from Poland and Ukraine go to the generic
-postal carrier. Paack and Ukrposhta have no rule for their own
-numbers; Posti, Dachser, Hermes Einrichtungs-Service, Swiss Post Cargo, PostLogistics,
-Colisweb and Delivengo have none by design. Each answer is recorded in the
-carrier's `numbers.json`.
-
-## Other carriers
-
-Spee-Dee, SunYou and ShipUp follow the first 100. SunYou's one public sample, an old
-one, had history in ParcelsApp and 17TRACK and none in Ship24.
+The catalog declares supported inputs and routes. Some anonymous trackers require a postcode,
+capability URL, browser service or interactive verification. Dedicated adapters reject
+unbound replies, wrong parcel identities and ambiguous multi-piece shipments. Unresolved
+scan clocks remain local. See each [carrier README](../carriers/) for its scope and constraints.
 
 ## Method
 
-- Each source was called on its own through `UniversalTracker.fetchSource()` (45 s
-  budget, UPU 8 s), with no stop at the first success. Dedicated adapters kept their own
-  deadlines. Browser lookups ran one at a time, and TRAWL-based sources used the shared
-  browser service. [coverage-probe.mjs](../scripts/coverage-probe.mjs) reruns these
-  lookups for a list of references and stores the results in coverage.json; its header
-  lists the inputs.
-- References are public (customer reports, complaints, documentation examples). Private
-  numbers and postcodes were withheld, and no account was signed into.
-- One reference per row. Extra references and bounded rechecks only investigated
-  failures and are not averaged in. The extra references the notes describe are kept in
-  coverage.json after the row's reference, and count for the lookup order only; a
-  reference marked `stale` is too old for its negatives to count.
-- Partial grades come from the notes below: rows or legs another source has, or mostly
-  undated rows. The probe suggests them from row counts, undated rows and the newest
-  scan, for review.
-- Rows 31–100 each use the newest public post found that ties a number to the carrier
-  (Trustpilot reviews, complaint letters, Q&A threads, review sites, court filings, shop
-  pull requests), skipping pages that print the author's contact details. The numbers
-  and their sources are in each carrier's `numbers.json`, except C Chez Vous and Hermes
-  Einrichtungs-Service references, which open the order on their own.
-- For those rows, a first-call timeout, pending 17TRACK poll or Postal Ninja capture
-  failure got one bounded recheck, and the cell shows the recheck. Every all-negative row
-  got one or two more recent references where any existed; the notes say where they
-  differed.
+[scripts/coverage-probe.mjs](../scripts/coverage-probe.mjs) runs adapters and providers independently
+with bounded deadlines. Keep its input references outside the repository. Review grades before
+writing coverage.json, including partial history, stale references, wrong carrier and refused
+formats. Extra references inform provider ordering but are not averaged into the README's
+comparison. Run `npm run generate` to update the tables and summary.

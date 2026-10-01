@@ -10,6 +10,6 @@ sequence without inventing offsets. `last_update` stays empty so providers can
 supply dated history. The details column mixes routing notes and recipient data;
 the adapter reads only the dedicated status and facility columns.
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/korea-post`.
+Run `npm run test:carriers:live -- carriers/korea-post`.
 Set `KOREA_POST_TRACKING_NUMBER` outside the repository for a real international
 parcel.

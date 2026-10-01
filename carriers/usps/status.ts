@@ -11,8 +11,8 @@
  * NOTICE LEFT, ARRIVED, DEPARTED, ACCEPTED, PICKED UP — prior art).
  * `statuses.json` holds the full list.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 const RETURNED_TERMS = ['return to sender', 'returned to sender', 'returning to sender'];
 const FAILED_ATTEMPT_TERMS = [

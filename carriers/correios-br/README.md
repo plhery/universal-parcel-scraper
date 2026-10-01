@@ -23,4 +23,4 @@ tokens are excluded.
 ## Testing
 
 Set `CORREIOS_BR_TRACKING_NUMBER` to an authorized real reference and run
-`npm run test:carriers:live -- packages/carriers/carriers/correios-br`.
+`npm run test:carriers:live -- carriers/correios-br`.

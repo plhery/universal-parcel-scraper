@@ -2,7 +2,7 @@
 
 China Post parcels use the [universal providers](../../providers/README.md).
 EMS has a separate [official adapter](../ems/README.md). Source selection is
-covered in [ROUTING.md](../../../../docs/ROUTING.md); provider results are in
+covered in [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md); provider results are in
 [COVERAGE.md](../../providers/COVERAGE.md).
 
 ## How it works

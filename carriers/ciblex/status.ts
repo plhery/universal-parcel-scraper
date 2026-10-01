@@ -12,9 +12,9 @@
  * and no carrier-declared stage beyond the transit default, so the sync's
  * wording classifier records them for review.
  */
-import type { CarrierStatus } from '../../core/result';
-import { clean } from '../../core/transport';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedCiblexStatus {
   status: CarrierStatus;

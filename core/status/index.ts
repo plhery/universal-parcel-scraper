@@ -8,14 +8,14 @@
  * never persists anything; the host's sync decides precedence and records
  * where each stage came from.
  */
-import type { CarrierStatus } from '../result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export type { Stage };
-export { STAGES } from '../../generated/catalog';
-export { trackingLanguageStage, languageStageStatus } from './language';
-export { classifyWording, wordingStage } from './wording';
-export type { ClassifiedWording } from './wording';
+export { STAGES } from '../../generated/catalog.js';
+export { trackingLanguageStage, languageStageStatus } from './language.js';
+export { classifyWording, wordingStage } from './wording.js';
+export type { ClassifiedWording } from './wording.js';
 
 /** What a carrier's explicit status map yields for one raw code or wording. */
 export interface ClassifiedStatus {

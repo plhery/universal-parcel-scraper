@@ -14,19 +14,18 @@
  * alias, so only one eCommerce shipment from that exact request URL is
  * accepted, and the id itself is never retained.
  */
-import 'server-only';
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, SchemaError, type CarrierErrorOptions } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps, singleFlight } from '../../core/runner';
-import { countryTimeZone } from '../../core/time';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { clean as cleanText, UpstreamHttpError } from '../../core/transport';
-import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser';
-import { isRecord, type JsonObject } from '../../core/types';
-import { stageFor, statusFor } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { countryTimeZone } from '../../core/time/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { clean as cleanText, UpstreamHttpError } from '../../core/transport/index.js';
+import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { stageFor, statusFor } from './status.js';
 
 const PROVIDER = 'DHL eCommerce';
 const API = 'https://www.dhl.com/utapi';

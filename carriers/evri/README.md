@@ -46,6 +46,6 @@ universal providers. A not-found here says nothing about Evri UK.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/evri`. The not-found
+`npm run test:carriers:live -- carriers/evri`. The not-found
 check needs no env vars; the positive check runs when `EVRI_TRACKING_NUMBER` is
 set outside the repository.

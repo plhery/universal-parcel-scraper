@@ -11,8 +11,7 @@
     ]
   },
   "brand": {
-    "color": "#ffdd00",
-    "family": "gls"
+    "color": "#ffdd00"
   },
   "selectable": true,
   "timezone": "Europe/Berlin",
@@ -38,6 +37,10 @@
     ],
     "recognition": {
       "rank": 50
+    },
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 240
     }
   },
   "capabilities": [

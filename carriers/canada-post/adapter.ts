@@ -1,12 +1,11 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { canadaPostLookupKind, normalizeCanadaPostNumber, parseCanadaPostTrackingResponse, resolveCanadaPostPin } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { canadaPostLookupKind, normalizeCanadaPostNumber, parseCanadaPostTrackingResponse, resolveCanadaPostPin } from './parser.js';
 
-export { normalizeCanadaPostNumber, parseCanadaPostTrackingResponse } from './parser';
+export { normalizeCanadaPostNumber, parseCanadaPostTrackingResponse } from './parser.js';
 
 const API_BASE = 'https://www.canadapost-postescanada.ca/track-reperage/rs/track/json/package';
 const DEFAULT_TIMEOUT_MS = 15_000;

@@ -1,5 +1,5 @@
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 /** The official client's package enum and English translations. */
 export const CANADA_POST_STATUS_STAGE: Readonly<Record<string, Stage>> = {

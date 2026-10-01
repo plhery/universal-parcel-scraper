@@ -18,7 +18,8 @@
     "adapter": "sf-express",
     "steps": [
       "trawl"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

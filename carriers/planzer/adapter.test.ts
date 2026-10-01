@@ -2,14 +2,14 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { CarrierResult } from '../../core/result';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   fetchPlanzer,
   parsePlanzerTrackingResponse,
   PlanzerTracker,
   planzerShipmentNumber,
-} from './adapter';
-import { planzerDescription, planzerEventStage } from './status';
+} from './adapter.js';
+import { planzerDescription, planzerEventStage } from './status.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(

@@ -1,11 +1,11 @@
-import 'server-only';
-import { chromium, type Browser, type Page, type Response as BrowserResponse } from 'playwright-core';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { isRecord } from '../../core/types';
-import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview } from './parser';
+import { loadChromium } from '../../core/transport/optional.js';
+import type { Browser, Page, Response as BrowserResponse } from 'playwright-core';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { isRecord } from '../../core/types.js';
+import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview } from './parser.js';
 
 export const UKRPOSHTA_API = 'https://track.ukrposhta.ua/php/track_new.php';
 const MAX_BYTES = 1_000_000;
@@ -77,7 +77,7 @@ async function localBrowser(number: string, executablePath: string, signal: Abor
   const abort = () => { rejectAbort(signal.reason); void close().catch(() => {}); };
   signal.addEventListener('abort', abort, { once: true });
   try {
-    launching = chromium.launch({ executablePath, headless: true, timeout: Math.min(timeoutMs, 10_000),
+    launching = (await loadChromium("Ukrposhta")).launch({ executablePath, headless: true, timeout: Math.min(timeoutMs, 10_000),
       env: { PATH: process.env.PATH ?? '', HOME: process.env.HOME ?? '/tmp', LANG: 'en_US.UTF-8' } });
     const operation = (async () => {
       browser = await launching;

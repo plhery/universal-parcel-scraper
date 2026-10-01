@@ -1,8 +1,8 @@
-import { CARRIER_DEFINITIONS, carrierTimezone } from './definitions';
-import { matchesDomain } from './linkRules';
-import { countryTimeZone } from '../time';
-import { NETWORK_BRANDS, carrierBrand } from './networks';
-import type { CarrierId } from '../../generated/catalog';
+import { CARRIER_DEFINITIONS, carrierTimezone } from './definitions.js';
+import { matchesDomain } from './linkRules.js';
+import { countryTimeZone } from '../time/index.js';
+import { NETWORK_BRANDS, carrierBrand } from './networks.js';
+import type { CarrierId } from '../../generated/catalog.js';
 
 export { carrierBrand };
 

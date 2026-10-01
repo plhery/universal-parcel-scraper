@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import fixture from './fixtures/delivered.json';
-import { normalizeSfExpressNumber, parse } from './parser';
-import { sfExpressEventStatus, sfExpressSummaryStatus } from './status';
+import fixture from './fixtures/delivered.json' with { type: 'json' };
+import { normalizeSfExpressNumber, parse } from './parser.js';
+import { sfExpressEventStatus, sfExpressSummaryStatus } from './status.js';
 
 const NUMBER = 'SF0000000000001';
 const copy = () => structuredClone(fixture);

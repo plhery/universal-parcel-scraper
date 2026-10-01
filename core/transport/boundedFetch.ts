@@ -5,8 +5,8 @@
  * diagnostics to rejected responses. Errors are the shared taxonomy in
  * core/errors.
  */
-import { UpstreamHttpError, UpstreamNetworkError, type UpstreamRequestDiagnostics } from '../errors';
-import { readUpstreamHttpDiagnostics } from './upstreamHttpDiagnostics';
+import { UpstreamHttpError, UpstreamNetworkError, type UpstreamRequestDiagnostics } from '../errors/index.js';
+import { readUpstreamHttpDiagnostics } from './upstreamHttpDiagnostics.js';
 
 const DEFAULT_MAX_BYTES = 2_000_000;
 const TRANSIENT_HTTP_STATUSES = new Set([429, 502, 503, 504]);

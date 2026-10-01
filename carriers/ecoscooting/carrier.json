@@ -18,7 +18,8 @@
     "adapter": "ecoscooting",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

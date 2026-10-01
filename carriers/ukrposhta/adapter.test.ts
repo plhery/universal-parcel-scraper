@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { chromium, type Browser } from 'playwright-core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, UKRPOSHTA_API, UkrposhtaTracker, ukrposhtaTrackingUrl } from './adapter';
-import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview, ukrposhtaWallClock } from './parser';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, UKRPOSHTA_API, UkrposhtaTracker, ukrposhtaTrackingUrl } from './adapter.js';
+import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview, ukrposhtaWallClock } from './parser.js';
 
 const NUMBER = '0000000000091';
 const fixture = (name = 'returned') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));

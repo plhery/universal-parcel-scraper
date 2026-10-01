@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BpostTracker } from './adapter';
+import { BpostTracker } from './adapter.js';
 
 describe('bpost live tracking', () => {
   it('recognizes the anonymous batch endpoint missing-item response', async () => {

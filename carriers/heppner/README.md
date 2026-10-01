@@ -42,5 +42,5 @@ Switzerland through the `myportal.heppner-group.com` recipient portal. A lookup 
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/heppner` (no env vars). It asserts a
+`npm run test:carriers:live -- carriers/heppner` (no env vars). It asserts a
 synthetic, unassigned receipt number returns not-found.

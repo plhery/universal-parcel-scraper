@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PostiTracker } from './adapter';
+import { PostiTracker } from './adapter.js';
 
 describe('Posti public tracking', () => {
   it('maps the public corpus example, now past Posti\'s retention, to a clean not-found', async () => {

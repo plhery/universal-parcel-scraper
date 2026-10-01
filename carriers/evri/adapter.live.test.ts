@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EvriTracker } from './adapter';
+import { EvriTracker } from './adapter.js';
 
 describe('Evri International live compatibility', () => {
   it.skipIf(!process.env.EVRI_TRACKING_NUMBER)('returns matching international history with anonymous HTTP', async () => {

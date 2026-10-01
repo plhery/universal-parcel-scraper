@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * 17TRACK (t.17track.net), a universal aggregator with richer China Post history.
@@ -10,17 +9,17 @@ import 'server-only';
  * the provider's own rejection codes into typed errors so routing can tell a
  * verification wall from an outage.
  */
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { StepRecorder } from '../../core/telemetry';
-import type { TrawlClient } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { universalCarrierHints } from '../shared/hints';
-import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture';
-import { numberOf, result, text, type UniversalSource } from '../shared/result';
-import { seventeenTrackEvent } from './events';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import type { TrawlClient } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { universalCarrierHints } from '../shared/hints.js';
+import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
+import { numberOf, result, text, type UniversalSource } from '../shared/result.js';
+import { seventeenTrackEvent } from './events.js';
 
 const SOURCE: UniversalSource = '17TRACK';
 const API_URL = 'https://t.17track.net/track/restapi';

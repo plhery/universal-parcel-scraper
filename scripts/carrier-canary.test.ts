@@ -11,7 +11,7 @@ import {
   runCanaries,
   type CanaryResult,
   type CanaryTarget,
-} from './carrierCanary';
+} from './carrier-canary.js';
 
 describe('carrier front-door canaries', () => {
   afterEach(() => {

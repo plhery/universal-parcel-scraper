@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SingaporePostTracker } from './adapter';
+import { SingaporePostTracker } from './adapter.js';
 
 describe('Singapore Post live compatibility', () => {
   it.skipIf(!process.env.SINGAPORE_POST_TRACKING_NUMBER)('returns fresh parcel history', async () => {

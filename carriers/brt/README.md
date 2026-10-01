@@ -28,4 +28,4 @@ redirects and generic HTTP errors remain inconclusive.
 
 Set `BRT_TRACKING_NUMBER` to an authorized BRTcode and optionally
 `BRT_UNKNOWN_NUMBER` to a valid-looking unknown code, then run
-`npm run test:carriers:live -- packages/carriers/carriers/brt`.
+`npm run test:carriers:live -- carriers/brt`.

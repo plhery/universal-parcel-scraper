@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BringTracker } from './adapter';
+import { BringTracker } from './adapter.js';
 
 describe('Bring live consumer tracking', () => {
   it.skipIf(!process.env.BRING_TRACKING_NUMBER)('returns exact matching history', async () => {

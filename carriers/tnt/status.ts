@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const STATUS: Record<string, ClassifiedStatus> = {
   "colis chez l'expéditeur": { status: 'pending', stage: 'registered' },

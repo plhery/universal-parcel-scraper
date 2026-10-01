@@ -29,4 +29,4 @@ measurements, contact information and free-form delivery comments are excluded.
 ## Testing
 
 Set `CTT_EXPRESS_TRACKING_NUMBER` to an authorized real Spanish reference and run
-`npm run test:carriers:live -- packages/carriers/carriers/ctt-express`.
+`npm run test:carriers:live -- carriers/ctt-express`.

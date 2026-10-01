@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SwissPostCargoTracker } from './adapter';
+import { SwissPostCargoTracker } from './adapter.js';
 
 // A current Swiss Post Cargo barcode or customer reference, supplied outside
 // the repository.

@@ -15,7 +15,8 @@
     "adapter": "landmark-global",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const vocabulary: Record<string, ClassifiedStatus> = {
   'shipment delivered': { status: 'delivered', stage: 'delivered' },

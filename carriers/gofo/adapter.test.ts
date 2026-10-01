@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, GofoTracker } from './adapter';
-import { normalizeGofoNumber, parseGofo } from './parser';
-import { gofoStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, GofoTracker } from './adapter.js';
+import { normalizeGofoNumber, parseGofo } from './parser.js';
+import { gofoStatus } from './status.js';
 
 const NUMBER = 'GFUS00000000000001';
 const OTHER = 'GFUS00000000000002';

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { classifyWording, wordingStage } from './wording';
-import { trackingLanguageStage } from './language';
+import { classifyWording, wordingStage } from './wording.js';
+import { trackingLanguageStage } from './language.js';
 
 describe('classifyWording', () => {
   it.each(['Not delivered to sender', 'Will be delivered back to sender', 'May have been delivered to the sender',

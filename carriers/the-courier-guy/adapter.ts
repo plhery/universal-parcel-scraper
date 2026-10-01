@@ -1,10 +1,9 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber, parseCourierGuy } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber, parseCourierGuy } from './parser.js';
 
 const ENDPOINT = 'https://api.portal.thecourierguy.co.za/tracking/shipments';
 

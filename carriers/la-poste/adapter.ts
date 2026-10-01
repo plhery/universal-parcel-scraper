@@ -1,19 +1,18 @@
-import 'server-only';
 
-import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter';
-import { carrierIdFromPartner } from '../../core/catalog/hints';
+import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import {
   CarrierError,
   SchemaError,
   UpstreamHttpError,
-} from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps, type StepSpec } from '../../core/runner';
-import type { StepRecorder } from '../../core/telemetry';
-import { isoTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { eventStage, eventStatus } from './status';
+} from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps, type StepSpec } from '../../core/runner/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { isoTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { eventStage, eventStatus } from './status.js';
 
 // Protocol provenance:
 // - `suivi-unifie` is the keyless feed the public tracking page calls: one

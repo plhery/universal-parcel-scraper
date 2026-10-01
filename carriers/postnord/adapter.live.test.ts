@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PostnordTracker } from './adapter';
+import { PostnordTracker } from './adapter.js';
 
 describe('PostNord live tracking', () => {
   it('returns a structured negative with the complete anonymous request', async () => {

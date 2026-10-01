@@ -1,23 +1,22 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import { eventPoint, type CarrierEvent, type CarrierResult, type EventPoint } from '../../core/result';
-import type { ClassifiedStatus } from '../../core/status';
-import { isValidS10TrackingNumber } from '../../core/detection';
-import { isoTime } from '../../core/time';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { eventPoint, type CarrierEvent, type CarrierResult, type EventPoint } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { isValidS10TrackingNumber } from '../../core/detection/index.js';
+import { isoTime } from '../../core/time/index.js';
 import {
   cleanScalar,
   decodeText,
   fetchBounded,
   parseJsonBytes,
   UpstreamHttpError,
-} from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyIndiaPostEvent } from './status';
+} from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyIndiaPostEvent } from './status.js';
 
 // Protocol provenance (inspected 2026-09-01):
 // https://github.com/bivu-m/njs-tracker-scraper

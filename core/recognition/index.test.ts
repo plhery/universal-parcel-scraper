@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from './carrierRecognition';
+import { recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from './index.js';
 
 const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: Partial<RecognitionOutcome> = {}): RecognitionOutcome => ({
   carrier, status, needsInput: null, preferred: false, lastActivityAt: null, ...extra,

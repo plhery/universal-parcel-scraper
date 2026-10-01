@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
-import { normalizeTrackingNumber } from '../../core/detection';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { epochSecondsTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { uniuniStatus } from './status';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { epochSecondsTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { uniuniStatus } from './status.js';
 
 const PROVIDER = 'UniUni';
 

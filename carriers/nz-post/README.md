@@ -20,10 +20,10 @@ is inconclusive; only the service's specific absence response is negative.
 
 Explicit offsets establish event instants. Missing, malformed or offsetless
 clocks preserve the source order without borrowing an older scan's timestamp.
-See [ROUTING.md](../../../../docs/ROUTING.md) for unresolved history handling.
+See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for unresolved history handling.
 Delivery estimates and account-only delivery controls are not retrieved.
 
 ## Testing
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/nz-post`.
+Run `npm run test:carriers:live -- carriers/nz-post`.
 Set `NZ_POST_TRACKING_NUMBER` outside the repository for a real parcel.

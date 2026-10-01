@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { SeurTracker, adapter } from './adapter';
-import { normalizeSeurNumber, parseSeur } from './parser';
-import { classifySeurStatus } from './status';
-import fixture from './fixtures/history.json';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { SeurTracker, adapter } from './adapter.js';
+import { normalizeSeurNumber, parseSeur } from './parser.js';
+import { classifySeurStatus } from './status.js';
+import fixture from './fixtures/history.json' with { type: 'json' };
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '9900002';
 const copy = () => structuredClone(fixture);

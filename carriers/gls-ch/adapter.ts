@@ -1,13 +1,12 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyDescription, GLS_STATUSES, statusCode } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyDescription, GLS_STATUSES, statusCode } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://gls-group.eu/EU/en/parcel-tracking
@@ -22,7 +21,7 @@ const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
 
-export { glsSwitzerlandStatus } from './status';
+export { glsSwitzerlandStatus } from './status.js';
 
 interface ParsedEvent {
   event: CarrierEvent;

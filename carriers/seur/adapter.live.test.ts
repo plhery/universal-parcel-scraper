@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { adapter } from './adapter';
+import { adapter } from './adapter.js';
 
 const instance = () => adapter({ fetcher: fetch, env: {}, trawl: null, browserExecutablePath: null,
   recorder: { step() {}, lookup() {} } });

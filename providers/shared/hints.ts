@@ -6,11 +6,11 @@
  * adapter, but only that adapter confirming the shipment adopts the carrier.
  * Nothing here decides a carrier on its own.
  */
-import type { CarrierId } from '../../generated/catalog';
-import { brandCarrierIds, carrierIdFromName } from '../../core/catalog/hints';
-import { detectCarrierMatch } from '../../core/detection';
+import type { CarrierId } from '../../generated/catalog.js';
+import { brandCarrierIds, carrierIdFromName } from '../../core/catalog/hints.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 
-export { isKnownCarrierName } from '../../core/catalog/hints';
+export { isKnownCarrierName } from '../../core/catalog/hints.js';
 
 /**
  * A bare brand ("DPD Group") names several catalog networks; the number can

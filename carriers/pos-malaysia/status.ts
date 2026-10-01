@@ -10,7 +10,7 @@
  * stage. The fixed labels come from the official tracking SPA's sample data
  * and identity-bound tracking responses.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const SUMMARY_STATUS: Record<string, ClassifiedStatus> = {
   'Delivery completed': { status: 'delivered', stage: 'delivered' },

@@ -1,17 +1,17 @@
-import 'server-only';
+import { loadChromium } from '../../core/transport/optional.js';
 
 import { DateTime } from 'luxon';
-import { chromium, type Browser, type Response as BrowserResponse } from 'playwright-core';
-import type { AdapterEnvironment, AdapterFactory, TrackingContext } from '../../core/adapter';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import type { ClassifiedStatus } from '../../core/status';
-import { explicitOffsetTime, EXPLICIT_OFFSET_PATTERN } from '../../core/time';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { yunExpressStatus } from './status';
+import type { Browser, Response as BrowserResponse } from 'playwright-core';
+import type { AdapterEnvironment, AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { explicitOffsetTime, EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
 const MAX_BYTES = 1_000_000;
@@ -135,7 +135,7 @@ async function localBrowser(number: string, executablePath: string, signal: Abor
   const abort = () => { fail(signal.reason); void browser?.close().catch(() => {}); };
   signal.addEventListener('abort', abort, { once: true });
   try {
-    browser = await chromium.launch({ executablePath, headless: true, timeout: Math.min(timeoutMs, 10_000),
+    browser = await (await loadChromium("YunExpress")).launch({ executablePath, headless: true, timeout: Math.min(timeoutMs, 10_000),
       env: { PATH: process.env.PATH ?? '', HOME: process.env.HOME ?? '/tmp', LANG: 'en_US.UTF-8' } });
     signal.throwIfAborted();
     const page = await browser.newPage({ locale: 'en-US' });

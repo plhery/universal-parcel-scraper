@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { OntracTracker } from './adapter';
+import { OntracTracker } from './adapter.js';
 
 describe('OnTrac live tracking', () => {
   it('keeps the generic missing-resource response inconclusive', async () => {

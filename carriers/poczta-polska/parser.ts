@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyPocztaPolskaStatus } from './status';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyPocztaPolskaStatus } from './status.js';
 
 export function normalizePocztaPolskaNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/\s/g, '');

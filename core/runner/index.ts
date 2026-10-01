@@ -9,8 +9,8 @@
  * `StepRecorder`. Adapters describe their tiers; they do not time or count
  * them.
  */
-import { BudgetExceededError, carrierErrorKind } from '../errors';
-import { NOOP_RECORDER, errorTypeOf, outcomeOf, safeRecorder, type StepOutcome, type StepRecorder } from '../telemetry';
+import { BudgetExceededError, carrierErrorKind } from '../errors/index.js';
+import { NOOP_RECORDER, errorTypeOf, outcomeOf, safeRecorder, type StepOutcome, type StepRecorder } from '../telemetry/index.js';
 
 export interface StepContext {
   /** Aborts when the lookup budget or the caller's signal expires. */

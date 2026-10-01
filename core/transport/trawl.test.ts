@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { UpstreamHttpError } from '../errors';
-import { TrawlClient, TrawlError, trawlBody, trawlEndpoint } from './trawl';
+import { UpstreamHttpError } from '../errors/index.js';
+import { TrawlClient, TrawlError, trawlBody, trawlEndpoint } from './trawl.js';
 
 function jsonFetcher(payload: unknown, status = 200): typeof fetch {
   return vi.fn(async () => new Response(JSON.stringify(payload), { status, headers: { 'Content-Type': 'application/json' } })) as unknown as typeof fetch;

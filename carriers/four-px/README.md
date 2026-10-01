@@ -11,5 +11,5 @@ offset is retained as `local_time`, without an invented instant. The server
 reference can identify a delivery partner's tracking number; provider discovery
 confirms the operator separately.
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/four-px`.
+Run `npm run test:carriers:live -- carriers/four-px`.
 Set `FOUR_PX_TRACKING_NUMBER` outside the repository to check a real parcel.

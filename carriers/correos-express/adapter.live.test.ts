@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CorreosExpressTracker } from './adapter';
+import { CorreosExpressTracker } from './adapter.js';
 
 describe('Correos Express live tracking', () => {
   it.skipIf(!process.env.CORREOS_EXPRESS_TRACKING_NUMBER)('returns matching public history', async () => {

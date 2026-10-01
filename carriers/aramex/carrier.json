@@ -20,7 +20,8 @@
     "adapter": "aramex",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history"

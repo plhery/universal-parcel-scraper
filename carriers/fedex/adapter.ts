@@ -1,7 +1,6 @@
-import 'server-only';
 
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
+import type { AdapterFactory } from '../../core/adapter/index.js';
 import {
   ChallengeError,
   InputRequiredError,
@@ -9,14 +8,14 @@ import {
   SchemaError,
   TransportError,
   UpstreamHttpError,
-} from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { explicitOffsetTime } from '../../core/time';
-import { clean, cleanScalar, TrawlClient } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status';
+} from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean, cleanScalar, TrawlClient } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status.js';
 
 /**
  * FedEx, through the tracking reply the public page reads itself.
@@ -231,7 +230,7 @@ export class FedExTracker {
       throw new TypeError('FedEx timeout must be positive');
     }
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.#trawl = options.trawl;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;

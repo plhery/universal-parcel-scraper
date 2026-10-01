@@ -13,8 +13,8 @@
  * FedEx's tracking documentation; `IT`/`SE`/`CA` match the official Track API
  * vocabulary (prior art). `statuses.json` holds the full list.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 /** Package and scan codes, uppercased, to the product stage. */
 export const FEDEX_CODE_STAGE: Readonly<Record<string, Stage>> = {

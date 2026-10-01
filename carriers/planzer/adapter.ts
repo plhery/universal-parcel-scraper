@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Planzer and Quickpac tracking.
@@ -17,13 +16,13 @@ import 'server-only';
  * served by `./shared`, chosen by the factory when the parcel has a tracking
  * URL.
  */
-import type { AdapterFactory } from '../../core/adapter';
-import { SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { PlanzerSharedTracker } from './shared';
-import { PLANZER_STATUS, planzerDescription, planzerEventStage } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { PlanzerSharedTracker } from './shared.js';
+import { PLANZER_STATUS, planzerDescription, planzerEventStage } from './status.js';
 
 const PROVIDER = 'Planzer';
 const UPSTREAM = 'Planzer tracking';

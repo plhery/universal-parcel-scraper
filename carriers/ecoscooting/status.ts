@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const DELIVERED: ClassifiedStatus = { status: 'delivered', stage: 'delivered' };
 // A pickup point signing for the parcel or receiving it means it waits there.

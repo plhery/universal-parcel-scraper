@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   normalizePacketaTrackingNumber,
   packetaTrackingUrl,
   parsePacketaTrackingResponse,
   PacketaTracker,
-} from './adapter';
-import { classifyPacketaStatus, packetaEventStage } from './status';
+} from './adapter.js';
+import { classifyPacketaStatus, packetaEventStage } from './status.js';
 
 // All identifiers, timestamps and names below are synthetic. Event sentences use
 // the real canned English wording confirmed live by the prior-art client, so

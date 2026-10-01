@@ -1,7 +1,15 @@
 # Places
 
 Carriers say where a scan happened in free text: "Härkingen", "LEIPZIG - DE", "Sort centre
-Chicago IL", "FRANCE". `placesForEvents` turns each one into a map place, or into nothing.
+Chicago IL", "FRANCE". The Node-only `/places` entry point turns this text into coordinates,
+or `null` when it cannot place the scan confidently.
+
+```js
+import { locatePlace, placesForEvents } from 'universal-parcel-scraper/places';
+
+locatePlace('LEIPZIG - DE');
+placesForEvents(['Härkingen', 'Zürich'], { carrierCountries: ['CH'] });
+```
 
 ## How a place is chosen
 
@@ -16,14 +24,14 @@ Chicago IL", "FRANCE". `placesForEvents` turns each one into a map place, or int
 - Text that names only a country gets that country, marked `country`, so the map shades
   the country instead of pinning a town.
 
-Places are worked out each time the API returns a parcel, not stored, so a better
-gazetteer improves every parcel at once. The gazetteer loads once per process. If
-anything fails, parcels are served without places.
+The gazetteer loads once per process, from the packaged asset. `preloadPlaces()` loads it
+ahead of the first lookup. Results are cached in memory; consumers decide whether to
+persist them or serve a parcel when place resolution fails.
 
 ## Facilities
 
 Some carriers say exactly where a scan happened, and the town's centre can be kilometres off:
-Swiss Post's "Zürich Briefzentrum" is in Mülligen, 7 km west.
+Swiss Post's "Zürich Briefzentrum" is in Mülligen.
 
 - `facilities.json` places sorting centres by the six-digit site number Swiss Post ends its
   scan text with ("Zürich Briefzentrum 801050"), whichever source relayed the scan. The text
@@ -31,7 +39,7 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen, 7 km west.
   OpenStreetMap element its point comes from. The first four digits are often not a
   postcode (8920 and 8520, the Urdorf and Frauenfeld parcel centres, are none), so unknown
   sites stay on their town.
-- A carrier's own coordinates for a scan (`point` on the event, kept in `raw_data`) move it
+- A carrier's own coordinates, supplied through the `points` option, move a scan
   to the facility when they are within 30 km of the town its text names. Scans with the same
   text share a point, so a carrier that places some scans of an office keeps them together.
 
@@ -41,10 +49,11 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen, 7 km west.
 or more, the postal localities of Switzerland, Liechtenstein and their neighbours, Swiss
 and Liechtenstein postcodes, and Natural Earth country label points. Decisions about
 what to include are commented in the script.
-Then run `node packages/carriers/scripts/generate-region-towns.mjs`: the carriers package keeps
-the towns of a few US states and Canadian provinces from it (`npm run test:contract` checks).
+Then run `node scripts/generate-region-towns.mjs`: the carrier catalog keeps
+the towns of a few US states and Canadian provinces from it. `npm run test:generated`
+checks this projection.
 
 GeoNames data is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 ([geonames.org](https://www.geonames.org)) and facility points come from
-[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL); the privacy notice, linked
-from the app, credits both. Natural Earth is public domain and needs no credit.
+[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL). Natural Earth is public
+domain. Credits are included in [NOTICE](../NOTICE).

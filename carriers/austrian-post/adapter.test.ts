@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, AustrianPostTracker, normalizeAustrianPostNumber, parseAustrianPostResponse } from './adapter';
-import { austrianPostEventStatus, austrianPostSummaryStatus } from './status';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, AustrianPostTracker, normalizeAustrianPostNumber, parseAustrianPostResponse } from './adapter.js';
+import { austrianPostEventStatus, austrianPostSummaryStatus } from './status.js';
 
 const NUMBER = '1000000000000000000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

@@ -10,10 +10,7 @@
     ]
   },
   "brand": {
-    "color": "#00014d",
-    "palette": {
-      "accent": "#53efef"
-    }
+    "color": "#00014d"
   },
   "selectable": true,
   "timezone": "UTC",
@@ -23,7 +20,8 @@
     "upstreamName": "Evri International",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

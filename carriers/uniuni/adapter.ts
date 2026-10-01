@@ -1,10 +1,9 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser.js';
 
 const ENDPOINT = 'https://tracking-service-api.uniuni.ca/tracking/trackinguniuninew';
 // Fixed anonymous website configuration from the official tracking client;

@@ -40,5 +40,5 @@ Tracked through the public recipient search.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/colisweb` (no env vars). It asserts
+`npm run test:carriers:live -- carriers/colisweb` (no env vars). It asserts
 that an unknown number returns the indeterminate empty-500 result.

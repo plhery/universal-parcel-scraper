@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PocztaPolskaTracker } from './adapter';
+import { PocztaPolskaTracker } from './adapter.js';
 
 describe('Poczta Polska anonymous tracking live', () => {
   it.skipIf(!process.env.POCZTA_POLSKA_TRACKING_NUMBER)('returns exact-reference history', async () => {

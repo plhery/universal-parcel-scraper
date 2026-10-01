@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BlueDartTracker } from './adapter';
+import { BlueDartTracker } from './adapter.js';
 
 describe('Blue Dart live tracking', () => {
   it('recognizes the explicit no-information result', async () => {

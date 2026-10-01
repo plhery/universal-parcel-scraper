@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { adapter } from './adapter';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const carrier = adapter({ trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
 describe('Relais Colis anonymous live history', () => {

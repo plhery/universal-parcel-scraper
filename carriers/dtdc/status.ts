@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const STATUS = new Map<string, ClassifiedStatus>([
   ['Pickup Awaited', { status: 'pending', stage: 'registered' }],

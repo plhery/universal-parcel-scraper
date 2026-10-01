@@ -8,9 +8,9 @@
  * (a redirect, a rejected status, an unreadable body) into the shared error
  * taxonomy. Parsing stays with each provider.
  */
-import { IndeterminateError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport';
-import type { UniversalSource } from './result';
+import { IndeterminateError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/index.js';
+import type { UniversalSource } from './result.js';
 
 /** How many responses the browser may have captured before the newest is meaningless. */
 const MAX_CAPTURED = 20;

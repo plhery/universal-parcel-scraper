@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, DtdcTracker } from './adapter';
-import { normalizeDtdcNumber, parseDtdc } from './parser';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, DtdcTracker } from './adapter.js';
+import { normalizeDtdcNumber, parseDtdc } from './parser.js';
 
 const NUMBER = 'N00000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

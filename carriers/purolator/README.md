@@ -21,4 +21,4 @@ shipment. Recipient information, delivery instructions, references and proof dat
 ## Testing
 
 Set `PUROLATOR_TRACKING_NUMBER` to an authorized real PIN and run
-`npm run test:carriers:live -- packages/carriers/carriers/purolator`.
+`npm run test:carriers:live -- carriers/purolator`.

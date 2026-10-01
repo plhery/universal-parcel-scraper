@@ -1,16 +1,15 @@
-import 'server-only';
 
 import { createHash, randomBytes } from 'node:crypto';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { solveYundaSlider } from './challenge';
-import { normalizeYundaNumber, parseYunda, yundaEnvelope } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { solveYundaSlider } from './challenge.js';
+import { normalizeYundaNumber, parseYunda, yundaEnvelope } from './parser.js';
 
 const ORIGIN = 'https://web.yundaex.com';
 // Public apiSetting.js on the current consumer site signs ordinary anonymous

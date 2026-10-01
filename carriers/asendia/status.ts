@@ -24,8 +24,8 @@
  * never match the "delivered" substring. Wording the map does not recognize
  * gets no carrier stage assignment beyond the transit default.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedAsendiaStatus {
   status: CarrierStatus;

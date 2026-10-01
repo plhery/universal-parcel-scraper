@@ -171,7 +171,7 @@ step exists for future protocol changes.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/providers/parcelsapp` with
+`npm run test:carriers:live -- providers/parcelsapp` with
 `PARCELSAPP_LIVE_NUMBER` set, and optionally `PARCELSAPP_LIVE_POSTCODE`,
 `PARCELSAPP_LIVE_EXPECTED_STATES` and `PARCELSAPP_LIVE_EXPECTED_EVENTS`. Keep live
 values out of the repository. Unit tests use synthetic

@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NacexTracker, adapter } from './adapter';
-import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser';
-import { classifyNacexStatus } from './status';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NacexTracker, adapter } from './adapter.js';
+import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser.js';
+import { classifyNacexStatus } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '9900/99000002';
 const OTHER = '9900/99000003';

@@ -10,10 +10,7 @@
     ]
   },
   "brand": {
-    "color": "#001e62",
-    "palette": {
-      "accent": "#ff4f00"
-    }
+    "color": "#001e62"
   },
   "selectable": true,
   "timezone": "Europe/Madrid",

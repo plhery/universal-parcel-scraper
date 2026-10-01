@@ -11,7 +11,7 @@
  * https://github.com/ha-parcel-integrations/ha-ctt (MIT) and confirmed live on
  * 2026-09-10 against a delivered parcel whose whole history mapped.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const EVENT_STATUS: Record<number, ClassifiedStatus> = {
   1: { status: 'pending', stage: 'registered' },

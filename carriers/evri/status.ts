@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // Exact English event labels from the official GlobalEco international portal.
 // Evidence for observed versus synthetic boundaries lives in statuses.json.

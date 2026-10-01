@@ -50,5 +50,5 @@ The parser:
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/gls-fr` (no env vars;
+`npm run test:carriers:live -- carriers/gls-fr` (no env vars;
 checks the 404 for a valid-shaped wrong number).

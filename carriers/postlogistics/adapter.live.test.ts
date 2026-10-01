@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fetchPostlogistics, PostlogisticsTracker } from './adapter';
+import { fetchPostlogistics, PostlogisticsTracker } from './adapter.js';
 
 // A validly shaped barcode that was never issued: the endpoint answers
 // `Data: null`, which is PostLogistics' "unknown identifier".

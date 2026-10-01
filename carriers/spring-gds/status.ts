@@ -12,7 +12,7 @@
  * `unsuccesfull` is PostNL's own spelling; the corrected spelling is mapped
  * alongside it so a fix upstream does not silently lose the classification.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const CATEGORY_STATUS = new Map<string, ClassifiedStatus>([
   ['pre-advised', { status: 'pending', stage: 'registered' }],

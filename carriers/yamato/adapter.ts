@@ -1,13 +1,12 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { normalizeTrackingNumber } from '../../core/detection';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean, decodeText, fetchBounded } from '../../core/transport';
-import { yamatoStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { yamatoStatus } from './status.js';
 
 const PROVIDER = 'Yamato Transport';
 const ENDPOINT = 'https://toi.kuronekoyamato.co.jp/cgi-bin/tneko';

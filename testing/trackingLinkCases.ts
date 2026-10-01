@@ -1,4 +1,4 @@
-import type { CarrierId } from '../types';
+import type { CarrierId } from '../generated/catalog.js';
 
 export interface TrackingLinkCase {
   carrier: CarrierId;

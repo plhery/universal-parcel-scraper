@@ -1,0 +1,17 @@
+{
+  "catalog": 105,
+  "activeAdapters": 84,
+  "countries": 58,
+  "referenceCarriers": 100,
+  "comparison": {
+    "combined": 70,
+    "direct": 51,
+    "providers": {
+      "ParcelsApp": 50,
+      "Postal Ninja": 41,
+      "17TRACK": 40,
+      "Ship24": 38,
+      "UPU": 11
+    }
+  }
+}

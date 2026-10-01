@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { StepRecord, StepRecorder } from '../../core/telemetry';
+import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import {
   DPDFranceChallengeError,
   DPDFranceTracker,
@@ -9,8 +9,8 @@ import {
   dpdFranceTrackingUrl,
   normalizeDPDFranceTrackingNumber,
   parseDPDFranceTrackingHtml,
-} from './adapter';
-import { classifyStatus } from './status';
+} from './adapter.js';
+import { classifyStatus } from './status.js';
 
 type Row = [date: string, clock: string, description: string, location: string];
 type Detail = [label: string, value: string];

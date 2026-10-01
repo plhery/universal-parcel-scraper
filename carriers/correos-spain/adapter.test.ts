@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   normalizeCorreosSpainTrackingNumber,
   correosSpainTrackingUrl,
   parseCorreosSpainTrackingResponse,
   CorreosSpainTracker,
-} from './adapter';
-import { classifyCorreosSpainStatus } from './status';
+} from './adapter.js';
+import { classifyCorreosSpainStatus } from './status.js';
 
 // All identifiers and timestamps below are synthetic. Event codes and Spanish
 // wordings reuse the vendor's fixed texts confirmed against a real parcel by

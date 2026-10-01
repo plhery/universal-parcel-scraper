@@ -7,26 +7,26 @@
  * What it is not: no provider I/O, no HTTP, no application or framework code.
  * Everything here is a pure function of the catalog and its arguments.
  */
-import { normalizeCourierGuyNumber } from '../../carriers/the-courier-guy/number';
-import { postlogisticsIdentifier } from '../../carriers/postlogistics/number';
-import type { CarrierId } from '../../generated/catalog';
-import { isValidMondialRelayBarcode } from '../detection/mondialRelay';
-import { normalizeTrackingNumber } from '../detection/normalize';
-import { supportsSwissPostHandoff } from '../detection/s10';
-import { amazonOrdersUrl, amazonShippingUrl, requiresAmazonAccount } from './amazon';
-import { CARRIER_DEFINITIONS } from './definitions';
+import { normalizeCourierGuyNumber } from '../../carriers/the-courier-guy/number.js';
+import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
+import type { CarrierId } from '../../generated/catalog.js';
+import { isValidMondialRelayBarcode } from '../detection/mondialRelay.js';
+import { normalizeTrackingNumber } from '../detection/normalize.js';
+import { supportsSwissPostHandoff } from '../detection/s10.js';
+import { amazonOrdersUrl, amazonShippingUrl, requiresAmazonAccount } from './amazon.js';
+import { CARRIER_DEFINITIONS } from './definitions.js';
 import type {
   CarrierDefinition,
   CarrierInfo,
   CarrierInputRequirement,
   ParcelTrackingLink,
   TrackedParcel,
-} from './types';
+} from './types.js';
 
-export * from './types';
-export * from './definitions';
-export * from './linkRules';
-export * from './amazon';
+export * from './types.js';
+export * from './definitions.js';
+export * from './linkRules.js';
+export * from './amazon.js';
 
 /** Carrier-specific printed identifiers expected by the official portal. */
 export function trackingNumberForLink(carrierId: CarrierId, raw: string): string {

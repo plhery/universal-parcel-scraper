@@ -71,6 +71,6 @@ HTTP 400, 403 and 404 all mean "no such parcel" and raise
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/gls-ch` (no env vars;
+`npm run test:carriers:live -- carriers/gls-ch` (no env vars;
 checks that a retired published example and a wrong number both return a clean
 404). Fixtures are constructed in the endpoint shapes with synthetic values.

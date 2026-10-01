@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { RoyalMailTracker } from './adapter';
+import { RoyalMailTracker } from './adapter.js';
 
 // A real shipment supplied outside the repository, e.g.
 // ROYAL_MAIL_LIVE_TRACKING_NUMBER=SG999999999GB npm run test:carriers:live
@@ -19,7 +19,7 @@ describe('Royal Mail live browser tracking', () => {
   it.runIf(Boolean(LIVE_TRACKING_NUMBER))(
     'normalizes a caller-supplied real shipment without retaining private response fields',
     async () => {
-      const result = await new RoyalMailTracker({ timeoutMs: 60_000 }).fetch(LIVE_TRACKING_NUMBER);
+      const result = await new RoyalMailTracker({ trawlUrl: process.env.FLARESOLVERR_URL, timeoutMs: 60_000 }).fetch(LIVE_TRACKING_NUMBER);
       expect(result.status).not.toBe('unknown');
       expect(result.last_status_text).toEqual(expect.any(String));
       expect(Array.isArray(result.events)).toBe(true);

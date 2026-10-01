@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { TrawlClient } from '../../core/transport';
-import { PostalNinjaTracker } from './adapter';
+import { TrawlClient } from '../../core/transport/index.js';
+import { PostalNinjaTracker } from './adapter.js';
 
 // Public forum reference, also used by src/server/universalScrapers.live.test.ts.
 // https://www.reddit.com/r/AirReps/comments/1vfhh53/please_help_yunexpress_alibaba_tracking_stuck_on/

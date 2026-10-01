@@ -15,4 +15,4 @@ reports the carrier's current state. International TA-Q-BIN uses a separate port
 ## Live test
 
 Set `YAMATO_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/yamato/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/yamato/adapter.live.test.ts`.

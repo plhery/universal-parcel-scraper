@@ -12,8 +12,7 @@
     ]
   },
   "brand": {
-    "color": "#dc0032",
-    "decal": "dpd"
+    "color": "#dc0032"
   },
   "selectable": true,
   "timezone": "Europe/Zurich",

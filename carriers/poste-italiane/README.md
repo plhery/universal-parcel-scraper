@@ -45,6 +45,6 @@ generic postal fallback.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/poste-italiane`. The unknown-number
+`npm run test:carriers:live -- carriers/poste-italiane`. The unknown-number
 check needs no env vars; set `POSTE_ITALIANE_DELIVERED_TRACKING_NUMBER` to also check a real
 delivered parcel.

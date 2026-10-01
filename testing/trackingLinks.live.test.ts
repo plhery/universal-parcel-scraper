@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { chromium, type Browser } from 'playwright-core';
-import { parcelTrackingLinks } from '../lib/carriers';
-import { trackingLinkCases } from './trackingLinkCases';
-import { trackingPageVerdict } from './trackingLinkProbe';
+import { parcelTrackingLinks } from '../core/catalog/index.js';
+import { trackingLinkCases } from './trackingLinkCases.js';
+import { trackingPageVerdict } from './trackingLinkProbe.js';
 
 describe('UI tracking links (rendered public pages)', () => {
   let browser: Browser;

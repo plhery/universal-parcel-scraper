@@ -2,10 +2,10 @@ import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { NotFoundError, UpstreamHttpError } from '../errors';
-import { REGISTRY } from '../../generated/registry';
-import { NOOP_RECORDER } from '../telemetry';
-import { AdapterRegistry, accepted, recognizeFromLookup } from '.';
+import { NotFoundError, UpstreamHttpError } from '../errors/index.js';
+import { REGISTRY } from '../../generated/registry.js';
+import { NOOP_RECORDER } from '../telemetry/index.js';
+import { AdapterRegistry, accepted, recognizeFromLookup } from './index.js';
 
 const carriersDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'carriers');
 

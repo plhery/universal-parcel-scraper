@@ -47,5 +47,5 @@ Bootstrap, lookup and refresh share one cancellable 15-second budget.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/posti`. Without env vars it checks
+`npm run test:carriers:live -- carriers/posti`. Without env vars it checks
 two not-found cases; set `POSTI_TRACKING_NUMBER` to also check a real shipment.

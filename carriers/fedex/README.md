@@ -14,7 +14,7 @@ FLARESOLVERR_URL for browser fallback')`.
 1. `trawl`: loads `https://www.fedex.com/fedextrack/?trknbr=…` (a shell) with
    `captureResponses` on `POST https://api.fedex.com/track/v2/shipments` and parses the
    captured replies newest first. The browser service has a dedicated FedEx route (see
-   [`ops/trawl/README.md`](../../../../ops/trawl/README.md)):
+   [`trawl/README.md`](../../trawl/README.md)):
    - it opens the blank tracker and submits its normal form, every time, because the
      result-page form can ignore a submission or keep the previous route;
    - it keeps the page and context only after a reply that matches the requested number
@@ -77,6 +77,6 @@ FLARESOLVERR_URL for browser fallback')`.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/fedex` with
+`npm run test:carriers:live -- carriers/fedex` with
 `FEDEX_LIVE_TRACKING_NUMBER` and `FLARESOLVERR_URL` set. The missing-browser check runs
 without either.

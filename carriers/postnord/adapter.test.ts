@@ -1,10 +1,10 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { PostnordTracker } from './adapter';
-import { normalizePostnordNumber, parsePostnord } from './parser';
-import { classifyPostnordStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { PostnordTracker } from './adapter.js';
+import { normalizePostnordNumber, parsePostnord } from './parser.js';
+import { classifyPostnordStatus } from './status.js';
 
 const NUMBER = '00573000000000000001';
 const OTHER_NUMBER = '00573000000000000002';

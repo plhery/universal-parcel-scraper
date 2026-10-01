@@ -1,14 +1,13 @@
-import 'server-only';
 
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import type { StepRecorder } from '../../core/telemetry';
-import { TrawlClient } from '../../core/transport';
-import { normalizeSfExpressNumber, parse } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { TrawlClient } from '../../core/transport/index.js';
+import { normalizeSfExpressNumber, parse } from './parser.js';
 
-export { normalizeSfExpressNumber, parse } from './parser';
+export { normalizeSfExpressNumber, parse } from './parser.js';
 
 const PROVIDER = 'SF Express';
 const ORIGIN = 'https://htm.sf-express.com';

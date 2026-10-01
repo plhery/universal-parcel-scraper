@@ -22,5 +22,5 @@ coordinates, operators and proof images are excluded.
 ## Live test
 
 Set `UNIUNI_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/uniuni/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/uniuni/adapter.live.test.ts`.
 Optionally set `UNIUNI_UNKNOWN_NUMBER` to check an absent parcel.

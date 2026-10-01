@@ -51,6 +51,6 @@ Accepted references, uppercased with spaces removed:
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/c-chez-vous` (no env vars). The two
+`npm run test:carriers:live -- carriers/c-chez-vous` (no env vars). The two
 examples C Chez Vous prints under its tracking form are retired orders; the test asserts they
 return not-found.

@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import Ajv, { type SchemaObject } from 'ajv';
+import { Ajv, type SchemaObject } from 'ajv';
 import { describe, expect, it } from 'vitest';
 
 const catalogDirectory = path.dirname(fileURLToPath(import.meta.url));

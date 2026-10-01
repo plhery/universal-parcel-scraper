@@ -1,5 +1,5 @@
-import type { Stage } from '../../generated/catalog';
-import type { CarrierStatus } from '../result';
+import type { Stage } from '../../generated/catalog.js';
+import type { CarrierStatus } from '../result/index.js';
 
 /** Instructions, uncertainty and a return in progress do not prove sender delivery. */
 export function nonterminalEnglishReturn(description: string): boolean {

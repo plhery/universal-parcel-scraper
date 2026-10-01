@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const groups: Array<[string[], ClassifiedStatus]> = [
   [['submitted', 'pending-approval', 'collection-assigned', 'awaiting-dropoff', 'collection-accepted'], { status: 'pending', stage: 'registered' }],

@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon';
-import { normalizeTrackingNumber } from '../../core/detection';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { canparStatus } from './status';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { canparStatus } from './status.js';
 
 export function normalizeCanparNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);

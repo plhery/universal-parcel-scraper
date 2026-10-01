@@ -1,10 +1,9 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeNinjaVanNumber, parseNinjaVan, parseNinjaVanNotFound } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeNinjaVanNumber, parseNinjaVan, parseNinjaVanNotFound } from './parser.js';
 
 const ENDPOINT = 'https://walrus.ninjavan.co/my/dash/1.2/public/orders';
 

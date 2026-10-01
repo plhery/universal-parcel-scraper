@@ -33,5 +33,5 @@ for the last mile. This folder covers the journey up to that handoff.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/sunyou` needs no env vars; it checks that a
+`npm run test:carriers:live -- carriers/sunyou` needs no env vars; it checks that a
 synthetic number returns not-found.

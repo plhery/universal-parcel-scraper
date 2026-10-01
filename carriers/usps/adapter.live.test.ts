@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { USPSTracker } from './adapter';
+import { USPSTracker } from './adapter.js';
 
 // A real shipment supplied outside the repository, e.g.
-// USPS_LIVE_TRACKING_NUMBER=9400111201080805483016 npm run test:carriers:live
+// USPS_LIVE_TRACKING_NUMBER=<tracking-number> npm run test:carriers:live
 // Open-source rule: never commit the number, a response, or any private
 // field it returns. The wrong-number probe below needs no browser service.
 const LIVE_TRACKING_NUMBER = (process.env.USPS_LIVE_TRACKING_NUMBER ?? '').trim();
@@ -19,7 +19,7 @@ describe('USPS live browser tracking', () => {
   it.runIf(Boolean(LIVE_TRACKING_NUMBER))(
     'normalizes a caller-supplied real shipment without retaining private response fields',
     async () => {
-      const result = await new USPSTracker({ timeoutMs: 90_000 }).fetch(LIVE_TRACKING_NUMBER);
+      const result = await new USPSTracker({ trawlUrl: process.env.FLARESOLVERR_URL, timeoutMs: 90_000 }).fetch(LIVE_TRACKING_NUMBER);
       expect(result.status).not.toBe('unknown');
       expect(result.last_status_text).toEqual(expect.any(String));
       expect((result.events ?? []).length).toBeGreaterThan(0);

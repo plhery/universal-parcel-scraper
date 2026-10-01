@@ -1,11 +1,10 @@
-import 'server-only';
 
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { IndeterminateError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeDtdcNumber, parseDtdc } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeDtdcNumber, parseDtdc } from './parser.js';
 
 // The current official MyDTDC app's anonymous tracking feed. Its deployed
 // assets/configs/prod.json names this host; the Flutter client calls this path.

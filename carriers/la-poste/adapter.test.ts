@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { UpstreamHttpError } from '../../core/errors';
-import type { StepRecord, StepRecorder } from '../../core/telemetry';
+import { UpstreamHttpError } from '../../core/errors/index.js';
+import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import {
   LaPosteTracker,
   adapter,
@@ -9,8 +9,8 @@ import {
   laPosteTrackingUrl,
   normalizeLaPosteTrackingNumber,
   parseLaPosteTrackingResponse,
-} from './adapter';
-import { eventStage, eventStatus } from './status';
+} from './adapter.js';
+import { eventStage, eventStatus } from './status.js';
 
 const TRACKING_NUMBER = 'AB12345678901';
 const CAPABILITIES = (JSON.parse(

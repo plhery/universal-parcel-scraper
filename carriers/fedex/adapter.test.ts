@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { StepRecorder } from '../../core/telemetry';
+import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   FedExTracker,
   fedexTrackingUrl,
   parseFedExTrackingHtml,
   parseFedExTrackingResponse,
-} from './adapter';
-import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status';
+} from './adapter.js';
+import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status.js';
 
 // 999999999999 and 999999999998 are made-up numbers in FedEx's published
 // format. No real shipment, recipient, signatory or session value appears in

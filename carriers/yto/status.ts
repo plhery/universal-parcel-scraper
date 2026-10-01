@@ -1,4 +1,4 @@
-import type { ClassifiedStatus, Stage } from '../../core/status';
+import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 
 const STATUS = new Map<string, ClassifiedStatus>([
   ['123', { status: 'in_transit', stage: 'in_transit' }],

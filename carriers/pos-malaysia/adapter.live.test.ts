@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PosMalaysiaTracker } from './adapter';
+import { PosMalaysiaTracker } from './adapter.js';
 
 // Supply authorized parcel references through the environment, never fixtures.
 describe('Pos Malaysia live anonymous tracking', () => {

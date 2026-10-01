@@ -1,14 +1,13 @@
-import 'server-only';
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { amazonShippingOrigin, amazonShippingUrl } from '../../core/catalog';
-import { isAmazonTrackingNumber } from '../../core/detection';
-import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyStatus, statusKey, type ClassifiedStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { amazonShippingOrigin, amazonShippingUrl } from '../../core/catalog/index.js';
+import { isAmazonTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyStatus, statusKey, type ClassifiedStatus } from './status.js';
 
 const PROVIDER = 'Amazon Shipping';
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -16,7 +15,7 @@ const MAX_RESPONSE_BYTES = 2_000_000;
 const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
 
-export { amazonShippingStatus } from './status';
+export { amazonShippingStatus } from './status.js';
 
 interface ParsedDate {
   iso: string;

@@ -1,12 +1,8 @@
-/**
- * The catalog lookups and the S10 checksum now live in the carrier package.
- * Input validation stays here because it depends on the carrier-specific
- * validators in `@carriers/carriers/dachser/adapter` and `@carriers/carriers/planzer/shared`.
- */
-import { activeRequirements, carrierDefinition, type CarrierRequirementRule } from '@carriers/core/catalog';
-import { isValidMondialRelayBarcode } from '@carriers/core/detection';
-import { validateDachserTrackingUrl } from '@carriers/carriers/dachser/adapter';
-import { validatePlanzerSharedUrl } from '@carriers/carriers/planzer/shared';
+/** Validate parcel credentials against the catalog and pure carrier URL validators. */
+import { activeRequirements, carrierDefinition, type CarrierRequirementRule } from './index.js';
+import { isValidMondialRelayBarcode } from '../detection/index.js';
+import { validateDachserTrackingUrl } from './urls.js';
+import { validatePlanzerSharedUrl } from './urls.js';
 
 export {
   AUTOMATIC_CARRIER_IDS,
@@ -16,11 +12,11 @@ export {
   carrierDefinition,
   carrierTimezone,
   requiredRequirements,
-} from '@carriers/core/catalog';
+} from './index.js';
 export {
   isValidS10TrackingNumber,
   supportsSwissPostHandoff,
-} from '@carriers/core/detection';
+} from '../detection/index.js';
 
 export function normalizeCarrierInputs(
   carrierId: string,

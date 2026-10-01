@@ -25,5 +25,5 @@ consumer's unbound negative response remains inconclusive.
 ## Live test
 
 Set `BRING_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/bring-posten/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/bring-posten/adapter.live.test.ts`.
 Optionally set `BRING_UNKNOWN_NUMBER` to check the inconclusive absence response.

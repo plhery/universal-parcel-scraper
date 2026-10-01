@@ -17,7 +17,7 @@ Default order: **ParcelsApp → Ship24 → 17TRACK → UPU**.
 results in [coverage.json](coverage.json) gets its own order ([coverage.ts](coverage.ts)
 grades them). UPU needs a checksum-valid S10 number and always stays last. Checksum-valid
 China Post `C…CN` and `L…CN` numbers start with 17TRACK. Affinity, cooldowns and budgets
-are in [docs/ROUTING.md](../../../docs/ROUTING.md). [COMPARISON.md](COMPARISON.md) explains
+are in [docs/ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md). [COMPARISON.md](COMPARISON.md) explains
 the order, and [COVERAGE.md](COVERAGE.md) compares results carrier by carrier.
 
 ## Shared behaviour
@@ -61,8 +61,8 @@ the order, and [COVERAGE.md](COVERAGE.md) compares results carrier by carrier.
   [core/errors](../core/errors/index.ts) holds the shared failure categories.
 
 `TrackingCaptureError` and the `SeventeenTrack*Error` classes carry diagnostic
-`reason`/code fields. Follow [docs/OBSERVABILITY.md](../../../docs/OBSERVABILITY.md).
-TRAWL build and session-cache settings live in [ops/trawl](../../../ops/trawl/README.md).
+`reason`/code fields. Follow [docs/OBSERVABILITY.md](https://github.com/plhery/delivery-tracker/blob/main/docs/OBSERVABILITY.md).
+TRAWL build and session-cache settings live in [ops/trawl](../trawl/README.md).
 
 ## Adding or changing a provider
 
@@ -74,6 +74,6 @@ TRAWL build and session-cache settings live in [ops/trawl](../../../ops/trawl/RE
 - Change the default order only with evidence, and record it in
   [COMPARISON.md](COMPARISON.md).
 - Add the provider's results to [coverage.json](coverage.json) with
-  `packages/carriers/scripts/coverage-probe.mjs`, then regenerate the COVERAGE.md tables
+  `scripts/coverage-probe.mjs`, then regenerate the COVERAGE.md tables
   with `coverage-tables.mjs`.
 - Run the package checks and routing tests.

@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon';
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { Stage } from '../../core/status';
-import { explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, statusForStage } from './status';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, statusForStage } from './status.js';
 
 export function normalizeCanadaPostNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');

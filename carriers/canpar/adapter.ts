@@ -1,10 +1,9 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { SchemaError, TransportError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeCanparNumber, parseCanpar } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { SchemaError, TransportError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeCanparNumber, parseCanpar } from './parser.js';
 
 const ENDPOINT = 'https://canship.canpar.com/api/CanparAddons/trackByBarcodeV2';
 

@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { classifyNacexStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { classifyNacexStatus } from './status.js';
 
 const NO_HISTORY = 'No existe ningún albarán introducido en el sistema cumpliendo los criterios especificados. Consulte con su agencia NACEX más cercana.';
 

@@ -41,5 +41,5 @@ generic, so the user picks the carrier by hand.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/hermes` (no env vars). It checks the
+`npm run test:carriers:live -- carriers/hermes` (no env vars). It checks the
 carrier's published delivered sample and the empty-order not-found for a wrong number.

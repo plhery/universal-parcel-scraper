@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ColiswebTracker } from './adapter';
+import { ColiswebTracker } from './adapter.js';
 
 describe('Colisweb live anonymous tracking', () => {
   it('reports the observed valid-shaped wrong-number response without claiming a clean 404', async () => {

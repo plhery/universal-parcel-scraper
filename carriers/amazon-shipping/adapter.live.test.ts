@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AmazonShippingHistoryExpiredError, AmazonShippingNotFoundError, AmazonShippingTracker } from './adapter';
+import { AmazonShippingHistoryExpiredError, AmazonShippingNotFoundError, AmazonShippingTracker } from './adapter.js';
 
 const LIVE_TRACKING_NUMBER = process.env.AMAZON_SHIPPING_LIVE_TRACKING_NUMBER ?? '';
 

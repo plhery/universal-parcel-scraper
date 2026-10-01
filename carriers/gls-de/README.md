@@ -30,7 +30,7 @@ is sent, so a wrong or expired number never transmits it.
   the `/DE/en/` variant. It returns false only for a clean not-found and
   rethrows everything else, so an outage never reads as "not GLS". It never
   sends a postcode. Carrier recognition uses it, and the user is then asked for
-  the postcode (see [ROUTING.md](../../../../docs/ROUTING.md)).
+  the postcode (see [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)).
 - `GLSGermanyTrackingError` keeps its name because
   `src/server/expandedCarriers.live.test.ts` asserts it. The constructor also
   accepts a positional timeout.

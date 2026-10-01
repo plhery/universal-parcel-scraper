@@ -1,10 +1,10 @@
-import { normalizeTrackingNumber } from '../../core/detection';
-import { IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { zonedTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { ytoScan, ytoStatus } from './status';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { ytoScan, ytoStatus } from './status.js';
 
 const PROVIDER = 'YTO Express';
 // The domestic client's /ec/apollo/checkWaybillNo rules. Keep them local so a

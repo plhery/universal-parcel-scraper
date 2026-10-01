@@ -1,0 +1,102 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version in package.json
+        required: true
+        type: string
+        default: '0.1.0'
+      publish_npm:
+        description: Publish using npm trusted publishing
+        required: true
+        type: boolean
+        default: false
+      publish_trawl:
+        description: Publish the AGPL TRAWL derivative with its source archives
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run lint && npm run typecheck && npm test && npm run test:scripts && npm run test:generated && npm run build && npm run test:package
+  publish:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 26
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - name: Validate release identity
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const v=process.env.RELEASE_VERSION; if(!/^\d+\.\d+\.\d+$/.test(v) || JSON.parse(fs.readFileSync('package.json')).version!==v) process.exit(1);"
+          if git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then exit 1; fi
+      - run: npm ci --ignore-scripts && npm run build && npm pack --ignore-scripts
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/${{ github.repository }}:${{ inputs.version }}
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        if: ${{ inputs.publish_trawl }}
+        with:
+          context: trawl
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/${{ github.repository }}-trawl:${{ inputs.version }}
+      - name: Include matching TRAWL source
+        if: ${{ inputs.publish_trawl }}
+        run: |
+          gh api repos/germondai/trawl/tarball/c81d628b4d509ceb6e4ae4567f0ffb62d4eeb051 > trawl-upstream-source.tar.gz
+          git archive --format=tar.gz --prefix=universal-parcel-scraper/ HEAD trawl > trawl-patch-source.tar.gz
+      - name: Publish npm package with provenance
+        if: ${{ inputs.publish_npm }}
+        run: npm publish --provenance --access public
+      - name: Tag and publish GitHub release
+        run: |
+          git tag "v$RELEASE_VERSION"
+          git push origin "v$RELEASE_VERSION"
+          cat > release-notes.md <<'NOTES'
+          Standalone parcel detection and tracking, with a Node library, CLI and stateless HTTP API.
+
+          The core package is Apache-2.0. Optional TRAWL artifacts are AGPL-3.0 and include matching source archives.
+          NOTES
+          files=("universal-parcel-scraper-$RELEASE_VERSION.tgz")
+          if [ -f trawl-upstream-source.tar.gz ]; then files+=(trawl-upstream-source.tar.gz trawl-patch-source.tar.gz); fi
+          gh release create "v$RELEASE_VERSION" "${files[@]}" --verify-tag --title "v$RELEASE_VERSION" --notes-file release-notes.md

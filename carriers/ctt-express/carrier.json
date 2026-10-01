@@ -16,15 +16,31 @@
   "tracking": {
     "mode": "automatic",
     "adapter": "ctt-express",
-    "steps": ["direct"],
-    "recognition": { "rank": 35 }
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 35
+    },
+    "localClocks": true
   },
-  "capabilities": ["history", "eta"],
+  "capabilities": [
+    "history",
+    "eta"
+  ],
   "portal": {
     "url": "https://shipping-tracking.production.cloud2.cttexpress.com/?sc={trackingNumber}",
     "canaryUrl": "https://shipping-tracking.production.cloud2.cttexpress.com/",
-    "shows": ["status", "history", "estimated_delivery"],
-    "scraped": ["status", "history", "estimated_delivery"],
+    "shows": [
+      "status",
+      "history",
+      "estimated_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "estimated_delivery"
+    ],
     "discarded": [],
     "unavailable": []
   },

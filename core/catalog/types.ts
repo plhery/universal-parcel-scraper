@@ -7,8 +7,8 @@
  * What it is not: no data, no behaviour and no provider I/O; every declaration
  * here is erased at build time.
  */
-import type { CarrierId } from '../../generated/catalog';
-import type { DetectionConfidence } from '../detection/types';
+import type { CarrierId } from '../../generated/catalog.js';
+import type { DetectionConfidence } from '../detection/types.js';
 
 export type CarrierTrackingMode = 'automatic' | 'link-only';
 export type CarrierInputField = 'trackingUrl' | 'dpdPostcode';
@@ -110,6 +110,8 @@ export interface CarrierDefinition {
     requirements?: readonly CarrierCatalogRequirement[];
     /** Present when the adapter can recognize a number; higher is asked first. */
     recognitionRank?: number;
+    refresh?: { minMinutes: number; afterFailureMinutes?: number };
+    localClocks?: boolean;
   };
   trackingUrlTemplate?: string;
   linkRules: readonly RawTrackingLinkRule[];

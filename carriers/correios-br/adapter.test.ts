@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import fixture from './fixtures/delivered.json';
-import statuses from './statuses.json';
-import { carrierErrorKind } from '../../core/errors';
-import { normalizeCarrierResult } from '../../core/result';
-import { CorreiosTracker } from './adapter';
-import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser';
-import { classifyCorreiosStatus } from './status';
+import fixture from './fixtures/delivered.json' with { type: 'json' };
+import statuses from './statuses.json' with { type: 'json' };
+import { carrierErrorKind } from '../../core/errors/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { CorreiosTracker } from './adapter.js';
+import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser.js';
+import { classifyCorreiosStatus } from './status.js';
 
 const NUMBER = 'AA000000005BR';
 const HOME = 'https://rastreamento.correios.com.br/app/index.php';

@@ -23,7 +23,8 @@
     "adapter": "bring-posten",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

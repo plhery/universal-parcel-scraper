@@ -1,10 +1,9 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { normalizeBrtNumber, parseBrt } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { normalizeBrtNumber, parseBrt } from './parser.js';
 
 export class BrtTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}

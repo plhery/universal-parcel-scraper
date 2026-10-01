@@ -1,7 +1,6 @@
-import 'server-only';
 
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { numberOf } from '../shared/result';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { numberOf } from '../shared/result.js';
 
 export const PARCELSAPP_API = 'https://parcelsapp.com/api/v2/parcels';
 

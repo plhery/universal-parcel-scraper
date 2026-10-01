@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // The official portal's statusCodes.json describes both regional code sets.
 // Its presentation TYPE can label pickup as Created and damage or handoff as Delivered.

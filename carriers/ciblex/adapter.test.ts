@@ -2,16 +2,16 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   CiblexTracker,
   adapter,
   ciblexTrackingUrl,
   normalizeCiblexTrackingNumber,
   parseCiblexTrackingHtml,
-} from './adapter';
-import { classifyCiblexStatus, comparableText } from './status';
+} from './adapter.js';
+import { classifyCiblexStatus, comparableText } from './status.js';
 
 // Fully synthetic identifier paired with a deterministic provider-shaped HTML
 // fixture. Ciblex does not publish a reusable demo shipment number.

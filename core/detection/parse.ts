@@ -7,11 +7,11 @@
  * What it is not: it never fetches the pasted URL and performs no provider I/O;
  * every decision comes from the string and the catalog.
  */
-import { TRACKING_LINK_RULES, matchesDomain, type TrackingLinkRule } from '../catalog/linkRules';
-import { keywordNumberInText, recognizedNumberInText } from './candidates';
-import { detectCarrierMatch } from './detect';
-import { validTrackingNumber } from './normalize';
-import type { TrackingInputMatch } from './types';
+import { TRACKING_LINK_RULES, matchesDomain, type TrackingLinkRule } from '../catalog/linkRules.js';
+import { keywordNumberInText, recognizedNumberInText } from './candidates.js';
+import { detectCarrierMatch } from './detect.js';
+import { validTrackingNumber } from './normalize.js';
+import type { TrackingInputMatch } from './types.js';
 
 function trimPastedUrl(raw: string): string {
   return raw.replace(/^[\s<'"(\x5b]+/, '').replace(/[\s>'")\],;.!?]+$/, '');

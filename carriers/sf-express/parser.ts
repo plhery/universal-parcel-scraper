@@ -1,12 +1,11 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { sfExpressEventStatus, sfExpressSummaryStatus } from './status';
+import { ChallengeError, IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { sfExpressEventStatus, sfExpressSummaryStatus } from './status.js';
 
 const PROVIDER = 'SF Express';
 

@@ -47,7 +47,7 @@ native catalog all carry it; everything user-facing says PostNL.
   upstream fix loses nothing.
 - The item's `destination_code` becomes `destination_country`. The host uses it as a hint to
   propose one national-post confirmation for S10 numbers (see
-  [routing](../../../../docs/ROUTING.md)).
+  [routing](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)).
 - Sender name is kept only as a webshop or business name, whitespace-collapsed and capped at
   200 characters. Recipient name, address and signature link are dropped; the fixture carries
   them so the test can assert it.
@@ -63,5 +63,5 @@ native catalog all carry it; everything user-facing says PostNL.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/spring-gds` (no env vars). It checks
+`npm run test:carriers:live -- carriers/spring-gds` (no env vars). It checks
 that a never-issued S10 number returns a clean 404.

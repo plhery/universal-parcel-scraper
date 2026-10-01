@@ -13,8 +13,7 @@
     ]
   },
   "brand": {
-    "color": "#ffcc00",
-    "family": "dhl"
+    "color": "#ffcc00"
   },
   "selectable": true,
   "timezone": "UTC",

@@ -7,7 +7,7 @@
  * I/O; whether a parcel needs the customer's Amazon account is a catalog
  * concern and lives in `core/catalog/amazon`.
  */
-import { CARRIER_CATALOG } from '../../generated/catalog';
+import { CARRIER_CATALOG } from '../../generated/catalog.js';
 
 export const AMAZON_NUMBER_PATTERN = CARRIER_CATALOG['amazon-logistics'].detectionRules[0].pattern;
 

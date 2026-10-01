@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { Settings } from 'luxon';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError } from '../../core/errors';
+import { NotFoundError } from '../../core/errors/index.js';
 import {
   normalizeSwissPostCargoTrackingNumber,
   parseSwissPostCargoResponse,
   SwissPostCargoTracker,
   swissPostCargoTrackingUrl,
-} from './adapter';
-import { statusFor } from './status';
+} from './adapter.js';
+import { statusFor } from './status.js';
 
 const fixture = (name: string): Record<string, unknown> => JSON.parse(
   readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'),

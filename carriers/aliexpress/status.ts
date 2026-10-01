@@ -14,8 +14,8 @@
  * https://github.com/ha-parcel-integrations/ha-cainiao (`parcels.py`
  * `_ACTION_MAP`, 41 codes grouped by leg, MIT).
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 /** Parcel-level order tokens, used only when the newest trace has no action code. */
 export const CAINIAO_STATUS = new Map<string, CarrierStatus>([

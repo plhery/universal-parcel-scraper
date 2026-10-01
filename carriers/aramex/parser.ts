@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { classifyAramexStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { classifyAramexStatus } from './status.js';
 
 export function normalizeAramexNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');

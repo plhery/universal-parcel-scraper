@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AsendiaTracker } from './probe';
+import { AsendiaTracker } from './probe.js';
 
 describe('Asendia live public tracking protocol', () => {
   it('reports the official Turnstile challenge instead of claiming a wrong-number lookup', async () => {

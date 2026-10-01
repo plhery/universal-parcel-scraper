@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import { HermesTracker, parseHermesTrackingResponse } from './adapter';
-import { hermesStatus } from './status';
+import { NotFoundError } from '../../core/errors/index.js';
+import { HermesTracker, parseHermesTrackingResponse } from './adapter.js';
+import { hermesStatus } from './status.js';
 
 const WRONG_HERMES_NUMBER = '12345678';
 const DELIVERED_NUMBER = '62162057330000611';

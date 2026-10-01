@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, FourPxTracker, parse } from './adapter';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, FourPxTracker, parse } from './adapter.js';
 
 const NUMBER = '4PX0000000000001CN';
 const fixture = (name = 'delivered') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));

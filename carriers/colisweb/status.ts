@@ -10,8 +10,8 @@
  * A step that is not listed stays unmapped — the adapter reports the delivery
  * with no stage and the sync classifies it.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedStatus {
   status: CarrierStatus;

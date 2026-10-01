@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * ParcelsApp (parcelsapp.com), a universal aggregator used as the second
@@ -12,24 +11,24 @@ import 'server-only';
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import timers from 'node:timers/promises';
-import type { AdapterFactory } from '../../core/adapter';
-import { carrierTimezone } from '../../core/catalog';
-import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints';
-import { carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { StepRecorder } from '../../core/telemetry';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { carrierTimezone } from '../../core/catalog/index.js';
+import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
+import { carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   canadaProvinceTimeZone, countryCode, countryTimeZone, mislabeledLocalTime, mislabeledWallTime, regionHasTown, sharedClockZone,
   timeZoneCountry, usStateTimeZone,
-} from '../../core/time';
-import type { TrawlClient } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture';
-import { universalCarrierHints } from '../shared/hints';
-import { event, isNotice, localEvent, numberOf, result, type UniversalSource } from '../shared/result';
-import { carrierScan, markReturnLeg, type CarrierScan } from '../shared/scans';
-import { PARCELSAPP_API, ParcelsAppHttpClient } from './http';
+} from '../../core/time/index.js';
+import type { TrawlClient } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
+import { universalCarrierHints } from '../shared/hints.js';
+import { event, isNotice, localEvent, numberOf, result, type UniversalSource } from '../shared/result.js';
+import { carrierScan, markReturnLeg, type CarrierScan } from '../shared/scans.js';
+import { PARCELSAPP_API, ParcelsAppHttpClient } from './http.js';
 
 const SOURCE: UniversalSource = 'ParcelsApp';
 const MAX_EVENTS = 1000;

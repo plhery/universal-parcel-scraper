@@ -26,7 +26,7 @@ Checks, before any history is read:
 ## Notes
 
 - Promotion from `amazon-logistics` needs a structured `SWA` or `MCF` reply. The check lives
-  in the host ([`src/server/amazonShippingEligibility.ts`](../../../../src/server/amazonShippingEligibility.ts))
+  in the host ([`src/server/amazonShippingEligibility.ts`](https://github.com/plhery/delivery-tracker/blob/main/src/server/amazonShippingEligibility.ts))
   because it uses host observability and `HttpError`s. It runs again when a parcel is created
   or its carrier changes; a client-supplied carrier name is never trusted. Guessing
   optimistically would show an account-only parcel as trackable and then never update it.
@@ -55,7 +55,7 @@ Checks, before any history is read:
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/amazon-shipping` probes a wrong
+`npm run test:carriers:live -- carriers/amazon-shipping` probes a wrong
 number. Set `AMAZON_SHIPPING_LIVE_TRACKING_NUMBER` for a real shipment, plus
 `AMAZON_SHIPPING_EXPECT_NOT_FOUND=true` or `AMAZON_SHIPPING_EXPECT_EXPIRED=true` when that
 is the expected outcome.

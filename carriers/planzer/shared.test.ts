@@ -3,7 +3,7 @@ import {
   parsePlanzerTrackingHtml,
   PlanzerSharedTracker,
   validatePlanzerSharedUrl,
-} from './shared';
+} from './shared.js';
 
 const WRONG_SHARED_NUMBER = '9999000000000';
 // A made-up access key of the right shape for the tracking credential.

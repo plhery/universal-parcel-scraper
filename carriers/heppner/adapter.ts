@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Heppner recipient tracking.
@@ -18,18 +17,18 @@ import 'server-only';
  */
 import { Buffer } from 'node:buffer';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { InputRequiredError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import {
   cleanScalar,
   decodeText,
   fetchBounded,
   parseJsonBytes,
   UpstreamHttpError,
-} from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyHeppnerEvent, heppnerCode } from './status';
+} from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyHeppnerEvent, heppnerCode } from './status.js';
 
 const SEARCH_ENDPOINT = 'https://myportal.heppner-group.com/api/recipient/search/expedition';
 const DETAIL_ENDPOINT = 'https://myportal.heppner-group.com/api/recipient/search/detailexpedition';

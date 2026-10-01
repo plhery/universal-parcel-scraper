@@ -1,12 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, EcoscootingTracker } from './adapter';
-import { normalizeEcoscootingNumber, parseEcoscooting } from './parser';
-import { ecoscootingStatus } from './status';
-import metadata from './carrier.json';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, EcoscootingTracker } from './adapter.js';
+import { normalizeEcoscootingNumber, parseEcoscooting } from './parser.js';
+import { ecoscootingStatus } from './status.js';
+import metadata from './carrier.json' with { type: 'json' };
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '000000000000000001';
 const OTHER = '000000000000000002';

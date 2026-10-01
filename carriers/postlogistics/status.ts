@@ -11,7 +11,7 @@
  * code per scan but no stage vocabulary, so events are returned without an
  * explicit stage and the sync records them for review.
  */
-import type { CarrierStatus } from '../../core/result';
+import type { CarrierStatus } from '../../core/result/index.js';
 
 /** Codes that mean the parcel reached its recipient. */
 export const POSTLOGISTICS_DELIVERED_CODES = ['DEL', 'DLV', 'POD', 'SIG'] as const;

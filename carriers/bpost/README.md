@@ -21,11 +21,11 @@ numeric barcodes; only the batch service's explicit absence reply is negative.
 ## Limitations
 
 Scan clocks have no offsets. The adapter preserves their local digits and the
-provider's order; see [ROUTING.md](../../../../docs/ROUTING.md) for unresolved
+provider's order; see [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for unresolved
 history handling. Weight and dimensions have explicit units. Addresses, recipient data,
 delivery instructions and proof assets are excluded.
 
 ## Testing
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/bpost`.
+Run `npm run test:carriers:live -- carriers/bpost`.
 Set `BPOST_TRACKING_NUMBER` outside the repository to check a real parcel.

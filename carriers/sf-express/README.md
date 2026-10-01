@@ -10,8 +10,8 @@ driven by the TRAWL browser service.
    page's own call to
    `GET https://htm.sf-express.com/sf-service-core-web/service/bills/{number}/routes?lang=en&region=tw&translate=&app=bill`.
    - The page opens a GeeTest v4 slider in bind mode with no start button, which TRAWL's generic
-     solver can't drive. The scoped helper [`sf-express-session.mjs`](../../../../ops/trawl/sf-express-session.mjs)
-     solves it; see [`ops/trawl/README.md`](../../../../ops/trawl/README.md).
+     solver can't drive. The scoped helper [`sf-express-session.mjs`](../../trawl/sf-express-session.mjs)
+     solves it; see [`trawl/README.md`](../../trawl/README.md).
    - The page adds its own short-lived verification headers. Each lookup uses a fresh isolated
      context; no cookies, tokens or phone suffix are stored.
    - Only a capture whose URL matches that number and query exactly counts. A hidden widget is not
@@ -50,6 +50,6 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/sf-express` with `FLARESOLVERR_URL` and
+`npm run test:carriers:live -- carriers/sf-express` with `FLARESOLVERR_URL` and
 `SF_EXPRESS_TRACKING_NUMBER`. Optional: `SF_EXPRESS_EXPECTED_EVENTS` (exact event count) and
 `SF_EXPRESS_CHECK_RESTRICTION=1` (checks that a synthetic number gets the restriction).

@@ -1,12 +1,11 @@
-import 'server-only';
 
-import type { AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { zonedTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyPacketaStatus, packetaEventStage } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyPacketaStatus, packetaEventStage } from './status.js';
 
 // Protocol provenance:
 // - Prior art (structure + contract, verified independently below, MIT):

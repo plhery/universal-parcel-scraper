@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { HermesTracker } from './adapter';
+import { HermesTracker } from './adapter.js';
 
 describe('Hermes live anonymous tracking', () => {
   it('still recognizes Hermes\'s public delivered sample', async () => {

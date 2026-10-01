@@ -18,7 +18,8 @@
     "adapter": "ems",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

@@ -6,8 +6,8 @@
  * authority; wording is only consulted for ids the map does not know, so a new
  * id degrades to a sensible stage instead of an invented one.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 /** Observed `sendungsstatusId` values and the status each one means. */
 export const HERMES_STATUS = new Map<number, CarrierStatus>([

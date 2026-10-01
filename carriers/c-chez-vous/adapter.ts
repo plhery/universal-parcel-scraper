@@ -11,17 +11,16 @@
  * credential: never log it, quote it in an issue, or put a real one in a
  * fixture.
  */
-import 'server-only';
 
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
-import { UpstreamHttpError, clean, decodeText, fetchBounded } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { UNKNOWN_STEP, UNKNOWN_STEP_DESCRIPTION, parcelStep, stepDetails } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { UpstreamHttpError, clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { UNKNOWN_STEP, UNKNOWN_STEP_DESCRIPTION, parcelStep, stepDetails } from './status.js';
 
-export { STEP_DETAILS, stepDetails } from './status';
+export { STEP_DETAILS, stepDetails } from './status.js';
 
 const PROVIDER = 'C Chez Vous';
 const TRACKING_BASE = 'https://www.cchezvous.fr/suivi-colis';

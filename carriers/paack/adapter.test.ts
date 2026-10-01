@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   PaackTracker,
   normalizePaackPostcode,
@@ -10,8 +10,8 @@ import {
   paackTrackingUrl,
   parsePaackTrackingHtml,
   parsePaackTrackingResponse,
-} from './adapter';
-import { classifyPaackEvent, statusKey } from './status';
+} from './adapter.js';
+import { classifyPaackEvent, statusKey } from './status.js';
 
 // Paack publishes this synthetic exchange order in its official Postman
 // examples: https://www.postman.com/paacklogistics/paack-apis/folder/1uuw6iw/orders-api

@@ -47,13 +47,13 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
   `clean()` is not used.
 - Scan locations keep the facility's name and number as sent ("Zürich
   Briefzentrum 801050"): the six-digit number is Swiss Post's site number, not
-  the recipient's postcode (see [PRIVACY.md](../../../../PRIVACY.md)). The map
-  places known sites by it ([places](../../../../src/server/places/README.md)).
+  the recipient's postcode (see [PRIVACY.md](https://github.com/plhery/delivery-tracker/blob/main/PRIVACY.md)). The map
+  places known sites by it ([places](../../places/README.md)).
   Recipient name, address, signature and delivery instructions are never read;
   a test asserts it.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/swiss-post` (no env
+`npm run test:carriers:live -- carriers/swiss-post` (no env
 vars; checks that a valid-shaped unknown number returns a clean 404). The
 fixture is constructed in the public result shape with a synthetic number.

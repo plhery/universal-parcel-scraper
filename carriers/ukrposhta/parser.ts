@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon';
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport/text';
-import { isRecord } from '../../core/types';
-import { ukrposhtaReturnCue, ukrposhtaStatus } from './status';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/text.js';
+import { isRecord } from '../../core/types.js';
+import { ukrposhtaReturnCue, ukrposhtaStatus } from './status.js';
 
 const PROVIDER = 'ukrposhta';
 const MAX_SCANS = 500;

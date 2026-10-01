@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { FALLBACK_EVENT_LABELS, STAGE_STATUS, STATUS_MAP, swissPostEventStage } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { FALLBACK_EVENT_LABELS, STAGE_STATUS, STATUS_MAP, swissPostEventStage } from './status.js';
 
 // The public tracker signs an anonymous visitor in before it will search: it
 // creates a throwaway user, echoes a CSRF token, and keys the search result on

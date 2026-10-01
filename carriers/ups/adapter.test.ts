@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { StepRecorder } from '../../core/telemetry';
-import { UPSTracker, parseUPSTrackingHtml, parseUPSTrackingResponse, upsTrackingUrl } from './adapter';
-import { UPS_PROGRESS_STATUS, upsStatus } from './status';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { UPSTracker, parseUPSTrackingHtml, parseUPSTrackingResponse, upsTrackingUrl } from './adapter.js';
+import { UPS_PROGRESS_STATUS, upsStatus } from './status.js';
 
 // 1Z999AA10123456784 is a made-up number in UPS's published format; it is the
 // same value numbers.json records as synthetic. No real shipment, recipient or

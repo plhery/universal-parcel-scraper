@@ -18,7 +18,10 @@
     "steps": [
       "direct"
     ],
-    "recognition": { "rank": 29 }
+    "recognition": {
+      "rank": 29
+    },
+    "localClocks": true
   },
   "capabilities": [
     "history",

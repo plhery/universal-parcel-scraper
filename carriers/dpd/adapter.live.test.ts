@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DPDTracker } from './adapter';
+import { DPDTracker } from './adapter.js';
 
 describe('DPD Switzerland live guest tracking', () => {
   it('recognizes a wrong number or the current browser challenge fallback', async () => {

@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // ConsumerShipmentStatusMain in Posti's public parcels bundle, inspected
 // 2026-09-21. Return movement is not a completed return.

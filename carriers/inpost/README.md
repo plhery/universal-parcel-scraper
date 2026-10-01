@@ -38,6 +38,6 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/inpost`. The wrong-number check
+`npm run test:carriers:live -- carriers/inpost`. The wrong-number check
 needs no env vars; set `INPOST_DELIVERED_TRACKING_NUMBER` to also check a real delivered
 parcel.

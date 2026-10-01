@@ -14,8 +14,8 @@
  * An API label that is in neither map is an error rather than an unmapped
  * event: the adapter refuses to turn unfamiliar wording into history.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 /** Shipment-level English labels from `overallStatus.text.english`. */
 export const PLANZER_STATUS = new Map<string, CarrierStatus>([

@@ -52,5 +52,5 @@ rule.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/dachser` (no env vars). It sends a
+`npm run test:carriers:live -- carriers/dachser` (no env vars). It sends a
 made-up number and hash and accepts either the null-result not-found or the generic 500.

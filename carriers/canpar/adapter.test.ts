@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, CanparTracker } from './adapter';
-import { parseCanpar } from './parser';
-import { canparStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, CanparTracker } from './adapter.js';
+import { parseCanpar } from './parser.js';
+import { canparStatus } from './status.js';
 
 const NUMBER = 'C000000000000000000001';
 const OTHER = 'C000000000000000000002';

@@ -15,9 +15,9 @@
  * classifier leaves unresolved. Future tenses are deliberately *not* delivery:
  * "votre colis va être livré" is an announcement, not a delivery.
  */
-import type { CarrierStatus } from '../../core/result';
-import { languageStageStatus, trackingLanguageStage, type Stage } from '../../core/status';
-import { clean } from '../../core/transport';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { languageStageStatus, trackingLanguageStage, type Stage } from '../../core/status/index.js';
+import { clean } from '../../core/transport/index.js';
 
 /** Progress-bar groups, the coarse key every event carries. */
 export const GROUP_STATUSES = new Map<string, CarrierStatus>([

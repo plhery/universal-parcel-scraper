@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FourPxTracker } from './adapter';
+import { FourPxTracker } from './adapter.js';
 
 describe('4PX live compatibility', () => {
   it.skipIf(!process.env.FOUR_PX_TRACKING_NUMBER)('returns fresh parcel history', async () => {

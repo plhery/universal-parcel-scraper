@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
-import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport';
-import { loadCapture, type CaptureSpec } from './capture';
+import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/index.js';
+import { loadCapture, type CaptureSpec } from './capture.js';
 
 const spec: CaptureSpec = {
   source: '17TRACK',

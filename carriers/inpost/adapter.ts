@@ -1,12 +1,11 @@
-import 'server-only';
 
-import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyInpostStatus } from './status';
+import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyInpostStatus } from './status.js';
 
 // Protocol provenance:
 // - Prior art (structure + vocabulary, verified independently below, MIT):

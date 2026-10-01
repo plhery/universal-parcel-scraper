@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { calendarDay } from '../../core/time';
-import { clean } from '../../core/transport';
-import { classifyCorreosExpressStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { calendarDay } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { classifyCorreosExpressStatus } from './status.js';
 
 const MONTHS: Record<string, number> = { ene: 1, feb: 2, mar: 3, abr: 4, may: 5, jun: 6, jul: 7, ago: 8, sep: 9, oct: 10, nov: 11, dic: 12 };
 const NO_HISTORY = 'Lo sentimos, no se ha encontrado ningún envío con el número indicado.';

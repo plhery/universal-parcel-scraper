@@ -8,8 +8,7 @@
     ]
   },
   "brand": {
-    "color": "#cc0000",
-    "decal": "japan-post"
+    "color": "#cc0000"
   },
   "selectable": true,
   "timezone": "UTC",
@@ -18,7 +17,8 @@
     "adapter": "japan-post",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

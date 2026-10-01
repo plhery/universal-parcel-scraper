@@ -1,12 +1,11 @@
 // @vitest-environment node
 import { describe, expect, it, vi, afterEach } from 'vitest';
 import { chromium } from 'playwright-core';
-import { scrapeUniversalPage } from '@carriers/core/transport/browser';
-import { PostalNinjaTracker, parsePostalNinjaResponse } from '@carriers/providers/postal-ninja/adapter';
-import { Ship24Tracker, parseShip24Response } from '@carriers/providers/ship24/adapter';
+import { scrapeUniversalPage } from '../core/transport/browser.js';
+import { PostalNinjaTracker, parsePostalNinjaResponse } from '../providers/postal-ninja/adapter.js';
+import { Ship24Tracker, parseShip24Response } from '../providers/ship24/adapter.js';
 
 vi.mock('playwright-core', () => ({ chromium: { launch: vi.fn() } }));
-vi.mock('./observability', async importOriginal => ({ ...await importOriginal<typeof import('./observability')>(), reportRoutingEvent: vi.fn() }));
 const number = 'ZZ12345678900';
 const ninja = (events: unknown[] = [
   { dt: '2026-08-17T07:22:00', dsc: 'Out for delivery' },

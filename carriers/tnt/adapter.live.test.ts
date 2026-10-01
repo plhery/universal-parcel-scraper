@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TntExpressTracker, TntFranceTracker } from './adapter';
+import { TntExpressTracker, TntFranceTracker } from './adapter.js';
 
 describe('TNT France anonymous live tracking', () => {
   it.skipIf(!process.env.TNT_FRANCE_TRACKING_NUMBER)('returns matching shipment history', async () => {

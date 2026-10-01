@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { calendarDay } from '../../core/time';
-import { clean } from '../../core/transport';
-import { classifyBrtStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { calendarDay } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { classifyBrtStatus } from './status.js';
 
 export function normalizeBrtNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');

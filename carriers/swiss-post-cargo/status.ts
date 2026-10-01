@@ -7,9 +7,9 @@
  * outcomes that must never be guessed wrong (returns and failures), and the
  * codes settle the rest.
  */
-import { cleanScalar } from '../../core/transport';
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import { cleanScalar } from '../../core/transport/index.js';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 /** Lower-cased, accent-free wording, for language-independent matching. */
 export function comparable(value: unknown): string {

@@ -1,10 +1,9 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser.js';
 
 const ORIGIN = 'https://www.nacex.es';
 const DETAIL_KEYS = new Set(['agencia_origen', 'numero_albaran', 'estado', 'internacional', 'externo', 'usr', 'pas']);

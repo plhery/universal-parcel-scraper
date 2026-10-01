@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { CarrierResult } from '../../core/result';
-import { DHLSessionError, DHLTracker, dhlTrackingUrl, normalizeDHLTrackingNumber, parseDHLTrackingResponse } from './adapter';
+import type { CarrierResult } from '../../core/result/index.js';
+import { DHLSessionError, DHLTracker, dhlTrackingUrl, normalizeDHLTrackingNumber, parseDHLTrackingResponse } from './adapter.js';
 
 const NUMBER = 'LF123456785DE';
 const CONFIG = 'https://www.dhl.de/int-verfolgen/data/config?domain=de&language=en';

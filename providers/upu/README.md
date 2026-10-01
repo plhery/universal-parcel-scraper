@@ -3,7 +3,7 @@
 Last-resort postal fallback. UPU is the data source, not an operator. It is eligible
 only for checksum-valid S10 numbers, which proves neither coverage nor the carrier. It
 always runs last, and a success never gives it affinity or a place in shadow comparisons
-([docs/ROUTING.md](../../../../docs/ROUTING.md)). Persisted provider name: `UPU`.
+([docs/ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)). Persisted provider name: `UPU`.
 
 ## How it works
 
@@ -51,7 +51,7 @@ curl --fail-with-body --max-time 15 \
 Because UPU gives no instant, the host archives its scans (up to 1,000 per lookup
 number). It adds newly seen milestones to the timeline at observation time, and never
 lets UPU advance the UTC watermark or replace richer saved progress. The rules are in
-[docs/ROUTING.md](../../../../docs/ROUTING.md).
+[docs/ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md).
 
 ## Limitations
 

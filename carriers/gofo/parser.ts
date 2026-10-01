@@ -1,11 +1,11 @@
 import { DateTime, IANAZone } from 'luxon';
-import { normalizeTrackingNumber } from '../../core/detection';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { gofoStatus } from './status';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { gofoStatus } from './status.js';
 
 const LABEL_CREATED = '100';
 /** The clock the adapter requests: GOFO prints Pacific clocks with their real offset. */

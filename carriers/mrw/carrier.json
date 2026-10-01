@@ -16,7 +16,8 @@
   "tracking": {
     "mode": "automatic",
     "adapter": "universal",
-    "steps": []
+    "steps": [],
+    "localClocks": true
   },
   "capabilities": [],
   "portal": {

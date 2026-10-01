@@ -20,5 +20,5 @@ references, signatures and proof-of-delivery images.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/ontrac`. Set
+`npm run test:carriers:live -- carriers/ontrac`. Set
 `ONTRAC_TRACKING_NUMBER` to check history for an authorized real parcel.

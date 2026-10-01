@@ -1,11 +1,11 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { UpstreamHttpError } from '../../core/errors';
-import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry';
-import { scrapeUniversalPage } from '../../core/transport/browser';
-import { parseShip24Response, Ship24Tracker } from './adapter';
-import { ship24Checksum, Ship24HttpClient } from './http';
+import { UpstreamHttpError } from '../../core/errors/index.js';
+import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
+import { scrapeUniversalPage } from '../../core/transport/browser.js';
+import { parseShip24Response, Ship24Tracker } from './adapter.js';
+import { ship24Checksum, Ship24HttpClient } from './http.js';
 
 vi.mock('../../core/transport/browser', () => ({ scrapeUniversalPage: vi.fn() }));
 

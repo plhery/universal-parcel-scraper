@@ -7,17 +7,16 @@
  * its result from an allowlist of status, timeline and operational-location
  * fields, so none of that reaches the result or the logs.
  */
-import 'server-only';
 
 import { createHash } from 'node:crypto';
-import type { AdapterFactory } from '../../core/adapter';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyStatus, comparableText, includesAny } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyStatus, comparableText, includesAny } from './status.js';
 
-export { classifyStatus } from './status';
+export { classifyStatus } from './status.js';
 
 const PROVIDER = 'GEODIS';
 const TRACKING_ENDPOINT =

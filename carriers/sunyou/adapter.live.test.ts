@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fetchSunYou } from './adapter';
+import { fetchSunYou } from './adapter.js';
 
 // A validly shaped number that was never issued: SunYou answers with
 // `displayStatus: "0"`, its explicit "no such shipment".

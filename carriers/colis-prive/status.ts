@@ -9,9 +9,9 @@
  * must not be read as a delivery. Wording that matches nothing stays unmapped —
  * the adapter emits the row with no stage and the sync classifies it.
  */
-import type { CarrierStatus } from '../../core/result';
-import { clean } from '../../core/transport';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedStatus {
   status: CarrierStatus;

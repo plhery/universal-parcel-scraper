@@ -65,6 +65,6 @@ rendered status, after that wait.
 ## Testing
 
 No dedicated live test. The wrong-number canary in
-[`src/server/browserProtectedCarriers.live.test.ts`](../../../../src/server/browserProtectedCarriers.live.test.ts)
+[`src/server/browserProtectedCarriers.live.test.ts`](https://github.com/plhery/delivery-tracker/blob/main/src/server/browserProtectedCarriers.live.test.ts)
 accepts either a clean no-result or the exact challenge error above:
 `npm run test:carriers:live -- src/server/browserProtectedCarriers.live.test.ts`.

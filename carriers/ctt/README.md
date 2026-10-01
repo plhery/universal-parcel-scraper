@@ -56,5 +56,5 @@ is a separate carrier.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/ctt`. The unknown-number check needs
+`npm run test:carriers:live -- carriers/ctt`. The unknown-number check needs
 no env vars; set `CTT_DELIVERED_TRACKING_NUMBER` to also check a real delivered parcel.

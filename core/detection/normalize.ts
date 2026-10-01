@@ -1,4 +1,4 @@
-import { postlogisticsIdentifier } from '../../carriers/postlogistics/number';
+import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
 
 /**
  * Tracking-number normalization and display formatting.

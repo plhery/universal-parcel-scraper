@@ -3,10 +3,10 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { CARRIER_CATALOG } from '../generated/catalog';
-import { CARRIER_COVERAGE, COVERAGE_SOURCES, coverageProblems, coverageTiers, isHistory, type CoverageCell } from './coverage';
-import { orderUniversalSources, universalPlan } from './universal';
-import type { UniversalSource } from './shared/result';
+import { CARRIER_CATALOG } from '../generated/catalog.js';
+import { CARRIER_COVERAGE, COVERAGE_SOURCES, coverageProblems, coverageTiers, isHistory, type CoverageCell } from './coverage.js';
+import { orderUniversalSources, universalPlan } from './universal.js';
+import type { UniversalSource } from './shared/result.js';
 
 const providersDirectory = path.dirname(fileURLToPath(import.meta.url));
 const COVERAGE_PATH = path.join(providersDirectory, 'COVERAGE.md');
@@ -124,7 +124,7 @@ describe('coverage evidence', () => {
     const current = readFileSync(COVERAGE_PATH, 'utf8');
     const next = replaceBlock(replaceBlock(current, 'coverage', coverageTable()), 'lookup-order', lookupOrder());
     if (process.env.UPDATE_COVERAGE_TABLES) writeFileSync(COVERAGE_PATH, next);
-    else expect(current, 'Run node packages/carriers/scripts/coverage-tables.mjs').toBe(next);
+    else expect(current, 'Run node scripts/coverage-tables.mjs').toBe(next);
   });
 });
 

@@ -1,18 +1,17 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { isValidMondialRelayBarcode } from '../../core/detection';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps, singleFlight } from '../../core/runner';
-import type { ClassifiedStatus } from '../../core/status';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { isoTime, zonedTime, type ParsedTime } from '../../core/time';
-import { cleanScalar, TrawlClient, trawlBody, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyStatus, milestoneNumberStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { isValidMondialRelayBarcode } from '../../core/detection/index.js';
+import { ChallengeError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps, singleFlight } from '../../core/runner/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
+import { cleanScalar, TrawlClient, trawlBody, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyStatus, milestoneNumberStatus } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://www.mondialrelay.fr/versioned-assets/2nMAiuVI9Rv9J3kZacblPYCfCABwzS-qZ3m7eFBQn4A/Scripts/vue/tracking/js/app.js
@@ -312,7 +311,7 @@ export class MondialRelayTracker {
       this.timeoutMs,
       options.directTimeoutMs ?? DEFAULT_DIRECT_TIMEOUT_MS,
     ));
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.#trawl = options.trawl;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;

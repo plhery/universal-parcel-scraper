@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // The current consumer site's status labels and its published sample history.
 const STATUSES: Record<string, ClassifiedStatus & { wording: string }> = {

@@ -6,7 +6,7 @@
  * What it is not: no provider I/O, no application or framework types. These
  * declarations are erased at build time and safe to import from anywhere.
  */
-import type { CarrierId } from '../../generated/catalog';
+import type { CarrierId } from '../../generated/catalog.js';
 
 export type DetectionConfidence = 'high' | 'low' | 'none';
 

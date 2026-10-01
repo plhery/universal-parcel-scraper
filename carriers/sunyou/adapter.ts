@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * SunYou tracking.
@@ -14,12 +13,12 @@ import 'server-only';
  */
 import { randomInt } from 'node:crypto';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { sunYouStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { sunYouStatus } from './status.js';
 
 const PROVIDER = 'SunYou';
 const UPSTREAM = 'SunYou tracking';

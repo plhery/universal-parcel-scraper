@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, UniuniTracker } from './adapter';
-import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser';
-import { uniuniStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, UniuniTracker } from './adapter.js';
+import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser.js';
+import { uniuniStatus } from './status.js';
 
 const NUMBER = 'UUS0000000000000001';
 const OTHER = 'UUS0000000000000002';

@@ -1,6 +1,6 @@
-import sharp from 'sharp';
-import { ChallengeError, SchemaError } from '../../core/errors';
-import { isRecord } from '../../core/types';
+import { loadSharp } from '../../core/transport/optional.js';
+import { ChallengeError, SchemaError } from '../../core/errors/index.js';
+import { isRecord } from '../../core/types.js';
 
 const PROVIDER = 'Yunda Express';
 const PNG = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
@@ -10,6 +10,7 @@ async function pixels(raw: unknown, width: number, height: number) {
   const bytes = Buffer.from(raw, 'base64');
   if (!bytes.subarray(0, 8).equals(PNG)) throw new SchemaError(PROVIDER, 'Yunda returned an unsupported challenge image');
   try {
+    const sharp = await loadSharp('Yunda');
     const decoder = sharp(bytes, { limitInputPixels: 60_000, failOn: 'warning' });
     const metadata = await decoder.metadata();
     if (metadata.format !== 'png' || metadata.width !== width || metadata.height !== height || (width === 40 && !metadata.hasAlpha)) {

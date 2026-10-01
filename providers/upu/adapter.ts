@@ -1,14 +1,13 @@
-import 'server-only';
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { decodeText, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { eventStage, hasPrivateDeliveryDetails, isNotice, numberOf, result, text } from '../shared/result';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { eventStage, hasPrivateDeliveryDetails, isNotice, numberOf, result, text } from '../shared/result.js';
 
 const SOURCE = 'UPU';
 export const UPU_BUDGET_MS = 8_000;

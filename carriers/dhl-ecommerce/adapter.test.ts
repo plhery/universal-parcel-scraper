@@ -1,12 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { CarrierResult } from '../../core/result';
-import { UpstreamHttpError } from '../../core/transport';
-import * as trackingBrowser from '../../core/transport/browser';
+import type { CarrierResult } from '../../core/result/index.js';
+import { UpstreamHttpError } from '../../core/transport/index.js';
+import * as trackingBrowser from '../../core/transport/browser.js';
 import {
   DHLEcommerceSessionError, DHLEcommerceTracker, dhlEcommerceTrackingUrl,
   normalizeDHLEcommerceNumber, parseDHLEcommerceResponse,
-} from './adapter';
+} from './adapter.js';
 
 const NUMBER = '33870000000000001';
 

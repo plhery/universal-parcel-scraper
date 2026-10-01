@@ -13,7 +13,7 @@
  * which keeps the migration behavior-preserving.
  */
 
-import type { UpstreamHttpDiagnostics } from '../transport/upstreamHttpDiagnostics';
+import type { UpstreamHttpDiagnostics } from '../transport/upstreamHttpDiagnostics.js';
 
 export type { UpstreamHttpDiagnostics };
 

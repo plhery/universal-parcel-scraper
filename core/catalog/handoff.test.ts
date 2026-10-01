@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { deliveryHandoff, hasDirectHandoffAdapter } from './carrierHandoff';
-import { normalizeCarrierResult, type CarrierResult } from '@carriers/core/result';
+import { deliveryHandoff, hasDirectHandoffAdapter } from './handoff.js';
+import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 
 describe('general delivery handoff candidates', () => {
   it('keeps tracking history when optional partner evidence is malformed', () => {

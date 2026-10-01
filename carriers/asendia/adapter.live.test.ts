@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AsendiaA1Tracker } from './adapter';
+import { AsendiaA1Tracker } from './adapter.js';
 
 // Valid shape, never issued.
 const UNKNOWN_NUMBER = 'AS000000000US';

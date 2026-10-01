@@ -1,10 +1,10 @@
-import { normalizeTrackingNumber } from '../../core/detection';
-import { ChallengeError, IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { zonedTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { yundaStatus } from './status';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { ChallengeError, IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { yundaStatus } from './status.js';
 
 const PROVIDER = 'Yunda Express';
 const ZONE = 'Asia/Shanghai';

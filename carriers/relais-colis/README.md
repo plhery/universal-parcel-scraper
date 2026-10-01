@@ -35,5 +35,5 @@ Supply `RELAIS_COLIS_TRACKING_NUMBER` and optionally `RELAIS_COLIS_UNKNOWN_NUMBE
 outside the repository, then run:
 
 ```sh
-npm run test:carriers:live -- packages/carriers/carriers/relais-colis/adapter.live.test.ts
+npm run test:carriers:live -- carriers/relais-colis/adapter.live.test.ts
 ```

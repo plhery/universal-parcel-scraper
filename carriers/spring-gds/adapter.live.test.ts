@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fetchPostNL } from './adapter';
+import { fetchPostNL } from './adapter.js';
 
 // A validly shaped Dutch S10 number that was never issued: PostNL answers with
 // an item that has no events and says the barcode was not found.

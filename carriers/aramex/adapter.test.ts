@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { AramexTracker } from './adapter';
-import { aramexDetailUrl, parseAramex } from './parser';
+import { AramexTracker } from './adapter.js';
+import { aramexDetailUrl, parseAramex } from './parser.js';
 
 const NUMBER = '00000000001';
 const html = readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { KoreaPostTracker } from './adapter';
+import { KoreaPostTracker } from './adapter.js';
 
 describe('Korea Post live compatibility', () => {
   it.skipIf(!process.env.KOREA_POST_TRACKING_NUMBER)('returns fresh international parcel history', async () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { SfExpressTracker } from './adapter';
-import { TrawlClient } from '../../core/transport';
+import { SfExpressTracker } from './adapter.js';
+import { TrawlClient } from '../../core/transport/index.js';
 
 const trawl = TrawlClient.fromEnvironment();
 const number = process.env.SF_EXPRESS_TRACKING_NUMBER;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { NzPostTracker } from './adapter';
+import { NzPostTracker } from './adapter.js';
 
 describe('NZ Post anonymous tracking live', () => {
   it.skipIf(!process.env.NZ_POST_TRACKING_NUMBER)('returns exact-reference history', async () => {

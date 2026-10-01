@@ -10,7 +10,7 @@
  * one, because the shipment-level status says nothing about where the parcel
  * was three days ago.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const DISPLAY_STATUS = new Map<string, ClassifiedStatus>([
   ['1', { status: 'in_transit', stage: 'in_transit' }],

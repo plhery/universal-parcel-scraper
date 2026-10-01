@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { StepRecorder } from '../../core/telemetry';
+import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   parseRoyalMailTrackingHtml,
   parseRoyalMailTrackingResponse,
   RoyalMailTracker,
   royalMailSummaryApiUrl,
   royalMailTrackingUrl,
-} from './adapter';
-import { royalMailStage, royalMailStatus } from './status';
+} from './adapter.js';
+import { royalMailStage, royalMailStatus } from './status.js';
 
 // SG999999999GB and SG999999998GB are made-up numbers in Royal Mail's
 // published S10 format. No real shipment, recipient or signatory appears in

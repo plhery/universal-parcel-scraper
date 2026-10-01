@@ -1,12 +1,11 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean, decodeText, fetchBounded } from '../../core/transport';
-import { evriStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { evriStatus } from './status.js';
 
 const PROVIDER = 'Evri International';
 // The international tracker linked by https://www.evri.com/track-a-parcel.

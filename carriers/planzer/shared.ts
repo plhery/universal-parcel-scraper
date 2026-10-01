@@ -1,4 +1,5 @@
-import 'server-only';
+import { validatePlanzerSharedUrl } from '../../core/catalog/urls.js';
+export { validatePlanzerSharedUrl } from '../../core/catalog/urls.js';
 
 /**
  * Planzer shared shipments.
@@ -14,24 +15,21 @@ import 'server-only';
  * timestamp.
  */
 import { load } from 'cheerio';
-import { NotFoundError, SchemaError } from '../../core/errors';
-import { isPlanzerSharedTrackingNumber, normalizeTrackingNumber } from '../../core/detection';
-import type { CarrierResult } from '../../core/result';
-import { decodeText, fetchBounded } from '../../core/transport';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { isPlanzerSharedTrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
 import {
   PLANZER_ROUTE_STAGES,
   PLANZER_ROUTE_STATUS,
   planzerRouteStage,
   type PlanzerRouteStage,
-} from './status';
+} from './status.js';
 
 export { isPlanzerSharedTrackingNumber, normalizeTrackingNumber };
 
 const PROVIDER = 'Planzer';
 const UPSTREAM = 'Planzer shared tracking';
-const PLANZER_SHARED_HOST = 'trackandtrace.planzergroup.com';
-const PLANZER_SHARED_PATH = /^\/shared\/sendungen\/([^/]+)\/?$/;
-const PLANZER_ACCESS_KEY = /^[A-Za-z0-9_-]{32,256}$/;
 const DEFAULT_TIMEOUT_MS = 15_000;
 const EVENT_DESCRIPTIONS: Record<PlanzerRouteStage, string> = {
   registered: 'Shipment registered by Planzer',
@@ -57,44 +55,7 @@ interface RouteStep {
  * Accepts only a complete, https Planzer shared link for this very shipment,
  * with exactly one well-formed access key. Returns the canonical URL to fetch.
  */
-export function validatePlanzerSharedUrl(rawUrl: string, trackingNumber: string): string {
-  const value = rawUrl.trim();
-  if (value.length < 1 || value.length > 4_096) {
-    throw new TypeError('Paste the complete Planzer tracking URL');
-  }
-  let url: URL;
-  try {
-    url = new URL(value);
-  } catch (error) {
-    throw new TypeError('Paste a valid Planzer tracking URL', { cause: error });
-  }
-  if (
-    url.protocol !== 'https:'
-    || url.hostname.toLowerCase() !== PLANZER_SHARED_HOST
-    || url.username
-    || url.password
-    || (url.port && url.port !== '443')
-    || url.hash
-  ) {
-    throw new TypeError(`Planzer shared links must use https://${PLANZER_SHARED_HOST}`);
-  }
-  let pathname: string;
-  try {
-    pathname = decodeURIComponent(url.pathname);
-  } catch (error) {
-    throw new TypeError('Paste a valid Planzer tracking URL', { cause: error });
-  }
-  const match = PLANZER_SHARED_PATH.exec(pathname);
-  if (!match) throw new TypeError('Paste a Planzer shared shipment URL');
-  if (normalizeTrackingNumber(match[1]!) !== normalizeTrackingNumber(trackingNumber)) {
-    throw new TypeError('The Planzer URL belongs to a different tracking number');
-  }
-  const accessKeys = url.searchParams.getAll('accessKey');
-  if (accessKeys.length !== 1 || !PLANZER_ACCESS_KEY.test(accessKeys[0]!)) {
-    throw new TypeError('The Planzer URL must include its accessKey');
-  }
-  return url.toString();
-}
+
 
 /** Projects one shared route page. Pure: the offline tests target this. */
 export function parsePlanzerTrackingHtml(html: string, trackingNumber: string): CarrierResult {

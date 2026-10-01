@@ -35,5 +35,5 @@ expire.
 ## Testing
 
 Set `TNT_TRACKING_NUMBER` (9 digits) or `TNT_FRANCE_TRACKING_NUMBER` (16 digits) outside
-the repository, then run `npm run test:carriers:live -- packages/carriers/carriers/tnt`.
+the repository, then run `npm run test:carriers:live -- carriers/tnt`.
 The wrong-number check runs without either.

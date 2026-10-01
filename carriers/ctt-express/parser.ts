@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { calendarDay, explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyCttExpressStatus } from './status';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyCttExpressStatus } from './status.js';
 
 export function normalizeCttExpressNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');

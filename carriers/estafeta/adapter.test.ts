@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, EstafetaTracker } from './adapter';
-import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser';
-import { estafetaStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, EstafetaTracker } from './adapter.js';
+import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
+import { estafetaStatus } from './status.js';
 
 const NUMBER = '9000000001';
 const GUIDE = '100000000000000A00TEST';

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   GeodisTracker,
   GeodisTrackingError,
@@ -11,8 +11,8 @@ import {
   geodisTrackingUrl,
   normalizeGeodisTrackingNumber,
   parseGeodisTrackingResponse,
-} from './adapter';
-import { classifyStatus } from './status';
+} from './adapter.js';
+import { classifyStatus } from './status.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const OFFICIAL_SYNTHETIC_NUMBER = '1G123GEODIS0';

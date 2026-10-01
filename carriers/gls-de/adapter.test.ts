@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { JsonObject } from '../../core/types';
-import { GLSGermanyTracker } from './adapter';
+import type { JsonObject } from '../../core/types.js';
+import { GLSGermanyTracker } from './adapter.js';
 
 const NUMBER = '12345678901';
 

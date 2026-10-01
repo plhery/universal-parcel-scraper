@@ -13,9 +13,9 @@
  * The provider's own wording is never returned; each mapped entry supplies the
  * English description we display.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
-import type { JsonObject } from '../../core/types';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
+import type { JsonObject } from '../../core/types.js';
 
 export interface ClassifiedPaackStatus {
   status: CarrierStatus;

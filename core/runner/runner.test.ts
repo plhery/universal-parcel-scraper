@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import { ChallengeError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../errors';
-import type { LookupRecord, StepRecord, StepRecorder } from '../telemetry';
-import { recoverableByDefault, runSteps, singleFlight } from './index';
+import { ChallengeError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../errors/index.js';
+import type { LookupRecord, StepRecord, StepRecorder } from '../telemetry/index.js';
+import { recoverableByDefault, runSteps, singleFlight } from './index.js';
 
 function recorder(): StepRecorder & { steps: StepRecord[]; lookups: LookupRecord[] } {
   const steps: StepRecord[] = [];

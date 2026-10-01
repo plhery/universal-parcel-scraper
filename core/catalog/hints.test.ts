@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   brandCarrierIds, brandTimeZones, carrierIdFromName, carrierIdFromPartner, carrierIdFromPartnerLinks, carrierNameCountryZone, isKnownCarrierName,
   nationalPostCandidate,
-} from './hints';
+} from './hints.js';
 
 describe('brand networks', () => {
   it('lists the catalog networks of a bare or group brand name', () => {

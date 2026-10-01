@@ -6,9 +6,9 @@
  * What it is not: no carrier decision of its own (it defers to the detection
  * engine) and no provider I/O.
  */
-import { AMAZON_NUMBER_PATTERN } from './amazon';
-import { detectCarrierMatch } from './detect';
-import { validTrackingNumber } from './normalize';
+import { AMAZON_NUMBER_PATTERN } from './amazon.js';
+import { detectCarrierMatch } from './detect.js';
+import { validTrackingNumber } from './normalize.js';
 
 export const TRACKING_CANDIDATE_PATTERNS = [
   new RegExp(`\\b${AMAZON_NUMBER_PATTERN.slice(1, -1).replaceAll('[0-9]', '(?:[\\s.-]*[0-9])')}\\b`, 'gi'),

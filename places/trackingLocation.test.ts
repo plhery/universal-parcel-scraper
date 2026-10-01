@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { countryFlag, countryName, trackingLocationCountry, trackingPlace } from './trackingLocation';
+import { countryFlag, countryName, trackingLocationCountry, trackingPlace } from './trackingLocation.js';
 
 describe('tracking places', () => {
   it.each([
@@ -39,7 +39,7 @@ describe('tracking places', () => {
       return code === 'CN' ? 'China mainland' : of.call(this, code);
     });
     vi.resetModules();
-    const fresh = await import('./trackingLocation');
+    const fresh = await import('./trackingLocation.js');
     expect(fresh.trackingPlace('Shenzhen, China')).toEqual({ country: 'CN', place: 'Shenzhen' });
     expect(fresh.trackingLocationCountry('Canton, Chine')).toBe('CN');
     expect(fresh.countryName('CN', 'en-GB')).toBe('China');

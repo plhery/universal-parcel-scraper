@@ -1,13 +1,12 @@
-import 'server-only';
 
-import type { AdapterFactory } from '../../core/adapter';
-import { InputRequiredError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { isoTime, zonedTime, type ParsedTime } from '../../core/time';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { referenceConsignment } from './reference';
-import { statusFor } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { referenceConsignment } from './reference.js';
+import { statusFor } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30): the source map published by the
 // official public tracker posts { Identifier } to this anonymous endpoint and

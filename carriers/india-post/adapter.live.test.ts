@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import { IndiaPostTracker } from './adapter';
+import { NotFoundError } from '../../core/errors/index.js';
+import { IndiaPostTracker } from './adapter.js';
 
 // Live compatibility checks for the MySpeedPost Livewire flow. The wrong-number
 // case runs in the opt-in live suite; the real-parcel case additionally needs a

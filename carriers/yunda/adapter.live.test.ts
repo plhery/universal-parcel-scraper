@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { YundaTracker } from './adapter';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { YundaTracker } from './adapter.js';
 
 const number = process.env.YUNDA_TRACKING_NUMBER;
 describe.skipIf(!number)('Yunda anonymous live tracking', () => {

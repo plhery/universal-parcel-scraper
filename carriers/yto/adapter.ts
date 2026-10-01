@@ -1,11 +1,10 @@
-import 'server-only';
 
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeYtoNumber, parseYto } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeYtoNumber, parseYto } from './parser.js';
 
 // Current domestic website request builder, queryWaybillTrackList:
 // https://www.yto.net.cn/ (Nuxt client). This endpoint accepts anonymous reads.

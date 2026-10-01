@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { fetchCainiao } from './adapter';
-import { normalizeCarrierResult } from '../../core/result';
+import { fetchCainiao } from './adapter.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
 
 // A validly shaped number that was never issued: the endpoint answers with an
 // empty external module, which is Cainiao's "unknown shipment".

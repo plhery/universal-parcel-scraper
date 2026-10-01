@@ -40,7 +40,7 @@ Cainiao's other `CN` families, such as `CNUSUP`, belong to other networks.
 ## Live test
 
 Set `ECOSCOOTING_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/ecoscooting/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/ecoscooting/adapter.live.test.ts`.
 Optionally set `ECOSCOOTING_UNKNOWN_NUMBER` to check an inconclusive query error.
 Set `ECOSCOOTING_PORTUGAL_NUMBER` to check the `CN` reference completion schema.
 Set `ECOSCOOTING_PICKUP_NUMBER` to a parcel collected at a pickup point to check

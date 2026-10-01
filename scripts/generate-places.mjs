@@ -1,9 +1,9 @@
-// Builds src/server/places/places.tsv.br, the offline gazetteer that turns the
+// Builds places/places.tsv.br, the offline gazetteer that turns the
 // free-text locations carriers print into map places.
 //
 // Sources, downloaded into a cache directory on the first run:
 // - GeoNames cities1000 and postal codes, CC BY 4.0: https://www.geonames.org
-// - Country label points from src/components/map/world.json (Natural Earth, public domain)
+// - Country label points from places/countries.json (Natural Earth, public domain)
 //
 // Run: node scripts/generate-places.mjs [cache directory]. Needs `unzip`.
 import { execFileSync } from 'node:child_process';
@@ -11,11 +11,11 @@ import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { brotliCompressSync, constants } from 'node:zlib';
-import { nameKey, nameKeys } from '../src/server/places/names.mjs';
+import { nameKey, nameKeys } from '../places/names.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const cache = process.argv[2] ?? '/tmp/delivery-tracker-places';
-const output = join(root, 'src/server/places/places.tsv.br');
+const cache = process.argv[2] ?? '/tmp/universal-parcel-scraper-places';
+const output = join(root, 'places/places.tsv.br');
 // Small towns in these countries often host sorting centres, so every
 // locality in their postal files becomes a place.
 const LOCALITY_COUNTRIES = ['CH', 'LI', 'AT', 'DE', 'FR', 'IT'];
@@ -107,7 +107,7 @@ for (const country of LOCALITY_COUNTRIES) {
   }
 }
 
-const world = JSON.parse(await readFile(join(root, 'src/components/map/world.json'), 'utf8'));
+const world = JSON.parse(await readFile(join(root, 'places/countries.json'), 'utf8'));
 const countries = world.countries.filter((country) => country.code && country.label)
   .map((country) => [country.code, country.name, country.label[0], country.label[1]])
   .sort(([a], [b]) => a.localeCompare(b));

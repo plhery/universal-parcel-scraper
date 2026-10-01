@@ -27,4 +27,4 @@ empty pages, generic HTTP errors and missing histories remain inconclusive.
 
 Set `NACEX_TRACKING_NUMBER` to an authorized real reference and optionally
 `NACEX_UNKNOWN_NUMBER` to a valid-looking unknown reference, then run
-`npm run test:carriers:live -- packages/carriers/carriers/nacex`.
+`npm run test:carriers:live -- carriers/nacex`.

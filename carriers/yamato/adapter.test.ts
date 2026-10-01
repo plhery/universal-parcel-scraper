@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, normalizeYamatoNumber, parse, YamatoTracker } from './adapter';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, normalizeYamatoNumber, parse, YamatoTracker } from './adapter.js';
 
 const NUMBER = '123456789012';
 const fixture = () => readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');

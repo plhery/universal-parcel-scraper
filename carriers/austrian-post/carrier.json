@@ -8,11 +8,7 @@
     ]
   },
   "brand": {
-    "color": "#ffdc00",
-    "palette": {
-      "accent": "#1a1a1a",
-      "brand-light": "#1a1a1a"
-    }
+    "color": "#ffdc00"
   },
   "selectable": true,
   "timezone": "Europe/Vienna",

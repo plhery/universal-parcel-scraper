@@ -1,16 +1,16 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import { normalizeCarrierResult } from '../../core/result';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
 import {
   normalizePosMalaysiaTrackingNumber,
   parsePosMalaysiaTrackingResponse,
   posMalaysiaTrackingUrl,
   PosMalaysiaTracker,
   adapter,
-} from './adapter';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { classifyPosMalaysiaStatus, isMappedPosMalaysiaSummary } from './status';
+} from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { classifyPosMalaysiaStatus, isMappedPosMalaysiaSummary } from './status.js';
 
 // All identifiers, timestamps, offices and names below are synthetic. Event
 // wordings and process summaries reuse the vendor's fixed English texts found

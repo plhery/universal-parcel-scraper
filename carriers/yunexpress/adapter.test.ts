@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright-core';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { TrawlClient, type TrawlScrapeResponse } from '../../core/transport';
-import { adapter, parse, parseCaptured, YunExpressTracker } from './adapter';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
+import { adapter, parse, parseCaptured, YunExpressTracker } from './adapter.js';
 
 const NUMBER = 'YT0000000000000001';
 const API = 'https://services.yuntrack.com/Track/Query';

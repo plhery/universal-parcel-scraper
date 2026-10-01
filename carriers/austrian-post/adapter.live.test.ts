@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AustrianPostTracker } from './adapter';
+import { AustrianPostTracker } from './adapter.js';
 
 describe('Austrian Post anonymous live tracking', () => {
   it.skipIf(!process.env.AUSTRIAN_POST_TRACKING_NUMBER)('returns identity-bound tracking history', async () => {

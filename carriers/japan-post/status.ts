@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // Exact English tracking labels from the official Japan Post result table and
 // its tracking notices. Provenance is recorded in statuses.json.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clean, cleanScalar, escapeRegExp, textFromHtml } from './text';
+import { clean, cleanScalar, escapeRegExp, textFromHtml } from './text.js';
 
 describe('text helpers', () => {
   it('collapses whitespace and caps length', () => {

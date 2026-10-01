@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SchemaError } from '../../core/errors';
+import { SchemaError } from '../../core/errors/index.js';
 import {
   normalizeCttTrackingNumber,
   cttTrackingUrl,
   parseCttTrackingResponse,
   CttTracker,
   CttMaintenanceError,
-} from './adapter';
-import { classifyCttStatus } from './status';
+} from './adapter.js';
+import { classifyCttStatus } from './status.js';
 
 // All identifiers and timestamps below are synthetic. Portuguese status labels
 // reuse the vendor's fixed texts observed live on a delivered parcel, so

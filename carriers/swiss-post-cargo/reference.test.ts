@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { referenceConsignment } from './reference';
+import { referenceConsignment } from './reference.js';
 
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;

@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { zonedTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { classifyBlueDartStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { classifyBlueDartStatus } from './status.js';
 
 export function normalizeBlueDartNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');

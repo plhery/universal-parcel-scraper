@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import fixture from './fixtures/returned.json';
-import { NinjaVanTracker, adapter } from './adapter';
-import { normalizeNinjaVanNumber, parseNinjaVan, parseNinjaVanNotFound } from './parser';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import fixture from './fixtures/returned.json' with { type: 'json' };
+import { NinjaVanTracker, adapter } from './adapter.js';
+import { normalizeNinjaVanNumber, parseNinjaVan, parseNinjaVanNotFound } from './parser.js';
 
 const NUMBER = 'NLMYA00000000';
 const clone = () => structuredClone(fixture);

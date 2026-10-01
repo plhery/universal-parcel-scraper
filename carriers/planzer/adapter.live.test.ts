@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { fetchPlanzer } from './adapter';
-import { PlanzerSharedTracker } from './shared';
+import { fetchPlanzer } from './adapter.js';
+import { PlanzerSharedTracker } from './shared.js';
 
 describe('Planzer live anonymous tracking', () => {
   it.skipIf(!process.env.QUICKPAC_DELIVERED_TRACKING_NUMBER)(

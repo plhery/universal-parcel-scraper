@@ -1,7 +1,8 @@
 import { isIP } from 'node:net';
 import { pathToFileURL } from 'node:url';
-import contract from '../../contracts/openapi.json' with { type: 'json' };
-import { writeCanaryReport } from '../../scripts/canary-report.mjs';
+import catalog from '../data/catalog.json' with { type: 'json' };
+const contract = { 'x-carriers': catalog };
+import { writeCanaryReport } from './canary-report.mjs';
 
 const DEFAULT_TIMEOUT_MS = 15_000;
 const DEFAULT_ATTEMPTS = 2;

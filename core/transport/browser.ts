@@ -1,8 +1,8 @@
-import 'server-only';
+import { loadChromium } from './optional.js';
 
-import { chromium, type Browser, type Page, type Response } from 'playwright-core';
-import type { CarrierResult } from '../result';
-import { UpstreamHttpError } from '../errors';
+import type { Browser, Page, Response } from 'playwright-core';
+import type { CarrierResult } from '../result/index.js';
+import { UpstreamHttpError } from '../errors/index.js';
 
 export interface UniversalBrowserOptions {
   executablePath?: string;
@@ -25,7 +25,7 @@ export async function scrapeUniversalPage(
   },
   parse: (payload: unknown) => CarrierResult,
 ): Promise<CarrierResult> {
-  const executablePath = options.executablePath ?? process.env.TRACKING_CHROMIUM_PATH;
+  const executablePath = options.executablePath;
   if (!executablePath) throw new Error(`${spec.name} requires TRACKING_CHROMIUM_PATH`);
   const timeoutMs = options.timeoutMs ?? 45_000;
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 60_000) throw new TypeError('Browser tracking timeout must be between 1 and 60000 ms');
@@ -37,7 +37,7 @@ export async function scrapeUniversalPage(
   try {
     const deadline = Date.now() + timeoutMs;
     // Do not pass the application environment (database/API secrets) to Chromium.
-    browser = await chromium.launch({ executablePath, headless: true,
+    browser = await (await loadChromium(spec.name)).launch({ executablePath, headless: true,
       args: ['--disable-blink-features=AutomationControlled', '--disable-dev-shm-usage'], timeout: Math.min(timeoutMs, 10_000),
       env: { PATH: process.env.PATH ?? '', HOME: process.env.HOME ?? '/tmp', LANG: 'en_US.UTF-8' } });
     const platform = process.platform === 'darwin' ? 'Macintosh; Intel Mac OS X 10_15_7' : 'X11; Linux x86_64';

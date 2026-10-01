@@ -34,5 +34,5 @@ are omitted. Proof lookup requires a postcode and is not queried.
 ## Live test
 
 Set `GOFO_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/gofo/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/gofo/adapter.live.test.ts`.
 Optionally set `GOFO_UNKNOWN_NUMBER` to check explicit absence.

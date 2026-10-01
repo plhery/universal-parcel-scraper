@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { BringTracker } from './adapter';
-import { normalizeBringNumber, parseBring } from './parser';
-import { bringStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { BringTracker } from './adapter.js';
+import { normalizeBringNumber, parseBring } from './parser.js';
+import { bringStatus } from './status.js';
 
 const NUMBER = '00000000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

@@ -1,14 +1,13 @@
-import 'server-only';
 
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import type { StepRecorder } from '../../core/telemetry';
-import { zonedTime } from '../../core/time';
-import { TrawlClient, clean, decodeText, fetchBounded } from '../../core/transport';
-import { classifyStatus, comparableText, includesAny } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { TrawlClient, clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { classifyStatus, comparableText, includesAny } from './status.js';
 
 // Protocol provenance:
 // - DPD France publishes a server-rendered recipient page rather than a
@@ -235,7 +234,7 @@ export class DPDFranceTracker {
     ));
     this.budgetMs = options.budgetMs
       ?? this.directTimeoutMs + this.timeoutMs + SOLVER_ALLOWANCE_MS;
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.fetcher = options.fetcher;
     this.configuredTrawl = options.trawl;
     this.recorder = options.recorder;

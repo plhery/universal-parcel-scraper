@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { DelhiveryTracker } from './adapter';
-import { parseDelhivery } from './parser';
+import { DelhiveryTracker } from './adapter.js';
+import { parseDelhivery } from './parser.js';
 
 const NUMBER = '0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

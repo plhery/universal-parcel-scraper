@@ -1,14 +1,13 @@
-import 'server-only';
 
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, ChallengeError, InputRequiredError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import type { StepRecorder } from '../../core/telemetry';
-import { explicitOffsetTime, epochMillisTime } from '../../core/time';
-import { clean, TrawlClient } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { australiaPostStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, ChallengeError, InputRequiredError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { explicitOffsetTime, epochMillisTime } from '../../core/time/index.js';
+import { clean, TrawlClient } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { australiaPostStatus } from './status.js';
 
 const PROVIDER = 'Australia Post';
 const DETAIL = 'https://auspost.com.au/mypost/track/details/';

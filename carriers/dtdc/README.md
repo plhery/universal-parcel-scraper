@@ -22,4 +22,4 @@ booking information and unlabelled weight values are excluded.
 ## Testing
 
 Set `DTDC_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/dtdc/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/dtdc/adapter.live.test.ts`.

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import { PosteItalianeTracker } from './adapter';
+import { NotFoundError } from '../../core/errors/index.js';
+import { PosteItalianeTracker } from './adapter.js';
 
 // Live compatibility checks for the keyless DoveQuando endpoint. Unknown codes
 // answer esitoRicerca "1"; old expired parcels omit esitoRicerca with empty

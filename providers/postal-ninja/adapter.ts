@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Postal Ninja (postal.ninja), an opt-in universal aggregator.
@@ -11,16 +10,16 @@ import 'server-only';
  * `TRACKING_ENABLE_POSTAL_NINJA=true` puts it in the chain before 17TRACK.
  */
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, NoHistoryError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { StepRecorder } from '../../core/telemetry';
-import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport';
-import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser';
-import { isRecord } from '../../core/types';
-import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture';
-import { event, eventStage, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/index.js';
+import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
+import { isRecord } from '../../core/types.js';
+import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
+import { event, eventStage, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
 const GET_API = 'https://postal.ninja/track/get';

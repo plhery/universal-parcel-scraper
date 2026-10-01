@@ -23,5 +23,5 @@ inputs and are outside this adapter's scope.
 ## Live test
 
 Set `CANPAR_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/canpar/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/canpar/adapter.live.test.ts`.
 Optionally set `CANPAR_UNKNOWN_NUMBER` to check an inconclusive empty result.

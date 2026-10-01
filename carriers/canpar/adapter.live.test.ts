@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CanparTracker } from './adapter';
+import { CanparTracker } from './adapter.js';
 
 describe('Canpar live tracking', () => {
   it.skipIf(!process.env.CANPAR_TRACKING_NUMBER)('returns identity-bound history', async () => {

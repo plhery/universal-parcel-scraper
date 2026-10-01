@@ -21,7 +21,7 @@ Both paths:
 
 1. Open `https://postal.ninja/en/tools`, fill the official embedded widget, untick "save
    this parcel" so no stored parcel is left behind, and submit. The TRAWL
-   [compatibility build](../../../../ops/trawl/README.md) uses `#trawl-number=<number>`
+   [compatibility build](../../trawl/README.md) uses `#trawl-number=<number>`
    as its own marker to trigger that submission. It is not an upstream deep link.
 2. The widget gets a Turnstile token and signs its requests:
    `POST /track/check` with `{tc, ds: null, lang}` returns `PROCESSING` and a handle.
@@ -76,7 +76,7 @@ numbers or handles cannot end the lookup.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/providers/postal-ninja` with
+`npm run test:carriers:live -- providers/postal-ninja` with
 `FLARESOLVERR_URL` set: two successive lookups of a public reference, and a synthetic
 untraceable number that must stay inconclusive. The local Chromium path is covered by
 `src/server/universalScrapers.live.test.ts` with `TRACKING_CHROMIUM_PATH`. Unit tests use

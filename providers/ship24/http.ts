@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * The signed request the public Ship24 web app makes for one parcel.
@@ -10,7 +9,7 @@ import 'server-only';
  * browser fingerprint or issued token is involved. See README.md.
  */
 import { createHash, createHmac } from 'node:crypto';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 
 const PAGE = 'https://www.ship24.com/tracking';
 // Public website checksum configuration, not a provisioned API credential.

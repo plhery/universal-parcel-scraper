@@ -1,14 +1,13 @@
-import 'server-only';
 
 import { createHash } from 'node:crypto';
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { clean, decodeText, fetchBounded } from '../../core/transport';
-import { yanwenStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { yanwenStatus } from './status.js';
 
 // This constant is shipped in the public browser script; it is part of the
 // anonymous form protocol, not a customer or account credential.

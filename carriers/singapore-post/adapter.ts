@@ -1,14 +1,13 @@
-import 'server-only';
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { singaporePostStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { singaporePostStatus } from './status.js';
 
 const ENDPOINT = 'https://www.singpost.com/api/services/track-events';
 

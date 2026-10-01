@@ -9,7 +9,7 @@
  *
  * The corpus is a characterization of today's engine. A failure here means
  * detection changed: decide whether that change was intended, then update the
- * records and the golden file (`node packages/carriers/scripts/detection-golden.mjs`).
+ * records and the golden file (`node scripts/detection-golden.mjs`).
  */
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -22,7 +22,7 @@ import {
   isValidMondialRelayBarcode,
   isValidS10TrackingNumber,
   normalizeTrackingNumber,
-} from '../detection';
+} from '../detection/index.js';
 import {
   CARRIERS_DIRECTORY,
   carrierFolders,
@@ -30,8 +30,8 @@ import {
   loadNumberCorpusFiles,
   positiveRecords,
   type CorpusRecord,
-} from './corpus';
-import { buildDetectionGolden, readDetectionGolden, writeDetectionGolden } from './golden';
+} from './corpus.js';
+import { buildDetectionGolden, readDetectionGolden, writeDetectionGolden } from './golden.js';
 
 interface DetectionRule {
   readonly id: string;
@@ -225,7 +225,7 @@ describe('declared collisions', () => {
 });
 
 describe('swift golden file', () => {
-  it('matches the committed contracts/fixtures/detection-golden.json', () => {
+  it('matches the committed data/detection-golden.json', () => {
     if (process.env.UPDATE_DETECTION_GOLDEN) {
       expect(writeDetectionGolden().length).toBe(buildDetectionGolden().length);
       return;

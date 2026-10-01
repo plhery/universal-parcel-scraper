@@ -16,7 +16,7 @@ picks AliExpress or pastes a `global.cainiao.com` link.
 - The partner number comes from `copyRealMailNo`; only when that is missing or malformed is it
   extracted from the display prose in `realMailNo`. It is returned as `delivery_tracking_number`,
   with `destCountry` as `destination_country_name`.
-- The host decides whether to hand off to the partner; see [`docs/ROUTING.md`](../../../../docs/ROUTING.md).
+- The host decides whether to hand off to the partner; see [`docs/ROUTING.md`](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md).
   Checksum-valid `L…CH` numbers keep a Swiss Post confirmation probe unless Cainiao names another
   destination. The destination label only restricts that probe; it never picks the operator.
 
@@ -50,5 +50,5 @@ picks AliExpress or pastes a `global.cainiao.com` link.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/aliexpress` needs no env vars. It checks
+`npm run test:carriers:live -- carriers/aliexpress` needs no env vars. It checks
 not-found with a synthetic number and handoff extraction on the public example in `numbers.json`.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { trackingPageVerdict } from './trackingLinkProbe';
+import { trackingPageVerdict } from './trackingLinkProbe.js';
 
 const route = /^https:\/\/carrier\.example\/tracking(?:\?|$)/;
 const marker = /track your parcel/i;

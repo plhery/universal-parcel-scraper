@@ -13,7 +13,7 @@
  * `in_transit` stage placeholder, which the adapter only uses as an event stage
  * when a more specific source has already set the shipment status.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 /** Fold a French label to the form the phrase lists are written in. */
 export function comparableText(value: string): string {

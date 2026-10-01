@@ -8,9 +8,9 @@
  * stays unmapped: the adapter emits the event without a stage and the sync
  * classifies and records it for review.
  */
-import type { CarrierStatus } from '../../core/result';
-import { cleanScalar } from '../../core/transport';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { cleanScalar } from '../../core/transport/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface GLSFranceStatusMetadata {
   status: CarrierStatus;

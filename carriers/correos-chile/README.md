@@ -25,4 +25,4 @@ The page can return a browser challenge instead of an anonymous session.
 
 Set `CORREOS_CHILE_TRACKING_NUMBER` to an authorized real reference and
 optionally `CORREOS_CHILE_UNKNOWN_NUMBER` to a valid-looking unknown reference,
-then run `npm run test:carriers:live -- packages/carriers/carriers/correos-chile`.
+then run `npm run test:carriers:live -- carriers/correos-chile`.

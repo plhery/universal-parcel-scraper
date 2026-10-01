@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CttExpressTracker } from './adapter';
+import { CttExpressTracker } from './adapter.js';
 
 describe('CTT Express live tracking', () => {
   it.skipIf(!process.env.CTT_EXPRESS_TRACKING_NUMBER)('returns matching real history', async () => {

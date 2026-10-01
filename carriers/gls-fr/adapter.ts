@@ -7,24 +7,23 @@
  * operational-location fields, so recipient names, street addresses, contacts,
  * signatures and delivery instructions never leave this module.
  */
-import 'server-only';
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { isValidGlsParcelNumber } from '../../core/detection';
-import { SchemaError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { isValidGlsParcelNumber } from '../../core/detection/index.js';
+import { SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   FAILED_DELAYED_DELIVERY,
   glsFranceStatusCode,
   glsFranceStatusMetadata,
   type GLSFranceStatusMetadata,
-} from './status';
+} from './status.js';
 
-export { glsFranceStatus } from './status';
+export { glsFranceStatus } from './status.js';
 
 const PROVIDER = 'GLS France';
 const TRACKING_API =

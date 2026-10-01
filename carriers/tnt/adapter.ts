@@ -1,14 +1,13 @@
-import 'server-only';
 
 import { load } from 'cheerio';
-import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { normalizeTrackingNumber } from '../../core/detection';
-import { ChallengeError, IndeterminateError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime, zonedTime } from '../../core/time';
-import { clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { tntExpressStatus, tntFranceStatus } from './status';
+import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { ChallengeError, IndeterminateError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
+import { clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { tntExpressStatus, tntFranceStatus } from './status.js';
 
 const PROVIDER = 'TNT France';
 const ENDPOINT = 'https://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do';

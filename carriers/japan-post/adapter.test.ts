@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, JapanPostTracker, normalizeJapanPostNumber, parse } from './adapter';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, JapanPostTracker, normalizeJapanPostNumber, parse } from './adapter.js';
 
 const NUMBER = 'CN000000005JP';
 const fixture = (name = 'positive') => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');

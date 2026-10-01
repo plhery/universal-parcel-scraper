@@ -6,7 +6,7 @@
  * What it is not: no carrier lookup and no provider I/O. Input is normalized
  * here, so callers may pass a raw or an already-normalized number.
  */
-import { normalizeTrackingNumber } from './normalize';
+import { normalizeTrackingNumber } from './normalize.js';
 
 /** Validate the UPU S10 check digit, not only its broad A2-N9-A2 shape. */
 export function isValidS10TrackingNumber(raw: string): boolean {

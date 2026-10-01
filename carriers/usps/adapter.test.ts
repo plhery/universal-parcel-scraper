@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { StepRecorder } from '../../core/telemetry';
-import { normalizeUSPSNumber, parseUSPSTrackingHtml, USPSTracker, uspsTrackingUrl } from './adapter';
-import { uspsStage, uspsStatus } from './status';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { normalizeUSPSNumber, parseUSPSTrackingHtml, USPSTracker, uspsTrackingUrl } from './adapter.js';
+import { uspsStage, uspsStatus } from './status.js';
 
 // 9400111899223397910421 and 9400111899223397910438 are made-up numbers in
 // USPS's published format. No real shipment, recipient or signatory appears

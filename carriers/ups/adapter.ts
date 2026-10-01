@@ -1,17 +1,16 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter';
-import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps, singleFlight } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { calendarDay } from '../../core/time';
-import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TrawlClient } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { UPS_PROGRESS_STATUS, upsStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { calendarDay } from '../../core/time/index.js';
+import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TrawlClient } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { UPS_PROGRESS_STATUS, upsStatus } from './status.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
@@ -340,7 +339,7 @@ export class UPSTracker {
       this.timeoutMs,
       options.directTimeoutMs ?? DEFAULT_DIRECT_TIMEOUT_MS,
     ));
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.#trawl = options.trawl;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;

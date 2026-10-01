@@ -23,6 +23,6 @@ excluded.
 ## Live test
 
 Set `LANDMARK_GLOBAL_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/landmark-global/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/landmark-global/adapter.live.test.ts`.
 Optionally set `LANDMARK_GLOBAL_UNKNOWN_NUMBER` to check explicit absence.
 Set `LANDMARK_GLOBAL_ALIAS_NUMBER` to check an N1 reference against its canonical parcel.

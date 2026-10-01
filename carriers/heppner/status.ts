@@ -12,9 +12,9 @@
  * unmapped keeps a neutral description and no explicit stage assignment beyond
  * the transit default the previous implementation used.
  */
-import type { CarrierStatus } from '../../core/result';
-import { cleanScalar } from '../../core/transport';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { cleanScalar } from '../../core/transport/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedHeppnerEvent {
   status: CarrierStatus;

@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Paack recipient tracking.
@@ -20,12 +19,12 @@ import 'server-only';
  * fields read are the echoed identifier and the delivery window.
  */
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
-import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { decodeText, fetchBounded, UpstreamHttpError } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyPaackEvent } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { decodeText, fetchBounded, UpstreamHttpError } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyPaackEvent } from './status.js';
 
 const TRACKING_ENDPOINT = 'https://mydeliveries.paack.app/tracking/order';
 const DEFAULT_TIMEOUT_MS = 15_000;

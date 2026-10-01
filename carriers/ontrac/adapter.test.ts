@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { OntracTracker } from './adapter';
-import { normalizeOntracNumber, parseOntrac } from './parser';
+import { OntracTracker } from './adapter.js';
+import { normalizeOntracNumber, parseOntrac } from './parser.js';
 
 const NUMBER = '1LS0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

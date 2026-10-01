@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SwissPostTracker } from './adapter';
+import { SwissPostTracker } from './adapter.js';
 
 describe('Swiss Post live anonymous tracking', () => {
   it('maps the official empty result for a valid-shaped wrong number to a clean 404', async () => {

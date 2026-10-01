@@ -11,7 +11,7 @@
  * https://github.com/ha-parcel-integrations/ha-inpost (MIT,
  * `TRACKING_STATUS_MAP`), live-confirmed on IT/PT/GB consignments 2026-08-31.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const TRACKING_STATUS: Record<string, ClassifiedStatus> = {
   // Creation and handover.

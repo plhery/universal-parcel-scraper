@@ -14,8 +14,8 @@
  * Provenance: the MySpeedPost Livewire tracker inspected 2026-09-01, with
  * https://github.com/bivu-m/njs-tracker-scraper as the starting point.
  */
-import type { ClassifiedStatus } from '../../core/status';
-import { cleanScalar } from '../../core/transport';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { cleanScalar } from '../../core/transport/index.js';
 
 function statusKey(value: unknown): string {
   return cleanScalar(value, 200).toLocaleLowerCase('en-US').replace(/[^a-z0-9]+/g, '');

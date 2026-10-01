@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EmsTracker } from './adapter';
+import { EmsTracker } from './adapter.js';
 
 describe('EMS live compatibility', () => {
   it.skipIf(!process.env.EMS_TRACKING_NUMBER)('returns real EMS history without browser state', async () => {

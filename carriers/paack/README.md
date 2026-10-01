@@ -49,5 +49,5 @@ the public recipient page, which needs the order number and the delivery postcod
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/paack` (no env vars). It checks
+`npm run test:carriers:live -- carriers/paack` (no env vars). It checks
 that Paack's own retired API examples return not-found.

@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Ship24 (ship24.com), a universal aggregator and the first discovery
@@ -13,19 +12,19 @@ import 'server-only';
  * stays unknown to the page that asks the same API.
  */
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter';
-import { carrierTimezone } from '../../core/catalog';
-import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints';
-import { SchemaError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { StepRecorder } from '../../core/telemetry';
-import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser';
-import { countryTimeZone, sharedClockZone } from '../../core/time';
-import { isRecord } from '../../core/types';
-import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints';
-import { localEvent, numberOf, result, type UniversalSource } from '../shared/result';
-import { Ship24HttpClient } from './http';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { carrierTimezone } from '../../core/catalog/index.js';
+import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
+import { SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
+import { countryTimeZone, sharedClockZone } from '../../core/time/index.js';
+import { isRecord } from '../../core/types.js';
+import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
+import { localEvent, numberOf, result, type UniversalSource } from '../shared/result.js';
+import { Ship24HttpClient } from './http.js';
 
 const SOURCE: UniversalSource = 'Ship24';
 const MAX_EVENTS = 1000;

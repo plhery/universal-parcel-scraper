@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PurolatorTracker } from './adapter';
+import { PurolatorTracker } from './adapter.js';
 
 describe('Purolator live tracking', () => {
   it.skipIf(!process.env.PUROLATOR_TRACKING_NUMBER)('returns matching real history', async () => {

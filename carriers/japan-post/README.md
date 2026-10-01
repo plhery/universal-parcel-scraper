@@ -42,4 +42,4 @@ Accepts checksum-valid S10 references and 11–13 digit domestic numbers.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/japan-post` with `JAPAN_POST_TRACKING_NUMBER`.
+`npm run test:carriers:live -- carriers/japan-post` with `JAPAN_POST_TRACKING_NUMBER`.

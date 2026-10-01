@@ -34,5 +34,5 @@ promises and their active-shipment provenance is unverified.
 ## Live test
 
 Set `COURIER_GUY_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/the-courier-guy/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/the-courier-guy/adapter.live.test.ts`.
 Optionally set `COURIER_GUY_UNKNOWN_NUMBER` to check explicit absence.

@@ -1,12 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SchemaError } from '../../core/errors';
+import { SchemaError } from '../../core/errors/index.js';
 import {
   normalizeInpostTrackingNumber,
   parseInpostTrackingResponse,
   InpostTracker,
-} from './adapter';
-import { classifyInpostStatus } from './status';
+} from './adapter.js';
+import { classifyInpostStatus } from './status.js';
 
 // All identifiers and timestamps below are synthetic. Status codes and the
 // response shape follow the keyless inposteasy.com hub as documented by the

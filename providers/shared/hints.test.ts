@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { brandCarrierForNumber, universalCarrierHints } from './hints';
+import { brandCarrierForNumber, universalCarrierHints } from './hints.js';
 
 describe('carrier names reported by universal providers', () => {
   it('resolves a bare brand only when the number leaves one of its networks', () => {

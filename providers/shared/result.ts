@@ -10,10 +10,10 @@
  * merged in a later step.
  */
 import { DateTime } from 'luxon';
-import { trackingLanguageStage } from '../../core/status';
-import { nonterminalEnglishReturn } from '../../core/status/language';
-import type { Stage } from '../../generated/catalog';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
+import { trackingLanguageStage } from '../../core/status/index.js';
+import { nonterminalEnglishReturn } from '../../core/status/language.js';
+import type { Stage } from '../../generated/catalog.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 
 export type UniversalSource = '17TRACK' | 'ParcelsApp' | 'Postal Ninja' | 'Ship24' | 'UPU';
 const STAGES: Record<string, Stage> = {

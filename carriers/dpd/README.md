@@ -34,7 +34,7 @@ DPD postcode as a one-tap suggestion.
 API alone whether DPD knows a 14-digit number: a matching reply is true, a 404 or a
 details-call 400 is false, anything else (a login failure included) is a failure.
 Carrier recognition uses it in the Add sheet and in routing
-([ROUTING.md](../../../../docs/ROUTING.md)). When a carrier picked by hand cannot own
+([ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)). When a carrier picked by hand cannot own
 the number (a forwarder such as Asendia), the sheet asks too and offers the carrier
 that knows it, without blocking the choice.
 
@@ -61,8 +61,8 @@ DPD parcel, not a Swiss one.
   wording.
 - The two shapes word the same scan differently, so they are stored as separate
   events, except at an exact shared instant, where DPD's scan takes over the stored
-  row in place (see [ROUTING.md](../../../../docs/ROUTING.md) and
-  [`eventIdentity.ts`](../../../../src/server/eventIdentity.ts)).
+  row in place (see [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) and
+  [`eventIdentity.ts`](https://github.com/plhery/delivery-tracker/blob/main/src/server/eventIdentity.ts)).
 
 ## Notes
 
@@ -107,6 +107,6 @@ DPD parcel, not a Swiss one.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/dpd` (no env vars) expects
+`npm run test:carriers:live -- carriers/dpd` (no env vars) expects
 a clean not-found for a synthetic number, or the page challenge error. Fixtures are
 synthetic, in the live response shapes ([fixtures/README.md](fixtures/README.md)).

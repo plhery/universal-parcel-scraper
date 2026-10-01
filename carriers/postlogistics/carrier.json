@@ -8,8 +8,7 @@
     ]
   },
   "brand": {
-    "color": "#ffcc00",
-    "family": "swiss-post"
+    "color": "#ffcc00"
   },
   "selectable": true,
   "timezone": "Europe/Zurich",
@@ -19,7 +18,9 @@
     "steps": [
       "direct"
     ],
-    "recognition": { "rank": 26 }
+    "recognition": {
+      "rank": 26
+    }
   },
   "capabilities": [
     "history",
@@ -44,7 +45,9 @@
   },
   "links": [
     {
-      "domains": ["tracking.postlogistics.ch"],
+      "domains": [
+        "tracking.postlogistics.ch"
+      ],
       "path": "^/public/trackandtrace/([^/?#]+)/?$"
     }
   ],

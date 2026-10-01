@@ -59,6 +59,6 @@ Parsing, in order:
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/usps` with
+`npm run test:carriers:live -- carriers/usps` with
 `USPS_LIVE_TRACKING_NUMBER` and `FLARESOLVERR_URL` set. The missing-browser check runs
 without either.

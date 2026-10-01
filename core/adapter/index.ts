@@ -7,11 +7,11 @@
  * declares its steps; it reaches the network only through what the
  * `AdapterEnvironment` provides, and it reports through the `StepRecorder`.
  */
-import { carrierErrorKind } from '../errors';
-import type { CarrierResult } from '../result';
-import type { StepRecorder } from '../telemetry';
-import type { TrawlClient } from '../transport/trawl';
-import { explicitOffsetTime } from '../time';
+import { carrierErrorKind } from '../errors/index.js';
+import type { CarrierResult } from '../result/index.js';
+import type { StepRecorder } from '../telemetry/index.js';
+import type { TrawlClient } from '../transport/trawl.js';
+import { explicitOffsetTime } from '../time/index.js';
 
 export interface TrackingInput {
   /** The tracking number as stored on the parcel, validated at the API boundary. */

@@ -10,8 +10,8 @@
  * then reports the shipment as `unknown` rather than inventing a stage, and the
  * sync records the wording for review.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface Milestone {
   stage: Stage;

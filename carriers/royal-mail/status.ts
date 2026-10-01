@@ -6,8 +6,8 @@
  * carrier acceptance, while the summary category Collected means delivery.
  * `statuses.json` records the scan wording retained from prior art.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 const RETURNED_TERMS = ['return to sender', 'returned to sender', 'returning to sender'];
 const FAILED_ATTEMPT_TERMS = [

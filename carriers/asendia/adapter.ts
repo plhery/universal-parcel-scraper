@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Asendia tracking through Asendia USA's A1 platform.
@@ -37,8 +36,8 @@ import 'server-only';
  * read, and nothing else from the summary is copied except the destination
  * country, weight and the declared last-mile reference.
  */
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { carrierIdFromPartner } from '../../core/catalog/hints';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import {
   BudgetExceededError,
   ChallengeError,
@@ -46,13 +45,13 @@ import {
   NotFoundError,
   SchemaError,
   UpstreamHttpError,
-} from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { languageStageStatus, wordingStage, type Stage } from '../../core/status';
-import { explicitOffsetTime } from '../../core/time';
-import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyAsendiaA1Event, type ClassifiedAsendiaStatus } from './status';
+} from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { languageStageStatus, wordingStage, type Stage } from '../../core/status/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyAsendiaA1Event, type ClassifiedAsendiaStatus } from './status.js';
 
 const PROVIDER = 'Asendia';
 const PAGE_URL = 'https://a1.asendiausa.com/tracking/';

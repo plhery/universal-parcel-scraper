@@ -8,8 +8,8 @@
  * ordered so that negatives and future-dated notices are decided before the
  * broad delivery words they contain.
  */
-import type { CarrierResult } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierResult } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 /** Lower-cased, accent-free text, for language-independent matching. */
 export function plainText(raw: unknown): string {

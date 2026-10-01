@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { CarrierResult } from '../../core/result';
-import { fetchSunYou, parseSunYouTrackingResponse, SunYouTracker } from './adapter';
+import type { CarrierResult } from '../../core/result/index.js';
+import { fetchSunYou, parseSunYouTrackingResponse, SunYouTracker } from './adapter.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(

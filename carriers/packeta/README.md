@@ -39,6 +39,6 @@ CZ, SK, HU, RO and PL. Tracked through the keyless endpoint behind the public tr
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/packeta`. The wrong-number check
+`npm run test:carriers:live -- carriers/packeta`. The wrong-number check
 needs no env vars; set `PACKETA_DELIVERED_TRACKING_NUMBER` to also check a real delivered
 parcel.

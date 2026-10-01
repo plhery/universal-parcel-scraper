@@ -20,8 +20,8 @@
  * what the myDPD guest API returns for Swiss consignee lookups; the wording
  * lists come from the public tracking page in en/de/fr/it.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 /** English labels for the guest API enumeration, used when the API sends no translation. */
 export const API_LABELS: Record<string, string> = {

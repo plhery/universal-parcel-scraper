@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { HermesGermanyTracker, parseHermesGermanyResponse } from './adapter';
-import { STATUSES } from './status';
+import { HermesGermanyTracker, parseHermesGermanyResponse } from './adapter.js';
+import { STATUSES } from './status.js';
 
 const NUMBER = 'H1234567890123456789';
 

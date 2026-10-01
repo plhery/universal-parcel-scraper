@@ -3,10 +3,10 @@ import { readFileSync } from 'node:fs';
 import timers from 'node:timers/promises';
 import { DateTime } from 'luxon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { TrawlClient } from '../../core/transport';
-import { carrierErrorKind, NoHistoryError } from '../../core/errors';
-import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry';
-import { ParcelsAppTracker, parseParcelsAppHtml, parseParcelsAppResponse } from './adapter';
+import { TrawlClient } from '../../core/transport/index.js';
+import { carrierErrorKind, NoHistoryError } from '../../core/errors/index.js';
+import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
+import { ParcelsAppTracker, parseParcelsAppHtml, parseParcelsAppResponse } from './adapter.js';
 
 const number = 'ZZ12345678900';
 const API = 'https://parcelsapp.com/api/v2/parcels';

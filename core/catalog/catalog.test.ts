@@ -17,7 +17,7 @@ import {
   requirementSatisfied,
   tracksAutomatically,
   trackingNumberForLink,
-} from './index';
+} from './index.js';
 
 /**
  * Per-carrier expectations stay in src/lib/carriers.test.ts. What this file

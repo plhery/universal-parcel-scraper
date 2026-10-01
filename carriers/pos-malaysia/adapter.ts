@@ -1,16 +1,15 @@
-import 'server-only';
 
 import { randomUUID } from 'node:crypto';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { IndeterminateError, SchemaError, TransportError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import type { ClassifiedStatus } from '../../core/status';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { zonedTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyPosMalaysiaStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { zonedTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyPosMalaysiaStatus } from './status.js';
 
 // Protocol provenance:
 // - The consumer request builder is shipped by https://tracking.pos.com.my:

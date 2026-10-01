@@ -1,16 +1,15 @@
-import 'server-only';
 
 import { DateTime } from 'luxon';
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter';
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { ChallengeError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { usStateTimeZone } from '../../core/time';
-import { clean, TrawlClient } from '../../core/transport';
-import { uspsStage, uspsStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { ChallengeError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { usStateTimeZone } from '../../core/time/index.js';
+import { clean, TrawlClient } from '../../core/transport/index.js';
+import { uspsStage, uspsStatus } from './status.js';
 
 /**
  * USPS, through the server-rendered tracking page.
@@ -230,7 +229,7 @@ export class USPSTracker {
       throw new TypeError('USPS timeout must be positive');
     }
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.#trawl = options.trawl;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;

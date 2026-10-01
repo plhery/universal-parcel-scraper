@@ -11,8 +11,7 @@
     ]
   },
   "brand": {
-    "color": "#ef7d00",
-    "decal": "postnl"
+    "color": "#ef7d00"
   },
   "selectable": true,
   "timezone": "Europe/Amsterdam",
@@ -21,7 +20,11 @@
     "adapter": "spring-gds",
     "steps": [
       "direct"
-    ]
+    ],
+    "refresh": {
+      "minMinutes": 30
+    },
+    "localClocks": true
   },
   "capabilities": [
     "history",

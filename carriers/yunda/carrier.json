@@ -8,11 +8,7 @@
     ]
   },
   "brand": {
-    "color": "#ffce00",
-    "palette": {
-      "accent": "#393838",
-      "brand-light": "#393838"
-    }
+    "color": "#ffce00"
   },
   "selectable": true,
   "timezone": "Asia/Shanghai",
@@ -21,7 +17,8 @@
     "adapter": "yunda",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

@@ -15,15 +15,37 @@
   "tracking": {
     "mode": "automatic",
     "adapter": "purolator",
-    "steps": ["direct"]
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": ["history", "location", "weight"],
+  "capabilities": [
+    "history",
+    "location",
+    "weight"
+  ],
   "portal": {
     "url": "https://www.purolator.com/en/shipping/tracker?pins={trackingNumber}",
     "canaryUrl": "https://www.purolator.com/en/shipping/tracker",
-    "shows": ["status", "history", "location", "estimated_delivery", "weight", "recipient"],
-    "scraped": ["status", "history", "location", "weight"],
-    "discarded": ["estimated_delivery", "recipient"],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "estimated_delivery",
+      "weight",
+      "recipient"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight"
+    ],
+    "discarded": [
+      "estimated_delivery",
+      "recipient"
+    ],
     "unavailable": []
   },
   "links": [

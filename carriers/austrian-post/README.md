@@ -22,4 +22,4 @@ history and GraphQL errors remain inconclusive so another source can help.
 ## Testing
 
 Set `AUSTRIAN_POST_TRACKING_NUMBER` outside the repository, then run
-`npm run test:carriers:live -- packages/carriers/carriers/austrian-post`.
+`npm run test:carriers:live -- carriers/austrian-post`.

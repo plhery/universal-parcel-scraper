@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { PostiTracker, normalizePostiTrackingNumber, parse } from './adapter';
-import { postiEventStage, postiStatus } from './status';
+import { PostiTracker, normalizePostiTrackingNumber, parse } from './adapter.js';
+import { postiEventStage, postiStatus } from './status.js';
 
 const NUMBER = 'CW123456785FR';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

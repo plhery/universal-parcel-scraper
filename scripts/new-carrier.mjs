@@ -3,9 +3,9 @@
  * detection sweep expect, plus one README for integration details.
  * carrier.json is validated against
  * core/catalog/carrier.schema.json before anything is written, so a fresh
- * folder is never the reason `npm run contract:generate` fails.
+ * folder is never the reason `npm run generate` fails.
  *
- *   node packages/carriers/scripts/new-carrier.mjs --id <id> --name "<Name>" \
+ *   node scripts/new-carrier.mjs --id <id> --name "<Name>" \
  *     [--mode automatic|link-only] [--adapter universal|<id>] \
  *     [--timezone <tz>] [--color #hex] [--portal-url <url>] [--canary-url <url>]
  */
@@ -23,7 +23,7 @@ const schemaPath = path.join(packageRoot, 'core', 'catalog', 'carrier.schema.jso
 const emptyCorpusGap = 'no public sample found yet';
 
 const usage = [
-  'Usage: node packages/carriers/scripts/new-carrier.mjs --id <id> --name "<Name>"',
+  'Usage: node scripts/new-carrier.mjs --id <id> --name "<Name>"',
   '         [--mode automatic|link-only] [--adapter universal|<id>]',
   '         [--timezone <tz>] [--color #hex] [--portal-url <url>] [--canary-url <url>]',
 ].join('\n');
@@ -124,12 +124,12 @@ TODO: one or two sentences on what this covers and how it is tracked.
 
 ## Testing
 
-\`npm run test:carriers:live -- packages/carriers/carriers/${options.id}\`
+\`npm run test:carriers:live -- carriers/${options.id}\`
 `;
 }
 
 function checklist(options) {
-  const folder = `packages/carriers/carriers/${options.id}`;
+  const folder = `carriers/${options.id}`;
   return [
     '',
     'Next steps:',
@@ -140,8 +140,8 @@ function checklist(options) {
     `  3. Add evidence-tagged sample numbers to ${folder}/numbers.json, drop its "gap" line, and run the detection sweep.`,
     `  4. Record observed status wordings in ${folder}/statuses.json.`,
     `  5. Describe how it works, gotchas and limitations in ${folder}/README.md.`,
-    '  6. Run npm run contract:generate, then npm run ios:resources.',
-    '  7. Run npm run test:contract and the carrier tests.',
+    '  6. Run npm run generate.',
+    '  7. Run npm run test:generated and the carrier tests.',
     '',
   ].join('\n');
 }
@@ -153,7 +153,7 @@ async function main() {
 
   const folder = path.join(packageRoot, 'carriers', options.id);
   const exists = await access(folder).then(() => true, () => false);
-  if (exists) throw new Error(`packages/carriers/carriers/${options.id} already exists`);
+  if (exists) throw new Error(`carriers/${options.id} already exists`);
 
   await mkdir(folder, { recursive: true });
   const files = [
@@ -166,7 +166,7 @@ async function main() {
   ];
   for (const [name, contents] of files) {
     await writeFile(path.join(folder, name), contents);
-    console.log(`Wrote packages/carriers/carriers/${options.id}/${name}`);
+    console.log(`Wrote carriers/${options.id}/${name}`);
   }
   console.log(checklist(options));
 }

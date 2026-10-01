@@ -12,15 +12,7 @@
     ]
   },
   "brand": {
-    "color": "#ef3026",
-    "decal": "mondial-relay",
-    "palette": {
-      "truck": "#f5a9bb",
-      "edge": "#94154b",
-      "accent": "#94154b",
-      "brand-light": "#94154b",
-      "brand-dark": "#f5a9bb"
-    }
+    "color": "#ef3026"
   },
   "selectable": true,
   "timezone": "Europe/Paris",

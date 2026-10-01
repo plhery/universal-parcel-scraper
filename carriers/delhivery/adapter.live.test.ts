@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DelhiveryTracker } from './adapter';
+import { DelhiveryTracker } from './adapter.js';
 
 describe('Delhivery live tracking', () => {
   it('returns the explicit invalid-or-old waybill result', async () => {

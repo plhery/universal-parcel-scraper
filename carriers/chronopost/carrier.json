@@ -10,13 +10,7 @@
     ]
   },
   "brand": {
-    "color": "#0056a7",
-    "decal": "chronopost",
-    "palette": {
-      "accent": "#0094cf",
-      "truck": "#ffffff",
-      "edge": "#0056a7"
-    }
+    "color": "#0056a7"
   },
   "selectable": true,
   "timezone": "Europe/Paris",

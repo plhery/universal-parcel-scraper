@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { YanwenTracker } from './adapter';
+import { YanwenTracker } from './adapter.js';
 
 describe('Yanwen live compatibility', () => {
   it.skipIf(!process.env.YANWEN_TRACKING_NUMBER)('returns fresh anonymous parcel history', async () => {

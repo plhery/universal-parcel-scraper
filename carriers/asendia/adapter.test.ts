@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
-import { carrierErrorKind, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
-import { REGISTRY } from '../../generated/registry';
+import { carrierErrorKind, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { REGISTRY } from '../../generated/registry.js';
 import {
   adapter,
   AsendiaA1Tracker,
@@ -11,8 +11,8 @@ import {
   normalizeAsendiaA1TrackingNumber,
   parseAsendiaA1PublicConfig,
   parseAsendiaA1TrackingResponse,
-} from './adapter';
-import { classifyAsendiaA1Event } from './status';
+} from './adapter.js';
+import { classifyAsendiaA1Event } from './status.js';
 
 // Published on https://www.ship24.com/couriers/asendia-tracking as an Asendia
 // example; each fixture's other references are synthetic.

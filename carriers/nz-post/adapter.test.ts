@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { normalizeCarrierResult } from '../../core/result';
-import { adapter, NzPostTracker } from './adapter';
-import { normalizeNzPostNumber, parseNzPost } from './parser';
-import { classifyNzPostStatus } from './status';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { adapter, NzPostTracker } from './adapter.js';
+import { normalizeNzPostNumber, parseNzPost } from './parser.js';
+import { classifyNzPostStatus } from './status.js';
 
 const NUMBER = '00000000000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

@@ -12,7 +12,7 @@
  * success vocabulary was confirmed against a real parcel on 2026-08-24; the
  * ASCII-apostrophe delivered variant was observed live on 2026-09-11.
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 /** Collapse whitespace and lower-case with the Italian locale, as the map expects. */
 export function normalizePosteItalianeWording(value: unknown): string {

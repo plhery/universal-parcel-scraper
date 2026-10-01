@@ -1,10 +1,9 @@
-import 'server-only';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { IndeterminateError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeOntracNumber, parseOntrac } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeOntracNumber, parseOntrac } from './parser.js';
 
 // Endpoint and schema come from the current official portal client:
 // https://www.ontrac.com/wp-content/themes/ontrac/assets/js/ontrac-package-status.js

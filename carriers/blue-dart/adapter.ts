@@ -1,10 +1,9 @@
-import 'server-only';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { normalizeBlueDartNumber, parseBlueDart } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { normalizeBlueDartNumber, parseBlueDart } from './parser.js';
 
 const ENDPOINT = 'https://www.bluedart.com/trackdartresultthirdparty';
 

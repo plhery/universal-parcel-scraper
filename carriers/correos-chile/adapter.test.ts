@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { CorreosChileTracker, adapter } from './adapter';
-import { normalizeCorreosChileNumber, parseCorreosChileBootstrap, parseCorreosChileTracking } from './parser';
-import { classifyCorreosChileScan } from './status';
-import fixture from './fixtures/customs.json';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { CorreosChileTracker, adapter } from './adapter.js';
+import { normalizeCorreosChileNumber, parseCorreosChileBootstrap, parseCorreosChileTracking } from './parser.js';
+import { classifyCorreosChileScan } from './status.js';
+import fixture from './fixtures/customs.json' with { type: 'json' };
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'SX000000005CL';
 const BOOTSTRAP = readFileSync(fileURLToPath(new URL('./fixtures/bootstrap.html', import.meta.url)), 'utf8');
@@ -151,21 +151,28 @@ describe('Correos de Chile anonymous tracking', () => {
     await expect(new CorreosChileTracker({ fetcher: immediate }).fetch(NUMBER, { budgetMs: 0 }))
       .rejects.toMatchObject({ kind: 'budget' });
     expect(immediate).not.toHaveBeenCalled();
-    const slowBootstrap = vi.fn<typeof fetch>(async () => {
-      await new Promise(resolve => setTimeout(resolve, 35));
-      return pageResponse();
-    });
-    await expect(new CorreosChileTracker({ fetcher: slowBootstrap }).fetch(NUMBER, { budgetMs: 20.5 }))
-      .rejects.toMatchObject({ kind: 'budget' });
-    expect(slowBootstrap).toHaveBeenCalledTimes(1);
-    const slowDetail = vi.fn<typeof fetch>().mockResolvedValueOnce(pageResponse())
-      .mockImplementationOnce(async () => {
-        await new Promise(resolve => setTimeout(resolve, 35));
-        return Response.json(fixture);
+    // Advance the observed monotonic clock at response boundaries, so CPU load
+    // cannot consume the tiny lookup budget before the second request starts.
+    let elapsed = 0;
+    const clock = vi.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    try {
+      const slowBootstrap = vi.fn<typeof fetch>(async () => {
+        elapsed = 10_001;
+        return pageResponse();
       });
-    await expect(new CorreosChileTracker({ fetcher: slowDetail }).fetch(NUMBER, { budgetMs: 20.5 }))
-      .rejects.toMatchObject({ kind: 'budget' });
-    expect(slowDetail).toHaveBeenCalledTimes(2);
+      await expect(new CorreosChileTracker({ fetcher: slowBootstrap }).fetch(NUMBER, { budgetMs: 10_000 }))
+        .rejects.toMatchObject({ kind: 'budget' });
+      expect(slowBootstrap).toHaveBeenCalledTimes(1);
+      elapsed = 0;
+      const slowDetail = vi.fn<typeof fetch>().mockResolvedValueOnce(pageResponse())
+        .mockImplementationOnce(async () => {
+          elapsed = 10_001;
+          return Response.json(fixture);
+        });
+      await expect(new CorreosChileTracker({ fetcher: slowDetail }).fetch(NUMBER, { budgetMs: 10_000 }))
+        .rejects.toMatchObject({ kind: 'budget' });
+      expect(slowDetail).toHaveBeenCalledTimes(2);
+    } finally { clock.mockRestore(); }
     const controller = new AbortController();
     const waiting = vi.fn<typeof fetch>(async (_url, init) => {
       await new Promise((_resolve, reject) => {

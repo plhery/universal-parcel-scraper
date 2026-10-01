@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
+import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import {
   AsendiaTracker,
   asendiaConfigApiUrl,
@@ -13,8 +13,8 @@ import {
   normalizeAsendiaTrackingNumber,
   parseAsendiaPublicHitKey,
   parseAsendiaTrackingResponse,
-} from './probe';
-import { classifyAsendiaStatus, comparableText } from './status';
+} from './probe.js';
+import { classifyAsendiaStatus, comparableText } from './status.js';
 
 // Official Asendia documentation examples include ASE12345678 and S10 parcel
 // identifiers such as LF092919653FR:

@@ -7,7 +7,7 @@
  * one `LookupRecord` whose `finalStep` says which tier served the result. That
  * single field answers "is this fallback tier worth keeping".
  */
-import { carrierErrorKind, errorTypeOf, type CarrierErrorKind } from '../errors';
+import { carrierErrorKind, errorTypeOf, type CarrierErrorKind } from '../errors/index.js';
 
 export type StepOutcome = 'ok' | CarrierErrorKind | 'error';
 

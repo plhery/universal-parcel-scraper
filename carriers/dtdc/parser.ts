@@ -1,10 +1,10 @@
-import { IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors';
-import { normalizeTrackingNumber } from '../../core/detection';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { epochMillisTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { dtdcStatus } from './status';
+import { IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { epochMillisTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { dtdcStatus } from './status.js';
 
 const PROVIDER = 'DTDC';
 

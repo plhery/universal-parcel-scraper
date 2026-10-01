@@ -3,7 +3,7 @@ import {
   BudgetExceededError, CarrierError, ChallengeError, IndeterminateError, InputRequiredError, MaintenanceError,
   NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError,
   carrierErrorKind, errorTypeOf, retryAfterMsOf,
-} from './index';
+} from './index.js';
 
 describe('carrier error taxonomy', () => {
   it('gives every kind a stable name, kind and HTTP-like status', () => {

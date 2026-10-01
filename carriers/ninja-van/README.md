@@ -22,5 +22,5 @@ retained.
 ## Live test
 
 Set `NINJA_VAN_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/ninja-van/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/ninja-van/adapter.live.test.ts`.
 Optionally set `NINJA_VAN_UNKNOWN_NUMBER` to check an explicitly absent parcel.

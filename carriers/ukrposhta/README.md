@@ -16,7 +16,7 @@ remain failures. No account, saved browser profile or recipient details are used
 
 The batch clock includes seconds, while full history has minute precision. Matching
 uses that shared precision. All offsetless scan clocks remain local, including
-foreign scans, and retain native order. See [ROUTING.md](../../../../docs/ROUTING.md)
+foreign scans, and retain native order. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)
 for unresolved history handling. A return decision starts a separate leg; later
 transport remains active until a delivery scan completes that leg.
 
@@ -31,5 +31,5 @@ as a challenge and routing falls back to the universal providers.
 
 ## Testing
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/ukrposhta` with
+Run `npm run test:carriers:live -- carriers/ukrposhta` with
 `TRACKING_CHROMIUM_PATH` and `UKRPOSHTA_TRACKING_NUMBER` supplied outside the repository.

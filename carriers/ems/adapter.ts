@@ -1,13 +1,12 @@
-import 'server-only';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean, decodeText, fetchBounded } from '../../core/transport';
-import { emsStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
+import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { emsStatus } from './status.js';
 
 const ENDPOINT = 'https://items.ems.post/api/publicTracking/track';
 const TIMEOUT_MS = 15_000;

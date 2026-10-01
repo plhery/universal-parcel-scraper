@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const statuses: Record<string, ClassifiedStatus> = {
   DELIVERED: { status: 'delivered', stage: 'delivered' },

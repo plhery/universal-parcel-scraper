@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, CourierGuyTracker } from './adapter';
-import { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber, parseCourierGuy } from './parser';
-import { courierGuyStatus } from './status';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, CourierGuyTracker } from './adapter.js';
+import { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber, parseCourierGuy } from './parser.js';
+import { courierGuyStatus } from './status.js';
 
 const NUMBER = 'TESTA1';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));

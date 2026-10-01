@@ -10,8 +10,8 @@
  * Only codes with a confirmed meaning are mapped. Anything else is left without
  * a stage so the sync can classify the wording and record the code for review.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 /** Shipment-level `globalStatus` → status. The event codes below refine it. */
 export const STATUS_MAP = new Map<string, CarrierStatus>([

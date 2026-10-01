@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { ChallengeError } from '../../core/errors';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter } from './adapter';
+import { ChallengeError } from '../../core/errors/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter } from './adapter.js';
 
 const executablePath = process.env.TRACKING_CHROMIUM_PATH;
 const instance = () => adapter({ browserExecutablePath: executablePath ?? null, trawl: null, recorder: NOOP_RECORDER, env: {} });

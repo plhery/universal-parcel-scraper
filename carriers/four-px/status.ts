@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const CODES = new Map<string, ClassifiedStatus>([
   ['FPX_S_OK', { status: 'delivered', stage: 'delivered' }],

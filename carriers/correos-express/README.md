@@ -31,4 +31,4 @@ other form-only responses remain inconclusive.
 
 Set `CORREOS_EXPRESS_TRACKING_NUMBER` to an authorized real reference and optionally
 `CORREOS_EXPRESS_UNKNOWN_NUMBER` to a valid-looking unknown reference, then run
-`npm run test:carriers:live -- packages/carriers/carriers/correos-express`.
+`npm run test:carriers:live -- carriers/correos-express`.

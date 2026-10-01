@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { afterEach, expect, it, vi } from 'vitest';
-import { fetchBounded, UpstreamHttpError } from './boundedFetch';
+import { fetchBounded, UpstreamHttpError } from './boundedFetch.js';
 
 afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
 

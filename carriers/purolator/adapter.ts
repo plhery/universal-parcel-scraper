@@ -1,10 +1,9 @@
-import 'server-only';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizePurolatorNumber, parsePurolator } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizePurolatorNumber, parsePurolator } from './parser.js';
 
 const ENDPOINT = 'https://public-tracking.purolator.com/tracking/data';
 // Public anonymous client configuration, not an account/API credential:

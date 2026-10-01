@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { adapter } from './adapter';
-import { carrierErrorKind } from '../../core/errors';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter } from './adapter.js';
+import { carrierErrorKind } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = process.env.CANADA_POST_LIVE_TRACKING_NUMBER?.trim();
 const NOTICE = process.env.CANADA_POST_LIVE_NOTICE_NUMBER?.trim();

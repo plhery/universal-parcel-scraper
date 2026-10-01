@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DachserTracker } from './adapter';
+import { DachserTracker } from './adapter.js';
 
 describe('Dachser live public tracking', () => {
   it('recognizes the response for a wrong capability tuple without accepting a shipment', async () => {

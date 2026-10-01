@@ -8,8 +8,8 @@ driven by the TRAWL browser service. Plain HTTP is challenged.
 
 1. `trawl`: TRAWL opens `/mypost/track/details/{number}` (tiers 2–3, no plain HTTP) and captures
    exactly `GET https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments?trackingIds={number}`.
-   - The Australia Post helper ([`australia-post-browser.mjs`](../../../../ops/trawl/australia-post-browser.mjs),
-     see [`ops/trawl/README.md`](../../../../ops/trawl/README.md)) reads the current public API key
+   - The Australia Post helper ([`australia-post-browser.mjs`](../../trawl/australia-post-browser.mjs),
+     see [`trawl/README.md`](../../trawl/README.md)) reads the current public API key
      from the page's app module and makes that GET inside the browser session with
      `AP_CHANNEL_NAME: WEB_DETAIL`. The key is never pinned here, and browser state is never replayed
      over plain HTTP.
@@ -50,5 +50,5 @@ limited; a missing capture or changed schema is an error for normal provider fal
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/australia-post` with `FLARESOLVERR_URL`. Add
+`npm run test:carriers:live -- carriers/australia-post` with `FLARESOLVERR_URL`. Add
 `AUSTRALIA_POST_TRACKING_NUMBER` for the positive case; the synthetic not-found runs without it.

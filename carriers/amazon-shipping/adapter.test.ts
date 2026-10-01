@@ -7,8 +7,8 @@ import {
   amazonShippingTrackingUrl,
   normalizeAmazonShippingTrackingNumber,
   parseAmazonShippingTrackingResponse,
-} from './adapter';
-import { amazonShippingStatus } from './status';
+} from './adapter.js';
+import { amazonShippingStatus } from './status.js';
 
 const TRACKING_NUMBER = 'FR1234567890';
 

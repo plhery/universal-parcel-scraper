@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { CarrierResult } from '../../core/result';
-import { fetchPostNL, parsePostNLTrackingResponse, PostNLTracker } from './adapter';
-import { postNLStatus } from './status';
+import type { CarrierResult } from '../../core/result/index.js';
+import { fetchPostNL, parsePostNLTrackingResponse, PostNLTracker } from './adapter.js';
+import { postNLStatus } from './status.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(

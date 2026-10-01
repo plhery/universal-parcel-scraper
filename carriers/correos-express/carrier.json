@@ -9,28 +9,50 @@
     ]
   },
   "brand": {
-    "color": "#ffcd00",
-    "palette": {
-      "accent": "#002e6d",
-      "brand-light": "#002e6d"
-    }
+    "color": "#ffcd00"
   },
   "selectable": true,
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
     "adapter": "correos-express",
-    "steps": ["direct"],
-    "recognition": { "rank": 36 }
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 36
+    },
+    "localClocks": true
   },
-  "capabilities": ["history", "location", "eta"],
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
   "portal": {
     "url": "https://s.correosexpress.com/",
     "canaryUrl": "https://s.correosexpress.com/",
-    "shows": ["status", "history", "location", "estimated_delivery", "proof_of_delivery"],
-    "scraped": ["status", "history", "location", "estimated_delivery"],
-    "discarded": ["proof_of_delivery", "contact_details", "delivery_comments"],
-    "unavailable": ["offset_timestamps"]
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "estimated_delivery",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "estimated_delivery"
+    ],
+    "discarded": [
+      "proof_of_delivery",
+      "contact_details",
+      "delivery_comments"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": [

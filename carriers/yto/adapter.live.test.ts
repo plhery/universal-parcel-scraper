@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { IndeterminateError } from '../../core/errors';
-import { YtoTracker } from './adapter';
+import { IndeterminateError } from '../../core/errors/index.js';
+import { YtoTracker } from './adapter.js';
 
 describe('YTO live compatibility', () => {
   it.skipIf(!process.env.YTO_TRACKING_NUMBER)('returns identity-bound domestic history without browser state', async () => {

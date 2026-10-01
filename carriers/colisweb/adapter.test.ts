@@ -2,15 +2,15 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import {
   ColiswebTracker,
   coliswebRequestBody,
   coliswebTrackingUrl,
   normalizeColiswebTrackingNumber,
   parseColiswebTrackingResponse,
-} from './adapter';
-import { classifyStatus } from './status';
+} from './adapter.js';
+import { classifyStatus } from './status.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 // 10000000 is Colisweb's own documented UI example, not a real shipment.

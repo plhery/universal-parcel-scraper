@@ -13,25 +13,24 @@
  *
  * DHL's business API credentials are not needed for this public flow.
  */
-import 'server-only';
 
 import makeFetchCookie from 'fetch-cookie';
 import { Cookie, CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter';
+import type { AdapterFactory } from '../../core/adapter/index.js';
 import {
   ChallengeError, IndeterminateError, InputRequiredError, RateLimitedError, SchemaError,
   type CarrierErrorOptions,
-} from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { carrierIdFromPartnerLinks } from '../../core/catalog/hints';
-import { runSteps, singleFlight } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { isoTime } from '../../core/time';
+} from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { carrierIdFromPartnerLinks } from '../../core/catalog/hints.js';
+import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { isoTime } from '../../core/time/index.js';
 import {
   clean as cleanText, fetchBounded, parseJsonBytes, TrawlClient, UpstreamHttpError, UpstreamNetworkError,
-} from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { stageForText, statusForStage } from './status';
+} from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { stageForText, statusForStage } from './status.js';
 
 const PROVIDER = 'DHL';
 const TIMEZONE = 'Europe/Berlin';
@@ -260,7 +259,7 @@ export class DHLTracker {
     // followed by the session it seeds, with room for the transport itself.
     this.budgetMs = options.budgetMs ?? this.timeoutMs + 4 * this.directTimeoutMs + 30_000;
     this.trawl = options.trawl ?? null;
-    this.trawlUrl = (options.trawlUrl ?? process.env.FLARESOLVERR_URL ?? '').trim();
+    this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.fetcher = options.fetcher;
     this.recorder = options.recorder ?? NOOP_RECORDER;
     this.now = options.now ?? Date.now;

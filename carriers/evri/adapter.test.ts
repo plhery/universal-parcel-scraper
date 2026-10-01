@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { adapter, EvriTracker, normalizeEvriNumber, parse } from './adapter';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter, EvriTracker, normalizeEvriNumber, parse } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = 'H000000000000001';
 const UNKNOWN = 'H000000000000000';

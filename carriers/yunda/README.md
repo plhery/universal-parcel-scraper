@@ -27,4 +27,4 @@ use separate flows. Other verification types and ambiguous slider images are uns
 ## Testing
 
 Set `YUNDA_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/yunda/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/yunda/adapter.live.test.ts`.

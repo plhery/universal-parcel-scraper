@@ -1,8 +1,8 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { TrawlClient } from '../../core/transport';
-import { parse17TrackResponse, SeventeenTrackTracker } from './adapter';
+import { TrawlClient } from '../../core/transport/index.js';
+import { parse17TrackResponse, SeventeenTrackTracker } from './adapter.js';
 
 const number = 'ZZ12345678900';
 const API = 'https://t.17track.net/track/restapi';

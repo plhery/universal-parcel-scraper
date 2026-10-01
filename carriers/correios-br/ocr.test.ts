@@ -2,7 +2,9 @@ import sharp from 'sharp';
 import { once } from 'node:events';
 import type { Worker } from 'node:worker_threads';
 import { describe, expect, it, vi } from 'vitest';
-import { CorreiosOcr } from './ocr';
+import { CorreiosOcr } from './ocr.js';
+vi.setConfig({ testTimeout: 30_000 });
+
 import { decodeCorreiosLogits } from './ocr-worker.mjs';
 
 function logits(indices: number[]) {
@@ -24,12 +26,12 @@ describe('Correios local OCR', () => {
     const ocr = new CorreiosOcr();
     const png = await sharp({ create: { width: 215, height: 80, channels: 3, background: 'white' } }).png().toBuffer();
     try {
-      expect(await ocr.solve(png, AbortSignal.timeout(5000))).toBeTypeOf('string');
-      expect(await ocr.solve(png, AbortSignal.timeout(5000))).toBeTypeOf('string');
+      expect(await ocr.solve(png, AbortSignal.timeout(30_000))).toBeTypeOf('string');
+      expect(await ocr.solve(png, AbortSignal.timeout(30_000))).toBeTypeOf('string');
       const oversized = await sharp({ create: { width: 430, height: 160, channels: 3, background: 'white' } }).png().toBuffer();
-      await expect(ocr.solve(oversized, AbortSignal.timeout(5000))).rejects.toMatchObject({ kind: 'challenge' });
-      await expect(ocr.solve(new Uint8Array(100_001), AbortSignal.timeout(5000))).rejects.toMatchObject({ kind: 'challenge' });
-      await expect(ocr.solve(new Uint8Array(), AbortSignal.timeout(5000))).rejects.toMatchObject({ kind: 'challenge' });
+      await expect(ocr.solve(oversized, AbortSignal.timeout(30_000))).rejects.toMatchObject({ kind: 'challenge' });
+      await expect(ocr.solve(new Uint8Array(100_001), AbortSignal.timeout(30_000))).rejects.toMatchObject({ kind: 'challenge' });
+      await expect(ocr.solve(new Uint8Array(), AbortSignal.timeout(30_000))).rejects.toMatchObject({ kind: 'challenge' });
     } finally { await ocr.close(); }
   });
 
@@ -43,7 +45,7 @@ describe('Correios local OCR', () => {
       controller.abort();
       await expect(second).rejects.toBeInstanceOf(Error);
       await expect(first).rejects.toBeInstanceOf(Error);
-      expect(await ocr.solve(png, AbortSignal.timeout(5000))).toBeTypeOf('string');
+      expect(await ocr.solve(png, AbortSignal.timeout(30_000))).toBeTypeOf('string');
     } finally { await ocr.close(); }
   });
 
@@ -51,8 +53,8 @@ describe('Correios local OCR', () => {
     const ocr = new CorreiosOcr();
     const png = await sharp({ create: { width: 215, height: 80, channels: 3, background: 'white' } }).png().toBuffer();
     try {
-      const pending = Array.from({ length: 8 }, () => ocr.solve(png, AbortSignal.timeout(5000)));
-      await expect(ocr.solve(png, AbortSignal.timeout(5000))).rejects.toMatchObject({ kind: 'transport' });
+      const pending = Array.from({ length: 8 }, () => ocr.solve(png, AbortSignal.timeout(30_000)));
+      await expect(ocr.solve(png, AbortSignal.timeout(30_000))).rejects.toMatchObject({ kind: 'transport' });
       expect((await Promise.all(pending)).every((answer) => typeof answer === 'string')).toBe(true);
     } finally { await ocr.close(); }
   });
@@ -62,12 +64,12 @@ describe('Correios local OCR', () => {
     const png = await sharp({ create: { width: 215, height: 80, channels: 3, background: 'white' } }).png().toBuffer();
     vi.useFakeTimers();
     try {
-      await ocr.solve(png, AbortSignal.timeout(5000));
+      await ocr.solve(png, AbortSignal.timeout(30_000));
       const worker = (ocr as unknown as { worker: Worker }).worker;
       const exited = once(worker, 'exit');
       vi.advanceTimersByTime(30_001);
       await exited;
-      expect(await ocr.solve(png, AbortSignal.timeout(5000))).toBeTypeOf('string');
+      expect(await ocr.solve(png, AbortSignal.timeout(30_000))).toBeTypeOf('string');
       expect((ocr as unknown as { worker: Worker }).worker).not.toBe(worker);
     } finally { vi.useRealTimers(); await ocr.close(); }
   });

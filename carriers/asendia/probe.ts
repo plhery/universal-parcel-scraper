@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * Asendia global portal (track.asendia.com) protocol probe.
@@ -26,18 +25,18 @@ import 'server-only';
 import { createHash } from 'node:crypto';
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result';
-import { isoTime, zonedTime, type ParsedTime } from '../../core/time';
+import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import {
   cleanScalar,
   decodeText,
   fetchBounded,
   parseJsonBytes,
   UpstreamHttpError,
-} from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { classifyAsendiaStatus } from './status';
+} from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { classifyAsendiaStatus } from './status.js';
 
 const TRACKING_ORIGIN = 'https://track.asendia.com';
 const TRACKING_PAGE = `${TRACKING_ORIGIN}/track`;
@@ -331,7 +330,7 @@ export class AsendiaTracker {
     this.now = options.now ?? (() => new Date());
     this.fetcher = options.fetcher;
     this.turnstileTokenProvider = options.turnstileTokenProvider
-      ?? (() => process.env.ASENDIA_TURNSTILE_TOKEN ?? '');
+      ?? (() => '');
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Asendia timeout must be positive');
     }

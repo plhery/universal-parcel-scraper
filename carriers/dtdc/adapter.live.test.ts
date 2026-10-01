@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DtdcTracker } from './adapter';
+import { DtdcTracker } from './adapter.js';
 
 describe('DTDC live compatibility', () => {
   it.skipIf(!process.env.DTDC_TRACKING_NUMBER)('returns identity-bound dated history without session state', async () => {

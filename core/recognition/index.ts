@@ -1,15 +1,14 @@
-import 'server-only';
 
-import type { Recognition } from '@carriers/core/adapter';
-import { carrierBrand } from '@carriers/core/catalog/networks';
-import type { RecognitionCandidate } from '@carriers/core/catalog/recognition';
-import { CARRIER_RECOGNITION_RANKS } from '@carriers/generated/recognition';
+import type { Recognition } from '../adapter/index.js';
+import { carrierBrand } from '../catalog/networks.js';
+import type { RecognitionCandidate } from '../catalog/recognition.js';
+import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
 
 export {
   MAX_RECOGNITIONS,
   recognitionCandidates,
   type RecognitionCandidate,
-} from '@carriers/core/catalog/recognition';
+} from '../catalog/recognition.js';
 
 /**
  * Carrier recognition: when a number's shape fits several carriers, ask the

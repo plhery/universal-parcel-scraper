@@ -25,5 +25,5 @@ Reference-number searches and international partner histories are outside this a
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/blue-dart`. Set
+`npm run test:carriers:live -- carriers/blue-dart`. Set
 `BLUE_DART_TRACKING_NUMBER` to check an authorized real shipment.

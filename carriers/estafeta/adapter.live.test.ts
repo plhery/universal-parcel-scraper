@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, EstafetaTracker } from './adapter';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, EstafetaTracker } from './adapter.js';
 
 describe('Estafeta live tracking', () => {
   it.skipIf(!process.env.ESTAFETA_TRACKING_NUMBER)('returns exact single-piece local history', async () => {

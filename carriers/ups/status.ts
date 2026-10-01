@@ -11,7 +11,7 @@
  * stable per-event code, so the adapter attaches no `stage` to an event: the
  * sync classifies the raw wording and records it for review instead.
  */
-import type { CarrierStatus } from '../../core/result';
+import type { CarrierStatus } from '../../core/result/index.js';
 
 const EXCEPTION_TERMS = [
   'return to sender', 'returned', 'delivery attempted', 'we missed you',

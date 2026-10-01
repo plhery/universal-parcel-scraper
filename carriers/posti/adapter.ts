@@ -1,14 +1,13 @@
-import 'server-only';
 
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { CarrierError, IndeterminateError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { runSteps, type StepContext } from '../../core/runner';
-import type { StepRecorder } from '../../core/telemetry';
-import { explicitOffsetTime } from '../../core/time';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { postiEventStage, postiStatus } from './status';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { CarrierError, IndeterminateError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { runSteps, type StepContext } from '../../core/runner/index.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { postiEventStage, postiStatus } from './status.js';
 
 const TOKEN_URL = 'https://auth-service.posti.fi/api/v1/anonymous_token';
 const GRAPHQL_URL = 'https://graphql.posti.fi/graphql';

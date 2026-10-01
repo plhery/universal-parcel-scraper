@@ -1,11 +1,10 @@
-import 'server-only';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter';
-import { BudgetExceededError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { decodeText, fetchBounded } from '../../core/transport';
-import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl } from './parser';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl } from './parser.js';
 
 // The shop link (www.tip-sa.com/cliente/datos_prestashop.php) redirects here.
 const LOOKUP = 'https://aplicaciones.tip-sa.com/cliente/datos_prestashop.php';

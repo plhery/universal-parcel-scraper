@@ -10,7 +10,7 @@ last mile. It runs two public trackers:
   protocol and parser for the Turnstile canary.
 
 A number A1 does not know is not-found for this adapter only; routing then tries the universal
-providers in the same check (see [routing](../../../../docs/ROUTING.md)).
+providers in the same check (see [routing](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)).
 
 ## How it works
 
@@ -76,7 +76,7 @@ providers in the same check (see [routing](../../../../docs/ROUTING.md)).
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/asendia`. `adapter.live.test.ts`
+`npm run test:carriers:live -- carriers/asendia`. `adapter.live.test.ts`
 checks a synthetic unknown number after validating the page's public key. Set
 `ASENDIA_LIVE_NUMBER` to an authorized current shipment to also check matching history;
 that test is skipped without it because A1 can archive old public examples. Offline fixtures

@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { BrtTracker, adapter } from './adapter';
-import { normalizeBrtNumber, parseBrt } from './parser';
-import { classifyBrtStatus } from './status';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { BrtTracker, adapter } from './adapter.js';
+import { normalizeBrtNumber, parseBrt } from './parser.js';
+import { classifyBrtStatus } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '99000000000002';
 const OTHER = '99000000000003';

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BrtTracker } from './adapter';
+import { BrtTracker } from './adapter.js';
 
 describe('BRT anonymous live history', () => {
   it.skipIf(!process.env.BRT_TRACKING_NUMBER)('retrieves exact BRTcode tracking scans', async () => {

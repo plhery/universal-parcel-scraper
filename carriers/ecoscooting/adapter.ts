@@ -1,10 +1,9 @@
-import 'server-only';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
-import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import { runSteps } from '../../core/runner';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { normalizeEcoscootingNumber, parseEcoscooting } from './parser';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { runSteps } from '../../core/runner/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { normalizeEcoscootingNumber, parseEcoscooting } from './parser.js';
 
 const ENDPOINT = 'https://de-link.cainiao.com/gateway/link.do';
 

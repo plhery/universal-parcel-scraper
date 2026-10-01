@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
-import fixture from './fixtures/delivered.json';
-import { adapter, SfExpressTracker, sfExpressApiUrl, sfExpressTrackingUrl } from './adapter';
-import { TrawlClient } from '../../core/transport';
-import type { AdapterEnvironment } from '../../core/adapter';
-import { parseTrackingInput } from '../../core/detection/parse';
+import fixture from './fixtures/delivered.json' with { type: 'json' };
+import { adapter, SfExpressTracker, sfExpressApiUrl, sfExpressTrackingUrl } from './adapter.js';
+import { TrawlClient } from '../../core/transport/index.js';
+import type { AdapterEnvironment } from '../../core/adapter/index.js';
+import { parseTrackingInput } from '../../core/detection/parse.js';
 
 const NUMBER = 'SF0000000000001';
 const api = sfExpressApiUrl(NUMBER);

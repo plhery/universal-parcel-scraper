@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { calendarDay, zonedTime } from '../../core/time';
-import { classifyCiblexStatus, comparableText } from './status';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { calendarDay, zonedTime } from '../../core/time/index.js';
+import { classifyCiblexStatus, comparableText } from './status.js';
 
 export function normalizeCiblexTrackingNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');

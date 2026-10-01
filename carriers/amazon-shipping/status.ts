@@ -11,8 +11,8 @@
  * Order matters: returns and failures are decided before the broad "delivered"
  * substring they contain, and delays before the transit words.
  */
-import type { CarrierStatus } from '../../core/result';
-import type { Stage } from '../../generated/catalog';
+import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedStatus {
   status: CarrierStatus;

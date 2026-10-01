@@ -1,4 +1,4 @@
-import { NotFoundError, SchemaError } from '../../core/errors';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 
 const DAY_MS = 24 * 3_600_000;
 /** The pieces of one consignment are announced and picked up together. */

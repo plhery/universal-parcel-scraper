@@ -1,12 +1,12 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter } from './adapter';
-import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl } from './parser';
-import { tipsaStatus } from './status';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter } from './adapter.js';
+import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl } from './parser.js';
+import { tipsaStatus } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '0990010990010000000017';
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');

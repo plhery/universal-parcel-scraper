@@ -63,5 +63,5 @@ Outcomes:
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/india-post` with `INDIA_POST_TRACKING_NUMBER`
+`npm run test:carriers:live -- carriers/india-post` with `INDIA_POST_TRACKING_NUMBER`
 set to a real consignment. The synthetic not-found case runs without it.

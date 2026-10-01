@@ -14,12 +14,7 @@
     ]
   },
   "brand": {
-    "color": "#ffcc00",
-    "decal": "swiss-post",
-    "palette": {
-      "accent": "#141414",
-      "brand-light": "#141414"
-    }
+    "color": "#ffcc00"
   },
   "selectable": true,
   "timezone": "Europe/Zurich",

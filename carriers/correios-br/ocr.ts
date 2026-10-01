@@ -1,6 +1,5 @@
-import { resolve } from 'node:path';
 import { Worker } from 'node:worker_threads';
-import { ChallengeError, TransportError } from '../../core/errors';
+import { ChallengeError, TransportError } from '../../core/errors/index.js';
 
 function withAbort<T>(operation: Promise<T>, signal: AbortSignal, abort?: () => void): Promise<T> {
   signal.throwIfAborted();
@@ -31,7 +30,7 @@ export class CorreiosOcr {
     try {
       await withAbort(previous, signal);
       signal.throwIfAborted();
-      const worker = this.worker ??= new Worker(resolve(process.cwd(), 'packages/carriers/carriers/correios-br/ocr-worker.mjs'));
+      const worker = this.worker ??= new Worker(new URL('./ocr-worker.mjs', import.meta.url));
       worker.ref();
       const id = ++this.nextId;
       const operation = new Promise<string>((resolve, reject) => {

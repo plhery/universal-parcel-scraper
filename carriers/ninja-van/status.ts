@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // Public tracking events. The website omits its internal routing and shipment
 // bookkeeping rows from the visible timeline.

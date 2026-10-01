@@ -22,5 +22,5 @@ references, delivery instructions and proof data are excluded.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/postnord` checks a structured negative.
+`npm run test:carriers:live -- carriers/postnord` checks a structured negative.
 Set `POSTNORD_TRACKING_NUMBER` to check history for an authorized real parcel.

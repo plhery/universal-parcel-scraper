@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { adapter, parseUpuResponse } from './adapter';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter, parseUpuResponse } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const number = 'EB000000005CN';
 const scan = (EventCd = 'EMA', EventNm = 'Posting/Collection', EventDT = '/Date(1789202880000+0200)/') =>

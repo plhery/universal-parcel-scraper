@@ -1,4 +1,3 @@
-import 'server-only';
 
 /**
  * PostNL international tracking (carrier id `spring-gds`).
@@ -17,14 +16,14 @@ import 'server-only';
  * the requested number is the only one read. PostNL answers an unknown barcode
  * with an ordinary item that has no events and says so in `message`.
  */
-import type { AdapterFactory, TrackingContext } from '../../core/adapter';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { DateTime } from 'luxon';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { countryTimeZone, explicitOffsetTime, mislabeledWallTime, settleGuessedClocks, type FeedClock, type ParsedTime } from '../../core/time';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord, type JsonObject } from '../../core/types';
-import { postNLStatus } from './status';
+import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { countryTimeZone, explicitOffsetTime, mislabeledWallTime, settleGuessedClocks, type FeedClock, type ParsedTime } from '../../core/time/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
+import { postNLStatus } from './status.js';
 
 const PROVIDER = 'PostNL';
 const TOKEN_URL = 'https://postnl.post/api/v1/auth/token';

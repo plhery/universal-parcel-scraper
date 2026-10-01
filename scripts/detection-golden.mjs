@@ -1,5 +1,5 @@
 /*
- * Regenerates contracts/fixtures/detection-golden.json: every number in the
+ * Regenerates data/detection-golden.json: every number in the
  * corpus with the carrier, confidence and candidates the detection engine
  * returns for it. The native tests replay this file, so it has to come from the
  * engine itself rather than from a second implementation here.
@@ -8,14 +8,14 @@
  * resolve, so this script drives the sweep test in update mode. The writing
  * happens in core/testing/golden.ts.
  *
- *   node packages/carriers/scripts/detection-golden.mjs
+ *   node scripts/detection-golden.mjs
  */
 
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const result = spawnSync(
   'npx',
@@ -23,8 +23,8 @@ const result = spawnSync(
     'vitest',
     'run',
     '--config',
-    'vitest.server.config.ts',
-    'packages/carriers/core/testing/detectionSweep',
+    'vitest.config.ts',
+    'core/testing/detectionSweep',
   ],
   {
     cwd: repositoryRoot,

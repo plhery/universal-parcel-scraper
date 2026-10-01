@@ -1,4 +1,4 @@
-import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status';
+import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status/index.js';
 
 function comparable(value: string): string {
   return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/\s+/g, ' ').trim();

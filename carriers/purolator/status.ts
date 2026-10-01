@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // Event codes observed in the official anonymous tracking service. The
 // website's lifecycle rail combines these into much broader presentation states.

@@ -13,4 +13,4 @@ export {
   glsSwitzerlandStatus as glsGermanyStatus,
   statusCode,
   type ClassifiedStatus,
-} from '../gls-ch/status';
+} from '../gls-ch/status.js';

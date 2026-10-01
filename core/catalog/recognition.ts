@@ -7,11 +7,11 @@
  * What it is not: no provider I/O. Asking the carriers is the server's job
  * (`src/server/carrierRecognition.ts`).
  */
-import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition';
-import { detectCarrierMatch } from '../detection/detect';
-import { AUTOMATIC_CARRIER_IDS, carrierAdapter, requiredRequirements } from './definitions';
-import { carrierBrand } from './networks';
-import type { CarrierInputField } from './types';
+import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
+import { detectCarrierMatch } from '../detection/detect.js';
+import { AUTOMATIC_CARRIER_IDS, carrierAdapter, requiredRequirements } from './definitions.js';
+import { carrierBrand } from './networks.js';
+import type { CarrierInputField } from './types.js';
 
 /** Carriers asked at once. */
 export const MAX_RECOGNITIONS = 5;

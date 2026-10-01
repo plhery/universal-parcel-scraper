@@ -9,8 +9,8 @@
  * delivery words, and anything unrecognized keeps the caller's fallback
  * instead of inventing progress.
  */
-import type { CarrierStatus } from '../../core/result';
-import { trackingLanguageStage } from '../../core/status';
+import type { CarrierStatus } from '../../core/result/index.js';
+import { trackingLanguageStage } from '../../core/status/index.js';
 
 export function stageForText(text: string, fallback = 'in_transit'): string {
   const value = text.toLowerCase();

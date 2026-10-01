@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { YamatoTracker } from './adapter';
+import { YamatoTracker } from './adapter.js';
 
 describe('Yamato live compatibility', () => {
   it.skipIf(!process.env.YAMATO_TRACKING_NUMBER)('returns identity-bound domestic history without browser state', async () => {

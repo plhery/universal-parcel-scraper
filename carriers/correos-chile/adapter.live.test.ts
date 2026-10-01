@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { adapter } from './adapter';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const instance = () => adapter({ fetcher: fetch, env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
 

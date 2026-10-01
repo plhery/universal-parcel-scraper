@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { AustraliaPostTracker } from './adapter';
-import { TrawlClient } from '../../core/transport';
+import { AustraliaPostTracker } from './adapter.js';
+import { TrawlClient } from '../../core/transport/index.js';
 
 const trawl = TrawlClient.fromEnvironment();
 const number = process.env.AUSTRALIA_POST_TRACKING_NUMBER;

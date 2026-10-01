@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, LandmarkTracker } from './adapter';
-import { normalizeLandmarkNumber, parseLandmark } from './parser';
-import { landmarkStatus } from './status';
-import metadata from './carrier.json';
-import statuses from './statuses.json';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, LandmarkTracker } from './adapter.js';
+import { normalizeLandmarkNumber, parseLandmark } from './parser.js';
+import { landmarkStatus } from './status.js';
+import metadata from './carrier.json' with { type: 'json' };
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'LTN00000001N1';
 const fixture = () => readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');

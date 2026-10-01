@@ -1,5 +1,3 @@
-import 'server-only';
-
 /**
  * The universal discovery chain: what runs when no dedicated carrier adapter
  * can answer for a parcel.
@@ -17,100 +15,26 @@ import 'server-only';
  * This module owns the order and the aggregate failure; every protocol detail
  * lives in the provider folder next to it.
  */
-import type { AdapterEnvironment, CarrierAdapter } from '../core/adapter';
-import type { CarrierResult } from '../core/result';
-import { NOOP_RECORDER } from '../core/telemetry';
-import { TrawlClient } from '../core/transport';
-import { isValidS10TrackingNumber } from '../core/detection/s10';
-import { normalizeTrackingNumber } from '../core/detection/normalize';
-import { adapter as parcelsAppAdapter, PARCELSAPP_BUDGET_MS } from './parcelsapp/adapter';
-import { adapter as postalNinjaAdapter } from './postal-ninja/adapter';
-import { adapter as seventeenTrackAdapter } from './seventeentrack/adapter';
-import { adapter as ship24Adapter } from './ship24/adapter';
-import { adapter as upuAdapter, UPU_BUDGET_MS } from './upu/adapter';
-import { numberOf, type UniversalSource as Source } from './shared/result';
-import { coverageTiers, type CoverageTier } from './coverage';
+import type { AdapterEnvironment, CarrierAdapter } from '../core/adapter/index.js';
+import type { CarrierResult } from '../core/result/index.js';
+import { NOOP_RECORDER } from '../core/telemetry/index.js';
+import { TrawlClient } from '../core/transport/index.js';
+import { adapter as parcelsAppAdapter } from './parcelsapp/adapter.js';
+import { adapter as postalNinjaAdapter } from './postal-ninja/adapter.js';
+import { adapter as seventeenTrackAdapter } from './seventeentrack/adapter.js';
+import { adapter as ship24Adapter } from './ship24/adapter.js';
+import { adapter as upuAdapter } from './upu/adapter.js';
+import { numberOf, type UniversalSource as Source } from './shared/result.js';
 
-export { parse17TrackResponse, SeventeenTrackLookupError, SeventeenTrackNoHistoryError, SeventeenTrackVerificationError } from './seventeentrack/adapter';
-export { parseParcelsAppHtml, parseParcelsAppResponse } from './parcelsapp/adapter';
-export { parsePostalNinjaResponse } from './postal-ninja/adapter';
-export { parseShip24Response } from './ship24/adapter';
-export { TrackingCaptureError } from './shared/capture';
-export type { UniversalSource } from './shared/result';
+export { parse17TrackResponse, SeventeenTrackLookupError, SeventeenTrackNoHistoryError, SeventeenTrackVerificationError } from './seventeentrack/adapter.js';
+export { parseParcelsAppHtml, parseParcelsAppResponse } from './parcelsapp/adapter.js';
+export { parsePostalNinjaResponse } from './postal-ninja/adapter.js';
+export { parseShip24Response } from './ship24/adapter.js';
+export { TrackingCaptureError } from './shared/capture.js';
+export type { UniversalSource } from './shared/result.js';
 
-export const UNIVERSAL_SOURCES: Source[] = ['ParcelsApp', 'Ship24', '17TRACK', 'UPU'];
-/** Providers reached only through the browser service: slower, and sharing one TRAWL. */
-export const BROWSER_SOURCES: ReadonlySet<Source> = new Set(['17TRACK', 'Postal Ninja']);
-
-/** Lookup time reserved by the chain and host router, before transport allowance. */
-export function universalSourceBudget(source: Source): number {
-  return source === 'ParcelsApp' ? PARCELSAPP_BUDGET_MS : source === 'UPU' ? UPU_BUDGET_MS : 30_000;
-}
-
-/** Evidence-based exception to affinity/rotation, shared by discovery and routing. */
-export function priorityUniversalSource(trackingNumber?: string): Source | undefined {
-  // E-series and untested formats keep ordinary discovery.
-  return trackingNumber && /^[CL][A-Z]\d{9}CN$/.test(normalizeTrackingNumber(trackingNumber)) && isValidS10TrackingNumber(trackingNumber)
-    ? '17TRACK' : undefined;
-}
-
-export interface UniversalPlan {
-  /** The eligible providers, in the order to ask them. */
-  sources: Source[];
-  /** The carrier whose coverage evidence ordered them, or null for the default order. */
-  carrier: string | null;
-  /** A provider's coverage tier for that carrier; `unknown` without evidence. */
-  tier(source: Source): CoverageTier;
-  /** Lower is fuller history for the carrier; providers without evidence share one rank. */
-  rank(source: Source): number;
-}
-
-const TIER_RANK: Record<CoverageTier, number> = { full: 0, partial: 1, unknown: 2, empty: 3, excluded: 4 };
-const tierRank = (tiers: Partial<Record<Source, CoverageTier>> | null, source: Source): number =>
-  TIER_RANK[source === 'UPU' ? 'unknown' : tiers?.[source] ?? 'unknown'];
-
-/**
- * Orders providers (given in the default order) by a carrier's coverage tiers:
- * fuller history first, HTTP before the browser service, then the default order.
- * Excluded providers are left out unless nothing else would remain. UPU stays
- * last whatever its evidence: sparse, never a preferred source.
- */
-export function orderUniversalSources(eligible: readonly Source[], tiers: Partial<Record<Source, CoverageTier>> | null): Source[] {
-  const excluded = (source: Source) => source !== 'UPU' && tiers?.[source] === 'excluded';
-  const usable = eligible.some((source) => source !== 'UPU' && !excluded(source)) ? eligible.filter((source) => !excluded(source)) : [...eligible];
-  return usable.sort((a, b) => Number(a === 'UPU') - Number(b === 'UPU') || tierRank(tiers, a) - tierRank(tiers, b)
-    || Number(BROWSER_SOURCES.has(a)) - Number(BROWSER_SOURCES.has(b)) || eligible.indexOf(a) - eligible.indexOf(b));
-}
-
-/**
- * The providers to ask for a number, ordered by the coverage evidence of the
- * first of `carriers` that has some (the carrier the lookup is for, then the one
- * confirmed or discovered for the number), otherwise in the default order.
- */
-export function universalPlan(options: {
-  carriers?: ReadonlyArray<string | null | undefined>;
-  trackingNumber?: string;
-  enablePostalNinja?: boolean;
-} = {}): UniversalPlan {
-  const { trackingNumber, enablePostalNinja = false } = options;
-  const defaults: Source[] = enablePostalNinja ? ['ParcelsApp', 'Ship24', 'Postal Ninja', '17TRACK', 'UPU'] : [...UNIVERSAL_SOURCES];
-  const eligible = defaults.filter((source) => source !== 'UPU' || trackingNumber === undefined || isValidS10TrackingNumber(trackingNumber));
-  const carrier = (options.carriers ?? []).find((candidate) => coverageTiers(candidate)) ?? null;
-  const tiers = coverageTiers(carrier);
-  const ordered = orderUniversalSources(eligible, tiers);
-  const priority = priorityUniversalSource(trackingNumber);
-  return {
-    sources: priority ? [priority, ...ordered.filter((source) => source !== priority)] : ordered,
-    carrier,
-    tier: (source) => tiers?.[source] ?? 'unknown',
-    rank: (source) => tierRank(tiers, source),
-  };
-}
-
-/** The default order for a number, without a carrier's evidence. */
-export function universalSources(enablePostalNinja = false, trackingNumber?: string): Source[] {
-  return universalPlan({ trackingNumber, enablePostalNinja }).sources;
-}
+export * from './plan.js';
+import { universalSources, universalSourceBudget } from './plan.js';
 
 const FACTORIES = {
   'Ship24': ship24Adapter,
@@ -136,6 +60,7 @@ export class UniversalTrackingError extends AggregateError {
 }
 
 export interface UniversalTrackerOptions {
+  providers?: readonly Source[];
   /** The browser service endpoint; overrides `environment.trawl`. An empty string disables it. */
   trawlUrl?: string;
   timeoutMs?: number;
@@ -149,6 +74,7 @@ export interface UniversalTrackerOptions {
 }
 
 export class UniversalTracker {
+  private readonly instances = new Map<Source, CarrierAdapter>();
   constructor(readonly options: UniversalTrackerOptions = {}) {
     if (options.timeoutMs !== undefined && (!Number.isFinite(options.timeoutMs) || options.timeoutMs <= 0)) {
       throw new TypeError('Universal tracking timeout must be positive');
@@ -164,7 +90,7 @@ export class UniversalTracker {
   async fetch(trackingNumber: string, postcode?: string | null): Promise<CarrierResult> {
     numberOf(trackingNumber);
     const failures: SourceFailure[] = [];
-    const sources = universalSources(this.options.enablePostalNinja, trackingNumber);
+    const sources = universalSources(this.options.enablePostalNinja, trackingNumber).filter(source => (this.options.providers ?? ['UPU']).includes(source));
     for (const source of sources) {
       try { return await this.fetchSource(source, trackingNumber, undefined, postcode); }
       catch (error) { failures.push({ source, reason: 'history unavailable; try again later or open the tracking website', error }); }
@@ -172,17 +98,19 @@ export class UniversalTracker {
     throw new UniversalTrackingError(failures);
   }
 
-  async fetchSource(source: Source, trackingNumber: string, timeoutMs = this.options.timeoutMs ?? universalSourceBudget(source), postcode?: string | null, timezone?: string | null): Promise<CarrierResult> {
+  async fetchSource(source: Source, trackingNumber: string, timeoutMs = this.options.timeoutMs ?? universalSourceBudget(source), postcode?: string | null, timezone?: string | null, signal?: AbortSignal): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
     if (this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')) {
       return await this.options.browserLookup(source, number);
     }
-    return await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null }, { budgetMs: timeoutMs });
+    return await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null }, { budgetMs: timeoutMs, signal });
   }
 
   /** One provider adapter, built from this tracker's environment. */
   private provider(source: Source): CarrierAdapter {
-    return FACTORIES[source](this.environment());
+    let instance = this.instances.get(source);
+    if (!instance) { instance = FACTORIES[source](this.environment()); this.instances.set(source, instance); }
+    return instance;
   }
 
   private environment(): AdapterEnvironment {
@@ -193,7 +121,7 @@ export class UniversalTracker {
       trawl: this.trawl(fetcher, partial),
       browserExecutablePath: partial.browserExecutablePath ?? this.options.executablePath ?? null,
       recorder: partial.recorder ?? NOOP_RECORDER,
-      env: partial.env ?? process.env,
+      env: partial.env ?? {},
     };
   }
 
@@ -201,6 +129,6 @@ export class UniversalTracker {
     const configured = this.options.trawlUrl;
     if (configured !== undefined) return configured ? new TrawlClient(configured, fetcher) : null;
     if (partial.trawl !== undefined) return partial.trawl;
-    return TrawlClient.fromEnvironment(process.env, fetcher);
+    return TrawlClient.fromEnvironment(partial.env ?? {}, fetcher);
   }
 }

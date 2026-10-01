@@ -8,7 +8,7 @@
  * broad words they contain, and only then consult the package's shared
  * multilingual classifier.
  */
-import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status';
+import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status/index.js';
 
 export type { ClassifiedStatus };
 

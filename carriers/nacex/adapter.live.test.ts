@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { NacexTracker } from './adapter';
+import { NacexTracker } from './adapter.js';
 
 describe('NACEX live tracking', () => {
   it.skipIf(!process.env.NACEX_TRACKING_NUMBER)('returns matching detailed scans', async () => {

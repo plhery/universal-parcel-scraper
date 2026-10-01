@@ -8,16 +8,15 @@
  * milestones, the step and the slot's starting day; everything describing a
  * person or a shop is dropped.
  */
-import 'server-only';
 
-import type { AdapterFactory } from '../../core/adapter';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { UpstreamHttpError, clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyStatus, type ClassifiedStatus } from './status';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { UpstreamHttpError, clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyStatus, type ClassifiedStatus } from './status.js';
 
-export { classifyStatus } from './status';
+export { classifyStatus } from './status.js';
 
 const PROVIDER = 'Colisweb';
 const TRACKING_ENDPOINT = 'https://www.colisweb.com/api/search';

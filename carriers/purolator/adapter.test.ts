@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result';
-import { PurolatorTracker } from './adapter';
-import { normalizePurolatorNumber, parsePurolator } from './parser';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { PurolatorTracker } from './adapter.js';
+import { normalizePurolatorNumber, parsePurolator } from './parser.js';
 
 const NUMBER = '100000000001';
 const OTHER = '100000000002';

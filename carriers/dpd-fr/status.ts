@@ -14,8 +14,8 @@
  * Provenance: wording observed on https://trace.dpd.fr/fr/trace/<number> for
  * outbound and return legs.
  */
-import type { ClassifiedStatus } from '../../core/status';
-import { clean } from '../../core/transport';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { clean } from '../../core/transport/index.js';
 
 /** Lowercase, accent-free, punctuation-free form used for every wording comparison. */
 export function comparableText(value: string): string {

@@ -41,7 +41,7 @@ decides the route; it is not a fallback tier.
   shipment, and a milestone the parcels repeat within 15 minutes is kept once.
 - No detection rule points at the 8-digit shipment or the composite. Such a rule
   would make Planzer a candidate probe for other carriers' numbers
-  ([ROUTING.md](../../../../docs/ROUTING.md)), and a matching
+  ([ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)), and a matching
   8-digit shipment is too weak an identity to adopt someone else's parcel. These
   numbers are tracked only when the user files the parcel under Planzer.
 - An unfamiliar API milestone label is a `SchemaError`, not an unmapped event.
@@ -75,7 +75,7 @@ decides the route; it is not a fallback tier.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/planzer`. Unknown-number
+`npm run test:carriers:live -- carriers/planzer`. Unknown-number
 checks need no env vars. Set `QUICKPAC_DELIVERED_TRACKING_NUMBER` to a real
 delivered Quickpac parcel to also check the four milestones and the `Shipped`
 relabel.

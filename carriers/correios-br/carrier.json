@@ -8,26 +8,39 @@
     ]
   },
   "brand": {
-    "color": "#ffd500",
-    "palette": {
-      "accent": "#06416a",
-      "brand-light": "#06416a"
-    }
+    "color": "#ffd500"
   },
   "selectable": true,
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
     "adapter": "correios-br",
-    "steps": ["direct"]
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": ["history", "location"],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://rastreamento.correios.com.br/app/index.php?objetos={trackingNumber}",
     "canaryUrl": "https://rastreamento.correios.com.br/app/index.php",
-    "shows": ["status", "history", "location", "estimated_delivery"],
-    "scraped": ["status", "history", "location"],
-    "discarded": ["estimated_delivery"],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "estimated_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "estimated_delivery"
+    ],
     "unavailable": []
   },
   "links": [

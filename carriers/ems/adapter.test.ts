@@ -1,13 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
-import { AdapterRegistry } from '../../core/adapter';
-import { carrierDefinition, CARRIERS } from '../../core/catalog';
-import { detectCarrier, parseTrackingInput } from '../../core/detection';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { REGISTRY } from '../../generated/registry';
-import { EmsTracker, normalizeEmsTrackingNumber, parse } from './adapter';
+import { AdapterRegistry } from '../../core/adapter/index.js';
+import { carrierDefinition, CARRIERS } from '../../core/catalog/index.js';
+import { detectCarrier, parseTrackingInput } from '../../core/detection/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { REGISTRY } from '../../generated/registry.js';
+import { EmsTracker, normalizeEmsTrackingNumber, parse } from './adapter.js';
 
 const NUMBER = 'EB000000005CN';
 const fixture = (name = 'positive') => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');

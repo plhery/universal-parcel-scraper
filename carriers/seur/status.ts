@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const observed: Record<string, { group: string; wording: string; mapped: ClassifiedStatus }> = {
   LL020: { group: 'ENTREGADO', wording: 'EL ENVÍO HA SIDO ENTREGADO A UN VECINO.', mapped: { status: 'delivered', stage: 'delivered' } },

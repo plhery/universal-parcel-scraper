@@ -30,4 +30,4 @@ inconclusive, as do blank responses, redirects and generic HTTP errors.
 
 Set `CIBLEX_TRACKING_NUMBER` outside the repository and optionally
 `CIBLEX_UNKNOWN_NUMBER`, then run
-`npm run test:carriers:live -- packages/carriers/carriers/ciblex`.
+`npm run test:carriers:live -- carriers/ciblex`.

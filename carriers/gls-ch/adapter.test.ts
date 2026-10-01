@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { JsonObject } from '../../core/types';
+import type { JsonObject } from '../../core/types.js';
 import {
   GLSSwitzerlandTracker,
   GLSSwitzerlandTrackingError,
@@ -10,8 +10,8 @@ import {
   normalizeGLSSwitzerlandPostcode,
   normalizeGLSSwitzerlandTrackingNumber,
   parseGLSSwitzerlandTrackingResponse,
-} from './adapter';
-import { glsSwitzerlandStatus } from './status';
+} from './adapter.js';
+import { glsSwitzerlandStatus } from './status.js';
 
 // Intentional test identifiers from official documentation. Swiss Post's GLS
 // guide publishes parcel 993990103198 alongside fictional “Test Entreprise”

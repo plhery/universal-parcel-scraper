@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { StepRecord, StepRecorder } from '../../core/telemetry';
+import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import {
   DPDChallengeError,
   DPDTracker,
   DPDTrackingError,
   adapter,
   parseDPDTrackingApi,
-} from './adapter';
-import { apiStage, apiStatus, scanStage, wordingStatus } from './status';
+} from './adapter.js';
+import { apiStage, apiStatus, scanStage, wordingStatus } from './status.js';
 
 // Every identifier below is synthetic: a 14-digit number that matches DPD's
 // shape but was never issued, and made-up names for the private fields the

@@ -1,10 +1,8 @@
-import 'server-only';
 
 import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { brotliDecompressSync } from 'node:zlib';
-import { ambiguousAddressCodes, trackingPlace } from '../../lib/trackingLocation';
-import facilityList from './facilities.json';
+import { ambiguousAddressCodes, trackingPlace } from './trackingLocation.js';
+import facilityList from './facilities.json' with { type: 'json' };
 import { nameKey, nameKeys } from './names.mjs';
 
 /** Where a scan happened, as precisely as its free-text location allows. */
@@ -45,7 +43,7 @@ interface Gazetteer {
   countries: Map<string, { name: string; latitude: number; longitude: number }>;
 }
 
-const DATA = 'src/server/places/places.tsv.br';
+const DATA = new URL('./places.tsv.br', import.meta.url);
 // Words for facilities and services rather than places ("Agence DPD de La Crau", "PAKETZENTRUM").
 const FACILITY_WORDS = new Set(`
   agence agency air airport area branch bureau cedex cidex center centre centro centrum clasificacion colis
@@ -81,7 +79,7 @@ let loaded: Gazetteer | null = null;
 function gazetteer(): Gazetteer {
   if (loaded) return loaded;
   // Parsed straight from bytes: substrings of one decompressed string would keep all 10 MB of it alive.
-  const bytes = brotliDecompressSync(readFileSync(resolve(process.cwd(), DATA)));
+  const bytes = brotliDecompressSync(readFileSync(DATA));
   const rows: string[][] = [];
   for (let start = 0; start < bytes.length;) {
     let end = bytes.indexOf(10, start);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import { CttTracker } from './adapter';
+import { NotFoundError } from '../../core/errors/index.js';
+import { CttTracker } from './adapter.js';
 
 // Live compatibility checks for the OutSystems session flow. Unknown codes
 // answer Found:false with a clear backend; the maintenance sibling tells an

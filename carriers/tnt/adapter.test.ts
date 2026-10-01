@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, normalizeTntExpressNumber, normalizeTntFranceNumber, parseTntExpressResponse, parseTntFranceResponse, TntExpressTracker, TntFranceTracker } from './adapter';
-import { tntExpressStatus } from './status';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, normalizeTntExpressNumber, normalizeTntFranceNumber, parseTntExpressResponse, parseTntFranceResponse, TntExpressTracker, TntFranceTracker } from './adapter.js';
+import { tntExpressStatus } from './status.js';
 
 const NUMBER = '1000000000000001';
 const fixture = () => readFileSync(new URL('./fixtures/registered.html', import.meta.url), 'utf8');

@@ -23,5 +23,5 @@ use a separate service and are outside this adapter's scope.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/delhivery`. Set
+`npm run test:carriers:live -- carriers/delhivery`. Set
 `DELHIVERY_TRACKING_NUMBER` to check an authorized real parcel.

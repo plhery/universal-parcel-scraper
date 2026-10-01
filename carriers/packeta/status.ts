@@ -16,7 +16,7 @@
  * reconstructed. The event sentences were confirmed live on 2026-08-19 against
  * real delivered parcels (values fictionalized in that project's fixtures).
  */
-import type { ClassifiedStatus, Stage } from '../../core/status';
+import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 
 const PACKET_STATUS: Record<string, ClassifiedStatus> = {
   // TO_BE_PROCESSED

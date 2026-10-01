@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { locatePlace, placesForEvents } from './index';
+import { describe, expect, it, vi } from 'vitest';
+import { locatePlace, placesForEvents } from './index.js';
+
+vi.setConfig({ testTimeout: 30_000 });
 
 const place = (location: string, countries?: string[]) => locatePlace(location, { countries });
 

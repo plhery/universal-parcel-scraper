@@ -20,7 +20,8 @@
     "adapter": "pos-malaysia",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",

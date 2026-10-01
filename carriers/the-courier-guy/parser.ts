@@ -1,13 +1,13 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { explicitOffsetTime } from '../../core/time';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { courierGuyStatus, courierGuyWording, HIDDEN_COURIER_GUY_CODES } from './status';
-import { normalizeCourierGuyNumber } from './number';
+import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { courierGuyStatus, courierGuyWording, HIDDEN_COURIER_GUY_CODES } from './status.js';
+import { normalizeCourierGuyNumber } from './number.js';
 
-export { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber } from './number';
+export { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber } from './number.js';
 
 function clock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: string; provider_time_text?: string } {
   if (value != null && typeof value !== 'string') throw new SchemaError('The Courier Guy', 'Invalid scan clock');

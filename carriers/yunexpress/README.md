@@ -9,7 +9,7 @@ requests are rejected by the site's protection.
 
 Configure a Chromium executable for local browser capture. When no local
 executable is configured, the adapter can use a Trawl browser service that
-includes the [Yuntrack capture hook](../../../../ops/trawl/tracking-capture.mjs).
+includes the [Yuntrack capture hook](../../trawl/tracking-capture.mjs).
 The hook checks the posted parcel and reads the browser's decoded API body.
 Stock Trawl skips compressed bodies. Service capture is skipped when local
 Chromium is configured.
@@ -22,6 +22,6 @@ reply is inconclusive when its latest summary does not match the first scan.
 A shorter projection than the returned raw history is incomplete. The downstream
 reference is retained for separate carrier confirmation.
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/yunexpress` with a
+Run `npm run test:carriers:live -- carriers/yunexpress` with a
 configured browser. Set `YUNEXPRESS_TRACKING_NUMBER` outside the repository to
 check a real parcel.

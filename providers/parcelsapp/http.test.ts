@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
-import { parcelsAppChecksum, parcelsAppRequest, ParcelsAppHttpClient, PARCELSAPP_API } from './http';
+import { parcelsAppChecksum, parcelsAppRequest, ParcelsAppHttpClient, PARCELSAPP_API } from './http.js';
 
 describe('ParcelsApp public request protocol', () => {
   it.each([

@@ -18,8 +18,8 @@
  * parcel the provider would know today. So an empty provider is asked last,
  * never skipped; only a wrong parcel or a refused format excludes it.
  */
-import data from './coverage.json';
-import type { UniversalSource } from './shared/result';
+import data from './coverage.json' with { type: 'json' };
+import type { UniversalSource } from './types.js';
 
 export type CoverageAnswer = 'history' | 'no_history' | 'summary_only' | 'sign_in' | 'postcode_prompt'
   | 'wrong_carrier' | 'refused' | 'error' | 'blocked' | 'unverified' | 'n/a';

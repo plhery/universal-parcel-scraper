@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { adapter, CanadaPostTracker, canadaPostTrackingUrl, parseCanadaPostTrackingResponse } from './adapter';
-import { canadaPostLookupKind, normalizeCanadaPostNumber, resolveCanadaPostPin } from './parser';
-import { canadaPostPackageStage, canadaPostStage, canadaPostStatus } from './status';
-import { BudgetExceededError, carrierErrorKind, IndeterminateError, SchemaError } from '../../core/errors';
-import { normalizeCarrierResult } from '../../core/result';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter, CanadaPostTracker, canadaPostTrackingUrl, parseCanadaPostTrackingResponse } from './adapter.js';
+import { canadaPostLookupKind, normalizeCanadaPostNumber, resolveCanadaPostPin } from './parser.js';
+import { canadaPostPackageStage, canadaPostStage, canadaPostStatus } from './status.js';
+import { BudgetExceededError, carrierErrorKind, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = '0073938000999999';
 const MOVING_NUMBER = '0073938000888888';

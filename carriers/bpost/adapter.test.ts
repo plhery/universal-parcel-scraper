@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { normalizeCarrierResult } from '../../core/result';
-import { adapter, BpostTracker } from './adapter';
-import { normalizeBpostNumber, parseBpost } from './parser';
-import { classifyBpostStatus } from './status';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
+import { adapter, BpostTracker } from './adapter.js';
+import { normalizeBpostNumber, parseBpost } from './parser.js';
+import { classifyBpostStatus } from './status.js';
 
 const NUMBER = '000000000000000000000001';
 const OTHER = '000000000000000000000002';

@@ -12,7 +12,7 @@
  * against a real ES parcel on 2026-08-24 (admitted → classified →
  * out for delivery → failed attempt → office hold → collected).
  */
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'A010000V': { status: 'pending', stage: 'registered' },

@@ -1,10 +1,10 @@
 import { DateTime, IANAZone } from 'luxon';
-import { isValidS10TrackingNumber } from '../../core/detection/s10';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors';
-import type { CarrierEvent, CarrierResult } from '../../core/result';
-import { clean } from '../../core/transport';
-import { isRecord } from '../../core/types';
-import { classifyCorreiosStatus } from './status';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+import { classifyCorreiosStatus } from './status.js';
 
 export function normalizeCorreiosNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');

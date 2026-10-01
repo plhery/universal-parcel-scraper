@@ -1,10 +1,9 @@
-import 'server-only';
 
-import type { AdapterFactory } from '../../core/adapter';
-import { NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors';
-import type { CarrierResult } from '../../core/result';
-import { fetchBounded, parseJsonBytes } from '../../core/transport';
-import { isRecord } from '../../core/types';
+import type { AdapterFactory } from '../../core/adapter/index.js';
+import { NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
 import {
   glsSwitzerlandDetailApiUrl,
   glsDeliveryReference,
@@ -14,7 +13,7 @@ import {
   normalizeGLSSwitzerlandTrackingNumber,
   parseGLSSwitzerlandTrackingResponse,
   selectGLSParcel,
-} from '../gls-ch/adapter';
+} from '../gls-ch/adapter.js';
 
 // GLS's GROUP recipient service covers German and Swiss parcels. Keep the
 // shared response parser; the delivery postcode can be Swiss or German.

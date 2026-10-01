@@ -28,5 +28,5 @@ are obtained anew for each lookup and are not stored in the result.
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/aramex`. Set
+`npm run test:carriers:live -- carriers/aramex`. Set
 `ARAMEX_TRACKING_NUMBER` to check an authorized real shipment.

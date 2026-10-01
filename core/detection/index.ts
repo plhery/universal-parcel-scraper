@@ -11,22 +11,22 @@ export type {
   CarrierDetection,
   DetectionConfidence,
   TrackingInputMatch,
-} from './types';
-export { AMAZON_NUMBER_PATTERN, isAmazonTrackingNumber } from './amazon';
+} from './types.js';
+export { AMAZON_NUMBER_PATTERN, isAmazonTrackingNumber } from './amazon.js';
 export {
   TRACKING_CANDIDATE_PATTERNS,
   keywordNumberInText,
   recognizedNumberInText,
-} from './candidates';
-export { detectCarrier, detectCarrierMatch } from './detect';
-export { isValidGlsParcelNumber } from './gls';
-export { isValidHermesParcelNumber } from './hermes';
-export { isValidMondialRelayBarcode } from './mondialRelay';
+} from './candidates.js';
+export { detectCarrier, detectCarrierMatch } from './detect.js';
+export { isValidGlsParcelNumber } from './gls.js';
+export { isValidHermesParcelNumber } from './hermes.js';
+export { isValidMondialRelayBarcode } from './mondialRelay.js';
 export {
   formatTrackingNumber,
   isPlanzerSharedTrackingNumber,
   normalizeTrackingNumber,
   validTrackingNumber,
-} from './normalize';
-export { parseTrackingInput } from './parse';
-export { isValidS10TrackingNumber, supportsSwissPostHandoff } from './s10';
+} from './normalize.js';
+export { parseTrackingInput } from './parse.js';
+export { isValidS10TrackingNumber, supportsSwissPostHandoff } from './s10.js';

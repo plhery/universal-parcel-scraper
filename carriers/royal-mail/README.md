@@ -89,7 +89,7 @@ Tried without a reliable fix:
 
 ## Testing
 
-`npm run test:carriers:live -- packages/carriers/carriers/royal-mail` checks
+`npm run test:carriers:live -- carriers/royal-mail` checks
 the missing-browser-service error. With `FLARESOLVERR_URL` and
 `ROYAL_MAIL_LIVE_TRACKING_NUMBER` (kept outside the repository) it runs a real
 lookup and asserts no private fields come back.

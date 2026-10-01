@@ -27,4 +27,4 @@ YTO Global shipments use separate website flows and are outside this adapter's s
 ## Testing
 
 Set `YTO_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- packages/carriers/carriers/yto/adapter.live.test.ts`.
+`npm run test:carriers:live -- carriers/yto/adapter.live.test.ts`.

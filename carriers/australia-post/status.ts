@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 
 // Event codes and milestone labels consumed by the public tracking application.
 // statuses.json distinguishes live vocabulary from synthetic status boundaries.

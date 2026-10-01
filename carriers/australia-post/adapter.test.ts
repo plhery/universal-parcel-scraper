@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { adapter, AustraliaPostTracker, australiaPostApiUrl, australiaPostTrackingUrl, normalizeAustraliaPostNumber, parse } from './adapter';
-import { TrawlClient } from '../../core/transport';
-import { NOOP_RECORDER } from '../../core/telemetry';
+import { adapter, AustraliaPostTracker, australiaPostApiUrl, australiaPostTrackingUrl, normalizeAustraliaPostNumber, parse } from './adapter.js';
+import { TrawlClient } from '../../core/transport/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = '7T0000000001000000001';
 const OTHER = '7T0000000001000000002';

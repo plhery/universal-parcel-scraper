@@ -3,7 +3,7 @@ import {
   calendarDay, countryCode, countryTimeZone, epochMillisTime, epochSecondsTime, explicitOffsetTime, isoTime, mislabeledLocalTime,
   mislabeledWallTime, canadaProvinceTimeZone, regionHasTown, settleGuessedClocks, sharedClockZone, timeZoneCountry, townKey,
   usStateTimeZone, zonedTime,
-} from './index';
+} from './index.js';
 
 describe('time policies', () => {
   it('keeps explicit offsets and rejects naive values', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { NotFoundError } from '../../core/errors';
-import { CorreosSpainTracker } from './adapter';
+import { NotFoundError } from '../../core/errors/index.js';
+import { CorreosSpainTracker } from './adapter.js';
 
 // Live compatibility checks for the keyless localizador endpoint. Unknown codes
 // answer 200 with a non-zero codError, which the adapter maps to a clean 404.

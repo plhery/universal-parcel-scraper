@@ -21,12 +21,12 @@ opening hours and payment documents are excluded.
 
 The service includes international partner scans without clock offsets. Local
 digits and provider order are preserved; a timezone is never inferred from the
-carrier's home country. See [ROUTING.md](../../../../docs/ROUTING.md) for
+carrier's home country. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for
 unresolved history handling. Empty history, invalidated scans and ambiguous
 reused numbers are inconclusive. Pallet consignments and references with linked
 components need parcel-level history and are not supported.
 
 ## Testing
 
-Run `npm run test:carriers:live -- packages/carriers/carriers/poczta-polska`.
+Run `npm run test:carriers:live -- carriers/poczta-polska`.
 Set `POCZTA_POLSKA_TRACKING_NUMBER` outside the repository for a real parcel.

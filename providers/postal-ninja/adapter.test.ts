@@ -1,10 +1,10 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { scrapeUniversalPage } from '../../core/transport/browser';
-import { TrawlClient } from '../../core/transport';
-import { NOOP_RECORDER } from '../../core/telemetry';
-import { adapter, parsePostalNinjaResponse, PostalNinjaTracker } from './adapter';
+import { scrapeUniversalPage } from '../../core/transport/browser.js';
+import { TrawlClient } from '../../core/transport/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, parsePostalNinjaResponse, PostalNinjaTracker } from './adapter.js';
 
 vi.mock('../../core/transport/browser', () => ({ scrapeUniversalPage: vi.fn() }));
 
