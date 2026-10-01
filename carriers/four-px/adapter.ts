@@ -99,6 +99,6 @@ export class FourPxTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new FourPxTracker({ fetcher: environment.fetcher });
-  return { id: 'four-px', steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'four-px', budgetMs: context.budgetMs ?? 15_000,
+  return { id: 'four-px', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'four-px', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

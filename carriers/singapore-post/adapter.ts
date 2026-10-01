@@ -92,6 +92,6 @@ export class SingaporePostTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new SingaporePostTracker({ fetcher: environment.fetcher });
-  return { id: 'singapore-post', steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'singapore-post', budgetMs: context.budgetMs ?? 15_000,
+  return { id: 'singapore-post', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'singapore-post', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

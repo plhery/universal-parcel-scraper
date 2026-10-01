@@ -38,5 +38,5 @@ export class PurolatorTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new PurolatorTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'purolator', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'purolator', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

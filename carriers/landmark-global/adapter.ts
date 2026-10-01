@@ -25,5 +25,5 @@ export class LandmarkTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new LandmarkTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'landmark-global', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'landmark-global', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

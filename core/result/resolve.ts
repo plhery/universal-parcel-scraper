@@ -12,15 +12,31 @@ export function resultStage(result: CarrierResult): Stage | null {
     delivered: 'delivered', exception: 'failed_attempt',
   };
   const base = fallback[result.status ?? 'unknown'];
-  return base ? classifyWording(result.last_status_text ?? '', base).stage : null;
+  if (!base) return null;
+  const stage = classifyWording(result.last_status_text ?? '', base).stage;
+  const first = result.events?.[0]?.stage;
+  return stage === 'pending' && stages.has(first ?? '') ? first as Stage : stage;
 }
 
 export function resultHasUpdate(result: CarrierResult): boolean {
   const stage = resultStage(result);
   return Boolean(stage && stage !== 'pending') || (result.events ?? []).some(event => {
     const declared = stages.has(event.stage ?? '') ? event.stage as Stage : undefined;
-    return (declared ?? classifyWording(event.description ?? '', 'pending').stage) !== 'pending';
+    return Boolean(declared && declared !== 'pending')
+      || Boolean(event.description && classifyWording(event.description, 'pending').stage !== 'pending');
   });
+}
+
+export function classifyStage(text: string, fallback = 'in_transit') {
+  return classifyWording(text, fallback as Stage);
+}
+
+export function inferStage(text: string, fallback = 'in_transit'): string {
+  return classifyStage(text, fallback).stage;
+}
+
+export function stageSource(declaredStage: string, description: string): string {
+  return stages.has(declaredStage) ? 'carrier_map' : classifyStage(description).source;
 }
 
 export interface ResolvedEvent extends CarrierEvent {

@@ -196,5 +196,5 @@ export class YunExpressTracker {
 export const adapter: AdapterFactory = (environment: AdapterEnvironment) => {
   const tracker = new YunExpressTracker({ trawl: environment.trawl, executablePath: environment.browserExecutablePath,
     fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'yunexpress', steps: ['browser', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'yunexpress', recordsSteps: true, steps: ['browser', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

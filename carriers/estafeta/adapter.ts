@@ -42,5 +42,5 @@ export class EstafetaTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new EstafetaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'estafeta', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'estafeta', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

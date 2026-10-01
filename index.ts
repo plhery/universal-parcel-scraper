@@ -13,3 +13,7 @@ export { validateDachserTrackingUrl, validatePlanzerSharedUrl } from './core/cat
 export { CARRIER_CATALOG, CARRIER_IDS, type CarrierId } from './generated/catalog.js';
 export * from './providers/plan.js';
 export type { UniversalSource } from './providers/types.js';
+export * from './core/time/result.js';
+export * from './core/catalog/hints.js';
+export { universalCarrierHints } from './providers/shared/hints.js';
+export { recognitionAskedCarriers } from './core/catalog/recognition.js';

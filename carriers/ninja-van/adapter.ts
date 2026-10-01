@@ -34,7 +34,7 @@ export class NinjaVanTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new NinjaVanTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'ninja-van', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'ninja-van', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeNinjaVanNumber(number))) };
 };

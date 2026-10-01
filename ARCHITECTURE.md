@@ -28,3 +28,10 @@ use `StepRecorder` to connect their own observability; the HTTP server logs only
 status codes and durations.
 
 [Provider ordering](providers/COMPARISON.md) · [Carrier corpus](CORPUS.md) · [HTTP contract](server/openapi.json).
+
+Consumers with their own router can call `trackCarrier` from `/node`, supplying an
+`AdapterRegistry`, their configured `UniversalTracker`, and a `StepRecorder`. It dispatches
+one carrier lookup and normalizes the result; it leaves scheduling and provider choice to
+the consumer. An adapter with `recordsSteps` reports its own lookup, so dispatch does not
+wrap its telemetry a second time. `CarrierError.reason` distinguishes expected details
+such as Amazon Shipping's expired history from transport failures.

@@ -45,6 +45,6 @@ export class TipsaTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new TipsaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'tipsa', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'tipsa', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeTipsaNumber(number))) };
 };

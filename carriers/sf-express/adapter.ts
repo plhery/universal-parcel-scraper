@@ -74,5 +74,5 @@ export class SfExpressTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new SfExpressTracker({ trawl: environment.trawl, recorder: environment.recorder });
-  return { id: 'sf-express', steps: ['trawl'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'sf-express', recordsSteps: true, steps: ['trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

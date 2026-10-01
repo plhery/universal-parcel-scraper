@@ -185,5 +185,5 @@ export class PostiTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new PostiTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'posti', steps: ['direct', 'refresh'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'posti', recordsSteps: true, steps: ['direct', 'refresh'], track: (input, context) => tracker.fetch(input.number, context) };
 };

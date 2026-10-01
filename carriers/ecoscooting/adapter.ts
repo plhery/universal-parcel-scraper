@@ -33,5 +33,5 @@ export class EcoscootingTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new EcoscootingTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'ecoscooting', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'ecoscooting', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

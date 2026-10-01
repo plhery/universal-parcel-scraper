@@ -32,6 +32,6 @@ export class CttExpressTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new CttExpressTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'ctt-express', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'ctt-express', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeCttExpressNumber(number))) };
 };

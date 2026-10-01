@@ -32,5 +32,5 @@ export class OntracTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new OntracTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'ontrac', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'ontrac', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

@@ -27,5 +27,5 @@ export class BringTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new BringTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'bring-posten', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'bring-posten', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

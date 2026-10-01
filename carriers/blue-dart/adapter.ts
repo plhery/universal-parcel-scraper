@@ -28,5 +28,5 @@ export class BlueDartTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new BlueDartTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'blue-dart', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'blue-dart', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

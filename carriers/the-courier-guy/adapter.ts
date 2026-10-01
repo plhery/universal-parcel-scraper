@@ -38,7 +38,7 @@ export class CourierGuyTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new CourierGuyTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'the-courier-guy', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'the-courier-guy', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeCourierGuyRecognitionNumber(number))) };
 };

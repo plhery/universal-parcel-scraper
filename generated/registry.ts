@@ -51,6 +51,7 @@ import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
 import { adapter as laPoste } from '../carriers/la-poste/adapter.js';
 import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.js';
 import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
+import { adapter as mrw } from '../carriers/mrw/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as ninjaVan } from '../carriers/ninja-van/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
@@ -139,6 +140,7 @@ export const REGISTRY: RegistryDefinition = {
     "la-poste": laPoste,
     "landmark-global": landmarkGlobal,
     "mondial-relay": mondialRelay,
+    "mrw": mrw,
     "nacex": nacex,
     "ninja-van": ninjaVan,
     "nz-post": nzPost,
@@ -235,7 +237,7 @@ export const REGISTRY: RegistryDefinition = {
     "la-poste": "la-poste",
     "landmark-global": "landmark-global",
     "mondial-relay": "mondial-relay",
-    "mrw": "universal",
+    "mrw": "mrw",
     "nacex": "nacex",
     "ninja-van": "ninja-van",
     "nz-post": "nz-post",

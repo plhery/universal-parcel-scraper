@@ -35,7 +35,8 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
 
 - `facilities.json` places sorting centres by the six-digit site number Swiss Post ends its
   scan text with ("Zürich Briefzentrum 801050"), whichever source relayed the scan. The text
-  must also start with the site's town. Only sites seen in scans are listed, each with the
+  must also start with the site's town. The place keeps the town as its name; a distinct facility name is returned as `site`.
+  Only sites seen in scans are listed, each with the
   OpenStreetMap element its point comes from. The first four digits are often not a
   postcode (8920 and 8520, the Urdorf and Frauenfeld parcel centres, are none), so unknown
   sites stay on their town.

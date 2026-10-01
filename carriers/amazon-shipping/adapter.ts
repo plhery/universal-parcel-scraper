@@ -35,10 +35,10 @@ export interface AmazonShippingOptions {
   fetcher?: typeof fetch;
 }
 
-/** Kept as a named class: the host's eligibility check narrows on it with `instanceof`. */
+/** A confirmed absence, with a public reason consumers can inspect. */
 export class AmazonShippingNotFoundError extends NotFoundError {
   constructor() {
-    super(PROVIDER);
+    super(PROVIDER, undefined, { reason: 'shipment_not_found' });
     this.name = 'AmazonShippingNotFoundError';
   }
 }
@@ -51,7 +51,7 @@ export class AmazonShippingNotFoundError extends NotFoundError {
  */
 export class AmazonShippingHistoryExpiredError extends IndeterminateError {
   constructor() {
-    super(PROVIDER, 'Amazon Shipping tracking history has expired');
+    super(PROVIDER, 'Amazon Shipping tracking history has expired', { reason: 'history_expired' });
     this.name = 'AmazonShippingHistoryExpiredError';
   }
 }

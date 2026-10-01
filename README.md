@@ -11,7 +11,7 @@ Detect a carrier, fetch its tracking history, and get consistent stages and scan
 A TypeScript library, a CLI, and a small HTTP server. No tracking-service account required.
 
 <!-- GENERATED:summary -->
-**105 carriers · 84 active dedicated adapters · 58 countries represented**
+**105 carriers · 85 active dedicated adapters · 58 countries represented**
 <!-- /GENERATED:summary -->
 
 </div>
@@ -21,10 +21,10 @@ DHL, UPS, FedEx, USPS, Swiss Post, DPD, PostNL, and many more.
 
 ## Get started
 
-Node.js 24 or newer. Install from GitHub:
+Node.js 24 or newer:
 
 ```sh
-npm install github:plhery/universal-parcel-scraper
+npm install universal-parcel-scraper
 npx parcel-scraper detect 1Z999AA10123456784
 npx parcel-scraper track YOUR_TRACKING_NUMBER --carrier ups
 ```
@@ -99,11 +99,10 @@ It stores no parcel list and runs no background polling. Set `SCRAPER_TOKEN` for
 authentication, `SCRAPER_PROVIDERS` to select fallbacks, and `SCRAPER_DEMO_PAGE=true` for a
 small one-off tracking page. [HTTP contract](server/openapi.json) · [Configuration](.env.example).
 
-Build a container from this repository; it includes Chromium and the optional transports:
+The versioned container includes Chromium and the optional transports:
 
 ```sh
-docker build -t universal-parcel-scraper .
-docker run --rm -p 127.0.0.1:8080:8080 universal-parcel-scraper
+docker run --rm -p 127.0.0.1:8080:8080 ghcr.io/plhery/universal-parcel-scraper:0.2.0
 ```
 
 A [Home Assistant REST sensor](examples/home-assistant.yaml) can call the same API.

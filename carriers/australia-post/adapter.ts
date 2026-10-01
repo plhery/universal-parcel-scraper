@@ -164,5 +164,5 @@ export class AustraliaPostTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new AustraliaPostTracker({ trawl: environment.trawl, recorder: environment.recorder });
-  return { id: 'australia-post', steps: ['trawl'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'australia-post', recordsSteps: true, steps: ['trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

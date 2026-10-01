@@ -30,5 +30,5 @@ export class DelhiveryTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new DelhiveryTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'delhivery', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'delhivery', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

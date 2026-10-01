@@ -6,7 +6,7 @@ on:
         description: Version in package.json
         required: true
         type: string
-        default: '0.1.0'
+        default: '0.2.0'
       publish_npm:
         description: Publish using npm trusted publishing
         required: true

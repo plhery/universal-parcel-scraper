@@ -40,6 +40,8 @@ export interface CarrierErrorOptions {
   cause?: unknown;
   status?: number;
   retryAfterMs?: number;
+  /** Stable detail within an error kind, such as `history_expired`. */
+  reason?: string;
 }
 
 export class CarrierError extends Error {
@@ -47,12 +49,14 @@ export class CarrierError extends Error {
   readonly provider: string;
   readonly status?: number;
   readonly retryAfterMs?: number;
+  readonly reason?: string;
 
   constructor(kind: CarrierErrorKind, provider: string, message: string, options: CarrierErrorOptions = {}) {
     super(message, options.cause === undefined ? undefined : { cause: options.cause });
     this.name = 'CarrierError';
     this.kind = kind;
     this.provider = provider;
+    if (options.reason !== undefined) this.reason = options.reason;
     const status = options.status ?? STATUS_BY_KIND[kind];
     if (status !== undefined) this.status = status;
     if (options.retryAfterMs !== undefined && Number.isFinite(options.retryAfterMs)) {

@@ -90,6 +90,6 @@ export class KoreaPostTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new KoreaPostTracker({ fetcher: environment.fetcher });
-  return { id: 'korea-post', steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'korea-post', budgetMs: context.budgetMs ?? 15_000,
+  return { id: 'korea-post', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'korea-post', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

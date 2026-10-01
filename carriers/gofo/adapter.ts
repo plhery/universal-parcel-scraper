@@ -31,5 +31,5 @@ export class GofoTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new GofoTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'gofo', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'gofo', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

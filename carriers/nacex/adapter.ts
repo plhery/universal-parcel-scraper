@@ -82,6 +82,6 @@ export class NacexTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new NacexTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'nacex', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'nacex', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeNacexNumber(number))) };
 };

@@ -52,6 +52,6 @@ export class CiblexTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new CiblexTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'ciblex', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'ciblex', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeCiblexTrackingNumber(number))) };
 };

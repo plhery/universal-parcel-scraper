@@ -70,5 +70,5 @@ export class CorreiosTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new CorreiosTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'correios-br', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'correios-br', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

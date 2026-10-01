@@ -27,6 +27,6 @@ export class CorreosExpressTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new CorreosExpressTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'correos-express', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'correos-express', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeCorreosExpressNumber(number))) };
 };

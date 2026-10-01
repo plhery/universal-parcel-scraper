@@ -83,7 +83,7 @@ count as history. Expired-reference negatives do not establish current carrier c
 | [BRT](../carriers/brt/README.md) | Yes | Not tested; alternate ✓ 7 | No history | ✓ 23 | No history | ✓ 5 | N/A |
 | [SEUR](../carriers/seur/README.md) | Yes | No history; alternate ✓ 6 | No history | ✓ 4 | ✓ 4 | ✓ 4 | N/A |
 | [Correos Express](../carriers/correos-express/README.md) | Yes | ✓ 9 | ✓ 9 | ✓ 9 | No history | No history | N/A |
-| [MRW](../carriers/mrw/carrier.json) | No adapter | Not tested | No history | No history | ✓ 1 | No history | N/A |
+| [MRW](../carriers/mrw/README.md) | Yes | Summary only; alternate ✓ 14 | No history | No history | ✓ 1 | No history | N/A |
 | [NACEX](../carriers/nacex/README.md) | Yes | Not tested; alternate ✓ 14 | Error | Error | Error | Error | N/A |
 | [Colis Privé](../carriers/colis-prive/README.md) | Yes (postcode) | Not tested (postcode) | No history | No history | No history | No history | N/A |
 | [Relais Colis](../carriers/relais-colis/README.md) | Yes | ✓ 4 | No history | ✓ 4 | No history | Refused | N/A |

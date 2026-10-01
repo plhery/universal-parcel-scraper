@@ -31,7 +31,7 @@ export class CanparTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new CanparTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'canpar', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'canpar', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeCanparNumber(number))) };
 };

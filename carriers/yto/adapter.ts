@@ -34,5 +34,5 @@ export class YtoTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new YtoTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'yto', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'yto', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

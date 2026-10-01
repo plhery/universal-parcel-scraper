@@ -58,6 +58,8 @@ export interface CarrierAdapter {
   readonly id: string;
   /** The tiers this adapter can go through, in order; telemetry labels use these ids. */
   readonly steps: readonly string[];
+  /** The adapter records its own steps, including single-step protocols. */
+  readonly recordsSteps?: boolean;
   track(input: TrackingInput, context?: TrackingContext): Promise<CarrierResult>;
   /**
    * Required when carrier.json declares `tracking.recognition`: whether the

@@ -126,5 +126,5 @@ export class UkrposhtaTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new UkrposhtaTracker({ executablePath: environment.browserExecutablePath, recorder: environment.recorder });
-  return { id: 'ukrposhta', steps: ['browser'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'ukrposhta', recordsSteps: true, steps: ['browser'], track: (input, context) => tracker.fetch(input.number, context) };
 };

@@ -59,5 +59,5 @@ export class YundaTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new YundaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'yunda', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'yunda', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

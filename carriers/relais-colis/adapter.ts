@@ -244,7 +244,7 @@ export class RelaisColisTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new RelaisColisTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
   return {
-    id: 'relais-colis',
+    id: 'relais-colis', recordsSteps: true,
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeRelaisColisTrackingNumber(number))),

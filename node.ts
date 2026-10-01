@@ -1,8 +1,11 @@
 export * from './facade/index.js';
 export * from './core/adapter/index.js';
+export * from './core/adapter/track.js';
 export * from './core/runner/index.js';
 export * from './core/telemetry/index.js';
 export * from './core/transport/index.js';
 export { REGISTRY } from './generated/registry.js';
 export { UniversalTracker, UniversalTrackingError } from './providers/universal.js';
+export { TrackingCaptureError, SeventeenTrackLookupError, SeventeenTrackNoHistoryError, SeventeenTrackVerificationError } from './providers/universal.js';
+export { amazonShippingEligibility } from './carriers/amazon-shipping/eligibility.js';
 export { createTrackingServer, type TrackingServerOptions } from './server/index.js';

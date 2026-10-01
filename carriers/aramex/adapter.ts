@@ -42,5 +42,5 @@ export class AramexTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new AramexTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'aramex', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'aramex', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

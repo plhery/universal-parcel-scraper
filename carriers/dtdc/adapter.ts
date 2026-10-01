@@ -35,5 +35,5 @@ export class DtdcTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new DtdcTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'dtdc', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'dtdc', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

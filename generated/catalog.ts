@@ -1738,8 +1738,8 @@ export const CARRIER_CATALOG = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://t.17track.net/",
-    "trackingUrlTemplate": "https://www.parcelforce.com/portal/pw/track?trackNumber={trackingNumber}",
+    "canaryUrl": "https://www.royalmail.com/track-your-item",
+    "trackingUrlTemplate": "https://www.royalmail.com/track-your-item#/tracking-results/{trackingNumber}",
     "linkRules": [
       {
         "domains": [
@@ -2060,10 +2060,10 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal",
+      "adapter": "mrw",
       "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.mrw.es/seguimiento/",
     "trackingUrlTemplate": "https://www.mrw.es/seguimiento",
     "linkRules": [],
     "detectionRules": [
@@ -2723,6 +2723,10 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^SP\\d{18}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^SP\\d{16}$",
         "confidence": "high"
       }
     ]

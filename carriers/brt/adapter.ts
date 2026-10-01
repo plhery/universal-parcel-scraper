@@ -29,6 +29,6 @@ export class BrtTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new BrtTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'brt', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'brt', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeBrtNumber(number))) };
 };

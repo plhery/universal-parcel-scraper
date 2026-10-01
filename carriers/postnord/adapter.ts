@@ -63,5 +63,5 @@ export class PostnordTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new PostnordTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'postnord', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'postnord', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

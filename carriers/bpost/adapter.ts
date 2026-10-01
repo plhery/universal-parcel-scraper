@@ -38,6 +38,6 @@ export class BpostTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new BpostTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'bpost', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'bpost', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeBpostNumber(number))) };
 };

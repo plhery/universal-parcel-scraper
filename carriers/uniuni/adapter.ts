@@ -39,7 +39,7 @@ export class UniuniTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new UniuniTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'uniuni', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'uniuni', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeUniuniRecognitionNumber(number))) };
 };

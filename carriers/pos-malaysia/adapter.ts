@@ -191,7 +191,7 @@ export class PosMalaysiaTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new PosMalaysiaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
   return {
-    id: 'pos-malaysia',
+    id: 'pos-malaysia', recordsSteps: true,
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
   };
