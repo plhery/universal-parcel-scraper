@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 452" role="img" aria-label="The track command printing JSON, and a parcel timeline drawn from it">
+  <style>
+    .mono text { font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; fill: #8aa39d; white-space: pre; }
+    .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; }
+    .cmd { fill: #f4f6ef; } .prompt { fill: #6fd3bd; } .key { fill: #9fd6c9; } .str { fill: #f0c58a; } .dim { fill: #5f7d76; }
+  </style>
+  <rect x=".5" y=".5" width="839" height="451" rx="12" fill="#0e1f1c" stroke="#23403a"/>
+  <circle cx="24" cy="20" r="5.5" fill="#2f4a44"/><circle cx="43" cy="20" r="5.5" fill="#2f4a44"/><circle cx="62" cy="20" r="5.5" fill="#2f4a44"/>
+
+  <g class="mono">
+    <text x="28" y="70" xml:space="preserve"><tspan class="prompt">$</tspan> <tspan class="cmd">parcel-scraper track "$NUMBER"</tspan></text>
+    <text x="28" y="89.5" xml:space="preserve">{</text>
+    <text x="28" y="109" xml:space="preserve">  <tspan class="key">"carrier"</tspan>: <tspan class="str">"swiss-post"</tspan>,</text>
+    <text x="28" y="128.5" xml:space="preserve">  <tspan class="key">"source"</tspan>: <tspan class="str">"swiss-post"</tspan>,</text>
+    <text x="28" y="148" xml:space="preserve">  <tspan class="key">"result"</tspan>: {</text>
+    <text x="28" y="167.5" xml:space="preserve">    <tspan class="key">"status"</tspan>: <tspan class="str">"out_for_delivery"</tspan>,</text>
+    <text x="28" y="187" xml:space="preserve">    <tspan class="key">"expected_delivery"</tspan>: <tspan class="str">"2026-03-14"</tspan>,</text>
+    <text x="28" y="206.5" xml:space="preserve">    <tspan class="key">"events"</tspan>: [</text>
+    <text x="28" y="226" xml:space="preserve">      {</text>
+    <text x="28" y="245.5" xml:space="preserve">        <tspan class="key">"time"</tspan>: <tspan class="str">"2026-03-14T07:42:00+01:00"</tspan>,</text>
+    <text x="28" y="265" xml:space="preserve">        <tspan class="key">"location"</tspan>: <tspan class="str">"Lausanne"</tspan>,</text>
+    <text x="28" y="284.5" xml:space="preserve">        <tspan class="key">"description"</tspan>: <tspan class="str">"Out for delivery"</tspan>,</text>
+    <text x="28" y="304" xml:space="preserve">        <tspan class="key">"stage"</tspan>: <tspan class="str">"out_for_delivery"</tspan></text>
+    <text x="28" y="323.5" xml:space="preserve">      },</text>
+    <text x="28" y="343" xml:space="preserve">      <tspan class="dim">… two earlier scans</tspan></text>
+    <text x="28" y="362.5" xml:space="preserve">    ],</text>
+    <text x="28" y="382" xml:space="preserve">    <tspan class="key">"current_stage"</tspan>: <tspan class="str">"out_for_delivery"</tspan></text>
+    <text x="28" y="401.5" xml:space="preserve">  }</text>
+    <text x="28" y="421" xml:space="preserve">}</text>
+  </g>
+
+  <rect x="440.5" y="56.5" width="375" height="371" rx="10" fill="#142b27" stroke="#25453e"/>
+  <g class="sans">
+    <text x="464" y="94" font-size="17" font-weight="600" fill="#f4f6ef">Swiss Post</text>
+    <text x="464" y="115" font-size="12.5" fill="#8aa39d">Expected 14 March</text>
+    <rect x="682" y="76" width="110" height="24" rx="12" fill="#1d5c50"/>
+    <text x="737" y="92.5" font-size="12" font-weight="600" fill="#c4f2e7" text-anchor="middle">Out for delivery</text>
+
+    <path d="M476 158H673.3" stroke="#4fd1b5" stroke-width="3"/>
+    <path d="M673.3 158H772" stroke="#2c4a44" stroke-width="3"/>
+    <circle cx="476" cy="158" r="7" fill="#4fd1b5"/>
+    <circle cx="574.7" cy="158" r="7" fill="#4fd1b5"/>
+    <circle cx="673.3" cy="158" r="12" fill="#4fd1b5" fill-opacity=".25"/>
+    <circle cx="673.3" cy="158" r="7" fill="#4fd1b5"/>
+    <circle cx="772" cy="158" r="6" fill="#142b27" stroke="#3d635b" stroke-width="2"/>
+    <g font-size="11.5" fill="#8aa39d" text-anchor="middle">
+      <text x="476" y="187">Accepted</text>
+      <text x="574.7" y="187">In transit</text>
+      <text x="673.3" y="187" fill="#f4f6ef" font-weight="600">Out for delivery</text>
+      <text x="772" y="187">Delivered</text>
+    </g>
+
+    <path d="M464 212H792" stroke="#25453e"/>
+    <path d="M476 246V354" stroke="#2c4a44" stroke-width="2"/>
+    <circle cx="476" cy="246" r="5" fill="#4fd1b5"/>
+    <circle cx="476" cy="300" r="4" fill="#3d635b"/>
+    <circle cx="476" cy="354" r="4" fill="#3d635b"/>
+    <g font-size="13.5" fill="#f4f6ef">
+      <text x="498" y="244" font-weight="600">Out for delivery</text>
+      <text x="498" y="298">Sorted at parcel centre</text>
+      <text x="498" y="352">Parcel accepted</text>
+    </g>
+    <g font-size="12" fill="#8aa39d">
+      <text x="498" y="263">14 Mar, 07:42 · Lausanne</text>
+      <text x="498" y="317">13 Mar, 22:10 · Daillens</text>
+      <text x="498" y="371">13 Mar, 16:05 · Zürich</text>
+    </g>
+    <text x="464" y="408" font-size="11.5" fill="#5f7d76">Drawn from the JSON on the left.</text>
+  </g>
+</svg>
