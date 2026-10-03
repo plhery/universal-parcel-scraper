@@ -6,10 +6,11 @@ import { Ship24Tracker } from '../providers/ship24/adapter.js';
 // Public forum example; no account or recipient details required.
 // https://www.reddit.com/r/AirReps/comments/1vfhh53/please_help_yunexpress_alibaba_tracking_stuck_on/
 const number = 'YT2621200705470145';
+const executablePath = process.env.TRACKING_CHROMIUM_PATH;
 
-describe.runIf(Boolean(process.env.TRACKING_CHROMIUM_PATH))('universal form scrapers', () => {
+describe.runIf(Boolean(executablePath))('universal form scrapers', () => {
   for (const [name, tracker] of [
-    ['Postal Ninja', new PostalNinjaTracker()], ['Ship24', new Ship24Tracker()],
+    ['Postal Ninja', new PostalNinjaTracker({ executablePath })], ['Ship24', new Ship24Tracker({ executablePath })],
   ] as const) {
     it(`retrieves matching history from ${name}`, async (context) => {
       const result = await tracker.fetch(number).catch((error: unknown) => {

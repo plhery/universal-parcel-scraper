@@ -45,7 +45,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright-core install --with-deps chromium
       - name: Look up wrong numbers through each public adapter and provider
         id: adapters
         env:
@@ -68,7 +68,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright-core install --with-deps chromium
       - name: Check tracking routes, rendered content and number forwarding
         id: links
         env:
