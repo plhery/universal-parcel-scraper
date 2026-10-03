@@ -107,6 +107,7 @@ export class PostalNinjaTracker {
         && payload.track.state === 'NO_INFO' && !payload.inProgress) {
         return new NoHistoryError(SOURCE, 'Postal Ninja has no available tracking history');
       }
+      return undefined;
     };
     return runSteps({ carrier: SOURCE, budgetMs: timeoutMs, recorder: this.options.recorder }, [{
       id: 'trawl', enabled: Boolean(this.options.trawl),

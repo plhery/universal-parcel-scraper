@@ -31,7 +31,7 @@ const MAX_EVENTS = 1000;
 /** The provider answered, but its lookup did not produce history for this shipment. */
 export class SeventeenTrackLookupError extends TransportError {
   constructor(
-    readonly reason: 'lookup_unavailable' | 'lookup_pending',
+    override readonly reason: 'lookup_unavailable' | 'lookup_pending',
     readonly providerCode: number,
     readonly providerMessage?: string,
   ) {
@@ -42,7 +42,7 @@ export class SeventeenTrackLookupError extends TransportError {
 
 /** A matching code-400/null-shipment reply supplies no history, not a network failure or a proven invalid number. */
 export class SeventeenTrackNoHistoryError extends NoHistoryError {
-  readonly reason = 'no_history';
+  override readonly reason = 'no_history';
   readonly providerCode = 400;
 
   constructor() {
@@ -53,7 +53,7 @@ export class SeventeenTrackNoHistoryError extends NoHistoryError {
 
 /** The provider asked for an interactive verification the unattended lookup cannot pass. */
 export class SeventeenTrackVerificationError extends ChallengeError {
-  readonly reason = 'verification_required';
+  override readonly reason = 'verification_required';
 
   constructor(readonly providerCode: number, readonly providerMessage?: string) {
     super(SOURCE, describeLookup('verification_required', providerCode, providerMessage));

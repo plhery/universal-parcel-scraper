@@ -40,7 +40,7 @@ export interface CaptureSpec {
  */
 export class TrackingCaptureError extends IndeterminateError {
   constructor(
-    readonly reason: 'capture_missing' | 'capture_unreadable' | 'history_missing',
+    override readonly reason: 'capture_missing' | 'capture_unreadable' | 'history_missing',
     provider = 'Tracking browser',
   ) {
     super(provider, `Tracking browser: ${reason}`);
