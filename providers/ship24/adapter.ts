@@ -6,10 +6,11 @@
  * Two tiers: `direct` is one signed anonymous JSON POST per lookup (see
  * http.ts), `browser` loads the public tracking page in a local Chromium
  * session and reads the same API response from it. The browser tier only runs
- * when the direct tier failed for a reason a browser can repair: a rate limit
- * or a server outage is reported as it is, so the router's backoff is not
- * amplified into a second request, and a number the aggregator does not know
- * stays unknown to the page that asks the same API.
+ * when a Chromium is configured and the direct tier failed for a reason a
+ * browser can repair: a rate limit or a server outage is reported as it is, so
+ * the router's backoff is not amplified into a second request, and a number
+ * the aggregator does not know stays unknown to the page that asks the same
+ * API.
  */
 import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
@@ -122,6 +123,9 @@ export class Ship24Tracker {
       },
       {
         id: 'browser',
+        // Without a Chromium this tier could only replace the direct failure
+        // with its own configuration error. Alone, it still runs to report it.
+        enabled: http === null || Boolean(this.options.executablePath),
         recovers: browserCanRecover,
         run: async ({ remainingMs }) => ({
           ...await scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs: Math.max(1, Math.floor(remainingMs)) }, {

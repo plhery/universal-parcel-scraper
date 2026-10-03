@@ -19,6 +19,7 @@ Both steps share one budget: 45 s standalone, 30 s inside the chain.
 
 The browser step runs only when a browser could fix the direct failure:
 
+- Without a configured Chromium the direct failure is reported as it is.
 - HTTP 429 and 5xx are reported with their `Retry-After`, so the router backs off once
   instead of asking twice.
 - HTTP 404 and 410 are final: the page calls the same API and only waits out the budget.

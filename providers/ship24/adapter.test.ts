@@ -15,13 +15,14 @@ const history = { data: { tracking_number: number,
   events: [{ timestamp: '2026-09-10T10:00:00+02:00', status: 'Delivered', dispatch_code_id: 7 }] } };
 const reply = (data: unknown) => new Response(JSON.stringify(data), { status: 201 });
 
-function fixture() {
+function fixture(executablePath: string | null = '/test/chromium') {
   const steps: StepRecord[] = [];
   const lookups: LookupRecord[] = [];
   const recorder: StepRecorder = { step: (record) => { steps.push(record); }, lookup: (record) => { lookups.push(record); } };
   const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(history));
   const client = new Ship24HttpClient(fetcher);
-  return { client, fetcher, steps, lookups, tracker: new Ship24Tracker({ httpClient: client, recorder }) };
+  return { client, fetcher, steps, lookups,
+    tracker: new Ship24Tracker({ httpClient: client, executablePath: executablePath ?? undefined, recorder }) };
 }
 afterEach(() => { vi.restoreAllMocks(); vi.clearAllMocks(); });
 
@@ -87,6 +88,15 @@ describe('Ship24 anonymous HTTP tracking', () => {
     await expect(tracker.fetch(number)).resolves.toMatchObject({ tracking_source: 'browser-session-response' });
     expect(fetcher).toHaveBeenCalledOnce();
     expect(steps[1]).toMatchObject({ step: 'browser', outcome: 'ok', fallbackFrom: 'direct', fallbackReason: 'challenge' });
+  });
+
+  it('reports the rejected HTTP path itself when no Chromium is configured', async () => {
+    const { tracker, fetcher, steps, lookups } = fixture(null);
+    fetcher.mockResolvedValueOnce(new Response('rejected', { status: 403 }));
+    await expect(tracker.fetch(number)).rejects.toMatchObject({ status: 403, kind: 'challenge' });
+    expect(scrapeUniversalPage).not.toHaveBeenCalled();
+    expect(steps.map(({ step, outcome }) => [step, outcome])).toEqual([['direct', 'challenge']]);
+    expect(lookups).toMatchObject([{ finalStep: 'direct', outcome: 'challenge', stepsAvailable: 1 }]);
   });
 
   it.each([429, 503])('preserves HTTP %i and Retry-After without browser amplification', async (status) => {
