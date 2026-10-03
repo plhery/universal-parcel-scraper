@@ -6,8 +6,8 @@ import { createTracker, TrackingError } from './index.js';
 
 const number = '1Z999AA10123456784';
 const environment: AdapterEnvironment = { trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} };
-function registry(track: CarrierAdapter['track']): AdapterRegistry {
-  const factory: AdapterFactory = () => ({ id: 'ups', steps: ['direct'], track });
+function registry(track: CarrierAdapter['track'], recordsSteps = false): AdapterRegistry {
+  const factory: AdapterFactory = () => ({ id: 'ups', steps: ['direct'], recordsSteps, track });
   return new AdapterRegistry({ factories: { ups: factory }, carriers: { ups: 'ups' } }, environment);
 }
 
@@ -24,6 +24,19 @@ describe('standalone tracker', () => {
       { stage: 'delivered', instant: '2026-01-02T12:00:00Z' }, { instant: null },
     ] }, attempts: [{ source: 'ups', kind: 'ok' }] });
     expect(lookup.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it('records a single-step lookup once, leaving it to an adapter that records its own steps', async () => {
+    const lookups: string[] = [];
+    const recorder = { step() {}, lookup: ({ carrier }: { carrier: string }) => { lookups.push(carrier); } };
+    const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [
+      { time: '2026-01-02T12:00:00Z', description: 'Delivered', stage: 'delivered' },
+    ] });
+    await createTracker({ registry: registry(lookup), providers: [], recorder }).track({ number });
+    expect(lookups).toEqual(['ups']);
+    await createTracker({ registry: registry(lookup, true), providers: [], recorder }).track({ number });
+    expect(lookups).toEqual(['ups']);
+    expect(lookup).toHaveBeenCalledTimes(2);
   });
 
   it('keeps commercial providers off unless selected', async () => {

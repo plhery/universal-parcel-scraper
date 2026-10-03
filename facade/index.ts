@@ -179,7 +179,7 @@ export function createTracker(options: TrackerOptions = {}) {
     const adapter = registry.for(carrier);
     const directInput = { number, postcode: fields.dpdPostcode, trackingUrl: fields.trackingUrl };
     const directBudget = () => Math.min(remaining(), 60_000);
-    let result = adapter ? await attempt(carrier, () => adapter.steps.length > 1
+    let result = adapter ? await attempt(carrier, () => adapter.recordsSteps || adapter.steps.length > 1
       ? adapter.track(directInput, { signal, budgetMs: directBudget() })
       : runSteps({ carrier, budgetMs: directBudget(), signal, recorder: environment.recorder }, [
         { id: adapter.steps[0] ?? 'direct', run: ({ signal: stepSignal, remainingMs }) => adapter.track(
