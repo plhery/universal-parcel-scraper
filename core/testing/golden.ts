@@ -52,7 +52,7 @@ export function serializeDetectionGolden(entries: readonly DetectionGoldenEntry[
 }
 
 export function readDetectionGolden(): DetectionGoldenEntry[] {
-  return JSON.parse(readFileSync(GOLDEN_PATH, 'utf8'));
+  return JSON.parse(readFileSync(GOLDEN_PATH, 'utf8')) as DetectionGoldenEntry[];
 }
 
 export function writeDetectionGolden(): DetectionGoldenEntry[] {

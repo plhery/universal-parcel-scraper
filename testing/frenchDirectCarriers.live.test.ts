@@ -36,7 +36,7 @@ describe('French direct carriers live wrong-number handling', () => {
         name: 'UpstreamHttpError',
         provider: 'La Poste tracking',
       });
-      const status = (caught as { status?: unknown }).status;
+      const status = (caught as { status?: number }).status;
       expect([403, 404]).toContain(status);
       expect((caught as Error).message).toBe(`La Poste tracking returned HTTP ${status}`);
     }

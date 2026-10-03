@@ -59,7 +59,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // times without a zone, even when multiple countries are involved. Preserve
   // them as local_time, but never invent UTC scans or use the destination zone
   // for the whole journey. Explicit offsets, when present, can be persisted.
-  for (const raw of [...rawEvents].reverse()) {
+  for (const raw of [...rawEvents as unknown[]].reverse()) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event');
     const description = text(raw.dsc);
     if (!description || isNotice(description)) continue;

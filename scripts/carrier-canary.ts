@@ -173,7 +173,7 @@ export async function runCanaries(
   targets: CanaryTarget[],
   options: Parameters<typeof probeCanaryTarget>[1] = {},
 ): Promise<CanaryResult[]> {
-  const results: CanaryResult[] = new Array(targets.length);
+  const results = new Array<CanaryResult>(targets.length);
   let cursor = 0;
   const runWorker = async () => {
     while (cursor < targets.length) {

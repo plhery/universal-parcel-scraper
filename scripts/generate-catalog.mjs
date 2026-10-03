@@ -159,26 +159,6 @@ function validateDetectionRuleIds(documents) {
 // Folders -> x-carriers
 // ---------------------------------------------------------------------------
 
-// Key order used for carriers the contract does not describe yet. Existing
-// entries keep the order contracts/openapi.json already uses (see
-// orderedContractEntry), so adopting the folders as the source of truth does
-// not reshuffle a hundred entries in the diff.
-const contractKeyOrder = [
-  'displayName',
-  'displayNames',
-  'aliases',
-  'countries',
-  'color',
-  'selectable',
-  'timezone',
-  'tracking',
-  'canaryUrl',
-  'trackingUrlTemplate',
-  'trackingSiteName',
-  'linkRules',
-  'detectionRules',
-];
-
 function contractDetectionRule(rule) {
   // `id` stays a folder-side concept: the published contract keeps the old shape.
   const contractRule = { pattern: rule.pattern, confidence: rule.confidence };

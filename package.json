@@ -54,7 +54,7 @@
     "build": "node scripts/build.mjs",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "eslint . --max-warnings=0 --pass-on-unpruned-suppressions",
     "test": "vitest run",
     "test:scripts": "node --test trawl/*.test.mjs scripts/*.test.mjs",
     "generate": "node scripts/generate-catalog.mjs && node scripts/generate-registry.mjs --strict && node scripts/generate-region-towns.mjs && node scripts/coverage-tables.mjs && node scripts/generate-readme.mjs",
@@ -99,6 +99,8 @@
     "@types/luxon": "^3.7.5",
     "ajv": "^8.20.0",
     "eslint": "^9.39.5",
-    "@typescript-eslint/parser": "^8.71.0"
+    "@eslint/js": "^9.39.5",
+    "typescript-eslint": "^8.71.0",
+    "globals": "^17.13.0"
   }
 }

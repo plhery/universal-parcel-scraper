@@ -131,7 +131,7 @@ export function createTracker(options: TrackerOptions = {}) {
     // The budget cancels what is still in flight and ends the wait: carriers that have not
     // answered by then are reported as unanswered. Only the caller's own signal rejects.
     const signal = context.signal ? AbortSignal.any([context.signal, AbortSignal.timeout(ms)]) : AbortSignal.timeout(ms);
-    const candidates = recognitionCandidates(number).filter(candidate => registry.for(candidate.carrier)?.recognize);
+    const candidates = recognitionCandidates(number).filter(candidate => typeof registry.for(candidate.carrier)?.recognize === 'function');
     const ask = () => lookupSignals.run(signal, () => recognizeAll(candidates, carrier =>
       registry.for(carrier)!.recognize!(number, { signal, budgetMs: ms }), ms));
     const outcomes = await (context.signal ? bounded(ask, context.signal) : ask());

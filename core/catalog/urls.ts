@@ -6,6 +6,7 @@ const PLANZER_ACCESS_KEY = /^[A-Za-z0-9_-]{32,256}$/;
 const DACHSER_HOST = 'customeriberia.dachser.com';
 const DACHSER_PAGE_PATH = '/customerarea/utilidades/seguimiento-publico/detalle';
 const CAPABILITY_VALUE = /^[A-Za-z0-9_-]{4,256}$/;
+// eslint-disable-next-line no-control-regex -- control characters are what this rejects
 const CONTROL_CHARACTER = /[\x00-\x1f\x7f]/;
 const ALLOWED_QUERY_KEYS = new Set([
   'hash',

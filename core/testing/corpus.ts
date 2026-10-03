@@ -81,7 +81,7 @@ export const CARRIERS_DIRECTORY = path.resolve(testingDirectory, '..', '..', 'ca
 export const NUMBERS_SCHEMA_PATH = path.join(testingDirectory, 'numbers.schema.json');
 
 function compileSchema(): ValidateFunction {
-  const schema: SchemaObject = JSON.parse(readFileSync(NUMBERS_SCHEMA_PATH, 'utf8'));
+  const schema = JSON.parse(readFileSync(NUMBERS_SCHEMA_PATH, 'utf8')) as SchemaObject;
   return new Ajv({ allErrors: true, allowUnionTypes: true }).compile(schema);
 }
 
