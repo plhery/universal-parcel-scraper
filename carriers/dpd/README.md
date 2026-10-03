@@ -86,7 +86,8 @@ DPD parcel, not a Swiss one.
 - A local `clean()` is kept because the API mixes strings and numbers.
 - The Firebase project, app id, package, certificate hash and API key are public,
   app-restricted values from the myDPD build, so they live in code.
-  `DPD_FIREBASE_API_KEY` overrides the key without a release.
+  `DPD_FIREBASE_API_KEY` in the adapter environment overrides the key without a
+  release.
 - Every guest-API failure, including 429, is a `DPDAPIError` (`IndeterminateError`),
   so the page tier can still answer.
 

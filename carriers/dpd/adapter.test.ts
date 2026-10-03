@@ -669,6 +669,23 @@ describe('DPD adapter factory', () => {
       .resolves.toMatchObject({ status: 'out_for_delivery' });
     expect(String(fetcher.mock.calls[3]?.[0])).toContain('dataForVerification=8000');
   });
+
+  it('signs in with the key the environment supplies, and with the pinned one otherwise', async () => {
+    const keyOf = (call: Parameters<typeof fetch> | undefined) => new Headers(call?.[1]?.headers).get('X-Goog-Api-Key');
+    const { recorder } = recordingRecorder();
+    const environment = { trawl: null, browserExecutablePath: null, recorder };
+
+    const replaced = mockGuestApi(Response.json(READY_FOR_COLLECTION));
+    await adapter({ ...environment, env: { DPD_FIREBASE_API_KEY: ' synthetic-replacement ' } })
+      .track({ number: TRACKING_NUMBER, postcode: '8000' });
+    expect(keyOf(replaced.mock.calls[0])).toBe('synthetic-replacement');
+    vi.restoreAllMocks();
+
+    const pinned = mockGuestApi(Response.json(READY_FOR_COLLECTION));
+    await adapter({ ...environment, env: { DPD_FIREBASE_API_KEY: ' ' } })
+      .track({ number: TRACKING_NUMBER, postcode: '8000' });
+    expect(keyOf(pinned.mock.calls[0])).toMatch(/^AIza/);
+  });
 });
 
 describe('DPD transient read retry', () => {

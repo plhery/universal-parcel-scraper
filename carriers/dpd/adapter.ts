@@ -856,6 +856,8 @@ export const adapter: AdapterFactory = (environment) => {
     fetcher: environment.fetcher,
     trawl: environment.trawl,
     recorder: environment.recorder,
+    // A host can follow a rotated key without waiting for a release.
+    firebaseApiKey: environment.env.DPD_FIREBASE_API_KEY?.trim() || undefined,
   });
   return {
     id: 'dpd',
