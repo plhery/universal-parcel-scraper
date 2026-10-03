@@ -128,10 +128,13 @@ export function createTracker(options: TrackerOptions = {}) {
     if (typeof raw !== 'string' || !validTrackingNumber(raw)) throw new TypeError('Invalid tracking number');
     const number = normalizeTrackingNumber(raw);
     const ms = budget(context.budgetMs, 10_000);
+    // The budget cancels what is still in flight and ends the wait: carriers that have not
+    // answered by then are reported as unanswered. Only the caller's own signal rejects.
     const signal = context.signal ? AbortSignal.any([context.signal, AbortSignal.timeout(ms)]) : AbortSignal.timeout(ms);
     const candidates = recognitionCandidates(number).filter(candidate => registry.for(candidate.carrier)?.recognize);
-    const outcomes = await bounded(() => lookupSignals.run(signal, () => recognizeAll(candidates, carrier =>
-      registry.for(carrier)!.recognize!(number, { signal, budgetMs: ms }), ms)), signal);
+    const ask = () => lookupSignals.run(signal, () => recognizeAll(candidates, carrier =>
+      registry.for(carrier)!.recognize!(number, { signal, budgetMs: ms }), ms));
+    const outcomes = await (context.signal ? bounded(ask, context.signal) : ask());
     return { ...settleRecognition(outcomes), asked: candidates.map(candidate => candidate.carrier),
       unanswered: outcomes.filter(outcome => outcome.status === 'failed').map(outcome => outcome.carrier) };
   }
@@ -153,7 +156,10 @@ export function createTracker(options: TrackerOptions = {}) {
         if (answer.carrier) carrier = answer.carrier;
         else if (answer.choices.length) throw new InputRequiredError('Tracking', 'carrier', 'Choose a carrier for this number');
       } catch (error) {
-        if (signal.aborted || error instanceof InputRequiredError) throw error;
+        if (context.signal?.aborted) throw context.signal.reason;
+        if (error instanceof InputRequiredError) throw error;
+        // Recognition used the whole budget: no source was asked, and that is the failure to report.
+        if (signal.aborted) throw new TrackingError([], failureHint(new BudgetExceededError('Tracking', ms)));
       }
     }
     if (input.postcode != null && typeof input.postcode !== 'string') throw new TypeError('Invalid postcode');

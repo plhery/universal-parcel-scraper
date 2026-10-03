@@ -11,6 +11,17 @@ function registry(track: CarrierAdapter['track'], recordsSteps = false): Adapter
   return new AdapterRegistry({ factories: { ups: factory }, carriers: { ups: 'ups' } }, environment);
 }
 
+// A number whose shape fits several carriers; these four can be asked whether they know it.
+const ambiguous = '06080000000002';
+const hung = () => new Promise<never>(() => {});
+function recognizers(recognize: Record<'dpd' | 'seur' | 'brt' | 'ciblex', NonNullable<CarrierAdapter['recognize']>>, track: CarrierAdapter['track'] = hung): AdapterRegistry {
+  const carriers = Object.keys(recognize) as (keyof typeof recognize)[];
+  return new AdapterRegistry({
+    factories: Object.fromEntries(carriers.map(id => [id, (): CarrierAdapter => ({ id, steps: ['direct'], track, recognize: recognize[id] })])),
+    carriers: Object.fromEntries(carriers.map(id => [id, id])),
+  }, environment);
+}
+
 describe('standalone tracker', () => {
   it('detects locally and resolves stages without inventing local-clock instants', async () => {
     const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [
@@ -91,6 +102,60 @@ describe('standalone tracker', () => {
     controller.abort(reason);
     await expect(pending).rejects.toBe(reason);
     expect(fetcher.mock.calls[0][1]!.signal!.aborted).toBe(true);
+  });
+
+  it('returns the carriers that answered when others have not by the budget', async () => {
+    const waiting = vi.fn<NonNullable<CarrierAdapter['recognize']>>().mockImplementation(hung);
+    const tracker = createTracker({ providers: [], registry: recognizers({
+      dpd: async () => ({ known: true }), seur: waiting, brt: async () => ({ known: false }),
+      ciblex: async () => { throw new SchemaError('Ciblex'); },
+    }) });
+    const answer = { carrier: 'dpd', choices: [], asked: ['dpd', 'seur', 'brt', 'ciblex'], unanswered: ['seur', 'ciblex'] };
+    await expect(tracker.recognize(ambiguous, { budgetMs: 30 })).resolves.toEqual(answer);
+    // The budget still cancels what was in flight.
+    expect(waiting.mock.calls[0][1]!.signal!.aborted).toBe(true);
+    // A caller's signal that stays quiet changes nothing.
+    await expect(tracker.recognize(ambiguous, { budgetMs: 30, signal: new AbortController().signal })).resolves.toEqual(answer);
+  });
+
+  it('tracks with the carrier that answered once recognition has waited long enough for the others', async () => {
+    vi.useFakeTimers();
+    // Put the budget signals on the same faked clock as the recognition deadline.
+    vi.spyOn(AbortSignal, 'timeout').mockImplementation((ms) => {
+      const controller = new AbortController();
+      setTimeout(() => { controller.abort(new DOMException('The operation timed out', 'TimeoutError')); }, ms);
+      return controller.signal;
+    });
+    try {
+      const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [
+        { time: '2026-01-02T12:00:00Z', description: 'Delivered', stage: 'delivered' },
+      ] });
+      const tracker = createTracker({ providers: [], registry: recognizers({
+        dpd: async () => ({ known: true }), seur: hung, brt: async () => ({ known: false }), ciblex: async () => ({ known: false }),
+      }, lookup) });
+      const pending = tracker.track({ number: ambiguous });
+      await vi.advanceTimersByTimeAsync(10_000);
+      await expect(pending).resolves.toMatchObject({ carrier: 'dpd', source: 'dpd', attempts: [{ source: 'dpd', kind: 'ok' }] });
+      expect(lookup).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+      vi.restoreAllMocks();
+    }
+  });
+
+  it('rejects a recognition the caller cancels, and reports a budget spent on it as a tracking failure', async () => {
+    const tracker = createTracker({ providers: [], registry: recognizers({ dpd: hung, seur: hung, brt: hung, ciblex: hung }) });
+    const controller = new AbortController();
+    const reason = new Error('caller cancelled');
+    const pending = tracker.recognize(ambiguous, { signal: controller.signal });
+    controller.abort(reason);
+    await expect(pending).rejects.toBe(reason);
+    // Whatever else the caller supplied, no source was asked: the budget is the failure.
+    for (const input of [{ number: ambiguous }, { number: ambiguous, postcode: '8000' }]) {
+      const failure = await tracker.track(input, { budgetMs: 30 }).catch((error: unknown) => error);
+      expect(failure).toBeInstanceOf(TrackingError);
+      expect(failure).toMatchObject({ attempts: [], hint: { kind: 'budget' } });
+    }
   });
 
   it('validates carrier-specific credentials before any lookup', async () => {
