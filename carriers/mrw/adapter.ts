@@ -47,8 +47,10 @@ export class MrwTracker {
       const deadline = performance.now() + remainingMs;
       const jar = new Map<string, string>();
       let requests = 0;
+      // The step's signal ends at the budget too, and its timer can fire just before the deadline reads as passed.
+      const spent = () => performance.now() >= deadline || (signal.aborted && !context.signal?.aborted);
       const ensureTime = () => {
-        if (performance.now() >= deadline) throw new BudgetExceededError('MRW', budgetMs);
+        if (spent()) throw new BudgetExceededError('MRW', budgetMs);
         signal.throwIfAborted();
       };
       const pace = async () => {
@@ -66,7 +68,7 @@ export class MrwTracker {
           }, this.options.paceMs ?? PACE_MS);
           signal.addEventListener('abort', abort, { once: true });
         }).catch(error => {
-          if (performance.now() >= deadline) throw new BudgetExceededError('MRW', budgetMs, { cause: error });
+          if (spent()) throw new BudgetExceededError('MRW', budgetMs, { cause: error });
           throw error;
         });
         ensureTime();
