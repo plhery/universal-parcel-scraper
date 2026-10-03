@@ -22,7 +22,7 @@ scope.
 - `PUBLIC_SPA_APP_KEY` is a public client identifier shipped in the recipient SPA, not an
   account secret. It can rotate when GEODIS deploys the frontend; requests then fail loudly.
 - `GeodisTrackingError` is a plain `NotFoundError` kept as a named class because
-  `src/server/frenchDirectCarriers.live.test.ts` matches on its name.
+  `testing/frenchDirectCarriers.live.test.ts` matches on its name.
 - Status is wording-only (no codes). Rule order matters: "en cours de livraison" and "va être
   livré" contain the participle, so out-for-delivery and future-delivery rules run first, and
   delivered rules are anchored (sentence start, "a été livré", or a parcel noun before it).
@@ -40,5 +40,5 @@ scope.
 
 ## Testing
 
-`npm run test:carriers:live -- src/server/frenchDirectCarriers.live.test.ts` (no env vars). It
+`npm run test:carriers:live -- testing/frenchDirectCarriers.live.test.ts` (no env vars). It
 asserts a validly shaped unknown `1G…` number returns not-found.

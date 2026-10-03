@@ -32,7 +32,7 @@ function environment(): AdapterEnvironment {
     trawl: TRAWL_URL ? new TrawlClient(TRAWL_URL) : null,
     browserExecutablePath: process.env.TRACKING_CHROMIUM_PATH ?? null,
     recorder: NOOP_RECORDER,
-    env: { ...process.env, TRACKING_ENABLE_POSTAL_NINJA: 'true' },
+    env: process.env,
   };
 }
 

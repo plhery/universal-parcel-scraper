@@ -13,7 +13,8 @@ factories, the order and the persisted names.
 | [UPU](upu/README.md) | Anonymous JSON GET | `direct` | Cheap last-resort postal history |
 
 Default order: **ParcelsApp → Ship24 → 17TRACK → UPU**.
-`TRACKING_ENABLE_POSTAL_NINJA=true` adds Postal Ninja before 17TRACK. A carrier with
+Selecting `Postal Ninja` in `providers` (`SCRAPER_PROVIDERS` for the CLI and server) adds
+it before 17TRACK. A carrier with
 results in [coverage.json](coverage.json) gets its own order ([coverage.ts](coverage.ts)
 grades them). UPU needs a checksum-valid S10 number and always stays last. Checksum-valid
 China Post `C…CN` and `L…CN` numbers start with 17TRACK. Affinity, cooldowns and budgets

@@ -85,6 +85,6 @@ carrier.
 
 ## Testing
 
-No dedicated live test. `npm run test:carriers:live -- src/server/expandedCarriers.live.test.ts`
+No dedicated live test. `npm run test:carriers:live -- testing/expandedCarriers.live.test.ts`
 with `FLARESOLVERR_URL` set runs the whole chain, which can end at 17TRACK. Unit tests use
 synthetic [fixtures](fixtures/README.md).

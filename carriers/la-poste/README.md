@@ -67,5 +67,5 @@ universal provider.
 
 ## Testing
 
-`npm run test:carriers:live -- src/server/frenchDirectCarriers.live.test.ts`
+`npm run test:carriers:live -- testing/frenchDirectCarriers.live.test.ts`
 (no env vars) checks a wrong number gets a clean not-found or the recognized 403.

@@ -1,6 +1,7 @@
 # Postal Ninja
 
-Opt-in universal provider: `TRACKING_ENABLE_POSTAL_NINJA=true` inserts it before 17TRACK.
+Opt-in universal provider: selecting `Postal Ninja` in `providers` (`SCRAPER_PROVIDERS` for
+the CLI and server) inserts it before 17TRACK.
 Through TRAWL it returns full histories, often with destination legs. Its scan times
 usually have no zone. Persisted provider name: `Postal Ninja`. The results page needs a
 handle from a verified lookup, which cannot be built from the tracking number, so the
@@ -79,5 +80,5 @@ numbers or handles cannot end the lookup.
 `npm run test:carriers:live -- providers/postal-ninja` with
 `FLARESOLVERR_URL` set: two successive lookups of a public reference, and a synthetic
 untraceable number that must stay inconclusive. The local Chromium path is covered by
-`src/server/universalScrapers.live.test.ts` with `TRACKING_CHROMIUM_PATH`. Unit tests use
+`testing/universalScrapers.live.test.ts` with `TRACKING_CHROMIUM_PATH`. Unit tests use
 synthetic [fixtures](fixtures/README.md).

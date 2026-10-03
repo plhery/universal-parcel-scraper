@@ -69,6 +69,6 @@ shipment → `SchemaError`.
 
 ## Testing
 
-`npm run test:carriers:live -- src/server/browserProtectedCarriers.live.test.ts`
+`npm run test:carriers:live -- testing/browserProtectedCarriers.live.test.ts`
 runs without a browser service, so it only checks the wrong-number or challenge
 error.

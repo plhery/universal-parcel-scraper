@@ -63,6 +63,6 @@ non-2xx statuses are indeterminate.
 
 ## Testing
 
-`npm run test:carriers:live -- src/server/browserProtectedCarriers.live.test.ts`
+`npm run test:carriers:live -- testing/browserProtectedCarriers.live.test.ts`
 runs without a browser service, so it accepts either a clean not-found or the
 challenge error.

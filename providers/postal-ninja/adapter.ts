@@ -6,8 +6,8 @@
  * opens the normal results page for its verified handle and captures the full
  * `/track/get` response. Local Chromium without TRAWL retains compact widget
  * capture. The main entry form has a separate verification gate.
- * The provider is disabled by default;
- * `TRACKING_ENABLE_POSTAL_NINJA=true` puts it in the chain before 17TRACK.
+ * The provider is disabled by default; selecting `Postal Ninja` in `providers`
+ * puts it in the chain before 17TRACK.
  */
 import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';

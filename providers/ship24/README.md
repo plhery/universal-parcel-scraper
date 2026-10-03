@@ -69,6 +69,6 @@ credentials. No account, cookie, fingerprint or issued token is used.
 
 ## Testing
 
-`npm run test:carriers:live -- src/server/universalScrapers.live.test.ts` with
+`npm run test:carriers:live -- testing/universalScrapers.live.test.ts` with
 `TRACKING_CHROMIUM_PATH` set runs the browser step against a public reference. Unit
 tests use [fixtures](fixtures/README.md) and never contact Ship24.

@@ -53,5 +53,5 @@ back to `Europe/Berlin`) and stored as UTC.
 
 ## Testing
 
-Live coverage is in `src/server/expandedCarriers.live.test.ts` (no env vars). It
+Live coverage is in `testing/expandedCarriers.live.test.ts` (no env vars). It
 accepts history or the 404 expiry, and skips on a 403/429 network block.

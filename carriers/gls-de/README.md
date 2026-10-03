@@ -32,11 +32,11 @@ is sent, so a wrong or expired number never transmits it.
   sends a postcode. Carrier recognition uses it, and the user is then asked for
   the postcode (see [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)).
 - `GLSGermanyTrackingError` keeps its name because
-  `src/server/expandedCarriers.live.test.ts` asserts it. The constructor also
+  `testing/expandedCarriers.live.test.ts` asserts it. The constructor also
   accepts a positional timeout.
 
 ## Testing
 
-No live test in this folder. `npm run test:carriers:live -- src/server/expandedCarriers.live.test.ts`
+No live test in this folder. `npm run test:carriers:live -- testing/expandedCarriers.live.test.ts`
 checks that an expired public number returns `GLSGermanyTrackingError` before any
 detail request.
