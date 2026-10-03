@@ -35,10 +35,17 @@ try {
     assert(!readFileSync(new URL('browser/scraper.js', base), 'utf8').includes('node:'));
   `);
   execFileSync(process.execPath, ['smoke.mjs'], { cwd: scratch, stdio: 'inherit' });
+  writeFileSync(path.join(scratch,'smoke.cjs'), `
+    const assert = require('node:assert/strict');
+    assert.equal(require('universal-parcel-scraper').parseTrackingInput('1Z999AA10123456784').carrier, 'ups');
+    assert.equal(typeof require('universal-parcel-scraper/node').createTracker, 'function');
+    assert.equal(require('universal-parcel-scraper/places').locatePlace('Paris, FR').country, 'FR');
+  `);
+  execFileSync(process.execPath, ['smoke.cjs'], { cwd: scratch, stdio: 'inherit' });
   const cli = execFileSync(path.join(scratch, 'node_modules/.bin/parcel-scraper'), ['detect','1Z999AA10123456784'], { cwd: scratch, encoding: 'utf8' });
   assert.equal(JSON.parse(cli).carrier, 'ups');
   assert(existsSync(tarball));
   const forbidden = /"(?:next|react|@supabase|@sentry)/;
   assert(!forbidden.test(readFileSync(path.join(scratch,'node_modules/universal-parcel-scraper/package.json'),'utf8')));
-  console.log(`Packed package verified: ${packed.files.length} files; all entry points, CLI and assets work without optional dependencies.`);
+  console.log(`Packed package verified: ${packed.files.length} files; all entry points load through import and require; CLI and assets work without optional dependencies.`);
 } finally { rmSync(scratch, { recursive: true, force: true }); }
