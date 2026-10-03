@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - run: docker build -t universal-parcel-scraper:test .
-      - name: Check health, detection, and browser bundle
+      - name: Check health, detection, browser bundle and Chromium
         run: |
           set -euo pipefail
           docker run -d --name parcel-scraper-test -p 127.0.0.1:8080:8080 -e SCRAPER_DEMO_PAGE=true universal-parcel-scraper:test
@@ -51,3 +51,4 @@ jobs:
           curl -fsS http://127.0.0.1:8080/assets/scraper.js >/dev/null
           curl -fsS http://127.0.0.1:8080/v1/detect -H 'Content-Type: application/json' \
             -d '{"text":"1Z999AA10123456784"}' | jq -e '.carrier == "ups"'
+          docker exec -i parcel-scraper-test node --input-type=module - < scripts/container-smoke.mjs
