@@ -29,6 +29,19 @@ describe('ParcelsApp public request protocol', () => {
     for (const postcode of [undefined, null, '', '  ']) expect(parcelsAppRequest('ZZ12345678900', postcode).has('extra[zipcode]')).toBe(false);
   });
 
+  it('uses the manual selector field for country codes and names, without changing the general country', () => {
+    for (const hint of ['FR', 'fr', ' France ']) {
+      const form = parcelsAppRequest('ZZ12345678900', '01234', hint);
+      expect(form.get('country')).toBe('Unknown');
+      expect(form.get('extra[manualCountry]')).toBe('France');
+      expect(form.get('extra[zipcode]')).toBe('01234');
+    }
+    expect(parcelsAppRequest('ZZ12345678900', null, 'US').get('extra[manualCountry]')).toBe('United States');
+    for (const hint of [undefined, null, '', 'XX', 'ZZ', 'T1', 'France&extra[email]=test']) {
+      expect(parcelsAppRequest('ZZ12345678900', null, hint).has('extra[manualCountry]')).toBe(false);
+    }
+  });
+
   it('bounds the request and omits caching, redirects and cookies', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ states: [] }));
     await new ParcelsAppHttpClient(fetcher).fetch('ZZ12345678900', 1000.75, '01234');

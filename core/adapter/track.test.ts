@@ -74,8 +74,8 @@ describe('consumer dispatch', () => {
     const universal = { fetch: vi.fn().mockResolvedValue({ status: 'in_transit' }) } as unknown as UniversalTracker;
     const registry = new AdapterRegistry({ factories: {}, carriers: { test: 'universal', manual: null } }, environment);
     const signal = new AbortController().signal;
-    await trackCarrier('test', { number: 'TEST0001', postcode: '00000' }, { registry, universal, signal, budgetMs: 5_000 });
-    expect(universal.fetch).toHaveBeenCalledExactlyOnceWith('TEST0001', '00000', { signal, budgetMs: 5_000 });
+    await trackCarrier('test', { number: 'TEST0001', postcode: '00000', countryHint: 'FR' }, { registry, universal, signal, budgetMs: 5_000 });
+    expect(universal.fetch).toHaveBeenCalledExactlyOnceWith('TEST0001', '00000', { signal, budgetMs: 5_000 }, 'FR');
     await expect(trackCarrier('manual', { number: 'TEST0001' }, { registry, universal })).rejects.toThrow('No tracking adapter');
   });
 });

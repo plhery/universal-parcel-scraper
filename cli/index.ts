@@ -11,7 +11,7 @@ const help = `Universal Parcel Scraper
 
   parcel-scraper detect <number, link or text>
   parcel-scraper recognize <number>
-  parcel-scraper track <number> [--carrier <id>] [--postcode <value>] [--tracking-url <url>]
+  parcel-scraper track <number> [--carrier <id>] [--postcode <value>] [--tracking-url <url>] [--country-hint <code>]
   parcel-scraper carriers
   parcel-scraper serve [--host <address>] [--port <port>]
 
@@ -36,7 +36,7 @@ export async function main(argv = process.argv.slice(2), env = process.env): Pro
   if (!['detect','recognize','track','carriers','serve'].includes(command)) throw new TypeError('Unknown command; use --help');
   const values: Record<string, string> = {};
   const positional: string[] = [];
-  const allowed = command === 'track' ? ['carrier','postcode','tracking-url'] : command === 'serve' ? ['host','port'] : [];
+  const allowed = command === 'track' ? ['carrier','postcode','tracking-url','country-hint'] : command === 'serve' ? ['host','port'] : [];
   for (let i = 0; i < args.length; i++) {
     const argument = args[i]!;
     if (!argument.startsWith('--')) { positional.push(argument); continue; }
@@ -71,7 +71,7 @@ export async function main(argv = process.argv.slice(2), env = process.env): Pro
   }
   const tracker = createTracker(options);
   if (command === 'recognize') print(await tracker.recognize(input));
-  else print(await tracker.track({ number: input, carrier: values.carrier, postcode: values.postcode, trackingUrl: values['tracking-url'] }));
+  else print(await tracker.track({ number: input, carrier: values.carrier, postcode: values.postcode, trackingUrl: values['tracking-url'], countryHint: values['country-hint'] }));
   return 0;
 }
 

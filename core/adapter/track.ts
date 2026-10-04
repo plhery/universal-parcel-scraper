@@ -32,7 +32,7 @@ export async function trackCarrier(carrier: string, input: TrackingInput, option
   }
   if (options.registry.adapterIdFor(carrier) === 'universal') {
     return normalizeCarrierResult(await options.universal.fetch(input.number, input.postcode,
-      { signal: options.signal, budgetMs: options.budgetMs }));
+      { signal: options.signal, budgetMs: options.budgetMs }, ...(input.countryHint === undefined ? [] : [input.countryHint])));
   }
   throw new RangeError(`No tracking adapter is registered for ${carrier}`);
 }

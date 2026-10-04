@@ -49,6 +49,17 @@ describe('tracking HTTP API', () => {
     expect(track).toHaveBeenCalledTimes(2);
   });
 
+  it('keeps country hints in the cache identity and forwards them to the tracker', async () => {
+    const track = vi.fn().mockResolvedValue(answer);
+    const url = await started({ tracker: tracker(track) });
+    for (const countryHint of [undefined, 'FR', 'CH', 'FR']) {
+      expect((await post(url, { ...input, ...(countryHint ? { countryHint } : {}) })).status).toBe(200);
+    }
+    expect(track).toHaveBeenCalledTimes(3);
+    expect(track.mock.calls[1]![0]).toMatchObject({ countryHint: 'FR' });
+    expect(track.mock.calls[2]![0]).toMatchObject({ countryHint: 'CH' });
+  });
+
   it('expires cached responses and honors the carrier minimum refresh', async () => {
     let time = 0;
     const track = vi.fn().mockResolvedValue({ ...answer, carrier: 'gls-de' });

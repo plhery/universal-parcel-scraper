@@ -73,6 +73,8 @@ one.
 `createTracker()` validates the input. A number whose shape fits several carriers is settled
 by asking the ones that can recognize it cheaply. The tracker then tries the carrier's
 dedicated adapter, and after that the fallbacks the caller enabled, in the coverage order.
+An optional `countryHint` is forwarded to universal providers for a bounded retry after an
+empty answer. It does not identify a carrier, set the destination or resolve scan clocks.
 One deadline and one cancellation signal cover the whole call. The answer lists every
 attempt with its source and outcome.
 

@@ -37,6 +37,8 @@ export interface ParcelInput {
   number: string;
   carrier?: string;
   postcode?: string | null;
+  /** A destination or visitor country hint for an empty universal lookup; never shipment evidence. */
+  countryHint?: string | null;
   trackingUrl?: string | null;
 }
 
@@ -174,6 +176,7 @@ export function createTracker(options: TrackerOptions = {}) {
         if (signal.aborted) throw new TrackingError([], failureHint(new BudgetExceededError('Tracking', ms)));
       }
     }
+    if (input.countryHint != null && typeof input.countryHint !== 'string') throw new TypeError('Invalid country hint');
     if (input.postcode != null && typeof input.postcode !== 'string') throw new TypeError('Invalid postcode');
     if (input.trackingUrl != null && typeof input.trackingUrl !== 'string') throw new TypeError('Invalid tracking URL');
     const fields = normalizeCarrierInputs(carrier, number, input.trackingUrl ?? '', input.postcode ?? '');
@@ -211,7 +214,7 @@ export function createTracker(options: TrackerOptions = {}) {
         if (signal.aborted) break;
         result = await attempt(candidate, () => provider(candidate, async () => resolveResult(await universal.fetchSource(candidate,
           number, Math.min(remaining() + DEADLINE_SLACK_MS, universalSourceBudget(candidate)), fields.postcode,
-          carrierTimezone(carrier) === 'UTC' ? null : carrierTimezone(carrier), signal)), signal));
+          carrierTimezone(carrier) === 'UTC' ? null : carrierTimezone(carrier), signal, input.countryHint)), signal));
         if (result) { source = candidate; break; }
       }
     }

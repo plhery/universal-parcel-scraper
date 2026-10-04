@@ -13,6 +13,7 @@ describe('ParcelsApp direct lookup', () => {
     };
     const result = await new ParcelsAppTracker({ trawl: null, fetcher }).fetch(
       process.env.PARCELSAPP_LIVE_NUMBER!, 30_000, process.env.PARCELSAPP_LIVE_POSTCODE,
+      null, undefined, process.env.PARCELSAPP_LIVE_COUNTRY,
     );
     expect(result).toMatchObject({ tracking_provider: 'ParcelsApp', tracking_source: 'structured-web-response' });
     expect(result.events!.length).toBeGreaterThan(0);

@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Universal Parcel Scraper",
-    "version": "0.3.5"
+    "version": "0.4.0"
   },
   "paths": {
     "/health": {
@@ -539,6 +539,13 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 120000
+          },
+          "countryHint": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Country code or English name used only to retry an empty universal lookup."
           }
         },
         "required": [

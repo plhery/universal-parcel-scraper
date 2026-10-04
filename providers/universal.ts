@@ -94,9 +94,10 @@ export class UniversalTracker {
    * stored delivery postcode, if the user supplied one: it is forwarded into
    * every provider's track input. ParcelsApp submits it as extra[zipcode] on
    * its direct API request; the other providers currently do not consume it.
+   * `countryHint` lets ParcelsApp retry an empty answer with that country.
    * The caller's budget covers the whole chain and its signal ends it.
    */
-  async fetch(trackingNumber: string, postcode?: string | null, context: TrackingContext = {}): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, postcode?: string | null, context: TrackingContext = {}, countryHint?: string | null): Promise<CarrierResult> {
     numberOf(trackingNumber);
     context.signal?.throwIfAborted();
     const deadline = context.budgetMs === undefined ? Infinity : performance.now() + context.budgetMs;
@@ -110,7 +111,7 @@ export class UniversalTracker {
       }
       try {
         return await this.fetchSource(source, trackingNumber, Math.min(remaining, this.options.timeoutMs ?? universalSourceBudget(source)),
-          postcode, null, context.signal);
+          postcode, null, context.signal, countryHint);
       } catch (error) {
         if (context.signal?.aborted) throw context.signal.reason;
         failures.push({ source, reason: 'history unavailable; try again later or open the tracking website', error });
@@ -119,12 +120,12 @@ export class UniversalTracker {
     throw new UniversalTrackingError(failures);
   }
 
-  async fetchSource(source: Source, trackingNumber: string, timeoutMs = this.options.timeoutMs ?? universalSourceBudget(source), postcode?: string | null, timezone?: string | null, signal?: AbortSignal): Promise<CarrierResult> {
+  async fetchSource(source: Source, trackingNumber: string, timeoutMs = this.options.timeoutMs ?? universalSourceBudget(source), postcode?: string | null, timezone?: string | null, signal?: AbortSignal, countryHint?: string | null): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
     if (this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')) {
       return await this.options.browserLookup(source, number);
     }
-    return await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null }, { budgetMs: timeoutMs, signal });
+    return await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null, countryHint: countryHint ?? null }, { budgetMs: timeoutMs, signal });
   }
 
   /** One provider adapter, built from this tracker's environment. */

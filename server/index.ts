@@ -161,7 +161,7 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     const number = normalizeTrackingNumber(input.number);
     const detected = detectCarrierMatch(number);
     input = { ...input, number, carrier: input.carrier ?? (detected.confidence === 'high' ? detected.carrier : undefined) };
-    const key = createHash('sha256').update(JSON.stringify([input.number, input.carrier, input.postcode, input.trackingUrl])).digest('hex');
+    const key = createHash('sha256').update(JSON.stringify([input.number, input.carrier, input.postcode, input.trackingUrl, input.countryHint])).digest('hex');
     const previous = cache.get(key);
     if (previous && previous.until > now()) {
       if (previous.error) throw previous.error;
@@ -241,13 +241,13 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       if (request.method !== 'POST') { json(response, 405, { error: 'Use POST' }); return; }
       const input = await body(request);
       const allowed = path === '/v1/detect' ? ['text'] : path === '/v1/recognize' ? ['number','budgetMs']
-        : ['number','carrier','postcode','trackingUrl','budgetMs'];
+        : ['number','carrier','postcode','trackingUrl','countryHint','budgetMs'];
       if (Object.keys(input).some(key => !allowed.includes(key))) throw new HttpError(400, 'Unknown request field');
       if (path === '/v1/detect') { json(response, 200, tracker.detect(input.text as string)); return; }
       if (input.budgetMs !== undefined && (typeof input.budgetMs !== 'number' || !Number.isInteger(input.budgetMs) || input.budgetMs < 1 || input.budgetMs > 120_000)) throw new HttpError(400, 'Invalid lookup budget');
       if (path === '/v1/recognize') { json(response, 200, await tracker.recognize(input.number as string, { budgetMs: input.budgetMs })); return; }
       const result = await tracked({ number: input.number as string, carrier: input.carrier as string | undefined,
-        postcode: input.postcode as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined }, input.budgetMs);
+        postcode: input.postcode as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined, countryHint: input.countryHint as string | null | undefined }, input.budgetMs);
       json(response, 200, result);
     } catch (error) {
       if (error instanceof HttpError) {
