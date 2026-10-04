@@ -97,6 +97,11 @@ function livewireResponse(
 
 afterEach(() => vi.restoreAllMocks());
 
+it('distinguishes export-customs entry and exit under the same event type', () => {
+  expect(classifyIndiaPostEvent('ExportCustoms', 'Out of Export Customs').stage).toBe('in_transit');
+  expect(classifyIndiaPostEvent('ExportCustoms', 'Sent to Export Customs').stage).toBe('customs');
+});
+
 describe('India Post tracking input', () => {
   it('accepts only valid India-issued S10 identifiers and builds the scraper URL', () => {
     expect(normalizeIndiaPostTrackingNumber('jn 067.614-884 in')).toBe(SAMPLE_NUMBER);

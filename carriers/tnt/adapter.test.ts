@@ -75,6 +75,17 @@ describe('TNT France public tracking', () => {
 });
 
 describe('TNT international public tracking', () => {
+  it('uses the customs-release code independently of the parcel summary and scan locale', () => {
+    const payload = express();
+    payload['tracker.output'].consignment[0].events[0] = {
+      ...payload['tracker.output'].consignment[0].events[0], legacyCode: 'RC', statusDescription: 'Customs has released the goods',
+    };
+    const result = parseTntExpressResponse(payload, EXPRESS_NUMBER);
+    expect(result.current_stage).toBe('in_transit');
+    expect(result.events?.[0]).toMatchObject({ stage: 'in_transit', provider_code: 'RC' });
+    payload['tracker.output'].consignment[0].events[0].statusDescription = 'Libération des marchandises';
+    expect(parseTntExpressResponse(payload, EXPRESS_NUMBER).events?.[0]?.stage).toBe('in_transit');
+  });
   it('reads the newest consignment that carried the number, newest scan first', () => {
     const result = parseTntExpressResponse(express(), EXPRESS_NUMBER);
     expect(result).toMatchObject({

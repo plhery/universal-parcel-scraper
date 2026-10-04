@@ -35,6 +35,8 @@ Bootstrap, lookup and refresh share one cancellable 15-second budget.
 - Pickup availability is not delivery; transport back to the sender is not a completed
   return. Notification and pre-advice rows prove no movement.
 - `reasonDescription` is shown but never used to classify.
+- Registration labels describe repeated handling during transport. Country arrival and
+  readiness for delivery remain transit until a scan identifies the delivery round.
 - Only timestamps with explicit offsets are kept; missing or ambiguous times stay unset.
 - Measurements need a known unit and a positive finite value.
 - Main status enums come from Posti's public parcels bundle

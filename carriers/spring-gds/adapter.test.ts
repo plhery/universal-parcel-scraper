@@ -264,7 +264,11 @@ describe('PostNL ambiguity and clock safety', () => {
 
   it.each([
     ['Processing', 'The item is out for delivery', 'out_for_delivery'],
-    ['Processing', 'The item is at the local sorting centre', 'accepted'],
+    ['Processing', 'The item is at the local sorting centre', 'in_transit'],
+    ['Processing', 'The item has arrived at the domestic sorting centre', 'in_transit'],
+    ['Customs', 'The item is released by customs', 'in_transit'],
+    ['Customs', 'The item is not released by customs', 'customs'],
+    ['Customs', 'The item will be released by customs', 'customs'],
     ['Processing', 'The item will be out for delivery', 'accepted'],
     ['Processing', 'Not out for delivery', 'accepted'],
     ['Future category', 'The item is out for delivery', undefined],

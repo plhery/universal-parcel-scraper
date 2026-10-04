@@ -43,6 +43,8 @@ universal provider.
   wording. La Poste keeps a failed delivery inside its original group
   ("Incident : livraison impossible" arrives with code `DR1`, meaning
   registered).
+- `DISTOU`/`MD1` also includes preparation at the distribution site. That precise label
+  stays in transit until the parcel is on its delivery round.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs
   entry. Pickup and customs are set as `current_stage` because the status
   vocabulary has no value for them.

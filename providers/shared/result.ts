@@ -49,6 +49,11 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   const french = description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
   if (/colis en preparation chez l'expediteur/.test(french)) return 'registered';
   if (/prise en charge de votre colis sur notre site logistique/.test(french)) return 'accepted';
+  // Posti's handling labels survive in aggregator histories. Registration is
+  // a repeated physical scan here, and the reason can describe future customs
+  // or delivery without making either the event's stage.
+  if (/^(?:the )?item (?:accepted from transport(?:[.!]?$|[.!]? this is a transportation marking\b)|has arrived to destination country(?:[.!]?$|[.!]? the item has reached (?:the target country|finland)\b)|is ready for delivery in destination country[.!]?$|in process in office of exchange(?:[.!]?$|[.!]? the item is being processed\b))/i.test(description)
+    || /^(?:the )?item has been registered(?:[.!]?$| the item can be registered several times during delivery\b)/i.test(description)) return 'in_transit';
   if (nonterminalEnglishReturn(description)) return 'exception';
   if (/returned to (?:the )?sender/i.test(description)) return 'returned';
   if (/not delivered|could not.*deliver|unable to deliver|delivery (?:attempt|failed)/i.test(description)) return 'failed_attempt';
@@ -71,7 +76,7 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // "The status will be updated once shipment is out for delivery" is not the round itself.
   if (/out for delivery/i.test(description)
     && !/(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery/i.test(description)) return 'out_for_delivery';
-  if (/clearance (?:processing )?completed|customs (?:cleared|released)/i.test(description)) return 'in_transit';
+  if (/clearance (?:processing )?completed|customs (?:cleared|released)|customs (?:has |have )released (?:the )?(?:goods|shipment|parcel|package|item)\b/i.test(description)) return 'in_transit';
   if (/customs|clearance/i.test(description)) return 'customs';
   if (/instruction data.*provided.*electronically|electronic information|information (?:received|submitted)|label (?:created|printed)|pre.?advice|shipment announced/i.test(description)) return 'registered';
   if (/will be transported to the destination country/i.test(description)) return 'in_transit';

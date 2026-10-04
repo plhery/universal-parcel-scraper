@@ -13,6 +13,14 @@
     { "wording": "Item is ready for a pick up", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-09-21" },
     { "wording": "Item accepted from transport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-21" },
     { "wording": "Item has been released for delivery.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-21" },
-    { "wording": "We sent the recipient an email about the item.", "language": "en", "stage": "pending", "confirmedBy": "live", "firstSeen": "2026-09-21", "note": "Notification alone proves no new movement." }
+    { "wording": "We sent the recipient an email about the item.", "language": "en", "stage": "pending", "confirmedBy": "live", "firstSeen": "2026-09-21", "note": "Notification alone proves no new movement." },
+    {"wording": "Item delivered to the recipient.", "language": "en", "stage": "delivered", "confirmedBy": "fixture", "firstSeen": "2026-10-04"},
+    {"wording": "Item has been registered", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04", "note": "Posti describes registration as repeated handling during transport, not electronic pre-advice."},
+    {"wording": "Item has arrived to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04"},
+    {"wording": "Item is on the way to the recipient", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04"},
+    {"wording": "Item is ready for delivery in destination country", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04", "note": "Readiness in the country does not establish the delivery round."},
+    {"wording": "Item in process in office of exchange.", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04"},
+    {"wording": "The item is on its way to the destination country.", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04"},
+    {"wording": "Item received for transport", "language": "en", "stage": "accepted", "confirmedBy": "fixture", "firstSeen": "2026-10-04"}
   ]
 }

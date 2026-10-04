@@ -135,6 +135,30 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "note": "Exact English description refines the overloaded Processing category."
+    },
+    {
+      "wording": "The item is released by customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04",
+      "note": "The Customs category includes release; this exact label ends the customs step."
+    },
+    {
+      "wording": "The item has arrived at the domestic sorting centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04",
+      "note": "The Processing category also covers handling after acceptance."
+    },
+    {
+      "wording": "The item is at the local sorting centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04",
+      "note": "The Processing category also covers handling after acceptance."
     }
   ]
 }

@@ -40,9 +40,10 @@ native catalog all carry it; everything user-facing says PostNL.
   dated scans around it or lands after the lookup.
 - Stamps with seven fraction digits (customs, bagging) carry a real `Z`: read as local
   times, they would break the list's order.
-- Categories supply the status, with one precise English refinement: "The item is out
-  for delivery" distinguishes delivery from other `Processing` scans. Unknown categories
-  leave the event unstaged and the shipment status unknown.
+- Categories supply the status. Exact English labels distinguish sorting from acceptance,
+  the delivery round from preparation, and customs release from customs entry because
+  `Processing` and `Customs` cover several milestones. Unknown categories leave the event
+  unstaged and the shipment status unknown.
 - `unsuccesfull` is PostNL's own spelling. The corrected spelling is mapped too, so an
   upstream fix loses nothing.
 - The item's `destination_code` becomes `destination_country`. The host uses it as a hint to

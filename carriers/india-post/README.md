@@ -42,7 +42,7 @@ Outcomes:
 - Most rows have no stable status code. `event_type`, `event` and `remarks` are joined into one normalized
   key and matched by substring, most specific first. Unrecognized rows keep an `in_transit` stage with
   an `unknown` status, so no scan is dropped and no terminal stage is invented.
-- `CUSTOM_RECEIVE` is customs. `CUSTOM_RETURN` and "released by export Customs" mean customs handed
+- `CUSTOM_RECEIVE` is customs. `CUSTOM_RETURN`, "Out of Export Customs" and "released by export Customs" mean customs handed
   the item back: in transit, not returned to sender.
 - `tracked_at` without an offset is read as `Asia/Kolkata`. `synced_at` is returned as
   `source_synced_at`.

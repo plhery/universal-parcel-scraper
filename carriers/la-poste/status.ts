@@ -92,6 +92,10 @@ export function eventStatus(
 ): CarrierStatus {
   const described = labelStatus(label, false);
   if (described === 'exception') return described;
+  if (code.toUpperCase() === 'MD1'
+    && comparable(label) === 'votre envoi est sur son site de distribution. nous le preparons pour le mettre en livraison.') {
+    return 'in_transit';
+  }
   return CODE_STATUSES.get(code.toLocaleUpperCase('en-US'))
     ?? GROUP_STATUSES.get(group.toLocaleUpperCase('en-US'))
     ?? (described !== 'unknown' ? described : labelStatus(label, hasEvents));

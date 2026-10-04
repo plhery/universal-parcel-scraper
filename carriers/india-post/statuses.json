@@ -14,6 +14,7 @@
     { "code": "ItemDelivered", "wording": "Item Delivered", "language": "en", "stage": "delivered", "confirmedBy": "fixture", "firstSeen": "2026-09-01", "note": "Substring keys `itemdelivered`, `deliveredtorecipient`, `delivereddelivery`." },
     { "code": "DeliveryAttempted", "wording": "Delivery Attempted", "language": "en", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-01", "note": "Substring keys `deliveryattempted`, `deliveryfailed`, `notdelivered`, `undelivered`." },
     { "code": "InsufficientAddress", "wording": "Insufficient Address", "language": "en", "stage": "exception", "confirmedBy": "prior-art", "firstSeen": "2026-09-01", "note": "Substring keys `insufficientaddress`, `addresseecannotbelocated`, `damaged`, `refused`, `lost`. Reclassified to exception 2026-09-12." },
-    { "code": "ReturnToSender", "wording": "Return To Sender", "language": "en", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-01", "note": "Substring keys `returntosender`, `returnedtocustomer`, `returnedtobookingoffice`, `returnitem`." }
+    { "code": "ReturnToSender", "wording": "Return To Sender", "language": "en", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-01", "note": "Substring keys `returntosender`, `returnedtocustomer`, `returnedtobookingoffice`, `returnitem`." },
+    {"wording": "Out of Export Customs", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-10-04", "code": "ExportCustoms", "note": "ExportCustoms also covers entry; the exit label ends that step."}
   ]
 }

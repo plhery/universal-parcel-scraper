@@ -75,6 +75,7 @@ export function classifyIndiaPostEvent(...values: unknown[]): ClassifiedStatus {
     'returnedfromcustoms',
     'releasedbyexportcustoms',
     'releasedbycustoms',
+    'outofexportcustoms',
   ])) return { status: 'in_transit', stage: 'in_transit' };
   if (includesAny(key, ['customs', 'customclearance', 'customreceive'])) {
     return { status: 'in_transit', stage: 'customs' };

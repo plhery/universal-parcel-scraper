@@ -121,6 +121,14 @@
       "stage": "returned",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28"
+    },
+    {
+      "code": "RC",
+      "wording": "Customs has released the goods",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04"
     }
   ]
 }

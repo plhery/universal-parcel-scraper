@@ -158,6 +158,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-20",
       "note": "Resolved by the shared classifier; \"sont terminees\" is the release and stays in_transit."
+    },
+    {
+      "wording": "Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04",
+      "code": "MD1",
+      "note": "DISTOU/MD1 also covers preparation before the delivery round."
     }
   ]
 }

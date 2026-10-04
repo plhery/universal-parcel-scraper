@@ -108,6 +108,11 @@ says how it got there:
 Each carrier's `statuses.json` records the codes and wordings seen from that carrier and the
 stage each one means. [CORPUS.md](CORPUS.md) describes those records.
 
+Some carrier categories cover several milestones. Exact carrier labels refine those cases;
+explanatory reasons and future delivery instructions do not establish a new milestone.
+Universal providers preserve Posti's handling labels, where registration can record repeated
+physical handling rather than electronic pre-advice.
+
 `resolveResult()` exposes an `instant` only for a scan clock with a verified UTC offset.
 Local clocks keep their original fields. More rows alone do not prove a fresher or more
 complete history.

@@ -74,6 +74,23 @@ describe('Posti projection', () => {
     expect(postiEventStage('Item has been released for delivery.')).toBe('in_transit');
     expect(postiEventStage('We sent the recipient an email about the item.')).toBe('pending');
   });
+
+  it.each([
+    ['Item delivered to the recipient.', 'delivered'],
+    ['Item has been registered', 'in_transit'],
+    ['Item has arrived to destination country', 'in_transit'],
+    ['Item is on the way to the recipient', 'in_transit'],
+    ['Item is ready for delivery in destination country', 'in_transit'],
+    ['Item in process in office of exchange.', 'in_transit'],
+    ['The item is on its way to the destination country.', 'in_transit'],
+    ['Item received for transport', 'accepted'],
+  ])('maps %s independently of the final state and explanatory reason', (description, stage) => {
+    const data = fixture();
+    hit(data).events = [{ eventDescription: description,
+      reasonDescription: 'If customs clearance is needed, the recipient is notified. Otherwise it is delivered.',
+      timestamp: '2026-01-01T12:00:00Z' }];
+    expect(parse(data, NUMBER).events?.[0]?.stage).toBe(stage);
+  });
 });
 
 describe('Posti anonymous transport', () => {
