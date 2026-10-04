@@ -30,7 +30,12 @@ decision based on an earlier check belong to whoever calls it.
 - `universal-parcel-scraper/app` holds helpers shaped for the parcel app this package was
   extracted from: its parcel view, the carrier-name hints for provider results, the
   result-clock helpers its sync uses, carrier scan-identity policies and the country a scan's
-  location names. It imports no Node runtime modules and is outside the semver contract.
+  location names. It imports no Node runtime modules and has no backward-compatibility
+  guarantee; coordinate breaking changes with the app. General-purpose tracking and catalog
+  helpers belong in the stable entry points, even when the app is their only consumer.
+
+The stable entry points and data schemas follow semver: fixes are patches, additions are
+minor, and breaking changes are major. Before 1.0.0, breaking changes raise the minor version.
 
 ## Carrier folders
 

@@ -4,7 +4,8 @@
 - After a requested change, validate, stage the relevant files, commit and push directly to `main`. Do not create a branch or pull request unless explicitly requested.
 - Before pushing, confirm no secrets or unrelated generated artifacts are included.
 - Never import from an app or framework. Browser exports must remain free of Node runtime imports. Resolve assets against their module, not the consumer's working directory.
-- Public exports, result fields, error kinds, carrier ids, provider names and data schemas follow semver. Fixes are patches; additive changes are minor; removals, renames and new stages are major. Until 1.0.0 a major change raises the minor version. Do not rename ids or stages in place. The `/app` entry point is exempt: it follows the parcel app.
+- Public exports, result fields, error kinds, carrier ids, provider names and data schemas follow semver. Fixes are patches; additive changes are minor; removals, renames and new stages are major. Until 1.0.0 breaking changes raise the minor version. Do not rename ids or stages in place.
+- `/app` contains helpers coupled to the parcel app's data model or behavior. It has no backward-compatibility guarantee; coordinate breaking changes with the app. General-purpose tracking and catalog APIs belong in the stable entry points.
 - Commercial universal providers are opt-in. Consumers own polling and persistence.
 
 ## Documentation
