@@ -29,4 +29,13 @@ describe('carrier names reported by universal providers', () => {
       reported_carriers: ['Swiss Post', 'DPD Group'],
     });
   });
+
+  it('keeps the postal union\'s feed among the reported names, where it proposes no carrier', () => {
+    // An S10 number with a valid check digit.
+    const finnish = 'RR123456785FI';
+    expect(universalCarrierHints(['Finland Post'], finnish)).toEqual({ reported_carriers: ['Finland Post'], discovered_carrier: 'posti' });
+    // The feed is no carrier, but it still counts as a name: two names propose nothing.
+    expect(universalCarrierHints(['UPU', 'Finland Post'], finnish)).toEqual({ reported_carriers: ['UPU', 'Finland Post'] });
+    expect(universalCarrierHints(['Universal Postal Union'], finnish)).toEqual({ reported_carriers: ['Universal Postal Union'] });
+  });
 });

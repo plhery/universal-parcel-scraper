@@ -10,11 +10,15 @@ const key = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 // These brands have several regional/service adapters.
 const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'post'];
+// An alias also gives the name its carrier's clock, which moves the stored
+// instants, and so the event ids, of past scans under that name.
 const NAME_ALIASES: Readonly<Record<string, string>> = {
   ups: 'ups', swisspost: 'swiss-post', laposte: 'la-poste', colissimo: 'la-poste',
   dhlecommerce: 'dhl-ecommerce', cainiao: 'aliexpress', postnl: 'spring-gds',
-  asendiausa: 'asendia',
+  asendiausa: 'asendia', finlandpost: 'posti',
 };
+// The postal union's shared feed, which aggregators list among a parcel's carriers.
+const FEED_NAMES = ['upu', 'universalpostalunion'];
 const CATALOG_NAMES = new Set([
   ...Object.entries(CARRIER_DEFINITIONS).filter(([id]) => id !== 'unknown')
     .map(([, definition]) => key(definition.displayName)),
@@ -86,12 +90,23 @@ export function carrierIdFromName(name: string): string | undefined {
 /**
  * Whether a reported carrier name is already in the catalog: a carrier or alias,
  * another network of a brand that has several ("DHL Express", "GLS Italy"), or
- * one of those followed by a country. Any other name is a carrier new to us.
+ * one of those followed by a country. A name it does not know is a carrier new
+ * to us or a feed (`isCarrierFeedName`).
  */
 export function isKnownCarrierName(name: string): boolean {
   const qualified = countryQualified(name);
   return [key(name), ...(qualified ? [key(qualified.base)] : [])].some((candidate) =>
     CATALOG_NAMES.has(candidate) || NETWORK_BRANDS.some((brand) => candidate.startsWith(brand)));
+}
+
+/**
+ * Whether a reported name is the postal union's shared feed ("UPU", "Universal
+ * Postal Union"). The feed relays every postal operator's scans and names no
+ * carrier: it has no catalog id and is not a known carrier name, so a reply
+ * that names only the feed says nothing about whose parcel it is.
+ */
+export function isCarrierFeedName(name: string): boolean {
+  return FEED_NAMES.includes(key(name));
 }
 
 /**

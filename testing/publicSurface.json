@@ -249,6 +249,7 @@
       "countryName",
       "displayedCarrierId",
       "eventTimestamp",
+      "isCarrierFeedName",
       "isKnownCarrierName",
       "latestResultTime",
       "nationalPostCandidate",

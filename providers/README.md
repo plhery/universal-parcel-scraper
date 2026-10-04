@@ -60,7 +60,9 @@ and [COVERAGE.md](COVERAGE.md) holds what was measured.
   when a provider files it as generic transit: it was cancelled before shipping. A
   relabel that mentions a void is not.
 - A carrier name reported by a provider is a hint. A consumer may try that carrier's
-  adapter, and adopts the carrier only when that adapter confirms the shipment.
+  adapter, and adopts the carrier only when that adapter confirms the shipment. The postal
+  union's feed, which an aggregator lists as "UPU" or "Universal Postal Union", is not a
+  carrier.
 - The names `Ship24`, `ParcelsApp`, `17TRACK`, `Postal Ninja` and `UPU` are public, and
   consumers store them. Don't rename them.
 

@@ -83,7 +83,9 @@ step exists for future protocol changes.
   country ("Example Hub", "Toronto, ON") rules nothing out, and step 4 only reads scans
   without a location. A country added to `COUNTRY_ZONES` therefore moves the stored scans
   located in it, as a changed catalog `timezone` moves its carrier's, and so their event
-  ids: plan a re-key of stored ParcelsApp rows with either change.
+  ids. So does a reported name newly mapped to a catalog carrier on a local clock
+  (`NAME_ALIASES` in [hints.ts](../../core/catalog/hints.ts)), for the scans under that
+  name. Plan a re-key of stored ParcelsApp rows with any of these changes.
 
   With no zone, an offset is taken as given. Steps 3 and 4 choose a zone only:
   `carrierIdFromName` still treats these brands as ambiguous, so discovery and routing

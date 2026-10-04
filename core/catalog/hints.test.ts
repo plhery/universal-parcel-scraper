@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
-  brandCarrierIds, brandTimeZones, carrierIdFromName, carrierIdFromPartner, carrierIdFromPartnerLinks, carrierNameCountryZone, isKnownCarrierName,
-  nationalPostCandidate,
+  brandCarrierIds, brandTimeZones, carrierIdFromName, carrierIdFromPartner, carrierIdFromPartnerLinks, carrierNameCountryZone, isCarrierFeedName,
+  isKnownCarrierName, nationalPostCandidate,
 } from './hints.js';
 
 describe('brand networks', () => {
@@ -61,6 +61,7 @@ describe('carrier names reported by universal providers', () => {
   it.each([
     ['UPS', 'ups'], ['La Poste (Colissimo)', 'la-poste'], ['Chronopost France', 'chronopost'],
     ['Chronopost (France)', 'chronopost'], ['Posti Finland', 'posti'], ['Swiss Post CH', 'swiss-post'],
+    ['Finland Post', 'posti'],
   ])('maps %s, a carrier followed by its own country included', (name, expected) => {
     expect(carrierIdFromName(name)).toBe(expected);
   });
@@ -75,12 +76,24 @@ describe('carrier names reported by universal providers', () => {
   it.each([
     'La Poste', 'La Poste (Colissimo)', 'Chronopost France', 'FedEx', 'India Post', 'Posti', 'UPS',
     'Chronopost Portugal', 'Correos Chile', 'Royal Mail (UK)', 'DHL', 'DHL Express', 'GLS Italy', 'DPD UK',
+    'Finland Post',
   ])('knows %s from the catalog', (name) => {
     expect(isKnownCarrierName(name)).toBe(true);
   });
 
   it.each(['Example Parcel Co', 'Example Express Italy', 'Postexample Courier'])('treats %s as new', (name) => {
     expect(isKnownCarrierName(name)).toBe(false);
+  });
+
+  it.each(['UPU', 'upu', 'Universal Postal Union'])('takes %s for the postal union\'s feed, not for a carrier', (name) => {
+    expect(isCarrierFeedName(name)).toBe(true);
+    expect(carrierIdFromName(name)).toBeUndefined();
+    expect(isKnownCarrierName(name)).toBe(false);
+    expect(carrierNameCountryZone(name)).toBeNull();
+  });
+
+  it.each(['UPS', 'Posti', 'Finland Post', 'Post', 'Example Parcel Co', ''])('takes %s for no feed', (name) => {
+    expect(isCarrierFeedName(name)).toBe(false);
   });
 });
 

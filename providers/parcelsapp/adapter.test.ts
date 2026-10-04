@@ -354,6 +354,36 @@ describe('ParcelsApp result parsing', () => {
     expect(reply(['Example Transport', 'TNT'], [scan(0)]).discovered_carrier).toBeUndefined();
   });
 
+  it('reads scans named "Finland Post" on Posti\'s clock and proposes Posti', () => {
+    // The name is the catalog's Posti, so its scans take the carrier's zone
+    // before their own location, as every catalog carrier's do.
+    const finnish = 'RR123456785FI';
+    const reply = (carriers: string[]) => parseParcelsAppResponse({
+      carriers,
+      states: [
+        { date: '2026-07-03T14:20:00+00:00', status: 'Item has left the country of origin', carrier: 0, location: 'Example Hub, Germany' },
+        { date: '2026-07-02T18:30:00+00:00', status: 'Item is being transported', carrier: 0 },
+        { date: '2026-01-14T09:15:00+00:00', status: 'Item registered', carrier: 0 },
+      ],
+    }, finnish, identity(finnish));
+    const named = reply(['Finland Post']);
+    expect(named.events?.map((scan) => scan.time)).toEqual([
+      '2026-07-03T11:20:00.000Z', // located abroad, still 14:20 in Helsinki
+      '2026-07-02T15:30:00.000Z', // summer: EEST
+      '2026-01-14T07:15:00.000Z', // winter: EET
+    ]);
+    expect(named).toMatchObject({ reported_carriers: ['Finland Post'], discovered_carrier: 'posti' });
+    expect(reply(['Posti']).events?.map((scan) => scan.time)).toEqual(named.events?.map((scan) => scan.time));
+    // A second listed name, here the postal union's feed, changes nothing when every scan names Finland Post.
+    expect(reply(['Finland Post', 'Universal Postal Union'])).toMatchObject({
+      reported_carriers: ['Finland Post', 'Universal Postal Union'], discovered_carrier: 'posti',
+    });
+    // A name outside the catalog keeps the labeled instant, or its location's clock.
+    expect(reply(['Example Parcel Co']).events?.map((scan) => scan.time)).toEqual([
+      '2026-07-03T12:20:00.000Z', '2026-07-02T18:30:00.000Z', '2026-01-14T09:15:00.000Z',
+    ]);
+  });
+
   it('keeps the UTC instants ParcelsApp gives TNT international scans', () => {
     // Checked against tnt.com's offsets (2026-09-28); a TNT France number keeps the French clock.
     const scan = (trackingNumber: string) => parseParcelsAppResponse({
