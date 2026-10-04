@@ -6,7 +6,7 @@
 
 **Parcel tracking that asks the carrier directly, from your own machine.**
 
-The engine behind [Peek](https://github.com/plhery/delivery-tracker), the open-source parcel tracker for iPhone and the web.
+The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/plhery/peek-delivery-tracker)), the open-source parcel tracker for iPhone and the web.
 
 [![npm](https://img.shields.io/npm/v/universal-parcel-scraper)](https://www.npmjs.com/package/universal-parcel-scraper)
 [![CI](https://github.com/plhery/universal-parcel-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/plhery/universal-parcel-scraper/actions/workflows/ci.yml)
@@ -27,7 +27,7 @@ The engine behind [Peek](https://github.com/plhery/delivery-tracker), the open-s
 Give it a tracking number. It finds the carrier, fetches the history from the carrier's own
 site and returns the same JSON for every carrier. No account, no API key.
 
-It is the tracking engine of [Peek](https://github.com/plhery/delivery-tracker), usable on
+It is the tracking engine of [Peek](https://github.com/plhery/peek-delivery-tracker), usable on
 its own as a command, a Node library or an HTTP server.
 
 ## Benchmark
@@ -120,7 +120,7 @@ settings, such as `SCRAPER_TOKEN` and `SCRAPER_TRUSTED_PROXIES`, in [.env.exampl
 
 ## What you can build with it
 
-- A parcel-tracking app, like [Peek](https://github.com/plhery/delivery-tracker).
+- A parcel-tracking app, like [Peek](https://github.com/plhery/peek-delivery-tracker).
 - A [Home Assistant sensor](examples/home-assistant.yaml) for the parcel you are waiting on.
 - Order status inside a shop or help desk, from any backend that speaks HTTP.
 - Tracking numbers pulled out of shipping emails: `detect` reads pasted text and links.
