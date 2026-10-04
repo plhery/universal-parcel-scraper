@@ -36,8 +36,9 @@ FLARESOLVERR_URL for browser fallback')`.
 - The rendered page is read only to spot a challenge. Its "can't find that tracking number"
   notice appears both for unknown numbers and for refused API calls, so it never means
   not-found.
-- An empty `packages` array returns an unlocated `unknown`, not not-found: the real not-found
-  envelope has never been observed.
+- An empty `packages` array or `TRACKING.TRACKINGNUMBER.NOTFOUND` error returns an unlocated
+  `unknown`. The coded error can echo the number with a default status and an empty scan;
+  its placeholders never establish movement or identify FedEx as the carrier.
 - A recipient-gated shipment (`TRACKING.AUTHORIZATION.ERROR`) raises `InputRequiredError`
   instead of retrying a verification the adapter cannot supply.
 - Results bind strictly to `trackingNbr`. Several matches (same digits, different

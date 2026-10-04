@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { StepRecorder } from '../../core/telemetry/index.js';
+import { recognizeFromLookup } from '../../core/adapter/index.js';
 import {
   FedExTracker,
   fedexTrackingUrl,
@@ -153,6 +154,19 @@ describe('FedEx structured response', () => {
       },
     }, DELIVERED_NUMBER)).toMatchObject({ status: 'unknown', events: [] });
   });
+
+  it('never recognizes a not-found placeholder despite its default status and scan', async () => {
+    const payload = { output: { packages: [{
+      trackingNbr: IN_TRANSIT_NUMBER,
+      keyStatus: 'In transit', keyStatusCD: '', scanEventList: [{}],
+      errorList: [{ code: 'TRACKING.TRACKINGNUMBER.NOTFOUND' }],
+    }] } };
+    const result = parseFedExTrackingResponse(payload, IN_TRANSIT_NUMBER);
+    expect(result).toMatchObject({ status: 'unknown', events: [], last_update: null });
+    expect(result).not.toHaveProperty('current_stage');
+    await expect(recognizeFromLookup(async () => result)).resolves.toEqual({ known: false, lastActivityAt: null });
+  });
+
 });
 
 describe('FedEx lookup steps', () => {

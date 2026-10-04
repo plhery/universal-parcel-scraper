@@ -138,12 +138,14 @@ export function parseFedExTrackingResponse(payload: unknown, trackingNumber: str
   const shipment = matches[0]!;
   const scans = Array.isArray(shipment.scanEventList) ? shipment.scanEventList.filter(isRecord) : [];
   const errors = Array.isArray(shipment.errorList) ? shipment.errorList.filter(isRecord) : [];
+  const codes = errors.map(errorCode).join(' ');
+  // Error replies can echo the number with a default status and an empty scan.
+  // Those placeholders cannot establish a shipment, even when the status says moving.
+  if (/TRACKINGNUMBER|NOTFOUND|NOT FOUND|NO TRACKING/.test(codes)) return notLocated();
   const keyStatus = clean(shipment.keyStatus);
   const keyStatusCD = cleanScalar(shipment.keyStatusCD);
   const statusDetails = clean(shipment.statusWithDetails);
   if (scans.length === 0 && !keyStatus && !keyStatusCD) {
-    const codes = errors.map(errorCode).join(' ');
-    if (/TRACKINGNUMBER|NOTFOUND|NOT FOUND|NO TRACKING/.test(codes)) return notLocated();
     if (/AUTHENTICAT|AUTHORIZATION/.test(codes)) {
       throw new InputRequiredError('FedEx', 'recipient verification',
         'FedEx requires recipient verification for this shipment');
