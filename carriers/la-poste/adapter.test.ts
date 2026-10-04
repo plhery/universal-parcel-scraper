@@ -72,6 +72,8 @@ describe('La Poste tracking input', () => {
     expect(normalizeLaPosteTrackingNumber('ab 123.456-78901')).toBe(TRACKING_NUMBER);
     expect(normalizeLaPosteTrackingNumber('RA123456785FR')).toBe('RA123456785FR');
     expect(normalizeLaPosteTrackingNumber('12345678901234q')).toBe('12345678901234Q');
+    expect(normalizeLaPosteTrackingNumber('87 0012 3456 7890')).toBe('87001234567890');
+    expect(normalizeLaPosteTrackingNumber('87 0012 3456 78901')).toBe('870012345678901');
 
     const page = new URL(laPosteTrackingUrl(TRACKING_NUMBER));
     expect(page.origin).toBe('https://www.laposte.fr');
@@ -103,8 +105,11 @@ describe('La Poste tracking input', () => {
       'AB12345678901&lang=en',
       'AB1234567890É',
       'ABCDEFGHIJKLMN1',
+      '870012345678',
+      '8700123456789012',
+      '8700123456789A',
     ]) {
-      expect(() => laPosteTrackingUrl(value)).toThrow('13- or 15-character');
+      expect(() => laPosteTrackingUrl(value)).toThrow('13-, 14- or 15-character');
     }
   });
 });
@@ -469,6 +474,23 @@ describe('La Poste status vocabulary', () => {
 });
 
 describe('La Poste adapter factory', () => {
+  it.each(['87001234567890', '870012345678901'])('retrieves tracked mail without changing the numeric identifier: %s', async (number) => {
+    const fixture = deliveredFixture();
+    fixture[0]!.shipment.idShip = number;
+    fixture[0]!.shipment.product = 'Envoi suivi';
+    fixture[0]!.shipment.event[1]!.label = 'Votre envoi a été distribué.';
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json(fixture));
+    const instance = adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
+
+    await expect(instance.track({ number })).resolves.toMatchObject({ status: 'delivered' });
+    expect(new URL(String(fetcher.mock.calls[0]![0])).pathname).toBe(`/ssu/sun/back/suivi-unifie/${number}`);
+
+    const wrong = deliveredFixture();
+    wrong[0]!.shipment.idShip = `${number.slice(0, -1)}2`;
+    expect(() => parseLaPosteTrackingResponse(wrong, number)).toThrow('different shipment');
+    expect(() => parseLaPosteTrackingResponse([{ returnCode: 104 }], number)).toThrow('could not locate');
+  });
+
   it('declares the direct and retry tiers and fetches the bounded official endpoint', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       Response.json(deliveredFixture()),

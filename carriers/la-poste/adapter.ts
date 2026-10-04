@@ -84,9 +84,10 @@ export function normalizeLaPosteTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   const domestic = /^[A-Z0-9]{2}\d{11}$/.test(value);
   const international = /^[A-Z]{2}\d{9}[A-Z]{2}$/.test(value);
+  const numericMail = /^\d{14,15}$/.test(value);
   const foreignExpress = /^\d{14}[A-Z]$/.test(value);
-  if (!domestic && !international && !foreignExpress) {
-    throw new InvalidInputError('La Poste', 'La Poste tracking numbers must use a supported 13- or 15-character format');
+  if (!domestic && !international && !numericMail && !foreignExpress) {
+    throw new InvalidInputError('La Poste', 'La Poste tracking numbers must use a supported 13-, 14- or 15-character format');
   }
   return value;
 }

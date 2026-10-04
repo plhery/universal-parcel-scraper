@@ -99,6 +99,21 @@ describe('the detection engine', () => {
       .toMatchObject({ trackingNumber: 'RA123456785CH', carrier: 'swiss-post', source: 'link' });
   });
 
+  it.each(['87001234567890', '870012345678901'])('selects La Poste for numeric tracked mail: %s', (number) => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'la-poste', confidence: 'high' });
+    expect(parseTrackingInput(`Suivi : ${number}`)).toMatchObject({
+      trackingNumber: number, carrier: 'la-poste', confidence: 'high', source: 'text',
+    });
+    expect(parseTrackingInput(`https://www.laposte.fr/outils/suivre-vos-envois?code=${number}`))
+      .toMatchObject({ trackingNumber: number, carrier: 'la-poste', source: 'link' });
+  });
+
+  it('keeps other numeric carriers ambiguous', () => {
+    expect(detectCarrierMatch('123456789012345')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('87979.0061660090')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('06080000000002').candidates[0]).toBe('dpd');
+  });
+
   it('recognizes the PostLogistics printed reference without claiming every 11-digit number', () => {
     expect(parseTrackingInput('12345678-001')).toMatchObject({
       trackingNumber: '12345678-001', carrier: 'postlogistics', confidence: 'high', source: 'number',

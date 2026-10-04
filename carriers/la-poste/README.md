@@ -4,6 +4,10 @@ La Poste's unified tracking feed. It serves Colissimo, tracked mail,
 [Chronopost](../chronopost/README.md) and [Delivengo](../delivengo/README.md),
 so those two folders point `tracking.adapter` here.
 
+Numeric tracked-mail identifiers reach the same feed without truncation or
+conversion to a parcel number. Their detection rules live in `carrier.json`;
+generic numeric lengths alone do not identify La Poste.
+
 ## How it works
 
 1. `direct`: one keyless GET of

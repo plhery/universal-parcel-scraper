@@ -782,5 +782,39 @@
       "usps"
     ],
     "reason": "CTT Express numbers share TIPSA's agency, agency, waybill layout; the CTT Express prefix is the only high-confidence rule, so TIPSA references starting 00 are read as CTT Express."
+  },
+  {
+    "shape": "870 followed by eleven digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "la-poste",
+      "seur"
+    ],
+    "reason": "La Poste numeric tracked mail overlaps generic fourteen-digit rules; the specific La Poste prefix decides."
+  },
+  {
+    "shape": "870 followed by eleven digits with a valid Hermes check digit",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "hermes-de",
+      "la-poste",
+      "seur"
+    ],
+    "reason": "La Poste numeric tracked mail also overlaps checksum-valid Hermes numbers; the specific La Poste prefix decides."
+  },
+  {
+    "shape": "870 followed by twelve digits",
+    "carriers": [
+      "fedex",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "La Poste numeric tracked mail overlaps generic fifteen-digit rules; the specific La Poste prefix decides."
   }
 ]

@@ -35,18 +35,10 @@
         "url": "https://marketplace.fnacdarty.com/s/article/Dois-je-obligatoirement-renseigner-un-num%C3%A9ro-de-suivi-tracking-pour-ma-commande?language=fr_BE"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dpd",
-          "ciblex",
-          "hermes-de",
-          "seur",
-          "brt",
-          "delhivery"
-        ]
+        "carrier": "la-poste",
+        "confidence": "high"
       },
-      "note": "Published integration example, not a real shipment. The source attributes it to La Poste / Colissimo, which no rule claims."
+      "note": "Published integration example, not a real shipment."
     },
     {
       "number": "87000918635108",
@@ -56,17 +48,10 @@
         "url": "https://marketplace.fnacdarty.com/s/article/Dois-je-obligatoirement-renseigner-un-num%C3%A9ro-de-suivi-tracking-pour-ma-commande?language=fr_BE"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dpd",
-          "ciblex",
-          "seur",
-          "brt",
-          "delhivery"
-        ]
+        "carrier": "la-poste",
+        "confidence": "high"
       },
-      "note": "Published integration example, not a real shipment. The source attributes it to La Poste / Colissimo, which no rule claims."
+      "note": "Published integration example, not a real shipment."
     },
     {
       "number": "88000019255788Y",
@@ -135,6 +120,18 @@
         "confidence": "high"
       },
       "note": "Made-up number that follows the published format."
+    },
+    {
+      "number": "870012345678901",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-04",
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "Made-up numeric tracked-mail identifier; La Poste documents fifteen-character tracked mail."
     }
   ]
 }
