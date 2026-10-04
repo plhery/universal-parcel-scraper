@@ -22,7 +22,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carrierCountries: ['CH'] });
 - A town nothing confirms needs 15,000 people. Otherwise the scan gets no place: a wrong
   dot is worse than none. Postcodes only confirm a name, never stand in for one.
 - Text that names only a country gets that country, marked `country`, so the map shades
-  the country instead of pinning a town.
+  the country instead of pinning a town. A DHL operation followed only by a country name
+  also places that country; the carrier's name alone supplies no country.
 
 The gazetteer loads once per process, from the packaged asset. `preloadPlaces()` loads it
 ahead of the first lookup. Results are cached in memory; consumers decide whether to

@@ -68,6 +68,10 @@ export function trackingPlace(location: string): TrackingPlace {
   }
   if (country) return { country, place: kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|(]+$/u, '') : '' };
   if (fields.length === 1 && text === fields[0]![0]) {
+    // Aggregators can name a DHL country operation instead of a town.
+    const operation = /^DHL\s+(.+)$/i.exec(text);
+    const operationCountry = operation ? namedCountry(operation[1]!, true) : null;
+    if (operationCountry) return { country: operationCountry, place: '' };
     const words = text.split(/\s+/);
     for (let count = Math.min(words.length - 1, 4); count > 0; count -= 1) {
       const code = namedCountry(words.slice(0, count).join(' '), true);

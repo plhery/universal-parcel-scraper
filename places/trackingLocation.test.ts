@@ -14,6 +14,7 @@ describe('tracking places', () => {
 
   it.each([
     ['France', 'FR'], ['DE', 'DE'], ['CH ', 'CH'], ['THE NETHERLANDS', 'NL'], ['Czech Republic', 'CZ'], ['Hong Kong', 'HK'],
+    ['DHL Netherlands', 'NL'],
   ])('leaves no place when %s is only a country', (location, country) => {
     expect(trackingPlace(location)).toEqual({ country, place: '' });
   });
@@ -21,6 +22,7 @@ describe('tracking places', () => {
   it.each([
     '', 'Warehouse', 'Paris', 'Buchs AG', 'Basel, BS', 'Wilmington, DE', 'France distribution center',
     'Zürich Briefzentrum', 'Mexico City', 'Andorra la Vella',
+    'DHL Paris', 'DHL Netherlands distribution centre',
   ])('keeps %s whole without guessing a country', (location) => {
     expect(trackingPlace(location)).toEqual({ country: null, place: location });
   });

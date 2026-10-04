@@ -13,6 +13,10 @@ function expectPlace(location: string, expected: { country: string; name: string
 }
 
 describe('locatePlace', () => {
+  it('places a country operation without inventing a city', () => {
+    expect(place('DHL Netherlands')).toMatchObject({ country: 'NL', precision: 'country', name: 'Netherlands' });
+  });
+
   it('reads the formats carriers print, with or without a country', () => {
     const zurich = { country: 'CH', name: 'Zürich', latitude: 47.37, longitude: 8.55 };
     for (const location of ['ZUERICH, CH', 'ZUERICH CH', 'ZURICH']) expectPlace(location, zurich);
