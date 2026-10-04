@@ -13,6 +13,28 @@
             "Postal Ninja": 14,
             "UPU": 1
           }
+        },
+        {
+          "note": "DHL Express waybill: https://www.trustpilot.com/reviews/6aaaf40b0ae5ece3b117fe62",
+          "results": {
+            "Ship24": 23,
+            "ParcelsApp": 23
+          }
+        },
+        {
+          "note": "DHL Express waybill: https://www.trustpilot.com/reviews/6a901943246975fa82db1390",
+          "results": {
+            "Ship24": 14,
+            "ParcelsApp": "no_history"
+          }
+        },
+        {
+          "note": "Older Apple DHL Express shipment: https://www.trustpilot.com/reviews/6a2c5fdea14e3bff06c7d1ff",
+          "stale": true,
+          "results": {
+            "Ship24": "no_history",
+            "ParcelsApp": "no_history"
+          }
         }
       ]
     },

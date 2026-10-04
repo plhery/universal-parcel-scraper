@@ -10,6 +10,9 @@ When replacing a comparison reference, rerun the adapter and every provider on t
 replacement. Keep other references as routing evidence. Adapter availability and successful
 comparison lookups are separate counts.
 
+The DHL references include Express shipments outside the dedicated DHL Paket adapter's
+scope. Their public sources are in [the number corpus](../carriers/dhl/numbers.json).
+
 OMGO is outside the comparison cohort. ParcelsApp returns OMGO history; the other
 providers are unverified for it.
 
@@ -130,7 +133,7 @@ about current coverage.
 | Source | Carriers with history | Full | Partial | Only source |
 | --- | ---: | ---: | ---: | ---: |
 | Ship24 | 42 | 27 | 15 | 0 |
-| ParcelsApp | 53 | 48 | 5 | 5 |
+| ParcelsApp | 53 | 47 | 6 | 5 |
 | 17TRACK | 43 | 39 | 4 | 4 |
 | Postal Ninja | 44 | 38 | 6 | 2 |
 
@@ -138,6 +141,7 @@ With Postal Ninja enabled, carriers without their own order use ParcelsApp → S
 
 | Carrier | Order |
 | --- | --- |
+| DHL | Ship24 → Postal Ninja → ParcelsApp → 17TRACK |
 | UPS | ParcelsApp → Postal Ninja → 17TRACK → Ship24 |
 | USPS | 17TRACK → ParcelsApp → Ship24 → Postal Ninja |
 | Royal Mail | ParcelsApp → Postal Ninja → Ship24 → 17TRACK |
