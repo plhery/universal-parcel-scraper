@@ -192,5 +192,5 @@ jobs:
             echo "::notice::SCRAPER_ADOPTION_TOKEN is not set, so the app was not told about $PUBLISHED_VERSION."
             exit 0
           fi
-          GH_TOKEN="$ADOPTION_TOKEN" gh api --method POST repos/plhery/delivery-tracker/dispatches \
+          GH_TOKEN="$ADOPTION_TOKEN" gh api --method POST repos/plhery/peek-delivery-tracker/dispatches \
             -f event_type=scraper-release -f "client_payload[version]=$PUBLISHED_VERSION"
