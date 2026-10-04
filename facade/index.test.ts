@@ -15,8 +15,8 @@ function registry(track: CarrierAdapter['track'], recordsSteps = false): Adapter
 // A number whose shape fits several carriers; these four can be asked whether they know it.
 const ambiguous = '06080000000002';
 const hung = () => new Promise<never>(() => {});
-function recognizers(recognize: Record<'dpd' | 'seur' | 'brt' | 'ciblex', NonNullable<CarrierAdapter['recognize']>>, track: CarrierAdapter['track'] = hung): AdapterRegistry {
-  const carriers = Object.keys(recognize) as (keyof typeof recognize)[];
+function recognizers(recognize: Record<string, NonNullable<CarrierAdapter['recognize']>>, track: CarrierAdapter['track'] = hung): AdapterRegistry {
+  const carriers = Object.keys(recognize);
   return new AdapterRegistry({
     factories: Object.fromEntries(carriers.map(id => [id, (): CarrierAdapter => ({ id, steps: ['direct'], track, recognize: recognize[id] })])),
     carriers: Object.fromEntries(carriers.map(id => [id, id])),
@@ -49,6 +49,22 @@ describe('standalone tracker', () => {
     await createTracker({ registry: registry(lookup, true), providers: [], recorder }).track({ number });
     expect(lookups).toEqual(['ups']);
     expect(lookup).toHaveBeenCalledTimes(2);
+  });
+
+  it('confirms the direct carrier for a generic postal number before tracking', async () => {
+    const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [
+      { time: new Date().toISOString(), description: 'Delivered', stage: 'delivered' },
+    ] });
+    const posti = vi.fn().mockResolvedValue({ known: true });
+    const chronopost = vi.fn().mockResolvedValue({ known: false });
+    const tracker = createTracker({ providers: [], registry: recognizers({ posti, chronopost }, lookup) });
+    expect(tracker.detect('RR123456785FI')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    await expect(tracker.track({ number: 'RR123456785FI' })).resolves.toMatchObject({
+      carrier: 'posti', source: 'posti', attempts: [{ source: 'posti', kind: 'ok' }],
+    });
+    expect(posti).toHaveBeenCalledOnce();
+    expect(chronopost).toHaveBeenCalledOnce();
+    expect(lookup).toHaveBeenCalledOnce();
   });
 
   it('keeps commercial providers off unless selected', async () => {

@@ -2,8 +2,10 @@
 
 Finnish postal operator, including Finnish delivery of foreign-issued postal numbers. Tracked
 through the anonymous consumer GraphQL flow behind [posti.fi/en/tracking](https://www.posti.fi/en/tracking).
-There is no detection rule: a foreign S10 suffix names the issuer, not the deliverer, so Posti
-is reached through a `posti.fi` link, an explicit pick or routing.
+Finnish-issued postal numbers are candidates for recognition through the same anonymous
+lookup. The [UPU S10 standard](https://www.upu.int/UPU/media/upu/files/postalSolutions/programmesAndServices/standards/S10-12.pdf)
+names the issuing country, not the deliverer, so the suffix alone never selects Posti.
+Foreign-issued numbers are reached through a `posti.fi` link, an explicit pick or routing.
 
 ## How it works
 

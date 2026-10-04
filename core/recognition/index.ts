@@ -11,7 +11,8 @@ export {
 } from '../catalog/recognition.js';
 
 /**
- * Carrier recognition: when a number's shape fits several carriers, ask the
+ * Carrier recognition: when a number's shape fits several carriers or names
+ * only an international postal item, ask the
  * ones that can answer cheaply whether they know it. The Add sheet runs it
  * while the user is still in the form, the first sync runs it again after
  * saving, and routing keeps retrying it while the filed carrier cannot track

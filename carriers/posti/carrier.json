@@ -18,7 +18,10 @@
     "steps": [
       "direct",
       "refresh"
-    ]
+    ],
+    "recognition": {
+      "rank": 27
+    }
   },
   "capabilities": [
     "history",
@@ -65,5 +68,13 @@
       "path": "^/(?:[a-z]{2}/)?tracking/([^/?#]+)(?:/[0-9]+)?/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "posti-1",
+      "pattern": "^[A-Z]{2}\\d{9}FI$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "s10"
+    }
+  ]
 }

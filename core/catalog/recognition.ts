@@ -9,7 +9,8 @@
  */
 import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
 import { detectCarrierMatch } from '../detection/detect.js';
-import { AUTOMATIC_CARRIER_IDS, carrierAdapter, requiredRequirements } from './definitions.js';
+import { normalizeTrackingNumber } from '../detection/normalize.js';
+import { AUTOMATIC_CARRIER_IDS, CARRIER_DEFINITIONS, carrierAdapter, requiredRequirements } from './definitions.js';
 import { carrierBrand } from './networks.js';
 import type { CarrierInputField } from './types.js';
 
@@ -28,26 +29,45 @@ export interface RecognitionCandidate {
  * The low-confidence candidates worth asking, best first: the carrier a
  * universal provider named, then the ones number evidence backs, then the
  * catalog's popularity rank. Only carriers that declare `tracking.recognition`
- * qualify. A high-confidence number needs no recognition.
+ * qualify. A high-confidence dedicated carrier needs no recognition; the
+ * unknown postal carrier still needs a direct carrier to confirm it.
  */
 export function recognitionCandidates(
   number: string,
   options: { hint?: string; skip?: (carrier: string) => boolean } = {},
 ): RecognitionCandidate[] {
   const detected = detectCarrierMatch(number);
-  if (detected.confidence !== 'low') return [];
+  const unknownPostalCarrier = detected.carrier === 'intl-post';
+  if (detected.confidence !== 'low' && !unknownPostalCarrier) return [];
+  // The high-confidence S10 fallback hides low-confidence carrier rules from
+  // detection. Recover those candidates without assigning the issuer's
+  // postal carrier as the deliverer: each candidate must confirm this number.
+  // intl-post already checked the S10 checksum, so only S10 or shape-only rules
+  // can contribute here.
+  const normalized = normalizeTrackingNumber(number);
+  const postalMatches = unknownPostalCarrier ? Object.entries(CARRIER_DEFINITIONS)
+    .flatMap(([carrier, definition]) => {
+      const rule = definition.detectionRules.find((candidate) => candidate.confidence === 'low'
+        && (!candidate.checksum || candidate.checksum === 's10')
+        && new RegExp(candidate.pattern).test(normalized)
+        && (!candidate.rawPattern || new RegExp(candidate.rawPattern).test(number.trim().toUpperCase())));
+      return rule ? [{ carrier, preferred: rule.preferred === true }] : [];
+    }) : [];
+  const candidates: readonly string[] = unknownPostalCarrier ? postalMatches.map(({ carrier }) => carrier) : detected.candidates;
+  const preferred: readonly string[] = unknownPostalCarrier
+    ? postalMatches.filter((match) => match.preferred).map(({ carrier }) => carrier) : detected.preferred;
   // A carrier the number points to but that cannot be asked (DPD France) keeps
   // its brand's other networks out: DPD's guest API also answers for DPD
   // France parcels, and would file one under DPD Switzerland.
-  const shadowed = new Set(detected.preferred
+  const shadowed = new Set(preferred
     .filter((carrier) => CARRIER_RECOGNITION_RANKS[carrier] === undefined)
     .map((carrier) => carrierBrand(carrier)).filter(Boolean));
   const score = (carrier: string) => [
     carrier === options.hint ? 1 : 0,
-    detected.preferred.includes(carrier as never) ? 1 : 0,
+    preferred.includes(carrier) ? 1 : 0,
     CARRIER_RECOGNITION_RANKS[carrier] ?? 0,
   ];
-  return detected.candidates
+  return candidates
     .filter((carrier) => CARRIER_RECOGNITION_RANKS[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)
       && carrierAdapter(carrier) !== 'universal' && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier))
     .map((carrier) => ({ carrier, score: score(carrier) }))
@@ -56,7 +76,7 @@ export function recognitionCandidates(
     .map(({ carrier }) => ({
       carrier,
       needsInput: requiredRequirements(carrier, number)[0]?.field ?? null,
-      preferred: detected.preferred.includes(carrier as never),
+      preferred: preferred.includes(carrier),
     }));
 }
 

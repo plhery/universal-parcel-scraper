@@ -21,8 +21,12 @@
     "mode": "automatic",
     "adapter": "dhl-ecommerce",
     "steps": [
+      "direct",
       "browser"
-    ]
+    ],
+    "recognition": {
+      "rank": 23
+    }
   },
   "capabilities": [
     "history",

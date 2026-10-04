@@ -1,14 +1,6 @@
 /**
- * DHL eCommerce, through the public recipient endpoint the global tracking
- * page calls (`www.dhl.com/utapi`).
- *
- * The endpoint answers every direct server request with an Akamai crypto
- * proof-of-work challenge (HTTP 428) that plain HTTP cannot solve (verified
- * 2026-09-10: cookie replay and visiting the page first both still return
- * 428), and browser clearance is not transferable back to Node. The lookup
- * therefore has a single step: a local Chromium session loads the tracking
- * page, the site solves its own challenge and calls the API in that session,
- * and the response to the exact requested URL is parsed.
+ * DHL eCommerce, through its anonymous Americas Webtrack API first, then
+ * the global tracking page's UTAPI for shipments outside Webtrack's scope.
  *
  * DHL may answer with a customer-confirmation id instead of the queried
  * alias, so only one eCommerce shipment from that exact request URL is
@@ -16,19 +8,21 @@
  */
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, InvalidInputError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
+import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { countryTimeZone } from '../../core/time/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { clean as cleanText, UpstreamHttpError } from '../../core/transport/index.js';
+import { clean as cleanText, fetchBounded, parseJsonBytes, UpstreamHttpError, UpstreamNetworkError, userAgentOf } from '../../core/transport/index.js';
 import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { stageFor, statusFor } from './status.js';
 
 const PROVIDER = 'DHL eCommerce';
 const API = 'https://www.dhl.com/utapi';
+const WEBTRACK_API = 'https://api.dhlecs.com/webtrack/v4/tracking';
+const DIRECT_TIMEOUT_MS = 15_000;
 /** Statuses DHL answers with while its challenge is unsolved. */
 const CHALLENGE_STATUSES = [401, 403, 419, 428];
 
@@ -122,6 +116,81 @@ export function parseDHLEcommerceResponse(payload: unknown): CarrierResult {
   };
 }
 
+function webtrackClock(event: JsonObject): { time?: string; local_time?: string } | null {
+  const date = clean(event.date, 32);
+  const time = clean(event.time, 32);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)
+    || !/^\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)?$/.test(time)) return null;
+  const raw = `${date}T${time}`;
+  if (!DateTime.fromISO(raw, { zone: 'UTC', setZone: true }).isValid) return null;
+  const location = clean(event.location, 160);
+  const country = location.split(',').at(-1)?.trim().toUpperCase() ?? '';
+  const instant = eventTime({ timestamp: raw, location: { address: {
+    addressLocality: location, ...(/^[A-Z]{2}$/.test(country) ? { countryCode: country } : {}),
+  } } });
+  return instant ? { time: instant } : { local_time: raw };
+}
+
+/** Webtrack scopes the read to the requested alias and returns that alias on
+ * each package, as its own client requires. An alias can differ from all of
+ * the package's carrier identifiers, so accept it only on one identified,
+ * unambiguous package. Never accept a bare query echo or a fabricated shell. */
+export function parseDHLEcommerceWebtrackResponse(payload: unknown, trackingNumber: string): CarrierResult {
+  const number = normalizeDHLEcommerceNumber(trackingNumber);
+  if (!isRecord(payload) || !Array.isArray(payload.packages) || !Number.isInteger(payload.total)
+    || Number(payload.total) < 0 || payload.packages.length > 50 || payload.offset !== 0
+    || (payload.errors !== undefined && (!Array.isArray(payload.errors) || payload.errors.length > 0))) {
+    throw new SchemaError(PROVIDER, 'DHL eCommerce returned an invalid Webtrack response');
+  }
+  if (payload.total === 0 && payload.packages.length === 0) {
+    // Webtrack covers the Americas network; the global endpoint may still
+    // know an item this regional endpoint does not list.
+    throw new IndeterminateError(PROVIDER, 'DHL eCommerce Webtrack does not list this shipment', { reason: 'webtrack_not_found' });
+  }
+  if (payload.total !== 1 || payload.packages.length !== 1 || !isRecord(payload.packages[0])) {
+    throw new SchemaError(PROVIDER, 'DHL eCommerce did not return one unambiguous Webtrack package');
+  }
+  const shipment = payload.packages[0];
+  const identifiers = [shipment.trackingId, shipment.packageId, shipment.dhlPackageId, shipment.deliveryConfirmationNumber];
+  const matches = (value: unknown) => typeof value === 'string'
+    && value.toUpperCase().replace(/[\s.-]/g, '') === number;
+  if (!clean(shipment.tmiUid) || !identifiers.some((value) => clean(value))
+    || ![shipment.trackedValue, ...identifiers].some(matches)) {
+    throw new SchemaError(PROVIDER, 'DHL eCommerce returned a different or unidentified Webtrack package');
+  }
+  const summary = clean(shipment.status);
+  if (!summary || !Array.isArray(shipment.events) || shipment.events.length > 500
+    || shipment.events.some((event) => !isRecord(event))) {
+    throw new SchemaError(PROVIDER, 'DHL eCommerce returned invalid Webtrack tracking history');
+  }
+  const events: CarrierEvent[] = shipment.events.flatMap((event: JsonObject) => {
+    const description = clean(event.primaryEventDescription);
+    const clock = webtrackClock(event);
+    if (!description || !clock) return [];
+    const stage = stageFor({ description });
+    return [{ ...clock, description: stage === 'delivered' ? 'Delivered' : description,
+      location: clean(event.location, 160), stage }];
+  }).sort((left, right) => left.time && right.time ? right.time.localeCompare(left.time) : 0).slice(0, 100);
+  const summaryStage = stageFor({ description: summary, statusCode: summary === 'Delivered' ? 'delivered' : undefined });
+  // A published scan carries finer semantics than Webtrack's coarse summary.
+  const stage = ['delivered', 'returned'].includes(summaryStage) ? summaryStage : events[0]?.stage ?? summaryStage;
+  if (events.length === 0) {
+    throw new IndeterminateError(PROVIDER, 'DHL eCommerce has not published Webtrack tracking history', { reason: 'webtrack_no_history' });
+  }
+  const expected = clean(shipment.estimatedDeliveryDate, 32);
+  const sender = clean(isRecord(shipment.sender) ? shipment.sender.name : null, 200);
+  return {
+    status: statusFor(stage), current_stage: stage,
+    last_status_text: stage === 'delivered' ? 'Delivered' : summary,
+    last_update: events.find((event) => event.time)?.time ?? null,
+    expected_delivery: !['delivered', 'returned'].includes(stage) && /^\d{4}-\d{2}-\d{2}$/.test(expected)
+      && DateTime.fromISO(expected).isValid ? expected : null,
+    timezone: 'UTC', events,
+    ...(sender ? { sender_name: sender } : {}),
+    ...(stage === 'delivered' && events[0]?.stage === 'delivered' && events[0].time ? { delivered_at: events[0].time } : {}),
+  };
+}
+
 /**
  * The tracking page answered with a challenge status instead of the tracking
  * application. The name is part of the host's error metadata contract: it
@@ -146,6 +215,8 @@ function trackingApiUrl(number: string): string {
 export interface DHLEcommerceTrackerOptions extends Omit<UniversalBrowserOptions, 'signal'> {
   budgetMs?: number;
   recorder?: StepRecorder;
+  fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class DHLEcommerceTracker {
@@ -166,9 +237,46 @@ export class DHLEcommerceTracker {
     const timeoutMs = this.options.timeoutMs ?? 45_000;
     return takeTurn(this.serialize, PROVIDER, context, ({ signal, budgetMs }) => runSteps<CarrierResult>(
       { carrier: 'dhl-ecommerce', budgetMs: budgetMs ?? this.options.budgetMs ?? timeoutMs + 15_000, signal, recorder: this.recorder },
-      [{ id: 'browser', run: (step) => this.browser(
-        number, Math.max(1, Math.floor(Math.min(timeoutMs, step.remainingMs))), step.signal) }],
+      [
+        { id: 'direct', run: (step) => this.direct(number, Math.min(DIRECT_TIMEOUT_MS, step.remainingMs), step.signal) },
+        { id: 'browser', recovers: (error) => error instanceof ChallengeError || error instanceof UpstreamNetworkError
+          || error instanceof UpstreamHttpError && error.status >= 500
+          || error instanceof IndeterminateError && ['webtrack_not_found', 'webtrack_no_history'].includes(error.reason ?? ''),
+          run: (step) => this.browser(number, Math.max(1, Math.floor(Math.min(timeoutMs, step.remainingMs))), step.signal) },
+      ],
     ));
+  }
+
+  /** Recognition never starts the global page or spends a browser budget. */
+  async recognize(trackingNumber: string, context: TrackingContext = {}): Promise<Recognition> {
+    return recognizeFromLookup(async () => {
+      const number = normalizeDHLEcommerceNumber(trackingNumber);
+      const budget = lookupBudget(context, DIRECT_TIMEOUT_MS, PROVIDER);
+      try {
+        return await this.direct(number, Math.min(DIRECT_TIMEOUT_MS, budget.remainingMs()), budget.signal);
+      } catch (error) {
+        // A clean regional miss is unknown to this recognition check; it is
+        // never a claim that the global DHL network does not know the number.
+        if (error instanceof IndeterminateError && error.reason === 'webtrack_not_found') throw new NotFoundError(PROVIDER);
+        throw error;
+      }
+    }, () => accepted(() => normalizeDHLEcommerceNumber(trackingNumber)));
+  }
+
+  private async direct(number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
+    try {
+      const { response, bytes } = await fetchBounded(WEBTRACK_API, { method: 'POST', signal,
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) },
+        body: JSON.stringify({ trackedValue: number, offset: 0, locale: 'en-US' }),
+      }, { provider: PROVIDER, timeoutMs, maxBytes: 1_000_000, fetcher: this.options.fetcher, allowHttpStatuses: [404, 410] });
+      if (!response.ok) throw new IndeterminateError(PROVIDER, 'DHL eCommerce Webtrack endpoint is unavailable');
+      return parseDHLEcommerceWebtrackResponse(parseJsonBytes(bytes, PROVIDER), number);
+    } catch (error) {
+      if (error instanceof UpstreamHttpError && CHALLENGE_STATUSES.includes(error.status)) {
+        throw new DHLEcommerceSessionError(error.status, { cause: error });
+      }
+      throw error;
+    }
   }
 
   private async browser(number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
@@ -190,10 +298,12 @@ export class DHLEcommerceTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new DHLEcommerceTracker({
     executablePath: environment.browserExecutablePath ?? undefined, recorder: environment.recorder,
+    fetcher: environment.fetcher, userAgent: environment.userAgent,
   });
   return {
     id: 'dhl-ecommerce', recordsSteps: true,
-    steps: ['browser'],
+    steps: ['direct', 'browser'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => tracker.recognize(number, context),
   };
 };

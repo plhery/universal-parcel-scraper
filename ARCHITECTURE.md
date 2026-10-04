@@ -70,8 +70,10 @@ one.
 
 ## A lookup
 
-`createTracker()` validates the input. A number whose shape fits several carriers is settled
-by asking the ones that can recognize it cheaply. The tracker then tries the carrier's
+`createTracker()` validates the input. A number whose shape fits several carriers, or only
+identifies an international postal item, is settled by asking the carriers that can recognize
+it cheaply. A postal issuer is a lookup candidate, not proof of the delivery carrier.
+The tracker then tries the carrier's
 dedicated adapter, and after that the fallbacks the caller enabled, in the coverage order.
 An optional `countryHint` is forwarded to universal providers for a bounded retry after an
 empty answer. It does not identify a carrier, set the destination or resolve scan clocks.

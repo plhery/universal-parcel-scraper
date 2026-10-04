@@ -1,5 +1,5 @@
 
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { CarrierError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
@@ -185,5 +185,10 @@ export class PostiTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new PostiTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'posti', recordsSteps: true, steps: ['direct', 'refresh'], track: (input, context) => tracker.fetch(input.number, context) };
+  return {
+    id: 'posti', recordsSteps: true, steps: ['direct', 'refresh'],
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
+      () => accepted(() => normalizePostiTrackingNumber(number))),
+  };
 };

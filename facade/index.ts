@@ -164,7 +164,7 @@ export function createTracker(options: TrackerOptions = {}) {
     let carrier = input.carrier || detectCarrierMatch(number).carrier;
     if (typeof carrier !== 'string') throw new TypeError('Invalid carrier');
     carrierDefinition(carrier);
-    if (!input.carrier && detectCarrierMatch(number).confidence !== 'high') {
+    if (!input.carrier && recognitionCandidates(number).length > 0) {
       try {
         const answer = await recognize(number, { signal, budgetMs: Math.min(10_000, ms) });
         if (answer.carrier) carrier = answer.carrier;

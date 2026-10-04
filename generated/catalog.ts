@@ -470,7 +470,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "dhl-ecommerce"
+      "adapter": "dhl-ecommerce",
+      "recognitionRank": 23
     },
     "canaryUrl": "https://www.dhl.com/ch-en/home/tracking.html",
     "trackingUrlTemplate": "https://www.dhl.com/ch-en/home/tracking.html?tracking-id={trackingNumber}&submit=1",
@@ -1975,7 +1976,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/Helsinki",
     "tracking": {
       "mode": "automatic",
-      "adapter": "posti"
+      "adapter": "posti",
+      "recognitionRank": 27
     },
     "canaryUrl": "https://www.posti.fi/en/tracking",
     "trackingUrlTemplate": "https://www.posti.fi/en/tracking/{trackingNumber}",
@@ -1987,7 +1989,14 @@ export const CARRIER_CATALOG = {
         "path": "^/(?:[a-z]{2}/)?tracking/([^/?#]+)(?:/[0-9]+)?/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{2}\\d{9}FI$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
+      }
+    ]
   },
   "correos-express": {
     "displayName": "Correos Express",

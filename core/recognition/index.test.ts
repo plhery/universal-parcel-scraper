@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { detectCarrierMatch } from '../detection/detect.js';
 import { recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from './index.js';
 
 const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: Partial<RecognitionOutcome> = {}): RecognitionOutcome => ({
@@ -33,6 +34,32 @@ describe('recognition candidates', () => {
     expect(recognitionCandidates('000000000000000000000001')).toEqual(expect.arrayContaining([
       { carrier: 'bpost', needsInput: null, preferred: false },
     ]));
+  });
+
+  it('confirms direct postal candidates before the unknown-postal fallback', () => {
+    // Finnish issuance is number evidence for a lookup, not proof of delivery.
+    expect(detectCarrierMatch('CE123456785FI')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    expect(recognitionCandidates('ce 123.456-785 fi')).toEqual([
+      { carrier: 'posti', needsInput: null, preferred: true },
+      { carrier: 'chronopost', needsInput: null, preferred: false },
+    ]);
+    expect(recognitionCandidates('XR123456785TS')).toEqual([
+      { carrier: 'chronopost', needsInput: null, preferred: false },
+    ]);
+    expect(recognitionCandidates('CE123456785FI', { hint: 'chronopost' }).map(({ carrier }) => carrier))
+      .toEqual(['chronopost', 'posti']);
+    expect(recognitionCandidates('CE123456785FI', { skip: (carrier) => carrier === 'posti' }).map(({ carrier }) => carrier))
+      .toEqual(['chronopost']);
+  });
+
+  it('does not infer Posti from a failed postal checksum or probe a known direct postal carrier', () => {
+    expect(recognitionCandidates('CE123456789FI').map(({ carrier }) => carrier)).not.toContain('posti');
+    // Chronopost accepts proprietary aliases with the same shape, which need
+    // not have an S10 checksum. Its lookup still has to confirm the identity.
+    expect(recognitionCandidates('HL123456789JB')).toEqual([
+      { carrier: 'chronopost', needsInput: null, preferred: false },
+    ]);
+    expect(recognitionCandidates('RA123456785CH')).toEqual([]);
   });
 });
 

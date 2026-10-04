@@ -1,60 +1,45 @@
 # DHL eCommerce
 
-DHL's webshop parcel division (formerly DHL Global Mail), tracked through the
-`www.dhl.com/utapi` endpoint the global DHL tracking page calls. Shipments of
-other DHL services are rejected; German DHL Paket is [dhl](../dhl/README.md).
+DHL's webshop parcel division, formerly DHL Global Mail. German DHL Paket is
+[dhl](../dhl/README.md).
 
-## How it works
+## Retrieval
 
-1. `browser`: a local Chromium loads the public tracking page, the site solves
-   its own Akamai challenge and calls `utapi` in that session, and the response
-   to the exact requested `utapi` URL is parsed. Lookups are serialised per
-   instance, and the [browser helper](../../core/transport/browser.ts) runs one
-   local browser per process.
+The `direct` step posts one anonymous lookup to `api.dhlecs.com/webtrack/v4/tracking`,
+the endpoint configured by [DHL Webtrack](https://webtrack.dhlglobalmail.com/).
+It covers the Americas network, including its international parcels. Recognition
+uses only this HTTP lookup so ambiguous numbers can reach DHL eCommerce early.
 
-There is no direct HTTP step: plain requests get an Akamai proof-of-work
-challenge (HTTP 428), and browser clearance doesn't transfer back to Node.
+The `browser` step retains the global tracking page's `www.dhl.com/utapi` lookup
+for shipments missing from Webtrack, histories Webtrack has not published,
+interactive challenges, and regional network or server failures. Webtrack misses
+do not establish that DHL's global network has no shipment. Rate limits,
+malformed replies, cancellation and spent budgets stop the lookup. Browser
+lookups are serialized per instance.
 
-## Notes
+## Parsing
 
-- Exactly one `ecommerce` shipment is accepted, and only from the exact request
-  URL. DHL may echo a customer-confirmation id instead of the queried number,
-  so checking the echoed id would reject good data; the id is never kept.
-- Event timestamps are local wall-clock strings, sometimes without a country
-  code. The zone comes from the event's country code, a locality that is a
-  country code, or a known hub (`HUB_ZONES`); other scans are dropped rather
-  than stamped as UTC, which would reorder the history. All times are converted
-  to UTC because legs cross zones.
-- Stage: wording first, `statusCode` as fallback, except `delivered`, which
-  outranks the wording.
-- Sender drop-off wording ("picked up at parcelshop", "dropped off at") maps to
-  `accepted`, not `ready_for_pickup`: the parcel is entering the network.
-- A delivered event's description becomes "Delivered", because the original
-  line names the signatory.
-- `estimatedTimeOfDelivery` survives delivery in the payload; it is dropped once
-  delivered or returned.
-- A 401/403/419/428 on the page itself becomes `DHLEcommerceSessionError`. The
-  host's observability reports the upstream status for errors with that name,
-  so keep it.
+Webtrack must return one identified package matching the requested number or
+alias. Its `trackedValue` binds an alias to that package, as DHL's own client
+does; the alias can differ from all concrete shipment identifiers. UTAPI accepts
+one `ecommerce` shipment from the exact requested response URL because it can
+return a different customer-confirmation identifier.
 
-## Rejected approaches
-
-- Direct HTTP with cookie replay, or visiting the page first: still HTTP 428.
-- Reproducing the proof-of-work in Node: the challenge was solved but the data
-  request stayed blocked.
-- The shared TRAWL browser service (as in `dhl`): the site has to call its API
-  inside the session that solved the challenge, which only the local Chromium
-  helper captures.
+Timestamps use explicit offsets, the event's country or an identified hub.
+Unresolved Webtrack clocks remain `local_time`; unresolved UTAPI clocks are
+omitted. Converted instants use UTC. The coarse status does not replace a more
+precise latest scan, and delivered descriptions omit signatures. Recipient
+addresses and customer references are excluded.
 
 ## Limitations
 
-- The browser helper only accepts 200/201 API responses and handles 429. An API
-  404/5xx or a parser failure is ignored while waiting and ends as a generic
-  timeout.
-- Scans with an unresolvable timezone are omitted, so the history can be
-  shorter than the portal's.
-- Recipient address and customer references are never read; a test asserts it.
+Webtrack has regional coverage. The global route needs local Chromium because
+UTAPI challenges direct requests. The browser helper waits for successful API
+responses, so an API error can end as a timeout. Sender names and estimates are
+returned only when the chosen source publishes them.
 
 ## Testing
 
-No live test. Fixtures are constructed from the documented `utapi` shape.
+Run `npm run test:carriers:live -- carriers/dhl-ecommerce`. The synthetic HTTP
+miss runs without credentials. Set `DHL_ECOMMERCE_TRACKING_NUMBER` outside the
+repository to check an authorized Webtrack shipment.

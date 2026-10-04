@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { PostiTracker, normalizePostiTrackingNumber, parse } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { PostiTracker, adapter, normalizePostiTrackingNumber, parse } from './adapter.js';
 import { postiEventStage, postiStatus } from './status.js';
 
 const NUMBER = 'CW123456785FR';
@@ -140,5 +141,33 @@ describe('Posti anonymous transport', () => {
     const fetcher = vi.fn<typeof fetch>();
     await expect(new PostiTracker({ fetcher }).fetch('TRACK&admin=1')).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();
+  });
+});
+
+describe('Posti recognition', () => {
+  const makeAdapter = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER,
+    trawl: null, browserExecutablePath: null, env: {} });
+
+  it('recognizes identity-bound public history through the ordinary anonymous flow', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(tokens()).mockResolvedValueOnce(Response.json(fixture()));
+    const signal = new AbortController().signal;
+    await expect(makeAdapter(fetcher).recognize!(NUMBER, { signal, budgetMs: 1_000 }))
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T13:00:00.000Z' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher.mock.calls.every(([, init]) => init?.signal instanceof AbortSignal)).toBe(true);
+  });
+
+  it('keeps clean not-found, wrong identity, and query failure distinct', async () => {
+    const missing = vi.fn<typeof fetch>().mockResolvedValueOnce(tokens())
+      .mockResolvedValueOnce(Response.json({ data: { consumerSearchShipments: { totalHits: 0, hits: [] } } }));
+    await expect(makeAdapter(missing).recognize!(NUMBER)).resolves.toEqual({ known: false });
+    const wrong = vi.fn<typeof fetch>().mockResolvedValueOnce(tokens()).mockResolvedValueOnce(Response.json(fixture()));
+    await expect(makeAdapter(wrong).recognize!('CW000000005FR')).rejects.toMatchObject({ kind: 'schema' });
+    const failed = vi.fn<typeof fetch>().mockResolvedValueOnce(tokens())
+      .mockResolvedValueOnce(Response.json({ errors: [{ message: 'Resolver unavailable' }] }));
+    await expect(makeAdapter(failed).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    const invalid = vi.fn<typeof fetch>();
+    await expect(makeAdapter(invalid).recognize!('TRACK&admin=1')).resolves.toEqual({ known: false });
+    expect(invalid).not.toHaveBeenCalled();
   });
 });

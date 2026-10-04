@@ -2,6 +2,34 @@
   "carrier": "posti",
   "records": [
     {
+      "number": "CP123456785FI",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Invented checksum-valid Finnish-issued S10 number. The issuer makes Posti a recognition candidate; offline detection stays with the unknown postal carrier."
+    },
+    {
+      "number": "CP123456789FI",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "posti"
+        ]
+      },
+      "note": "Invented Finnish-shaped identifier with a failed S10 check digit. It cannot suggest Posti."
+    },
+    {
       "number": "00264300487130023858",
       "role": "shipment",
       "evidence": "open_source_example",
