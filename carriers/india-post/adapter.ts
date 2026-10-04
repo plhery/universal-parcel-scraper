@@ -7,7 +7,7 @@ import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, S
 import { eventPoint, type CarrierEvent, type CarrierResult, type EventPoint } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/index.js';
-import { isoTime } from '../../core/time/index.js';
+import { isoTime, mislabeledLocalTime } from '../../core/time/index.js';
 import {
   cleanScalar,
   decodeText,
@@ -128,6 +128,43 @@ function eventText(raw: string): string {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
+// India Post's code for a flight leaving, in `event_type`. The wording beside
+// it changes: one row read "Aircraft Departure", then "UPLIFT".
+const TAKE_OFF_CODE = 'AircraftTakeOff';
+// The label a take-off's wall clock arrives under; any other offset is kept.
+const UTC_LABEL = /(?:Z|[+-]00:?00)$/i;
+// The zones of the airports a take-off row may name, by IATA code.
+const AIRPORT_ZONES: Readonly<Record<string, string>> = {
+  BOM: 'Asia/Kolkata', DEL: 'Asia/Kolkata', MAA: 'Asia/Kolkata', CCU: 'Asia/Kolkata',
+  BLR: 'Asia/Kolkata', HYD: 'Asia/Kolkata', COK: 'Asia/Kolkata', AMD: 'Asia/Kolkata',
+  FRA: 'Europe/Berlin', MUC: 'Europe/Berlin', LEJ: 'Europe/Berlin', CGN: 'Europe/Berlin',
+  LHR: 'Europe/London', CDG: 'Europe/Paris', AMS: 'Europe/Amsterdam', ZRH: 'Europe/Zurich',
+  VIE: 'Europe/Vienna', BRU: 'Europe/Brussels', LGG: 'Europe/Brussels', FCO: 'Europe/Rome',
+  MXP: 'Europe/Rome', MAD: 'Europe/Madrid', CPH: 'Europe/Copenhagen', ARN: 'Europe/Stockholm',
+  HEL: 'Europe/Helsinki', IST: 'Europe/Istanbul',
+  DXB: 'Asia/Dubai', AUH: 'Asia/Dubai', DOH: 'Asia/Qatar', SIN: 'Asia/Singapore',
+  HKG: 'Asia/Hong_Kong', BKK: 'Asia/Bangkok', NRT: 'Asia/Tokyo', ICN: 'Asia/Seoul',
+  PVG: 'Asia/Shanghai', KUL: 'Asia/Kuala_Lumpur', CMB: 'Asia/Colombo', DAC: 'Asia/Dhaka',
+  KTM: 'Asia/Kathmandu',
+  JFK: 'America/New_York', EWR: 'America/New_York', ORD: 'America/Chicago',
+  LAX: 'America/Los_Angeles', SFO: 'America/Los_Angeles', YYZ: 'America/Toronto',
+  SYD: 'Australia/Sydney', MEL: 'Australia/Melbourne',
+};
+
+/**
+ * The zone a take-off row's clock is kept in. Its `tracked_at` is the
+ * departure airport's wall clock under a UTC label: a take-off was seen
+ * recorded hours before its labelled time. The office names the airport first,
+ * as in "Office - DEL 00000000". Null for every other row, for an airport
+ * outside the table and for a value not labelled UTC: those are read as any
+ * row is.
+ */
+function takeOffZone(providerCode: string, office: string, trackedAt: string): string | null {
+  if (providerCode !== TAKE_OFF_CODE || !UTC_LABEL.test(trackedAt)) return null;
+  const airport = /^Office - ([A-Z]{3})\b/.exec(office)?.[1];
+  return airport ? AIRPORT_ZONES[airport] ?? null : null;
+}
+
 /**
  * The office's point from MySpeedPost's pincode directory. It is looked up by
  * pincode, not by office: "KOLKATA FOREIGN LCAO 900056" comes back as an office
@@ -171,16 +208,19 @@ export function parseIndiaPostTrackingHtml(
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
   events.slice(0, 500).forEach((rawEvent, index) => {
+    const office = clean(rawEvent.office, 120);
+    const providerCode = clean(rawEvent.event_type, 100);
     // tracked_at is ISO; offset-less values are read as Asia/Kolkata, the zone
-    // every India Post office stamps.
-    const time = isoTime(rawEvent.tracked_at, 'Asia/Kolkata', 100);
+    // every India Post office stamps. A take-off is read on its airport's clock.
+    const zone = takeOffZone(providerCode, office, clean(rawEvent.tracked_at, 100));
+    const time = zone
+      ? mislabeledLocalTime(rawEvent.tracked_at, zone, 100)
+      : isoTime(rawEvent.tracked_at, 'Asia/Kolkata', 100);
     const description = eventText(clean(rawEvent.event));
     if (!time || !description) return;
-    const office = clean(rawEvent.office, 120);
     const pincode = /^\d{6}$/.test(clean(rawEvent.pincode, 6))
       ? clean(rawEvent.pincode, 6)
       : '';
-    const providerCode = clean(rawEvent.event_type, 100);
     const point = officePoint(rawEvent, office);
     const identity = JSON.stringify([time.iso, description, office, pincode, providerCode]);
     if (seen.has(identity)) return;

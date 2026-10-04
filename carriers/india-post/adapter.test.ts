@@ -22,6 +22,9 @@ const DELIVERED = JSON.parse(
 const EXPORT_CUSTOMS = JSON.parse(
   readFileSync(new URL('./fixtures/export-customs.json', import.meta.url), 'utf8'),
 ) as { synced_at: string; tracking_events: Array<Record<string, unknown>> };
+const FLIGHT_LEGS = JSON.parse(
+  readFileSync(new URL('./fixtures/flight-legs.json', import.meta.url), 'utf8'),
+) as { synced_at: string; tracking_events: Array<Record<string, unknown>> };
 const CAPABILITIES = (JSON.parse(
   readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
 ) as { capabilities: string[] }).capabilities;
@@ -62,6 +65,10 @@ function trackingHistoryHtml(
       <div tracking-request="${escapeAttribute(request)}"></div>
     </div>
   `;
+}
+
+function takeOff(trackedAt: string, office: string, eventType = 'AircraftTakeOff'): Record<string, unknown> {
+  return { tracked_at: trackedAt, event: 'AIRCRAFT_DEPARTURE', event_type: eventType, office, pincode: '', remarks: '' };
 }
 
 function pageHtml(
@@ -209,6 +216,73 @@ describe('India Post response normalization', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', source_synced_at: '2026-06-20T08:00:00Z' });
     expect(classifyIndiaPostEvent('CustomReturn', 'CUSTOM_RETURN')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(classifyIndiaPostEvent('Item returned from export Customs/Security')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+  });
+
+  it('reads a take-off on its airport\'s clock, whatever its wording, and leaves office rows alone', () => {
+    const result = parseIndiaPostTrackingHtml(
+      trackingHistoryHtml(SAMPLE_NUMBER, FLIGHT_LEGS.tracking_events, FLIGHT_LEGS.synced_at),
+      SAMPLE_NUMBER,
+    );
+    expect(result.events?.map((event) => [event.time, event.description, event.location])).toEqual([
+      // Labelled 20:05Z and 01:40Z: the wall clocks of Paris and Delhi.
+      ['2026-07-11T20:05:00+02:00', 'UPLIFT', 'Office - CDG 00000003'],
+      ['2026-07-11T01:40:00+05:30', 'Aircraft Departure', 'Office - DEL 00000002'],
+      // The host hashes the time string into a stored row: these stay as labelled.
+      ['2026-07-10T16:45:00Z', 'Transferred to Office of Exchange', 'Example Foreign Post Office 110002'],
+      ['2026-07-09T05:40:00Z', 'Item Booked', 'Example GPO 110001'],
+    ]);
+    expect(result.events?.slice(0, 2).map((event) => [event.stage, event.provider_code])).toEqual([
+      ['in_transit', 'AircraftTakeOff'],
+      ['in_transit', 'AircraftTakeOff'],
+    ]);
+    expect(result).toMatchObject({
+      status: 'in_transit',
+      current_stage: 'in_transit',
+      last_status_text: 'UPLIFT',
+      last_update: '2026-07-11T20:05:00+02:00',
+    });
+    // As labelled, the newest take-off is later than the sync that reported it.
+    const synced = Date.parse(FLIGHT_LEGS.synced_at);
+    expect(Date.parse(String(FLIGHT_LEGS.tracking_events.at(-1)?.tracked_at))).toBeGreaterThan(synced);
+    expect(Date.parse(String(result.last_update))).toBeLessThan(synced);
+  });
+
+  it('follows an airport through its clock change and keeps the label where it knows no zone', () => {
+    const times = (events: Array<Record<string, unknown>>) =>
+      parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, events), SAMPLE_NUMBER).events?.map((event) => event.time);
+
+    expect(times([
+      takeOff('2026-03-28T22:10:00.000000Z', 'Office - CDG 00000003'),
+      takeOff('2026-03-29T22:10:00.000000Z', 'Office - CDG 00000003'),
+    ])).toEqual(['2026-03-29T22:10:00+02:00', '2026-03-28T22:10:00+01:00']);
+    // An airport outside the table.
+    expect(times([takeOff('2026-07-11T20:05:00.000000Z', 'Office - GRU 00000004')])).toEqual(['2026-07-11T20:05:00Z']);
+    // A take-off at an office that names no airport, and another code at an airport.
+    expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - 00000001')])).toEqual(['2026-07-11T01:40:00Z']);
+    expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - DEL 00000002', 'Unknown')])).toEqual(['2026-07-11T01:40:00Z']);
+  });
+
+  it('re-reads only a take-off labelled UTC', () => {
+    const times = (trackedAt: string, office: string) =>
+      parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, [takeOff(trackedAt, office)]), SAMPLE_NUMBER)
+        .events?.map((event) => event.time);
+
+    expect(times('2026-07-11T20:05:00+00:00', 'Office - CDG 00000003')).toEqual(['2026-07-11T20:05:00+02:00']);
+    // Another offset is kept, and a value without one is on India's clock, as for any row.
+    expect(times('2026-07-11T07:10:00+05:30', 'Office - DEL 00000002')).toEqual(['2026-07-11T07:10:00+05:30']);
+    expect(times('2026-07-11T20:05:00+02:00', 'Office - CDG 00000003')).toEqual(['2026-07-11T20:05:00+02:00']);
+    expect(times('2026-07-11T20:05:00', 'Office - CDG 00000003')).toEqual(['2026-07-11T20:05:00+05:30']);
+  });
+
+  it('keeps rows newest first once a take-off is back on its own clock', () => {
+    const result = parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, [
+      // 18:05 UTC on Paris's clock: before the 19:30 UTC scan it would outrank as labelled.
+      takeOff('2026-07-11T20:05:00.000000Z', 'Office - CDG 00000003'),
+      { tracked_at: '2026-07-11T19:30:00.000000Z', event: 'Item Received', event_type: 'ItemReceived', office: 'Example Office of Exchange', pincode: '', remarks: '' },
+    ]), SAMPLE_NUMBER);
+
+    expect(result.events?.map((event) => event.time)).toEqual(['2026-07-11T19:30:00Z', '2026-07-11T20:05:00+02:00']);
+    expect(result).toMatchObject({ last_status_text: 'Item Received', last_update: '2026-07-11T19:30:00Z' });
   });
 
   it('produces every capability carrier.json declares', () => {

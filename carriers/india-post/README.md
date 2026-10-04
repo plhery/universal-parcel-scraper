@@ -46,6 +46,12 @@ Outcomes:
   the item back: in transit, not returned to sender.
 - `tracked_at` without an offset is read as `Asia/Kolkata`. `synced_at` is returned as
   `source_synced_at`.
+- A take-off row (`event_type` `AircraftTakeOff`, whose office starts with the airport's code as in
+  `Office - DEL 00000000`) carries the departure airport's wall clock labelled `Z`: a take-off was
+  seen recorded hours before its labelled time. Its digits are read in the airport's zone, from a
+  table of airport codes in the adapter. The row is found by its code because its wording changes.
+  A take-off at an airport outside the table keeps its label, and one whose label is not UTC is
+  read like any other row.
 - IDs and pincodes arrive as numbers or strings, hence `cleanScalar`. A pincode is kept only when it
   is exactly six digits.
 - A row's `pincode_info` is MySpeedPost's directory entry for the pincode, not for the office:
@@ -56,9 +62,9 @@ Outcomes:
 ## Limitations
 
 - No ETA.
-- Only booking, dispatch, customs and delivery wording has been seen live. Failure, return and pickup
-  rules come from prior art ([njs-tracker-scraper](https://github.com/bivu-m/njs-tracker-scraper));
-  new wording lands on `in_transit` until added.
+- Only booking, dispatch, customs, take-off and delivery rows have been seen live. A take-off has no
+  rule and lands on `in_transit`, as new wording does until added. Failure, return and pickup rules
+  come from prior art ([njs-tracker-scraper](https://github.com/bivu-m/njs-tracker-scraper)).
 - Recipient remark, address and contact number are never read; the offline test asserts it.
 
 ## Testing
