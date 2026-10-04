@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -7,7 +7,7 @@ import { classifyBlueDartStatus } from './status.js';
 
 export function normalizeBlueDartNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^\d{11}$/.test(number)) throw new TypeError('Blue Dart requires an eleven-digit waybill');
+  if (!/^\d{11}$/.test(number)) throw new InvalidInputError('Blue Dart', 'Blue Dart requires an eleven-digit waybill');
   return number;
 }
 

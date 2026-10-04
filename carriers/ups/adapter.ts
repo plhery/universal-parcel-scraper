@@ -2,18 +2,19 @@
 import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay } from '../../core/time/index.js';
-import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TrawlClient } from '../../core/transport/index.js';
+import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPS_PROGRESS_STATUS, upsStatus } from './status.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
+const TRAWL_PROVIDER = 'TRAWL while fetching UPS';
 const MAX_BYTES = 10_000_000;
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0';
 const DEFAULT_TIMEOUT_MS = 90_000;
@@ -46,6 +47,17 @@ export class UPSSessionRejected extends ChallengeError {
   }
 }
 
+/**
+ * What one lookup lends each request. A session outlives the lookup that
+ * built it, so it is handed these per request and keeps neither.
+ */
+interface RequestBounds {
+  /** Aborts on the caller's signal or when the lookup budget is spent. */
+  signal: AbortSignal;
+  /** When the lookup budget is spent, on the `performance.now()` clock. */
+  deadline: number;
+}
+
 class UPSHttpSession {
   readonly jar = new CookieJar();
   readonly #fetcher: typeof fetch;
@@ -57,7 +69,7 @@ class UPSHttpSession {
     this.#fetcher = makeFetchCookie(fetcher ?? ((input, init) => fetch(input, init)), this.jar);
   }
 
-  async fetchPage(url: string): Promise<string> {
+  async fetchPage(url: string, bounds: RequestBounds): Promise<string> {
     const result = await this.request(url, {
       headers: {
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -71,11 +83,11 @@ class UPSHttpSession {
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': this.#userAgent,
       },
-    }, 'UPS tracking page');
+    }, 'UPS tracking page', bounds);
     return decodeText(result);
   }
 
-  async fetchStatus(trackingNumber: string): Promise<JsonObject> {
+  async fetchStatus(trackingNumber: string, bounds: RequestBounds): Promise<JsonObject> {
     const token = await this.xsrfToken();
     if (!token) throw new UPSSessionRejected('The UPS session has no XSRF token');
     const clientUrl = upsTrackingUrl(trackingNumber);
@@ -104,7 +116,7 @@ class UPSHttpSession {
         returnToValue: '',
         AssociatedBcdnNumber: null,
       }),
-    }, 'UPS status API');
+    }, 'UPS status API', bounds);
     const payload = parseJsonBytes(bytes, 'UPS');
     if (!isRecord(payload)) throw new UPSSessionRejected('UPS returned an invalid tracking response');
     return payload;
@@ -124,10 +136,11 @@ class UPSHttpSession {
     url: string,
     init: RequestInit,
     description: string,
+    bounds: RequestBounds,
   ): Promise<Uint8Array> {
-    const result = await fetchBounded(url, init, {
+    const result = await fetchBounded(url, { ...init, signal: bounds.signal }, {
       provider: description,
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.max(1, Math.floor(Math.min(this.timeoutMs, bounds.deadline - performance.now()))),
       maxBytes: MAX_BYTES,
       redirect: 'follow',
       fetcher: this.#fetcher,
@@ -351,25 +364,28 @@ export class UPSTracker {
     return this.trawlUrl ? new TrawlClient(this.trawlUrl, this.#fetcher) : null;
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     // One lookup at a time: the cached session's cookies and XSRF token are
     // shared state and must never be refreshed by two lookups at once.
-    return this.#serialize(async () => {
+    return takeTurn(this.#serialize, 'UPS', context, async (left) => {
       const number = trackingNumber.toUpperCase();
       if (!/^1Z[A-Z0-9]{16}$/.test(number)) {
-        throw new SchemaError('UPS', 'UPS tracking numbers must start with 1Z and contain 18 characters');
+        throw new InvalidInputError('UPS', 'UPS tracking numbers must start with 1Z and contain 18 characters');
       }
-      return this.#lookup(number);
+      return this.#lookup(number, left);
     });
   }
 
-  async #lookup(number: string): Promise<CarrierResult> {
+  async #lookup(number: string, context: TrackingContext): Promise<CarrierResult> {
     const trawl = this.#browserService();
     // The direct page, kept so it can still be read when no browser service
     // exists and the structured call was refused.
     const page: { html: string | null } = { html: null };
     return runSteps<CarrierResult>({
-      carrier: 'ups', budgetMs: this.timeoutMs, recorder: this.#recorder,
+      // Without a caller's budget the browser tier leaves the service its own time
+      // and the request the allowance to bring the answer back.
+      carrier: 'ups', budgetMs: context.budgetMs ?? this.timeoutMs + (trawl ? TRAWL_TRANSPORT_ALLOWANCE_MS : 0), signal: context.signal,
+      recorder: this.#recorder,
     }, [
       {
         id: 'direct',
@@ -378,10 +394,13 @@ export class UPSTracker {
         // every session a browser did not establish, so with a browser the
         // structured answer is read from the page's own call instead.
         enabled: trawl === null,
-        run: async () => {
+        run: async ({ remainingMs, signal }) => {
           try {
-            return await this.#directResult(number, page);
+            return await this.#directResult(number, page, { signal, deadline: performance.now() + remainingMs });
           } catch (error) {
+            // A caller that cancelled gets its own reason back: no answer from
+            // the page already fetched, no challenge report.
+            context.signal?.throwIfAborted();
             if (page.html !== null) {
               try {
                 return this.#renderedResult(page.html, number);
@@ -400,22 +419,24 @@ export class UPSTracker {
       {
         id: 'trawl',
         enabled: trawl !== null,
-        run: () => this.#trawlResult(trawl!, number),
+        run: ({ remainingMs, signal }) => this.#trawlResult(
+          trawl!, number, Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal,
+        ),
       },
     ]);
   }
 
   /** The cached session, then a fresh one; both talk plain HTTP to the status API. */
-  async #directResult(number: string, page: { html: string | null }): Promise<CarrierResult> {
+  async #directResult(number: string, page: { html: string | null }, bounds: RequestBounds): Promise<CarrierResult> {
     const cached = this.#session;
     if (cached) {
       try {
-        return await this.#apiResult(number, cached);
+        return await this.#apiResult(number, cached, bounds);
       } catch (error) {
         if (!(error instanceof UPSSessionRejected)) throw error;
         try {
-          await cached.fetchPage(upsTrackingUrl(number));
-          return await this.#apiResult(number, cached);
+          await cached.fetchPage(upsTrackingUrl(number), bounds);
+          return await this.#apiResult(number, cached, bounds);
         } catch (refreshError) {
           if (!(refreshError instanceof UPSSessionRejected)) throw refreshError;
           this.#session = null;
@@ -423,9 +444,9 @@ export class UPSTracker {
       }
     }
     const direct = new UPSHttpSession(this.directTimeoutMs, this.#fetcher);
-    page.html = await direct.fetchPage(upsTrackingUrl(number));
+    page.html = await direct.fetchPage(upsTrackingUrl(number), bounds);
     if (!await direct.xsrfToken()) throw new UPSSessionRejected('UPS challenged the direct tracking session');
-    const result = await this.#apiResult(number, direct);
+    const result = await this.#apiResult(number, direct, bounds);
     this.#session = direct;
     return result;
   }
@@ -436,19 +457,20 @@ export class UPSTracker {
    * over plain HTTP: Akamai accepts the call only from the session it
    * validated in the page. The page the browser rendered is the last resort.
    */
-  async #trawlResult(trawl: TrawlClient, number: string): Promise<CarrierResult> {
+  async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     const page = await trawl.scrape({
       url: upsTrackingUrl(number),
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: this.timeoutMs,
+      maxTimeout: timeoutMs,
       captureResponses: [STATUS_API],
       settleTimeout: SETTLE_TIMEOUT_MS,
     }, {
-      provider: 'TRAWL while fetching UPS',
-      timeoutMs: this.timeoutMs,
+      provider: TRAWL_PROVIDER,
+      timeoutMs,
       maxBytes: MAX_BYTES,
       fetcher: this.#fetcher,
+      signal,
     });
     let captureError: unknown;
     // Newest first: a later reply is the page's final answer.
@@ -469,8 +491,8 @@ export class UPSTracker {
     }
   }
 
-  async #apiResult(number: string, session: UPSHttpSession): Promise<CarrierResult> {
-    return this.#structuredResult(number, await session.fetchStatus(number));
+  async #apiResult(number: string, session: UPSHttpSession, bounds: RequestBounds): Promise<CarrierResult> {
+    return this.#structuredResult(number, await session.fetchStatus(number, bounds));
   }
 
   #structuredResult(number: string, payload: unknown): CarrierResult {
@@ -499,6 +521,6 @@ export const adapter: AdapterFactory = (environment) => {
     // `direct` is plain HTTP and runs only without a browser service. `trawl`
     // is the browser, which also reads the page's own status call.
     steps: ['direct', 'trawl'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

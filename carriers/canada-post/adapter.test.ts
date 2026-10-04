@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { adapter, CanadaPostTracker, canadaPostTrackingUrl, parseCanadaPostTrackingResponse } from './adapter.js';
 import { canadaPostLookupKind, normalizeCanadaPostNumber, resolveCanadaPostPin } from './parser.js';
 import { canadaPostPackageStage, canadaPostStage, canadaPostStatus } from './status.js';
-import { BudgetExceededError, carrierErrorKind, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { BudgetExceededError, carrierErrorKind, IndeterminateError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
@@ -284,7 +284,7 @@ describe('Canada Post bounded native lookup', () => {
   it('respects pre-aborted caller signals and rejects invalid numbers before transport', async () => {
     const fetcher = vi.fn<typeof fetch>(); const controller = new AbortController(); controller.abort();
     await expect(new CanadaPostTracker({ fetcher }).fetch(NUMBER, { signal: controller.signal })).rejects.toBeTruthy();
-    await expect(new CanadaPostTracker({ fetcher }).fetch('RR000000019CA')).rejects.toBeInstanceOf(TypeError);
+    await expect(new CanadaPostTracker({ fetcher }).fetch('RR000000019CA')).rejects.toBeInstanceOf(InvalidInputError);
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeCanadaPostNumber('rr 000000005 ca')).toBe('RR000000005CA');
     expect(canadaPostLookupKind(NUMBER)).toBe('pin'); expect(canadaPostLookupKind(NOTICE)).toBe('dnc');

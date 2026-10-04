@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { HermesGermanyTracker, parseHermesGermanyResponse } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, HermesGermanyTracker, parseHermesGermanyResponse } from './adapter.js';
 import { STATUSES } from './status.js';
 
 const NUMBER = 'H1234567890123456789';
@@ -100,5 +101,13 @@ describe('Hermes Germany', () => {
     await expect(new HermesGermanyTracker().fetch(NUMBER)).rejects.toMatchObject({
       status, name: status === 404 ? 'HermesGermanyTrackingError' : 'UpstreamHttpError',
     });
+  });
+
+  it('answers a number Hermes does not issue without a request', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    await expect(new HermesGermanyTracker({ fetcher }).fetch('1234')).rejects.toMatchObject({ kind: 'invalid_input' });
+    await expect(adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER }).recognize!('1234'))
+      .resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 });

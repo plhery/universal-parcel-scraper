@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -8,7 +8,7 @@ import { classifyCttExpressStatus } from './status.js';
 
 export function normalizeCttExpressNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^00\d{20}$/.test(number)) throw new TypeError('CTT Express requires a Spanish shipment tracking number');
+  if (!/^00\d{20}$/.test(number)) throw new InvalidInputError('CTT Express', 'CTT Express requires a Spanish shipment tracking number');
   return number;
 }
 

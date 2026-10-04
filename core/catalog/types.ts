@@ -11,7 +11,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionConfidence } from '../detection/types.js';
 
 export type CarrierTrackingMode = 'automatic' | 'link-only';
-export type CarrierInputField = 'trackingUrl' | 'dpdPostcode';
+export type CarrierInputField = 'trackingUrl' | 'postcode';
 export type CarrierInputValidator =
   | 'planzerSharedUrl'
   | 'dachserCapabilityUrl'
@@ -116,34 +116,4 @@ export interface CarrierDefinition {
   trackingUrlTemplate?: string;
   linkRules: readonly RawTrackingLinkRule[];
   detectionRules: readonly DetectionRule[];
-}
-
-export interface ParcelTrackingLink {
-  carrier: CarrierInfo;
-  name: string;
-  url: string;
-  active: boolean;
-  ready: boolean;
-  role: 'active' | 'waiting' | 'history';
-}
-
-/**
- * The parcel fields the tracking-link helpers read. Structurally a subset of
- * the application's `Parcel`, restated here so the package stays independent.
- */
-export interface TrackedParcel {
-  carrier: CarrierId;
-  trackingNumber: string;
-  trackingUrl?: string;
-  /** Carrier currently supplying automatic updates for a multi-carrier journey. */
-  trackingSource?: CarrierId;
-  trackingProvider?: string;
-  /** The carrier answered the check the provider's result came from; links stay with the carrier. */
-  carrierAnswered?: boolean;
-  activeTrackingNumber?: string;
-  /** Whether Swiss Post has announced a Swiss-issued inbound shipment. */
-  swissPostReady?: boolean;
-  originalCarrier?: CarrierId;
-  originalTrackingNumber?: string;
-  originalTrackingUrl?: string;
 }

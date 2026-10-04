@@ -13,11 +13,11 @@ import {
   carrierRequirements,
   carrierTimezone,
   localizedCarrierUrl,
-  parcelTrackingLinks,
   requirementSatisfied,
   tracksAutomatically,
   trackingNumberForLink,
 } from './index.js';
+import { parcelTrackingLinks } from './parcel.js';
 
 /**
  * Per-carrier expectations stay in src/lib/carriers.test.ts. What this file
@@ -71,12 +71,12 @@ describe('the catalog lookups the server reads', () => {
     // A 26-digit Mondial Relay label barcode carries its own check digits.
     expect(activeRequirements('mondial-relay', '12123456780101006623123454')).toEqual([]);
     expect(activeRequirements('mondial-relay', '12345678').map((item) => item.validator)).toEqual(['francePostcode']);
-    expect(carrierRequirements('mondial-relay', '12345678').map((item) => item.field)).toEqual(['dpdPostcode']);
+    expect(carrierRequirements('mondial-relay', '12345678').map((item) => item.field)).toEqual(['postcode']);
     expect(activeRequirements('swiss-post', 'RA123456785CH')).toEqual([]);
   });
 
   it('marks only the DPD postcode as optional', () => {
-    expect(activeRequirements('dpd', '06080000000001')).toMatchObject([{ field: 'dpdPostcode', optional: true }]);
+    expect(activeRequirements('dpd', '06080000000001')).toMatchObject([{ field: 'postcode', optional: true }]);
     for (const [carrier, number] of [
       ['gls-ch', '993990103198'],
       ['gls-de', '123456789018'],

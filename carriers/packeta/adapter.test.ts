@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizePacketaTrackingNumber,
   packetaTrackingUrl,
@@ -38,7 +38,7 @@ describe('Packeta tracking normalization', () => {
     expect(normalizePacketaTrackingNumber('z1234567890')).toBe(TRACKING_NUMBER);
     expect(normalizePacketaTrackingNumber('Z1234567890')).toBe(TRACKING_NUMBER);
     for (const raw of ['1234567890', 'Z123456789', 'Z12345678901', 'ZA234567890', '']) {
-      expect(() => normalizePacketaTrackingNumber(raw)).toThrow(TypeError);
+      expect(() => normalizePacketaTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(packetaTrackingUrl(TRACKING_NUMBER)).toBe('https://tracking.packeta.com/en/Z1234567890');
   });
@@ -194,6 +194,6 @@ describe('PacketaTracker fetch', () => {
       .rejects.toThrow(TypeError);
     expect(() => new PacketaTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new PacketaTracker({ timeoutMs: 1_000 }).fetch('nope'))
-      .rejects.toThrow(TypeError);
+      .rejects.toThrow(InvalidInputError);
   });
 });

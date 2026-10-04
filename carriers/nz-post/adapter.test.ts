@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { adapter, NzPostTracker } from './adapter.js';
 import { normalizeNzPostNumber, parseNzPost } from './parser.js';
 import { classifyNzPostStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '00000000000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -125,7 +126,7 @@ describe('NZ Post bounded anonymous transport', () => {
   it('rejects invalid inputs before I/O and bounds response bytes and cancellation', async () => {
     const fetcher = vi.fn<typeof fetch>();
     for (const number of ['123', 'RR000000006NZ', `${NUMBER}&private=value`]) {
-      expect(() => new NzPostTracker({ fetcher }).fetch(number)).toThrow(TypeError);
+      expect(() => new NzPostTracker({ fetcher }).fetch(number)).toThrow(InvalidInputError);
     }
     await expect(new NzPostTracker({ fetcher }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();

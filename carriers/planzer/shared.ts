@@ -15,10 +15,11 @@ export { validatePlanzerSharedUrl } from '../../core/catalog/urls.js';
  * timestamp.
  */
 import { load } from 'cheerio';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { isPlanzerSharedTrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import {
   PLANZER_ROUTE_STAGES,
   PLANZER_ROUTE_STATUS,
@@ -131,23 +132,34 @@ export function parsePlanzerTrackingHtml(html: string, trackingNumber: string): 
 export class PlanzerSharedTracker {
   private readonly fetcher: typeof fetch | undefined;
   readonly timeoutMs: number;
+  private readonly userAgent: string;
 
-  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {
+  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {
     this.fetcher = options.fetcher;
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string, trackingUrl: string): Promise<CarrierResult> {
-    const url = validatePlanzerSharedUrl(trackingUrl, trackingNumber);
+  async fetch(trackingNumber: string, trackingUrl: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    let url: string;
+    try {
+      url = validatePlanzerSharedUrl(trackingUrl, trackingNumber);
+    } catch (error) {
+      // A link that is not this shipment's is the caller's credential, rejected before any request.
+      if (error instanceof TypeError) throw new InvalidInputError(PROVIDER, error.message, { cause: error });
+      throw error;
+    }
+    const budget = lookupBudget(context, this.timeoutMs);
     const { bytes } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'de-CH,de;q=0.9,en;q=0.8',
-        'User-Agent': 'SwissDeliveryTracker/1.0',
+        'User-Agent': this.userAgent,
       },
     }, {
       provider: UPSTREAM,
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       fetcher: this.fetcher,
     });
     return parsePlanzerTrackingHtml(decodeText(bytes), trackingNumber);

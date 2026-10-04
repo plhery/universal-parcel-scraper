@@ -201,7 +201,7 @@ describe('Yunda anonymous retrieval', () => {
 
   it.each(['123', '7700000000001', '7600000000001', '0000000000001,OTHER'])('rejects unsupported number %s before I/O', async number => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new YundaTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new YundaTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

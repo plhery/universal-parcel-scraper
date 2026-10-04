@@ -95,7 +95,7 @@ describe('Korea Post retrieval', () => {
 
   it('rejects domestic inputs before I/O, preserves cancellation and caps response size', async () => {
     const unused = vi.fn<typeof fetch>();
-    await expect(new KoreaPostTracker({ fetcher: unused }).fetch('6000000000000')).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new KoreaPostTracker({ fetcher: unused }).fetch('6000000000000')).rejects.toMatchObject({ kind: 'invalid_input' });
     await expect(new KoreaPostTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(unused).not.toHaveBeenCalled();
     const huge = vi.fn<typeof fetch>().mockResolvedValue(new Response('x'.repeat(1_000_001)));

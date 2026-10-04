@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { PurolatorTracker } from './adapter.js';
 import { normalizePurolatorNumber, parsePurolator } from './parser.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '100000000001';
 const OTHER = '100000000002';
@@ -117,7 +118,7 @@ describe('Purolator direct tracking', () => {
     expect(headers.has('Authorization')).toBe(false);
     expect(headers.has('Cookie')).toBe(false);
     expect(normalizePurolatorNumber('100 000 000.001')).toBe(NUMBER);
-    for (const invalid of ['123', 'BYS000000000', `${NUMBER}?tracking=other`]) expect(() => normalizePurolatorNumber(invalid)).toThrow(TypeError);
+    for (const invalid of ['123', 'BYS000000000', `${NUMBER}?tracking=other`]) expect(() => normalizePurolatorNumber(invalid)).toThrow(InvalidInputError);
   });
 
   it('classifies explicit AWS challenge replies, generic missing resources, malformed JSON, throttling and outages separately', async () => {

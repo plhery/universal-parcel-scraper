@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { chromium, type Browser } from 'playwright-core';
-import { parcelTrackingLinks } from '../core/catalog/index.js';
+import { parcelTrackingLinks } from '../core/catalog/parcel.js';
 import { trackingLinkCases } from './trackingLinkCases.js';
 import { trackingPageVerdict } from './trackingLinkProbe.js';
 

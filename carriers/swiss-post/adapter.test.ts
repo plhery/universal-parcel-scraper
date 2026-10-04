@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { LookupBudget } from '../../core/adapter/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
 import type { JsonObject } from '../../core/types.js';
 import { parseSwissPostShipment, SwissPostTracker } from './adapter.js';
@@ -115,6 +116,50 @@ describe('Swiss Post projection', () => {
       'private@example.test',
       'private-summary-id',
     ]) expect(serialized).not.toContain(privateValue);
+  });
+});
+
+describe('Swiss Post translation table', () => {
+  it('is requested again after a lookup cancelled while it loaded', async () => {
+    const { shipment, events, translations } = outForDelivery();
+    const controller = new AbortController();
+    let tableRequests = 0;
+    const fetcher: typeof fetch = async (input, init) => {
+      const url = String(input);
+      if (url.endsWith('/user')) {
+        return new Response(JSON.stringify({ userIdentifier: 'unit-test-user' }), { headers: { 'x-csrf-token': 'unit-test-csrf' } });
+      }
+      if (url.includes('/history?')) return new Response(JSON.stringify({ hash: 'unit-test-hash' }));
+      if (url.includes('/history/not-included/')) return new Response(JSON.stringify([shipment]));
+      if (url.endsWith('/events')) return new Response(JSON.stringify(events));
+      tableRequests += 1;
+      if (tableRequests > 1) return new Response(JSON.stringify({ 'shipment-text--': translations }));
+      const signal = init!.signal!;
+      return new Promise<Response>((_, reject) => {
+        signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+        controller.abort(new Error('caller cancelled'));
+      });
+    };
+    const tracker = new SwissPostTracker({ fetcher });
+
+    await expect(tracker.fetch('993412345612345678', { signal: controller.signal })).rejects.toThrow('unreachable');
+    const result = await tracker.fetch('993412345612345678');
+
+    expect(tableRequests).toBe(2);
+    expect(result.events?.[1]?.description).toBe('Shipment is being forwarded');
+  });
+
+  it('is requested again after a lookup whose budget ran out while it loaded', async () => {
+    const { translations } = outForDelivery();
+    const fetcher = vi.fn<typeof fetch>()
+      .mockRejectedValueOnce(new DOMException('The operation timed out', 'TimeoutError'))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ 'shipment-text--': translations })));
+    const tracker = new SwissPostTracker();
+    // The request's own timer fired just ahead of the budget's signal.
+    const spent: LookupBudget = { signal: new AbortController().signal, budgetMs: 40, deadline: 0, remainingMs: () => 3 };
+
+    await expect(tracker.loadTranslations(fetcher, spent)).rejects.toThrow('unreachable');
+    await expect(tracker.loadTranslations(fetcher)).resolves.toEqual(translations);
   });
 });
 

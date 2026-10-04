@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { CARRIER_CATALOG } from '../generated/catalog.js';
-import { parcelTrackingLinks } from '../core/catalog/index.js';
+import { parcelTrackingLinks } from '../core/catalog/parcel.js';
 import type { CarrierId } from '../generated/catalog.js';
 import { trackingLinkCases, uncheckedTrackingLinks } from './trackingLinkCases.js';
 

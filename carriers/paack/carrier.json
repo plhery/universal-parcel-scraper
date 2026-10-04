@@ -22,7 +22,7 @@
     "adapter": "paack",
     "requirements": [
       {
-        "field": "dpdPostcode",
+        "field": "postcode",
         "validator": "paackPostcode",
         "label": "Delivery postcode",
         "type": "text",

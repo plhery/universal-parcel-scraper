@@ -1,5 +1,5 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -14,7 +14,7 @@ const ZONE = 'Asia/Shanghai';
 
 export function normalizeYtoNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!NUMBER.test(number)) throw new InputRequiredError(PROVIDER, 'number', 'YTO requires a domestic waybill number');
+  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'YTO requires a domestic waybill number');
   return number;
 }
 

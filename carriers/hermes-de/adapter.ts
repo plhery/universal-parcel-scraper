@@ -1,9 +1,9 @@
 
 import { DateTime } from 'luxon';
-import { recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
-import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { hermesGermanyMilestone, IGNORED_BOOKING_STATUS, type Milestone } from './status.js';
 
@@ -20,6 +20,7 @@ export interface HermesGermanyOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export { STATUSES } from './status.js';
@@ -47,8 +48,7 @@ export class HermesGermanyTrackingError extends NotFoundError {
 export function normalizeHermesGermanyNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^(?=.*\d)[A-Z0-9]{8,20}$/.test(value)) {
-    throw new InputRequiredError(CARRIER, 'an 8-to-20-character tracking number',
-      'Hermes Germany requires an 8-to-20-character tracking number');
+    throw new InvalidInputError(CARRIER, 'Hermes Germany requires an 8-to-20-character tracking number');
   }
   return value;
 }
@@ -134,28 +134,32 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
 export class HermesGermanyTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: number | HermesGermanyOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher } = typeof options === 'number'
-      ? { timeoutMs: options, fetcher: undefined }
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher, userAgent } = typeof options === 'number'
+      ? { timeoutMs: options, fetcher: undefined, userAgent: undefined }
       : options;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new TypeError('Hermes Germany timeout must be positive');
     this.timeoutMs = timeoutMs;
     this.#fetcher = fetcher;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeHermesGermanyNumber(trackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(`${API}${encodeURIComponent(number)}`, {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'X-Language': 'de',
         Referer: 'https://www.myhermes.de/',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: PROVIDER,
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: 750_000,
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
@@ -167,11 +171,11 @@ export class HermesGermanyTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new HermesGermanyTracker({ fetcher: environment.fetcher });
+  const tracker = new HermesGermanyTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'hermes-de',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
-    recognize: (number) => recognizeFromLookup(() => tracker.fetch(number)),
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context)),
   };
 };

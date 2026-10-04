@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -10,7 +10,7 @@ import { classifyNzPostStatus } from './status.js';
 export function normalizeNzPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/\s/g, '');
   if (!/^\d{20}$/.test(number) && !isValidS10TrackingNumber(number)) {
-    throw new TypeError('NZ Post requires a domestic parcel barcode or valid postal tracking number');
+    throw new InvalidInputError('nz-post', 'NZ Post requires a domestic parcel barcode or valid postal tracking number');
   }
   return number;
 }

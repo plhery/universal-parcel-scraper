@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -14,6 +14,11 @@ import { FALLBACK_EVENT_LABELS, STAGE_STATUS, STATUS_MAP, swissPostEventStage } 
 const API_BASE = 'https://service.post.ch/ekp-web/api';
 const TRANSLATIONS_URL = 'https://service.post.ch/ekp-web/core/rest/translations/en/shipment-text-messages';
 const PROVIDER = 'Swiss Post';
+const REQUEST_TIMEOUT_MS = 10_000;
+/** The user, search, result, event and translation calls, each at its own bound. */
+const DEFAULT_BUDGET_MS = 5 * REQUEST_TIMEOUT_MS;
+/** A request's own timer can fire a few milliseconds before the budget's clock runs out. */
+const BUDGET_SLACK_MS = 5;
 const HEADERS = {
   'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/121.0.0.0 Safari/537.36',
   Accept: 'application/json, text/plain, */*',
@@ -33,6 +38,11 @@ export interface SwissPostOptions {
  */
 function text(value: unknown, limit = 500): string {
   return String(value ?? '').trim().slice(0, limit);
+}
+
+/** Whether the lookup was cancelled or has spent its budget, rather than a request failing on its own. */
+function ended(budget: LookupBudget): boolean {
+  return budget.signal.aborted || budget.remainingMs() <= BUDGET_SLACK_MS;
 }
 
 function comparableShipmentNumber(value: unknown): string {
@@ -206,39 +216,46 @@ export class SwissPostTracker {
     fetcher: typeof fetch,
     url: string,
     init: RequestInit = {},
+    budget?: LookupBudget,
   ): Promise<unknown> {
-    const { bytes } = await fetchBounded(url, init, {
+    const { bytes } = await fetchBounded(url, budget ? { ...init, signal: budget.signal } : init, {
       provider: 'Swiss Post tracking',
-      timeoutMs: 10_000,
+      timeoutMs: Math.min(REQUEST_TIMEOUT_MS, budget?.remainingMs() ?? REQUEST_TIMEOUT_MS),
       fetcher,
     });
     return parseJsonBytes(bytes, PROVIDER);
   }
 
   /** Cached for the process: the table is large, static, and shared by every lookup. */
-  async loadTranslations(fetcher: typeof fetch): Promise<Record<string, string>> {
+  async loadTranslations(fetcher: typeof fetch, budget?: LookupBudget): Promise<Record<string, string>> {
     if (this.#translations) return this.#translations;
     if (this.#translationAttempted) return {};
     this.#translationAttempted = true;
     try {
-      const payload = await this.readJson(fetcher, TRANSLATIONS_URL, { headers: HEADERS });
+      const payload = await this.readJson(fetcher, TRANSLATIONS_URL, { headers: HEADERS }, budget);
       const raw = isRecord(payload) && isRecord(payload['shipment-text--'])
         ? payload['shipment-text--']
         : {};
       this.#translations = Object.fromEntries(
         Object.entries(raw).filter((entry): entry is [string, string] => typeof entry[1] === 'string'),
       );
-    } catch {
+    } catch (error) {
+      // A lookup that ended says nothing about the table: the next one asks again.
+      if (budget && ended(budget)) {
+        this.#translationAttempted = false;
+        throw error;
+      }
       return {};
     }
     return this.#translations;
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    const budget = lookupBudget(context, DEFAULT_BUDGET_MS);
     const fetcher = makeFetchCookie(this.#fetcher ?? fetch, new CookieJar());
-    const userResult = await fetchBounded(`${API_BASE}/user`, { headers: HEADERS }, {
+    const userResult = await fetchBounded(`${API_BASE}/user`, { headers: HEADERS, signal: budget.signal }, {
       provider: 'Swiss Post tracking',
-      timeoutMs: 10_000,
+      timeoutMs: Math.min(REQUEST_TIMEOUT_MS, budget.remainingMs()),
       fetcher,
     });
     const userPayload = parseJsonBytes(userResult.bytes, PROVIDER);
@@ -252,13 +269,14 @@ export class SwissPostTracker {
       method: 'POST',
       headers: { ...headers, 'Content-Type': 'application/json' },
       body: JSON.stringify({ searchQuery: trackingNumber }),
-    });
+    }, budget);
     const hash = isRecord(historyPayload) ? text(historyPayload.hash) : '';
     if (!hash) throw new SchemaError(PROVIDER, 'Swiss Post did not return a shipment search identifier');
     const items = await this.readJson(
       fetcher,
       `${API_BASE}/history/not-included/${encodeURIComponent(hash)}?${query}`,
       { headers },
+      budget,
     );
     if (!Array.isArray(items)) {
       throw new SchemaError(PROVIDER, 'Swiss Post returned an invalid shipment response');
@@ -287,13 +305,15 @@ export class SwissPostTracker {
           fetcher,
           `${API_BASE}/shipment/id/${encodeURIComponent(identity)}/events`,
           { headers },
+          budget,
         );
         if (Array.isArray(payload)) events = payload;
-      } catch {
+      } catch (error) {
         // A shipment summary is still useful when the optional event call fails.
+        if (ended(budget)) throw error;
       }
     }
-    const translations = events.length > 0 ? await this.loadTranslations(fetcher) : {};
+    const translations = events.length > 0 ? await this.loadTranslations(fetcher, budget) : {};
     return parseSwissPostShipment(item, events, translations);
   }
 }
@@ -303,6 +323,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'swiss-post',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

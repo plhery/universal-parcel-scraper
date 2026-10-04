@@ -2,7 +2,7 @@
 import { load } from 'cheerio';
 import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, IndeterminateError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -17,13 +17,13 @@ const EXPRESS_ENDPOINT = 'https://www.tnt.com/api/v3/shipment';
 
 export function normalizeTntFranceNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^\d{16}$/.test(number)) throw new InputRequiredError(PROVIDER, 'number', 'TNT France direct tracking requires a 16-digit national consignment');
+  if (!/^\d{16}$/.test(number)) throw new InvalidInputError(PROVIDER, 'TNT France direct tracking requires a 16-digit national consignment');
   return number;
 }
 
 export function normalizeTntExpressNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^\d{9}$/.test(number)) throw new InputRequiredError(EXPRESS_PROVIDER, 'number', 'TNT direct tracking requires a 9-digit consignment or a 16-digit TNT France consignment');
+  if (!/^\d{9}$/.test(number)) throw new InvalidInputError(EXPRESS_PROVIDER, 'TNT direct tracking requires a 9-digit consignment or a 16-digit TNT France consignment');
   return number;
 }
 

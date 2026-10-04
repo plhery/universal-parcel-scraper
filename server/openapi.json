@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Universal Parcel Scraper",
-    "version": "0.1.0"
+    "version": "0.3.0"
   },
   "paths": {
     "/health": {
@@ -18,18 +18,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Invalid or required input"
-          },
-          "401": {
-            "description": "Bearer token required"
-          },
-          "429": {
-            "description": "Rate limit or concurrency reached"
-          },
-          "502": {
-            "description": "No enabled upstream answered"
           }
         },
         "security": []
@@ -49,17 +37,33 @@
               }
             }
           },
-          "400": {
-            "description": "Invalid or required input"
-          },
           "401": {
-            "description": "Bearer token required"
+            "description": "Bearer token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
-            "description": "Rate limit or concurrency reached"
-          },
-          "502": {
-            "description": "No enabled upstream answered"
+            "description": "Rate limit or concurrency reached, or the upstream is rate limiting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before another request can succeed"
+              }
+            }
           }
         },
         "security": [
@@ -85,16 +89,72 @@
             }
           },
           "400": {
-            "description": "Invalid or required input"
+            "description": "Invalid or required input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Bearer token required"
+            "description": "Bearer token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "The route accepts POST only",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body is too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
-            "description": "Rate limit or concurrency reached"
-          },
-          "502": {
-            "description": "No enabled upstream answered"
+            "description": "Rate limit or concurrency reached, or the upstream is rate limiting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before another request can succeed"
+              }
+            }
           }
         },
         "requestBody": {
@@ -140,16 +200,82 @@
             }
           },
           "400": {
-            "description": "Invalid or required input"
+            "description": "Invalid or required input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Bearer token required"
+            "description": "Bearer token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "The route accepts POST only",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body is too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
-            "description": "Rate limit or concurrency reached"
+            "description": "Rate limit or concurrency reached, or the upstream is rate limiting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before another request can succeed"
+              }
+            }
           },
           "502": {
-            "description": "No enabled upstream answered"
+            "description": "No enabled source answered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -199,16 +325,108 @@
             }
           },
           "400": {
-            "description": "Invalid or required input"
+            "description": "Invalid or required input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Bearer token required"
+            "description": "Bearer token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No enabled source knows the parcel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds until the server asks the upstream again, or longer when the upstream asked for more"
+              }
+            }
+          },
+          "405": {
+            "description": "The route accepts POST only",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body is too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not application/json",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
-            "description": "Rate limit or concurrency reached"
+            "description": "Rate limit or concurrency reached, or the upstream is rate limiting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds to wait before repeating the request. After a failed lookup: until the server asks the upstream again, or longer when the upstream asked for more"
+              }
+            }
           },
           "502": {
-            "description": "No enabled upstream answered"
+            "description": "No enabled source answered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds until the server asks the upstream again, or longer when the upstream asked for more"
+              }
+            }
           }
         },
         "requestBody": {
@@ -217,6 +435,62 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ParcelInput"
+              }
+            }
+          }
+        },
+        "security": [
+          {},
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "operationId": "openapi",
+        "responses": {
+          "200": {
+            "description": "This document",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "openapi",
+                    "info",
+                    "paths"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Bearer token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit reached",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before another request can succeed"
               }
             }
           }
@@ -393,23 +667,7 @@
           "attempts": {
             "type": "array",
             "items": {
-              "type": "object",
-              "required": [
-                "source",
-                "kind",
-                "durationMs"
-              ],
-              "properties": {
-                "source": {
-                  "type": "string"
-                },
-                "kind": {
-                  "type": "string"
-                },
-                "durationMs": {
-                  "type": "integer"
-                }
-              }
+              "$ref": "#/components/schemas/Attempt"
             }
           },
           "handoff": {
@@ -481,6 +739,95 @@
           }
         },
         "additionalProperties": true
+      },
+      "Attempt": {
+        "type": "object",
+        "required": [
+          "source",
+          "kind",
+          "durationMs"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "not_found",
+              "indeterminate",
+              "challenge",
+              "rate_limited",
+              "maintenance",
+              "schema",
+              "input_required",
+              "invalid_input",
+              "transport",
+              "budget"
+            ]
+          },
+          "durationMs": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "FailureHint": {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "not_found",
+              "indeterminate",
+              "challenge",
+              "rate_limited",
+              "maintenance",
+              "schema",
+              "input_required",
+              "invalid_input",
+              "transport",
+              "budget"
+            ],
+            "description": "What failed; `invalid_input` and `not_found` are answers, not outages."
+          },
+          "retryAfterMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Milliseconds to wait before repeating the request; what `Retry-After` says in seconds."
+          }
+        },
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string",
+            "description": "The input a carrier still needs."
+          },
+          "attempts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attempt"
+            }
+          },
+          "hint": {
+            "$ref": "#/components/schemas/FailureHint"
+          }
+        },
+        "additionalProperties": false
       }
     }
   }

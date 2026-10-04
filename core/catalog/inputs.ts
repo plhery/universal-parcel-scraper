@@ -22,26 +22,26 @@ export function normalizeCarrierInputs(
   carrierId: string,
   trackingNumber: string,
   trackingUrl: string,
-  dpdPostcode: string,
-): { trackingUrl: string | null; dpdPostcode: string | null } {
-  const supplied: Record<'trackingUrl' | 'dpdPostcode', string | null> = {
+  postcode: string,
+): { trackingUrl: string | null; postcode: string | null } {
+  const supplied: Record<'trackingUrl' | 'postcode', string | null> = {
     trackingUrl: trackingUrl.trim() || null,
-    dpdPostcode: dpdPostcode.trim() || null,
+    postcode: postcode.trim() || null,
   };
   const mondialBarcode = carrierId === 'mondial-relay' && /^\d{26}$/.test(trackingNumber);
   if (mondialBarcode && !isValidMondialRelayBarcode(trackingNumber)) {
     throw new TypeError('Invalid Mondial Relay barcode');
   }
-  const requirements = new Map<'trackingUrl' | 'dpdPostcode', CarrierRequirementRule>(
+  const requirements = new Map<'trackingUrl' | 'postcode', CarrierRequirementRule>(
     activeRequirements(carrierId, trackingNumber).map((item) => [item.field, item]),
   );
   // Older clients may still supply a postcode for label barcodes. Validate it
   // when present, while allowing the public alias to work without one.
-  if (mondialBarcode && supplied.dpdPostcode) {
-    requirements.set('dpdPostcode', { field: 'dpdPostcode', validator: 'francePostcode' });
+  if (mondialBarcode && supplied.postcode) {
+    requirements.set('postcode', { field: 'postcode', validator: 'francePostcode' });
   }
   for (const [field, value] of Object.entries(supplied) as Array<[
-    'trackingUrl' | 'dpdPostcode',
+    'trackingUrl' | 'postcode',
     string | null,
   ]>) {
     if (value !== null && !requirements.has(field)) {

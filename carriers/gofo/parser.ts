@@ -1,6 +1,6 @@
 import { DateTime, IANAZone } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -17,7 +17,7 @@ const SUPPORT_LINE = new RegExp(String.raw`\s*(?:For delivery issues (?:&|and) t
 
 export function normalizeGofoNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^GFUS\d{14}$/.test(number)) throw new TypeError('GOFO US requires a GFUS parcel reference');
+  if (!/^GFUS\d{14}$/.test(number)) throw new InvalidInputError('GOFO', 'GOFO US requires a GFUS parcel reference');
   return number;
 }
 

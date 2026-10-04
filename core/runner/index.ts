@@ -9,6 +9,7 @@
  * `StepRecorder`. Adapters describe their tiers; they do not time or count
  * them.
  */
+import type { TrackingContext } from '../adapter/index.js';
 import { BudgetExceededError, carrierErrorKind } from '../errors/index.js';
 import { NOOP_RECORDER, errorTypeOf, outcomeOf, safeRecorder, type StepOutcome, type StepRecorder } from '../telemetry/index.js';
 
@@ -76,9 +77,22 @@ export async function runSteps<T>(options: RunOptions, steps: readonly StepSpec<
     : { fallbackFrom: previousStep, fallbackReason: outcomeOf(previousError), fallbackErrorType: errorTypeOf(previousError), fallbackError: previousError });
 
   for (const step of enabled) {
+    // A lookup whose signal has aborted starts nothing more. A deadline is the budget
+    // running out. A cancellation leaves the failure it interrupted as the answer, as it
+    // does when the last step is the one interrupted, or the caller's reason when no
+    // step had run; the dispatcher turns either into the caller's reason.
+    if (options.signal?.aborted) {
+      const reason: unknown = options.signal.reason;
+      const error = reason instanceof DOMException && reason.name === 'TimeoutError'
+        ? new BudgetExceededError(options.carrier, options.budgetMs, { cause: previousError ?? reason })
+        : previousStep === null ? reason : previousError;
+      finish(outcomeOf(error), error);
+      throw error;
+    }
     if (previousStep !== null && !(step.recovers ?? recoverableByDefault)(previousError)) continue;
     const remainingMs = options.budgetMs - (now() - started);
-    if (remainingMs <= 0) {
+    // Under a millisecond is no time for a step: its timer would fire before it began.
+    if (remainingMs < 1) {
       const error = new BudgetExceededError(options.carrier, options.budgetMs, { cause: previousError });
       finish('budget', error);
       throw error;
@@ -123,18 +137,71 @@ export async function runSteps<T>(options: RunOptions, steps: readonly StepSpec<
 /**
  * Serialize calls through one adapter instance so a shared session (cookies,
  * CSRF tokens, version handles) is never refreshed by two lookups at once.
+ * A lookup that passes its signal stops waiting when it aborts, without
+ * letting the lookups behind it overtake the one in front.
  */
-export function singleFlight(): <T>(operation: () => Promise<T>) => Promise<T> {
+export function singleFlight(): <T>(operation: () => Promise<T>, signal?: AbortSignal) => Promise<T> {
   let tail: Promise<void> = Promise.resolve();
-  return async <T>(operation: () => Promise<T>): Promise<T> => {
+  return async <T>(operation: () => Promise<T>, signal?: AbortSignal): Promise<T> => {
+    signal?.throwIfAborted();
     const previous = tail;
     let release!: () => void;
     tail = new Promise<void>((resolve) => { release = resolve; });
-    await previous;
+    if (signal) {
+      let abort!: () => void;
+      const aborted = new Promise<never>((_, reject) => {
+        abort = () => reject(signal.reason);
+        signal.addEventListener('abort', abort, { once: true });
+      });
+      try {
+        await Promise.race([previous, aborted]);
+      } catch (error) {
+        void previous.then(release);
+        throw error;
+      } finally {
+        signal.removeEventListener('abort', abort);
+      }
+    } else await previous;
     try {
+      // The caller may have left in the tick its turn came up.
+      signal?.throwIfAborted();
       return await operation();
     } finally {
       release();
     }
   };
+}
+
+/**
+ * One lookup's turn in a serialized adapter. A budget the caller set starts
+ * at the call: waiting for the turn spends it, and running out there is a
+ * budget error. Without one, the adapter's default budget starts with the
+ * turn and only cancellation ends the wait. The lookup gets the context it
+ * has left.
+ */
+export async function takeTurn<T>(
+  serialize: ReturnType<typeof singleFlight>,
+  carrier: string,
+  context: TrackingContext,
+  lookup: (context: TrackingContext) => Promise<T>,
+): Promise<T> {
+  const { signal, budgetMs } = context;
+  // A budget that is absent, or already spent, is left to the lookup's own runner.
+  if (budgetMs === undefined || !(budgetMs > 0)) return serialize(() => lookup(context), signal);
+  signal?.throwIfAborted();
+  const deadline = performance.now() + budgetMs;
+  // Node rejects timer delays past 2^31 - 1 ms; a budget that long never ends a wait.
+  const timer = AbortSignal.timeout(Math.min(2 ** 31 - 1, Math.max(1, Math.floor(budgetMs))));
+  const spent = (cause?: unknown) => new BudgetExceededError(carrier, budgetMs, { cause });
+  try {
+    return await serialize(() => {
+      const left = deadline - performance.now();
+      if (left < 1) throw spent();
+      return lookup({ signal, budgetMs: left });
+    }, signal ? AbortSignal.any([signal, timer]) : timer);
+  } catch (error) {
+    // Only the wait takes the timer, so its reason means the budget ran out there.
+    if (error === timer.reason && !signal?.aborted) throw spent(error);
+    throw error;
+  }
 }

@@ -1,7 +1,7 @@
 
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../../core/time/index.js';
@@ -13,7 +13,7 @@ const ENDPOINT = 'https://www.singpost.com/api/services/track-events';
 
 export function normalizeSingaporePostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z0-9]{8,30}$/.test(number)) throw new TypeError('Singapore Post requires an alphanumeric parcel reference');
+  if (!/^[A-Z0-9]{8,30}$/.test(number)) throw new InvalidInputError('Singapore Post', 'Singapore Post requires an alphanumeric parcel reference');
   return number;
 }
 

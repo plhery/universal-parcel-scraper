@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -12,7 +12,7 @@ const FAILED_ROUND = 'Su envío no ha podido ser entregado';
 
 export function normalizeCorreosExpressNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^\d{16}$/.test(number)) throw new TypeError('Correos Express requires a 16-digit shipment number');
+  if (!/^\d{16}$/.test(number)) throw new InvalidInputError('Correos Express', 'Correos Express requires a 16-digit shipment number');
   return number;
 }
 

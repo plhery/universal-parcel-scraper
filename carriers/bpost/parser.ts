@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -9,7 +9,7 @@ import { classifyBpostStatus } from './status.js';
 export function normalizeBpostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^(?:\d{18}|\d{24}|\d{30})$/.test(number) && !isValidS10TrackingNumber(number)) {
-    throw new TypeError('bpost requires a parcel barcode or postal tracking number');
+    throw new InvalidInputError('bpost', 'bpost requires a parcel barcode or postal tracking number');
   }
   return number;
 }

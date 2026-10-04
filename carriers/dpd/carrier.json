@@ -21,7 +21,7 @@
     "adapter": "dpd",
     "requirements": [
       {
-        "field": "dpdPostcode",
+        "field": "postcode",
         "validator": "swissPostcode",
         "optional": true,
         "label": "Delivery postcode",

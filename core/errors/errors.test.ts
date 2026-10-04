@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
-  BudgetExceededError, CarrierError, ChallengeError, IndeterminateError, InputRequiredError, MaintenanceError,
+  BudgetExceededError, CarrierError, ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, MaintenanceError,
   NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError,
   carrierErrorKind, errorTypeOf, retryAfterMsOf,
 } from './index.js';
+import { failureHint, failureKind } from './hint.js';
 
 describe('carrier error taxonomy', () => {
   it('gives every kind a stable name, kind and HTTP-like status', () => {
@@ -17,6 +18,7 @@ describe('carrier error taxonomy', () => {
     expect(new MaintenanceError('CTT')).toMatchObject({ kind: 'maintenance', status: 503 });
     expect(new SchemaError('DHL').status).toBeUndefined();
     expect(new InputRequiredError('Heppner', 'the delivery postcode')).toMatchObject({ kind: 'input_required', field: 'the delivery postcode' });
+    expect(new InvalidInputError('La Poste')).toMatchObject({ name: 'InvalidInputError', kind: 'invalid_input', status: 400 });
     expect(new TransportError('DPD')).toMatchObject({ kind: 'transport' });
     expect(new BudgetExceededError('dhl', 5_000).message).toContain('5000 ms budget');
   });
@@ -40,6 +42,19 @@ describe('carrier error taxonomy', () => {
     const rateLimited = new Error('outer', { cause: new RateLimitedError('Ship24', 12_000) });
     expect(retryAfterMsOf(rateLimited)).toBe(12_000);
     expect(retryAfterMsOf(new NotFoundError('CTT'))).toBeUndefined();
+  });
+
+  it('labels failures outside the taxonomy by what a retry could change', () => {
+    expect(failureKind(new InvalidInputError('La Poste'))).toBe('invalid_input');
+    expect(failureKind(new Error('outer', { cause: new NotFoundError('CTT') }))).toBe('not_found');
+    // Thrown by the runtime while reading a reply: the payload was not the expected shape.
+    for (const error of [new TypeError('Cannot read properties of undefined'), new RangeError('Invalid time value'), new SyntaxError('Unexpected token')]) {
+      expect(failureKind(error)).toBe('schema');
+    }
+    expect(failureKind(new Error('socket closed'))).toBe('transport');
+    expect(failureKind('string')).toBe('transport');
+    expect(failureHint(new RateLimitedError('Ship24', 30_000))).toEqual({ kind: 'rate_limited', retryAfterMs: 30_000 });
+    expect(failureHint(new TypeError('bad payload'))).toEqual({ kind: 'schema' });
   });
 
   it('clamps negative retry windows and keeps custom statuses', () => {

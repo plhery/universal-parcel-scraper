@@ -53,7 +53,7 @@ describe('SF Express browser adapter', () => {
   it('does not dispatch without a service, valid input, usable budget or active signal', async () => {
     await expect(new SfExpressTracker({ trawl: null }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     const { tracker, scrape } = mock();
-    await expect(tracker.fetch('invalid')).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(tracker.fetch('invalid')).rejects.toMatchObject({ kind: 'invalid_input' });
     await expect(tracker.fetch(NUMBER, { budgetMs: 15_000 })).rejects.toMatchObject({ kind: 'budget' });
     await expect(tracker.fetch(NUMBER, { budgetMs: Infinity })).rejects.toBeInstanceOf(TypeError);
     const controller = new AbortController(); controller.abort(new Error('cancelled'));

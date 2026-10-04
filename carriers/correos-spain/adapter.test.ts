@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizeCorreosSpainTrackingNumber,
   correosSpainTrackingUrl,
@@ -43,7 +43,7 @@ describe('Correos Spain tracking normalization', () => {
     expect(normalizeCorreosSpainTrackingNumber('pr123456789012345c')).toBe(TRACKING_NUMBER);
     expect(normalizeCorreosSpainTrackingNumber('PQ0011223344ES')).toBe('PQ0011223344ES');
     for (const raw of ['ABC', '123', '']) {
-      expect(() => normalizeCorreosSpainTrackingNumber(raw)).toThrow(TypeError);
+      expect(() => normalizeCorreosSpainTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(correosSpainTrackingUrl(TRACKING_NUMBER)).toBe(
       'https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=PR123456789012345C',
@@ -208,6 +208,6 @@ describe('CorreosSpainTracker fetch', () => {
       .rejects.toThrow(TypeError);
     expect(() => new CorreosSpainTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new CorreosSpainTracker({ timeoutMs: 1_000 }).fetch('ABC'))
-      .rejects.toThrow(TypeError);
+      .rejects.toThrow(InvalidInputError);
   });
 });

@@ -7,6 +7,7 @@ import { MrwTracker, adapter } from './adapter.js';
 import { normalizeMrwNumber, parseMrwBootstrap, parseMrwHistory, parseMrwSummary } from './parser.js';
 import { classifyMrwStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '99000Z000001';
 const fixture = (name: string) => readFileSync(fileURLToPath(new URL(`./fixtures/${name}.html`, import.meta.url)), 'utf8');
@@ -18,7 +19,7 @@ describe('MRW anonymous tracking', () => {
     expect(normalizeMrwNumber(' 99000z000001 ')).toBe(NUMBER);
     expect(normalizeMrwNumber('990000000001')).toBe('990000000001');
     for (const raw of ['', '99000Z00001', '99000ZZ000001', NUMBER + '?', 'X'.repeat(49)]) {
-      expect(() => normalizeMrwNumber(raw)).toThrow(TypeError);
+      expect(() => normalizeMrwNumber(raw)).toThrow(InvalidInputError);
     }
   });
 

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import {
   normalizePosMalaysiaTrackingNumber,
@@ -53,7 +53,7 @@ describe('Pos Malaysia tracking normalization', () => {
     expect(normalizePosMalaysiaTrackingNumber('mypm00000000015')).toBe(TRACKING_NUMBER);
     expect(normalizePosMalaysiaTrackingNumber('RR157638464MY')).toBe('RR157638464MY');
     for (const raw of ['12345', 'Z8328162951', 'MYPM000000001', '']) {
-      expect(() => normalizePosMalaysiaTrackingNumber(raw)).toThrow(TypeError);
+      expect(() => normalizePosMalaysiaTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(posMalaysiaTrackingUrl(TRACKING_NUMBER)).toBe('https://tracking.pos.com.my/tracking/MYPM00000000015');
   });
@@ -274,7 +274,7 @@ describe('PosMalaysiaTracker fetch', () => {
       .rejects.toThrow(TypeError);
     expect(() => new PosMalaysiaTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new PosMalaysiaTracker({ timeoutMs: 1_000 }).fetch('nope'))
-      .rejects.toThrow(TypeError);
+      .rejects.toThrow(InvalidInputError);
   });
 
   it('does not turn a missing HTTP endpoint into shipment absence or lose throttling', async () => {

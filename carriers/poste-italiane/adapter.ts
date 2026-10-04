@@ -1,9 +1,9 @@
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyPosteItalianeStatus } from './status.js';
 
@@ -21,6 +21,8 @@ import { classifyPosteItalianeStatus } from './status.js';
 //   (expired parcels show the documented "Tracciatura non disponibile").
 const TRACKING_ENDPOINT = 'https://www.poste.it/online/dovequando/DQ-REST/ricercasemplice';
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** `fetchBounded` repeats a request that failed in transit once, after this pause. */
+const TRANSIENT_RETRY_DELAY_MS = 1_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
 
@@ -66,7 +68,7 @@ export function normalizePosteItalianeTrackingNumber(raw: string): string {
   // with the generic postal fallback — those routes were never sampled here.
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^(?:RA\d{11}|[13]UW[A-Z0-9]{10}|5P[A-Z0-9]{11}|2IMA\d{10})$/.test(value)) {
-    throw new TypeError('Poste Italiane tracking requires a Poste Italiane parcel identifier');
+    throw new InvalidInputError('Poste Italiane', 'Poste Italiane tracking requires a Poste Italiane parcel identifier');
   }
   return value;
 }
@@ -169,31 +171,36 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
 export class PosteItalianeTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
+  private readonly userAgent: string;
 
-  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch } = {}) {
+  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Poste Italiane tracking timeout must be positive');
     }
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizePosteItalianeTrackingNumber(rawTrackingNumber);
+    // The default budget covers the request, the pause and the one transient retry.
+    const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
     const { response, bytes } = await fetchBounded(TRACKING_ENDPOINT, {
       method: 'POST',
+      signal: budget.signal,
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
         'Content-Type': 'application/json',
         Origin: 'https://www.poste.it',
         Referer: 'https://www.poste.it/',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.userAgent,
       },
       body: JSON.stringify({ codiceSpedizione: trackingNumber, tipoRichiedente: 'WEB', periodoRicerca: 1 }),
     }, {
       provider: 'Poste Italiane tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -205,10 +212,10 @@ export class PosteItalianeTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PosteItalianeTracker({ fetcher: environment.fetcher });
+  const tracker = new PosteItalianeTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'poste-italiane',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

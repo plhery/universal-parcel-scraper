@@ -1,10 +1,10 @@
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyCorreosSpainStatus } from './status.js';
 
@@ -21,6 +21,8 @@ import { classifyCorreosSpainStatus } from './status.js';
 //   attempt → office hold → collected); the map lives in status.ts.
 const TRACKING_ENDPOINT = 'https://localizador.correos.es/canonico/eventos_envio_servicio';
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** `fetchBounded` repeats a request that failed in transit once, after this pause. */
+const TRANSIENT_RETRY_DELAY_MS = 1_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
 
@@ -44,7 +46,7 @@ export function normalizeCorreosSpainTrackingNumber(raw: string): string {
   // PR-prefixed); the codError envelope — not the shape — decides unknown.
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^[A-Z0-9]{4,40}$/.test(value) || !/\d/.test(value)) {
-    throw new TypeError('Correos tracking requires a tracking code with letters, numbers and a digit');
+    throw new InvalidInputError('Correos', 'Correos tracking requires a tracking code with letters, numbers and a digit');
   }
   return value;
 }
@@ -161,28 +163,33 @@ export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumb
 export class CorreosSpainTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
+  private readonly userAgent: string;
 
-  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch } = {}) {
+  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
+    this.userAgent = userAgentOf(options.userAgent);
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Correos tracking timeout must be positive');
     }
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeCorreosSpainTrackingNumber(rawTrackingNumber);
+    // The default budget covers the request, the pause and the one transient retry.
+    const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
     const url = `${TRACKING_ENDPOINT}/${encodeURIComponent(trackingNumber)}`
       + '?codAplicacion=60&codCanal=3&codIdioma=ES&indUltEvento=N';
     const { response, bytes } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.userAgent,
       },
     }, {
       provider: 'Correos tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -194,10 +201,10 @@ export class CorreosSpainTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new CorreosSpainTracker({ fetcher: environment.fetcher });
+  const tracker = new CorreosSpainTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'correos-spain',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

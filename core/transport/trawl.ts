@@ -68,7 +68,27 @@ export class TrawlError extends CarrierError {
 }
 
 const DEFAULT_MAX_BYTES = 10_000_000;
-const TRANSPORT_ALLOWANCE_MS = 15_000;
+/**
+ * How long a request to the browser service may outlast the time the service
+ * was given, so its own timeout answer still arrives. A lookup whose budget is
+ * its default leaves this much room after the service's time.
+ */
+export const TRAWL_TRANSPORT_ALLOWANCE_MS = 15_000;
+const TRANSPORT_ALLOWANCE_MS = TRAWL_TRANSPORT_ALLOWANCE_MS;
+
+/**
+ * End the call when its signal has aborted. A cancellation is rethrown as the
+ * caller gave it. A deadline is a browser service that did not answer in
+ * time: the request's own failure when there is one, typed either way.
+ */
+function throwIfEnded(options: TrawlCallOptions, failure?: unknown): void {
+  const signal = options.signal;
+  if (!signal?.aborted) return;
+  const reason: unknown = signal.reason;
+  if (!(reason instanceof DOMException && reason.name === 'TimeoutError')) throw reason;
+  throw failure instanceof CarrierError ? failure
+    : new TrawlError(options.provider, 'The browser service did not answer before the deadline', { cause: reason });
+}
 
 export function trawlEndpoint(configured: string): URL {
   let endpoint: URL;
@@ -166,11 +186,11 @@ export class TrawlClient {
 
   /** Native API: load a page in a browser tier, optionally capturing in-page API responses. */
   async scrape(request: TrawlScrapeRequest, options: TrawlCallOptions): Promise<TrawlScrapeResponse> {
-    options.signal?.throwIfAborted();
+    throwIfEnded(options);
     const deadline = performance.now() + options.timeoutMs + TRANSPORT_ALLOWANCE_MS;
     try { return await this.scrapeOnce(request, options); }
     catch (error) {
-      options.signal?.throwIfAborted();
+      throwIfEnded(options, error);
       // Retry only an identified dead browser, never maintenance, challenges or arbitrary 500s.
       if (!(error instanceof UpstreamHttpError) || error.status < 500
         || !/Target page, context or browser has been closed/.test(error.diagnostics?.body_excerpt ?? '')
@@ -180,11 +200,11 @@ export class TrawlClient {
           provider: 'TRAWL readiness', timeoutMs: 2_000, maxBytes: 16_384,
           fetcher: this.requestFetcher(options),
         });
-        options.signal?.throwIfAborted();
+        throwIfEnded(options, error);
         const health = parseJsonBytes(bytes, 'TRAWL readiness');
         if (!isRecord(health) || health.status !== 'ok' || !isRecord(health.pool)
           || Number(health.pool.live) < 1 || Number(health.pool.available) < 1) throw error;
-      } catch { options.signal?.throwIfAborted(); throw error; }
+      } catch { throwIfEnded(options, error); throw error; }
       const remaining = Math.floor(deadline - performance.now() - TRANSPORT_ALLOWANCE_MS);
       if (remaining < 1_000) throw error;
       return this.scrapeOnce({ ...request, maxTimeout: Math.min(request.maxTimeout ?? options.timeoutMs, remaining) },
@@ -193,7 +213,7 @@ export class TrawlClient {
   }
 
   private async scrapeOnce(request: TrawlScrapeRequest, options: TrawlCallOptions): Promise<TrawlScrapeResponse> {
-    options.signal?.throwIfAborted();
+    throwIfEnded(options);
     const { bytes } = await fetchBounded(this.scrapeUrl(), {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -204,7 +224,7 @@ export class TrawlClient {
       maxBytes: options.maxBytes ?? DEFAULT_MAX_BYTES,
       fetcher: this.requestFetcher(options),
     });
-    options.signal?.throwIfAborted();
+    throwIfEnded(options);
     const value = parseJsonBytes(bytes, options.provider);
     if (!isRecord(value)) throw new TrawlError(options.provider, 'The browser service returned an invalid response');
     if (value.error) {
@@ -231,7 +251,7 @@ export class TrawlClient {
 
   /** Legacy command API (`request.get`): returns the solved page HTML. */
   async solve(url: string, options: TrawlCallOptions): Promise<string> {
-    options.signal?.throwIfAborted();
+    throwIfEnded(options);
     const { bytes } = await fetchBounded(this.commandUrl(), {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -242,7 +262,7 @@ export class TrawlClient {
       maxBytes: options.maxBytes ?? DEFAULT_MAX_BYTES,
       fetcher: this.requestFetcher(options),
     });
-    options.signal?.throwIfAborted();
+    throwIfEnded(options);
     const payload = parseJsonBytes(bytes, options.provider);
     const solution = isRecord(payload) && isRecord(payload.solution) ? payload.solution : {};
     if (isRecord(payload) && payload.status === 'ok' && [200, 302].includes(Number(solution.status))

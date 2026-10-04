@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { scrapeUniversalPage } from '../../core/transport/browser.js';
 import { parseShip24Response, Ship24Tracker } from './adapter.js';
@@ -41,6 +41,15 @@ describe('Ship24 result parsing', () => {
   it('rejects history that belongs to another shipment', () => {
     expect(() => parseShip24Response({ data: { tracking_number: 'OTHER123', events: [] } }, number))
       .toThrow('no matching shipment history');
+  });
+
+  it.each([
+    ['no events', []],
+    ['only a notice', [{ timestamp: '2026-09-10T10:00:00+02:00', status: 'Tracking number not found' }]],
+  ])('reports a matching reply with %s as inconclusive, never as a reply of the wrong shape', (_, events) => {
+    const parse = () => parseShip24Response({ data: { tracking_number: number, events } }, number);
+    expect(parse).toThrow(IndeterminateError);
+    expect(parse).toThrow(expect.objectContaining({ kind: 'indeterminate', provider: 'Ship24', message: 'No usable tracking events' }));
   });
 });
 
@@ -116,6 +125,13 @@ describe('Ship24 anonymous HTTP tracking', () => {
     expect(steps[0]).toMatchObject({ step: 'direct', outcome: 'not_found' });
   });
 
+  it('reports a history without usable scans as inconclusive when no Chromium is configured', async () => {
+    const { tracker, fetcher, steps } = fixture(null);
+    fetcher.mockResolvedValueOnce(reply({ data: { tracking_number: number, events: [] } }));
+    await expect(tracker.fetch(number)).rejects.toMatchObject({ kind: 'indeterminate', message: 'No usable tracking events' });
+    expect(steps.map(({ step, outcome, errorType }) => [step, outcome, errorType])).toEqual([['direct', 'indeterminate', 'IndeterminateError']]);
+  });
+
   it('rejects unrelated history before falling back and does not leak it into the result', async () => {
     const { tracker, fetcher, steps } = fixture();
     fetcher.mockResolvedValueOnce(reply({ data: { ...history.data, tracking_number: 'OTHER123' } }));
@@ -139,6 +155,19 @@ describe('Ship24 anonymous HTTP tracking', () => {
     vi.mocked(scrapeUniversalPage).mockResolvedValueOnce({ events: [] });
     await tracker.fetch(number);
     expect(scrapeUniversalPage).toHaveBeenCalledWith(expect.objectContaining({ timeoutMs: 37_500 }), expect.anything(), expect.anything());
+  });
+
+  it('ends the browser recovery when the caller cancels', async () => {
+    const { tracker, fetcher } = fixture();
+    fetcher.mockResolvedValueOnce(new Response('rejected', { status: 403 }));
+    vi.mocked(scrapeUniversalPage).mockImplementationOnce(({ signal }) => new Promise((_, reject) => {
+      signal!.addEventListener('abort', () => reject(signal!.reason), { once: true });
+    }));
+    const controller = new AbortController();
+    const lookup = tracker.fetch(number, undefined, null, controller.signal);
+    await vi.waitFor(() => expect(scrapeUniversalPage).toHaveBeenCalledOnce());
+    controller.abort(new Error('caller cancelled'));
+    await expect(lookup).rejects.toThrow('caller cancelled');
   });
 
   it('runs the browser alone when no signed HTTP client is configured', async () => {

@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -8,7 +8,7 @@ import { classifyPurolatorStatus } from './status.js';
 
 export function normalizePurolatorNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^(?:[0-5]\d{11}|(?!BYS)[A-Z]{3}\d{9})$/.test(number)) throw new TypeError('Purolator requires a Purolator tracking PIN');
+  if (!/^(?:[0-5]\d{11}|(?!BYS)[A-Z]{3}\d{9})$/.test(number)) throw new InvalidInputError('Purolator', 'Purolator requires a Purolator tracking PIN');
   return number;
 }
 

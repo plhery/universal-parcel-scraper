@@ -14,7 +14,7 @@ import timers from 'node:timers/promises';
 import type { AdapterFactory } from '../../core/adapter/index.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
-import { carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
+import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -261,6 +261,8 @@ function browserCanRecover(error: unknown): boolean {
   if (error instanceof UpstreamNetworkError) return false;
   // A second lookup cannot repair missing input, rate limiting or an outage.
   if (error instanceof UpstreamHttpError && (error.status === 429 || error.status >= 500)) return false;
+  // The browser tier reads a larger reply than the direct POST's cap.
+  if (error instanceof CarrierError && error.reason === 'response_too_large') return true;
   const kind = carrierErrorKind(error);
   return kind === null || kind === 'challenge' || kind === 'transport' || kind === 'schema';
 }
@@ -327,12 +329,12 @@ export class ParcelsAppTracker {
     this.http = options.httpClient === undefined ? new ParcelsAppHttpClient(options.fetcher) : options.httpClient;
   }
 
-  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? PARCELSAPP_BUDGET_MS, postcode?: string | null, timezone: string | null = null): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? PARCELSAPP_BUDGET_MS, postcode?: string | null, timezone: string | null = null, signal?: AbortSignal): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
     if (!Number.isFinite(budgetMs) || budgetMs < 1) throw new TypeError('ParcelsApp timeout must be positive');
     const deadline = performance.now() + budgetMs;
-    const request = async (remainingMs: number): Promise<CarrierResult> => {
-      const payload = await this.http!.fetch(number, Math.max(1, Math.min(DIRECT_BUDGET_MS, Math.floor(remainingMs))), postcode);
+    const request = async (remainingMs: number, signal: AbortSignal): Promise<CarrierResult> => {
+      const payload = await this.http!.fetch(number, Math.max(1, Math.min(DIRECT_BUDGET_MS, Math.floor(remainingMs))), postcode, signal);
       // This endpoint returns one shipment per POST, synchronously, with no
       // shared session or polling handle. Each retry keeps its own request
       // binding. Numberless browser captures never get this exemption.
@@ -341,10 +343,10 @@ export class ParcelsAppTracker {
       }
       return { ...parseHistory(payload, number, timezone), tracking_source: 'structured-web-response' };
     };
-    return runSteps({ carrier: SOURCE, budgetMs, recorder: this.options.recorder }, [{
+    return runSteps({ carrier: SOURCE, budgetMs, signal, recorder: this.options.recorder }, [{
       id: 'direct',
       enabled: this.http !== null,
-      run: ({ remainingMs }) => request(remainingMs),
+      run: ({ remainingMs, signal }) => request(remainingMs, signal),
     }, {
       id: 'retry',
       enabled: this.http !== null,
@@ -355,16 +357,16 @@ export class ParcelsAppTracker {
       run: async ({ signal }) => {
         await timers.setTimeout(RETRY_DELAY_MS, undefined, { signal });
         signal.throwIfAborted();
-        return request(deadline - performance.now());
+        return request(deadline - performance.now(), signal);
       },
     }, {
       id: 'trawl',
       enabled: this.options.trawl != null || this.http === null,
       recovers: browserCanRecover,
-      run: async ({ remainingMs }) => {
+      run: async ({ remainingMs, signal }) => {
         const capture: CaptureSpec = {
           source: SOURCE, url: `https://parcelsapp.com/en/tracking/${number}`, apiUrl: PARCELSAPP_API,
-          budgetMs: remainingMs, fetcher: this.options.fetcher,
+          budgetMs: remainingMs, fetcher: this.options.fetcher, signal,
         };
         const page = await loadCapture(this.options.trawl ?? null, capture);
         for (const body of capturedBodies(page, capture)) {
@@ -388,6 +390,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: SOURCE,
     steps: ['direct', 'retry', 'trawl'],
-    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, input.postcode, input.timezone ?? null),
+    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, input.postcode, input.timezone ?? null, context?.signal),
   };
 };

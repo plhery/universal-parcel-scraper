@@ -16,8 +16,8 @@ describe('recognition candidates', () => {
       { carrier: 'ciblex', needsInput: null, preferred: false },
     ]);
     expect(recognitionCandidates('12345678901', { hint: 'gls-de' })).toEqual([
-      { carrier: 'gls-de', needsInput: 'dpdPostcode', preferred: false },
-      { carrier: 'gls-ch', needsInput: 'dpdPostcode', preferred: false },
+      { carrier: 'gls-de', needsInput: 'postcode', preferred: false },
+      { carrier: 'gls-ch', needsInput: 'postcode', preferred: false },
       { carrier: 'postlogistics', needsInput: null, preferred: false },
     ]);
     expect(recognitionCandidates('06080000000002', { skip: (carrier) => carrier === 'dpd' }).map((candidate) => candidate.carrier))

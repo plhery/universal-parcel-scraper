@@ -1,9 +1,9 @@
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyPacketaStatus, packetaEventStage } from './status.js';
 
@@ -24,6 +24,8 @@ import { classifyPacketaStatus, packetaEventStage } from './status.js';
 const TRACKING_ENDPOINT = 'https://tracking.packeta.com/api/getPacketById';
 const TRACKING_LOCALE = 'en';
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** `fetchBounded` repeats a request that failed in transit once, after this pause. */
+const TRANSIENT_RETRY_DELAY_MS = 1_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
 
@@ -41,7 +43,7 @@ function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
 export function normalizePacketaTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^Z\d{10}$/.test(value)) {
-    throw new TypeError('Packeta tracking requires a Z-prefixed barcode with ten digits');
+    throw new InvalidInputError('Packeta', 'Packeta tracking requires a Z-prefixed barcode with ten digits');
   }
   return value;
 }
@@ -126,28 +128,33 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
 export class PacketaTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
+  private readonly userAgent: string;
 
-  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch } = {}) {
+  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
+    this.userAgent = userAgentOf(options.userAgent);
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Packeta timeout must be positive');
     }
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizePacketaTrackingNumber(rawTrackingNumber);
+    // The default budget covers the request, the pause and the one transient retry.
+    const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
     const url = `${TRACKING_ENDPOINT}/${encodeURIComponent(trackingNumber)}/${TRACKING_LOCALE}`;
     const { response, bytes } = await fetchBounded(url, {
       method: 'POST',
+      signal: budget.signal,
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.userAgent,
       },
     }, {
       provider: 'Packeta tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -160,10 +167,10 @@ export class PacketaTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PacketaTracker({ fetcher: environment.fetcher });
+  const tracker = new PacketaTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'packeta',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

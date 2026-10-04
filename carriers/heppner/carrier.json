@@ -20,7 +20,7 @@
     "adapter": "heppner",
     "requirements": [
       {
-        "field": "dpdPostcode",
+        "field": "postcode",
         "validator": "swissOrFrancePostcode",
         "label": "Delivery postcode",
         "type": "text",

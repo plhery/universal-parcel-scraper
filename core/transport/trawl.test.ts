@@ -116,6 +116,29 @@ describe('dead browser recovery', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
+  it('reports a deadline as a browser service that did not answer, and a cancellation as the caller gave it', async () => {
+    const stalled = vi.fn<typeof fetch>().mockImplementation((_input, init) => new Promise((_, reject) => {
+      init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+    }));
+    const client = new TrawlClient('http://trawl:8191', stalled);
+    // The lookup's budget timer: the service's own allowance would outlast it.
+    for (const call of [
+      () => client.scrape({ url: 'https://example.test' }, { ...options, signal: AbortSignal.timeout(20) }),
+      () => client.solve('https://example.test', { ...options, signal: AbortSignal.timeout(20) }),
+    ]) {
+      const failure = await call().catch((error: unknown) => error);
+      expect(failure).toMatchObject({ kind: 'transport', cause: expect.objectContaining({ name: 'TimeoutError' }) });
+    }
+    const expired = AbortSignal.abort(new DOMException('The operation timed out', 'TimeoutError'));
+    await expect(client.scrape({ url: 'https://example.test' }, { ...options, signal: expired })).rejects.toMatchObject({ name: 'TrawlError', kind: 'transport' });
+    const controller = new AbortController();
+    const reason = new Error('caller cancelled');
+    const pending = client.scrape({ url: 'https://example.test' }, { ...options, signal: controller.signal });
+    controller.abort(reason);
+    await expect(pending).rejects.toBe(reason);
+    expect(stalled).toHaveBeenCalledTimes(3);
+  });
+
   it('cancels readiness without starting a second browser attempt', async () => {
     const controller = new AbortController();
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(closed()).mockImplementationOnce(async (_input, init) => {

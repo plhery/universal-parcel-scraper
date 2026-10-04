@@ -635,6 +635,28 @@ describe('ParcelsApp direct lookup', () => {
     await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number)).rejects.toThrow('identity missing');
   });
 
+  it('reads a direct reply past the size cap through the browser, which accepts a larger one', async () => {
+    const steps: StepRecord[] = [];
+    const recorder: StepRecorder = { step: (record) => { steps.push(record); }, lookup: () => {} };
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response('x', { headers: { 'content-length': '3000000' } }))
+      .mockResolvedValueOnce(captured(announced));
+    const result = await new ParcelsAppTracker({ fetcher, recorder, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number);
+    expect(result.current_stage).toBe('registered');
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(steps).toMatchObject([
+      { step: 'direct', outcome: 'indeterminate' },
+      { step: 'trawl', outcome: 'ok', fallbackFrom: 'direct', fallbackReason: 'indeterminate' },
+    ]);
+  });
+
+  it('starts no browser lookup for a reply within the cap that carries no usable scan', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ states: [{ date: '2026-01-01T00:00:00Z', status: 'Tracking number not found' }] }));
+    await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+      .rejects.toMatchObject({ kind: 'indeterminate', message: 'No usable tracking events' });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
   it.each([429, 500, 503])('does not amplify HTTP %i with a browser retry', async (status) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status, headers: { 'Retry-After': '120' } }));
     await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
@@ -653,6 +675,18 @@ describe('ParcelsApp direct lookup', () => {
   it.each([{ correctId: 'OTHER123', ...announced }, { states: [{}] }, { states: [null] }, { states: Array(1001).fill({}) }, { uuid: 'unfinished' }])('rejects aliases, malformed and intermediate replies', async (payload) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(payload));
     await expect(new ParcelsAppTracker({ fetcher }).fetch(number)).rejects.toThrow();
+  });
+
+  it('starts no retry and no browser lookup once the caller cancels', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('connection reset'));
+    const controller = new AbortController();
+    const lookup = new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) })
+      .fetch(number, undefined, null, null, controller.signal);
+    await vi.waitFor(() => expect(fetcher).toHaveBeenCalledOnce());
+    controller.abort(new Error('caller cancelled'));
+    // The interrupted request is the failure; the chain and the facade answer with the caller's reason.
+    await expect(lookup).rejects.toMatchObject({ name: 'UpstreamNetworkError' });
+    expect(fetcher).toHaveBeenCalledOnce();
   });
 });
 

@@ -13,12 +13,12 @@
  * only when `mailNoSource` is `EXTERNAL`; otherwise Cainiao is still waiting
  * for the seller and the parcel is simply pending.
  */
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   CAINIAO_ACTION_STATUS,
@@ -35,7 +35,6 @@ const MAX_EVENTS_TO_RETURN = 20;
 const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
   'Accept-Language': 'en-US,en;q=0.9',
-  'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
 };
 
 function record(value: unknown): JsonObject {
@@ -172,33 +171,39 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
 export class CainiaoTracker {
   private readonly fetcher: typeof fetch | undefined;
   private readonly timeoutMs: number;
+  private readonly userAgent: string;
 
-  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {
+  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {
     this.fetcher = options.fetcher;
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    const budget = lookupBudget(context, this.timeoutMs);
     const { bytes } = await fetchBounded(
       `${DETAIL_URL}?${new URLSearchParams({ mailNos: trackingNumber, lang: 'en-US' })}`,
-      { headers: { ...BASE_HEADERS, Referer: 'https://www.aliexpress.com/' } },
-      { provider: UPSTREAM, timeoutMs: this.timeoutMs, fetcher: this.fetcher },
+      {
+        signal: budget.signal,
+        headers: { ...BASE_HEADERS, 'User-Agent': this.userAgent, Referer: 'https://www.aliexpress.com/' },
+      },
+      { provider: UPSTREAM, timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()), fetcher: this.fetcher },
     );
     return parseCainiaoTrackingResponse(parseJsonBytes(bytes, UPSTREAM), trackingNumber);
   }
 }
 
 /** Kept for the host's legacy dispatch chain until it is deleted. */
-export async function fetchCainiao(trackingNumber: string): Promise<CarrierResult> {
-  return new CainiaoTracker().fetch(trackingNumber);
+export async function fetchCainiao(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  return new CainiaoTracker().fetch(trackingNumber, context);
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new CainiaoTracker({ fetcher: environment.fetcher });
+  const tracker = new CainiaoTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'aliexpress',
     // One keyless GET; there is no second tier to fall back to.
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

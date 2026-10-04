@@ -21,7 +21,7 @@
     "adapter": "mondial-relay",
     "requirements": [
       {
-        "field": "dpdPostcode",
+        "field": "postcode",
         "whenTrackingNumber": "^(?![0-9]{26}$).*$",
         "validator": "francePostcode",
         "label": "Delivery postcode",

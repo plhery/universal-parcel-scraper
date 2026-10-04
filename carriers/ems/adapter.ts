@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
 import { emsStatus } from './status.js';
@@ -17,7 +17,7 @@ const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/
 export function normalizeEmsTrackingNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!/^E[A-Z]\d{9}[A-Z]{2}$/.test(number) || !isValidS10TrackingNumber(number)) {
-    throw new InputRequiredError('EMS', 'number', 'EMS requires a valid E-prefixed postal tracking number');
+    throw new InvalidInputError('EMS', 'EMS requires a valid E-prefixed postal tracking number');
   }
   return number;
 }

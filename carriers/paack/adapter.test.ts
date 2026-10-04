@@ -327,6 +327,15 @@ describe('Paack response normalization', () => {
     expect(() => parsePaackTrackingResponse(successRoute({
       orderTrackData: { external_id: 'EXCHANGE000001R' },
     }), OFFICIAL_EXAMPLE_NUMBER)).toThrow('different shipment');
+    // An echoed id Paack's own number form rejects is the provider's fault, never the caller's.
+    for (const echoed of ['', 'ORD-2024-0001', 'ABCDEF', '1'.repeat(41), 12345]) {
+      expect(() => parsePaackTrackingResponse(successRoute({
+        orderTrackData: { external_id: echoed },
+      }), OFFICIAL_EXAMPLE_NUMBER)).toThrow(expect.objectContaining({
+        kind: 'schema',
+        message: 'Paack returned an invalid shipment number',
+      }));
+    }
     expect(() => parsePaackTrackingResponse({ orderTrackData: {
       external_id: OFFICIAL_EXAMPLE_NUMBER,
     } }, OFFICIAL_EXAMPLE_NUMBER)).toThrow('incomplete tracking details');

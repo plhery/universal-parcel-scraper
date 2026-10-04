@@ -113,19 +113,29 @@ describe('Mondial Relay tracking input', () => {
   });
 
   it('rejects incomplete credentials, invalid postcodes, and parameter injection', () => {
-    for (const [shipment, postcode] of [
-      [OFFICIAL_PDF_SHIPMENT, ''],
-      ['1718596', OFFICIAL_PAGE_POSTCODE],
-      ['17185966000', OFFICIAL_PAGE_POSTCODE],
-      [OFFICIAL_PDF_SHIPMENT, '00000'],
-      [OFFICIAL_PDF_SHIPMENT, '96000'],
-      [OFFICIAL_PDF_SHIPMENT, '5965A'],
-      [`${PUBLIC_CREDENTIAL}&admin=true`, ''],
-      ['1718596É', OFFICIAL_PAGE_POSTCODE],
-    ]) {
+    // A well-shaped number lacks only its postcode; any other number is one Mondial Relay does not issue.
+    for (const [shipment, postcode, kind] of [
+      [OFFICIAL_PDF_SHIPMENT, '', 'input_required'],
+      ['1718596', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
+      ['17185966000', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
+      [OFFICIAL_PDF_SHIPMENT, '00000', 'input_required'],
+      [OFFICIAL_PDF_SHIPMENT, '96000', 'input_required'],
+      [OFFICIAL_PDF_SHIPMENT, '5965A', 'input_required'],
+      [`${PUBLIC_CREDENTIAL}&admin=true`, '', 'invalid_input'],
+      ['1718596É', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
+    ] as const) {
       expect(() => normalizeMondialRelayCredential(shipment, postcode))
         .toThrow('8-, 10-, or 12-digit shipment number');
+      expect(() => normalizeMondialRelayCredential(shipment, postcode))
+        .toThrow(expect.objectContaining({ kind }));
     }
+  });
+
+  it('rejects a number Mondial Relay does not issue before any request', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
+    await expect(new MondialRelayTracker({ trawlUrl: 'http://trawl.internal:8191' }).fetch('1718596', OFFICIAL_PAGE_POSTCODE))
+      .rejects.toMatchObject({ kind: 'invalid_input' });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 });
 
@@ -382,20 +392,23 @@ describe('Mondial Relay web session', () => {
       url: TRACKING_PAGE,
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: 2_000,
+      maxTimeout: expect.any(Number),
     });
     const trackingRequest = JSON.parse(String(fetcher.mock.calls[1]![1]?.body));
     expect(trackingRequest).toMatchObject({
       url: apiUrl(),
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: 2_000,
       headers: {
         Accept: 'application/json, text/plain, */*',
         Referer: TRACKING_PAGE,
         RequestVerificationToken: TEST_TOKEN,
       },
     });
+    // Both requests share the 2 s lookup budget: each is given what is left of it.
+    expect(bootstrapRequest.maxTimeout).toBeLessThanOrEqual(2_000);
+    expect(trackingRequest.maxTimeout).toBeGreaterThan(0);
+    expect(trackingRequest.maxTimeout).toBeLessThanOrEqual(bootstrapRequest.maxTimeout);
   });
 
   it.each(['numeric-object', 'buffer'] as const)('uses TRAWL %s bodies for the token/API sequence', async (format) => {
@@ -440,20 +453,23 @@ describe('Mondial Relay web session', () => {
       url: TRACKING_PAGE,
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: 2_000,
+      maxTimeout: expect.any(Number),
     });
     const trackingRequest = JSON.parse(String(fetcher.mock.calls[1]![1]?.body));
     expect(trackingRequest).toMatchObject({
       url: apiUrl(),
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: 2_000,
       headers: {
         Accept: 'application/json, text/plain, */*',
         Referer: TRACKING_PAGE,
         RequestVerificationToken: TEST_TOKEN,
       },
     });
+    // Both requests share the 2 s lookup budget: each is given what is left of it.
+    expect(bootstrapRequest.maxTimeout).toBeLessThanOrEqual(2_000);
+    expect(trackingRequest.maxTimeout).toBeGreaterThan(0);
+    expect(trackingRequest.maxTimeout).toBeLessThanOrEqual(bootstrapRequest.maxTimeout);
   });
 
   it('fails closed when no browser session exists or TRAWL changes shipment', async () => {
@@ -487,6 +503,50 @@ describe('Mondial Relay web session', () => {
       trawlUrl: 'http://trawl.internal:8191/scrape',
     }).fetch(PUBLIC_CREDENTIAL)).rejects.toThrow('different shipment');
   });
+
+  it('answers a cancelled lookup at once, queued or in flight, and leaves the next one alone', async () => {
+    const reply = (payload: unknown) => new Response(JSON.stringify(payload), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const bootstrap = () => reply({
+      tier: 3, statusCode: 200, url: TRACKING_PAGE, html: VUE_PAGE, body: numericByteObject(tokenPage()),
+    });
+    let reached!: () => void;
+    const apiRequest = new Promise<void>((resolve) => { reached = resolve; });
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(bootstrap())
+      .mockImplementationOnce((_url, init) => new Promise<Response>((_resolve, reject) => {
+        init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+        reached();
+      }))
+      .mockResolvedValueOnce(bootstrap())
+      .mockResolvedValueOnce(reply({
+        tier: 3, statusCode: 200, url: apiUrl(), html: VUE_PAGE,
+        body: numericByteObject(JSON.stringify(syntheticSuccessFixture())),
+      }));
+    const tracker = new MondialRelayTracker({ trawlUrl: 'http://trawl.internal:8191/scrape' });
+    const inFlight = new AbortController();
+    const queued = new AbortController();
+    const stopped = new Error('caller stopped');
+    const cancelled = new Error('caller cancelled');
+
+    const first = tracker.fetch(PUBLIC_CREDENTIAL, '', { signal: inFlight.signal });
+    const second = tracker.fetch(PUBLIC_CREDENTIAL, '', { signal: queued.signal });
+    const third = tracker.fetch(PUBLIC_CREDENTIAL);
+    await apiRequest;
+
+    queued.abort(cancelled);
+    await expect(second).rejects.toBe(cancelled);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+
+    inFlight.abort(stopped);
+    await expect(first).rejects.toBe(stopped);
+    expect(fetcher.mock.calls[1]![1]?.signal?.aborted).toBe(true);
+
+    // The cancelled turn passes without a request; the next lookup is served.
+    await expect(third).resolves.toMatchObject({ status: 'out_for_delivery' });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+  });
 });
 
 
@@ -509,6 +569,7 @@ describe('documented Mondial Relay 26-digit label barcode', () => {
     expect(mondialRelayTrackingUrl(barcode)).toBe(`${TRACKING_PAGE}?numeroExpedition=121234567801`);
     expect(() => normalizeMondialRelayCredential(barcode.slice(0, -1) + '5')).toThrow('Invalid Mondial Relay barcode');
     expect(() => normalizeMondialRelayCredential(barcode.slice(0, 14) + '1' + barcode.slice(15))).toThrow('Invalid Mondial Relay barcode');
+    expect(() => normalizeMondialRelayCredential(barcode.slice(0, -1) + '5')).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   });
   it('requires returned shipment identity to match the documented embedded number', () => {
     expect(parseMondialRelayTrackingResponse(syntheticSuccessFixture('12345678'), barcode)).toMatchObject({ status: 'out_for_delivery' });

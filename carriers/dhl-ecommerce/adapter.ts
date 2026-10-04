@@ -16,10 +16,10 @@
  */
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, InvalidInputError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { countryTimeZone } from '../../core/time/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { clean as cleanText, UpstreamHttpError } from '../../core/transport/index.js';
@@ -43,7 +43,7 @@ function clean(value: unknown, limit = 500): string {
 
 export function normalizeDHLEcommerceNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^(?=.*\d)[A-Z0-9]{5,40}$/.test(number)) throw new TypeError('DHL eCommerce tracking number is invalid');
+  if (!/^(?=.*\d)[A-Z0-9]{5,40}$/.test(number)) throw new InvalidInputError(PROVIDER, 'DHL eCommerce tracking number is invalid');
   return number;
 }
 
@@ -143,7 +143,7 @@ function trackingApiUrl(number: string): string {
   return url.toString();
 }
 
-export interface DHLEcommerceTrackerOptions extends UniversalBrowserOptions {
+export interface DHLEcommerceTrackerOptions extends Omit<UniversalBrowserOptions, 'signal'> {
   budgetMs?: number;
   recorder?: StepRecorder;
 }
@@ -161,18 +161,19 @@ export class DHLEcommerceTracker {
   }
 
   /** One browser at a time per instance: a batch must not spawn a Chromium per parcel. */
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeDHLEcommerceNumber(trackingNumber);
     const timeoutMs = this.options.timeoutMs ?? 45_000;
-    return this.serialize(() => runSteps<CarrierResult>(
-      { carrier: 'dhl-ecommerce', budgetMs: this.options.budgetMs ?? timeoutMs + 15_000, recorder: this.recorder },
-      [{ id: 'browser', run: () => this.browser(number, timeoutMs) }],
+    return takeTurn(this.serialize, PROVIDER, context, ({ signal, budgetMs }) => runSteps<CarrierResult>(
+      { carrier: 'dhl-ecommerce', budgetMs: budgetMs ?? this.options.budgetMs ?? timeoutMs + 15_000, signal, recorder: this.recorder },
+      [{ id: 'browser', run: (step) => this.browser(
+        number, Math.max(1, Math.floor(Math.min(timeoutMs, step.remainingMs))), step.signal) }],
     ));
   }
 
-  private async browser(number: string, timeoutMs: number): Promise<CarrierResult> {
+  private async browser(number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     try {
-      return await scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs }, {
+      return await scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs, signal }, {
         name: PROVIDER, url: dhlEcommerceTrackingUrl(number), responseUrl: trackingApiUrl(number),
       }, parseDHLEcommerceResponse);
     } catch (error) {
@@ -193,6 +194,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'dhl-ecommerce',
     steps: ['browser'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

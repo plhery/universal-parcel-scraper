@@ -262,6 +262,38 @@ describe('India Post Livewire session', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
+  it('rejects without another poll when the caller cancels during a refresh', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'Completed', trackingHistoryHtml())))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'Processing'));
+    const timers = vi.spyOn(globalThis, 'setTimeout');
+    const controller = new AbortController();
+    const cancelled = new Error('caller cancelled');
+
+    const lookup = new IndiaPostTracker({ fetcher, pollIntervalMs: 60_000 }).fetch(SAMPLE_NUMBER, { signal: controller.signal });
+    await vi.waitFor(() => expect(timers).toHaveBeenCalledWith(expect.any(Function), 60_000));
+    controller.abort(cancelled);
+
+    await expect(lookup).rejects.toBe(cancelled);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps the cached history when the deadline passes during a refresh', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'Completed', trackingHistoryHtml())))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'Processing'));
+    const timers = vi.spyOn(globalThis, 'setTimeout');
+    const controller = new AbortController();
+
+    const lookup = new IndiaPostTracker({ fetcher, pollIntervalMs: 60_000 }).fetch(SAMPLE_NUMBER, { signal: controller.signal });
+    await vi.waitFor(() => expect(timers).toHaveBeenCalledWith(expect.any(Function), 60_000));
+    // What the runner's step signal does when the lookup budget is spent.
+    controller.abort(new DOMException('Timed out', 'TimeoutError'));
+
+    await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
   it('submits and polls a new valid-shaped wrong number into a clean 404', async () => {
     const fetcher = vi.fn<typeof fetch>()
       .mockResolvedValueOnce(new Response(pageHtml(WRONG_VALID_NUMBER, 'New')))

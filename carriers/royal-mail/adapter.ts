@@ -1,12 +1,12 @@
 
 import { DateTime } from 'luxon';
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { clean, cleanScalar, TrawlClient } from '../../core/transport/index.js';
+import { clean, cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { royalMailStage, royalMailSummaryStage, statusForStage } from './status.js';
@@ -25,7 +25,7 @@ const MAX_EVENTS_TO_RETURN = 100;
 export function normalizeRoyalMailNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^[A-Z]{2}\d{9}GB$/.test(value)) {
-    throw new SchemaError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format');
+    throw new InvalidInputError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format');
   }
   return value;
 }
@@ -170,7 +170,7 @@ export class RoyalMailTracker {
     return this.trawlUrl ? new TrawlClient(this.trawlUrl, this.#fetcher) : null;
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeRoyalMailNumber(trackingNumber);
     // Akamai refuses every non-browser client, so a direct attempt only burns
     // time. There is one step, and it is the browser.
@@ -182,9 +182,12 @@ export class RoyalMailTracker {
       );
     }
     return runSteps<CarrierResult>({
-      carrier: 'royal-mail', budgetMs: this.timeoutMs, recorder: this.#recorder,
+      // Without a caller's budget the lookup leaves the service its own time and
+      // the request the allowance to bring the answer back.
+      carrier: 'royal-mail', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
+      recorder: this.#recorder,
     }, [
-      { id: 'trawl', run: () => this.#trawlResult(trawl, number) },
+      { id: 'trawl', run: ({ remainingMs, signal }) => this.#trawlResult(trawl, number, Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal) },
     ]);
   }
 
@@ -194,13 +197,13 @@ export class RoyalMailTracker {
    * over plain HTTP: the edge accepts the call only from the session it
    * validated. The page the browser rendered only tells a challenge apart.
    */
-  async #trawlResult(trawl: TrawlClient, number: string): Promise<CarrierResult> {
+  async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     const summaryUrl = royalMailSummaryApiUrl(number);
     const page = await trawl.scrape({
       url: royalMailTrackingUrl(number),
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: this.timeoutMs,
+      maxTimeout: timeoutMs,
       captureResponses: [summaryUrl],
       settleTimeout: SETTLE_TIMEOUT_MS,
     }, {
@@ -208,9 +211,10 @@ export class RoyalMailTracker {
       // A browser may validate its cached main document with 304 while the
       // freshly submitted tracking request still returns a normal JSON reply.
       requireSolved: false,
-      timeoutMs: this.timeoutMs,
+      timeoutMs,
       maxBytes: MAX_BYTES,
       fetcher: this.#fetcher,
+      signal,
     });
     if (![2, 3].includes(page.tier) || ![200, 304].includes(page.statusCode)) {
       throw new TransportError('Royal Mail', 'The browser service did not load the Royal Mail tracking page');
@@ -268,6 +272,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'royal-mail',
     // Akamai refuses every non-browser client, so there is no direct tier.
     steps: ['trawl'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

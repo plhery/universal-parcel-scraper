@@ -182,11 +182,11 @@ describe('Australia Post browser retrieval', () => {
   it('requires a browser, validates input and honors cancellation and caller budgets', async () => {
     await expect(new AustraliaPostTracker({ trawl: null }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     const { tracker: client, fetcher } = tracker(service());
-    await expect(client.fetch('bad')).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(client.fetch('bad')).rejects.toMatchObject({ kind: 'invalid_input' });
     await expect(client.fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     for (const budgetMs of [0, -1, Infinity, 60_001]) await expect(client.fetch(NUMBER, { budgetMs })).rejects.toThrow('budget');
     for (const budgetMs of [1, 15_000]) await expect(client.fetch(NUMBER, { budgetMs })).rejects.toMatchObject({ kind: 'budget' });
-    await expect(client.fetch('7'.repeat(35))).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(client.fetch('7'.repeat(35))).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
     await client.fetch(NUMBER, { budgetMs: 20_000 });
     expect(JSON.parse(String(fetcher.mock.calls[0]![1]!.body)).maxTimeout).toBeLessThanOrEqual(5000);

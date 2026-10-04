@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../core/errors/index.js';
+import { InvalidInputError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
+import { DEFAULT_USER_AGENT } from '../core/transport/userAgent.js';
 import { createTracker, TrackingError } from './index.js';
 
 const number = '1Z999AA10123456784';
@@ -164,6 +165,52 @@ describe('standalone tracker', () => {
     await expect(tracker.track({ number, trackingUrl: 'https://private.invalid/secret' })).rejects.toBeInstanceOf(TypeError);
     await expect(tracker.track({ number, postcode: 'secret' })).rejects.toBeInstanceOf(TypeError);
     expect(lookup).not.toHaveBeenCalled();
+  });
+
+  it('reports a spent deadline as a budget failure when the source ends on the same budget, and asks no fallback', async () => {
+    // What adapters do with the budget they are handed: their own timer, joined with the caller's signal.
+    const lookup: CarrierAdapter['track'] = (_input, context) => new Promise((_, reject) => {
+      const ended = AbortSignal.any([context!.signal!, AbortSignal.timeout(Math.floor(context!.budgetMs!))]);
+      ended.addEventListener('abort', () => reject(new UpstreamNetworkError('UPS', ended.reason)), { once: true });
+    });
+    const fetcher = vi.fn<typeof fetch>();
+    for (const recordsSteps of [false, true]) {
+      await expect(createTracker({ registry: registry(lookup, recordsSteps), providers: ['Ship24'], fetcher }).track({ number }, { budgetMs: 60 }))
+        .rejects.toMatchObject({ hint: { kind: 'budget' }, attempts: [{ source: 'ups', kind: 'budget' }] });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('keeps an earlier source\'s failure as the hint when a later source only refuses the number\'s format', async () => {
+    const composite = '1234/12345678';
+    const nacex = (error: Error) => new AdapterRegistry({ factories: { nacex: () => ({ id: 'nacex', steps: ['direct'],
+      track: vi.fn().mockRejectedValue(error) }) }, carriers: { nacex: 'nacex' } }, environment);
+    const failure = (error: Error) => createTracker({ registry: nacex(error), providers: ['Ship24'], fetcher: vi.fn<typeof fetch>() })
+      .track({ number: composite, carrier: 'nacex' }).then(() => null, (reason: TrackingError) => reason);
+    expect(await failure(new RateLimitedError('NACEX', 30_000))).toMatchObject({
+      hint: { kind: 'rate_limited', retryAfterMs: 30_000 }, attempts: [{ source: 'nacex', kind: 'rate_limited' }, { source: 'Ship24', kind: 'invalid_input' }],
+    });
+    // A direct adapter that refuses the format itself is still the answer.
+    expect(await failure(new InvalidInputError('NACEX'))).toMatchObject({ hint: { kind: 'invalid_input' } });
+  });
+
+  it('tells a rejected number and a malformed reply apart from a transport failure', async () => {
+    const hintOf = async (error: Error) => createTracker({ registry: registry(vi.fn().mockRejectedValue(error)), providers: [] })
+      .track({ number }).then(() => null, (failure: TrackingError) => ({ hint: failure.hint.kind, attempt: failure.attempts[0]?.kind }));
+    expect(await hintOf(new InvalidInputError('UPS'))).toEqual({ hint: 'invalid_input', attempt: 'invalid_input' });
+    expect(await hintOf(new TypeError('Cannot read properties of undefined'))).toEqual({ hint: 'schema', attempt: 'schema' });
+    expect(await hintOf(new Error('socket closed'))).toEqual({ hint: 'transport', attempt: 'transport' });
+  });
+
+  it('names the install to carriers with the host User-Agent and rejects an unusable one', async () => {
+    const sent = async (userAgent?: string) => {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('{}', { status: 404 }));
+      await createTracker({ userAgent, fetcher, providers: [] }).track({ number: '6A00000000000', carrier: 'la-poste' }).catch(() => {});
+      return new Headers(fetcher.mock.calls[0]![1]!.headers).get('user-agent');
+    };
+    expect(await sent('ExampleHost/1.0')).toBe('ExampleHost/1.0');
+    expect(await sent()).toBe(DEFAULT_USER_AGENT);
+    expect(() => createTracker({ userAgent: 'Example\r\nX-Injected: 1' })).toThrow(TypeError);
   });
 
   it('exposes a safe aggregate error without adapter diagnostics', async () => {

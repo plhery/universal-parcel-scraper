@@ -42,7 +42,9 @@ describe('USPS international numbers', () => {
   it.each(['LZ123456789CN', 'LZ123456789US', 'LZ12345678CN', 'LZ123456785C'])
     ('rejects invalid international number %s before making a request', async (number) => {
       const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
-      await expect(new USPSTracker({ trawlUrl: TRAWL_URL }).fetch(number)).rejects.toThrow('checksum-valid UPU S10');
+      const lookup = new USPSTracker({ trawlUrl: TRAWL_URL }).fetch(number);
+      await expect(lookup).rejects.toThrow('checksum-valid UPU S10');
+      await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
       expect(fetcher).not.toHaveBeenCalled();
     });
 });
@@ -216,8 +218,9 @@ describe('USPS lookup steps', () => {
   it('rejects a number that is not a USPS number before any request', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('must not fetch'));
-    await expect(new USPSTracker({ trawlUrl: TRAWL_URL }).fetch('1Z999AA10123456784'))
-      .rejects.toThrow('USPS tracking numbers must contain 20 or 22 digits');
+    const lookup = new USPSTracker({ trawlUrl: TRAWL_URL }).fetch('1Z999AA10123456784');
+    await expect(lookup).rejects.toThrow('USPS tracking numbers must contain 20 or 22 digits');
+    await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

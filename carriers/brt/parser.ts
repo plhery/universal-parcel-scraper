@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -7,7 +7,7 @@ import { classifyBrtStatus } from './status.js';
 
 export function normalizeBrtNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');
-  if (!/^\d{14}$/.test(number)) throw new TypeError('BRT requires a fourteen-digit BRTcode');
+  if (!/^\d{14}$/.test(number)) throw new InvalidInputError('BRT', 'BRT requires a fourteen-digit BRTcode');
   return number;
 }
 

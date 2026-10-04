@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
@@ -15,7 +15,7 @@ const PUBLIC_FORM_SALT = '00#78a13&ba6c;73LOL';
 
 export function normalizeYanwenNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z0-9]{8,40}$/.test(number)) throw new TypeError('Yanwen requires an alphanumeric parcel reference');
+  if (!/^[A-Z0-9]{8,40}$/.test(number)) throw new InvalidInputError('Yanwen', 'Yanwen requires an alphanumeric parcel reference');
   return number;
 }
 

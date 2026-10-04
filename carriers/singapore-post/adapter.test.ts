@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, parse, SingaporePostTracker } from './adapter.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'RR000000005SG';
 const fixture = (name = 'in-transit') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
@@ -96,7 +97,7 @@ describe('Singapore Post retrieval', () => {
   it('propagates cancellation, validates inputs before I/O and caps the response', async () => {
     const unused = vi.fn<typeof fetch>();
     await expect(new SingaporePostTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
-    await expect(new SingaporePostTracker({ fetcher: unused }).fetch('tracking&number')).rejects.toThrow(TypeError);
+    await expect(new SingaporePostTracker({ fetcher: unused }).fetch('tracking&number')).rejects.toThrow(InvalidInputError);
     expect(unused).not.toHaveBeenCalled();
     const huge = vi.fn<typeof fetch>().mockResolvedValue(new Response('x'.repeat(1_000_001)));
     await expect(new SingaporePostTracker({ fetcher: huge }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');

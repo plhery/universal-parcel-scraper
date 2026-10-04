@@ -13,10 +13,10 @@
  */
 
 import { load } from 'cheerio';
-import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import { UpstreamHttpError, clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { UpstreamHttpError, clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { classifyStatus } from './status.js';
 
 export { classifyStatus } from './status.js';
@@ -70,9 +70,7 @@ export class ColisPriveTrackingError extends NotFoundError {
 export function normalizeColisPriveCredential(raw: string): string {
   const credential = raw.trim().toLocaleUpperCase('en-US');
   if (!/^[A-Z0-9]{12}(?:0[1-9]|[1-8]\d|9[0-5]|97|98)\d{3}$/.test(credential)) {
-    throw new TypeError(
-      'Colis Privé tracking requires the 12-character shipment number followed by the 5-digit recipient postcode',
-    );
+    throw new InvalidInputError(PROVIDER, 'Colis Privé tracking requires the 12-character shipment number followed by the 5-digit recipient postcode');
   }
   return credential;
 }
@@ -164,11 +162,13 @@ export interface ColisPriveTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class ColisPriveTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: ColisPriveTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -176,19 +176,22 @@ export class ColisPriveTracker {
       throw new TypeError('Colis Privé timeout must be positive');
     }
     this.#fetcher = options.fetcher;
+    this.#userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawCredential: string): Promise<CarrierResult> {
+  async fetch(rawCredential: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const credential = normalizeColisPriveCredential(rawCredential);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(colisPriveTrackingUrl(credential), {
+      signal: budget.signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'fr-FR,fr;q=0.9',
-        'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: 'Colis Privé tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       redirect: 'manual',
       allowHttpError: true,
@@ -207,13 +210,13 @@ export class ColisPriveTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new ColisPriveTracker({ fetcher: environment.fetcher });
+  const tracker = new ColisPriveTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'colis-prive',
     steps: ['direct'],
     // The postcode is already part of the stored number for this carrier.
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
     // A bare 12-character number needs the postcode appended: it reads as unknown.
-    recognize: (number) => recognizeFromLookup(() => tracker.fetch(number), () => accepted(() => normalizeColisPriveCredential(number))),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeColisPriveCredential(number))),
   };
 };

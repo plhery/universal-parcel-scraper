@@ -160,7 +160,7 @@ describe('EMS retrieval and registration', () => {
 
   it.each(['LZ000000005CN', 'EB000000000CN', 'TRACK&itemId=123', ''])('rejects unsupported input %s before I/O', async (number) => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new EmsTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new EmsTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

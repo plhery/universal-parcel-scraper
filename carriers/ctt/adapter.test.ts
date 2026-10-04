@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SchemaError } from '../../core/errors/index.js';
+import { SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizeCttTrackingNumber,
   cttTrackingUrl,
@@ -94,7 +94,7 @@ describe('CTT tracking normalization', () => {
     expect(normalizeCttTrackingNumber('rl000000005pt')).toBe(TRACKING_NUMBER);
     expect(normalizeCttTrackingNumber('RL402552798PT')).toBe('RL402552798PT');
     for (const raw of ['RL000000006PT', 'RL000000005GB', '12345', '']) {
-      expect(() => normalizeCttTrackingNumber(raw)).toThrow(TypeError);
+      expect(() => normalizeCttTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(cttTrackingUrl(TRACKING_NUMBER)).toBe(
       'https://www.ctt.pt/feapl_2/app/open/objectSearch/objectSearch.jspx?objects=RL000000005PT',
@@ -235,6 +235,26 @@ describe('CttTracker fetch', () => {
       .rejects.toMatchObject({ name: 'UpstreamHttpError', status: 503 });
     expect(() => new CttTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new CttTracker({ timeoutMs: 1_000 }).fetch('nope'))
-      .rejects.toThrow(TypeError);
+      .rejects.toThrow(InvalidInputError);
+  });
+
+  it("gives every request of the ceremony the caller's signal and starts none after an abort", async () => {
+    const scenario: CttScenario = {};
+    mockCttFlow(scenario);
+    const controller = new AbortController();
+    const signals: AbortSignal[] = [];
+    // The caller cancels while the cookie-less 403 is being answered.
+    const fetcher: typeof fetch = async (input, init) => {
+      if (init?.signal) signals.push(init.signal);
+      const response = await fetch(input, init);
+      if (response.status === 403) controller.abort(new Error('caller cancelled'));
+      return response;
+    };
+    await expect(new CttTracker({ timeoutMs: 1_000, fetcher }).fetch(TRACKING_NUMBER, { signal: controller.signal }))
+      .rejects.toThrow('caller cancelled');
+    expect(scenario.calls).toHaveLength(4);
+    expect(scenario.calls?.filter((call) => call.includes('DataActionGetObjectEventsByInputObjectCode'))).toHaveLength(1);
+    expect(signals).toHaveLength(4);
+    expect(signals.every((signal) => signal.aborted)).toBe(true);
   });
 });

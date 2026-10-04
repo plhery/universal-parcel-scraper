@@ -1,9 +1,9 @@
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { referenceConsignment } from './reference.js';
 import { statusFor } from './status.js';
@@ -21,6 +21,7 @@ const MAX_RESPONSE_BYTES = 2_000_000;
 
 export interface SwissPostCargoOptions {
   timeoutMs?: number;
+  userAgent?: string;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
   /** Test seam for the clock that decides which reference shipments are current. */
@@ -43,7 +44,7 @@ function eventTimestamp(value: unknown): ParsedTime | null {
 export function normalizeSwissPostCargoTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^(?=.*\d)[A-Z0-9]{6,40}$/.test(value)) {
-    throw new InputRequiredError(PROVIDER, 'a 6- to 40-character barcode or reference');
+    throw new InvalidInputError(PROVIDER, `${PROVIDER} tracking requires a 6- to 40-character barcode or reference`);
   }
   return value;
 }
@@ -158,33 +159,37 @@ export class SwissPostCargoTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
   readonly #now: () => number;
+  readonly #userAgent: string;
 
   constructor(options: number | SwissPostCargoOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher, now = Date.now }: SwissPostCargoOptions = typeof options === 'number' ? { timeoutMs: options } : options;
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher, now = Date.now, userAgent }: SwissPostCargoOptions = typeof options === 'number' ? { timeoutMs: options } : options;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
       throw new TypeError('Swiss Post Cargo timeout must be positive');
     }
     this.timeoutMs = timeoutMs;
     this.#fetcher = fetcher;
     this.#now = now;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeSwissPostCargoTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { bytes } = await fetchBounded(TRACKING_API, {
       method: 'POST',
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'Accept-Language': 'en-CH,en;q=0.9',
         'Content-Type': 'application/json',
         Origin: 'https://apv.swisspost-cargo.com',
         Referer: `${TRACKING_PAGE}/`,
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
       body: JSON.stringify({ Identifier: trackingNumber }),
     }, {
       provider: 'Swiss Post Cargo tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
     });
@@ -193,10 +198,10 @@ export class SwissPostCargoTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new SwissPostCargoTracker({ fetcher: environment.fetcher });
+  const tracker = new SwissPostCargoTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'swiss-post-cargo',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

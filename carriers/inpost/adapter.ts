@@ -1,9 +1,9 @@
 
-import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyInpostStatus } from './status.js';
 
@@ -23,6 +23,8 @@ import { classifyInpostStatus } from './status.js';
 //   consignments 2026-08-31 by the prior-art client; the map lives in status.ts.
 const TRACKING_ENDPOINT = 'https://inposteasy.com/api/tracking';
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** The pause `fetchBounded` takes before its one retry of a failed request. */
+const TRANSIENT_RETRY_DELAY_MS = 1_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
 
@@ -33,7 +35,7 @@ function statusCode(value: unknown): string {
 export function normalizeInpostTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^(?:\d{24}|JJD\d{16}|JD\d{16}|8YDR\d{9})$/.test(value)) {
-    throw new TypeError('InPost tracking requires a 24-digit, JJD/JD legacy or 8YDR identifier');
+    throw new InvalidInputError('InPost', 'InPost tracking requires a 24-digit, JJD/JD legacy or 8YDR identifier');
   }
   return value;
 }
@@ -103,27 +105,32 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
 export class InpostTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
+  private readonly userAgent: string;
 
-  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch } = {}) {
+  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
+    this.userAgent = userAgentOf(options.userAgent);
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('InPost timeout must be positive');
     }
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeInpostTrackingNumber(rawTrackingNumber);
+    // The default budget covers the request, the pause and the one transient retry.
+    const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
     const url = `${TRACKING_ENDPOINT}/${encodeURIComponent(trackingNumber)}`;
     const { response, bytes } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.userAgent,
       },
     }, {
       provider: 'InPost tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -136,11 +143,11 @@ export class InpostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new InpostTracker({ fetcher: environment.fetcher });
+  const tracker = new InpostTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'inpost',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
-    recognize: (number) => recognizeFromLookup(() => tracker.fetch(number), () => accepted(() => normalizeInpostTrackingNumber(number))),
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeInpostTrackingNumber(number))),
   };
 };

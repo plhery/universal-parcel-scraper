@@ -21,7 +21,7 @@
     "adapter": "gls-ch",
     "requirements": [
       {
-        "field": "dpdPostcode",
+        "field": "postcode",
         "validator": "swissPostcode",
         "label": "Delivery postcode",
         "type": "text",

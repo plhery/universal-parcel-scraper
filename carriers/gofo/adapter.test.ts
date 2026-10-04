@@ -5,6 +5,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, GofoTracker } from './adapter.js';
 import { normalizeGofoNumber, parseGofo } from './parser.js';
 import { gofoStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'GFUS00000000000001';
 const OTHER = 'GFUS00000000000002';
@@ -181,7 +182,7 @@ describe('GOFO direct retrieval', () => {
   });
   it('rejects invalid input, cancellation, oversized and malformed responses within a fractional budget', async () => {
     const unused = vi.fn<typeof fetch>();
-    await expect(new GofoTracker({ fetcher: unused }).fetch(`${NUMBER}&other=1`)).rejects.toThrow(TypeError);
+    await expect(new GofoTracker({ fetcher: unused }).fetch(`${NUMBER}&other=1`)).rejects.toThrow(InvalidInputError);
     await expect(new GofoTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow(); expect(unused).not.toHaveBeenCalled();
     const slow = vi.fn<typeof fetch>().mockImplementation(async (_url, init) => { await new Promise<void>(resolve => init?.signal?.addEventListener('abort', () => resolve(), { once: true })); init?.signal?.throwIfAborted(); return new Response('{}'); });
     await expect(new GofoTracker({ fetcher: slow }).fetch(NUMBER, { budgetMs: 20.5 })).rejects.toThrow();

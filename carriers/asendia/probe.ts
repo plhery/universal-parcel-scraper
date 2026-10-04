@@ -25,7 +25,7 @@
 import { createHash } from 'node:crypto';
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import {
@@ -34,6 +34,7 @@ import {
   fetchBounded,
   parseJsonBytes,
   UpstreamHttpError,
+  userAgentOf,
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyAsendiaStatus } from './status.js';
@@ -84,7 +85,7 @@ function plainText(value: unknown, maxLength = 500): string {
 export function normalizeAsendiaTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s-]/g, '');
   if (!/^[A-Z0-9]{8,40}$/.test(value) || !/\d/.test(value)) {
-    throw new TypeError('Asendia tracking numbers must contain 8 to 40 ASCII letters and digits');
+    throw new InvalidInputError('Asendia', 'Asendia tracking numbers must contain 8 to 40 ASCII letters and digits');
   }
   return value;
 }
@@ -297,7 +298,7 @@ function challengeToken(value: unknown): string {
   return token;
 }
 
-function baseHeaders(): Record<string, string> {
+function baseHeaders(userAgent: string): Record<string, string> {
   return {
     Accept: 'application/json',
     'Accept-Language': 'en',
@@ -307,7 +308,7 @@ function baseHeaders(): Record<string, string> {
     'X-Timezone': ZONE,
     Origin: TRACKING_ORIGIN,
     Referer: `${TRACKING_PAGE}/`,
-    'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+    'User-Agent': userAgent,
   };
 }
 
@@ -317,6 +318,7 @@ export interface AsendiaTrackerOptions {
   turnstileTokenProvider?: () => string | Promise<string>;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class AsendiaTracker {
@@ -324,6 +326,7 @@ export class AsendiaTracker {
   readonly now: () => Date;
   readonly turnstileTokenProvider: () => string | Promise<string>;
   readonly fetcher?: typeof fetch;
+  readonly userAgent: string;
 
   constructor(options: AsendiaTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -334,6 +337,7 @@ export class AsendiaTracker {
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Asendia timeout must be positive');
     }
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
   async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
@@ -341,7 +345,7 @@ export class AsendiaTracker {
     const token = challengeToken(await this.turnstileTokenProvider());
     const [environmentScript, configPayload] = await Promise.all([
       this.requestText(ENVIRONMENT_SCRIPT, 'Asendia public environment'),
-      this.requestJson(CONFIG_API, { headers: baseHeaders() }, 'Asendia tracking configuration'),
+      this.requestJson(CONFIG_API, { headers: baseHeaders(this.userAgent) }, 'Asendia tracking configuration'),
     ]);
     const publicHitKey = parseAsendiaPublicHitKey(environmentScript);
     const config = parseTenantConfig(configPayload);
@@ -349,7 +353,7 @@ export class AsendiaTracker {
     const hitToken = asendiaHitToken(trackingNumber, date, publicHitKey);
     const payload = await this.requestJson(asendiaTrackingApiUrl(), {
       method: 'POST',
-      headers: { ...baseHeaders(), 'X-Hit-Token': hitToken },
+      headers: { ...baseHeaders(this.userAgent), 'X-Hit-Token': hitToken },
       body: JSON.stringify({
         ids: [trackingNumber],
         id: config.id,

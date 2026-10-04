@@ -1,7 +1,7 @@
 
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -12,7 +12,7 @@ const ENDPOINT = 'https://track.4px.com/track/v2/front/listTrackV3';
 
 export function normalizeFourPxNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z0-9]{8,40}$/.test(number)) throw new TypeError('4PX requires an alphanumeric parcel reference');
+  if (!/^[A-Z0-9]{8,40}$/.test(number)) throw new InvalidInputError('4PX', '4PX requires an alphanumeric parcel reference');
   return number;
 }
 

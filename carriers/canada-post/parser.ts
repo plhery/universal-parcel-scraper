@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
@@ -11,7 +11,7 @@ import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, statusFor
 export function normalizeCanadaPostNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^\d{11,24}$/.test(value) && !(value.endsWith('CA') && isValidS10TrackingNumber(value))) {
-    throw new TypeError('Canada Post requires a parcel PIN, numeric reference or valid Canadian postal tracking number');
+    throw new InvalidInputError('canada-post', 'Canada Post requires a parcel PIN, numeric reference or valid Canadian postal tracking number');
   }
   return value;
 }

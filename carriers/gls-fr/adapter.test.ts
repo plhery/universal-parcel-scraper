@@ -307,6 +307,18 @@ describe('GLS France response normalization', () => {
     expect(missing).toHaveBeenCalledTimes(3);
   });
 
+  it('does not ask for the number as printed once the caller has cancelled', async () => {
+    const controller = new AbortController();
+    const fetcher = vi.fn<typeof fetch>(async () => {
+      controller.abort(new Error('caller cancelled'));
+      return new Response('404 No command found', { status: 404 });
+    });
+
+    await expect(new GLSFranceTracker({ timeoutMs: 1_000, fetcher }).fetch(PRINTED_TRACKING_NUMBER, { signal: controller.signal }))
+      .rejects.toThrow('caller cancelled');
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it('enforces the adapter response-size limit', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', {
       headers: { 'Content-Length': '750001' },

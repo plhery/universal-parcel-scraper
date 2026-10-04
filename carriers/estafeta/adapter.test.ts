@@ -6,6 +6,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, EstafetaTracker } from './adapter.js';
 import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
 import { estafetaStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '9000000001';
 const GUIDE = '100000000000000A00TEST';
@@ -28,7 +29,7 @@ describe('Estafeta bound history', () => {
     expect(parseEstafetaHistory(history, full).canonical_tracking_number).toBeUndefined();
     expect(parseEstafetaHistory(history, short).canonical_tracking_number).toBe(guide);
     for (const number of ['A'.repeat(22), '900000000001AA00000002', '900000000001A00000000?', '90000000000A1000000002']) {
-      expect(() => normalizeEstafetaNumber(number)).toThrow(TypeError);
+      expect(() => normalizeEstafetaNumber(number)).toThrow(InvalidInputError);
     }
     const pieces = load(html); pieces('.shipmentInfoDiv').append('<ul class="multiplesWaybillList"><li><a class="MultipleLink">900000000001A000000003</a></li></ul>');
     expect(() => parseEstafetaLookup(pieces.html(), guide)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
@@ -41,7 +42,7 @@ describe('Estafeta bound history', () => {
     expect(parseEstafetaHistory(history, parseEstafetaLookup(fixture('full-guide-lookup.html'), guide)).canonical_tracking_number).toBeUndefined();
     expect(parseEstafetaHistory(history, parseEstafetaLookup(fixture('full-guide-lookup.html'), NUMBER)).canonical_tracking_number).toBe(guide);
     for (const number of ['9000000000001DD0000002', '90000000000001D0000002']) {
-      expect(() => normalizeEstafetaNumber(number)).toThrow(TypeError);
+      expect(() => normalizeEstafetaNumber(number)).toThrow(InvalidInputError);
     }
   });
   it('binds the short-code alias to the canonical guide and retains local clocks without projecting private details', () => {
@@ -167,7 +168,7 @@ describe('Estafeta direct retrieval', () => {
     }
   });
   it('rejects invalid input and cancellation before I/O and limits both response bodies', async () => {
-    const unused = vi.fn<typeof fetch>(); for (const number of ['123', `${NUMBER}&wayBill=OTHER`, 'ABC1234567', 'X'.repeat(23)]) await expect(new EstafetaTracker({ fetcher: unused }).fetch(number)).rejects.toThrow(TypeError);
+    const unused = vi.fn<typeof fetch>(); for (const number of ['123', `${NUMBER}&wayBill=OTHER`, 'ABC1234567', 'X'.repeat(23)]) await expect(new EstafetaTracker({ fetcher: unused }).fetch(number)).rejects.toThrow(InvalidInputError);
     await expect(new EstafetaTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow(); expect(unused).not.toHaveBeenCalled();
     for (const second of [false, true]) { const fetcher = vi.fn<typeof fetch>(); if (second) fetcher.mockResolvedValueOnce(new Response(lookupHtml())); fetcher.mockResolvedValueOnce(new Response('x'.repeat(1_000_001))); await expect(new EstafetaTracker({ fetcher }).fetch(NUMBER)).rejects.toThrow('unexpectedly large'); }
   });

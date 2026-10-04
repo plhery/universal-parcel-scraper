@@ -9,12 +9,12 @@
  */
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidGlsParcelNumber } from '../../core/detection/index.js';
-import { SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { InvalidInputError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   FAILED_DELAYED_DELIVERY,
@@ -87,7 +87,7 @@ function printedNumber(raw: string): string {
 export function normalizeGLSFranceTrackingNumber(raw: string): string {
   const value = parcelNumber(printedNumber(raw));
   if (!value) {
-    throw new TypeError('GLS France tracking numbers must contain 8 letters or digits, or 11 digits (12 with a valid check digit)');
+    throw new InvalidInputError(PROVIDER, 'GLS France tracking numbers must contain 8 letters or digits, or 11 digits (12 with a valid check digit)');
   }
   return value;
 }
@@ -207,11 +207,13 @@ export interface GLSFranceTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class GLSFranceTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: GLSFranceTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -219,33 +221,36 @@ export class GLSFranceTracker {
       throw new TypeError('GLS France timeout must be positive');
     }
     this.#fetcher = options.fetcher;
+    this.#userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const normalized = normalizeGLSFranceTrackingNumber(trackingNumber);
     const printed = printedNumber(trackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     try {
-      return await this.lookup(normalized, normalized);
+      return await this.lookup(normalized, normalized, budget);
     } catch (error) {
       // The 11-digit parcel number is what GLS keys a parcel by. Should the
       // French backend only know the number as printed, ask for it once too.
       if (printed === normalized || !(error instanceof UpstreamHttpError) || error.status !== 404) throw error;
-      return await this.lookup(printed, normalized);
+      return await this.lookup(printed, normalized, budget);
     }
   }
 
-  private async lookup(code: string, normalized: string): Promise<CarrierResult> {
+  private async lookup(code: string, normalized: string, budget: LookupBudget): Promise<CarrierResult> {
     const { bytes } = await fetchBounded(`${TRACKING_API}/${encodeURIComponent(code)}`, {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'Accept-Language': 'fr-FR,fr;q=0.9',
         Origin: 'https://moncolis.gls-france.com',
         Referer: `${TRACKING_PAGE}/`,
-        'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: 'GLS France tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       fetcher: this.#fetcher,
     });
@@ -254,10 +259,10 @@ export class GLSFranceTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new GLSFranceTracker({ fetcher: environment.fetcher });
+  const tracker = new GLSFranceTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'gls-fr',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

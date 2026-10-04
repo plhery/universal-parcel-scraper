@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url';
 import catalog from '../data/catalog.json' with { type: 'json' };
 const contract = { 'x-carriers': catalog };
 import { writeCanaryReport } from './canary-report.mjs';
+import { DEFAULT_USER_AGENT } from '../core/transport/userAgent.js';
 
 const DEFAULT_TIMEOUT_MS = 15_000;
 const DEFAULT_ATTEMPTS = 2;
@@ -115,7 +116,7 @@ export async function requestCanaryStatus(url: string, timeoutMs: number): Promi
   const response = await fetch(url, {
     headers: {
       Accept: 'text/html,application/json;q=0.8,*/*;q=0.5',
-      'User-Agent': 'SwissDeliveryTracker-Canary/1.0',
+      'User-Agent': DEFAULT_USER_AGENT,
     },
     cache: 'no-store',
     redirect: 'manual',

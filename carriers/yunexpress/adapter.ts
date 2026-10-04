@@ -1,25 +1,23 @@
-import { loadChromium } from '../../core/transport/optional.js';
-
 import { DateTime } from 'luxon';
-import type { Browser, Response as BrowserResponse } from 'playwright-core';
+import type { Response as BrowserResponse } from 'playwright-core';
 import type { AdapterEnvironment, AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { explicitOffsetTime, EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
+import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
 import { yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
 const MAX_BYTES = 1_000_000;
-let browserBusy = false;
 
 export function normalizeYunExpressNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^YT\d{16}$/.test(number)) throw new TypeError('YunExpress requires a YT parcel reference');
+  if (!/^YT\d{16}$/.test(number)) throw new InvalidInputError('YunExpress', 'YunExpress requires a YT parcel reference');
   return number;
 }
 
@@ -121,23 +119,16 @@ export function parseCaptured(page: TrawlScrapeResponse, number: string): Carrie
   return parse(payload, number);
 }
 
-async function localBrowser(number: string, executablePath: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
-  signal.throwIfAborted();
-  if (browserBusy) throw new TransportError('YunExpress', 'The YunExpress tracking browser is busy');
-  browserBusy = true;
-  let browser: Browser | undefined;
-  let rejectHistory!: (error: unknown) => void;
-  let resolveHistory!: (result: CarrierResult) => void;
-  let settled = false;
-  const history = new Promise<CarrierResult>((resolve, reject) => { resolveHistory = resolve; rejectHistory = reject; });
-  void history.catch(() => {});
-  const fail = (error: unknown) => { if (!settled) { settled = true; rejectHistory(error); } };
-  const abort = () => { fail(signal.reason); void browser?.close().catch(() => {}); };
-  signal.addEventListener('abort', abort, { once: true });
-  try {
-    browser = await (await loadChromium("YunExpress")).launch({ executablePath, headless: true, timeout: Math.min(timeoutMs, 10_000),
-      env: { PATH: process.env.PATH ?? '', HOME: process.env.HOME ?? '/tmp', LANG: 'en_US.UTF-8' } });
-    signal.throwIfAborted();
+function localBrowser(number: string, executablePath: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+  return withLocalBrowser({ provider: 'YunExpress', executablePath, signal, timeoutMs }, async ({ browser, signal: session, remainingMs }) => {
+    let rejectHistory!: (error: unknown) => void;
+    let resolveHistory!: (result: CarrierResult) => void;
+    let settled = false;
+    const history = new Promise<CarrierResult>((resolve, reject) => { resolveHistory = resolve; rejectHistory = reject; });
+    void history.catch(() => {});
+    const fail = (error: unknown) => { if (!settled) { settled = true; rejectHistory(error); } };
+    // A reply that arrives after the lookup ended is never history.
+    session.addEventListener('abort', () => { settled = true; }, { once: true });
     const page = await browser.newPage({ locale: 'en-US' });
     // Request interception makes the same fresh session receive API 405.
     // Observe response events without altering the browser's network requests.
@@ -152,22 +143,18 @@ async function localBrowser(number: string, executablePath: string, signal: Abor
         }
         if (Number(response.headers()['content-length']) > MAX_BYTES) throw new SchemaError('YunExpress', 'YunExpress returned excessive tracking data');
         const bytes = await response.body();
-        signal.throwIfAborted();
         if (bytes.length > MAX_BYTES) throw new SchemaError('YunExpress', 'YunExpress returned excessive tracking data');
         const result = parse(JSON.parse(bytes.toString('utf8')) as unknown, number);
         if (!settled) { settled = true; resolveHistory(result); }
       } catch (error) { fail(error instanceof SyntaxError ? new SchemaError('YunExpress', 'YunExpress returned unreadable tracking JSON', { cause: error }) : error); }
     });
-    const navigation = page.goto(yunExpressTrackingUrl(number), { waitUntil: 'domcontentloaded', timeout: timeoutMs }).then((response) => {
+    const navigation = page.goto(yunExpressTrackingUrl(number), { waitUntil: 'domcontentloaded', timeout: remainingMs() }).then((response) => {
       if (!response || response.status() !== 200) throw new TransportError('YunExpress', 'YunExpress tracking page is unavailable');
       return history;
     });
+    void navigation.catch(() => {});
     return await Promise.race([navigation, history]);
-  } finally {
-    settled = true;
-    signal.removeEventListener('abort', abort);
-    try { await browser?.close(); } finally { browserBusy = false; }
-  }
+  });
 }
 
 export class YunExpressTracker {
@@ -179,7 +166,8 @@ export class YunExpressTracker {
     if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError('YunExpress timeout must be positive');
     if (!this.options.trawl && !this.options.executablePath) throw new ChallengeError('YunExpress', 'YunExpress requires a configured tracking browser');
     return runSteps({ carrier: 'yunexpress', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'browser', enabled: Boolean(this.options.executablePath), run: ({ signal, remainingMs }) => localBrowser(number, this.options.executablePath!, signal, Math.max(1, Math.floor(remainingMs))) },
+      // The shared launcher serves a lookup for at most 60 s; a longer budget gives the browser that much.
+      { id: 'browser', enabled: Boolean(this.options.executablePath), run: ({ signal, remainingMs }) => localBrowser(number, this.options.executablePath!, signal, Math.min(60_000, Math.max(1, Math.floor(remainingMs)))) },
       // Keep the local runtime primary. Service capture needs the matching
       // decoded-response hook and is used only without local Chromium.
       { id: 'trawl', enabled: !this.options.executablePath && Boolean(this.options.trawl), run: async ({ signal, remainingMs }) => {

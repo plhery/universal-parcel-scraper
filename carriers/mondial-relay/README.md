@@ -22,8 +22,8 @@ Without a browser service (`FLARESOLVERR_URL`) the lookup fails at once with a
 `ChallengeError`. Lookups are serialized per adapter instance (`singleFlight`)
 so the token and the API call stay on one browser identity. Errors: warning
 reply → `NotFoundError`; no token → `ChallengeError`; well-shaped number without
-a postcode → `InputRequiredError`; malformed number or a reply for another
-shipment → `SchemaError`.
+a postcode → `InputRequiredError`; malformed number → `InvalidInputError`; a reply
+for another shipment → `SchemaError`.
 
 ## Notes
 
@@ -37,8 +37,7 @@ shipment → `SchemaError`.
 - Never read the barcode's routing suffix as a postcode: it looks like one, and a
   wrong postcode returns another parcel or nothing.
 - The postcode is part of the credential: kept out of logs, links and fixtures.
-  The tracking link carries `numeroExpedition` only. It is stored in the
-  historic `dpdPostcode` field / `dpd_postcode` column.
+  The tracking link carries `numeroExpedition` only.
 - Status comes from the `SuiviContextuel` headline, then events, then the
   highest reached milestone (its label, then its number). The deciding stage is
   set as `current_stage`, because the status vocabulary has no pickup value and

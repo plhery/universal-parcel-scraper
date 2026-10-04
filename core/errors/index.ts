@@ -25,6 +25,7 @@ export type CarrierErrorKind =
   | 'maintenance'     // the provider announced planned unavailability
   | 'schema'          // the payload did not have the expected shape or identity
   | 'input_required'  // the lookup needs a postcode or capability URL the parcel does not have
+  | 'invalid_input'   // the carrier cannot look up the number or credential as supplied; no retry can succeed
   | 'transport'       // network failure, timeout, or a browser service that could not help
   | 'budget';         // the lookup ran out of its time budget before any step succeeded
 
@@ -34,6 +35,7 @@ const STATUS_BY_KIND: Partial<Record<CarrierErrorKind, number>> = {
   challenge: 403,
   rate_limited: 429,
   maintenance: 503,
+  invalid_input: 400,
 };
 
 export interface CarrierErrorOptions {
@@ -125,6 +127,17 @@ export class InputRequiredError extends CarrierError {
     super('input_required', provider, message, options);
     this.name = 'InputRequiredError';
     this.field = field;
+  }
+}
+
+/**
+ * The adapter rejected the number or credential before any request: the format
+ * is not one this carrier issues. Repeating the lookup cannot succeed.
+ */
+export class InvalidInputError extends CarrierError {
+  constructor(provider: string, message = `${provider} cannot look up this tracking number`, options?: CarrierErrorOptions) {
+    super('invalid_input', provider, message, options);
+    this.name = 'InvalidInputError';
   }
 }
 

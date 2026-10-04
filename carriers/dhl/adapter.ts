@@ -16,14 +16,14 @@
 
 import makeFetchCookie from 'fetch-cookie';
 import { Cookie, CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import type { AdapterFactory, LookupBudget, TrackingContext } from '../../core/adapter/index.js';
 import {
-  ChallengeError, IndeterminateError, InputRequiredError, RateLimitedError, SchemaError,
+  ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, RateLimitedError, SchemaError,
   type CarrierErrorOptions,
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { carrierIdFromPartnerLinks } from '../../core/catalog/hints.js';
-import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { isoTime } from '../../core/time/index.js';
 import {
@@ -52,7 +52,7 @@ function clean(value: unknown, limit = 500): string {
 
 export function normalizeDHLTrackingNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z0-9]{5,40}$/.test(value)) throw new TypeError('DHL tracking number is invalid');
+  if (!/^[A-Z0-9]{5,40}$/.test(value)) throw new InvalidInputError(PROVIDER, 'DHL tracking number is invalid');
   return value;
 }
 
@@ -162,6 +162,19 @@ function renewable(error: unknown): boolean {
   return error instanceof DHLSessionError || error instanceof UpstreamNetworkError;
 }
 
+/** What every request of one lookup shares: a signal that aborts on the caller's signal or a spent budget, and when that budget ends. */
+type Limits = Pick<LookupBudget, 'signal' | 'deadline'>;
+
+/** A request's own timeout, shortened to what is left of the lookup budget. */
+function capped(timeoutMs: number, { deadline }: Limits): number {
+  return Math.max(1, Math.floor(Math.min(timeoutMs, deadline - performance.now())));
+}
+
+/** A lookup that was cancelled or ran out of time starts nothing more: no renewal, no browser. */
+function over(signal: AbortSignal | undefined, deadline: number): boolean {
+  return signal?.aborted === true || deadline - performance.now() < 1;
+}
+
 class DHLSession {
   readonly jar = new CookieJar();
   readonly fetcher: typeof fetch;
@@ -190,26 +203,26 @@ class DHLSession {
     }
   }
 
-  async fetch(number: string): Promise<CarrierResult> {
+  async fetch(number: string, limits: Limits): Promise<CarrierResult> {
     if (!this.token) {
-      const config = await this.request(CONFIG_URL);
+      const config = await this.request(CONFIG_URL, limits);
       if (typeof config.verfolgenCsrfToken !== 'string' || !config.verfolgenCsrfToken) throw new DHLSessionError();
       this.token = config.verfolgenCsrfToken;
       this.wg = typeof config.initialWG === 'number' ? String(config.initialWG) : '0';
     }
     const url = new URL(`${ORIGIN}${DATA_PATH}/search`);
     url.search = new URLSearchParams({ piececode: number, noRedirect: 'true', language: 'en' }).toString();
-    return parseDHLTrackingResponse(await this.request(url), number);
+    return parseDHLTrackingResponse(await this.request(url, limits), number);
   }
 
-  private async request(url: string | URL): Promise<JsonObject> {
-    const { response, bytes } = await fetchBounded(url, { headers: {
+  private async request(url: string | URL, limits: Limits): Promise<JsonObject> {
+    const { response, bytes } = await fetchBounded(url, { signal: limits.signal, headers: {
       Accept: 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9',
       'User-Agent': this.userAgent, Referer: TRACKING_PAGE,
       'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty',
       ...(this.token ? { 'verfolgen-CSRF-token': this.token, 'verfolgen-wg': this.wg } : {}),
     } }, {
-      provider: PROVIDER, timeoutMs: this.timeoutMs, maxBytes: MAX_BYTES,
+      provider: PROVIDER, timeoutMs: capped(this.timeoutMs, limits), maxBytes: MAX_BYTES,
       fetcher: this.fetcher, redirect: 'manual', allowHttpError: true,
     });
     if ([301, 302, 303, 307, 308, 401, 403, 419].includes(response.status)) throw new DHLSessionError();
@@ -272,16 +285,33 @@ export class DHLTracker {
   }
 
   /** Lookups share one session, so two parcels never renew it at the same time. */
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeDHLTrackingNumber(trackingNumber);
-    return this.serialize(() => this.lookup(number));
+    return takeTurn(this.serialize, 'dhl', context, (left) => this.lookup(number, left));
   }
 
-  private async lookup(number: string): Promise<CarrierResult> {
+  private async lookup(number: string, context: TrackingContext): Promise<CarrierResult> {
+    const { signal } = context;
+    // The caller may have left while the lookup waited for its turn.
+    signal?.throwIfAborted();
+    const budgetMs = context.budgetMs ?? this.budgetMs;
+    const deadline = performance.now() + budgetMs;
+    // The direct step's own signal: once it has aborted, the lookup is over and no browser follows.
+    let ended: AbortSignal | undefined;
     try {
-      return await runSteps<CarrierResult>({ carrier: 'dhl', budgetMs: this.budgetMs, recorder: this.recorder }, [
-        { id: 'direct', run: () => this.direct(number) },
-        { id: 'trawl', enabled: this.trawl !== null || this.trawlUrl !== '', recovers: renewable, run: () => this.browser(number) },
+      return await runSteps<CarrierResult>({ carrier: 'dhl', budgetMs, signal, recorder: this.recorder }, [
+        {
+          id: 'direct',
+          run: (step) => {
+            ended = step.signal;
+            return this.direct(number, { signal: step.signal, deadline });
+          },
+        },
+        {
+          id: 'trawl', enabled: this.trawl !== null || this.trawlUrl !== '',
+          recovers: (error) => renewable(error) && !over(ended, deadline),
+          run: (step) => this.browser(number, { signal: step.signal, deadline }),
+        },
       ]);
     } catch (error) {
       // A session that ended the lookup is never reused by the next one.
@@ -291,31 +321,33 @@ export class DHLTracker {
   }
 
   /** The direct session, renewing a stale one or an interrupted read once. */
-  private async direct(number: string): Promise<CarrierResult> {
+  private async direct(number: string, limits: Limits): Promise<CarrierResult> {
     if (this.session !== null && this.now() - this.sessionOpenedAt >= SESSION_MAX_AGE_MS) this.session = null;
     const cached = this.session !== null;
     const session = this.session ?? this.open(new DHLSession(this.directTimeoutMs, this.fetcher));
     try {
-      return await session.fetch(number);
+      return await session.fetch(number, limits);
     } catch (error) {
       // A fresh session that was rejected outright needs a browser, not a
       // second identical attempt; a cached one may simply have expired.
       if (!renewable(error) || (!cached && !(error instanceof UpstreamNetworkError))) throw error;
-      return await this.open(new DHLSession(this.directTimeoutMs, this.fetcher)).fetch(number);
+      if (over(limits.signal, limits.deadline)) throw error;
+      return await this.open(new DHLSession(this.directTimeoutMs, this.fetcher)).fetch(number, limits);
     }
   }
 
   /** A solved browser session, replayed over HTTP with its cookies and user agent. */
-  private async browser(number: string): Promise<CarrierResult> {
+  private async browser(number: string, limits: Limits): Promise<CarrierResult> {
     this.session = null;
     const trawl = this.trawl ?? new TrawlClient(this.trawlUrl, this.fetcher);
+    const timeoutMs = capped(this.timeoutMs, limits);
     const solved = await trawl.scrape(
-      { url: dhlTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: this.timeoutMs },
-      { provider: `TRAWL while fetching ${PROVIDER}`, timeoutMs: this.timeoutMs, maxBytes: 10_000_000, fetcher: this.fetcher },
+      { url: dhlTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs },
+      { provider: `TRAWL while fetching ${PROVIDER}`, timeoutMs, maxBytes: 10_000_000, fetcher: this.fetcher, signal: limits.signal },
     );
     const session = new DHLSession(this.directTimeoutMs, this.fetcher);
     await session.seed(solved.cookies, solved.userAgent);
-    const result = await session.fetch(number);
+    const result = await session.fetch(number, limits);
     this.open(session);
     return result;
   }
@@ -328,6 +360,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'dhl',
     steps: ['direct', 'trawl'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

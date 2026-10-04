@@ -19,10 +19,10 @@
  * fields read are the echoed identifier and the delivery window.
  */
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import { decodeText, fetchBounded, UpstreamHttpError } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyPaackEvent } from './status.js';
 
@@ -106,9 +106,7 @@ function remixContext(html: string): unknown {
 export function normalizePaackTrackingNumber(raw: string): string {
   const value = raw.trim().toLocaleUpperCase('en-US').replace(/\s/g, '');
   if (!/^(?=.*\d)[A-Z0-9]{4,40}$/.test(value)) {
-    throw new TypeError(
-      'Paack tracking numbers must contain 4 to 40 ASCII letters and digits, including at least one digit',
-    );
+    throw new InvalidInputError('Paack', 'Paack tracking numbers must contain 4 to 40 ASCII letters and digits, including at least one digit');
   }
   return value;
 }
@@ -116,9 +114,7 @@ export function normalizePaackTrackingNumber(raw: string): string {
 export function normalizePaackPostcode(raw: string): string {
   const value = raw.trim().toLocaleUpperCase('en-US');
   if (!/^(?=.{3,10}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/.test(value)) {
-    throw new TypeError(
-      'Paack tracking requires a 3- to 10-character alphanumeric delivery postcode',
-    );
+    throw new InvalidInputError('Paack', 'Paack tracking requires a 3- to 10-character alphanumeric delivery postcode');
   }
   return value.replace(/\s+/g, '');
 }
@@ -143,10 +139,14 @@ export function parsePaackTrackingResponse(
 
   const order = route.orderTrackData;
   if (!isRecord(order)) throw new SchemaError('Paack', 'Paack returned incomplete tracking details');
-  const responseNumber = typeof order.external_id === 'string'
-    ? normalizePaackTrackingNumber(order.external_id)
-    : '';
-  if (!responseNumber) throw new SchemaError('Paack', 'Paack returned an invalid shipment number');
+  if (typeof order.external_id !== 'string') throw new SchemaError('Paack', 'Paack returned an invalid shipment number');
+  let responseNumber: string;
+  try {
+    responseNumber = normalizePaackTrackingNumber(order.external_id);
+  } catch (cause) {
+    // The echoed id is the provider's value, not the caller's input.
+    throw new SchemaError('Paack', 'Paack returned an invalid shipment number', { cause });
+  }
   if (responseNumber !== trackingNumber) {
     throw new SchemaError('Paack', 'Paack returned a different shipment');
   }
@@ -218,11 +218,13 @@ export interface PaackTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class PaackTracker {
   readonly timeoutMs: number;
   readonly fetcher?: typeof fetch;
+  private readonly userAgent: string;
 
   constructor(options: PaackTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -230,20 +232,23 @@ export class PaackTracker {
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Paack timeout must be positive');
     }
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawTrackingNumber: string, rawPostcode: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, rawPostcode: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizePaackTrackingNumber(rawTrackingNumber);
     const postcode = normalizePaackPostcode(rawPostcode);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(paackTrackingUrl(trackingNumber, postcode), {
+      signal: budget.signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'fr-FR,fr;q=0.9,en;q=0.8',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.userAgent,
       },
     }, {
       provider: 'Paack tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       redirect: 'manual',
       fetcher: this.fetcher,
@@ -259,14 +264,14 @@ export class PaackTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PaackTracker({ fetcher: environment.fetcher });
+  const tracker = new PaackTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'paack',
     steps: ['direct'],
-    track: async (input) => {
+    track: async (input, context) => {
       const postcode = input.postcode?.trim() ?? '';
       if (!postcode) throw new InputRequiredError('Paack', 'the delivery postcode');
-      return tracker.fetch(input.number, postcode);
+      return tracker.fetch(input.number, postcode, context);
     },
   };
 };

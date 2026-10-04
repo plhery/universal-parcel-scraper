@@ -4,13 +4,14 @@ import { carrierDefinition, carrierTimezone } from '../core/catalog/index.js';
 import { normalizeCarrierInputs } from '../core/catalog/inputs.js';
 import { deliveryHandoff, type DeliveryHandoff } from '../core/catalog/handoff.js';
 import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validTrackingNumber } from '../core/detection/index.js';
-import { BudgetExceededError, carrierErrorKind, IndeterminateError, InputRequiredError, type CarrierErrorKind } from '../core/errors/index.js';
-import { failureHint, type FailureHint } from '../core/errors/hint.js';
+import { BudgetExceededError, IndeterminateError, InputRequiredError, type CarrierErrorKind } from '../core/errors/index.js';
+import { failureHint, failureKind, type FailureHint } from '../core/errors/hint.js';
 import { recognitionCandidates, recognizeAll, settleRecognition } from '../core/recognition/index.js';
 import { resolveResult, resultHasUpdate, type ResolvedResult } from '../core/result/resolve.js';
 import { runSteps } from '../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/trawl.js';
+import { userAgentOf } from '../core/transport/userAgent.js';
 import { REGISTRY } from '../generated/registry.js';
 import { universalPlan, universalSourceBudget } from '../providers/plan.js';
 import type { UniversalSource } from '../providers/types.js';
@@ -23,7 +24,10 @@ export interface TrackerOptions {
   providers?: readonly UniversalSource[];
   recorder?: StepRecorder;
   fetcher?: typeof fetch;
+  /** How this install names itself to carriers that accept a plain client. */
+  userAgent?: string;
   env?: Readonly<Record<string, string | undefined>>;
+  /** A registry built by the host carries its own environment, `userAgent` included. */
   registry?: AdapterRegistry;
   /** Minimum gap between calls to the same universal provider in this process. */
   providerSpacingMs?: number;
@@ -66,6 +70,13 @@ function budget(value: number | undefined, fallback: number): number {
   return Math.floor(ms);
 }
 
+/**
+ * Added to the budget an attempt is given, so that at the caller's deadline it
+ * is this lookup's signal that ends the attempt, not the source's own timer a
+ * moment earlier: the attempt is then a spent budget, not a failed source.
+ */
+const DEADLINE_SLACK_MS = 25;
+
 async function bounded<T>(run: () => Promise<T>, signal: AbortSignal): Promise<T> {
   signal.throwIfAborted();
   let abort!: () => void;
@@ -92,6 +103,7 @@ export function createTracker(options: TrackerOptions = {}) {
   };
   const environment: AdapterEnvironment = {
     fetcher,
+    userAgent: userAgentOf(options.userAgent),
     trawl: options.trawlUrl ? new TrawlClient(options.trawlUrl, fetcher) : null,
     browserExecutablePath: options.chromiumPath || null,
     recorder: options.recorder ?? NOOP_RECORDER,
@@ -176,15 +188,16 @@ export function createTracker(options: TrackerOptions = {}) {
         attempts.push({ source, kind: 'ok', durationMs: Math.round(performance.now() - start) });
         return result;
       } catch (error) {
-        lastError = error;
-        attempts.push({ source, kind: signal.aborted ? 'budget' : carrierErrorKind(error) ?? 'transport', durationMs: Math.round(performance.now() - start) });
+        // A source that cannot take this number says nothing about the failure an earlier source reported.
+        if (!attempts.some(entry => entry.kind !== 'ok') || failureKind(error) !== 'invalid_input') lastError = error;
+        attempts.push({ source, kind: signal.aborted ? 'budget' : failureKind(error), durationMs: Math.round(performance.now() - start) });
         if (context.signal?.aborted) throw context.signal.reason;
         return null;
       }
     }
     const adapter = registry.for(carrier);
-    const directInput = { number, postcode: fields.dpdPostcode, trackingUrl: fields.trackingUrl };
-    const directBudget = () => Math.min(remaining(), 60_000);
+    const directInput = { number, postcode: fields.postcode, trackingUrl: fields.trackingUrl };
+    const directBudget = () => Math.min(remaining() + DEADLINE_SLACK_MS, 60_000);
     let result = adapter ? await attempt(carrier, () => adapter.recordsSteps || adapter.steps.length > 1
       ? adapter.track(directInput, { signal, budgetMs: directBudget() })
       : runSteps({ carrier, budgetMs: directBudget(), signal, recorder: environment.recorder }, [
@@ -197,7 +210,7 @@ export function createTracker(options: TrackerOptions = {}) {
       for (const candidate of plan.sources.filter(source => enabled.includes(source))) {
         if (signal.aborted) break;
         result = await attempt(candidate, () => provider(candidate, async () => resolveResult(await universal.fetchSource(candidate,
-          number, Math.min(remaining(), universalSourceBudget(candidate)), fields.dpdPostcode,
+          number, Math.min(remaining() + DEADLINE_SLACK_MS, universalSourceBudget(candidate)), fields.postcode,
           carrierTimezone(carrier) === 'UTC' ? null : carrierTimezone(carrier), signal)), signal));
         if (result) { source = candidate; break; }
       }

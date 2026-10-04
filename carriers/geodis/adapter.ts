@@ -9,10 +9,10 @@
  */
 
 import { createHash } from 'node:crypto';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyStatus, comparableText, includesAny } from './status.js';
 
@@ -161,7 +161,7 @@ function isNotFoundCode(value: unknown): boolean {
 export function normalizeGeodisTrackingNumber(raw: string): string {
   const trackingNumber = raw.trim().toLocaleUpperCase('en-US');
   if (!/^1G[A-Z0-9]{10}$/.test(trackingNumber)) {
-    throw new TypeError('GEODIS tracking numbers must start with 1G and contain 12 letters and digits');
+    throw new InvalidInputError(PROVIDER, 'GEODIS tracking numbers must start with 1G and contain 12 letters and digits');
   }
   return trackingNumber;
 }
@@ -253,11 +253,13 @@ export interface GeodisTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class GeodisTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: GeodisTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -265,27 +267,30 @@ export class GeodisTracker {
       throw new TypeError('GEODIS timeout must be positive');
     }
     this.#fetcher = options.fetcher;
+    this.#userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeGeodisTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const body = geodisRequestBody(trackingNumber);
     const timestamp = Date.now();
     const { bytes } = await fetchBounded(geodisTrackingUrl(), {
       method: 'POST',
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'Accept-Language': 'fr-FR,fr;q=0.9',
         'Content-Type': 'application/json',
         Origin: 'https://espace-client.geodis.com',
         Referer: TRACKING_PAGE,
-        'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
         'X-GEODIS-Service': geodisServiceHeader(trackingNumber, timestamp),
       },
       body,
     }, {
       provider: 'GEODIS tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       fetcher: this.#fetcher,
     });
@@ -294,10 +299,10 @@ export class GeodisTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new GeodisTracker({ fetcher: environment.fetcher });
+  const tracker = new GeodisTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'geodis',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

@@ -1,6 +1,6 @@
 
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, ChallengeError, InputRequiredError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -18,7 +18,7 @@ const TRANSPORT_ALLOWANCE_MS = 15_000;
 export function normalizeAustraliaPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^(?=.*\d)[A-Z0-9]{10,34}$/.test(number)) {
-    throw new InputRequiredError(PROVIDER, 'number', 'Australia Post requires a 10-to-34-character tracking number');
+    throw new InvalidInputError(PROVIDER, 'Australia Post requires a 10-to-34-character tracking number');
   }
   return number;
 }

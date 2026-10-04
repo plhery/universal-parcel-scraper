@@ -19,11 +19,11 @@
  * Any other type is refused rather than guessed at. A `Data: null` answer is
  * PostLogistics' explicit "unknown identifier".
  */
-import type { AdapterFactory, Recognition } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { referenceConsignment } from '../swiss-post-cargo/reference.js';
 import { postlogisticsIdentifier } from './number.js';
@@ -36,7 +36,6 @@ const DEFAULT_TIMEOUT_MS = 15_000;
 const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
   'Accept-Language': 'en-US,en;q=0.9',
-  'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
 };
 
 function record(value: unknown): JsonObject {
@@ -127,17 +126,19 @@ export class PostlogisticsTracker {
   private readonly fetcher: typeof fetch | undefined;
   private readonly timeoutMs: number;
   private readonly now: () => number;
+  private readonly userAgent: string;
 
-  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number; now?: () => number } = {}) {
+  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number; now?: () => number; userAgent?: string } = {}) {
     this.fetcher = options.fetcher;
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.now = options.now ?? Date.now;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const dashed = postlogisticsIdentifier(trackingNumber);
     const identifiers = dashed === trackingNumber ? [trackingNumber] : [trackingNumber, dashed];
-    const signal = AbortSignal.timeout(this.timeoutMs);
+    const budget = lookupBudget(context, this.timeoutMs);
     for (const [index, identifier] of identifiers.entries()) {
       const { bytes } = await fetchBounded(
         TRACK_URL,
@@ -145,14 +146,15 @@ export class PostlogisticsTracker {
           method: 'POST',
           headers: {
             ...BASE_HEADERS,
+            'User-Agent': this.userAgent,
             'Content-Type': 'application/json',
             Origin: 'https://tracking.postlogistics.ch',
             Referer: 'https://tracking.postlogistics.ch/',
           },
           body: JSON.stringify({ Identifier: identifier }),
-          signal,
+          signal: budget.signal,
         },
-        { provider: UPSTREAM, timeoutMs: this.timeoutMs, fetcher: this.fetcher },
+        { provider: UPSTREAM, timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()), fetcher: this.fetcher },
       );
       try {
         return parsePostlogisticsTrackingResponse(parseJsonBytes(bytes, UPSTREAM), trackingNumber, this.now());
@@ -163,9 +165,9 @@ export class PostlogisticsTracker {
     throw new NotFoundError(PROVIDER);
   }
 
-  async recognizes(trackingNumber: string): Promise<Recognition> {
+  async recognizes(trackingNumber: string, context: TrackingContext = {}): Promise<Recognition> {
     try {
-      const result = await this.fetch(trackingNumber);
+      const result = await this.fetch(trackingNumber, context);
       const events = (result.events ?? []).filter((event) => event.description && event.time);
       const times = events.map((event) => explicitOffsetTime(event.time)?.timestamp)
         .filter((value): value is number => value !== undefined);
@@ -181,17 +183,17 @@ export class PostlogisticsTracker {
 }
 
 /** Kept for the host's legacy dispatch chain until it is deleted. */
-export async function fetchPostlogistics(trackingNumber: string): Promise<CarrierResult> {
-  return new PostlogisticsTracker().fetch(trackingNumber);
+export async function fetchPostlogistics(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  return new PostlogisticsTracker().fetch(trackingNumber, context);
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PostlogisticsTracker({ fetcher: environment.fetcher });
+  const tracker = new PostlogisticsTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'postlogistics',
     // Keyless POST, with one alternate spelling after a compact not-found.
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
-    recognize: (number) => tracker.recognizes(number),
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => tracker.recognizes(number, context),
   };
 };

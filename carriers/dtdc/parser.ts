@@ -1,4 +1,4 @@
-import { IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { epochMillisTime } from '../../core/time/index.js';
@@ -10,7 +10,7 @@ const PROVIDER = 'DTDC';
 
 export function normalizeDtdcNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^[A-Z0-9]{8,20}$/.test(number)) throw new InputRequiredError(PROVIDER, 'number', 'DTDC requires an alphanumeric shipment reference');
+  if (!/^[A-Z0-9]{8,20}$/.test(number)) throw new InvalidInputError(PROVIDER, 'DTDC requires an alphanumeric shipment reference');
   return number;
 }
 

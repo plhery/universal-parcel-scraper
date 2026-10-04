@@ -16,10 +16,10 @@
  * served by `./shared`, chosen by the factory when the parcel has a tracking
  * URL.
  */
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { PlanzerSharedTracker } from './shared.js';
 import { PLANZER_STATUS, planzerDescription, planzerEventStage } from './status.js';
@@ -28,10 +28,11 @@ const PROVIDER = 'Planzer';
 const UPSTREAM = 'Planzer tracking';
 const SHIPMENTS_URL = 'https://api.tracking.app.planzer.ch/api/v1/shipments';
 const DEFAULT_TIMEOUT_MS = 10_000;
+/** The longest pause `fetchBounded` takes before its one replay: a 429's `Retry-After`. */
+const MAX_RETRY_PAUSE_MS = 60_000;
 const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
   'Accept-Language': 'en-US,en;q=0.9',
-  'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
 };
 
 function record(value: unknown): JsonObject {
@@ -142,20 +143,24 @@ export function parsePlanzerTrackingResponse(value: unknown, shipmentNumber: str
 export class PlanzerTracker {
   private readonly fetcher: typeof fetch | undefined;
   private readonly timeoutMs: number;
+  private readonly userAgent: string;
 
-  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {
+  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {
     this.fetcher = options.fetcher;
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const shipmentNumber = planzerShipmentNumber(trackingNumber);
+    // The default budget covers the request, the longest retry pause and the one replay.
+    const budget = lookupBudget(context, 2 * this.timeoutMs + MAX_RETRY_PAUSE_MS);
     const { bytes } = await fetchBounded(
       `${SHIPMENTS_URL}/${encodeURIComponent(shipmentNumber)}/Pak`,
-      { headers: BASE_HEADERS },
+      { signal: budget.signal, headers: { ...BASE_HEADERS, 'User-Agent': this.userAgent } },
       {
         provider: UPSTREAM,
-        timeoutMs: this.timeoutMs,
+        timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
         // One replay after a transport failure, HTTP 502/503/504, or a 429
         // with a short Retry-After; parsing and validation are never retried.
         retryTransient: true,
@@ -167,20 +172,20 @@ export class PlanzerTracker {
 }
 
 /** Kept for the host's legacy dispatch chain until it is deleted. */
-export async function fetchPlanzer(trackingNumber: string): Promise<CarrierResult> {
-  return new PlanzerTracker().fetch(trackingNumber);
+export async function fetchPlanzer(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  return new PlanzerTracker().fetch(trackingNumber, context);
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PlanzerTracker({ fetcher: environment.fetcher });
-  const shared = new PlanzerSharedTracker({ fetcher: environment.fetcher });
+  const tracker = new PlanzerTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
+  const shared = new PlanzerSharedTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'planzer',
     // Both routes are a single bounded request; the capability URL decides
     // which one, not a fallback tier.
     steps: ['direct'],
-    track: (input) => (input.trackingUrl
-      ? shared.fetch(input.number, input.trackingUrl)
-      : tracker.fetch(input.number)),
+    track: (input, context) => (input.trackingUrl
+      ? shared.fetch(input.number, input.trackingUrl, context)
+      : tracker.fetch(input.number, context)),
   };
 };

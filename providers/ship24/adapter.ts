@@ -98,7 +98,7 @@ function browserCanRecover(error: unknown): boolean {
     && (error.status === 404 || error.status === 410 || error.status === 429 || error.status >= 500));
 }
 
-export interface Ship24Options extends UniversalBrowserOptions {
+export interface Ship24Options extends Omit<UniversalBrowserOptions, 'signal'> {
   /** The signed HTTP client for the direct tier; without one the browser tier runs alone. */
   httpClient?: Ship24HttpClient | null;
   recorder?: StepRecorder;
@@ -107,17 +107,17 @@ export interface Ship24Options extends UniversalBrowserOptions {
 export class Ship24Tracker {
   constructor(readonly options: Ship24Options = {}) {}
 
-  async fetch(trackingNumber: string, budgetMs?: number, timezone: string | null = null): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, budgetMs?: number, timezone: string | null = null, signal?: AbortSignal): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
     const timeoutMs = budgetMs ?? this.options.timeoutMs ?? 45_000;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 60_000) throw new TypeError('Ship24 timeout must be between 1 and 60000 ms');
     const http = this.options.httpClient ?? null;
-    return runSteps({ carrier: SOURCE, budgetMs: timeoutMs, recorder: this.options.recorder }, [
+    return runSteps({ carrier: SOURCE, budgetMs: timeoutMs, signal, recorder: this.options.recorder }, [
       {
         id: 'direct',
         enabled: http !== null,
-        run: async ({ remainingMs }) => ({
-          ...parseShip24Response(await http!.fetch(number, Math.max(1, Math.min(DIRECT_BUDGET_MS, Math.floor(remainingMs)))), number, timezone),
+        run: async ({ remainingMs, signal }) => ({
+          ...parseShip24Response(await http!.fetch(number, Math.max(1, Math.min(DIRECT_BUDGET_MS, Math.floor(remainingMs))), signal), number, timezone),
           tracking_source: 'structured-web-response',
         }),
       },
@@ -127,8 +127,8 @@ export class Ship24Tracker {
         // with its own configuration error. Alone, it still runs to report it.
         enabled: http === null || Boolean(this.options.executablePath),
         recovers: browserCanRecover,
-        run: async ({ remainingMs }) => ({
-          ...await scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs: Math.max(1, Math.floor(remainingMs)) }, {
+        run: async ({ remainingMs, signal }) => ({
+          ...await scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs: Math.max(1, Math.floor(remainingMs)), signal }, {
             name: SOURCE, url: `https://www.ship24.com/tracking?p=${number}`,
             responseUrl: `https://api.ship24.com/api/parcels/${number}?lang=en`,
           }, (payload) => parseShip24Response(payload, number, timezone)),
@@ -148,6 +148,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: SOURCE,
     steps: ['direct', 'browser'],
-    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, input.timezone ?? null),
+    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, input.timezone ?? null, context?.signal),
   };
 };

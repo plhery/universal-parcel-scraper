@@ -17,8 +17,8 @@
  */
 import { Buffer } from 'node:buffer';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import {
   cleanScalar,
@@ -26,6 +26,7 @@ import {
   fetchBounded,
   parseJsonBytes,
   UpstreamHttpError,
+  userAgentOf,
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyHeppnerEvent, heppnerCode } from './status.js';
@@ -67,7 +68,7 @@ function eventTime(value: unknown): { iso: string; timestamp: number } | null {
 export function normalizeHeppnerTrackingNumber(raw: string): string {
   const trackingNumber = raw.replace(/\s/g, '');
   if (!/^\d{8}$/.test(trackingNumber)) {
-    throw new TypeError('Heppner tracking numbers must contain exactly 8 digits');
+    throw new InvalidInputError('Heppner', 'Heppner tracking numbers must contain exactly 8 digits');
   }
   return trackingNumber;
 }
@@ -79,7 +80,7 @@ export function normalizeHeppnerCredential(
   const trackingNumber = normalizeHeppnerTrackingNumber(rawTrackingNumber);
   const postcode = rawPostcode.trim();
   if (!/^\d{4,5}$/.test(postcode)) {
-    throw new TypeError('Heppner requires a four-digit Swiss or five-digit French delivery postcode');
+    throw new InvalidInputError('Heppner', 'Heppner requires a four-digit Swiss or five-digit French delivery postcode');
   }
   return {
     trackingNumber,
@@ -221,6 +222,7 @@ export function parseHeppnerTrackingResponse(
 }
 
 function requestHeaders(
+  userAgent: string,
   accept: string,
   origin = 'https://www.heppner-group.com',
 ): Record<string, string> {
@@ -229,7 +231,7 @@ function requestHeaders(
     'Accept-Language': 'fr-FR,fr;q=0.9',
     Origin: origin,
     Referer: 'https://www.heppner-group.com/destinataire-suivez-votre-marchandise/',
-    'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+    'User-Agent': userAgent,
   };
 }
 
@@ -237,11 +239,13 @@ export interface HeppnerTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class HeppnerTracker {
   readonly timeoutMs: number;
   readonly fetcher?: typeof fetch;
+  private readonly userAgent: string;
 
   constructor(options: HeppnerTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -249,16 +253,22 @@ export class HeppnerTracker {
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Heppner timeout must be positive');
     }
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawTrackingNumber: string, rawPostcode: string): Promise<CarrierResult> {
+  async fetch(
+    rawTrackingNumber: string,
+    rawPostcode: string,
+    context: TrackingContext = {},
+  ): Promise<CarrierResult> {
     const credential = normalizeHeppnerCredential(rawTrackingNumber, rawPostcode);
+    const budget = lookupBudget(context, 2 * this.timeoutMs);
     const search = await fetchBounded(
       heppnerSearchUrl(credential.trackingNumber, credential.postcode),
-      { headers: requestHeaders('text/plain,*/*;q=0.8') },
+      { signal: budget.signal, headers: requestHeaders(this.userAgent, 'text/plain,*/*;q=0.8') },
       {
         provider: 'Heppner shipment search',
-        timeoutMs: this.timeoutMs,
+        timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
         maxBytes: 2_048,
         fetcher: this.fetcher,
         allowHttpError: true,
@@ -275,13 +285,14 @@ export class HeppnerTracker {
     );
 
     const detail = await fetchBounded(heppnerDetailUrl(capability), {
+      signal: budget.signal,
       headers: {
-        ...requestHeaders('application/json', 'https://myportal.heppner-group.com'),
+        ...requestHeaders(this.userAgent, 'application/json', 'https://myportal.heppner-group.com'),
         Referer: heppnerTrackingPageUrl(capability),
       },
     }, {
       provider: 'Heppner tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       fetcher: this.fetcher,
       allowHttpError: true,
@@ -298,14 +309,14 @@ export class HeppnerTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new HeppnerTracker({ fetcher: environment.fetcher });
+  const tracker = new HeppnerTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'heppner',
     steps: ['direct'],
-    track: async (input) => {
+    track: async (input, context) => {
       const postcode = input.postcode?.trim() ?? '';
       if (!postcode) throw new InputRequiredError('Heppner', 'the delivery postcode');
-      return tracker.fetch(input.number, postcode);
+      return tracker.fetch(input.number, postcode, context);
     },
   };
 };

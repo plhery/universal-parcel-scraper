@@ -1,5 +1,5 @@
-import { loadChromium } from '../../core/transport/optional.js';
-import type { Browser, Page, Response as BrowserResponse } from 'playwright-core';
+import { withLocalBrowser } from '../../core/transport/localBrowser.js';
+import type { Page, Response as BrowserResponse } from 'playwright-core';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -9,7 +9,6 @@ import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview
 
 export const UKRPOSHTA_API = 'https://track.ukrposhta.ua/php/track_new.php';
 const MAX_BYTES = 1_000_000;
-let browserBusy = false;
 
 export function ukrposhtaTrackingUrl(number: string): string {
   const url = new URL('https://track.ukrposhta.ua/en/');
@@ -59,55 +58,25 @@ async function readLookup(page: Page, number: string, deadline: number, signal: 
   catch (cause) { throw new SchemaError('ukrposhta', 'Ukrposhta returned invalid tracking JSON', { cause }); }
 }
 
-async function localBrowser(number: string, executablePath: string, signal: AbortSignal, timeoutMs: number) {
-  signal.throwIfAborted();
-  if (browserBusy) throw new TransportError('ukrposhta', 'The Ukrposhta tracking browser is busy');
-  browserBusy = true;
-  const deadline = performance.now() + timeoutMs;
-  let browser: Browser | undefined;
-  let launching: Promise<Browser> | undefined;
-  let closing: Promise<void> | undefined;
-  const close = (): Promise<void> => {
-    if (browser && !closing) closing = browser.close();
-    return closing ?? Promise.resolve();
-  };
-  let rejectAbort!: (error: unknown) => void;
-  const aborted = new Promise<never>((_, reject) => { rejectAbort = reject; });
-  void aborted.catch(() => {});
-  const abort = () => { rejectAbort(signal.reason); void close().catch(() => {}); };
-  signal.addEventListener('abort', abort, { once: true });
-  try {
-    launching = (await loadChromium("Ukrposhta")).launch({ executablePath, headless: true, timeout: Math.min(timeoutMs, 10_000),
-      env: { PATH: process.env.PATH ?? '', HOME: process.env.HOME ?? '/tmp', LANG: 'en_US.UTF-8' } });
-    const operation = (async () => {
-      browser = await launching;
-      signal.throwIfAborted();
-      const context = await browser!.newContext({ locale: 'en-US', acceptDownloads: false, serviceWorkers: 'block' });
-      signal.throwIfAborted();
-      await context.route('**/*', async route => {
-        const url = new URL(route.request().url());
-        const allowed = url.protocol === 'https:' && ['track.ukrposhta.ua', 'www.google.com', 'www.gstatic.com', 'www.recaptcha.net'].includes(url.hostname);
-        await (allowed ? route.continue() : route.abort());
-      });
-      signal.throwIfAborted();
-      const page = await context.newPage();
-      signal.throwIfAborted();
-      // The native repeated-reference batch supplies a barcode-bound latest
-      // scan and total count. Its single-reference mode supplies full history.
-      const overview = parseUkrposhtaOverview(await readLookup(page, `${number},${number}`, deadline, signal, timeoutMs), number);
-      return parseUkrposhtaHistory(await readLookup(page, number, deadline, signal, timeoutMs), overview);
-    })();
-    return await Promise.race([operation, aborted]);
-  } finally {
-    signal.removeEventListener('abort', abort);
-    if (browser) {
-      try { await close(); } finally { browserBusy = false; }
-    } else if (launching) {
-      // Reject the caller promptly, but retain the lock until a launch that
-      // ignored cancellation has resolved and its browser has been closed.
-      void launching.then(async late => { browser = late; await close(); }).catch(() => {}).finally(() => { browserBusy = false; });
-    } else browserBusy = false;
-  }
+function localBrowser(number: string, executablePath: string, signal: AbortSignal, timeoutMs: number) {
+  return withLocalBrowser({ provider: 'ukrposhta', executablePath, signal, timeoutMs }, async ({ browser, signal: session, remainingMs }) => {
+    // Waiting for the browser and launching it already spent part of the budget.
+    const deadline = performance.now() + remainingMs();
+    const context = await browser.newContext({ locale: 'en-US', acceptDownloads: false, serviceWorkers: 'block' });
+    session.throwIfAborted();
+    await context.route('**/*', async route => {
+      const url = new URL(route.request().url());
+      const allowed = url.protocol === 'https:' && ['track.ukrposhta.ua', 'www.google.com', 'www.gstatic.com', 'www.recaptcha.net'].includes(url.hostname);
+      await (allowed ? route.continue() : route.abort());
+    });
+    session.throwIfAborted();
+    const page = await context.newPage();
+    session.throwIfAborted();
+    // The native repeated-reference batch supplies a barcode-bound latest
+    // scan and total count. Its single-reference mode supplies full history.
+    const overview = parseUkrposhtaOverview(await readLookup(page, `${number},${number}`, deadline, session, timeoutMs), number);
+    return parseUkrposhtaHistory(await readLookup(page, number, deadline, session, timeoutMs), overview);
+  });
 }
 
 export class UkrposhtaTracker {

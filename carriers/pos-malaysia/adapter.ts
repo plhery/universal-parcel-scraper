@@ -1,13 +1,13 @@
 
 import { randomUUID } from 'node:crypto';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { zonedTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyPosMalaysiaStatus } from './status.js';
 
@@ -36,7 +36,7 @@ function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
 export function normalizePosMalaysiaTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^(?:MYPM\d{11}|[A-Z]{2}\d{9}MY)$/.test(value)) {
-    throw new TypeError('Pos Malaysia tracking requires an MYPM barcode or MY S10 identifier');
+    throw new InvalidInputError('Pos Malaysia', 'Pos Malaysia tracking requires an MYPM barcode or MY S10 identifier');
   }
   return value;
 }
@@ -145,11 +145,13 @@ export class PosMalaysiaTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
   readonly recorder: StepRecorder;
+  private readonly userAgent: string;
 
-  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {
+  constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
     this.recorder = options.recorder ?? NOOP_RECORDER;
+    this.userAgent = userAgentOf(options.userAgent);
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Pos Malaysia timeout must be positive');
     }
@@ -168,7 +170,7 @@ export class PosMalaysiaTracker {
               Accept: 'application/json, text/plain, */*',
               'Accept-Language': 'en-US,en;q=0.9',
               'Content-Type': 'application/json',
-              'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+              'User-Agent': this.userAgent,
               'P-Request-ID': randomUUID(),
             },
             body: JSON.stringify({ connote_ids: [trackingNumber], culture: 'en' }),
@@ -189,7 +191,9 @@ export class PosMalaysiaTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PosMalaysiaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new PosMalaysiaTracker({
+    fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent,
+  });
   return {
     id: 'pos-malaysia', recordsSteps: true,
     steps: ['direct'],

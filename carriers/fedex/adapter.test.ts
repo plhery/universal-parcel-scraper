@@ -313,8 +313,9 @@ describe('FedEx lookup steps', () => {
   it('rejects a number that is not a FedEx number before any request', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('must not fetch'));
-    await expect(new FedExTracker({ trawlUrl: TRAWL_URL }).fetch('1Z999AA10123456784'))
-      .rejects.toThrow('FedEx tracking numbers must contain 12 or 15 digits');
+    const lookup = new FedExTracker({ trawlUrl: TRAWL_URL }).fetch('1Z999AA10123456784');
+    await expect(lookup).rejects.toThrow('FedEx tracking numbers must contain 12 or 15 digits');
+    await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 });

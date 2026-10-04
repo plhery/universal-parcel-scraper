@@ -1,6 +1,6 @@
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { IndeterminateError, MaintenanceError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, InvalidInputError, MaintenanceError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/index.js';
@@ -74,7 +74,7 @@ export function normalizeCttTrackingNumber(raw: string): string {
   // the generic postal fallback — those routes were never sampled here.
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^[A-Z]{2}\d{9}PT$/.test(value) || !isValidS10TrackingNumber(value)) {
-    throw new TypeError('CTT tracking requires a valid 13-character S10 number ending in PT');
+    throw new InvalidInputError('CTT', 'CTT tracking requires a valid 13-character S10 number ending in PT');
   }
   return value;
 }
@@ -183,26 +183,27 @@ export class CttTracker {
     }
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeCttTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const payload = await this.callAction(TRACK_ACTION, {
       ObjectCodeInput: trackingNumber,
       SearchInput: trackingNumber,
       IsFromPublicArea: true,
       IPClient: '',
-    }, null, true, true);
+    }, null, true, true, budget);
     const record = isRecord(payload.data) ? payload.data.ObjectEventsFromQuery : undefined;
     if (!isRecord(record) || !record.Found) {
       // Found:false is both genuine unknown and backend outage: a found parcel
       // already proves health, so the sibling check runs solely on negatives.
-      if (await this.isMaintenance()) throw new CttMaintenanceError();
+      if (await this.isMaintenance(budget)) throw new CttMaintenanceError();
       throw new NotFoundError('CTT');
     }
     return parseCttTrackingResponse(payload, trackingNumber);
   }
 
-  private async isMaintenance(): Promise<boolean> {
-    const payload = await this.callAction(MAINTENANCE_ACTION, {}, null, true, true);
+  private async isMaintenance(budget: LookupBudget): Promise<boolean> {
+    const payload = await this.callAction(MAINTENANCE_ACTION, {}, null, true, true, budget);
     const data = isRecord(payload.data) ? payload.data : {};
     return data.IsMaintenance === true;
   }
@@ -213,8 +214,9 @@ export class CttTracker {
     session: CttSession | null,
     retrySession: boolean,
     retryVersion: boolean,
+    budget: LookupBudget,
   ): Promise<{ data?: unknown; versionInfo?: unknown } & Record<string, unknown>> {
-    const apiVersion = await this.ensureApiVersion(action);
+    const apiVersion = await this.ensureApiVersion(action, budget);
     const headers: Record<string, string> = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
@@ -226,6 +228,7 @@ export class CttTracker {
     }
     const { response, bytes } = await fetchBounded(`${BASE_URL}${SCREEN_PATH}/${action}`, {
       method: 'POST',
+      signal: budget.signal,
       headers,
       body: JSON.stringify({
         versionInfo: { moduleVersion: this.moduleVersion, apiVersion },
@@ -234,7 +237,7 @@ export class CttTracker {
       }),
     }, {
       provider: 'CTT tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -243,7 +246,7 @@ export class CttTracker {
     if (response.status === 403) {
       const bootstrapped = sessionFromSetCookie(response);
       if (retrySession && bootstrapped) {
-        return this.callAction(action, variables, bootstrapped, false, retryVersion);
+        return this.callAction(action, variables, bootstrapped, false, retryVersion, budget);
       }
       throw new CttApiError('anonymous session bootstrap failed');
     }
@@ -255,16 +258,16 @@ export class CttTracker {
       this.moduleVersion = null;
       this.screenScript = null;
       this.apiVersions.delete(action);
-      return this.callAction(action, variables, session, retrySession, false);
+      return this.callAction(action, variables, session, retrySession, false, budget);
     }
     return payload;
   }
 
-  private async ensureApiVersion(action: string): Promise<string> {
+  private async ensureApiVersion(action: string, budget: LookupBudget): Promise<string> {
     const cached = this.apiVersions.get(action);
     if (cached !== undefined) return cached;
-    await this.ensureModuleVersion();
-    const script = await this.ensureScreenScript();
+    await this.ensureModuleVersion(budget);
+    const script = await this.ensureScreenScript(budget);
     const version = new RegExp(
       `callDataAction\\("${escapeRegExp(action)}",\\s*"[^"]*",\\s*"([^"]+)"`,
     ).exec(script)?.[1];
@@ -273,13 +276,14 @@ export class CttTracker {
     return version;
   }
 
-  private async ensureModuleVersion(): Promise<void> {
+  private async ensureModuleVersion(budget: LookupBudget): Promise<void> {
     if (this.moduleVersion !== null) return;
     const { response, bytes } = await fetchBounded(MODULE_VERSION_URL, {
+      signal: budget.signal,
       headers: { Accept: 'application/json', 'User-Agent': BROWSER_USER_AGENT },
     }, {
       provider: 'CTT tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -292,12 +296,12 @@ export class CttTracker {
     this.moduleVersion = token;
   }
 
-  private async ensureScreenScript(): Promise<string> {
+  private async ensureScreenScript(budget: LookupBudget): Promise<string> {
     if (this.screenScript !== null) return this.screenScript;
     // The version token carries +/= characters: it must travel percent-encoded
     // or the manifest endpoint answers an unrelated shape.
     const manifestUrl = `${BASE_URL}/CustomerArea/moduleservices/moduleinfo?${encodeURIComponent(this.moduleVersion ?? '')}`;
-    const manifest = await this.fetchJson(manifestUrl);
+    const manifest = await this.fetchJson(manifestUrl, budget);
     const versions = isRecord(manifest) && isRecord(manifest.manifest) && isRecord(manifest.manifest.urlVersions)
       ? manifest.manifest.urlVersions as Record<string, unknown>
       : {};
@@ -305,21 +309,22 @@ export class CttTracker {
     if (typeof scriptToken !== 'string' || !scriptToken) {
       throw new CttApiError("module manifest missing the screen script's version token");
     }
-    const script = decodeText((await this.fetchBytes(`${BASE_URL}${SCREEN_SCRIPT_PATH}?${scriptToken}`)).bytes);
+    const script = decodeText((await this.fetchBytes(`${BASE_URL}${SCREEN_SCRIPT_PATH}?${scriptToken}`, budget)).bytes);
     this.screenScript = script;
     return script;
   }
 
-  private async fetchJson(url: string): Promise<unknown> {
-    return parseJsonBytes((await this.fetchBytes(url)).bytes, 'CTT tracking');
+  private async fetchJson(url: string, budget: LookupBudget): Promise<unknown> {
+    return parseJsonBytes((await this.fetchBytes(url, budget)).bytes, 'CTT tracking');
   }
 
-  private async fetchBytes(url: string): Promise<{ bytes: Uint8Array }> {
+  private async fetchBytes(url: string, budget: LookupBudget): Promise<{ bytes: Uint8Array }> {
     const { response, bytes } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: { Accept: 'application/json, text/plain, */*', 'User-Agent': BROWSER_USER_AGENT },
     }, {
       provider: 'CTT tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_SCRIPT_BYTES,
       retryTransient: true,
       allowHttpError: true,
@@ -337,6 +342,6 @@ export const adapter: AdapterFactory = (environment) => {
     // The OutSystems session bootstrap and the version-token refresh are part
     // of the direct call, not separate tiers: they never change the transport.
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

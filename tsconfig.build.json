@@ -10,6 +10,7 @@
   "include": [
     "index.ts",
     "node.ts",
+    "app.ts",
     "core/**/*.ts",
     "carriers/**/*.ts",
     "providers/**/*.ts",

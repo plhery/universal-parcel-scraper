@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { CttExpressTracker, adapter } from './adapter.js';
 import { normalizeCttExpressNumber, parseCttExpress } from './parser.js';
 import { classifyCttExpressStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '0000000000000000000001';
 const OTHER = '0000000000000000000002';
@@ -29,7 +30,7 @@ describe('CTT Express direct tracking', () => {
 
   it('binds one exact shipment and its single package, rejecting multi-piece completion', () => {
     expect(normalizeCttExpressNumber('000000 000000 0000000001')).toBe(NUMBER);
-    for (const raw of ['1000000000000000000001', '0000000000000000000001001', 'DT000000005PT', '', NUMBER + '?']) expect(() => normalizeCttExpressNumber(raw)).toThrow(TypeError);
+    for (const raw of ['1000000000000000000001', '0000000000000000000001001', 'DT000000005PT', '', NUMBER + '?']) expect(() => normalizeCttExpressNumber(raw)).toThrow(InvalidInputError);
     const wrongShipment = clone(); wrongShipment.data.shipping_code = OTHER;
     const wrongPiece = clone(); wrongPiece.data.shipping_history.item_code = OTHER + '001';
     const ambiguousPiece = clone(); ambiguousPiece.data.shipping_history.item_code = NUMBER + '002';

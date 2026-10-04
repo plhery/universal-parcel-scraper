@@ -715,7 +715,7 @@ export const CARRIER_CATALOG = {
       "adapter": "gls-ch",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissPostcode",
           "label": "Delivery postcode",
           "type": "text",
@@ -782,7 +782,7 @@ export const CARRIER_CATALOG = {
       "adapter": "dpd",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissPostcode",
           "optional": true,
           "label": "Delivery postcode",
@@ -881,7 +881,7 @@ export const CARRIER_CATALOG = {
       "adapter": "mondial-relay",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "whenTrackingNumber": "^(?![0-9]{26}$).*$",
           "validator": "francePostcode",
           "label": "Delivery postcode",
@@ -1270,7 +1270,7 @@ export const CARRIER_CATALOG = {
       "adapter": "heppner",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissOrFrancePostcode",
           "label": "Delivery postcode",
           "type": "text",
@@ -1352,7 +1352,7 @@ export const CARRIER_CATALOG = {
       "adapter": "paack",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "paackPostcode",
           "label": "Delivery postcode",
           "type": "text",
@@ -1547,7 +1547,7 @@ export const CARRIER_CATALOG = {
       "adapter": "gls-de",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissOrFrancePostcode",
           "label": "Delivery postcode",
           "type": "text",

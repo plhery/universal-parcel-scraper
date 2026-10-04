@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizePosteItalianeTrackingNumber,
   posteItalianeTrackingUrl,
@@ -44,7 +44,7 @@ describe('Poste Italiane tracking normalization', () => {
     expect(normalizePosteItalianeTrackingNumber('1UW1G2J193065')).toBe('1UW1G2J193065');
     expect(normalizePosteItalianeTrackingNumber('2IMA0051035900')).toBe('2IMA0051035900');
     for (const raw of ['12345', 'Z8328162951', 'LD156008025FR', '']) {
-      expect(() => normalizePosteItalianeTrackingNumber(raw)).toThrow(TypeError);
+      expect(() => normalizePosteItalianeTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(posteItalianeTrackingUrl(TRACKING_NUMBER)).toBe(
       'https://www.poste.it/cerca/index.html#/risultati-spedizioni/RA00000000001',
@@ -199,6 +199,6 @@ describe('PosteItalianeTracker fetch', () => {
       .rejects.toThrow(TypeError);
     expect(() => new PosteItalianeTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new PosteItalianeTracker({ timeoutMs: 1_000 }).fetch('nope'))
-      .rejects.toThrow(TypeError);
+      .rejects.toThrow(InvalidInputError);
   });
 });

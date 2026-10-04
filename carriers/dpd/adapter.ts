@@ -2,16 +2,8 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 import { randomBytes } from 'node:crypto';
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import {
-  ChallengeError,
-  IndeterminateError,
-  NotFoundError,
-  SchemaError,
-  carrierErrorKind,
-  type CarrierErrorKind,
-  type CarrierErrorOptions,
-} from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -496,6 +488,19 @@ function durationSeconds(value: unknown, fallback: number): number {
   return match ? Number(match[1]) : fallback;
 }
 
+/** `shared`, for as long as the lookup waiting on it is live: its own signal ends the wait, not the shared work. */
+async function whileLive<T>(shared: Promise<T>, signal: AbortSignal): Promise<T> {
+  signal.throwIfAborted();
+  let leave!: () => void;
+  const left = new Promise<never>((_resolve, reject) => { leave = () => reject(signal.reason); });
+  signal.addEventListener('abort', leave, { once: true });
+  try {
+    return await Promise.race([shared, left]);
+  } finally {
+    signal.removeEventListener('abort', leave);
+  }
+}
+
 export interface DPDTrackerOptions {
   timeoutMs?: number;
   /** Whole-lookup budget; defaults to both tiers plus the solver's own allowance. */
@@ -522,7 +527,7 @@ export class DPDTracker {
   #installationFid = '';
   #installationToken = '';
   #installationExpiresAt = 0;
-  #tokenRefresh: Promise<string> | null = null;
+  #tokenRefresh: { token: Promise<string>; owner: AbortSignal } | null = null;
   #tokenFailure: { error: unknown; until: number } | null = null;
 
   constructor(options: DPDTrackerOptions = {}) {
@@ -541,25 +546,39 @@ export class DPDTracker {
     return this.flaresolverrUrl ? new TrawlClient(this.flaresolverrUrl, this.fetcher) : null;
   }
 
-  async fetch(trackingNumber: string, postcode = ''): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, postcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
     if (!/^\d{14}$/.test(trackingNumber)) {
-      throw new TypeError('DPD tracking numbers must contain 14 digits');
+      throw new InvalidInputError('DPD', 'DPD tracking numbers must contain 14 digits');
     }
     const resolvedPostcode = postcode.trim();
     if (resolvedPostcode && !/^\d{4}$/.test(resolvedPostcode)) {
-      throw new TypeError('DPD postcode must contain exactly 4 digits');
+      throw new InvalidInputError('DPD', 'DPD postcode must contain exactly 4 digits');
     }
+    // One signal and one clock for both tiers and the guest login they share with `recognizes`.
+    const lookup = lookupBudget(context, this.budgetMs, 'dpd');
+    const pageRecovers = (error: unknown): boolean => {
+      const kind = carrierErrorKind(error);
+      return !context.signal?.aborted && kind !== null && PAGE_RECOVERS.has(kind);
+    };
     const result = await runSteps<CarrierResult>({
-      carrier: 'dpd', budgetMs: this.budgetMs, recorder: this.recorder,
+      carrier: 'dpd', budgetMs: lookup.budgetMs, signal: lookup.signal, recorder: this.recorder,
     }, [
-      { id: 'direct', run: () => this.apiFetch(trackingNumber, resolvedPostcode) },
+      {
+        id: 'direct',
+        run: () => this.apiFetch(trackingNumber, resolvedPostcode, lookup).catch((error: unknown) => {
+          // The signal ends the guest tier a moment before the runner counts
+          // the budget as spent: the tier reports the budget itself, so the
+          // page is not entered in between.
+          if (lookup.signal.aborted && pageRecovers(error)) {
+            throw new BudgetExceededError('dpd', lookup.budgetMs, { cause: error });
+          }
+          throw error;
+        }),
+      },
       {
         id: 'page',
-        recovers: (error) => {
-          const kind = carrierErrorKind(error);
-          return kind !== null && PAGE_RECOVERS.has(kind);
-        },
-        run: ({ previousError }) => this.pageFetch(trackingNumber, previousError !== undefined),
+        recovers: pageRecovers,
+        run: ({ previousError }) => this.pageFetch(trackingNumber, previousError !== undefined, lookup),
       },
     ]);
     result.tracking_url = dpdTrackingUrl(trackingNumber);
@@ -574,10 +593,11 @@ export class DPDTracker {
    * parcels) are false; any other failure, a 400 from a token step included,
    * stays a failure.
    */
-  async recognizes(trackingNumber: string): Promise<boolean> {
+  async recognizes(trackingNumber: string, context: TrackingContext = {}): Promise<boolean> {
     if (!/^\d{14}$/.test(trackingNumber)) return false;
+    const lookup = lookupBudget(context, this.budgetMs, 'dpd');
     try {
-      const payload = await this.detailsWithFreshToken(trackingNumber);
+      const payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);
       return clean(payload.parcelNumber ?? payload.shipmentId) === trackingNumber;
     } catch (error) {
       if (error instanceof DPDTrackingError) return false;
@@ -586,25 +606,25 @@ export class DPDTracker {
     }
   }
 
-  private async apiFetch(trackingNumber: string, postcode: string): Promise<CarrierResult> {
+  private async apiFetch(trackingNumber: string, postcode: string, lookup: LookupBudget): Promise<CarrierResult> {
     let postcodeVerified: boolean | undefined;
     let payload: JsonObject;
     try {
-      payload = await this.detailsWithFreshToken(trackingNumber, postcode || undefined);
+      payload = await this.detailsWithFreshToken(trackingNumber, postcode || undefined, lookup);
       if (postcode) postcodeVerified = true;
     } catch (error) {
       if (!(error instanceof DPDAPIHttpError) || !postcode || error.status !== 400) throw error;
-      payload = await this.detailsWithFreshToken(trackingNumber);
+      payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);
       postcodeVerified = false;
     }
     return parseDPDTrackingApi(payload, trackingNumber, postcodeVerified);
   }
 
-  private async detailsWithFreshToken(trackingNumber: string, postcode?: string): Promise<JsonObject> {
+  private async detailsWithFreshToken(trackingNumber: string, postcode: string | undefined, lookup: LookupBudget): Promise<JsonObject> {
     for (let attempt = 0; attempt < 2; attempt += 1) {
-      const token = await this.accessToken();
+      const token = await this.accessToken(lookup);
       try {
-        return await this.parcelDetails(trackingNumber, postcode, token);
+        return await this.parcelDetails(trackingNumber, postcode, token, lookup);
       } catch (error) {
         if (!(error instanceof DPDAPIHttpError) || error.status !== 401 || attempt > 0) throw error;
         this.#accessToken = '';
@@ -618,6 +638,7 @@ export class DPDTracker {
     trackingNumber: string,
     postcode: string | undefined,
     token: string,
+    lookup: LookupBudget,
   ): Promise<JsonObject> {
     const url = new URL(`${DETAILS_BASE}/${encodeURIComponent(trackingNumber)}`);
     url.searchParams.set('parcelType', 'INCOMING');
@@ -631,7 +652,7 @@ export class DPDTracker {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'User-Agent': `myDPD/${CLIENT_VERSION} (Android)`,
-      }, true);
+      }, lookup, true);
     } catch (error) {
       if (error instanceof DPDAPIHttpError && error.status === 404) {
         throw new DPDTrackingError();
@@ -641,34 +662,49 @@ export class DPDTracker {
     }
   }
 
-  private async accessToken(): Promise<string> {
-    if (this.#accessToken && Date.now() < this.#accessTokenExpiresAt) return this.#accessToken;
-    // Concurrent lookups share one refresh and its outcome. A failed guest
-    // login is answered from memory for a short while, so a queue of lookups
-    // during an outage does not replay the whole token chain one by one.
-    if (this.#tokenRefresh) return await this.#tokenRefresh;
-    if (this.#tokenFailure && Date.now() < this.#tokenFailure.until) throw this.#tokenFailure.error;
-    this.#tokenRefresh = this.refreshAccessToken().then((token) => {
-      this.#tokenFailure = null;
-      return token;
-    }, (error: unknown) => {
-      this.#tokenFailure = { error, until: Date.now() + TOKEN_FAILURE_MEMORY_MS };
-      throw error;
-    }).finally(() => { this.#tokenRefresh = null; });
-    return await this.#tokenRefresh;
+  private async accessToken(lookup: LookupBudget): Promise<string> {
+    for (;;) {
+      if (this.#accessToken && Date.now() < this.#accessTokenExpiresAt) return this.#accessToken;
+      // Concurrent lookups share one refresh and its outcome. A failed guest
+      // login is answered from memory for a short while, so a queue of lookups
+      // during an outage does not replay the whole token chain one by one.
+      // The refresh runs on the signal and budget of the lookup that started
+      // it. Cut short by those, it proves nothing about DPD: it is not
+      // remembered, and a lookup that shared it logs in itself.
+      const shared = this.#tokenRefresh;
+      if (shared) {
+        try {
+          return await whileLive(shared.token, lookup.signal);
+        } catch (error) {
+          if (lookup.signal.aborted) throw new DPDAPIError('DPD guest API is unreachable', { cause: error });
+          if (!shared.owner.aborted) throw error;
+          continue;
+        }
+      }
+      if (this.#tokenFailure && Date.now() < this.#tokenFailure.until) throw this.#tokenFailure.error;
+      const token = this.refreshAccessToken(lookup).then((value) => {
+        this.#tokenFailure = null;
+        return value;
+      }, (error: unknown) => {
+        if (!lookup.signal.aborted) this.#tokenFailure = { error, until: Date.now() + TOKEN_FAILURE_MEMORY_MS };
+        throw error;
+      }).finally(() => { this.#tokenRefresh = null; });
+      this.#tokenRefresh = { token, owner: lookup.signal };
+      return await token;
+    }
   }
 
-  private async refreshAccessToken(): Promise<string> {
+  private async refreshAccessToken(lookup: LookupBudget): Promise<string> {
     let payload: JsonObject | null = null;
     for (let attempt = 0; attempt < 2; attempt += 1) {
-      const basicToken = this.#basicToken || await this.fetchBasicToken();
+      const basicToken = this.#basicToken || await this.fetchBasicToken(lookup);
       try {
         payload = await this.requestJson(OAUTH_URL, '', {
           Authorization: `Basic ${basicToken}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'User-Agent': `myDPD/${CLIENT_VERSION} (Android)`,
-        });
+        }, lookup);
         break;
       } catch (error) {
         if (!(error instanceof DPDAPIHttpError)
@@ -685,10 +721,10 @@ export class DPDTracker {
     return token;
   }
 
-  private async fetchBasicToken(): Promise<string> {
+  private async fetchBasicToken(lookup: LookupBudget): Promise<string> {
     if (!this.firebaseApiKey) throw new DPDAPIError('DPD Firebase client configuration is missing');
     for (let attempt = 0; attempt < 2; attempt += 1) {
-      const [fid, installationToken] = await this.firebaseInstallation();
+      const [fid, installationToken] = await this.firebaseInstallation(lookup);
       try {
         const payload = await this.requestJson(REMOTE_CONFIG_URL, {
           appId: FIREBASE_APP_ID,
@@ -701,7 +737,7 @@ export class DPDTracker {
           packageName: ANDROID_PACKAGE,
           sdkVersion: '22.1.2',
           analyticsUserProperties: {},
-        }, this.firebaseHeaders({ 'X-Goog-Firebase-Installations-Auth': installationToken }));
+        }, this.firebaseHeaders({ 'X-Goog-Firebase-Installations-Auth': installationToken }), lookup);
         const entries = isRecord(payload.entries) ? payload.entries : {};
         const token = clean(entries.basic_dpd_token);
         if (!token) throw new DPDAPIError('myDPD Remote Config omitted its guest credential');
@@ -719,7 +755,7 @@ export class DPDTracker {
     throw new DPDAPIError('myDPD Remote Config authentication failed');
   }
 
-  private async firebaseInstallation(): Promise<[string, string]> {
+  private async firebaseInstallation(lookup: LookupBudget): Promise<[string, string]> {
     if (this.#installationFid
       && this.#installationToken
       && Date.now() < this.#installationExpiresAt) {
@@ -733,7 +769,7 @@ export class DPDTracker {
       appId: FIREBASE_APP_ID,
       authVersion: 'FIS_v2',
       sdkVersion: 'a:18.0.0',
-    }, this.firebaseHeaders());
+    }, this.firebaseHeaders(), lookup);
     const auth = isRecord(payload.authToken) ? payload.authToken : {};
     const token = clean(auth.token);
     if (!token) throw new DPDAPIError('Firebase did not issue a myDPD installation token');
@@ -759,8 +795,13 @@ export class DPDTracker {
     url: string | URL,
     data: JsonObject | string,
     headers: Record<string, string>,
+    lookup: LookupBudget,
     retryRead = false,
   ): Promise<JsonObject> {
+    // The request keeps its own timeout; the lookup's signal alone ends it at
+    // the budget. A failure with that signal aborted is then the lookup's doing,
+    // not DPD's, which is what the token refresh and the `direct` step need to
+    // tell apart.
     const deadline = performance.now() + this.timeoutMs;
     let result;
     try {
@@ -769,6 +810,7 @@ export class DPDTracker {
           method: 'POST',
           headers,
           body: typeof data === 'string' ? data : JSON.stringify(data),
+          signal: lookup.signal,
         }, {
           provider: 'DPD guest API',
           timeoutMs: Math.max(1, Math.floor(deadline - performance.now())),
@@ -780,8 +822,8 @@ export class DPDTracker {
         const pause = 1_000 + Math.floor(Math.random() * 2_000);
         const retryAfter = result.response.headers.get('retry-after');
         if (!retryRead || attempt > 0 || ![502, 503, 504].includes(result.response.status)
-          || retryAfter !== null || deadline - performance.now() < pause + 1_000) break;
-        await delay(pause);
+          || retryAfter !== null || Math.min(deadline, lookup.deadline) - performance.now() < pause + 1_000) break;
+        await delay(pause, undefined, { signal: lookup.signal });
       }
     } catch (error) {
       throw new DPDAPIError('DPD guest API is unreachable', { cause: error });
@@ -797,7 +839,7 @@ export class DPDTracker {
     return payload;
   }
 
-  private async pageFetch(trackingNumber: string, apiFailed: boolean): Promise<CarrierResult> {
+  private async pageFetch(trackingNumber: string, apiFailed: boolean, lookup: LookupBudget): Promise<CarrierResult> {
     const url = new URL(FETCH_BASE);
     url.searchParams.set('lang', 'en');
     url.searchParams.set('parcelNumber', trackingNumber);
@@ -806,13 +848,14 @@ export class DPDTracker {
     if (trawl) {
       html = await trawl.solve(url.toString(), {
         provider: 'The browser challenge solver',
-        timeoutMs: this.timeoutMs,
+        timeoutMs: Math.min(this.timeoutMs, lookup.remainingMs()),
         maxBytes: MAX_BYTES,
         fetcher: this.fetcher,
+        signal: lookup.signal,
       });
     } else {
       try {
-        html = await this.directGet(url);
+        html = await this.directGet(url, lookup);
       } catch (error) {
         if (!(error instanceof DPDChallengeError)) throw error;
         const prefix = apiFailed ? 'DPD guest API is unavailable and ' : 'DPD ';
@@ -825,8 +868,9 @@ export class DPDTracker {
     return parseDPDTrackingHtml(html, trackingNumber);
   }
 
-  private async directGet(url: URL): Promise<string> {
+  private async directGet(url: URL, lookup: LookupBudget): Promise<string> {
     const result = await fetchBounded(url, {
+      signal: lookup.signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'en-CH,en;q=0.9',
@@ -834,7 +878,7 @@ export class DPDTracker {
       },
     }, {
       provider: 'DPD',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, lookup.remainingMs()),
       maxBytes: MAX_BYTES,
       redirect: 'follow',
       allowHttpError: true,
@@ -864,7 +908,7 @@ export const adapter: AdapterFactory = (environment) => {
     // The guest JSON protocol first; the Cloudflare-protected consignee page,
     // solved by the browser service when one is configured, second.
     steps: ['direct', 'page'],
-    track: (input) => tracker.fetch(input.number, input.postcode ?? ''),
-    recognize: async (number) => ({ known: await tracker.recognizes(number) }),
+    track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
+    recognize: async (number, context) => ({ known: await tracker.recognizes(number, context) }),
   };
 };

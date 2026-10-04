@@ -7,6 +7,7 @@ import { adapter } from './adapter.js';
 import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl } from './parser.js';
 import { tipsaStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '0990010990010000000017';
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
@@ -22,7 +23,7 @@ describe('TIPSA shipment page', () => {
   it('takes only the full 22-digit reference', () => {
     expect(normalizeTipsaNumber(' 099001 099001 0000000017 ')).toBe(NUMBER);
     for (const number of ['0000000017', `${NUMBER}0`, 'AB0010990010000000017', '9'.repeat(65)]) {
-      expect(() => normalizeTipsaNumber(number)).toThrow(TypeError);
+      expect(() => normalizeTipsaNumber(number)).toThrow(InvalidInputError);
     }
   });
 

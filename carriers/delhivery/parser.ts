@@ -1,4 +1,4 @@
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -15,7 +15,7 @@ function scanTime(value: unknown) {
 
 export function normalizeDelhiveryNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^\d{13,14}$/.test(number)) throw new TypeError('Delhivery requires a thirteen- or fourteen-digit waybill');
+  if (!/^\d{13,14}$/.test(number)) throw new InvalidInputError('Delhivery', 'Delhivery requires a thirteen- or fourteen-digit waybill');
   return number;
 }
 

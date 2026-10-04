@@ -14,6 +14,7 @@ import { trackingLanguageStage } from '../../core/status/index.js';
 import { nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { IndeterminateError, InvalidInputError } from '../../core/errors/index.js';
 
 export type UniversalSource = '17TRACK' | 'ParcelsApp' | 'Postal Ninja' | 'Ship24' | 'UPU';
 const STAGES: Record<string, Stage> = {
@@ -23,7 +24,7 @@ const STAGES: Record<string, Stage> = {
 
 export function numberOf(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^(?=.*\d)[A-Z0-9]{4,40}$/.test(number)) throw new TypeError('Invalid tracking number');
+  if (!/^(?=.*\d)[A-Z0-9]{4,40}$/.test(number)) throw new InvalidInputError('Tracking', 'Invalid tracking number');
   return number;
 }
 
@@ -134,7 +135,8 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
   // omit offsets everywhere pass preserveOrder instead.
   const unique = [...new Map(events.map((e) => [`${moment(e)}|${e.description}`, e])).values()]
     .sort((a, b) => preserveOrder ? 0 : moment(b).localeCompare(moment(a))).slice(0, 100);
-  if (!unique.length) throw new TypeError('No usable tracking events');
+  // A well-formed reply with no scan left after notices and private details proves nothing about the parcel.
+  if (!unique.length) throw new IndeterminateError(source, 'No usable tracking events');
   const current = unique.find((e) => e.stage && e.stage !== 'pending')?.stage as Stage | undefined;
   // Unknown wording can be displayed, but must not imply movement.
   const status: CarrierStatus = current === 'delivered' ? 'delivered'

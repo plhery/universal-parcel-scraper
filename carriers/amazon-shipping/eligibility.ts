@@ -1,10 +1,13 @@
 import { AmazonShippingTracker, type AmazonShippingOptions } from './adapter.js';
+import type { TrackingContext } from '../../core/adapter/index.js';
 import { CarrierError } from '../../core/errors/index.js';
 
 /** A public eligibility check; transport errors remain errors for the consumer to report. */
-export async function amazonShippingEligibility(number: string, options: AmazonShippingOptions = {}): Promise<'available' | 'expired' | 'not-found'> {
+export async function amazonShippingEligibility(
+  number: string, options: AmazonShippingOptions = {}, context: TrackingContext = {},
+): Promise<'available' | 'expired' | 'not-found'> {
   try {
-    await new AmazonShippingTracker({ ...options, timeoutMs: options.timeoutMs ?? 5_000 }).fetch(number);
+    await new AmazonShippingTracker({ ...options, timeoutMs: options.timeoutMs ?? 5_000 }).fetch(number, context);
     return 'available';
   } catch (error) {
     if (error instanceof CarrierError && error.reason === 'history_expired') return 'expired';

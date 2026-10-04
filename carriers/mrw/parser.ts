@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -11,10 +11,10 @@ const HISTORY_HEADERS = 'Fecha|Hora|Estado envío|Ubicación';
 const NEUTRAL = 'Actualización de seguimiento';
 
 export function normalizeMrwNumber(raw: string): string {
-  if (raw.length > 48) throw new TypeError('MRW tracking number is too long');
+  if (raw.length > 48) throw new InvalidInputError('MRW', 'MRW tracking number is too long');
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (/^(?:\d{12}|\d{5}[A-Z]\d{6})$/.test(number)) return number;
-  throw new TypeError('MRW requires a complete 12-character tracking number');
+  throw new InvalidInputError('MRW', 'MRW requires a complete 12-character tracking number');
 }
 
 export interface MrwSummary {

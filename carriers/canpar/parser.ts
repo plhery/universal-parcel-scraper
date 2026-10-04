@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -8,7 +8,7 @@ import { canparStatus } from './status.js';
 
 export function normalizeCanparNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^[CDKLSUXZ]\d{21}$/.test(number)) throw new TypeError('Canpar requires a full parcel barcode');
+  if (!/^[CDKLSUXZ]\d{21}$/.test(number)) throw new InvalidInputError('Canpar', 'Canpar requires a full parcel barcode');
   return number;
 }
 

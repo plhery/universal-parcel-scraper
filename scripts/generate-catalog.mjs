@@ -56,7 +56,7 @@ async function readAdapterFolders() {
 
 const carrierInputValidators = {
   trackingUrl: new Set(['planzerSharedUrl', 'dachserCapabilityUrl']),
-  dpdPostcode: new Set([
+  postcode: new Set([
     'swissPostcode',
     'francePostcode',
     'swissOrFrancePostcode',
@@ -72,7 +72,7 @@ async function validateCarrierSchema(documents) {
   for (const carrier of documents) {
     if (!validate(carrier)) {
       const details = validate.errors
-        .map((error) => `${error.instancePath || '/'} ${error.message}`)
+        .map((error) => `${error.instancePath || '/'} ${error.message}${error.params.allowedValues ? `: ${error.params.allowedValues.join(', ')}` : ''}`)
         .join('; ');
       throw new Error(`carriers/${carrier.id}/carrier.json is invalid: ${details}`);
     }

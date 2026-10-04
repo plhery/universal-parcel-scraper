@@ -265,6 +265,44 @@ describe('DHL sessions and browser fallback', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
+  it('cancels one lookup alone: no renewal, no browser, no session left for the next caller', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockImplementationOnce((_url, init) => new Promise<Response>((_resolve, reject) => {
+        init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason as Error));
+      }))
+      .mockResolvedValueOnce(new Response('', { status: 403 }))
+      .mockResolvedValueOnce(solved([]))
+      .mockResolvedValueOnce(config()).mockResolvedValueOnce(Response.json(shipment()));
+    const tracker = new DHLTracker({ trawlUrl: 'http://trawl:8191' });
+    const [running, waiting] = [new AbortController(), new AbortController()];
+    const cancelled = tracker.fetch(NUMBER, { signal: running.signal });
+    const left = tracker.fetch(NUMBER, { signal: waiting.signal });
+    const next = tracker.fetch(NUMBER);
+    await vi.waitFor(() => expect(fetcher).toHaveBeenCalledTimes(1));
+    // A caller that leaves the queue does not wait for the lookup ahead of it.
+    waiting.abort(new Error('left the queue'));
+    await expect(left).rejects.toThrow('left the queue');
+    running.abort(new Error('caller cancelled'));
+    await expect(cancelled).rejects.toMatchObject({ name: 'UpstreamNetworkError' });
+    // The next lookup opens its own session: rejected outright, it goes straight to the browser.
+    expect((await next).current_stage).toBe('in_transit');
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([CONFIG, CONFIG, 'http://trawl:8191/scrape', CONFIG, SEARCH]);
+  });
+
+  it('counts the wait for a turn against a budget the caller set', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation((_url, init) => new Promise<Response>((_resolve, reject) => {
+      init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason as Error));
+    }));
+    const tracker = new DHLTracker({ trawlUrl: 'http://trawl:8191' });
+    const running = new AbortController();
+    const hung = tracker.fetch(NUMBER, { signal: running.signal });
+    await expect(tracker.fetch(NUMBER, { budgetMs: 20 })).rejects.toMatchObject({ kind: 'budget', message: expect.stringContaining('20 ms') });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    running.abort(new Error('caller cancelled'));
+    await expect(hung).rejects.toMatchObject({ name: 'UpstreamNetworkError' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it.each([429, 500, 503])('does not bypass HTTP %s using the browser', async (status) => {
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('', { status }));
     await expect(new DHLTracker({ trawlUrl: 'http://trawl:8191' }).fetch(NUMBER)).rejects.toMatchObject({ status });

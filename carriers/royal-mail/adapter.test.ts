@@ -275,8 +275,9 @@ describe('Royal Mail lookup steps', () => {
   it('rejects a number that is not a Royal Mail number before any request', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('must not fetch'));
-    await expect(new RoyalMailTracker({ trawlUrl: TRAWL_URL }).fetch('1Z999AA10123456784'))
-      .rejects.toThrow('Royal Mail tracking numbers must match the UPU S10 format');
+    const lookup = new RoyalMailTracker({ trawlUrl: TRAWL_URL }).fetch('1Z999AA10123456784');
+    await expect(lookup).rejects.toThrow('Royal Mail tracking numbers must match the UPU S10 format');
+    await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 
@@ -292,5 +293,27 @@ describe('Royal Mail rendered page', () => {
   it('tells a challenge from an inconclusive load', () => {
     expect(parseRoyalMailTrackingHtml('<html><body><h1>Access Denied</h1></body></html>')).toBe('challenged');
     expect(parseRoyalMailTrackingHtml('<html><body>Track your item</body></html>')).toBe('inconclusive');
+  });
+});
+
+describe('Royal Mail lookup budget', () => {
+  it('gives the service its own time and waits the transport allowance for its answer when no budget is set', async () => {
+    const controller = new AbortController();
+    const fetcher = vi.fn<typeof fetch>((_url, init) => new Promise<Response>((_, reject) => {
+      init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason as Error), { once: true });
+    }));
+    const pending = new RoyalMailTracker({ timeoutMs: 40, trawlUrl: TRAWL_URL, fetcher })
+      .fetch(DELIVERED_NUMBER, { signal: controller.signal });
+    const settled = vi.fn();
+    pending.then(settled, settled);
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    // The service was told 40 ms; the request is still open for its timeout answer.
+    expect(JSON.parse(String(fetcher.mock.calls[0]![1]!.body))).toMatchObject({ maxTimeout: 40 });
+    expect(settled).not.toHaveBeenCalled();
+    controller.abort(new Error('caller cancelled'));
+    await expect(pending).rejects.toThrow('caller cancelled');
+    // A caller's budget is a hard stop instead.
+    await expect(new RoyalMailTracker({ trawlUrl: TRAWL_URL, fetcher }).fetch(DELIVERED_NUMBER, { budgetMs: 40 }))
+      .rejects.toMatchObject({ kind: 'transport' });
   });
 });

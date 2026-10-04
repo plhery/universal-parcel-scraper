@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { classifyNacexStatus } from './status.js';
@@ -8,7 +8,7 @@ const NO_HISTORY = 'No existe ningún albarán introducido en el sistema cumplie
 
 export function normalizeNacexNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');
-  if (!/^\d{4}\/\d{8}$/.test(number)) throw new TypeError('NACEX requires an agency and eight-digit shipment number');
+  if (!/^\d{4}\/\d{8}$/.test(number)) throw new InvalidInputError('NACEX', 'NACEX requires an agency and eight-digit shipment number');
   return number;
 }
 

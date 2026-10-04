@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -9,7 +9,7 @@ import { classifyOntracStatus } from './status.js';
 export function normalizeOntracNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^(?:[CD]\d{14}|L[AIEHNX]\d{8}|1LS[A-Z0-9]{12,14})$/.test(number)) {
-    throw new TypeError('OnTrac requires an OnTrac or LaserShip tracking number');
+    throw new InvalidInputError('OnTrac', 'OnTrac requires an OnTrac or LaserShip tracking number');
   }
   return number;
 }

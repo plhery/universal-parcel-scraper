@@ -2,11 +2,14 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { BudgetExceededError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { aramexDetailRedirect, aramexDetailUrl, normalizeAramexNumber, parseAramex } from './parser.js';
 
 export class AramexTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  private readonly userAgent: string;
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {
+    this.userAgent = userAgentOf(options.userAgent);
+  }
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeAramexNumber(raw);
     return runSteps({ carrier: 'aramex', budgetMs: context.budgetMs ?? 20_000, signal: context.signal,
@@ -19,7 +22,7 @@ export class AramexTracker {
         try {
           // The edge rejects Node's default user agent on server networks.
           const { response, bytes } = await fetchBounded(url, { signal, headers: {
-            Accept: 'text/html', 'User-Agent': 'SwissDeliveryTracker/1.0',
+            Accept: 'text/html', 'User-Agent': this.userAgent,
           } }, {
             provider: 'Aramex', timeoutMs: Math.max(1, Math.floor(left)), maxBytes: 1_500_000,
             fetcher: this.options.fetcher, ...(regionalRedirect ? { redirect: 'manual', allowHttpStatuses: [301, 302, 303, 307, 308] } : {}),
@@ -41,6 +44,6 @@ export class AramexTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new AramexTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new AramexTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'aramex', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

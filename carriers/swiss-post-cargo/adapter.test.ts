@@ -26,7 +26,9 @@ describe('Swiss Post Cargo tracking', () => {
     expect(normalizeSwissPostCargoTrackingNumber(' 12.34-abc789 ')).toBe('1234ABC789');
     expect(swissPostCargoTrackingUrl('12.34-abc789'))
       .toBe('https://apv.swisspost-cargo.com/public/trackandtrace/1234ABC789');
-    expect(() => normalizeSwissPostCargoTrackingNumber('letters-only')).toThrow('barcode or reference');
+    expect(() => normalizeSwissPostCargoTrackingNumber('letters-only'))
+      .toThrow('Swiss Post Cargo tracking requires a 6- to 40-character barcode or reference');
+    expect(() => normalizeSwissPostCargoTrackingNumber('letters-only')).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   });
 
   it('maps only public history fields and rejects a different barcode', () => {

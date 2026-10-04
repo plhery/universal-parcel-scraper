@@ -2,7 +2,7 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { BudgetExceededError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { canadaPostLookupKind, normalizeCanadaPostNumber, parseCanadaPostTrackingResponse, resolveCanadaPostPin } from './parser.js';
 
 export { normalizeCanadaPostNumber, parseCanadaPostTrackingResponse } from './parser.js';
@@ -20,16 +20,19 @@ export interface CanadaPostTrackerOptions {
   timeoutMs?: number;
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
+  userAgent?: string;
 }
 
 export class CanadaPostTracker {
   readonly timeoutMs: number;
   readonly #options: CanadaPostTrackerOptions;
+  readonly #userAgent: string;
 
   constructor(options: number | CanadaPostTrackerOptions = {}) {
     this.#options = typeof options === 'number' ? { timeoutMs: options } : options;
     this.timeoutMs = this.#options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) throw new TypeError('Canada Post timeout must be positive');
+    this.#userAgent = userAgentOf(this.#options.userAgent);
   }
 
   async fetch(rawTrackingNumber: string, context: TrackingContext = {}) {
@@ -50,7 +53,7 @@ export class CanadaPostTracker {
             // The public tracking application's interceptor sends empty Basic credentials.
             Authorization: 'Basic Og==',
             Referer: 'https://www.canadapost-postescanada.ca/track-reperage/en/home',
-            'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+            'User-Agent': this.#userAgent,
             'X-Requested-With': 'XMLHttpRequest',
           } }, { provider: 'canada-post', timeoutMs: Math.max(1, Math.floor(requestBudget)),
             maxBytes: 1_000_000, fetcher: this.#options.fetcher }));
@@ -78,7 +81,7 @@ export class CanadaPostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new CanadaPostTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new CanadaPostTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'canada-post', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeCanadaPostNumber(number))) };
 };

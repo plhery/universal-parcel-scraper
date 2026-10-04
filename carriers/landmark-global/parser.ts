@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { landmarkStatus } from './status.js';
@@ -10,7 +10,7 @@ const ABSENT = "We couldn't find a match for this value. Please try a different 
 
 export function normalizeLandmarkNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^LTN\d{8,9}(?:N1)?$/.test(number)) throw new TypeError('Landmark requires an LTN parcel reference');
+  if (!/^LTN\d{8,9}(?:N1)?$/.test(number)) throw new InvalidInputError('Landmark Global', 'Landmark requires an LTN parcel reference');
   return number;
 }
 

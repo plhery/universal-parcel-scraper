@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -14,10 +14,10 @@ export const TIPSA_ZONE = 'Europe/Madrid';
 
 /** The 22-digit reference: charge agency, origin agency and waybill, six, six and ten digits. */
 export function normalizeTipsaNumber(raw: string): string {
-  if (raw.length > 64) throw new TypeError('TIPSA tracking number is too long');
+  if (raw.length > 64) throw new InvalidInputError(PROVIDER, 'TIPSA tracking number is too long');
   const number = raw.replace(/[\s.-]/g, '');
   if (/^\d{22}$/.test(number)) return number;
-  throw new TypeError('TIPSA requires the full 22-digit reference');
+  throw new InvalidInputError(PROVIDER, 'TIPSA requires the full 22-digit reference');
 }
 
 /**

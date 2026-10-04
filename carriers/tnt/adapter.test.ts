@@ -44,11 +44,11 @@ describe('TNT France public tracking', () => {
   });
 
   it('sends international numbers to tnt.com and other shapes nowhere', async () => {
-    expect(() => normalizeTntFranceNumber('123456789')).toThrow('16-digit');
+    expect(() => normalizeTntFranceNumber('123456789')).toThrow(expect.objectContaining({ kind: 'invalid_input', message: expect.stringContaining('16-digit') }));
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => new URL(String(url)).hostname === 'www.tnt.fr'
       ? new Response(fixture()) : new Response(JSON.stringify(express())));
     await expect(tracker(fetcher).recognize!('12345678')).resolves.toEqual({ known: false });
-    await expect(tracker(fetcher).track({ number: '12345678' })).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(tracker(fetcher).track({ number: '12345678' })).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
     await tracker(fetcher).track({ number: EXPRESS_NUMBER });
     await tracker(fetcher).track({ number: NUMBER });

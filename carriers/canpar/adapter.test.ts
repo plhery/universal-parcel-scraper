@@ -5,6 +5,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, CanparTracker } from './adapter.js';
 import { parseCanpar } from './parser.js';
 import { canparStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'C000000000000000000001';
 const OTHER = 'C000000000000000000002';
@@ -129,7 +130,7 @@ describe('Canpar retrieval', () => {
   it('rejects invalid inputs before I/O and bounds cancellation, elapsed time and response size', async () => {
     const unused = vi.fn<typeof fetch>();
     for (const number of ['123', `${NUMBER}&barcode=OTHER`, 'W000000000001']) {
-      await expect(new CanparTracker({ fetcher: unused }).fetch(number)).rejects.toThrow(TypeError);
+      await expect(new CanparTracker({ fetcher: unused }).fetch(number)).rejects.toThrow(InvalidInputError);
     }
     await expect(new CanparTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(unused).not.toHaveBeenCalled();

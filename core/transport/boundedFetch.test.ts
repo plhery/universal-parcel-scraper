@@ -39,7 +39,21 @@ describe('bounded carrier request retries', () => {
   it('cancels a Retry-After wait without sending another request', async () => {
     const controller = new AbortController();
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status: 503, headers: { 'Retry-After': '60' } }));
-    const failure = expect(fetchBounded(URL, { signal: controller.signal }, { ...OPTIONS, fetcher })).rejects.toThrow();
+    // The retry that could not happen leaves the provider's own answer, not a bare abort.
+    const failure = expect(fetchBounded(URL, { signal: controller.signal }, { ...OPTIONS, fetcher }))
+      .rejects.toMatchObject({ name: 'UpstreamHttpError', status: 503 });
+    await vi.advanceTimersByTimeAsync(10);
+    controller.abort();
+    await failure;
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it('keeps a failed request typed when the lookup ends during the pause before its retry', async () => {
+    const controller = new AbortController();
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new DOMException('Timed out', 'TimeoutError'));
+    const failure = expect(fetchBounded(URL, { signal: controller.signal }, { ...OPTIONS, fetcher }))
+      .rejects.toMatchObject({ name: 'UpstreamNetworkError', kind: 'transport' });
     await vi.advanceTimersByTimeAsync(10);
     controller.abort();
     await failure;
@@ -184,8 +198,9 @@ describe('bounded carrier request retries', () => {
 
   it('does not retry oversized or malformed successful responses', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('invalid json'));
+    // Typed, so a consumer does not read it as a network failure to retry at once.
     await expect(fetchBounded(URL, {}, { ...OPTIONS, fetcher, maxBytes: 5 }))
-      .rejects.toThrow('unexpectedly large response');
+      .rejects.toMatchObject({ kind: 'indeterminate', message: expect.stringContaining('unexpectedly large response') });
     expect(fetcher).toHaveBeenCalledOnce();
     const result = await fetchBounded(URL, {}, { ...OPTIONS, fetcher });
     expect(() => parseJsonBytes(result.bytes, 'Tracking')).toThrow('invalid tracking response');
@@ -196,5 +211,14 @@ describe('bounded carrier request retries', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('oversized'));
     await expect(fetchBounded(URL, {}, { provider: 'Tracking', fetcher, maxBytes: 2 }))
       .rejects.not.toBeInstanceOf(UpstreamNetworkError);
+  });
+
+  it.each([
+    ['declared', () => new Response('x', { headers: { 'content-length': '3000000' } })],
+    ['streamed', () => new Response('oversized')],
+  ])('names a %s oversized response so a tier with a larger cap can take over', async (_, response) => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => response());
+    await expect(fetchBounded(URL, {}, { provider: 'Tracking', fetcher, maxBytes: 2 }))
+      .rejects.toMatchObject({ kind: 'indeterminate', reason: 'response_too_large' });
   });
 });

@@ -1,16 +1,12 @@
 
-import { accepted, recognizeFromLookup, type AdapterFactory } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { carrierIdFromPartner } from '../../core/catalog/hints.js';
-import {
-  CarrierError,
-  SchemaError,
-  UpstreamHttpError,
-} from '../../core/errors/index.js';
+import { CarrierError, InvalidInputError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { isoTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { eventStage, eventStatus } from './status.js';
 
@@ -90,7 +86,7 @@ export function normalizeLaPosteTrackingNumber(raw: string): string {
   const international = /^[A-Z]{2}\d{9}[A-Z]{2}$/.test(value);
   const foreignExpress = /^\d{14}[A-Z]$/.test(value);
   if (!domestic && !international && !foreignExpress) {
-    throw new TypeError('La Poste tracking numbers must use a supported 13- or 15-character format');
+    throw new InvalidInputError('La Poste', 'La Poste tracking numbers must use a supported 13- or 15-character format');
   }
   return value;
 }
@@ -198,12 +194,14 @@ export interface LaPosteTrackerOptions {
   timeoutMs?: number;
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
+  userAgent?: string;
 }
 
 export class LaPosteTracker {
   readonly timeoutMs: number;
   private readonly fetcher?: typeof fetch;
   private readonly recorder?: StepRecorder;
+  private readonly userAgent: string;
 
   constructor(options: LaPosteTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -212,22 +210,25 @@ export class LaPosteTracker {
     }
     this.fetcher = options.fetcher;
     this.recorder = options.recorder;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const normalized = normalizeLaPosteTrackingNumber(trackingNumber);
-    const deadline = performance.now() + this.timeoutMs;
-    const request = async (remainingMs: number): Promise<CarrierResult> => {
+    const budgetMs = context.budgetMs ?? this.timeoutMs;
+    const deadline = performance.now() + budgetMs;
+    const request = async (remainingMs: number, signal: AbortSignal): Promise<CarrierResult> => {
       const { bytes } = await fetchBounded(laPosteTrackingApiUrl(normalized), {
+        signal,
         headers: {
           Accept: 'application/json, text/plain, */*',
           'Accept-Language': 'fr-FR,fr;q=0.9',
           Referer: laPosteTrackingUrl(normalized),
-          'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
+          'User-Agent': this.userAgent,
         },
       }, {
         provider: 'La Poste tracking',
-        timeoutMs: Math.max(1, Math.floor(remainingMs)),
+        timeoutMs: Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))),
         maxBytes: MAX_RESPONSE_BYTES,
         fetcher: this.fetcher,
       });
@@ -247,12 +248,12 @@ export class LaPosteTracker {
     const retry: StepSpec<CarrierResult> = {
       id: 'retry',
       recovers: retriable,
-      run: ({ remainingMs }) => request(remainingMs),
+      run: ({ remainingMs, signal }) => request(remainingMs, signal),
     };
     return await runSteps<CarrierResult>({
-      carrier: 'la-poste', budgetMs: this.timeoutMs, recorder: this.recorder,
+      carrier: 'la-poste', budgetMs, signal: context.signal, recorder: this.recorder,
     }, [
-      { id: 'direct', run: ({ remainingMs }) => request(remainingMs) },
+      { id: 'direct', run: ({ remainingMs, signal }) => request(remainingMs, signal) },
       retry,
       { ...retry },
       { ...retry },
@@ -264,13 +265,14 @@ export const adapter: AdapterFactory = (environment) => {
   const tracker = new LaPosteTracker({
     fetcher: environment.fetcher,
     recorder: environment.recorder,
+    userAgent: environment.userAgent,
   });
   return {
     id: 'la-poste',
     // One keyless request, then up to three immediate retries of the same
     // request after a transient HTTP 403, inside the original deadline.
     steps: ['direct', 'retry'],
-    track: (input) => tracker.fetch(input.number),
-    recognize: (number) => recognizeFromLookup(() => tracker.fetch(number), () => accepted(() => normalizeLaPosteTrackingNumber(number))),
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeLaPosteTrackingNumber(number))),
   };
 };

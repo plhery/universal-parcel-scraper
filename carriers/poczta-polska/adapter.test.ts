@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { adapter, parsePocztaPolskaBootstrap, PocztaPolskaTracker } from './adapter.js';
 import { normalizePocztaPolskaNumber, parsePocztaPolska } from './parser.js';
 import { classifyPocztaPolskaStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '00000000000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -167,7 +168,7 @@ describe('Poczta Polska public widget request', () => {
   it('rejects invalid inputs and cancels before sending the tracking query', async () => {
     const unused = vi.fn<typeof fetch>();
     for (const number of ['123', 'RR000000006PL', `${NUMBER}&payment=1`]) {
-      expect(() => new PocztaPolskaTracker({ fetcher: unused }).fetch(number)).toThrow(TypeError);
+      expect(() => new PocztaPolskaTracker({ fetcher: unused }).fetch(number)).toThrow(InvalidInputError);
     }
     await expect(new PocztaPolskaTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(unused).not.toHaveBeenCalled();

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ChallengeError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../telemetry/index.js';
-import { recoverableByDefault, runSteps, singleFlight } from './index.js';
+import { recoverableByDefault, runSteps, singleFlight, takeTurn } from './index.js';
 
 function recorder(): StepRecorder & { steps: StepRecord[]; lookups: LookupRecord[] } {
   const steps: StepRecord[] = [];
@@ -102,6 +102,43 @@ describe('runSteps', () => {
   });
 });
 
+describe('runSteps cancellation and the last millisecond', () => {
+  it('starts no later step once the caller has cancelled, and keeps the interrupted failure whichever step it was', async () => {
+    const later = vi.fn(async () => 'never');
+    for (const steps of [1, 2]) {
+      const sink = recorder();
+      const controller = new AbortController();
+      const interrupted = new TransportError('ups', 'interrupted');
+      await expect(runSteps({ carrier: 'ups', budgetMs: 1_000, recorder: sink, signal: controller.signal }, [
+        { id: 'direct', run: async () => { controller.abort(new Error('caller cancelled')); throw interrupted; } },
+        { id: 'trawl', run: later },
+      ].slice(0, steps))).rejects.toBe(interrupted);
+      expect(sink.steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'transport']]);
+      expect(sink.lookups).toEqual([expect.objectContaining({ finalStep: 'direct', attempts: 1, outcome: 'transport' })]);
+    }
+    expect(later).not.toHaveBeenCalled();
+  });
+
+  it('runs nothing for a signal that is already aborted: the caller\'s reason, or a budget error for a deadline', async () => {
+    const run = vi.fn(async () => 'never');
+    const reason = new Error('caller cancelled');
+    await expect(runSteps({ carrier: 'ups', budgetMs: 1_000, signal: AbortSignal.abort(reason) }, [{ id: 'direct', run }])).rejects.toBe(reason);
+    const deadline = AbortSignal.abort(new DOMException('The operation timed out', 'TimeoutError'));
+    await expect(runSteps({ carrier: 'ups', budgetMs: 1_000, signal: deadline }, [{ id: 'direct', run }])).rejects.toMatchObject({ kind: 'budget' });
+    expect(run).not.toHaveBeenCalled();
+  });
+
+  it('does not start a recovery with under a millisecond of budget left', async () => {
+    let time = 0;
+    const later = vi.fn(async () => 'never');
+    await expect(runSteps({ carrier: 'ups', budgetMs: 1_000, now: () => time }, [
+      { id: 'direct', run: async () => { time = 999.4; throw new ChallengeError('UPS'); } },
+      { id: 'trawl', run: later },
+    ])).rejects.toMatchObject({ kind: 'budget' });
+    expect(later).not.toHaveBeenCalled();
+  });
+});
+
 describe('singleFlight', () => {
   it('serializes operations in call order', async () => {
     const lock = singleFlight();
@@ -116,5 +153,80 @@ describe('singleFlight', () => {
     const lock = singleFlight();
     await expect(lock(async () => { throw new Error('boom'); })).rejects.toThrow('boom');
     await expect(lock(async () => 'after')).resolves.toBe('after');
+  });
+
+  it('does not start a lookup cancelled in the tick its turn comes up', async () => {
+    const lock = singleFlight();
+    const controller = new AbortController();
+    const cancelled = vi.fn(async () => 'never');
+    // The lookup in front ends, and its caller cancels the next one as soon as it hears.
+    const first = lock(async () => {});
+    const waiting = lock(cancelled, controller.signal);
+    await first;
+    controller.abort(new Error('left as the turn came up'));
+    await expect(waiting).rejects.toThrow('left as the turn came up');
+    expect(cancelled).not.toHaveBeenCalled();
+    await expect(lock(async () => 'next')).resolves.toBe('next');
+  });
+
+  it('lets a cancelled lookup leave the queue without starting or reordering the others', async () => {
+    const lock = singleFlight();
+    const order: string[] = [];
+    let finish!: () => void;
+    const first = lock(() => new Promise<void>((resolve) => { finish = () => { order.push('first'); resolve(); }; }));
+    const controller = new AbortController();
+    const cancelled = vi.fn(async () => { order.push('cancelled'); });
+    const waiting = lock(cancelled, controller.signal);
+    const third = lock(async () => { order.push('third'); });
+    controller.abort(new Error('caller cancelled'));
+    await expect(waiting).rejects.toThrow('caller cancelled');
+    expect(order).toEqual([]);
+    finish();
+    await Promise.all([first, third]);
+    expect(order).toEqual(['first', 'third']);
+    expect(cancelled).not.toHaveBeenCalled();
+    await expect(lock(async () => 'never', AbortSignal.abort(new Error('already cancelled')))).rejects.toThrow('already cancelled');
+  });
+});
+
+describe('takeTurn', () => {
+  const held = () => { let release!: () => void; const done = new Promise<void>((resolve) => { release = resolve; }); return { done, release }; };
+
+  it('spends a budget the caller set while waiting, and hands the lookup what is left', async () => {
+    const serialize = singleFlight();
+    const front = held();
+    const first = takeTurn(serialize, 'ups', {}, () => front.done);
+    const lookup = vi.fn(async () => 'never');
+    await expect(takeTurn(serialize, 'ups', { budgetMs: 30 }, lookup)).rejects.toMatchObject({ kind: 'budget', provider: 'ups' });
+    expect(lookup).not.toHaveBeenCalled();
+    front.release();
+    await first;
+    const seen = await takeTurn(serialize, 'ups', { budgetMs: 5_000 }, async (left) => left);
+    expect(seen.budgetMs).toBeGreaterThan(4_000);
+    expect(seen.budgetMs).toBeLessThanOrEqual(5_000);
+  });
+
+  it('leaves the default budget to the lookup and ends the wait only on cancellation', async () => {
+    const serialize = singleFlight();
+    const front = held();
+    const first = takeTurn(serialize, 'ups', {}, () => front.done);
+    const controller = new AbortController();
+    const context = { signal: controller.signal };
+    const waiting = takeTurn(serialize, 'ups', context, async (left) => left);
+    const cancelled = takeTurn(serialize, 'ups', { signal: AbortSignal.abort(new Error('already cancelled')), budgetMs: 1_000 }, async () => 'never');
+    await expect(cancelled).rejects.toThrow('already cancelled');
+    front.release();
+    await first;
+    // The same context comes back: no budget was invented for the lookup.
+    await expect(waiting).resolves.toBe(context);
+    const reason = new Error('caller cancelled');
+    const second = held();
+    const holder = takeTurn(serialize, 'ups', {}, () => second.done);
+    const leaving = new AbortController();
+    const left = takeTurn(serialize, 'ups', { signal: leaving.signal, budgetMs: 60_000 }, async () => 'never');
+    leaving.abort(reason);
+    await expect(left).rejects.toBe(reason);
+    second.release();
+    await holder;
   });
 });

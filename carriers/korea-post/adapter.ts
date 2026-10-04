@@ -2,7 +2,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
@@ -12,7 +12,7 @@ const ENDPOINT = 'https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttS
 
 export function normalizeKoreaPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number)) throw new InputRequiredError('Korea Post', 'number', 'Korea Post direct tracking supports international postal identifiers');
+  if (!/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number)) throw new InvalidInputError('Korea Post', 'Korea Post direct tracking supports international postal identifiers');
   return number;
 }
 

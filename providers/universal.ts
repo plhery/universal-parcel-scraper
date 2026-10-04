@@ -15,7 +15,8 @@
  * This module owns the order and the aggregate failure; every protocol detail
  * lives in the provider folder next to it.
  */
-import type { AdapterEnvironment, CarrierAdapter } from '../core/adapter/index.js';
+import type { AdapterEnvironment, CarrierAdapter, TrackingContext } from '../core/adapter/index.js';
+import { BudgetExceededError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
@@ -35,6 +36,13 @@ export type { UniversalSource } from './shared/result.js';
 
 export * from './plan.js';
 import { universalSources, universalSourceBudget } from './plan.js';
+
+/**
+ * A source is asked only with this much budget left. A provider that runs out
+ * of time returns a few milliseconds before the deadline, because its timers
+ * round down to whole milliseconds, and none answers in less.
+ */
+const MIN_SOURCE_BUDGET_MS = 50;
 
 const FACTORIES = {
   'Ship24': ship24Adapter,
@@ -86,14 +94,27 @@ export class UniversalTracker {
    * stored delivery postcode, if the user supplied one: it is forwarded into
    * every provider's track input. ParcelsApp submits it as extra[zipcode] on
    * its direct API request; the other providers currently do not consume it.
+   * The caller's budget covers the whole chain and its signal ends it.
    */
-  async fetch(trackingNumber: string, postcode?: string | null): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, postcode?: string | null, context: TrackingContext = {}): Promise<CarrierResult> {
     numberOf(trackingNumber);
+    context.signal?.throwIfAborted();
+    const deadline = context.budgetMs === undefined ? Infinity : performance.now() + context.budgetMs;
     const failures: SourceFailure[] = [];
     const sources = universalSources(this.options.enablePostalNinja, trackingNumber).filter(source => (this.options.providers ?? ['UPU']).includes(source));
     for (const source of sources) {
-      try { return await this.fetchSource(source, trackingNumber, undefined, postcode); }
-      catch (error) { failures.push({ source, reason: 'history unavailable; try again later or open the tracking website', error }); }
+      const remaining = deadline - performance.now();
+      if (remaining < MIN_SOURCE_BUDGET_MS) {
+        failures.push({ source, reason: 'the lookup budget was spent first', error: new BudgetExceededError(source, context.budgetMs!) });
+        continue;
+      }
+      try {
+        return await this.fetchSource(source, trackingNumber, Math.min(remaining, this.options.timeoutMs ?? universalSourceBudget(source)),
+          postcode, null, context.signal);
+      } catch (error) {
+        if (context.signal?.aborted) throw context.signal.reason;
+        failures.push({ source, reason: 'history unavailable; try again later or open the tracking website', error });
+      }
     }
     throw new UniversalTrackingError(failures);
   }
@@ -118,6 +139,7 @@ export class UniversalTracker {
     const fetcher = partial.fetcher ?? this.options.fetcher;
     return {
       fetcher,
+      userAgent: partial.userAgent,
       trawl: this.trawl(fetcher, partial),
       browserExecutablePath: partial.browserExecutablePath ?? this.options.executablePath ?? null,
       recorder: partial.recorder ?? NOOP_RECORDER,

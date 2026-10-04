@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, UKRPOSHTA_API, UkrposhtaTracker, ukrposhtaTrackingUrl } from './adapter.js';
 import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview, ukrposhtaWallClock } from './parser.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '0000000000091';
 const fixture = (name = 'returned') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
@@ -128,8 +129,8 @@ describe('Ukrposhta native history projection', () => {
   it('validates input before any browser operation and preserves exact output identities', () => {
     expect(normalizeUkrposhtaNumber(' 000 0000 0000 91 ')).toBe(NUMBER);
     expect(normalizeUkrposhtaNumber('rr000000005ua')).toBe('RR000000005UA');
-    expect(() => normalizeUkrposhtaNumber('RR000000009UA')).toThrow(TypeError);
-    expect(() => normalizeUkrposhtaNumber('1234567890123&extra=1')).toThrow(TypeError);
+    expect(() => normalizeUkrposhtaNumber('RR000000009UA')).toThrow(InvalidInputError);
+    expect(() => normalizeUkrposhtaNumber('1234567890123&extra=1')).toThrow(InvalidInputError);
   });
 });
 
@@ -179,6 +180,16 @@ describe('Ukrposhta bounded anonymous browser retrieval', () => {
     expect(seam.page.goto).toHaveBeenCalledOnce();
   });
 
+  it('records a page timeout that lands on the lookup deadline as the budget running out', async () => {
+    const seam = browserSeam(), clock = vi.spyOn(performance, 'now').mockReturnValue(0);
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    // The browser is handed the remaining budget rounded down, so its own timer fires just before the deadline.
+    seam.page.goto.mockImplementation(async () => { clock.mockReturnValue(4998); throw new Error('page.goto: Timeout 4998ms exceeded.'); });
+    await expect(new UkrposhtaTracker({ executablePath: '/synthetic/chromium', recorder }).fetch(NUMBER, { budgetMs: 5000 })).rejects.toMatchObject({ kind: 'budget' });
+    expect(recorder.step).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ step: 'browser', outcome: 'budget' }));
+    expect(seam.browser.close).toHaveBeenCalledOnce();
+  });
+
   it('rejects a captured response submitted for another parcel', async () => {
     const seam = browserSeam();
     const original = await seam.page.waitForResponse();
@@ -220,7 +231,7 @@ describe('Ukrposhta bounded anonymous browser retrieval', () => {
     expect(seam.browser.close).toHaveBeenCalled();
   });
 
-  it('rejects launch cancellation promptly and closes a late browser before releasing the lock', async () => {
+  it('rejects launch cancellation promptly and closes a late browser before the next lookup gets its turn', async () => {
     const seam = browserSeam(), controller = new AbortController();
     let resolveLaunch!: (browser: Browser) => void;
     let resolveClose!: () => void;
@@ -228,20 +239,21 @@ describe('Ukrposhta bounded anonymous browser retrieval', () => {
     seam.browser.close.mockImplementation(() => new Promise(resolve => { resolveClose = resolve; }));
     const tracker = new UkrposhtaTracker({ executablePath: '/synthetic/chromium' });
     const pending = tracker.fetch(NUMBER, { signal: controller.signal });
+    await vi.waitFor(() => expect(seam.launch).toHaveBeenCalledOnce());
     controller.abort(new Error('Cancelled during launch'));
     await expect(pending).rejects.toThrow('Cancelled during launch');
-    await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+    // A waiting lookup spends its own budget; it never starts a second browser.
+    await expect(tracker.fetch(NUMBER, { budgetMs: 20 })).rejects.toMatchObject({ kind: 'budget' });
     expect(seam.launch).toHaveBeenCalledOnce();
     resolveLaunch(seam.browser as never);
     await vi.waitFor(() => expect(seam.browser.close).toHaveBeenCalledOnce());
-    await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+    await expect(tracker.fetch(NUMBER, { budgetMs: 20 })).rejects.toMatchObject({ kind: 'budget' });
     expect(seam.browser.newContext).not.toHaveBeenCalled();
+    seam.launch.mockResolvedValue(seam.browser as never);
+    seam.browser.close.mockResolvedValue();
+    const queued = tracker.fetch(NUMBER);
     resolveClose();
-    await vi.waitFor(async () => {
-      seam.launch.mockResolvedValue(seam.browser as never);
-      seam.browser.close.mockResolvedValue();
-      await expect(tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'returned' });
-    });
+    await expect(queued).resolves.toMatchObject({ current_stage: 'returned' });
   });
 
   it.each(['context', 'page'])('rejects cancellation during %s setup and closes its browser', async phase => {
@@ -260,7 +272,7 @@ describe('Ukrposhta bounded anonymous browser retrieval', () => {
   it('requires a configured runtime and performs no browser work for invalid or pre-aborted input', async () => {
     const seam = browserSeam();
     expect(() => new UkrposhtaTracker().fetch(NUMBER)).toThrow(expect.objectContaining({ kind: 'challenge' }));
-    expect(() => new UkrposhtaTracker({ executablePath: '/synthetic/chromium' }).fetch('invalid')).toThrow(TypeError);
+    expect(() => new UkrposhtaTracker({ executablePath: '/synthetic/chromium' }).fetch('invalid')).toThrow(InvalidInputError);
     await expect(new UkrposhtaTracker({ executablePath: '/synthetic/chromium' }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(seam.launch).not.toHaveBeenCalled();
   });

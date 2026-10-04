@@ -9,6 +9,10 @@ Fill its catalog document, add public or synthetic number examples, implement re
 pure parser, and add synthetic fixtures with offline tests. Declare recognition only when a
 cheap anonymous HTTP lookup can positively distinguish a known parcel from an unknown one.
 Regenerate the catalog and registry. The existing carrier folders show the adapter contract.
+An adapter passes the caller's signal and budget into every request and, where it names a
+client, takes its User-Agent from the environment; `testing/adapterContext.test.ts` and
+`testing/adapterContextSource.test.ts` check both for every registered adapter. A number the carrier does not issue is an
+`InvalidInputError`.
 
 Keep recipient details, capability links, private tracking numbers and postcodes out of Git,
 issues and logs. Live tests read private inputs from environment variables or ignored files.
@@ -20,9 +24,10 @@ to run the live test. Catalog facts belong in the JSON files. Provider results b
 [providers/COVERAGE.md](providers/COVERAGE.md). `npm run generate` updates the README counts.
 
 The public entry points, result shape, carrier ids, provider names and published data schemas
-follow semver. Fixes are patches; additive carriers, fields and exports are minor releases;
-removals, renames and stage-vocabulary changes are major releases. Version 0.x is the initial
-API line. Consumers should pin exact versions.
+follow semver; the `/app` entry point is exempt. Fixes are patches; additive carriers, fields
+and exports are minor releases; removals, renames and stage-vocabulary changes are major
+releases. Version 0.x is the initial API line: until 1.0.0 a removal or rename raises the
+minor version. Consumers should pin exact versions.
 
 npm has two channels, and `.github/workflows/release.yml` publishes both as the package's npm
 trusted publisher. A push to `main` that changes the files a consumer installs is published as

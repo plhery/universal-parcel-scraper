@@ -1,10 +1,10 @@
 import { validateDachserTrackingUrl } from '../../core/catalog/urls.js';
 export { validateDachserTrackingUrl } from '../../core/catalog/urls.js';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { eventLabel, plainText, shipmentStatus } from './status.js';
 
@@ -26,6 +26,7 @@ export interface DachserOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 function normalizeTrackingNumber(raw: unknown): string {
@@ -43,7 +44,15 @@ function normalizeTrackingNumber(raw: unknown): string {
 
 
 export function dachserApiUrl(trackingUrl: string, trackingNumber: string): string {
-  const url = new URL(validateDachserTrackingUrl(trackingUrl, trackingNumber));
+  let validated: string;
+  try {
+    validated = validateDachserTrackingUrl(trackingUrl, trackingNumber);
+  } catch (error) {
+    // A link that is not this shipment's is the caller's credential, rejected before any request.
+    if (error instanceof TypeError) throw new InvalidInputError(PROVIDER, error.message, { cause: error });
+    throw error;
+  }
+  const url = new URL(validated);
   url.pathname = DACHSER_API_PATH;
   return url.toString();
 }
@@ -116,26 +125,31 @@ export function parseDachserTrackingResponse(payload: unknown, trackingNumber: s
 export class DachserTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: number | DachserOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher } = typeof options === 'number'
-      ? { timeoutMs: options, fetcher: undefined }
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher, userAgent } = typeof options === 'number'
+      ? { timeoutMs: options, fetcher: undefined, userAgent: undefined }
       : options;
     this.timeoutMs = timeoutMs;
     this.#fetcher = fetcher;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(trackingNumber: string, trackingUrl: string): Promise<CarrierResult> {
-    const { bytes, response } = await fetchBounded(dachserApiUrl(trackingUrl, trackingNumber), {
+  async fetch(trackingNumber: string, trackingUrl: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    const url = dachserApiUrl(trackingUrl, trackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
+    const { bytes, response } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'Accept-Language': 'en',
         Referer: `https://${DACHSER_HOST}${DACHSER_PAGE_PATH}`,
-        'User-Agent': 'SwissDeliveryTracker/1.0',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: 'Dachser tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
     });
@@ -169,16 +183,16 @@ export class DachserTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new DachserTracker({ fetcher: environment.fetcher });
+  const tracker = new DachserTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'dachser',
     steps: ['direct'],
-    track: async (input) => {
+    track: async (input, context) => {
       if (!input.trackingUrl) {
         throw new InputRequiredError(PROVIDER, 'its complete tracking URL',
           'Dachser tracking requires its complete tracking URL');
       }
-      return tracker.fetch(input.number, input.trackingUrl);
+      return tracker.fetch(input.number, input.trackingUrl, context);
     },
   };
 };

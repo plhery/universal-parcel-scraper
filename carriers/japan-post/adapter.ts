@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
 import { japanPostStatus } from './status.js';
@@ -24,7 +24,7 @@ export function normalizeJapanPostNumber(raw: string): string {
   // S10 references. U-prefixed customs labels are explicitly not trackable.
   if (!/^\d{11,13}$/.test(number)
     && (!/^[A-TV-Z][A-Z]\d{9}[A-Z]{2}$/.test(number) || !isValidS10TrackingNumber(number))) {
-    throw new InputRequiredError(PROVIDER, 'number', 'Japan Post requires a domestic tracking number or a valid tracked postal reference');
+    throw new InvalidInputError(PROVIDER, 'Japan Post requires a domestic tracking number or a valid tracked postal reference');
   }
   return number;
 }

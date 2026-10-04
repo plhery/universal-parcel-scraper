@@ -1,5 +1,5 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -20,7 +20,7 @@ const PICKUP_POINT_CODES = new Set(['GTMS_PUDO_INBOUND', 'GTMS_STA_SIGNED', 'GTM
 
 export function normalizeEcoscootingNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^(?:\d{18}|CN(?:ESP|PRT)\d{20})$/.test(number)) throw new TypeError('Ecoscooting requires a numeric, CNESP or CNPRT parcel reference');
+  if (!/^(?:\d{18}|CN(?:ESP|PRT)\d{20})$/.test(number)) throw new InvalidInputError('Ecoscooting', 'Ecoscooting requires a numeric, CNESP or CNPRT parcel reference');
   return number;
 }
 

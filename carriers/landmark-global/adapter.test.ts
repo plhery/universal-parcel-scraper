@@ -8,6 +8,7 @@ import { normalizeLandmarkNumber, parseLandmark } from './parser.js';
 import { landmarkStatus } from './status.js';
 import metadata from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'LTN00000001N1';
 const fixture = () => readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');
@@ -103,7 +104,7 @@ describe('Landmark direct retrieval', () => {
     }
     for (const number of ['LTN0000000', 'LTN0000000000', 'LTN000000009N2', 'LTN000000009N11']) {
       expect(patterns.some(pattern => pattern.test(number)), number).toBe(false);
-      expect(() => normalizeLandmarkNumber(number)).toThrow(TypeError);
+      expect(() => normalizeLandmarkNumber(number)).toThrow(InvalidInputError);
     }
   });
   it('forwards the full nine-digit reference and alias without truncating routing digits', async () => {
@@ -113,7 +114,7 @@ describe('Landmark direct retrieval', () => {
       expect(new URL(String(fetcher.mock.lastCall?.[0])).searchParams.get('search')).toBe(number);
     }
     expect(fetcher).toHaveBeenCalledTimes(2);
-    for (const number of ['LTN0000000', 'LTN0000000000', 'LTN000000009N2', 'LTN000000009N11']) expect(() => normalizeLandmarkNumber(number)).toThrow(TypeError);
+    for (const number of ['LTN0000000', 'LTN0000000000', 'LTN000000009N2', 'LTN000000009N11']) expect(() => normalizeLandmarkNumber(number)).toThrow(InvalidInputError);
     expect(normalizeLandmarkNumber('ltn-000000009 n1')).toBe('LTN000000009N1');
   });
   it('uses one fresh anonymous GET without a bootstrap or API credentials', async () => {
@@ -132,7 +133,7 @@ describe('Landmark direct retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Failure', { status: Number(status) })); await expect(new LandmarkTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind }); expect(fetcher).toHaveBeenCalledOnce();
   });
   it('bounds invalid inputs, cancellation, fractional deadlines and response size', async () => {
-    const unused = vi.fn<typeof fetch>(); await expect(new LandmarkTracker({ fetcher: unused }).fetch(`${NUMBER}&search=other`)).rejects.toThrow(TypeError);
+    const unused = vi.fn<typeof fetch>(); await expect(new LandmarkTracker({ fetcher: unused }).fetch(`${NUMBER}&search=other`)).rejects.toThrow(InvalidInputError);
     await expect(new LandmarkTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow(); expect(unused).not.toHaveBeenCalled();
     const slow = vi.fn<typeof fetch>().mockImplementation(async (_url, init) => { await new Promise<void>(resolve => init?.signal?.addEventListener('abort', () => resolve(), { once: true })); init?.signal?.throwIfAborted(); return new Response(''); });
     await expect(new LandmarkTracker({ fetcher: slow }).fetch(NUMBER, { budgetMs: 20.5 })).rejects.toThrow();

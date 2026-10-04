@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
+import { carrierErrorKind } from '../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
 import { UniversalTracker, UniversalTrackingError, universalPlan, universalSources, UNIVERSAL_SOURCES } from './universal.js';
@@ -53,6 +54,31 @@ describe('universal discovery chain', () => {
     const [url, options] = fetcher.mock.calls[0];
     expect(String(url)).toBe('https://parcelsapp.com/api/v2/parcels');
     expect(new URLSearchParams(String(options!.body)).get('carrier')).toBe('Auto-Detect');
+  });
+
+  it('ends the chain on the caller\'s signal and spends one budget across providers', async () => {
+    const browserLookup = vi.fn().mockRejectedValue(new Error('Unavailable'));
+    const fetcher = vi.fn<typeof fetch>().mockImplementation((_url, init) => new Promise((_, reject) => {
+      init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+    }));
+    const tracker = new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK'], trawlUrl: '', fetcher, browserLookup });
+    await expect(tracker.fetch(number, null, { signal: AbortSignal.abort(new Error('caller cancelled')) })).rejects.toThrow('caller cancelled');
+    expect(fetcher).not.toHaveBeenCalled();
+    const controller = new AbortController();
+    const pending = tracker.fetch(number, null, { signal: controller.signal });
+    await vi.waitFor(() => expect(fetcher).toHaveBeenCalledOnce());
+    controller.abort(new Error('caller cancelled'));
+    await expect(pending).rejects.toThrow('caller cancelled');
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(browserLookup).not.toHaveBeenCalled();
+    fetcher.mockClear();
+    const spent = await tracker.fetch(number, null, { budgetMs: 80 }).catch((error: unknown) => error);
+    expect(spent).toBeInstanceOf(UniversalTrackingError);
+    // The first source used the budget: the others are reported as never asked.
+    expect((spent as UniversalTrackingError).failures.map(({ source, error }) => [source, carrierErrorKind(error)]))
+      .toEqual([['ParcelsApp', 'transport'], ['Ship24', 'budget'], ['17TRACK', 'budget']]);
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(browserLookup).not.toHaveBeenCalled();
   });
 
   it('continues to another provider when prioritized 17TRACK returns no history', async () => {

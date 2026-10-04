@@ -2,7 +2,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
 import { evriStatus } from './status.js';
@@ -16,7 +16,7 @@ const MAX_RESPONSE_BYTES = 1_000_000;
 export function normalizeEvriNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^[A-Z0-9]{16}$/.test(number)) {
-    throw new InputRequiredError(PROVIDER, 'number', 'Evri requires a 16-character tracking number');
+    throw new InvalidInputError(PROVIDER, 'Evri requires a 16-character tracking number');
   }
   return number;
 }

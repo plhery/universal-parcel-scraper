@@ -114,4 +114,19 @@ describe('Planzer shared link validation', () => {
   it('returns the canonical URL for a complete shared link', () => {
     expect(validatePlanzerSharedUrl(` ${WRONG_SHARED_URL} `, WRONG_SHARED_NUMBER)).toBe(WRONG_SHARED_URL);
   });
+
+  it('rejects a link that is not the shipment\'s as invalid input before any request', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    const tracker = new PlanzerSharedTracker({ fetcher });
+    await expect(tracker.fetch(WRONG_SHARED_NUMBER, 'https://example.com/x')).rejects.toMatchObject({
+      name: 'InvalidInputError',
+      kind: 'invalid_input',
+      message: 'Planzer shared links must use https://trackandtrace.planzergroup.com',
+    });
+    await expect(tracker.fetch('9999000000001', WRONG_SHARED_URL)).rejects.toMatchObject({
+      kind: 'invalid_input',
+      message: 'The Planzer URL belongs to a different tracking number',
+    });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
 });

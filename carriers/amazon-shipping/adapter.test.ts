@@ -44,7 +44,10 @@ describe('Amazon Shipping France input', () => {
       'FR123456789A',
       'FR1234567890?admin=true',
       'FR123456789É',
-    ]) expect(() => normalizeAmazonShippingTrackingNumber(value)).toThrow('European country prefix');
+    ]) {
+      expect(() => normalizeAmazonShippingTrackingNumber(value)).toThrow('European country prefix');
+      expect(() => normalizeAmazonShippingTrackingNumber(value)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
+    }
   });
 });
 

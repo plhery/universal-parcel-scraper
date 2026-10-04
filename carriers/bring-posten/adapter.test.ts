@@ -4,6 +4,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { BringTracker } from './adapter.js';
 import { normalizeBringNumber, parseBring } from './parser.js';
 import { bringStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '00000000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -120,7 +121,7 @@ describe('Bring bounded anonymous retrieval', () => {
   });
 
   it('validates inputs, response bytes, cancellation and malformed JSON', async () => {
-    for (const number of ['123', 'RR000000006NO', 'RR000000005CN', `${NUMBER}&secret=value`]) expect(() => normalizeBringNumber(number)).toThrow(TypeError);
+    for (const number of ['123', 'RR000000006NO', 'RR000000005CN', `${NUMBER}&secret=value`]) expect(() => normalizeBringNumber(number)).toThrow(InvalidInputError);
     expect(normalizeBringNumber('rr 000000005 no')).toBe('RR000000005NO');
     const fetcher = vi.fn<typeof fetch>();
     await expect(new BringTracker({ fetcher }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow(); expect(fetcher).not.toHaveBeenCalled();

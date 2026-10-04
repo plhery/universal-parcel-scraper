@@ -164,7 +164,7 @@ describe('Yamato retrieval', () => {
 
   it.each(['123', '1234567890123', 'ABC123456789', '123456789012&number02=123'])('rejects unsupported input %s before I/O', async (number) => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new YamatoTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new YamatoTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

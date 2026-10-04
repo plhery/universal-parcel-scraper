@@ -21,7 +21,7 @@ import { DateTime } from 'luxon';
 import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { countryTimeZone, explicitOffsetTime, mislabeledWallTime, settleGuessedClocks, type FeedClock, type ParsedTime } from '../../core/time/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { postNLStatus } from './status.js';
 
@@ -38,17 +38,17 @@ const NOT_FOUND_MESSAGE = /barcode was not found/i;
 const HOME_ZONE = 'Europe/Amsterdam';
 // Customs and bagging records carry seven fraction digits and a real "Z".
 const PRECISE_UTC = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{4,7}Z$/;
-const BASE_HEADERS = {
-  Accept: 'application/json, text/plain, */*',
-  'Accept-Language': 'en-US,en;q=0.9',
-  'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
-};
-const SITE_HEADERS = {
-  ...BASE_HEADERS,
-  'Content-Type': 'application/json',
-  Origin: 'https://postnl.post',
-  Referer: 'https://postnl.post/',
-};
+
+function siteHeaders(userAgent: string): Record<string, string> {
+  return {
+    Accept: 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'User-Agent': userAgent,
+    'Content-Type': 'application/json',
+    Origin: 'https://postnl.post',
+    Referer: 'https://postnl.post/',
+  };
+}
 
 function record(value: unknown): JsonObject {
   return isRecord(value) ? value : {};
@@ -168,17 +168,19 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
 export class PostNLTracker {
   private readonly fetcher: typeof fetch | undefined;
   private readonly now: () => Date;
+  private readonly headers: Record<string, string>;
 
-  constructor(options: { fetcher?: typeof fetch; now?: () => Date } = {}) {
+  constructor(options: { fetcher?: typeof fetch; now?: () => Date; userAgent?: string } = {}) {
     this.fetcher = options.fetcher;
     this.now = options.now ?? (() => new Date());
+    this.headers = siteHeaders(userAgentOf(options.userAgent));
   }
 
   /** A fresh visitor token per lookup: it is short-lived and keyless. */
   private async visitorToken(signal: AbortSignal): Promise<string> {
     const { bytes } = await fetchBounded(
       TOKEN_URL,
-      { method: 'POST', headers: SITE_HEADERS, body: '{}', signal },
+      { method: 'POST', headers: this.headers, body: '{}', signal },
       {
         provider: 'PostNL authentication',
         timeoutMs: TOKEN_TIMEOUT_MS,
@@ -205,7 +207,7 @@ export class PostNLTracker {
         TRACK_URL,
         {
           method: 'POST',
-          headers: { ...SITE_HEADERS, Authorization: `Bearer ${accessToken}` },
+          headers: { ...this.headers, Authorization: `Bearer ${accessToken}` },
           body: JSON.stringify({ items: [trackingNumber], language_code: 'en' }),
           signal,
         },
@@ -234,7 +236,7 @@ export async function fetchPostNL(trackingNumber: string): Promise<CarrierResult
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PostNLTracker({ fetcher: environment.fetcher });
+  const tracker = new PostNLTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'spring-gds',
     // The visitor token and the lookup are one step: both are keyless HTTP on

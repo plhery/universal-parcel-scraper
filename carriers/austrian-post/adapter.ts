@@ -1,7 +1,7 @@
 
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -16,7 +16,7 @@ const ENDPOINT = 'https://api.post.at/sendungen/sv/graphqlPublic';
 export function normalizeAustrianPostNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!/^\d{22}$/.test(number) && !(/^[A-Z]{2}\d{9}AT$/.test(number) && isValidS10TrackingNumber(number))) {
-    throw new TypeError('Austrian Post requires a 22-digit or valid AT postal identifier');
+    throw new InvalidInputError(PROVIDER, 'Austrian Post requires a 22-digit or valid AT postal identifier');
   }
   return number;
 }

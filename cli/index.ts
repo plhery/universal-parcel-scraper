@@ -17,7 +17,18 @@ const help = `Universal Parcel Scraper
 
 SCRAPER_PROVIDERS selects comma-separated providers; default: UPU.
 FLARESOLVERR_URL and TRACKING_CHROMIUM_PATH enable browser transports.
-SCRAPER_TOKEN protects the HTTP API. SCRAPER_DEMO_PAGE=true enables its one-off page.`;
+SCRAPER_USER_AGENT replaces the client name adapters send to carriers.
+SCRAPER_TOKEN protects the HTTP API. SCRAPER_DEMO_PAGE=true enables its one-off page.
+SCRAPER_RATE_LIMIT, SCRAPER_MAX_CONCURRENT, SCRAPER_CACHE_MS and SCRAPER_FAILURE_CACHE_MS
+bound the HTTP API; SCRAPER_TRUSTED_PROXIES counts the reverse proxies in front of it.`;
+
+/** A whole number from the environment, or undefined when unset so the default applies. */
+function count(env: NodeJS.ProcessEnv, name: string): number | undefined {
+  const raw = env[name]?.trim();
+  if (!raw) return undefined;
+  if (!/^\d{1,9}$/.test(raw)) throw new TypeError(`${name} must be a whole number`);
+  return Number(raw);
+}
 
 export async function main(argv = process.argv.slice(2), env = process.env): Promise<number> {
   const [command, ...args] = argv;
@@ -42,12 +53,16 @@ export async function main(argv = process.argv.slice(2), env = process.env): Pro
   if (command === 'detect') { print(createTracker().detect(input)); return 0; }
   const providers = env.SCRAPER_PROVIDERS === undefined ? undefined
     : env.SCRAPER_PROVIDERS.split(',').map(value => value.trim()).filter(Boolean) as UniversalSource[];
-  const options = { providers, trawlUrl: env.FLARESOLVERR_URL, chromiumPath: env.TRACKING_CHROMIUM_PATH, env };
+  const options = { providers, trawlUrl: env.FLARESOLVERR_URL, chromiumPath: env.TRACKING_CHROMIUM_PATH,
+    userAgent: env.SCRAPER_USER_AGENT?.trim() || undefined, env };
   if (command === 'serve') {
     const port = Number(values.port ?? env.PORT ?? 8080);
     if (!Number.isInteger(port) || port < 1 || port > 65535) throw new TypeError('Invalid port');
     const host = values.host ?? env.HOST ?? '127.0.0.1';
     const server = createTrackingServer({ ...options, token: env.SCRAPER_TOKEN, demoPage: env.SCRAPER_DEMO_PAGE === 'true',
+      rateLimit: count(env, 'SCRAPER_RATE_LIMIT'), maxConcurrent: count(env, 'SCRAPER_MAX_CONCURRENT'),
+      cacheMs: count(env, 'SCRAPER_CACHE_MS'), failureCacheMs: count(env, 'SCRAPER_FAILURE_CACHE_MS'),
+      trustedProxies: count(env, 'SCRAPER_TRUSTED_PROXIES'),
       log: record => console.error(JSON.stringify(record)) });
     await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(port, host, resolve); });
     console.error(`Parcel tracking server listening on ${host}:${port}`);

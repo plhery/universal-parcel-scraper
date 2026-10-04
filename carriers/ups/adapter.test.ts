@@ -201,9 +201,91 @@ describe('UPS lookup steps', () => {
   it('rejects a number that is not a UPS number before any request', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('must not fetch'));
-    await expect(new UPSTracker({ trawlUrl: '' }).fetch('1Z999'))
-      .rejects.toThrow('UPS tracking numbers must start with 1Z');
+    const lookup = new UPSTracker({ trawlUrl: '' }).fetch('1Z999');
+    await expect(lookup).rejects.toThrow('UPS tracking numbers must start with 1Z');
+    await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+});
+
+describe('UPS lookup context', () => {
+  /** A request that ends only when its signal aborts. */
+  const held = (init?: RequestInit) => new Promise<Response>((_, reject) => {
+    init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason as Error), { once: true });
+  });
+
+  it('answers a caller cancelled in the queue at once and leaves the next caller its turn', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockImplementationOnce((_url, init) => held(init))
+      .mockImplementation(async () => Response.json({ tier: 3, statusCode: 200, html: RENDERED_PAGE, cookies: [] }));
+    const tracker = new UPSTracker({ trawlUrl: TRAWL_URL, fetcher });
+    const first = new AbortController();
+    const second = new AbortController();
+    const running = tracker.fetch(TRACKING_NUMBER, { signal: first.signal });
+    const queued = tracker.fetch(TRACKING_NUMBER, { signal: second.signal });
+    const next = tracker.fetch(TRACKING_NUMBER);
+    await vi.waitFor(() => expect(fetcher).toHaveBeenCalledTimes(1));
+
+    second.abort(new Error('second caller left'));
+    await expect(queued).rejects.toThrow('second caller left');
+
+    first.abort(new Error('first caller left'));
+    await expect(running).rejects.toThrow('first caller left');
+    await expect(next).resolves.toMatchObject({ status: 'delivered' });
+    // The cancelled turn passed without a request of its own.
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('ends a queued lookup when the budget its caller set is spent', async () => {
+    const fetcher = vi.fn<typeof fetch>((_url, init) => held(init));
+    const tracker = new UPSTracker({ trawlUrl: TRAWL_URL, fetcher });
+    const first = new AbortController();
+    const running = tracker.fetch(TRACKING_NUMBER, { signal: first.signal });
+
+    await expect(tracker.fetch(TRACKING_NUMBER, { budgetMs: 40 }))
+      .rejects.toMatchObject({ name: 'BudgetExceededError', kind: 'budget' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+
+    first.abort(new Error('first caller left'));
+    await expect(running).rejects.toThrow('first caller left');
+  });
+
+  it('reports a browser service that outlasts the budget as a transport failure', async () => {
+    const fetcher = vi.fn<typeof fetch>((_url, init) => held(init));
+    const { recorder, records } = stepRecorder();
+
+    await expect(new UPSTracker({ trawlUrl: TRAWL_URL, fetcher, recorder }).fetch(TRACKING_NUMBER, { budgetMs: 50 }))
+      .rejects.toMatchObject({ name: 'UpstreamNetworkError', kind: 'transport' });
+    expect(records).toEqual(['trawl:transport', 'lookup:trawl:transport']);
+  });
+
+  // The conformance test always configures a browser service, so it never runs this tier.
+  it('bounds the plain HTTP tier by the budget and the signal without spoiling the next lookup', async () => {
+    let answering = false;
+    const fetcher = vi.fn<typeof fetch>(async (url, init) => {
+      if (String(url) === STATUS_API) return answering ? Response.json(fixture()) : held(init);
+      const page = new Response(RENDERED_PAGE, { headers: { 'Set-Cookie': 'X-XSRF-TOKEN-ST=token; Domain=ups.com; Path=/' } });
+      Object.defineProperty(page, 'url', { value: String(url) });
+      return page;
+    });
+    const tracker = new UPSTracker({ trawl: null, fetcher });
+
+    // A spent budget ends the held status call; the page already fetched still answers.
+    await expect(tracker.fetch(TRACKING_NUMBER, { budgetMs: 50 }))
+      .resolves.toMatchObject({ tracking_source: 'rendered-page' });
+
+    const controller = new AbortController();
+    const cancelled = tracker.fetch(TRACKING_NUMBER, { signal: controller.signal });
+    await vi.waitFor(() => expect(fetcher).toHaveBeenCalledTimes(4));
+    controller.abort(new Error('caller left'));
+    await expect(cancelled).rejects.toThrow('caller left');
+
+    answering = true;
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'structured-web-response' });
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'structured-web-response' });
+    // Neither unfinished session was kept; the one that answered serves the last lookup alone.
+    expect(fetcher.mock.calls.map(([url]) => String(url) === STATUS_API))
+      .toEqual([false, true, false, true, false, true, true]);
   });
 });
 

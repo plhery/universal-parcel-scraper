@@ -1,5 +1,5 @@
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -12,10 +12,10 @@ const RESOURCE = 'cl_cch_seguimiento_portlet_seguimientoresurcecommand';
 const ALLOWED_PARAMS = new Set(['p_p_id', 'p_p_lifecycle', 'p_p_state', 'p_p_mode', 'p_p_resource_id', 'p_p_cacheability']);
 
 export function normalizeCorreosChileNumber(raw: string): string {
-  if (raw.length > 48) throw new TypeError('Correos de Chile tracking number is too long');
+  if (raw.length > 48) throw new InvalidInputError('Correos de Chile', 'Correos de Chile tracking number is too long');
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (/^\d{13}$/.test(number) || (/^[A-Z]{2}\d{9}CL$/.test(number) && isValidS10TrackingNumber(number))) return number;
-  throw new TypeError('Correos de Chile requires 13 digits or a valid Chilean postal number');
+  throw new InvalidInputError('Correos de Chile', 'Correos de Chile requires 13 digits or a valid Chilean postal number');
 }
 
 export interface ChileBootstrap {

@@ -1,7 +1,7 @@
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, IndeterminateError, InputRequiredError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -12,7 +12,7 @@ const PROVIDER = 'SF Express';
 export function normalizeSfExpressNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^(?:SF\d{13}|\d{12})$/.test(number)) {
-    throw new InputRequiredError(PROVIDER, 'number', 'SF Express requires a 12-digit number or SF followed by 13 digits');
+    throw new InvalidInputError(PROVIDER, 'SF Express requires a 12-digit number or SF followed by 13 digits');
   }
   return number;
 }

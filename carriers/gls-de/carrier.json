@@ -20,7 +20,7 @@
     "adapter": "gls-de",
     "requirements": [
       {
-        "field": "dpdPostcode",
+        "field": "postcode",
         "validator": "swissOrFrancePostcode",
         "label": "Delivery postcode",
         "type": "text",

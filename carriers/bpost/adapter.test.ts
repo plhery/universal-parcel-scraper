@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { adapter, BpostTracker } from './adapter.js';
 import { normalizeBpostNumber, parseBpost } from './parser.js';
 import { classifyBpostStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '000000000000000000000001';
 const OTHER = '000000000000000000000002';
@@ -137,7 +138,7 @@ describe('bpost anonymous batch request', () => {
   it('rejects unsupported inputs before I/O, propagates cancellation and bounds response size', async () => {
     const unused = vi.fn<typeof fetch>();
     for (const invalid of ['123', 'RR000000006BE', `${NUMBER}&postalCode=1234`]) {
-      await expect(new BpostTracker({ fetcher: unused }).fetch(invalid)).rejects.toThrow(TypeError);
+      await expect(new BpostTracker({ fetcher: unused }).fetch(invalid)).rejects.toThrow(InvalidInputError);
     }
     await expect(new BpostTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(unused).not.toHaveBeenCalled();

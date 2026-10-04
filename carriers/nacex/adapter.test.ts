@@ -6,6 +6,7 @@ import { NacexTracker, adapter } from './adapter.js';
 import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser.js';
 import { classifyNacexStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '9900/99000002';
 const OTHER = '9900/99000003';
@@ -43,7 +44,7 @@ describe('NACEX direct tracking', () => {
 
   it('validates composite input and both summary and expanded detail identity', () => {
     expect(normalizeNacexNumber('9900 / 99000002')).toBe(NUMBER);
-    for (const number of ['', '123', '990099000002', '9900/9900002', '9900/990000002', NUMBER + '?', 'ABCD/99000002']) expect(() => normalizeNacexNumber(number)).toThrow(TypeError);
+    for (const number of ['', '123', '990099000002', '9900/9900002', '9900/990000002', NUMBER + '?', 'ABCD/99000002']) expect(() => normalizeNacexNumber(number)).toThrow(InvalidInputError);
     for (const body of [edit($ => $('#tabla_estado tr').first().children('td').last().text(OTHER)),
       edit($ => $('#tabla_estado').clone().appendTo('body')), edit($ => $('#table_historico').clone().appendTo('body')),
       edit($ => $('.fuente_label').filter((_,n) => $(n).text() === 'Agencia origen').first().parent().append('9')),

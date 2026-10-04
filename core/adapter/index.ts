@@ -7,7 +7,7 @@
  * declares its steps; it reaches the network only through what the
  * `AdapterEnvironment` provides, and it reports through the `StepRecorder`.
  */
-import { carrierErrorKind } from '../errors/index.js';
+import { BudgetExceededError, carrierErrorKind, InvalidInputError } from '../errors/index.js';
 import type { CarrierResult } from '../result/index.js';
 import type { StepRecorder } from '../telemetry/index.js';
 import type { TrawlClient } from '../transport/trawl.js';
@@ -35,9 +35,45 @@ export interface TrackingContext {
   budgetMs?: number;
 }
 
+/** What an adapter derives from a `TrackingContext`: one signal and one clock for the whole lookup. */
+export interface LookupBudget {
+  /** Aborts on the caller's signal or when the budget is spent. Every request takes it. */
+  readonly signal: AbortSignal;
+  readonly budgetMs: number;
+  /** When the budget is spent, on the `performance.now()` clock. */
+  readonly deadline: number;
+  /** Whole milliseconds left, never below 1 so it is always a valid request timeout. */
+  remainingMs: () => number;
+}
+
+/** The longest delay a timer holds; a longer one would fire at once. */
+const MAX_TIMER_MS = 2 ** 31 - 1;
+
+/**
+ * The caller's signal joined with the lookup budget. Throws the caller's
+ * reason when the signal is already aborted, so no request starts.
+ */
+export function lookupBudget(context: TrackingContext | undefined, defaultBudgetMs: number, provider = 'Tracking'): LookupBudget {
+  context?.signal?.throwIfAborted();
+  const budgetMs = context?.budgetMs ?? defaultBudgetMs;
+  if (!Number.isFinite(budgetMs)) throw new TypeError('Lookup budget must be a finite number of milliseconds');
+  // A budget already spent is a budget failure, as the step runner reports it.
+  if (budgetMs <= 0) throw new BudgetExceededError(provider, budgetMs);
+  const deadline = performance.now() + budgetMs;
+  const timeout = AbortSignal.timeout(Math.min(MAX_TIMER_MS, Math.max(1, Math.floor(budgetMs))));
+  return {
+    budgetMs,
+    deadline,
+    signal: context?.signal ? AbortSignal.any([context.signal, timeout]) : timeout,
+    remainingMs: () => Math.min(MAX_TIMER_MS, Math.max(1, Math.floor(deadline - performance.now()))),
+  };
+}
+
 export interface AdapterEnvironment {
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  /** Sent where an adapter names itself instead of a browser; `DEFAULT_USER_AGENT` when absent. */
+  userAgent?: string;
   /** The private browser service, or null when not configured. */
   trawl: TrawlClient | null;
   /** A Chromium executable for adapters that must run a browser locally, or null. */
@@ -79,13 +115,13 @@ export type AdapterFactory = (environment: AdapterEnvironment) => CarrierAdapter
  * number check: a form it cannot look up is unknown without a request. Only
  * for lookups without a browser tier.
  */
-/** Whether a number check passes: false when it throws its TypeError. */
+/** Whether a number check passes: false when it rejects the number. */
 export function accepted(check: () => unknown): boolean {
   try {
     check();
     return true;
   } catch (error) {
-    if (error instanceof TypeError) return false;
+    if (error instanceof InvalidInputError || error instanceof TypeError) return false;
     throw error;
   }
 }
@@ -99,7 +135,8 @@ export async function recognizeFromLookup(
   try {
     result = await lookup();
   } catch (error) {
-    if (carrierErrorKind(error) === 'not_found') return { known: false };
+    // A number the carrier does not issue is as unknown to it as one it cannot find.
+    if (['not_found', 'invalid_input'].includes(carrierErrorKind(error) ?? '')) return { known: false };
     throw error;
   }
   // Local clocks and malformed dates cannot rank reuse of a tracking number.

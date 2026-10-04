@@ -13,10 +13,10 @@
  */
 
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { UpstreamHttpError, clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { UpstreamHttpError, clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { UNKNOWN_STEP, UNKNOWN_STEP_DESCRIPTION, parcelStep, stepDetails } from './status.js';
 
@@ -60,7 +60,7 @@ export function normalizeCChezVousCredential(raw: string): string {
   const composite = /^([A-Z0-9]{11})--(\d{5})$/.exec(value);
   if (composite) {
     if (!FRENCH_POSTCODE.test(composite[2])) {
-      throw new TypeError('C Chez Vous tracking contains an invalid French postcode');
+      throw new InvalidInputError(PROVIDER, 'C Chez Vous tracking contains an invalid French postcode');
     }
     return `${composite[1]}--${composite[2]}`;
   }
@@ -70,15 +70,13 @@ export function normalizeCChezVousCredential(raw: string): string {
   const compactComposite = /^([A-Z0-9]{11})(\d{5})$/.exec(value);
   if (compactComposite) {
     if (!FRENCH_POSTCODE.test(compactComposite[2])) {
-      throw new TypeError('C Chez Vous tracking contains an invalid French postcode');
+      throw new InvalidInputError(PROVIDER, 'C Chez Vous tracking contains an invalid French postcode');
     }
     return `${compactComposite[1]}--${compactComposite[2]}`;
   }
 
   if (!/^(?=.*\d)[A-Z0-9]{8,15}$/.test(value)) {
-    throw new TypeError(
-      'C Chez Vous tracking requires an 8- to 15-character order number, or an 11-character order followed by -- and a French postcode',
-    );
+    throw new InvalidInputError(PROVIDER, 'C Chez Vous tracking requires an 8- to 15-character order number, or an 11-character order followed by -- and a French postcode');
   }
   return value;
 }
@@ -156,11 +154,13 @@ export interface CChezVousTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class CChezVousTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: CChezVousTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -168,19 +168,22 @@ export class CChezVousTracker {
       throw new TypeError('C Chez Vous timeout must be positive');
     }
     this.#fetcher = options.fetcher;
+    this.#userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawCredential: string): Promise<CarrierResult> {
+  async fetch(rawCredential: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const credential = normalizeCChezVousCredential(rawCredential);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(cChezVousTrackingUrl(credential), {
+      signal: budget.signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'fr-FR,fr;q=0.9',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: 'C Chez Vous tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       redirect: 'manual',
       allowHttpError: true,
@@ -197,11 +200,11 @@ export class CChezVousTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new CChezVousTracker({ fetcher: environment.fetcher });
+  const tracker = new CChezVousTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'c-chez-vous',
     steps: ['direct'],
     // The postcode, when the order needs one, is already part of the stored number.
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

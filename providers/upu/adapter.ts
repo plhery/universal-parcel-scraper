@@ -2,7 +2,7 @@
 import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -82,7 +82,7 @@ export const adapter: AdapterFactory = (environment) => ({
   steps: ['direct'],
   async track(input, context) {
     const number = numberOf(input.number);
-    if (!isValidS10TrackingNumber(number)) throw new TypeError('UPU requires a checksum-valid postal S10 number');
+    if (!isValidS10TrackingNumber(number)) throw new InvalidInputError(SOURCE, 'UPU requires a checksum-valid postal S10 number');
     const budgetMs = Math.min(context?.budgetMs ?? UPU_BUDGET_MS, UPU_BUDGET_MS);
     if (!Number.isFinite(budgetMs) || budgetMs < 1) throw new TypeError('UPU timeout must be positive');
     context?.signal?.throwIfAborted();

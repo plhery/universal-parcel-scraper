@@ -1,11 +1,11 @@
 
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { amazonShippingOrigin, amazonShippingUrl } from '../../core/catalog/index.js';
 import { isAmazonTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyStatus, statusKey, type ClassifiedStatus } from './status.js';
 
@@ -33,6 +33,7 @@ export interface AmazonShippingOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 /** A confirmed absence, with a public reason consumers can inspect. */
@@ -179,8 +180,7 @@ function metadataValue(metadata: JsonObject, field: string): unknown {
 export function normalizeAmazonShippingTrackingNumber(raw: string): string {
   const value = raw.trim().toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!isAmazonTrackingNumber(value)) {
-    throw new InputRequiredError(PROVIDER, 'a European country prefix and 10 digits, or TBA and 12 digits',
-      'Amazon tracking numbers need a European country prefix and 10 digits, or TBA and 12 digits');
+    throw new InvalidInputError(PROVIDER, 'Amazon tracking numbers need a European country prefix and 10 digits, or TBA and 12 digits');
   }
   return value;
 }
@@ -289,30 +289,34 @@ export function amazonShippingTimezone(number: string): string | null {
 export class AmazonShippingTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: number | AmazonShippingOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher } = typeof options === 'number'
-      ? { timeoutMs: options, fetcher: undefined }
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher, userAgent } = typeof options === 'number'
+      ? { timeoutMs: options, fetcher: undefined, userAgent: undefined }
       : options;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
       throw new TypeError('Amazon Shipping timeout must be positive');
     }
     this.timeoutMs = timeoutMs;
     this.#fetcher = fetcher;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeAmazonShippingTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { bytes } = await fetchBounded(amazonShippingTrackingApiUrl(trackingNumber), {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.9',
         Referer: amazonShippingTrackingUrl(trackingNumber),
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: 'Amazon Shipping tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
     });
@@ -321,10 +325,10 @@ export class AmazonShippingTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new AmazonShippingTracker({ fetcher: environment.fetcher });
+  const tracker = new AmazonShippingTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'amazon-shipping',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

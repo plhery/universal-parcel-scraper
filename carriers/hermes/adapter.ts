@@ -1,7 +1,7 @@
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { hermesEventStage, hermesStatus } from './status.js';
 
@@ -18,6 +18,7 @@ export interface HermesOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 function normalizeHermesTrackingNumber(raw: unknown): string {
@@ -89,26 +90,30 @@ export function parseHermesTrackingResponse(
 export class HermesTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: number | HermesOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher } = typeof options === 'number'
-      ? { timeoutMs: options, fetcher: undefined }
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, fetcher, userAgent } = typeof options === 'number'
+      ? { timeoutMs: options, fetcher: undefined, userAgent: undefined }
       : options;
     this.timeoutMs = timeoutMs;
     this.#fetcher = fetcher;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const url = new URL(HERMES_API);
     url.searchParams.set('parcelNumber', trackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { bytes } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
-        'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
     }, {
       provider: 'Hermes tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
     });
     return parseHermesTrackingResponse(parseJsonBytes(bytes, PROVIDER), trackingNumber);
@@ -116,10 +121,10 @@ export class HermesTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new HermesTracker({ fetcher: environment.fetcher });
+  const tracker = new HermesTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'hermes',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

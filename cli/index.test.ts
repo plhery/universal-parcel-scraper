@@ -1,10 +1,24 @@
+import { createServer } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { InputRequiredError, SchemaError } from '../core/errors/index.js';
 import { TrackingError } from '../facade/index.js';
 import { failureText, main } from './index.js';
 
 const number = '1Z999AA10123456784';
-afterEach(() => { vi.restoreAllMocks(); });
+afterEach(() => {
+  // `serve` closes its server on these signals; emitting one here ends it without ending the test process.
+  process.emit('SIGTERM');
+  vi.restoreAllMocks();
+});
+
+async function freePort(): Promise<number> {
+  const probe = createServer();
+  await new Promise<void>((resolve) => probe.listen(0, '127.0.0.1', resolve));
+  const { port } = probe.address() as AddressInfo;
+  await new Promise<void>((resolve) => probe.close(() => resolve()));
+  return port;
+}
 
 describe('command line', () => {
   it('detects and lists carriers whatever the transport settings are', async () => {
@@ -39,5 +53,24 @@ describe('command line', () => {
     expect(failureText(new Error('private payload'))).toBe('Tracking could not be completed');
     expect(JSON.parse(failureText(new TrackingError([{ source: 'ups', kind: 'not_found', durationMs: 1 }], { kind: 'not_found' }))))
       .toEqual({ error: 'No enabled source returned tracking history', attempts: [{ source: 'ups', kind: 'not_found', durationMs: 1 }], hint: { kind: 'not_found' } });
+  });
+});
+
+describe('serve configuration', () => {
+  it('applies the request limit and trusted proxy count from the environment', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    const port = await freePort();
+    await expect(main(['serve', '--port', String(port)], { SCRAPER_RATE_LIMIT: '1', SCRAPER_TRUSTED_PROXIES: '1' })).resolves.toBe(0);
+    const carriers = (forwarded: string) => fetch(`http://127.0.0.1:${port}/v1/carriers`, { headers: { 'X-Forwarded-For': forwarded } });
+    expect((await carriers('198.51.100.7')).status).toBe(200);
+    expect((await carriers('198.51.100.7')).status).toBe(429);
+    expect((await carriers('198.51.100.8')).status).toBe(200);
+  });
+
+  it('refuses a limit that is not a whole number before listening', async () => {
+    for (const name of ['SCRAPER_RATE_LIMIT', 'SCRAPER_MAX_CONCURRENT', 'SCRAPER_CACHE_MS', 'SCRAPER_FAILURE_CACHE_MS', 'SCRAPER_TRUSTED_PROXIES']) {
+      await expect(main(['serve', '--port', '8080'], { [name]: 'many' })).rejects.toThrow(`${name} must be a whole number`);
+    }
+    await expect(main(['serve', '--port', '8080'], { SCRAPER_USER_AGENT: 'Exämple/1.0' })).rejects.toThrow(TypeError);
   });
 });

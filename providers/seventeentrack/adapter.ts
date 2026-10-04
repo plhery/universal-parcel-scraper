@@ -141,16 +141,16 @@ export interface SeventeenTrackOptions {
 export class SeventeenTrackTracker {
   constructor(readonly options: SeventeenTrackOptions = {}) {}
 
-  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? 30_000): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? 30_000, signal?: AbortSignal): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
-    const spec = (remainingMs: number): CaptureSpec => ({
+    const spec = (remainingMs: number, signal: AbortSignal): CaptureSpec => ({
       source: SOURCE, url: `https://t.17track.net/en#nums=${number}`, apiUrl: API_URL,
-      budgetMs: remainingMs, fetcher: this.options.fetcher,
+      budgetMs: remainingMs, fetcher: this.options.fetcher, signal,
     });
-    return runSteps({ carrier: SOURCE, budgetMs, recorder: this.options.recorder }, [{
+    return runSteps({ carrier: SOURCE, budgetMs, signal, recorder: this.options.recorder }, [{
       id: 'trawl',
-      run: async ({ remainingMs }) => {
-        const capture = spec(remainingMs);
+      run: async ({ remainingMs, signal }) => {
+        const capture = spec(remainingMs, signal);
         const page = await loadCapture(this.options.trawl ?? null, capture);
         let pending: Error | undefined;
         for (const body of capturedBodies(page, capture)) {
@@ -175,6 +175,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: SOURCE,
     steps: ['trawl'],
-    track: (input, context) => tracker.fetch(input.number, context?.budgetMs),
+    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, context?.signal),
   };
 };

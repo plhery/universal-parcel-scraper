@@ -5,7 +5,7 @@
  * diagnostics to rejected responses. Errors are the shared taxonomy in
  * core/errors.
  */
-import { UpstreamHttpError, UpstreamNetworkError, type UpstreamRequestDiagnostics } from '../errors/index.js';
+import { IndeterminateError, UpstreamHttpError, UpstreamNetworkError, type UpstreamRequestDiagnostics } from '../errors/index.js';
 import { readUpstreamHttpDiagnostics } from './upstreamHttpDiagnostics.js';
 
 const DEFAULT_MAX_BYTES = 2_000_000;
@@ -36,20 +36,25 @@ function retryDelay(header: string | null, status: number): number | null {
   return Math.max(DEFAULT_RETRY_DELAY_MS, delay);
 }
 
-async function waitBeforeRetry(delayMs: number, signal?: AbortSignal | null): Promise<void> {
-  signal?.throwIfAborted();
-  await new Promise<void>((resolve, reject) => {
+/** Wait before the one retry. False when the lookup's signal ended the wait: the first failure stands. */
+async function pausedBeforeRetry(delayMs: number, signal?: AbortSignal | null): Promise<boolean> {
+  if (signal?.aborted) return false;
+  return await new Promise<boolean>((resolve) => {
     const abort = () => {
       clearTimeout(timer);
-      signal?.removeEventListener('abort', abort);
-      reject(signal?.reason);
+      resolve(false);
     };
     const timer = setTimeout(() => {
       signal?.removeEventListener('abort', abort);
-      resolve();
+      resolve(true);
     }, delayMs);
     signal?.addEventListener('abort', abort, { once: true });
   });
+}
+
+/** A reply past the byte cap. The reason lets a tier that reads with a larger cap take over. */
+function responseTooLarge(provider: string): IndeterminateError {
+  return new IndeterminateError(provider, `${provider} returned an unexpectedly large response`, { reason: 'response_too_large' });
 }
 
 async function cancelQuietly(body: ReadableStream<Uint8Array> | null): Promise<void> {
@@ -89,34 +94,32 @@ export async function fetchBounded(
         signal: init.signal ? AbortSignal.any([init.signal, timeout]) : timeout,
       });
     } catch (error) {
-      if (options.retryTransient && attempt === 0 && !init.signal?.aborted) {
-        await waitBeforeRetry(DEFAULT_RETRY_DELAY_MS, init.signal);
-        continue;
-      }
+      if (options.retryTransient && attempt === 0 && await pausedBeforeRetry(DEFAULT_RETRY_DELAY_MS, init.signal)) continue;
       throw new UpstreamNetworkError(options.provider, error, requestDiagnostics(url, init, options.timeoutMs ?? 15_000));
     }
     if (response.ok || options.allowHttpError || options.allowHttpStatuses?.includes(response.status)) break;
     const delay = retryDelay(response.headers.get('retry-after'), response.status);
-    if (options.retryTransient && attempt === 0
-      && TRANSIENT_HTTP_STATUSES.has(response.status) && delay !== null) {
-      await cancelQuietly(response.body);
-      await waitBeforeRetry(delay, init.signal);
-      continue;
-    }
     const retryHeader = response.headers.get('retry-after');
     const retryAfterMs = retryHeader === null ? undefined : /^\d+$/.test(retryHeader.trim())
       ? Number(retryHeader) * 1000 : Date.parse(retryHeader) - Date.now();
-    // Diagnostic failure must never replace the original HTTP status.
-    const diagnostics = await readUpstreamHttpDiagnostics(response).catch(() => undefined);
-    throw new UpstreamHttpError(options.provider, response.status,
-      Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined, diagnostics,
+    const rejection = (diagnostics?: Awaited<ReturnType<typeof readUpstreamHttpDiagnostics>>) => new UpstreamHttpError(
+      options.provider, response.status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined, diagnostics,
       requestDiagnostics(url, init, options.timeoutMs ?? 15_000));
+    if (options.retryTransient && attempt === 0
+      && TRANSIENT_HTTP_STATUSES.has(response.status) && delay !== null) {
+      await cancelQuietly(response.body);
+      if (await pausedBeforeRetry(delay, init.signal)) continue;
+      // The body is gone, but the status the provider gave is still the answer.
+      throw rejection();
+    }
+    // Diagnostic failure must never replace the original HTTP status.
+    throw rejection(await readUpstreamHttpDiagnostics(response).catch(() => undefined));
   }
 
   const contentLength = Number(response.headers.get('content-length'));
   if (Number.isFinite(contentLength) && contentLength > maxBytes) {
     await cancelQuietly(response.body);
-    throw new Error(`${options.provider} returned an unexpectedly large response`);
+    throw responseTooLarge(options.provider);
   }
 
   if (!response.body) return { response, bytes: new Uint8Array() };
@@ -136,7 +139,7 @@ export async function fetchBounded(
         } catch {
           // Preserve the size error even if the upstream stream rejects cleanup.
         }
-        throw new Error(`${options.provider} returned an unexpectedly large response`);
+        throw responseTooLarge(options.provider);
       }
       chunks.push(value);
     }

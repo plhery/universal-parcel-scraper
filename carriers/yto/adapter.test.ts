@@ -147,7 +147,7 @@ describe('YTO domestic retrieval', () => {
 
   it.each(['123', 'YT0000000000001,OTHER', 'YT0000000000001&query=OTHER'])('rejects invalid input %s before I/O', async number => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new YtoTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new YtoTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

@@ -8,6 +8,7 @@ import { normalizeCorreosChileNumber, parseCorreosChileBootstrap, parseCorreosCh
 import { classifyCorreosChileScan } from './status.js';
 import fixture from './fixtures/customs.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'SX000000005CL';
 const BOOTSTRAP = readFileSync(fileURLToPath(new URL('./fixtures/bootstrap.html', import.meta.url)), 'utf8');
@@ -25,7 +26,7 @@ describe('Correos de Chile anonymous tracking', () => {
     expect(normalizeCorreosChileNumber(' sx 000000005 cl ')).toBe(NUMBER);
     expect(normalizeCorreosChileNumber('9900000000001')).toBe('9900000000001');
     for (const value of ['', 'SX000000000CL', 'SX000000005US', '990000000001', NUMBER + '?', 'X'.repeat(49)]) {
-      expect(() => normalizeCorreosChileNumber(value)).toThrow(TypeError);
+      expect(() => normalizeCorreosChileNumber(value)).toThrow(InvalidInputError);
     }
   });
 

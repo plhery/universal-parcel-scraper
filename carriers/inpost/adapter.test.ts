@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SchemaError } from '../../core/errors/index.js';
+import { SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizeInpostTrackingNumber,
   parseInpostTrackingResponse,
@@ -38,7 +38,7 @@ describe('InPost tracking normalization', () => {
     expect(normalizeInpostTrackingNumber('jjd0002233564270287')).toBe('JJD0002233564270287');
     expect(normalizeInpostTrackingNumber('8ydr098765432')).toBe('8YDR098765432');
     for (const raw of ['12345', 'Z8328162951', '']) {
-      expect(() => normalizeInpostTrackingNumber(raw)).toThrow(TypeError);
+      expect(() => normalizeInpostTrackingNumber(raw)).toThrow(InvalidInputError);
     }
   });
 });
@@ -160,6 +160,6 @@ describe('InpostTracker fetch', () => {
       .rejects.toThrow(TypeError);
     expect(() => new InpostTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new InpostTracker({ timeoutMs: 1_000 }).fetch('nope'))
-      .rejects.toThrow(TypeError);
+      .rejects.toThrow(InvalidInputError);
   });
 });

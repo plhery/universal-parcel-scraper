@@ -1,9 +1,10 @@
 
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import {
   ChallengeError,
   InputRequiredError,
+  InvalidInputError,
   RateLimitedError,
   SchemaError,
   TransportError,
@@ -13,7 +14,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, cleanScalar, TrawlClient } from '../../core/transport/index.js';
+import { clean, cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status.js';
 
@@ -47,7 +48,7 @@ const MAX_EVENTS_TO_RETURN = 100;
 export function normalizeFedExTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^\d{12}$/.test(value) && !/^\d{15}$/.test(value)) {
-    throw new SchemaError('FedEx', 'FedEx tracking numbers must contain 12 or 15 digits');
+    throw new InvalidInputError('FedEx', 'FedEx tracking numbers must contain 12 or 15 digits');
   }
   return value;
 }
@@ -242,7 +243,7 @@ export class FedExTracker {
     return this.trawlUrl ? new TrawlClient(this.trawlUrl, this.#fetcher) : null;
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeFedExTrackingNumber(trackingNumber);
     // Plain HTTP probes were rejected; the dedicated route uses the browser.
     const trawl = this.#browserService();
@@ -253,9 +254,12 @@ export class FedExTracker {
       );
     }
     return runSteps<CarrierResult>({
-      carrier: 'fedex', budgetMs: this.timeoutMs, recorder: this.#recorder,
+      // Without a caller's budget the lookup leaves the service its own time and
+      // the request the allowance to bring the answer back.
+      carrier: 'fedex', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
+      recorder: this.#recorder,
     }, [
-      { id: 'trawl', run: () => this.#trawlResult(trawl, number) },
+      { id: 'trawl', run: ({ remainingMs, signal }) => this.#trawlResult(trawl, number, Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal) },
     ]);
   }
 
@@ -265,19 +269,20 @@ export class FedExTracker {
    * over plain HTTP: the edge accepts the call only from the session it
    * validated. The page the browser rendered only tells a challenge apart.
    */
-  async #trawlResult(trawl: TrawlClient, number: string): Promise<CarrierResult> {
+  async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     const page = await trawl.scrape({
       url: fedexTrackingUrl(number),
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: this.timeoutMs,
+      maxTimeout: timeoutMs,
       captureResponses: [TRACK_API],
       settleTimeout: SETTLE_TIMEOUT_MS,
     }, {
       provider: 'TRAWL while fetching FedEx',
-      timeoutMs: this.timeoutMs,
+      timeoutMs,
       maxBytes: MAX_BYTES,
       fetcher: this.#fetcher,
+      signal,
     });
     let captureError: unknown;
     // Newest first: a later reply is the page's final answer.
@@ -334,6 +339,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'fedex',
     // Browser-backed direct tracking; universal recovery belongs to the caller.
     steps: ['trawl'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

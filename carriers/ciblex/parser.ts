@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { calendarDay, zonedTime } from '../../core/time/index.js';
@@ -8,7 +8,7 @@ import { classifyCiblexStatus, comparableText } from './status.js';
 
 export function normalizeCiblexTrackingNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');
-  if (!/^(?:\d{14}|\d{24})$/.test(number)) throw new TypeError('Ciblex requires exactly 14 or 24 digits');
+  if (!/^(?:\d{14}|\d{24})$/.test(number)) throw new InvalidInputError('Ciblex', 'Ciblex requires exactly 14 or 24 digits');
   return number;
 }
 

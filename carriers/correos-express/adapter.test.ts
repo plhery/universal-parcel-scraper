@@ -6,6 +6,7 @@ import { CorreosExpressTracker, adapter } from './adapter.js';
 import { normalizeCorreosExpressNumber, parseCorreosExpress } from './parser.js';
 import { classifyCorreosExpressStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '9900000000000002';
 const OTHER = '9900000000000003';
@@ -37,7 +38,7 @@ describe('Correos Express direct tracking', () => {
 
   it('requires supported input and both independent shipment label and hidden field to match', () => {
     expect(normalizeCorreosExpressNumber('9900 0000 0000 0002')).toBe(NUMBER);
-    for (const raw of ['', '123', NUMBER + '1234567', NUMBER + '?', 'A' + NUMBER.slice(1)]) expect(() => normalizeCorreosExpressNumber(raw)).toThrow(TypeError);
+    for (const raw of ['', '123', NUMBER + '1234567', NUMBER + '?', 'A' + NUMBER.slice(1)]) expect(() => normalizeCorreosExpressNumber(raw)).toThrow(InvalidInputError);
     for (const changed of [edit($ => $('h3.status .shipping > span').text(OTHER)), edit($ => $('#shippingNumber').val(OTHER)),
       edit($ => $('.shipping').remove()), edit($ => $('h3.status').clone().appendTo('body')),
       edit($ => $('.shipping > span').clone().appendTo('.shipping')),

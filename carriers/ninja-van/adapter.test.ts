@@ -4,6 +4,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import fixture from './fixtures/returned.json' with { type: 'json' };
 import { NinjaVanTracker, adapter } from './adapter.js';
 import { normalizeNinjaVanNumber, parseNinjaVan, parseNinjaVanNotFound } from './parser.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'NLMYA00000000';
 const clone = () => structuredClone(fixture);
@@ -88,8 +89,8 @@ describe('Ninja Van parser', () => {
 
   it('requires a scoped Malaysian parcel format', () => {
     expect(normalizeNinjaVanNumber('nlmya 00000000')).toBe(NUMBER);
-    expect(() => normalizeNinjaVanNumber('NLIDA00000000')).toThrow(TypeError);
-    expect(() => normalizeNinjaVanNumber('NVMYA00000000')).toThrow(TypeError);
+    expect(() => normalizeNinjaVanNumber('NLIDA00000000')).toThrow(InvalidInputError);
+    expect(() => normalizeNinjaVanNumber('NVMYA00000000')).toThrow(InvalidInputError);
   });
 });
 

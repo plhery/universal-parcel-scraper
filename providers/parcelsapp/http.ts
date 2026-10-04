@@ -49,11 +49,11 @@ export function parcelsAppRequest(trackingNumber: string, postcode?: string | nu
 export class ParcelsAppHttpClient {
   constructor(readonly fetcher?: typeof fetch) {}
 
-  async fetch(trackingNumber: string, timeoutMs: number, postcode?: string | null): Promise<unknown> {
+  async fetch(trackingNumber: string, timeoutMs: number, postcode?: string | null, signal?: AbortSignal): Promise<unknown> {
     const number = numberOf(trackingNumber);
     if (!Number.isFinite(timeoutMs) || timeoutMs < 1) throw new TypeError('ParcelsApp HTTP timeout must be positive');
     const { bytes } = await fetchBounded(PARCELSAPP_API, {
-      method: 'POST',
+      method: 'POST', signal,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         Origin: 'https://parcelsapp.com', Referer: `https://parcelsapp.com/en/tracking/${number}`,

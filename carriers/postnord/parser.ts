@@ -1,5 +1,5 @@
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -9,7 +9,7 @@ import { classifyPostnordStatus, isPostnordAdministrativeEvent } from './status.
 export function normalizePostnordNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^\d{10,20}$/.test(number) && !/^\d{11}SE$/.test(number) && !isValidS10TrackingNumber(number)) {
-    throw new TypeError('PostNord requires a numeric or postal tracking number');
+    throw new InvalidInputError('PostNord', 'PostNord requires a numeric or postal tracking number');
   }
   return number;
 }

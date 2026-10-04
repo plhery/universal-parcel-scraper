@@ -150,6 +150,17 @@ describe('Postal Ninja widget lookup', () => {
     );
   });
 
+  it('ends the widget lookup when the caller cancels', async () => {
+    vi.mocked(scrapeUniversalPage).mockImplementationOnce(({ signal }) => new Promise((_, reject) => {
+      signal!.addEventListener('abort', () => reject(signal!.reason), { once: true });
+    }));
+    const controller = new AbortController();
+    const lookup = new PostalNinjaTracker({ executablePath: '/test/chromium' }).fetch(number, undefined, controller.signal);
+    await vi.waitFor(() => expect(scrapeUniversalPage).toHaveBeenCalledOnce());
+    controller.abort(new Error('caller cancelled'));
+    await expect(lookup).rejects.toThrow('caller cancelled');
+  });
+
   it('validates the number and the budget before starting a browser', async () => {
     await expect(new PostalNinjaTracker().fetch('https://localhost')).rejects.toThrow('Invalid tracking number');
     await expect(new PostalNinjaTracker({ timeoutMs: Infinity }).fetch(number)).rejects.toThrow('timeout');

@@ -713,7 +713,7 @@
       "adapter": "gls-ch",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissPostcode",
           "label": "Delivery postcode",
           "type": "text",
@@ -780,7 +780,7 @@
       "adapter": "dpd",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissPostcode",
           "optional": true,
           "label": "Delivery postcode",
@@ -879,7 +879,7 @@
       "adapter": "mondial-relay",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "whenTrackingNumber": "^(?![0-9]{26}$).*$",
           "validator": "francePostcode",
           "label": "Delivery postcode",
@@ -1268,7 +1268,7 @@
       "adapter": "heppner",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissOrFrancePostcode",
           "label": "Delivery postcode",
           "type": "text",
@@ -1350,7 +1350,7 @@
       "adapter": "paack",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "paackPostcode",
           "label": "Delivery postcode",
           "type": "text",
@@ -1545,7 +1545,7 @@
       "adapter": "gls-de",
       "requirements": [
         {
-          "field": "dpdPostcode",
+          "field": "postcode",
           "validator": "swissOrFrancePostcode",
           "label": "Delivery postcode",
           "type": "text",

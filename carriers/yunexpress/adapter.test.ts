@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { adapter, parse, parseCaptured, YunExpressTracker } from './adapter.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'YT0000000000000001';
 const API = 'https://services.yuntrack.com/Track/Query';
@@ -158,6 +159,21 @@ describe('YunExpress browser execution', () => {
     } finally { launch.mockRestore(); }
   });
 
+  it('gives local Chromium its 60 s limit out of a longer budget', async () => {
+    const goto = vi.fn(async (url: string, options: { timeout: number }) => { void url; void options; return { status: () => 503 }; });
+    const browser = { newPage: vi.fn(async () => ({ on: vi.fn(), goto })), close: vi.fn(async () => {}) };
+    const launch = vi.spyOn(chromium, 'launch').mockResolvedValue(browser as never);
+    try {
+      await expect(new YunExpressTracker({ executablePath: '/synthetic/chromium' }).fetch(NUMBER, { budgetMs: 90_000 }))
+        .rejects.toMatchObject({ kind: 'transport', message: 'YunExpress tracking page is unavailable' });
+      expect(launch).toHaveBeenCalledOnce();
+      const timeout = goto.mock.calls[0]![1].timeout;
+      expect(timeout).toBeGreaterThan(50_000);
+      expect(timeout).toBeLessThanOrEqual(60_000);
+      expect(browser.close).toHaveBeenCalledOnce();
+    } finally { launch.mockRestore(); }
+  });
+
   it('requests Trawl capture with a fresh page and bounded cancellation-aware timeout', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(captured())));
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
@@ -179,7 +195,7 @@ describe('YunExpress browser execution', () => {
   it('rejects unsupported input and pre-abort before contacting Trawl', async () => {
     const fetcher = vi.fn<typeof fetch>();
     const tracker = new YunExpressTracker({ trawl: new TrawlClient('http://127.0.0.1:8191', fetcher) });
-    await expect(tracker.fetch('bad&number')).rejects.toThrow(TypeError);
+    await expect(tracker.fetch('bad&number')).rejects.toThrow(InvalidInputError);
     await expect(tracker.fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();
   });

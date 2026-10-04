@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { epochSecondsTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -11,14 +11,14 @@ const PROVIDER = 'UniUni';
 
 export function normalizeUniuniNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^[A-Z0-9]{8,35}$/.test(number)) throw new TypeError('UniUni requires an alphanumeric tracking reference');
+  if (!/^[A-Z0-9]{8,35}$/.test(number)) throw new InvalidInputError(PROVIDER, 'UniUni requires an alphanumeric tracking reference');
   return number;
 }
 
 /** Discovery only probes formats confirmed for individual parcels. */
 export function normalizeUniuniRecognitionNumber(raw: string): string {
   const number = normalizeUniuniNumber(raw);
-  if (!/^(?:UUS[A-Z0-9]{16}|UUSC\d{12}|U9999\d{11}|4C\d{9}US)$/.test(number)) throw new TypeError('UniUni recognition requires a supported parcel format');
+  if (!/^(?:UUS[A-Z0-9]{16}|UUSC\d{12}|U9999\d{11}|4C\d{9}US)$/.test(number)) throw new InvalidInputError(PROVIDER, 'UniUni recognition requires a supported parcel format');
   return number;
 }
 

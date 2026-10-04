@@ -30,13 +30,18 @@ function recordingRecorder(): { recorder: StepRecorder; steps: StepRecord[] } {
 }
 
 /** The four guest-API calls a cold tracker makes before it reads the parcel. */
-function mockGuestApi(details: Response) {
-  return vi.spyOn(globalThis, 'fetch')
+function mockGuestApi(details: Response, fetcher = vi.spyOn(globalThis, 'fetch')) {
+  return fetcher
     .mockResolvedValueOnce(Response.json({ fid: 'unit-test-fid', authToken: { token: 'installation-token', expiresIn: '604800s' } }))
     .mockResolvedValueOnce(Response.json({ entries: { basic_dpd_token: 'dW5pdDp0ZXN0' } }))
     .mockResolvedValueOnce(Response.json({ access_token: 'unit-test-access-token', expires_in: 3600 }))
     .mockResolvedValueOnce(details);
 }
+
+/** A request DPD never answers: it ends when its signal aborts. */
+const unanswered: typeof fetch = (_url, init) => new Promise<Response>((_resolve, reject) => {
+  init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason as Error), { once: true });
+});
 
 afterEach(() => vi.restoreAllMocks());
 
@@ -603,6 +608,42 @@ describe('DPDTracker steps', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('keeps a lookup that was cut short out of the guest login the others share', async () => {
+    const fetcher = mockGuestApi(
+      Response.json(READY_FOR_COLLECTION),
+      vi.spyOn(globalThis, 'fetch').mockImplementationOnce(unanswered),
+    );
+    const tracker = new DPDTracker({ timeoutMs: 1_000, trawl: null });
+    const waiter = new AbortController();
+    const owning = tracker.recognizes(TRACKING_NUMBER, { budgetMs: 40 });
+    const waiting = tracker.recognizes(TRACKING_NUMBER, { signal: waiter.signal });
+    const sharing = tracker.recognizes(TRACKING_NUMBER);
+    const installation = fetcher.mock.calls[0]![1]!.signal!;
+
+    // A lookup that stops waiting leaves the login running for the others.
+    waiter.abort(new Error('caller cancelled'));
+    await expect(waiting).rejects.toMatchObject({ kind: 'indeterminate', cause: { message: 'caller cancelled' } });
+    expect(installation.aborted).toBe(false);
+
+    // The login ends with the budget of the lookup that started it. It is not
+    // remembered as a failed login: the lookup still waiting logs in itself.
+    await expect(owning).rejects.toThrow();
+    expect(installation.aborted).toBe(true);
+    await expect(sharing).resolves.toBe(true);
+    expect(fetcher).toHaveBeenCalledTimes(5);
+  });
+
+  it('ends on the budget without trying the page once the guest API has used it up', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(unanswered);
+    const { recorder, steps } = recordingRecorder();
+
+    await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null, recorder }).fetch(TRACKING_NUMBER, '', { budgetMs: 40 }))
+      .rejects.toMatchObject({ kind: 'budget' });
+
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'budget']]);
   });
 
   it('keeps a positive unknown parcel out of the page fallback', async () => {

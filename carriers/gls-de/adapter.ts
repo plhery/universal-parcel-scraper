@@ -1,5 +1,5 @@
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -51,10 +51,12 @@ export class GLSGermanyTracker {
     this.#fetcher = fetcher;
   }
 
-  async fetch(rawTrackingNumber: string, rawPostcode: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, rawPostcode: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeGLSSwitzerlandTrackingNumber(rawTrackingNumber);
     const postcode = normalizeGLSSwitzerlandPostcode(rawPostcode, '4,5');
-    const overview = await this.request(glsSwitzerlandOverviewApiUrl(number, this.now()));
+    // Two requests, each with the full request timeout.
+    const budget = lookupBudget(context, 2 * this.timeoutMs);
+    const overview = await this.request(glsSwitzerlandOverviewApiUrl(number, this.now()), budget);
     // Validate the overview identity before resolving a Track ID to a parcel number.
     try {
       parseGLSSwitzerlandTrackingResponse(overview, number);
@@ -73,7 +75,7 @@ export class GLSGermanyTracker {
     const owner = owners.find((row) => row.type === 'REQUEST');
     const detail = await this.request(glsSwitzerlandDetailApiUrl(
       String(parcel.tuNo), postcode, this.now(), String(owner?.code ?? ''), '4,5',
-    ));
+    ), budget);
     try {
       const result = parseGLSSwitzerlandTrackingResponse(detail, String(parcel.tuNo));
       // Both services use CET/CEST; expose the regional timezone to clients.
@@ -89,11 +91,12 @@ export class GLSGermanyTracker {
    * the host's carrier-detection route, which promotes a number to `gls-de`
    * only after this returns true; a provider failure must stay a failure.
    */
-  async recognizes(rawTrackingNumber: string): Promise<boolean> {
+  async recognizes(rawTrackingNumber: string, context: TrackingContext = {}): Promise<boolean> {
     const number = normalizeGLSSwitzerlandTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     try {
       const url = glsSwitzerlandOverviewApiUrl(number, this.now()).replace('/GROUP/en/', '/DE/en/');
-      const overview = await this.request(url);
+      const overview = await this.request(url, budget);
       const result = parseGLSSwitzerlandTrackingResponse(overview, number);
       return result.status !== 'unknown';
     } catch (error) {
@@ -102,12 +105,13 @@ export class GLSGermanyTracker {
     }
   }
 
-  private async request(url: string): Promise<unknown> {
+  private async request(url: string, budget: LookupBudget): Promise<unknown> {
     const { response, bytes } = await fetchBounded(url, {
+      signal: budget.signal,
       headers: { Accept: 'application/json', Referer: 'https://gls-group.eu/EU/en/parcel-tracking' },
     }, {
       provider: PROVIDER,
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: 1_000_000,
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
@@ -127,7 +131,7 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'gls-de',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number, input.postcode ?? ''),
-    recognize: async (number) => ({ known: await tracker.recognizes(number) }),
+    track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
+    recognize: async (number, context) => ({ known: await tracker.recognizes(number, context) }),
   };
 };

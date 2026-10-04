@@ -5,6 +5,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, UniuniTracker } from './adapter.js';
 import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser.js';
 import { uniuniStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'UUS0000000000000001';
 const OTHER = 'UUS0000000000000002';
@@ -24,7 +25,7 @@ describe('UniUni confirmed parcel formats', () => {
     for (const number of ['UUSC00000000001', 'UUSC0000000000001', 'UUSX000000000001', 'UUSC00000000000A',
       `X${UUSC_NUMBER}`, `${UUSC_NUMBER}X`]) {
       expect(new RegExp(uuscRule.pattern).test(number), number).toBe(false);
-      expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(TypeError);
+      expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(InvalidInputError);
     }
     expect(normalizeUniuniRecognitionNumber(NUMBER)).toBe(NUMBER);
     expect(normalizeUniuniRecognitionNumber('4C000000001US')).toBe('4C000000001US');
@@ -37,7 +38,7 @@ describe('UniUni confirmed parcel formats', () => {
     expect(normalizeUniuniRecognitionNumber('u9999-00000 000001')).toBe(U9999_NUMBER);
     for (const number of ['U99990000000001', 'U9999000000000001', 'U999800000000001', 'U99990000000000A', `X${U9999_NUMBER}`]) {
       expect(new RegExp(rule.pattern).test(number), number).toBe(false);
-      expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(TypeError);
+      expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(InvalidInputError);
     }
   });
 
@@ -244,7 +245,7 @@ describe('UniUni direct retrieval', () => {
   it('rejects invalid input before I/O and bounds cancellation, elapsed time and response size', async () => {
     const unused = vi.fn<typeof fetch>();
     for (const number of ['123', `${NUMBER}&id=OTHER`, 'U'.repeat(36)]) {
-      await expect(new UniuniTracker({ fetcher: unused }).fetch(number)).rejects.toThrow(TypeError);
+      await expect(new UniuniTracker({ fetcher: unused }).fetch(number)).rejects.toThrow(InvalidInputError);
     }
     await expect(new UniuniTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(unused).not.toHaveBeenCalled();

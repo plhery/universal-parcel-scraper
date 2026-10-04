@@ -11,8 +11,9 @@ DPD Switzerland (myDPD), Swiss last-mile parcels only. DPD France is
    client-credentials token, and the token reads `/v10/parcels/details/<number>`.
    Tokens are cached per instance. Concurrent lookups share one refresh, and a
    failed login answers new lookups for 30 seconds, so a burst of lookups during
-   a login outage costs one attempt. A 400/401 on the token call drops the Basic
-   credential and retries once.
+   a login outage costs one attempt. A refresh cut short by its own lookup's
+   cancellation or budget is not remembered, and a lookup sharing it logs in
+   itself. A 400/401 on the token call drops the Basic credential and retries once.
 2. `page`: the rendered consignee page (`/ch/mydpd/my-parcels/track`), when the
    guest API is inconclusive, fails in transport or returns a mismatched payload.
    It sits behind Cloudflare, so it goes through the browser service when

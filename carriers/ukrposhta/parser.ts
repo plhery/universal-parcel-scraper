@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
@@ -12,7 +12,7 @@ const MAX_SCANS = 500;
 export function normalizeUkrposhtaNumber(raw: string): string {
   const number = raw.trim().replace(/[\s-]+/g, '').toUpperCase();
   if (/^\d{13}$/.test(number) || isValidS10TrackingNumber(number)) return number;
-  throw new TypeError('Ukrposhta requires a 13-digit domestic or valid S10 postal reference');
+  throw new InvalidInputError(PROVIDER, 'Ukrposhta requires a 13-digit domestic or valid S10 postal reference');
 }
 
 function text(value: unknown, field: string, required = false): string {

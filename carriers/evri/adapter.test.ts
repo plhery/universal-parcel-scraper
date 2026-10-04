@@ -91,7 +91,7 @@ describe('Evri International parser', () => {
   it('recognizes an interactive challenge and validates input before retrieval', () => {
     expect(() => parse('<title>Verify you are human</title>', NUMBER)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     expect(normalizeEvriNumber('h0000 0000 0000 001')).toBe(NUMBER);
-    expect(() => normalizeEvriNumber('12345678')).toThrow(expect.objectContaining({ kind: 'input_required' }));
+    expect(() => normalizeEvriNumber('12345678')).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   });
 });
 
@@ -132,7 +132,7 @@ describe('Evri International retrieval', () => {
 
   it('rejects invalid input and timeout without making a request', async () => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new EvriTracker({ fetcher }).fetch('invalid')).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new EvriTracker({ fetcher }).fetch('invalid')).rejects.toMatchObject({ kind: 'invalid_input' });
     for (const budgetMs of [0, -1, NaN, Infinity]) await expect(new EvriTracker({ fetcher }).fetch(NUMBER, { budgetMs })).rejects.toThrow('positive');
     expect(fetcher).not.toHaveBeenCalled();
   });

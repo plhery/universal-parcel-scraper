@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { PostnordTracker } from './adapter.js';
 import { normalizePostnordNumber, parsePostnord } from './parser.js';
 import { classifyPostnordStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '00573000000000000001';
 const OTHER_NUMBER = '00573000000000000002';
@@ -154,7 +155,7 @@ describe('PostNord direct tracking', () => {
     expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('X-CustomHeader')).not.toBe(new Headers(fetcher.mock.calls[1]?.[1]?.headers).get('X-CustomHeader'));
     expect(normalizePostnordNumber('00573 000000000000001')).toBe(NUMBER);
     expect(normalizePostnordNumber('rr 000000005 se')).toBe('RR000000005SE');
-    for (const invalid of ['123', 'RR000000006SE', `${NUMBER}?id=other`]) expect(() => normalizePostnordNumber(invalid)).toThrow(TypeError);
+    for (const invalid of ['123', 'RR000000006SE', `${NUMBER}?id=other`]) expect(() => normalizePostnordNumber(invalid)).toThrow(InvalidInputError);
   });
 
   it('requires the observed negative schema and keeps challenges, throttling and outages distinct', async () => {

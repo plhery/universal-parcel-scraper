@@ -1,4 +1,4 @@
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -12,7 +12,7 @@ const MAX_EVENTS = 100;
 /** The MY public order endpoint is the only country route with a live positive. */
 export function normalizeNinjaVanNumber(raw: string): string {
   const number = raw.trim().toUpperCase().replace(/[\s-]/g, '');
-  if (!/^NLMY[A-Z]{1,2}\d{8,10}$/.test(number)) throw new TypeError('Ninja Van direct tracking requires an NLMY parcel ID');
+  if (!/^NLMY[A-Z]{1,2}\d{8,10}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Ninja Van direct tracking requires an NLMY parcel ID');
   return number;
 }
 

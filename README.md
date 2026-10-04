@@ -124,12 +124,14 @@ curl http://127.0.0.1:8080/v1/track \
 memory and rate-limits callers. It has no database and never polls on its own.
 
 Set `SCRAPER_TOKEN` to require a bearer token. `SCRAPER_DEMO_PAGE=true` serves a small page
-at `/` for trying numbers by hand. The other settings are in [.env.example](.env.example).
+at `/` for trying numbers by hand. Behind a reverse proxy, set `SCRAPER_TRUSTED_PROXIES` so
+the rate limit counts each caller and not the proxy. The other settings are in
+[.env.example](.env.example).
 
 ### Docker
 
 ```sh
-docker run --rm -p 127.0.0.1:8080:8080 ghcr.io/plhery/universal-parcel-scraper:0.2.0
+docker run --rm -p 127.0.0.1:8080:8080 ghcr.io/plhery/universal-parcel-scraper:0.3.0
 ```
 
 The image runs `serve` and ships Chromium, for the carriers that only answer a real browser.
@@ -167,6 +169,9 @@ npm install playwright-core sharp onnxruntime-web
 
 Then pass `chromiumPath` or `trawlUrl` to `createTracker()`. The CLI and the server read
 `TRACKING_CHROMIUM_PATH` and `FLARESOLVERR_URL`.
+
+Where a carrier accepts a plain client, the adapter names itself with the package's default
+User-Agent. Pass `userAgent`, or set `SCRAPER_USER_AGENT`, to send your own.
 
 When the adapter finds no history, the lookup can move on to an aggregator. Only UPU is on
 by default, for the postal numbers it can serve. The commercial ones are opt-in, and each

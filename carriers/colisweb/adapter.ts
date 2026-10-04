@@ -9,10 +9,10 @@
  * person or a shop is dropped.
  */
 
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { UpstreamHttpError, clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { UpstreamHttpError, clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyStatus, type ClassifiedStatus } from './status.js';
 
@@ -53,7 +53,7 @@ function saysNotFound(value: unknown): boolean {
 export function normalizeColiswebTrackingNumber(raw: string): string {
   const value = raw.replace(/\s/g, '');
   if (!/^\d{8,32}$/.test(value)) {
-    throw new TypeError('Colisweb tracking numbers must contain at least 8 digits');
+    throw new InvalidInputError(PROVIDER, 'Colisweb tracking numbers must contain at least 8 digits');
   }
   return value;
 }
@@ -129,11 +129,13 @@ export interface ColiswebTrackerOptions {
   timeoutMs?: number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 export class ColiswebTracker {
   readonly timeoutMs: number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: ColiswebTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -141,23 +143,26 @@ export class ColiswebTracker {
       throw new TypeError('Colisweb timeout must be positive');
     }
     this.#fetcher = options.fetcher;
+    this.#userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeColiswebTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(coliswebTrackingUrl(), {
       method: 'POST',
+      signal: budget.signal,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Origin: 'https://www.colisweb.com',
         Referer: 'https://www.colisweb.com/suivi-livraison',
-        'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+        'User-Agent': this.#userAgent,
       },
       body: coliswebRequestBody(trackingNumber),
     }, {
       provider: 'Colisweb tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       redirect: 'error',
       allowHttpError: true,
@@ -185,10 +190,10 @@ export class ColiswebTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new ColiswebTracker({ fetcher: environment.fetcher });
+  const tracker = new ColiswebTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'colisweb',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

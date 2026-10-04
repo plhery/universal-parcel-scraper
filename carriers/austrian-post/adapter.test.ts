@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, AustrianPostTracker, normalizeAustrianPostNumber, parseAustrianPostResponse } from './adapter.js';
 import { austrianPostEventStatus, austrianPostSummaryStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '1000000000000000000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -79,7 +80,7 @@ describe('Austrian Post public tracking', () => {
 
   it('rejects invalid input before network and exposes recognition for ambiguous digits', async () => {
     expect(normalizeAustrianPostNumber(` ${NUMBER} `)).toBe(NUMBER);
-    expect(() => normalizeAustrianPostNumber(`${NUMBER}"}`)).toThrow(TypeError);
+    expect(() => normalizeAustrianPostNumber(`${NUMBER}"}`)).toThrow(InvalidInputError);
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(fixture())));
     const tracker = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(tracker.recognize!('123')).resolves.toEqual({ known: false });

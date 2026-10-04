@@ -92,9 +92,12 @@ describe('GLS Switzerland tracking input', () => {
       expect(() => normalizeGLSSwitzerlandTrackingNumber(value)).toThrow(
         '8-character Track ID or an 11-to-14-digit parcel number',
       );
+      expect(() => normalizeGLSSwitzerlandTrackingNumber(value)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
     for (const value of ['800', '80000', '80A0', '8000?x=1']) {
       expect(() => normalizeGLSSwitzerlandPostcode(value)).toThrow('4-digit recipient postcode');
+      // The postcode is the credential the lookup still needs.
+      expect(() => normalizeGLSSwitzerlandPostcode(value)).toThrow(expect.objectContaining({ kind: 'input_required' }));
     }
   });
 });

@@ -185,7 +185,7 @@ describe('Japan Post retrieval', () => {
 
   it.each(['UL000000005JP', 'CN000000000JP', '12345', 'TRACK&reqCodeNo2=123', ''])('rejects unsupported input %s before I/O', async (number) => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new JapanPostTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new JapanPostTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

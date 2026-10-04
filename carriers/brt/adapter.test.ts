@@ -6,6 +6,7 @@ import { BrtTracker, adapter } from './adapter.js';
 import { normalizeBrtNumber, parseBrt } from './parser.js';
 import { classifyBrtStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '99000000000002';
 const OTHER = '99000000000003';
@@ -36,7 +37,7 @@ describe('BRT direct tracking', () => {
 
   it('binds the returned BRTcode, rejects ambiguous details and accepts only the supported format', () => {
     expect(normalizeBrtNumber('9900 0000 0000 02')).toBe(NUMBER);
-    for (const n of ['', '123', NUMBER + '0', NUMBER.slice(1), NUMBER + '?', 'ABC00000000000']) expect(() => normalizeBrtNumber(n)).toThrow(TypeError);
+    for (const n of ['', '123', NUMBER + '0', NUMBER.slice(1), NUMBER + '?', 'ABC00000000000']) expect(() => normalizeBrtNumber(n)).toThrow(InvalidInputError);
     for (const body of [edit($ => $('.table_dati_spedizione tr').eq(1).children('td').last().text(OTHER)),
       edit($ => $('.table_dati_spedizione tr').eq(1).remove()),
       edit($ => $('.table_dati_spedizione tr').eq(1).clone().appendTo('.table_dati_spedizione')),

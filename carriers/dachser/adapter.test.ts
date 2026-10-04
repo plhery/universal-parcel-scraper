@@ -34,6 +34,21 @@ describe('Dachser capability URL', () => {
     expect(() => validateDachserTrackingUrl('https://customeriberia.dachser.com/customerarea/utilidades/seguimiento-publico/detalle?numeroUnico=12345678&hash=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&unexpected=1', WRONG_DACHSER_NUMBER))
       .toThrow('unsupported parameter');
   });
+
+  it('rejects a link that is not the shipment\'s as invalid input before any request', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    const tracker = new DachserTracker({ fetcher });
+    await expect(tracker.fetch(WRONG_DACHSER_NUMBER, 'https://example.com/x')).rejects.toMatchObject({
+      name: 'InvalidInputError',
+      kind: 'invalid_input',
+      message: 'Dachser links must use https://customeriberia.dachser.com',
+    });
+    await expect(tracker.fetch('87654321', WRONG_DACHSER_URL)).rejects.toMatchObject({
+      kind: 'invalid_input',
+      message: 'The Dachser URL belongs to a different tracking number',
+    });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
 });
 
 describe('Dachser response normalization', () => {

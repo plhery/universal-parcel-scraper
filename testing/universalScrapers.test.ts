@@ -221,22 +221,35 @@ describe('bounded browser scraper lifecycle', () => {
     expect(f.browser.close).toHaveBeenCalledOnce();
   });
 
-  it('closes on page failure, rejects unrelated history on timeout and releases the concurrency slot', async () => {
+  it('closes on page failure, rejects unrelated history at the deadline and gives the browser to the next lookup', async () => {
     const f = browserFixture(ship(), 'https://untrusted.test/');
     f.page.goto.mockResolvedValueOnce({ headers: () => ({}), status: () => 403 });
     const tracker = new Ship24Tracker({ executablePath: '/test/chromium', timeoutMs: 30 });
     await expect(tracker.fetch(number)).rejects.toThrow('HTTP 403');
-    await expect(tracker.fetch(number)).rejects.toThrow('timeout');
+    await expect(tracker.fetch(number)).rejects.toMatchObject({ kind: 'budget' });
     expect(f.browser.close).toHaveBeenCalledTimes(2);
   });
 
   it('does not allow an outage to spawn browsers for a whole sync batch', async () => {
     const f = browserFixture(ship(), 'https://untrusted.test/');
-    const tracker = new Ship24Tracker({ executablePath: '/test/chromium', timeoutMs: 30 });
-    const first = tracker.fetch(number);
-    await expect(tracker.fetch(number)).rejects.toThrow('busy');
-    await expect(first).rejects.toThrow('timeout');
+    const first = new Ship24Tracker({ executablePath: '/test/chromium', timeoutMs: 60 }).fetch(number);
+    // The second lookup waits for the browser and runs out of its own, shorter budget.
+    const second = new Ship24Tracker({ executablePath: '/test/chromium', timeoutMs: 10 }).fetch(number);
+    const outcomes = await Promise.allSettled([first, second]);
+    expect(outcomes.map((outcome) => outcome.status === 'rejected' && outcome.reason)).toEqual([
+      expect.objectContaining({ kind: 'budget' }), expect.objectContaining({ kind: 'budget' }),
+    ]);
+    expect(chromium.launch).toHaveBeenCalledOnce();
     expect(f.browser.close).toHaveBeenCalledOnce();
+  });
+
+  it('runs concurrent lookups one after another in the same browser slot', async () => {
+    const f = browserFixture(ship(), `https://api.ship24.com/api/parcels/${number}?lang=en`);
+    const tracker = new Ship24Tracker({ executablePath: '/test/chromium' });
+    const answers = await Promise.all([tracker.fetch(number), tracker.fetch(number), tracker.fetch(number)]);
+    expect(answers.map((answer) => answer.tracking_provider)).toEqual(['Ship24', 'Ship24', 'Ship24']);
+    expect(chromium.launch).toHaveBeenCalledTimes(3);
+    expect(f.browser.close).toHaveBeenCalledTimes(3);
   });
 
   it('permits required challenge subdomains while blocking unrelated and private hosts', async () => {
@@ -259,7 +272,7 @@ describe('bounded browser scraper lifecycle', () => {
   it('closes the browser even when context creation stalls', async () => {
     const f = browserFixture(ship(), 'https://untrusted.test/');
     f.browser.newContext.mockImplementationOnce(() => new Promise(() => {}));
-    await expect(new Ship24Tracker({ executablePath: '/test/chromium', timeoutMs: 30 }).fetch(number)).rejects.toThrow('timeout');
+    await expect(new Ship24Tracker({ executablePath: '/test/chromium', timeoutMs: 30 }).fetch(number)).rejects.toMatchObject({ kind: 'budget' });
     expect(f.browser.close).toHaveBeenCalledOnce();
   });
 

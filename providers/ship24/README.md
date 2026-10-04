@@ -27,7 +27,7 @@ The browser step runs only when a browser could fix the direct failure:
 
 Built without an HTTP client (as in browser tests), the adapter runs the browser step
 alone. Only one local browser session runs per server process; an overlapping lookup
-fails fast and retries on the next sync.
+waits its turn within its own budget.
 
 ## Request signing
 

@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded, UpstreamHttpError, UpstreamNetworkError } from '../../core/transport/index.js';
 import { calendarDay, zonedTime, type ParsedTime } from '../../core/time/index.js';
@@ -53,7 +53,7 @@ export class RelaisColisTrackingError extends NotFoundError {
 export function normalizeRelaisColisTrackingNumber(raw: string): string {
   const trackingNumber = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^[A-Z0-9]{10,16}$/.test(trackingNumber) || !/\d/.test(trackingNumber)) {
-    throw new TypeError('Relais Colis tracking numbers must contain 10 to 16 letters and digits');
+    throw new InvalidInputError('Relais Colis', 'Relais Colis tracking numbers must contain 10 to 16 letters and digits');
   }
   return trackingNumber;
 }

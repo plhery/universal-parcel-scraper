@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, parse, YanwenTracker, yanwenTrackingUrl } from './adapter.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'UK000000005YP';
 const fixture = (name = 'delivered') => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');
@@ -88,7 +89,7 @@ describe('Yanwen anonymous form retrieval', () => {
 
   it('rejects unsupported inputs before I/O, propagates cancellation and limits response size', async () => {
     const unused = vi.fn<typeof fetch>();
-    await expect(new YanwenTracker({ fetcher: unused }).fetch('tracking&nums')).rejects.toThrow(TypeError);
+    await expect(new YanwenTracker({ fetcher: unused }).fetch('tracking&nums')).rejects.toThrow(InvalidInputError);
     await expect(new YanwenTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(unused).not.toHaveBeenCalled();
     const huge = vi.fn<typeof fetch>().mockResolvedValue(new Response('x'.repeat(1_000_001)));

@@ -1,6 +1,6 @@
 
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { CarrierError, IndeterminateError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { CarrierError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -31,7 +31,7 @@ const QUERY = `query SearchShipments($searchTerms: [String!]!, $locale: String) 
 
 export function normalizePostiTrackingNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z0-9]{4,40}$/.test(number)) throw new TypeError('Posti requires a 4–40 character tracking number');
+  if (!/^[A-Z0-9]{4,40}$/.test(number)) throw new InvalidInputError('Posti', 'Posti requires a 4–40 character tracking number');
   return number;
 }
 

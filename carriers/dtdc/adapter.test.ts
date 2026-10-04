@@ -181,7 +181,7 @@ describe('DTDC retrieval', () => {
 
   it.each(['123', 'N00000001&reference_number=OTHER', 'N'.repeat(21)])('rejects invalid input %s before I/O', async number => {
     const fetcher = vi.fn<typeof fetch>();
-    await expect(new DtdcTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'input_required' });
+    await expect(new DtdcTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

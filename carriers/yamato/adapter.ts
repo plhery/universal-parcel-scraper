@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
 import { yamatoStatus } from './status.js';
@@ -15,7 +15,7 @@ const ZONE = 'Asia/Tokyo';
 export function normalizeYamatoNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!/^\d{12}$/.test(number)) {
-    throw new InputRequiredError(PROVIDER, 'number', 'Yamato requires a 12-digit tracking number');
+    throw new InvalidInputError(PROVIDER, 'Yamato requires a 12-digit tracking number');
   }
   return number;
 }

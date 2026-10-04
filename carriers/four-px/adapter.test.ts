@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, FourPxTracker, parse } from './adapter.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '4PX0000000000001CN';
 const fixture = (name = 'delivered') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
@@ -115,7 +116,7 @@ describe('4PX retrieval', () => {
     await expect(new FourPxTracker({ fetcher: slow }).fetch(NUMBER, { budgetMs: 10.5 })).rejects.toMatchObject({ kind: 'transport' });
     const unused = vi.fn<typeof fetch>();
     await expect(new FourPxTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
-    await expect(new FourPxTracker({ fetcher: unused }).fetch('bad&query=number')).rejects.toThrow(TypeError);
+    await expect(new FourPxTracker({ fetcher: unused }).fetch('bad&query=number')).rejects.toThrow(InvalidInputError);
     expect(unused).not.toHaveBeenCalled();
   });
 });

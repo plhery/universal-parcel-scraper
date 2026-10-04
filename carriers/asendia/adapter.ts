@@ -38,18 +38,11 @@
  */
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { carrierIdFromPartner } from '../../core/catalog/hints.js';
-import {
-  BudgetExceededError,
-  ChallengeError,
-  IndeterminateError,
-  NotFoundError,
-  SchemaError,
-  UpstreamHttpError,
-} from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { languageStageStatus, wordingStage, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyAsendiaA1Event, type ClassifiedAsendiaStatus } from './status.js';
 
@@ -57,10 +50,11 @@ const PROVIDER = 'Asendia';
 const PAGE_URL = 'https://a1.asendiausa.com/tracking/';
 const SCRIPT_URL = `${PAGE_URL}js/main.js`;
 const API_HOST_SUFFIXES = ['asendiaprod.com', 'asendia.io', 'asendia.com', 'asendiausa.com'];
-const USER_AGENT = 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)';
 const GUID = /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}/gi;
 const DEFAULT_BUDGET_MS = 25_000;
 const MAX_REQUEST_MS = 10_000;
+/** The longest delay a timer holds; a longer one fires at once. */
+const MAX_TIMER_MS = 2 ** 31 - 1;
 /** The public configuration is re-read at least this often, in case it rotates. */
 const CONFIG_TTL_MS = 6 * 60 * 60_000;
 /** A not-found is only trusted when the tracking key was accepted this recently. */
@@ -99,7 +93,7 @@ function comparable(value: unknown): string {
 export function normalizeAsendiaA1TrackingNumber(raw: string): string {
   const value = comparable(raw);
   if (!/^[A-Z0-9]{6,40}$/.test(value)) {
-    throw new TypeError('Asendia tracking numbers must contain 6 to 40 ASCII letters and digits');
+    throw new InvalidInputError(PROVIDER, 'Asendia tracking numbers must contain 6 to 40 ASCII letters and digits');
   }
   return value;
 }
@@ -276,6 +270,7 @@ export interface AsendiaA1TrackerOptions {
   /** Wall clock in milliseconds, for the configuration cache and budgets. */
   now?: () => number;
   budgetMs?: number;
+  userAgent?: string;
 }
 
 interface CachedConfig {
@@ -284,18 +279,28 @@ interface CachedConfig {
   keyCheckedAt: number;
 }
 
+interface ConfigRead {
+  promise: Promise<CachedConfig>;
+  /** The lookup whose signal and budget the read runs under. */
+  owner: RequestBudget;
+  /** Set as the read fails: its own lookup's cancellation or budget ended it, not Asendia. */
+  cut: boolean;
+}
+
 export class AsendiaA1Tracker {
   private readonly fetcher?: typeof fetch;
   private readonly now: () => number;
   private readonly budgetMs: number;
+  private readonly userAgent: string;
   private cached: CachedConfig | null = null;
-  private loading: Promise<CachedConfig> | null = null;
+  private loading: ConfigRead | null = null;
 
   constructor(options: AsendiaA1TrackerOptions = {}) {
     this.fetcher = options.fetcher;
     this.now = options.now ?? Date.now;
     this.budgetMs = options.budgetMs ?? DEFAULT_BUDGET_MS;
     if (!Number.isFinite(this.budgetMs) || this.budgetMs <= 0) throw new TypeError('Asendia budget must be positive');
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
   async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
@@ -338,14 +343,58 @@ export class AsendiaA1Tracker {
   }
 
   /** One page read at a time; concurrent lookups share it. */
-  private loadConfig(request: RequestBudget): Promise<CachedConfig> {
-    this.loading ??= this.readConfig(request).finally(() => { this.loading = null; });
-    return this.loading;
+  private async loadConfig(request: RequestBudget): Promise<CachedConfig> {
+    for (;;) {
+      const read = this.loading ??= this.startRead(request);
+      if (read.owner === request) return read.promise;
+      const outcome = await this.whileLive(read.promise.then((config) => ({ config }), (error: unknown) => ({ error })), request);
+      if ('config' in outcome) return outcome.config;
+      // A read cut short by its own lookup's cancellation or budget says
+      // nothing about Asendia: a lookup that shared it reads again.
+      if (!read.cut) throw outcome.error;
+    }
+  }
+
+  private startRead(owner: RequestBudget): ConfigRead {
+    const read: ConfigRead = {
+      owner,
+      cut: false,
+      promise: this.readConfig(owner).catch((error: unknown) => {
+        // Judged as the read fails: a host may cancel the lookup once it has settled.
+        read.cut = this.cutShort(owner, error);
+        throw error;
+      }).finally(() => { this.loading = null; }),
+    };
+    return read;
+  }
+
+  /** Waits for a read another lookup started, no longer than this lookup's own signal and budget allow. */
+  private async whileLive<T>(shared: Promise<T>, request: RequestBudget): Promise<T> {
+    let leave!: (reason: unknown) => void;
+    const gone = new Promise<never>((_resolve, reject) => { leave = reject; });
+    const cancelled = () => leave(request.signal?.reason);
+    const spent = setTimeout(() => leave(new BudgetExceededError(PROVIDER, request.budgetMs)), Math.min(MAX_TIMER_MS, this.remaining(request)));
+    request.signal?.addEventListener('abort', cancelled, { once: true });
+    try {
+      return await Promise.race([shared, gone]);
+    } finally {
+      clearTimeout(spent);
+      request.signal?.removeEventListener('abort', cancelled);
+    }
+  }
+
+  /** Whether a failed read was ended by its own lookup's cancellation or budget rather than by Asendia. */
+  private cutShort(owner: RequestBudget, error: unknown): boolean {
+    if (owner.signal?.aborted || owner.deadline - this.now() < 1) return true;
+    // A request timer can fire just before the clock reaches the deadline.
+    return owner.budgetBound === true && error instanceof UpstreamNetworkError
+      && isRecord(error.cause) && error.cause.name === 'TimeoutError';
   }
 
   private async readConfig(request: RequestBudget): Promise<CachedConfig> {
     const { bytes } = await fetchBounded(SCRIPT_URL, {
-      headers: { Accept: '*/*', Referer: PAGE_URL, 'User-Agent': USER_AGENT },
+      signal: request.signal,
+      headers: { Accept: '*/*', Referer: PAGE_URL, 'User-Agent': this.userAgent },
     }, {
       provider: 'Asendia tracking page', timeoutMs: this.requestTimeout(request), maxBytes: MAX_SCRIPT_BYTES, fetcher: this.fetcher,
     });
@@ -377,11 +426,12 @@ export class AsendiaA1Tracker {
 
   private async api(url: URL, config: AsendiaA1PublicConfig, request: RequestBudget, provider: string): Promise<JsonObject> {
     const { response, bytes } = await fetchBounded(url, {
+      signal: request.signal,
       headers: {
         Accept: 'application/json',
         Authorization: config.authorization,
         'X-AsendiaOne-ApiKey': config.apiKey,
-        'User-Agent': USER_AGENT,
+        'User-Agent': this.userAgent,
       },
     }, {
       provider, timeoutMs: this.requestTimeout(request), maxBytes: MAX_RESPONSE_BYTES, fetcher: this.fetcher,
@@ -407,10 +457,16 @@ export class AsendiaA1Tracker {
   }
 
   private requestTimeout(request: RequestBudget): number {
+    const remaining = this.remaining(request);
+    request.budgetBound = remaining <= MAX_REQUEST_MS;
+    return Math.min(MAX_REQUEST_MS, remaining);
+  }
+
+  private remaining(request: RequestBudget): number {
     request.signal?.throwIfAborted();
     const remaining = Math.floor(request.deadline - this.now());
     if (remaining < 1) throw new BudgetExceededError(PROVIDER, request.budgetMs);
-    return Math.min(MAX_REQUEST_MS, remaining);
+    return remaining;
   }
 }
 
@@ -418,10 +474,12 @@ interface RequestBudget {
   deadline: number;
   budgetMs: number;
   signal?: AbortSignal;
+  /** The lookup's latest request was given what the budget had left as its timeout, not the request cap. */
+  budgetBound?: boolean;
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new AsendiaA1Tracker({ fetcher: environment.fetcher });
+  const tracker = new AsendiaA1Tracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'asendia',
     // Plain HTTP against the public page's own API; no second tier.

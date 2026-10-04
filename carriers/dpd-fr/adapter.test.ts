@@ -326,6 +326,32 @@ describe('DPD France transport tiers', () => {
     expect(steps[1]).toMatchObject({ fallbackFrom: 'direct', fallbackReason: 'challenge' });
   });
 
+  it('gives the browser tier the caller\'s signal and what is left of the budget', async () => {
+    let reached!: () => void;
+    const browserRequest = new Promise<void>((resolve) => { reached = resolve; });
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(new Response('<title>Just a moment...</title>', {
+        status: 403,
+        headers: { 'CF-Mitigated': 'challenge' },
+      }))
+      .mockImplementationOnce((_url, init) => new Promise<Response>((_resolve, reject) => {
+        init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+        reached();
+      }));
+    const controller = new AbortController();
+    const cancelled = new Error('caller cancelled');
+
+    const lookup = new DPDFranceTracker({ timeoutMs: 60_000, trawlUrl: 'http://trawl.internal:8191/v1' })
+      .fetch(TEST_TRACKING_NUMBER, { signal: controller.signal, budgetMs: 30_000 });
+    await browserRequest;
+    controller.abort(cancelled);
+
+    await expect(lookup).rejects.toBe(cancelled);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher.mock.calls[1]![1]?.signal?.aborted).toBe(true);
+    expect(JSON.parse(String(fetcher.mock.calls[1]![1]?.body)).maxTimeout).toBeLessThanOrEqual(30_000);
+  });
+
   it('surfaces an actionable error when no browser solver is configured', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(
       '<title>Just a moment...</title>',

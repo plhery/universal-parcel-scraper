@@ -1,14 +1,14 @@
 
 import { DateTime } from 'luxon';
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { ChallengeError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { usStateTimeZone } from '../../core/time/index.js';
-import { clean, TrawlClient } from '../../core/transport/index.js';
+import { clean, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { uspsStage, uspsStatus } from './status.js';
 
 /**
@@ -38,7 +38,7 @@ export function normalizeUSPSNumber(raw: string): string {
   // The S10 suffix identifies the issuing country, not the destination.
   // Incoming international mail keeps that number when USPS takes over.
   if (!/^\d{20}$/.test(value) && !/^\d{22}$/.test(value) && !isValidS10TrackingNumber(value)) {
-    throw new SchemaError('USPS', 'USPS tracking numbers must contain 20 or 22 digits, or be a checksum-valid UPU S10 number');
+    throw new InvalidInputError('USPS', 'USPS tracking numbers must contain 20 or 22 digits, or be a checksum-valid UPU S10 number');
   }
   return value;
 }
@@ -241,7 +241,7 @@ export class USPSTracker {
     return this.trawlUrl ? new TrawlClient(this.trawlUrl, this.#fetcher) : null;
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeUSPSNumber(trackingNumber);
     // Akamai refuses every non-browser client, so a direct attempt only burns
     // time. There is one step, and it is the browser.
@@ -253,25 +253,29 @@ export class USPSTracker {
       );
     }
     return runSteps<CarrierResult>({
-      carrier: 'usps', budgetMs: this.timeoutMs, recorder: this.#recorder,
+      // Without a caller's budget the lookup leaves the service its own time and
+      // the request the allowance to bring the answer back.
+      carrier: 'usps', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
+      recorder: this.#recorder,
     }, [
-      { id: 'trawl', run: () => this.#trawlResult(trawl, number) },
+      { id: 'trawl', run: ({ remainingMs, signal }) => this.#trawlResult(trawl, number, Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal) },
     ]);
   }
 
   /** Read the browser's rendered page without replaying its session. An
    * unresolved challenge remains an error so universal fallback can run. */
-  async #trawlResult(trawl: TrawlClient, number: string): Promise<CarrierResult> {
+  async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     const page = await trawl.scrape({
       url: uspsTrackingUrl(number),
       skipHttp: true,
       maxTier: 3,
-      maxTimeout: this.timeoutMs,
+      maxTimeout: timeoutMs,
     }, {
       provider: 'TRAWL while fetching USPS',
-      timeoutMs: this.timeoutMs,
+      timeoutMs,
       maxBytes: MAX_BYTES,
       fetcher: this.#fetcher,
+      signal,
     });
     const result = parseUSPSTrackingHtml(page.html, number);
     result.tracking_url = uspsTrackingUrl(number);
@@ -290,6 +294,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'usps',
     // Akamai refuses every non-browser client, so there is no direct tier.
     steps: ['trawl'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

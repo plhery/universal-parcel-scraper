@@ -13,10 +13,10 @@
  */
 import { randomInt } from 'node:crypto';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { sunYouStatus } from './status.js';
 
@@ -26,11 +26,11 @@ const QUERY_URL = 'https://sypost.net/queryTrack';
 const JSONP_ENVELOPE = /^\s*\w+\(([\s\S]*)\)\s*;?\s*$/;
 const EXPLICIT_OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/;
 const LEG_OFFSET = /^([+-])(\d{2}):?(\d{2})$/;
+const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_EVENTS_TO_RETURN = 20;
 const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
   'Accept-Language': 'en-US,en;q=0.9',
-  'User-Agent': 'Mozilla/5.0 (compatible; SwissDeliveryTracker/1.0)',
 };
 
 function record(value: unknown): JsonObject {
@@ -134,14 +134,17 @@ export function parseSunYouTrackingResponse(value: unknown, trackingNumber: stri
 
 export class SunYouTracker {
   private readonly fetcher: typeof fetch | undefined;
-  private readonly timeoutMs: number | undefined;
+  private readonly timeoutMs: number;
+  private readonly userAgent: string;
 
-  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {
+  constructor(options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {
     this.fetcher = options.fetcher;
-    this.timeoutMs = options.timeoutMs;
+    this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    const budget = lookupBudget(context, this.timeoutMs);
     const queryTime = `${Date.now()}-${randomInt(10_000, 100_000)}`;
     const { bytes } = await fetchBounded(
       `${QUERY_URL}?${new URLSearchParams({
@@ -149,24 +152,27 @@ export class SunYouTracker {
         toLanguage: 'en_US',
         trackNumber: trackingNumber,
       })}`,
-      { headers: { ...BASE_HEADERS, Referer: 'https://sypost.net/search' } },
-      { provider: UPSTREAM, ...(this.timeoutMs === undefined ? {} : { timeoutMs: this.timeoutMs }), fetcher: this.fetcher },
+      {
+        signal: budget.signal,
+        headers: { ...BASE_HEADERS, 'User-Agent': this.userAgent, Referer: 'https://sypost.net/search' },
+      },
+      { provider: UPSTREAM, timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()), fetcher: this.fetcher },
     );
     return parseSunYouTrackingResponse(parseSunYouEnvelope(decodeText(bytes)), trackingNumber);
   }
 }
 
 /** Kept for the host's legacy dispatch chain until it is deleted. */
-export async function fetchSunYou(trackingNumber: string): Promise<CarrierResult> {
-  return new SunYouTracker().fetch(trackingNumber);
+export async function fetchSunYou(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  return new SunYouTracker().fetch(trackingNumber, context);
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new SunYouTracker({ fetcher: environment.fetcher });
+  const tracker = new SunYouTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'sunyou',
     // One keyless GET; there is no second tier to fall back to.
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

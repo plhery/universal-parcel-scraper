@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
-import { carrierErrorKind, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { carrierErrorKind, NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { REGISTRY } from '../../generated/registry.js';
 import {
@@ -66,6 +66,17 @@ function upstream(routes: Record<string, Reply[]>) {
 const jsonReply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
 const script = () => new Response(PAGE_SCRIPT);
 
+/** The first request answers nothing and ends only with its signal; the rest go to `fetcher`. */
+function stallingFirst(fetcher: typeof fetch): typeof fetch {
+  let stalled = false;
+  return (input, init) => {
+    if (stalled) return fetcher(input, init);
+    stalled = true;
+    const signal = init!.signal!;
+    return new Promise((_resolve, reject) => signal.addEventListener('abort', () => reject(signal.reason), { once: true }));
+  };
+}
+
 describe('Asendia A1 public page configuration', () => {
   it('reads the page script values without pinning them', () => {
     expect(parseAsendiaA1PublicConfig(PAGE_SCRIPT)).toEqual({
@@ -95,7 +106,7 @@ describe('Asendia A1 tracking numbers and links', () => {
     expect(normalizeAsendiaA1TrackingNumber(' as 010-501 721us ')).toBe(NUMBER);
     expect(asendiaA1TrackingUrl(NUMBER)).toBe(`https://a1.asendiausa.com/tracking/?trackingnumber=${NUMBER}`);
     for (const invalid of ['AB12', '', 'x'.repeat(41)]) {
-      expect(() => normalizeAsendiaA1TrackingNumber(invalid)).toThrow(TypeError);
+      expect(() => normalizeAsendiaA1TrackingNumber(invalid)).toThrow(InvalidInputError);
     }
   });
 });
@@ -388,6 +399,51 @@ describe('Asendia A1 lookup flow', () => {
     });
     await expect(new AsendiaA1Tracker({ fetcher, now: () => now }).fetch(NUMBER))
       .rejects.toMatchObject({ name: 'BudgetExceededError', kind: 'budget' });
+  });
+
+  it('keeps a cancelled lookup from failing the lookups that share its page read', async () => {
+    const { fetcher, paths } = upstream({
+      'main.js': [script()], Customer: [jsonReply(CUSTOMER)], Tracking: [jsonReply(delivered())],
+    });
+    const tracker = new AsendiaA1Tracker({ fetcher: stallingFirst(fetcher) });
+    const reader = new AbortController();
+    const waiter = new AbortController();
+    const cancelled = tracker.fetch(NUMBER, { signal: reader.signal });
+    const sharing = tracker.fetch(NUMBER);
+    const leaving = tracker.fetch(NUMBER, { signal: waiter.signal });
+    // A lookup waiting on another's read leaves on its own signal alone.
+    waiter.abort(new Error('waiter cancelled'));
+    await expect(leaving).rejects.toBe(waiter.signal.reason);
+    expect(paths()).toEqual([]);
+    reader.abort(new Error('reader cancelled'));
+    await expect(cancelled).rejects.toMatchObject({ kind: 'transport', cause: reader.signal.reason });
+    await expect(sharing).resolves.toMatchObject({ status: 'delivered' });
+    expect(paths()).toEqual(['main.js', 'Customer', 'Tracking']);
+  });
+
+  it('keeps a lookup out of budget from failing the lookups that share its page read', async () => {
+    const { fetcher, paths } = upstream({
+      'main.js': [script()], Customer: [jsonReply(CUSTOMER)], Tracking: [jsonReply(delivered())],
+    });
+    // A request timer can fire just ahead of the clock: here the clock never reaches the deadline.
+    const tracker = new AsendiaA1Tracker({ fetcher: stallingFirst(fetcher), now: () => 0 });
+    const spent = tracker.fetch(NUMBER, { budgetMs: 5 });
+    // A budget longer than a timer can hold still waits for the read.
+    const sharing = tracker.fetch(NUMBER, { budgetMs: 2 ** 31 });
+    await expect(spent).rejects.toMatchObject({ kind: 'transport', cause: { name: 'TimeoutError' } });
+    await expect(sharing).resolves.toMatchObject({ status: 'delivered' });
+    expect(paths()).toEqual(['main.js', 'Customer', 'Tracking']);
+  });
+
+  it('shares a failed page read with lookups whose host cancels each one as it settles', async () => {
+    const { fetcher, paths } = upstream({ 'main.js': [new Response('', { status: 500 })] });
+    const tracker = new AsendiaA1Tracker({ fetcher });
+    const lookups = [1, 2, 3].map(() => {
+      const controller = new AbortController();
+      return tracker.fetch(NUMBER, { signal: controller.signal }).finally(() => controller.abort());
+    });
+    await Promise.all(lookups.map((lookup) => expect(lookup).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 500 })));
+    expect(paths()).toEqual(['main.js']);
   });
 
   it('is the registered adapter and uses the environment fetcher', async () => {

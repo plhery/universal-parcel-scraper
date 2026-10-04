@@ -5,6 +5,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, CourierGuyTracker } from './adapter.js';
 import { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber, parseCourierGuy } from './parser.js';
 import { courierGuyStatus } from './status.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'TESTA1';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -23,9 +24,9 @@ describe('The Courier Guy native product references', () => {
     for (const number of ['LD000001', 'DD000001']) expect(rule.test(number)).toBe(true);
     for (const number of ['LD00001', 'LD0000001', 'DL000001', 'LD000001A', 'XLD000001', 'LD00000!']) {
       expect(rule.test(number), number).toBe(false);
-      expect(() => normalizeCourierGuyRecognitionNumber(number), number).toThrow(TypeError);
+      expect(() => normalizeCourierGuyRecognitionNumber(number), number).toThrow(InvalidInputError);
     }
-    expect(() => normalizeCourierGuyNumber('LD--000001')).toThrow(TypeError);
+    expect(() => normalizeCourierGuyNumber('LD--000001')).toThrow(InvalidInputError);
   });
 
   it('binds the complete printed product reference to one returned canonical shipment', () => {
@@ -228,7 +229,7 @@ describe('The Courier Guy bounded anonymous transport', () => {
 
   it('rejects invalid inputs before I/O and bounds cancellation, bytes and malformed responses', async () => {
     const fetcher = vi.fn<typeof fetch>();
-    for (const number of ['123', 'TESTA1&secret=value', 'X'.repeat(41)]) expect(() => normalizeCourierGuyNumber(number)).toThrow(TypeError);
+    for (const number of ['123', 'TESTA1&secret=value', 'X'.repeat(41)]) expect(() => normalizeCourierGuyNumber(number)).toThrow(InvalidInputError);
     await expect(new CourierGuyTracker({ fetcher }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();
     const huge = vi.fn<typeof fetch>().mockResolvedValue(new Response('x'.repeat(1_000_001)));

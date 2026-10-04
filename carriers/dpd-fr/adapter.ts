@@ -1,7 +1,7 @@
 
 import { load } from 'cheerio';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -46,6 +46,11 @@ export class DPDFranceTrackingError extends NotFoundError {
   }
 }
 
+/** A request's own timeout, shortened to what the lookup budget has left. */
+function capped(timeoutMs: number, remainingMs: number): number {
+  return Math.min(timeoutMs, Math.max(1, Math.floor(remainingMs)));
+}
+
 function challenged(status: number, headers: Headers, html: string): boolean {
   return (status === 403 && headers.get('cf-mitigated') === 'challenge')
     || /Just a moment|Performing security verification|Enable JavaScript and cookies/i.test(html);
@@ -65,9 +70,7 @@ function expectedDeliveryDate(value: string): string | null {
 export function normalizeDPDFranceTrackingNumber(raw: string): string {
   const value = raw.replace(/[\s.-]/g, '');
   if (!/^(?:[01]\d{11,14}|250\d{9,12})$/.test(value)) {
-    throw new TypeError(
-      'DPD France tracking numbers must start with 0, 1, or 250 and contain 12 to 15 digits',
-    );
+    throw new InvalidInputError('DPD France', 'DPD France tracking numbers must start with 0, 1, or 250 and contain 12 to 15 digits');
   }
   return value;
 }
@@ -246,18 +249,18 @@ export class DPDFranceTracker {
     return this.trawlUrl ? new TrawlClient(this.trawlUrl, this.fetcher) : null;
   }
 
-  async fetch(rawTrackingNumber: string): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeDPDFranceTrackingNumber(rawTrackingNumber);
     const url = dpdFranceTrackingUrl(number);
     const trawl = this.browserService();
     const html = await runSteps<string>({
-      carrier: 'dpd-fr', budgetMs: this.budgetMs, recorder: this.recorder,
+      carrier: 'dpd-fr', budgetMs: context.budgetMs ?? this.budgetMs, signal: context.signal, recorder: this.recorder,
     }, [
       {
         id: 'direct',
-        run: async () => {
+        run: async ({ remainingMs, signal }) => {
           try {
-            return await this.directGet(url);
+            return await this.directGet(url, capped(this.directTimeoutMs, remainingMs), signal);
           } catch (error) {
             // Without a browser service there is no second tier, so the
             // challenge has to carry the operator's next step itself.
@@ -272,17 +275,21 @@ export class DPDFranceTracker {
         id: 'trawl',
         enabled: trawl !== null,
         recovers: (error) => error instanceof DPDFranceChallengeError,
-        run: async () => (await trawl!.scrape({
-          url,
-          skipHttp: true,
-          maxTier: 3,
-          maxTimeout: this.timeoutMs,
-        }, {
-          provider: 'TRAWL while fetching DPD France',
-          timeoutMs: this.timeoutMs,
-          maxBytes: MAX_RESPONSE_BYTES,
-          fetcher: this.fetcher,
-        })).html,
+        run: async ({ remainingMs, signal }) => {
+          const timeoutMs = capped(this.timeoutMs, remainingMs);
+          return (await trawl!.scrape({
+            url,
+            skipHttp: true,
+            maxTier: 3,
+            maxTimeout: timeoutMs,
+          }, {
+            provider: 'TRAWL while fetching DPD France',
+            timeoutMs,
+            maxBytes: MAX_RESPONSE_BYTES,
+            fetcher: this.fetcher,
+            signal,
+          })).html;
+        },
       },
     ]);
     const result = parseDPDFranceTrackingHtml(html, number);
@@ -291,8 +298,9 @@ export class DPDFranceTracker {
     return result;
   }
 
-  private async directGet(url: string): Promise<string> {
+  private async directGet(url: string, timeoutMs: number, signal: AbortSignal): Promise<string> {
     const result = await fetchBounded(url, {
+      signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'fr-FR,fr;q=0.9',
@@ -300,7 +308,7 @@ export class DPDFranceTracker {
       },
     }, {
       provider: 'DPD France tracking',
-      timeoutMs: this.directTimeoutMs,
+      timeoutMs,
       maxBytes: MAX_RESPONSE_BYTES,
       redirect: 'follow',
       allowHttpError: true,
@@ -328,6 +336,6 @@ export const adapter: AdapterFactory = (environment) => {
     // One direct HTML GET, then the browser service's native scrape API when
     // Cloudflare challenges it.
     steps: ['direct', 'trawl'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

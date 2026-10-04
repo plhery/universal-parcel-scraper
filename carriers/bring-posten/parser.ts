@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -10,7 +10,7 @@ import { bringStatus, bringWording } from './status.js';
 export function normalizeBringNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!/^\d{17,18}$/.test(number) && !(/^[A-Z]{2}\d{9}NO$/.test(number) && isValidS10TrackingNumber(number))) {
-    throw new TypeError('Bring requires a parcel or consignment tracking number');
+    throw new InvalidInputError('Bring', 'Bring requires a parcel or consignment tracking number');
   }
   return number;
 }

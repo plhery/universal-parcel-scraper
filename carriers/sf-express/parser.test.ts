@@ -23,7 +23,7 @@ describe('SF Express public route parsing', () => {
     expect(normalizeSfExpressNumber('sf 0000000000001')).toBe(NUMBER);
     expect(normalizeSfExpressNumber('1234-5678-9012')).toBe('123456789012');
     for (const value of ['', 'SF123', '1234567890123', 'SF0000000000001/other']) {
-      expect(() => normalizeSfExpressNumber(value)).toThrow(expect.objectContaining({ kind: 'input_required' }));
+      expect(() => normalizeSfExpressNumber(value)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
   });
 

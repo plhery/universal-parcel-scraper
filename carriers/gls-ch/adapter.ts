@@ -1,10 +1,10 @@
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { InputRequiredError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyDescription, GLS_STATUSES, statusCode } from './status.js';
 
@@ -35,6 +35,7 @@ export interface GLSSwitzerlandOptions {
   now?: () => number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 /** Kept as a named class: the German folder narrows on it with `instanceof`. */
@@ -67,8 +68,7 @@ function isReturnParcel(parcel: JsonObject): boolean {
 export function normalizeGLSSwitzerlandTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\d)[A-Z0-9]{8}|\d{11,14})$/.test(value)) {
-    throw new InputRequiredError('GLS', 'an 8-character Track ID or an 11-to-14-digit parcel number',
-      'GLS tracking requires an 8-character Track ID or an 11-to-14-digit parcel number');
+    throw new InvalidInputError('GLS', 'GLS tracking requires an 8-character Track ID or an 11-to-14-digit parcel number');
   }
   return value;
 }
@@ -350,13 +350,13 @@ function ownerCode(parcel: JsonObject): string {
   ), '');
 }
 
-function pageHeaders(): Record<string, string> {
+function pageHeaders(userAgent: string): Record<string, string> {
   return {
     Accept: 'application/json',
     'Accept-Language': 'en-CH,en;q=0.9',
     Origin: 'https://gls-group.eu',
     Referer: `${TRACKING_PAGE}/`,
-    'User-Agent': 'Mozilla/5.0 (compatible; DeliveryTracker/1.0)',
+    'User-Agent': userAgent,
   };
 }
 
@@ -364,10 +364,11 @@ export class GLSSwitzerlandTracker {
   readonly timeoutMs: number;
   readonly now: () => number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: number | GLSSwitzerlandOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, now = Date.now, fetcher } = typeof options === 'number'
-      ? { timeoutMs: options, now: Date.now, fetcher: undefined }
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, now = Date.now, fetcher, userAgent } = typeof options === 'number'
+      ? { timeoutMs: options, now: Date.now, fetcher: undefined, userAgent: undefined }
       : options;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
       throw new TypeError('GLS Switzerland timeout must be positive');
@@ -375,11 +376,14 @@ export class GLSSwitzerlandTracker {
     this.timeoutMs = timeoutMs;
     this.now = now;
     this.#fetcher = fetcher;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(rawTrackingNumber: string, rawPostcode = ''): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, rawPostcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeGLSSwitzerlandTrackingNumber(rawTrackingNumber);
-    const overview = await this.request(glsSwitzerlandOverviewApiUrl(trackingNumber, this.now()));
+    // Up to two requests, each with the full request timeout.
+    const budget = lookupBudget(context, 2 * this.timeoutMs);
+    const overview = await this.request(glsSwitzerlandOverviewApiUrl(trackingNumber, this.now()), budget);
     const parcel = selectGLSParcel(overview, trackingNumber);
     if (!rawPostcode.trim()) return parseGLSSwitzerlandTrackingResponse(overview, trackingNumber);
 
@@ -392,7 +396,7 @@ export class GLSSwitzerlandTracker {
       rawPostcode,
       this.now(),
       ownerCode(parcel),
-    ));
+    ), budget);
     const result = parseGLSSwitzerlandTrackingResponse(detail, parcelNumber);
     const overviewResult = parseGLSSwitzerlandTrackingResponse(overview, trackingNumber);
     return { ...result, ...glsDeliveryReference(overviewResult) };
@@ -403,13 +407,15 @@ export class GLSSwitzerlandTracker {
    * Only a 404 whose body carries GLS's `lastError: E000` is a not-found here;
    * a 400 or 403 can be a challenge, so it stays a failure.
    */
-  async recognizes(rawTrackingNumber: string): Promise<boolean> {
+  async recognizes(rawTrackingNumber: string, context: TrackingContext = {}): Promise<boolean> {
     const trackingNumber = normalizeGLSSwitzerlandTrackingNumber(rawTrackingNumber);
+    const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(glsSwitzerlandOverviewApiUrl(trackingNumber, this.now()), {
-      headers: pageHeaders(),
+      signal: budget.signal,
+      headers: pageHeaders(this.#userAgent),
     }, {
       provider: 'GLS Switzerland tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
@@ -427,12 +433,13 @@ export class GLSSwitzerlandTracker {
     }
   }
 
-  private async request(url: string): Promise<unknown> {
+  private async request(url: string, budget: LookupBudget): Promise<unknown> {
     const { response, bytes } = await fetchBounded(url, {
-      headers: pageHeaders(),
+      signal: budget.signal,
+      headers: pageHeaders(this.#userAgent),
     }, {
       provider: 'GLS Switzerland tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
@@ -449,11 +456,11 @@ export function glsDeliveryReference(result: CarrierResult): Partial<CarrierResu
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new GLSSwitzerlandTracker({ fetcher: environment.fetcher });
+  const tracker = new GLSSwitzerlandTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'gls-ch',
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number, input.postcode ?? ''),
-    recognize: async (number) => ({ known: await tracker.recognizes(number) }),
+    track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
+    recognize: async (number, context) => ({ known: await tracker.recognizes(number, context) }),
   };
 };

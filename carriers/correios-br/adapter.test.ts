@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import fixture from './fixtures/delivered.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
-import { carrierErrorKind } from '../../core/errors/index.js';
+import { carrierErrorKind, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { CorreiosTracker } from './adapter.js';
 import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser.js';
@@ -48,7 +48,7 @@ describe('Correios parser', () => {
 
   it('requires one exact response identity and structurally complete bounded scans', () => {
     expect(normalizeCorreiosNumber('aa 000000005 br')).toBe(NUMBER);
-    for (const raw of ['AA000000000BR', '123', '', 'AA000000005BR?']) expect(() => normalizeCorreiosNumber(raw)).toThrow(TypeError);
+    for (const raw of ['AA000000000BR', '123', '', 'AA000000005BR?']) expect(() => normalizeCorreiosNumber(raw)).toThrow(InvalidInputError);
     for (const payload of [null, [], {}, { ...fixture, codObjeto: 'BB000000005BR' }, { ...fixture, eventos: null }, { ...fixture, eventos: [null] },
       { ...fixture, eventos: [scan('BDE', '', 'Incomplete', null)] }, { ...fixture, eventos: [scan('BDE', '01', '', null)] },
       { ...fixture, eventos: Array(501).fill(fixture.eventos[0]) }]) expect(() => parseCorreios(payload, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));

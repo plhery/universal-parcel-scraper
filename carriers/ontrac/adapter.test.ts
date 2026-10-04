@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { OntracTracker } from './adapter.js';
 import { normalizeOntracNumber, parseOntrac } from './parser.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '1LS0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -107,7 +108,7 @@ describe('OnTrac direct tracking', () => {
     fetcher.mockResolvedValue(new Response('{}', { status: 503 }));
     await expect(new OntracTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' });
     expect(normalizeOntracNumber('1ls 0000000000001')).toBe(NUMBER);
-    expect(() => normalizeOntracNumber('123')).toThrow(TypeError);
+    expect(() => normalizeOntracNumber('123')).toThrow(InvalidInputError);
   });
   it('preserves the upstream throttle window and rejection diagnostics', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Too many requests', {

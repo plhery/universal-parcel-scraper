@@ -77,7 +77,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   return result(events, SOURCE, true);
 }
 
-export interface PostalNinjaOptions extends UniversalBrowserOptions {
+export interface PostalNinjaOptions extends Omit<UniversalBrowserOptions, 'signal'> {
   trawl?: TrawlClient | null;
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
@@ -86,7 +86,7 @@ export interface PostalNinjaOptions extends UniversalBrowserOptions {
 export class PostalNinjaTracker {
   constructor(readonly options: PostalNinjaOptions = {}) {}
 
-  async fetch(trackingNumber: string, budgetMs?: number): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, budgetMs?: number, signal?: AbortSignal): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
     const timeoutMs = budgetMs ?? this.options.timeoutMs ?? 45_000;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 60_000) throw new TypeError('Postal Ninja timeout must be between 1 and 60000 ms');
@@ -109,12 +109,12 @@ export class PostalNinjaTracker {
       }
       return undefined;
     };
-    return runSteps({ carrier: SOURCE, budgetMs: timeoutMs, recorder: this.options.recorder }, [{
+    return runSteps({ carrier: SOURCE, budgetMs: timeoutMs, signal, recorder: this.options.recorder }, [{
       id: 'trawl', enabled: Boolean(this.options.trawl),
-      run: async ({ remainingMs }) => {
+      run: async ({ remainingMs, signal }) => {
         const spec: CaptureSpec = {
           source: SOURCE, url: `https://postal.ninja/en/tools#trawl-number=${number}`,
-          apiUrl: GET_API, additionalApiUrls: [CHECK_API], budgetMs: remainingMs, fetcher: this.options.fetcher,
+          apiUrl: GET_API, additionalApiUrls: [CHECK_API], budgetMs: remainingMs, fetcher: this.options.fetcher, signal,
           acceptResultPage: (page) => isMatchingResultPage(page, number),
         };
         const page = await loadCapture(this.options.trawl ?? null, spec);
@@ -146,7 +146,7 @@ export class PostalNinjaTracker {
       // A failed TRAWL attempt proceeds to the next universal provider. Do
       // not spend another browser budget on the known-unreliable Chromium path.
       enabled: !this.options.trawl,
-      run: ({ remainingMs }) => scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs: Math.max(1, Math.floor(remainingMs)) }, {
+      run: ({ remainingMs, signal }) => scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs: Math.max(1, Math.floor(remainingMs)), signal }, {
         name: SOURCE, url: 'https://postal.ninja/en/tools', responseUrl: 'https://postal.ninja/track/get',
         responseErrors: {
           'https://postal.ninja/track/check': responseError,
@@ -175,6 +175,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: SOURCE,
     steps: [environment.trawl ? 'trawl' : 'browser'],
-    track: (input, context) => tracker.fetch(input.number, context?.budgetMs),
+    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, context?.signal),
   };
 };

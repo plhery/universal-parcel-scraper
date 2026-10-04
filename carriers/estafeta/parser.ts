@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { estafetaStatus } from './status.js';
@@ -19,7 +19,7 @@ const FULL_GUIDE = /^(?:\d{22}|\d{12}(?:[A-Z]\d|\d[A-Z])\d{8}|\d{15}[A-Z0-9]{7})
 
 export function normalizeEstafetaNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^\d{10}$/.test(number) && !FULL_GUIDE.test(number)) throw new TypeError('Estafeta requires a tracking code or full guide');
+  if (!/^\d{10}$/.test(number) && !FULL_GUIDE.test(number)) throw new InvalidInputError('Estafeta', 'Estafeta requires a tracking code or full guide');
   return number;
 }
 

@@ -7,6 +7,7 @@ import { normalizeEcoscootingNumber, parseEcoscooting } from './parser.js';
 import { ecoscootingStatus } from './status.js';
 import metadata from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
+import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '000000000000000001';
 const OTHER = '000000000000000002';
@@ -207,7 +208,7 @@ describe('Ecoscooting direct retrieval', () => {
     for (const number of ['CNPRT0000000000000000001', 'CNPRT000000000000000000001', 'CNESP0000000000000000001', 'CNFRA00000000000000000001',
       'CNUSUP00000000001', 'CNPRT00000000000000000001&x=1']) {
       expect(patterns.some(pattern => pattern.test(number)), number).toBe(false);
-      await expect(instance.track({ number })).rejects.toThrow(TypeError);
+      await expect(instance.track({ number })).rejects.toThrow(InvalidInputError);
     }
     expect(fetcher).toHaveBeenCalledTimes(4);
   });
@@ -229,7 +230,7 @@ describe('Ecoscooting direct retrieval', () => {
     await expect(new EcoscootingTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind }); expect(fetcher).toHaveBeenCalledOnce();
   });
   it('bounds invalid inputs, cancellation, fractional deadlines, body size and malformed JSON', async () => {
-    const unused = vi.fn<typeof fetch>(); await expect(new EcoscootingTracker({ fetcher: unused }).fetch('ICP000000000000000001')).rejects.toThrow(TypeError);
+    const unused = vi.fn<typeof fetch>(); await expect(new EcoscootingTracker({ fetcher: unused }).fetch('ICP000000000000000001')).rejects.toThrow(InvalidInputError);
     await expect(new EcoscootingTracker({ fetcher: unused }).fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow(); expect(unused).not.toHaveBeenCalled();
     const slow = vi.fn<typeof fetch>().mockImplementation(async (_url, init) => { await new Promise<void>(resolve => init?.signal?.addEventListener('abort', () => resolve(), { once: true })); init?.signal?.throwIfAborted(); return new Response('{}'); });
     await expect(new EcoscootingTracker({ fetcher: slow }).fetch(NUMBER, { budgetMs: 20.5 })).rejects.toThrow();

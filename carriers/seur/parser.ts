@@ -1,4 +1,4 @@
-import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -7,7 +7,7 @@ import { classifySeurStatus } from './status.js';
 
 export function normalizeSeurNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');
-  if (!/^(?:\d{7}|\d{14}|\d{21})$/.test(number)) throw new TypeError('SEUR requires a seven, fourteen or twenty-one digit identifier');
+  if (!/^(?:\d{7}|\d{14}|\d{21})$/.test(number)) throw new InvalidInputError('SEUR', 'SEUR requires a seven, fourteen or twenty-one digit identifier');
   return number;
 }
 

@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { NotFoundError, UpstreamHttpError } from '../errors/index.js';
+import { InvalidInputError, NotFoundError, UpstreamHttpError } from '../errors/index.js';
 import { REGISTRY } from '../../generated/registry.js';
 import { NOOP_RECORDER } from '../telemetry/index.js';
 import { AdapterRegistry, accepted, recognizeFromLookup } from './index.js';
@@ -54,6 +54,9 @@ describe('recognition from a plain lookup', () => {
     await expect(recognizeFromLookup(async () => ({ status: 'delivered', events: [], last_update: '2026-09-09T08:00:00Z' })))
       .resolves.toEqual({ known: true, lastActivityAt: '2026-09-09T08:00:00.000Z' });
     await expect(recognizeFromLookup(async () => { throw new NotFoundError('Carrier'); })).resolves.toEqual({ known: false });
+    // A lookup that rejects the number's format knows it no better than one that cannot find it.
+    await expect(recognizeFromLookup(async () => { throw new InvalidInputError('Carrier'); })).resolves.toEqual({ known: false });
+    expect(accepted(() => { throw new InvalidInputError('Carrier'); })).toBe(false);
     // A form of number the adapter does not accept is unknown without a request.
     let asked = false;
     const reject = () => accepted(() => { throw new TypeError('Unsupported number'); });

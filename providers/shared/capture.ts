@@ -30,6 +30,8 @@ export interface CaptureSpec {
   acceptResultPage?: (page: TrawlScrapeResponse) => boolean;
   budgetMs: number;
   fetcher?: typeof fetch;
+  /** Ends the browser service call when the caller cancels or the lookup budget is spent. */
+  signal?: AbortSignal;
 }
 
 /**
@@ -63,7 +65,7 @@ export async function loadCapture(trawl: TrawlClient | null, spec: CaptureSpec):
     captureResponses: [spec.apiUrl, ...spec.additionalApiUrls ?? []], settleTimeout: SETTLE_TIMEOUT_MS,
   }, {
     provider: `${spec.source} tracking browser`, timeoutMs: budgetMs,
-    maxBytes: MAX_PAGE_BYTES, fetcher: spec.fetcher,
+    maxBytes: MAX_PAGE_BYTES, fetcher: spec.fetcher, signal: spec.signal,
     // A 304 page still carries a fresh captured API reply (observed on
     // 17TRACK 2026-09-13), so the solved-page gate below allows it: the caller
     // validates through the captured bodies (identity, demo and polling

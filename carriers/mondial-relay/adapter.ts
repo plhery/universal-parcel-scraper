@@ -1,15 +1,15 @@
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { isValidMondialRelayBarcode } from '../../core/detection/index.js';
-import { ChallengeError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { runSteps, singleFlight } from '../../core/runner/index.js';
+import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
-import { cleanScalar, TrawlClient, trawlBody, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport/index.js';
+import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, TrawlClient, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyStatus, milestoneNumberStatus } from './status.js';
 
@@ -62,7 +62,7 @@ export function normalizeMondialRelayCredential(
   let postcode = rawPostcode.trim();
   if (/^\d{26}$/.test(shipment)) {
     if (!isValidMondialRelayBarcode(shipment) || (postcode && !plausibleFrenchPostcode(postcode))) {
-      throw new SchemaError('Mondial Relay', 'Invalid Mondial Relay barcode or postcode');
+      throw new InvalidInputError('Mondial Relay', 'Invalid Mondial Relay barcode or postcode');
     }
     // The public alias carries brand/shipment/parcel sequence, not a postcode.
     return { shipment: shipment.slice(0, 12), postcode, canonicalShipment: shipment.slice(2, 10) };
@@ -77,7 +77,7 @@ export function normalizeMondialRelayCredential(
     // anything else is a number this carrier cannot address at all.
     throw shapedShipment
       ? new InputRequiredError('Mondial Relay', 'the recipient postcode', CREDENTIAL_MESSAGE)
-      : new SchemaError('Mondial Relay', CREDENTIAL_MESSAGE);
+      : new InvalidInputError('Mondial Relay', CREDENTIAL_MESSAGE);
   }
   // The longer forms put the 2-digit brand before the 8-digit shipment (the
   // 12-digit one adds the parcel sequence), and the API echoes the shipment.
@@ -326,13 +326,14 @@ export class MondialRelayTracker {
     return this.trawlUrl ? new TrawlClient(this.trawlUrl, this.#fetcher) : null;
   }
 
-  async fetch(rawShipment: string, rawPostcode = ''): Promise<CarrierResult> {
+  async fetch(rawShipment: string, rawPostcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
     // One lookup at a time: the page token and the API call have to stay on the
     // same solved browser identity.
-    return this.#serialize(() => this.#lookup(normalizeMondialRelayCredential(rawShipment, rawPostcode)));
+    return takeTurn(this.#serialize, 'Mondial Relay', context,
+      (left) => this.#lookup(normalizeMondialRelayCredential(rawShipment, rawPostcode), left));
   }
 
-  async #lookup(credential: MondialRelayCredential): Promise<CarrierResult> {
+  async #lookup(credential: MondialRelayCredential, context: TrackingContext): Promise<CarrierResult> {
     // Cloudflare blocks every non-browser client with an HTTP 403 WAF block
     // (verified from multiple networks, 2026-09-10), so a direct attempt only
     // burns time and reports a fallback on each sync. There is one step, and
@@ -345,14 +346,25 @@ export class MondialRelayTracker {
       );
     }
     return runSteps<CarrierResult>({
-      carrier: 'mondial-relay', budgetMs: this.timeoutMs, recorder: this.#recorder,
+      // Without a caller's budget the lookup leaves the service its own time and
+      // the request the allowance to bring the answer back.
+      carrier: 'mondial-relay', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
+      recorder: this.#recorder,
     }, [
-      { id: 'trawl', run: () => this.#trawlResult(trawl, credential) },
+      {
+        id: 'trawl',
+        run: ({ remainingMs, signal }) => this.#trawlResult(trawl, credential, performance.now() + remainingMs, signal),
+      },
     ]);
   }
 
-  async #trawlResult(trawl: TrawlClient, credential: MondialRelayCredential): Promise<CarrierResult> {
-    const bootstrap = await this.#scrape(trawl, { url: TRACKING_PAGE });
+  async #trawlResult(
+    trawl: TrawlClient,
+    credential: MondialRelayCredential,
+    deadline: number,
+    signal: AbortSignal,
+  ): Promise<CarrierResult> {
+    const bootstrap = await this.#scrape(trawl, { url: TRACKING_PAGE }, deadline, signal);
     const token = verificationToken(originalTrawlPage(bootstrap));
     const apiUrl = trackingApiUrl(credential);
     const tracked = await this.#scrape(trawl, {
@@ -363,17 +375,25 @@ export class MondialRelayTracker {
         Referer: TRACKING_PAGE,
         RequestVerificationToken: token,
       },
-    });
+    }, deadline, signal);
     assertTrawlTarget(tracked, apiUrl);
     return this.#finish(trawlJson(tracked), credential, 'browser-session-response');
   }
 
-  #scrape(trawl: TrawlClient, request: TrawlScrapeRequest): Promise<TrawlScrapeResponse> {
-    return trawl.scrape({ skipHttp: true, maxTier: 3, maxTimeout: this.timeoutMs, ...request }, {
+  /** One browser request, given what is left of the lookup budget up to the tracker's own timeout. */
+  #scrape(
+    trawl: TrawlClient,
+    request: TrawlScrapeRequest,
+    deadline: number,
+    signal: AbortSignal,
+  ): Promise<TrawlScrapeResponse> {
+    const timeoutMs = Math.max(1, Math.floor(Math.min(this.timeoutMs, deadline - performance.now())));
+    return trawl.scrape({ skipHttp: true, maxTier: 3, maxTimeout: timeoutMs, ...request }, {
       provider: 'TRAWL while fetching Mondial Relay',
-      timeoutMs: this.timeoutMs,
+      timeoutMs,
       maxBytes: MAX_TRAWL_BYTES,
       fetcher: this.#fetcher,
+      signal,
     });
   }
 
@@ -401,6 +421,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'mondial-relay',
     // Cloudflare refuses every non-browser client, so there is no direct tier.
     steps: ['trawl'],
-    track: (input) => tracker.fetch(input.number, input.postcode ?? ''),
+    track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
   };
 };

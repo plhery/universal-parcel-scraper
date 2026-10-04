@@ -2,8 +2,8 @@
 import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
-import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type EventPoint } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/index.js';
@@ -79,7 +79,7 @@ export class IndiaPostChallengeError extends ChallengeError {
 export function normalizeIndiaPostTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!/^[A-Z]{2}\d{9}IN$/.test(value) || !isValidS10TrackingNumber(value)) {
-    throw new TypeError('India Post tracking requires a valid 13-character S10 number ending in IN');
+    throw new InvalidInputError('India Post', 'India Post tracking requires a valid 13-character S10 number ending in IN');
   }
   return value;
 }
@@ -310,10 +310,21 @@ function challengePage(status: number, html: string, headers: Headers): boolean 
     || /Just a moment|Enable JavaScript and cookies|cf-chl-|_cf_chl_opt/i.test(html);
 }
 
-function pause(milliseconds: number): Promise<void> {
-  return milliseconds > 0
-    ? new Promise((resolve) => setTimeout(resolve, milliseconds))
-    : Promise.resolve();
+/** The poll interval, cut short as soon as the lookup's signal aborts. */
+async function pause(milliseconds: number, signal: AbortSignal): Promise<void> {
+  signal.throwIfAborted();
+  if (milliseconds <= 0) return;
+  await new Promise<void>((resolve, reject) => {
+    const abort = () => {
+      clearTimeout(timer);
+      reject(signal.reason);
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener('abort', abort);
+      resolve();
+    }, milliseconds);
+    signal.addEventListener('abort', abort, { once: true });
+  });
 }
 
 export class IndiaPostTracker {
@@ -342,12 +353,13 @@ export class IndiaPostTracker {
 
   private async request(
     fetcher: typeof fetch,
+    budget: LookupBudget,
     url: string,
     init: RequestInit,
   ): Promise<{ bytes: Uint8Array; html: string }> {
-    const result = await fetchBounded(url, init, {
+    const result = await fetchBounded(url, { ...init, signal: budget.signal }, {
       provider: 'India Post tracking',
-      timeoutMs: this.timeoutMs,
+      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       redirect: 'manual',
       fetcher,
@@ -365,6 +377,7 @@ export class IndiaPostTracker {
 
   private async update(
     fetcher: typeof fetch,
+    budget: LookupBudget,
     trackingNumber: string,
     pageUrl: string,
     token: string,
@@ -372,7 +385,7 @@ export class IndiaPostTracker {
     calls: JsonObject[],
     updates: JsonObject = {},
   ): Promise<LivewireUpdate> {
-    const result = await this.request(fetcher, LIVEWIRE_UPDATE, {
+    const result = await this.request(fetcher, budget, LIVEWIRE_UPDATE, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -394,13 +407,19 @@ export class IndiaPostTracker {
     );
   }
 
-  async fetch(trackingNumber: string): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const normalized = normalizeIndiaPostTrackingNumber(trackingNumber);
     const pageUrl = indiaPostTrackingUrl(normalized);
+    // The default budget covers the page, the first update, then every poll
+    // after its pause.
+    const budget = lookupBudget(
+      context,
+      (this.maxPollAttempts + 2) * this.timeoutMs + this.maxPollAttempts * this.pollIntervalMs,
+    );
     // The Livewire flow is stateful: the session cookie issued with the page
     // must travel with every /livewire/update call, so the jar is per lookup.
     const fetcher = makeFetchCookie(this.fetcher, new CookieJar());
-    const page = await this.request(fetcher, pageUrl, {
+    const page = await this.request(fetcher, budget, pageUrl, {
       headers: {
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.9',
@@ -415,12 +434,16 @@ export class IndiaPostTracker {
       // What the page's Refresh button sends. A failed refresh still leaves
       // the cached history, which is better than no answer.
       try {
-        return await this.complete(fetcher, normalized, pageUrl, csrfToken(page.html), initial.snapshot, [{
+        return await this.complete(fetcher, budget, normalized, pageUrl, csrfToken(page.html), initial.snapshot, [{
           path: '',
           method: '__dispatch',
           params: ['refresh_consignment', { userTimezone: USER_TIMEZONE }],
         }], { userTimezone: USER_TIMEZONE });
       } catch {
+        // A caller that cancelled is not waiting for an answer; one whose
+        // deadline passed still takes the history already in hand.
+        const reason: unknown = context.signal?.reason;
+        if (context.signal?.aborted && !(reason instanceof DOMException && reason.name === 'TimeoutError')) throw reason;
         return cached;
       }
     }
@@ -430,12 +453,12 @@ export class IndiaPostTracker {
 
     const token = csrfToken(page.html);
     return initial.status === 'Processing'
-      ? this.complete(fetcher, normalized, pageUrl, token, initial.snapshot, [{
+      ? this.complete(fetcher, budget, normalized, pageUrl, token, initial.snapshot, [{
         path: '',
         method: 'fetchStatus',
         params: [],
       }])
-      : this.complete(fetcher, normalized, pageUrl, token, initial.snapshot, [{
+      : this.complete(fetcher, budget, normalized, pageUrl, token, initial.snapshot, [{
         path: '',
         method: '__dispatch',
         params: ['set_consignment_number', { consignment_number: normalized }],
@@ -449,6 +472,7 @@ export class IndiaPostTracker {
   /** Send the first calls, then poll `fetchStatus` until the component completes. */
   private async complete(
     fetcher: typeof fetch,
+    budget: LookupBudget,
     normalized: string,
     pageUrl: string,
     token: string,
@@ -456,7 +480,7 @@ export class IndiaPostTracker {
     calls: JsonObject[],
     updates: JsonObject = {},
   ): Promise<CarrierResult> {
-    let update = await this.update(fetcher, normalized, pageUrl, token, snapshot, calls, updates);
+    let update = await this.update(fetcher, budget, normalized, pageUrl, token, snapshot, calls, updates);
     for (let attempt = 0; attempt <= this.maxPollAttempts; attempt += 1) {
       const names = dispatchNames(update.effects);
       if (names.has('consignment_not_found')) throw new NotFoundError('India Post');
@@ -469,9 +493,10 @@ export class IndiaPostTracker {
         throw new SchemaError('India Post', 'India Post returned an unsupported tracking state');
       }
       if (attempt === this.maxPollAttempts) break;
-      await pause(this.pollIntervalMs);
+      await pause(this.pollIntervalMs, budget.signal);
       update = await this.update(
         fetcher,
+        budget,
         normalized,
         pageUrl,
         token,
@@ -492,6 +517,6 @@ export const adapter: AdapterFactory = (environment) => {
     // The Livewire submit-and-poll cycle is part of the direct call: it is one
     // stateful conversation with one host, not a fallback tier.
     steps: ['direct'],
-    track: (input) => tracker.fetch(input.number),
+    track: (input, context) => tracker.fetch(input.number, context),
   };
 };

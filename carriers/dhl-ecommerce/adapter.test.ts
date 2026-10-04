@@ -151,6 +151,39 @@ describe('DHL eCommerce fetching', () => {
       .toMatchObject({ name: 'UpstreamHttpError', status: 503 });
   });
 
+  it('answers a lookup cancelled in the queue at once, without a browser and without failing the one behind it', async () => {
+    let finish!: (result: CarrierResult) => void;
+    const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage')
+      .mockImplementationOnce(() => new Promise<CarrierResult>((resolve) => { finish = resolve; }))
+      .mockImplementation(async (_options, _spec, parse) => parse(shipment()));
+    const tracker = new DHLEcommerceTracker({ executablePath: '/test/chromium' });
+    const controller = new AbortController();
+    const first = tracker.fetch(NUMBER);
+    const cancelled = tracker.fetch(NUMBER, { signal: controller.signal });
+    const behind = tracker.fetch(NUMBER);
+    await vi.waitFor(() => expect(browser).toHaveBeenCalledOnce());
+    controller.abort(new Error('caller cancelled'));
+    await expect(cancelled).rejects.toThrow('caller cancelled');
+    finish(parseDHLEcommerceResponse(shipment()));
+    await expect(first).resolves.toMatchObject({ current_stage: 'in_transit' });
+    await expect(behind).resolves.toMatchObject({ current_stage: 'in_transit' });
+    expect(browser).toHaveBeenCalledTimes(2);
+  });
+
+  it('counts the wait in the queue against a budget the caller set', async () => {
+    let finish!: (result: CarrierResult) => void;
+    const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage')
+      .mockImplementationOnce(() => new Promise<CarrierResult>((resolve) => { finish = resolve; }))
+      .mockImplementation(async (_options, _spec, parse) => parse(shipment()));
+    const tracker = new DHLEcommerceTracker({ executablePath: '/test/chromium' });
+    const first = tracker.fetch(NUMBER);
+    await expect(tracker.fetch(NUMBER, { budgetMs: 40 })).rejects.toMatchObject({ name: 'BudgetExceededError', kind: 'budget' });
+    finish(parseDHLEcommerceResponse(shipment()));
+    await expect(first).resolves.toMatchObject({ current_stage: 'in_transit' });
+    await expect(tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'in_transit' });
+    expect(browser).toHaveBeenCalledTimes(2);
+  });
+
   it('reports the browser step through the recorder', async () => {
     vi.spyOn(trackingBrowser, 'scrapeUniversalPage').mockImplementation(async (_options, _spec, parse) => parse(shipment()));
     const steps: string[] = [];
