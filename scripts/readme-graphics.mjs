@@ -7,7 +7,7 @@ const mono = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', 
 const escape = text => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // Every picture is a card with its own surface, so it reads the same on any page theme.
-export const theme = { surface: '#0d1b18', edge: '#24403a', ink: '#f4f6ef', muted: '#9db5ae', line: '#2c4a44', box: '#142824', accent: '#4fd1b5', tint: '#1d5c50', other: '#5d7771' };
+export const theme = { surface: '#171714', edge: '#3a382e', ink: '#fffaf0', muted: '#b5b1a3', line: '#3a382e', box: '#23221c', accent: '#f3cf48', tint: '#4d4113', other: '#6b6859' };
 const card = (width, height, label, style, body) => [
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width + 56} ${height + 52}" role="img" aria-label="${label}">`,
   `  <style>${style}</style>`,
@@ -77,7 +77,7 @@ export function stagesFigure(samples, stage, stages) {
     `text { font: 13px ${sans}; } .mono { font: 12px ${mono}; }`, [...rows, target, ...list]);
 }
 
-const terminalInk = { window: '#0d1b18', bar: '#142824', edge: '#24403a', text: '#8fa9a2', title: '#6f8a83', command: '#f4f6ef', prompt: '#6fd3bd', key: '#9fd6c9', string: '#f0c58a' };
+const terminalInk = { window: '#171714', bar: '#23221c', edge: '#3a382e', text: '#b5b1a3', title: '#8c897c', command: '#fffaf0', prompt: '#f3cf48', key: '#e9dfc0', string: '#dcb98f' };
 // What `track` printed for a parcel on its way, cut down to three fields by the jq filter in the picture.
 const scans = [
   ['2026-03-14T07:42:00+01:00', 'out_for_delivery', 'Lausanne'],
