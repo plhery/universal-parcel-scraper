@@ -3,7 +3,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { randomBytes } from 'node:crypto';
 import { load } from 'cheerio';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
+import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -25,7 +25,8 @@ import {
 //   `continueWithoutVerification=true`. A rejected postcode (HTTP 400) is
 //   retried once without verification and reported as unverified rather than
 //   failing the lookup.
-// - The consignee web page is the fallback when the guest API is inconclusive.
+// - The consignee web page is the fallback when the guest API is inconclusive,
+//   except HTTP 503: the service is down, irrespective of the parcel number.
 //   It sits behind Cloudflare, so it is fetched through the browser service's
 //   legacy command API when one is configured and directly otherwise.
 const TRACKING_BASE = 'https://www.dpdgroup.com/ch/mydpd/my-parcels/incoming';
@@ -62,7 +63,7 @@ export class DPDChallengeError extends ChallengeError {
 /**
  * The guest API answered, but the answer proves nothing about the shipment
  * (unreachable, malformed, unauthenticated, or an HTTP status the guest flow
- * handles itself). The rendered page is allowed to recover from it.
+ * handles itself, except HTTP 503). The rendered page is allowed to recover from it.
  */
 export class DPDAPIError extends IndeterminateError {
   constructor(message: string, options?: CarrierErrorOptions) {
@@ -828,6 +829,9 @@ export class DPDTracker {
     } catch (error) {
       throw new DPDAPIError('DPD guest API is unreachable', { cause: error });
     }
+    // A 503 describes DPD's availability, so the page must not turn it into
+    // an answer about the parcel or hold up the caller's other lookups.
+    if (result.response.status === 503) throw new UpstreamHttpError('DPD guest API', 503);
     if (!result.response.ok) throw new DPDAPIHttpError(result.response.status);
     let payload: unknown;
     try {

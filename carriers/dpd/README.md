@@ -16,6 +16,7 @@ DPD Switzerland (myDPD), Swiss last-mile parcels only. DPD France is
    itself. A 400/401 on the token call drops the Basic credential and retries once.
 2. `page`: the rendered consignee page (`/ch/mydpd/my-parcels/track`), when the
    guest API is inconclusive, fails in transport or returns a mismatched payload.
+   HTTP 503 ends the lookup as a service failure without entering the page tier.
    It sits behind Cloudflare, so it goes through the browser service when
    `FLARESOLVERR_URL` is set; otherwise a challenge fails with an error naming it.
 
@@ -89,8 +90,9 @@ DPD parcel, not a Swiss one.
   app-restricted values from the myDPD build, so they live in code.
   `DPD_FIREBASE_API_KEY` in the adapter environment overrides the key without a
   release.
-- Every guest-API failure, including 429, is a `DPDAPIError` (`IndeterminateError`),
-  so the page tier can still answer.
+- A parcel-details 503 is retried once within the lookup budget. If it persists,
+  or a login step returns 503, the lookup reports the service failure. Other
+  guest-API failures, including 429, allow the page tier to answer.
 
 ## Rejected approaches
 

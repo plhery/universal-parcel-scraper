@@ -740,9 +740,37 @@ describe('DPD transient read retry', () => {
     expect(String(fetcher.mock.calls[3]![0])).toEqual(String(fetcher.mock.calls[4]![0]));
   });
   it('does not spend the retry delay when the request budget is nearly exhausted', async () => {
+    const fetcher = mockGuestApi(new Response('', { status: 503 }));
+    const { recorder, steps } = recordingRecorder();
+    await expect(new DPDTracker({ timeoutMs: 1_000, flaresolverrUrl: 'http://browser.invalid:8191', recorder })
+      .fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+    expect(steps.map(step => step.step)).toEqual(['direct']);
+  });
+  it('ends a persistent details 503 after one retry without trying the page', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
     const fetcher = mockGuestApi(new Response('', { status: 503 }))
-      .mockResolvedValueOnce(new Response(`<div>${TRACKING_NUMBER}</div>`));
-    await new DPDTracker({ timeoutMs: 1_000, trawl: null }).fetch(TRACKING_NUMBER).catch(() => undefined);
-    expect(String(fetcher.mock.calls[4]![0])).not.toEqual(String(fetcher.mock.calls[3]![0]));
+      .mockResolvedValueOnce(new Response('', { status: 503 }));
+    const { recorder, steps } = recordingRecorder();
+    await expect(new DPDTracker({ timeoutMs: 5_000, flaresolverrUrl: 'http://browser.invalid:8191', recorder })
+      .fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+    expect(fetcher).toHaveBeenCalledTimes(5);
+    expect(steps.map(step => step.step)).toEqual(['direct']);
+  });
+  it.each([0, 1, 2])('ends a 503 at login step %s without trying the page', async (step) => {
+    const fetcher = mockGuestApi(Response.json(READY_FOR_COLLECTION));
+    const responses = [
+      Response.json({ fid: 'synthetic', authToken: { token: 'synthetic', expiresIn: '604800s' } }),
+      Response.json({ entries: { basic_dpd_token: 'c3ludGhldGlj' } }),
+      Response.json({ access_token: 'synthetic', expires_in: 3600 }),
+    ];
+    fetcher.mockReset();
+    for (const response of responses.slice(0, step)) fetcher.mockResolvedValueOnce(response);
+    fetcher.mockResolvedValueOnce(new Response('', { status: 503 }));
+    const { recorder, steps } = recordingRecorder();
+    await expect(new DPDTracker({ timeoutMs: 1_000, flaresolverrUrl: 'http://browser.invalid:8191', recorder })
+      .fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+    expect(fetcher).toHaveBeenCalledTimes(step + 1);
+    expect(steps.map(record => record.step)).toEqual(['direct']);
   });
 });
