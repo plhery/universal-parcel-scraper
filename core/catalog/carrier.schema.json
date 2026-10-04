@@ -205,7 +205,7 @@
           "minLength": 1
         },
         "canaryUrl": {
-          "description": "Public, credential-free HTTPS URL the daily canary probes. Required for automatic carriers.",
+          "description": "Public, credential-free HTTPS URL the weekly canary probes. Required for automatic carriers.",
           "type": "string"
         },
         "shows": {

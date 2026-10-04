@@ -2,7 +2,9 @@ name: Carrier canaries
 
 on:
   schedule:
-    - cron: '17 5 * * *'
+    # One run a day. Monday's also probes the carriers' front doors.
+    - cron: '17 5 * * 1'
+    - cron: '17 5 * * 0,2-6'
   workflow_dispatch:
 
 permissions:
@@ -15,6 +17,9 @@ concurrency:
 jobs:
   probe:
     name: Public carrier reachability
+    # No lookup depends on a front door, so a weekly look is enough. The daily
+    # jobs below exercise what tracking uses.
+    if: ${{ github.event_name != 'schedule' || github.event.schedule == '17 5 * * 1' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     outputs:
@@ -99,7 +104,7 @@ jobs:
           failures=$(jq -r '
             {"probe": "Public carrier reachability", "adapters": "Carrier adapters with synthetic numbers",
              "tracking-links": "Rendered UI tracking links"} as $names
-            | to_entries[] | select(.value.result != "success")
+            | to_entries[] | select(.value.result != "success" and .value.result != "skipped")
             | "#### \($names[.key] // .key)\n\n\(.value.outputs.failures | select(. != null and . != "")
                 // "The job failed before reporting checks; see the run log.")\n"
           ' <<<"$NEEDS")
