@@ -54,8 +54,12 @@ Outcomes:
   read like any other row.
 - Take-offs use one wording even when the source switches labels. A strictly formatted flight remark
   supplies its flight number and route; other remarks are discarded. Known departure airports are
-  named with their country so maps can locate the scan. A destination in a flight remark is a route,
-  not proof of arrival there.
+  named with their country so maps can locate the scan. A departure's route does not prove arrival.
+- `MailArrived` with a matching flight remark places the arrival at that flight's destination;
+  its office field still names the origin. The description keeps the arrival's own flight number
+  and route, and the location excludes the origin's pincode and directory coordinates. Ordinary
+  sorting arrivals without a matching flight remark keep their office. Arrival timestamps retain
+  their supplied offset; the take-off clock correction does not apply to them.
 - The app identity policy requires the same instant and provider code before updating a
   reworded stored scan. The consumer owns the stored rows and notification receipts.
 - IDs and pincodes arrive as numbers or strings, hence `cleanScalar`. A pincode is kept only when it
@@ -68,7 +72,7 @@ Outcomes:
 ## Limitations
 
 - No ETA.
-- Only booking, dispatch, customs, take-off and delivery rows have been seen live. Failure, return and pickup rules
+- Only booking, dispatch, customs, flight and delivery rows have been seen live. Failure, return and pickup rules
   come from prior art ([njs-tracker-scraper](https://github.com/bivu-m/njs-tracker-scraper)).
 - Recipient details, addresses and contact numbers are never retained. Only strictly formatted
   flight remarks supply display text; the offline test asserts it.

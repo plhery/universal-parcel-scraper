@@ -304,6 +304,47 @@ describe('India Post response normalization', () => {
     expect(times('2026-07-11T20:05:00', 'Office - CDG 00000003')).toEqual(['2026-07-11T20:05:00+05:30']);
   });
 
+  it('locates mail arrival at the flight destination even when the office still names the origin', () => {
+    const result = parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, [
+      { ...takeOff('2026-07-11T18:00:00Z', 'Office - FRA'), remarks: 'Flight No: ZZ0101 (From FRA To CDG)' },
+      {
+        tracked_at: '2026-07-12T10:15:00Z', event: 'MAIL_ARRIVED', event_type: 'MailArrived',
+        office: 'Office - FRA', pincode: '110002', remarks: 'Flight No: ZZ0102 (From FRA To CDG)',
+        pincode_info: { is_verified: true, office_name: 'Office - FRA', latitude: 28.6, longitude: 77.2 },
+      },
+    ]), SAMPLE_NUMBER);
+    const arrival = result.events?.[0];
+    expect(arrival).toEqual({
+      time: '2026-07-12T10:15:00Z',
+      description: 'Flight ZZ0102 arrived: Frankfurt Airport (FRA) → Paris Charles de Gaulle Airport (CDG)',
+      location: 'Paris Charles de Gaulle Airport (CDG), France',
+      stage: 'in_transit', provider_code: 'MailArrived',
+    });
+    expect(locatePlace(arrival?.location)).toMatchObject({ name: 'Paris', country: 'FR' });
+    expect(result).toMatchObject({ last_status_text: arrival?.description, last_update: arrival?.time });
+    expect(result.events?.[1]?.location).toBe('Frankfurt Airport (FRA), Germany');
+  });
+
+  it('requires a matching flight remark before moving a mail arrival away from its office', () => {
+    const parse = (remarks: string, eventType = 'MailArrived', office = 'Office - FRA') =>
+      parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, [{
+        tracked_at: '2026-07-12T10:15:00Z', event: 'MAIL_ARRIVED', event_type: eventType, office, remarks,
+      }]), SAMPLE_NUMBER).events?.[0];
+    for (const remarks of [
+      '', 'private recipient details', 'Flight No: ZZ0102 (From FRA To CDG) private recipient details',
+      'Flight No: ZZ0102 (From DEL To CDG)',
+    ]) {
+      expect(parse(remarks)).toMatchObject({ description: 'Mail Arrived', location: 'Office - FRA' });
+      expect(JSON.stringify(parse(remarks))).not.toContain('private');
+    }
+    expect(parse('Flight No: ZZ0102 (From FRA To CDG)', 'ItemReceived'))
+      .toMatchObject({ description: 'Mail Arrived', location: 'Office - FRA' });
+    expect(parse('', 'MailArrived', 'Example Sorting Centre'))
+      .toMatchObject({ description: 'Mail Arrived', location: 'Example Sorting Centre' });
+    expect(parse('Flight No: ZZ0102 (From FRA To GRU)'))
+      .toMatchObject({ description: 'Flight ZZ0102 arrived: Frankfurt Airport (FRA) → GRU', location: 'GRU Airport' });
+  });
+
   it('keeps rows newest first once a take-off is back on its own clock', () => {
     const result = parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, [
       // 18:05 UTC on Paris's clock: before the 19:30 UTC scan it would outrank as labelled.
