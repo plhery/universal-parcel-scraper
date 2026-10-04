@@ -21,6 +21,26 @@ const row = (date: string, time: string, description: string) =>
 const carrierRow = (date: string, time: string, description: string, carrier: string) =>
   `<li class="event"><div class="event-time"><strong>${date}</strong><span>${time}</span></div><div class="event-content"><strong>${description}</strong><div class="carrier"><div class="courier-icon"></div> ${carrier} </div></div></li>`;
 
+it('keeps scan locations from the API while excluding a delivery-service label', () => {
+  const parse = (location: unknown) => parseParcelsAppResponse({
+    carriers: ['Chronopost'], states: [{ date: '2026-07-12T10:15:00Z', status: 'In transit', carrier: 0, location }],
+  }, number, identity()).events?.[0];
+  expect(parse('  Example   Sorting Centre, France  ')?.location).toBe('Example Sorting Centre, France');
+  expect(parse('France')?.location).toBe('France');
+  for (const location of [undefined, '', 'Type de livraison : Livraison Standard', ['France'], { city: 'Example City' }]) {
+    expect(parse(location)).not.toHaveProperty('location');
+  }
+});
+
+it('keeps the reported place when another carrier repeats a delivery without a location', () => {
+  const result = parseParcelsAppResponse({ carriers: ['Chronopost', 'DHL'], states: [
+    { date: '2026-07-12T10:15:00Z', status: 'Livraison effectuée', carrier: 0, location: 'Example Sorting Centre, France' },
+    { date: '2026-07-12T10:15:00Z', status: 'Delivered', carrier: 1 },
+  ] }, number, identity(), 'Europe/Paris');
+  expect(result.events).toHaveLength(1);
+  expect(result.events?.[0]).toMatchObject({ description: 'Delivered', location: 'Example Sorting Centre, France' });
+});
+
 const captured = (data: unknown, overrides: Record<string, unknown> = {}) => new Response(JSON.stringify({
   url: `https://parcelsapp.com/en/tracking/${number}`, html: identity(), statusCode: 200, tier: 3,
   capturedResponses: [{ url: API, body: JSON.stringify(data), status: 200, truncated: false, base64Encoded: false }],
@@ -209,7 +229,12 @@ describe('ParcelsApp result parsing', () => {
     const html = parseParcelsAppHtml(page, number);
     const json = parseParcelsAppResponse(undatedLeg, number, identity());
     expect(html).toMatchObject({ undated_event_count: 1, last_update: json.last_update, current_stage: json.current_stage });
-    expect(html.events).toEqual(json.events);
+    // This page fixture has no location fields; its scan clocks and wording still agree.
+    expect(html.events).toEqual(json.events?.map((event) => {
+      const scan = { ...event };
+      delete scan.location;
+      return scan;
+    }));
     expect(new Set(html.reported_carriers as string[])).toEqual(new Set(json.reported_carriers as string[]));
     expect(() => parseParcelsAppHtml(rendered(carrierRow('aN Inv NaN', 'aN:aN', 'Departed from Asendia', 'Asendia Spain')), number))
       .toThrow('No usable tracking events');

@@ -149,7 +149,14 @@ function moment(value: CarrierEvent): string {
 export function result(events: CarrierEvent[], source: UniversalSource, preserveOrder = false): CarrierResult {
   // Wall times sort alongside UTC instants only approximately; providers that
   // omit offsets everywhere pass preserveOrder instead.
-  const unique = [...new Map(events.map((e) => [`${moment(e)}|${e.description}`, e])).values()]
+  const scans = new Map<string, CarrierEvent>();
+  for (const event of events) {
+    const key = `${moment(event)}|${event.description}`;
+    const earlier = scans.get(key);
+    // A carrier's copy can lack the place another copy of the same scan reported.
+    scans.set(key, !event.location && earlier?.location ? { ...event, location: earlier.location } : event);
+  }
+  const unique = [...scans.values()]
     .sort((a, b) => preserveOrder ? 0 : moment(b).localeCompare(moment(a))).slice(0, 100);
   // A well-formed reply with no scan left after notices and private details proves nothing about the parcel.
   if (!unique.length) throw new IndeterminateError(source, 'No usable tracking events');

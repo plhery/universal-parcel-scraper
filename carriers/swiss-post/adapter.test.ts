@@ -88,6 +88,19 @@ describe('Swiss Post historical event codes', () => {
 });
 
 describe('Swiss Post projection', () => {
+  it('keeps an explicit scan country when the city is absent without assuming Switzerland', () => {
+    const locations = (events: JsonObject[]) => parseSwissPostShipment({ globalStatus: 'DELIVERED' }, events)
+      .events?.map((event) => event.location);
+    const scan = { eventCode: 'PARCEL.*.1.3800', timestamp: '2026-07-12T10:15:00Z' };
+    expect(locations([{ ...scan, country: 'CH' }])).toEqual(['CH']);
+    expect(locations([{ ...scan, country: 'DE', zip: '12345' }])).toEqual(['DE']);
+    expect(locations([{ ...scan, country: 'CH', city: 'Example Depot', zip: '100000' }]))
+      .toEqual(['Example Depot 100000']);
+    for (const country of [undefined, '', 'ZZ', ['CH'], { code: 'CH' }]) {
+      expect(locations([{ ...scan, country }])).toEqual(['']);
+    }
+  });
+
   it('ignores structured text without stringifying it into shipment data', () => {
     const result = parseSwissPostShipment({ globalStatus: ['DELIVERED'], shipmentNumber: ['993412345612345678'],
       internationalBarcode: ['RA123456785CH'], lastEventDateTime: ['2026-01-01'], calculatedDeliveryDate: ['2026-01-02'] }, [

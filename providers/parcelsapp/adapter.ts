@@ -225,6 +225,9 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       continue;
     }
     if (parsed) {
+      const location = typeof raw.location === 'string' ? raw.location.replace(/\s+/g, ' ').trim().slice(0, 200) : '';
+      // Some Chronopost rows put the service label in the location field.
+      if (location && !/^Type de livraison\s*:/i.test(location)) parsed.location = location;
       events.push(parsed);
       scanCarriers.add(name);
     }

@@ -60,6 +60,9 @@ step exists for future protocol changes.
 
 ## Parsing
 
+- API scans retain their reported location. Chronopost's delivery-service label in that
+  field is excluded because it names a service, not a place. A repeat without a place
+  keeps the location another copy of the same scan reported.
 - Identity: the API reply does not echo the number, so a direct result is bound to the
   single POST that sent it. A different `correctId` is rejected as an unverified alias.
   A browser capture must render exactly one matching `Tracking number` row in the result

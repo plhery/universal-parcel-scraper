@@ -49,6 +49,7 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
   Briefzentrum 801050"): the six-digit number is Swiss Post's site number, not
   the recipient's postcode (see [PRIVACY.md](https://github.com/plhery/delivery-tracker/blob/main/PRIVACY.md)). The map
   places known sites by it ([places](../../places/README.md)).
+  A scan without a city keeps its explicit country; the carrier's home country is never substituted.
   Recipient name, address, signature and delivery instructions are never read;
   a test asserts it.
 

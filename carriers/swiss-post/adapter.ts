@@ -4,6 +4,7 @@ import { CookieJar } from 'tough-cookie';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { FALLBACK_EVENT_LABELS, STAGE_STATUS, STATUS_MAP, swissPostEventStage } from './status.js';
@@ -131,9 +132,13 @@ function eventDescription(
   return $('span').text().trim().slice(0, 500) || 'Tracking update';
 }
 
-/** Operational scan location only: the city and its postcode, never a street. */
+/** Operational scan location: city and postcode, or an explicit country when city is absent. */
 function eventLocation(event: JsonObject): string {
-  return [text(event.city, 100), text(event.zip, 30)].filter(Boolean).join(' ').slice(0, 160);
+  const city = text(event.city, 100);
+  const postcode = text(event.zip, 30);
+  const country = countryCode(event.country);
+  if (!city) return country && country !== 'ZZ' ? country : postcode;
+  return [city, postcode].filter(Boolean).join(' ').slice(0, 160);
 }
 
 /**

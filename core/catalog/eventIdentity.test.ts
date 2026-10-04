@@ -14,8 +14,30 @@ describe('same-instant identity policies', () => {
     });
   });
 
-  it.each(['unknown', 'dpd-fr', 'dhl', '', 'toString'])('does not opt in %s', (source) => {
+  it.each(['dpd-fr', 'dhl', '', 'toString'])('does not opt in %s', (source) => {
     expect(sameInstantIdentityPolicy(source)).toBeUndefined();
+  });
+
+  it.each(['unknown', 'swiss-post'])('matches %s location enrichment only with unchanged scan evidence', (source) => {
+    expect(sameInstantIdentityPolicy(source)).toBeUndefined();
+    const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
+    expect(policy?.storedSources).toEqual([source]);
+    expect(policy?.requireProviderCode).toBe(source === 'swiss-post');
+    expect(policy?.matchEachScan).toBe(true);
+    const stored = { stage: 'in_transit', description: 'Arrived at sorting centre', location: '', providerCode: 'SORT' };
+    const incoming = { ...stored, location: 'Example City, France' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, incoming)).toBe(true);
+    expect(policy?.matches?.(stored, incoming)).toBe(false);
+    for (const different of [
+      { ...stored, description: 'Departed sorting centre' },
+      { ...stored, stage: 'out_for_delivery' },
+      { ...stored, location: 'Another City, France' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    expect(policy?.matches?.({ ...incoming, stage: 'pending' }, { ...stored, stage: 'pending' })).toBe(true);
+    for (const stage of ['', 'unknown']) {
+      expect(policy?.matches?.({ ...incoming, stage }, { ...stored, stage })).toBe(false);
+    }
   });
 
   it('keeps UPS disabled for apps that cannot check scan evidence', () => {

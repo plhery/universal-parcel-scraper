@@ -134,6 +134,12 @@ physical handling rather than electronic pre-advice.
 Local clocks keep their original fields. More rows alone do not prove a fresher or more
 complete history.
 
+The app's scan-identity policies let Swiss Post and universal scans gain a location in
+place only when a scan retains its instant, wording and known stage and matches uniquely
+in both directions. Distinct wording can distinguish scans sharing an instant. Swiss Post
+also requires its provider code. Conflicting locations stay separate, and older apps that
+cannot compare scan evidence do not use these policies.
+
 ## Fallback providers
 
 The universal providers answer when no dedicated adapter can. Commercial ones run only when
