@@ -1,7 +1,8 @@
 # Carrier coverage by tracking source
 
-The 100 carriers in [coverage.json](coverage.json) are a curated comparison set, not a
-market-share ranking. Each provider was called separately on the same comparison reference.
+The carriers in [coverage.json](coverage.json) are a curated comparison set, not a
+market-share ranking. Provider results come from separate lookups on the same comparison reference;
+unverified cells have no established result.
 A direct sample names an alternative when that reference is outside the adapter's scope or
 no longer available. The README counts only the direct cells that begin with a check mark and
 the first provider reference. It leaves alternate samples out.
@@ -37,7 +38,7 @@ about current coverage.
 | [Royal Mail](../carriers/royal-mail/README.md) | Disabled | Error | No history | ✓ 1 | No history | ✓ 4 | No history |
 | [Swiss Post](../carriers/swiss-post/README.md) | Yes | ✓ 8 | ✓ 8 | ✓ 8 | ✓ 8 | No history | N/A |
 | [La Poste / Colissimo](../carriers/la-poste/README.md) | Yes | ✓ 15 | ✓ 11, partial | ✓ 16 | ✓ 14 | ✓ 26 | No history |
-| [DPD](../carriers/dpd/README.md) | Yes (optional postcode) | ✓ 4 | ✓ 1, partial | ✓ 4 | ✓ 4 | ✓ 4 | N/A |
+| [DPD](../carriers/dpd/README.md) | Yes (Switzerland; optional postcode) | ✓ 4 | ✓ 1, partial | ✓ 4 | ✓ 4 | ✓ 4 | N/A |
 | [DHL eCommerce](../carriers/dhl-ecommerce/README.md) | Yes | ✓ 16 | ✓ 11, partial | ✓ 36 | No history | ✓ 34 | N/A |
 | [AliExpress / Cainiao](../carriers/aliexpress/README.md) | Yes | ✓ 17 | No history | ✓ 17 | ✓ 17 | ✓ 17 | N/A |
 | [China Post](../carriers/china-post/README.md) | No adapter | Blocked | ✓ 1, partial | ✓ 1, partial | ✓ 39 | ✓ 17 | ✓ 1 |
@@ -66,12 +67,12 @@ about current coverage.
 | [YunExpress](../carriers/yunexpress/README.md) | Yes (browser) | ✓ 23 | ✓ 14 | ✓ 15 | ✓ 14 | ✓ 15 | N/A |
 | [4PX](../carriers/four-px/README.md) | Yes | ✓ 26 | ✓ 25 | ✓ 26 | ✓ 26 | ✓ 26 | N/A |
 | [Yanwen](../carriers/yanwen/README.md) | Yes | ✓ 29 | ✓ 1, partial | ✓ 29 | ✓ 29 | No history | No history |
-| [J&T Express](../carriers/j-and-t/carrier.json) | No adapter | Blocked (Philippines) | No history | No history | No history | No history | N/A |
-| [JD Logistics](../carriers/jd-logistics/carrier.json) | No adapter | Not tested | Unverified | Unverified | Unverified | Refused | N/A |
-| [ZTO Express](../carriers/zto/carrier.json) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
+| [J&T Express](../carriers/j-and-t/README.md) | No adapter | Blocked (Philippines) | No history | No history | No history | No history | N/A |
+| [JD Logistics](../carriers/jd-logistics/README.md) | Yes (international) | Unverified | Unverified | Unverified | Unverified | Refused | N/A |
+| [ZTO Express](../carriers/zto/README.md) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
 | [YTO Express](../carriers/yto/README.md) | Yes (China domestic) | ✓ 30 | Error | ✓ 30 | ✓ 20 | No history | N/A |
 | [Yunda Express](../carriers/yunda/README.md) | Yes (China domestic) | Unverified; alternate ✓ 2 | Unverified | Unverified | Unverified | Unverified | N/A |
-| [STO Express](../carriers/sto/carrier.json) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
+| [STO Express](../carriers/sto/README.md) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Yamato Transport](../carriers/yamato/README.md) | Yes | ✓ 7 (yearless dates) | Error | Wrong carrier | No history | No history | N/A |
 | [Correios Brazil](../carriers/correios-br/README.md) | Yes (local OCR) | ✓ 8 | ✓ 8 | No history | ✓ 8 | Error | No history |
 | [Singapore Post](../carriers/singapore-post/README.md) | Yes | ✓ 9 | ✓ 4, partial | ✓ 12 | ✓ 18 | ✓ 11 | ✓ 4 |
@@ -128,6 +129,18 @@ about current coverage.
 | [Ecoscooting](../carriers/ecoscooting/README.md) | Yes | ✓ 6 | ✓ 6, partial | ✓ 6, partial | No history | ✓ 22 | N/A |
 | [TIPSA](../carriers/tipsa/README.md) | Yes | ✓ 13 | No history | ✓ 13 | No history | No history | N/A |
 | [Canpar](../carriers/canpar/README.md) | Yes | ✓ 11 | No history | ✓ 11 | No history | ✓ 11 | N/A |
+| [DPD Germany](../carriers/dpd-de/README.md) | Yes (Germany; optional postcode) | ✓ 4 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [DPD UK](../carriers/dpd-uk/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Evri UK](../carriers/evri-uk/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [SpeedPAK](../carriers/speedpak/README.md) | Yes | ✓ 14 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Intelcom / Dragonfly](../carriers/intelcom/README.md) | Yes (Canada) | Not found | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Ekart](../carriers/ekart/README.md) | Yes (ecommerce) | ✓ 1 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Xpressbees](../carriers/xpressbees/README.md) | Yes (seller-platform AWBs) | Alternative ✓ 42 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [LBC Express](../carriers/lbc-express/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Nova Poshta (Ukraine)](../carriers/nova-poshta/README.md) | Yes (Ukraine; summary) | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
+| [SPX Express Philippines](../carriers/spx-ph/README.md) | Yes (Philippines) | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
+| [CNE Express](../carriers/cne/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Sagawa Express](../carriers/sagawa/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
 <!-- /GENERATED:coverage -->
 
 <!-- GENERATED:lookup-order -->

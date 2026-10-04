@@ -32,7 +32,9 @@
           "ciblex",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Shared numeric shape that must stay a suggestion rather than a carrier."
@@ -52,7 +54,10 @@
           "ciblex",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk",
+          "xpressbees"
         ]
       },
       "note": "Shared numeric shape that must stay a suggestion rather than a carrier."
@@ -109,7 +114,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Shared numeric shape that must stay a suggestion rather than a carrier."

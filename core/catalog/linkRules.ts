@@ -13,6 +13,7 @@ export interface TrackingLinkRule {
   carrier: CarrierId;
   domains: string[];
   params?: string[];
+  query?: RegExp;
   path?: RegExp;
   pathPattern?: RegExp;
   fragment?: RegExp;
@@ -25,6 +26,7 @@ export const TRACKING_LINK_RULES: TrackingLinkRule[] = Object.entries(CARRIER_DE
     carrier: carrier as CarrierId,
     domains: [...rule.domains],
     params: rule.params ? [...rule.params] : undefined,
+    query: rule.query ? new RegExp(rule.query, 'i') : undefined,
     path: rule.path ? new RegExp(rule.path, 'i') : undefined,
     pathPattern: rule.pathPattern ? new RegExp(rule.pathPattern, 'i') : undefined,
     fragment: rule.fragment ? new RegExp(rule.fragment, 'i') : undefined,

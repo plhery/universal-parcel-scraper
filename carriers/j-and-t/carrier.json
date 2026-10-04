@@ -25,7 +25,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://www.jtexpress.ph/track-and-trace?flag=1&waybillNo={trackingNumber}",
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.jtexpress.ph/",
     "shows": [],
     "scraped": [],
     "discarded": [],

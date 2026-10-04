@@ -1,0 +1,18 @@
+{
+  "carrier": "intelcom",
+  "records": [
+    {
+      "number": "INTLCM1657986256",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justanswer.com/software/vud02-intelcom-package-not-delivered-address-dispute.html"
+      },
+      "expect": {
+        "carrier": "intelcom",
+        "confidence": "high"
+      },
+      "note": "Lower-confidence customer report: spaces in the source were removed. Attribution was not independently verified."
+    }
+  ]
+}

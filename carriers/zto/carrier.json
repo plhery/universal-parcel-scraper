@@ -20,7 +20,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://www.zto.com/",
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.zto.com/check",
     "shows": [],
     "scraped": [],
     "discarded": [],

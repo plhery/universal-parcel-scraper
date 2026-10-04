@@ -9,7 +9,7 @@ export { carrierBrand };
 const key = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 // These brands have several regional/service adapters.
-const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'post'];
+const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'evri', 'post'];
 // An alias also gives the name its carrier's clock, which moves the stored
 // instants, and so the event ids, of past scans under that name.
 const NAME_ALIASES: Readonly<Record<string, string>> = {
@@ -21,7 +21,7 @@ const NAME_ALIASES: Readonly<Record<string, string>> = {
 const FEED_NAMES = ['upu', 'universalpostalunion'];
 const CATALOG_NAMES = new Set([
   ...Object.entries(CARRIER_DEFINITIONS).filter(([id]) => id !== 'unknown')
-    .map(([, definition]) => key(definition.displayName)),
+    .flatMap(([, definition]) => [definition.displayName, ...(definition.aliases ?? [])].map(key)),
   ...Object.keys(NAME_ALIASES), ...AMBIGUOUS_BRANDS,
 ]);
 
@@ -59,7 +59,7 @@ function catalogCarrier(normalized: string): string | undefined {
   if (AMBIGUOUS_BRANDS.includes(normalized)) return undefined;
   if (Object.hasOwn(NAME_ALIASES, normalized)) return NAME_ALIASES[normalized];
   const matches = Object.entries(CARRIER_DEFINITIONS)
-    .filter(([id, definition]) => id !== 'unknown' && key(definition.displayName) === normalized);
+    .filter(([id, definition]) => id !== 'unknown' && [definition.displayName, ...(definition.aliases ?? [])].some(name => key(name) === normalized));
   return matches.length === 1 ? matches[0]![0] : undefined;
 }
 

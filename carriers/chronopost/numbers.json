@@ -105,6 +105,19 @@
         "confidence": "high"
       },
       "note": "Made-up number that follows the published format."
+    },
+    {
+      "number": "XW295445484JF",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Publicly reported Chronopost reference linked to a German DPD waybill. The reported linkage must be confirmed against carrier history."
     }
   ]
 }

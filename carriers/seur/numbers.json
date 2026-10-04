@@ -17,7 +17,9 @@
           "ciblex",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SEUR, which stays one candidate among several."
@@ -55,7 +57,9 @@
           "ciblex",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SEUR, which stays one candidate among several."

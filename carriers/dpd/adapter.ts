@@ -422,6 +422,33 @@ export function parseDPDTrackingApi(
   return result;
 }
 
+/** Guard automatic scope confirmation and the new German direct service. */
+function requireGuestActivity(payload: JsonObject, result: CarrierResult): void {
+  if (!isRecord(payload.status) || !known(payload.status.description)) {
+    throw new SchemaError('DPD', 'DPD returned no usable shipment status');
+  }
+  const validClock = (value: string): boolean => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)
+    && isoTime(value, 'UTC') !== null;
+  for (const field of ['parcelHistory', 'parcelEvents'] as const) {
+    const rows = payload[field];
+    if (rows === undefined) continue;
+    if (!Array.isArray(rows) || rows.length > 1_000 || rows.some((row) => !isRecord(row))) {
+      throw new SchemaError('DPD', 'DPD returned invalid tracking history');
+    }
+    for (const row of rows.filter(isRecord)) {
+      const clock = field === 'parcelHistory'
+        ? known(row.eventDateAndTime) : `${known(row.date)}T${known(row.time)}`;
+      const description = field === 'parcelHistory'
+        ? known(row.description) : firstText(row.translation, row.eventTypeText, row.eventType);
+      if (!description || !validClock(clock)) {
+        throw new SchemaError('DPD', 'DPD returned an incomplete tracking event');
+      }
+    }
+  }
+  // An identity echo or a summary without activity does not establish a parcel.
+  if (!result.events?.length) throw new IndeterminateError('DPD', 'DPD returned no shipment activity');
+}
+
 export function parseDPDTrackingHtml(html: string, trackingNumber: string): CarrierResult {
   if (/Just a moment|cf-mitigated|Enable JavaScript and cookies/i.test(html)) {
     throw new DPDChallengeError();
@@ -503,6 +530,8 @@ async function whileLive<T>(shared: Promise<T>, signal: AbortSignal): Promise<T>
 }
 
 export interface DPDTrackerOptions {
+  /** Guest service country; the existing Swiss adapter remains the default. */
+  country?: 'CH' | 'DE';
   timeoutMs?: number;
   /** Whole-lookup budget; defaults to both tiers plus the solver's own allowance. */
   budgetMs?: number;
@@ -515,6 +544,7 @@ export interface DPDTrackerOptions {
 }
 
 export class DPDTracker {
+  readonly country: 'CH' | 'DE';
   readonly timeoutMs: number;
   readonly budgetMs: number;
   readonly flaresolverrUrl: string;
@@ -532,6 +562,7 @@ export class DPDTracker {
   #tokenFailure: { error: unknown; until: number } | null = null;
 
   constructor(options: DPDTrackerOptions = {}) {
+    this.country = options.country ?? 'CH';
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.budgetMs = options.budgetMs ?? this.timeoutMs * 2 + SOLVER_ALLOWANCE_MS;
     this.flaresolverrUrl = (options.flaresolverrUrl ?? '').trim();
@@ -552,17 +583,18 @@ export class DPDTracker {
       throw new InvalidInputError('DPD', 'DPD tracking numbers must contain 14 digits');
     }
     const resolvedPostcode = postcode.trim();
-    if (resolvedPostcode && !/^\d{4}$/.test(resolvedPostcode)) {
-      throw new InvalidInputError('DPD', 'DPD postcode must contain exactly 4 digits');
+    if (resolvedPostcode && !(this.country === 'DE' ? /^\d{5}$/ : /^\d{4}$/).test(resolvedPostcode)) {
+      throw new InvalidInputError('DPD', `DPD postcode must contain exactly ${this.country === 'DE' ? 5 : 4} digits`);
     }
     // One signal and one clock for both tiers and the guest login they share with `recognizes`.
-    const lookup = lookupBudget(context, this.budgetMs, 'dpd');
+    const carrier = this.country === 'DE' ? 'dpd-de' : 'dpd';
+    const lookup = lookupBudget(context, this.budgetMs, carrier);
     const pageRecovers = (error: unknown): boolean => {
       const kind = carrierErrorKind(error);
       return !context.signal?.aborted && kind !== null && PAGE_RECOVERS.has(kind);
     };
     const result = await runSteps<CarrierResult>({
-      carrier: 'dpd', budgetMs: lookup.budgetMs, signal: lookup.signal, recorder: this.recorder,
+      carrier, budgetMs: lookup.budgetMs, signal: lookup.signal, recorder: this.recorder,
     }, [
       {
         id: 'direct',
@@ -571,24 +603,27 @@ export class DPDTracker {
           // the budget as spent: the tier reports the budget itself, so the
           // page is not entered in between.
           if (lookup.signal.aborted && pageRecovers(error)) {
-            throw new BudgetExceededError('dpd', lookup.budgetMs, { cause: error });
+            throw new BudgetExceededError(carrier, lookup.budgetMs, { cause: error });
           }
           throw error;
         }),
       },
-      {
+      ...(this.country === 'CH' ? [{
         id: 'page',
         recovers: pageRecovers,
-        run: ({ previousError }) => this.pageFetch(trackingNumber, previousError !== undefined, lookup),
-      },
+        run: ({ previousError }: { previousError?: unknown }) => this.pageFetch(trackingNumber, previousError !== undefined, lookup),
+      }] : []),
     ]);
-    result.tracking_url = dpdTrackingUrl(trackingNumber);
+    result.tracking_url = this.country === 'DE'
+      ? `https://tracking.dpd.de/status/en_US/parcel/${trackingNumber}`
+      : dpdTrackingUrl(trackingNumber);
     return result;
   }
 
   /**
-   * Whether DPD knows a 14-digit number, for the host's carrier-detection
-   * route, which promotes the number to `dpd` only when this returns true.
+   * Whether the guest reply establishes Swiss activity for a 14-digit number.
+   * The group-wide identity match alone must not promote another country's
+   * parcel to the Swiss carrier id. Missing country evidence is inconclusive.
    * Guest API only, never the page tier. A positive not-found (404) and a
    * details lookup DPD refuses without the postcode (400, seen for old
    * parcels) are false; any other failure, a 400 from a token step included,
@@ -599,7 +634,13 @@ export class DPDTracker {
     const lookup = lookupBudget(context, this.budgetMs, 'dpd');
     try {
       const payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);
-      return clean(payload.parcelNumber ?? payload.shipmentId) === trackingNumber;
+      if (clean(payload.parcelNumber ?? payload.shipmentId) !== trackingNumber) return false;
+      const current = isRecord(payload.status) ? payload.status : {};
+      const country = known(current.countryCode).toUpperCase();
+      if (/^[A-Z]{2}$/.test(country) && country !== 'CH') return false;
+      if (country !== 'CH') throw new IndeterminateError('DPD Switzerland', 'DPD returned no Swiss country evidence');
+      requireGuestActivity(payload, parseDPDTrackingApi(payload, trackingNumber));
+      return true;
     } catch (error) {
       if (error instanceof DPDTrackingError) return false;
       if (error instanceof DPDDetailsRefusedError) return false;
@@ -618,7 +659,17 @@ export class DPDTracker {
       payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);
       postcodeVerified = false;
     }
-    return parseDPDTrackingApi(payload, trackingNumber, postcodeVerified);
+    const result = parseDPDTrackingApi(payload, trackingNumber, postcodeVerified);
+    // The guest service can answer for another business unit. A selected
+    // German adapter must not project explicit evidence for another country.
+    if (this.country === 'DE' && isRecord(payload.status)) {
+      const country = known(payload.status.countryCode).toUpperCase();
+      if (/^[A-Z]{2}$/.test(country) && country !== 'DE') {
+        throw new IndeterminateError('DPD Germany', 'DPD returned activity in another country');
+      }
+    }
+    if (this.country === 'DE') requireGuestActivity(payload, result);
+    return result;
   }
 
   private async detailsWithFreshToken(trackingNumber: string, postcode: string | undefined, lookup: LookupBudget): Promise<JsonObject> {
@@ -643,7 +694,7 @@ export class DPDTracker {
   ): Promise<JsonObject> {
     const url = new URL(`${DETAILS_BASE}/${encodeURIComponent(trackingNumber)}`);
     url.searchParams.set('parcelType', 'INCOMING');
-    url.searchParams.set('businessUnit', 'DPD-CH');
+    url.searchParams.set('businessUnit', `DPD-${this.country}`);
     url.searchParams.set('lang', 'en');
     url.searchParams.set('continueWithoutVerification', postcode ? 'false' : 'true');
     if (postcode) url.searchParams.set('dataForVerification', postcode);
@@ -732,7 +783,7 @@ export class DPDTracker {
           appInstanceId: fid,
           appInstanceIdToken: installationToken,
           languageCode: 'en-US',
-          countryCode: 'CH',
+          countryCode: this.country,
           platformVersion: '36',
           appVersion: CLIENT_VERSION,
           packageName: ANDROID_PACKAGE,

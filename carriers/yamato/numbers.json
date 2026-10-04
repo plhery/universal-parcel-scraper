@@ -22,7 +22,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Yamato Transport, which stays one candidate among several."
@@ -48,7 +49,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Yamato Transport, which stays one candidate among several."

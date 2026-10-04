@@ -16,7 +16,8 @@
           "dhl-ecommerce",
           "correos-express",
           "canada-post",
-          "tnt"
+          "tnt",
+          "evri-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Correos Express, which stays one candidate among several."
@@ -36,7 +37,8 @@
           "dhl-ecommerce",
           "correos-express",
           "canada-post",
-          "tnt"
+          "tnt",
+          "evri-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Correos Express, which stays one candidate among several."
@@ -56,7 +58,8 @@
           "dhl-ecommerce",
           "correos-express",
           "canada-post",
-          "tnt"
+          "tnt",
+          "evri-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Correos Express, which stays one candidate among several."

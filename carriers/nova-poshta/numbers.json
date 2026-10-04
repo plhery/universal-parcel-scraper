@@ -1,0 +1,26 @@
+{
+  "carrier": "nova-poshta",
+  "records": [
+    {
+      "number": "59000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    }
+  ]
+}

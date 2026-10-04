@@ -1,0 +1,63 @@
+{
+  "id": "nova-poshta",
+  "displayName": "Nova Poshta (Ukraine)",
+  "aliases": [
+    "Nova Poshta",
+    "Nova Post Ukraine",
+    "Нова Пошта"
+  ],
+  "region": {
+    "countries": [
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#e30613"
+  },
+  "selectable": true,
+  "timezone": "Europe/Kyiv",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "nova-poshta",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://novaposhta.ua/en/tracking/{trackingNumber}",
+    "canaryUrl": "https://novaposhta.ua/en/tracking/",
+    "shows": [
+      "status"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [
+      "recipient_details",
+      "sender_details",
+      "addresses",
+      "payment_details"
+    ],
+    "unavailable": [
+      "history",
+      "eta",
+      "pickup_point"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "novaposhta.ua"
+      ],
+      "path": "^/(?:en/)?tracking/(\\d{14})(?:/|$)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "nova-poshta-domestic",
+      "pattern": "^(?:(?:20[4678]|590|595)\\d{11}|(?:21|51)\\d{12})$",
+      "confidence": "low"
+    }
+  ]
+}

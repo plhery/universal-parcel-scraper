@@ -1,0 +1,72 @@
+{
+  "id": "intelcom",
+  "displayName": "Intelcom / Dragonfly",
+  "aliases": [
+    "Intelcom",
+    "Dragonfly",
+    "Dragonfly Shipping"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#ffda00"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "intelcom",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://dragonflyshipping.ca/en/track-your-package/?tracking-id={trackingNumber}",
+    "canaryUrl": "https://dragonflyshipping.ca/en/track-your-package/",
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "driver_name",
+      "recipient_details"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "eta",
+      "driver_name",
+      "recipient_details",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "pickup_point",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "intelcom.ca",
+        "dragonflyshipping.ca"
+      ],
+      "params": [
+        "tracking-id"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "intelcom-1",
+      "pattern": "^INTLCM\\d{8,20}$",
+      "confidence": "high"
+    }
+  ]
+}

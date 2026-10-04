@@ -133,7 +133,9 @@ function scanZone(payload: Record<string, unknown>, state: Record<string, unknow
   if (carrier === 'tnt' && /^\d{9}$/.test(number)) return null;
   if (typeof name === 'string' && ASENDIA_USA.test(name.trim())) return null;
   const zone = carrier ? carrierTimezone(carrier) : 'UTC';
-  if (zone !== 'UTC') return zone;
+  // A country-qualified routing name can identify a branch rather than the
+  // scan location. Keep its clock as a guess even when the alias is catalogued.
+  if (zone !== 'UTC' && !(typeof name === 'string' && carrierNameCountryZone(name))) return zone;
   const location = typeof state.location === 'string' ? state.location.trim() : '';
   const place = location.split(',').at(-1);
   // A state or province the town confirms beats the country its code also

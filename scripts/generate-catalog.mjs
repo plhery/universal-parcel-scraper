@@ -59,6 +59,7 @@ const carrierInputValidators = {
   postcode: new Set([
     'swissPostcode',
     'francePostcode',
+    'germanyPostcode',
     'swissOrFrancePostcode',
     'paackPostcode',
   ]),
@@ -135,7 +136,7 @@ function validateCarrierSemantics(carrier, adapterFolders) {
     }
   }
   for (const rule of carrier.links) {
-    for (const field of ['path', 'pathPattern', 'fragment']) {
+    for (const field of ['query', 'path', 'pathPattern', 'fragment']) {
       if (rule[field] !== undefined) new RegExp(rule[field], 'i');
     }
   }

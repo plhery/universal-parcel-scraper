@@ -1,0 +1,69 @@
+import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { classifyWording, languageStageStatus, type Stage } from '../../core/status/index.js';
+import { epochMillisTime, explicitOffsetTime } from '../../core/time/index.js';
+import { clean, cleanScalar, textFromHtml } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
+
+const PROVIDER = 'Intelcom / Dragonfly';
+
+export function normalizeIntelcomNumber(raw: string): string {
+  const number = normalizeTrackingNumber(raw);
+  if (!/^[A-Z0-9]{6,40}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Intelcom requires an alphanumeric tracking number');
+  return number;
+}
+
+function scanTime(value: unknown) {
+  if (typeof value === 'number') {
+    return Number.isSafeInteger(value) && value >= 1_000_000_000_000 && value < 10_000_000_000_000
+      ? epochMillisTime(value) : null;
+  }
+  const clock = clean(value, 64);
+  const match = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-](\d{2}):?(\d{2}))$/i.exec(clock);
+  if (!match) return null;
+  // Luxon normalizes malformed offsets, so establish their bounds first.
+  if (match[1] !== undefined && (Number(match[1]) > 14 || Number(match[2]) > 59
+    || (Number(match[1]) === 14 && Number(match[2]) !== 0))) return null;
+  return explicitOffsetTime(clock);
+}
+
+function scan(raw: unknown): CarrierEvent {
+  if (!isRecord(raw) || cleanScalar(raw.status) === '' || !/^-?\d+(?:\.\d+)?$/.test(cleanScalar(raw.step))) {
+    throw new SchemaError(PROVIDER, 'Intelcom returned an invalid status');
+  }
+  const labels = isRecord(raw.labels) ? raw.labels : {};
+  const nested = isRecord(labels.shortLabel) ? labels.shortLabel : {};
+  const direct = isRecord(raw.shortLabel) ? raw.shortLabel : {};
+  // Public labels can contain recipient-address template tokens. Keep the
+  // short milestone wording; never expand them using the address object.
+  const description = textFromHtml((clean(nested.en) || clean(direct.en)).replace(/\{[^}]+\}/g, '')).trim();
+  if (!description) throw new SchemaError(PROVIDER, 'Intelcom returned no English milestone label');
+  const mapped = classifyWording(description, 'pending');
+  const time = scanTime(raw.timestamp);
+  const code = cleanScalar(raw.statusCode) || cleanScalar(raw.status);
+  return { description, provider_code: code, ...(time ? { time: time.iso } : { provider_time_text: cleanScalar(raw.timestamp) || undefined }),
+    ...(mapped.source !== 'none' ? { stage: mapped.stage, stage_source: mapped.source } : {}) };
+}
+
+export function parseIntelcom(payload: unknown, rawNumber: string): CarrierResult {
+  const number = normalizeIntelcomNumber(rawNumber);
+  if (!isRecord(payload) || typeof payload.success !== 'boolean' || !isRecord(payload.data)) throw new SchemaError(PROVIDER, 'Intelcom returned an invalid envelope');
+  if (!payload.success) {
+    if (payload.data.code === 'not_found' && payload.data.result === null) throw new NotFoundError(PROVIDER);
+    throw new IndeterminateError(PROVIDER, 'Intelcom did not complete the lookup');
+  }
+  const result = payload.data.result;
+  if (!isRecord(result) || clean(result.tracking_id) !== number) throw new SchemaError(PROVIDER, 'Intelcom returned a different shipment');
+  const latest = scan(result.last_status);
+  const history = result.status_list ?? [];
+  if (!Array.isArray(history) || history.length > 1000) throw new SchemaError(PROVIDER, 'Intelcom returned an invalid history');
+  const events = history.map(scan);
+  if (!events.length && !latest.time) throw new IndeterminateError(PROVIDER, 'Intelcom returned no dated shipment activity');
+  const output: CarrierResult = { status: latest.stage ? languageStageStatus(latest.stage as Stage) : 'unknown',
+    last_status_text: latest.description!, last_update: latest.time ?? null,
+    ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
+    ...(latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(events.length ? { events: events.slice(0, 100) } : { summary_only: true, events: [] }) };
+  return output;
+}

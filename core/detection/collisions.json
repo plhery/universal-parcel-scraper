@@ -479,9 +479,10 @@
       "canada-post",
       "correos-express",
       "dhl-ecommerce",
+      "evri-uk",
       "tnt"
     ],
-    "reason": "16-digit numbers are shared by four carriers, TNT France parcel numbers among them; the number stays a low-confidence suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "eight characters mixing letters and digits",
@@ -568,9 +569,12 @@
       "ciblex",
       "delhivery",
       "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta",
       "seur"
     ],
-    "reason": "14-digit numbers are shared by five carriers; the number stays a low-confidence suggestion. A DPD Switzerland depot prefix (0606-0619) only lists DPD first."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{14}",
@@ -579,10 +583,39 @@
       "ciblex",
       "delhivery",
       "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "seur"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "9{14}",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "xpressbees"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "9{14}",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
       "dpd-fr",
+      "dpd-uk",
       "seur"
     ],
-    "reason": "14-digit numbers starting with 0 or 1 add DPD France to the five carriers already sharing that length; the number stays a suggestion. A DPD France depot prefix (10) lists DPD France first."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{14}",
@@ -591,10 +624,27 @@
       "ciblex",
       "delhivery",
       "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "seur",
+      "xpressbees"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "9{14}",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
       "hermes-de",
       "seur"
     ],
-    "reason": "A 14-digit number whose last digit passes the Hermes check adds Hermes Germany to the five carriers sharing that length; the number stays a suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{14}",
@@ -603,11 +653,29 @@
       "ciblex",
       "delhivery",
       "dpd",
+      "dpd-de",
       "dpd-fr",
+      "dpd-uk",
       "hermes-de",
       "seur"
     ],
-    "reason": "A 14-digit number starting with 0 or 1 whose last digit passes the Hermes check matches DPD France and Hermes Germany as well; the number stays a suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "9{14}",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "hermes-de",
+      "seur",
+      "xpressbees"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{12}",
@@ -615,6 +683,7 @@
       "colis-prive",
       "fedex",
       "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -622,7 +691,7 @@
       "yamato",
       "zto"
     ],
-    "reason": "12-digit numbers are shared by nine carriers; the number stays a low-confidence suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{12}",
@@ -633,6 +702,7 @@
       "gls-de",
       "gls-fr",
       "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -640,7 +710,7 @@
       "yamato",
       "zto"
     ],
-    "reason": "A 12-digit number whose last digit passes the GLS check adds the three GLS networks to the nine carriers sharing that length; the number stays a suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{12}",
@@ -648,6 +718,7 @@
       "colis-prive",
       "fedex",
       "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -656,7 +727,7 @@
       "yamato",
       "zto"
     ],
-    "reason": "12-digit numbers in the Purolator range are shared by ten carriers; the number stays a low-confidence suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{12}",
@@ -684,6 +755,7 @@
       "dpd-fr",
       "fedex",
       "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -692,7 +764,7 @@
       "yamato",
       "zto"
     ],
-    "reason": "12-digit numbers starting with 0 or 1 add DPD France to the ten carriers already sharing that length; the number stays a suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{12}",
@@ -704,6 +776,7 @@
       "gls-de",
       "gls-fr",
       "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -712,7 +785,7 @@
       "yamato",
       "zto"
     ],
-    "reason": "A 12-digit number starting with 0 or 1 whose last digit passes the GLS check matches DPD France and the three GLS networks as well; the number stays a suggestion."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "9{20}",
@@ -808,10 +881,12 @@
       "ciblex",
       "delhivery",
       "dpd",
+      "dpd-de",
+      "dpd-uk",
       "la-poste",
       "seur"
     ],
-    "reason": "La Poste numeric tracked mail overlaps generic fourteen-digit rules; the specific La Poste prefix decides."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "870 followed by eleven digits with a valid Hermes check digit",
@@ -820,11 +895,13 @@
       "ciblex",
       "delhivery",
       "dpd",
+      "dpd-de",
+      "dpd-uk",
       "hermes-de",
       "la-poste",
       "seur"
     ],
-    "reason": "La Poste numeric tracked mail also overlaps checksum-valid Hermes numbers; the specific La Poste prefix decides."
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
     "shape": "870 followed by twelve digits",
@@ -834,5 +911,22 @@
       "yunda"
     ],
     "reason": "La Poste numeric tracked mail overlaps generic fifteen-digit rules; the specific La Poste prefix decides."
+  },
+  {
+    "shape": "16-character alphanumeric reference",
+    "carriers": [
+      "evri",
+      "evri-uk"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "16-character alphanumeric reference",
+    "carriers": [
+      "evri",
+      "evri-uk",
+      "hermes-de"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   }
 ]

@@ -190,7 +190,7 @@
     },
     {
       "carrier": "dpd",
-      "direct": "Yes (optional postcode)",
+      "direct": "Yes (Switzerland; optional postcode)",
       "sample": "\u2713 4",
       "references": [
         {
@@ -756,8 +756,8 @@
     },
     {
       "carrier": "jd-logistics",
-      "direct": "No adapter",
-      "sample": "Not tested",
+      "direct": "Yes (international)",
+      "sample": "Unverified",
       "references": [
         {
           "results": {
@@ -1888,6 +1888,210 @@
             "ParcelsApp": 11,
             "17TRACK": "no_history",
             "Postal Ninja": 11,
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "dpd-de",
+      "direct": "Yes (Germany; optional postcode)",
+      "sample": "\u2713 4",
+      "references": [
+        {
+          "note": "Public DPD Germany reference: https://www.paketda.de/fragen-antworten.php",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "dpd-uk",
+      "direct": "No adapter",
+      "sample": "Blocked",
+      "references": [
+        {
+          "note": "UK reference-plus-postcode flow requires a challenge and session before retrieval.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "evri-uk",
+      "direct": "No adapter",
+      "sample": "Blocked",
+      "references": [
+        {
+          "note": "Domestic UK bootstrap requires a challenge; Evri International is a separate adapter.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "speedpak",
+      "direct": "Yes",
+      "sample": "\u2713 14",
+      "references": [
+        {
+          "note": "Public SpeedPAK reference: https://community.ebay.com/forum/shipping-57923/topic/speedpak-any-know-who-is-delivering-them-in-the-us-now-158487/?focus_post=506934",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "intelcom",
+      "direct": "Yes (Canada)",
+      "sample": "Not found",
+      "references": [
+        {
+          "note": "Public Intelcom reference returned not_found; successful live history is unverified: https://www.justanswer.com/software/vud02-intelcom-package-not-delivered-address-dispute.html",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "ekart",
+      "direct": "Yes (ecommerce)",
+      "sample": "\u2713 1",
+      "references": [
+        {
+          "note": "Public Ekart reference returned a pickup-request scan: https://www.trustpilot.com/review/www.ekart.com",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "xpressbees",
+      "direct": "Yes (seller-platform AWBs)",
+      "sample": "Alternative \u2713 42",
+      "references": [
+        {
+          "note": "Comparison reference: https://www.trustpilot.com/review/xpressbees.com?page=3. Alternative public seller reference returned history: https://shipmentv2.xpressbees.com/orders/tracking/14344968962622",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "lbc-express",
+      "direct": "No adapter",
+      "sample": "Blocked",
+      "references": [
+        {
+          "note": "Public LBC reference: https://www.trustpilot.com/review/www.lbcexpress.com. Official anonymous retrieval is blocked.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "nova-poshta",
+      "direct": "Yes (Ukraine; summary)",
+      "sample": "Unverified",
+      "references": [
+        {
+          "note": "Anonymous summary schema and explicit not-found response are established; successful live retrieval is unverified.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "spx-ph",
+      "direct": "Yes (Philippines)",
+      "sample": "Unverified",
+      "references": [
+        {
+          "note": "Anonymous single-parcel schema is established; successful live history is unverified.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "cne",
+      "direct": "No adapter",
+      "sample": "Blocked",
+      "references": [
+        {
+          "note": "Official tracking requires a generated signature and challenges anonymous retrieval.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
+    },
+    {
+      "carrier": "sagawa",
+      "direct": "No adapter",
+      "sample": "Blocked",
+      "references": [
+        {
+          "note": "Official tracking front door blocks anonymous retrieval.",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
             "UPU": "n/a"
           }
         }

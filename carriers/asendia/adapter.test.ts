@@ -124,8 +124,7 @@ describe('Asendia A1 reply projection', () => {
       destination_country: 'CA',
       delivery_tracking_number: VENDOR_REFERENCE,
     });
-    // Intelcom is not in the catalog, so no partner is named.
-    expect(result.delivery_carrier).toBeUndefined();
+    expect(result.delivery_carrier).toBe('intelcom');
     expect(result.events).toHaveLength(13);
     expect(result.events?.slice(0, 2)).toEqual([
       { time: '2026-04-05T00:11:21Z', location: 'Calgary, AB, CA', description: 'Delivered', stage: 'delivered', provider_code: 'B13' },

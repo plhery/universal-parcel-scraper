@@ -1,0 +1,30 @@
+{
+  "carrier": "spx-ph",
+  "records": [
+    {
+      "number": "PH000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "spx-ph"
+        ]
+      },
+      "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    },
+    {
+      "number": "SPXPH000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    }
+  ]
+}

@@ -43,6 +43,11 @@ Each carrier owns its catalog document, retrieval, pure parsers, status evidence
 synthetic fixtures, next to a README on how its site is read. Nothing about a carrier lives
 outside its folder except the files `npm run generate` derives from it.
 
+Scope follows the service and country, not the brand alone. Separate national services keep
+separate ids, and shared number shapes remain ambiguous. A group-wide endpoint matching a
+number does not establish a national carrier's ownership. Catalog presence, a dedicated
+adapter and successful history retrieval are separate claims in the coverage data.
+
 An adapter is built by a factory that receives an `AdapterEnvironment`. That environment is
 its only way to the network, and no framework or app import is allowed. The registry creates
 one adapter per process, on first use, so a carrier that fails to load cannot take the others

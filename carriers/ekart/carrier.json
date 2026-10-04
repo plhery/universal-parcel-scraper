@@ -1,0 +1,64 @@
+{
+  "id": "ekart",
+  "displayName": "Ekart",
+  "aliases": [
+    "eKart Logistics"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#0074D9"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ekart",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
+  "portal": {
+    "url": "https://ekartlogistics.com/ekartlogistics-web/shipmenttrack/{trackingNumber}",
+    "canaryUrl": "https://www.ekartlogistics.in/track-order",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "pickup_point"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "ekartlogistics.com"
+      ],
+      "path": "^/(?:ekartlogistics-web/)?shipmenttrack/([A-Z]{4}\\d{10})(?:/|$)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "ekart-ecommerce",
+      "pattern": "^(?:FMP[CP]|MYS[PR])\\d{10}$",
+      "confidence": "high"
+    }
+  ]
+}

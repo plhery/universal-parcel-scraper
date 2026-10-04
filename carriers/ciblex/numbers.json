@@ -16,7 +16,10 @@
           "ciblex",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk",
+          "xpressbees"
         ]
       },
       "note": "Invented placeholder used as a shape check. Filed under Ciblex, which stays one candidate among several."

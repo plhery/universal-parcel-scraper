@@ -1530,13 +1530,17 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^H\\d{15,19}$",
+        "pattern": "^H\\d{16,19}$",
         "confidence": "high"
       },
       {
         "pattern": "^\\d{14}$",
         "confidence": "low",
         "checksum": "hermes"
+      },
+      {
+        "pattern": "^H\\d{15}$",
+        "confidence": "low"
       }
     ]
   },
@@ -1772,7 +1776,7 @@
     "displayName": "Evri",
     "color": "#00014d",
     "aliases": [
-      "Hermes UK"
+      "Evri International"
     ],
     "countries": [
       "GB"
@@ -1786,12 +1790,12 @@
       "localClocks": true
     },
     "canaryUrl": "https://globaleco.app/track/",
-    "trackingUrlTemplate": "https://www.evri.com/track-a-parcel",
+    "trackingUrlTemplate": "https://globaleco.app/track",
     "linkRules": [],
     "detectionRules": [
       {
         "pattern": "^H[A-Z0-9]{15}$",
-        "confidence": "high"
+        "confidence": "low"
       }
     ]
   },
@@ -3178,7 +3182,7 @@
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.sto.cn/pc/service-page/iframe_2_21",
     "trackingUrlTemplate": "https://www.sto.cn/",
     "linkRules": [],
     "detectionRules": [
@@ -3269,7 +3273,7 @@
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.zto.com/check",
     "trackingUrlTemplate": "https://www.zto.com/",
     "linkRules": [],
     "detectionRules": [
@@ -3289,11 +3293,21 @@
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jd-logistics",
+      "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
-    "trackingUrlTemplate": "https://www.jingdonglogistics.com/Tracking",
-    "linkRules": [],
+    "canaryUrl": "https://www.jingdonglogistics.com/Tracking",
+    "trackingUrlTemplate": "https://www.jingdonglogistics.com/Tracking?waybillCodes={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "jingdonglogistics.com"
+        ],
+        "params": [
+          "waybillCodes"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^VG\\d{11}$",
@@ -3926,7 +3940,7 @@
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.jtexpress.ph/",
     "trackingUrlTemplate": "https://www.jtexpress.ph/track-and-trace?flag=1&waybillNo={trackingNumber}",
     "linkRules": [
       {
@@ -3986,6 +4000,36 @@
     ],
     "detectionRules": []
   },
+  "cne": {
+    "displayName": "CNE Express",
+    "color": "#e83828",
+    "aliases": [
+      "CNE",
+      "递一物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cne.com/track",
+    "trackingUrlTemplate": "https://www.cne.com/en/track?no={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "cne.com"
+        ],
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "dhl-express": {
     "displayName": "DHL Express",
     "color": "#ffcc00",
@@ -4019,6 +4063,272 @@
       }
     ]
   },
+  "dpd-de": {
+    "displayName": "DPD Germany",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD Deutschland"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-de",
+      "requirements": [
+        {
+          "field": "postcode",
+          "optional": true,
+          "label": "Delivery postcode",
+          "type": "text",
+          "pattern": "^[0-9]{5}$",
+          "maxLength": 5,
+          "inputMode": "numeric",
+          "autoComplete": "postal-code",
+          "help": "Optional. DPD uses it to unlock verified scans and the delivery window.",
+          "validator": "germanyPostcode"
+        }
+      ]
+    },
+    "canaryUrl": "https://tracking.dpd.de/status/en_US/parcel/",
+    "trackingUrlTemplate": "https://tracking.dpd.de/status/en_US/parcel/{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.dpd.de"
+        ],
+        "path": "^/status/[a-z]{2}_[A-Z]{2}/parcel/(\\d{14})/?$"
+      },
+      {
+        "domains": [
+          "my.dpd.de"
+        ],
+        "params": [
+          "parcelno"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "dpd-uk": {
+    "displayName": "DPD UK",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD United Kingdom"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.dpd.co.uk/",
+    "trackingUrlTemplate": "https://track.dpd.co.uk/?reference={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "track.dpd.co.uk",
+          "tracking.dpd.co.uk"
+        ],
+        "params": [
+          "reference",
+          "parcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "ekart": {
+    "displayName": "Ekart",
+    "color": "#0074D9",
+    "aliases": [
+      "eKart Logistics"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ekart"
+    },
+    "canaryUrl": "https://www.ekartlogistics.in/track-order",
+    "trackingUrlTemplate": "https://ekartlogistics.com/ekartlogistics-web/shipmenttrack/{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "ekartlogistics.com"
+        ],
+        "path": "^/(?:ekartlogistics-web/)?shipmenttrack/([A-Z]{4}\\d{10})(?:/|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:FMP[CP]|MYS[PR])\\d{10}$",
+        "confidence": "high"
+      }
+    ]
+  },
+  "evri-uk": {
+    "displayName": "Evri UK",
+    "color": "#00014d",
+    "aliases": [
+      "Hermes UK",
+      "Evri Domestic",
+      "Hermes Domestic UK"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.evri.com/track-a-parcel",
+    "trackingUrlTemplate": "https://www.evri.com/track/parcel/{trackingNumber}/details",
+    "linkRules": [
+      {
+        "domains": [
+          "evri.com",
+          "www.evri.com"
+        ],
+        "path": "^/track/parcel/([A-Za-z0-9]{16})/details/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^H[A-Z0-9]{15}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{16}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "intelcom": {
+    "displayName": "Intelcom / Dragonfly",
+    "color": "#ffda00",
+    "aliases": [
+      "Intelcom",
+      "Dragonfly",
+      "Dragonfly Shipping"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "intelcom"
+    },
+    "canaryUrl": "https://dragonflyshipping.ca/en/track-your-package/",
+    "trackingUrlTemplate": "https://dragonflyshipping.ca/en/track-your-package/?tracking-id={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "intelcom.ca",
+          "dragonflyshipping.ca"
+        ],
+        "params": [
+          "tracking-id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^INTLCM\\d{8,20}$",
+        "confidence": "high"
+      }
+    ]
+  },
+  "lbc-express": {
+    "displayName": "LBC Express",
+    "color": "#e30613",
+    "aliases": [
+      "LBC"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.lbcexpress.com/track/",
+    "trackingUrlTemplate": "https://www.lbcexpress.com/track/?tracking_no={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "lbcexpress.com"
+        ],
+        "params": [
+          "tracking_no"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "nova-poshta": {
+    "displayName": "Nova Poshta (Ukraine)",
+    "color": "#e30613",
+    "aliases": [
+      "Nova Poshta",
+      "Nova Post Ukraine",
+      "Нова Пошта"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "nova-poshta"
+    },
+    "canaryUrl": "https://novaposhta.ua/en/tracking/",
+    "trackingUrlTemplate": "https://novaposhta.ua/en/tracking/{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "novaposhta.ua"
+        ],
+        "path": "^/(?:en/)?tracking/(\\d{14})(?:/|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:(?:20[4678]|590|595)\\d{11}|(?:21|51)\\d{12})$",
+        "confidence": "low"
+      }
+    ]
+  },
   "omgo": {
     "displayName": "OMGO",
     "color": "#8e8e93",
@@ -4041,6 +4351,176 @@
       {
         "pattern": "^OMGO\\d{13}$",
         "confidence": "high"
+      }
+    ]
+  },
+  "sagawa": {
+    "displayName": "Sagawa Express",
+    "color": "#003889",
+    "aliases": [
+      "佐川急便"
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Tokyo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.sagawa-exp.co.jp/send/howto-search.html",
+    "trackingUrlTemplate": "https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp",
+    "linkRules": [
+      {
+        "domains": [
+          "sagawa-exp.co.jp"
+        ],
+        "params": [
+          "okurijoNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "speedpak": {
+    "displayName": "SpeedPAK",
+    "color": "#ee7532",
+    "aliases": [
+      "Orange Connex",
+      "OrangeConnex"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "speedpak"
+    },
+    "canaryUrl": "https://www.orangeconnex.com/tracking",
+    "trackingUrlTemplate": "https://www.orangeconnex.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "orangeconnex.com",
+          "orangeconnex.cn"
+        ],
+        "params": [
+          "trackingNumber",
+          "trackingNumbers"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^E[ES][A-Z0-9]{26}$",
+        "confidence": "high"
+      }
+    ]
+  },
+  "spx-ph": {
+    "displayName": "SPX Express Philippines",
+    "color": "#ee4d2d",
+    "aliases": [
+      "Shopee Express Philippines",
+      "Shopee Xpress Philippines",
+      "SPX Philippines"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spx-ph"
+    },
+    "canaryUrl": "https://spx.ph/en",
+    "trackingUrlTemplate": "https://spx.ph/track?{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "spx.ph"
+        ],
+        "pathPattern": "^/track/?$",
+        "query": "^((?:SPX)?PH\\d{10,16}[A-Z]?)$"
+      },
+      {
+        "domains": [
+          "spx.ph",
+          "shopeexpress.ph"
+        ],
+        "params": [
+          "spx_tn",
+          "sls_tracking_number"
+        ]
+      },
+      {
+        "domains": [
+          "spx.ph",
+          "shopeexpress.ph"
+        ],
+        "path": "^/detail/((?:SPX)?PH\\d{10,16}[A-Z]?)(?:/|$)"
+      },
+      {
+        "domains": [
+          "spx.ph",
+          "shopeexpress.ph"
+        ],
+        "fragment": "^/detail/((?:SPX)?PH\\d{10,16}[A-Z]?)(?:$|[?&])"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SPXPH\\d{10,16}[A-Z]?$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^PH\\d{12,14}[A-Z]?$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "xpressbees": {
+    "displayName": "Xpressbees",
+    "color": "#f58220",
+    "aliases": [
+      "Xpress Bees",
+      "XpressBees"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xpressbees"
+    },
+    "canaryUrl": "https://www.xpressbees.com/track",
+    "trackingUrlTemplate": "https://shipmentv2.xpressbees.com/orders/tracking/{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "shipmentv2.xpressbees.com"
+        ],
+        "path": "^/orders/tracking/(\\d{12,16})(?:/|$)"
+      },
+      {
+        "domains": [
+          "xpressbees.com"
+        ],
+        "params": [
+          "trackid"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^[19]\\d{13}$",
+        "confidence": "low"
       }
     ]
   }

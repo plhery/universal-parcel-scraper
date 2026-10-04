@@ -2,7 +2,7 @@
   "id": "evri",
   "displayName": "Evri",
   "aliases": [
-    "Hermes UK"
+    "Evri International"
   ],
   "region": {
     "countries": [
@@ -29,7 +29,7 @@
     "weight"
   ],
   "portal": {
-    "url": "https://www.evri.com/track-a-parcel",
+    "url": "https://globaleco.app/track",
     "canaryUrl": "https://globaleco.app/track/",
     "shows": [
       "status",
@@ -63,7 +63,7 @@
     {
       "id": "evri-1",
       "pattern": "^H[A-Z0-9]{15}$",
-      "confidence": "high"
+      "confidence": "low"
     }
   ]
 }

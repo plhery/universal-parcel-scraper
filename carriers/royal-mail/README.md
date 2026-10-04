@@ -1,95 +1,42 @@
 # Royal Mail
 
-Royal Mail is tracked through the universal providers (`tracking.adapter:
-universal`). The browser adapter in this folder is experimental: it stays
-registered for explicit calls and tests, but routing and handoff discovery never
-call it because it doesn't work reliably from the production server.
+Automatic tracking uses the universal providers. The browser adapter stays
+available for explicit calls and tests, but normal routing and handoff discovery
+exclude it because anonymous retrieval is unreliable.
 
 ## How the experimental adapter works
 
-1. `trawl` (the only step): TRAWL, with the `ops/trawl` compatibility build
-   (`tracking-capture.mjs`), loads
-   `https://www.royalmail.com/track-your-item#/tracking-results/{number}` at tier
-   2 or 3 and captures the page's own call to
-   `https://api-web.royalmail.com/mailpieces/microsummary/v1/summary/{number}`.
-   - Four TrustArc opt-out preference cookies are preloaded (no consent id or
-     tokens). Changing consent reloads the page and erases the typed number, so
-     hCaptcha never runs. With the cookies, the hash route starts the lookup
-     itself; otherwise the number is typed with native key events and submitted.
-   - Invisible hCaptcha usually auto-passes, or the page reuses an
-     `x-rmg-api-session`. Once the tracking GET starts, TRAWL's solver is skipped.
-   - A first `401 / E0015` stays open for the page's own CAPTCHA refresh (its
-     bundle reruns hCaptcha on `E0015`); a second rejection, any other final
-     reply or a connection failure ends capture at once.
-   - No captured reply fails the tier, so TRAWL can drop a stale cached session
-     and try a fresh context within the budget (60 s, 15 s settle).
-2. The adapter parses the newest captured reply for the exact URL. A
-   main-document 304 is accepted (cache revalidation).
+1. `trawl`: a real browser loads the official tracking page and captures its
+   microsummary response. The page handles hCaptcha and its API session.
+   Plain HTTP does not replay the browser's session.
+2. The newest complete response for the requested number is parsed. The
+   `mailPieceId` must match; an empty object or gateway 404 is not not-found.
 
-No direct tier or HTTP replay of the browser session: Akamai refuses
-non-browser clients. Without a browser service the adapter throws a
-`ChallengeError` naming `FLARESOLVERR_URL`.
+Without a browser service, the adapter reports a challenge naming
+`FLARESOLVERR_URL`. Calls share the caller's deadline and cancellation signal.
 
 ## Notes
 
-- 429 is rate-limited (honours `Retry-After`), 401/403 and `E0015` are
-  challenges, `E1142` ("cannot currently confirm the status") is inconclusive.
-  Empty objects and gateway 404s are never not-found.
-- Microsummary returns `mailPieces` as one object, not an array; `mailPieceId`
-  must match. Summary-only replies are valid.
-- Stage comes from `summary.statusCategory`, then wording. The category
-  `Collected` means delivered, but a scan saying "Collected" means accepted.
-  `Ready for Delivery` is not out for delivery.
-- Offset-free times are kept as sent, not assumed UK: scans can be overseas.
-- Delivered prose becomes "Delivered" (it names the signatory). Recipient,
-  signature, photo, address and GPS fields are never read.
+- Consent preferences are set before submission because changing them can
+  reload the page and clear the typed number.
+- A first `401 / E0015` allows the page's own CAPTCHA refresh; repeated
+  rejection ends the lookup. HTTP 429 preserves `Retry-After`.
+- Summary categories establish stages; their meaning can differ from the
+  same wording in an individual scan.
+- Offset-free scan clocks remain unresolved because scans can be overseas.
+- Delivered wording is reduced to `Delivered` because it can name a signatory.
+  Recipient, signature, photo, address and GPS fields are discarded.
 
 ## Limitations
 
-- No history: microsummary has none, and the page's "Get more details" call
-  (`GET /mailpieces/v3/{number}/events`, fresh `x-rmg-recaptcha`) isn't captured.
-- An interactive hCaptcha (drag-and-drop puzzle) can appear; TRAWL's
-  checkbox/audio solver can't pass it.
-
-## Why it fails
-
-The CAPTCHA token is issued and the CORS preflight returns 200, then the
-token-bearing GET is reset before any response: `ERR_HTTP2_PROTOCOL_ERROR` in
-Chrome (NetLog: remote `RST_STREAM` right after the headers),
-`NS_ERROR_NET_RESET` in Firefox. Some `ERR_FAILED` cases are local
-cancellations of unknown cause. Fresh server profiles occasionally succeed, not
-repeatably. Edge policy, browser signals, token validation and an upstream fault
-can't be told apart from here.
-
-Tried without a reliable fix:
-
-- Plain HTTP, with or without the browser's headers and an unused token:
-  timeouts or HTTP/2 `INTERNAL_ERROR` (curl, `curl_cffi`).
-- Disabling HTTP/2 or HTTP/3: Firefox resets the same way; Chrome never sends
-  the tracking GET. DNT/GPC signals: the consent reload still happens.
-- Another egress IP, pinning the API peer, waiting before submitting, a newer
-  TRAWL, persistent or incognito profiles, accepting cookies, locale and user
-  agent overrides, native Chromium outside Docker.
-- Other controllers: Camoufox (TRAWL's default), Patchright with Google Chrome
-  injected through TRAWL's `BrowserPool.browserFactory`, stock Playwright (shows
-  a visible hCaptcha), nodriver, SeleniumBase CDP (puzzle solved, GET still
-  reset), raw CDP with `navigator.webdriver` false.
-- Resubmitting the form after a failure: a new token, the same reset.
-
-## What might work next
-
-- Keep a successful page alive. On a Mac, Chrome kept on the same document
-  ("Track another item", no reload) served repeated live lookups through
-  `x-rmg-api-session`, also via the server's egress IP. Sessions last 120 s and
-  requests don't extend them; after expiry the page renews with a fresh CAPTCHA
-  on its own. TRAWL's cookie cache can't substitute, since only the live page
-  renews the session. Untested on the server, where no fresh profile succeeded:
-  first reproduce the working Mac environment (OS, Chrome build, graphics).
-- Royal Mail's official Tracking API (needs account onboarding; not tried).
+The microsummary has no event history. The separate events call requires a
+fresh CAPTCHA token and is not captured. Akamai can deny the main document even
+in a fresh Chromium session, or reset the API request after the CAPTCHA flow.
+An interactive hCaptcha can also require manual input. Browser availability
+alone does not establish reliable direct coverage.
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/royal-mail` checks
-the missing-browser-service error. With `FLARESOLVERR_URL` and
-`ROYAL_MAIL_LIVE_TRACKING_NUMBER` (kept outside the repository) it runs a real
-lookup and asserts no private fields come back.
+`npm run test:carriers:live -- carriers/royal-mail` checks the missing-browser
+error. Set `FLARESOLVERR_URL` and `ROYAL_MAIL_LIVE_TRACKING_NUMBER` outside the
+repository for a real lookup.

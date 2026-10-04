@@ -18,7 +18,9 @@
           "hermes-de",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -40,7 +42,9 @@
           "hermes-de",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -84,7 +88,10 @@
           "hermes-de",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk",
+          "xpressbees"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -105,7 +112,9 @@
           "hermes-de",
           "seur",
           "brt",
-          "delhivery"
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -121,6 +130,22 @@
         "confidence": "high"
       },
       "note": "Invented H-prefixed number matching the Hermes Germany shape."
+    },
+    {
+      "number": "H000000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "hermes-de",
+          "evri",
+          "evri-uk"
+        ]
+      },
+      "note": "Invented shared H-prefixed barcode; country and service require recognition or an explicit carrier link."
     }
   ]
 }

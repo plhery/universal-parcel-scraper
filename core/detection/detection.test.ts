@@ -84,7 +84,7 @@ describe('the detection engine', () => {
     // DPD Switzerland, 10xx DPD France. Other 14-digit carriers stay candidates.
     expect(detectCarrierMatch('06080000000002')).toMatchObject({
       carrier: 'unknown', confidence: 'low', preferred: ['dpd'],
-      candidates: ['dpd', 'dpd-fr', 'ciblex', 'seur', 'brt', 'delhivery'],
+      candidates: ['dpd', 'dpd-fr', 'ciblex', 'seur', 'brt', 'delhivery', 'dpd-de', 'dpd-uk'],
     });
     expect(detectCarrierMatch('10000000000001')).toMatchObject({
       carrier: 'unknown', confidence: 'low', preferred: ['dpd-fr'],
@@ -97,6 +97,35 @@ describe('the detection engine', () => {
   it('reads a number out of a pasted carrier link', () => {
     expect(parseTrackingInput('https://service.post.ch/ekp-web/ui/entry/search/RA123456785CH'))
       .toMatchObject({ trackingNumber: 'RA123456785CH', carrier: 'swiss-post', source: 'link' });
+  });
+
+  it.each(['PH000000000001', 'SPXPH000000000001'])(
+    'reads the SPX Philippines portal bare query: %s', (number) => {
+      expect(parseTrackingInput(`https://spx.ph/track?${number}`)).toMatchObject({
+        trackingNumber: number, carrier: 'spx-ph', confidence: 'high', source: 'link',
+      });
+    },
+  );
+
+  it('decodes an SPX bare query without admitting another path, host or query syntax', () => {
+    expect(parseTrackingInput('https://spx.ph/track?%50%48000000000001')).toMatchObject({
+      trackingNumber: 'PH000000000001', carrier: 'spx-ph', source: 'link',
+    });
+    for (const url of [
+      'https://spx.ph/other?PH000000000001',
+      'https://spx.ph.example.com/track?PH000000000001',
+      'https://spx.ph/track?unknown=PH000000000001',
+      'https://spx.ph/track?PH000000000001&PH000000000002',
+      'https://spx.ph/track?PH000000000001%2CPH000000000002',
+    ]) {
+      expect(parseTrackingInput(url).carrier).not.toBe('spx-ph');
+    }
+  });
+
+  it('binds Nova Poshta through the current official tracking path', () => {
+    expect(parseTrackingInput('https://novaposhta.ua/en/tracking/59000000000001/')).toMatchObject({
+      trackingNumber: '59000000000001', carrier: 'nova-poshta', confidence: 'high', source: 'link',
+    });
   });
 
   it.each(['87001234567890', '870012345678901'])('selects La Poste for numeric tracked mail: %s', (number) => {

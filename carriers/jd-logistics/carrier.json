@@ -14,19 +14,45 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "jd-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
-    "url": "https://www.jingdonglogistics.com/Tracking",
-    "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "url": "https://www.jingdonglogistics.com/Tracking?waybillCodes={trackingNumber}",
+    "canaryUrl": "https://www.jingdonglogistics.com/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "recipient_details",
+      "proof_of_delivery_images"
+    ],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "jingdonglogistics.com"
+      ],
+      "params": [
+        "waybillCodes"
+      ]
+    }
+  ],
   "detection": [
     {
       "id": "jd-logistics-1",

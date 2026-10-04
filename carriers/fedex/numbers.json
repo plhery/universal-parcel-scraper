@@ -39,7 +39,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to FedEx, which stays one candidate among several."
@@ -65,7 +66,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Publicly reported FedEx shipment; detection lists FedEx among several twelve-digit candidates. On 2026-09-30 ParcelsApp listed its US scans as \"City, ST\"; its delivery-day order only fits local clocks."
@@ -91,7 +93,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Publicly reported FedEx shipment; detection lists FedEx among several twelve-digit candidates. On 2026-09-30 FedEx's own page gave the local delivery time whose digits ParcelsApp labels UTC."
@@ -115,7 +118,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to FedEx, which stays one candidate among several."

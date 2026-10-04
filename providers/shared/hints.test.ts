@@ -10,8 +10,8 @@ describe('carrier names reported by universal providers', () => {
     expect(brandCarrierForNumber('DPD', '250000000000000')).toBe('dpd-fr');
     // Both DPD networks match and neither is preferred.
     expect(brandCarrierForNumber('DPD Group', '06200000000002')).toBeUndefined();
-    // Only DPD Switzerland accepts a 14-digit number starting with 2-9.
-    expect(brandCarrierForNumber('DPD Group', '20000000000002')).toBe('dpd');
+    // Germany and the UK share the number shape; the bare brand cannot pick a country.
+    expect(brandCarrierForNumber('DPD Group', '20000000000002')).toBeUndefined();
     // The number is no network of the brand at all.
     expect(brandCarrierForNumber('GLS', '06080000000002')).toBeUndefined();
     // Not a bare brand.

@@ -67,6 +67,19 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number with identity-bound history in the official anonymous feed."
+    },
+    {
+      "number": "UUS61T1260957452967",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://community.ebay.com/forum/shipping-57923/topic/speedpak-any-know-who-is-delivering-them-in-the-us-now-158487/?focus_post=506934"
+      },
+      "expect": {
+        "carrier": "uniuni",
+        "confidence": "high"
+      },
+      "note": "Publicly reported UniUni last-mile number paired with a SpeedPAK shipment. Source attribution is not a permanent live-status oracle."
     }
   ]
 }

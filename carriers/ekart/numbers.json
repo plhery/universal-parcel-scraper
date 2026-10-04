@@ -1,0 +1,29 @@
+{
+  "carrier": "ekart",
+  "records": [
+    {
+      "number": "MYSR1174742606",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/www.ekart.com"
+      },
+      "expect": {
+        "carrier": "ekart",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+    },
+    {
+      "number": "FMPP0000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "ekart",
+        "confidence": "high"
+      },
+      "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    }
+  ]
+}

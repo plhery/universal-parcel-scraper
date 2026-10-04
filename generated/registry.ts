@@ -29,9 +29,11 @@ import { adapter as dhl } from '../carriers/dhl/adapter.js';
 import { adapter as dhlEcommerce } from '../carriers/dhl-ecommerce/adapter.js';
 import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
+import { adapter as dpdDe } from '../carriers/dpd-de/adapter.js';
 import { adapter as dpdFr } from '../carriers/dpd-fr/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
+import { adapter as ekart } from '../carriers/ekart/adapter.js';
 import { adapter as ems } from '../carriers/ems/adapter.js';
 import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as evri } from '../carriers/evri/adapter.js';
@@ -47,7 +49,9 @@ import { adapter as hermes } from '../carriers/hermes/adapter.js';
 import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
 import { adapter as indiaPost } from '../carriers/india-post/adapter.js';
 import { adapter as inpost } from '../carriers/inpost/adapter.js';
+import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
 import { adapter as japanPost } from '../carriers/japan-post/adapter.js';
+import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
 import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
 import { adapter as laPoste } from '../carriers/la-poste/adapter.js';
 import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.js';
@@ -55,6 +59,7 @@ import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as ninjaVan } from '../carriers/ninja-van/adapter.js';
+import { adapter as novaPoshta } from '../carriers/nova-poshta/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
 import { adapter as ontrac } from '../carriers/ontrac/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
@@ -72,7 +77,9 @@ import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
 import { adapter as seur } from '../carriers/seur/adapter.js';
 import { adapter as sfExpress } from '../carriers/sf-express/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
+import { adapter as speedpak } from '../carriers/speedpak/adapter.js';
 import { adapter as springGds } from '../carriers/spring-gds/adapter.js';
+import { adapter as spxPh } from '../carriers/spx-ph/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
@@ -83,6 +90,7 @@ import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as uniuni } from '../carriers/uniuni/adapter.js';
 import { adapter as ups } from '../carriers/ups/adapter.js';
 import { adapter as usps } from '../carriers/usps/adapter.js';
+import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
 import { adapter as yanwen } from '../carriers/yanwen/adapter.js';
 import { adapter as yto } from '../carriers/yto/adapter.js';
@@ -119,9 +127,11 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-ecommerce": dhlEcommerce,
     "dhl-express": dhlExpress,
     "dpd": dpd,
+    "dpd-de": dpdDe,
     "dpd-fr": dpdFr,
     "dtdc": dtdc,
     "ecoscooting": ecoscooting,
+    "ekart": ekart,
     "ems": ems,
     "estafeta": estafeta,
     "evri": evri,
@@ -137,7 +147,9 @@ export const REGISTRY: RegistryDefinition = {
     "hermes-de": hermesDe,
     "india-post": indiaPost,
     "inpost": inpost,
+    "intelcom": intelcom,
     "japan-post": japanPost,
+    "jd-logistics": jdLogistics,
     "korea-post": koreaPost,
     "la-poste": laPoste,
     "landmark-global": landmarkGlobal,
@@ -145,6 +157,7 @@ export const REGISTRY: RegistryDefinition = {
     "mrw": mrw,
     "nacex": nacex,
     "ninja-van": ninjaVan,
+    "nova-poshta": novaPoshta,
     "nz-post": nzPost,
     "ontrac": ontrac,
     "paack": paack,
@@ -162,7 +175,9 @@ export const REGISTRY: RegistryDefinition = {
     "seur": seur,
     "sf-express": sfExpress,
     "singapore-post": singaporePost,
+    "speedpak": speedpak,
     "spring-gds": springGds,
+    "spx-ph": spxPh,
     "sunyou": sunyou,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
@@ -173,6 +188,7 @@ export const REGISTRY: RegistryDefinition = {
     "uniuni": uniuni,
     "ups": ups,
     "usps": usps,
+    "xpressbees": xpressbees,
     "yamato": yamato,
     "yanwen": yanwen,
     "yto": yto,
@@ -198,6 +214,7 @@ export const REGISTRY: RegistryDefinition = {
     "china-post": "universal",
     "chronopost": "la-poste",
     "ciblex": "ciblex",
+    "cne": "universal",
     "colis-prive": "colis-prive",
     "colisweb": "colisweb",
     "correios-br": "correios-br",
@@ -213,12 +230,16 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-ecommerce": "dhl-ecommerce",
     "dhl-express": "dhl-express",
     "dpd": "dpd",
+    "dpd-de": "dpd-de",
     "dpd-fr": "dpd-fr",
+    "dpd-uk": "universal",
     "dtdc": "dtdc",
     "ecoscooting": "ecoscooting",
+    "ekart": "ekart",
     "ems": "ems",
     "estafeta": "estafeta",
     "evri": "evri",
+    "evri-uk": "universal",
     "fedex": "fedex",
     "four-px": "four-px",
     "geodis": "geodis",
@@ -232,17 +253,20 @@ export const REGISTRY: RegistryDefinition = {
     "hongkong-post": "universal",
     "india-post": "india-post",
     "inpost": "inpost",
+    "intelcom": "intelcom",
     "intl-post": "universal",
     "j-and-t": "universal",
     "japan-post": "japan-post",
-    "jd-logistics": "universal",
+    "jd-logistics": "jd-logistics",
     "korea-post": "korea-post",
     "la-poste": "la-poste",
     "landmark-global": "landmark-global",
+    "lbc-express": "universal",
     "mondial-relay": "mondial-relay",
     "mrw": "mrw",
     "nacex": "nacex",
     "ninja-van": "ninja-van",
+    "nova-poshta": "nova-poshta",
     "nz-post": "nz-post",
     "old-dominion": "universal",
     "omgo": "universal",
@@ -261,13 +285,16 @@ export const REGISTRY: RegistryDefinition = {
     "quickpac": "planzer",
     "relais-colis": "relais-colis",
     "royal-mail": "universal",
+    "sagawa": "universal",
     "seur": "seur",
     "sf-express": "sf-express",
     "shipup": "universal",
     "singapore-post": "singapore-post",
     "spee-dee": "universal",
+    "speedpak": "speedpak",
     "speedx": "universal",
     "spring-gds": "spring-gds",
+    "spx-ph": "spx-ph",
     "sto": "universal",
     "sunyou": "sunyou",
     "swiss-post": "swiss-post",
@@ -281,6 +308,7 @@ export const REGISTRY: RegistryDefinition = {
     "unknown": "universal",
     "ups": "ups",
     "usps": "usps",
+    "xpressbees": "xpressbees",
     "yamato": "yamato",
     "yanwen": "yanwen",
     "yto": "yto",

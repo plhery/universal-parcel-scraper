@@ -64,7 +64,7 @@ export function normalizeCarrierInputs(
           `${carrierDefinition(carrierId).displayName} requires the four-digit delivery postcode`,
         );
       }
-      if (requirement.validator === 'francePostcode') {
+      if (requirement.validator === 'francePostcode' || requirement.validator === 'germanyPostcode') {
         throw new TypeError(
           `${carrierDefinition(carrierId).displayName} requires the five-digit delivery postcode`,
         );
@@ -94,6 +94,7 @@ export function normalizeCarrierInputs(
         }
         break;
       case 'francePostcode':
+      case 'germanyPostcode':
         if (!/^\d{5}$/.test(value)) {
           throw new TypeError(
             `${carrierDefinition(carrierId).displayName} requires the five-digit delivery postcode`,

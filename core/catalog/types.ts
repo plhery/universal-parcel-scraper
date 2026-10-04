@@ -17,6 +17,7 @@ export type CarrierInputValidator =
   | 'dachserCapabilityUrl'
   | 'swissPostcode'
   | 'francePostcode'
+  | 'germanyPostcode'
   | 'swissOrFrancePostcode'
   | 'paackPostcode';
 
@@ -85,6 +86,8 @@ export interface DetectionRule {
 export interface RawTrackingLinkRule {
   domains: readonly string[];
   params?: readonly string[];
+  /** Capture a number from the whole query, for portals without named parameters. */
+  query?: string;
   path?: string;
   pathPattern?: string;
   fragment?: string;

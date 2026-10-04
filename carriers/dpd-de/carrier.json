@@ -1,0 +1,94 @@
+{
+  "id": "dpd-de",
+  "displayName": "DPD Germany",
+  "aliases": [
+    "DPD Deutschland"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#dc0032"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dpd-de",
+    "steps": [
+      "direct"
+    ],
+    "requirements": [
+      {
+        "field": "postcode",
+        "optional": true,
+        "label": "Delivery postcode",
+        "type": "text",
+        "pattern": "^[0-9]{5}$",
+        "maxLength": 5,
+        "inputMode": "numeric",
+        "autoComplete": "postal-code",
+        "help": "Optional. DPD uses it to unlock verified scans and the delivery window.",
+        "validator": "germanyPostcode"
+      }
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "sender_name",
+    "pickup_point",
+    "weight",
+    "delivered_at",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://tracking.dpd.de/status/en_US/parcel/{trackingNumber}",
+    "canaryUrl": "https://tracking.dpd.de/status/en_US/parcel/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.dpd.de"
+      ],
+      "path": "^/status/[a-z]{2}_[A-Z]{2}/parcel/(\\d{14})/?$"
+    },
+    {
+      "domains": [
+        "my.dpd.de"
+      ],
+      "params": [
+        "parcelno"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "dpd-de-1",
+      "pattern": "^\\d{14}$",
+      "confidence": "low"
+    }
+  ]
+}

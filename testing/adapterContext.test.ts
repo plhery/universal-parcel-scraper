@@ -73,6 +73,7 @@ function credential(validator: string, number: string): string {
   switch (validator) {
     case 'swissPostcode': case 'swissOrFrancePostcode': return '8000';
     case 'francePostcode': return '75001';
+    case 'germanyPostcode': return '00000';
     case 'paackPostcode': return '28001';
     case 'planzerSharedUrl':
       return `https://trackandtrace.planzergroup.com/shared/sendungen/${number}?accessKey=${'A'.repeat(32)}`;

@@ -1,0 +1,72 @@
+{
+  "id": "speedpak",
+  "displayName": "SpeedPAK",
+  "aliases": [
+    "Orange Connex",
+    "OrangeConnex"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ee7532"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "speedpak",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_partner"
+  ],
+  "portal": {
+    "url": "https://www.orangeconnex.com/tracking",
+    "canaryUrl": "https://www.orangeconnex.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "postcodes"
+    ],
+    "unavailable": [
+      "eta",
+      "pickup_point"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "orangeconnex.com",
+        "orangeconnex.cn"
+      ],
+      "params": [
+        "trackingNumber",
+        "trackingNumbers"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "speedpak-1",
+      "pattern": "^E[ES][A-Z0-9]{26}$",
+      "confidence": "high"
+    }
+  ]
+}

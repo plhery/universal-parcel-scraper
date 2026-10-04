@@ -30,7 +30,8 @@
           "dhl-ecommerce",
           "correos-express",
           "canada-post",
-          "tnt"
+          "tnt",
+          "evri-uk"
         ]
       },
       "note": "Official documentation example, not a real shipment. The source attributes it to DHL eCommerce, which stays one candidate among several."

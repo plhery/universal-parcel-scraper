@@ -1,0 +1,11 @@
+{
+  "carrier": "ekart",
+  "entries": [
+    {
+      "wording": "Pickup Requested",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    }
+  ]
+}

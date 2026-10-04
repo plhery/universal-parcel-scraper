@@ -45,7 +45,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Invented 12-digit placeholder with a valid GLS check digit; the route only resolves it after a verified GLS lookup. Filed under GLS Germany, which stays one candidate among several."

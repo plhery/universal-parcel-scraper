@@ -63,7 +63,8 @@
           "sto",
           "zto",
           "yamato",
-          "j-and-t"
+          "j-and-t",
+          "lbc-express"
         ]
       },
       "note": "Published integration example, not a real shipment. The source attributes it to GLS France, which stays one candidate among several."

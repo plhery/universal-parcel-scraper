@@ -2,7 +2,8 @@
 
 Hermes Germany (myHermes) parcels, tracked through the anonymous recipient
 service the public page calls. Hermes Einrichtungs-Service (furniture) is
-[hermes](../hermes/README.md); Evri, the former Hermes UK, is
+[hermes](../hermes/README.md). The former Hermes UK domestic service is
+[evri-uk](../evri-uk/README.md), and its international service is
 [evri](../evri/README.md).
 
 ## How it works
@@ -18,12 +19,9 @@ back to `Europe/Berlin`) and stored as UTC.
 
 ## Notes
 
-- Detection: `H` + 15–19 digits selects Hermes. A bare 14-digit number is only
-  a suggestion, and only when its last digit passes the modulo-10 check weighted
-  3, 1, 3, … from the left (paketda.de's "Paket-Prüfziffern"). Every publicly
-  reported 14-digit Hermes number in `numbers.json` passes it; about one in ten
-  other 14-digit numbers passes by chance (one La Poste sample does), so Hermes
-  stays a suggestion there.
+- Barcodes shared with Evri remain ambiguous across services. Longer Hermes
+  barcodes retain their existing recognition. Numeric detection uses the
+  published checksum as a preference, since other carriers can pass it too.
 - Stages come from the `parcelStatus` enum only, no wording rules. The enum is
   stable, and wording would only add a chance to be wrong. The enum was read
   from the carrier's public bundle `gcp-prd.my-deliveries.de/tnt/bundle/tnt-bundle-v2.js`.

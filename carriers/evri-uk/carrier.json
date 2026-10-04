@@ -1,0 +1,63 @@
+{
+  "id": "evri-uk",
+  "displayName": "Evri UK",
+  "aliases": [
+    "Hermes UK",
+    "Evri Domestic",
+    "Hermes Domestic UK"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#00014d"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
+  "portal": {
+    "url": "https://www.evri.com/track/parcel/{trackingNumber}/details",
+    "canaryUrl": "https://www.evri.com/track-a-parcel",
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "proof_of_delivery"
+    ],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "evri.com",
+        "www.evri.com"
+      ],
+      "path": "^/track/parcel/([A-Za-z0-9]{16})/details/?$"
+    }
+  ],
+  "detection": [
+    {
+      "id": "evri-uk-1",
+      "pattern": "^H[A-Z0-9]{15}$",
+      "confidence": "low"
+    },
+    {
+      "id": "evri-uk-2",
+      "pattern": "^\\d{16}$",
+      "confidence": "low"
+    }
+  ]
+}

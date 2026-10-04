@@ -558,7 +558,7 @@ describe('DPDTracker steps', () => {
   });
 
   it('recognizes a number only from the guest API and never tries the page', async () => {
-    const known = mockGuestApi(Response.json(READY_FOR_COLLECTION));
+    const known = mockGuestApi(Response.json(DELIVERED_UNVERIFIED));
     const tracker = new DPDTracker({ timeoutMs: 1_000, trawl: null });
     await expect(tracker.recognizes(TRACKING_NUMBER)).resolves.toBe(true);
     expect(String(known.mock.calls[3]?.[0])).toContain('continueWithoutVerification=true');
@@ -583,10 +583,36 @@ describe('DPDTracker steps', () => {
     await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null }).recognizes(TRACKING_NUMBER)).rejects.toThrow();
   });
 
+  it.each(['DE', 'GB'])('does not recognize %s activity as Swiss DPD', async (countryCode) => {
+    const payload = structuredClone(READY_FOR_COLLECTION);
+    (payload.status as Record<string, unknown>).countryCode = countryCode;
+    const fetcher = mockGuestApi(Response.json(payload));
+    await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null }).recognizes(TRACKING_NUMBER)).resolves.toBe(false);
+    expect(fetcher).toHaveBeenCalledTimes(4);
+  });
+
+  it.each([undefined, null, 'UNDEFINED', {}, ''])('keeps missing or unusable Swiss country evidence inconclusive', async (countryCode) => {
+    const payload = structuredClone(READY_FOR_COLLECTION);
+    (payload.status as Record<string, unknown>).countryCode = countryCode;
+    const fetcher = mockGuestApi(Response.json(payload));
+    await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null }).recognizes(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+  });
+
+  it('does not recognize a Swiss identity and summary without shipment activity', async () => {
+    const fetcher = mockGuestApi(Response.json({
+      parcelNumber: TRACKING_NUMBER, status: { description: 'ORDER_CREATED', countryCode: 'CH' }, parcelHistory: [],
+    }));
+    await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null }).recognizes(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+  });
+
   it('shares one guest login between concurrent lookups', async () => {
-    const fetcher = mockGuestApi(Response.json(READY_FOR_COLLECTION))
-      .mockResolvedValueOnce(Response.json(READY_FOR_COLLECTION))
-      .mockResolvedValueOnce(Response.json(READY_FOR_COLLECTION));
+    const fetcher = mockGuestApi(Response.json(DELIVERED_UNVERIFIED))
+      .mockResolvedValueOnce(Response.json(DELIVERED_UNVERIFIED))
+      .mockResolvedValueOnce(Response.json(DELIVERED_UNVERIFIED));
     const tracker = new DPDTracker({ timeoutMs: 1_000, trawl: null });
     await expect(Promise.all([1, 2, 3].map(() => tracker.recognizes(TRACKING_NUMBER)))).resolves.toEqual([true, true, true]);
     // Installation, Remote Config and the token once; three details requests.
@@ -612,7 +638,7 @@ describe('DPDTracker steps', () => {
 
   it('keeps a lookup that was cut short out of the guest login the others share', async () => {
     const fetcher = mockGuestApi(
-      Response.json(READY_FOR_COLLECTION),
+      Response.json(DELIVERED_UNVERIFIED),
       vi.spyOn(globalThis, 'fetch').mockImplementationOnce(unanswered),
     );
     const tracker = new DPDTracker({ timeoutMs: 1_000, trawl: null });

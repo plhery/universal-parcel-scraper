@@ -314,15 +314,27 @@ describe('ParcelsApp result parsing', () => {
       .toEqual(['2026-07-02T18:30:00.000Z']);
   });
 
-  it('reads a bare brand in the clock all of its catalog networks keep', () => {
-    // Live shape (2026-09-26): scans named only "DPD Group", without a location,
-    // on a parcel filed under a carrier with no local clock.
+  it.each([
+    ['DPD UK', '2026-07-02T17:30:00.000Z'],
+    ['DPD Germany', '2026-07-02T16:30:00.000Z'],
+    ['Hermes UK', '2026-07-02T17:30:00.000Z'],
+  ])('lets a scan location refine the country-qualified name %s', (name, local) => {
+    const scan = (location?: string) => parseParcelsAppResponse({
+      carriers: [name], states: [{ date: '2026-07-02T18:30:00+00:00', status: 'In transit', carrier: 0, ...(location ? { location } : {}) }],
+    }, number, identity()).events?.[0]?.time;
+    expect(scan()).toBe(local);
+    expect(scan('Example Hub, Spain')).toBe('2026-07-02T16:30:00.000Z');
+    expect(scan('Example Hub, United States')).toBe('2026-07-02T18:30:00.000Z');
+  });
+
+  it('uses a bare brand clock only when all catalog networks agree', () => {
+    // DPD's catalog includes the UK, so a bare group name has no single clock.
     const scans = (carriers: string[], dates: string[], extra: Record<string, unknown> = {}) => parseParcelsAppResponse({
       carriers, states: dates.map((date) => ({ date, status: 'In transit', carrier: 0, ...extra })),
     }, number, identity()).events?.map((scan) => scan.time);
     expect(scans(['DPD Group'], ['2026-07-02T18:30:00+00:00', '2026-01-14T09:15:00+00:00'])).toEqual([
-      '2026-07-02T16:30:00.000Z', // summer: CEST
-      '2026-01-14T08:15:00.000Z', // winter: CET
+      '2026-07-02T18:30:00.000Z',
+      '2026-01-14T09:15:00.000Z',
     ]);
     expect(scans(['GLS'], ['2026-07-02T18:30:00+00:00'])).toEqual(['2026-07-02T16:30:00.000Z']);
     expect(scans(['Hermes'], ['2026-01-14T09:15:00+00:00'])).toEqual(['2026-01-14T08:15:00.000Z']);
@@ -563,7 +575,7 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
-  it('reads rendered scans in the clock of the carrier each one names, as the JSON reply does', () => {
+  it('preserves the same unresolved brand clocks in rendered and JSON scans', () => {
     const swiss = '06080000000002';
     const page = identity(swiss).replace('</table>', `</table><ul class="events">${
       carrierRow('02 Jul 2026', '10:37', 'Delivered', 'DPD Group')}${carrierRow('14 Jan 2026', '09:15', 'Parcel handed', 'DPD Group')}</ul>`);
@@ -572,7 +584,7 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-07-02T10:37:00+00:00', status: 'Delivered', carrier: 0 },
       { date: '2026-01-14T09:15:00+00:00', status: 'Parcel handed', carrier: 0 },
     ] }, swiss, identity(swiss));
-    expect(rendered.events?.map((scan) => scan.time)).toEqual(['2026-07-02T08:37:00.000Z', '2026-01-14T08:15:00.000Z']);
+    expect(rendered.events?.map((scan) => scan.time)).toEqual(['2026-07-02T10:37:00.000Z', '2026-01-14T09:15:00.000Z']);
     expect(rendered.events?.map((scan) => scan.time)).toEqual(json.events?.map((scan) => scan.time));
     expect(rendered).toMatchObject({ reported_carriers: ['DPD Group'], discovered_carrier: 'dpd' });
   });

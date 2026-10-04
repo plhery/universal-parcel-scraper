@@ -10,8 +10,12 @@
         "date": "2026-05-18"
       },
       "expect": {
-        "carrier": "evri",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri",
+          "evri-uk"
+        ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. Evri International parcel."
     },
@@ -23,8 +27,12 @@
         "url": "https://wobaaa.com/aliexpress-uk-tracking-numbers/"
       },
       "expect": {
-        "carrier": "evri",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri",
+          "evri-uk"
+        ]
       },
       "note": "Published integration example, not a real shipment."
     }

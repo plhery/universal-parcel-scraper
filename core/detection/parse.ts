@@ -31,9 +31,10 @@ function queryParam(url: URL, names: string[]): string | undefined {
 
 function numberFromRule(url: URL, rule: TrackingLinkRule): string | undefined {
   const fromQuery = rule.params ? queryParam(url, rule.params) : undefined;
+  const fromBareQuery = rule.query?.exec(decodeURIComponent(url.search.slice(1)))?.[1];
   const fromPath = rule.path?.exec(url.pathname)?.[1];
   const fromFragment = rule.fragment?.exec(decodeURIComponent(url.hash.slice(1)))?.[1];
-  const candidate = cleanLinkTrackingNumber(fromQuery ?? fromPath ?? fromFragment ?? '');
+  const candidate = cleanLinkTrackingNumber(fromQuery ?? fromBareQuery ?? fromPath ?? fromFragment ?? '');
   return validTrackingNumber(candidate) ? candidate : undefined;
 }
 

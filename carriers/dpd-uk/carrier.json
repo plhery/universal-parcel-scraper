@@ -1,0 +1,59 @@
+{
+  "id": "dpd-uk",
+  "displayName": "DPD UK",
+  "aliases": [
+    "DPD United Kingdom"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#dc0032"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
+  "portal": {
+    "url": "https://track.dpd.co.uk/?reference={trackingNumber}",
+    "canaryUrl": "https://track.dpd.co.uk/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.dpd.co.uk",
+        "tracking.dpd.co.uk"
+      ],
+      "params": [
+        "reference",
+        "parcelNumber"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "dpd-uk-1",
+      "pattern": "^\\d{14}$",
+      "confidence": "low"
+    }
+  ]
+}

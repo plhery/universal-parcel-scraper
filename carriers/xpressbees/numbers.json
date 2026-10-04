@@ -1,0 +1,50 @@
+{
+  "carrier": "xpressbees",
+  "records": [
+    {
+      "number": "94391823031857",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/xpressbees.com?page=3"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk",
+          "xpressbees"
+        ]
+      },
+      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+    },
+    {
+      "number": "10000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "dpd",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk",
+          "xpressbees"
+        ]
+      },
+      "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    }
+  ]
+}

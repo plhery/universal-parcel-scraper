@@ -1,0 +1,38 @@
+{
+  "carrier": "dpd-de",
+  "entries": [
+    {
+      "code": "PARCEL_HANDED",
+      "wording": "Parcel handed to DPD",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Moves the result to in_transit; no milestone of its own, so the event stays unmapped for the sync to classify. Its verified parcelEvents twin is ORI."
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "Your parcel is on its way",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Moves the result to in_transit; no milestone of its own, so the event stays unmapped for the sync to classify."
+    },
+    {
+      "code": "AT_DELIVERY_CENTER",
+      "wording": "At delivery center",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Moves the result to in_transit; no milestone of its own, so the event stays unmapped for the sync to classify."
+    },
+    {
+      "code": "UNSUCCESSFUL_DELIVERY_ATTEMPT",
+      "wording": "Unsuccessful delivery attempt",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "A retry, not a terminal state: the result status stays in_transit."
+    }
+  ]
+}
