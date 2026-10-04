@@ -1,17 +1,21 @@
 # Choosing a provider
 
-[coverage.json](coverage.json) records the evidence; [COVERAGE.md](COVERAGE.md) renders it.
-`universalPlan()` orders eligible providers by the carrier's history tier, prefers HTTP over
-browser within a tier, and retains the default order for ties. Inconclusive and empty sources
-remain eligible; wrong-carrier replies and refused formats are excluded when another usable
-source remains. Extra references inform those tiers without changing the README comparison.
+[coverage.json](coverage.json) records the evidence and [COVERAGE.md](COVERAGE.md) renders it.
+This page says how that evidence becomes an order.
 
-Validated China Post C/L postal numbers prioritize 17TRACK. UPU requires a valid S10 number
-and stays last because its exchange-office history is sparse. A provider is called at most
-once per lookup, with a bounded budget. All commercial providers require explicit selection
-by the consumer; the facade's default is UPU only.
+`universalPlan()` takes the eligible providers for a carrier and sorts them by that carrier's
+history tier, fuller history first. Within a tier, plain HTTP comes before a browser. Ties
+keep the default order. A source that was inconclusive or empty stays eligible. One that
+answered with the wrong carrier or refused the format is left out, as long as another usable
+source remains. Extra references inform the tiers without changing the README comparison.
 
-[universalPlan](plan.ts) is browser-safe. Protocol implementations live in each provider folder.
-The facade applies the selected provider set; consumers with their own router can use the
-same order and the Node primitives. Persistence, affinity, retries between lookups and shared
-cooldowns belong to the consumer.
+Two rules sit on top. Validated China Post C/L postal numbers go to 17TRACK first. UPU needs
+a valid S10 number and stays last, because its exchange-office history is sparse.
+
+A provider is called at most once per lookup, with a bounded budget. The aggregators run only
+when the consumer selects them, and the facade's default is UPU alone.
+
+[universalPlan](plan.ts) is safe for browsers. Protocol implementations live in each provider
+folder. The facade applies the selected provider set, and consumers with their own router can
+use the same order with the Node primitives. Persistence, affinity, retries between lookups
+and shared cooldowns belong to the consumer.

@@ -1,10 +1,12 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { coverageChart, darken, stagesFigure, terminal, themes } from './readme-graphics.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const read = name => JSON.parse(readFileSync(path.join(root, name), 'utf8'));
 const documents = readdirSync(path.join(root, 'carriers'), { withFileTypes: true }).filter(entry => entry.isDirectory())
-  .map(entry => JSON.parse(readFileSync(path.join(root, 'carriers', entry.name, 'carrier.json'), 'utf8')));
-const coverage = JSON.parse(readFileSync(path.join(root, 'providers/coverage.json'), 'utf8')).carriers;
+  .map(entry => read(`carriers/${entry.name}/carrier.json`));
+const coverage = read('providers/coverage.json').carriers;
 if (coverage.length !== 100) throw new Error('Update the reference-set label when the comparison cohort changes');
 const sources = ['ParcelsApp','Postal Ninja','17TRACK','Ship24','UPU'];
 const history = cell => typeof cell === 'number' && cell > 0 || cell === 'history'
@@ -18,52 +20,47 @@ const activeAdapters = documents.filter(document => document.tracking.mode === '
 const countries = new Set(documents.flatMap(document => document.region.countries)).size;
 const summary = { catalog: documents.length, activeAdapters, countries, referenceCarriers: coverage.length,
   comparison: { combined: union, direct: coverage.filter(direct).length, providers: counts } };
-// GitHub's light and dark surfaces. The dark diagram is the light one with these colours swapped.
-const themes = {
-  light: { ink: '#1f2328', muted: '#59636e', line: '#d1d9e0', box: '#f6f8fa', accent: '#0b8068', tint: '#e6f4f0', other: '#9aa2ab' },
-  dark: { ink: '#f0f6fc', muted: '#9198a1', line: '#3d444d', box: '#151b23', accent: '#2a9d85', tint: '#12302b', other: '#59626d' },
-};
+const count = value => value.toLocaleString('en-US');
+// The fallbacks reach what the largest aggregator says it follows.
+const reach = Math.max(...Object.values(read('docs/reach.json')).map(provider => provider.carriers));
 const rows = [
   { label: 'This project, all fallbacks enabled', count: union, own: true },
   { label: 'This project, dedicated adapters alone', count: summary.comparison.direct, own: true },
   ...sources.map(source => ({ label: source, count: counts[source], own: false })),
 ];
-function chart(theme) {
-  const left = 270, scale = 420, pitch = 34, top = 44, bottom = top + rows.length * pitch;
-  const at = count => Math.round(left + count / coverage.length * scale);
-  const bar = (row, index) => {
-    const y = top + index * pitch + 8, width = Math.max(8, at(row.count) - left);
-    return [
-      `  <text x="0" y="${y + 13.5}" fill="${theme.ink}"${row.own ? ' font-weight="600"' : ''}>${row.label}</text>`,
-      `  <path d="M${left} ${y}h${width - 4}a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-${width - 4}z" fill="${row.own ? theme.accent : theme.other}"/>`,
-      `  <text x="${left + width + 8}" y="${y + 13.5}" fill="${theme.ink}"${row.own ? ' font-weight="600"' : ''}>${row.count}</text>`,
-    ].join('\n');
-  };
-  const ticks = [0, coverage.length / 2, coverage.length];
-  return [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 ${bottom + 30}" role="img" aria-label="Carriers with tracking history, by source">`,
-    `  <style>text { font: 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; }</style>`,
-    `  <text x="0" y="16" fill="${theme.muted}">Carriers with tracking history, out of ${coverage.length}</text>`,
-    `  <rect x="${left + scale - 222}" y="6" width="10" height="10" rx="2" fill="${theme.accent}"/>`,
-    `  <text x="${left + scale - 206}" y="16" fill="${theme.muted}">this project</text>`,
-    `  <rect x="${left + scale - 118}" y="6" width="10" height="10" rx="2" fill="${theme.other}"/>`,
-    `  <text x="${left + scale - 102}" y="16" fill="${theme.muted}">one source alone</text>`,
-    ...ticks.map(tick => `  <path d="M${at(tick) + .5} ${top}V${bottom}" stroke="${theme.line}"/>`),
-    ...rows.map(bar),
-    ...ticks.map(tick => `  <text x="${at(tick)}" y="${bottom + 20}" fill="${theme.muted}" text-anchor="middle" style="font-size: 11.5px">${tick}</text>`),
-    '</svg>', '',
-  ].join('\n');
-}
-const picture = (name, alt) => [
+// Every status a carrier folder records, and one delivery round as six of them report it.
+const statuses = documents.flatMap(document => existsSync(path.join(root,'carriers',document.id,'statuses.json'))
+  ? read(`carriers/${document.id}/statuses.json`).entries.map(entry => ({ ...entry, carrier: document })) : []);
+const stage = 'out_for_delivery';
+const samples = [['dhl','Die Sendung wurde in das Zustellfahrzeug geladen.'], ['mondial-relay','En cours de livraison'],
+  ['correios-br','Objeto saiu para entrega ao destinatário'], ['correos-express','EN REPARTO'], ['yamato','配達中'], ['la-poste','DISTOU']]
+  .map(([carrier, label]) => {
+    const entry = statuses.find(status => status.carrier.id === carrier && (status.wording ?? status.code) === label && status.stage === stage);
+    if (!entry) throw new Error(`${carrier} no longer records "${label}" as ${stage}; pick another sample for the README`);
+    return { carrier: entry.carrier.displayName, label, code: !entry.wording };
+  });
+// The terminal prints what detection answers for a number the corpus holds.
+const sample = read('data/detection-golden.json').find(record => record.input === '1Z999AA10123456784');
+if (sample?.confidence !== 'high') throw new Error('The README terminal needs a corpus number that detection names with high confidence');
+const detected = JSON.stringify({ trackingNumber: sample.input, source: 'number', carrier: sample.carrier,
+  confidence: sample.confidence, candidates: sample.candidates, preferred: [] }, null, 2).split('\n');
+const picture = (name, alt, width) => [
   '<picture>',
   `  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/${name}-dark.svg">`,
-  `  <img src="docs/assets/${name}-light.svg" alt="${alt}" width="760">`,
+  `  <img src="docs/assets/${name}-light.svg" alt="${alt}" width="${width}">`,
   '</picture>',
 ].join('\n');
 const blocks = {
-  summary: `**${documents.length} carriers · ${activeAdapters} active dedicated adapters · ${countries} countries represented**`,
+  summary: [
+    `**${count(reach)}+ carriers** through **${activeAdapters} dedicated adapters** and **${sources.length} universal fallbacks**`,
+    '', `<sub>${documents.length} carriers in the catalog · ${countries} countries represented</sub>`,
+  ].join('\n'),
+  stages: [
+    picture('stages', `${samples.map(entry => `${entry.carrier}: ${entry.label}`).join('; ')}. All are filed under ${stage}.`, 760),
+    '', `The folders hold ${count(statuses.length)} recorded statuses from ${new Set(statuses.map(status => status.carrier.id)).size} carriers.`,
+  ].join('\n'),
   coverage: [
-    picture('coverage', `Carriers with tracking history: ${rows.map(row => `${row.label} ${row.count}`).join(', ')}.`),
+    picture('coverage', `Carriers with tracking history: ${rows.map(row => `${row.label} ${row.count}`).join(', ')}.`, 760),
     '', '<details>', '<summary>The same numbers as a table</summary>', '',
     '| Source | Carriers with history |', '| --- | ---: |',
     `| **Universal Parcel Scraper, all fallbacks enabled** | **${union} / ${coverage.length}** |`,
@@ -79,14 +76,17 @@ for (const [name, content] of Object.entries(blocks)) {
   if (!next.includes(start) || !next.includes(end)) throw new Error(`Missing README ${name} markers`);
   next = next.replace(new RegExp(`${start}[\\s\\S]*?${end}`), `${start}\n${content}\n${end}`);
 }
-const diagram = readFileSync(path.join(root,'docs/assets/how-it-works-light.svg'),'utf8');
 const outputs = { 'README.md': next, 'data/coverage-summary.json': JSON.stringify(summary,null,2)+'\n',
-  'docs/assets/coverage-light.svg': chart(themes.light), 'docs/assets/coverage-dark.svg': chart(themes.dark),
-  'docs/assets/how-it-works-dark.svg': Object.keys(themes.light).reduce((svg, role) => svg.replaceAll(themes.light[role], themes.dark[role]), diagram) };
+  'docs/assets/terminal.svg': terminal(`npx universal-parcel-scraper detect ${sample.input}`, detected),
+  'docs/assets/how-it-works-dark.svg': darken(readFileSync(path.join(root,'docs/assets/how-it-works-light.svg'),'utf8')) };
+for (const [name, theme] of Object.entries(themes)) {
+  outputs[`docs/assets/coverage-${name}.svg`] = coverageChart(rows, coverage.length, theme);
+  outputs[`docs/assets/stages-${name}.svg`] = stagesFigure(samples, stage, read('data/stages.json'), theme);
+}
 for (const [name, content] of Object.entries(outputs)) {
   const file = path.join(root,name);
   if (process.argv.includes('--check')) {
     if (!existsSync(file) || readFileSync(file,'utf8') !== content) throw new Error(`${name} is stale; run npm run generate`);
   } else { mkdirSync(path.dirname(file), { recursive: true }); writeFileSync(file,content); }
 }
-console.log('README coverage and its chart are generated from the catalog and comparison references.');
+console.log('The README counts and pictures are generated from the catalog, the status records and the comparison references.');

@@ -1,15 +1,18 @@
 # Carrier coverage by tracking source
 
-The 100 carriers in [coverage.json](coverage.json) form a curated comparison set, not a
+The 100 carriers in [coverage.json](coverage.json) are a curated comparison set, not a
 market-share ranking. Each provider was called separately on the same comparison reference.
-Direct samples name alternatives when that reference is outside the adapter's scope or no
-longer available. The README counts only direct cells beginning with a check mark and the
-first provider reference; it excludes alternate samples.
+A direct sample names an alternative when that reference is outside the adapter's scope or
+no longer available. The README counts only the direct cells that begin with a check mark and
+the first provider reference. It leaves alternate samples out.
 
-A check mark means scan history was retrieved; counts are projected rows, including partial
-histories. Translations, repeated reports and postal exchange-office rows can increase a
-count without adding progress. Summary-only, challenges and failed identity checks do not
-count as history. Expired-reference negatives do not establish current carrier coverage.
+## Reading the table
+
+A check mark means scan history came back. The number beside it counts projected rows,
+partial histories included. Translations, repeated reports and postal exchange-office rows
+can raise that count without adding progress. A summary alone, a challenge or a failed
+identity check does not count as history. A negative on an expired reference says nothing
+about current coverage.
 
 <!-- GENERATED:coverage -->
 | Carrier | Direct support | Direct sample | Ship24 | ParcelsApp | 17TRACK | Postal Ninja | UPU |

@@ -1,22 +1,26 @@
 <div align="center">
 
-<img src="docs/assets/logo.svg" width="88" alt="">
+<img src="docs/assets/pip.svg" width="112" alt="Pip, a kraft parcel with a face">
 
 # Universal Parcel Scraper
 
 **Parcel tracking that asks the carrier directly, from your own machine.**
+
+The engine behind [Peek](https://github.com/plhery/delivery-tracker), the open-source parcel tracker for iPhone and the web.
 
 [![npm](https://img.shields.io/npm/v/universal-parcel-scraper)](https://www.npmjs.com/package/universal-parcel-scraper)
 [![CI](https://github.com/plhery/universal-parcel-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/plhery/universal-parcel-scraper/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/core-Apache--2.0-blue.svg)](LICENSE)
 
 <!-- GENERATED:summary -->
-**105 carriers · 85 active dedicated adapters · 58 countries represented**
+**3,500+ carriers** through **85 dedicated adapters** and **5 universal fallbacks**
+
+<sub>105 carriers in the catalog · 58 countries represented</sub>
 <!-- /GENERATED:summary -->
 
 [Try it](#try-it) · [Ways to run it](#ways-to-run-it) · [Coverage](#how-much-can-it-track) · [Carriers](carriers/) · [Add a carrier](CONTRIBUTING.md)
 
-<img src="docs/assets/demo.svg" width="840" alt="The track command printing a parcel's history as JSON, next to a timeline drawn from it">
+<img src="docs/assets/terminal.svg" width="840" alt="A terminal session: the detect command names UPS as the carrier of a tracking number, then the track command prints a parcel's scans with their stages">
 
 </div>
 
@@ -24,10 +28,15 @@ Give it a tracking number. It works out which carrier the number belongs to and 
 history from that carrier's own website. What comes back has one shape, so a UPS parcel and
 a Poczta Polska parcel look the same to your code.
 
-There is no account to open and no API key. Every carrier publishes tracking in its own way,
-and hosted tracking APIs smooth that over for a fee while seeing every number you look up.
-Here the same work is open code: one adapter per carrier, each in [its own folder](carriers/)
-with a README on how that site is read.
+There is no account to open and no API key. The carriers it knows best each have a dedicated
+adapter in [their own folder](carriers/), with a README on how that site is read. For the
+rest it can ask the universal trackers such as 17TRACK and Ship24, which is where the big
+number above comes from. Those stay off until you switch them on, and each one you enable
+sees the numbers you send it.
+
+It started as the tracking engine inside [Peek](https://github.com/plhery/delivery-tracker)
+and was pulled out so it can be used on its own. It runs as a command-line tool and as a Node
+library, and it can serve the same lookups over HTTP.
 
 ## Try it
 
@@ -138,8 +147,8 @@ The image runs `serve` and ships Chromium, for the carriers that only answer a r
 
 ## What you can build with it
 
-- **A tracking screen in your own app.** [Delivery Tracker](https://github.com/plhery/delivery-tracker),
-  an open-source iPhone app and PWA, runs on this package.
+- **A parcel-tracking app.** [Peek](https://github.com/plhery/delivery-tracker) is the
+  full-size example: an iPhone and web app built on this package.
 - **A Home Assistant sensor** for the parcel you are waiting on.
   [The config is in examples](examples/home-assistant.yaml).
 - **Order status inside a shop or help desk**, so customers are not sent off to the carrier's
@@ -156,7 +165,7 @@ are yours to do.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/how-it-works-dark.svg">
-  <img src="docs/assets/how-it-works-light.svg" width="840" alt="An input is detected offline and tracked by the carrier's dedicated adapter. With no history, the lookup moves to the fallbacks you enabled. Either way the result is one timeline.">
+  <img src="docs/assets/how-it-works-light.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback you enabled when that finds no history. Each scan's wording is filed under a stage, and the result is one timeline.">
 </picture>
 
 Each adapter uses plain HTTP wherever the carrier's site allows it. Some sites only answer a
@@ -181,14 +190,35 @@ one you enable receives the tracking number:
 createTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'] });
 ```
 
+### One stage list
+
+Carriers describe the same moment in their own words, or with a bare code. Each carrier
+folder keeps a `statuses.json` with the codes and wordings seen from that carrier and the
+stage each one means. Every entry also says how it was confirmed, by a live reply or the
+carrier's own documentation for instance.
+
+<!-- GENERATED:stages -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/stages-dark.svg">
+  <img src="docs/assets/stages-light.svg" alt="DHL: Die Sendung wurde in das Zustellfahrzeug geladen.; Mondial Relay: En cours de livraison; Correios Brazil: Objeto saiu para entrega ao destinatário; Correos Express: EN REPARTO; Yamato Transport: 配達中; La Poste / Colissimo: DISTOU. All are filed under out_for_delivery." width="760">
+</picture>
+
+The folders hold 1,671 recorded statuses from 88 carriers.
+<!-- /GENERATED:stages -->
+
+A scan nobody has recorded yet goes through a shared classifier that reads English, French,
+German, Italian, Spanish, Portuguese and Polish. Each scan in the result carries a
+`stage_source` saying which of the two decided.
+
 [ARCHITECTURE.md](ARCHITECTURE.md) has the rest.
 
 ## How much can it track?
 
-A carrier count says what the catalog knows about. Whether a real parcel comes back with its
-history is a different question, so each source was run on its own against the same
-**100-carrier reference set**. The top bar counts a carrier when any source below it returned
-a history.
+The number at the top of this page is reach: with the fallbacks on, a lookup can go to the
+largest aggregator, and [reach.json](docs/reach.json) records how many carriers each one
+says it follows. Whether a real parcel comes back with its history is a different question,
+so each source was run on its own against the same **100-carrier reference set**. The top
+bar counts a carrier when any source below it returned a history.
 
 <!-- GENERATED:coverage -->
 <picture>
@@ -225,15 +255,15 @@ or a promise about today, because parcels expire and carrier sites change.
 | Account | None | Sign-up and an API key |
 | Cost | Your own compute | A plan or a per-shipment price |
 | Who sees the tracking number | The carrier, plus any fallback you enable | The vendor, then the carrier |
-| Carriers | The [catalog](carriers/) in this repository | A much larger catalog |
+| Carriers | Dedicated adapters for the [catalog](carriers/), fallbacks for the rest | One large catalog |
 | Updates | You poll | Webhooks |
 | When a carrier changes its site | The adapter breaks until it is fixed here | The vendor deals with it |
 | Hosting | Yours | Theirs |
 
-If you want the widest catalog and nothing to run, a hosted API is the better choice. This
-project is for when the numbers should stay on your side, or when a price per parcel makes
-no sense for what you are building. Vendor catalog totals are not comparable with the
-reference test above.
+If you want webhooks and nothing to run, a hosted API is the better choice. This project is
+for when the numbers should stay on your side, or when a price per parcel makes no sense for
+what you are building. Vendor catalog totals are not comparable with the reference test
+above.
 
 ## Privacy and limits
 
