@@ -115,6 +115,13 @@ says how it got there:
   [core/status](core/status/wording.ts).
 - A scan no rule matches takes the caller's fallback.
 
+Adapters retain `stage_source` when they classify wording before returning a stage.
+Explicit carrier vocabularies and provider codes use `carrier_map`; text rules use
+`wording:<rule>`, and unmatched text uses `none`. Resolution preserves that source,
+including on `pending` events. Universal summaries carry `current_stage_source` from
+the event that establishes the current stage. Consumers can review wording and
+fallback decisions without mistaking them for explicit maps.
+
 Each carrier's `statuses.json` records the codes and wordings seen from that carrier and the
 stage each one means. [CORPUS.md](CORPUS.md) describes those records.
 

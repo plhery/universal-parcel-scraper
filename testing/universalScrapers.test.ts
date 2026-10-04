@@ -33,8 +33,8 @@ describe('Postal Ninja and Ship24 result parsing', () => {
     const parsed = parsePostalNinjaResponse(ninja(), number);
     expect(parsed).toMatchObject({ tracking_provider: 'Postal Ninja', current_stage: 'delivered', last_update: null });
     expect(parsed.events).toEqual([
-      { local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered' },
-      { local_time: '2026-08-17T07:22:00', description: 'Out for delivery', stage: 'out_for_delivery' },
+      { local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered', stage_source: 'wording:provider' },
+      { local_time: '2026-08-17T07:22:00', description: 'Out for delivery', stage: 'out_for_delivery', stage_source: 'wording:provider' },
     ]);
     expect(JSON.stringify(parsed)).not.toContain('PRIVATE');
   });
@@ -83,7 +83,7 @@ describe('Postal Ninja and Ship24 result parsing', () => {
     // An undated newest scan never fabricates last_update (same rule as Postal Ninja).
     expect(parsed).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: null });
     expect(parsed.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-09-11T19:32:00', '2026-09-11T17:32:00.000Z', '2026-09-11T10:00:00']);
-    expect(parsed.events?.[0]).toEqual({ local_time: '2026-09-11T19:32:00', description: 'DEPOT CHRONOPOST, Shipment in transit', stage: 'in_transit' });
+    expect(parsed.events?.[0]).toEqual({ local_time: '2026-09-11T19:32:00', description: 'DEPOT CHRONOPOST, Shipment in transit', stage: 'in_transit', stage_source: 'wording:language' });
     expect(JSON.stringify(parsed)).not.toContain('datetime');
   });
 
@@ -94,7 +94,7 @@ describe('Postal Ninja and Ship24 result parsing', () => {
     } }, number, timezone).events?.[0];
     // La Poste and its Chronopost leg keep one clock: 19:32 in Paris is 17:32 UTC.
     expect(withCouriers(['La Poste', 'Chronopost'])).toEqual({
-      time: '2026-09-11T17:32:00.000Z', description: 'DEPOT CHRONOPOST, Shipment in transit', stage: 'in_transit',
+      time: '2026-09-11T17:32:00.000Z', description: 'DEPOT CHRONOPOST, Shipment in transit', stage: 'in_transit', stage_source: 'wording:language',
     });
     // Couriers on different clocks cannot say which one scanned; the place can.
     expect(withCouriers(['Swiss Post', 'USPS'])?.local_time).toBe('2026-09-11T19:32:00');

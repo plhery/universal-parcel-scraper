@@ -4,15 +4,16 @@ import type { AdapterFactory } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { eventStage, hasPrivateDeliveryDetails, isNotice, numberOf, result, text } from '../shared/result.js';
+import { classifyEvent, hasPrivateDeliveryDetails, isNotice, numberOf, result, text } from '../shared/result.js';
 
 const SOURCE = 'UPU';
 export const UPU_BUDGET_MS = 8_000;
 const MAX_EVENTS = 1_000;
-const STAGES: Record<string, string> = {
+const STAGES: Record<string, Stage> = {
   EMA: 'accepted', EMB: 'in_transit', EMC: 'in_transit', EMD: 'in_transit',
   EDA: 'customs', EDB: 'customs', EDC: 'in_transit',
   EXA: 'customs', EXB: 'customs', EXC: 'in_transit', EMI: 'delivered',
@@ -58,11 +59,13 @@ export function parseUpuResponse(payload: unknown, trackingNumber: string): Carr
     // DLV means a forecast, not final delivery. Do not let it advance freshness.
     if (raw.EventCd === 'DLV' || /\b(?:estimated|expected|predicted) delivery\b/i.test(description)) continue;
     if (!description || isNotice(description)) throw new SchemaError(SOURCE, 'UPU returned no event label');
-    const stage = STAGES[raw.EventCd] ?? eventStage(description) ?? 'pending';
+    const mapped = STAGES[raw.EventCd];
+    const classified = mapped ? { stage: mapped, stage_source: 'carrier_map' } : classifyEvent(description);
+    const { stage } = classified;
     if (stage !== 'delivered' && hasPrivateDeliveryDetails(description)) continue;
     const location = text(raw.EventLocation);
     events.push({ local_time: localTime(raw.EventDT), provider_code: raw.EventCd,
-      description: stage === 'delivered' ? 'Delivered' : description, stage,
+      description: stage === 'delivered' ? 'Delivered' : description, ...classified,
       ...(location && !hasPrivateDeliveryDetails(location) ? { location } : {}),
     });
   }

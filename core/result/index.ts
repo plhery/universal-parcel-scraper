@@ -24,6 +24,8 @@ export interface CarrierEvent extends JsonObject {
   location?: string;
   description?: string;
   stage?: string;
+  /** Explicit map, wording rule, or unresolved fallback used by the adapter. */
+  stage_source?: string;
   provider_code?: string;
   /**
    * Where the carrier itself puts the scanning facility, when it says so. The
@@ -40,6 +42,8 @@ export interface EventPoint extends JsonObject {
 export interface CarrierResult extends JsonObject {
   status?: CarrierStatus;
   current_stage?: string;
+  /** How the adapter chose current_stage, when it records that decision. */
+  current_stage_source?: string;
   last_status_text?: string | null;
   last_update?: string | null;
   expected_delivery?: string | null;
@@ -74,6 +78,7 @@ const STATUSES = new Set<CarrierStatus>([
 ]);
 const CURRENT_STAGES = new Set<string>(STAGES);
 const OPTIONAL_TEXT_FIELDS = [
+  'current_stage_source',
   'last_status_text',
   'last_update',
   'expected_delivery',
@@ -87,7 +92,7 @@ const OPTIONAL_TEXT_FIELDS = [
   'international_tracking_number',
   'timezone',
 ] as const;
-const EVENT_TEXT_FIELDS = ['time', 'location', 'description', 'stage'] as const;
+const EVENT_TEXT_FIELDS = ['time', 'location', 'description', 'stage', 'stage_source'] as const;
 
 /** A carrier's coordinates for a scan, or null when they are not a usable point. */
 export function eventPoint(latitude: unknown, longitude: unknown): EventPoint | null {

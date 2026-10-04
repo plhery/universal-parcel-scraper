@@ -6,8 +6,7 @@
  *
  * The wording -> stage logic below is provider vocabulary (Ship24, ParcelsApp,
  * 17TRACK and Postal Ninja all render the same aggregated scans), not a
- * carrier status map. It is kept here unchanged while the classifiers are
- * merged in a later step.
+ * carrier status map. Its decisions retain their wording-rule provenance.
  */
 import { DateTime } from 'luxon';
 import { trackingLanguageStage } from '../../core/status/index.js';
@@ -87,22 +86,34 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
 }
 
 export function eventStage(description: string): Stage | undefined {
-  return sourceEventStage(description, false) ?? trackingLanguageStage(description) ?? sourceEventStage(description);
+  const classified = classifyEvent(description);
+  return classified.stage_source === 'none' ? undefined : classified.stage;
+}
+
+/** Retain the decision before delivery wording is redacted or a stage is projected. */
+export function classifyEvent(description: string, declared?: Stage): { stage: Stage; stage_source: string } {
+  const specific = sourceEventStage(description, false);
+  if (specific) return { stage: specific, stage_source: 'wording:provider' };
+  if (declared) return { stage: declared, stage_source: 'carrier_map' };
+  const translated = trackingLanguageStage(description);
+  if (translated) return { stage: translated, stage_source: 'wording:language' };
+  const broad = sourceEventStage(description);
+  return { stage: broad ?? 'pending', stage_source: broad ? 'wording:provider' : 'none' };
 }
 
 const EXPLICIT_OFFSET = /(?:Z|[+-]\d{2}:\d{2})$/;
 const LOCAL_WALL_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 
-function describe(description: unknown, stage?: unknown): { description: string; stage: Stage | 'pending' } | null {
+function describe(description: unknown, stage?: unknown): { description: string; stage: Stage; stage_source: string } | null {
   const label = text(description);
   if (!label || isNotice(label)) return null;
   const declared = typeof stage === 'string' && Object.hasOwn(STAGES, stage) ? STAGES[stage] : undefined;
   // Established source semantics (e.g. handoff/negation) remain first. A real
   // provider stage outranks the new intuitive translation fallback.
-  const resolved = sourceEventStage(label, false) ?? declared ?? trackingLanguageStage(label) ?? sourceEventStage(label);
-  if (resolved !== 'delivered' && hasPrivateDeliveryDetails(label)) return null;
+  const classified = classifyEvent(label, declared);
+  if (classified.stage !== 'delivered' && hasPrivateDeliveryDetails(label)) return null;
   // Delivery descriptions can include signatures, access codes or door numbers.
-  return { description: resolved === 'delivered' ? 'Delivered' : label, stage: resolved ?? 'pending' };
+  return { description: classified.stage === 'delivered' ? 'Delivered' : label, ...classified };
 }
 
 export function event(time: unknown, description: unknown, stage?: unknown): CarrierEvent | null {
@@ -142,14 +153,16 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
     .sort((a, b) => preserveOrder ? 0 : moment(b).localeCompare(moment(a))).slice(0, 100);
   // A well-formed reply with no scan left after notices and private details proves nothing about the parcel.
   if (!unique.length) throw new IndeterminateError(source, 'No usable tracking events');
-  const current = unique.find((e) => e.stage && e.stage !== 'pending')?.stage as Stage | undefined;
+  const currentEvent = unique.find((e) => e.stage && e.stage !== 'pending');
+  const current = currentEvent?.stage as Stage | undefined;
   // Unknown wording can be displayed, but must not imply movement.
   const status: CarrierStatus = current === 'delivered' ? 'delivered'
     : current === 'registered' || !current ? 'pending'
       : current === 'out_for_delivery' || current === 'ready_for_pickup' ? 'out_for_delivery'
         : ['returned', 'failed_attempt', 'exception'].includes(current) ? 'exception' : 'in_transit';
   return {
-    status, current_stage: current ?? 'pending', last_status_text: unique[0]!.description,
+    status, current_stage: current ?? 'pending', current_stage_source: currentEvent?.stage_source ?? 'none',
+    last_status_text: unique[0]!.description,
     last_update: unique[0]!.time ?? null, expected_delivery: null, timezone: 'UTC',
     tracking_provider: source, events: unique,
   };

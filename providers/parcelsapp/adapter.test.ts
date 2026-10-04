@@ -47,6 +47,7 @@ describe('ParcelsApp YTO scans', () => {
   it('gives both label languages the same stages and stored wording', () => {
     const chinese = history('chinese', [0, 1, 2, 3, 4, 5]);
     expect(history('english', [0, 1, 2, 3, 4, 5]).events).toEqual(chinese.events);
+    expect(chinese.events?.every((event) => event.stage_source === 'carrier_map')).toBe(true);
     expect(chinese).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
     expect(chinese.events?.map((event) => [event.time, event.description, event.stage])).toEqual([
       ['2026-05-06T10:00:00.000Z', 'Delivered', 'delivered'],
@@ -78,9 +79,9 @@ describe('ParcelsApp YTO scans', () => {
 
   it('leaves labels of other carriers and unknown YTO labels to the shared rules', () => {
     const other = parseParcelsAppResponse({ carriers: ['Example Parcel Co'], states: [{ date: '2026-05-01T18:00:00Z', status: '派件扫描', carrier: 0 }] }, number, identity());
-    expect(other.events?.[0]).toMatchObject({ description: '派件扫描', stage: 'pending' });
+    expect(other.events?.[0]).toMatchObject({ description: '派件扫描', stage: 'pending', stage_source: 'none' });
     const unknown = parseParcelsAppResponse({ carriers: ['YTO Express'], states: [{ date: '2026-05-01T18:00:00Z', status: '问题件扫描', carrier: 0 }] }, number, identity());
-    expect(unknown.events?.[0]).toMatchObject({ description: '问题件扫描', stage: 'pending' });
+    expect(unknown.events?.[0]).toMatchObject({ description: '问题件扫描', stage: 'pending', stage_source: 'none' });
   });
 
   it('reads the same scans from the rendered page', () => {

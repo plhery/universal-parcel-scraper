@@ -228,7 +228,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       events.push(parsed);
       scanCarriers.add(name);
     }
-    if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage }), scan });
+    if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage, stage_source: 'carrier_map' }), scan });
   }
   markReturnLeg(scans);
   if (!events.length) {
@@ -306,7 +306,7 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
     const scan = carrierScan(name ? carrierIdFromName(name) : undefined, description);
     const parsed = event((zone ? mislabeledLocalTime(state.date, zone)?.iso : undefined) ?? state.date, scan?.wording ?? description);
     if (parsed) events.push(parsed);
-    if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage }), scan });
+    if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage, stage_source: 'carrier_map' }), scan });
   });
   markReturnLeg(scans);
   return { ...result(events, SOURCE), ...(undated ? { undated_event_count: undated } : {}),

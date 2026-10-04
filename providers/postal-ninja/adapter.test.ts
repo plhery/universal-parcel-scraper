@@ -21,8 +21,8 @@ describe('Postal Ninja result parsing', () => {
     expect(parsed).toMatchObject({ status: 'delivered', current_stage: 'delivered', tracking_provider: 'Postal Ninja' });
     // Wall-clock scans never fabricate a UTC instant, so the summary has no last_update.
     expect(parsed.last_update).toBeNull();
-    expect(parsed.events?.[0]).toEqual({ local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered' });
-    expect(parsed.events?.[1]).toEqual({ local_time: '2026-08-17T07:22:00', description: 'Out for delivery', stage: 'out_for_delivery' });
+    expect(parsed.events?.[0]).toEqual({ local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered', stage_source: 'wording:provider' });
+    expect(parsed.events?.[1]).toEqual({ local_time: '2026-08-17T07:22:00', description: 'Out for delivery', stage: 'out_for_delivery', stage_source: 'wording:provider' });
     // An explicit offset can be persisted as a real instant.
     expect(parsed.events?.[2]).toMatchObject({ time: '2026-08-16T04:00:00.000Z', stage: 'in_transit' });
     expect(JSON.stringify(parsed)).not.toContain('PRIVATE');
@@ -38,8 +38,8 @@ describe('Postal Ninja result parsing', () => {
     } }, number);
     expect(parsed).toMatchObject({ current_stage: 'delivered', last_update: null });
     expect(parsed.events).toEqual([
-      { local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered' },
-      { local_time: '2026-08-01T10:00:00', description: 'Shipment information received', stage: 'registered' },
+      { local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered', stage_source: 'wording:provider' },
+      { local_time: '2026-08-01T10:00:00', description: 'Shipment information received', stage: 'registered', stage_source: 'wording:provider' },
     ]);
     expect(JSON.stringify(parsed)).not.toContain('PRIVATE');
   });

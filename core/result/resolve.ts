@@ -35,8 +35,11 @@ export function inferStage(text: string, fallback = 'in_transit'): string {
   return classifyStage(text, fallback).stage;
 }
 
-export function stageSource(declaredStage: string, description: string): string {
-  return stages.has(declaredStage) ? 'carrier_map' : classifyStage(description).source;
+export function stageSource(declaredStage: string, description: string, source?: unknown): string {
+  if (!stages.has(declaredStage)) return classifyStage(description).source;
+  if (typeof source === 'string' && source.length <= 100
+    && (source === 'none' || source === 'carrier_map' || /^wording:[a-z0-9_]+$/.test(source))) return source;
+  return 'carrier_map';
 }
 
 export interface ResolvedEvent extends CarrierEvent {
@@ -58,7 +61,7 @@ export function resolveResult(input: unknown): ResolvedResult {
     const declared = stages.has(event.stage ?? '') ? event.stage as Stage : undefined;
     const classified = classifyWording(event.description ?? '', 'in_transit');
     return { ...event, stage: declared ?? classified.stage,
-      stage_source: declared ? 'carrier_map' : classified.source,
+      stage_source: declared ? stageSource(declared, event.description ?? '', event.stage_source) : classified.source,
       instant: explicitOffsetTime(event.time)?.iso ?? null };
   });
   return { ...result, ...(current ? { current_stage: current } : {}), events };

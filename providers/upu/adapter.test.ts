@@ -37,6 +37,18 @@ describe('UPU postal tracking', () => {
     expect(parseUpuResponse(payload([scan('EDC', 'Item returned from Customs (import)')]), number).current_stage).toBe('in_transit');
   });
 
+  it('distinguishes known postal codes from wording and unresolved codes', () => {
+    const value = parseUpuResponse(payload([
+      scan('EDC', 'Item held by Customs', '2026-01-01T10:00:00'),
+      scan('ZZ1', 'Sorted in regional hub', '2026-01-01T11:00:00'),
+      scan('ZZ2', 'Unrecognized carrier message', '2026-01-01T12:00:00'),
+    ]), number);
+    expect(value.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['pending', 'none'], ['in_transit', 'wording:language'], ['in_transit', 'carrier_map'],
+    ]);
+    expect(value.current_stage_source).toBe('wording:language');
+  });
+
   it('handles a negative WCF offset as wall time, not a verified instant', () => {
     expect(parseUpuResponse(payload([scan('EMA', 'Posting/Collection', '/Date(1789202880000-0300)/')]), number).events?.[0])
       .toMatchObject({ local_time: '2026-09-12T05:48:00' });

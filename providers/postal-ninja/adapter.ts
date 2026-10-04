@@ -19,7 +19,7 @@ import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/inde
 import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
 import { isRecord } from '../../core/types.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
-import { event, eventStage, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
+import { classifyEvent, event, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
 const GET_API = 'https://postal.ninja/track/get';
@@ -69,9 +69,10 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
       const parsed = event(raw.dt, description);
       if (parsed) events.push(parsed);
     } else {
-      const stage = eventStage(description) ?? 'pending';
+      const classified = classifyEvent(description);
+      const { stage } = classified;
       if (stage !== 'delivered' && hasPrivateDeliveryDetails(description)) continue;
-      events.push({ local_time: raw.dt, description: stage === 'delivered' ? 'Delivered' : description, stage });
+      events.push({ local_time: raw.dt, description: stage === 'delivered' ? 'Delivered' : description, ...classified });
     }
   }
   return result(events, SOURCE, true);
