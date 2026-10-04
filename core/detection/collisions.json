@@ -1,5 +1,10 @@
 [
   {
+    "shape": "OMGO followed by thirteen digits ending in a French postcode range",
+    "carriers": ["colis-prive", "omgo"],
+    "reason": "Colis Privé accepts generic seventeen-character composites; the specific OMGO prefix is the only high-confidence rule."
+  },
+  {
     "shape": "AA9{10}",
     "carriers": [
       "amazon-logistics",

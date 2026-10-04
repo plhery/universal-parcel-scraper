@@ -21,6 +21,8 @@ export const TRACKING_CANDIDATE_PATTERNS = [
   /\b[A-Z]{2}\s*\d(?:[\s.-]?\d){8}\s*[A-Z]{2}\b/gi,
   /\b(?:JJD|JVGL)[A-Z0-9]{8,}\b/gi,
   /\b\d(?:[\s.-]?\d){9,19}\b/g,
+  // Let catalog rules claim other complete identifiers without copying their shapes here.
+  /\b[A-Z0-9]{4,40}\b/gi,
 ];
 
 /** The first candidate in the text that one carrier claims confidently. */

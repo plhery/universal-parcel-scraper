@@ -2,9 +2,10 @@
 
 Cainiao is Alibaba's logistics network and carries the international leg of most AliExpress
 orders. It rarely does the last mile: it hands the parcel to a local post or courier and
-publishes that partner's number when it has one. Cainiao numbers have no exclusive shape
-(`LP` + 14 digits collides with other networks), so parcels land here only when the user
-picks AliExpress or pastes a `global.cainiao.com` link.
+publishes that partner's number when it has one. The catalog recognizes a specific Cainiao
+shipment-number family; ambiguous formats need the user to pick AliExpress or paste a
+`global.cainiao.com` link. Detection does not select
+the last-mile carrier.
 
 ## How it works
 
@@ -52,3 +53,4 @@ picks AliExpress or pastes a `global.cainiao.com` link.
 
 `npm run test:carriers:live -- carriers/aliexpress` needs no env vars. It checks
 not-found with a synthetic number and handoff extraction on the public example in `numbers.json`.
+`CAINIAO_TRACKING_NUMBER` adds a private shipment lookup through automatic detection.

@@ -195,7 +195,12 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^DOFR\\d{13}HD$",
+        "confidence": "high"
+      }
+    ]
   },
   "sunyou": {
     "displayName": "SunYou",
@@ -3971,6 +3976,31 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": []
+  },
+  "omgo": {
+    "displayName": "OMGO",
+    "color": "#8e8e93",
+    "aliases": [
+      "OMGO Express"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://omgoexpress.cn/",
+    "trackingUrlTemplate": "https://omgoexpress.cn/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^OMGO\\d{13}$",
+        "confidence": "high"
+      }
+    ]
   }
 } as const;
 
@@ -4079,7 +4109,8 @@ export const CARRIER_IDS = [
   "yanwen",
   "the-courier-guy",
   "j-and-t",
-  "ems"
+  "ems",
+  "omgo"
 ] as const;
 export type CarrierId = (typeof CARRIER_IDS)[number];
 

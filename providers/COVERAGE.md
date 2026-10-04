@@ -10,6 +10,9 @@ When replacing a comparison reference, rerun the adapter and every provider on t
 replacement. Keep other references as routing evidence. Adapter availability and successful
 comparison lookups are separate counts.
 
+OMGO is outside the comparison cohort. ParcelsApp returns OMGO history; the other
+providers are unverified for it.
+
 ## Reading the table
 
 A check mark means scan history came back. The number beside it counts projected rows,

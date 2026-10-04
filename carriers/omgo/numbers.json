@@ -1,0 +1,28 @@
+{
+  "carrier": "omgo",
+  "records": [
+    {
+      "number": "OMGO0000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": { "carrier": "omgo", "confidence": "high" },
+      "note": "Synthetic shipment-number shape."
+    },
+    {
+      "number": "OMGO0000000050001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": { "carrier": "omgo", "confidence": "high" },
+      "note": "Synthetic suffix also accepted by the generic Colis Privé composite rule."
+    },
+    {
+      "number": "OMGO000000000001",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": { "carrier": "unknown", "confidence": "none", "not": ["omgo"] }
+    }
+  ]
+}

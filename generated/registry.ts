@@ -242,6 +242,7 @@ export const REGISTRY: RegistryDefinition = {
     "ninja-van": "ninja-van",
     "nz-post": "nz-post",
     "old-dominion": "universal",
+    "omgo": "universal",
     "ontrac": "ontrac",
     "paack": "paack",
     "packeta": "packeta",

@@ -193,7 +193,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^DOFR\\d{13}HD$",
+        "confidence": "high"
+      }
+    ]
   },
   "sunyou": {
     "displayName": "SunYou",
@@ -3969,5 +3974,30 @@
       }
     ],
     "detectionRules": []
+  },
+  "omgo": {
+    "displayName": "OMGO",
+    "color": "#8e8e93",
+    "aliases": [
+      "OMGO Express"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://omgoexpress.cn/",
+    "trackingUrlTemplate": "https://omgoexpress.cn/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^OMGO\\d{13}$",
+        "confidence": "high"
+      }
+    ]
   }
 }

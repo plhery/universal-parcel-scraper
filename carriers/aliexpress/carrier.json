@@ -55,5 +55,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "aliexpress-1",
+      "pattern": "^DOFR\\d{13}HD$",
+      "confidence": "high"
+    }
+  ]
 }

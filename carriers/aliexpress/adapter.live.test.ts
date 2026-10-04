@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fetchCainiao } from './adapter.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { createTracker } from '../../facade/index.js';
 
 // A validly shaped number that was never issued: the endpoint answers with an
 // empty external module, which is Cainiao's "unknown shipment".
@@ -17,6 +18,13 @@ describe('Cainiao live wrong-number handling', () => {
 });
 
 describe('Cainiao live handoff evidence', () => {
+  it.skipIf(!process.env.CAINIAO_TRACKING_NUMBER)('detects a Cainiao shipment and uses its direct adapter', async () => {
+    const answer = await createTracker({ providers: [] }).track({ number: process.env.CAINIAO_TRACKING_NUMBER! });
+    expect(answer.carrier).toBe('aliexpress');
+    expect(answer.source).toBe('aliexpress');
+    expect(answer.result.events.length).toBeGreaterThan(0);
+  });
+
   it('retains the independent reference from the public corpus example through normalization', async () => {
     // Public shipment report already recorded with provenance in numbers.json.
     const result = normalizeCarrierResult(await fetchCainiao('CNG00798678939847'));

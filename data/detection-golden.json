@@ -3614,6 +3614,26 @@
     "candidates": []
   },
   {
+    "input": "DOFR0000000000001HD",
+    "carrier": "aliexpress",
+    "confidence": "high",
+    "candidates": [
+      "aliexpress"
+    ]
+  },
+  {
+    "input": "DOFR0000000000001HU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "DOFR000000000001HD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "DQ0DK20000034530118220Z",
     "carrier": "correos-spain",
     "confidence": "high",
@@ -4460,6 +4480,28 @@
     ],
     "asked": [
       "ninja-van"
+    ]
+  },
+  {
+    "input": "OMGO0000000000001",
+    "carrier": "omgo",
+    "confidence": "high",
+    "candidates": [
+      "omgo"
+    ]
+  },
+  {
+    "input": "OMGO000000000001",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "OMGO0000000050001",
+    "carrier": "omgo",
+    "confidence": "high",
+    "candidates": [
+      "omgo"
     ]
   },
   {

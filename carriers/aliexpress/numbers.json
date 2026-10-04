@@ -2,6 +2,28 @@
   "carrier": "aliexpress",
   "records": [
     {
+      "number": "DOFR0000000000001HD",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": { "carrier": "aliexpress", "confidence": "high" },
+      "note": "Synthetic Cainiao shipment-number shape."
+    },
+    {
+      "number": "DOFR000000000001HD",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": { "carrier": "unknown", "confidence": "none", "not": ["aliexpress"] }
+    },
+    {
+      "number": "DOFR0000000000001HU",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": { "carrier": "unknown", "confidence": "none", "not": ["aliexpress"] }
+    },
+    {
       "number": "CNG00798678939847",
       "role": "shipment",
       "evidence": "public_shipment_report",
