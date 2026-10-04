@@ -34,7 +34,21 @@
       "stage": "registered",
       "confirmedBy": "fixture",
       "firstSeen": "2026-09-12",
-      "note": "Shipment announced. The adapter reports the shipment as pending and stamps no event stage."
+      "note": "Shipment announced; the summary remains pending and the scan is registered."
+    },
+    {
+      "code": "RFS",
+      "stage": "accepted",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04",
+      "note": "Goods received by the carrier."
+    },
+    {
+      "code": "SCA",
+      "stage": "out_for_delivery",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-10-04",
+      "note": "Loaded for delivery."
     }
   ]
 }

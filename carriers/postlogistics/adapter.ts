@@ -27,7 +27,7 @@ import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { referenceConsignment } from '../swiss-post-cargo/reference.js';
 import { postlogisticsIdentifier } from './number.js';
-import { POSTLOGISTICS_IMAGE_CODE, postlogisticsStatus } from './status.js';
+import { POSTLOGISTICS_IMAGE_CODE, postlogisticsStage, postlogisticsStatus } from './status.js';
 
 const PROVIDER = 'PostLogistics';
 const UPSTREAM = 'PostLogistics tracking';
@@ -117,6 +117,7 @@ export function parsePostlogisticsTrackingResponse(value: unknown, trackingNumbe
     time: text(event.TimeStamp),
     location: text(event.City),
     description: text(event.Description),
+    stage: postlogisticsStage(text(event.Status)),
   }));
   const latest = orderedHistory[0]?.event ?? {};
   const latestStatus = text(latest.Status);
@@ -125,6 +126,7 @@ export function parsePostlogisticsTrackingResponse(value: unknown, trackingNumbe
     .find(Boolean) ?? '';
   return {
     status: postlogisticsStatus(latestStatus),
+    current_stage: postlogisticsStage(latestStatus),
     last_status_text: text(latest.Description) || latestStatus,
     last_update: text(latest.TimeStamp) || null,
     expected_delivery: eta ? eta.slice(0, 10) : null,

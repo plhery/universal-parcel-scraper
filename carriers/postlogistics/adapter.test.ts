@@ -3,12 +3,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { CarrierResult } from '../../core/result/index.js';
+import { resolveResult, resultHasUpdate, resultStage } from '../../core/result/resolve.js';
 import {
   fetchPostlogistics,
   parsePostlogisticsTrackingResponse,
   PostlogisticsTracker,
 } from './adapter.js';
-import { postlogisticsStatus } from './status.js';
+import { postlogisticsStage, postlogisticsStatus } from './status.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(
@@ -245,6 +246,9 @@ describe('PostLogistics response types and event ordering', () => {
       'Réception des marchandises Poste',
       'réception données Poste',
     ]);
+    expect(result.events?.map((event) => event.stage)).toEqual([
+      'delivered', 'out_for_delivery', 'accepted', 'registered',
+    ]);
   });
 
   it('puts the later of two entries that share an instant on top, and keeps a picture entry that stands alone', () => {
@@ -352,12 +356,51 @@ describe('PostLogistics shared customer references', () => {
 });
 
 describe('PostLogistics history codes', () => {
+  it('keeps an announcement registered when its wording has no classification rule', () => {
+    const payload = {
+      Type: 1,
+      Data: [{ Identifier: '12345678-001', History: [{
+        TimeStamp: '2026-09-01T07:33:49.9', Status: 'NTF', Description: 'réception données Poste',
+      }] }],
+    };
+    const result = parsePostlogisticsTrackingResponse(payload, '12345678001');
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    expect(resultStage(result)).toBe('registered');
+    expect(resultHasUpdate(result)).toBe(true);
+    expect(resolveResult(result).events).toEqual([
+      expect.objectContaining({ stage: 'registered', stage_source: 'carrier_map', time: '2026-09-01T07:33:49.9' }),
+    ]);
+  });
+
+  it.each([
+    ['RFS', 'in_transit', 'accepted'],
+    ['SCA', 'out_for_delivery', 'out_for_delivery'],
+    ['POD', 'delivered', 'delivered'],
+  ] as const)('uses %s for the summary and scan even without recognizable wording', (code, status, stage) => {
+    const result = parsePostlogisticsTrackingResponse({
+      Type: 1, Data: [{ Identifier: '12345678-001', History: [{
+        TimeStamp: '2026-09-01T09:00:00+02:00', Status: code, Description: 'Carrier scan',
+      }] }],
+    }, '12345678001');
+    expect(result).toMatchObject({ status, current_stage: stage, events: [{ stage }] });
+    expect(resultStage(result)).toBe(stage);
+  });
+
+  it('leaves an unknown history code to wording instead of borrowing the delivery stage', () => {
+    expect(postlogisticsStage('TRN')).toBeUndefined();
+    const result = parsePostlogisticsTrackingResponse(fixture('delivered.json'), '998811223344556677');
+    expect(result.events?.map((event) => event.stage)).toEqual(['delivered', undefined, 'registered']);
+    expect(resolveResult(result).events.map((event) => event.stage)).toEqual(['delivered', 'in_transit', 'registered']);
+  });
+
   it.each([
     ['DEL', 'delivered'],
     ['DLV', 'delivered'],
     ['POD', 'delivered'],
     ['SIG', 'delivered'],
     ['NTF', 'pending'],
+    ['RFS', 'in_transit'],
+    ['SCA', 'out_for_delivery'],
     // Anything else leaves the shipment moving; the wording is classified by
     // the sync rather than guessed at here.
     ['TRN', 'in_transit'],
