@@ -291,7 +291,7 @@ export const adapter: AdapterFactory = (environment) => {
     recorder: environment.recorder,
   });
   return {
-    id: 'usps',
+    id: 'usps', recordsSteps: true,
     // Akamai refuses every non-browser client, so there is no direct tier.
     steps: ['trawl'],
     track: (input, context) => tracker.fetch(input.number, context),

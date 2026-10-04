@@ -336,7 +336,7 @@ export const adapter: AdapterFactory = (environment) => {
     recorder: environment.recorder,
   });
   return {
-    id: 'fedex',
+    id: 'fedex', recordsSteps: true,
     // Browser-backed direct tracking; universal recovery belongs to the caller.
     steps: ['trawl'],
     track: (input, context) => tracker.fetch(input.number, context),

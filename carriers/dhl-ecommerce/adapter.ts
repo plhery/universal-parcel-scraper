@@ -192,7 +192,7 @@ export const adapter: AdapterFactory = (environment) => {
     executablePath: environment.browserExecutablePath ?? undefined, recorder: environment.recorder,
   });
   return {
-    id: 'dhl-ecommerce',
+    id: 'dhl-ecommerce', recordsSteps: true,
     steps: ['browser'],
     track: (input, context) => tracker.fetch(input.number, context),
   };

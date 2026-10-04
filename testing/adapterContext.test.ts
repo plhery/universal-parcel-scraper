@@ -7,16 +7,20 @@
  * service and the local browser), in every combination of the two browsers a
  * host can configure, so each number form and each tier is driven where it
  * runs. The budget is driven with one number, since each lookup waits it out.
+ * Each adapter of the registry is also dispatched through `trackCarrier` over
+ * a transport that refuses every request, and reports that lookup to the
+ * host's recorder at most once.
  * A transport that never answers holds a lookup at its first request:
  * `adapterContextSource.test.ts` reads from the source that the requests and
  * the timers after it are written with a signal too.
  */
 import { chromium } from 'playwright-core';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
-import type { AdapterEnvironment, AdapterFactory, CarrierAdapter, TrackingContext, TrackingInput } from '../core/adapter/index.js';
+import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter, type TrackingContext, type TrackingInput } from '../core/adapter/index.js';
+import { trackCarrier } from '../core/adapter/track.js';
 import { activeRequirements } from '../core/catalog/index.js';
 import { normalizeTrackingNumber } from '../core/detection/index.js';
-import { NOOP_RECORDER } from '../core/telemetry/index.js';
+import { NOOP_RECORDER, type StepRecorder } from '../core/telemetry/index.js';
 import { loadNumberCorpusFiles } from '../core/testing/corpus.js';
 import { TrawlClient } from '../core/transport/trawl.js';
 import { REGISTRY } from '../generated/registry.js';
@@ -24,6 +28,7 @@ import { adapter as parcelsApp } from '../providers/parcelsapp/adapter.js';
 import { adapter as postalNinja } from '../providers/postal-ninja/adapter.js';
 import { adapter as seventeenTrack } from '../providers/seventeentrack/adapter.js';
 import { adapter as ship24 } from '../providers/ship24/adapter.js';
+import type { UniversalTracker } from '../providers/universal.js';
 import { adapter as upu } from '../providers/upu/adapter.js';
 
 vi.mock('playwright-core', () => ({ chromium: { launch: vi.fn() } }));
@@ -105,9 +110,9 @@ const SUBJECTS: Readonly<Record<string, Subject>> = {
 const refuse: typeof fetch = () => Promise.reject(new Error('The conformance test sends no request'));
 vi.stubGlobal('fetch', refuse);
 
-function environment(fetcher: typeof fetch, browsers: Browsers): AdapterEnvironment {
+function environment(fetcher: typeof fetch, browsers: Browsers, recorder: StepRecorder = NOOP_RECORDER): AdapterEnvironment {
   return {
-    fetcher, userAgent: HOST_USER_AGENT, recorder: NOOP_RECORDER, env: {},
+    fetcher, userAgent: HOST_USER_AGENT, recorder, env: {},
     trawl: browsers.service ? new TrawlClient(BROWSER_SERVICE, fetcher) : null,
     browserExecutablePath: browsers.chromium ? '/synthetic/chromium' : null,
   };
@@ -145,6 +150,18 @@ function harness(subject: string, browsers: Browsers) {
       .filter(([input]) => !(input instanceof Request ? input.url : String(input)).startsWith(BROWSER_SERVICE))
       .map(([input, init]) => (init?.headers !== undefined ? new Headers(init.headers)
         : input instanceof Request ? input.headers : new Headers()).get('user-agent')) };
+}
+
+/**
+ * One adapter behind a registry, over a transport that refuses every request at
+ * once, with the recorder a host gives both the adapter and the dispatch.
+ */
+function refused(subject: string, browsers: Browsers) {
+  const recorder = { ...NOOP_RECORDER, lookup: vi.fn<StepRecorder['lookup']>() };
+  vi.mocked(chromium.launch).mockReset().mockRejectedValue(new Error('The conformance test launches no browser'));
+  vi.stubGlobal('fetch', refuse);
+  return { recorder, registry: new AdapterRegistry({ factories: { [subject]: SUBJECTS[subject]!.factory }, carriers: { [subject]: subject } },
+    environment(refuse, browsers, recorder)) };
 }
 
 type Operation = 'track' | 'recognize';
@@ -277,6 +294,23 @@ describe.each(Object.entries(ENVIRONMENTS))('%s', (_, browsers) => {
         await finish(controller, pending);
         expect(outcome).toBe('failed');
         expect(left).toBe(0);
+      });
+
+      if (operation !== 'track' || !Object.hasOwn(REGISTRY.factories, subject)) return;
+
+      // The dispatch runs an adapter that does not declare `recordsSteps` in a runner of its own.
+      it('reports a dispatched lookup to the recorder at most once', async () => {
+        const [sample] = await reached();
+        if (!sample) return;
+        const { registry, recorder } = refused(subject, browsers);
+        const controller = new AbortController();
+        // The budget ends the wait of an adapter that retries a refused request.
+        const pending = trackCarrier(subject, sample, { registry, recorder, universal: {} as UniversalTracker,
+          signal: controller.signal, budgetMs: BUDGET_MS });
+        const outcome = await within(pending, BUDGET_SETTLE_MS);
+        await finish(controller, pending);
+        expect(outcome).toBe('failed');
+        expect(recorder.lookup.mock.calls.length).toBeLessThanOrEqual(1);
       });
     });
   });
