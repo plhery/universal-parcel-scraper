@@ -1,12 +1,18 @@
 name: Release
+# npm trusts this workflow file to publish the package, so both channels
+# publish from here: a push to main publishes a prerelease under `next`, and a
+# dispatch publishes the package.json version under `latest`.
 on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
   workflow_dispatch:
     inputs:
       version:
         description: Version in package.json
         required: true
         type: string
-        default: '0.2.0'
       publish_npm:
         description: Publish using npm trusted publishing
         required: true
@@ -19,11 +25,16 @@ on:
         default: false
 permissions:
   contents: read
+# Pushes run one at a time and in order; a queued push gives way to a newer
+# one, which contains it. Dispatched releases queue apart from pushes, so a
+# push never cancels a queued release.
 concurrency:
-  group: release
+  group: release-${{ github.event_name }}
   cancel-in-progress: false
 jobs:
   validate:
+    # A push to a fork does nothing.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.repository == 'plhery/universal-parcel-scraper' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -34,14 +45,66 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run lint && npm run typecheck && npm test && npm run test:scripts && npm run test:generated && npm run build && npm run test:package
+  prerelease:
+    needs: validate
+    if: ${{ github.event_name == 'push' && github.repository == 'plhery/universal-parcel-scraper' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    # One job at a time plans and publishes to npm, whichever channel it serves.
+    concurrency:
+      group: release-npm
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      listed: ${{ steps.listed.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 26
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Plan the prerelease
+        id: plan
+        run: node scripts/prerelease.mjs
+      - name: Publish npm prerelease with provenance
+        if: ${{ steps.plan.outputs.publish == 'true' }}
+        env:
+          PRERELEASE_VERSION: ${{ steps.plan.outputs.version }}
+        run: |
+          npm version "$PRERELEASE_VERSION" --no-git-tag-version
+          npm publish --tag next --access public --provenance --ignore-scripts
+      # npm accepts a publish before it serves the version. The job holds its
+      # place until then, so the next plan and the app both find the version.
+      - name: Wait until npm lists the version
+        id: listed
+        if: ${{ steps.plan.outputs.notify == 'true' }}
+        env:
+          PUBLISHED_VERSION: ${{ steps.plan.outputs.version }}
+        run: |
+          node scripts/prerelease.mjs --await "$PUBLISHED_VERSION"
+          echo "version=$PUBLISHED_VERSION" >> "$GITHUB_OUTPUT"
   publish:
     needs: validate
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    concurrency:
+      group: release-npm
+      cancel-in-progress: false
     permissions:
       contents: write
       packages: write
       id-token: write
+    outputs:
+      listed: ${{ steps.listed.outputs.version }}
     env:
       RELEASE_VERSION: ${{ inputs.version }}
       GH_TOKEN: ${{ github.token }}
@@ -54,11 +117,15 @@ jobs:
         with:
           node-version: 26
           registry-url: https://registry.npmjs.org
-          cache: npm
+          package-manager-cache: false
       - name: Validate release identity
         run: |
           node --input-type=module -e "import fs from 'node:fs'; const v=process.env.RELEASE_VERSION; if(!/^\d+\.\d+\.\d+$/.test(v) || JSON.parse(fs.readFileSync('package.json')).version!==v) process.exit(1);"
           if git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then exit 1; fi
+      - name: Plan the npm release
+        id: npm
+        if: ${{ inputs.publish_npm }}
+        run: node scripts/prerelease.mjs --stable
       - run: npm ci --ignore-scripts && npm run build && npm pack --ignore-scripts
       - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
@@ -86,8 +153,15 @@ jobs:
           gh api repos/germondai/trawl/tarball/c81d628b4d509ceb6e4ae4567f0ffb62d4eeb051 > trawl-upstream-source.tar.gz
           git archive --format=tar.gz --prefix=universal-parcel-scraper/ HEAD trawl > trawl-patch-source.tar.gz
       - name: Publish npm package with provenance
-        if: ${{ inputs.publish_npm }}
-        run: npm publish --provenance --access public
+        if: ${{ steps.npm.outputs.publish == 'true' }}
+        run: npm publish --provenance --access public --ignore-scripts
+      # Before the tag, so that a rerun after a failure here still passes the identity check.
+      - name: Wait until npm lists the version
+        id: listed
+        if: ${{ steps.npm.outputs.notify == 'true' }}
+        run: |
+          node scripts/prerelease.mjs --await "$RELEASE_VERSION"
+          echo "version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
       - name: Tag and publish GitHub release
         run: |
           git tag "v$RELEASE_VERSION"
@@ -100,3 +174,23 @@ jobs:
           files=("universal-parcel-scraper-$RELEASE_VERSION.tgz")
           if [ -f trawl-upstream-source.tar.gz ]; then files+=(trawl-upstream-source.tar.gz trawl-patch-source.tar.gz); fi
           gh release create "v$RELEASE_VERSION" "${files[@]}" --verify-tag --title "v$RELEASE_VERSION" --notes-file release-notes.md
+  # Tells the app about a version npm lists. The token that reaches the app's
+  # repository is used here only, on a runner that installed and built nothing.
+  notify:
+    name: Notify the app
+    needs: [prerelease, publish]
+    if: ${{ always() && (needs.prerelease.outputs.listed != '' || needs.publish.outputs.listed != '') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    env:
+      ADOPTION_TOKEN: ${{ secrets.SCRAPER_ADOPTION_TOKEN }}
+      PUBLISHED_VERSION: ${{ needs.prerelease.outputs.listed || needs.publish.outputs.listed }}
+    steps:
+      - run: |
+          if [ -z "$ADOPTION_TOKEN" ]; then
+            echo "::notice::SCRAPER_ADOPTION_TOKEN is not set, so the app was not told about $PUBLISHED_VERSION."
+            exit 0
+          fi
+          GH_TOKEN="$ADOPTION_TOKEN" gh api --method POST repos/plhery/delivery-tracker/dispatches \
+            -f event_type=scraper-release -f "client_payload[version]=$PUBLISHED_VERSION"

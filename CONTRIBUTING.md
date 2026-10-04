@@ -24,8 +24,10 @@ follow semver. Fixes are patches; additive carriers, fields and exports are mino
 removals, renames and stage-vocabulary changes are major releases. Version 0.x is the initial
 API line. Consumers should pin exact versions.
 
-The release workflow is dispatched with a version. It validates, builds package and container
-artifacts, tags the commit and creates a GitHub release. npm publication is opt-in and requires
-this repository to be configured as the package's npm trusted publisher. The first npm
-publication may require the owner's npm account. TRAWL publication includes upstream and
-patch source archives under its AGPL license.
+npm has two channels, and `.github/workflows/release.yml` publishes both as the package's npm
+trusted publisher. A push to `main` that changes the files a consumer installs is published as
+`X.Y.Z-main.N` under the `next` tag, where `N` is the commit count. A push that only touches
+Markdown, or leaves those files unchanged, publishes nothing. Dispatching the workflow with the
+version in `package.json` validates, builds package and container artifacts, tags the commit
+and creates a GitHub release; publishing that version to npm under `latest` is opt-in. TRAWL
+publication includes upstream and patch source archives under its AGPL license.
