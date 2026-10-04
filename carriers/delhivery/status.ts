@@ -4,9 +4,11 @@ const statuses: Record<string, ClassifiedStatus> = {
   DELIVERED: { status: 'delivered', stage: 'delivered' },
   'OUT FOR DELIVERY': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'IN TRANSIT': { status: 'in_transit', stage: 'in_transit' },
+  'IN TRANSIT FOR RETURN': { status: 'in_transit', stage: 'in_transit' },
   'PICKED UP': { status: 'in_transit', stage: 'accepted' },
   MANIFESTED: { status: 'pending', stage: 'registered' },
   'RTO DELIVERED': { status: 'exception', stage: 'returned' },
+  DELIVERED_SELLER: { status: 'exception', stage: 'returned' },
 };
 
 export function classifyDelhiveryStatus(value: string): ClassifiedStatus | undefined {

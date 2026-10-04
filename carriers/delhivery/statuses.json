@@ -6,6 +6,12 @@
       "language": "en",
       "stage": "delivered",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "In Transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
     }
   ]
 }

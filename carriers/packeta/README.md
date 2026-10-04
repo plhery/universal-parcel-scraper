@@ -10,9 +10,10 @@ CZ, SK, HU, RO and PL. Tracked through the keyless endpoint behind the public tr
    - The echoed `barcode` must match the request, with or without its `Z` prefix,
      otherwise `SchemaError`. The public API returns the ten barcode digits.
    - Unknown codes come back two ways, both `NotFoundError`: HTTP 404 `{"error":"notFound"}`,
-     or HTTP 200 carrying `error` instead of `item`. Expired codes answer the same 404, so
-     unknown and expired look identical.
-   - Any other non-200 is `UpstreamHttpError`.
+     or HTTP 200 carrying the same `notFound` error instead of `item`. Expired codes answer
+     the same 404, so unknown and expired look identical.
+   - Other API errors remain inconclusive. An HTTP 404 without that error signature, or
+     another unsuccessful HTTP response, is `UpstreamHttpError`.
 
 ## Notes
 

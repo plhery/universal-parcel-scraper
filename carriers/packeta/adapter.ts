@@ -1,6 +1,6 @@
 
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
@@ -57,10 +57,11 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
   const requested = normalizePacketaTrackingNumber(trackingNumber);
   if (!isRecord(payload)) throw new SchemaError('Packeta', 'Packeta returned an invalid tracking response');
   const item = payload.item;
-  // A 200 carrying an error instead of an item is Packeta's second unknown-code
-  // signal (mirrors the HTTP 404 contract); it is a domain outcome, not a crash.
+  // Only the named notFound error establishes absence; other API errors say
+  // nothing about the requested parcel.
   if (!isRecord(item)) {
-    if (typeof payload.error === 'string') throw new NotFoundError('Packeta');
+    if (payload.error === 'notFound') throw new NotFoundError('Packeta');
+    if (typeof payload.error === 'string') throw new IndeterminateError('Packeta', 'Packeta returned a tracking error');
     throw new SchemaError('Packeta', 'Packeta returned an invalid tracking response');
   }
   const returned = typeof item.barcode === 'string'
@@ -163,7 +164,13 @@ export class PacketaTracker {
       allowHttpError: true,
       fetcher: this.fetcher,
     });
-    if (response.status === 404) throw new NotFoundError('Packeta');
+    if (response.status === 404) {
+      let payload: unknown;
+      try { payload = parseJsonBytes(bytes, 'Packeta tracking'); }
+      catch { throw new UpstreamHttpError('Packeta tracking', response.status); }
+      if (isRecord(payload) && payload.error === 'notFound') throw new NotFoundError('Packeta');
+      throw new UpstreamHttpError('Packeta tracking', response.status);
+    }
     if (!response.ok) throw new UpstreamHttpError('Packeta tracking', response.status);
     return parsePacketaTrackingResponse(parseJsonBytes(bytes, 'Packeta tracking'), trackingNumber);
   }

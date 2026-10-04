@@ -13,12 +13,15 @@ not-found; other empty replies remain schema failures.
 Future progress labels are excluded. Current status becomes a snapshot when no scan
 reports it at the same instant; its timestamp is never assigned to an undated scan.
 Calendar days and invalid date labels remain unresolved instead of becoming midnight scans.
+The returned flow can still be in transit. Its shipment status determines current progress;
+return scans retain their leg, and sender delivery does not become recipient delivery.
 Scan remarks, recipient information, coordinates, references and phone fields are excluded.
 
 ## Limitations
 
-The public feed often omits historical scan dates. Displayed delivery periods are prose,
-so the adapter does not convert them into an exact delivery estimate. Freight LR numbers
+Anonymous tracking can expose only the latest undated scan; the website asks for login to
+show more detail. Displayed delivery periods are prose, so the adapter does not convert
+them into an exact delivery estimate. Freight LR numbers
 use a separate service and are outside this adapter's scope.
 
 ## Testing

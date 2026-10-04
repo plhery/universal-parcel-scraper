@@ -23,13 +23,22 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   const requested = normalizeDelhiveryNumber(number);
   if (!isRecord(payload) || payload.statusCode !== 200 || !Array.isArray(payload.data) || payload.data.length > 100) throw new SchemaError('Delhivery');
   if (!payload.data.length && payload.message === 'invalid AWB or very old package') throw new NotFoundError('Delhivery');
-  const matches = payload.data.filter(isRecord).filter(item => clean(item.awb, 64) === requested);
+  const matches = payload.data.filter(isRecord).filter(item =>
+    (typeof item.awb === 'string' ? item.awb.trim()
+      : typeof item.awb === 'number' && Number.isSafeInteger(item.awb) ? String(item.awb) : '') === requested);
   if (matches.length !== 1) throw new SchemaError('Delhivery', 'Delhivery did not return one matching shipment');
   const item = matches[0]!;
   if (!isRecord(item.status) || !Array.isArray(item.trackingStates)) throw new SchemaError('Delhivery');
   const description = clean(item.status.status, 200);
   if (!description) throw new IndeterminateError('Delhivery', 'Delhivery returned no current status');
-  const mapped = classifyDelhiveryStatus(description);
+  const returning = item.status.statusType === 'RT' || item.currentFlow === 'Returned' || item.currentFlow === 'Reverse';
+  // RETURNED names a flow, including parcels still travelling to the sender.
+  // The separate shipment status establishes movement or completed delivery.
+  const snapshotDescription = returning && description.toUpperCase() === 'RETURNED'
+    ? clean(item.hqStatus, 200) : description;
+  const current = classifyDelhiveryStatus(snapshotDescription);
+  const mapped = returning && current?.stage === 'delivered'
+    ? classifyDelhiveryStatus('RTO DELIVERED') : current;
   const updated = scanTime(item.status.statusDateTime);
   const currentTimeText = clean(item.status.statusDateTime, 64);
   const events: CarrierEvent[] = [];
@@ -48,20 +57,24 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
       const time = scanTime(scan.scanDateTime);
       const timeText = clean(scan.scanDateTime, 64);
       const location = clean(scan.cityLocation, 160);
-      const key = `${time?.timestamp ?? timeText}\u0000${label}\u0000${location}`;
+      const returnScan = scan.scanType === 'RT' || item.currentFlow === 'Reverse';
+      const key = `${time?.timestamp ?? timeText}\u0000${label}\u0000${location}\u0000${returnScan ? 'return' : ''}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      const classified = classifyDelhiveryStatus(label);
+      const scanStatus = classifyDelhiveryStatus(label);
+      const classified = returnScan && scanStatus?.stage === 'delivered'
+        ? classifyDelhiveryStatus('RTO DELIVERED') : scanStatus;
       events.push({ description: label, ...(time ? { time: time.iso } : timeText ? { provider_time_text: timeText } : {}), ...(location ? { location } : {}),
-        ...(classified ? { stage: classified.stage } : {}) });
+        ...(classified ? { stage: classified.stage } : {}), ...(returnScan ? { provider_leg: 'return' } : {}) });
     }
   }
   // Repeated scan labels cannot bind a summary timestamp to a particular
   // historical location. Keep the dated status snapshot separate.
-  if (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
-    && event.description?.toUpperCase() === description.toUpperCase())) {
-    events.unshift({ description, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
-      ...(mapped ? { stage: mapped.stage } : {}), summary_snapshot: true });
+  if (snapshotDescription && (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
+    && event.description?.toUpperCase() === snapshotDescription.toUpperCase() && event.stage === mapped?.stage
+    && (!returning || event.provider_leg === 'return')))) {
+    events.unshift({ description: snapshotDescription, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
+      ...(mapped ? { stage: mapped.stage } : {}), ...(returning ? { provider_leg: 'return' } : {}), summary_snapshot: true });
   }
   const dated = events.filter(event => event.time).sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const undated = events.filter(event => !event.time);

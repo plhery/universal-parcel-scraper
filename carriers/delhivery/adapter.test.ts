@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { DelhiveryTracker } from './adapter.js';
 import { parseDelhivery } from './parser.js';
+import { resolveResult } from '../../core/result/resolve.js';
 
 const NUMBER = '0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -22,6 +23,8 @@ describe('Delhivery direct tracking', () => {
       expect(() => parseDelhivery(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     }
     const value = payload(); value.data[0].awb = '0000000000002';
+    expect(() => parseDelhivery(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    value.data[0].awb = `${NUMBER}${' '.repeat(64)}0000000000002`;
     expect(() => parseDelhivery(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseDelhivery({ statusCode: 200, data: [], message: 'invalid AWB or very old package' }, NUMBER))
       .toThrowError(expect.objectContaining({ kind: 'not_found' }));
@@ -81,6 +84,63 @@ describe('Delhivery direct tracking', () => {
     expect(result.events?.[0]).toMatchObject({ stage: 'returned', summary_snapshot: true });
     expect(result.events?.[1]!.stage).toBe('delivered');
     expect(result.delivered_at).toBeUndefined();
+  });
+  it('keeps the returned flow moving until the shipment status confirms delivery', () => {
+    const value = JSON.parse(readFileSync(new URL('./fixtures/return-in-transit.json', import.meta.url), 'utf8'));
+    const result = parseDelhivery(value, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'RETURNED' });
+    expect(result.events).toEqual([
+      expect.objectContaining({ description: 'In Transit', stage: 'in_transit', provider_leg: 'return', summary_snapshot: true }),
+      expect.objectContaining({ stage: 'in_transit', provider_leg: 'return', location: 'Example City' }),
+    ]);
+    expect(result.events?.[1]).not.toHaveProperty('time');
+    expect(result.delivered_at).toBeUndefined();
+    value.data[0].hqStatus = 'Delivered';
+    expect(parseDelhivery(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    value.data[0].hqStatus = 'Unfamiliar status';
+    expect(parseDelhivery(value, NUMBER)).toMatchObject({ status: 'unknown' });
+    expect(parseDelhivery(value, NUMBER).current_stage).toBeUndefined();
+    expect(resolveResult(parseDelhivery(value, NUMBER)).events.every(event => event.stage !== 'returned')).toBe(true);
+    delete value.data[0].hqStatus;
+    expect(parseDelhivery(value, NUMBER).events).toHaveLength(1);
+  });
+  it('marks sender delivery and individual return scans without relabelling outbound scans', () => {
+    const value = payload();
+    value.data[0].status.status = 'DELIVERED_SELLER';
+    value.data[0].status.statusType = 'RT';
+    value.data[0].trackingStates[1].scans = [{
+      scan: 'Delivered', scanType: 'RT', cityLocation: 'Example Return Hub', scanDateTime: '2026-01-03T13:00:00',
+    }];
+    const result = parseDelhivery(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(result.events?.find(event => event.location === 'Example Return Hub'))
+      .toMatchObject({ stage: 'returned', provider_leg: 'return' });
+    const outbound = result.events?.find(event => event.location === 'Example City');
+    expect(outbound?.stage).toBe('delivered');
+    expect(outbound).not.toHaveProperty('provider_leg');
+    expect(result.delivered_at).toBeUndefined();
+  });
+  it('does not let an outbound scan hide a return snapshot at the same instant', () => {
+    const value = payload();
+    value.data[0].status.statusType = 'RT';
+    value.data[0].trackingStates[0].scans[0].scanDateTime = value.data[0].status.statusDateTime;
+    const result = parseDelhivery(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(result.events?.filter(event => event.summary_snapshot)).toEqual([
+      expect.objectContaining({ stage: 'returned', provider_leg: 'return' }),
+    ]);
+    expect(result.events?.find(event => event.location === 'Example City' && event.description === 'Delivered')?.stage)
+      .toBe('delivered');
+  });
+  it('keeps identical outbound and return scan labels separate', () => {
+    const value = payload();
+    value.data[0].trackingStates = [{ label: 'Delivered', scans: [
+      { scan: 'Delivered', scanType: 'DL', scanDateTime: '2026-01-03T13:00:00', cityLocation: 'Example City' },
+      { scan: 'Delivered', scanType: 'RT', scanDateTime: '2026-01-03T13:00:00', cityLocation: 'Example City' },
+    ] }];
+    const rows = parseDelhivery(value, NUMBER).events?.filter(event => !event.summary_snapshot);
+    expect(rows).toHaveLength(2);
+    expect(rows?.map(event => event.stage)).toEqual(['delivered', 'returned']);
   });
   it('distinguishes future rail states from malformed completed history', () => {
     for (const state of [null, { scans: {} }, { scans: [null] }, { scans: [{}] }]) {

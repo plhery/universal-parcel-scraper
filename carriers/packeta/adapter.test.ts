@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
+import { IndeterminateError, NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizePacketaTrackingNumber,
   packetaTrackingUrl,
@@ -123,6 +123,8 @@ describe('Packeta response parsing', () => {
       .toThrow(NotFoundError);
     expect(() => parsePacketaTrackingResponse({}, TRACKING_NUMBER)).toThrow(SchemaError);
     expect(() => parsePacketaTrackingResponse(null, TRACKING_NUMBER)).toThrow(SchemaError);
+    expect(() => parsePacketaTrackingResponse({ error: 'serviceUnavailable' }, TRACKING_NUMBER))
+      .toThrow(IndeterminateError);
   });
 
   it('accepts a registered parcel without events and skips malformed rows', () => {
@@ -205,5 +207,16 @@ describe('PacketaTracker fetch', () => {
     expect(() => new PacketaTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new PacketaTracker({ timeoutMs: 1_000 }).fetch('nope'))
       .rejects.toThrow(InvalidInputError);
+  });
+
+  it('does not report maintenance or generic HTTP errors as missing parcels', async () => {
+    const tracker = new PacketaTracker({ timeoutMs: 1_000 });
+    const fetcher = vi.spyOn(globalThis, 'fetch');
+    fetcher.mockResolvedValue(response({ error: 'serviceUnavailable' }, 200));
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toBeInstanceOf(IndeterminateError);
+    for (const value of [{ error: 'serviceUnavailable' }, '<html>Not Found</html>', {}]) {
+      fetcher.mockResolvedValue(response(value, 404));
+      await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 404 });
+    }
   });
 });
