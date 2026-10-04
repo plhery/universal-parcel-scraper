@@ -219,6 +219,51 @@ describe('PostLogistics response types and event ordering', () => {
     });
   });
 
+  it('reads the delivery scan, not the picture entry that shares its instant', () => {
+    const result = parsePostlogisticsTrackingResponse({
+      Type: 1,
+      Data: [{
+        Identifier: '12345678-001',
+        History: [
+          { TimeStamp: '2026-09-01T07:33:49.9', Status: 'NTF', Description: 'réception données Poste', City: '' },
+          { TimeStamp: '2026-09-01T13:16:42.727', Status: 'RFS', Description: 'Réception des marchandises Poste', City: 'Hub Dintikon' },
+          { TimeStamp: '2026-09-02T09:14:07.833', Status: 'SCA', Description: 'Chargement pour livraison', City: '' },
+          { TimeStamp: '2026-09-02T14:35:51.77', Status: 'IMG', Description: 'IMAGE', City: '' },
+          { TimeStamp: '2026-09-02T14:35:51.77', Status: 'POD', Description: 'LIVRE SCANNE', City: 'Zurich' },
+        ],
+      }],
+    }, '12345678001');
+
+    expect(result).toMatchObject({
+      status: 'delivered',
+      last_status_text: 'LIVRE SCANNE',
+      last_update: '2026-09-02T14:35:51.77',
+    });
+    expect(result.events?.map((event) => event.description)).toEqual([
+      'LIVRE SCANNE',
+      'Chargement pour livraison',
+      'Réception des marchandises Poste',
+      'réception données Poste',
+    ]);
+  });
+
+  it('puts the later of two entries that share an instant on top, and keeps a picture entry that stands alone', () => {
+    const result = parsePostlogisticsTrackingResponse({
+      Type: 1,
+      Data: [{
+        Identifier: '12345678-001',
+        History: [
+          { TimeStamp: '2026-09-02T09:14:07', Status: 'RFS', Description: 'Accepted' },
+          { TimeStamp: '2026-09-02T09:14:07', Status: 'SCA', Description: 'Loaded for delivery' },
+          { TimeStamp: '2026-09-02T14:35:51', Status: 'IMG', Description: 'IMAGE' },
+        ],
+      }],
+    }, '12345678001');
+
+    expect(result).toMatchObject({ status: 'in_transit', last_status_text: 'IMAGE' });
+    expect(result.events?.map((event) => event.description)).toEqual(['IMAGE', 'Loaded for delivery', 'Accepted']);
+  });
+
   it('rejects an unsupported response type and a mismatched Type 1 barcode', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(jsonResponse({

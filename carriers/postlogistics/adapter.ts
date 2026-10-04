@@ -27,7 +27,7 @@ import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { referenceConsignment } from '../swiss-post-cargo/reference.js';
 import { postlogisticsIdentifier } from './number.js';
-import { postlogisticsStatus } from './status.js';
+import { POSTLOGISTICS_IMAGE_CODE, postlogisticsStatus } from './status.js';
 
 const PROVIDER = 'PostLogistics';
 const UPSTREAM = 'PostLogistics tracking';
@@ -52,6 +52,15 @@ function text(value: unknown): string {
 
 function comparableIdentifier(value: unknown): string {
   return text(value).toLocaleUpperCase('en-US').replace(/[^A-Z0-9]/g, '');
+}
+
+/**
+ * A history without the `IMG` entries that only say a picture was taken with
+ * a scan: they share that scan's instant, and the scan says what happened.
+ */
+function scans(history: JsonObject[]): JsonObject[] {
+  return history.filter((entry) => text(entry.Status) !== POSTLOGISTICS_IMAGE_CODE
+    || !history.some((other) => other !== entry && text(other.TimeStamp) === text(entry.TimeStamp)));
 }
 
 /** Projects one track-and-trace payload. Pure: the offline tests target this. */
@@ -91,9 +100,10 @@ export function parsePostlogisticsTrackingResponse(value: unknown, trackingNumbe
     shipments = referenceConsignment(shipments, (shipment) => recordArray(shipment.History)
       .map((event) => Date.parse(text(event.TimeStamp))), PROVIDER, now);
   }
-  const history = shipments.flatMap((shipment) => recordArray(shipment.History));
+  const history = shipments.flatMap((shipment) => scans(recordArray(shipment.History)));
   // Merged references interleave several barcodes, so order by absolute
-  // instant and keep the provider's order for entries that share one.
+  // instant. The endpoint lists a history oldest first, so of two entries
+  // that share an instant the later one is the newer.
   const orderedHistory = history.map((event, index) => {
     const rawTimestamp = text(event.TimeStamp);
     const parsedTimestamp = Date.parse(rawTimestamp);
@@ -102,7 +112,7 @@ export function parsePostlogisticsTrackingResponse(value: unknown, trackingNumbe
       index,
       timestamp: Number.isFinite(parsedTimestamp) ? parsedTimestamp : Number.NEGATIVE_INFINITY,
     };
-  }).sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  }).sort((left, right) => right.timestamp - left.timestamp || right.index - left.index);
   const events = orderedHistory.map(({ event }): CarrierEvent => ({
     time: text(event.TimeStamp),
     location: text(event.City),

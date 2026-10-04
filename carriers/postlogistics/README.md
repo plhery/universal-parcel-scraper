@@ -36,9 +36,13 @@ Recognition uses the same lookup and requires a scan before claiming a match.
 
 ## Notes
 
-- History is sorted by absolute instant, with provider order as tie-breaker —
-  merged references interleave barcodes with different offsets, so array order
-  would put an older scan on top.
+- History is sorted by absolute instant — merged references interleave barcodes
+  with different offsets, so array order would put an older scan on top. The
+  endpoint lists a history oldest first, so of two entries that share an instant
+  the later one goes on top.
+- An `IMG` entry records the picture taken with a scan and shares that scan's
+  instant. It is dropped: left in, it would sit on top of the delivery scan and
+  the shipment would never read as delivered. One that stands alone is kept.
 - Only outcome codes are mapped (`DEL`, `DLV`, `POD`, `SIG` → delivered, `NTF` →
   pending); everything else stays in transit. Events carry no stage and the sync
   classifies their wording. A wrong "delivered" is worse than a missing nuance.

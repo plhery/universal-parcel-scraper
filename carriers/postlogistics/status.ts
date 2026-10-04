@@ -19,6 +19,9 @@ export const POSTLOGISTICS_DELIVERED_CODES = ['DEL', 'DLV', 'POD', 'SIG'] as con
 /** The code that means the shipment is announced but not yet moving. */
 export const POSTLOGISTICS_NOTIFIED_CODE = 'NTF';
 
+/** The code of an entry that records a picture, not a movement. */
+export const POSTLOGISTICS_IMAGE_CODE = 'IMG';
+
 /** The shipment status the newest history code implies. */
 export function postlogisticsStatus(code: string): CarrierStatus {
   if ((POSTLOGISTICS_DELIVERED_CODES as readonly string[]).includes(code)) return 'delivered';
