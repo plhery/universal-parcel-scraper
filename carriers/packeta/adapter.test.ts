@@ -102,7 +102,17 @@ describe('Packeta response parsing', () => {
   });
 
   it('binds the returned barcode to the requested shipment', () => {
+    expect(parsePacketaTrackingResponse({ item: packet({ barcode: '1234567890' }) }, TRACKING_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(parsePacketaTrackingResponse({ item: packet({ barcode: TRACKING_NUMBER }) }, TRACKING_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(() => parsePacketaTrackingResponse({ item: packet({ barcode: '0987654321' }) }, TRACKING_NUMBER))
+      .toThrow(SchemaError);
     expect(() => parsePacketaTrackingResponse({ item: packet({ barcode: 'Z0987654321' }) }, TRACKING_NUMBER))
+      .toThrow(SchemaError);
+    expect(() => parsePacketaTrackingResponse({ item: packet({ barcode: 1234567890 }) }, TRACKING_NUMBER))
+      .toThrow(SchemaError);
+    expect(() => parsePacketaTrackingResponse({ item: packet({ barcode: `1234567890${' '.repeat(64)}0987654321` }) }, TRACKING_NUMBER))
       .toThrow(SchemaError);
     expect(() => parsePacketaTrackingResponse({ item: packet({ barcode: undefined }) }, TRACKING_NUMBER))
       .toThrow(SchemaError);

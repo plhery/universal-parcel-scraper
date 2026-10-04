@@ -531,9 +531,10 @@
     {
       "carrier": "bpost",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 11",
+      "sample": "✓ 11",
       "references": [
         {
+          "note": "A domestic parcel",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "postcode_prompt",
@@ -541,6 +542,16 @@
             "Postal Ninja": "no_history",
             "UPU": "n/a"
           }
+        },
+        {
+          "results": {
+            "Ship24": "no_history",
+            "ParcelsApp": "postcode_prompt",
+            "17TRACK": "no_history",
+            "Postal Ninja": "no_history",
+            "UPU": "n/a"
+          },
+          "note": "Another comparison reference"
         },
         {
           "note": "An S10 item through Landmark Global",
@@ -608,8 +619,18 @@
     {
       "carrier": "aramex",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 26",
+      "sample": "✓ 16",
       "references": [
+        {
+          "note": "A domestic shipment",
+          "results": {
+            "Ship24": "no_history",
+            "ParcelsApp": "no_history",
+            "17TRACK": "no_history",
+            "Postal Ninja": 16,
+            "UPU": "n/a"
+          }
+        },
         {
           "results": {
             "Ship24": "no_history",
@@ -620,7 +641,8 @@
               "partial": "undated rows"
             },
             "UPU": "n/a"
-          }
+          },
+          "note": "Another comparison reference"
         },
         {
           "note": "An international shipment",
@@ -799,8 +821,18 @@
     {
       "carrier": "correios-br",
       "direct": "Yes (local OCR)",
-      "sample": "No history; alternate ✓ 14",
+      "sample": "✓ 8",
       "references": [
+        {
+          "note": "A Brazilian postal item",
+          "results": {
+            "Ship24": 8,
+            "ParcelsApp": "no_history",
+            "17TRACK": 8,
+            "Postal Ninja": "error",
+            "UPU": "no_history"
+          }
+        },
         {
           "results": {
             "Ship24": 8,
@@ -808,7 +840,8 @@
             "17TRACK": 8,
             "Postal Ninja": 8,
             "UPU": "no_history"
-          }
+          },
+          "note": "Another comparison reference"
         }
       ]
     },
@@ -853,8 +886,18 @@
     {
       "carrier": "korea-post",
       "direct": "Yes (international)",
-      "sample": "Domestic unsupported; alternate ✓ 20",
+      "sample": "✓ 20",
       "references": [
+        {
+          "note": "An EMS item",
+          "results": {
+            "Ship24": 36,
+            "ParcelsApp": 41,
+            "17TRACK": 28,
+            "Postal Ninja": 27,
+            "UPU": 1
+          }
+        },
         {
           "results": {
             "Ship24": "no_history",
@@ -862,7 +905,8 @@
             "17TRACK": "no_history",
             "Postal Ninja": "no_history",
             "UPU": "n/a"
-          }
+          },
+          "note": "Another comparison reference"
         },
         {
           "note": "An EMS item",
@@ -982,9 +1026,10 @@
     {
       "carrier": "delhivery",
       "direct": "Yes",
-      "sample": "No history; alternate summary + 1 undated scan",
+      "sample": "✓ 2, partial (one undated scan and a status snapshot)",
       "references": [
         {
+          "note": "A domestic parcel",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",
@@ -992,6 +1037,16 @@
             "Postal Ninja": "no_history",
             "UPU": "n/a"
           }
+        },
+        {
+          "results": {
+            "Ship24": "no_history",
+            "ParcelsApp": "no_history",
+            "17TRACK": "no_history",
+            "Postal Ninja": "no_history",
+            "UPU": "n/a"
+          },
+          "note": "Another comparison reference"
         }
       ]
     },
@@ -1014,8 +1069,18 @@
     {
       "carrier": "dtdc",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 9",
+      "sample": "✓ 9",
       "references": [
+        {
+          "note": "A domestic parcel",
+          "results": {
+            "Ship24": "no_history",
+            "ParcelsApp": 37,
+            "17TRACK": "no_history",
+            "Postal Ninja": "no_history",
+            "UPU": "n/a"
+          }
+        },
         {
           "results": {
             "Ship24": "no_history",
@@ -1023,7 +1088,8 @@
             "17TRACK": "no_history",
             "Postal Ninja": "refused",
             "UPU": "n/a"
-          }
+          },
+          "note": "Another comparison reference"
         }
       ]
     },
@@ -1046,8 +1112,18 @@
     {
       "carrier": "packeta",
       "direct": "Yes",
-      "sample": "No history",
+      "sample": "✓ 6",
       "references": [
+        {
+          "note": "A parcel handed to a delivery partner",
+          "results": {
+            "Ship24": 11,
+            "ParcelsApp": "no_history",
+            "17TRACK": "no_history",
+            "Postal Ninja": 12,
+            "UPU": "n/a"
+          }
+        },
         {
           "stale": true,
           "results": {
@@ -1056,7 +1132,8 @@
             "17TRACK": "no_history",
             "Postal Ninja": "no_history",
             "UPU": "n/a"
-          }
+          },
+          "note": "Another comparison reference"
         }
       ]
     },
@@ -1086,9 +1163,10 @@
     {
       "carrier": "bring-posten",
       "direct": "Yes",
-      "sample": "Not tested; alternate ✓ 3",
+      "sample": "✓ 12",
       "references": [
         {
+          "note": "A Norwegian postal item",
           "results": {
             "Ship24": 12,
             "ParcelsApp": 15,
@@ -1096,6 +1174,16 @@
             "Postal Ninja": 16,
             "UPU": 3
           }
+        },
+        {
+          "results": {
+            "Ship24": 12,
+            "ParcelsApp": 15,
+            "17TRACK": 19,
+            "Postal Ninja": 16,
+            "UPU": 3
+          },
+          "note": "Another comparison reference"
         }
       ]
     },
@@ -1166,9 +1254,10 @@
     {
       "carrier": "brt",
       "direct": "Yes",
-      "sample": "Not tested; alternate ✓ 7",
+      "sample": "✓ 9",
       "references": [
         {
+          "note": "An international parcel",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": 23,
@@ -1176,6 +1265,16 @@
             "Postal Ninja": 5,
             "UPU": "n/a"
           }
+        },
+        {
+          "results": {
+            "Ship24": "no_history",
+            "ParcelsApp": 23,
+            "17TRACK": "no_history",
+            "Postal Ninja": 5,
+            "UPU": "n/a"
+          },
+          "note": "Another comparison reference"
         }
       ]
     },
@@ -1214,8 +1313,18 @@
     {
       "carrier": "mrw",
       "direct": "Yes",
-      "sample": "Summary only; alternate ✓ 14",
+      "sample": "✓ 14",
       "references": [
+        {
+          "note": "A delivered parcel",
+          "results": {
+            "Ship24": 14,
+            "ParcelsApp": 14,
+            "17TRACK": "no_history",
+            "Postal Ninja": 14,
+            "UPU": "n/a"
+          }
+        },
         {
           "stale": true,
           "results": {
@@ -1224,7 +1333,8 @@
             "17TRACK": 1,
             "Postal Ninja": "no_history",
             "UPU": "n/a"
-          }
+          },
+          "note": "Another comparison reference"
         },
         {
           "note": "A September parcel",
@@ -1240,8 +1350,18 @@
     {
       "carrier": "nacex",
       "direct": "Yes",
-      "sample": "Not tested; alternate ✓ 14",
+      "sample": "✓ 13",
       "references": [
+        {
+          "note": "An agency/shipment reference",
+          "results": {
+            "Ship24": "refused",
+            "ParcelsApp": "refused",
+            "17TRACK": "refused",
+            "Postal Ninja": "refused",
+            "UPU": "n/a"
+          }
+        },
         {
           "results": {
             "Ship24": "error",
@@ -1249,7 +1369,8 @@
             "17TRACK": "error",
             "Postal Ninja": "error",
             "UPU": "n/a"
-          }
+          },
+          "note": "Another comparison reference"
         }
       ]
     },

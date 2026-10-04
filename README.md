@@ -15,7 +15,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 <!-- GENERATED:summary -->
 **3,500+ carriers** through **85 dedicated adapters** and **5 universal fallbacks**
 
-<sub>105 carriers in the catalog · 58 countries represented</sub>
+<sub>105 catalog entries · 58 countries represented</sub>
 <!-- /GENERATED:summary -->
 
 [Try it](#try-it) · [Ways to run it](#ways-to-run-it) · [Benchmark](#benchmark) · [Carriers](carriers/) · [Add a carrier](CONTRIBUTING.md)
@@ -33,9 +33,9 @@ its own as a command, a Node library or an HTTP server.
 ## Benchmark
 
 <!-- GENERATED:coverage -->
-Benchmarked against 100 popular carriers, it returns tracking history for **70**. The best single aggregator returns 50.
+In a curated benchmark of 100 carriers, dedicated adapters return tracking history for **62**, rising to **75** with all fallbacks enabled. The best single aggregator returns 52.
 
-<img src="docs/assets/coverage.svg" alt="Carriers with tracking history: This project, all fallbacks enabled 70, This project, dedicated adapters alone 51, ParcelsApp 50, Postal Ninja 41, 17TRACK 40, Ship24 38, UPU 11." width="760">
+<img src="docs/assets/coverage.svg" alt="Carriers with tracking history: This project, all fallbacks enabled 75, This project, dedicated adapters alone 62, ParcelsApp 52, Postal Ninja 43, 17TRACK 40, Ship24 41, UPU 12." width="760">
 <!-- /GENERATED:coverage -->
 
 [Method and results per carrier](providers/COVERAGE.md)

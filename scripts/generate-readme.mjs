@@ -49,14 +49,14 @@ const best = Math.max(...Object.values(counts));
 const blocks = {
   summary: [
     `**${count(reach)}+ carriers** through **${activeAdapters} dedicated adapters** and **${sources.length} universal fallbacks**`,
-    '', `<sub>${documents.length} carriers in the catalog · ${countries} countries represented</sub>`,
+    '', `<sub>${documents.length} catalog entries · ${countries} countries represented</sub>`,
   ].join('\n'),
   stages: [
     picture('stages', `${samples.map(entry => `${entry.carrier}: ${entry.label}`).join('; ')}. All are filed under ${stage}.`),
     '', `The carrier folders record ${count(statuses.length)} such statuses, each filed under one stage.`,
   ].join('\n'),
   coverage: [
-    `Benchmarked against ${coverage.length} popular carriers, it returns tracking history for **${union}**. The best single aggregator returns ${best}.`,
+    `In a curated benchmark of ${coverage.length} carriers, dedicated adapters return tracking history for **${summary.comparison.direct}**, rising to **${union}** with all fallbacks enabled. The best single aggregator returns ${best}.`,
     '', picture('coverage', `Carriers with tracking history: ${rows.map(row => `${row.label} ${row.count}`).join(', ')}.`),
   ].join('\n'),
 };

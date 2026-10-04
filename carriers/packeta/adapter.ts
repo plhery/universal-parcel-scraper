@@ -63,9 +63,12 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
     if (typeof payload.error === 'string') throw new NotFoundError('Packeta');
     throw new SchemaError('Packeta', 'Packeta returned an invalid tracking response');
   }
-  const returned = clean(item.barcode, 64).toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+  const returned = typeof item.barcode === 'string'
+    ? item.barcode.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '') : '';
   if (!returned) throw new SchemaError('Packeta', 'Packeta did not return a shipment identifier');
-  if (returned !== requested) throw new SchemaError('Packeta', 'Packeta returned a different shipment');
+  if (returned !== requested && returned !== requested.slice(1)) {
+    throw new SchemaError('Packeta', 'Packeta returned a different shipment');
+  }
   const code = clean(item.packetStatusId, 16);
   const classified = classifyPacketaStatus(code);
   const rawDetails = item.trackingDetails;

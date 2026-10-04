@@ -7,7 +7,8 @@ CZ, SK, HU, RO and PL. Tracked through the keyless endpoint behind the public tr
 
 1. `direct`: one `POST https://tracking.packeta.com/api/getPacketById/{code}/en`. No cookies,
    headers, account or browser state.
-   - The echoed `barcode` must match the request, otherwise `SchemaError`.
+   - The echoed `barcode` must match the request, with or without its `Z` prefix,
+     otherwise `SchemaError`. The public API returns the ten barcode digits.
    - Unknown codes come back two ways, both `NotFoundError`: HTTP 404 `{"error":"notFound"}`,
      or HTTP 200 carrying `error` instead of `item`. Expired codes answer the same 404, so
      unknown and expired look identical.
