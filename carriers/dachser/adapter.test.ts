@@ -15,6 +15,7 @@ const fixture = (name: string): Record<string, unknown> => JSON.parse(
 ) as Record<string, unknown>;
 const inTransit = () => fixture('in-transit');
 const nullResult500 = () => fixture('null-result-500');
+const nullMessage500 = () => fixture('null-message-500');
 const capabilities = (JSON.parse(
   readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
 ) as { capabilities: string[] }).capabilities;
@@ -107,31 +108,47 @@ describe('Dachser no-data response', () => {
   });
 
   it('does not misclassify unrelated upstream failures as no data', async () => {
+    // The catch-all code and the detail path also carry every other unhandled failure.
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({
-      code: 'ERR_APP_500',
+      ...nullResult500(),
       message: 'Database unavailable',
     }), { status: 500 }));
 
     await expect(new DachserTracker({ timeoutMs: 1_000 }).fetch(WRONG_DACHSER_NUMBER, WRONG_DACHSER_URL))
       .rejects.toMatchObject({
         name: 'UpstreamHttpError',
+        kind: 'indeterminate',
         status: 500,
         message: 'Dachser tracking returned HTTP 500',
       });
   });
 
-  it('keeps Dachser\'s current generic null-message 500 indeterminate', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({
-      code: 'ERR_APP_500',
-      message: null,
-      path: '/api/utilidades/seguimiento-publico/detalle',
-    }), { status: 500 }));
+  it('keeps the null-message 500 indeterminate, which no field tells apart from an outage', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(
+      JSON.stringify(nullMessage500()),
+      { status: 500, headers: { 'Content-Type': 'application/json' } },
+    ));
 
     await expect(new DachserTracker({ timeoutMs: 1_000 }).fetch(WRONG_DACHSER_NUMBER, WRONG_DACHSER_URL))
       .rejects.toMatchObject({
         name: 'UpstreamHttpError',
+        kind: 'indeterminate',
         status: 500,
         message: 'Dachser tracking returned HTTP 500',
       });
+  });
+
+  it('classifies each reply on its own when the two shapes alternate for one tuple', async () => {
+    const reply = (payload: Record<string, unknown>) => new Response(JSON.stringify(payload), { status: 500 });
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(reply(nullResult500()))
+      .mockResolvedValueOnce(reply(nullMessage500()))
+      .mockResolvedValueOnce(reply(nullResult500()));
+    const tracker = new DachserTracker({ timeoutMs: 1_000 });
+    const lookup = () => tracker.fetch(WRONG_DACHSER_NUMBER, WRONG_DACHSER_URL);
+
+    await expect(lookup()).rejects.toMatchObject({ kind: 'not_found' });
+    await expect(lookup()).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(lookup()).rejects.toMatchObject({ kind: 'not_found' });
   });
 });

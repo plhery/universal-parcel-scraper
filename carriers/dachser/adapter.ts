@@ -147,10 +147,12 @@ export class DachserTracker {
       } catch {
         throw new UpstreamHttpError('Dachser tracking', response.status);
       }
-      // An unknown shipment/access tuple currently reaches a null result in
-      // Dachser's public endpoint and is surfaced as this stable JSON 500.
-      // Match the public error signature narrowly so unrelated 500s remain
-      // operational failures rather than false not-found results.
+      // An unknown shipment/access tuple reaches a null result in Dachser's
+      // public endpoint and surfaces as a JSON 500 whose message names it.
+      // ERR_APP_500 is the endpoint's catch-all for any unhandled exception and
+      // the message is the only field that says which one, so the `message: null`
+      // reply the same tuple also gets stays an operational failure, like every
+      // unrelated 500, rather than a false not-found.
       const errorMessage = plainText(isRecord(errorPayload) ? errorPayload.message ?? '' : '');
       if (
         response.status === 500

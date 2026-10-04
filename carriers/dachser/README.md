@@ -13,9 +13,8 @@ rule.
    - Without a URL the factory raises `InputRequiredError`.
    - 404 is not-found.
    - HTTP 500 is not-found only on the exact null-result signature: `code: ERR_APP_500`, the
-     detail API's `path`, and a message naming `resultadoDetExp` and `null`. The endpoint
-     alternates this with a generic 500 for the same bad tuple; every other 500 stays
-     `UpstreamHttpError` so an outage never reads as "no such shipment" and stops retries.
+     detail API's `path`, and a message naming `resultadoDetExp` and `null`. Every other 500
+     stays `UpstreamHttpError` so an outage never reads as "no such shipment" and stops retries.
    - The echoed `numUnico` must match the parcel's number.
 
 ## Notes
@@ -45,6 +44,11 @@ rule.
 
 ## Limitations
 
+- An unknown shipment or wrong link reads as not-found only some of the time. Dachser's server
+  leaves the message out of most of these 500s, and without it the reply is the one any other
+  unhandled failure of the endpoint gets: `ERR_APP_500` is its catch-all code and the message
+  is the only field that names the failure. Those replies stay `UpstreamHttpError`, so the same
+  link can alternate between not-found and an upstream error.
 - No scan locations on event rows.
 - Needles are masculine singular ("registrado", "aceptado"): "expedición registrada" falls to
   the neutral update, and "expedición recogida" hits `ready_for_pickup` before `accepted`.
