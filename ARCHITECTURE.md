@@ -4,10 +4,7 @@ One lookup goes in and one timeline comes out. The package answers a question ab
 parcel and keeps nothing afterwards. Accounts, parcel storage, polling, notifications and any
 decision based on an earlier check belong to whoever calls it.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/how-it-works-dark.svg">
-  <img src="docs/assets/how-it-works-light.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback the caller enabled when that finds no history. Each scan's wording is filed under a stage, and the result is one timeline.">
-</picture>
+<img src="docs/assets/how-it-works.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback the caller enabled when that finds no history. Each scan's wording is filed under a stage, and the result is one timeline.">
 
 ## Where things live
 

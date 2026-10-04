@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { coverageChart, darken, stagesFigure, terminal, themes } from './readme-graphics.mjs';
+import { coverageChart, stagesFigure, terminal } from './readme-graphics.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = name => JSON.parse(readFileSync(path.join(root, name), 'utf8'));
 const documents = readdirSync(path.join(root, 'carriers'), { withFileTypes: true }).filter(entry => entry.isDirectory())
@@ -44,29 +44,20 @@ const sample = read('data/detection-golden.json').find(record => record.input ==
 if (sample?.confidence !== 'high') throw new Error('The README terminal needs a corpus number that detection names with high confidence');
 const detected = JSON.stringify({ trackingNumber: sample.input, source: 'number', carrier: sample.carrier,
   confidence: sample.confidence, candidates: sample.candidates, preferred: [] }, null, 2).split('\n');
-const picture = (name, alt, width) => [
-  '<picture>',
-  `  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/${name}-dark.svg">`,
-  `  <img src="docs/assets/${name}-light.svg" alt="${alt}" width="${width}">`,
-  '</picture>',
-].join('\n');
+const picture = (name, alt) => `<img src="docs/assets/${name}.svg" alt="${alt}" width="760">`;
+const best = Math.max(...Object.values(counts));
 const blocks = {
   summary: [
     `**${count(reach)}+ carriers** through **${activeAdapters} dedicated adapters** and **${sources.length} universal fallbacks**`,
     '', `<sub>${documents.length} carriers in the catalog · ${countries} countries represented</sub>`,
   ].join('\n'),
   stages: [
-    picture('stages', `${samples.map(entry => `${entry.carrier}: ${entry.label}`).join('; ')}. All are filed under ${stage}.`, 760),
-    '', `The folders hold ${count(statuses.length)} recorded statuses from ${new Set(statuses.map(status => status.carrier.id)).size} carriers.`,
+    picture('stages', `${samples.map(entry => `${entry.carrier}: ${entry.label}`).join('; ')}. All are filed under ${stage}.`),
+    '', `The carrier folders record ${count(statuses.length)} such statuses, each filed under one stage.`,
   ].join('\n'),
   coverage: [
-    picture('coverage', `Carriers with tracking history: ${rows.map(row => `${row.label} ${row.count}`).join(', ')}.`, 760),
-    '', '<details>', '<summary>The same numbers as a table</summary>', '',
-    '| Source | Carriers with history |', '| --- | ---: |',
-    `| **Universal Parcel Scraper, all fallbacks enabled** | **${union} / ${coverage.length}** |`,
-    `| Dedicated adapters alone | ${summary.comparison.direct} / ${coverage.length} |`,
-    ...sources.map(source => `| ${source} | ${counts[source]} / ${coverage.length} |`),
-    '', '</details>',
+    `Benchmarked against ${coverage.length} popular carriers, it returns tracking history for **${union}**. The best single aggregator returns ${best}.`,
+    '', picture('coverage', `Carriers with tracking history: ${rows.map(row => `${row.label} ${row.count}`).join(', ')}.`),
   ].join('\n'),
 };
 const readme = path.join(root,'README.md');
@@ -78,11 +69,8 @@ for (const [name, content] of Object.entries(blocks)) {
 }
 const outputs = { 'README.md': next, 'data/coverage-summary.json': JSON.stringify(summary,null,2)+'\n',
   'docs/assets/terminal.svg': terminal(`npx universal-parcel-scraper detect ${sample.input}`, detected),
-  'docs/assets/how-it-works-dark.svg': darken(readFileSync(path.join(root,'docs/assets/how-it-works-light.svg'),'utf8')) };
-for (const [name, theme] of Object.entries(themes)) {
-  outputs[`docs/assets/coverage-${name}.svg`] = coverageChart(rows, coverage.length, theme);
-  outputs[`docs/assets/stages-${name}.svg`] = stagesFigure(samples, stage, read('data/stages.json'), theme);
-}
+  'docs/assets/coverage.svg': coverageChart(rows, coverage.length),
+  'docs/assets/stages.svg': stagesFigure(samples, stage, read('data/stages.json')) };
 for (const [name, content] of Object.entries(outputs)) {
   const file = path.join(root,name);
   if (process.argv.includes('--check')) {

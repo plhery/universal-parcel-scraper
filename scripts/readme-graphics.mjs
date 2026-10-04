@@ -6,17 +6,17 @@ const sans = "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvet
 const mono = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace";
 const escape = text => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// GitHub's light and dark surfaces, by role.
-export const themes = {
-  light: { ink: '#1f2328', muted: '#59636e', line: '#d1d9e0', box: '#f6f8fa', accent: '#0b8068', tint: '#e6f4f0', other: '#9aa2ab' },
-  dark: { ink: '#f0f6fc', muted: '#9198a1', line: '#3d444d', box: '#151b23', accent: '#2a9d85', tint: '#12302b', other: '#59626d' },
-};
-
-/** A hand-drawn light picture becomes its dark twin by swapping the light colours for the dark ones. */
-export const darken = svg => Object.keys(themes.light).reduce((next, role) => next.replaceAll(themes.light[role], themes.dark[role]), svg);
+// Every picture is a card with its own surface, so it reads the same on any page theme.
+export const theme = { surface: '#0d1b18', edge: '#24403a', ink: '#f4f6ef', muted: '#9db5ae', line: '#2c4a44', box: '#142824', accent: '#4fd1b5', tint: '#1d5c50', other: '#5d7771' };
+const card = (width, height, label, style, body) => [
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width + 56} ${height + 52}" role="img" aria-label="${label}">`,
+  `  <style>${style}</style>`,
+  `  <rect x=".5" y=".5" width="${width + 55}" height="${height + 51}" rx="12" fill="${theme.surface}" stroke="${theme.edge}"/>`,
+  '  <g transform="translate(28 26)">', ...body, '  </g>', '</svg>', '',
+].join('\n');
 
 /** Carriers with history per source, as bars. `rows` are `{ label, count, own }`. */
-export function coverageChart(rows, total, theme) {
+export function coverageChart(rows, total) {
   const left = 270, scale = 420, pitch = 34, top = 44, bottom = top + rows.length * pitch;
   const at = count => Math.round(left + count / total * scale);
   const bar = (row, index) => {
@@ -28,9 +28,7 @@ export function coverageChart(rows, total, theme) {
     ].join('\n');
   };
   const ticks = [0, total / 2, total];
-  return [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 ${bottom + 30}" role="img" aria-label="Carriers with tracking history, by source">`,
-    `  <style>text { font: 13px ${sans}; }</style>`,
+  return card(760, bottom + 24, 'Carriers with tracking history, by source', `text { font: 13px ${sans}; }`, [
     `  <text x="0" y="16" fill="${theme.muted}">Carriers with tracking history, out of ${total}</text>`,
     `  <rect x="${left + scale - 222}" y="6" width="10" height="10" rx="2" fill="${theme.accent}"/>`,
     `  <text x="${left + scale - 206}" y="16" fill="${theme.muted}">this project</text>`,
@@ -39,12 +37,11 @@ export function coverageChart(rows, total, theme) {
     ...ticks.map(tick => `  <path d="M${at(tick) + .5} ${top}V${bottom}" stroke="${theme.line}"/>`),
     ...rows.map(bar),
     ...ticks.map(tick => `  <text x="${at(tick)}" y="${bottom + 20}" fill="${theme.muted}" text-anchor="middle" style="font-size: 11.5px">${tick}</text>`),
-    '</svg>', '',
-  ].join('\n');
+  ]);
 }
 
 /** Recorded statuses of several carriers meeting in one stage, above the whole stage list. `samples` are `{ carrier, label, code }`. */
-export function stagesFigure(samples, stage, stages, theme) {
+export function stagesFigure(samples, stage, stages) {
   const width = 760, chip = 500, pillLeft = 586, pitch = 40, rowHeight = 32;
   const middle = (samples.length * pitch - 8) / 2;
   const pill = (x, y, name) => {
@@ -76,11 +73,8 @@ export function stagesFigure(samples, stage, stages, theme) {
     list.push(next.svg);
     x += next.wide + 8;
   }
-  return [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${y + 27}" role="img" aria-label="${samples.length} carriers' statuses filed under ${stage}">`,
-    `  <style>text { font: 13px ${sans}; } .mono { font: 12px ${mono}; }</style>`,
-    ...rows, target, ...list, '</svg>', '',
-  ].join('\n');
+  return card(width, y + 26, `${samples.length} carriers' statuses filed under ${stage}`,
+    `text { font: 13px ${sans}; } .mono { font: 12px ${mono}; }`, [...rows, target, ...list]);
 }
 
 const terminalInk = { window: '#0d1b18', bar: '#142824', edge: '#24403a', text: '#8fa9a2', title: '#6f8a83', command: '#f4f6ef', prompt: '#6fd3bd', key: '#9fd6c9', string: '#f0c58a' };

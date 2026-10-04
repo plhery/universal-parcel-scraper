@@ -1,16 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 270" role="img" aria-label="An input is detected offline and fetched by the carrier's dedicated adapter, or by an enabled fallback when that finds no history. Each scan's wording is mapped to a stage, and the result is one timeline.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-28 -2 936 292" role="img" aria-label="An input is detected offline and fetched by the carrier's dedicated adapter, or by an enabled fallback when that finds no history. Each scan's wording is mapped to a stage, and the result is one timeline.">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; text-anchor: middle; }
-    .title { font-size: 14px; font-weight: 600; fill: #f0f6fc; }
-    .sub { font-size: 12px; fill: #9198a1; }
-    .mono { font: 11px ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; fill: #9198a1; }
-    .box { fill: #151b23; stroke: #3d444d; }
-    .flow { fill: none; stroke: #9198a1; stroke-width: 1.5; }
-    .hair { fill: none; stroke: #3d444d; }
+    .title { font-size: 14px; font-weight: 600; fill: #f4f6ef; }
+    .sub { font-size: 12px; fill: #9db5ae; }
+    .mono { font: 11px ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; fill: #9db5ae; }
+    .box { fill: #142824; stroke: #2c4a44; }
+    .flow { fill: none; stroke: #9db5ae; stroke-width: 1.5; }
+    .hair { fill: none; stroke: #2c4a44; }
   </style>
+  <rect x="-27.5" y="-1.5" width="935" height="291" rx="12" fill="#0d1b18" stroke="#24403a"/>
   <defs>
     <marker id="head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M1 1 9 5 1 9Z" fill="#9198a1"/>
+      <path d="M1 1 9 5 1 9Z" fill="#9db5ae"/>
     </marker>
   </defs>
 
@@ -34,7 +35,7 @@
   <text class="sub" x="620.5" y="83">each scan's wording,</text>
   <text class="sub" x="620.5" y="100">filed under one list</text>
 
-  <rect x="722.5" y="24.5" width="156" height="92" rx="10" fill="#12302b" stroke="#2a9d85"/>
+  <rect x="722.5" y="24.5" width="156" height="92" rx="10" fill="#1d5c50" stroke="#4fd1b5"/>
   <text class="title" x="800.5" y="62">One timeline</text>
   <text class="sub" x="800.5" y="83">the same JSON</text>
   <text class="sub" x="800.5" y="100">for every carrier</text>

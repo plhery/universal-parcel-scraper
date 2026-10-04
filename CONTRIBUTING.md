@@ -85,9 +85,8 @@ Keep carrier READMEs short: scope, retrieval, the reasons for non-obvious choice
 how to run the live test. Catalog facts belong in the JSON files and provider results in
 [providers/COVERAGE.md](providers/COVERAGE.md).
 
-`npm run generate` writes the README's counts and its pictures in `docs/assets/`. The
-exception is `how-it-works-light.svg`, which is drawn by hand; its dark twin is derived
-from it.
+`npm run generate` writes the README's counts and its pictures in `docs/assets/`. Only
+`how-it-works.svg` and `pip.svg` are drawn by hand.
 
 ## Versions and releases
 
