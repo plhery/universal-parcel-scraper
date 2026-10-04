@@ -109,8 +109,8 @@ describe('requirementSatisfied', () => {
 describe('tracking links', () => {
   it('compiles every carrier link rule once', () => {
     expect(TRACKING_LINK_RULES.length).toBeGreaterThan(0);
-    expect(carrierLinkRules('swiss-post')[0].domains).toContain('service.post.ch');
-    expect(carrierLinkRules('swiss-post')[0].path).toBeInstanceOf(RegExp);
+    expect(carrierLinkRules('swiss-post')[0]!.domains).toContain('service.post.ch');
+    expect(carrierLinkRules('swiss-post')[0]!.path).toBeInstanceOf(RegExp);
   });
 
   it('localizes only the portals that support it', () => {

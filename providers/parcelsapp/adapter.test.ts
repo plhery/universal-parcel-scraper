@@ -110,7 +110,7 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-01-04T09:15:00Z', status: "Colis en préparation chez l'expéditeur" },
     ];
     const parsed = transport === 'json' ? parseParcelsAppResponse({ states }, number, identity())
-      : parseParcelsAppHtml(rendered(row('05 Jan 2026', '08:30', states[0].status) + row('04 Jan 2026', '09:15', states[1].status)), number);
+      : parseParcelsAppHtml(rendered(row('05 Jan 2026', '08:30', states[0]!.status) + row('04 Jan 2026', '09:15', states[1]!.status)), number);
     expect(parsed).toMatchObject({ status: 'in_transit', current_stage: 'accepted',
       last_update: '2026-01-05T08:30:00.000Z', tracking_provider: 'ParcelsApp' });
     expect(parsed.events?.map(({ stage }) => stage)).toEqual(['accepted', 'registered']);
@@ -129,7 +129,7 @@ describe('ParcelsApp result parsing', () => {
       ['05', '17:10', 'LEIDO EN DESTINO'],
       ['02', '22:20', 'TRANSITO'],
       ['02', '17:50', 'PENDIENTE DE ENTREGAR A TIPSA'],
-    ];
+    ] as const;
     const parsed = transport === 'json'
       ? parseParcelsAppResponse({ carriers: ['TIPSA'], states: scans.map(([day, time, label]) => ({
         date: `2026-05-${day}T${time}:00Z`, status: label + label, carrier: 0,
@@ -203,7 +203,7 @@ describe('ParcelsApp result parsing', () => {
     const page = rendered(undatedLeg.states.map((state) => {
       const date = typeof state.date === 'string' ? DateTime.fromISO(state.date, { zone: 'UTC', locale: 'en' }) : null;
       return carrierRow(date?.toFormat('dd LLL yyyy') ?? 'aN Inv NaN', date?.toFormat('HH:mm') ?? 'aN:aN',
-        String(state.status), undatedLeg.carriers[Number(state.carrier)]);
+        String(state.status), undatedLeg.carriers[Number(state.carrier)]!);
     }).join(''));
     const html = parseParcelsAppHtml(page, number);
     const json = parseParcelsAppResponse(undatedLeg, number, identity());
@@ -220,7 +220,7 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-08-17T03:04:00Z', status: 'Additional information provided' },
     ] }, number, identity());
     expect(result.current_stage).toBe('delivered');
-    expect(result.events?.[1].stage).toBe('pending');
+    expect(result.events?.[1]!.stage).toBe('pending');
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 
@@ -541,7 +541,7 @@ describe('ParcelsApp browser capture', () => {
   it('asks the browser service for the page and reads its captured API response', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(captured(announced));
     await expect(tracker(fetcher, 'http://browser.test/v1').fetch(number)).resolves.toMatchObject({ tracking_provider: 'ParcelsApp', current_stage: 'registered' });
-    const [url, options] = fetcher.mock.calls[0];
+    const [url, options] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('http://browser.test/scrape');
     expect(JSON.parse(String(options!.body))).toMatchObject({
       url: `https://parcelsapp.com/en/tracking/${number}`, skipHttp: true, maxTier: 3,
@@ -578,7 +578,7 @@ describe('ParcelsApp direct lookup', () => {
     const result = await new ParcelsAppTracker({ fetcher }).fetch(number, 10_000, ' 01234 ');
     expect(result).toMatchObject({ current_stage: 'registered', tracking_source: 'structured-web-response' });
     expect(fetcher).toHaveBeenCalledOnce();
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(API);
     expect(new URLSearchParams(String(init!.body)).get('extra[zipcode]')).toBe('01234');
     expect(JSON.stringify(result)).not.toContain('01234');
@@ -594,7 +594,7 @@ describe('ParcelsApp direct lookup', () => {
     finishFirst(reply(announced));
     expect(second.current_stage).toBe('delivered');
     expect((await first).current_stage).toBe('registered');
-    expect(String(fetcher.mock.calls[0][1]!.body)).not.toBe(String(fetcher.mock.calls[1][1]!.body));
+    expect(String(fetcher.mock.calls[0]![1]!.body)).not.toBe(String(fetcher.mock.calls[1]![1]!.body));
   });
 
   it('reports a postcode gate without treating it as a scan or retrying in a browser', async () => {
@@ -712,7 +712,7 @@ describe('ParcelsApp slow lookup recovery', () => {
   function timedFetch(replies: { afterMs: number; payload?: unknown; failure?: Error }[]) {
     let attempt = 0;
     return vi.fn<typeof fetch>().mockImplementation((_url, init) => new Promise((resolve, reject) => {
-      const reply = replies[attempt++];
+      const reply = replies[attempt++]!;
       const signal = init!.signal!;
       const abort = () => { clearTimeout(timer); reject(signal.reason); };
       const timer = setTimeout(() => {
@@ -744,8 +744,8 @@ describe('ParcelsApp slow lookup recovery', () => {
     await expect(lookup).resolves.toMatchObject({ tracking_source: 'structured-web-response', current_stage: 'registered' });
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(fetcher.mock.calls.map(([url]) => url)).toEqual([API, API]);
-    expect(String(fetcher.mock.calls[1][1]!.body)).toBe(String(fetcher.mock.calls[0][1]!.body));
-    expect(new URLSearchParams(String(fetcher.mock.calls[1][1]!.body)).get('extra[zipcode]')).toBe('01234');
+    expect(String(fetcher.mock.calls[1]![1]!.body)).toBe(String(fetcher.mock.calls[0]![1]!.body));
+    expect(new URLSearchParams(String(fetcher.mock.calls[1]![1]!.body)).get('extra[zipcode]')).toBe('01234');
     expect(steps).toMatchObject([
       { step: 'direct', outcome: 'transport' }, { step: 'retry', outcome: 'ok', fallbackFrom: 'direct' },
     ]);

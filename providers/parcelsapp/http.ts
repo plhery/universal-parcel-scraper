@@ -23,9 +23,9 @@ export function parcelsAppChecksum(text: string): number {
     hash = Math.imul(hash, 0x5bd1e995) ^ Math.imul(block, 0x5bd1e995);
   }
   const remaining = bytes.length - offset;
-  if (remaining >= 3) hash ^= bytes[offset + 2] << 16;
-  if (remaining >= 2) hash ^= bytes[offset + 1] << 8;
-  if (remaining >= 1) hash = Math.imul(hash ^ bytes[offset], 0x5bd1e995);
+  if (remaining >= 3) hash ^= bytes[offset + 2]! << 16;
+  if (remaining >= 2) hash ^= bytes[offset + 1]! << 8;
+  if (remaining >= 1) hash = Math.imul(hash ^ bytes[offset]!, 0x5bd1e995);
   hash ^= hash >>> 13;
   hash = Math.imul(hash, 0x5bd1e995);
   return (hash ^ hash >>> 15) >>> 0;

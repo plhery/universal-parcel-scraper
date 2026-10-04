@@ -21,7 +21,7 @@ function sessionCookie(response: Response, previous?: string): string {
 }
 
 function htmlText(response: Response, bytes: Uint8Array): string {
-  const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1].toLowerCase();
+  const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1]!.toLowerCase();
   if (charset && !['utf-8', 'utf8', 'iso-8859-1', 'windows-1252'].includes(charset)) throw new SchemaError('NACEX', 'NACEX response encoding changed');
   return decodeText(bytes, charset?.startsWith('utf') ? 'utf-8' : 'windows-1252');
 }

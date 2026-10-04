@@ -40,7 +40,7 @@ describe('UI tracking links (rendered public pages)', () => {
       // Only a request carrying it elsewhere shows the page looking it up.
       let sent = `${request.url()}\n${request.postData() ?? ''}`;
       try { sent = decodeURIComponent(sent); } catch { /* keep the raw request */ }
-      for (const address of [link.url, page.url()]) {
+      for (const address of [link!.url, page.url()]) {
         const { pathname, search, hash } = new URL(address);
         for (const echo of [address, pathname + search + hash, pathname + search]) sent = sent.split(echo).join('');
       }
@@ -49,11 +49,11 @@ describe('UI tracking links (rendered public pages)', () => {
     try {
       let response;
       try {
-        response = await page.goto(link.url, { waitUntil: 'commit', timeout: 20_000 });
+        response = await page.goto(link!.url, { waitUntil: 'commit', timeout: 20_000 });
       } catch (error) {
         // A headless transport failure is inconclusive. Only permit a skip after
         // an independent HTTP GET rules out a missing page or broken redirect.
-        const http = await fetch(link.url, { signal: AbortSignal.timeout(10_000) });
+        const http = await fetch(link!.url, { signal: AbortSignal.timeout(10_000) });
         const html = await http.text();
         const verdict = trackingPageVerdict({ status: http.status, url: http.url,
           title: '', text: html.replace(/<[^>]*>/g, ' ') }, testCase.route, testCase.marker, testCase.shipmentNotFound);

@@ -192,7 +192,7 @@ describe('Ecoscooting direct retrieval', () => {
       new Response(JSON.stringify(referenceFixture(JSON.parse(new URLSearchParams(String(init?.body)).get('logistics_interface')!).mailNo))));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     for (const [input, number] of [[PORTUGAL_NUMBER, PORTUGAL_NUMBER], ['cnprt-00000000000000000001', PORTUGAL_NUMBER],
-      [SPAIN_NUMBER, SPAIN_NUMBER], ['cnesp 00000000000000000001', SPAIN_NUMBER]]) {
+      [SPAIN_NUMBER, SPAIN_NUMBER], ['cnesp 00000000000000000001', SPAIN_NUMBER]] as const) {
       await expect(instance.track({ number: input })).resolves.toMatchObject({ status: 'delivered' });
       const form = new URLSearchParams(String(fetcher.mock.lastCall?.[1]?.body));
       expect(JSON.parse(form.get('logistics_interface')!).mailNo).toBe(number);

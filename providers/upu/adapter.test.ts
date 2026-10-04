@@ -33,7 +33,7 @@ describe('UPU postal tracking', () => {
     const value = parseUpuResponse(payload([scan(), customs, delivered, delivered]), number);
     expect(value.current_stage).toBe('delivered');
     expect(value.events?.map((event) => event.stage)).toEqual(['delivered', 'customs', 'accepted']);
-    expect(value.events?.[0].description).toBe('Delivered');
+    expect(value.events?.[0]!.description).toBe('Delivered');
     expect(parseUpuResponse(payload([scan('EDC', 'Item returned from Customs (import)')]), number).current_stage).toBe('in_transit');
   });
 
@@ -64,10 +64,10 @@ describe('UPU postal tracking', () => {
     await expect(tracker.track({ number: 'eb 000000005 cn', postcode: 'PRIVATE' }, { budgetMs: 1000 }))
       .resolves.toMatchObject({ tracking_provider: 'UPU' });
     expect(fetcher).toHaveBeenCalledOnce();
-    expect(fetcher.mock.calls[0][0]).toBe(`https://globaltracktrace.ptc.post/gtt.api/service.svc/rest/ItemTTWithTrans/${number}/EN`);
-    expect(fetcher.mock.calls[0][1]).toMatchObject({ cache: 'no-store', redirect: 'error', signal: expect.any(AbortSignal) });
-    expect(fetcher.mock.calls[0][1]?.headers).toBeUndefined();
-    expect(fetcher.mock.calls[0][1]?.body).toBeUndefined();
+    expect(fetcher.mock.calls[0]![0]).toBe(`https://globaltracktrace.ptc.post/gtt.api/service.svc/rest/ItemTTWithTrans/${number}/EN`);
+    expect(fetcher.mock.calls[0]![1]).toMatchObject({ cache: 'no-store', redirect: 'error', signal: expect.any(AbortSignal) });
+    expect(fetcher.mock.calls[0]![1]?.headers).toBeUndefined();
+    expect(fetcher.mock.calls[0]![1]?.body).toBeUndefined();
   });
 
   it.each(['', '[]'])('classifies an empty lookup as parcel-specific, not a provider outage', async (body) => {

@@ -73,7 +73,7 @@ describe('intuitive language contrasts', () => {
     for (const description of ['Livré', 'Zugestellt', 'Consegnato', 'Entregado', 'Entregue']) {
       expect(buildEvents({ id: 'synthetic', carrier: 'swiss-post' }, {
         events: [{ time: '2026-01-01T12:00:00Z', description, stage: 'ready_for_pickup' }],
-      })[0].stage).toBe('ready_for_pickup');
+      })[0]!.stage).toBe('ready_for_pickup');
       expect(event('2026-01-01T12:00:00Z', description, 'AvailableForPickup')?.stage).toBe('ready_for_pickup');
     }
     const scan = { timestamp: '2026-01-01T12:00:00Z', description: 'Étiquette créée', statusCode: 'delivered' };

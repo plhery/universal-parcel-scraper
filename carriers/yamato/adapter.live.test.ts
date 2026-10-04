@@ -8,6 +8,6 @@ describe('Yamato live compatibility', () => {
     expect(result.last_status_text).toEqual(expect.any(String));
     expect(result.events?.every((event) => event.description && event.provider_time_text)).toBe(true);
     expect(result.events?.every((event) => !event.time || /Z$/.test(event.time))).toBe(true);
-    expect(result.last_update ?? null).toBe(result.events?.[0].time ?? null);
+    expect(result.last_update ?? null).toBe(result.events?.[0]!.time ?? null);
   });
 });

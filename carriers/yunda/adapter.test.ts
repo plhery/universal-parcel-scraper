@@ -67,8 +67,8 @@ describe('Yunda domestic history', () => {
     const value = fixture(); rows(value).at(-1).scanTm = clock;
     const result = parseYunda(value, NUMBER);
     expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
-    expect(result.events?.[0].time).toBeUndefined(); expect(result.events?.[0].provider_time_text).toBe(clock || undefined);
-    expect(result.events?.[1].time).toBe('2026-01-03T12:00:00+08:00');
+    expect(result.events?.[0]!.time).toBeUndefined(); expect(result.events?.[0]!.provider_time_text).toBe(clock || undefined);
+    expect(result.events?.[1]!.time).toBe('2026-01-03T12:00:00+08:00');
   });
 
   it('keeps return movement active and only sender delivery terminal', () => {
@@ -133,7 +133,7 @@ describe('Yunda bounded verification', () => {
     const at = async (x: number) => {
       for (let i = 0; i < big.length; i += 4) big.set([70, 90, 110, 255], i);
       for (let row = 0; row < 40; row++) for (let col = 0; col < 40; col++) {
-        if (small[(row * 40 + col) * 4 + 3] > 127) big.set([255, 255, 255, 255], ((row + value.y) * 344 + x + col) * 4);
+        if (small[(row * 40 + col) * 4 + 3]! > 127) big.set([255, 255, 255, 255], ((row + value.y) * 344 + x + col) * 4);
       }
       return { ...value, big: await png(big, 344, 152) };
     };
@@ -174,23 +174,23 @@ describe('Yunda anonymous retrieval', () => {
     expect(fetcher).toHaveBeenCalledTimes(6);
     for (let offset = 0; offset < 6; offset += 3) {
       const [type, captcha, search] = fetcher.mock.calls.slice(offset, offset + 3);
-      const parameters = new URL(String(type[0])).searchParams;
+      const parameters = new URL(String(type![0])).searchParams;
       expect(parameters.get('wid')).toBe('22');
       const signed = createHash('md5').update(createHash('sha1').update(parameters.get('randomStr') + '2024YdWeb' + parameters.get('timeStamp')).digest('hex')).digest('hex').toUpperCase();
       expect(parameters.get('signature')).toBe(signed);
-      expect(new Headers(type[1]?.headers).has('Cookie')).toBe(false);
-      expect(String(captcha[0])).toContain('/index.php/api/order.record/captcha?');
-      expect(new Headers(captcha[1]?.headers).get('Cookie')).toBe('PHPSESSID=synthetic-session');
-      expect(search[0]).toBe('https://web.yundaex.com/index.php/api/v2.record/search');
+      expect(new Headers(type![1]?.headers).has('Cookie')).toBe(false);
+      expect(String(captcha![0])).toContain('/index.php/api/order.record/captcha?');
+      expect(new Headers(captcha![1]?.headers).get('Cookie')).toBe('PHPSESSID=synthetic-session');
+      expect(search![0]).toBe('https://web.yundaex.com/index.php/api/v2.record/search');
       // fetch-cookie implements the original redirect:error policy by asking
       // the injected transport for a manual response before inspecting it.
-      expect(search[1]).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'manual' });
-      const body = search[1]?.body as FormData;
+      expect(search![1]).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'manual' });
+      const body = search![1]?.body as FormData;
       expect(Object.fromEntries(body)).toEqual({ ...Object.fromEntries(parameters), x: '80', y: '40', tm: NUMBER });
-      expect(new Headers(search[1]?.headers).get('Cookie')).toBe('PHPSESSID=synthetic-session');
-      expect(search[1]?.signal).toBeInstanceOf(AbortSignal);
+      expect(new Headers(search![1]?.headers).get('Cookie')).toBe('PHPSESSID=synthetic-session');
+      expect(search![1]?.signal).toBeInstanceOf(AbortSignal);
     }
-    expect(new URL(String(fetcher.mock.calls[0][0])).searchParams.get('randomStr')).not.toBe(new URL(String(fetcher.mock.calls[3][0])).searchParams.get('randomStr'));
+    expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('randomStr')).not.toBe(new URL(String(fetcher.mock.calls[3]![0])).searchParams.get('randomStr'));
   });
 
   it('never follows a session redirect to another site', async () => {

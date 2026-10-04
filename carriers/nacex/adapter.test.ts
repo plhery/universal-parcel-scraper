@@ -13,7 +13,7 @@ const OTHER = '9900/99000003';
 const html = readFileSync(new URL('./fixtures/history.html', import.meta.url), 'utf8');
 const bootstrap = '<form name="seguimientoFormulario" method="post" action="/seguimientoFormulario.do;jsessionid=synthetic.server:node-route"><input name="agencia_origen"><input name="numero_albaran"></form>';
 const negative = '<div class="Z3"><h2>Formulario de Seguimiento</h2><div class="t9">No existe ningún albarán introducido en el sistema cumpliendo los criterios especificados.<br>Consulte con su agencia NACEX más cercana.</div></div>';
-const detailPath = (number = NUMBER) => { const [agency, albaran] = number.split('/');
+const detailPath = (number = NUMBER) => { const [agency, albaran] = number.split('/') as [string, string];
   return '/seguimientoDetalle.do?' + new URLSearchParams({ agencia_origen: agency, numero_albaran: albaran, estado: '1', internacional: '0', externo: 'N', usr: 'null', pas: 'null' }); };
 const response = (body = html, headers: HeadersInit = {}) => new Response(Buffer.from(body, 'latin1'), { headers: { 'Content-Type': 'text/html; charset=ISO-8859-1', ...Object.fromEntries(new Headers(headers)) } });
 const freshSession = () => response(bootstrap, { 'Set-Cookie': 'JSESSIONID="synthetic.server:first-route"; Path=/; HttpOnly' });
@@ -27,13 +27,13 @@ describe('NACEX direct tracking', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered', last_update: null });
     expect(result.events).toHaveLength(14);
     expect(result.events?.[0]).toMatchObject({ description: 'Delivered', stage: 'delivered', provider_time_text: '16 January 2026' });
-    expect(result.events?.[0].location).toBeUndefined();
+    expect(result.events?.[0]!.location).toBeUndefined();
     expect(result.events?.[1]).toMatchObject({ stage: 'out_for_delivery', location: 'TEST LOCALITY' });
-    expect(result.events?.[2].stage).toBe('ready_for_pickup');
+    expect(result.events?.[2]!.stage).toBe('ready_for_pickup');
     expect(result.events?.[1]).toEqual(result.events?.[3]);
     expect(result.events?.[4]).toMatchObject({ description: 'Cambio de dirección', provider_time_text: '15 January 2026' });
-    expect(result.events?.[5].description).toBe('Solución de entrega concertada');
-    expect(result.events?.[6].stage).toBe('failed_attempt');
+    expect(result.events?.[5]!.description).toBe('Solución de entrega concertada');
+    expect(result.events?.[6]!.stage).toBe('failed_attempt');
     expect(result.events?.every(event => !event.time && !event.local_time && !event.provider_code)).toBe(true);
     expect(result.last_update_local).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
@@ -75,8 +75,8 @@ describe('NACEX direct tracking', () => {
       expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Nuevo estado', last_update: null });
       expect(result.current_stage).toBeUndefined();
       expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].description).toBe('Nueva gestión');
-      expect(result.events?.[0].provider_time_text).toBe(clock || undefined);
+      expect(result.events?.[0]!.description).toBe('Nueva gestión');
+      expect(result.events?.[0]!.provider_time_text).toBe(clock || undefined);
     }
   });
 
@@ -178,7 +178,7 @@ describe('NACEX direct tracking', () => {
     const tracker = new NacexTracker({ fetcher: fetcher as unknown as typeof fetch });
     await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
     await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
-    expect(new Headers(fetcher.mock.calls[2][1].headers).has('cookie')).toBe(false);
+    expect(new Headers(fetcher.mock.calls[2]![1].headers).has('cookie')).toBe(false);
   });
 
   it('preserves HTTP failure taxonomy at every phase and limits streaming bodies without retries', async () => {

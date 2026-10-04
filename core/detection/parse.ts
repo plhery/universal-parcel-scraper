@@ -18,7 +18,7 @@ function trimPastedUrl(raw: string): string {
 }
 
 function cleanLinkTrackingNumber(raw: string): string {
-  return raw.split(/[,|]/, 1)[0].trim();
+  return raw.split(/[,|]/, 1)[0]!.trim();
 }
 
 function queryParam(url: URL, names: string[]): string | undefined {
@@ -83,7 +83,7 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
           const suggestedCarriers = new Set(suggestedRules.map((candidate) => candidate.carrier));
           const rule = detected.confidence === 'high'
             ? rules.find((candidate) => candidate.carrier === detected.carrier) ?? firstRule
-            : suggestedCarriers.size === 1 ? suggestedRules[0] : firstRule;
+            : suggestedCarriers.size === 1 ? suggestedRules[0]! : firstRule;
           return {
             trackingNumber,
             carrier: rule.carrier,

@@ -38,11 +38,11 @@ export async function main(argv = process.argv.slice(2), env = process.env): Pro
   const positional: string[] = [];
   const allowed = command === 'track' ? ['carrier','postcode','tracking-url'] : command === 'serve' ? ['host','port'] : [];
   for (let i = 0; i < args.length; i++) {
-    const argument = args[i];
+    const argument = args[i]!;
     if (!argument.startsWith('--')) { positional.push(argument); continue; }
     const name = argument.slice(2);
-    if (!allowed.includes(name) || !args[i+1] || args[i+1].startsWith('--')) throw new TypeError('Unknown or incomplete command option; use --help');
-    values[name] = args[++i];
+    if (!allowed.includes(name) || !args[i+1] || args[i+1]!.startsWith('--')) throw new TypeError('Unknown or incomplete command option; use --help');
+    values[name] = args[++i]!;
   }
   const print = (value: unknown) => console.log(JSON.stringify(value, null, 2));
   const input = positional.join(' ');

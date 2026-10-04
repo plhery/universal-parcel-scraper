@@ -168,7 +168,7 @@ describe('UniUni parcel history', () => {
     const unknown = parseUniuni(value, NUMBER);
     expect(unknown).toMatchObject({ status: 'unknown', last_status_text: 'Awaiting review' });
     expect(unknown.events?.[0]).not.toHaveProperty('stage');
-    expect(unknown.events?.[1].description).toBe('Delivered');
+    expect(unknown.events?.[1]!.description).toBe('Delivered');
     value.data.valid_tno[0].spath_list.push(latest);
     expect(parseUniuni(value, NUMBER).events).toHaveLength(10);
     for (let i = 0; i < 110; i++) value.data.valid_tno[0].spath_list.push({ ...latest, city: `Example City ${i}` });
@@ -181,7 +181,7 @@ describe('UniUni direct retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(uuscFixture()));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     await expect(instance.recognize!('uusc-000000 000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
-    expect(new URL(String(fetcher.mock.calls[0][0])).searchParams.get('id')).toBe(UUSC_NUMBER);
+    expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(UUSC_NUMBER);
     await expect(instance.recognize!('UUSC00000000000A')).resolves.toEqual({ known: false });
     await expect(instance.recognize!('UUSC00000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledOnce();
@@ -192,7 +192,7 @@ describe('UniUni direct retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(value));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     await expect(instance.recognize!('u9999 00000000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
-    expect(new URL(String(fetcher.mock.calls[0][0])).searchParams.get('id')).toBe(U9999_NUMBER);
+    expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(U9999_NUMBER);
   });
 
   it('recognizes only supported formats, exact absence and dated activity while preserving uncertain failures', async () => {

@@ -70,7 +70,7 @@ describe('Delhivery direct tracking', () => {
     const result = parseDelhivery(value, NUMBER);
     expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
     expect(result.events?.[0]).toMatchObject({ description: 'DELIVERED', summary_snapshot: true });
-    expect(result.events?.[0].location).toBeUndefined();
+    expect(result.events?.[0]!.location).toBeUndefined();
     expect(result.events?.filter(event => event.location)).toHaveLength(3);
     expect(result.events?.every(event => !event.time)).toBe(true);
   });
@@ -79,7 +79,7 @@ describe('Delhivery direct tracking', () => {
     const result = parseDelhivery(value, NUMBER);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
     expect(result.events?.[0]).toMatchObject({ stage: 'returned', summary_snapshot: true });
-    expect(result.events?.[1].stage).toBe('delivered');
+    expect(result.events?.[1]!.stage).toBe('delivered');
     expect(result.delivered_at).toBeUndefined();
   });
   it('distinguishes future rail states from malformed completed history', () => {

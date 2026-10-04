@@ -59,7 +59,7 @@ export function normalizeCChezVousCredential(raw: string): string {
   const value = raw.trim().toLocaleUpperCase('en-US').replace(/\s/g, '');
   const composite = /^([A-Z0-9]{11})--(\d{5})$/.exec(value);
   if (composite) {
-    if (!FRENCH_POSTCODE.test(composite[2])) {
+    if (!FRENCH_POSTCODE.test(composite[2]!)) {
       throw new InvalidInputError(PROVIDER, 'C Chez Vous tracking contains an invalid French postcode');
     }
     return `${composite[1]}--${composite[2]}`;
@@ -69,7 +69,7 @@ export function normalizeCChezVousCredential(raw: string): string {
   // composite form has an 11-character order followed by its 5-digit postcode.
   const compactComposite = /^([A-Z0-9]{11})(\d{5})$/.exec(value);
   if (compactComposite) {
-    if (!FRENCH_POSTCODE.test(compactComposite[2])) {
+    if (!FRENCH_POSTCODE.test(compactComposite[2]!)) {
       throw new InvalidInputError(PROVIDER, 'C Chez Vous tracking contains an invalid French postcode');
     }
     return `${compactComposite[1]}--${compactComposite[2]}`;

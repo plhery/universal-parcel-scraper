@@ -39,7 +39,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const entries = payload.filter(isRecord).filter((entry) => Array.isArray(entry.trackingIds) && entry.trackingIds.includes(number));
   if (entries.length !== 1) throw new SchemaError(PROVIDER, 'Australia Post returned a different or ambiguous lookup');
-  const entry = entries[0];
+  const entry = entries[0]!;
   if (entry.status === 400 && isRecord(entry.error) && entry.error.errorCode === 21
     && entry.error.error === 'Invalid Tracking ID' && entry.error.status === 'Failed'
     && entry.shipment === undefined) throw new NotFoundError(PROVIDER);

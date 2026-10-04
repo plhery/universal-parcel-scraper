@@ -27,7 +27,7 @@ describe('GLS Germany', () => {
     expect(result).toMatchObject({ status: 'delivered', timezone: 'Europe/Berlin', expected_delivery: null, canonical_tracking_number: NUMBER });
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'in_transit']);
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
-    const detail = new URL(String(fetcher.mock.calls[1][0]));
+    const detail = new URL(String(fetcher.mock.calls[1]![0]));
     expect(detail.pathname).toContain(`/rstt028/${NUMBER}`);
     expect(detail.searchParams.get('postalCode')).toBe('01067');
     expect(detail.searchParams.get('tuOwnerCode')).toBe('DE01');
@@ -86,7 +86,7 @@ describe('GLS Germany', () => {
       .mockResolvedValueOnce(new Response(JSON.stringify(parcel())));
     const result = await new GLSGermanyTracker().fetch(`${NUMBER}8`, ' 8000 ');
     expect(result.events).toHaveLength(2);
-    const detail = new URL(String(fetcher.mock.calls[1][0]));
+    const detail = new URL(String(fetcher.mock.calls[1]![0]));
     expect(detail.pathname).toContain(`/rstt028/${NUMBER}`);
     expect(detail.searchParams.get('postalCode')).toBe('8000');
   });
@@ -105,7 +105,7 @@ describe('GLS Germany', () => {
       .mockResolvedValueOnce(new Response(JSON.stringify({ tuStatus: [parcel('99999999999')] })));
     const tracker = new GLSGermanyTracker();
     await expect(tracker.recognizes(`${NUMBER}8`)).resolves.toBe(true);
-    expect(String(fetcher.mock.calls[0][0])).toContain('/DE/en/rstt029');
+    expect(String(fetcher.mock.calls[0]![0])).toContain('/DE/en/rstt029');
     await expect(tracker.recognizes(NUMBER)).resolves.toBe(false);
     await expect(tracker.recognizes(NUMBER)).rejects.toThrow('different shipment');
   });

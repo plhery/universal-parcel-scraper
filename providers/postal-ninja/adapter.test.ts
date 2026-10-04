@@ -96,7 +96,7 @@ describe('Postal Ninja TRAWL capture', () => {
     const provider = adapter({trawl, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null});
     expect(provider.steps).toEqual(['trawl']);
     await expect(provider.track({number, postcode: null}, {budgetMs: 30_000})).resolves.toMatchObject({tracking_provider: 'Postal Ninja', current_stage: 'delivered'});
-    expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toMatchObject({url, skipHttp: true, maxTier: 3, captureResponses: [get, check]});
+    expect(JSON.parse(String(fetcher.mock.calls[0]![1]?.body))).toMatchObject({url, skipHttp: true, maxTier: 3, captureResponses: [get, check]});
     expect(scrapeUniversalPage).not.toHaveBeenCalled();
   });
 

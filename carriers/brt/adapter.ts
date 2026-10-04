@@ -20,7 +20,7 @@ export class BrtTracker {
       if (performance.now() >= deadline) throw new BudgetExceededError('BRT', context.budgetMs ?? 15_000);
       signal.throwIfAborted();
       if (response.status !== 200) throw new IndeterminateError('BRT', 'BRT tracking endpoint is unavailable');
-      const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1].toLowerCase();
+      const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1]!.toLowerCase();
       if (charset && !['utf-8', 'utf8', 'iso-8859-1', 'windows-1252'].includes(charset)) throw new SchemaError('BRT', 'BRT response encoding changed');
       return parseBrt(decodeText(bytes, charset?.startsWith('utf') ? 'utf-8' : 'windows-1252'), number);
     } }]);

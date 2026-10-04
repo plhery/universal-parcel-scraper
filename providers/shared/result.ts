@@ -144,8 +144,8 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
       : current === 'out_for_delivery' || current === 'ready_for_pickup' ? 'out_for_delivery'
         : ['returned', 'failed_attempt', 'exception'].includes(current) ? 'exception' : 'in_transit';
   return {
-    status, current_stage: current ?? 'pending', last_status_text: unique[0].description,
-    last_update: unique[0].time ?? null, expected_delivery: null, timezone: 'UTC',
+    status, current_stage: current ?? 'pending', last_status_text: unique[0]!.description,
+    last_update: unique[0]!.time ?? null, expected_delivery: null, timezone: 'UTC',
     tracking_provider: source, events: unique,
   };
 }

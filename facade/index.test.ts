@@ -35,7 +35,7 @@ describe('standalone tracker', () => {
     expect(answer).toMatchObject({ carrier: 'ups', source: 'ups', result: { current_stage: 'delivered', events: [
       { stage: 'delivered', instant: '2026-01-02T12:00:00Z' }, { instant: null },
     ] }, attempts: [{ source: 'ups', kind: 'ok' }] });
-    expect(lookup.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
+    expect(lookup.mock.calls[0]![1].signal).toBeInstanceOf(AbortSignal);
   });
 
   it('records a single-step lookup once, leaving it to an adapter that records its own steps', async () => {
@@ -102,7 +102,7 @@ describe('standalone tracker', () => {
     await vi.waitFor(() => expect(fetcher).toHaveBeenCalled());
     controller.abort(reason);
     await expect(pending).rejects.toBe(reason);
-    expect(fetcher.mock.calls[0][1]!.signal!.aborted).toBe(true);
+    expect(fetcher.mock.calls[0]![1]!.signal!.aborted).toBe(true);
   });
 
   it('returns the carriers that answered when others have not by the budget', async () => {
@@ -114,7 +114,7 @@ describe('standalone tracker', () => {
     const answer = { carrier: 'dpd', choices: [], asked: ['dpd', 'seur', 'brt', 'ciblex'], unanswered: ['seur', 'ciblex'] };
     await expect(tracker.recognize(ambiguous, { budgetMs: 30 })).resolves.toEqual(answer);
     // The budget still cancels what was in flight.
-    expect(waiting.mock.calls[0][1]!.signal!.aborted).toBe(true);
+    expect(waiting.mock.calls[0]![1]!.signal!.aborted).toBe(true);
     // A caller's signal that stays quiet changes nothing.
     await expect(tracker.recognize(ambiguous, { budgetMs: 30, signal: new AbortController().signal })).resolves.toEqual(answer);
   });

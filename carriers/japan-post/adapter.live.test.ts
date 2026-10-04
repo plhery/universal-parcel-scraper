@@ -7,7 +7,7 @@ describe('Japan Post live compatibility', () => {
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.every((event) => event.local_time && event.description)).toBe(true);
     expect(result.events?.every((event) => event.time === undefined || /Z$/.test(event.time))).toBe(true);
-    expect(result.last_update ?? null).toBe(result.events?.[0].time ?? null);
+    expect(result.last_update ?? null).toBe(result.events?.[0]!.time ?? null);
     expect(result.last_update_local).toEqual(expect.any(String));
   });
 

@@ -17,7 +17,7 @@ describe('Yanwen result projection', () => {
     expect(result.events).toHaveLength(4);
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'accepted']);
     expect(result.events?.at(-1)?.time).toBe('2026-03-02T14:00:00+08:00');
-    expect(result.events?.[0].location).toBe('Example facility');
+    expect(result.events?.[0]!.location).toBe('Example facility');
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 
@@ -52,7 +52,7 @@ describe('Yanwen result projection', () => {
     $('.cz_r').each((_, element) => { const h = $(element).find('h6').last(); if (h.text().endsWith('Delivered.')) h.text('Expected delivery'); });
     const result = parse($.html(), NUMBER);
     expect(result.status).toBe('unknown');
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
   });
 
@@ -72,7 +72,7 @@ describe('Yanwen anonymous form retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(fixture()));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.track({ number: 'uk 000.000-005 yp' })).resolves.toMatchObject({ status: 'delivered' });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe('https://track.yw56.com.cn/en/querydel?nums=UK000000005YP&cyp=7cbe10bb0451c723ffac72e72cb79aa2');
     expect(yanwenTrackingUrl(NUMBER)).toBe(url);
     expect(init).toMatchObject({ method: 'POST', body: 'timeZone=1', cache: 'no-store', redirect: 'error' });

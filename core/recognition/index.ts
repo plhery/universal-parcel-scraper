@@ -72,14 +72,14 @@ function recent(outcome: RecognitionOutcome, now: Date): boolean {
 export function settleRecognition(outcomes: readonly RecognitionOutcome[], now = new Date()): { carrier?: string; choices: string[] } {
   const known = outcomes.filter((outcome) => outcome.status === 'known' && recent(outcome, now));
   if (known.length === 0) return { choices: [] };
-  if (known.length === 1) return { carrier: known[0].carrier, choices: [] };
+  if (known.length === 1) return { carrier: known[0]!.carrier, choices: [] };
   const backed = known.filter((outcome) => outcome.preferred);
-  if (backed.length === 1) return { carrier: backed[0].carrier, choices: [] };
+  if (backed.length === 1) return { carrier: backed[0]!.carrier, choices: [] };
   const brands = new Set(known.map((outcome) => carrierBrand(outcome.carrier) ?? outcome.carrier));
   if (brands.size === 1) {
     const [best] = [...known].sort((left, right) =>
       (CARRIER_RECOGNITION_RANKS[right.carrier] ?? 0) - (CARRIER_RECOGNITION_RANKS[left.carrier] ?? 0));
-    return { carrier: best.carrier, choices: [] };
+    return { carrier: best!.carrier, choices: [] };
   }
   return { choices: known.map((outcome) => outcome.carrier) };
 }

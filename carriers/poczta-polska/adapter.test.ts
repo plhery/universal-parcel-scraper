@@ -57,7 +57,7 @@ describe('Poczta Polska identity-bound scans', () => {
       const value = payload(); value.mailInfo.events.at(-1).time = time;
       const result = parsePocztaPolska(value, NUMBER);
       expect(result).toMatchObject({ status: 'delivered', last_update: null });
-      expect(result.events?.[0].description).toBe('Final delivery');
+      expect(result.events?.[0]!.description).toBe('Final delivery');
       expect(result.events?.[0]).not.toHaveProperty('time'); expect(result.events?.[0]).not.toHaveProperty('local_time');
       if (time) expect(result.events?.[0]).toMatchObject({ provider_time_text: time });
     });
@@ -68,7 +68,7 @@ describe('Poczta Polska identity-bound scans', () => {
     const relayed = payload(); relayed.mailInfo.recipientCountryCode = 'NZ';
     relayed.mailInfo.events.at(-2).time = '2026-01-07T08:00:00';
     expect(parsePocztaPolska(relayed, NUMBER).last_update_local).toBe('2026-01-06T12:00:00');
-    expect(parsePocztaPolska(relayed, NUMBER).events?.[0].description).toBe('Final delivery');
+    expect(parsePocztaPolska(relayed, NUMBER).events?.[0]!.description).toBe('Final delivery');
   });
 
   it('uses specific failure codes and never borrows a broad state or finished flag for unknown scans', () => {
@@ -130,8 +130,8 @@ describe('Poczta Polska public widget request', () => {
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.track({ number: NUMBER })).resolves.toMatchObject({ status: 'delivered' });
     expect(fetcher).toHaveBeenCalledTimes(2);
-    expect(String(fetcher.mock.calls[0][0])).toBe('https://emonitoring.poczta-polska.pl/');
-    const [url, init] = fetcher.mock.calls[1];
+    expect(String(fetcher.mock.calls[0]![0])).toBe('https://emonitoring.poczta-polska.pl/');
+    const [url, init] = fetcher.mock.calls[1]!;
     expect(String(url)).toBe('https://uss.poczta-polska.pl/uss/v2.0/tracking/checkmailex');
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error',
       body: JSON.stringify({ language: 'EN', number: NUMBER, addPostOfficeInfo: false }) });

@@ -215,6 +215,6 @@ describe('registered adapter result contracts', () => {
  it.each(cases)('$carrier normalizes its synthetic response', async entry => {
   const test = setup(entry);
   expect(await test.adapter.fetch(entry.carrier, entry.number, null)).toEqual(
-    (expected as Record<string, { result?: unknown }>)[`${entry.carrier}/${entry.fixture}/`].result);
+    (expected as Record<string, { result?: unknown }>)[`${entry.carrier}/${entry.fixture}/`]!.result);
  });
 });

@@ -64,10 +64,10 @@ export function parseGofo(payload: unknown, rawNumber: string): CarrierResult {
   if (!entries.length) throw new IndeterminateError('GOFO', 'GOFO returned no matching history');
   // The GFUS number is the waybill. The tracking number repeats it or is the
   // shipper's own reference, which must not name another GOFO parcel.
-  const reference = entries[0].trackingNumber;
+  const reference = entries[0]!.trackingNumber;
   const ownReference = reference === number || (typeof reference === 'string' && clean(reference, 100) !== ''
     && !/^GFUS\d{14}$/.test(normalizeTrackingNumber(reference)));
-  if (entries.length !== 1 || entries[0].waybillNo !== number || !ownReference || error.errorCount !== 0) {
+  if (entries.length !== 1 || entries[0]!.waybillNo !== number || !ownReference || error.errorCount !== 0) {
     throw new SchemaError('GOFO', 'GOFO returned a different or ambiguous parcel');
   }
   const item = entries[0]!;

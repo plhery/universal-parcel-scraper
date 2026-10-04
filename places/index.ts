@@ -123,21 +123,21 @@ function gazetteer(): Gazetteer {
   for (const fields of rows) {
     if (fields[0] === 'P') {
       const [, name, ascii, country, admin1, admin2, latitude, longitude, population, alternates] = fields;
-      data.names.push(name);
-      data.country[index] = code(country);
-      data.admin1[index] = code(admin1);
-      data.admin2[index] = code(admin2);
+      data.names.push(name!);
+      data.country[index] = code(country!);
+      data.admin1[index] = code(admin1!);
+      data.admin2[index] = code(admin2!);
       data.latitude[index] = Number(latitude);
       data.longitude[index] = Number(longitude);
       data.population[index] = Number(population);
-      for (const key of [...nameKeys(name), ...(ascii ? nameKeys(ascii) : [])]) add(key, index);
+      for (const key of [...nameKeys(name!), ...(ascii ? nameKeys(ascii) : [])]) add(key, index);
       for (const key of alternates ? alternates.split(',') : []) add(key, ~index);
       index += 1;
     } else if (fields[0] === 'Z') {
       const [, country, postcode, latitude, longitude] = fields;
       data.postcodes.set(`${country}:${postcode}`, { latitude: Number(latitude), longitude: Number(longitude) });
     } else if (fields[0] === 'C') {
-      const [, country, name, longitude, latitude] = fields;
+      const [, country, name, longitude, latitude] = fields as [string, string, string, ...string[]];
       data.countries.set(country, { name, latitude: Number(latitude), longitude: Number(longitude) });
     }
   }
@@ -176,12 +176,12 @@ function phrases(field: string): { key: string; text: string; rank: number }[] {
     if (!list.length) return;
     const key = list.map((token) => token.key).join(' ');
     if (key.length >= 3 && !found.some((phrase) => phrase.key === key)) {
-      found.push({ key, text: field.slice(list[0].start, list.at(-1)!.end), rank });
+      found.push({ key, text: field.slice(list[0]!.start, list.at(-1)!.end), rank });
     }
   };
   add(all, 0);
   let words = all.filter((token) => !FACILITY_WORDS.has(token.key));
-  while (words.length && LEADING_WORDS.has(words[0].key)) words = words.slice(1);
+  while (words.length && LEADING_WORDS.has(words[0]!.key)) words = words.slice(1);
   for (let count = words.length; count > 0; count -= 1) add(words.slice(0, count), words.length - count + 1);
   for (let start = 1; start < words.length; start += 1) add(words.slice(start), words.length + start);
   return found;
@@ -216,10 +216,10 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
     admin.push(trailing);
     if (!/,|;/.test(text.slice(0, -trailing.length)) && !ambiguousAddressCodes.has(trailing)) country = trailing;
   }
-  for (const match of rest.matchAll(/\b([A-Z]{2,3})\b/g)) admin.push(match[1]);
-  for (const match of rest.matchAll(/(?:\b[A-Z]{1,2}-)?\b(\d{4,5})\b/g)) postcodes.push(match[1]);
+  for (const match of rest.matchAll(/\b([A-Z]{2,3})\b/g)) admin.push(match[1]!);
+  for (const match of rest.matchAll(/(?:\b[A-Z]{1,2}-)?\b(\d{4,5})\b/g)) postcodes.push(match[1]!);
   // French departments and Italian provinces in brackets: "Sausheim 68 (68)", "Cologne (BS)".
-  for (const match of rest.matchAll(/\((\d{2}|[A-Z]{2})\)|(?:^|\s)(\d{2})(?=\s|$)/g)) admin.push(match[1] ?? match[2]);
+  for (const match of rest.matchAll(/\((\d{2}|[A-Z]{2})\)|(?:^|\s)(\d{2})(?=\s|$)/g)) admin.push(match[1] ?? match[2]!);
 
   // Postcodes only confirm a name, and only in a country the scan or the parcel
   // names: on its own, "2024" is more likely a year than a village.
@@ -242,16 +242,16 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
     for (const phrase of phrases(field)) {
       for (const entry of [data.keys.get(phrase.key) ?? []].flat()) {
         const { index, alternate } = candidate(entry);
-        const placeCountry = data.codes[data.country[index]];
+        const placeCountry = data.codes[data.country[index]!]!;
         if (country && placeCountry !== country) continue;
         const hint = hinted.indexOf(placeCountry);
-        const admin1 = data.codes[data.admin1[index]];
-        const adminCodes = [admin1, data.codes[data.admin2[index]]].filter(Boolean);
+        const admin1 = data.codes[data.admin1[index]!];
+        const adminCodes = [admin1, data.codes[data.admin2[index]!]].filter(Boolean);
         const adminMatch = admin.some((code) => adminCodes.includes(code) || ADMIN_CODES[placeCountry]?.[code] === admin1);
         const postcodeMatch = postcode !== null && postcode.country === placeCountry
-          && distanceKm(postcode.latitude, postcode.longitude, data.latitude[index], data.longitude[index]) < 30;
+          && distanceKm(postcode.latitude, postcode.longitude, data.latitude[index]!, data.longitude[index]!) < 30;
         const confirmed = Boolean(country) || hint >= 0 || adminMatch || postcodeMatch;
-        const thousands = data.population[index];
+        const thousands = data.population[index]!;
         if (!confirmed && thousands < UNCONFIRMED_MIN_THOUSANDS) continue;
         const score = Math.log10(Math.max(thousands, .3) * 1000)
           + (alternate ? 0 : 1.8)
@@ -266,12 +266,12 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
   if (best) {
     const { index, text: written } = best;
     return {
-      latitude: round(data.latitude[index]),
-      longitude: round(data.longitude[index]),
+      latitude: round(data.latitude[index]!),
+      longitude: round(data.longitude[index]!),
       precision: 'city',
-      country: data.codes[data.country[index]],
+      country: data.codes[data.country[index]!]!,
       // Keep the carrier's spelling unless it is shouting: "La Crau", but "Köln" for "KOELN".
-      name: /\p{Ll}/u.test(written) ? written : data.names[index],
+      name: /\p{Ll}/u.test(written) ? written : data.names[index]!,
     };
   }
   const area = country ? data.countries.get(country) : null;
@@ -284,7 +284,7 @@ const round = (value: number) => Math.round(value * 1000) / 1000;
 function facilityPlace(text: string): EventPlace | null {
   const match = /^(.*\S)\s+(\d{6})$/.exec(text);
   const facility = match && FACILITIES.get(`CH:${match[2]}`);
-  if (!facility || !`${nameKey(match[1])} `.startsWith(`${nameKey(facility.town)} `)) return null;
+  if (!facility || !`${nameKey(match[1]!)} `.startsWith(`${nameKey(facility.town)} `)) return null;
   const { latitude, longitude, country, town, name } = facility;
   return { latitude, longitude, precision: 'city', country, name: town, ...(name === town ? {} : { site: name }) };
 }
@@ -339,8 +339,8 @@ export function placesForEvents(
     const after = first.slice(index + 1).find(Boolean)?.country;
     const neighbours = [...new Set([before, after].filter((code): code is string => Boolean(code)))];
     const place = !neighbours.length || neighbours.every((code) => base.includes(code))
-      ? first[index]
-      : cachedPlace(location, [...neighbours, ...base.filter((code) => !neighbours.includes(code))]) ?? first[index];
+      ? first[index]!
+      : cachedPlace(location, [...neighbours, ...base.filter((code) => !neighbours.includes(code))]) ?? first[index]!;
     return atPoint(place, points[index] ?? pointAt.get(location.trim()));
   });
 }

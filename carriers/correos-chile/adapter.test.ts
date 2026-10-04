@@ -37,7 +37,7 @@ describe('Correos de Chile anonymous tracking', () => {
     expect(result.events).toHaveLength(2);
     expect(result.events?.[0]).toMatchObject({ stage: 'customs', provider_code: '003', location: 'AEROPUERTO',
       local_time: '2026-09-05T01:24:00' });
-    expect(result.events?.[1].stage).toBeUndefined();
+    expect(result.events?.[1]!.stage).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE_SYNTHETIC|sucursales|Iconos|Codigo|Referencia|RutEntrega/);
     for (const entry of statuses.entries) {
@@ -76,9 +76,9 @@ describe('Correos de Chile anonymous tracking', () => {
     expect(result.current_stage).toBeUndefined();
     expect(result.last_update_local).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
-    expect(result.events?.[0].provider_time_text).toBe('2026-02-30T01:24:00');
-    expect(result.events?.[1].stage).toBe('delivered');
-    expect(result.events?.[1].local_time).toBe('2026-08-31T19:20:00');
+    expect(result.events?.[0]!.provider_time_text).toBe('2026-02-30T01:24:00');
+    expect(result.events?.[1]!.stage).toBe('delivered');
+    expect(result.events?.[1]!.local_time).toBe('2026-08-31T19:20:00');
   });
 
   it('does not expose untyped recipient-like scan text or free-form provider codes', () => {
@@ -86,8 +86,8 @@ describe('Correos de Chile anonymous tracking', () => {
     body.historial[0] = { ...body.historial[0], Estado: 'ENTREGADO A PRIVATE_SYNTHETIC_RECIPIENT', Icono: 'recipient-ID' };
     const result = parseCorreosChileTracking(payload({ seguimiento: JSON.stringify(body) }), NUMBER);
     expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Actualización del envío' });
-    expect(result.events?.[0].description).toBe('Actualización del envío');
-    expect(result.events?.[0].provider_code).toBeUndefined();
+    expect(result.events?.[0]!.description).toBe('Actualización del envío');
+    expect(result.events?.[0]!.provider_code).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC_RECIPIENT');
   });
 

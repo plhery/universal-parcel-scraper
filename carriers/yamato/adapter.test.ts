@@ -38,7 +38,7 @@ describe('Yamato parser', () => {
     const html = fixture().replace('class="tracking-invoice-block-state-title">配達完了', 'class="tracking-invoice-block-state-title">New wording');
     expect(parse(html, NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'New wording' });
     expect(parse(html, NUMBER).current_stage).toBeUndefined();
-    expect(parse(html, NUMBER).events?.[0].stage).toBe('delivered');
+    expect(parse(html, NUMBER).events?.[0]!.stage).toBe('delivered');
   });
 
   it.each([
@@ -77,7 +77,7 @@ describe('Yamato parser', () => {
     const result = parse($.html(), NUMBER);
     expect(result.status).toBe(status); expect(result.current_stage).toBe(stage);
     expect(result.events?.[0]).toMatchObject({ description: wording, provider_leg: 'return' });
-    expect(result.events?.[0].stage).toBe(stage);
+    expect(result.events?.[0]!.stage).toBe(stage);
     expect(result.delivered_at).toBeUndefined();
   });
 
@@ -88,7 +88,7 @@ describe('Yamato parser', () => {
     const result = parse($.html(), NUMBER);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_update: null });
     expect(result.events?.at(-1)?.time).toBe('2025-12-31T07:43:00Z');
-    expect(result.events?.[0].time).toBeUndefined();
+    expect(result.events?.[0]!.time).toBeUndefined();
   });
 
   it.each(['wrong', 'duplicate', 'missing', 'input-only'])('rejects %s detail identity', (mode) => {
@@ -134,7 +134,7 @@ describe('Yamato parser', () => {
       const extra = scan.clone(); extra.find('.name').text(`Example office ${i}`); list.append(extra);
     }
     expect(parse($.html(), NUMBER).events).toHaveLength(100);
-    expect(parse($.html(), NUMBER).events?.[0].location).toBe('Example office 104');
+    expect(parse($.html(), NUMBER).events?.[0]!.location).toBe('Example office 104');
   });
 
   it('backs declared capabilities with synthetic data', () => {

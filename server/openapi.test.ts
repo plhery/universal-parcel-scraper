@@ -67,7 +67,7 @@ async function call(base: string, operationId: string, init: { method?: string; 
   expect(validate(body), `${operationId} ${status}: ${ajv.errorsText(validate.errors)}`).toBe(true);
   const wait = response.headers.get('retry-after');
   if (wait !== null) {
-    expect(Object.keys(operation.responses[status].headers ?? {}), `${operationId} ${status} headers`).toContain('Retry-After');
+    expect(Object.keys(operation.responses[status]!.headers ?? {}), `${operationId} ${status} headers`).toContain('Retry-After');
     expect(wait).toMatch(/^\d+$/);
   }
   exercised.add(`${operationId} ${status}`);

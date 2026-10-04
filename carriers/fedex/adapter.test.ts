@@ -300,7 +300,7 @@ describe('FedEx lookup steps', () => {
         { name: 'InputRequiredError', field: 'recipient verification' }],
       [{ output: { packages: [{ trackingNbr: IN_TRANSIT_NUMBER, keyStatus: 'Delivered' }] } },
         { name: 'SchemaError', message: 'FedEx did not return the requested parcel' }],
-    ]) {
+    ] as const) {
       fetcher.mockResolvedValueOnce(Response.json({
         tier: 2, statusCode: 200, html: '<body>Tracking app</body>',
         capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(body) }],

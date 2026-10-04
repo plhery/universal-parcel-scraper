@@ -50,7 +50,7 @@ describe('asking carriers', () => {
     expect(outcomes.map(({ carrier, status }) => [carrier, status])).toEqual([
       ['dpd', 'known'], ['seur', 'unknown'], ['brt', 'unknown'], ['hermes-de', 'failed'], ['ciblex', 'failed'],
     ]);
-    expect(outcomes[0].lastActivityAt).toBe('2026-09-09T08:00:00Z');
+    expect(outcomes[0]!.lastActivityAt).toBe('2026-09-09T08:00:00Z');
   });
 });
 

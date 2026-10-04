@@ -52,7 +52,7 @@ export function recognitionCandidates(
       && carrierAdapter(carrier) !== 'universal' && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier))
     .map((carrier) => ({ carrier, score: score(carrier) }))
     // Array#sort is stable: equal scores keep the catalog order.
-    .sort((left, right) => right.score[0] - left.score[0] || right.score[1] - left.score[1] || right.score[2] - left.score[2])
+    .sort((left, right) => right.score[0]! - left.score[0]! || right.score[1]! - left.score[1]! || right.score[2]! - left.score[2]!)
     .map(({ carrier }) => ({
       carrier,
       needsInput: requiredRequirements(carrier, number)[0]?.field ?? null,

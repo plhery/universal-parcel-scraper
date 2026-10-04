@@ -56,7 +56,7 @@ function catalogCarrier(normalized: string): string | undefined {
   if (Object.hasOwn(NAME_ALIASES, normalized)) return NAME_ALIASES[normalized];
   const matches = Object.entries(CARRIER_DEFINITIONS)
     .filter(([id, definition]) => id !== 'unknown' && key(definition.displayName) === normalized);
-  return matches.length === 1 ? matches[0][0] : undefined;
+  return matches.length === 1 ? matches[0]![0] : undefined;
 }
 
 /** "Chronopost France", "Royal Mail (UK)": the name before a trailing country, and its ISO code. */

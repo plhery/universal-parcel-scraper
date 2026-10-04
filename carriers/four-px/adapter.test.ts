@@ -14,7 +14,7 @@ describe('4PX result projection', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-03-28T14:30:03-04:00',
       delivered_at: '2026-03-28T14:30:03-04:00', destination_country: 'US', delivery_tracking_number: '4200000000000000000000000000000001' });
     expect(result.events).toHaveLength(26);
-    expect(result.events?.[1].stage).toBe('out_for_delivery');
+    expect(result.events?.[1]!.stage).toBe('out_for_delivery');
     expect(result.events?.at(-1)).toMatchObject({ stage: 'registered', time: '2026-03-03T14:30:03+08:00' });
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
     expect(result.timezone).toBeUndefined();
@@ -26,7 +26,7 @@ describe('4PX result projection', () => {
     const result = parse(payload, NUMBER);
     expect(result.last_update).toBeNull();
     expect(result.events?.[0]).toMatchObject({ local_time: '2026-03-28T14:30:03' });
-    expect(result.events?.[0].time).toBeUndefined();
+    expect(result.events?.[0]!.time).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
   });
 
@@ -69,7 +69,7 @@ describe('4PX result projection', () => {
     const result = parse(payload, NUMBER);
     expect(result).toMatchObject({ status: 'unknown', events: expect.any(Array) });
     expect(result.current_stage).toBeUndefined();
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
     expect(result.events).toHaveLength(26);
   });
 
@@ -89,7 +89,7 @@ describe('4PX retrieval', () => {
     await instance.track({ number: '4px 0000000000001 cn' });
     await instance.track({ number: NUMBER });
     expect(fetcher).toHaveBeenCalledTimes(2);
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe('https://track.4px.com/track/v2/front/listTrackV3');
     expect(JSON.parse(String(init?.body))).toEqual({ queryCodes: [NUMBER], language: 'en-us', translateLanguage: '' });
     expect(init).toMatchObject({ method: 'POST', redirect: 'error', cache: 'no-store' });

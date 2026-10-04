@@ -53,34 +53,34 @@ describe('SEUR simplified anonymous tracking', () => {
   it('does not infer completed delivery from planned wording, changed groups or arbitrary codes', () => {
     for (const change of [{ cod_situacion: 'ZZ999' }, { descripcion_situacion: 'EL ENVÍO SERÁ ENTREGADO MAÑANA.' },
       { grupo_situacion: 'ENTREGA PREVISTA' }, { descripcion_situacion: 'EL ENVÍO NO HA SIDO ENTREGADO.' }]) {
-      const body = copy(); Object.assign(body.situaciones[0], change);
+      const body = copy(); Object.assign(body.situaciones[0]!, change);
       expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'unknown' });
       expect(parseSeur(body, NUMBER).current_stage).toBeUndefined();
       expect(parseSeur(body, NUMBER).delivered_at).toBeUndefined();
     }
-    for (const code of ['constructor', 'toString', 'ZZ999']) expect(classifySeurStatus(code, 'ENTREGADO', fixture.situaciones[0].descripcion_situacion)).toBeUndefined();
+    for (const code of ['constructor', 'toString', 'ZZ999']) expect(classifySeurStatus(code, 'ENTREGADO', fixture.situaciones[0]!.descripcion_situacion)).toBeUndefined();
   });
 
   it('retains the newest unresolved clock and never borrows older delivery or freshness', () => {
     for (const date of ['', '2026-01-23', '2026-02-30T13:00:00Z', '2026-01-23T25:00:00Z', '2026-01-23T13:00:00+24:00', '2026-01-23T13:00:00+01:60', 'future morning']) {
-      const body = copy(); body.situaciones[0].fecha = date; body.situaciones[1] = { ...body.situaciones[0], fecha: '2026-01-22T13:00:00Z' };
+      const body = copy(); body.situaciones[0]!.fecha = date; body.situaciones[1] = { ...body.situaciones[0]!, fecha: '2026-01-22T13:00:00Z' };
       const result = parseSeur(body, NUMBER);
       expect(result.status).toBe('delivered'); expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].time).toBeUndefined(); expect(result.events?.[0].provider_time_text).toBe(date || undefined);
-      expect(result.events?.[1].time).toBe('2026-01-22T13:00:00Z');
+      expect(result.events?.[0]!.time).toBeUndefined(); expect(result.events?.[0]!.provider_time_text).toBe(date || undefined);
+      expect(result.events?.[1]!.time).toBe('2026-01-22T13:00:00Z');
     }
-    const naive = copy(); naive.situaciones[0].fecha = '2026-01-23T13:13:05';
+    const naive = copy(); naive.situaciones[0]!.fecha = '2026-01-23T13:13:05';
     expect(parseSeur(naive, NUMBER)).toMatchObject({ last_update: null, last_update_local: '2026-01-23T13:13:05' });
     expect(parseSeur(naive, NUMBER).delivered_at).toBeUndefined();
-    const offset = copy(); offset.situaciones[0].fecha = '2026-01-23T13:13:05+01:00';
+    const offset = copy(); offset.situaciones[0]!.fecha = '2026-01-23T13:13:05+01:00';
     expect(parseSeur(offset, NUMBER).last_update).toBe('2026-01-23T13:13:05+01:00');
   });
 
   it('preserves source position for repeated scans and validates the whole bounded feed', () => {
-    const body = copy(); body.situaciones.splice(1, 0, { ...body.situaciones[1], fecha: body.situaciones[0].fecha }, { ...body.situaciones[0] });
+    const body = copy(); body.situaciones.splice(1, 0, { ...body.situaciones[1]!, fecha: body.situaciones[0]!.fecha }, { ...body.situaciones[0]! });
     expect(parseSeur(body, NUMBER).events?.slice(0, 3).map(e => e.stage)).toEqual(['delivered', 'out_for_delivery', 'delivered']);
     for (const change of [{ cod_situacion: '' }, { grupo_situacion: '' }, { descripcion_situacion: '' }, { descripcion_situacion: 'X'.repeat(501) }, { fecha: 'X'.repeat(65) }]) {
-      const bad = copy(); Object.assign(bad.situaciones[0], change);
+      const bad = copy(); Object.assign(bad.situaciones[0]!, change);
       expect(() => parseSeur(bad, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     }
     expect(() => parseSeur({ ...fixture, situaciones: [...fixture.situaciones, null] }, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));

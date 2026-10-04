@@ -243,7 +243,7 @@ describe('Mondial Relay response normalization', () => {
       [OFFICIAL_PDF_SHIPMENT, `${OFFICIAL_PDF_SHIPMENT}12`],
       ['12171859', branded],
       ['73685167', OFFICIAL_TWELVE_DIGIT_SHIPMENT],
-    ]) {
+    ] as const) {
       expect(() => parseMondialRelayTrackingResponse(
         syntheticSuccessFixture(returned),
         requested,

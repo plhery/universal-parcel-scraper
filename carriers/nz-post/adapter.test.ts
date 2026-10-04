@@ -40,15 +40,15 @@ describe('NZ Post exact-reference projection', () => {
 
   it('accepts only the identity-bound absence signature and leaves unknown outcomes inconclusive', () => {
     expect(() => parseNzPost(absent(), NUMBER)).toThrowError(expect.objectContaining({ kind: 'not_found' }));
-    const generic = absent(); generic.results[0].errors[0].details = 'Invalid reference';
-    const incomplete = absent(); incomplete.results[0].errors.push(incomplete.results[0].errors[0]);
+    const generic = absent(); generic.results[0]!.errors[0]!.details = 'Invalid reference';
+    const incomplete = absent(); incomplete.results[0]!.errors.push(incomplete.results[0]!.errors[0]!);
     const mixed = { ...absent(), results: [{ ...absent().results[0], tracking_events: [] }] };
     const empty = payload(); empty.results[0].tracking_events = [];
     for (const value of [generic, incomplete, mixed, empty, { success: false, status_code: 2 },
       { success: true, status_code: 1, results: [] }]) {
       expect(() => parseNzPost(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     }
-    const wrong = absent(); wrong.results[0].tracking_reference = '00000000000000000002';
+    const wrong = absent(); wrong.results[0]!.tracking_reference = '00000000000000000002';
     expect(() => parseNzPost(wrong, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
@@ -57,7 +57,7 @@ describe('NZ Post exact-reference projection', () => {
       const value = payload(); value.results[0].tracking_events.at(-1).date_time = clock;
       const result = parseNzPost(value, NUMBER);
       expect(result.status).toBe('delivered'); expect(result.last_update).toBeNull();
-      expect(result.events?.[0].description).toBe('Delivered');
+      expect(result.events?.[0]!.description).toBe('Delivered');
       expect(result.events?.[0]).not.toHaveProperty('time'); expect(result).not.toHaveProperty('delivered_at');
       if (clock) expect(result.events?.[0]).toMatchObject({ provider_time_text: clock });
     });
@@ -73,7 +73,7 @@ describe('NZ Post exact-reference projection', () => {
     const duplicate = payload(); duplicate.results[0].tracking_events.push({ ...duplicate.results[0].tracking_events.at(-1), seqref: 'another' });
     expect(parseNzPost(duplicate, NUMBER).events).toHaveLength(5);
     const tie = payload(); tie.results[0].tracking_events.at(-1).date_time = tie.results[0].tracking_events.at(-2).date_time;
-    expect(parseNzPost(tie, NUMBER).events?.[0].description).toBe('Delivered');
+    expect(parseNzPost(tie, NUMBER).events?.[0]!.description).toBe('Delivered');
   });
 
   it('distinguishes pre-advice, pickup availability, failed attempts and unknown codes', () => {
@@ -93,7 +93,7 @@ describe('NZ Post exact-reference projection', () => {
       status: `Synthetic scan ${i}`, edifact_code: '8', date_time: '',
     }));
     expect(parseNzPost(value, NUMBER).events).toHaveLength(100);
-    expect(parseNzPost(value, NUMBER).events?.[0].description).toBe('Synthetic scan 100');
+    expect(parseNzPost(value, NUMBER).events?.[0]!.description).toBe('Synthetic scan 100');
     value.results[0].tracking_events = Array(501).fill(value.results[0].tracking_events[0]);
     expect(() => parseNzPost(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
@@ -107,7 +107,7 @@ describe('NZ Post bounded anonymous transport', () => {
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T12:00:00.000Z' });
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`https://tools.nzpost.co.nz/tracking/api/parceltrack/parcels?tracking_reference=${NUMBER}`);
     expect(init).toMatchObject({ cache: 'no-store', redirect: 'error' });
     expect(init?.signal).toBeInstanceOf(AbortSignal);

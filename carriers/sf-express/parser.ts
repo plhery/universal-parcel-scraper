@@ -47,7 +47,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     || payload.result.length > 20 || payload.result.some((entry) => !isRecord(entry))) throw new SchemaError(PROVIDER);
   const results = payload.result.filter(isRecord).filter((entry) => entry.id === number);
   if (results.length !== 1) throw new SchemaError(PROVIDER, 'SF Express returned a different or ambiguous shipment');
-  const shipment = results[0];
+  const shipment = results[0]!;
   if (!Array.isArray(shipment.routes) || !shipment.routes.length || shipment.routes.length > 500) {
     throw new SchemaError(PROVIDER, 'SF Express returned incomplete tracking history');
   }

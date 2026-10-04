@@ -82,9 +82,9 @@ describe('Correos Express direct tracking', () => {
       expect.objectContaining({ description: 'Tracking update', local_time: '2026-01-05T18:27:00' }),
       expect.objectContaining({ description: 'Tracking update', local_time: '2026-01-05T18:20:00' }),
     ]);
-    expect(result.events?.[0].provider_status).toBeUndefined();
-    expect(result.events?.[1].provider_status).toBeUndefined();
-    expect(result.events?.[2].stage).toBe('delivered');
+    expect(result.events?.[0]!.provider_status).toBeUndefined();
+    expect(result.events?.[1]!.provider_status).toBeUndefined();
+    expect(result.events?.[2]!.stage).toBe('delivered');
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
   });
 
@@ -118,10 +118,10 @@ describe('Correos Express direct tracking', () => {
       expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Tracking update', last_update: null, expected_delivery: null });
       expect(result.current_stage).toBeUndefined();
       expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].local_time).toBeUndefined();
-      expect(result.events?.[0].provider_status).toBeUndefined();
+      expect(result.events?.[0]!.local_time).toBeUndefined();
+      expect(result.events?.[0]!.provider_status).toBeUndefined();
       expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
-      if (clock) expect(result.events?.[0].provider_time_text).toBe(clock);
+      if (clock) expect(result.events?.[0]!.provider_time_text).toBe(clock);
     }
   });
 

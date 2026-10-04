@@ -43,7 +43,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   const block = blocks.first();
   const headings = block.find('.tracking-invoice-block-title');
   const heading = /^1件目：([\d-]+)$/.exec(clean(headings.text()));
-  if (headings.length !== 1 || !heading || normalizeTrackingNumber(heading[1]) !== number) {
+  if (headings.length !== 1 || !heading || normalizeTrackingNumber(heading[1]!) !== number) {
     throw new SchemaError(PROVIDER, 'Yamato returned a different shipment');
   }
   const summary = block.find('.tracking-invoice-block-state-title');

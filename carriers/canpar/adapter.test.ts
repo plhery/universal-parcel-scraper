@@ -110,7 +110,7 @@ describe('Canpar retrieval', () => {
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('https://canship.canpar.com/api/CanparAddons/trackByBarcodeV2');
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error' });
     expect(JSON.parse(String(init?.body))).toEqual({ barcode: NUMBER, track_shipment: false });

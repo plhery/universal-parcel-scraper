@@ -23,7 +23,7 @@ describe('Ukrposhta native history projection', () => {
     expect(result.events?.[2]).toMatchObject({ stage: 'in_transit', provider_leg: 'return' });
     expect(result.events?.[3]).toMatchObject({ stage: 'exception', provider_leg: 'return' });
     expect(result.events?.[4]).toMatchObject({ stage: 'registered' });
-    expect(result.events?.[4].provider_leg).toBeUndefined();
+    expect(result.events?.[4]!.provider_leg).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
     expect(result.expected_delivery).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
@@ -32,7 +32,7 @@ describe('Ukrposhta native history projection', () => {
   it('keeps international delivered history local rather than assigning the home zone', () => {
     const result = parsed(fixture('delivered'), 'RR000000005UA');
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null });
-    expect(result.events?.[1].stage).toBe('out_for_delivery');
+    expect(result.events?.[1]!.stage).toBe('out_for_delivery');
     expect(result.events?.every(event => event.local_time && !event.time)).toBe(true);
     expect(result.delivered_at).toBeUndefined();
   });
@@ -76,9 +76,9 @@ describe('Ukrposhta native history projection', () => {
     const result = parsed(pair);
     expect(result.last_update).toBeNull();
     expect(result.events?.[0]).toMatchObject({ provider_code: '41000', stage: 'returned' });
-    expect(result.events?.[0].local_time).toBeUndefined();
-    if (mode === 'invalid') expect(result.events?.[0].provider_time_text).toBe(value);
-    expect(result.events?.[1].provider_code).toBe('21700');
+    expect(result.events?.[0]!.local_time).toBeUndefined();
+    if (mode === 'invalid') expect(result.events?.[0]!.provider_time_text).toBe(value);
+    expect(result.events?.[1]!.provider_code).toBe('21700');
   });
 
   it.each(['31.02.2026 12:00', '29.03.2026 24:00', '2026-03-29T12:60:00', '2026-03-29T12:00:00Z', '29.03.2026'])('never normalizes malformed or unsupported clock %s', value => {
@@ -91,7 +91,7 @@ describe('Ukrposhta native history projection', () => {
     const result = parsed(pair);
     expect(result.status).toBe('unknown');
     expect(result.current_stage).toBeUndefined();
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
   });
 
   it.each(['multiple', 'empty', 'malformed date flag', 'malformed rows', 'malformed clock', 'too many'])('rejects %s without inventing absence', mode => {

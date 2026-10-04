@@ -129,7 +129,7 @@ describe('DHL eCommerce fetching', () => {
     expect(result.current_stage).toBe('in_transit');
     expect(fetcher).not.toHaveBeenCalled();
     expect(browser).toHaveBeenCalledOnce();
-    expect(browser.mock.calls[0][0].timeoutMs).toBeLessThanOrEqual(30000);
+    expect(browser.mock.calls[0]![0].timeoutMs).toBeLessThanOrEqual(30000);
   });
 
   it('propagates browser failures without a direct attempt', async () => {

@@ -70,8 +70,8 @@ describe('MRW anonymous tracking', () => {
     expect(result.current_stage).toBeUndefined();
     expect(result.last_update_local).toBeNull();
     expect(result.delivered_at).toBeUndefined();
-    expect(result.events?.[0].description).toBe('Actualización de seguimiento');
-    expect(result.events?.[0].provider_time_text).toBe('31/02/2026 19:29');
+    expect(result.events?.[0]!.description).toBe('Actualización de seguimiento');
+    expect(result.events?.[0]!.provider_time_text).toBe('31/02/2026 19:29');
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC_RECIPIENT');
   });
 

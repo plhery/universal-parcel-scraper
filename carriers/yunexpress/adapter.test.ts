@@ -21,7 +21,7 @@ describe('YunExpress captured response projection', () => {
     expect(result.events).toHaveLength(14);
     expect(result.events?.[0]).toMatchObject({ time: '2026-03-20T13:39:00-04:00', location: 'Example facility' });
     expect(result.events?.[1]).toMatchObject({ local_time: '2026-03-19T13:39:00' });
-    expect(result.events?.[1].time).toBeUndefined();
+    expect(result.events?.[1]!.time).toBeUndefined();
     expect(result.events?.at(-1)?.stage).toBe('registered');
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
@@ -44,7 +44,7 @@ describe('YunExpress captured response projection', () => {
     item.TrackData.ProcessGroupList[0].ProcessDetailList[0].ProcessContent = 'Delivered by Mailbox, synthetic delivery note----Example facility';
     const result = parse(payload, NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-03-20T13:39:00-04:00' });
-    expect(result.events?.[1].stage).toBe('in_transit');
+    expect(result.events?.[1]!.stage).toBe('in_transit');
     item.TrackInfo.LastTrackEvent.ProcessContent = 'Different description';
     expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
@@ -113,7 +113,7 @@ describe('YunExpress captured response projection', () => {
 
   it('uses the final capture and propagates failures rather than replaying an older success', () => {
     const page = captured();
-    page.capturedResponses.push({ ...page.capturedResponses[0], status: 403 });
+    page.capturedResponses.push({ ...page.capturedResponses[0]!, status: 403 });
     expect(() => parseCaptured(page, NUMBER)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     page.capturedResponses.at(-1)!.status = 200;
     page.capturedResponses.at(-1)!.body = JSON.stringify({ ResultList: [] });
@@ -122,10 +122,10 @@ describe('YunExpress captured response projection', () => {
 
   it('separates a missing, truncated or failed capture from an explicit unknown parcel', () => {
     const page = captured();
-    page.capturedResponses[0].truncated = true;
+    page.capturedResponses[0]!.truncated = true;
     expect(() => parseCaptured(page, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
-    page.capturedResponses[0].truncated = false;
-    page.capturedResponses[0].body = 'invalid JSON';
+    page.capturedResponses[0]!.truncated = false;
+    page.capturedResponses[0]!.body = 'invalid JSON';
     expect(() => parseCaptured(page, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     page.capturedResponses = [];
     expect(() => parseCaptured(page, NUMBER)).toThrow(expect.objectContaining({ kind: 'transport' }));
@@ -133,8 +133,8 @@ describe('YunExpress captured response projection', () => {
 
   it('decodes an explicitly base64 encoded capture and proves each declared capability', () => {
     const page = captured();
-    page.capturedResponses[0].body = Buffer.from(page.capturedResponses[0].body!).toString('base64');
-    page.capturedResponses[0].base64Encoded = true;
+    page.capturedResponses[0]!.body = Buffer.from(page.capturedResponses[0]!.body!).toString('base64');
+    page.capturedResponses[0]!.base64Encoded = true;
     const result = parseCaptured(page, NUMBER);
     const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)) };
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
@@ -179,7 +179,7 @@ describe('YunExpress browser execution', () => {
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
     const instance = adapter({ trawl: new TrawlClient('http://127.0.0.1:8191', fetcher), browserExecutablePath: null, fetcher, env: {}, recorder });
     await expect(instance.track({ number: NUMBER }, { budgetMs: 10_000.5 })).resolves.toMatchObject({ current_stage: 'customs' });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('http://127.0.0.1:8191/scrape');
     expect(JSON.parse(String(init?.body))).toMatchObject({ url: `https://www.yuntrack.com/parcelTracking?id=${NUMBER}`, skipHttp: true,
       maxTier: 2, captureResponses: [API], settleTimeout: 5_000 });

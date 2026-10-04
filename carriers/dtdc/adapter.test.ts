@@ -59,7 +59,7 @@ describe('DTDC parser', () => {
     payload.data.type = 'rto'; payload.data.tracking[0].type = 'rto';
     const result = parseDtdc(payload, NUMBER);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
-    expect(result.events?.[0].stage).toBe('returned');
+    expect(result.events?.[0]!.stage).toBe('returned');
     expect(result.delivered_at).toBeUndefined();
   });
 
@@ -109,7 +109,7 @@ describe('DTDC parser', () => {
     expect(result).toMatchObject({ status: 'unknown', last_status_text: 'New return state' });
     expect(result.current_stage).toBeUndefined();
     expect(result.events?.[0]).toMatchObject({ provider_leg: 'return' });
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
   });
 
@@ -148,7 +148,7 @@ describe('DTDC parser', () => {
     for (let i = 0; i < 110; i++) payload.data.tracking.push({ ...payload.data.tracking[0], location: `Example depot ${i}`, timestamp: 1767531600000 + i * 1000 });
     const result = parseDtdc(payload, NUMBER);
     expect(result.events).toHaveLength(100);
-    expect(result.events?.[0].location).toBe('Example depot 109');
+    expect(result.events?.[0]!.location).toBe('Example depot 109');
     payload.data.tracking = Array.from({ length: 1001 }, () => payload.data.tracking[0]);
     expect(() => parseDtdc(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

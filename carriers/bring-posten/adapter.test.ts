@@ -109,7 +109,7 @@ describe('Bring bounded anonymous retrieval', () => {
   it('uses one current consumer JSON GET with no credentials', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(payload()));
     await new BringTracker({ fetcher }).fetch(NUMBER);
-    expect(fetcher).toHaveBeenCalledOnce(); const [url, init] = fetcher.mock.calls[0];
+    expect(fetcher).toHaveBeenCalledOnce(); const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`https://sporing.bring.no/sporing/json/${NUMBER}?lang=en`);
     expect(init).toMatchObject({ cache: 'no-store', redirect: 'error' });
     expect(new Headers(init?.headers).has('Authorization')).toBe(false); expect(new Headers(init?.headers).has('Cookie')).toBe(false);

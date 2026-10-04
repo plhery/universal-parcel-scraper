@@ -51,7 +51,7 @@ export function detectCarrierMatch(raw: string): CarrierDetection {
   const preferred = ranked.filter((match) => match.preferred).map((match) => match.carrier);
   const candidates = [...preferred, ...ranked.filter((match) => !match.preferred).map((match) => match.carrier)];
   if (highConfidence.length === 1) {
-    return { carrier: highConfidence[0].carrier, confidence: 'high', candidates, preferred };
+    return { carrier: highConfidence[0]!.carrier, confidence: 'high', candidates, preferred };
   }
   return {
     carrier: 'unknown',

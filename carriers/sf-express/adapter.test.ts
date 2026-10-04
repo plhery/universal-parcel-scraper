@@ -21,7 +21,7 @@ describe('SF Express browser adapter', () => {
     const { scrape, tracker } = mock();
     expect((await tracker.fetch(NUMBER, { budgetMs: 40_000 })).events).toHaveLength(6);
     expect(scrape).toHaveBeenCalledOnce();
-    const [request, options] = scrape.mock.calls[0];
+    const [request, options] = scrape.mock.calls[0]!;
     expect(request).toMatchObject({ url: sfExpressTrackingUrl(NUMBER), skipHttp: true, maxTier: 3, captureResponses: [api] });
     expect(request.maxTimeout).toBeGreaterThan(24_000);
     expect(request.maxTimeout).toBeLessThanOrEqual(25_000);

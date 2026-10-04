@@ -87,7 +87,7 @@ describe('YTO domestic parser', () => {
     value[0].waybillProcessInfo.unshift({ ...value[0].waybillProcessInfo[0], opCode: 'NEW', opName: 'New operation', opTime: '2026-01-04 10:00:00' });
     const result = parseYto(value, NUMBER);
     expect(result).toMatchObject({ status: 'unknown', last_status_text: 'New operation' });
-    expect(result.current_stage).toBeUndefined(); expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.current_stage).toBeUndefined(); expect(result.events?.[0]!.stage).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
   });
 
@@ -95,9 +95,9 @@ describe('YTO domestic parser', () => {
     const value = fixture(); value[0].waybillProcessInfo[0].opTime = clock;
     const result = parseYto(value, NUMBER);
     expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
-    expect(result.events?.[0].time).toBeUndefined();
-    expect(result.events?.[0].provider_time_text).toBe(clock || undefined);
-    expect(result.events?.[1].time).toBe('2026-01-03T12:00:00+08:00');
+    expect(result.events?.[0]!.time).toBeUndefined();
+    expect(result.events?.[0]!.provider_time_text).toBe(clock || undefined);
+    expect(result.events?.[1]!.time).toBe('2026-01-03T12:00:00+08:00');
   });
 
   it.each([null, {}, { waybillNo: NUMBER, opCode: '745' }])('rejects malformed scans %s without dropping them', scan => {
@@ -110,11 +110,11 @@ describe('YTO domestic parser', () => {
     const deduplicated = parseYto(value, NUMBER);
     expect(deduplicated.events).toHaveLength(6);
     expect(deduplicated.current_stage).toBe('delivered');
-    expect(deduplicated.events?.[0].provider_code).toBe('745');
-    expect(deduplicated.events?.[0].time).toBe('2026-01-03T18:00:00+08:00');
+    expect(deduplicated.events?.[0]!.provider_code).toBe('745');
+    expect(deduplicated.events?.[0]!.time).toBe('2026-01-03T18:00:00+08:00');
     for (let i = 0; i < 110; i++) value[0].waybillProcessInfo.unshift({ ...value[0].waybillProcessInfo[0], opOrgName: `Example depot ${i}` });
     expect(parseYto(value, NUMBER).events).toHaveLength(100);
-    expect(parseYto(value, NUMBER).events?.[0].location).toBe('Example depot 109');
+    expect(parseYto(value, NUMBER).events?.[0]!.location).toBe('Example depot 109');
     value[0].waybillProcessInfo = Array.from({ length: 1001 }, () => value[0].waybillProcessInfo[0]);
     expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

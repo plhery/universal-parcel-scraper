@@ -61,13 +61,13 @@ export function trackingPlace(location: string): TrackingPlace {
   let country: string | null = null;
   let kept = fields.length;
   while (kept > 0) {
-    const code = fieldCountry(fields[kept - 1][0].trim(), text, true);
+    const code = fieldCountry(fields[kept - 1]![0].trim(), text, true);
     if (!code || (country && code !== country)) break;
     country = code;
     kept -= 1;
   }
-  if (country) return { country, place: kept ? text.slice(0, fields[kept].index).replace(/[\s,;|(]+$/u, '') : '' };
-  if (fields.length === 1 && text === fields[0][0]) {
+  if (country) return { country, place: kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|(]+$/u, '') : '' };
+  if (fields.length === 1 && text === fields[0]![0]) {
     const words = text.split(/\s+/);
     for (let count = Math.min(words.length - 1, 4); count > 0; count -= 1) {
       const code = namedCountry(words.slice(0, count).join(' '), true);
@@ -84,7 +84,7 @@ export function countryFlag(code: string): string {
 
 /** The region's name, with the short "Hong Kong" and "Macao" iOS also uses. */
 export function countryName(code: string, languageTag: string): string {
-  const china = code === 'CN' ? chinaNames.get(languageTag.split('-')[0]) : undefined;
+  const china = code === 'CN' ? chinaNames.get(languageTag.split('-')[0]!) : undefined;
   if (china) return china;
   const style = code === 'HK' || code === 'MO' ? 'short' : 'long';
   const key = `${languageTag}:${style}`;

@@ -38,9 +38,9 @@ describe('Correios parser', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-05T16:10:47-03:00', delivered_at: '2026-01-05T16:10:47-03:00', expected_delivery: null });
     expect(result.events).toHaveLength(7);
     expect(result.events?.[0]).toEqual({ description: 'Objeto entregue ao destinatário', provider_code: 'BDE/01', time: '2026-01-05T16:10:47-03:00', location: 'Cidade Exemplo, SP', stage: 'delivered' });
-    expect(result.events?.[2].stage).toBe('exception');
-    expect(result.events?.[3].stage).toBe('exception');
-    expect(result.events?.[5].stage).toBe('accepted');
+    expect(result.events?.[2]!.stage).toBe('exception');
+    expect(result.events?.[3]!.stage).toBe('exception');
+    expect(result.events?.[5]!.stage).toBe('accepted');
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
     for (const row of statuses.entries) expect(classifyCorreiosStatus(row.code)?.stage).toBe(row.stage);
     expect(classifyCorreiosStatus('BDE/99')).toBeUndefined();
@@ -61,9 +61,9 @@ describe('Correios parser', () => {
       expect(result).toMatchObject({ status: 'unknown', last_status_text: 'New unmapped scan', last_update: null });
       expect(result.current_stage).toBeUndefined();
       expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].provider_code).toBe('BDE/99');
-      expect(result.events?.[0].time).toBeUndefined();
-      if (clock?.date) expect(result.events?.[0].provider_time_text).toBe(clock.date);
+      expect(result.events?.[0]!.provider_code).toBe('BDE/99');
+      expect(result.events?.[0]!.time).toBeUndefined();
+      if (clock?.date) expect(result.events?.[0]!.provider_time_text).toBe(clock.date);
     }
   });
 
@@ -76,21 +76,21 @@ describe('Correios parser', () => {
       const result = parseCorreios({ ...fixture, eventos: [scan('BDE', '01', 'Delivery', raw)] }, NUMBER);
       expect(result.last_update).toBeNull();
       expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].local_time).toMatch(/^2026-/);
-      expect(result.events?.[0].time).toBeUndefined();
+      expect(result.events?.[0]!.local_time).toMatch(/^2026-/);
+      expect(result.events?.[0]!.time).toBeUndefined();
     }
   });
 
   it('deduplicates projected scans and bounds text without promoting delivery-related failures', () => {
     const duplicate = clone();
-    duplicate.eventos.push(structuredClone(duplicate.eventos[0]));
+    duplicate.eventos.push(structuredClone(duplicate.eventos[0]!));
     expect(parseCorreios(duplicate, NUMBER).events).toHaveLength(7);
     for (const kind of ['34', '47']) {
       const result = parseCorreios({ ...fixture, eventos: [scan('BDE', kind, 'x'.repeat(600), 'x'.repeat(100)), ...fixture.eventos] }, NUMBER);
       expect(result.status).toBe('exception');
       expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].description).toHaveLength(500);
-      expect(result.events?.[0].provider_time_text).toHaveLength(64);
+      expect(result.events?.[0]!.description).toHaveLength(500);
+      expect(result.events?.[0]!.provider_time_text).toHaveLength(64);
     }
   });
 
@@ -120,17 +120,17 @@ describe('Correios session and transport', () => {
     const { tracker, calls, solveCaptcha } = portal();
     await tracker.fetch(NUMBER);
     expect(calls).toHaveLength(3);
-    expect(calls[0].url.href).toBe(HOME);
-    expect(calls[1].url.href).toBe(IMAGE);
-    expect(calls[2].url.pathname).toBe('/app/resultado.php');
-    expect(Object.fromEntries(calls[2].url.searchParams)).toEqual({ objeto: NUMBER, captcha: 'a1b2', mqs: 'S' });
+    expect(calls[0]!.url.href).toBe(HOME);
+    expect(calls[1]!.url.href).toBe(IMAGE);
+    expect(calls[2]!.url.pathname).toBe('/app/resultado.php');
+    expect(Object.fromEntries(calls[2]!.url.searchParams)).toEqual({ objeto: NUMBER, captcha: 'a1b2', mqs: 'S' });
     expect(solveCaptcha).toHaveBeenCalledWith(new Uint8Array([1, 2, 3]), expect.any(AbortSignal));
-    expect(new Headers(calls[1].init?.headers).get('cookie')).toBe('PHPSESSID=synthetic-session');
-    expect(new Headers(calls[2].init?.headers).get('referer')).toBe(HOME);
+    expect(new Headers(calls[1]!.init?.headers).get('cookie')).toBe('PHPSESSID=synthetic-session');
+    expect(new Headers(calls[2]!.init?.headers).get('referer')).toBe(HOME);
     // fetch-cookie uses manual fetches and honors the original redirect:error policy.
     expect(calls.every((call) => call.init?.cache === 'no-store' && call.init?.redirect === 'manual' && call.init?.signal instanceof AbortSignal)).toBe(true);
     await tracker.fetch(NUMBER);
-    expect(new Headers(calls[3].init?.headers).get('cookie')).toBeNull();
+    expect(new Headers(calls[3]!.init?.headers).get('cookie')).toBeNull();
     expect(calls).toHaveLength(6);
   });
 

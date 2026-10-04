@@ -26,8 +26,8 @@ describe('EMS result projection', () => {
     expect(result.events?.map((event) => event.stage)).toEqual([
       'customs', 'in_transit', 'in_transit', 'customs', 'in_transit', 'accepted',
     ]);
-    expect(result.events?.[1].description).toBe('Departed from export office');
-    expect(result.events?.[2].description).toBe('Released from export customs and security');
+    expect(result.events?.[1]!.description).toBe('Departed from export office');
+    expect(result.events?.[2]!.description).toBe('Released from export customs and security');
     expect(result.events?.every((event) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00$/.test(String(event.local_time)))).toBe(true);
     expect(result.timezone).toBeUndefined();
   });
@@ -106,7 +106,7 @@ describe('EMS result projection', () => {
       $('tbody').append(`<tr><td>Sep 4, 2026, 9:00 AM</td><td>Posted</td><td>Example office ${i}</td></tr>`);
     }
     expect(parse($.html(), NUMBER).events).toHaveLength(100);
-    expect(parse($.html(), NUMBER).events?.[0].location).toBe('Example office 109');
+    expect(parse($.html(), NUMBER).events?.[0]!.location).toBe('Example office 109');
   });
 
   it.each([
@@ -126,7 +126,7 @@ describe('EMS result projection', () => {
     const result = parse(withLastStatus(wording), NUMBER);
     expect(result).toMatchObject({ status: 'unknown', last_status_text: wording });
     expect(result.current_stage).toBeUndefined();
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
   });
 
   it('proves each declared capability with a scrubbed fixture', () => {

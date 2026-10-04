@@ -149,7 +149,7 @@ describe('Estafeta direct retrieval', () => {
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     await instance.track({ number: NUMBER }); await instance.track({ number: '100000000000000a00test' }); expect(fetcher).toHaveBeenCalledTimes(4);
     for (let index = 0; index < fetcher.mock.calls.length; index++) {
-      const [rawUrl, init] = fetcher.mock.calls[index]; const url = new URL(String(rawUrl));
+      const [rawUrl, init] = fetcher.mock.calls[index]!; const url = new URL(String(rawUrl));
       expect(init).toMatchObject({ cache: 'no-store', redirect: 'error' }); expect(init?.signal).toBeInstanceOf(AbortSignal);
       const headers = new Headers(init?.headers); expect(headers.has('Cookie') || headers.has('Authorization')).toBe(false);
       if (index % 2 === 0) expect(Object.fromEntries(url.searchParams)).toEqual({ wayBill: index === 0 ? NUMBER : GUIDE, wayBillType: index === 0 ? '0' : '1', isShipmentDetail: 'True' });

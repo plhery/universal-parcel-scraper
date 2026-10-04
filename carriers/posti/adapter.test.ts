@@ -82,8 +82,8 @@ describe('Posti anonymous transport', () => {
     const tracker = new PostiTracker({ fetcher });
     await tracker.fetch(NUMBER); await tracker.fetch(NUMBER);
     expect(fetcher).toHaveBeenCalledTimes(3);
-    expect(fetcher.mock.calls[0][0]).toBe('https://auth-service.posti.fi/api/v1/anonymous_token');
-    const request = fetcher.mock.calls[1][1]!;
+    expect(fetcher.mock.calls[0]![0]).toBe('https://auth-service.posti.fi/api/v1/anonymous_token');
+    const request = fetcher.mock.calls[1]![1]!;
     const body = JSON.parse(String(request.body));
     expect(body.variables).toEqual({ searchTerms: [NUMBER], locale: 'en' });
     expect(body.query).toContain('type: PUBLIC_SHIPMENTS');

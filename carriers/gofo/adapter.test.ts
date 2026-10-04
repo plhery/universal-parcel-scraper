@@ -32,7 +32,7 @@ describe('GOFO US history', () => {
   it('drops the support line GOFO appends to a scan, as its public page does, and keeps any other wording', () => {
     const description = (processContent: string) => {
       const value = counterFixture(); item(value).trackEventList[2].processContent = processContent;
-      return parseGofo(value, NUMBER).events?.[2].description;
+      return parseGofo(value, NUMBER).events?.[2]!.description;
     };
     for (const line of ['For Delivery Issues & Tracking Support, Contact GOFO at +1 949 688-6032 or cs@mail.gofoexpress.com',
       'for delivery issues & tracking support, contact gofo at +1 000 000-0000 or support@example.com',
@@ -128,7 +128,7 @@ describe('GOFO US history', () => {
     expect(parseGofo(summer, NUMBER).delivered_at).toBe('2026-08-10T15:58:30-05:00');
     for (const [processDate, time] of [['2026-11-01T01:30:00.000-0700', '2026-11-01T01:30:00-07:00'], ['2026-11-01T01:30:00.000-0800', '2026-11-01T01:30:00-08:00']]) {
       const repeated = fixture(); item(repeated).trackEventList[1].processDate = processDate;
-      expect(parseGofo(repeated, NUMBER).events?.[1].time).toBe(time);
+      expect(parseGofo(repeated, NUMBER).events?.[1]!.time).toBe(time);
     }
     for (const processDate of ['2026-01-04T12:00:00.000-0700', '2026-08-10T16:58:30.000-0400', '2026-01-04T20:00:00Z']) {
       const shifted = fixture(); item(shifted).trackEventList[0].processDate = processDate; bind(shifted);
@@ -152,7 +152,7 @@ describe('GOFO US history', () => {
     expect(() => parseGofo(negative, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     const value = fixture(); item(value).trackEventList.unshift({ ...item(value).trackEventList[0], processCode: '__proto__', processContent: 'Awaiting review' }); bind(value);
     expect(parseGofo(value, NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'Awaiting review' });
-    expect(parseGofo(value, NUMBER).events?.[1].description).toBe('Delivered');
+    expect(parseGofo(value, NUMBER).events?.[1]!.description).toBe('Delivered');
     expect(gofoStatus('__proto__')).toBeUndefined();
     item(value).trackEventList.push(item(value).trackEventList[0]); bind(value);
     expect(parseGofo(value, NUMBER).events).toHaveLength(5);

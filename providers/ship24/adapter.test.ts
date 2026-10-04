@@ -64,11 +64,11 @@ describe('Ship24 anonymous HTTP tracking', () => {
     expect(steps.map(({ step, outcome }) => [step, outcome])).toEqual([['direct', 'ok'], ['direct', 'ok']]);
     expect(lookups.map(({ carrier, finalStep, outcome }) => [carrier, finalStep, outcome]))
       .toEqual([['Ship24', 'direct', 'ok'], ['Ship24', 'direct', 'ok']]);
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`https://api.ship24.com/api/parcels/${number}?lang=en`);
     expect(init).toMatchObject({ method: 'POST', redirect: 'error', cache: 'no-store' });
     const headers = init!.headers as Record<string, string>;
-    const [encoded, signature] = headers['x-ship24-token'].split('.');
+    const [encoded, signature] = headers['x-ship24-token']!.split('.') as [string, string];
     expect(signature).toMatch(/^[a-f0-9]{64}$/);
     expect(JSON.parse(Buffer.from(encoded, 'base64').toString())).toMatchObject({ a: expect.any(Number), b: expect.any(Number), c: expect.stringMatching(/^[a-f0-9]{64}$/) });
     expect(headers).not.toHaveProperty('Cookie');

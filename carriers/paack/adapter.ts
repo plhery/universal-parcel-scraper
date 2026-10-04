@@ -58,7 +58,7 @@ function normalizedDate(value: unknown): string | null {
   if (typeof value === 'string') {
     const candidate = value.trim();
     const match = /^(\d{4}-\d{2}-\d{2})/.exec(candidate);
-    if (match && !Number.isNaN(Date.parse(candidate))) return match[1];
+    if (match && !Number.isNaN(Date.parse(candidate))) return match[1]!;
   }
   return normalizedTimestamp(value)?.iso.slice(0, 10) ?? null;
 }

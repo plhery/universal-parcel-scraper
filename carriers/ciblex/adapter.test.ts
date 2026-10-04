@@ -104,8 +104,8 @@ describe('Ciblex response normalization', () => {
     const html = readFileSync(new URL('./fixtures/full-barcode.html', import.meta.url), 'utf8');
     const result = parseCiblexTrackingHtml(html, '000000000000000000000001');
     expect(result.status).toBe('delivered'); expect(result.events).toHaveLength(8);
-    expect(result.events?.[0].time).toBe('2026-01-23T10:01:23+01:00');
-    expect(result.events?.[4].stage).toBeUndefined(); expect(result.events?.[7].stage).toBeUndefined();
+    expect(result.events?.[0]!.time).toBe('2026-01-23T10:01:23+01:00');
+    expect(result.events?.[4]!.stage).toBeUndefined(); expect(result.events?.[7]!.stage).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
     for (const invalid of [html.replace('(0000000000001)', 'other shipment 0000000000001'), html.replace('(0000000000001)', '(nested (0000000000001))')]) {
       expect(() => parseCiblexTrackingHtml(invalid, '000000000000000000000001')).toThrow(SchemaError);
@@ -113,16 +113,16 @@ describe('Ciblex response normalization', () => {
   });
 
   it('keeps ambiguous or nonexistent Paris DST clocks local without inventing an instant', () => {
-    for (const [day, local] of [['29/03/2026', '2026-03-29T02:30:00'], ['25/10/2026', '2026-10-25T02:30:00']]) {
+    for (const [day, local] of [['29/03/2026', '2026-03-29T02:30:00'], ['25/10/2026', '2026-10-25T02:30:00']] as const) {
       const result = parseCiblexTrackingHtml(trackingPage({ rows: [[day, '02:30', 'Colis Livré', ''], ['22/01/2026', '09:00', 'Colis Contrôle', '']] }), TEST_TRACKING_NUMBER);
       expect(result.status).toBe('delivered'); expect(result.last_update).toBeNull(); expect(result.last_update_local).toBe(local);
-      expect(result.events?.[0].local_time).toBe(local); expect(result.events?.[0].time).toBeUndefined(); expect(result.delivered_at).toBeUndefined();
+      expect(result.events?.[0]!.local_time).toBe(local); expect(result.events?.[0]!.time).toBeUndefined(); expect(result.delivered_at).toBeUndefined();
     }
   });
   it('requires the complete full barcode, rejecting suffix aliases, truncated and duplicate banners', () => {
     const full = '990000000000000000000001';
     expect(parseCiblexTrackingHtml(trackingPage({ trackingNumber: full }), full).events).toHaveLength(4);
-    for (const [returned, requested] of [[full.slice(-14), full], [full, full.slice(0, 14)], [full + '0', full]]) {
+    for (const [returned, requested] of [[full.slice(-14), full], [full, full.slice(0, 14)], [full + '0', full]] as const) {
       expect(() => parseCiblexTrackingHtml(trackingPage({ trackingNumber: returned }), requested)).toThrow(SchemaError);
     }
     const duplicated = load(trackingPage({ trackingNumber: full })); duplicated('body').append(duplicated('.t_bandeau_detail').clone());
@@ -130,12 +130,12 @@ describe('Ciblex response normalization', () => {
   });
 
   it('retains unresolved newest clocks and unknown statuses without borrowing older delivery', () => {
-    for (const [day, time] of [['31/02/2026', '09:00'], ['23/01/2026', '24:00'], ['23/01/2026', '09:99'], ['23/01/2026', ''], ['', '']]) {
+    for (const [day, time] of [['31/02/2026', '09:00'], ['23/01/2026', '24:00'], ['23/01/2026', '09:99'], ['23/01/2026', ''], ['', '']] as const) {
       const rows: Row[] = [[day, time, 'Statut provider nouveau', 'PRIVATE ADDRESS'], ['22/01/2026', '09:00', 'Colis Livré', '']];
       const result = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
       expect(result.status).toBe('unknown'); expect(result.current_stage).toBeUndefined(); expect(result.last_update).toBeNull();
-      expect(result.events?.[0].time).toBeUndefined(); expect(result.events?.[0].provider_time_text).toBe([day, time].filter(Boolean).join(' ') || undefined);
-      expect(result.events?.[0].stage).toBeUndefined(); expect(result.events?.[1].stage).toBe('delivered');
+      expect(result.events?.[0]!.time).toBeUndefined(); expect(result.events?.[0]!.provider_time_text).toBe([day, time].filter(Boolean).join(' ') || undefined);
+      expect(result.events?.[0]!.stage).toBeUndefined(); expect(result.events?.[1]!.stage).toBe('delivered');
       expect(JSON.stringify(result)).not.toContain('PRIVATE ADDRESS');
     }
     const knownTime: Row[] = [['23/01/2026', '09:00', 'Statut provider nouveau', ''], ['22/01/2026', '09:00', 'Colis Livré', '']];

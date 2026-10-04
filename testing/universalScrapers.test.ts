@@ -46,7 +46,7 @@ describe('Postal Ninja and Ship24 result parsing', () => {
     ]), number);
     expect(parsed.current_stage).toBe('delivered');
     expect(parsed.last_update).toBeNull();
-    expect(parsed.events?.[1].time).toBe('2026-08-16T04:00:00.000Z');
+    expect(parsed.events?.[1]!.time).toBe('2026-08-16T04:00:00.000Z');
   });
 
   it('rejects Postal Ninja challenges, private shipments, wrong identities, empty history and malformed dates', () => {
@@ -70,7 +70,7 @@ describe('Postal Ninja and Ship24 result parsing', () => {
   it('drops private delivery details even when an upstream carrier ignores the requested English language', () => {
     const raw = { timestamp: '2026-08-17T11:17:00+02:00', status: 'Consegnato da Cassetta postale, PIN: PRIVATE' };
     expect(JSON.stringify(parseShip24Response(ship([raw, ...ship().data.events]), number))).not.toContain('PRIVATE');
-    expect(parseShip24Response(ship([{ ...raw, dispatch_code_id: 7 }]), number).events?.[0].description).toBe('Delivered');
+    expect(parseShip24Response(ship([{ ...raw, dispatch_code_id: 7 }]), number).events?.[0]!.description).toBe('Delivered');
   });
 
   it('keeps offset-less carrier legs as local wall time instead of rejecting the shipment', () => {
@@ -255,7 +255,7 @@ describe('bounded browser scraper lifecycle', () => {
   it('permits required challenge subdomains while blocking unrelated and private hosts', async () => {
     const f = browserFixture(ship(), `https://api.ship24.com/api/parcels/${number}?lang=en`);
     await new Ship24Tracker({ executablePath: '/test/chromium' }).fetch(number);
-    const handler = f.context.route.mock.calls[0][1];
+    const handler = f.context.route.mock.calls[0]![1];
     for (const [url, allowed] of [
       ['https://api.ship24.com/api/parcels/test', true],
       ['https://brunhild.challenges.cloudflare.com/check', true],

@@ -20,7 +20,7 @@ describe('Japan Post result projection', () => {
       last_status_text: 'Final delivery', last_update: '2026-09-04T09:43:00Z', last_update_local: '2026-09-04T11:43:00', expected_delivery: null });
     expect(result.events).toHaveLength(5);
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'out_for_delivery', 'customs', 'in_transit', 'accepted']);
-    expect(result.events?.[0].location).toBe('MALTA');
+    expect(result.events?.[0]!.location).toBe('MALTA');
     expect(result.events?.at(-1)?.location).toBe('EXAMPLE ORIGIN, OSAKA');
     expect(result.events?.map((event) => event.local_time)).toEqual([
       '2026-09-04T11:43:00', '2026-09-04T07:45:00', '2026-09-03T12:55:00', '2026-09-02T11:33:00', '2026-09-01T12:23:00',
@@ -40,7 +40,7 @@ describe('Japan Post result projection', () => {
     expect(result.last_update).toBeNull();
     expect(result.last_update_local).toBe('2026-09-01');
     expect(result.events?.[0]).toMatchObject({ local_time: '2026-09-01' });
-    expect(result.events?.[0].time).toBeUndefined();
+    expect(result.events?.[0]!.time).toBeUndefined();
     expect(result.status).toBe('delivered');
   });
 
@@ -56,9 +56,9 @@ describe('Japan Post result projection', () => {
     const result = parse($.html(), NUMBER);
     expect(result.last_update).toBeNull();
     expect(result.last_update_local).toBe('2026-09-04T11:43:00');
-    expect(result.events?.[0].time).toBeUndefined();
-    expect(result.events?.[0].local_time).toBe('2026-09-04T11:43:00');
-    expect(result.events?.[1].time).toBe('2026-09-04T05:45:00Z');
+    expect(result.events?.[0]!.time).toBeUndefined();
+    expect(result.events?.[0]!.local_time).toBe('2026-09-04T11:43:00');
+    expect(result.events?.[1]!.time).toBe('2026-09-04T05:45:00Z');
   });
 
   it.each([
@@ -71,8 +71,8 @@ describe('Japan Post result projection', () => {
     $('table[summary="履歴情報"] tr').eq(-2).children('td').eq(0).text(raw);
     const result = parse($.html(), NUMBER);
     expect(result.last_update).toBe(instant);
-    expect(result.events?.[0].time ?? null).toBe(instant);
-    expect(result.events?.[0].local_time).toEqual(expect.any(String));
+    expect(result.events?.[0]!.time ?? null).toBe(instant);
+    expect(result.events?.[0]!.local_time).toEqual(expect.any(String));
   });
 
   it('recognizes explicit Japan country labels without using the office as timezone evidence', () => {
@@ -138,7 +138,7 @@ describe('Japan Post result projection', () => {
     const result = parse(withLastStatus(wording), NUMBER);
     expect(result).toMatchObject({ status: 'unknown', last_status_text: wording });
     expect(result.current_stage).toBeUndefined();
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
   });
 
   it('deduplicates exact scans and bounds returned history', () => {
@@ -154,7 +154,7 @@ describe('Japan Post result projection', () => {
     }
     const result = parse($.html(), NUMBER);
     expect(result.events).toHaveLength(100);
-    expect(result.events?.[0].location).toBe('Example office 104, MALTA');
+    expect(result.events?.[0]!.location).toBe('Example office 104, MALTA');
   });
 
   it('backs every declared capability with a synthetic fixture', () => {

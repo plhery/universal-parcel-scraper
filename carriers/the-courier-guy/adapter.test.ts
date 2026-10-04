@@ -15,7 +15,7 @@ const productPayload = (name = 'pudo-delivered') => JSON.parse(readFileSync(new 
 describe('The Courier Guy native product references', () => {
   it('restores only the confirmed product separator after generic host normalization', () => {
     for (const [input, expected] of [['ld-000001', 'LD-000001'], ['LD000001', 'LD-000001'],
-      [' d d - 0 0 0 0 0 1 ', 'DD-000001'], ['DD000001', 'DD-000001'], ['TESTA1', 'TESTA1']]) {
+      [' d d - 0 0 0 0 0 1 ', 'DD-000001'], ['DD000001', 'DD-000001'], ['TESTA1', 'TESTA1']] as const) {
       expect(normalizeCourierGuyNumber(input)).toBe(expected);
     }
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
@@ -200,7 +200,7 @@ describe('The Courier Guy bounded anonymous transport', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(payload()));
     await new CourierGuyTracker({ fetcher }).fetch('test a1');
     expect(fetcher).toHaveBeenCalledOnce();
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`https://api.portal.thecourierguy.co.za/tracking/shipments?tracking_reference=${NUMBER}&provider_id=7`);
     expect(init).toMatchObject({ cache: 'no-store', redirect: 'error' });
     expect(new Headers(init?.headers).has('Authorization')).toBe(false);

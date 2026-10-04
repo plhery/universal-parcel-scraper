@@ -44,7 +44,7 @@ function recognizedCode(text: string): string | undefined {
 
 /** Keep original response details; byte/time bounds prevent diagnostics delaying recovery. */
 export async function readUpstreamHttpDiagnostics(response: Response): Promise<UpstreamHttpDiagnostics> {
-  const mediaType = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
+  const mediaType = response.headers.get('content-type')?.split(';', 1)[0]!.trim().toLowerCase();
   const diagnostics: UpstreamHttpDiagnostics = {
     content_type: !mediaType ? 'missing' : CONTENT_TYPES.has(mediaType) ? mediaType : 'other',
     headers: Object.fromEntries(response.headers), response_url: response.url, status_text: response.statusText,

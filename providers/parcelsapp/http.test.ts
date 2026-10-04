@@ -35,7 +35,7 @@ describe('ParcelsApp public request protocol', () => {
     expect(fetcher).toHaveBeenCalledWith(PARCELSAPP_API, expect.objectContaining({
       method: 'POST', cache: 'no-store', redirect: 'error', signal: expect.any(AbortSignal),
     }));
-    const headers = new Headers(fetcher.mock.calls[0][1]!.headers);
+    const headers = new Headers(fetcher.mock.calls[0]![1]!.headers);
     expect(headers.get('Content-Type')).toContain('application/x-www-form-urlencoded');
     expect(headers.has('cookie')).toBe(false);
   });

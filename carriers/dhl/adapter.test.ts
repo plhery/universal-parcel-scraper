@@ -160,13 +160,13 @@ describe('DHL sessions and browser fallback', () => {
     expect((await tracker.fetch(NUMBER)).events).toHaveLength(2);
     await tracker.fetch(NUMBER);
     expect(fetcher).toHaveBeenCalledTimes(3);
-    expect(String(fetcher.mock.calls[0][0])).toBe(CONFIG);
-    expect(String(fetcher.mock.calls[1][0])).toBe(SEARCH);
-    const first = new Headers(fetcher.mock.calls[1][1]?.headers);
+    expect(String(fetcher.mock.calls[0]![0])).toBe(CONFIG);
+    expect(String(fetcher.mock.calls[1]![0])).toBe(SEARCH);
+    const first = new Headers(fetcher.mock.calls[1]![1]?.headers);
     expect(first.get('verfolgen-CSRF-token')).toBe('test-csrf');
     expect(first.get('verfolgen-wg')).toBe('0');
     expect(first.get('cookie')).toContain('verfolgenCsrfToken=test-csrf');
-    expect(new Headers(fetcher.mock.calls[2][1]?.headers).get('verfolgen-CSRF-token')).toBe('rotated-csrf');
+    expect(new Headers(fetcher.mock.calls[2]![1]?.headers).get('verfolgen-CSRF-token')).toBe('rotated-csrf');
   });
 
   it('uses the configured private browser for a rejected session', async () => {
@@ -180,9 +180,9 @@ describe('DHL sessions and browser fallback', () => {
       .mockResolvedValueOnce(Response.json(shipment()));
     const result = await new DHLTracker({ trawlUrl: 'http://trawl:8191/v1' }).fetch(NUMBER);
     expect(result.current_stage).toBe('in_transit');
-    expect(String(fetcher.mock.calls[1][0])).toBe('http://trawl:8191/scrape');
-    expect(JSON.parse(String(fetcher.mock.calls[1][1]?.body))).toMatchObject({ skipHttp: true, maxTier: 3, url: dhlTrackingUrl(NUMBER) });
-    const headers = new Headers(fetcher.mock.calls[2][1]?.headers);
+    expect(String(fetcher.mock.calls[1]![0])).toBe('http://trawl:8191/scrape');
+    expect(JSON.parse(String(fetcher.mock.calls[1]![1]?.body))).toMatchObject({ skipHttp: true, maxTier: 3, url: dhlTrackingUrl(NUMBER) });
+    const headers = new Headers(fetcher.mock.calls[2]![1]?.headers);
     expect(headers.get('user-agent')).toBe('Browser UA');
     expect(headers.get('cookie')).toContain('browser-proof');
     expect(headers.get('cookie')).not.toContain('private-other-site');
@@ -203,8 +203,8 @@ describe('DHL sessions and browser fallback', () => {
     now += 10 * 60_000;
     await tracker.fetch(NUMBER);
     expect(fetcher).toHaveBeenCalledTimes(5);
-    expect(String(fetcher.mock.calls[3][0])).toBe(CONFIG);
-    expect(new Headers(fetcher.mock.calls[4][1]?.headers).get('verfolgen-CSRF-token')).toBe('renewed');
+    expect(String(fetcher.mock.calls[3]![0])).toBe(CONFIG);
+    expect(new Headers(fetcher.mock.calls[4]![1]?.headers).get('verfolgen-CSRF-token')).toBe('renewed');
   });
 
   it('renews an expired session with HTTP before attempting a browser', async () => {
@@ -216,7 +216,7 @@ describe('DHL sessions and browser fallback', () => {
     await tracker.fetch(NUMBER);
     await tracker.fetch(NUMBER);
     expect(fetcher).toHaveBeenCalledTimes(5);
-    expect(String(fetcher.mock.calls[3][0])).toBe(CONFIG);
+    expect(String(fetcher.mock.calls[3]![0])).toBe(CONFIG);
   });
 
   it.each(['config', 'search', 'body', 'cached'])('recovers from an interrupted %s request with one fresh session', async (phase) => {
@@ -251,7 +251,7 @@ describe('DHL sessions and browser fallback', () => {
       .mockResolvedValueOnce(config()).mockResolvedValueOnce(Response.json(shipment()));
     const tracker = new DHLTracker({ trawlUrl: 'http://trawl:8191' });
     expect((await tracker.fetch(NUMBER)).events).toHaveLength(2);
-    expect(String(fetcher.mock.calls[2][0])).toBe('http://trawl:8191/scrape');
+    expect(String(fetcher.mock.calls[2]![0])).toBe('http://trawl:8191/scrape');
     expect(fetcher).toHaveBeenCalledTimes(5);
   });
 

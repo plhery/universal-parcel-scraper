@@ -9,4 +9,4 @@ const STATUSES: Record<string, ClassifiedStatus & { wording: string }> = {
   '已签收': { status: 'delivered', stage: 'delivered', wording: 'Delivered' },
 };
 
-export const yundaStatus = (label: string) => Object.hasOwn(STATUSES, label.trim()) ? STATUSES[label.trim()] : null;
+export const yundaStatus = (label: string) => Object.hasOwn(STATUSES, label.trim()) ? STATUSES[label.trim()]! : null;

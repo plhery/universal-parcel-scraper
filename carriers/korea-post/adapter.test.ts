@@ -60,7 +60,7 @@ describe('Korea Post international history', () => {
     history.find('tbody').append(history.find('tbody tr').last().clone());
     const result = parse($.html(), NUMBER);
     expect(result.status).toBe('unknown');
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
     expect(result.events).toHaveLength(5);
   });
 
@@ -77,7 +77,7 @@ describe('Korea Post retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(fixture()));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.track({ number: 'ee 000.000-005 kr' })).resolves.toMatchObject({ status: 'delivered' });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe('https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttSVL');
     expect(Object.fromEntries(new URLSearchParams(String(init?.body)))).toEqual({ target_command: 'kpl.tts.tt.epost.cmd.RetrieveEmsTraceEngCmd',
       JspURI: '/xtts/tt/epost/ems/EmsSearchResultEng.jsp', POST_CODE: NUMBER });

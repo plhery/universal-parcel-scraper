@@ -252,7 +252,7 @@ describe('tracking HTTP API', () => {
     expect(response.headers.get('retry-after')).toBe('60');
     expect(await response.json()).toMatchObject({ hint: { kind: 'rate_limited' } });
     expect(JSON.stringify(log.mock.calls)).not.toContain(input.number);
-    expect(log.mock.calls[0][0]).toMatchObject({ route: '/v1/track', status: 429 });
+    expect(log.mock.calls[0]![0]).toMatchObject({ route: '/v1/track', status: 429 });
     track.mockRejectedValue(new Error(`private ${input.number}`));
     const unexpected = await post(url, { ...input, postcode: '0000' } as typeof input);
     expect(unexpected.status).toBe(502);

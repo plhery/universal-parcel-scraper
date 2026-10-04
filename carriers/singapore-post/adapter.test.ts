@@ -63,7 +63,7 @@ describe('Singapore Post result projection', () => {
     payload.items[0].events.push(payload.items[0].events[0]);
     const result = parse(payload, NUMBER);
     expect(result.status).toBe('unknown');
-    expect(result.events?.[0].stage).toBeUndefined();
+    expect(result.events?.[0]!.stage).toBeUndefined();
     expect(result.events).toHaveLength(9);
   });
 
@@ -80,7 +80,7 @@ describe('Singapore Post retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(fixture())));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.track({ number: 'rr 000.000-005 sg' })).resolves.toMatchObject({ current_stage: 'customs' });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe('https://www.singpost.com/api/services/track-events');
     expect(JSON.parse(String(init?.body))).toEqual({ trackingNumber: NUMBER });
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error' });

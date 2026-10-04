@@ -56,7 +56,7 @@ function assertGraphql(payload: unknown): asserts payload is Record<string, unkn
 function measurement(raw: unknown, units: Record<string, number>): number | null {
   if (!isRecord(raw) || typeof raw.unit !== 'string' || !Object.hasOwn(units, raw.unit.toLowerCase())) return null;
   if (typeof raw.value !== 'number' && (typeof raw.value !== 'string' || !raw.value.trim())) return null;
-  const value = Number(raw.value) * units[raw.unit.toLowerCase()];
+  const value = Number(raw.value) * units[raw.unit.toLowerCase()]!;
   return Number.isFinite(value) && value > 0 ? value : null;
 }
 
@@ -114,7 +114,7 @@ interface Session { authorization: string; idToken: string; expiresAt: number }
 
 function expiry(token: string): number {
   try {
-    const claims: unknown = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
+    const claims: unknown = JSON.parse(Buffer.from(token.split('.')[1]!, 'base64url').toString());
     return isRecord(claims) && typeof claims.exp === 'number' && Number.isFinite(claims.exp) ? claims.exp * 1000 : 0;
   } catch { return 0; }
 }

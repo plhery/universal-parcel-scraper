@@ -59,7 +59,7 @@ export function parseUniuni(payload: unknown, rawNumber: string): CarrierResult 
   const invalid = payload.data.invalid_tno.split(',').map(value => value.trim()).filter(Boolean);
   if (invalid.length === 1 && invalid[0] === number && !valid.length) throw new NotFoundError(PROVIDER);
   if (!valid.length && !invalid.length) throw new IndeterminateError(PROVIDER, 'UniUni returned no tracking result');
-  if (invalid.length || valid.length !== 1 || valid[0].tno !== number) {
+  if (invalid.length || valid.length !== 1 || valid[0]!.tno !== number) {
     throw new SchemaError(PROVIDER, 'UniUni did not return one unambiguous matching parcel');
   }
   const item = valid[0]!;

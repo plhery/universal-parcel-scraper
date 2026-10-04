@@ -81,7 +81,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   const headers = history.find('th').map((_, cell) => clean($(cell).text())).get();
   if (!headers[0]?.startsWith('State occurrence date')
     || headers[1] !== 'Shipping track record' || headers[2] !== 'Details' || headers[3] !== 'Office'
-    || !['Prefecture / Country', 'Prefecture'].includes(headers[4])
+    || !['Prefecture / Country', 'Prefecture'].includes(headers[4]!)
     || headers[5] !== 'ZIP code（Postal code number）' || headers.length !== 6) {
     throw new SchemaError(PROVIDER, 'Japan Post returned an invalid history table');
   }

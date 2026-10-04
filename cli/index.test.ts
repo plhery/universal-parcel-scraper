@@ -25,9 +25,9 @@ describe('command line', () => {
     const log = vi.spyOn(console, 'log').mockImplementation(() => {});
     const env = { FLARESOLVERR_URL: 'localhost:8191', SCRAPER_PROVIDERS: 'ship24' };
     await expect(main(['detect', number], env)).resolves.toBe(0);
-    expect(JSON.parse(log.mock.calls[0][0] as string)).toMatchObject({ carrier: 'ups', confidence: 'high' });
+    expect(JSON.parse(log.mock.calls[0]![0] as string)).toMatchObject({ carrier: 'ups', confidence: 'high' });
     await expect(main(['carriers'], env)).resolves.toBe(0);
-    expect(JSON.parse(log.mock.calls[1][0] as string)).toHaveProperty('ups');
+    expect(JSON.parse(log.mock.calls[1]![0] as string)).toHaveProperty('ups');
   });
 
   it('names the rejected command, option, setting or input before any lookup', async () => {

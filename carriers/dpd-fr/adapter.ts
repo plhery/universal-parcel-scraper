@@ -88,7 +88,7 @@ export function dpdFranceTrackingUrl(raw: string): string {
 function deliveringDepot($: ReturnType<typeof load>): { number: number; point: EventPoint } | null {
   const depot = $('#agence');
   // Only the first line, which names the depot: <br> carries no text, so .text() would join it to the street.
-  const heading = (depot.find('.agInfos').first().html() ?? '').split(/<br\s*\/?>/i)[0];
+  const heading = (depot.find('.agInfos').first().html() ?? '').split(/<br\s*\/?>/i)[0]!;
   const number = /\bEtablissement\s+(\d{1,4})\s*$/i.exec(clean(load(heading).text(), 200))?.[1];
   const marker = depot.find('.marker-default').first();
   const point = eventPoint(marker.attr('data-lat'), marker.attr('data-lng'));

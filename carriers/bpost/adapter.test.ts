@@ -117,7 +117,7 @@ describe('bpost anonymous batch request', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.track({ number: '000000 000000 000000 000001' })).resolves.toMatchObject({ status: 'delivered' });
-    const [url, init] = fetcher.mock.calls[0];
+    const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe('https://track.bpost.cloud/track/items');
     expect(init).toMatchObject({ method: 'POST', body: JSON.stringify({ barcodes: [NUMBER] }), cache: 'no-store', redirect: 'error' });
     const headers = new Headers(init?.headers);

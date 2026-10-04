@@ -75,25 +75,25 @@ describe('USPS rendered page', () => {
       'Delivered', 'Out for Delivery', 'Notice Left (No Authorized Recipient Available)',
       'In Transit, Arriving On Time', 'Accepted at USPS Origin Facility',
     ]);
-    expect(result.events?.[2].stage).toBe('failed_attempt');
+    expect(result.events?.[2]!.stage).toBe('failed_attempt');
     expect(result.events?.[3]).toEqual({ description: 'In Transit, Arriving On Time',
       local_time: '2025-03-12T16:31:00', stage: 'in_transit' });
-    expect(result.events?.[4].time).toBe('2025-03-11T21:45:00-07:00');
+    expect(result.events?.[4]!.time).toBe('2025-03-11T21:45:00-07:00');
     expect(JSON.stringify(result)).not.toContain('PRIVATE RECIPIENT');
   });
 
   it('keeps an unresolved newest scan as local time and rejects another parcel’s timeline', () => {
     const result = parseUSPSTrackingHtml(TIMELINE_PAGE.replaceAll('EXAMPLE CITY, NY 00000', ''), DELIVERED_NUMBER);
     expect(result).toMatchObject({ last_update: null, last_update_local: '2025-03-14T12:17:00' });
-    expect(result.events?.[0].time).toBeUndefined();
+    expect(result.events?.[0]!.time).toBeUndefined();
     expect(() => parseUSPSTrackingHtml(TIMELINE_PAGE, IN_TRANSIT_NUMBER)).toThrow('requested parcel');
   });
 
   it('preserves a date-only update without inventing a clock time', () => {
     const result = parseUSPSTrackingHtml(TIMELINE_PAGE.replace('March 14, 2025 12:17 PM', 'March 14, 2025'), DELIVERED_NUMBER);
     expect(result.events?.[0]).toMatchObject({ description: 'Delivered', raw_time: 'March 14, 2025' });
-    expect(result.events?.[0].time).toBeUndefined();
-    expect(result.events?.[0].local_time).toBeUndefined();
+    expect(result.events?.[0]!.time).toBeUndefined();
+    expect(result.events?.[0]!.local_time).toBeUndefined();
     expect(result.last_update).toBeNull();
   });
 

@@ -220,7 +220,7 @@ describe('GLS Switzerland response normalization', () => {
       progressBar: { statusInfo: 'INTRANSIT' },
       history: [{ date: '2026-06-19', time: '08:00', evtDscr }],
     }, OFFICIAL_TEST_PARCEL_NUMBER);
-    expect(result.events?.[0].stage).toBe(stage);
+    expect(result.events?.[0]!.stage).toBe(stage);
   });
 
   it.each([

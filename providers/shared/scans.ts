@@ -22,7 +22,7 @@ const VOCABULARIES: Readonly<Record<string, (label: string) => CarrierScan | und
 
 /** The vocabulary entry for one relayed label, when its carrier has a vocabulary. */
 export function carrierScan(carrier: string | undefined, label: string): CarrierScan | undefined {
-  return carrier && Object.hasOwn(VOCABULARIES, carrier) ? VOCABULARIES[carrier](label) : undefined;
+  return carrier && Object.hasOwn(VOCABULARIES, carrier) ? VOCABULARIES[carrier]!(label) : undefined;
 }
 
 // After the carrier's own return scan, its delivery-side scans are the trip

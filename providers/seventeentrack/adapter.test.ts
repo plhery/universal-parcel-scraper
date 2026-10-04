@@ -181,7 +181,7 @@ describe('17TRACK result parsing', () => {
   });
 
   it('rejects demos, ambiguity, unfinished polling and verification errors', () => {
-    const ambiguous: Payload = { ...delivered, shipments: [delivered.shipments[0], delivered.shipments[0]] };
+    const ambiguous: Payload = { ...delivered, shipments: [delivered.shipments[0]!, delivered.shipments[0]!] };
     for (const payload of [history('TestNumber00017'), ambiguous, { meta: { code: 400 }, shipments: [] }]) {
       expect(() => parse17TrackResponse(payload, number)).toThrow();
     }
@@ -202,7 +202,7 @@ describe('17TRACK browser capture', () => {
   it('asks the browser service for the page and reads its captured API response', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(captured(delivered));
     await expect(tracker(fetcher, 'http://browser.test/v1').fetch(number)).resolves.toMatchObject({ tracking_provider: '17TRACK' });
-    const [url, options] = fetcher.mock.calls[0];
+    const [url, options] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('http://browser.test/scrape');
     expect(JSON.parse(String(options!.body))).toMatchObject({
       url: `https://t.17track.net/en#nums=${number}`, skipHttp: true, maxTier: 3,

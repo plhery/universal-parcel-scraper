@@ -42,7 +42,7 @@ export class CiblexTracker {
         if (performance.now() >= deadline) throw new BudgetExceededError('Ciblex', budgetMs);
         signal.throwIfAborted();
         if (response.status !== 200) throw new IndeterminateError('Ciblex', 'Ciblex tracking endpoint is unavailable');
-        const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1].toLowerCase();
+        const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1]!.toLowerCase();
         if (charset && !['utf-8', 'utf8', 'iso-8859-1', 'windows-1252'].includes(charset)) throw new SchemaError('Ciblex', 'Ciblex response encoding changed');
         // The current HTTP header declares UTF-8 despite the older HTML meta tag.
         return parseCiblexTrackingHtml(decodeText(bytes, charset && !charset.startsWith('utf') ? 'windows-1252' : 'utf-8'), number);

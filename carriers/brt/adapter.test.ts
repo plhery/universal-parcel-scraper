@@ -23,11 +23,11 @@ describe('BRT direct tracking', () => {
       last_update: null, last_update_local: '2026-01-16T21:07:00', weight_kg: 0.2 });
     expect(result.events).toHaveLength(7);
     expect(result.events?.[0]).toMatchObject({ stage: 'delivered', description: 'Delivered', local_time: '2026-01-16T21:07:00', location: 'TEST DEPOT (990)' });
-    expect(result.events?.[1].stage).toBe('ready_for_pickup');
+    expect(result.events?.[1]!.stage).toBe('ready_for_pickup');
     expect(result.events?.[2]).toMatchObject({ stage: 'out_for_delivery', provider_time_text: '14.01.2026' });
-    expect(result.events?.[2].local_time).toBeUndefined();
-    expect(result.events?.[5].stage).toBe('accepted');
-    expect(result.events?.[6].stage).toBe('registered');
+    expect(result.events?.[2]!.local_time).toBeUndefined();
+    expect(result.events?.[5]!.stage).toBe('accepted');
+    expect(result.events?.[6]!.stage).toBe('registered');
     expect(result.events?.every(event => !event.time && !event.provider_code)).toBe(true);
     expect(result.delivered_at).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
@@ -58,7 +58,7 @@ describe('BRT direct tracking', () => {
   });
 
   it('does not promote older dated delivery when the newest clock or wording is unresolved', () => {
-    for (const [date, clock] of [['', ''], ['31.02.2026', '25.00'], ['16.01.2026', '09.99'], ['Tomorrow', 'Any time']]) {
+    for (const [date, clock] of [['', ''], ['31.02.2026', '25.00'], ['16.01.2026', '09.99'], ['Tomorrow', 'Any time']] as const) {
       const result = parseBrt(edit($ => {
         const first = $('.table_stato_dati tr').eq(1).children('td');
         first.eq(0).text(date); first.eq(1).text(clock); first.eq(3).text('NEW PROVIDER STATUS');
@@ -66,8 +66,8 @@ describe('BRT direct tracking', () => {
       }), NUMBER);
       expect(result).toMatchObject({ status: 'unknown', last_status_text: 'NEW PROVIDER STATUS', last_update: null });
       expect(result.current_stage).toBeUndefined(); expect(result.last_update_local).toBeUndefined(); expect(result.delivered_at).toBeUndefined();
-      expect(result.events?.[0].provider_time_text).toBe([date, clock].filter(Boolean).join(' ') || undefined);
-      expect(result.events?.[0].local_time).toBeUndefined();
+      expect(result.events?.[0]!.provider_time_text).toBe([date, clock].filter(Boolean).join(' ') || undefined);
+      expect(result.events?.[0]!.local_time).toBeUndefined();
     }
     const delivered = parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').eq(1).text('')), NUMBER);
     expect(delivered.status).toBe('delivered'); expect(delivered.last_update_local).toBeUndefined(); expect(delivered.delivered_at).toBeUndefined();
@@ -133,7 +133,7 @@ describe('BRT direct tracking', () => {
   it('decodes the legacy page encoding while rejecting unknown encodings', async () => {
     const body = html.replaceAll('TEST DEPOT', 'TEST DÉPÔT');
     const latin = vi.fn<typeof fetch>().mockResolvedValue(new Response(Buffer.from(body, 'latin1')));
-    expect((await new BrtTracker({ fetcher: latin }).fetch(NUMBER)).events?.[0].location).toBe('TEST DÉPÔT (990)');
+    expect((await new BrtTracker({ fetcher: latin }).fetch(NUMBER)).events?.[0]!.location).toBe('TEST DÉPÔT (990)');
     const changed = vi.fn<typeof fetch>().mockResolvedValue(new Response(body, { headers: { 'Content-Type': 'text/html;charset=UTF-16' } }));
     await expect(new BrtTracker({ fetcher: changed }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
   });

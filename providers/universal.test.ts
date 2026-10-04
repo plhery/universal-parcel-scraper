@@ -51,7 +51,7 @@ describe('universal discovery chain', () => {
     expect(result.tracking_provider).toBe('ParcelsApp');
     expect(fetcher).toHaveBeenCalledOnce();
     expect(browserLookup).not.toHaveBeenCalled();
-    const [url, options] = fetcher.mock.calls[0];
+    const [url, options] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('https://parcelsapp.com/api/v2/parcels');
     expect(new URLSearchParams(String(options!.body)).get('carrier')).toBe('Auto-Detect');
   });
@@ -166,7 +166,7 @@ describe('universal discovery chain', () => {
     expect(steps).toMatchObject([{ carrier: '17TRACK', step: 'trawl', attempt: 1, outcome: 'ok', fallbackFrom: null }]);
     expect(lookups).toMatchObject([{ carrier: '17TRACK', finalStep: 'trawl', outcome: 'ok', attempts: 1 }]);
     // The browser service is given whole milliseconds of the remaining budget.
-    const { maxTimeout } = JSON.parse(String(fetcher.mock.calls[0][1]!.body)) as { maxTimeout: number };
+    const { maxTimeout } = JSON.parse(String(fetcher.mock.calls[0]![1]!.body)) as { maxTimeout: number };
     expect(Number.isInteger(maxTimeout)).toBe(true);
     expect(maxTimeout).toBeGreaterThan(19_000);
     expect(maxTimeout).toBeLessThanOrEqual(20_000);

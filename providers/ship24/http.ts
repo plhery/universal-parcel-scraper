@@ -36,7 +36,7 @@ export function ship24Checksum(text: string): number {
     hash = (Math.imul(hash, 5) + 0xe6546b64) | 0;
   }
   let tail = 0;
-  for (let index = offset; index < bytes.length; index++) tail |= bytes[index] << ((index - offset) * 8);
+  for (let index = offset; index < bytes.length; index++) tail |= bytes[index]! << ((index - offset) * 8);
   if (offset < bytes.length) hash ^= mix(tail);
   hash ^= bytes.length;
   hash = Math.imul(hash ^ hash >>> 16, 0x85ebca6b);

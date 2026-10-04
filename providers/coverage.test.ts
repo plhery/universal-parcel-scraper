@@ -21,15 +21,15 @@ function cellText(cell: CoverageCell | undefined): string {
   if (typeof cell === 'number') return `✓ ${cell}`;
   if (typeof cell === 'object') return `✓ ${cell.rows}, partial`;
   if (cell === 'history') return '✓';
-  return WORDS[cell!];
+  return WORDS[cell!]!;
 }
 
 function coverageTable(): string {
   const rows = CARRIER_COVERAGE.map((entry) => {
     const folder = path.join(providersDirectory, '..', 'carriers', entry.carrier);
     const link = existsSync(path.join(folder, 'README.md')) ? 'README.md' : 'carrier.json';
-    const name = entry.name ?? catalog[entry.carrier].displayName;
-    const results = COVERAGE_SOURCES.map((source) => cellText(entry.references[0].results[source]));
+    const name = entry.name ?? catalog[entry.carrier]!.displayName;
+    const results = COVERAGE_SOURCES.map((source) => cellText(entry.references[0]!.results[source]));
     return `| [${name}](../carriers/${entry.carrier}/${link}) | ${entry.direct} | ${entry.sample} | ${results.join(' | ')} |`;
   });
   return [`| Carrier | Direct support | Direct sample | ${COVERAGE_SOURCES.join(' | ')} |`,
@@ -49,7 +49,7 @@ function lookupOrder(): string {
     .filter((source) => source !== 'UPU').join(' → ');
   const standard = chain();
   const orders = CARRIER_COVERAGE.filter((entry) => chain(entry.carrier) !== standard)
-    .map((entry) => `| ${entry.name ?? catalog[entry.carrier].displayName} | ${chain(entry.carrier)} |`);
+    .map((entry) => `| ${entry.name ?? catalog[entry.carrier]!.displayName} | ${chain(entry.carrier)} |`);
   return [
     '| Source | Carriers with history | Full | Partial | Only source |',
     '| --- | ---: | ---: | ---: | ---: |',
@@ -79,8 +79,8 @@ describe('coverage evidence', () => {
     for (const entry of CARRIER_COVERAGE) {
       expect(catalog[entry.carrier], entry.carrier).toBeDefined();
       expect(coverageProblems(entry), entry.carrier).toEqual([]);
-      expect(Object.keys(entry.references[0].results).sort(), entry.carrier).toEqual([...COVERAGE_SOURCES].sort());
-      if (entry.name) expect(entry.name).not.toBe(catalog[entry.carrier].displayName);
+      expect(Object.keys(entry.references[0]!.results).sort(), entry.carrier).toEqual([...COVERAGE_SOURCES].sort());
+      if (entry.name) expect(entry.name).not.toBe(catalog[entry.carrier]!.displayName);
     }
   });
 
