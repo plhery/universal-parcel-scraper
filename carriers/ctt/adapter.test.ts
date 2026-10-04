@@ -38,7 +38,7 @@ function jsonResponse(value: unknown, status = 200, headers: Record<string, stri
 
 interface CttScenario {
   record?: Record<string, unknown> | null;
-  maintenance?: boolean;
+  maintenance?: unknown;
   staleFirst?: boolean;
   noCookie?: boolean;
   calls?: string[];
@@ -59,7 +59,7 @@ function mockCttFlow(scenario: CttScenario) {
     }
     if (url.includes('.mvc.js')) return new Response(SCREEN_SCRIPT, { headers: { 'Content-Type': 'application/javascript' } });
     if (url.includes('DataActionCheckIPLocked')) {
-      return jsonResponse({ data: { IsMaintenance: scenario.maintenance === true }, versionInfo: {} });
+      return jsonResponse({ data: { IsMaintenance: scenario.maintenance ?? false }, versionInfo: {} });
     }
     if (url.includes('DataActionGetObjectEventsByInputObjectCode')) {
       trackCalls += 1;
@@ -87,7 +87,10 @@ function mockCttFlow(scenario: CttScenario) {
   return { trackCalls: () => trackCalls };
 }
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.useRealTimers();
+  vi.restoreAllMocks();
+});
 
 describe('CTT tracking normalization', () => {
   it('accepts checksum-valid S10 PT and rejects the rest', () => {
@@ -216,6 +219,55 @@ describe('CttTracker fetch', () => {
     mockCttFlow({ record: { ObjectCode: TRACKING_NUMBER, Found: false, Events: { List: [] } }, maintenance: true });
     await expect(new CttTracker({ timeoutMs: 1_000 }).fetch(TRACKING_NUMBER))
       .rejects.toBeInstanceOf(CttMaintenanceError);
+  });
+
+  it.each([null, {}, { Found: 'false' }])('keeps an incomplete tracking response inconclusive (%j)', async (record) => {
+    const scenario: CttScenario = { record };
+    mockCttFlow(scenario);
+    await expect(new CttTracker().fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(scenario.calls?.some((call) => call.includes('DataActionCheckIPLocked'))).toBe(false);
+  });
+
+  it('requires an explicit healthy answer from the maintenance check before reporting not-found', async () => {
+    mockCttFlow({ record: { Found: false }, maintenance: 'false' });
+    await expect(new CttTracker().fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+  });
+
+  it.each(['moduleversioninfo', 'moduleinfo?', '.mvc.js', 'DataActionGetObjectEventsByInputObjectCode', 'DataActionCheckIPLocked'])(
+    'retries a transient HTTP failure at %s without losing session state', async (endpoint) => {
+      vi.useFakeTimers();
+      mockCttFlow({ record: { Found: false } });
+      let rejected = false;
+      const fetcher = vi.fn<typeof fetch>().mockImplementation(async (input, init) => {
+        if (!rejected && String(input).includes(endpoint)
+          && (!endpoint.startsWith('DataAction') || new Headers(init?.headers).has('Cookie') || endpoint === 'DataActionCheckIPLocked')) {
+          rejected = true;
+          return jsonResponse({}, 503);
+        }
+        return fetch(input, init);
+      });
+      const failure = expect(new CttTracker({ fetcher }).fetch(TRACKING_NUMBER))
+        .rejects.toMatchObject({ kind: 'not_found', status: 404 });
+      await vi.advanceTimersByTimeAsync(1_000);
+      await failure;
+      expect(rejected).toBe(true);
+      const attempts = fetcher.mock.calls.filter(([input]) => String(input).includes(endpoint));
+      const successfulRetry = attempts.at(-1)!;
+      const rejectedAttempt = attempts.at(-2)!;
+      expect(successfulRetry[1]?.body).toBe(rejectedAttempt[1]?.body);
+      expect(successfulRetry[1]?.headers).toEqual(rejectedAttempt[1]?.headers);
+    },
+  );
+
+  it('preserves maintenance diagnostics and Retry-After without treating the outage as a missing parcel', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Service maintenance', {
+      status: 503, headers: { 'Content-Type': 'text/plain', 'Retry-After': '120' },
+    }));
+    await expect(new CttTracker({ fetcher }).fetch(TRACKING_NUMBER)).rejects.toMatchObject({
+      kind: 'maintenance', status: 503, retryAfterMs: 120_000,
+      diagnostics: { body_excerpt: 'Service maintenance' },
+    });
+    expect(fetcher).toHaveBeenCalledOnce();
   });
 
   it('re-derives rotated version tokens once and fails bootstrap loops fast', async () => {

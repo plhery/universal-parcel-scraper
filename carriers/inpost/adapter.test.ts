@@ -30,7 +30,17 @@ function response(value: unknown, status = 200) {
   });
 }
 
-afterEach(() => vi.restoreAllMocks());
+function notFoundProblem(trackingNumber = TRACKING_NUMBER) {
+  return {
+    type: '/errors/external/not-found', title: 'NOT_FOUND', status: 404,
+    instance: `/api/tracking/${trackingNumber}`,
+  };
+}
+
+afterEach(() => {
+  vi.useRealTimers();
+  vi.restoreAllMocks();
+});
 
 describe('InPost tracking normalization', () => {
   it('accepts the detected InPost families case-insensitively and rejects the rest', () => {
@@ -149,7 +159,7 @@ describe('InpostTracker fetch', () => {
   });
 
   it('maps 404 to not-found and surfaces other failures distinctly', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(response({ detail: 'not found' }, 404));
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(response(notFoundProblem(), 404));
     await expect(new InpostTracker({ timeoutMs: 1_000 }).fetch(TRACKING_NUMBER))
       .rejects.toMatchObject({ name: 'NotFoundError', status: 404, message: 'InPost could not locate the shipment' });
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(response({}, 503));
@@ -161,5 +171,71 @@ describe('InpostTracker fetch', () => {
     expect(() => new InpostTracker({ timeoutMs: 0 })).toThrow(TypeError);
     await expect(new InpostTracker({ timeoutMs: 1_000 }).fetch('nope'))
       .rejects.toThrow(InvalidInputError);
+  });
+
+  it.each(['', 'Tracking client failed. '])('recognizes the hub wrapper with prefix %j around an identity-bound not-found problem', async (prefix) => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response({
+      type: '/errors/external/tracking-error', status: 404,
+      instance: `/api/tracking/${TRACKING_NUMBER}`, detail: prefix + JSON.stringify(notFoundProblem()),
+    }, 404));
+    await expect(new InpostTracker({ fetcher }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'not_found', status: 404 });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it.each([
+    '<html>Missing route</html>', {}, { ...notFoundProblem(), title: 'MAINTENANCE' },
+    notFoundProblem('640000000000000000000002'),
+    { type: '/errors/external/tracking-error', status: 404, instance: `/api/tracking/${TRACKING_NUMBER}`, detail: 'not json' },
+    { type: '/errors/external/tracking-error', status: 404, instance: `/api/tracking/${TRACKING_NUMBER}`,
+      detail: 'Tracking client failed. ' + JSON.stringify(notFoundProblem('640000000000000000000002')) },
+  ])('keeps an unrecognized HTTP 404 inconclusive (%j)', async (body) => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response(body, 404));
+    await expect(new InpostTracker({ fetcher }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('keeps HTTP 500 inconclusive even when its body resembles a not-found problem', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response(notFoundProblem(), 500));
+    await expect(new InpostTracker({ fetcher }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'indeterminate', status: 500 });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it.each([502, 503, 504])('recovers from HTTP %s with one bounded retry', async (status) => {
+    vi.useFakeTimers();
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(response({}, status))
+      .mockResolvedValueOnce(response(parcel()));
+    const result = new InpostTracker({ fetcher }).fetch(TRACKING_NUMBER);
+    await vi.advanceTimersByTimeAsync(999);
+    expect(fetcher).toHaveBeenCalledOnce();
+    await vi.advanceTimersByTimeAsync(1);
+    await expect(result).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it.each([429, 500, 503])('preserves HTTP %s diagnostics and a long retry window without reclassifying it', async (status) => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Upstream unavailable', {
+      status, headers: { 'Content-Type': 'text/plain', 'Retry-After': '120' },
+    }));
+    await expect(new InpostTracker({ fetcher }).fetch(TRACKING_NUMBER)).rejects.toMatchObject({
+      name: 'UpstreamHttpError', status, retryAfterMs: 120_000,
+      kind: status === 429 ? 'rate_limited' : status === 503 ? 'maintenance' : 'indeterminate',
+      diagnostics: { body_excerpt: 'Upstream unavailable' },
+    });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('ends a transient retry wait when the caller cancels', async () => {
+    vi.useFakeTimers();
+    const controller = new AbortController();
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response({}, 503));
+    const failure = expect(new InpostTracker({ fetcher }).fetch(TRACKING_NUMBER, { signal: controller.signal }))
+      .rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+    await vi.advanceTimersByTimeAsync(10);
+    controller.abort();
+    await failure;
+    expect(fetcher).toHaveBeenCalledOnce();
   });
 });

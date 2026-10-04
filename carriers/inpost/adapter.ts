@@ -1,9 +1,9 @@
 
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyInpostStatus } from './status.js';
 
@@ -15,12 +15,9 @@ import { classifyInpostStatus } from './status.js';
 //   (api-shipx-pl.easypack24.net, keyless, but its success shape is
 //   unconfirmed) and the inposteasy.com per-country hubs below. Only the
 //   inposteasy hub is implemented here; ShipX remains a future lead.
-// - Live verification 2026-09-10: GET
-//   https://inposteasy.com/api/tracking/000000000000000000000000 returns
-//   HTTP 404 with a structured NOT_FOUND problem body in ~0.2s, no cookies,
-//   headers or account. Long-expired corpus numbers return the same 404.
-// - Public cross-border status vocabulary live-confirmed on IT/PT/GB
-//   consignments 2026-08-31 by the prior-art client; the map lives in status.ts.
+// - Unknown or expired numbers return an identity-bound NOT_FOUND problem,
+//   optionally JSON-encoded inside the tracking-error wrapper's detail field.
+// - The public cross-border status vocabulary lives in status.ts.
 const TRACKING_ENDPOINT = 'https://inposteasy.com/api/tracking';
 const DEFAULT_TIMEOUT_MS = 15_000;
 /** The pause `fetchBounded` takes before its one retry of a failed request. */
@@ -38,6 +35,20 @@ export function normalizeInpostTrackingNumber(raw: string): string {
     throw new InvalidInputError('InPost', 'InPost tracking requires a 24-digit, JJD/JD legacy or 8YDR identifier');
   }
   return value;
+}
+
+function isNotFoundProblem(payload: unknown, trackingNumber: string): boolean {
+  if (!isRecord(payload) || payload.status !== 404
+    || payload.instance !== `/api/tracking/${trackingNumber}`) return false;
+  if (payload.type === '/errors/external/not-found' && payload.title === 'NOT_FOUND') return true;
+  if (payload.type !== '/errors/external/tracking-error' || typeof payload.detail !== 'string') return false;
+  try {
+    const nested: unknown = JSON.parse(payload.detail.replace(/^Tracking client failed\. /, ''));
+    return isRecord(nested) && nested.type === '/errors/external/not-found'
+      && nested.title === 'NOT_FOUND' && nested.status === 404 && nested.instance === payload.instance;
+  } catch {
+    return false;
+  }
 }
 
 export function parseInpostTrackingResponse(payload: unknown, trackingNumber: string): CarrierResult {
@@ -133,11 +144,15 @@ export class InpostTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
-      allowHttpError: true,
+      allowHttpStatuses: [404],
       fetcher: this.fetcher,
     });
-    if (response.status === 404) throw new NotFoundError('InPost');
-    if (!response.ok) throw new UpstreamHttpError('InPost tracking', response.status);
+    if (response.status === 404) {
+      let problem: unknown;
+      try { problem = parseJsonBytes(bytes, 'InPost tracking'); } catch { /* An HTML error page proves no shipment outcome. */ }
+      if (isNotFoundProblem(problem, trackingNumber)) throw new NotFoundError('InPost');
+      throw new IndeterminateError('InPost', 'InPost returned an unrecognized not-found response');
+    }
     return parseInpostTrackingResponse(parseJsonBytes(bytes, 'InPost tracking'), trackingNumber);
   }
 }

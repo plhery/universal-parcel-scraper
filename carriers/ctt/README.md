@@ -19,8 +19,12 @@ is a separate carrier.
       tokens once and replay.
    4. `Found:false` means either an unknown number or a backend outage. Only then is
       `DataActionCheckIPLocked` called to tell them apart: `NotFoundError` for a genuine
-      miss, `CttMaintenanceError` (a `MaintenanceError`) for an announced outage.
+      miss with an explicit healthy response, `CttMaintenanceError` (a `MaintenanceError`)
+      for an announced outage. Missing or malformed flags stay inconclusive.
    - Every request sends a browser `User-Agent`; Cloudflare answers error 1010 without one.
+   - Transient HTTP failures get one retry within the lookup budget, including during
+     bootstrap. Persistent failures keep their HTTP status, retry window and bounded
+     diagnostics; HTTP 503 remains maintenance.
 
 ## Notes
 

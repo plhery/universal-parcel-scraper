@@ -11,7 +11,6 @@ import {
   escapeRegExp,
   fetchBounded,
   parseJsonBytes,
-  UpstreamHttpError,
 } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyCttStatus } from './status.js';
@@ -28,8 +27,7 @@ import { classifyCttStatus } from './status.js';
 //   rotates on every frontend deploy (derived at runtime from keyless version
 //   endpoints and the screen bundle — never pinned). A browser User-Agent is
 //   mandatory (Cloudflare error 1010 otherwise).
-// - Live verification 2026-09-10, including a delivered parcel whose whole
-//   history mapped: Found:true carries ObjectEventsFromQuery; Found:false is
+// - Found:true carries ObjectEventsFromQuery; Found:false is
 //   BOTH genuine unknown and backend outage, told apart only via the sibling
 //   DataActionCheckIPLocked call (made solely on Found:false — a found parcel
 //   already proves health).
@@ -193,7 +191,10 @@ export class CttTracker {
       IPClient: '',
     }, null, true, true, budget);
     const record = isRecord(payload.data) ? payload.data.ObjectEventsFromQuery : undefined;
-    if (!isRecord(record) || !record.Found) {
+    if (!isRecord(record) || typeof record.Found !== 'boolean') {
+      throw new CttApiError('missing shipment Found flag');
+    }
+    if (!record.Found) {
       // Found:false is both genuine unknown and backend outage: a found parcel
       // already proves health, so the sibling check runs solely on negatives.
       if (await this.isMaintenance(budget)) throw new CttMaintenanceError();
@@ -205,6 +206,7 @@ export class CttTracker {
   private async isMaintenance(budget: LookupBudget): Promise<boolean> {
     const payload = await this.callAction(MAINTENANCE_ACTION, {}, null, true, true, budget);
     const data = isRecord(payload.data) ? payload.data : {};
+    if (typeof data.IsMaintenance !== 'boolean') throw new CttApiError('missing maintenance flag');
     return data.IsMaintenance === true;
   }
 
@@ -240,7 +242,7 @@ export class CttTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
-      allowHttpError: true,
+      allowHttpStatuses: [403],
       fetcher: this.fetcher,
     });
     if (response.status === 403) {
@@ -250,7 +252,6 @@ export class CttTracker {
       }
       throw new CttApiError('anonymous session bootstrap failed');
     }
-    if (!response.ok) throw new UpstreamHttpError('CTT tracking', response.status);
     const payload = parseJsonBytes(bytes, 'CTT tracking');
     if (!isRecord(payload)) throw new CttApiError('unexpected body (not a JSON object)');
     const versionInfo = isRecord(payload.versionInfo) ? payload.versionInfo : {};
@@ -278,7 +279,7 @@ export class CttTracker {
 
   private async ensureModuleVersion(budget: LookupBudget): Promise<void> {
     if (this.moduleVersion !== null) return;
-    const { response, bytes } = await fetchBounded(MODULE_VERSION_URL, {
+    const { bytes } = await fetchBounded(MODULE_VERSION_URL, {
       signal: budget.signal,
       headers: { Accept: 'application/json', 'User-Agent': BROWSER_USER_AGENT },
     }, {
@@ -286,10 +287,8 @@ export class CttTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
-      allowHttpError: true,
       fetcher: this.fetcher,
     });
-    if (!response.ok) throw new UpstreamHttpError('CTT tracking', response.status);
     const payload = parseJsonBytes(bytes, 'CTT tracking');
     const token = isRecord(payload) && typeof payload.versionToken === 'string' ? payload.versionToken : '';
     if (!token) throw new CttApiError('moduleversioninfo returned no versionToken');
@@ -319,7 +318,7 @@ export class CttTracker {
   }
 
   private async fetchBytes(url: string, budget: LookupBudget): Promise<{ bytes: Uint8Array }> {
-    const { response, bytes } = await fetchBounded(url, {
+    const { bytes } = await fetchBounded(url, {
       signal: budget.signal,
       headers: { Accept: 'application/json, text/plain, */*', 'User-Agent': BROWSER_USER_AGENT },
     }, {
@@ -327,10 +326,8 @@ export class CttTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_SCRIPT_BYTES,
       retryTransient: true,
-      allowHttpError: true,
       fetcher: this.fetcher,
     });
-    if (!response.ok) throw new UpstreamHttpError('CTT tracking', response.status);
     return { bytes };
   }
 }
