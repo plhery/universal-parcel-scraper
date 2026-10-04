@@ -1,16 +1,16 @@
 {
-  "catalog": 106,
-  "activeAdapters": 85,
+  "catalog": 107,
+  "activeAdapters": 86,
   "countries": 58,
-  "referenceCarriers": 100,
+  "referenceCarriers": 101,
   "comparison": {
-    "combined": 75,
-    "direct": 62,
+    "combined": 76,
+    "direct": 63,
     "providers": {
-      "ParcelsApp": 52,
+      "ParcelsApp": 53,
       "Postal Ninja": 43,
       "17TRACK": 40,
-      "Ship24": 41,
+      "Ship24": 42,
       "UPU": 12
     }
   }

@@ -99,7 +99,11 @@ Recognition uses HTTP by default. Consumers can request `recognitionCandidates` 
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's
 `recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank;
 recipient inputs exclude a candidate. Browser confirmation requires dated shipment activity
-and returns its tracking result for reuse. Consumers bound concurrency, cache answers and
+and returns its tracking result for reuse. An ambiguous ten-digit number includes DHL Express among its direct candidates. Its
+facility-local clocks stay unresolved; universal history can supply verified offsets.
+Consumers can ask enabled universal providers during preflight and reuse those results
+when saving, while retaining direct confirmation for carrier identity.
+Consumers bound concurrency, cache answers and
 decide when another check is due. `recognizeAll` passes cancellation and its budget to each
 callback and discards late answers.
 Pass the earlier HTTP error as the browser method's third argument so the adapter retains

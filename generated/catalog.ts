@@ -3988,6 +3988,39 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "dhl-express": {
+    "displayName": "DHL Express",
+    "color": "#ffcc00",
+    "aliases": [
+      "DHL Express Worldwide",
+      "MyDHL+"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dhl-express",
+      "recognitionRank": 75,
+      "browserRecognitionRank": 75,
+      "localClocks": true
+    },
+    "canaryUrl": "https://mydhl.express.dhl/gb/en/tracking.html",
+    "trackingUrlTemplate": "https://mydhl.express.dhl/gb/en/tracking.html#/results?id={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "mydhl.express.dhl"
+        ],
+        "fragment": "^/results\\?id=(\\d{10})(?:&|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{10}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "omgo": {
     "displayName": "OMGO",
     "color": "#8e8e93",
@@ -4121,6 +4154,7 @@ export const CARRIER_IDS = [
   "the-courier-guy",
   "j-and-t",
   "ems",
+  "dhl-express",
   "omgo"
 ] as const;
 export type CarrierId = (typeof CARRIER_IDS)[number];

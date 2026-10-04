@@ -8,7 +8,7 @@ export * from './core/errors/index.js';
 export * from './core/errors/hint.js';
 export * from './core/recognition/index.js';
 export * from './core/catalog/handoff.js';
-export { normalizeCarrierInputs } from './core/catalog/inputs.js';
+export { normalizeCarrierInputs, normalizeDeliveryPostcode } from './core/catalog/inputs.js';
 export { validateDachserTrackingUrl, validatePlanzerSharedUrl } from './core/catalog/urls.js';
 export { CARRIER_CATALOG, CARRIER_IDS, type CarrierId } from './generated/catalog.js';
 export * from './providers/plan.js';

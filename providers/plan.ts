@@ -13,6 +13,8 @@ export function universalSourceBudget(source: Source): number {
 
 /** Evidence-based exception to affinity/rotation, shared by discovery and routing. */
 export function priorityUniversalSource(trackingNumber?: string): Source | undefined {
+  // The Express corpus has complete Ship24 histories where ParcelsApp can be empty or input-gated.
+  if (trackingNumber && /^\d{10}$/.test(normalizeTrackingNumber(trackingNumber))) return 'Ship24';
   // E-series and untested formats keep ordinary discovery.
   return trackingNumber && /^[CL][A-Z]\d{9}CN$/.test(normalizeTrackingNumber(trackingNumber)) && isValidS10TrackingNumber(trackingNumber)
     ? '17TRACK' : undefined;

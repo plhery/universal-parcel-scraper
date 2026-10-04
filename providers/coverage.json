@@ -13,12 +13,22 @@
             "Postal Ninja": 14,
             "UPU": 1
           }
-        },
+        }
+      ]
+    },
+    {
+      "carrier": "dhl-express",
+      "direct": "Yes",
+      "sample": "\u2713 23",
+      "references": [
         {
           "note": "DHL Express waybill: https://www.trustpilot.com/reviews/6aaaf40b0ae5ece3b117fe62",
           "results": {
             "Ship24": 23,
-            "ParcelsApp": 23
+            "ParcelsApp": 23,
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
           }
         },
         {
@@ -41,7 +51,7 @@
     {
       "carrier": "ups",
       "direct": "Yes",
-      "sample": "✓ 11",
+      "sample": "\u2713 11",
       "references": [
         {
           "results": {
@@ -66,7 +76,7 @@
     {
       "carrier": "fedex",
       "direct": "Yes",
-      "sample": "✓ 14, intermittent",
+      "sample": "\u2713 14, intermittent",
       "references": [
         {
           "results": {
@@ -82,7 +92,7 @@
     {
       "carrier": "usps",
       "direct": "Yes",
-      "sample": "✓ 11",
+      "sample": "\u2713 11",
       "references": [
         {
           "results": {
@@ -114,7 +124,7 @@
     {
       "carrier": "amazon-shipping",
       "direct": "Yes",
-      "sample": "✓ 12",
+      "sample": "\u2713 12",
       "references": [
         {
           "results": {
@@ -146,7 +156,7 @@
     {
       "carrier": "swiss-post",
       "direct": "Yes",
-      "sample": "✓ 8",
+      "sample": "\u2713 8",
       "references": [
         {
           "results": {
@@ -162,7 +172,7 @@
     {
       "carrier": "la-poste",
       "direct": "Yes",
-      "sample": "✓ 15",
+      "sample": "\u2713 15",
       "references": [
         {
           "results": {
@@ -181,7 +191,7 @@
     {
       "carrier": "dpd",
       "direct": "Yes (optional postcode)",
-      "sample": "✓ 4",
+      "sample": "\u2713 4",
       "references": [
         {
           "results": {
@@ -200,7 +210,7 @@
     {
       "carrier": "dhl-ecommerce",
       "direct": "Yes",
-      "sample": "✓ 16",
+      "sample": "\u2713 16",
       "references": [
         {
           "results": {
@@ -219,7 +229,7 @@
     {
       "carrier": "aliexpress",
       "direct": "Yes",
-      "sample": "✓ 17",
+      "sample": "\u2713 17",
       "references": [
         {
           "results": {
@@ -257,7 +267,7 @@
     {
       "carrier": "ems",
       "direct": "Yes",
-      "sample": "✓ 7",
+      "sample": "\u2713 7",
       "references": [
         {
           "results": {
@@ -273,7 +283,7 @@
     {
       "carrier": "sf-express",
       "direct": "Yes",
-      "sample": "✓ 22",
+      "sample": "\u2713 22",
       "references": [
         {
           "results": {
@@ -355,7 +365,7 @@
     {
       "carrier": "evri",
       "direct": "Yes (international)",
-      "sample": "✓ 20",
+      "sample": "\u2713 20",
       "references": [
         {
           "results": {
@@ -405,7 +415,7 @@
     {
       "carrier": "inpost",
       "direct": "Yes",
-      "sample": "✓ 9",
+      "sample": "\u2713 9",
       "references": [
         {
           "results": {
@@ -421,7 +431,7 @@
     {
       "carrier": "spring-gds",
       "direct": "Yes",
-      "sample": "✓ 16",
+      "sample": "\u2713 16",
       "references": [
         {
           "results": {
@@ -440,7 +450,7 @@
     {
       "carrier": "canada-post",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 11",
+      "sample": "No history; alternate \u2713 11",
       "references": [
         {
           "results": {
@@ -456,7 +466,7 @@
     {
       "carrier": "australia-post",
       "direct": "Yes",
-      "sample": "✓ 12",
+      "sample": "\u2713 12",
       "references": [
         {
           "results": {
@@ -475,7 +485,7 @@
     {
       "carrier": "japan-post",
       "direct": "Yes",
-      "sample": "✓ 13",
+      "sample": "\u2713 13",
       "references": [
         {
           "results": {
@@ -497,7 +507,7 @@
     {
       "carrier": "india-post",
       "direct": "Yes",
-      "sample": "✓ 21",
+      "sample": "\u2713 21",
       "references": [
         {
           "results": {
@@ -534,7 +544,7 @@
       "carrier": "correos-spain",
       "name": "Correos Spain",
       "direct": "Yes",
-      "sample": "✓ 12",
+      "sample": "\u2713 12",
       "references": [
         {
           "results": {
@@ -553,7 +563,7 @@
     {
       "carrier": "bpost",
       "direct": "Yes",
-      "sample": "✓ 11",
+      "sample": "\u2713 11",
       "references": [
         {
           "note": "A domestic parcel",
@@ -587,7 +597,7 @@
     {
       "carrier": "austrian-post",
       "direct": "Yes",
-      "sample": "✓ 9",
+      "sample": "\u2713 9",
       "references": [
         {
           "results": {
@@ -606,7 +616,7 @@
     {
       "carrier": "postnord",
       "direct": "Yes",
-      "sample": "✓ 6",
+      "sample": "\u2713 6",
       "references": [
         {
           "results": {
@@ -625,7 +635,7 @@
     {
       "carrier": "tnt",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 1",
+      "sample": "No history; alternate \u2713 1",
       "references": [
         {
           "results": {
@@ -641,7 +651,7 @@
     {
       "carrier": "aramex",
       "direct": "Yes",
-      "sample": "✓ 16",
+      "sample": "\u2713 16",
       "references": [
         {
           "note": "A domestic shipment",
@@ -680,7 +690,7 @@
     {
       "carrier": "yunexpress",
       "direct": "Yes (browser)",
-      "sample": "✓ 23",
+      "sample": "\u2713 23",
       "references": [
         {
           "results": {
@@ -696,7 +706,7 @@
     {
       "carrier": "four-px",
       "direct": "Yes",
-      "sample": "✓ 26",
+      "sample": "\u2713 26",
       "references": [
         {
           "results": {
@@ -712,7 +722,7 @@
     {
       "carrier": "yanwen",
       "direct": "Yes",
-      "sample": "✓ 29",
+      "sample": "\u2713 29",
       "references": [
         {
           "results": {
@@ -779,7 +789,7 @@
     {
       "carrier": "yto",
       "direct": "Yes (China domestic)",
-      "sample": "✓ 30",
+      "sample": "\u2713 30",
       "references": [
         {
           "results": {
@@ -795,7 +805,7 @@
     {
       "carrier": "yunda",
       "direct": "Yes (China domestic)",
-      "sample": "Unverified; alternate ✓ 2",
+      "sample": "Unverified; alternate \u2713 2",
       "references": [
         {
           "results": {
@@ -827,7 +837,7 @@
     {
       "carrier": "yamato",
       "direct": "Yes",
-      "sample": "✓ 7 (yearless dates)",
+      "sample": "\u2713 7 (yearless dates)",
       "references": [
         {
           "results": {
@@ -843,7 +853,7 @@
     {
       "carrier": "correios-br",
       "direct": "Yes (local OCR)",
-      "sample": "✓ 8",
+      "sample": "\u2713 8",
       "references": [
         {
           "note": "A Brazilian postal item",
@@ -870,7 +880,7 @@
     {
       "carrier": "singapore-post",
       "direct": "Yes",
-      "sample": "✓ 9",
+      "sample": "\u2713 9",
       "references": [
         {
           "results": {
@@ -908,7 +918,7 @@
     {
       "carrier": "korea-post",
       "direct": "Yes (international)",
-      "sample": "✓ 20",
+      "sample": "\u2713 20",
       "references": [
         {
           "note": "An EMS item",
@@ -945,7 +955,7 @@
     {
       "carrier": "planzer",
       "direct": "Yes",
-      "sample": "✓ 4",
+      "sample": "\u2713 4",
       "references": [
         {
           "results": {
@@ -978,7 +988,7 @@
     {
       "carrier": "dpd-fr",
       "direct": "Yes",
-      "sample": "✓ 10",
+      "sample": "\u2713 10",
       "references": [
         {
           "results": {
@@ -1016,7 +1026,7 @@
     {
       "carrier": "purolator",
       "direct": "Yes",
-      "sample": "✓ 12, intermittent",
+      "sample": "\u2713 12, intermittent",
       "references": [
         {
           "results": {
@@ -1032,7 +1042,7 @@
     {
       "carrier": "ontrac",
       "direct": "Yes",
-      "sample": "✓ 14",
+      "sample": "\u2713 14",
       "references": [
         {
           "results": {
@@ -1048,7 +1058,7 @@
     {
       "carrier": "delhivery",
       "direct": "Yes",
-      "sample": "✓ 2, partial (one undated scan and a status snapshot)",
+      "sample": "\u2713 2, partial (one undated scan and a status snapshot)",
       "references": [
         {
           "note": "A domestic parcel",
@@ -1075,7 +1085,7 @@
     {
       "carrier": "blue-dart",
       "direct": "Yes",
-      "sample": "✓ 15",
+      "sample": "\u2713 15",
       "references": [
         {
           "results": {
@@ -1091,7 +1101,7 @@
     {
       "carrier": "dtdc",
       "direct": "Yes",
-      "sample": "✓ 9",
+      "sample": "\u2713 9",
       "references": [
         {
           "note": "A domestic parcel",
@@ -1118,7 +1128,7 @@
     {
       "carrier": "ninja-van",
       "direct": "Yes (Malaysia NLMY)",
-      "sample": "No history; alternate ✓ 5",
+      "sample": "No history; alternate \u2713 5",
       "references": [
         {
           "results": {
@@ -1134,7 +1144,7 @@
     {
       "carrier": "packeta",
       "direct": "Yes",
-      "sample": "✓ 6",
+      "sample": "\u2713 6",
       "references": [
         {
           "note": "A parcel handed to a delivery partner",
@@ -1162,7 +1172,7 @@
     {
       "carrier": "poczta-polska",
       "direct": "Yes",
-      "sample": "✓ 5",
+      "sample": "\u2713 5",
       "references": [
         {
           "results": {
@@ -1185,7 +1195,7 @@
     {
       "carrier": "bring-posten",
       "direct": "Yes",
-      "sample": "✓ 12",
+      "sample": "\u2713 12",
       "references": [
         {
           "note": "A Norwegian postal item",
@@ -1244,7 +1254,7 @@
     {
       "carrier": "ctt",
       "direct": "Yes",
-      "sample": "✓ 4",
+      "sample": "\u2713 4",
       "references": [
         {
           "results": {
@@ -1260,7 +1270,7 @@
     {
       "carrier": "ctt-express",
       "direct": "Yes",
-      "sample": "✓ 5",
+      "sample": "\u2713 5",
       "references": [
         {
           "results": {
@@ -1276,7 +1286,7 @@
     {
       "carrier": "brt",
       "direct": "Yes",
-      "sample": "✓ 9",
+      "sample": "\u2713 9",
       "references": [
         {
           "note": "An international parcel",
@@ -1303,7 +1313,7 @@
     {
       "carrier": "seur",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 6",
+      "sample": "No history; alternate \u2713 6",
       "references": [
         {
           "results": {
@@ -1319,7 +1329,7 @@
     {
       "carrier": "correos-express",
       "direct": "Yes",
-      "sample": "✓ 9",
+      "sample": "\u2713 9",
       "references": [
         {
           "results": {
@@ -1335,7 +1345,7 @@
     {
       "carrier": "mrw",
       "direct": "Yes",
-      "sample": "✓ 14",
+      "sample": "\u2713 14",
       "references": [
         {
           "note": "A delivered parcel",
@@ -1372,7 +1382,7 @@
     {
       "carrier": "nacex",
       "direct": "Yes",
-      "sample": "✓ 13",
+      "sample": "\u2713 13",
       "references": [
         {
           "note": "An agency/shipment reference",
@@ -1415,7 +1425,7 @@
     {
       "carrier": "relais-colis",
       "direct": "Yes",
-      "sample": "✓ 4",
+      "sample": "\u2713 4",
       "references": [
         {
           "results": {
@@ -1447,7 +1457,7 @@
     {
       "carrier": "asendia",
       "direct": "Yes (Asendia USA)",
-      "sample": "✓ 5",
+      "sample": "\u2713 5",
       "references": [
         {
           "results": {
@@ -1469,7 +1479,7 @@
     {
       "carrier": "landmark-global",
       "direct": "Yes",
-      "sample": "✓ 14",
+      "sample": "\u2713 14",
       "references": [
         {
           "results": {
@@ -1485,7 +1495,7 @@
     {
       "carrier": "nz-post",
       "direct": "Yes",
-      "sample": "✓ 16",
+      "sample": "\u2713 16",
       "references": [
         {
           "results": {
@@ -1501,7 +1511,7 @@
     {
       "carrier": "pos-malaysia",
       "direct": "Yes",
-      "sample": "✓ 2",
+      "sample": "\u2713 2",
       "references": [
         {
           "results": {
@@ -1533,7 +1543,7 @@
     {
       "carrier": "ukrposhta",
       "direct": "Yes",
-      "sample": "✓ 22; alternate ✓ 14",
+      "sample": "\u2713 22; alternate \u2713 14",
       "references": [
         {
           "results": {
@@ -1556,7 +1566,7 @@
     {
       "carrier": "estafeta",
       "direct": "Yes",
-      "sample": "✓ 4",
+      "sample": "\u2713 4",
       "references": [
         {
           "results": {
@@ -1572,7 +1582,7 @@
     {
       "carrier": "correos-chile",
       "direct": "Yes",
-      "sample": "No history; alternate ✓ 1",
+      "sample": "No history; alternate \u2713 1",
       "references": [
         {
           "results": {
@@ -1588,7 +1598,7 @@
     {
       "carrier": "the-courier-guy",
       "direct": "Yes",
-      "sample": "✓ 14; alternate ✓ 13",
+      "sample": "\u2713 14; alternate \u2713 13",
       "references": [
         {
           "results": {
@@ -1687,7 +1697,7 @@
     {
       "carrier": "hermes",
       "direct": "Yes",
-      "sample": "✓ 10",
+      "sample": "\u2713 10",
       "references": [
         {
           "results": {
@@ -1719,7 +1729,7 @@
     {
       "carrier": "ciblex",
       "direct": "Yes",
-      "sample": "✓ 7",
+      "sample": "\u2713 7",
       "references": [
         {
           "results": {
@@ -1751,7 +1761,7 @@
     {
       "carrier": "colisweb",
       "direct": "Yes",
-      "sample": "✓ 2",
+      "sample": "\u2713 2",
       "references": [
         {
           "results": {
@@ -1784,7 +1794,7 @@
     {
       "carrier": "uniuni",
       "direct": "Yes",
-      "sample": "✓ 6",
+      "sample": "\u2713 6",
       "references": [
         {
           "results": {
@@ -1816,7 +1826,7 @@
     {
       "carrier": "gofo",
       "direct": "Yes",
-      "sample": "✓ 14",
+      "sample": "\u2713 14",
       "references": [
         {
           "results": {
@@ -1832,7 +1842,7 @@
     {
       "carrier": "ecoscooting",
       "direct": "Yes",
-      "sample": "✓ 6",
+      "sample": "\u2713 6",
       "references": [
         {
           "results": {
@@ -1854,7 +1864,7 @@
     {
       "carrier": "tipsa",
       "direct": "Yes",
-      "sample": "✓ 13",
+      "sample": "\u2713 13",
       "references": [
         {
           "results": {
@@ -1870,7 +1880,7 @@
     {
       "carrier": "canpar",
       "direct": "Yes",
-      "sample": "✓ 11",
+      "sample": "\u2713 11",
       "references": [
         {
           "results": {

@@ -27,6 +27,7 @@ import { adapter as dachser } from '../carriers/dachser/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as dhl } from '../carriers/dhl/adapter.js';
 import { adapter as dhlEcommerce } from '../carriers/dhl-ecommerce/adapter.js';
+import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdFr } from '../carriers/dpd-fr/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
@@ -116,6 +117,7 @@ export const REGISTRY: RegistryDefinition = {
     "delhivery": delhivery,
     "dhl": dhl,
     "dhl-ecommerce": dhlEcommerce,
+    "dhl-express": dhlExpress,
     "dpd": dpd,
     "dpd-fr": dpdFr,
     "dtdc": dtdc,
@@ -209,6 +211,7 @@ export const REGISTRY: RegistryDefinition = {
     "delivengo": "la-poste",
     "dhl": "dhl",
     "dhl-ecommerce": "dhl-ecommerce",
+    "dhl-express": "dhl-express",
     "dpd": "dpd",
     "dpd-fr": "dpd-fr",
     "dtdc": "dtdc",

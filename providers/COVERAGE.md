@@ -28,6 +28,7 @@ about current coverage.
 | Carrier | Direct support | Direct sample | Ship24 | ParcelsApp | 17TRACK | Postal Ninja | UPU |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [DHL](../carriers/dhl/README.md) | Yes | Blocked | ✓ 10 | ✓ 14 | No history | ✓ 14 | ✓ 1 |
+| [DHL Express](../carriers/dhl-express/README.md) | Yes | ✓ 23 | ✓ 23 | ✓ 23 | Unverified | Unverified | N/A |
 | [UPS](../carriers/ups/README.md) | Yes | ✓ 11 | ✓ 1, partial | ✓ 11 | ✓ 11 | ✓ 11 | N/A |
 | [FedEx](../carriers/fedex/README.md) | Yes | ✓ 14, intermittent | ✓ 14 | ✓ 14 | ✓ 14 | ✓ 14 | N/A |
 | [USPS](../carriers/usps/README.md) | Yes | ✓ 11 | No history | No history | ✓ 11 | No history | N/A |
@@ -132,8 +133,8 @@ about current coverage.
 <!-- GENERATED:lookup-order -->
 | Source | Carriers with history | Full | Partial | Only source |
 | --- | ---: | ---: | ---: | ---: |
-| Ship24 | 42 | 27 | 15 | 0 |
-| ParcelsApp | 53 | 47 | 6 | 5 |
+| Ship24 | 43 | 28 | 15 | 0 |
+| ParcelsApp | 54 | 48 | 6 | 5 |
 | 17TRACK | 43 | 39 | 4 | 4 |
 | Postal Ninja | 44 | 38 | 6 | 2 |
 
@@ -141,7 +142,7 @@ With Postal Ninja enabled, carriers without their own order use ParcelsApp → S
 
 | Carrier | Order |
 | --- | --- |
-| DHL | Ship24 → Postal Ninja → ParcelsApp → 17TRACK |
+| DHL Express | Ship24 → ParcelsApp → Postal Ninja → 17TRACK |
 | UPS | ParcelsApp → Postal Ninja → 17TRACK → Ship24 |
 | USPS | 17TRACK → ParcelsApp → Ship24 → Postal Ninja |
 | Royal Mail | ParcelsApp → Postal Ninja → Ship24 → 17TRACK |

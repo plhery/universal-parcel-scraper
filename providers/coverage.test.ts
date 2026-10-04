@@ -129,6 +129,10 @@ describe('coverage evidence', () => {
 });
 
 describe('coverage-based lookup order', () => {
+  it('prioritizes the provider with complete Express history for ambiguous ten-digit numbers', () => {
+    expect(universalPlan({ trackingNumber: '1234567891' }).sources[0]).toBe('Ship24');
+    expect(universalPlan({ carriers: ['dhl-express'], trackingNumber: '1234567891' }).sources[0]).toBe('Ship24');
+  });
   const plan = (carrier: string, options: { trackingNumber?: string; enablePostalNinja?: boolean } = {}) =>
     universalPlan({ carriers: [carrier], enablePostalNinja: true, ...options });
 

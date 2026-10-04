@@ -1,0 +1,72 @@
+{
+  "carrier": "dhl-express",
+  "records": [
+    {
+      "number": "3408372365",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a901943246975fa82db1390",
+        "date": "2026-08-28"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
+    },
+    {
+      "number": "5126149092",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a2c5fdea14e3bff06c7d1ff",
+        "date": "2026-06-12"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "Publicly reported Apple shipment attributed to DHL Express; the attribution is unverified and available providers returned no history.",
+      "quarantine": true
+    },
+    {
+      "number": "7633033634",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6aaaf40b0ae5ece3b117fe62",
+        "date": "2026-09-16"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
+    }
+  ]
+}

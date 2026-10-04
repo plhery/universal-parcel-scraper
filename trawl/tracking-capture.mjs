@@ -52,6 +52,22 @@ export async function requestAustraliaPostInPage({ number, budgetMs }) {
 
 const SITES = [
   {
+    api: 'https://mydhl.express.dhl/shipmentTracking',
+    provider: 'DHL Express',
+    requestMethod: 'GET',
+    apiForNumber(number) {
+      return this.api + '?' + new URLSearchParams({ AWB: number, clientApp: 'mydhlplus', countryCode: 'gb', languageCode: 'en',
+        requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' });
+    },
+    number(page) {
+      if (page.origin !== 'https://mydhl.express.dhl' || page.pathname !== '/gb/en/tracking.html' || page.search) return null;
+      return /^#\/results\?id=(\d{10})$/.exec(page.hash)?.[1] ?? null;
+    },
+    settled(data, number) {
+      return data?.results?.some(result => result.id === number) || data?.errors?.some(error => error.id === number);
+    },
+  },
+  {
     api: 'https://services.yuntrack.com/Track/Query',
     provider: 'YunExpress',
     requestMethod: 'POST',
@@ -225,7 +241,8 @@ export async function attachTrackingCapture(page, url, options) {
       : requested.includes(candidate.api)));
   if (!site) return undefined;
   const number = site.number(target);
-  const api = site.api + (site.queryNumber ? `?trackingIds=${number}` : site.perNumber ? number : '');
+  const api = site.apiForNumber ? site.apiForNumber(number)
+    : site.api + (site.queryNumber ? `?trackingIds=${number}` : site.perNumber ? number : '');
   if (site.perNumber) {
     await page.context().addCookies(Object.entries(ROYAL_MAIL_OPT_OUT).map(([name, value]) => ({
       name, value, domain: '.royalmail.com', path: '/', secure: true, sameSite: 'Lax',

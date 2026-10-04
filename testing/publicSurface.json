@@ -76,6 +76,7 @@
       "mislabeledWallTime",
       "normalizeCarrierInputs",
       "normalizeCarrierResult",
+      "normalizeDeliveryPostcode",
       "normalizeTrackingNumber",
       "orderUniversalSources",
       "parseTrackingInput",

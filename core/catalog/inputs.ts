@@ -121,3 +121,12 @@ export function normalizeCarrierInputs(
   }
   return supplied;
 }
+
+/** A recipient postcode for universal providers; independent of a carrier's own credentials. */
+export function normalizeDeliveryPostcode(value: string): string {
+  const normalized = value.trim().toUpperCase().replace(/\s+/g, ' ');
+  if (!/^(?=.{3,12}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/.test(normalized)) {
+    throw new TypeError('A valid delivery postcode is required');
+  }
+  return normalized;
+}

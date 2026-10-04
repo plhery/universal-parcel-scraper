@@ -1,0 +1,47 @@
+{
+  "carrier": "dhl-express",
+  "entries": [
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Shipment is out with courier for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Shipment is on hold",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Delivery attempted but no response at Consignee address",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Shipment picked up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Shipment is in transit to destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    }
+  ]
+}

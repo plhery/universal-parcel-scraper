@@ -13,6 +13,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "correos-express": 36,
   "ctt-express": 35,
   "dhl-ecommerce": 23,
+  "dhl-express": 75,
   "dpd": 70,
   "gls-ch": 60,
   "gls-de": 50,
