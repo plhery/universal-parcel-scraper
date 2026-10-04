@@ -8,7 +8,7 @@
 export * from './core/catalog/parcel.js';
 export * from './core/catalog/hints.js';
 export * from './core/time/result.js';
-export { sameInstantIdentityPolicy, type SameInstantIdentityPolicy } from './core/catalog/eventIdentity.js';
+export { sameInstantIdentityPolicy, type SameInstantIdentityPolicy, type SameInstantScan } from './core/catalog/eventIdentity.js';
 export { universalCarrierHints } from './providers/shared/hints.js';
 export { recognitionAskedCarriers } from './core/catalog/recognition.js';
 export { countryFlag, countryName, trackingLocationCountry, trackingPlace, type TrackingPlace } from './places/trackingLocation.js';

@@ -265,6 +265,7 @@
     "types": [
       "ParcelTrackingLink",
       "SameInstantIdentityPolicy",
+      "SameInstantScan",
       "TrackedParcel",
       "TrackingPlace"
     ]

@@ -40,6 +40,9 @@ rendered status, after that wait.
   carry no stable code, so events get no stage; the sync classifies each scan's wording.
 - UPS's `Exception` token does not say whether it is a failed attempt or a return; both
   surface as `exception`.
+- The app scan-identity policy updates a scan when UPS adds its location, provided its
+  exact instant, wording and known stage agree. Conflicting locations and distinct
+  messages at one instant remain separate.
 - The rendered-page parser reads only the active progress-bar milestone. Reading the whole
   bar classified label-created parcels as out for delivery.
 - Scan times are built from the UTC pair UPS sends, or the local pair plus its explicit
