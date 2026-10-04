@@ -245,6 +245,8 @@
       "carrierIdsFromPartnerLinks",
       "carrierNameCountryZone",
       "carrierTrackingHintKey",
+      "countryFlag",
+      "countryName",
       "displayedCarrierId",
       "eventTimestamp",
       "isKnownCarrierName",
@@ -254,11 +256,14 @@
       "parcelTrackingNumbers",
       "recognitionAskedCarriers",
       "resultTimezone",
+      "trackingLocationCountry",
+      "trackingPlace",
       "universalCarrierHints"
     ],
     "types": [
       "ParcelTrackingLink",
-      "TrackedParcel"
+      "TrackedParcel",
+      "TrackingPlace"
     ]
   },
   "./places": {

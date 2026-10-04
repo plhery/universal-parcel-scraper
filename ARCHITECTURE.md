@@ -31,9 +31,9 @@ decision based on an earlier check belong to whoever calls it.
   [Its README](places/README.md) explains how a place is chosen.
 - `universal-parcel-scraper/data/*` exposes the generated JSON contracts.
 - `universal-parcel-scraper/app` holds helpers shaped for the parcel app this package was
-  extracted from: its parcel view, the carrier-name hints for provider results and the
-  result-clock helpers its sync uses. It imports no Node runtime modules and is outside the
-  semver contract.
+  extracted from: its parcel view, the carrier-name hints for provider results, the
+  result-clock helpers its sync uses and the country a scan's location names. It imports no
+  Node runtime modules and is outside the semver contract.
 
 ## Carrier folders
 
