@@ -18,7 +18,7 @@ function clock(raw: string): Pick<CarrierEvent, 'time'> & { local_time?: string;
   const validated = /^\d{4}-\d{2}-\d{2} (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(raw)
     ? DateTime.fromFormat(raw, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' }) : null;
   if (!validated?.isValid) return raw ? { provider_time_text: raw } : {};
-  return { local_time: validated.toISO({ includeOffset: false, suppressMilliseconds: true })! };
+  return { local_time: validated.toISO({ includeOffset: false, suppressMilliseconds: true }) };
 }
 
 export function parseLandmark(html: string, rawNumber: string): CarrierResult {

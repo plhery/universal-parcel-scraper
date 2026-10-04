@@ -138,7 +138,7 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
     const classified = postNLStatus(event.category, event.status_description);
     const { local_time, provider_time_text } = clocks[index]!;
     return {
-      ...(times[index] ? { time: times[index]!.iso } : local_time ? { local_time } : provider_time_text ? { provider_time_text } : {}),
+      ...(times[index] ? { time: times[index].iso } : local_time ? { local_time } : provider_time_text ? { provider_time_text } : {}),
       location: (text(event.country_name) || text(event.country_code)).slice(0, 200),
       description: (text(event.status_description) || text(event.category)).slice(0, 500),
       ...(classified ? { stage: classified.stage } : {}),

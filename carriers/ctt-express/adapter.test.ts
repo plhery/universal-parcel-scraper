@@ -220,10 +220,10 @@ describe('CTT Express direct tracking', () => {
     expect(fetcher).not.toHaveBeenCalled();
     expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-04T10:00:00.000Z' });
     const payload = { data: { shipping_code: NUMBER, shipping_history: { item_code: null, events: [] } }, error: null };
-    const empty = adapter({ fetcher: vi.fn(async () => json(payload)) as unknown as typeof fetch, trawl: null, browserExecutablePath: null, env: {}, recorder: { step() {}, lookup() {} } });
+    const empty = adapter({ fetcher: vi.fn(async () => json(payload)), trawl: null, browserExecutablePath: null, env: {}, recorder: { step() {}, lookup() {} } });
     await expect(empty.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
     const wrong = clone(); wrong.data.shipping_code = OTHER;
-    const mismatched = adapter({ fetcher: vi.fn(async () => json(wrong)) as unknown as typeof fetch, trawl: null, browserExecutablePath: null, env: {}, recorder: { step() {}, lookup() {} } });
+    const mismatched = adapter({ fetcher: vi.fn(async () => json(wrong)), trawl: null, browserExecutablePath: null, env: {}, recorder: { step() {}, lookup() {} } });
     await expect(mismatched.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
   });
 

@@ -69,7 +69,7 @@ function clock(day: string, time: string): { local_time?: string; provider_time_
   const rawClock = clockText(time);
   const validated = /^\d{2}\/\d{2}\/\d{4}$/.test(day) && /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(rawClock)
     ? DateTime.fromFormat(`${day} ${rawClock}`, 'dd/MM/yyyy HH:mm', { zone: 'UTC' }) : null;
-  return validated?.isValid ? { local_time: validated.toISO({ includeOffset: false, suppressMilliseconds: true })! }
+  return validated?.isValid ? { local_time: validated.toISO({ includeOffset: false, suppressMilliseconds: true }) }
     : { provider_time_text: clean(`${day} ${time}`, 100) };
 }
 

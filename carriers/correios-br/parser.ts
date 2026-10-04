@@ -24,7 +24,7 @@ function scanClock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
   const digits = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})(?:\.\d{1,6})?$/.exec(raw)?.[1];
   const wall = digits ? DateTime.fromFormat(digits, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' }) : null;
   if (!wall?.isValid) return raw ? { provider_time_text: raw } : {};
-  const local = wall.toISO({ includeOffset: false, suppressMilliseconds: true })!;
+  const local = wall.toISO({ includeOffset: false, suppressMilliseconds: true });
   const zone = isRecord(value) && value.timezone_type === 3 ? clean(value.timezone, 64) : '';
   if (!zone || !IANAZone.isValidZone(zone)) return { local_time: local };
   // Use the explicit per-row zone only when its clock exists uniquely. Do not
@@ -33,7 +33,7 @@ function scanClock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
   if (!zoned.isValid || zoned.toFormat('yyyy-MM-dd HH:mm:ss') !== digits || zoned.getPossibleOffsets().length !== 1) {
     return { local_time: local };
   }
-  return { time: zoned.toISO({ suppressMilliseconds: true })! };
+  return { time: zoned.toISO({ suppressMilliseconds: true }) };
 }
 
 export function parseCorreios(payload: unknown, number: string): CarrierResult {

@@ -131,7 +131,7 @@ function browserFixture(payload: unknown, responseUrl: string) {
   locator.locator.mockReturnValue(locator);
   const emit = (status = 201, url = responseUrl, message = payload) => respond?.({ url: () => url, status: () => status, headers: () => ({}), body: async () => Buffer.from(JSON.stringify(message)) });
   const page = { setDefaultTimeout: vi.fn(), on: vi.fn((_: string, callback: typeof respond) => { respond = callback; }),
-    goto: vi.fn(async () => { await emit(); return { headers: () => ({}), status: () => 200 as number }; }), locator: vi.fn().mockReturnValue(locator), frameLocator: vi.fn().mockReturnValue(locator) };
+    goto: vi.fn(async () => { await emit(); return { headers: () => ({}), status: (): number => 200 }; }), locator: vi.fn().mockReturnValue(locator), frameLocator: vi.fn().mockReturnValue(locator) };
   const context = { route: vi.fn(), newPage: vi.fn().mockResolvedValue(page) };
   const browser = { version: () => '152.0.0.0', newContext: vi.fn().mockResolvedValue(context), close: vi.fn() };
   vi.mocked(chromium.launch).mockResolvedValue(browser as never);

@@ -242,9 +242,9 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       if (Object.keys(input).some(key => !allowed.includes(key))) throw new HttpError(400, 'Unknown request field');
       if (path === '/v1/detect') { json(response, 200, tracker.detect(input.text as string)); return; }
       if (input.budgetMs !== undefined && (typeof input.budgetMs !== 'number' || !Number.isInteger(input.budgetMs) || input.budgetMs < 1 || input.budgetMs > 120_000)) throw new HttpError(400, 'Invalid lookup budget');
-      if (path === '/v1/recognize') { json(response, 200, await tracker.recognize(input.number as string, { budgetMs: input.budgetMs as number | undefined })); return; }
+      if (path === '/v1/recognize') { json(response, 200, await tracker.recognize(input.number as string, { budgetMs: input.budgetMs })); return; }
       const result = await tracked({ number: input.number as string, carrier: input.carrier as string | undefined,
-        postcode: input.postcode as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined }, input.budgetMs as number | undefined);
+        postcode: input.postcode as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined }, input.budgetMs);
       json(response, 200, result);
     } catch (error) {
       if (error instanceof HttpError) {

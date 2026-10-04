@@ -102,7 +102,7 @@ export function parseDHLEcommerceResponse(payload: unknown): CarrierResult {
     return [{ time, description: stage === 'delivered' ? 'Delivered' : description,
       location: [...new Set([clean(place.addressLocality, 160), clean(place.countryCode, 2)].filter(Boolean))].join(', '),
       stage }];
-  }).sort((a, b) => b.time!.localeCompare(a.time!)).slice(0, 100);
+  }).sort((a, b) => b.time.localeCompare(a.time)).slice(0, 100);
   const stage = shipment.returnFlag === true && shipment.status.statusCode === 'delivered'
     ? 'returned' : stageFor(shipment.status);
   const expected = clean(shipment.estimatedTimeOfDelivery, 64).slice(0, 10);

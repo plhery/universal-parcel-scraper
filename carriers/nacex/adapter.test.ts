@@ -143,7 +143,7 @@ describe('NACEX direct tracking', () => {
 
   it('recognizes matching history without ranking calendar days and reports only proven negatives as absent', async () => {
     const positive = vi.fn().mockResolvedValueOnce(freshSession()).mockResolvedValueOnce(redirect()).mockResolvedValueOnce(response());
-    const instance = adapter(environment(positive as unknown as typeof fetch));
+    const instance = adapter(environment(positive));
     expect(await instance.recognize!('invalid')).toEqual({ known: false });
     expect(positive).not.toHaveBeenCalled();
     expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null });

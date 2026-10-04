@@ -21,7 +21,7 @@ function eventTime(raw: string): string {
   if (!parsed.isValid) throw new SchemaError('Korea Post', 'Korea Post returned an invalid scan time');
   // The portal explicitly uses destination-local time after handover. Preserve
   // its sequence and wall clocks; a Korea-wide timezone would corrupt these.
-  return parsed.toISO({ suppressMilliseconds: true, includeOffset: false })!;
+  return parsed.toISO({ suppressMilliseconds: true, includeOffset: false });
 }
 
 export function parse(html: string, trackingNumber: string): CarrierResult {

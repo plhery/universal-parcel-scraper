@@ -26,7 +26,7 @@ function eventTime(raw: Record<string, unknown>): Pick<CarrierEvent, 'time'> & {
   // clock digits and must not replace the portal's per-scan local timestamp.
   const parsed = DateTime.fromISO(`${local.replace(' ', 'T')}${offset ?? (zone === 'UTC' ? 'Z' : '')}`, { setZone: true, zone: 'UTC' });
   if (!parsed.isValid) throw new SchemaError('4PX', '4PX returned an invalid scan time');
-  const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: Boolean(zone) })!;
+  const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: Boolean(zone) });
   return zone ? { time: iso } : { local_time: iso };
 }
 

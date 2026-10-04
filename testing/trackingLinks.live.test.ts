@@ -94,6 +94,7 @@ describe('UI tracking links (rendered public pages)', () => {
             testCase.number,
           );
         verdict = trackingPageVerdict({
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- goto() can answer null; the expectation above rules it out
           status: documentStatus ?? response!.status(), url: page.url(), title: await page.title(),
           text,
         }, testCase.route, testCase.marker, testCase.shipmentNotFound);

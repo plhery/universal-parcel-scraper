@@ -20,7 +20,7 @@ function scanClock(value: unknown): { time?: string; local_time?: string; provid
   }
   if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?$/.test(raw)) {
     const wall = DateTime.fromISO(raw, { zone: 'UTC' });
-    if (wall.isValid) return { local_time: wall.toISO({ includeOffset: false, suppressMilliseconds: true })! };
+    if (wall.isValid) return { local_time: wall.toISO({ includeOffset: false, suppressMilliseconds: true }) };
   }
   return raw ? { provider_time_text: raw } : {};
 }

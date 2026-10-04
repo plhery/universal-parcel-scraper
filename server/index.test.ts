@@ -45,7 +45,7 @@ describe('tracking HTTP API', () => {
     expect((await post(url, { number: ` ${input.number} `, carrier: 'ups' })).status).toBe(200);
     expect(track).toHaveBeenCalledTimes(1);
     track.mockResolvedValue(answer);
-    expect((await post(url, { ...input, postcode: '0000' } as typeof input)).status).toBe(200);
+    expect((await post(url, { ...input, postcode: '0000' })).status).toBe(200);
     expect(track).toHaveBeenCalledTimes(2);
   });
 
@@ -254,7 +254,7 @@ describe('tracking HTTP API', () => {
     expect(JSON.stringify(log.mock.calls)).not.toContain(input.number);
     expect(log.mock.calls[0]![0]).toMatchObject({ route: '/v1/track', status: 429 });
     track.mockRejectedValue(new Error(`private ${input.number}`));
-    const unexpected = await post(url, { ...input, postcode: '0000' } as typeof input);
+    const unexpected = await post(url, { ...input, postcode: '0000' });
     expect(unexpected.status).toBe(502);
     expect(JSON.stringify(await unexpected.json())).not.toContain(input.number);
   });

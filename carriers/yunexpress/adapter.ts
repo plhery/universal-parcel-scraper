@@ -34,7 +34,7 @@ function eventClock(raw: string, offset?: string): Pick<CarrierEvent, 'time'> & 
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(raw)) throw new SchemaError('YunExpress', 'YunExpress returned an invalid scan time');
   const parsed = DateTime.fromISO(`${raw}${offset ?? ''}`, { setZone: true, zone: 'UTC' });
   if (!parsed.isValid) throw new SchemaError('YunExpress', 'YunExpress returned an invalid scan time');
-  const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: Boolean(offset) })!;
+  const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: Boolean(offset) });
   return offset ? { time: iso } : { local_time: iso };
 }
 

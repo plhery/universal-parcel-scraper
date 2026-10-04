@@ -29,7 +29,7 @@ function eventTime(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
   if (!parsed.isValid) throw new SchemaError('Singapore Post', 'Singapore Post returned an invalid event date');
   // Speedpost scans omit offsets, including destination events. Keep that
   // uncertainty and the portal's newest-first order rather than assign +08.
-  return { local_time: parsed.toISO({ suppressMilliseconds: true, includeOffset: false })! };
+  return { local_time: parsed.toISO({ suppressMilliseconds: true, includeOffset: false }) };
 }
 
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {

@@ -59,7 +59,7 @@ function tokenPage(): string {
 function syntheticSuccessFixture(shipment = OFFICIAL_PDF_SHIPMENT): Record<string, unknown> {
   const fixture = structuredClone(SUCCESS_FIXTURE);
   fixture.Expedition.Numero = shipment;
-  return fixture as unknown as Record<string, unknown>;
+  return fixture;
 }
 
 function numericByteObject(value: string): Record<string, number> {

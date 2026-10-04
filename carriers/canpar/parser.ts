@@ -19,7 +19,7 @@ function clock(raw: unknown): { local_time?: string; provider_time_text?: string
     ? DateTime.fromFormat(text, 'yyyyMMdd HHmmss', { zone: 'UTC' }) : null;
   // The public client displays these digits as local clocks and ignores
   // time_shift. That field does not consistently describe a UTC offset.
-  return parsed?.isValid ? { local_time: parsed.toISO({ includeOffset: false, suppressMilliseconds: true })! }
+  return parsed?.isValid ? { local_time: parsed.toISO({ includeOffset: false, suppressMilliseconds: true }) }
     : text ? { provider_time_text: text } : {};
 }
 

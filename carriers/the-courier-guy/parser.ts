@@ -19,7 +19,7 @@ function clock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: stri
   }
   if (new RegExp(`${base}$`).test(raw)) {
     const wall = DateTime.fromISO(raw, { zone: 'UTC' });
-    if (wall.isValid) return { local_time: wall.toISO({ includeOffset: false })! };
+    if (wall.isValid) return { local_time: wall.toISO({ includeOffset: false }) };
   }
   return raw ? { provider_time_text: raw } : {};
 }

@@ -180,9 +180,9 @@ describe('Correos Express direct tracking', () => {
     expect(await instance.recognize!('invalid')).toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
     expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null });
-    const unknown = adapter({ fetcher: vi.fn(async () => response(negative())) as unknown as typeof fetch, env: {}, trawl: null, browserExecutablePath: null, recorder: { step() {}, lookup() {} } });
+    const unknown = adapter({ fetcher: vi.fn(async () => response(negative())), env: {}, trawl: null, browserExecutablePath: null, recorder: { step() {}, lookup() {} } });
     expect(await unknown.recognize!(NUMBER)).toEqual({ known: false });
-    const outage = adapter({ fetcher: vi.fn(async () => response(negative(NUMBER, '-1'))) as unknown as typeof fetch, env: {}, trawl: null, browserExecutablePath: null, recorder: { step() {}, lookup() {} } });
+    const outage = adapter({ fetcher: vi.fn(async () => response(negative(NUMBER, '-1'))), env: {}, trawl: null, browserExecutablePath: null, recorder: { step() {}, lookup() {} } });
     await expect(outage.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
   });
 

@@ -109,7 +109,7 @@ export function event(time: unknown, description: unknown, stage?: unknown): Car
   }
   const date = DateTime.fromISO(time, { setZone: true });
   if (!date.isValid) throw new TypeError('Tracking event has an invalid timestamp');
-  return { time: date.toUTC().toISO()!, ...described };
+  return { time: date.toUTC().toISO(), ...described };
 }
 
 /**

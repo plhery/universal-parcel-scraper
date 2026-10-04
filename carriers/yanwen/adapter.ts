@@ -30,7 +30,7 @@ function eventTime(day: string, raw: string): string {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !match) throw new SchemaError('Yanwen', 'Yanwen returned an invalid scan time');
   const parsed = DateTime.fromISO(`${day}T${match[1]}${match[2]}:${match[3] ?? '00'}`, { setZone: true });
   if (!parsed.isValid) throw new SchemaError('Yanwen', 'Yanwen returned an invalid scan time');
-  return parsed.toISO({ suppressMilliseconds: true })!;
+  return parsed.toISO({ suppressMilliseconds: true });
 }
 
 export function parse(html: string, trackingNumber: string): CarrierResult {

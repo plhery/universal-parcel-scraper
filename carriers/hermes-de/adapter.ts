@@ -74,7 +74,7 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
     }
     const date = DateTime.fromISO(entry.timestamp, { zone: 'Europe/Berlin', setZone: true });
     if (!date.isValid) throw new SchemaError(CARRIER, 'Hermes Germany returned an invalid event date');
-    const time = date.toUTC().toISO()!;
+    const time = date.toUTC().toISO();
     const identity = `${time}|${entry.parcelStatus}`;
     if (seen.has(identity) || IGNORED_BOOKING_STATUS.has(entry.parcelStatus)) continue;
     seen.add(identity);

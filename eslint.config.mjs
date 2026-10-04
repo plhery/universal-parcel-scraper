@@ -18,8 +18,6 @@ export default defineConfig(
       'no-empty': ['error', { allowEmptyCatch: true }],
       // An abort reason is the caller's own value, passed on as it is.
       '@typescript-eslint/prefer-promise-reject-errors': ['error', { allowThrowingAny: true, allowThrowingUnknown: true }],
-      // Redundant assertions are harmless; removing them is one mechanical sweep.
-      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     } },
   // Scripts are outside the TypeScript project: syntax rules only.
   { files: ['**/*.mjs'], extends: [tseslint.configs.disableTypeChecked], languageOptions: { globals: globals.node } },

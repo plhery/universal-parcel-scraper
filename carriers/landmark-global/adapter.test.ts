@@ -82,7 +82,7 @@ describe('Landmark Global history', () => {
     const $ = load(fixture()); const first = $('tbody tr').first(); first.find('td').first().text('Not delivered'); $('.current-status h3').text('Not delivered');
     expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'Not delivered' });
     expect(landmarkStatus('__proto__')).toBeUndefined();
-    first.remove(); $('.current-status h3').text('Onboard for delivery'); $('.current-status .time').attr('data-time', $('tbody tr').first().find('.time').attr('data-time')!);
+    first.remove(); $('.current-status h3').text('Onboard for delivery'); $('.current-status .time').attr('data-time', $('tbody tr').first().find('.time').attr('data-time'));
     expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'out_for_delivery' });
   });
   it('deduplicates repeated scans and excludes ambiguous delivery partner references', () => {

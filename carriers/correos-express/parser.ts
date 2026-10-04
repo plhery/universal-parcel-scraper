@@ -22,7 +22,7 @@ function scanClock(raw: string): { local_time?: string; provider_time_text?: str
   if (digits) {
     // UTC only validates the calendar digits; no instant or offset is emitted.
     const date = DateTime.fromFormat(digits, digits.length === 19 ? 'dd/MM/yyyy HH:mm:ss' : 'dd/MM/yyyy HH:mm', { zone: 'UTC' });
-    if (date.isValid) return { local_time: date.toISO({ includeOffset: false, suppressMilliseconds: true })! };
+    if (date.isValid) return { local_time: date.toISO({ includeOffset: false, suppressMilliseconds: true }) };
   }
   return text ? { provider_time_text: text } : {};
 }

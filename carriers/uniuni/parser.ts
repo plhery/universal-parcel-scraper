@@ -43,7 +43,7 @@ function clock(raw: unknown): Pick<CarrierEvent, 'time'> & { local_time?: string
   // UTC validates calendar digits only. Without corrected seconds, preserve
   // the provider's clock instead of choosing an offset or borrowing a scan.
   return parsed?.isValid && parsed.toFormat('yyyy-MM-dd HH:mm:ss') === text
-    ? { local_time: parsed.toISO({ includeOffset: false, suppressMilliseconds: true })! }
+    ? { local_time: parsed.toISO({ includeOffset: false, suppressMilliseconds: true }) }
     : { provider_time_text: text };
 }
 

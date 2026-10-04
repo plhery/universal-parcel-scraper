@@ -79,7 +79,7 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     const zone = wall ? wallZone(names.reported_carriers, raw.location, number, wall, timezone) : null;
     const instant = wall && zone ? DateTime.fromISO(wall, { zone }) : null;
     if (instant?.isValid) {
-      const timed: CarrierEvent = { ...parsed, time: instant.toUTC().toISO()! };
+      const timed: CarrierEvent = { ...parsed, time: instant.toUTC().toISO() };
       delete timed.local_time;
       events.push(timed);
     } else events.push(parsed);

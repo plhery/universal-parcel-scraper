@@ -92,7 +92,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       stage: postiEventStage(description),
     };
   }).sort((left, right) => (Date.parse(right.time || '') || 0) - (Date.parse(left.time || '') || 0)).slice(0, 100);
-  const current = postiStatus(hit.status.main, hit.status.subStatus as string[]);
+  const current = postiStatus(hit.status.main, hit.status.subStatus);
   const measurements = isRecord(hit.measurements) ? hit.measurements : {};
   const dimensions = ['length', 'width', 'height'].map((field) => measurement(measurements[field], { cm: 1, mm: 0.1, m: 100 }));
   const pickup = isRecord(hit.pickupPoint) && isRecord(hit.pickupPoint.address) ? hit.pickupPoint.address : {};

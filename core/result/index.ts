@@ -156,7 +156,7 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
         throw new TypeError('The carrier adapter returned an invalid tracking event');
       }
     }
-    const event = { ...rawEvent } as CarrierEvent;
+    const event = { ...rawEvent };
     if (event.point !== undefined) {
       const point = isRecord(event.point) ? eventPoint(event.point.latitude, event.point.longitude) : null;
       if (point) event.point = point;

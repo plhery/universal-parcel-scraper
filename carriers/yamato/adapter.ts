@@ -29,7 +29,7 @@ function eventDate(raw: string): Pick<CarrierEvent, 'time'> & { provider_time_te
   const date = DateTime.fromObject({ year: year ? Number(year) : 2000,
     month: Number(month), day: Number(day), hour: Number(hour), minute: Number(minute) }, { zone: ZONE });
   if (!date.isValid) throw new SchemaError(PROVIDER, 'Yamato returned an invalid event date');
-  return { provider_time_text: raw, ...(year ? { time: date.toUTC().toISO({ suppressMilliseconds: true })! } : {}) };
+  return { provider_time_text: raw, ...(year ? { time: date.toUTC().toISO({ suppressMilliseconds: true }) } : {}) };
 }
 
 export function parse(html: string, trackingNumber: string): CarrierResult {

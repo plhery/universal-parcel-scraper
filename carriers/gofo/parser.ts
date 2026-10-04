@@ -31,7 +31,7 @@ function scanClock(value: unknown, scanZone: unknown): Pick<CarrierEvent, 'time'
   }
   const local = DateTime.fromISO(match[1]!, { zone: 'UTC' });
   if (!local.isValid) throw new SchemaError('GOFO', 'GOFO returned an invalid scan date');
-  if (!match[2]) return { local_time: local.toISO({ includeOffset: false, suppressMilliseconds: true })! };
+  if (!match[2]) return { local_time: local.toISO({ includeOffset: false, suppressMilliseconds: true }) };
   const offset = match[2].replace(':', '');
   if (offset !== 'Z' && Number(offset.slice(1, 3)) * 60 + Number(offset.slice(3)) > 840) throw new SchemaError('GOFO', 'GOFO returned an invalid scan offset');
   const time = explicitOffsetTime(raw);
