@@ -255,7 +255,7 @@ function trawlJson(response: TrawlScrapeResponse): unknown {
   const $ = load(response.html);
   candidates.push($('pre').first().text(), $('body').text(), response.html);
   for (const candidate of candidates) {
-    const cleaned = candidate.trim().replace(/^﻿/, '');
+    const cleaned = candidate.trim().replace(/^\uFEFF/, '');
     if (!cleaned) continue;
     try {
       return JSON.parse(cleaned);

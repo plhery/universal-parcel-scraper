@@ -22,7 +22,7 @@ export function parsePurolator(payload: unknown, number: string): CarrierResult 
   if (search.status !== 'FOUND') throw new IndeterminateError('Purolator', 'Purolator did not return a unique matching shipment');
   if (search.type !== 'PIN' || !Number.isInteger(search.shipmentIndex) || !Number.isInteger(search.packageIndex)
     || (search.shipmentIndex as number) < 0 || (search.packageIndex as number) < 0) throw new SchemaError('Purolator');
-  const shipment = payload.shipment[search.shipmentIndex as number];
+  const shipment: unknown = payload.shipment[search.shipmentIndex as number];
   if (!isRecord(shipment) || !Array.isArray(shipment.package) || shipment.package.length > 100 || !shipment.package.every(isRecord)) throw new SchemaError('Purolator');
   const item = shipment.package[search.packageIndex as number];
   if (!item || item.pin !== requested || shipment.package.filter((candidate) => candidate.pin === requested).length !== 1) {

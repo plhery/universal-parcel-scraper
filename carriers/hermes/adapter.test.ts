@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError } from '../../core/errors/index.js';
+import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { HermesTracker, parseHermesTrackingResponse } from './adapter.js';
 import { hermesStatus } from './status.js';
 
@@ -20,6 +20,20 @@ const capabilities = carrier.capabilities;
 afterEach(() => vi.restoreAllMocks());
 
 describe('Hermes no-data response', () => {
+  it.each(['sendungsstatus', 'sendungsstatusBuchungszeitpunkt'])('rejects a structured %s field', (field) => {
+    for (const value of [{ value: 'Delivered' }, ['Delivered'], 700]) {
+      const event = { sendungsstatusId: 700, sendungsstatus: 'Delivered', sendungsstatusBuchungszeitpunkt: '2026-01-01 12:00', [field]: value };
+      const payload = { auftragsdaten: { lieferscheinnummer: WRONG_HERMES_NUMBER, statusjourneyDto: { auftragstatusdaten: [event] } } };
+      expect(() => parseHermesTrackingResponse(payload, WRONG_HERMES_NUMBER)).toThrow(SchemaError);
+    }
+  });
+
+  it('does not classify structured wording as delivery evidence', () => {
+    expect(hermesStatus(999, ['delivered'])).toBe('pending');
+    expect(hermesStatus(999, { text: 'delivered' })).toBe('pending');
+    expect(hermesStatus(999, 'delivered')).toBe('delivered');
+  });
+
   it('rejects the official empty-order placeholder as a privacy-safe 404', () => {
     expect(() => parseHermesTrackingResponse(emptyOrder(), WRONG_HERMES_NUMBER))
       .toThrow(NotFoundError);

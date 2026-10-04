@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { eventLabel, plainText, shipmentStatus } from './status.js';
 
@@ -30,7 +30,7 @@ export interface DachserOptions {
 }
 
 function normalizeTrackingNumber(raw: unknown): string {
-  return String(raw ?? '').replace(/[\s.-]/g, '').toUpperCase();
+  return cleanScalar(raw, 64).replace(/[\s.-]/g, '').toUpperCase();
 }
 
 /**
@@ -63,7 +63,7 @@ export function dachserApiUrl(trackingUrl: string, trackingNumber: string): stri
  * that do carry an offset keep it; everything else is read in Europe/Madrid.
  */
 function parseDateTime(raw: unknown): DateTime | null {
-  const value = String(raw ?? '').trim();
+  const value = typeof raw === 'string' ? raw.trim() : '';
   if (!value) return null;
   let parsed = DateTime.fromISO(value, { zone: 'Europe/Madrid', setZone: true });
   if (!parsed.isValid) {

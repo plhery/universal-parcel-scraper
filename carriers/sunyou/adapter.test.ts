@@ -80,6 +80,16 @@ describe('SunYou wrong-number handling', () => {
 });
 
 describe('official SunYou display statuses', () => {
+  it('accepts numeric status codes without treating an array as a code', () => {
+    const payload = (displayStatus: unknown) => ({ data: [{ orderNo: SUNYOU_WRONG_NUMBER, has: true, displayStatus }] });
+    expect(parseSunYouTrackingResponse(payload(4), SUNYOU_WRONG_NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    for (const value of [['4'], { value: '4' }]) {
+      const result = parseSunYouTrackingResponse(payload(value), SUNYOU_WRONG_NUMBER);
+      expect(result.status).toBe('in_transit');
+      expect(result.current_stage).toBeUndefined();
+    }
+  });
+
   it.each([
     ['1', 'in_transit', 'in_transit'],
     ['2', 'out_for_delivery', 'ready_for_pickup'],

@@ -19,6 +19,15 @@ function parcel(tuNo = NUMBER): JsonObject {
 afterEach(() => vi.restoreAllMocks());
 
 describe('GLS Germany', () => {
+  it('does not stringify a structured owner code into the detail request', async () => {
+    const overview = { ...parcel(), owners: [{ type: 'REQUEST', code: ['DE01'] }] };
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(Response.json({ tuStatus: [overview] }))
+      .mockResolvedValueOnce(Response.json(parcel()));
+    await new GLSGermanyTracker({ fetcher }).fetch(NUMBER, '00000');
+    expect(new URL(String(fetcher.mock.calls[1]![0])).searchParams.has('tuOwnerCode')).toBe(false);
+  });
+
   it('resolves the Track ID then uses the five-digit postcode and verifies the detail identity', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(new Response(JSON.stringify({ tuStatus: [parcel()] })))

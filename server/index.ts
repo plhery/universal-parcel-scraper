@@ -84,10 +84,13 @@ async function body(request: IncomingMessage): Promise<Record<string, unknown>> 
   if (Number(request.headers['content-length']) > limit) throw new HttpError(413, 'Request body is too large');
   const chunks: Buffer[] = [];
   let length = 0;
-  for await (const chunk of request) {
-    length += chunk.length;
+  const stream: AsyncIterable<unknown> = request;
+  for await (const chunk of stream) {
+    if (typeof chunk !== 'string' && !Buffer.isBuffer(chunk)) throw new HttpError(400, 'Invalid request body');
+    const bytes = Buffer.from(chunk);
+    length += bytes.length;
     if (length > limit) throw new HttpError(413, 'Request body is too large');
-    chunks.push(Buffer.from(chunk));
+    chunks.push(bytes);
   }
   let parsed: unknown;
   try { parsed = JSON.parse(Buffer.concat(chunks).toString('utf8')); }
@@ -209,7 +212,7 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     finally { pending.delete(key); }
   }
 
-  const server = createServer(async (request, response) => {
+  async function handleRequest(request: IncomingMessage, response: ServerResponse): Promise<void> {
     const started = performance.now();
     let route = 'unknown';
     response.on('finish', () => {
@@ -263,6 +266,9 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
         json(response, 502, { error: 'Tracking is temporarily unavailable' });
       }
     }
+  }
+  const server = createServer((request, response) => {
+    void handleRequest(request, response).catch(() => response.destroy());
   });
   server.requestTimeout = 15_000;
   server.headersTimeout = 10_000;

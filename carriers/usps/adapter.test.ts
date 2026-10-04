@@ -39,8 +39,8 @@ describe('USPS international numbers', () => {
     expect(new URL(uspsTrackingUrl(raw)).searchParams.get('tLabels')).toBe(expected);
   });
 
-  it.each(['LZ123456789CN', 'LZ123456789US', 'LZ12345678CN', 'LZ123456785C'])
-    ('rejects invalid international number %s before making a request', async (number) => {
+  it.each(['LZ123456789CN', 'LZ123456789US', 'LZ12345678CN', 'LZ123456785C'])(
+    'rejects invalid international number %s before making a request', async (number) => {
       const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
       const lookup = new USPSTracker({ trawlUrl: TRAWL_URL }).fetch(number);
       await expect(lookup).rejects.toThrow('checksum-valid UPU S10');

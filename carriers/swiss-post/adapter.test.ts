@@ -88,6 +88,22 @@ describe('Swiss Post historical event codes', () => {
 });
 
 describe('Swiss Post projection', () => {
+  it('ignores structured text without stringifying it into shipment data', () => {
+    const result = parseSwissPostShipment({ globalStatus: ['DELIVERED'], shipmentNumber: ['993412345612345678'],
+      internationalBarcode: ['RA123456785CH'], lastEventDateTime: ['2026-01-01'], calculatedDeliveryDate: ['2026-01-02'] }, [
+      { eventCode: ['PARCEL.*.1.1003'], timestamp: '2026-01-01T12:00:00Z' },
+      { eventCode: 'PARCEL.*.1.1003', timestamp: ['2026-01-01T12:00:00Z'] },
+    ]);
+    expect(result).toMatchObject({ status: 'in_transit', last_status_text: '', last_update: null, expected_delivery: null, events: [] });
+    expect(result.canonical_tracking_number).toBeUndefined();
+    expect(result.international_tracking_number).toBeUndefined();
+    const numeric = parseSwissPostShipment({ shipmentNumber: 12345678 }, [
+      { eventCode: 'PARCEL.*.1.1003', timestamp: '2026-01-01T12:00:00Z', city: 'Test  Depot', zip: 1000 },
+    ]);
+    expect(numeric.canonical_tracking_number).toBe('12345678');
+    expect(numeric.events?.[0]?.location).toBe('Test  Depot 1000');
+  });
+
   it('covers every capability declared in carrier.json', () => {
     expect(capabilities).toEqual(['history', 'location', 'eta', 'provider_code']);
     const { shipment, events, translations } = outForDelivery();

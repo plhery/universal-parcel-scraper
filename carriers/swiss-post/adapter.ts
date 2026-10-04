@@ -37,7 +37,8 @@ export interface SwissPostOptions {
  * deliberately not used here.
  */
 function text(value: unknown, limit = 500): string {
-  return String(value ?? '').trim().slice(0, limit);
+  return typeof value === 'string' || (typeof value === 'number' && Number.isFinite(value))
+    ? String(value).trim().slice(0, limit) : '';
 }
 
 /** Whether the lookup was cancelled or has spent its budget, rather than a request failing on its own. */
@@ -46,7 +47,7 @@ function ended(budget: LookupBudget): boolean {
 }
 
 function comparableShipmentNumber(value: unknown): string {
-  return String(value ?? '').replace(/[\s.-]/g, '').toUpperCase();
+  return text(value, 64).replace(/[\s.-]/g, '').toUpperCase();
 }
 
 function datePart(value: unknown): string | null {

@@ -36,7 +36,7 @@ function safeLocation(raw: string): string {
   const value = clean(raw, 100);
   // Free-form places can contain the recipient address. Retain only the
   // established operational-depot label with a repeated department code.
-  return /^([\p{Letter}\p{Mark} .'\/-]{1,70}) (\d{2,3}) \(\2\)$/u.test(value) ? value : '';
+  return /^([\p{Letter}\p{Mark} .'/-]{1,70}) (\d{2,3}) \(\2\)$/u.test(value) ? value : '';
 }
 
 export function parseCiblexTrackingHtml(html: string, raw: string): CarrierResult {

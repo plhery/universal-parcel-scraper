@@ -35,7 +35,7 @@ export function stageFor(event: JsonObject): string {
   if (/^(?:close bag|scanned into sack\/container)$/.test(text)) return 'in_transit';
   // A terminal provider code outranks an intuitive translated label.
   if (event.statusCode === 'delivered') return 'delivered';
-  const translated = trackingLanguageStage(String(event.description ?? ''));
+  const translated = trackingLanguageStage(typeof event.description === 'string' ? event.description : '');
   if (translated) return translated;
   switch (event.statusCode) {
     case 'transit': return 'in_transit';

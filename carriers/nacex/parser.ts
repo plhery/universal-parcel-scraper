@@ -89,7 +89,7 @@ export function parseNacex(html: string, raw: string): CarrierResult {
     }
     const mapped = classifyNacexStatus(label);
     const movement = mapped && ['accepted', 'in_transit', 'out_for_delivery', 'ready_for_pickup'].includes(mapped.stage);
-    const trailing = clean(cell.contents().filter((_, node) => node.type === 'text').map((_, node) => $(node).text()).get().join(' '), 300);
+    const trailing = clean(cell.contents().filter((_, node) => node.nodeType === 3).map((_, node) => $(node).text()).get().join(' '), 300);
     // The same trailing column holds a recipient after delivery. Only the
     // observed depot/locality shape of a mapped movement scan is a location.
     const locality = movement && /^\d{4}(?:-\d{1,3})?\s*-\s*([\p{L}][\p{L}\s.()-]{1,99})$/u.exec(trailing)?.[1];

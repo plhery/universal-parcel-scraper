@@ -52,6 +52,15 @@ describe('Dachser capability URL', () => {
 });
 
 describe('Dachser response normalization', () => {
+  it('does not derive identity, dates or delivery evidence from structured fields', () => {
+    expect(() => parseDachserTrackingResponse({ numUnico: [SHIPMENT_NUMBER] }, SHIPMENT_NUMBER)).toThrow('different shipment');
+    const result = parseDachserTrackingResponse({ numUnico: Number(SHIPMENT_NUMBER), estadoExpedicion: ['ENTREGADA'],
+      fechaEstado: ['2026-01-01'], fCompromiso: ['2026-01-02'],
+      incidenciaExpedicionData: [{ fechaIncidencia: ['2026-01-01'], descripcionIncidencia: 'ENTREGADA' }] }, SHIPMENT_NUMBER);
+    expect(result).toMatchObject({ status: 'unknown', last_update: null, expected_delivery: null, events: [] });
+    expect(eventLabel(['ENTREGADA']).stage).toBe('in_transit');
+  });
+
   it('keeps only normalized status and event data', () => {
     const result = parseDachserTrackingResponse(inTransit(), SHIPMENT_NUMBER);
     expect(result).toMatchObject({

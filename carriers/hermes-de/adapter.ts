@@ -55,13 +55,13 @@ export function normalizeHermesGermanyNumber(raw: string): string {
 
 export function parseHermesGermanyResponse(payload: unknown, trackingNumber: string): CarrierResult {
   const requested = normalizeHermesGermanyNumber(trackingNumber);
-  if (!Array.isArray(payload) || payload.some((entry) => !isRecord(entry))) {
+  if (!Array.isArray(payload) || !payload.every(isRecord)) {
     throw new SchemaError(CARRIER, 'Hermes Germany returned an invalid tracking response');
   }
   if (!payload.length) throw new HermesGermanyTrackingError();
   const parcels = payload.filter((entry) => entry.barcode === requested);
   if (parcels.length !== 1) throw new SchemaError(CARRIER, 'Hermes Germany returned a different or ambiguous shipment');
-  const progress: unknown = parcels[0].parcelProgress;
+  const progress = parcels[0]!.parcelProgress;
   if (!Array.isArray(progress) || !progress.length || progress.length > 500) {
     throw new SchemaError(CARRIER, 'Hermes Germany returned an invalid tracking history');
   }

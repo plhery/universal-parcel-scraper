@@ -232,7 +232,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   }
   markReturnLeg(scans);
   if (!events.length) {
-    const fields = payload.states.flatMap((raw: unknown) => isRecord(raw) && Array.isArray(raw.require_fields) ? raw.require_fields : []);
+    const fields = payload.states.flatMap((raw: unknown): unknown[] => isRecord(raw) && Array.isArray(raw.require_fields) ? raw.require_fields : []);
     if (fields.some((field: unknown) => isRecord(field) && field.name === 'zipcode')) {
       throw new InputRequiredError(SOURCE, 'postcode', 'ParcelsApp requires a valid delivery postcode or further recipient information');
     }
@@ -243,7 +243,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   // The carriers ParcelsApp aggregated for this number ("DPD Group"), as
   // discovery hints; routing confirms one with its own adapter before adopting it.
   const services = Array.isArray(payload.services) ? payload.services : [];
-  const carriers = Array.isArray(payload.carriers) ? payload.carriers : [];
+  const carriers: unknown[] = Array.isArray(payload.carriers) ? payload.carriers : [];
   const hints = universalCarrierHints([
     ...carriers, ...services.map((service: unknown) => isRecord(service) ? service.name : undefined),
   ].slice(0, 20), number);

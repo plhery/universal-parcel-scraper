@@ -284,7 +284,7 @@ export class FedExTracker {
       fetcher: this.#fetcher,
       signal,
     });
-    let captureError: unknown;
+    let captureError: Error | undefined;
     // Newest first: a later reply is the page's final answer.
     for (const entry of page.capturedResponses.slice(-MAX_CAPTURED).reverse()) {
       if (entry.url !== TRACK_API) continue;
@@ -311,7 +311,8 @@ export class FedExTracker {
         if (error instanceof InputRequiredError) throw error;
         // An unreadable or unrelated reply; the rendered page may still name a challenge.
         captureError ??= error instanceof SyntaxError
-          ? new SchemaError('FedEx', 'FedEx returned unreadable tracking JSON', { cause: error }) : error;
+          ? new SchemaError('FedEx', 'FedEx returned unreadable tracking JSON', { cause: error })
+          : error instanceof Error ? error : new SchemaError('FedEx', 'FedEx returned invalid tracking data', { cause: error });
       }
     }
     if (parseFedExTrackingHtml(page.html) === 'challenged') {

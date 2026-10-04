@@ -22,7 +22,7 @@ async function readCarrierDocuments() {
     try {
       document = JSON.parse(source);
     } catch (cause) {
-      throw new Error(`carriers/${folder}/carrier.json is not valid JSON: ${cause.message}`);
+      throw new Error(`carriers/${folder}/carrier.json is not valid JSON: ${cause.message}`, { cause });
     }
     if (document.id !== folder) {
       throw new Error(

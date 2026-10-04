@@ -58,7 +58,7 @@
     "build": "node scripts/build.mjs",
     "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings=0 --pass-on-unpruned-suppressions",
+    "lint": "eslint . --max-warnings=0",
     "test": "vitest run",
     "test:scripts": "node --test trawl/*.test.mjs scripts/*.test.mjs",
     "generate": "node scripts/generate-catalog.mjs && node scripts/generate-registry.mjs --strict && node scripts/generate-region-towns.mjs && node scripts/coverage-tables.mjs && node scripts/generate-readme.mjs",

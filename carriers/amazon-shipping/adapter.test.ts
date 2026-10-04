@@ -223,6 +223,14 @@ describe('Amazon Shipping discovery boundaries', () => {
     expect(() => parseAmazonShippingTrackingResponse({ ...deliveredFixture(), trackingId: 'FR0000000002' }, 'Europe/Paris', 'FR0000000001'))
       .toThrow('different tracking number');
   });
+  it('rejects structured identity even when it contains the requested number', () => {
+    for (const trackingId of [['FR0000000001'], { value: 'FR0000000001' }]) {
+      expect(() => parseAmazonShippingTrackingResponse({ ...deliveredFixture(), trackingId }, 'Europe/Paris', 'FR0000000001'))
+        .toThrow('different tracking number');
+    }
+    expect(parseAmazonShippingTrackingResponse({ ...deliveredFixture(), trackingId: 'FR0000000001' }, 'Europe/Paris', 'FR0000000001').status)
+      .toBe('delivered');
+  });
   it('uses the UK timezone and does not invent US timezones', () => {
     const uk = parseAmazonShippingTrackingResponse(deliveredFixture(), 'Europe/London');
     expect(uk.events?.[0]?.time).toContain('+01:00');

@@ -99,7 +99,7 @@ export function parseUkrposhtaHistory(payload: unknown, overview: UkrposhtaOverv
   // Both native histories are current-first. Keep that order across foreign
   // wall clocks or missing dates instead of sorting them as UTC instants.
   let returnLeg = false;
-  const events: CarrierEvent[] = Array(rows.length);
+  const events = new Array<CarrierEvent>(rows.length);
   for (let index = rows.length - 1; index >= 0; index--) {
     const row = rows[index]!;
     if (ukrposhtaReturnCue(row.label)) returnLeg = true;

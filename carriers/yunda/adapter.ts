@@ -41,9 +41,9 @@ export class YundaTracker {
           throw error;
         }
       };
-      const type = yundaEnvelope(await request('/index.php/api/order.record/captcha_type?' + params));
+      const type = yundaEnvelope(await request('/index.php/api/order.record/captcha_type?' + params.toString()));
       if (type.data !== 1) throw new ChallengeError('Yunda Express', 'Yunda requires an unsupported verification type');
-      const captcha = yundaEnvelope(await request('/index.php/api/order.record/captcha?' + params));
+      const captcha = yundaEnvelope(await request('/index.php/api/order.record/captcha?' + params.toString()));
       if (!isRecord(captcha.data)) throw new SchemaError('Yunda Express');
       const coordinate = await solveYundaSlider(captcha.data, signal);
       signal.throwIfAborted();

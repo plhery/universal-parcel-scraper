@@ -208,7 +208,7 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   const identitySummary = isRecord(progress.summary) ? progress.summary : {};
   const identityMetadata = isRecord(identitySummary.metadata) ? identitySummary.metadata : {};
   for (const identity of [payload.trackingId, payload.trackingID, progress.trackingId, metadataValue(identityMetadata, 'trackingId')]) {
-    if (trackingNumber && identity != null && String(identity).toUpperCase() !== trackingNumber) {
+    if (trackingNumber && identity != null && (typeof identity !== 'string' || identity.toUpperCase() !== trackingNumber)) {
       throw new SchemaError(PROVIDER, 'Amazon Shipping returned a different tracking number');
     }
   }

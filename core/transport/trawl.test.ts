@@ -43,6 +43,11 @@ describe('TrawlClient.scrape', () => {
   it('turns service errors and unsolved tiers into transport errors, and page statuses into HTTP errors', async () => {
     const client = (payload: unknown) => new TrawlClient('http://trawl:8191', jsonFetcher(payload));
     await expect(client({ error: 'browser crashed' }).scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({ name: 'TrawlError', kind: 'transport', message: 'browser crashed' });
+    for (const error of [{ message: 'browser crashed' }, ['browser crashed']]) {
+      await expect(client({ error }).scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({
+        kind: 'transport', message: 'The browser service could not fetch the page',
+      });
+    }
     await expect(client({ html: '<html/>', tier: 1, statusCode: 200 }).scrape({ url: 'https://e.test' }, options)).rejects.toBeInstanceOf(TrawlError);
     await expect(client({ html: '<html/>', tier: 3, statusCode: 429 }).scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({ kind: 'rate_limited' });
     await expect(client({ html: '<html/>', tier: 3, statusCode: 404 }).scrape({ url: 'https://e.test' }, options)).rejects.toBeInstanceOf(UpstreamHttpError);

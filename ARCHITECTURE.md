@@ -48,6 +48,10 @@ its only way to the network, and no framework or app import is allowed. The regi
 one adapter per process, on first use, so a carrier that fails to load cannot take the others
 down with it.
 
+Shared text helpers accept strings and, for scalar codes and identifiers, finite numbers.
+Adapters check required payload fields before projecting them; objects and arrays cannot
+supply shipment identity, scan text or status codes.
+
 Every adapter passes the caller's signal and budget into each request it makes. An adapter
 that names a client uses the host's `userAgent`, and one whose carrier only answers a browser
 keeps its own. `testing/adapterContext.test.ts` holds both by driving every registered adapter

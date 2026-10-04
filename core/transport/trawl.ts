@@ -10,7 +10,7 @@
  */
 import { CarrierError, UpstreamHttpError, type CarrierErrorOptions } from '../errors/index.js';
 import { decodeText, fetchBounded, parseJsonBytes } from './boundedFetch.js';
-import { clean } from './text.js';
+import { cleanScalar } from './text.js';
 import { isRecord, type JsonObject } from '../types.js';
 
 export interface TrawlScrapeRequest extends JsonObject {
@@ -228,7 +228,7 @@ export class TrawlClient {
     const value = parseJsonBytes(bytes, options.provider);
     if (!isRecord(value)) throw new TrawlError(options.provider, 'The browser service returned an invalid response');
     if (value.error) {
-      throw new TrawlError(options.provider, clean(String(value.error), 200) || 'The browser service could not fetch the page');
+      throw new TrawlError(options.provider, cleanScalar(value.error, 200) || 'The browser service could not fetch the page');
     }
     const statusCode = Number(value.statusCode);
     if (Number.isInteger(statusCode) && statusCode >= 400) throw new UpstreamHttpError(options.provider, statusCode);

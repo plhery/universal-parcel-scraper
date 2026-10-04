@@ -53,6 +53,16 @@ describe('Poste Italiane tracking normalization', () => {
 });
 
 describe('Poste Italiane response parsing', () => {
+  it('uses scalar envelope codes without treating an array as delivered', () => {
+    const active = { listaMovimenti: [movement('la spedizione è in transito presso', Date.UTC(2026, 0, 2))] };
+    for (const stato of ['5', 5]) {
+      expect(parsePosteItalianeTrackingResponse(parcel({ ...active, stato }), TRACKING_NUMBER).status).toBe('delivered');
+    }
+    for (const stato of [['5'], { value: '5' }]) {
+      expect(parsePosteItalianeTrackingResponse(parcel({ ...active, stato }), TRACKING_NUMBER).status).toBe('in_transit');
+    }
+  });
+
   it('returns delivered history newest-first with UTC epoch times', () => {
     const result = parsePosteItalianeTrackingResponse(parcel(), TRACKING_NUMBER);
     expect(result).toMatchObject({

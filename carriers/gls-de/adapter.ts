@@ -2,7 +2,7 @@
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import {
   glsSwitzerlandDetailApiUrl,
@@ -74,7 +74,7 @@ export class GLSGermanyTracker {
     const owners = Array.isArray(parcel.owners) ? parcel.owners.filter(isRecord) : [];
     const owner = owners.find((row) => row.type === 'REQUEST');
     const detail = await this.request(glsSwitzerlandDetailApiUrl(
-      String(parcel.tuNo), postcode, this.now(), String(owner?.code ?? ''), '4,5',
+      String(parcel.tuNo), postcode, this.now(), cleanScalar(owner?.code, 64), '4,5',
     ), budget);
     try {
       const result = parseGLSSwitzerlandTrackingResponse(detail, String(parcel.tuNo));

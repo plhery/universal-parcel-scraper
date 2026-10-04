@@ -14,7 +14,7 @@ const html = readFileSync(new URL('./fixtures/history.html', import.meta.url), '
 const bootstrap = '<form name="seguimientoFormulario" method="post" action="/seguimientoFormulario.do;jsessionid=synthetic.server:node-route"><input name="agencia_origen"><input name="numero_albaran"></form>';
 const negative = '<div class="Z3"><h2>Formulario de Seguimiento</h2><div class="t9">No existe ningún albarán introducido en el sistema cumpliendo los criterios especificados.<br>Consulte con su agencia NACEX más cercana.</div></div>';
 const detailPath = (number = NUMBER) => { const [agency, albaran] = number.split('/') as [string, string];
-  return '/seguimientoDetalle.do?' + new URLSearchParams({ agencia_origen: agency, numero_albaran: albaran, estado: '1', internacional: '0', externo: 'N', usr: 'null', pas: 'null' }); };
+  return '/seguimientoDetalle.do?' + new URLSearchParams({ agencia_origen: agency, numero_albaran: albaran, estado: '1', internacional: '0', externo: 'N', usr: 'null', pas: 'null' }).toString(); };
 const response = (body = html, headers: HeadersInit = {}) => new Response(Buffer.from(body, 'latin1'), { headers: { 'Content-Type': 'text/html; charset=ISO-8859-1', ...Object.fromEntries(new Headers(headers)) } });
 const freshSession = () => response(bootstrap, { 'Set-Cookie': 'JSESSIONID="synthetic.server:first-route"; Path=/; HttpOnly' });
 const redirect = (location = detailPath()) => new Response(null, { status: 302, headers: { Location: location, 'Set-Cookie': 'JSESSIONID=synthetic-second; Path=/; HttpOnly' } });

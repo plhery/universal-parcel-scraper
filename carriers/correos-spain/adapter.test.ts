@@ -52,6 +52,13 @@ describe('Correos Spain tracking normalization', () => {
 });
 
 describe('Correos Spain response parsing', () => {
+  it('accepts numeric result codes and rejects structured or boolean codes', () => {
+    expect(parseCorreosSpainTrackingResponse([envelope({ error: { codError: 0 } })], TRACKING_NUMBER).status).toBe('delivered');
+    for (const codError of [[0], { value: 0 }, false, Infinity]) {
+      expect(() => parseCorreosSpainTrackingResponse([envelope({ error: { codError } })], TRACKING_NUMBER)).toThrow(SchemaError);
+    }
+  });
+
   it('returns delivered history newest-first with Madrid timestamps', () => {
     const result = parseCorreosSpainTrackingResponse([envelope()], TRACKING_NUMBER);
     expect(result).toMatchObject({

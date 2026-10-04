@@ -492,7 +492,7 @@ export class IndiaPostTracker {
     const initial = initialTrackComponent(page.html, normalized);
     if (initial.status === 'Completed') {
       const cached = parseIndiaPostTrackingHtml(page.html, normalized);
-      const syncedAt = Date.parse(String(cached.source_synced_at ?? ''));
+      const syncedAt = typeof cached.source_synced_at === 'string' ? Date.parse(cached.source_synced_at) : NaN;
       if (Number.isFinite(syncedAt) && this.now().getTime() - syncedAt < REFRESH_AFTER_MS) return cached;
       // What the page's Refresh button sends. A failed refresh still leaves
       // the cached history, which is better than no answer.

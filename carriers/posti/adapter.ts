@@ -144,7 +144,7 @@ export class PostiTracker {
       if (refresh || !this.session || this.session.expiresAt <= Date.now() + 30_000) {
         this.session = undefined;
         const token = await request(TOKEN_URL, { method: 'POST' }, step);
-        const role = isRecord(token) && Array.isArray(token.role_tokens)
+        const role: unknown = isRecord(token) && Array.isArray(token.role_tokens)
           ? token.role_tokens.find((value) => isRecord(value) && value.type === 'anonymous') : undefined;
         if (!isRecord(token) || typeof token.id_token !== 'string' || !token.id_token
           || !isRecord(role) || typeof role.token !== 'string' || !role.token) {

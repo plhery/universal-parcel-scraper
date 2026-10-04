@@ -61,13 +61,14 @@ export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumb
   const requested = normalizeCorreosSpainTrackingNumber(trackingNumber);
   // The endpoint answers a single-element array; bare objects are accepted too
   // since some error bodies come back unwrapped.
-  const envelope = Array.isArray(payload) ? payload[0] : payload;
+  const envelope: unknown = Array.isArray(payload) ? payload[0] : payload;
   if (!isRecord(envelope)) throw new SchemaError('Correos', 'Correos returned an invalid tracking response');
   const returned = clean(envelope.codEnvio, 64).toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!returned) throw new SchemaError('Correos', 'Correos did not return a shipment identifier');
   if (returned !== requested) throw new SchemaError('Correos', 'Correos returned a different shipment');
   const error = envelope.error;
-  if (!isRecord(error) || error.codError == null) {
+  if (!isRecord(error) || (typeof error.codError !== 'string'
+    && (typeof error.codError !== 'number' || !Number.isFinite(error.codError)))) {
     throw new SchemaError('Correos', 'Correos returned a response without a result envelope');
   }
   // Any non-zero codError (e.g. "3" Sin Trazabilidad) means unknown or

@@ -58,7 +58,7 @@ export function parseEstafetaLookup(html: string, rawNumber: string): EstafetaLo
   if (controls.length !== 1 || controls.attr('data-shipment-index') !== guide) throw new SchemaError('Estafeta', 'Estafeta returned a different history target');
   const state = cards.find('.stateDescription.fontColorCurrentProcess');
   const messages = cards.find('.fontColorCurrentProcessMessage');
-  const parts = messages.contents().filter((_, node) => node.type === 'text').map((_, node) => clean($(node).text(), 100)).get().filter(Boolean);
+  const parts = messages.contents().filter((_, node) => node.nodeType === 3).map((_, node) => clean($(node).text(), 100)).get().filter(Boolean);
   if (state.length !== 1 || messages.length !== 1 || parts.length < 2) throw new SchemaError('Estafeta', 'Estafeta returned incomplete latest activity');
   return { number, guide, state: clean(state.text(), 200), latestClock: parts[0]!, latestDate: parts[1]! };
 }

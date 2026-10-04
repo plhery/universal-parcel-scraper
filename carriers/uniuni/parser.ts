@@ -76,9 +76,10 @@ export function parseUniuni(payload: unknown, rawNumber: string): CarrierResult 
   if (!Array.isArray(item.spath_list) || item.spath_list.length > 500) throw new SchemaError(PROVIDER);
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
+  const scans: unknown[] = item.spath_list;
   // The public client displays this oldest-first list in reverse. Keep that
   // sequence when the newest clock is incomplete, including equal-time scans.
-  for (const scan of [...item.spath_list].reverse()) {
+  for (const scan of [...scans].reverse()) {
     if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'UniUni returned an incomplete scan');
     const description = clean(scan.description_en, 500);
     if (!description || typeof scan.state !== 'number' || !Number.isSafeInteger(scan.state) || scan.state < 0) {

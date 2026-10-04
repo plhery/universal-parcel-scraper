@@ -484,7 +484,7 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
 }
 
 function durationSeconds(value: unknown, fallback: number): number {
-  const match = /^(\d+)s?$/.exec(String(value ?? ''));
+  const match = /^(\d+)s?$/.exec(typeof value === 'string' || typeof value === 'number' ? String(value) : '');
   return match ? Number(match[1]) : fallback;
 }
 

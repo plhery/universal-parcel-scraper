@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { IndeterminateError } from '../../core/errors/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { UPSTracker, parseUPSTrackingHtml, parseUPSTrackingResponse, upsTrackingUrl } from './adapter.js';
 import { UPS_PROGRESS_STATUS, upsStatus } from './status.js';
@@ -58,6 +59,13 @@ describe('UPS status vocabulary', () => {
 });
 
 describe('UPS structured response', () => {
+  it('accepts scalar success codes and rejects structured codes', () => {
+    expect(parseUPSTrackingResponse({ ...fixture(), statusCode: 200 }, TRACKING_NUMBER, TODAY).status).toBe('out_for_delivery');
+    for (const statusCode of [[200], { value: 200 }]) {
+      expect(() => parseUPSTrackingResponse({ ...fixture(), statusCode }, TRACKING_NUMBER, TODAY)).toThrow(IndeterminateError);
+    }
+  });
+
   it('projects the scan history and prefers the UTC pair for each scan', () => {
     const result = parseUPSTrackingResponse(fixture(), TRACKING_NUMBER, TODAY);
     expect(result).toMatchObject({

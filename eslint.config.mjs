@@ -5,8 +5,6 @@ import tseslint from 'typescript-eslint';
 
 const unsafe = ['assignment', 'member-access', 'call', 'return', 'argument'].map(name => `@typescript-eslint/no-unsafe-${name}`);
 
-// Violations that predate these rules are listed in eslint-suppressions.json; new code has none.
-// After fixing some, `npx eslint . --prune-suppressions` drops their entries.
 export default defineConfig(
   { ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'generated/**', '.private/**'] },
   { files: ['**/*.ts', '**/*.mjs'], extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],

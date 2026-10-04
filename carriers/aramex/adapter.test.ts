@@ -74,8 +74,8 @@ describe('Aramex direct tracking', () => {
     expect(fetcher.mock.calls.map(c => new Headers(c[1]?.headers).get('user-agent')))
       .toEqual([DEFAULT_USER_AGENT, DEFAULT_USER_AGENT, DEFAULT_USER_AGENT]);
   });
-  it.each(['https://example.invalid/ae/en/track/details?q=synthetic', '/ae/en/track/details?q=other', '/ae/en/login?q=synthetic'])
-    ('rejects an unbound detail redirect: %s', async location => {
+  it.each(['https://example.invalid/ae/en/track/details?q=synthetic', '/ae/en/track/details?q=other', '/ae/en/login?q=synthetic'])(
+    'rejects an unbound detail redirect: %s', async location => {
       const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(overview()))
         .mockResolvedValueOnce(new Response(null, { status: 302, headers: { Location: location } }));
       await expect(new AramexTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });

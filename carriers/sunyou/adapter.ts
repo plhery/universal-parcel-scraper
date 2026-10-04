@@ -16,7 +16,7 @@ import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import { cleanScalar, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { sunYouStatus } from './status.js';
 
@@ -107,7 +107,7 @@ export function parseSunYouTrackingResponse(value: unknown, trackingNumber: stri
   if (identified.length === 0) throw new SchemaError(PROVIDER, 'SunYou did not return a shipment identifier');
   const item = identified.find((candidate) => comparableIdentifier(candidate.orderNo) === requested);
   if (!item) throw new SchemaError(PROVIDER, 'SunYou returned a different shipment');
-  const displayStatus = String(item.displayStatus ?? '');
+  const displayStatus = cleanScalar(item.displayStatus, 16);
   if (displayStatus === '0') throw new NotFoundError(PROVIDER);
   if (item.has !== true) throw new NotFoundError(PROVIDER);
   const result = record(item.result);

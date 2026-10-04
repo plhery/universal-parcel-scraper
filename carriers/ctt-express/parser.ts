@@ -44,9 +44,10 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   // Official label specification: 22 shipment digits + 3 parcel-counter digits.
   if (history.item_code !== `${requested}001`) throw new SchemaError('CTT Express', 'CTT Express returned a different package');
   const events: CarrierEvent[] = [];
+  const rows: unknown[] = history.events;
   // Newest provider positions win equal-clock ties. Preserve duplicates until
   // their chronological leg is known so an earlier return start is not lost.
-  for (const row of [...history.events].reverse()) {
+  for (const row of [...rows].reverse()) {
     if (!isRecord(row) || row.type !== 'STATUS' || !['ITEM_STATUS_V2', 'ITEM_STATUS_CHANGE_V1'].includes(clean(row.source, 64))) {
       throw new SchemaError('CTT Express', 'CTT Express returned an unsupported scan source');
     }

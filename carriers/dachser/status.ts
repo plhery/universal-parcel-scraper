@@ -13,7 +13,7 @@ import type { Stage } from '../../generated/catalog.js';
 
 /** Lower-cased, accent-free text, for language-independent matching. */
 export function plainText(raw: unknown): string {
-  return String(raw ?? '')
+  return (typeof raw === 'string' ? raw : '')
     .toLocaleLowerCase()
     .normalize('NFKD')
     .replace(/\p{M}/gu, '');

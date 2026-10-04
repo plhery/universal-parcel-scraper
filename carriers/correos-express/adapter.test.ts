@@ -149,7 +149,7 @@ describe('Correos Express direct tracking', () => {
   it('validates calendar estimates and omits stale, unresolved and incident promises', () => {
     for (const estimate of ['31 Feb 2026', '03 Ene 2026', '06 Xxx 2026', 'Unknown']) {
       const changed = edit($ => { const heading = $('h3.status');
-        heading.contents().filter((_, node) => node.type === 'text').remove();
+        heading.contents().filter((_, node) => node.nodeType === 3).remove();
         heading.append('Entrega prevista: Martes, ' + estimate);
       });
       expect(parseCorreosExpress(changed, NUMBER).expected_delivery).toBeNull();

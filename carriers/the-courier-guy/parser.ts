@@ -29,7 +29,7 @@ export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierRes
   if (!isRecord(payload) || !Array.isArray(payload.shipments)) throw new SchemaError('The Courier Guy');
   if (!payload.shipments.length) throw new IndeterminateError('The Courier Guy', 'No identity-bound shipment history');
   if (payload.shipments.length !== 1) throw new IndeterminateError('The Courier Guy', 'Ambiguous shipment match');
-  const shipment = payload.shipments[0];
+  const shipment: unknown = payload.shipments[0];
   if (!isRecord(shipment) || shipment.provider_id !== 7
     || typeof shipment.short_tracking_reference !== 'string' || !/^[A-Z0-9]{5,40}$/.test(shipment.short_tracking_reference)
     || (shipment.short_tracking_reference !== number
@@ -40,8 +40,9 @@ export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierRes
     || !Array.isArray(shipment.tracking_events) || shipment.tracking_events.length > 500) throw new SchemaError('The Courier Guy');
   // Cancelled, never-collected DD bookings omit their count. This bounded
   // precollection timeline cannot complete a delivered or moving shipment.
+  const customReference = shipment.custom_tracking_reference;
   const cancelledCollection = shipment.parcel_count == null && shipment.status === 'cancelled'
-    && typeof shipment.custom_tracking_reference === 'string' && /^DD-[A-Z0-9]{6}$/.test(shipment.custom_tracking_reference)
+    && typeof customReference === 'string' && /^DD-[A-Z0-9]{6}$/.test(customReference)
     && Array.isArray(shipment.parcel_tracking_references)
     && shipment.parcel_tracking_references.length === 1
     && shipment.tracking_events.every(row => isRecord(row) && row.parcel_id === 0
@@ -50,7 +51,7 @@ export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierRes
     || !shipment.parcel_tracking_references.length
     || shipment.parcel_tracking_references.length > 500
     || shipment.parcel_tracking_references.some(ref => typeof ref !== 'string'
-      || (!/^[A-Z0-9]{5,40}$/.test(ref) && !(cancelledCollection && ref === `${shipment.custom_tracking_reference}/1`)))
+      || (!/^[A-Z0-9]{5,40}$/.test(ref) && !(cancelledCollection && ref === `${customReference}/1`)))
     || new Set(shipment.parcel_tracking_references).size !== shipment.parcel_tracking_references.length) throw new SchemaError('The Courier Guy', 'Invalid shipment pieces');
   if (!cancelledCollection && (!Number.isSafeInteger(shipment.parcel_count) || (shipment.parcel_count as number) < 1
     || shipment.parcel_tracking_references.length !== shipment.parcel_count)) throw new SchemaError('The Courier Guy', 'Invalid shipment pieces');

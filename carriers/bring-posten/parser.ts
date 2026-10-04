@@ -38,14 +38,14 @@ export function parseBring(payload: unknown, rawNumber: string): CarrierResult {
   if (!isRecord(consignment) || !Array.isArray(consignment.packageSet)) throw new SchemaError('Bring');
   if (consignment.numberOfConsignmentItems !== 1 || consignment.packageSet.length !== 1
     || !isRecord(consignment.domain) || consignment.domain.isMultiParcel !== false) throw new IndeterminateError('Bring', 'No complete single-piece consignment');
-  const parcel = consignment.packageSet[0];
+  const parcel: unknown = consignment.packageSet[0];
   if (!isRecord(parcel) || typeof parcel.brand !== 'string' || !['POSTEN', 'BRING'].includes(parcel.brand)
     || typeof consignment.consignmentId !== 'string' || typeof parcel.packageNumber !== 'string'
     || (consignment.consignmentId !== number && parcel.packageNumber !== number)) throw new SchemaError('Bring', 'Different consignment or parcel');
   if (!isRecord(parcel.domain) || !isRecord(parcel.domain.latestSignificantEvent)
     || !Array.isArray(parcel.eventSet) || parcel.eventSet.length > 500) throw new SchemaError('Bring');
   const summary = parcel.domain.latestSignificantEvent;
-  const significant = parcel.eventSet.find(row => isRecord(row) && row.insignificant === false);
+  const significant: unknown = parcel.eventSet.find(row => isRecord(row) && row.insignificant === false);
   if (!isRecord(significant) || summary.insignificant !== false
     || ['status', 'dateIso', 'lmEventCode', 'city'].some(key => summary[key] !== significant[key])) {
     throw new IndeterminateError('Bring', 'Latest significant scan does not match the public summary');

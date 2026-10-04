@@ -33,10 +33,11 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
   if (!item.waybillProcessInfo.length) throw new IndeterminateError(PROVIDER, 'YTO returned no shipment history');
 
   const events: CarrierEvent[] = [];
+  const history: unknown[] = item.waybillProcessInfo;
   let returning = false;
   // The official client uses the first row as current. Read oldest first to
   // preserve a return leg when later scans use ordinary movement/signature codes.
-  for (const raw of [...item.waybillProcessInfo].reverse()) {
+  for (const raw of [...history].reverse()) {
     if (!isRecord(raw) || normalizeTrackingNumber(clean(raw.waybillNo, 64)) !== number) {
       throw new SchemaError(PROVIDER, 'YTO returned mixed or incomplete shipment history');
     }

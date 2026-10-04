@@ -117,7 +117,7 @@ export function parseHeppnerCapability(
   ) {
     throw new SchemaError('Heppner', 'Heppner returned an invalid tracking capability');
   }
-  let decoded = '';
+  let decoded: string;
   try {
     decoded = Buffer.from(capability, 'base64').toString('utf8');
   } catch (error) {

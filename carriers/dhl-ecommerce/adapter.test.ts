@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { CarrierResult } from '../../core/result/index.js';
 import { UpstreamHttpError } from '../../core/transport/index.js';
 import * as trackingBrowser from '../../core/transport/browser.js';
+import { stageFor } from './status.js';
 import {
   DHLEcommerceSessionError, DHLEcommerceTracker, dhlEcommerceTrackingUrl,
   normalizeDHLEcommerceNumber, parseDHLEcommerceResponse,
@@ -29,6 +30,12 @@ function shipment(): Payload {
 afterEach(() => vi.restoreAllMocks());
 
 describe('DHL eCommerce normalization', () => {
+  it('requires text before using a translated delivery label', () => {
+    expect(stageFor({ description: ['Delivered'], statusCode: 'transit' })).toBe('in_transit');
+    expect(stageFor({ description: { text: 'Delivered' }, statusCode: 'transit' })).toBe('in_transit');
+    expect(stageFor({ description: ['unknown'], statusCode: 'delivered' })).toBe('delivered');
+  });
+
   it('reads aliases, converts local timestamps, keeps announcement stages and discards private fields', () => {
     const result = parseDHLEcommerceResponse(shipment());
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-09-09T03:40:17.000Z', expected_delivery: '2026-09-14' });

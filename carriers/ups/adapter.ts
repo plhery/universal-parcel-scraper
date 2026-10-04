@@ -272,12 +272,12 @@ export function parseUPSTrackingResponse(
   today = new Date(),
 ): CarrierResult {
   if (!isRecord(payload)) throw new SchemaError('UPS');
-  if (String(payload.statusCode ?? '') !== '200') {
+  if (payload.statusCode !== '200' && payload.statusCode !== 200) {
     throw new IndeterminateError('UPS', clean(payload.statusText) || 'UPS tracking is unavailable');
   }
   if (!Array.isArray(payload.trackDetails) || payload.trackDetails.length === 0) return notLocated();
   const expected = trackingNumber.toUpperCase();
-  const detail = payload.trackDetails.find((item) => isRecord(item)
+  const detail: unknown = payload.trackDetails.find((item) => isRecord(item)
     && cleanScalar(item.trackingNumber ?? item.requestedTrackingNumber).toUpperCase() === expected)
     ?? payload.trackDetails[0];
   if (!isRecord(detail)) throw new SchemaError('UPS');
@@ -472,7 +472,7 @@ export class UPSTracker {
       fetcher: this.#fetcher,
       signal,
     });
-    let captureError: unknown;
+    let captureError: Error | undefined;
     // Newest first: a later reply is the page's final answer.
     for (const entry of page.capturedResponses.slice(0, MAX_CAPTURED).reverse()) {
       if (entry.url !== STATUS_API || entry.status !== 200 || entry.truncated || entry.body === null) continue;
@@ -480,7 +480,7 @@ export class UPSTracker {
         return this.#structuredResult(number, JSON.parse(entry.body));
       } catch (error) {
         // An unreadable or unrelated reply; the rendered page may still answer.
-        captureError = error;
+        captureError = error instanceof Error ? error : new SchemaError('UPS', 'UPS returned invalid tracking data', { cause: error });
       }
     }
     try {

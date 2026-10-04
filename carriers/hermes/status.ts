@@ -37,7 +37,7 @@ export const HERMES_STATUS = new Map<number, CarrierStatus>([
 ]);
 
 function normalizedText(raw: unknown): string {
-  return String(raw ?? '').toLocaleLowerCase('de-DE').normalize('NFKD').replace(/\p{M}/gu, '');
+  return (typeof raw === 'string' ? raw : '').toLocaleLowerCase('de-DE').normalize('NFKD').replace(/\p{M}/gu, '');
 }
 
 export function hermesStatus(rawStatusId: unknown, rawDescription: unknown = ''): CarrierStatus {

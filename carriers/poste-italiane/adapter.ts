@@ -123,7 +123,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   // Envelope stato "5" forces delivered; otherwise the newest mapped event wins
   // and unmapped wording stays unknown with its raw text preserved.
-  if (String(payload.stato ?? '') === '5') {
+  if (payload.stato === '5' || payload.stato === 5) {
     return {
       status: 'delivered',
       current_stage: 'delivered',

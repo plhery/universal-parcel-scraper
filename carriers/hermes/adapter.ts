@@ -1,7 +1,7 @@
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { hermesEventStage, hermesStatus } from './status.js';
 
@@ -22,7 +22,7 @@ export interface HermesOptions {
 }
 
 function normalizeHermesTrackingNumber(raw: unknown): string {
-  return String(raw ?? '').replace(/[\s.-]/g, '').toUpperCase();
+  return cleanScalar(raw, 64).replace(/[\s.-]/g, '').toUpperCase();
 }
 
 export function parseHermesTrackingResponse(
@@ -59,21 +59,24 @@ export function parseHermesTrackingResponse(
     && order.auftragsart == null
     && order.statusjourneyDto == null
   ) throw new NotFoundError(PROVIDER);
-  const meaningfulEvents = rawEvents.filter((event) => (
-    String(event.sendungsstatus ?? '').trim()
-    && String(event.sendungsstatusBuchungszeitpunkt ?? '').trim()
-  ));
-  meaningfulEvents.sort((left, right) => String(right.sendungsstatusBuchungszeitpunkt ?? '')
-    .localeCompare(String(left.sendungsstatusBuchungszeitpunkt ?? '')));
+  const meaningfulEvents = rawEvents.flatMap((event) => {
+    const description = event.sendungsstatus;
+    const time = event.sendungsstatusBuchungszeitpunkt;
+    if ((description != null && typeof description !== 'string') || (time != null && typeof time !== 'string')) {
+      throw new SchemaError(PROVIDER, 'Hermes returned invalid tracking history');
+    }
+    return description?.trim() && time?.trim() ? [{ description, time, statusId: event.sendungsstatusId }] : [];
+  });
+  meaningfulEvents.sort((left, right) => right.time.localeCompare(left.time));
   const events = meaningfulEvents.map((event) => ({
-    time: String(event.sendungsstatusBuchungszeitpunkt ?? ''),
+    time: event.time,
     location: '',
-    description: String(event.sendungsstatus),
-    stage: hermesEventStage(event.sendungsstatusId, event.sendungsstatus),
+    description: event.description,
+    stage: hermesEventStage(event.statusId, event.description),
   }));
   return {
     status: meaningfulEvents[0]
-      ? hermesStatus(meaningfulEvents[0].sendungsstatusId, meaningfulEvents[0].sendungsstatus)
+      ? hermesStatus(meaningfulEvents[0].statusId, meaningfulEvents[0].description)
       : 'pending',
     last_status_text: events[0]?.description ?? '',
     last_update: events[0]?.time || null,
