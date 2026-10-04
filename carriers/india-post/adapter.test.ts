@@ -9,6 +9,7 @@ import {
   parseIndiaPostTrackingHtml,
 } from './adapter.js';
 import { classifyIndiaPostEvent } from './status.js';
+import { locatePlace } from '../../places/index.js';
 
 // Every identifier, office, pincode and timestamp below is synthetic; both
 // numbers are recorded in numbers.json as made-up values with valid check
@@ -225,8 +226,8 @@ describe('India Post response normalization', () => {
     );
     expect(result.events?.map((event) => [event.time, event.description, event.location])).toEqual([
       // Labelled 20:05Z and 01:40Z: the wall clocks of Paris and Delhi.
-      ['2026-07-11T20:05:00+02:00', 'UPLIFT', 'Office - CDG 00000003'],
-      ['2026-07-11T01:40:00+05:30', 'Aircraft Departure', 'Office - DEL 00000002'],
+      ['2026-07-11T20:05:00+02:00', 'Aircraft Departure', 'Paris Charles de Gaulle Airport (CDG), France'],
+      ['2026-07-11T01:40:00+05:30', 'Aircraft Departure', 'Delhi Airport (DEL), India'],
       // The host hashes the time string into a stored row: these stay as labelled.
       ['2026-07-10T16:45:00Z', 'Transferred to Office of Exchange', 'Example Foreign Post Office 110002'],
       ['2026-07-09T05:40:00Z', 'Item Booked', 'Example GPO 110001'],
@@ -238,7 +239,7 @@ describe('India Post response normalization', () => {
     expect(result).toMatchObject({
       status: 'in_transit',
       current_stage: 'in_transit',
-      last_status_text: 'UPLIFT',
+      last_status_text: 'Aircraft Departure',
       last_update: '2026-07-11T20:05:00+02:00',
     });
     // As labelled, the newest take-off is later than the sync that reported it.
@@ -260,6 +261,30 @@ describe('India Post response normalization', () => {
     // A take-off at an office that names no airport, and another code at an airport.
     expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - 00000001')])).toEqual(['2026-07-11T01:40:00Z']);
     expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - DEL 00000002', 'Unknown')])).toEqual(['2026-07-11T01:40:00Z']);
+  });
+
+  it('keeps flight numbers and routes while ignoring unrelated or mismatched remarks', () => {
+    const event = takeOff('2026-07-11T20:05:00Z', 'Office - FRA 00000003');
+    const parse = (remarks: string, wording = 'UPLIFT') => parseIndiaPostTrackingHtml(
+      trackingHistoryHtml(SAMPLE_NUMBER, [{ ...event, event: wording, remarks }]), SAMPLE_NUMBER,
+    ).events?.[0];
+    const flight = parse('Flight No: ZZ0101 (From FRA To CDG)');
+    expect(flight).toMatchObject({
+      description: 'Flight ZZ0101 departed: Frankfurt Airport (FRA) → Paris Charles de Gaulle Airport (CDG)',
+      location: 'Frankfurt Airport (FRA), Germany',
+      stage: 'in_transit',
+    });
+    expect(locatePlace(flight?.location)).toMatchObject({ country: 'DE', name: 'Frankfurt' });
+    expect(parse('Flight No: ZZ0101 (From FRA To CDG)', 'Aircraft Departure')).toEqual(flight);
+    for (const remarks of [
+      'private recipient details must never survive normalization',
+      'Flight No: ZZ0101 (From FRA To CDG) private recipient details',
+      'Flight No: ZZ0101 (From DEL To CDG)',
+    ]) {
+      expect(parse(remarks)?.description).toBe('Aircraft Departure');
+      expect(JSON.stringify(parse(remarks))).not.toContain('private');
+    }
+    expect(classifyIndiaPostEvent('AircraftTakeOff', 'UPLIFT')).toEqual({ status: 'in_transit', stage: 'in_transit' });
   });
 
   it('re-reads only a take-off labelled UTC', () => {

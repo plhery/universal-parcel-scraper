@@ -151,6 +151,26 @@ const AIRPORT_ZONES: Readonly<Record<string, string>> = {
   SYD: 'Australia/Sydney', MEL: 'Australia/Melbourne',
 };
 
+// Only verified names are expanded; other airport codes stay as the carrier wrote them.
+const AIRPORT_PLACES: Readonly<Record<string, { name: string; country: string }>> = {
+  BOM: { name: 'Mumbai Airport', country: 'India' },
+  DEL: { name: 'Delhi Airport', country: 'India' },
+  FRA: { name: 'Frankfurt Airport', country: 'Germany' },
+  CDG: { name: 'Paris Charles de Gaulle Airport', country: 'France' },
+};
+
+function departureAirport(office: string): string | undefined {
+  return /^Office - ([A-Z]{3})\b/.exec(office)?.[1];
+}
+
+/** Flight remarks have a narrow format; unrelated remarks can contain recipient details. */
+function flightDescription(remarks: unknown, office: string): string {
+  const match = /^Flight No:\s*([A-Z0-9]{2}\d{1,4}[A-Z]?)\s*\(From ([A-Z]{3}) To ([A-Z]{3})\)$/.exec(clean(remarks, 500));
+  if (!match || match[2] !== departureAirport(office)) return 'Aircraft Departure';
+  const airport = (code: string) => AIRPORT_PLACES[code] ? `${AIRPORT_PLACES[code].name} (${code})` : code;
+  return `Flight ${match[1]} departed: ${airport(match[2]!)} → ${airport(match[3]!)}`;
+}
+
 /**
  * The zone a take-off row's clock is kept in. Its `tracked_at` is the
  * departure airport's wall clock under a UTC label: a take-off was seen
@@ -161,7 +181,7 @@ const AIRPORT_ZONES: Readonly<Record<string, string>> = {
  */
 function takeOffZone(providerCode: string, office: string, trackedAt: string): string | null {
   if (providerCode !== TAKE_OFF_CODE || !UTC_LABEL.test(trackedAt)) return null;
-  const airport = /^Office - ([A-Z]{3})\b/.exec(office)?.[1];
+  const airport = departureAirport(office);
   return airport ? AIRPORT_ZONES[airport] ?? null : null;
 }
 
@@ -216,12 +236,15 @@ export function parseIndiaPostTrackingHtml(
     const time = zone
       ? mislabeledLocalTime(rawEvent.tracked_at, zone, 100)
       : isoTime(rawEvent.tracked_at, 'Asia/Kolkata', 100);
-    const description = eventText(clean(rawEvent.event));
+    const takeOff = providerCode === TAKE_OFF_CODE;
+    const description = takeOff ? flightDescription(rawEvent.remarks, office) : eventText(clean(rawEvent.event));
     if (!time || !description) return;
     const pincode = /^\d{6}$/.test(clean(rawEvent.pincode, 6))
       ? clean(rawEvent.pincode, 6)
       : '';
     const point = officePoint(rawEvent, office);
+    const airportCode = takeOff ? departureAirport(office) : undefined;
+    const airport = airportCode ? AIRPORT_PLACES[airportCode] : undefined;
     const identity = JSON.stringify([time.iso, description, office, pincode, providerCode]);
     if (seen.has(identity)) return;
     seen.add(identity);
@@ -236,7 +259,7 @@ export function parseIndiaPostTrackingHtml(
       // deliberately never retained.
       event: {
         time: time.iso,
-        location: [office, pincode].filter(Boolean).join(' '),
+        location: airport ? `${airport.name} (${airportCode}), ${airport.country}` : [office, pincode].filter(Boolean).join(' '),
         description,
         stage: classified.stage,
         ...(providerCode ? { provider_code: providerCode } : {}),

@@ -31,6 +31,7 @@ function includesAny(value: string, candidates: string[]): boolean {
  * `in_transit` stage.
  */
 export function classifyIndiaPostEvent(...values: unknown[]): ClassifiedStatus {
+  if (statusKey(values[0]) === 'aircrafttakeoff') return { status: 'in_transit', stage: 'in_transit' };
   const key = values.map(statusKey).filter(Boolean).join(' ');
   if (includesAny(key, [
     'returntosender',

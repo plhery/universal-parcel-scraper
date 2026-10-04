@@ -39,7 +39,7 @@ Outcomes:
 - `event` is either prose (older syncs) or a bare code (`ITEM_BOOK`, `BAG_DISPATCH`,
   `CUSTOM_RECEIVE`…). Known codes are spelled out, with `ITEM_BOOK` → "Item Booked" to match the old
   prose so stored rows don't duplicate. Other codes become title case.
-- There is no stable status code. `event_type`, `event` and `remarks` are joined into one normalized
+- Most rows have no stable status code. `event_type`, `event` and `remarks` are joined into one normalized
   key and matched by substring, most specific first. Unrecognized rows keep an `in_transit` stage with
   an `unknown` status, so no scan is dropped and no terminal stage is invented.
 - `CUSTOM_RECEIVE` is customs. `CUSTOM_RETURN` and "released by export Customs" mean customs handed
@@ -52,6 +52,12 @@ Outcomes:
   table of airport codes in the adapter. The row is found by its code because its wording changes.
   A take-off at an airport outside the table keeps its label, and one whose label is not UTC is
   read like any other row.
+- Take-offs use one wording even when the source switches labels. A strictly formatted flight remark
+  supplies its flight number and route; other remarks are discarded. Known departure airports are
+  named with their country so maps can locate the scan. A destination in a flight remark is a route,
+  not proof of arrival there.
+- The app identity policy requires the same instant and provider code before updating a
+  reworded stored scan. The consumer owns the stored rows and notification receipts.
 - IDs and pincodes arrive as numbers or strings, hence `cleanScalar`. A pincode is kept only when it
   is exactly six digits.
 - A row's `pincode_info` is MySpeedPost's directory entry for the pincode, not for the office:
@@ -62,10 +68,10 @@ Outcomes:
 ## Limitations
 
 - No ETA.
-- Only booking, dispatch, customs, take-off and delivery rows have been seen live. A take-off has no
-  rule and lands on `in_transit`, as new wording does until added. Failure, return and pickup rules
+- Only booking, dispatch, customs, take-off and delivery rows have been seen live. Failure, return and pickup rules
   come from prior art ([njs-tracker-scraper](https://github.com/bivu-m/njs-tracker-scraper)).
-- Recipient remark, address and contact number are never read; the offline test asserts it.
+- Recipient details, addresses and contact numbers are never retained. Only strictly formatted
+  flight remarks supply display text; the offline test asserts it.
 
 ## Testing
 
