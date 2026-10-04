@@ -17,6 +17,9 @@ do not establish that DHL's global network has no shipment. Rate limits,
 malformed replies, cancellation and spent budgets stop the lookup. Browser
 lookups are serialized per instance.
 
+Opt-in browser recognition goes straight to the global page after an inconclusive
+HTTP check. It requires dated activity and returns the history with its confirmation.
+
 ## Parsing
 
 Webtrack must return one identified package matching the requested number or

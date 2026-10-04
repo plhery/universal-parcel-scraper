@@ -471,7 +471,8 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "dhl-ecommerce",
-      "recognitionRank": 23
+      "recognitionRank": 23,
+      "browserRecognitionRank": 90
     },
     "canaryUrl": "https://www.dhl.com/ch-en/home/tracking.html",
     "trackingUrlTemplate": "https://www.dhl.com/ch-en/home/tracking.html?tracking-id={trackingNumber}&submit=1",
@@ -677,7 +678,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "fedex"
+      "adapter": "fedex",
+      "browserRecognitionRank": 100
     },
     "canaryUrl": "https://www.fedex.com/fedextrack/",
     "trackingUrlTemplate": "https://www.fedex.com/fedextrack/?trknbr={trackingNumber}",

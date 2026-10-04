@@ -92,6 +92,11 @@ export interface Recognition {
   lastActivityAt?: string | null;
 }
 
+/** Browser confirmation retains the lookup so a consumer can reuse its history. */
+export interface BrowserRecognition extends Recognition {
+  result?: CarrierResult;
+}
+
 export interface CarrierAdapter {
   readonly id: string;
   /** The tiers this adapter can go through, in order; telemetry labels use these ids. */
@@ -106,6 +111,8 @@ export interface CarrierAdapter {
    * other failure throws.
    */
   recognize?(number: string, context?: TrackingContext): Promise<Recognition>;
+  /** Opt-in confirmation through the adapter's browser path, without recipient inputs. */
+  recognizeWithBrowser?(number: string, context?: TrackingContext, previousError?: unknown): Promise<BrowserRecognition>;
 }
 
 export type AdapterFactory = (environment: AdapterEnvironment) => CarrierAdapter;
@@ -159,6 +166,14 @@ export async function recognizeFromLookup(
     lastActivityAt: !known ? null : times.length ? new Date(Math.max(...times)).toISOString()
       : Number.isFinite(updated) ? new Date(updated).toISOString() : null,
   };
+}
+
+/** Browser shells and undated default statuses do not establish a shipment. */
+export async function recognizeFromBrowserLookup(lookup: () => Promise<CarrierResult>): Promise<BrowserRecognition> {
+  let result: CarrierResult | undefined;
+  const answer = await recognizeFromLookup(async () => (result = await lookup()));
+  if (!answer.known || !answer.lastActivityAt || !result) return { known: false, lastActivityAt: null };
+  return { ...answer, result };
 }
 
 /** Registered adapter factories plus the carrier → adapter mapping, as generated. */

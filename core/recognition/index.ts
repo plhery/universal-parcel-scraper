@@ -1,5 +1,5 @@
 
-import type { Recognition } from '../adapter/index.js';
+import type { Recognition, TrackingContext } from '../adapter/index.js';
 import { carrierBrand } from '../catalog/networks.js';
 import type { RecognitionCandidate } from '../catalog/recognition.js';
 import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
@@ -32,20 +32,31 @@ export interface RecognitionOutcome extends RecognitionCandidate {
 
 /**
  * Ask every candidate at once. A candidate that throws, or has not answered
- * when the budget runs out, is `failed`; its lookup may still finish in the
- * background, but its answer is ignored.
+ * when the budget runs out, is `failed`. The callback receives the deadline
+ * and cancellation signal; answers after either are ignored.
  */
 export async function recognizeAll(
   candidates: readonly RecognitionCandidate[],
-  recognize: (carrier: string) => Promise<Recognition>,
+  recognize: (carrier: string, context: TrackingContext) => Promise<Recognition>,
   budgetMs: number,
+  signal?: AbortSignal,
 ): Promise<RecognitionOutcome[]> {
   const outcomes: RecognitionOutcome[] = candidates.map((candidate) => ({ ...candidate, status: 'failed', lastActivityAt: null }));
+  signal?.throwIfAborted();
+  if (budgetMs <= 0 || candidates.length === 0) return outcomes;
+  const controller = new AbortController();
+  const context: TrackingContext = { signal: controller.signal, budgetMs };
   let timer: ReturnType<typeof setTimeout> | undefined;
-  const deadline = new Promise<void>((resolve) => { timer = setTimeout(resolve, budgetMs); });
+  let stop: () => void = () => undefined;
+  const deadline = new Promise<void>((resolve) => {
+    stop = () => { controller.abort(); resolve(); };
+    timer = setTimeout(stop, budgetMs);
+    signal?.addEventListener('abort', stop, { once: true });
+  });
   const asked = candidates.map(async (candidate, index) => {
     try {
-      const answer = await recognize(candidate.carrier);
+      const answer = await recognize(candidate.carrier, context);
+      if (controller.signal.aborted) return;
       outcomes[index] = { ...candidate, status: answer.known ? 'known' : 'unknown', lastActivityAt: answer.lastActivityAt ?? null };
     } catch {
       // Stays failed: an outage is no answer about the number.
@@ -55,7 +66,9 @@ export async function recognizeAll(
     await Promise.race([Promise.all(asked), deadline]);
   } finally {
     clearTimeout(timer);
+    signal?.removeEventListener('abort', stop);
   }
+  signal?.throwIfAborted();
   return outcomes.map((outcome) => ({ ...outcome }));
 }
 

@@ -15,7 +15,10 @@
     "adapter": "fedex",
     "steps": [
       "trawl"
-    ]
+    ],
+    "browserRecognition": {
+      "rank": 100
+    }
   },
   "capabilities": [
     "history",

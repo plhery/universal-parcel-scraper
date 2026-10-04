@@ -44,6 +44,8 @@ FLARESOLVERR_URL for browser fallback')`.
 - Results bind strictly to `trackingNbr`. Several matches (same digits, different
   qualifiers) are refused: the qualifier is opaque and picking one risks another
   recipient's parcel.
+- Opt-in browser recognition uses the same lookup and requires dated shipment activity.
+  It returns the history with its confirmation so callers can reuse it after identification.
 - Status uses `keyStatusCD` / scan `statusCD` first, then substring matches on the prose. A
   `DL` code is terminal and outranks the wording.
 - Delivered scans are rewritten to "Delivered" because FedEx's line names the signatory.

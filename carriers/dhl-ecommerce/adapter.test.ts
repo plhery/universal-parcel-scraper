@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CarrierResult } from '../../core/result/index.js';
 import { UpstreamHttpError } from '../../core/transport/index.js';
+import { IndeterminateError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import * as trackingBrowser from '../../core/transport/browser.js';
 import { stageFor } from './status.js';
 import {
@@ -11,6 +12,21 @@ import {
 
 const NUMBER = '33870000000000001';
 const EMPTY_WEBTRACK = { total: 0, limit: 10, offset: 0, packages: [] };
+
+it('uses browser recognition only for recoverable HTTP failures and retains the history', async () => {
+  const result: CarrierResult = { status: 'in_transit', events: [{ time: '2026-09-09T08:00:00Z', description: 'Sorted' }] };
+  const page = vi.spyOn(trackingBrowser, 'scrapeUniversalPage').mockResolvedValue(result);
+  const tracker = new DHLEcommerceTracker();
+  for (const error of [new RateLimitedError('DHL eCommerce'), new SchemaError('DHL eCommerce')]) {
+    await expect(tracker.recognizeWithBrowser(NUMBER, {}, error)).rejects.toBe(error);
+  }
+  expect(page).not.toHaveBeenCalled();
+  await expect(tracker.recognizeWithBrowser(NUMBER, { budgetMs: 1_000 },
+    new IndeterminateError('DHL eCommerce', 'Regional miss', { reason: 'webtrack_not_found' })))
+    .resolves.toMatchObject({ known: true, lastActivityAt: '2026-09-09T08:00:00.000Z', result });
+  expect(page).toHaveBeenCalledOnce();
+  page.mockRestore();
+});
 function webtrack() {
   return {
     total: 1, limit: 10, offset: 0,

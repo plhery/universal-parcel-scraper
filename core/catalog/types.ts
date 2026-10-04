@@ -110,6 +110,8 @@ export interface CarrierDefinition {
     requirements?: readonly CarrierCatalogRequirement[];
     /** Present when the adapter can recognize a number; higher is asked first. */
     recognitionRank?: number;
+    /** Opt-in browser confirmation; higher is asked first after HTTP is inconclusive. */
+    browserRecognitionRank?: number;
     refresh?: { minMinutes: number; afterFailureMinutes?: number };
     localClocks?: boolean;
   };

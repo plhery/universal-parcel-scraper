@@ -95,6 +95,16 @@ caller. An adapter with `recordsSteps` reports its own lookup, so dispatch does 
 telemetry a second time. `CarrierError.reason` separates expected details, such as Amazon
 Shipping's expired history, from transport failures.
 
+Recognition uses HTTP by default. Consumers can request `recognitionCandidates` with
+`phase: 'browser'` after HTTP is inconclusive, then call the adapter's
+`recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank;
+recipient inputs exclude a candidate. Browser confirmation requires dated shipment activity
+and returns its tracking result for reuse. Consumers bound concurrency, cache answers and
+decide when another check is due. `recognizeAll` passes cancellation and its budget to each
+callback and discards late answers.
+Pass the earlier HTTP error as the browser method's third argument so the adapter retains
+its recovery policy, including rate limits and malformed responses.
+
 ## Status model
 
 Every scan ends up with one stage from [stages.json](data/stages.json), and `stage_source`

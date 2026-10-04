@@ -1,6 +1,6 @@
 
 import { load } from 'cheerio';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import {
   ChallengeError,
   InputRequiredError,
@@ -343,5 +343,6 @@ export const adapter: AdapterFactory = (environment) => {
     // Browser-backed direct tracking; universal recovery belongs to the caller.
     steps: ['trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognizeWithBrowser: (number, context) => recognizeFromBrowserLookup(() => tracker.fetch(number, context)),
   };
 };

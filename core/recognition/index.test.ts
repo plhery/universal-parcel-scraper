@@ -64,6 +64,29 @@ describe('recognition candidates', () => {
 });
 
 describe('asking carriers', () => {
+  it('keeps browser checks separate from HTTP checks', () => {
+    expect(recognitionCandidates('000000000001').map(({ carrier }) => carrier)).not.toContain('fedex');
+    expect(recognitionCandidates('000000000001', { phase: 'browser' }).map(({ carrier }) => carrier)).toEqual(['fedex']);
+    expect(recognitionCandidates('33870000000000001', { phase: 'browser' }).map(({ carrier }) => carrier)).toEqual(['dhl-ecommerce']);
+  });
+  it('aborts callbacks at the deadline and on caller cancellation', async () => {
+    let seen: AbortSignal | undefined;
+    const candidates = recognitionCandidates('000000000001', { phase: 'browser' });
+    const outcomes = await recognizeAll(candidates, async (_carrier, context) => {
+      seen = context.signal;
+      return new Promise(() => undefined);
+    }, 10);
+    expect(seen?.aborted).toBe(true);
+    expect(outcomes[0]?.status).toBe('failed');
+    const controller = new AbortController();
+    const request = recognizeAll(candidates, async (_carrier, context) => {
+      seen = context.signal;
+      return new Promise(() => undefined);
+    }, 10_000, controller.signal);
+    controller.abort();
+    await expect(request).rejects.toThrow();
+    expect(seen?.aborted).toBe(true);
+  });
   it('asks all at once and treats a failure or a late answer as no answer', async () => {
     const started: string[] = [];
     const outcomes = await recognizeAll(recognitionCandidates('12345678901231'), async (carrier) => {

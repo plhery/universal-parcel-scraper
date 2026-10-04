@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { InvalidInputError, NotFoundError, UpstreamHttpError } from '../errors/index.js';
 import { REGISTRY } from '../../generated/registry.js';
 import { NOOP_RECORDER } from '../telemetry/index.js';
-import { AdapterRegistry, accepted, recognizeFromLookup } from './index.js';
+import { AdapterRegistry, accepted, recognizeFromBrowserLookup, recognizeFromLookup } from './index.js';
 
 const carriersDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'carriers');
 
@@ -81,5 +81,29 @@ describe('catalog recognition', () => {
     });
     expect(declared.length).toBeGreaterThan(0);
     expect(declared.filter((id) => typeof registry.for(id)?.recognize !== 'function')).toEqual([]);
+  });
+  it('declares browser recognition only where the adapter supplies it', () => {
+    const registry = new AdapterRegistry(REGISTRY, { trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    const declared = readdirSync(carriersDirectory).filter((id) => {
+      try { return Boolean(JSON.parse(readFileSync(path.join(carriersDirectory, id, 'carrier.json'), 'utf8')).tracking?.browserRecognition); }
+      catch { return false; }
+    });
+    expect(declared.length).toBeGreaterThan(0);
+    expect(declared.filter((id) => typeof registry.for(id)?.recognizeWithBrowser !== 'function')).toEqual([]);
+  });
+});
+
+describe('browser confirmation', () => {
+  it('rejects shells and undated default statuses, and retains dated history', async () => {
+    await expect(recognizeFromBrowserLookup(async () => ({ status: 'in_transit', events: [] })))
+      .resolves.toEqual({ known: false, lastActivityAt: null });
+    await expect(recognizeFromBrowserLookup(async () => ({ status: 'unknown', events: [] })))
+      .resolves.toEqual({ known: false, lastActivityAt: null });
+    const result = { status: 'in_transit' as const, events: [{ time: '2026-09-09T08:00:00Z', description: 'Sorted' }] };
+    await expect(recognizeFromBrowserLookup(async () => result)).resolves.toEqual({
+      known: true, lastActivityAt: '2026-09-09T08:00:00.000Z', result,
+    });
+    await expect(recognizeFromBrowserLookup(async () => { throw new NotFoundError('Carrier'); })).resolves.toEqual({ known: false, lastActivityAt: null });
+    await expect(recognizeFromBrowserLookup(async () => { throw new UpstreamHttpError('Carrier', 503); })).rejects.toThrow();
   });
 });

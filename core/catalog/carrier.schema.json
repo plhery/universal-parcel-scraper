@@ -172,6 +172,21 @@
         },
         "localClocks": {
           "type": "boolean"
+        },
+        "browserRecognition": {
+          "description": "Present when the adapter implements recognizeWithBrowser(): opt-in browser confirmation without recipient inputs, requiring dated shipment activity. Higher rank is asked first after HTTP checks are inconclusive.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rank"
+          ],
+          "properties": {
+            "rank": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
         }
       }
     },

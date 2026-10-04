@@ -26,6 +26,9 @@
     ],
     "recognition": {
       "rank": 23
+    },
+    "browserRecognition": {
+      "rank": 90
     }
   },
   "capabilities": [

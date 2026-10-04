@@ -8,7 +8,7 @@
  */
 
 import { DateTime } from 'luxon';
-import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, lookupBudget, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
@@ -25,6 +25,12 @@ const WEBTRACK_API = 'https://api.dhlecs.com/webtrack/v4/tracking';
 const DIRECT_TIMEOUT_MS = 15_000;
 /** Statuses DHL answers with while its challenge is unsolved. */
 const CHALLENGE_STATUSES = [401, 403, 419, 428];
+
+function browserRecoveryAllowed(error: unknown): boolean {
+  return error instanceof ChallengeError || error instanceof UpstreamNetworkError
+    || error instanceof UpstreamHttpError && error.status >= 500
+    || error instanceof IndeterminateError && ['webtrack_not_found', 'webtrack_no_history'].includes(error.reason ?? '');
+}
 
 /**
  * UTAPI strings occasionally carry markup. Tags are dropped without a
@@ -239,9 +245,7 @@ export class DHLEcommerceTracker {
       { carrier: 'dhl-ecommerce', budgetMs: budgetMs ?? this.options.budgetMs ?? timeoutMs + 15_000, signal, recorder: this.recorder },
       [
         { id: 'direct', run: (step) => this.direct(number, Math.min(DIRECT_TIMEOUT_MS, step.remainingMs), step.signal) },
-        { id: 'browser', recovers: (error) => error instanceof ChallengeError || error instanceof UpstreamNetworkError
-          || error instanceof UpstreamHttpError && error.status >= 500
-          || error instanceof IndeterminateError && ['webtrack_not_found', 'webtrack_no_history'].includes(error.reason ?? ''),
+        { id: 'browser', recovers: browserRecoveryAllowed,
           run: (step) => this.browser(number, Math.max(1, Math.floor(Math.min(timeoutMs, step.remainingMs))), step.signal) },
       ],
     ));
@@ -293,6 +297,17 @@ export class DHLEcommerceTracker {
       throw error;
     }
   }
+
+  async recognizeWithBrowser(number: string, context: TrackingContext = {}, previousError?: unknown) {
+    if (previousError !== undefined && !browserRecoveryAllowed(previousError)) {
+      throw previousError instanceof Error ? previousError : new Error('DHL eCommerce HTTP recognition cannot recover through a browser');
+    }
+    const normalized = normalizeDHLEcommerceNumber(number);
+    return takeTurn(this.serialize, PROVIDER, context, (step) => recognizeFromBrowserLookup(() => runSteps<CarrierResult>(
+      { carrier: 'dhl-ecommerce', budgetMs: step.budgetMs ?? 20_000, signal: step.signal, recorder: this.recorder },
+      [{ id: 'browser', run: ({ signal, remainingMs }) => this.browser(normalized, remainingMs, signal) }],
+    )));
+  }
 }
 
 export const adapter: AdapterFactory = (environment) => {
@@ -305,5 +320,6 @@ export const adapter: AdapterFactory = (environment) => {
     steps: ['direct', 'browser'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => tracker.recognize(number, context),
+    recognizeWithBrowser: (number, context, previousError) => tracker.recognizeWithBrowser(number, context, previousError),
   };
 };
