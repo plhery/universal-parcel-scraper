@@ -20,3 +20,5 @@ A blocked HTTP request requires a configured browser service.
 ## Testing
 
 `npm run test:carriers:live -- carriers/dhl-express`
+
+Carrier protection can reject HTTP and browser sessions. These failures stay distinct from a missing waybill.

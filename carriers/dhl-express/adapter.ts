@@ -26,7 +26,7 @@ export function trackingUrl(raw: string): string {
 
 function apiUrl(number: string): string {
   return `${API}?${new URLSearchParams({ AWB: number, clientApp: 'mydhlplus', countryCode: 'gb', languageCode: 'en',
-    requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' })}`;
+    requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' }).toString().replace(/%2C/g, ',')}`;
 }
 
 /** MyDHL clocks are local to each facility; they do not carry a UTC offset. */

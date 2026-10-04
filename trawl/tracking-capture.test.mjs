@@ -35,7 +35,7 @@ const expressApi = 'https://mydhl.express.dhl/shipmentTracking';
 const expressNumber = '1234567891';
 const expressUrl = `https://mydhl.express.dhl/gb/en/tracking.html#/results?id=${expressNumber}`;
 const expressRequest = `${expressApi}?${new URLSearchParams({ AWB: expressNumber, clientApp: 'mydhlplus', countryCode: 'gb', languageCode: 'en',
-  requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' })}`;
+  requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' }).toString().replace(/%2C/g, ',')}`;
 
 test('DHL Express captures only its own page and exact waybill request, including decoded compressed data', async () => {
   for (const url of [expressUrl.replace('mydhl.express.dhl', 'other.test'), expressUrl.replace('/gb/en/', '/gb/fr/'),

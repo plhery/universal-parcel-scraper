@@ -54,10 +54,11 @@ const SITES = [
   {
     api: 'https://mydhl.express.dhl/shipmentTracking',
     provider: 'DHL Express',
+    allowTextResponse: true,
     requestMethod: 'GET',
     apiForNumber(number) {
       return this.api + '?' + new URLSearchParams({ AWB: number, clientApp: 'mydhlplus', countryCode: 'gb', languageCode: 'en',
-        requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' });
+        requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' }).toString().replace(/%2C/g, ',');
     },
     number(page) {
       if (page.origin !== 'https://mydhl.express.dhl' || page.pathname !== '/gb/en/tracking.html' || page.search) return null;
@@ -296,7 +297,7 @@ export async function attachTrackingCapture(page, url, options) {
     const length = headers['content-length'] === undefined ? 0 : Number(headers['content-length']);
     // The browser already decoded this response for the site. Do not implement
     // our own decompressor, fetch again or transfer the session to Node.
-    if (!type.includes('application/json') || !Number.isSafeInteger(length)
+    if ((!type.includes('application/json') && !site.allowTextResponse) || !Number.isSafeInteger(length)
       || length < 0 || length > 2_000_000 || bytes >= 4_000_000) {
       entry.error = 'unsupported or oversized tracking response'; finish(); return;
     }
@@ -308,6 +309,7 @@ export async function attachTrackingCapture(page, url, options) {
         entry.truncated = true; entry.error = 'tracking response budget exceeded'; finish(); return;
       }
       entry.body = body.toString('utf8');
+      if (site.allowTextResponse && /^\s*</.test(entry.body)) { finish(); return; }
       const data = JSON.parse(entry.body);
       // Preserve intermediate replies for diagnosis, but let the website carry
       // on until it holds a final reply for exactly the requested number.
