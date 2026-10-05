@@ -35,6 +35,13 @@ is sent, so a wrong or expired number never transmits it.
   `testing/expandedCarriers.live.test.ts` asserts it. The constructor also
   accepts a positional timeout.
 
+## Limitations
+
+- Recognition cannot tell a German parcel from a Swiss one. The GROUP service answers
+  for both networks, and its overview of a delivered German parcel names no owner. When
+  both networks recognize a number, the more popular one, GLS Switzerland, is chosen.
+  GLS Germany is reached through a German link or by picking it.
+
 ## Testing
 
 No live test in this folder. `npm run test:carriers:live -- testing/expandedCarriers.live.test.ts`

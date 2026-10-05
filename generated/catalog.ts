@@ -794,6 +794,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^\\d{12}$",
         "confidence": "low",
         "checksum": "gls"
+      },
+      {
+        "pattern": "^[A-Z]{6}$",
+        "confidence": "low"
       }
     ]
   },
@@ -1654,6 +1658,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^\\d{12}$",
         "confidence": "low",
         "checksum": "gls"
+      },
+      {
+        "pattern": "^[A-Z]{6}$",
+        "confidence": "low"
       }
     ]
   },
@@ -4381,6 +4389,41 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "j-and-t-cargo": {
+    "displayName": "J&T Cargo",
+    "color": "#00b075",
+    "aliases": [
+      "JNT Cargo",
+      "JT Cargo"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "link-only",
+      "adapter": null
+    },
+    "canaryUrl": "https://www.jtcargo.id/",
+    "trackingUrlTemplate": "https://www.jtcargo.id/networkQuery?waybillNo={trackingNumber}&type=0",
+    "linkRules": [
+      {
+        "domains": [
+          "jtcargo.id"
+        ],
+        "params": [
+          "waybillNo"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^20\\d{10}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "lbc-express": {
     "displayName": "LBC Express",
     "color": "#e30613",
@@ -4759,6 +4802,7 @@ export const CARRIER_IDS = [
   "ekart",
   "evri-uk",
   "intelcom",
+  "j-and-t-cargo",
   "lbc-express",
   "nova-poshta",
   "omgo",

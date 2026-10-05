@@ -57,12 +57,6 @@
     "reason": "A USPS-format number. USPS is offered and delivers it."
   },
   {
-    "carrier": "gls-de",
-    "pattern": "^[A-Z]{6}$",
-    "kind": "by_design",
-    "reason": "Input validation refuses an identifier without a digit."
-  },
-  {
     "carrier": "hermes",
     "pattern": "^\\d{17}$",
     "kind": "by_design",
@@ -79,6 +73,18 @@
     "pattern": "^JJD\\d{16}$",
     "kind": "collision",
     "reason": "DHL's high-confidence JJD rule claims Yodel's JJD numbers, so the carrier comes from a link or a pick."
+  },
+  {
+    "carrier": "j-and-t-cargo",
+    "pattern": "^57\\d{10}$",
+    "kind": "open",
+    "reason": "One reported waybill starts 57; the rule covers the 20 prefix of every other report."
+  },
+  {
+    "carrier": "j-and-t-cargo",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "A piece number of a multi-piece consignment. One sample does not establish the family."
   },
   {
     "carrier": "ninja-van",

@@ -264,6 +264,7 @@ export const REGISTRY: RegistryDefinition = {
     "intelcom": "intelcom",
     "intl-post": "universal",
     "j-and-t": "universal",
+    "j-and-t-cargo": null,
     "japan-post": "japan-post",
     "jd-logistics": "jd-logistics",
     "korea-post": "korea-post",

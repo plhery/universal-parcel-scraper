@@ -1183,5 +1183,31 @@
       "la-poste"
     ],
     "reason": "La Poste's tracked-letter numbers end in the same ISO 7064 check character DPD prints; La Poste's high-confidence rule decides."
+  },
+  {
+    "shape": "Six letters",
+    "carriers": [
+      "gls-ch",
+      "gls-de"
+    ],
+    "reason": "A GLS notification card's Track ID is six letters and the two networks share one tracking service; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20",
+    "carriers": [
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "j-and-t-cargo",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "J&T Cargo waybills start with 20 inside the twelve-digit space eleven carriers match broadly; the number stays a low-confidence suggestion."
   }
 ]

@@ -76,7 +76,11 @@ one.
 
 ## A lookup
 
-`createTracker()` validates the input. A number whose shape fits several carriers, or only
+`createTracker()` validates the input. A number is four to forty letters and digits and
+normally holds a digit. Without one it must be six to ten unbroken letters that a carrier's
+detection rule claims, as on a GLS notification card. Such a number is never read out of
+pasted text, and the universal providers refuse it.
+A number whose shape fits several carriers, or only
 identifies an international postal item, is settled by asking the carriers that can recognize
 it cheaply. A postal issuer is a lookup candidate, not proof of the delivery carrier.
 The tracker then tries the carrier's

@@ -10,7 +10,7 @@
 import { TRACKING_LINK_RULES, matchesDomain, type TrackingLinkRule } from '../catalog/linkRules.js';
 import { keywordNumberInText, recognizedNumberInText } from './candidates.js';
 import { detectCarrierMatch } from './detect.js';
-import { validTrackingNumber } from './normalize.js';
+import { validTrackingNumber } from './valid.js';
 import type { TrackingInputMatch } from './types.js';
 
 function trimPastedUrl(raw: string): string {

@@ -8,7 +8,7 @@
  */
 import { AMAZON_NUMBER_PATTERN } from './amazon.js';
 import { detectCarrierMatch } from './detect.js';
-import { validTrackingNumber } from './normalize.js';
+import { validTrackingNumberInText } from './valid.js';
 
 export const TRACKING_CANDIDATE_PATTERNS = [
   new RegExp(`\\b${AMAZON_NUMBER_PATTERN.slice(1, -1).replaceAll('[0-9]', '(?:[\\s.-]*[0-9])')}\\b`, 'gi'),
@@ -53,5 +53,5 @@ const LABELLED_NUMBER = new RegExp(
 export function keywordNumberInText(raw: string): string | undefined {
   // A sentence can end right after its number.
   const candidate = LABELLED_NUMBER.exec(raw)?.[1]?.replace(/[.-]+$/, '');
-  return candidate && validTrackingNumber(candidate) ? candidate : undefined;
+  return candidate && validTrackingNumberInText(candidate) ? candidate : undefined;
 }

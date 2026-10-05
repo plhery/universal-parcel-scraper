@@ -121,6 +121,11 @@
       "pattern": "^\\d{12}$",
       "confidence": "low",
       "checksum": "gls"
+    },
+    {
+      "id": "gls-de-3",
+      "pattern": "^[A-Z]{6}$",
+      "confidence": "low"
     }
   ]
 }

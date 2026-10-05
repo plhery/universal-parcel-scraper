@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { detectCarrierMatch, parseTrackingInput } from './index.js';
+import { detectCarrierMatch, parseTrackingInput, validTrackingNumber } from './index.js';
 
 describe('evidence-backed tracking formats', () => {
   it.each(['87001234567890A', '88001234567890Y'])('keeps the tracked-mail key in %s', (number) => {
@@ -116,13 +116,40 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('TBB123456789012').carrier).toBe('unknown');
   });
 
+  it('suggests J&T Cargo for a twelve-digit waybill starting with 20 and reads its link', () => {
+    expect(detectCarrierMatch('200123456789').candidates).toContain('j-and-t-cargo');
+    expect(detectCarrierMatch('210123456789').candidates).not.toContain('j-and-t-cargo');
+    expect(detectCarrierMatch('20012345678').candidates).not.toContain('j-and-t-cargo');
+    expect(parseTrackingInput('https://www.jtcargo.id/networkQuery?waybillNo=200123456789&type=0'))
+      .toMatchObject({ trackingNumber: '200123456789', carrier: 'j-and-t-cargo', source: 'link' });
+  });
+
+  it('takes a number without a digit only as unbroken letters a carrier claims, entered whole', () => {
+    for (const input of ['AALZJR', 'aalzjr', ' ABCDEF ']) expect(validTrackingNumber(input)).toBe(true);
+    // No carrier issues seven letters, and twelve are outside what a rule may claim.
+    for (const input of ['ABCDE', 'ABCDEFG', 'ABCDEFGHIJ', 'CONFIRMATION', 'AAL ZJR', 'AAL-ZJR', 'thank you', 'ÀBCDEF']) expect(validTrackingNumber(input)).toBe(false);
+    expect(detectCarrierMatch('CONFIRMATION').confidence).toBe('low');
+    expect(parseTrackingInput('bonjour').source).toBe('none');
+    expect(parseTrackingInput('aalzjr')).toMatchObject({ trackingNumber: 'aalzjr', carrier: 'unknown', confidence: 'low', candidates: ['gls-ch', 'gls-de'], source: 'number' });
+    // A word after a tracking label, or anywhere in a message, is not a number.
+    expect(parseTrackingInput('Tracking number: PENDING').source).toBe('none');
+    expect(parseTrackingInput('Your parcel AALZJR is on its way').source).toBe('none');
+    expect(parseTrackingInput('thank you').source).toBe('none');
+    // A carrier's own link can carry one.
+    expect(parseTrackingInput('https://gls-group.eu/EU/en/parcel-tracking?match=AALZJR'))
+      .toMatchObject({ trackingNumber: 'AALZJR', source: 'link' });
+  });
+
   it('offers UPS for an H waybill without selecting it', () => {
     expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
     expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');
   });
 
   it('does not infer a GLS country or Aramex service from a short reference', () => {
-    expect(detectCarrierMatch('ABCDEF')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+    // Six letters are a GLS Track ID: both networks are suggested and neither is selected.
+    expect(detectCarrierMatch('ABCDEF')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['gls-ch', 'gls-de'] });
+    expect(detectCarrierMatch('ABCDE')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+    expect(detectCarrierMatch('ABCDEFG')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
     expect(detectCarrierMatch('9680123456').candidates).not.toContain('aramex');
   });
 });

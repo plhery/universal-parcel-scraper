@@ -67,8 +67,8 @@ function isReturnParcel(parcel: JsonObject): boolean {
 
 export function normalizeGLSSwitzerlandTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\d)[A-Z0-9]{8}|\d{11,14})$/.test(value)) {
-    throw new InvalidInputError('GLS', 'GLS tracking requires an 8-character Track ID or an 11-to-14-digit parcel number');
+  if (!/^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\d)[A-Z0-9]{8}|[A-Z]{6}|\d{11,14})$/.test(value)) {
+    throw new InvalidInputError('GLS', 'GLS tracking requires a Track ID of 8 characters or 6 letters, or an 11-to-14-digit parcel number');
   }
   return value;
 }
@@ -171,9 +171,10 @@ export function selectGLSParcel(payload: unknown, rawTrackingNumber: string): Js
       && trackingNumber.slice(0, 11) === identifier)
   )));
   if (matching.length === 1) return matching[0]!;
-  // An eight-character Track ID is translated by the overview endpoint to its
-  // numeric parcel number and is not echoed. A single result is unambiguous.
-  if (/^[A-Z0-9]{8}$/.test(trackingNumber) && parcels.length === 1) return parcels[0]!;
+  // A Track ID, eight characters or the six letters of a notification card, is
+  // translated by the overview endpoint to its numeric parcel number and is not
+  // echoed. A single result is unambiguous.
+  if (/^(?:[A-Z0-9]{8}|[A-Z]{6})$/.test(trackingNumber) && parcels.length === 1) return parcels[0]!;
   if (matching.length > 1) throw new SchemaError(PROVIDER, 'GLS returned an ambiguous shipment');
   throw new SchemaError(PROVIDER, 'GLS returned a different shipment');
 }

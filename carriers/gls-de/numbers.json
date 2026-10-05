@@ -122,9 +122,13 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-de"
+        ]
       },
-      "note": "Six-letter Track ID from a public GLS delivery complaint. GLS group tracking resolves it to a delivered parcel. Input validation refuses an identifier without a digit, so it cannot be looked up here."
+      "note": "Six-letter Track ID from a public GLS delivery complaint. GLS group tracking resolves it to a delivered parcel."
     },
     {
       "number": "83852070139",

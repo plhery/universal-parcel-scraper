@@ -12,9 +12,10 @@ endpoint. `gls-group.eu` links are routed by country path (see each `carrier.jso
 (15 s timeout, 1 MB cap), with the frontend's `caller=witt002` and `millis` params.
 
 1. `rstt029?match={number}`: anonymous overview. Progress bar, status and
-   delivery owner, no history. It also translates an 8-character Track ID into
-   the numeric parcel number the detail call needs. Without a stored postcode,
-   this is the whole result.
+   delivery owner, no history. It also translates a Track ID into the numeric
+   parcel number the detail call needs. A Track ID is 8 characters, or the 6
+   letters of a notification card. Without a stored postcode, this is the whole
+   result.
 2. `rstt028/{parcelNumber}?postalCode=…&tuOwnerCode=…`: detailed history, gated
    by the recipient postcode. `tuOwnerCode` is the overview's `REQUEST` owner.
 

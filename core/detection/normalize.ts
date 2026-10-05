@@ -30,14 +30,3 @@ export function formatTrackingNumber(raw: string, carrier?: string): string {
   }
   return value;
 }
-
-/** Shape gate applied to anything pulled out of a link or pasted prose. */
-export function validTrackingNumber(raw: string): boolean {
-  const normalized = normalizeTrackingNumber(raw);
-  return normalized.length >= 4
-    && normalized.length <= 40
-    // The NACEX agency/shipment composite is the only tracking shape allowed
-    // to keep punctuation; everything else stays strict alphanumeric.
-    && (/^[A-Z0-9]+$/.test(normalized) || /^\d{4}\/\d{8}$/.test(normalized))
-    && /\d/.test(normalized);
-}
