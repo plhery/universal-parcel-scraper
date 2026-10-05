@@ -152,7 +152,7 @@
           }
         },
         {
-          "note": "Public references returned eight and six identity-bound history scans in fresh automated local Chromium: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/ and https://www.reddit.com/r/Sugargoo/comments/1we8q17/where_is_my_parcel/. The official documentation example returned E1142, which remains inconclusive. Anonymous requests can still stall or be reset; TRAWL deployment compatibility is unverified.",
+          "note": "Public references returned eight and six identity-bound history scans in fresh automated Chromium on both local and Linux server hosts: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/ and https://www.reddit.com/r/Sugargoo/comments/1we8q17/where_is_my_parcel/. The official documentation example returned E1142, which remains inconclusive. Anonymous requests can still stall before the API request or be reset; browser and runtime compatibility matter. TRAWL deployment compatibility is unverified.",
           "results": {}
         }
       ]
