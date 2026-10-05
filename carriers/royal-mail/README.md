@@ -38,6 +38,20 @@ with `trawl` or `trawlUrl` and no local `executablePath`. It is excluded from
 automatic routing. Constructor calls remain summary-only by default; pass
 `fullHistory: true` for the separate events flow.
 
+## Mobile API lead
+
+The official [Royal Mail APK](https://play.google.com/store/apps/details?id=com.royalmail.app.droid)
+contains the native request builders in .NET assemblies shipped in an ABI split.
+Guest tracking uses `https://api-app.royalmail.com`, with
+`/mailpieces/microsummary/v1/summary/{id}?returnExtendedData=true` and the separate
+`/mailpieces/v3.1/{id}/events` read. Both request builders send an application
+identifier, an issued anonymous bearer token and `X-acf-sensor-data` from the Akamai SDK.
+
+The token request posts `grant_type: anonymous`, `scope: tracking` and a device id
+to `/login/v1/tokens`. Discovering these routes does not establish a working
+HTTP-only guest session; a token request without the application identifier and
+sensor data receives an HTML 403. Application configuration and tokens stay outside Git.
+
 ## Limitations
 
 Akamai or an interactive CAPTCHA can block anonymous retrieval. Browser build

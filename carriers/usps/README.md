@@ -44,10 +44,25 @@ Parsing, in order:
   status `out_for_delivery`.
 - There is no direct step: it would only burn the budget on a 403.
 
+## Mobile API leads
+
+The official [USPS Mobile APK](https://play.google.com/store/apps/details?id=com.usps.app)
+opens `https://m.usps.com/m/TrackConfirmAction` in a WebView. Its native bridge
+handles scanning and saved labels; it does not provide a separate tracking read.
+The hosted destination returns a generic 404, which cannot establish parcel absence.
+
+The newer [Informed Delivery APK](https://play.google.com/store/apps/details?id=com.usps.id45833)
+contains the `https://apis.usps.com/tracking/v3` API base and native tracking models.
+Its account token flow uses authorization codes through
+`https://keyc.usps.com/realms/USPS-M/protocol/openid-connect/token`; the tracking
+API rejects requests without an access token with 401. This is an authenticated
+lead, not a demonstrated anonymous replacement for the public page. Informed
+Delivery's household mail, images and subscriber endpoints are outside this adapter's scope.
+
 ## Rejected approaches
 
 - Plain HTTP to the tracking page, with or without cookies: 403 before any content.
-- Official developer API (`api.usps.com`): the tracking scope needs a vetted business
+- Official developer API (`apis.usps.com`): the tracking scope needs a vetted business
   account, so it cannot serve anonymous lookups. Reconsider if the browser path stays
   unreliable.
 

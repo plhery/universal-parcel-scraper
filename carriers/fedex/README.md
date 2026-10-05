@@ -52,6 +52,18 @@ FLARESOLVERR_URL for browser fallback')`.
 - Scan times come from `date` + `time` + `gmtOffset`. A scan without a usable triple keeps no
   time rather than a guessed zone.
 
+## Mobile API lead
+
+The official [FedEx Mobile APK](https://play.google.com/store/apps/details?id=com.fedex.ida.android)
+uses the same `POST https://api.fedex.com/track/v2/shipments` route. Guest application
+tokens come from `/auth/oauth/v2/token` with `client_credentials` and `scope=oob`.
+The native request adds `x-clientid: ANDR`, `X-experienceid: MOBI`, version/locale
+headers and `X-acf-sensor-data` from the bundled Akamai SDK.
+
+Obtaining the mobile token does not clear tracking protection: ordinary HTTP with
+the app's request body and mobile headers still receives an HTML 403. Mobile
+application identifiers and issued tokens stay outside the repository.
+
 ## Rejected approaches
 
 - Plain HTTP to the tracking API, with or without the page's cookies, headers and OAuth

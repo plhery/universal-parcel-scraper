@@ -51,6 +51,23 @@ rendered status, after that wait.
   the last week or in the future.
 - The canary URL is a static PDF so the canary itself is not challenged.
 
+## Mobile API lead
+
+The official [UPS APK](https://play.google.com/store/apps/details?id=com.ups.mobile.android)
+delegates tracking to native code despite also containing a React Native bundle.
+Its detail read is `POST https://onlinetools.ups.com/api/molws/v2/tracking/details/{number}`
+with locale, an empty nickname body and a bearer token. Set both
+`AddPackageToTrackHistory` and `GetNicknameFromTrackHistory` to false for an
+independent lookup. The separate `TrackHistory` methods modify saved tracking
+records; they are not the parcel's scan feed.
+
+Guest tokens use `/security/v1/distributed-apps/authorize` and `/token` with
+`audience: anonymous` and a code challenge/verifier. The request builder also
+sends version and `X-Firebase-AppCheck` headers. Plain HTTP guest authorization
+is rejected with 401; the presence of the App Check header alone does not establish
+whether attestation is enforced. This route needs a verified guest session before
+it can replace browser retrieval. Application configuration and tokens stay outside Git.
+
 ## Rejected approaches
 
 - Calling `GetStatus` without loading the page first: 401 without the page's cookies.
