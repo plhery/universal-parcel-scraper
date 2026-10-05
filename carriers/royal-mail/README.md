@@ -47,10 +47,14 @@ Guest tracking uses `https://api-app.royalmail.com`, with
 `/mailpieces/v3.1/{id}/events` read. Both request builders send an application
 identifier, an issued anonymous bearer token and `X-acf-sensor-data` from the Akamai SDK.
 
-The token request posts `grant_type: anonymous`, `scope: tracking` and a device id
-to `/login/v1/tokens`. Discovering these routes does not establish a working
-HTTP-only guest session; a token request without the application identifier and
-sensor data receives an HTML 403. Application configuration and tokens stay outside Git.
+The token request posts `grant_type: anonymous`, `scope: tracking` and `device_id`
+to `/login/v1/tokens`. The standard host, `https://api.royalmail.net`, issues
+anonymous tracking tokens with its own login application identifier. That token
+does not unlock the protected tracking routes. The app uses a separate login
+identifier on the protected host; requests with that identifier and the correct
+body, but without SDK sensor data, receive an HTML 403. A token alone does not
+establish a working HTTP-only tracking session. Application configuration and
+tokens stay outside Git.
 
 ## Limitations
 

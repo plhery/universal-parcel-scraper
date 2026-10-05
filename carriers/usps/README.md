@@ -53,18 +53,23 @@ The hosted destination returns a generic 404, which cannot establish parcel abse
 
 The newer [Informed Delivery APK](https://play.google.com/store/apps/details?id=com.usps.id45833)
 contains the `https://apis.usps.com/tracking/v3` API base and native tracking models.
-Its account token flow uses authorization codes through
-`https://keyc.usps.com/realms/USPS-M/protocol/openid-connect/token`; the tracking
-API rejects requests without an access token with 401. This is an authenticated
-lead, not a demonstrated anonymous replacement for the public page. Informed
-Delivery's household mail, images and subscriber endpoints are outside this adapter's scope.
+Its account token flow uses authorization codes with PKCE and the `tracking`
+scope through `https://keyc.usps.com/realms/USPS-M/protocol/openid-connect/token`.
+Obtaining the token requires user sign-in; the APK's client identifier is not an
+access token. The tracking API rejects requests without a token with 401, which
+does not establish how an authenticated tracking request behaves. This account
+flow is not integrated into the adapter. Informed Delivery's household mail,
+images and subscriber endpoints are outside this adapter's scope.
+
+The separate [official developer API](https://github.com/USPS/api-examples/blob/main/README.md)
+uses `client_credentials` at `https://apis.usps.com/oauth2/v3/token`, with a
+registered application's Consumer Key and Consumer Secret and tracking access.
+This is an option for consumers with those credentials; it cannot provide an
+anonymous default. Developer authentication is not integrated into this adapter.
 
 ## Rejected approaches
 
 - Plain HTTP to the tracking page, with or without cookies: 403 before any content.
-- Official developer API (`apis.usps.com`): the tracking scope needs a vetted business
-  account, so it cannot serve anonymous lookups. Reconsider if the browser path stays
-  unreliable.
 
 ## Limitations
 
