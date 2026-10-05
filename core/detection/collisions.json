@@ -1,5 +1,20 @@
 [
   {
+    "shape": "Ten digits that fail the DHL Express waybill check",
+    "carriers": ["dhl", "estafeta", "mondial-relay", "relais-colis", "tipsa"],
+    "reason": "These carriers accept the same numeric length without a DHL Express checksum. Direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Twenty digits that fail the Polish barcode check",
+    "carriers": ["nz-post", "planzer", "usps"],
+    "reason": "The remaining numeric formats overlap. Direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Twenty digits outside Planzer's prefix that fail the Polish barcode check",
+    "carriers": ["nz-post", "usps"],
+    "reason": "These numeric formats overlap. Direct tracking must confirm the carrier."
+  },
+  {
     "shape": "OMGO followed by thirteen digits ending in a French postcode range",
     "carriers": [
       "colis-prive",

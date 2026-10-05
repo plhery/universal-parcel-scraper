@@ -13,12 +13,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
@@ -35,12 +35,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Publicly reported Apple shipment attributed to DHL Express; the attribution is unverified and available providers returned no history.",
@@ -58,12 +58,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."

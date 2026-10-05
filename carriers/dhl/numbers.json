@@ -26,12 +26,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Published integration example, not a real shipment. The source attributes it to DHL, which stays one candidate among several."

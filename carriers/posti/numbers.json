@@ -22,9 +22,6 @@
         "confidence": "low",
         "candidates": [
           "chronopost"
-        ],
-        "not": [
-          "posti"
         ]
       },
       "note": "Invented Finnish-shaped identifier with a failed S10 check digit. It cannot suggest Posti."
@@ -41,10 +38,10 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "poczta-polska",
           "postnord",
           "usps",
-          "nz-post",
-          "poczta-polska"
+          "nz-post"
         ]
       },
       "note": "Example Posti tracking link quoted in an open-source plugin's issue, not a confirmed shipment. The source attributes it to Posti, which no rule claims."

@@ -90,8 +90,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Shared numeric shape that must stay a suggestion rather than a carrier."

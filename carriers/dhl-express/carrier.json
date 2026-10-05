@@ -63,7 +63,9 @@
     {
       "id": "dhl-express-waybill",
       "pattern": "^\\d{10}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "dhl-express",
+      "preferred": true
     }
   ]
 }

@@ -113,6 +113,38 @@
         "confidence": "none"
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to TNT; no rule matches this shape."
+    },
+    {
+      "number": "403923212",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://express.tnt.com/expresswebservices-website/docs/ExpressConnect%20Shipping%20Integration%20Guide%20v3.7.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "Official Appendix I checksum example, not a real shipment."
+    },
+    {
+      "number": "403923214",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://express.tnt.com/expresswebservices-website/docs/ExpressConnect%20Shipping%20Integration%20Guide%20v3.7.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "Official Appendix I checksum example, not a real shipment."
     }
   ]
 }

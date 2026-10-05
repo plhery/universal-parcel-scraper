@@ -16,6 +16,7 @@ import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
 import { isValidMondialRelayBarcode } from './mondialRelay.js';
 import { normalizeTrackingNumber } from './normalize.js';
+import { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidTntConsignmentNumber } from './numericChecksums.js';
 import { isValidS10TrackingNumber } from './s10.js';
 import type { CarrierDetection } from './types.js';
 
@@ -24,6 +25,9 @@ function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   if (rule.checksum === 's10') return isValidS10TrackingNumber(trackingNumber);
   if (rule.checksum === 'hermes') return isValidHermesParcelNumber(trackingNumber);
   if (rule.checksum === 'gls') return isValidGlsParcelNumber(trackingNumber);
+  if (rule.checksum === 'dhl-express') return isValidDhlExpressWaybill(trackingNumber);
+  if (rule.checksum === 'tnt') return isValidTntConsignmentNumber(trackingNumber);
+  if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(trackingNumber);
   return true;
 }
 

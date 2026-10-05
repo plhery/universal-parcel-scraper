@@ -125,6 +125,24 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The S10 check digit does not validate. The source attributes it to Poczta Polska, which no rule claims."
+    },
+    {
+      "number": "00159007733123456789",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poczta-polska",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "Official reference example with the widget’s appended check digit, not a real shipment."
     }
   ]
 }

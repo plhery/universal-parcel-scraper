@@ -74,6 +74,23 @@
     ]
   },
   {
+    "input": "00159007733123456789",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "poczta-polska",
+      "usps",
+      "nz-post"
+    ],
+    "preferred": [
+      "poczta-polska"
+    ],
+    "asked": [
+      "poczta-polska",
+      "nz-post"
+    ]
+  },
+  {
     "input": "0020 1000 4133 1740 8562 5338 724P",
     "carrier": "unknown",
     "confidence": "none",
@@ -84,14 +101,17 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "poczta-polska",
       "postnord",
       "usps",
-      "nz-post",
+      "nz-post"
+    ],
+    "preferred": [
       "poczta-polska"
     ],
     "asked": [
-      "nz-post",
-      "poczta-polska"
+      "poczta-polska",
+      "nz-post"
     ]
   },
   {
@@ -119,14 +139,17 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "poczta-polska",
       "postnord",
       "usps",
-      "nz-post",
+      "nz-post"
+    ],
+    "preferred": [
       "poczta-polska"
     ],
     "asked": [
-      "nz-post",
-      "poczta-polska"
+      "poczta-polska",
+      "nz-post"
     ]
   },
   {
@@ -421,13 +444,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "poczta-polska",
       "usps",
-      "nz-post",
+      "nz-post"
+    ],
+    "preferred": [
       "poczta-polska"
     ],
     "asked": [
-      "nz-post",
-      "poczta-polska"
+      "poczta-polska",
+      "nz-post"
     ]
   },
   {
@@ -937,11 +963,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1031,11 +1055,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1155,11 +1177,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1401,11 +1421,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -1423,11 +1446,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1441,11 +1462,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1459,11 +1478,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1477,11 +1494,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1495,11 +1510,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1513,11 +1526,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1531,11 +1542,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -1749,6 +1758,9 @@
     "candidates": [
       "tnt"
     ],
+    "preferred": [
+      "tnt"
+    ],
     "asked": [
       "tnt"
     ]
@@ -1811,11 +1823,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -2072,11 +2082,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -2117,11 +2125,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -2160,11 +2166,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -2407,6 +2416,34 @@
     ]
   },
   {
+    "input": "403923212",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt"
+    ]
+  },
+  {
+    "input": "403923214",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt"
+    ]
+  },
+  {
     "input": "410569991366",
     "carrier": "unknown",
     "confidence": "low",
@@ -2481,13 +2518,8 @@
   {
     "input": "437650784",
     "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tnt"
-    ],
-    "asked": [
-      "tnt"
-    ]
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "440010970004135028",
@@ -2544,11 +2576,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -2579,11 +2609,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -2622,11 +2655,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -2674,11 +2705,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -3064,13 +3098,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "poczta-polska",
       "usps",
-      "nz-post",
+      "nz-post"
+    ],
+    "preferred": [
       "poczta-polska"
     ],
     "asked": [
-      "nz-post",
-      "poczta-polska"
+      "poczta-polska",
+      "nz-post"
     ]
   },
   {
@@ -3114,13 +3151,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "poczta-polska",
       "usps",
-      "nz-post",
+      "nz-post"
+    ],
+    "preferred": [
       "poczta-polska"
     ],
     "asked": [
-      "nz-post",
-      "poczta-polska"
+      "poczta-polska",
+      "nz-post"
     ]
   },
   {
@@ -3138,12 +3178,10 @@
     "confidence": "low",
     "candidates": [
       "usps",
-      "nz-post",
-      "poczta-polska"
+      "nz-post"
     ],
     "asked": [
-      "nz-post",
-      "poczta-polska"
+      "nz-post"
     ]
   },
   {
@@ -3172,11 +3210,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -3186,11 +3222,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -3362,11 +3401,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -3411,11 +3448,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -3441,11 +3481,9 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
-      "dhl-express"
+      "estafeta"
     ],
     "asked": [
-      "dhl-express",
       "relais-colis",
       "tipsa"
     ]
@@ -3683,6 +3721,9 @@
     "candidates": [
       "tnt"
     ],
+    "preferred": [
+      "tnt"
+    ],
     "asked": [
       "tnt"
     ]
@@ -3858,11 +3899,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [
@@ -3876,11 +3920,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl-express",
       "dhl",
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "estafeta",
+      "estafeta"
+    ],
+    "preferred": [
       "dhl-express"
     ],
     "asked": [

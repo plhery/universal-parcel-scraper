@@ -104,7 +104,7 @@ Recognition uses HTTP by default. Consumers can request `recognitionCandidates` 
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's
 `recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank;
 recipient inputs exclude a candidate. Browser confirmation requires dated shipment activity
-and returns its tracking result for reuse. An ambiguous ten-digit number includes DHL Express among its direct candidates. Its
+and returns its tracking result for reuse. An ambiguous ten-digit number includes DHL Express among its direct candidates when its waybill check passes. Its
 facility-local clocks stay unresolved; universal history can supply verified offsets.
 Consumers can ask enabled universal providers during preflight and reuse those results
 when saving, while retaining direct confirmation for carrier identity.

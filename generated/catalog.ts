@@ -3725,8 +3725,14 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^\\d{19,20}$",
+        "pattern": "^\\d{19}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{20}$",
+        "confidence": "low",
+        "checksum": "poczta-polska",
+        "preferred": true
       },
       {
         "pattern": "^PX\\d{10}$",
@@ -3833,7 +3839,9 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^\\d{9}$",
-        "confidence": "low"
+        "confidence": "low",
+        "checksum": "tnt",
+        "preferred": true
       },
       {
         "pattern": "^\\d{16}$",
@@ -4093,7 +4101,9 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^\\d{10}$",
-        "confidence": "low"
+        "confidence": "low",
+        "checksum": "dhl-express",
+        "preferred": true
       }
     ]
   },

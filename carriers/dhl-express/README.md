@@ -2,6 +2,10 @@
 
 DHL Express waybills through MyDHL+, separate from the German DHL Paket adapter.
 
+Detection shares the [MyDHL+ tracking page](https://mydhl.express.dhl/gb/en/tracking.html)'s
+waybill check with the adapter. A passing check prioritizes a candidate; it does
+not confirm the carrier or the existence of a shipment.
+
 ## Retrieval
 
 `direct` asks the public `shipmentTracking` JSON endpoint for one waybill.

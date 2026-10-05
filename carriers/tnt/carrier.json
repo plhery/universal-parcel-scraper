@@ -55,7 +55,9 @@
     {
       "id": "tnt-1",
       "pattern": "^\\d{9}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "tnt",
+      "preferred": true
     },
     {
       "id": "tnt-2",

@@ -17,8 +17,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Relais Colis, which stays one candidate among several."
@@ -101,8 +100,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer identifies this as the Relais Colis tracking number before a disputed return and promised replacement by Chronopost. Numeric detection remains ambiguous."
@@ -123,8 +121,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -145,8 +142,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -167,8 +163,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -189,8 +184,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -211,8 +205,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -233,8 +226,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -255,8 +247,7 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
@@ -273,12 +264,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."

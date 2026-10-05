@@ -17,10 +17,13 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   detectCarrierMatch,
+  isValidDhlExpressWaybill,
   isValidGlsParcelNumber,
   isValidHermesParcelNumber,
   isValidMondialRelayBarcode,
+  isValidPocztaPolskaBarcode,
   isValidS10TrackingNumber,
+  isValidTntConsignmentNumber,
   normalizeTrackingNumber,
 } from '../detection/index.js';
 import {
@@ -38,7 +41,7 @@ interface DetectionRule {
   readonly pattern: string;
   readonly rawPattern?: string;
   readonly confidence: 'high' | 'low';
-  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls';
+  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska';
   readonly preferred?: true;
 }
 
@@ -70,6 +73,9 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'mondial-relay') return isValidMondialRelayBarcode(value);
   if (rule.checksum === 'hermes') return isValidHermesParcelNumber(value);
   if (rule.checksum === 'gls') return isValidGlsParcelNumber(value);
+  if (rule.checksum === 'dhl-express') return isValidDhlExpressWaybill(value);
+  if (rule.checksum === 'tnt') return isValidTntConsignmentNumber(value);
+  if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(value);
   return true;
 }
 

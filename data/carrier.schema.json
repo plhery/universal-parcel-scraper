@@ -423,7 +423,10 @@
             "s10",
             "mondial-relay",
             "hermes",
-            "gls"
+            "gls",
+            "dhl-express",
+            "tnt",
+            "poczta-polska"
           ]
         },
         "preferred": {

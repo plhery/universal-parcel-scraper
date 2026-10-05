@@ -67,8 +67,15 @@
   "detection": [
     {
       "id": "poczta-polska-1",
-      "pattern": "^\\d{19,20}$",
+      "pattern": "^\\d{19}$",
       "confidence": "low"
+    },
+    {
+      "id": "poczta-polska-barcode",
+      "pattern": "^\\d{20}$",
+      "confidence": "low",
+      "checksum": "poczta-polska",
+      "preferred": true
     },
     {
       "id": "poczta-polska-2",

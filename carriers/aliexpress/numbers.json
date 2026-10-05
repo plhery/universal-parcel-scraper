@@ -6,7 +6,10 @@
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "observed_request",
-      "expect": { "carrier": "aliexpress", "confidence": "high" },
+      "expect": {
+        "carrier": "aliexpress",
+        "confidence": "high"
+      },
       "note": "Synthetic Cainiao shipment-number shape."
     },
     {
@@ -14,14 +17,20 @@
       "role": "negative",
       "evidence": "synthetic",
       "derivedFrom": "invented",
-      "expect": { "carrier": "unknown", "confidence": "none", "not": ["aliexpress"] }
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
     },
     {
       "number": "DOFR0000000000001HU",
       "role": "negative",
       "evidence": "synthetic",
       "derivedFrom": "invented",
-      "expect": { "carrier": "unknown", "confidence": "none", "not": ["aliexpress"] }
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
     },
     {
       "number": "CNG00798678939847",

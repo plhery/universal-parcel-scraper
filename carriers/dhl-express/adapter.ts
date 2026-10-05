@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type AdapterEnvironment, type TrackingContext } from '../../core/adapter/index.js';
+import { isValidDhlExpressWaybill } from '../../core/detection/numericChecksums.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -13,8 +14,7 @@ const MAX_BYTES = 1_000_000;
 
 export function normalizeNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  // The public MyDHL+ tracking bundle validates the last digit as the first nine modulo seven.
-  if (!/^\d{10}$/.test(number) || Number(number.slice(0, 9)) % 7 !== Number(number[9])) {
+  if (!isValidDhlExpressWaybill(number)) {
     throw new InvalidInputError(PROVIDER, 'DHL Express requires a 10-digit waybill with a valid check digit');
   }
   return number;

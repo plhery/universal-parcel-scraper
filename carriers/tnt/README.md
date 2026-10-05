@@ -16,6 +16,10 @@ postcode or account is required.
 
 ## Notes
 
+- Local detection accepts both consignment checks in
+  [ExpressConnect's Appendix I](https://express.tnt.com/expresswebservices-website/docs/ExpressConnect%20Shipping%20Integration%20Guide%20v3.7.pdf).
+  A passing check prioritizes a candidate without confirming a shipment. The
+  international checks do not apply to French national references.
 - tnt.com lists every consignment that carried the number, since numbers are reused.
   Only consignments whose own number matches are read, and the one with the most recent
   scan is the parcel. References, signatories and addresses are not kept.

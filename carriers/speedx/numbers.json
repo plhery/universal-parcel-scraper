@@ -101,10 +101,7 @@
       "shapeConfirmed": "2026-09-30",
       "expect": {
         "carrier": "unknown",
-        "confidence": "none",
-        "not": [
-          "speedx"
-        ]
+        "confidence": "none"
       },
       "note": "SPX followed only by digits, without the hub letters, must not resolve to SpeedX."
     },

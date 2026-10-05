@@ -79,12 +79,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."
@@ -101,12 +101,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-express",
           "dhl",
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta",
-          "dhl-express"
+          "estafeta"
         ]
       },
       "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."

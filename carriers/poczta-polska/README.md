@@ -10,6 +10,11 @@ one parcel's history. No account or browser is required. Both returned parcel
 identifiers must match. A 19-digit reference receives the same check digit that
 the official widget appends before lookup.
 
+Local detection checks complete numeric barcodes against the
+[widget's check-digit calculation](https://emonitoring.poczta-polska.pl/widget/widget.tracking.min.js).
+Passing checks prioritize a candidate without confirming a shipment. Shorter
+aliases have no check digit to validate and remain shape-based suggestions.
+
 ## Notes
 
 Specific scan codes determine progress. An unsuccessful delivery can carry the
