@@ -3895,6 +3895,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^[A-Z]{2}\\d{9}ES$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^[PD][A-Z][A-Z0-9]{4}\\d{9}[A-Z]$",
+        "confidence": "high"
       }
     ]
   },

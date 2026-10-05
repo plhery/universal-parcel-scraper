@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
+import { IndeterminateError, NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import {
   normalizeCorreosSpainTrackingNumber,
   correosSpainTrackingUrl,
+  parseCorreosSpainExpeditionResponse,
   parseCorreosSpainTrackingResponse,
   CorreosSpainTracker,
 } from './adapter.js';
@@ -14,6 +15,10 @@ import { classifyCorreosSpainStatus } from './status.js';
 // the prior-art client, so classification exercises production prose rather
 // than paraphrases.
 const TRACKING_NUMBER = 'PR123456789012345C';
+// An expedition code and the parcel code it stands for: the same fifteen
+// characters, then the parcel's seven further digits and its own check letter.
+const EXPEDITION = 'PL00ZZ000000001Z';
+const PARCEL = 'PL00ZZ0000000010100000Y';
 const DELIVERED = JSON.parse(
   readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'),
 ) as Record<string, unknown>;
@@ -90,6 +95,7 @@ describe('Correos Spain response parsing', () => {
       ['H01R390V', 'exception', 'failed_attempt'],
       ['H01R420V', 'exception', 'failed_attempt'],
       ['L03D320R', 'exception', 'returned'],
+      ['A170000V', 'pending', 'registered'],
     ];
     for (const [code, status, stage] of cases) {
       expect(classifyCorreosSpainStatus(code)).toEqual({ status, stage });
@@ -120,6 +126,29 @@ describe('Correos Spain response parsing', () => {
     expect(() => parseCorreosSpainTrackingResponse([envelope({ error: undefined })], TRACKING_NUMBER))
       .toThrow(SchemaError);
     expect(() => parseCorreosSpainTrackingResponse(null, TRACKING_NUMBER)).toThrow(SchemaError);
+  });
+
+  it('names the single parcel of an expedition and leaves several inconclusive', () => {
+    const shipment = (shipmentCode: string, expeditionCode = EXPEDITION) => ({ shipmentCode, expeditionCode, events: [] });
+    expect(parseCorreosSpainExpeditionResponse({ type: 'expeditions', shipment: [shipment(PARCEL)] }, EXPEDITION)).toBe(PARCEL);
+    expect(parseCorreosSpainExpeditionResponse({ shipment: [shipment('pl00zz 0000000010100000y'), shipment(PARCEL)] }, EXPEDITION)).toBe(PARCEL);
+    expect(() => parseCorreosSpainExpeditionResponse({ shipment: [shipment(PARCEL), shipment('PL00ZZ0000000020100000F')] }, EXPEDITION))
+      .toThrow(IndeterminateError);
+    // Another expedition's parcel, an empty list and a missing code are no answer about this one.
+    for (const payload of [{ shipment: [shipment(PARCEL, 'PL00ZZ000000002S')] }, { shipment: [] }, { shipment: [shipment('')] },
+      { shipment: [null] }, { shipment: 'none' }, {}, null]) {
+      expect(() => parseCorreosSpainExpeditionResponse(payload, EXPEDITION)).toThrow(SchemaError);
+    }
+  });
+
+  it('binds a parcel found through its expedition to that expedition', () => {
+    const parcel = (codExpedicion: unknown) => [envelope({ codEnvio: PARCEL, codExpedicion })];
+    expect(parseCorreosSpainTrackingResponse(parcel(EXPEDITION), PARCEL, EXPEDITION).status).toBe('delivered');
+    for (const other of ['PL00ZZ000000002S', null, undefined]) {
+      expect(() => parseCorreosSpainTrackingResponse(parcel(other), PARCEL, EXPEDITION)).toThrow(SchemaError);
+    }
+    // A parcel asked for by its own code needs no expedition.
+    expect(parseCorreosSpainTrackingResponse(parcel(null), PARCEL).status).toBe('delivered');
   });
 
   it('keeps codError-0 parcels without events as unknown with the envelope summary', () => {
@@ -204,6 +233,36 @@ describe('CorreosSpainTracker fetch', () => {
     expect(seen).toEqual([
       'https://localizador.correos.es/canonico/eventos_envio_servicio/PR123456789012345C?codAplicacion=60&codCanal=3&codIdioma=ES&indUltEvento=N',
     ]);
+  });
+
+  it('resolves an expedition code through the public search, then tracks its parcel', async () => {
+    const seen: string[] = [];
+    const search = 'https://api1.correos.es/digital-services/searchengines/api/v1/envios?text=PL00ZZ000000001Z&language=ES';
+    const localizador = (code: string) => `https://localizador.correos.es/canonico/eventos_envio_servicio/${code}?codAplicacion=60&codCanal=3&codIdioma=ES&indUltEvento=N`;
+    let found: Response = response({ type: 'expeditions', shipment: [{ shipmentCode: PARCEL, expeditionCode: EXPEDITION }] });
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+      seen.push(String(input));
+      return String(input) === search ? found.clone() : response([envelope({ codEnvio: PARCEL, codExpedicion: EXPEDITION })]);
+    });
+    const tracker = new CorreosSpainTracker({ timeoutMs: 1_000 });
+    expect((await tracker.fetch('pl00zz000000001z')).status).toBe('delivered');
+    expect(seen).toEqual([search, localizador(PARCEL)]);
+    // The search answers 204 for a code it does not know; the localizador is not asked.
+    seen.length = 0;
+    found = new Response(null, { status: 204 });
+    await expect(tracker.fetch(EXPEDITION)).rejects.toThrow(NotFoundError);
+    expect(seen).toEqual([search]);
+    found = response({}, 503);
+    await expect(tracker.fetch(EXPEDITION)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 503 });
+    // A code the search returns as its own parcel is tracked without an expedition binding.
+    seen.length = 0;
+    found = response({ type: 'envio', shipment: [{ shipmentCode: EXPEDITION, expeditionCode: EXPEDITION }] });
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+      seen.push(String(input));
+      return String(input) === search ? found.clone() : response([envelope({ codEnvio: EXPEDITION, codExpedicion: null })]);
+    });
+    expect((await tracker.fetch(EXPEDITION)).status).toBe('delivered');
+    expect(seen).toEqual([search, localizador(EXPEDITION)]);
   });
 
   it('surfaces transport and schema failures distinctly', async () => {

@@ -1,7 +1,7 @@
 # Correos
 
 The Spanish postal operator. Tracked through the keyless `localizador.correos.es`
-traceability service behind the public tracker. Correos Express (`correos-express`) and
+traceability service. Correos Express (`correos-express`) and
 Correos de Chile (`correos-chile`) are separate carriers.
 
 ## How it works
@@ -16,14 +16,30 @@ Correos de Chile (`correos-chile`) are separate carriers.
    - `codError` `0` with no events is `unknown`, with `resumen_ultimo` as the status text.
    - Non-200 is `UpstreamHttpError`.
 
+   The localizador only knows parcel codes. An expedition code is resolved first with one
+   `GET https://api1.correos.es/digital-services/searchengines/api/v1/envios?text={code}&language=ES`,
+   the keyless search behind the public tracker. It lists the expedition's parcels and answers
+   204 for a code it does not know. The parcel is then tracked as above, and its envelope must
+   name the expedition in `codExpedicion`.
+
 ## Notes
 
 - Detection covers checksum-valid `…ES` S10 numbers, `PR` + 15 digits + `C`, and the
   23-character parcel codes: a product prefix (`P…` parcels such as `PQ`, `PK`, `PH`; `D…`
-  returns), a 4-character label code, 16 digits and a check letter. The check-letter
-  algorithm is unknown, so the rule only checks the shape. Correos Express's all-digit
+  returns), a 4-character label code, 16 digits and a check letter. Correos Express's all-digit
   23-character numbers don't match. The adapter itself accepts any code and lets the
   envelope decide.
+- An expedition code is the 16-character number Correos gives a sender for a whole consignment:
+  the first fifteen characters of its parcel code and a check letter of its own. Detection and
+  the adapter share the shape through `core/detection/correosSpain.ts`.
+- The check letter of both codes is `TRWAGMYFPDXBNJZSQVHLCKE` at the sum of the other
+  characters' codes modulo 23. Correos publishes no formula; this one holds for every public
+  code in `numbers.json`. The rules still check only the shape: a checksum kind has to exist in
+  every port of the detection engine before a rule can name it.
+- An expedition of several parcels is inconclusive: one parcel's history does not describe the
+  others. Each parcel can still be tracked by its own code.
+- The search endpoint is not used for history. Its events carry Spanish text and a phase but no
+  `codEvento`, the only field the status map reads.
 - Only `codEvento` is mapped, never the Spanish `desTextoResumen` prose.
 - `L010000V`, `I010000V`, `X120000V` and `EOL.9001` come from a community integration and
   were never re-observed (`EOL.9001` does not even match the Correos code shape). They are
@@ -51,5 +67,5 @@ Correos de Chile (`correos-chile`) are separate carriers.
 ## Testing
 
 `npm run test:carriers:live -- carriers/correos-spain`. The unknown-number
-check needs no env vars; set `CORREOS_SPAIN_DELIVERED_TRACKING_NUMBER` to also check a real
-delivered parcel.
+checks need no env vars; set `CORREOS_SPAIN_DELIVERED_TRACKING_NUMBER` to also check a real
+delivered parcel and `CORREOS_SPAIN_EXPEDITION_CODE` a real single-parcel expedition.

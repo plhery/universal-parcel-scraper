@@ -60,6 +60,8 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'H01R420V': { status: 'exception', stage: 'failed_attempt' },
   // The pickup window closed: the parcel goes back to the sender.
   'L03D320R': { status: 'exception', stage: 'returned' },
+  // The sender left the parcel in a Citypaq locker; Correos admits it later.
+  'A170000V': { status: 'pending', stage: 'registered' },
 };
 
 /** The stage and status for a Correos `codEvento`, or undefined when unmapped. */

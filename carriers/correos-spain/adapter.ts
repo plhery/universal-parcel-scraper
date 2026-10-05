@@ -1,6 +1,7 @@
 
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { isCorreosSpainExpeditionCode } from '../../core/detection/correosSpain.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
@@ -20,6 +21,9 @@ import { classifyCorreosSpainStatus } from './status.js';
 //   prior-art client (admitted → classified → out-for-delivery → failed
 //   attempt → office hold → collected); the map lives in status.ts.
 const TRACKING_ENDPOINT = 'https://localizador.correos.es/canonico/eventos_envio_servicio';
+// The localizador only knows parcel codes. The public tracker's own search
+// names the parcels of an expedition code, and answers 204 for an unknown one.
+const EXPEDITION_ENDPOINT = 'https://api1.correos.es/digital-services/searchengines/api/v1/envios';
 const DEFAULT_TIMEOUT_MS = 15_000;
 /** `fetchBounded` repeats a request that failed in transit once, after this pause. */
 const TRANSIENT_RETRY_DELAY_MS = 1_000;
@@ -57,15 +61,42 @@ export function correosSpainTrackingUrl(rawTrackingNumber: string): string {
   return url.toString();
 }
 
-export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumber: string): CarrierResult {
+const code = (value: unknown) => clean(value, 64).toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+
+/**
+ * The parcel code behind an expedition code, from the public tracker's search.
+ * An expedition of several parcels has no single history: it stays inconclusive.
+ */
+export function parseCorreosSpainExpeditionResponse(payload: unknown, expeditionCode: string): string {
+  const requested = normalizeCorreosSpainTrackingNumber(expeditionCode);
+  const shipments: unknown = isRecord(payload) ? payload.shipment : undefined;
+  if (!Array.isArray(shipments) || !shipments.every(isRecord)) {
+    throw new SchemaError('Correos', 'Correos returned an invalid expedition response');
+  }
+  const parcels = new Set(shipments.filter((shipment) => code(shipment.expeditionCode) === requested)
+    .map((shipment) => code(shipment.shipmentCode)));
+  if (parcels.size === 0) throw new SchemaError('Correos', 'Correos returned a different expedition');
+  if (parcels.size > 1) throw new IndeterminateError('Correos', 'Correos expedition holds several parcels');
+  const [parcel] = parcels;
+  if (!parcel || !/^[A-Z0-9]{4,40}$/.test(parcel)) {
+    throw new SchemaError('Correos', 'Correos did not return the expedition parcel');
+  }
+  return parcel;
+}
+
+/** `expeditionCode` binds a parcel found through its expedition to that expedition. */
+export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumber: string, expeditionCode?: string): CarrierResult {
   const requested = normalizeCorreosSpainTrackingNumber(trackingNumber);
   // The endpoint answers a single-element array; bare objects are accepted too
   // since some error bodies come back unwrapped.
   const envelope: unknown = Array.isArray(payload) ? payload[0] : payload;
   if (!isRecord(envelope)) throw new SchemaError('Correos', 'Correos returned an invalid tracking response');
-  const returned = clean(envelope.codEnvio, 64).toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+  const returned = code(envelope.codEnvio);
   if (!returned) throw new SchemaError('Correos', 'Correos did not return a shipment identifier');
   if (returned !== requested) throw new SchemaError('Correos', 'Correos returned a different shipment');
+  if (expeditionCode !== undefined && code(envelope.codExpedicion) !== normalizeCorreosSpainTrackingNumber(expeditionCode)) {
+    throw new SchemaError('Correos', 'Correos returned a parcel of a different expedition');
+  }
   const error = envelope.error;
   if (!isRecord(error) || (typeof error.codError !== 'string'
     && (typeof error.codError !== 'number' || !Number.isFinite(error.codError)))) {
@@ -177,27 +208,39 @@ export class CorreosSpainTracker {
 
   async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeCorreosSpainTrackingNumber(rawTrackingNumber);
-    // The default budget covers the request, the pause and the one transient retry.
-    const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
-    const url = `${TRACKING_ENDPOINT}/${encodeURIComponent(trackingNumber)}`
-      + '?codAplicacion=60&codCanal=3&codIdioma=ES&indUltEvento=N';
-    const { response, bytes } = await fetchBounded(url, {
-      signal: budget.signal,
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'User-Agent': this.userAgent,
-      },
-    }, {
-      provider: 'Correos tracking',
-      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
-      maxBytes: MAX_RESPONSE_BYTES,
-      retryTransient: true,
-      allowHttpError: true,
-      fetcher: this.fetcher,
-    });
-    if (!response.ok) throw new UpstreamHttpError('Correos tracking', response.status);
-    return parseCorreosSpainTrackingResponse(parseJsonBytes(bytes, 'Correos tracking'), trackingNumber);
+    const expedition = isCorreosSpainExpeditionCode(trackingNumber);
+    // The default budget covers each request, its pause and its one transient retry.
+    const budget = lookupBudget(context, (expedition ? 2 : 1) * (2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS));
+    const request = async (url: string) => {
+      const { response, bytes } = await fetchBounded(url, {
+        signal: budget.signal,
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'User-Agent': this.userAgent,
+        },
+      }, {
+        provider: 'Correos tracking',
+        timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
+        maxBytes: MAX_RESPONSE_BYTES,
+        retryTransient: true,
+        allowHttpError: true,
+        fetcher: this.fetcher,
+      });
+      if (!response.ok) throw new UpstreamHttpError('Correos tracking', response.status);
+      return { response, bytes };
+    };
+    let parcel = trackingNumber;
+    if (expedition) {
+      const found = await request(`${EXPEDITION_ENDPOINT}?${new URLSearchParams({ text: trackingNumber, language: 'ES' })}`);
+      if (found.response.status === 204) throw new NotFoundError('Correos');
+      parcel = parseCorreosSpainExpeditionResponse(parseJsonBytes(found.bytes, 'Correos tracking'), trackingNumber);
+    }
+    const { bytes } = await request(`${TRACKING_ENDPOINT}/${encodeURIComponent(parcel)}`
+      + '?codAplicacion=60&codCanal=3&codIdioma=ES&indUltEvento=N');
+    // A code the search returns as its own parcel is tracked as any parcel code.
+    return parseCorreosSpainTrackingResponse(parseJsonBytes(bytes, 'Correos tracking'), parcel,
+      parcel === trackingNumber ? undefined : trackingNumber);
   }
 }
 
