@@ -4,7 +4,7 @@ Catalog support for Sagawa's Japanese domestic parcels. Explicit carrier selecti
 
 ## Retrieval
 
-There is no dedicated adapter. The public tracking service rejects direct HTTP requests and submissions from the corporate site's current tracking form in an ordinary browser. Its access-denied page does not establish parcel absence.
+There is no dedicated adapter. Sagawa has suspended its public shipment inquiry service and carrier inquiry API, as described in its [official service FAQ](https://www2.sagawa-exp.co.jp/information/detail/425/). Access denial does not establish parcel absence.
 
 ## Limitations
 

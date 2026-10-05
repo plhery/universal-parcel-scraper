@@ -130,8 +130,8 @@ about current coverage.
 | [TIPSA](../carriers/tipsa/README.md) | Yes | ✓ 13 | No history | ✓ 13 | No history | No history | N/A |
 | [Canpar](../carriers/canpar/README.md) | Yes | ✓ 11 | No history | ✓ 11 | No history | ✓ 11 | N/A |
 | [DPD Germany](../carriers/dpd-de/README.md) | Yes (Germany; optional postcode) | ✓ 4 | Unverified | Unverified | Unverified | Unverified | N/A |
-| [DPD UK](../carriers/dpd-uk/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
-| [Evri UK](../carriers/evri-uk/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [DPD UK](../carriers/dpd-uk/README.md) | Yes (UK parcel numbers) | ✓ 7 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Evri UK](../carriers/evri-uk/README.md) | Yes (local Chromium) | ✓ 6 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [SpeedPAK](../carriers/speedpak/README.md) | Yes | ✓ 14 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Intelcom / Dragonfly](../carriers/intelcom/README.md) | Yes (Canada) | Not found; alternate ✓ 6 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Ekart](../carriers/ekart/README.md) | Yes (ecommerce) | ✓ 1 | Unverified | Unverified | Unverified | Unverified | N/A |

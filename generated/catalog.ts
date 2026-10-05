@@ -4174,7 +4174,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "dpd-uk",
+      "localClocks": true
     },
     "canaryUrl": "https://track.dpd.co.uk/",
     "trackingUrlTemplate": "https://track.dpd.co.uk/?reference={trackingNumber}",
@@ -4244,7 +4245,7 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "evri-uk"
     },
     "canaryUrl": "https://www.evri.com/track-a-parcel",
     "trackingUrlTemplate": "https://www.evri.com/track/parcel/{trackingNumber}/details",

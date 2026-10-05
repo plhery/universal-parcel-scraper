@@ -18,13 +18,13 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "evri-uk",
+    "steps": [
+      "browser"
+    ]
   },
   "capabilities": [
-    "history",
-    "location",
-    "eta"
+    "history"
   ],
   "portal": {
     "url": "https://www.evri.com/track/parcel/{trackingNumber}/details",
@@ -35,9 +35,22 @@
       "eta",
       "proof_of_delivery"
     ],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "recipient_details",
+      "address",
+      "proof_of_delivery",
+      "gps",
+      "sender_details",
+      "issued_credentials"
+    ],
+    "unavailable": [
+      "location",
+      "eta"
+    ]
   },
   "links": [
     {

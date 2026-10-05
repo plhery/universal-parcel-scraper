@@ -1,29 +1,33 @@
 # DPD UK
 
-DPD's United Kingdom consumer delivery service. Switzerland, Germany and France
-have separate carrier ids. Automatic history uses the universal providers
-enabled by the caller.
+DPD's United Kingdom public parcel history, using fourteen-digit parcel numbers.
+Switzerland, Germany and France have separate carrier ids.
 
 ## How it works
 
-The official consumer page asks for a reference and delivery postcode.
-`apis.track.dpd.co.uk/v1/reference` resolves those to a parcel code. The page
-then submits a reCAPTCHA token to `/login` before its session reads
-`/parcels/{code}` and the event history.
+The official page calls `apis.track.dpd.co.uk/v1/reference` with an empty
+postcode to obtain a parcel handle, then reads `/parcels/{handle}` and
+`/parcels/{handle}/parcelevents`. These public reads need no account, cookie or
+CAPTCHA token. The adapter validates the parcel number in both lookup replies
+before reading history under the returned handle.
 
 ## Notes
 
-- A group-wide DPD guest response does not establish UK coverage.
-- The public tracking link prefills the reference; the user supplies the postcode.
-- A failed reference/postcode pair does not distinguish an unknown parcel from
-  a wrong postcode.
+- Scan times have no stated timezone, including delivery-partner scans. They
+  remain local clocks; the adapter does not assign a London offset.
+- History stays in the page's newest-first order. Exact repeated scans are
+  collapsed, and only a nonempty history produces a successful result.
+- Parcel handles and recipient details remain outside the result and errors.
 
 ## Limitations
 
-No dedicated adapter is registered. A successful authorized reference/postcode
-pair and the CAPTCHA session are required to validate that retrieval path.
+Order and collection references that require a postcode are outside this
+adapter's scope. Delivery options and proof of delivery behind the postcode
+form are not queried. A generic HTTP 404 does not establish parcel absence;
+only the reference service's explicit unknown-reference response does.
 
 ## Testing
 
-Provider live-test inputs and commands are documented in the
-[provider READMEs](../../providers/README.md).
+```sh
+DPD_UK_TRACKING_NUMBER=... DPD_UK_UNKNOWN_NUMBER=... npm run test:carriers:live -- carriers/dpd-uk
+```

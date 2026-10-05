@@ -1,4 +1,11 @@
 {
   "carrier": "evri-uk",
-  "entries": []
+  "entries": [
+    { "code": "EXPECTED", "language": "en", "stage": "registered", "confirmedBy": "live" },
+    { "code": "PROCESSING_HUB", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "code": "LOCAL_DEPOT", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "code": "COURIER_DELIVERY", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live" },
+    { "code": "DELIVERY_1900_2100", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live" },
+    { "code": "LEFT_GARAGE", "language": "en", "stage": "delivered", "confirmedBy": "live" }
+  ]
 }

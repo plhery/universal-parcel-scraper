@@ -341,6 +341,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpd-de', number: '01000000000001',
     route: /^https:\/\/my\.dpd\.de\/myparcels\/dataprotection-tracking\.aspx(?:\?|$)/,
     marker: /Paketnummer|Leider können wir.*keine Daten zu Ihrem Paket/i },
+  { carrier: 'dpd-uk', number: '00000000000001',
+    route: /^https:\/\/track\.dpd\.co\.uk\/(?:\?|$)/,
+    marker: /Enter the reference number and delivery postcode|Tracking Number, Calling card number/i },
   // The shared page links UK tracking and the international POST-only form.
   { carrier: 'evri', number: 'H000000000000001',
     route: /^https:\/\/www\.evri\.com\/track-a-parcel\/?$/,
@@ -356,6 +359,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   cne: 'the tracking portal redirects inspected Chrome sessions to about:blank through its anti-debug script, preventing a stable rendered-page check',
   'colis-prive': 'an unknown number-and-postcode credential redirects to the homepage, so only a real parcel verifies the link',
   dtdc: 'the MyDTDC Flutter page exposes no visible body text until accessibility is enabled, and the portal link opens its home page',
+  'evri-uk': 'the protected key request rejects the default automated browser and leaves the domestic result panel empty, so number forwarding cannot be verified',
   'poste-italiane': 'the results page exposes no readable text to headless Chrome',
   usps: 'tools.usps.com answers automated Chrome with an anti-bot script instead of the page',
 };

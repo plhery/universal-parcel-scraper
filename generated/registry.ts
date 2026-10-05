@@ -32,12 +32,14 @@ import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdDe } from '../carriers/dpd-de/adapter.js';
 import { adapter as dpdFr } from '../carriers/dpd-fr/adapter.js';
+import { adapter as dpdUk } from '../carriers/dpd-uk/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ekart } from '../carriers/ekart/adapter.js';
 import { adapter as ems } from '../carriers/ems/adapter.js';
 import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as evri } from '../carriers/evri/adapter.js';
+import { adapter as evriUk } from '../carriers/evri-uk/adapter.js';
 import { adapter as fedex } from '../carriers/fedex/adapter.js';
 import { adapter as fourPx } from '../carriers/four-px/adapter.js';
 import { adapter as geodis } from '../carriers/geodis/adapter.js';
@@ -132,12 +134,14 @@ export const REGISTRY: RegistryDefinition = {
     "dpd": dpd,
     "dpd-de": dpdDe,
     "dpd-fr": dpdFr,
+    "dpd-uk": dpdUk,
     "dtdc": dtdc,
     "ecoscooting": ecoscooting,
     "ekart": ekart,
     "ems": ems,
     "estafeta": estafeta,
     "evri": evri,
+    "evri-uk": evriUk,
     "fedex": fedex,
     "four-px": fourPx,
     "geodis": geodis,
@@ -236,14 +240,14 @@ export const REGISTRY: RegistryDefinition = {
     "dpd": "dpd",
     "dpd-de": "dpd-de",
     "dpd-fr": "dpd-fr",
-    "dpd-uk": "universal",
+    "dpd-uk": "dpd-uk",
     "dtdc": "dtdc",
     "ecoscooting": "ecoscooting",
     "ekart": "ekart",
     "ems": "ems",
     "estafeta": "estafeta",
     "evri": "evri",
-    "evri-uk": "universal",
+    "evri-uk": "evri-uk",
     "fedex": "fedex",
     "four-px": "four-px",
     "geodis": "geodis",

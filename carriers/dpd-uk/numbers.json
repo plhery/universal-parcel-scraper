@@ -1,5 +1,33 @@
 {
   "carrier": "dpd-uk",
-  "gap": "no public sample found yet",
-  "records": []
+  "records": [
+    {
+      "number": "15504366056765",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/review/primepaint.co.uk?page=3"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["dpd", "dpd-fr", "relais-colis", "ciblex", "seur", "brt", "delhivery", "dpd-de", "dpd-uk", "xpressbees"]
+      },
+      "note": "Prime Paint's public reply identifies this as DPD UK. A numeric shape alone does not identify the service. Tracking numbers can be reused; current history need not belong to the original report."
+    },
+    {
+      "number": "15504366057635",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/review/primepaint.co.uk?page=3"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["dpd", "dpd-fr", "relais-colis", "ciblex", "seur", "brt", "delhivery", "dpd-de", "dpd-uk", "xpressbees"]
+      },
+      "note": "Prime Paint's public reply identifies this as DPD UK. A numeric shape alone does not identify the service. Tracking numbers can be reused; current history need not belong to the original report."
+    }
+  ]
 }

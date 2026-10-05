@@ -152,7 +152,7 @@
           }
         },
         {
-          "note": "Alternate public reference returned eight identity-bound full-history scans in an interactive official session; fresh automated browser retrieval remains denied: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/",
+          "note": "Alternate public reference returned eight identity-bound full-history scans in an interactive official session. Fresh automated Chromium obtained the matching microsummary, but its separate events request failed; automated full history remains unverified: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/",
           "results": {}
         }
       ]
@@ -1916,11 +1916,11 @@
     },
     {
       "carrier": "dpd-uk",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes (UK parcel numbers)",
+      "sample": "\u2713 7",
       "references": [
         {
-          "note": "UK reference-plus-postcode flow requires a challenge and session before retrieval.",
+          "note": "Public UK parcel references returned seven and eight history scans through the current anonymous empty-postcode lookup; unqualified scan clocks remain local: https://uk.trustpilot.com/review/primepaint.co.uk?page=3. Order and collection references behind the postcode form are outside the adapter scope.",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -1933,11 +1933,11 @@
     },
     {
       "carrier": "evri-uk",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes (local Chromium)",
+      "sample": "\u2713 6",
       "references": [
         {
-          "note": "The official interactive navigation flow obtained rotating keys and six dated parcel scans. Fresh automated browser sessions are denied the keys: https://www.trustpilot.com/review/printerval.co.uk",
+          "note": "Public domestic reference returned six identity-bound, offset-dated history scans in fresh automated local Chromium. The current anonymous flow obtains rotating keys in the browser and requires no postcode: https://www.trustpilot.com/review/printerval.co.uk",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -2090,7 +2090,7 @@
       "sample": "Blocked",
       "references": [
         {
-          "note": "The current corporate tracking form posts to the public tracking service, which returns access denied. This is not evidence of parcel absence.",
+          "note": "Sagawa has suspended public shipment inquiry and its carrier inquiry API; fresh anonymous history retrieval is unavailable: https://www2.sagawa-exp.co.jp/information/detail/425/",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",

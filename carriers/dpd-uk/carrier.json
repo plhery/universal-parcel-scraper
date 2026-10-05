@@ -16,13 +16,15 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "dpd-uk",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",
-    "location",
-    "eta"
+    "location"
   ],
   "portal": {
     "url": "https://track.dpd.co.uk/?reference={trackingNumber}",
@@ -33,8 +35,18 @@
       "location",
       "eta"
     ],
-    "scraped": [],
-    "discarded": [],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "parcel_handle",
+      "merchant_reference",
+      "delivery_partner_reference",
+      "recipient_details",
+      "proof_of_delivery_images"
+    ],
     "unavailable": []
   },
   "links": [
