@@ -137,6 +137,28 @@ describe('the detection engine', () => {
       .toMatchObject({ trackingNumber: number, carrier: 'la-poste', source: 'link' });
   });
 
+  it.each([
+    'Tracking number: 12345678901',
+    'Tracking number 12345678901',
+    'Your tracking number is 12345678901.',
+    'tracking no. 12345678901',
+    'Tracking ID: 12345678901',
+    'Tracking: 12345678901',
+    'track 12345678901',
+    'Parcel number: 12345678901',
+    'Shipment tracking number: 12345678901',
+    'Tracking update. Your parcel number 12345678901 leaves today',
+  ])('reads the number a label introduces: %s', (text) => {
+    expect(parseTrackingInput(text)).toMatchObject({ trackingNumber: '12345678901', source: 'text', confidence: 'low' });
+  });
+
+  it('keeps a label word attached to the number, and takes no word for a number', () => {
+    expect(parseTrackingInput('Tracking NO123456789').trackingNumber).toBe('NO123456789');
+    expect(parseTrackingInput('tracking notable1234').trackingNumber).toBe('notable1234');
+    expect(parseTrackingInput('Tracking number: pending').source).toBe('none');
+    expect(parseTrackingInput('Shipment tracking: delayed').source).toBe('none');
+  });
+
   it('keeps other numeric carriers ambiguous', () => {
     expect(detectCarrierMatch('123456789012345')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch('87979.0061660090')).toMatchObject({ carrier: 'unknown', confidence: 'low' });

@@ -37,11 +37,21 @@ export function recognizedNumberInText(raw: string): string | undefined {
   return undefined;
 }
 
+// The second word of a label. "No" and "ID" also start numbers, so they belong
+// to the label only when they stand apart from what follows.
+const LABEL_SUFFIX = String.raw`(?:numbers?(?![A-Z])|no\.|(?:no|id)(?![A-Z0-9.]))`;
+const LABELLED_NUMBER = new RegExp(
+  String.raw`(?:track(?:ing)?(?:\s*${LABEL_SUFFIX}|(?![A-Z]))`
+  + String.raw`|(?:parcel|shipment)(?:\s+(?:tracking(?![A-Z])|${LABEL_SUFFIX})|(?![A-Z])))`
+  + String.raw`(?:\s+is(?![A-Z0-9]))?\s*[:#-]?\s*`
+  // The token holds a digit, so a label followed by a plain word does not end the search.
+  + String.raw`((?=[A-Z0-9.-]{0,39}\d)[A-Z0-9][A-Z0-9.-]{3,39})`,
+  'i',
+);
+
 /** Last resort: a number introduced by a "tracking number:" style label. */
 export function keywordNumberInText(raw: string): string | undefined {
-  const match = raw.match(
-    /(?:(?:tracking|track(?:ing)?\s*(?:number|no\.?|id)?)|(?:parcel|shipment)(?:\s+(?:tracking|number|no\.?|id))?)\s*[:#-]?\s*([A-Z0-9][A-Z0-9.-]{3,39})/i,
-  );
-  const candidate = match?.[1]?.trim();
+  // A sentence can end right after its number.
+  const candidate = LABELLED_NUMBER.exec(raw)?.[1]?.replace(/[.-]+$/, '');
   return candidate && validTrackingNumber(candidate) ? candidate : undefined;
 }
