@@ -1741,7 +1741,7 @@
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "royal-mail"
     },
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "trackingUrlTemplate": "https://www.royalmail.com/portal/rm/track?trackNumber={trackingNumber}",

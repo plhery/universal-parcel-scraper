@@ -292,7 +292,7 @@ export const REGISTRY: RegistryDefinition = {
     "purolator": "purolator",
     "quickpac": "planzer",
     "relais-colis": "relais-colis",
-    "royal-mail": "universal",
+    "royal-mail": "royal-mail",
     "sagawa": "universal",
     "seur": "seur",
     "sf-express": "sf-express",

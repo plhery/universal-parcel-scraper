@@ -14,8 +14,10 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "royal-mail",
+    "steps": [
+      "browser"
+    ]
   },
   "capabilities": [
     "history",
@@ -31,7 +33,12 @@
       "eta",
       "location"
     ],
-    "scraped": [],
+    "scraped": [
+      "status",
+      "history",
+      "eta",
+      "location"
+    ],
     "discarded": [
       "signatory",
       "proof of delivery extras",

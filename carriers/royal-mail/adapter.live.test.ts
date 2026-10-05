@@ -19,10 +19,13 @@ describe('Royal Mail live browser tracking', () => {
   it.runIf(Boolean(LIVE_TRACKING_NUMBER))(
     'normalizes a caller-supplied real shipment without retaining private response fields',
     async () => {
-      const result = await new RoyalMailTracker({ trawlUrl: process.env.FLARESOLVERR_URL, timeoutMs: 60_000, fullHistory: true }).fetch(LIVE_TRACKING_NUMBER);
+      const result = await new RoyalMailTracker({ executablePath: process.env.TRACKING_CHROMIUM_PATH,
+        trawlUrl: process.env.FLARESOLVERR_URL, timeoutMs: 60_000, fullHistory: true }).fetch(LIVE_TRACKING_NUMBER);
       expect(result.status).not.toBe('unknown');
       expect(result.last_status_text).toEqual(expect.any(String));
-      expect(Array.isArray(result.events)).toBe(true);
+      expect(result.events?.length).toBeGreaterThan(0);
+      expect(result.events?.some(event => event.time)).toBe(true);
+      expect(result.summary_only).not.toBe(true);
       for (const key of Object.keys(result)) {
         expect([
           'status',
@@ -49,5 +52,11 @@ describe('Royal Mail live browser tracking', () => {
       }
     },
     80_000,
+  );
+  it.runIf(Boolean(process.env.TRACKING_CHROMIUM_PATH && process.env.ROYAL_MAIL_UNKNOWN_NUMBER))(
+    'keeps an unknown reference inconclusive rather than inventing history', async () => {
+      await expect(new RoyalMailTracker({ executablePath: process.env.TRACKING_CHROMIUM_PATH, fullHistory: true })
+        .fetch(process.env.ROYAL_MAIL_UNKNOWN_NUMBER!)).rejects.toMatchObject({ kind: 'indeterminate' });
+    }, 65_000,
   );
 });

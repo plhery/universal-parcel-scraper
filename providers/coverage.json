@@ -139,8 +139,8 @@
     },
     {
       "carrier": "royal-mail",
-      "direct": "Disabled",
-      "sample": "Error",
+      "direct": "Yes (local Chromium)",
+      "sample": "\u2713 8",
       "references": [
         {
           "results": {
@@ -152,7 +152,7 @@
           }
         },
         {
-          "note": "Alternate public reference returned eight identity-bound full-history scans in an interactive official session. Fresh automated Chromium obtained the matching microsummary, but its separate events request failed; automated full history remains unverified: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/",
+          "note": "Public references returned eight and six identity-bound history scans in fresh automated local Chromium: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/ and https://www.reddit.com/r/Sugargoo/comments/1we8q17/where_is_my_parcel/. The official documentation example returned E1142, which remains inconclusive. Anonymous requests can still stall or be reset; TRAWL deployment compatibility is unverified.",
           "results": {}
         }
       ]

@@ -35,7 +35,7 @@ about current coverage.
 | [USPS](../carriers/usps/README.md) | Yes | ✓ 11 | No history | No history | ✓ 11 | No history | N/A |
 | [Amazon Logistics](../carriers/amazon-logistics/README.md) | Link only | Not tested | No history | Sign-in | No history | No history | N/A |
 | [Amazon Shipping](../carriers/amazon-shipping/README.md) | Yes | ✓ 12 | ✓ 12 | ✓ 12 | No history | ✓ 12 | N/A |
-| [Royal Mail](../carriers/royal-mail/README.md) | Disabled | Error | No history | ✓ 1 | No history | ✓ 4 | No history |
+| [Royal Mail](../carriers/royal-mail/README.md) | Yes (local Chromium) | ✓ 8 | No history | ✓ 1 | No history | ✓ 4 | No history |
 | [Swiss Post](../carriers/swiss-post/README.md) | Yes | ✓ 8 | ✓ 8 | ✓ 8 | ✓ 8 | No history | N/A |
 | [La Poste / Colissimo](../carriers/la-poste/README.md) | Yes | ✓ 15 | ✓ 11, partial | ✓ 16 | ✓ 14 | ✓ 26 | No history |
 | [DPD](../carriers/dpd/README.md) | Yes (Switzerland; optional postcode) | ✓ 4 | ✓ 1, partial | ✓ 4 | ✓ 4 | ✓ 4 | N/A |

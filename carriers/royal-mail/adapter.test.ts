@@ -1,10 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { TrawlClient } from '../../core/transport/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   parseRoyalMailTrackingHtml,
   parseRoyalMailTrackingResponse,
   RoyalMailTracker,
+  adapter,
   royalMailEventsApiUrl,
   royalMailSummaryApiUrl,
   royalMailTrackingUrl,
@@ -281,6 +284,22 @@ describe('Royal Mail lookup steps', () => {
     }));
     await expect(new RoyalMailTracker({ trawlUrl: TRAWL_URL, fetcher, fullHistory: true }).fetch(DELIVERED_NUMBER))
       .resolves.toMatchObject({ events: [], summary_only: true });
+  });
+
+  it('requires local Chromium for normal routing even when a browser service exists', () => {
+    const fetcher = vi.fn();
+    const instance = adapter({ trawl: new TrawlClient(TRAWL_URL, fetcher), browserExecutablePath: null, recorder: NOOP_RECORDER, env: {}, fetcher });
+    expect(instance.steps).toEqual(['browser']);
+    expect(() => instance.track({ number: DELIVERED_NUMBER })).toThrow('TRACKING_CHROMIUM_PATH');
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it.each([404, 410])('keeps an unrecognized HTTP %s outside parcel absence', async status => {
+    const fetcher = vi.fn().mockResolvedValue(Response.json({ tier: 3, statusCode: 200, html: '', capturedResponses: [
+      { url: royalMailSummaryApiUrl(DELIVERED_NUMBER), status, headers: {}, body: '{}' },
+    ] }));
+    await expect(new RoyalMailTracker({ trawlUrl: TRAWL_URL, fetcher }).fetch(DELIVERED_NUMBER))
+      .rejects.toMatchObject({ kind: 'transport' });
   });
 
   it('reports the missing browser service without any request', async () => {
