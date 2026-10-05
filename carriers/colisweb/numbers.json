@@ -9,6 +9,9 @@
         "url": "https://www.trustpilot.com/reviews/69d652f26c2dbef5f8ee61fb",
         "date": "2026-04-08"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -17,7 +20,7 @@
           "heppner"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Colisweb, which no rule claims."
+      "note": "Public report attributed to Colisweb, whose tracking returns its history. Eight digits are shared with other carriers and no rule offers Colisweb."
     },
     {
       "number": "87654321",

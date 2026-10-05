@@ -173,7 +173,7 @@
     },
     {
       "number": "LX123456789NL",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "synthetic",
       "derivedFrom": "invented",
       "shapeConfirmed": "2026-09-12",
@@ -184,7 +184,7 @@
           "chronopost"
         ]
       },
-      "note": "Invented placeholder used as a shape check. Filed under PostNL, which no rule claims."
+      "note": "Invented placeholder whose S10 check digit does not validate. Filed under PostNL, which no rule claims."
     },
     {
       "number": "RI543495045NL",

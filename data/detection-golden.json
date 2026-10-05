@@ -29,9 +29,21 @@
   },
   {
     "input": "0000100000104000903494",
-    "carrier": "ctt-express",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
+      "tipsa",
+      "austrian-post",
+      "ctt-express",
+      "usps",
+      "estafeta"
+    ],
+    "preferred": [
+      "tipsa"
+    ],
+    "asked": [
+      "tipsa",
+      "austrian-post",
       "ctt-express"
     ]
   },
@@ -3234,15 +3246,19 @@
   },
   {
     "input": "3A5V609829713",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
   },
   {
     "input": "3A5V721250488",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
   },
   {
     "input": "3SA5210528875",
@@ -5568,6 +5584,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "aliexpress",
       "colis-prive"
     ],
     "asked": [
@@ -5670,14 +5687,18 @@
   {
     "input": "CRIN26062320118472",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "intelcom"
+    ]
   },
   {
     "input": "CRIN26082718020483",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "intelcom"
+    ]
   },
   {
     "input": "CV000562646ES",

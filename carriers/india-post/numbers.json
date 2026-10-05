@@ -29,7 +29,7 @@
     },
     {
       "number": "JN067614885IN",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "synthetic",
       "derivedFrom": "invented",
       "shapeConfirmed": "2026-09-12",
@@ -40,7 +40,7 @@
           "chronopost"
         ]
       },
-      "note": "Invented placeholder used as a shape check. Filed under India Post, which no rule claims."
+      "note": "Invented placeholder whose S10 check digit does not validate. Filed under India Post, which no rule claims."
     },
     {
       "number": "RR000000005IN",

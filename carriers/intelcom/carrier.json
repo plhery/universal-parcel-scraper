@@ -67,6 +67,11 @@
       "id": "intelcom-1",
       "pattern": "^INTLCM\\d{8,20}$",
       "confidence": "high"
+    },
+    {
+      "id": "intelcom-2",
+      "pattern": "^CRIN\\d{14}$",
+      "confidence": "low"
     }
   ]
 }

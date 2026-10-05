@@ -1,0 +1,151 @@
+[
+  {
+    "carrier": "amazon-logistics",
+    "pattern": "^TB[CM]\\d{12}$",
+    "kind": "open",
+    "reason": "The shared Amazon pattern covers TBA only; the marketplace link and the native clients read the same pattern."
+  },
+  {
+    "carrier": "amazon-logistics",
+    "pattern": "^ZZ\\d{10}$",
+    "kind": "by_design",
+    "reason": "An invented prefix outside the marketplace list, kept as a shape check."
+  },
+  {
+    "carrier": "amazon-shipping",
+    "kind": "by_design",
+    "reason": "Amazon Logistics owns the shared Amazon pattern. A parcel moves here only after Amazon's public tracker answers for it."
+  },
+  {
+    "carrier": "aramex",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "Ten digits are shared by several carriers and nothing in the number points to Aramex."
+  },
+  {
+    "carrier": "asendia",
+    "pattern": "^ASHK\\d{14}$",
+    "kind": "open",
+    "reason": "One documentation example of Asendia's own identifier; the family is not established."
+  },
+  {
+    "carrier": "asendia",
+    "pattern": "^EEUS\\d{9}[A-Z]{2}\\d$",
+    "kind": "open",
+    "reason": "eBay International Shipping numbers Asendia has carried; whether Asendia carries the whole family is not established."
+  },
+  {
+    "carrier": "australia-post",
+    "pattern": "^7T\\d{19}$",
+    "kind": "open",
+    "reason": "Australia Post has no detection rule."
+  },
+  {
+    "carrier": "brt",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "BRT's tracking takes fourteen digits; what the fifteenth is has not been worked out."
+  },
+  {
+    "carrier": "c-chez-vous",
+    "kind": "by_design",
+    "reason": "The printed composite carries the postcode after its dashes and is entered with the carrier chosen."
+  },
+  {
+    "carrier": "colisweb",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "Eight digits are shared with Mondial Relay and Heppner, and no rule offers Colisweb."
+  },
+  {
+    "carrier": "dachser",
+    "kind": "by_design",
+    "reason": "Dachser tracking needs its capability link; the numbers alone are generic numeric shapes."
+  },
+  {
+    "carrier": "dhl-ecommerce",
+    "pattern": "^9[23]\\d{20}$",
+    "kind": "by_design",
+    "reason": "A USPS-format number. USPS is offered and delivers it."
+  },
+  {
+    "carrier": "dpd-de",
+    "pattern": "^\\d{14}[A-Z]$",
+    "kind": "open",
+    "reason": "A parcel number typed with its check letter. The rule has to change together with the answer the parcel app pins for this shape."
+  },
+  {
+    "carrier": "gls-de",
+    "pattern": "^[A-Z]{6}$",
+    "kind": "by_design",
+    "reason": "Input validation refuses an identifier without a digit."
+  },
+  {
+    "carrier": "hermes",
+    "pattern": "^\\d{17}$",
+    "kind": "open",
+    "reason": "No rule for the seventeen-digit furniture-delivery number."
+  },
+  {
+    "carrier": "inpost",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "A legacy Yodel reference the adapter does not take."
+  },
+  {
+    "carrier": "inpost",
+    "pattern": "^JJD\\d{16}$",
+    "kind": "collision",
+    "reason": "DHL's high-confidence JJD rule claims Yodel's JJD numbers, so the carrier comes from a link or a pick."
+  },
+  {
+    "carrier": "ninja-van",
+    "pattern": "^DX\\d{6}$",
+    "kind": "by_design",
+    "reason": "A documentation example of a merchant-prefixed ID; the adapter takes Malaysian NLMY parcel IDs only."
+  },
+  {
+    "carrier": "paack",
+    "kind": "by_design",
+    "reason": "Paack identifiers are retailer order numbers with no stable shape, so one can match another carrier's rule."
+  },
+  {
+    "carrier": "packeta",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "Detection selects Packeta for the Z form only; ten bare digits are a crowded shape."
+  },
+  {
+    "carrier": "planzer",
+    "kind": "by_design",
+    "reason": "A Planzer lookup needs the access key of its shared link."
+  },
+  {
+    "carrier": "posti",
+    "pattern": "^\\d{20}$",
+    "kind": "open",
+    "reason": "No rule offers Posti for its twenty-digit SSCC numbers."
+  },
+  {
+    "carrier": "shipup",
+    "kind": "by_design",
+    "reason": "An invented shape check; ShipUp has no number shape of its own."
+  },
+  {
+    "carrier": "swiss-post-cargo",
+    "kind": "by_design",
+    "reason": "The shipment number goes with a company number; eight digits alone are generic."
+  },
+  {
+    "carrier": "the-courier-guy",
+    "pattern": "^[A-Z0-9]{5,6}$",
+    "kind": "by_design",
+    "reason": "Short waybills are too generic for a rule."
+  },
+  {
+    "carrier": "ukrposhta",
+    "pattern": "^\\d{13}$",
+    "kind": "open",
+    "reason": "No rule for domestic thirteen-digit barcodes."
+  }
+]

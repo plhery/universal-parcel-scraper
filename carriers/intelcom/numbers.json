@@ -8,11 +8,17 @@
       "source": {
         "url": "https://intelcom.ca/en/track-your-package/?tracking-id=CRIN26082718020483"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "intelcom"
+        ]
       },
-      "note": "Published on the public official tracker. This merchant reference requires explicit carrier selection."
+      "note": "Published on the public official tracker, which returns its history. A merchant reference, so detection only suggests Intelcom."
     },
     {
       "number": "CRIN26062320118472",
@@ -21,9 +27,15 @@
       "source": {
         "url": "https://intelcom.ca/en/track-your-package/?tracking-id=CRIN26062320118472"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "intelcom"
+        ]
       },
       "note": "Published on the public official tracker. The service identifies this shipment as lost, rather than absent."
     },

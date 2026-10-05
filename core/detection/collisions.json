@@ -1149,5 +1149,13 @@
       "seur"
     ],
     "reason": "Nova Poshta waybills overlap other numeric families; a valid Hermes checksum cannot establish carrier ownership."
+  },
+  {
+    "shape": "CNG followed by fourteen digits ending in a French postcode range",
+    "carriers": [
+      "aliexpress",
+      "colis-prive"
+    ],
+    "reason": "Colis Privé accepts generic seventeen-character composites, so it overlaps Cainiao's CNG numbers; both stay suggestions."
   }
 ]

@@ -59,5 +59,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "cne-1",
+      "pattern": "^3A5V\\d{9}$",
+      "confidence": "high"
+    }
+  ]
 }

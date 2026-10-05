@@ -34,9 +34,9 @@ locator form on tip-sa.com also asks for the destination postcode; this page doe
 
 - Ten-digit waybills can't be looked up without their agency codes; recognition answers
   them as unknown without a request.
-- References starting `00` (the `000010` account) match CTT Express's rule, which is
-  high confidence, so they are filed as CTT Express until a universal provider names
-  TIPSA.
+- References of the `000010` account stay ambiguous with CTT Express, and recognition
+  asks TIPSA first. Any other reference starting `00` matches CTT Express's
+  high-confidence rule and is filed there until a universal provider names TIPSA.
 - An expired history and an unknown reference get the same empty redirect.
 
 ## Testing

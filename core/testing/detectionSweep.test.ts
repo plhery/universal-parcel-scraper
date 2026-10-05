@@ -4,8 +4,9 @@
  * What it does: replays every record in `carriers/<id>/numbers.json` through the
  * detection engine and asserts the recorded answer, checks that no second
  * carrier claims a positive record, reports detection rules that still have no
- * sample, requires every carrier overlap to be declared in `collisions.json`,
- * and compares the committed Swift golden file with the computed one.
+ * sample, requires every carrier overlap to be declared in `collisions.json`
+ * and every record whose own carrier is not offered to be declared in
+ * `gaps.json`, and compares the committed Swift golden file with the computed one.
  *
  * The corpus is a characterization of today's engine. A failure here means
  * detection changed: decide whether that change was intended, then update the
@@ -57,6 +58,10 @@ const collisions: { shape: string; carriers: string[]; reason: string }[] = JSON
 );
 const coverageBaseline: { maxUncoveredRules: number } = JSON.parse(
   readFileSync(path.join(detectionDirectory, 'coverage-baseline.json'), 'utf8'),
+);
+/** `open` is the worklist; the other kinds say why the gap stays. */
+const gaps: { carrier: string; pattern?: string; kind: 'by_design' | 'collision' | 'open'; reason: string }[] = JSON.parse(
+  readFileSync(path.join(detectionDirectory, 'gaps.json'), 'utf8'),
 );
 
 const RULES: CarrierRule[] = carrierFolders().flatMap((carrier) => {
@@ -242,6 +247,41 @@ describe('declared collisions', () => {
     const stale = [...declared.keys()].filter((key) => !seen.has(key));
     if (stale.length > 0) console.warn(`Declared collisions with no sample number:\n  ${stale.join('\n  ')}`);
     expect(stale.length).toBeLessThanOrEqual(collisions.length);
+  });
+});
+
+describe('declared gaps', () => {
+  const offered = (record: CorpusRecord): boolean => {
+    const match = detectCarrierMatch(record.number);
+    return match.carrier === record.carrier || (match.candidates as readonly string[]).includes(record.carrier);
+  };
+  // An S10 number names its issuing post and a label barcode is not typed, so neither is a gap.
+  const gapRecords = records.filter((record) => record.quarantine !== true
+    && record.role !== 'negative' && record.role !== 'full_barcode'
+    && !isValidS10TrackingNumber(normalizeTrackingNumber(record.number)) && !offered(record));
+  const covers = (gap: typeof gaps[number], record: CorpusRecord): boolean => gap.carrier === record.carrier
+    && (gap.pattern === undefined || new RegExp(gap.pattern).test(normalizeTrackingNumber(record.number)));
+
+  it('declares every record whose own carrier detection does not offer', () => {
+    const undeclared = gapRecords.filter((record) => !gaps.some((gap) => covers(gap, record)))
+      .map((record) => `${record.carrier} ${record.number}`);
+    expect(undeclared).toEqual([]);
+  });
+
+  it('drops a declaration once detection offers the carrier', () => {
+    const stale = gaps.filter((gap) => !gapRecords.some((record) => covers(gap, record)))
+      .map((gap) => `${gap.carrier} ${gap.pattern ?? 'every record'}`);
+    expect(stale).toEqual([]);
+  });
+
+  it('gives every declared gap a carrier, a kind and a reason', () => {
+    for (const gap of gaps) {
+      expect(folders).toContain(gap.carrier);
+      expect(['by_design', 'collision', 'open']).toContain(gap.kind);
+      expect(gap.reason.length).toBeGreaterThan(0);
+    }
+    const open = gaps.filter((gap) => gap.kind === 'open').map((gap) => `${gap.carrier} ${gap.pattern ?? ''}: ${gap.reason}`);
+    if (open.length > 0) console.warn(`Detection gaps still open (${open.length}):\n  ${open.join('\n  ')}`);
   });
 });
 

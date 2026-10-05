@@ -75,6 +75,21 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('900000000000000000000001').candidates).not.toContain('correos-express');
   });
 
+  it('selects CNE for its own family and only suggests the carriers of shared ones', () => {
+    expect(detectCarrierMatch('3a5v 123456789')).toMatchObject({ carrier: 'cne', confidence: 'high' });
+    expect(detectCarrierMatch('3A5V12345678').carrier).toBe('unknown');
+    expect(detectCarrierMatch('CRIN26010112345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['intelcom'] });
+    expect(detectCarrierMatch('CNG00123456789012')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['aliexpress', 'colis-prive'] });
+  });
+
+  it('keeps the 000010 account ambiguous between TIPSA and CTT Express', () => {
+    const shared = detectCarrierMatch('0000100000101234567890');
+    expect(shared).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['tipsa'] });
+    expect(shared.candidates).toEqual(expect.arrayContaining(['tipsa', 'ctt-express']));
+    expect(detectCarrierMatch('0082800082801234567890')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
+    expect(detectCarrierMatch('0000100000101234567890001')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
+  });
+
   it('offers UPS for an H waybill without selecting it', () => {
     expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
     expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');

@@ -16,7 +16,7 @@
           "heppner"
         ]
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to InPost, which no rule claims."
+      "note": "Open-source project example, not a real shipment. The source attributes it to Yodel, InPost's UK network; no rule claims it."
     },
     {
       "number": "620999677033395439338699",
@@ -98,7 +98,7 @@
           "inpost"
         ]
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to InPost, which stays one candidate among several."
+      "note": "Open-source project example, not a real shipment. The source attributes it to Yodel, InPost's UK network, which stays one candidate among several."
     },
     {
       "number": "JJD0002123456789012",
@@ -111,7 +111,7 @@
         "carrier": "dhl",
         "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to InPost; detection selects DHL."
+      "note": "Open-source project example, not a real shipment. The source attributes it to Yodel, InPost's UK network; DHL's rule for the JJD prefix selects DHL."
     },
     {
       "number": "JJD0002233564270287",
@@ -124,7 +124,7 @@
         "carrier": "dhl",
         "confidence": "high"
       },
-      "note": "Published integration example, not a real shipment. The source attributes it to InPost; detection selects DHL."
+      "note": "Published integration example, not a real shipment. The source calls it a direct Yodel number, InPost's UK network; DHL's rule for the JJD prefix selects DHL."
     }
   ]
 }

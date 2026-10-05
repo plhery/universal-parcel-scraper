@@ -199,6 +199,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^DOFR\\d{13}HD$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^CNG\\d{14}$",
+        "confidence": "low"
       }
     ]
   },
@@ -2230,6 +2234,10 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
+        "pattern": "^000010\\d{16}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^00\\d{20}$",
         "confidence": "high"
       },
@@ -4097,7 +4105,12 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^3A5V\\d{9}$",
+        "confidence": "high"
+      }
+    ]
   },
   "dhl-express": {
     "displayName": "DHL Express",
@@ -4330,6 +4343,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^INTLCM\\d{8,20}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^CRIN\\d{14}$",
+        "confidence": "low"
       }
     ]
   },

@@ -10,10 +10,17 @@
         "date": "2023-11-11"
       },
       "expect": {
-        "carrier": "ctt-express",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "ctt-express",
+          "usps",
+          "estafeta"
+        ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to TIPSA; CTT Express's rule for numbers starting 00 claims it."
+      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to TIPSA. CTT Express numbers can share the 000010 prefix, so it stays ambiguous and recognition asks TIPSA first."
     },
     {
       "number": "0280010280017024953690",

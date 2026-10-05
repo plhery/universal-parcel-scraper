@@ -10,7 +10,7 @@ Observed Canadian status codes establish milestones even when the English label 
 
 ## Limitations
 
-Merchant references can identify Intelcom shipments without an Intelcom prefix; they require explicit carrier selection. Recipient addresses, driver names, proof images and delivery estimates are discarded. Local scan clocks stay unresolved because Canada spans several timezones.
+Merchant references can identify Intelcom shipments without an Intelcom prefix. Detection suggests Intelcom for the `CRIN` family and the others require explicit carrier selection. Recipient addresses, driver names, proof images and delivery estimates are discarded. Local scan clocks stay unresolved because Canada spans several timezones.
 
 ## Testing
 

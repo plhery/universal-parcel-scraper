@@ -40,14 +40,18 @@
         "url": "https://www.paketda.de/fragen-antworten.php",
         "date": "2026-04-13"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "aliexpress",
           "colis-prive"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to AliExpress / Cainiao, which no rule claims."
+      "note": "Public report on the German consumer forum. Cainiao's tracking returns its history. Detection suggests AliExpress beside Colis Privé's generic rule."
     },
     {
       "number": "UB209300714LV",

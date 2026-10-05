@@ -197,6 +197,10 @@
       {
         "pattern": "^DOFR\\d{13}HD$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^CNG\\d{14}$",
+        "confidence": "low"
       }
     ]
   },
@@ -2228,6 +2232,10 @@
     ],
     "detectionRules": [
       {
+        "pattern": "^000010\\d{16}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^00\\d{20}$",
         "confidence": "high"
       },
@@ -4095,7 +4103,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^3A5V\\d{9}$",
+        "confidence": "high"
+      }
+    ]
   },
   "dhl-express": {
     "displayName": "DHL Express",
@@ -4328,6 +4341,10 @@
       {
         "pattern": "^INTLCM\\d{8,20}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^CRIN\\d{14}$",
+        "confidence": "low"
       }
     ]
   },

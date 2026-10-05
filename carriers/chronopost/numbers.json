@@ -3,7 +3,7 @@
   "records": [
     {
       "number": "0020 1000 4133 1740 8562 5338 724P",
-      "role": "shipment",
+      "role": "full_barcode",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/mi-bloquearon-la-cuenta-y-nece/1882f5a17b1ddd17f2",
@@ -13,7 +13,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Called the tracking number, next to the S10 shipment code. The source attributes it to Chronopost; no rule matches this shape."
+      "note": "Publicly reported label code, called the tracking number next to the S10 shipment code. The source attributes it to Chronopost; no rule matches this shape."
     },
     {
       "number": "12345678901234Q",

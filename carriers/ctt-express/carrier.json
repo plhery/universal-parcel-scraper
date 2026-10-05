@@ -56,6 +56,11 @@
   ],
   "detection": [
     {
+      "id": "ctt-express-3",
+      "pattern": "^000010\\d{16}$",
+      "confidence": "low"
+    },
+    {
       "id": "ctt-express-1",
       "pattern": "^00\\d{20}$",
       "confidence": "high"

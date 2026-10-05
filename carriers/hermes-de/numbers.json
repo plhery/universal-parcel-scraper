@@ -53,11 +53,15 @@
     },
     {
       "number": "1071247368",
-      "role": "shipment",
+      "role": "quarantined",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://de.trustpilot.com/reviews/6aa6c8e1e6ef84f3d9de84c3",
         "date": "2026-09-13"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine"
       },
       "expect": {
         "carrier": "unknown",
@@ -70,7 +74,7 @@
           "estafeta"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which no rule claims for this shape."
+      "note": "Reviewer attributes this ten-digit number to Hermes Germany, whose tracking does not know it."
     },
     {
       "number": "11204181008466",

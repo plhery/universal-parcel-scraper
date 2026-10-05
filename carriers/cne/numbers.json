@@ -8,11 +8,14 @@
       "source": {
         "url": "https://ca.trustpilot.com/review/firalli.com?page=8"
       },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+      "context": {
+        "assessment": "confirmed"
       },
-      "note": "Customer report explicitly attributes the number to CNE. Requires explicit carrier selection."
+      "expect": {
+        "carrier": "cne",
+        "confidence": "high"
+      },
+      "note": "Customer report attributes the number to CNE, whose tracking returns its history."
     },
     {
       "number": "3A5V609829713",
@@ -21,11 +24,14 @@
       "source": {
         "url": "https://nz.trustpilot.com/review/oriental-secrets.com"
       },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+      "context": {
+        "assessment": "confirmed"
       },
-      "note": "Customer report explicitly attributes the number to CNE and describes a return."
+      "expect": {
+        "carrier": "cne",
+        "confidence": "high"
+      },
+      "note": "Customer report attributes the number to CNE and describes a return. CNE's tracking returns its history."
     }
   ]
 }
