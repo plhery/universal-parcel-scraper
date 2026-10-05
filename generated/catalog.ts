@@ -168,7 +168,7 @@ export const CARRIER_CATALOG = {
   },
   "aliexpress": {
     "displayName": "AliExpress / Cainiao",
-    "color": "#ff4747",
+    "color": "#e62e04",
     "aliases": [
       "Cainiao",
       "AliExpress"
@@ -208,7 +208,7 @@ export const CARRIER_CATALOG = {
   },
   "sunyou": {
     "displayName": "SunYou",
-    "color": "#f39800",
+    "color": "#02a232",
     "aliases": [
       "SYPost"
     ],
@@ -1209,7 +1209,7 @@ export const CARRIER_CATALOG = {
   },
   "geodis": {
     "displayName": "GEODIS",
-    "color": "#00549f",
+    "color": "#3100e6",
     "countries": [
       "FR"
     ],
@@ -1488,7 +1488,7 @@ export const CARRIER_CATALOG = {
   },
   "shipup": {
     "displayName": "ShipUp",
-    "color": "#5c4ee5",
+    "color": "#c8ef69",
     "selectable": true,
     "timezone": "UTC",
     "tracking": {
@@ -4342,7 +4342,7 @@ export const CARRIER_CATALOG = {
   },
   "intelcom": {
     "displayName": "Intelcom / Dragonfly",
-    "color": "#ffda00",
+    "color": "#13a58f",
     "aliases": [
       "Intelcom",
       "Dragonfly",
