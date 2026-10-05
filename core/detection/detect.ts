@@ -12,6 +12,7 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionRule } from '../catalog/types.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { isCttExpressTrackingNumber } from './cttExpress.js';
 import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
 import { isValidMondialRelayBarcode } from './mondialRelay.js';
@@ -41,6 +42,7 @@ export function detectCarrierMatch(raw: string): CarrierDetection {
 
   const matches: { carrier: CarrierId; confidence: 'high' | 'low'; preferred: boolean }[] = [];
   for (const [carrier, definition] of Object.entries(CARRIER_DEFINITIONS)) {
+    if (carrier === 'ctt-express' && !isCttExpressTrackingNumber(trackingNumber)) continue;
     // A carrier's first matching rule decides its confidence and preference.
     const rule = definition.detectionRules.find((candidate) =>
       new RegExp(candidate.pattern).test(trackingNumber)

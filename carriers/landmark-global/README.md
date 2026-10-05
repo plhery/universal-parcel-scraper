@@ -19,6 +19,7 @@ country. The host archives unresolved clocks and asks providers for dated
 progress. The structured delivery-partner reference is preserved when
 unambiguous. Order references, package references and payment actions are
 excluded.
+Deposit permission alone does not establish delivery; only a completion scan does.
 
 ## Live test
 

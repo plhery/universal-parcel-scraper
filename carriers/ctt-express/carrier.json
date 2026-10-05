@@ -59,6 +59,11 @@
       "id": "ctt-express-1",
       "pattern": "^00\\d{20}$",
       "confidence": "high"
+    },
+    {
+      "id": "ctt-express-2",
+      "pattern": "^00\\d{20}001$",
+      "confidence": "high"
     }
   ]
 }

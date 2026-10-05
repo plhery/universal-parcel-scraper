@@ -16,6 +16,8 @@ keeps the reported service, identifier role and evidence assessment separate fro
 Candidates are public reports, not confirmation of issuance or current trackability. Scope
 reviews, uncertain attribution and auxiliary references require `quarantine: true` and never
 act as positive oracles. Keep their inputs intact, including spaces, case and leading zeroes.
+Quarantine means unresolved evidence, not a claim that a number is fake. Matching official
+history can resolve it; an absent result can reflect expired records.
 
 Relationships link a child to its master, a return to its outward shipment or a pickup
 booking to its parcel. Each cites its own evidence and targets another record in the same

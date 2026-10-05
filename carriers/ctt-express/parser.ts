@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { isCttExpressTrackingNumber } from '../../core/detection/cttExpress.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
@@ -8,7 +9,7 @@ import { classifyCttExpressStatus } from './status.js';
 
 export function normalizeCttExpressNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^00\d{20}$/.test(number)) throw new InvalidInputError('CTT Express', 'CTT Express requires a Spanish shipment tracking number');
+  if (!isCttExpressTrackingNumber(number)) throw new InvalidInputError('CTT Express', 'CTT Express requires a Spanish shipment or single-package tracking number');
   return number;
 }
 
@@ -42,7 +43,8 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   // cannot be inferred from one delivered package of a multi-piece shipment.
   if (data.item_count !== 1) throw new IndeterminateError('CTT Express', 'CTT Express did not return a single-piece shipment');
   // Official label specification: 22 shipment digits + 3 parcel-counter digits.
-  if (history.item_code !== `${requested}001`) throw new SchemaError('CTT Express', 'CTT Express returned a different package');
+  const packageCode = requested.length === 25 ? requested : `${requested}001`;
+  if (history.item_code !== packageCode) throw new SchemaError('CTT Express', 'CTT Express returned a different package');
   const events: CarrierEvent[] = [];
   const rows: unknown[] = history.events;
   // Newest provider positions win equal-clock ties. Preserve duplicates until

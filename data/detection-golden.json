@@ -220,9 +220,11 @@
   },
   {
     "input": "0082800082909715943073001",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
   },
   {
     "input": "0082900082909841703487",

@@ -6,6 +6,8 @@ import { CttExpressTracker, adapter } from './adapter.js';
 import { normalizeCttExpressNumber, parseCttExpress } from './parser.js';
 import { classifyCttExpressStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 
 const NUMBER = '0000000000000000000001';
 const OTHER = '0000000000000000000002';
@@ -30,7 +32,7 @@ describe('CTT Express direct tracking', () => {
 
   it('binds one exact shipment and its single package, rejecting multi-piece completion', () => {
     expect(normalizeCttExpressNumber('000000 000000 0000000001')).toBe(NUMBER);
-    for (const raw of ['1000000000000000000001', '0000000000000000000001001', 'DT000000005PT', '', NUMBER + '?']) expect(() => normalizeCttExpressNumber(raw)).toThrow(InvalidInputError);
+    for (const raw of ['1000000000000000000001', NUMBER + '000', NUMBER + '002', 'DT000000005PT', '', NUMBER + '?']) expect(() => normalizeCttExpressNumber(raw)).toThrow(InvalidInputError);
     const wrongShipment = clone(); wrongShipment.data.shipping_code = OTHER;
     const wrongPiece = clone(); wrongPiece.data.shipping_history.item_code = OTHER + '001';
     const ambiguousPiece = clone(); ambiguousPiece.data.shipping_history.item_code = NUMBER + '002';
@@ -39,6 +41,27 @@ describe('CTT Express direct tracking', () => {
       const multi = { ...fixture, data: { ...fixture.data, item_count: count } };
       expect(() => parseCttExpress(multi, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     }
+  });
+
+  it('routes and retrieves a whole single-package barcode without truncating or appending its counter twice', async () => {
+    const packageCode = NUMBER + '001';
+    const payload = clone(); payload.data.shipping_code = packageCode;
+    expect(normalizeCttExpressNumber(packageCode)).toBe(packageCode);
+    expect(detectCarrierMatch(packageCode)).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
+    expect(parseTrackingInput('Tracking number: ' + packageCode)).toMatchObject({ trackingNumber: packageCode, carrier: 'ctt-express' });
+    expect(recognitionAskedCarriers(packageCode)).toEqual([]);
+    const fetcher = vi.fn(async (url) => {
+      expect(new URL(String(url)).searchParams.get('sc')).toBe(packageCode);
+      return json(payload);
+    }) as unknown as typeof fetch;
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: { step() {}, lookup() {} } });
+    expect((await instance.track({ number: packageCode })).events).toHaveLength(7);
+    expect(await instance.recognize!(packageCode)).toMatchObject({ known: true });
+    const wrong = clone(); wrong.data.shipping_code = packageCode; wrong.data.shipping_history.item_code = OTHER + '001';
+    expect(() => parseCttExpress(wrong, packageCode)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseCttExpress(fixture, packageCode)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    const multi = clone(); multi.data.shipping_code = packageCode; multi.data.item_count = 2;
+    expect(() => parseCttExpress(multi, packageCode)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
   it('keeps token errors, unbound errors and echoed empty history inconclusive', async () => {

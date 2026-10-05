@@ -2228,6 +2228,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^00\\d{20}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^00\\d{20}001$",
+        "confidence": "high"
       }
     ]
   },

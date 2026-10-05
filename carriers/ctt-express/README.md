@@ -1,13 +1,14 @@
 # CTT Express
 
-Tracks single-piece Spanish shipment references through the anonymous JSON route
+Tracks single-piece Spanish shipment references and complete package codes through the anonymous JSON route
 used by the official public tracking app.
 
 ## How it works
 
-One GET requests shipment history. The returned shipment must match exactly and
+One GET requests shipment history using the complete input. The returned shipment must match exactly and
 its package code must identify the sole package according to the carrier's
 [label specification](https://transfer.cttexpress.com/IT/export/integra/Shipment_Number_Calculation_and_Package_Codes_of_CttExpress.pdf).
+Package inputs retain their counter and must match the returned package exactly.
 Multi-piece shipments remain inconclusive because the public response contains
 only one package's scans. Portuguese postal references use the universal providers.
 

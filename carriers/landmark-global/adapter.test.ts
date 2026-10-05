@@ -85,6 +85,16 @@ describe('Landmark Global history', () => {
     first.remove(); $('.current-status h3').text('Onboard for delivery'); $('.current-status .time').attr('data-time', $('tbody tr').first().find('.time').attr('data-time'));
     expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'out_for_delivery' });
   });
+  it('maps deposit delivery explicitly without exposing the delivery permission or inventing an instant', () => {
+    const $ = load(fixture());
+    const wording = 'Delivered - Delivery / deposit with non-recurring authority';
+    $('tbody tr:first-child td').first().text(wording); $('.current-status h3').text(wording);
+    const result = parseLandmark($.html(), NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered', last_update: null });
+    expect(result.events?.[0]).toMatchObject({ description: 'Delivered', stage: 'delivered', local_time: '2026-01-04T12:00:00' });
+    expect(result).not.toHaveProperty('delivered_at');
+    expect(landmarkStatus('One-time recipient permission for deposit')).toBeUndefined();
+  });
   it('deduplicates repeated scans and excludes ambiguous delivery partner references', () => {
     const $ = load(fixture()); $('tbody').append($('tbody tr').first().clone());
     expect(parseLandmark($.html(), NUMBER).events).toHaveLength(4);
