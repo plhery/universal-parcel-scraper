@@ -78,13 +78,13 @@
     },
     {
       "number": "027280011093919",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/firma-falsificata-e-pacco-mai-/f6a66bc9986923ffcf",
-        "date": "2025-07-25"
+        "date": "2025-07-25",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -94,7 +94,7 @@
           "yunda"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to BRT, which no rule claims."
+      "note": "Customer gives this as the shipment number in a complaint addressed to BRT. It has fifteen digits, one more than the BRTcode the adapter looks up."
     }
   ]
 }

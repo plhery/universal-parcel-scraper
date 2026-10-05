@@ -331,7 +331,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Customer calls this tracking ID; unusually long numeric identifier. Canonical/partner reference role remains unverified."
+      "note": "Customer calls this the Correos Express tracking ID. The carrier's reply asks for the tracking number instead, so this is not the sixteen-digit reference its tracking takes."
     }
   ]
 }

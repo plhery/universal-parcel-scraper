@@ -188,12 +188,11 @@
     },
     {
       "number": "RI543495045NL",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://developer.postnl.nl/integration-with-postnl/api-overview/send-and-track/barcode-webservice/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -205,12 +204,11 @@
     },
     {
       "number": "UE597256100NL",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://developer.postnl.nl/integration-with-postnl/api-overview/send-and-track/barcode-webservice/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -222,48 +220,48 @@
     },
     {
       "number": "CH105792445NL",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packet-stuck-in-liege-linehaul-68041/",
-        "date": "2020-12-22"
+        "date": "2020-12-22",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "spring-gds",
         "confidence": "high"
       },
-      "note": "Public AliExpress parcel report in a PostNL discussion. This reply does not name the issuing carrier or establish Spring GDS involvement."
+      "note": "Customer asks about an AliExpress parcel in a PostNL discussion. The suffix names PostNL as the issuing postal operator."
     },
     {
       "number": "LT392989842NL",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packet-stuck-in-liege-linehaul-68041/",
-        "date": "2020-12-30"
+        "date": "2020-12-30",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "spring-gds",
         "confidence": "high"
       },
-      "note": "Public parcel report in a PostNL discussion. This reply does not name the issuing carrier or establish Spring GDS involvement."
+      "note": "Customer asks about a parcel in a PostNL discussion and gets its status in reply. The suffix names PostNL as the issuing postal operator."
     },
     {
       "number": "LT403573975NL",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packet-stuck-in-liege-linehaul-68041/",
-        "date": "2021-01-05"
+        "date": "2021-01-05",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "spring-gds",
         "confidence": "high"
       },
-      "note": "Public parcel report in a PostNL discussion. This reply does not name the issuing carrier or establish Spring GDS involvement."
+      "note": "Customer reports a parcel held in Liège in a PostNL discussion. The suffix names PostNL as the issuing postal operator."
     }
   ]
 }

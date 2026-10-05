@@ -179,5 +179,8 @@ describe('DPD UK anonymous retrieval', () => {
     await expect(new DpdUkTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeDpdUkNumber('1550 0000 000 001')).toBe(NUMBER);
+    // The printed check letter is dropped when it matches; a mistyped one is not another parcel.
+    expect(normalizeDpdUkNumber('1550 0000 000 001 M')).toBe(NUMBER);
+    expect(() => normalizeDpdUkNumber(`${NUMBER}N`)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   });
 });

@@ -48,8 +48,11 @@ export interface NumberContext {
   readonly service?: string;
   /** The source's description of the identifier, separate from its corpus role. */
   readonly reportedRole?: string;
-  /** Evidence assessment, independent of the detector's recorded answer. */
-  readonly assessment: 'candidate' | 'scope_review' | 'review' | 'quarantine' | 'auxiliary';
+  /**
+   * Evidence assessment, independent of the detector's recorded answer.
+   * `confirmed` means the carrier's own tracking knew the number.
+   */
+  readonly assessment: 'confirmed' | 'candidate' | 'scope_review' | 'review' | 'quarantine' | 'auxiliary';
 }
 
 export interface NumberRelationship {

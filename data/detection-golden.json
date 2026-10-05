@@ -6211,6 +6211,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "ups",
       "dtdc"
     ]
   },
@@ -6420,134 +6421,98 @@
   },
   {
     "input": "JX3625991290",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX4515528953",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX5506861247",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX5650647974",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6284305075",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6332422018",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6378109991",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6402237172",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6406012655",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6414817390",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX6484847706",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
     "input": "JX9679544717",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "j-and-t",
+    "confidence": "high",
     "candidates": [
-      "colis-prive"
-    ],
-    "asked": [
-      "colis-prive"
+      "j-and-t"
     ]
   },
   {
@@ -7156,21 +7121,27 @@
   },
   {
     "input": "NJVTT80134490007",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "ninja-van",
+    "confidence": "high",
+    "candidates": [
+      "ninja-van"
+    ]
   },
   {
     "input": "NJVTT80422730008",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "ninja-van",
+    "confidence": "high",
+    "candidates": [
+      "ninja-van"
+    ]
   },
   {
     "input": "NJVTT80995860009",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "ninja-van",
+    "confidence": "high",
+    "candidates": [
+      "ninja-van"
+    ]
   },
   {
     "input": "NL0000000001",

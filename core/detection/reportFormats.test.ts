@@ -51,6 +51,22 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('GM1234567890123456')).toMatchObject({ carrier: 'dhl-ecommerce', confidence: 'high' });
   });
 
+  it.each(['JX1234567890', 'jx 1234 5678 90'])('selects J&T for its Indonesian JX waybill: %s', (number) => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'j-and-t', confidence: 'high' });
+  });
+
+  it('bounds the JX and Ninja Van families to their reported lengths', () => {
+    expect(detectCarrierMatch('NJVTT12345678901')).toMatchObject({ carrier: 'ninja-van', confidence: 'high' });
+    for (const number of ['JX123456789', 'JX12345678901', 'NJVTT1234567890', 'NJVTT123456789012', 'NJVAB12345678901']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain(number.startsWith('JX') ? 'j-and-t' : 'ninja-van');
+    }
+  });
+
+  it('offers UPS for an H waybill without selecting it', () => {
+    expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
+    expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');
+  });
+
   it('does not infer a GLS country or Aramex service from a short reference', () => {
     expect(detectCarrierMatch('ABCDEF')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
     expect(detectCarrierMatch('9680123456').candidates).not.toContain('aramex');

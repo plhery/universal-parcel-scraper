@@ -65,7 +65,7 @@
     },
     {
       "number": "NJVTT80134490007",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://mediakonsumen.com/2025/09/11/surat-pembaca/ekspedisi-ninja-xpress-bermasalah",
@@ -73,21 +73,20 @@
         "dateKind": "publication",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
         "assessment": "candidate",
         "service": "indonesia domestic",
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "ninja-van",
+        "confidence": "high"
       },
-      "note": "Customer names two separate Ninja Xpress shipments. Later comment reports the first delivered. The source attribution is retained in quarantine because current detection does not include this carrier."
+      "note": "Customer names two separate Ninja Xpress shipments. Later comment reports the first delivered."
     },
     {
       "number": "NJVTT80422730008",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://mediakonsumen.com/2025/09/11/surat-pembaca/ekspedisi-ninja-xpress-bermasalah",
@@ -95,21 +94,20 @@
         "dateKind": "publication",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
         "assessment": "candidate",
         "service": "indonesia domestic",
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "ninja-van",
+        "confidence": "high"
       },
-      "note": "Customer names two separate Ninja Xpress shipments. Later comment reports the first delivered. The source attribution is retained in quarantine because current detection does not include this carrier."
+      "note": "Customer names two separate Ninja Xpress shipments. Later comment reports the first delivered."
     },
     {
       "number": "NJVTT80995860009",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://mediakonsumen.com/2025/09/11/surat-pembaca/ekspedisi-ninja-xpress-bermasalah",
@@ -117,17 +115,16 @@
         "dateKind": "comment publication",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "indonesia domestic",
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "ninja-van",
+        "confidence": "high"
       },
-      "note": "Another customer posts their own shipment number in comments. The source attribution is retained in quarantine because current detection does not include this carrier."
+      "note": "Another customer posts their own shipment number in comments. Ninja Van's Indonesian endpoint answers it as an order it can no longer detail, unlike an unknown ID."
     },
     {
       "number": "NLIDAP1370713802",

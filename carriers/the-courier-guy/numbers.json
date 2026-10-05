@@ -57,18 +57,20 @@
     },
     {
       "number": "QGB8C",
-      "role": "order_reference",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.consumercomplaints.in/bycompany/the-courier-guy-south-africa-a266527.html",
         "date": "2022-03-18"
       },
-      "quarantine": true,
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Short reference from the source; standalone tracking is unconfirmed. The source attributes it to The Courier Guy; no rule matches this shape."
+      "note": "Five-character waybill from a public delivery complaint. The Courier Guy's tracking returns its history. No rule matches this shape."
     }
   ]
 }

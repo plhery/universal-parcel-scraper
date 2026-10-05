@@ -13,6 +13,8 @@ before reading history under the returned handle.
 
 ## Notes
 
+- A number typed with the label's check letter is looked up by its fourteen
+  digits, as in [dpd](../dpd/README.md).
 - Scan times have no stated timezone, including delivery-partner scans. They
   remain local clocks; the adapter does not assign a London offset.
 - History stays in the page's newest-first order. Exact repeated scans are

@@ -68,7 +68,6 @@
       "source": {
         "url": "https://developer.dhl.com/api-reference/references-dhl-ecommerce-americas"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
@@ -82,7 +81,6 @@
       "source": {
         "url": "https://developer.dhl.com/api-reference/references-dhl-ecommerce-americas"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
@@ -91,12 +89,11 @@
     },
     {
       "number": "9261269903500013618305",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://developer.dhl.com/api-reference/references-dhl-ecommerce-americas"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -106,16 +103,15 @@
           "estafeta"
         ]
       },
-      "note": "Official documentation example, not a real shipment. The source attributes it to DHL eCommerce, which no rule claims."
+      "note": "Official documentation example, not a real shipment. A USPS-format number DHL eCommerce issues in the Americas; no rule claims DHL eCommerce for it."
     },
     {
       "number": "9361269903500011492028",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://developer.dhl.com/api-reference/references-dhl-ecommerce-americas"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -125,7 +121,7 @@
           "estafeta"
         ]
       },
-      "note": "Official documentation example, not a real shipment. The source attributes it to DHL eCommerce, which no rule claims."
+      "note": "Official documentation example, not a real shipment. A USPS-format number DHL eCommerce issues in the Americas; no rule claims DHL eCommerce for it."
     },
     {
       "number": "JVGL08035717002011328118",

@@ -339,13 +339,12 @@
     },
     {
       "number": "CV000562646ES",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "open_source_example",
       "source": {
         "url": "https://gist.github.com/zxp/e83a4a1b7294a5ed6207",
         "date": "2015-08-29"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

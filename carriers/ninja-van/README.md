@@ -8,7 +8,9 @@ Van's public tracking page.
 One bounded GET returns an order identified by the requested tracking ID. A
 404 is treated as absence only when its error explicitly echoes that ID; other
 errors and empty histories are inconclusive. Other country and parcel formats
-still use universal providers.
+still use universal providers. The Indonesian route takes the same request and
+answers an order it can no longer detail differently from an unknown ID. The
+adapter does not use that route.
 
 ## Notes
 

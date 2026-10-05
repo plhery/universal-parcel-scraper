@@ -47,6 +47,54 @@
         ]
       },
       "note": "Publicly reported German DPD shipment. A numeric shape alone does not establish the carrier or destination."
+    },
+    {
+      "number": "01196812014637L",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "Parcel number with its printed check character, from the German consumer forum. DPD Germany's tracking shows the fourteen-digit parcel. Detection offers only Chronopost for this shape."
+    },
+    {
+      "number": "09447430407578",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=09447430407578",
+        "date": "2026-08-14",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public DPD shipment report on the German consumer forum. DPD Germany's tracking shows the parcel."
     }
   ]
 }

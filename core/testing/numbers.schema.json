@@ -48,7 +48,7 @@
       "properties": {
         "service": { "type": "string", "minLength": 1 },
         "reportedRole": { "type": "string", "minLength": 1 },
-        "assessment": { "enum": ["candidate", "scope_review", "review", "quarantine", "auxiliary"] }
+        "assessment": { "enum": ["confirmed", "candidate", "scope_review", "review", "quarantine", "auxiliary"] }
       }
     },
     "relationship": {

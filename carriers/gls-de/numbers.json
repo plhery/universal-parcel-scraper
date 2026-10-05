@@ -110,28 +110,34 @@
     },
     {
       "number": "AALZJR",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.paketda.de/fragen-antworten.php?suche=AALZJR",
-        "date": "2026-08-05"
+        "date": "2026-08-05",
+        "access": "full_page"
       },
-      "quarantine": true,
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Public GLS delivery complaint. The reference role and issuing country are unestablished; the forum generates a GLS Italy link and a respondent gives GLS Germany contact details. Do not infer a six-letter parcel-number rule."
+      "note": "Six-letter Track ID from a public GLS delivery complaint. GLS group tracking resolves it to a delivered parcel. Input validation refuses an identifier without a digit, so it cannot be looked up here."
     },
     {
       "number": "83852070139",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.paketda.de/fragen-antworten.php?suche=83852070139",
-        "date": "2026-08-03"
+        "date": "2026-08-03",
+        "access": "full_page"
       },
-      "quarantine": true,
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -144,7 +150,7 @@
           "aramex"
         ]
       },
-      "note": "Public GLS shipment complaint; the issuing country is unestablished. Filed here for investigation, without establishing GLS Germany adapter coverage."
+      "note": "Public GLS shipment complaint. GLS group tracking shows the parcel; the issuing country is unestablished."
     }
   ]
 }

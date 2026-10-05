@@ -561,7 +561,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^[KJV]\\d{10}$",
+        "pattern": "^[HJKV]\\d{10}$",
         "confidence": "low"
       }
     ]
@@ -3627,6 +3627,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^NV(?:SG|MY|PH|ID|TH|VN)[A-Z0-9]{8,20}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^NJVTT\\d{11}$",
+        "confidence": "high"
       }
     ]
   },
@@ -4018,6 +4022,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^JD\\d{10}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^JX\\d{10}$",
+        "confidence": "high"
       }
     ]
   },

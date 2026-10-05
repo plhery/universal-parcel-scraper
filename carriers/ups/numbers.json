@@ -743,15 +743,14 @@
     },
     {
       "number": "H9628165941",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.globkurier.pl/opinie-ups",
         "date": "2025-12-14",
         "dateKind": "publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
         "assessment": "candidate",
         "reportedRole": "reported_waybill"
@@ -760,10 +759,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "ups",
           "dtdc"
         ]
       },
-      "note": "Public UPS review reference matching the open-source H-waybill family. The detector currently offers another carrier; UPS issuance and direct retrieval remain unconfirmed. The source attribution is retained in quarantine because current detection does not include this carrier."
+      "note": "Broker review of a UPS shipment from Poland to Spain. The H waybill passes the mod-10 check of the open-source UPS waybill definition."
     }
   ]
 }

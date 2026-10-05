@@ -24,6 +24,12 @@ describe('number evidence metadata', () => {
     expect(validate(document(published))).toBe(true);
   });
 
+  it('lets a confirmed or candidate report act as an oracle without quarantine', () => {
+    for (const assessment of ['confirmed', 'candidate']) {
+      expect(validate(document({ ...published, context: { assessment } }))).toBe(true);
+    }
+  });
+
   it('accepts source access, date meaning and a separately cited relationship', () => {
     expect(validate(document({
       ...published,

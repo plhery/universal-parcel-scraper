@@ -13,11 +13,18 @@ derived. [numbers.schema.json](core/testing/numbers.schema.json) defines the rec
 Source access distinguishes a retrieved page from an indexed excerpt; `dateKind` says
 whether a source date belongs to a publication, comment or carrier reply. Optional context
 keeps the reported service, identifier role and evidence assessment separate from `expect`.
-Candidates are public reports, not confirmation of issuance or current trackability. Scope
-reviews, uncertain attribution and auxiliary references require `quarantine: true` and never
-act as positive oracles. Keep their inputs intact, including spaces, case and leading zeroes.
-Quarantine means unresolved evidence, not a claim that a number is fake. Matching official
-history can resolve it; an absent result can reflect expired records.
+Candidates are public reports, not confirmation of issuance or current trackability. A
+`confirmed` number is one the carrier's own tracking knew. Scope reviews, uncertain
+attribution and auxiliary references require `quarantine: true` and never act as positive
+oracles. Keep their inputs intact, including spaces, case and leading zeroes.
+
+Quarantine means unresolved evidence, not a claim that a number is fake. It is for a number
+whose carrier or role is in doubt. A report that names its carrier stays out of quarantine
+even when detection does not know the shape: `expect` records that gap, and the gap is what
+to fix. The suffix of a checksum-valid S10 number names the postal operator that issued it,
+which is attribution enough for a report of one; the delivery carrier can differ. A
+documentation placeholder whose check digit fails is a negative. Matching official history
+resolves a quarantined record; an absent result can reflect expired records.
 
 Relationships link a child to its master, a return to its outward shipment or a pickup
 booking to its parcel. Each cites its own evidence and targets another record in the same

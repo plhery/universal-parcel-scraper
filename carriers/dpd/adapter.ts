@@ -3,6 +3,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { randomBytes } from 'node:crypto';
 import { load } from 'cheerio';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -578,9 +579,11 @@ export class DPDTracker {
     return this.flaresolverrUrl ? new TrawlClient(this.flaresolverrUrl, this.fetcher) : null;
   }
 
-  async fetch(trackingNumber: string, postcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
-    if (!/^\d{14}$/.test(trackingNumber)) {
-      throw new InvalidInputError('DPD', 'DPD tracking numbers must contain 14 digits');
+  async fetch(raw: string, postcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
+    // Labels print a check character after the fourteen digits; the API takes the digits.
+    const trackingNumber = dpdParcelNumber(raw);
+    if (!trackingNumber) {
+      throw new InvalidInputError('DPD', 'DPD tracking numbers must contain 14 digits, with or without their check character');
     }
     const resolvedPostcode = postcode.trim();
     if (resolvedPostcode && !(this.country === 'DE' ? /^\d{5}$/ : /^\d{4}$/).test(resolvedPostcode)) {
@@ -629,8 +632,9 @@ export class DPDTracker {
    * parcels) are false; any other failure, a 400 from a token step included,
    * stays a failure.
    */
-  async recognizes(trackingNumber: string, context: TrackingContext = {}): Promise<boolean> {
-    if (!/^\d{14}$/.test(trackingNumber)) return false;
+  async recognizes(raw: string, context: TrackingContext = {}): Promise<boolean> {
+    const trackingNumber = dpdParcelNumber(raw);
+    if (!trackingNumber) return false;
     const lookup = lookupBudget(context, this.budgetMs, 'dpd');
     try {
       const payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);

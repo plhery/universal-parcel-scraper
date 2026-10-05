@@ -291,17 +291,16 @@
     },
     {
       "number": "TBM502887274000",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "open_source_example",
       "source": {
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/amazon.json"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to Amazon Logistics; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. The source lists it as a valid Amazon Logistics number; the catalog pattern covers TBA only."
     },
     {
       "number": "DE5679225276",

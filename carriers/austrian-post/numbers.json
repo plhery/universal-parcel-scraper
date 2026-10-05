@@ -54,12 +54,11 @@
     },
     {
       "number": "CA482156827DE",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://www.post.at/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

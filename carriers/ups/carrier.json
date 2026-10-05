@@ -62,7 +62,7 @@
     },
     {
       "id": "ups-2",
-      "pattern": "^[KJV]\\d{10}$",
+      "pattern": "^[HJKV]\\d{10}$",
       "confidence": "low"
     }
   ]

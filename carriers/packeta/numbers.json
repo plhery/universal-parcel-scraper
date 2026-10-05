@@ -151,7 +151,7 @@
     },
     {
       "number": "2949124276",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.globkurier.pl/opinie-packeta",
@@ -159,10 +159,9 @@
         "dateKind": "publication",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
-        "reportedRole": "unclassified_reference"
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "unknown",
@@ -175,11 +174,11 @@
           "estafeta"
         ]
       },
-      "note": "Numeric-only reference; customer reports Poland-to-Hungary delivery. Do not prepend Z without separate evidence."
+      "note": "The broker review shows the ten digits without the label's Z; customer reports Poland-to-Hungary delivery."
     },
     {
       "number": "4651896715",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.globkurier.pl/opinie-packeta",
@@ -187,10 +186,9 @@
         "dateKind": "publication",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
-        "reportedRole": "unclassified_reference"
+        "assessment": "confirmed",
+        "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "unknown",
@@ -203,11 +201,11 @@
           "estafeta"
         ]
       },
-      "note": "Numeric-only reference in explicit Packeta shipment review; canonical/alias role unverified."
+      "note": "The broker review shows the ten digits without the label's Z. Packeta's tracking returns the history of the Z-prefixed barcode."
     },
     {
       "number": "Z 216 5782 938",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.globkurier.pl/opinie-packeta",
@@ -215,9 +213,8 @@
         "dateKind": "publication",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
+        "assessment": "confirmed",
         "service": "cash on delivery",
         "reportedRole": "reported_shipment"
       },
@@ -225,7 +222,7 @@
         "carrier": "packeta",
         "confidence": "high"
       },
-      "note": "Spaced shipment number; unsolicited COD parcel, with Pocztex also named. Issuer/last-mile distinction unverified."
+      "note": "Spaced shipment number from a cash-on-delivery complaint. Packeta's tracking returns its history."
     }
   ]
 }

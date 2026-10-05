@@ -522,6 +522,21 @@ describe('DPDTracker steps', () => {
     expect(String(fetcher.mock.calls[3]?.[0])).toContain('dataForVerification=8000');
   });
 
+  it('takes a label typed with its check character and refuses a mistyped one', async () => {
+    const fetcher = mockGuestApi(Response.json(READY_FOR_COLLECTION));
+    const tracker = new DPDTracker({ timeoutMs: 1_000, trawl: null });
+
+    const result = await tracker.fetch(`${TRACKING_NUMBER}4`, '8000');
+
+    expect(result.tracking_url).toContain(`parcelNumber=${TRACKING_NUMBER}`);
+    expect(String(fetcher.mock.calls[3]?.[0])).toContain(TRACKING_NUMBER);
+    expect(String(fetcher.mock.calls[3]?.[0])).not.toContain(`${TRACKING_NUMBER}4`);
+    const requests = fetcher.mock.calls.length;
+    await expect(tracker.fetch(`${TRACKING_NUMBER}5`, '8000')).rejects.toMatchObject({ kind: 'invalid_input' });
+    await expect(tracker.recognizes(`${TRACKING_NUMBER}5`)).resolves.toBe(false);
+    expect(fetcher).toHaveBeenCalledTimes(requests);
+  });
+
   it('retries without verification when DPD rejects the postcode, and says so', async () => {
     const fetcher = mockGuestApi(new Response('', { status: 400 }))
       .mockResolvedValueOnce(Response.json(READY_FOR_COLLECTION));

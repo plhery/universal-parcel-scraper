@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import type { Stage } from '../../generated/catalog.js';
+import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -11,8 +12,8 @@ import { isRecord } from '../../core/types.js';
 export const PROVIDER = 'DPD UK';
 
 export function normalizeDpdUkNumber(raw: string): string {
-  const number = normalizeTrackingNumber(raw);
-  if (!/^\d{14}$/.test(number)) throw new InvalidInputError(PROVIDER, 'DPD UK requires a fourteen-digit parcel number');
+  const number = dpdParcelNumber(normalizeTrackingNumber(raw));
+  if (!number) throw new InvalidInputError(PROVIDER, 'DPD UK requires a fourteen-digit parcel number, with or without its check character');
   return number;
 }
 

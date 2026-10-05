@@ -60,12 +60,11 @@
     },
     {
       "number": "CP123456789PL",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -77,12 +76,11 @@
     },
     {
       "number": "EE123456789PL",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -94,12 +92,11 @@
     },
     {
       "number": "RR123456789PL",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -111,12 +108,11 @@
     },
     {
       "number": "VV123456789PL",
-      "role": "quarantined",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

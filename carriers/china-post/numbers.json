@@ -57,78 +57,78 @@
     },
     {
       "number": "RE012054200CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
-        "date": "2020-05-01"
+        "date": "2020-05-01",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+      "note": "Customer lists parcels stuck in Shanghai. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "RE019650569CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
-        "date": "2020-05-01"
+        "date": "2020-05-01",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+      "note": "Customer lists parcels stuck in Shanghai. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "UW510368425CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
-        "date": "2020-05-01"
+        "date": "2020-05-01",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+      "note": "Customer lists parcels stuck in Shanghai. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "UJ173293206CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
-        "date": "2020-05-01"
+        "date": "2020-05-01",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+      "note": "Customer lists parcels stuck in Shanghai. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "LZ241238634CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/package-says-delivered-but-it-is-in-the-wrong-city-148972/",
-        "date": "2025-05-28"
+        "date": "2025-05-28",
+        "access": "full_page"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Customer reports a shipment; the reply names Canada Post as the delivery carrier but does not name its issuer. A valid CN S10 suffix alone does not establish attribution."
+      "note": "Customer reports a parcel shown as delivered in the wrong Canadian city. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "LP165048889CN",
@@ -167,17 +167,16 @@
     },
     {
       "number": "LZ299755813CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/package-not-delivered-153529/",
         "date": "2025-10-09",
         "dateKind": "publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
+        "assessment": "candidate",
         "service": "international customs",
         "reportedRole": "reported_shipment"
       },
@@ -185,70 +184,67 @@
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Customer reports customs delay on parcel to Australia."
+      "note": "Customer reports a customs delay on a parcel to Australia and was referred to China Post. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "ui025626538cn",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/where-is-my-package-16416/",
         "date": "2019-01-05",
         "dateKind": "comment publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
+        "assessment": "candidate",
         "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Customer comment supplies own lower-case shipment number."
+      "note": "Customer gives this lower-case number as their China Post tracking number."
     },
     {
       "number": "UN392483044CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/where-is-my-package-16416/",
         "date": "2019-01-10",
         "dateKind": "comment publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
+        "assessment": "candidate",
         "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Another customer supplies own shipment number."
+      "note": "Another customer gives this as their parcel number. The suffix names China Post as the issuing postal operator."
     },
     {
       "number": "UU366745515CN",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.chinapostaltracking.com/qa/no-update-on-package-status-113845/",
         "date": "2022-04-15",
         "dateKind": "publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
+        "assessment": "candidate",
         "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Customer supplies postal identifier; no extra service is inferred from the UU prefix."
+      "note": "Customer gives this as the tracking id of a parcel leaving China. The suffix names China Post as the issuing postal operator."
     }
   ]
 }

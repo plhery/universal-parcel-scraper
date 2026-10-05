@@ -9,6 +9,8 @@ CZ, SK, HU, RO and PL. Tracked through the keyless endpoint behind the public tr
    headers, account or browser state.
    - The echoed `barcode` must match the request, with or without its `Z` prefix,
      otherwise `SchemaError`. The public API returns the ten barcode digits.
+   - Ten digits typed without the `Z` are the same packet: the API, older links and
+     brokers show them that way. Detection only selects Packeta for the `Z` form.
    - Unknown codes come back two ways, both `NotFoundError`: HTTP 404 `{"error":"notFound"}`,
      or HTTP 200 carrying the same `notFound` error instead of `item`. Expired codes answer
      the same 404, so unknown and expired look identical.

@@ -41,11 +41,12 @@ function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
 }
 
 export function normalizePacketaTrackingNumber(raw: string): string {
-  const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^Z\d{10}$/.test(value)) {
-    throw new InvalidInputError('Packeta', 'Packeta tracking requires a Z-prefixed barcode with ten digits');
+  // The label prints Z before the ten digits; Packeta's API, its older links and brokers show the digits alone.
+  const digits = /^Z?(\d{10})$/.exec(raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, ''))?.[1];
+  if (!digits) {
+    throw new InvalidInputError('Packeta', 'Packeta tracking requires a ten-digit packet number, with or without its Z prefix');
   }
-  return value;
+  return `Z${digits}`;
 }
 
 export function packetaTrackingUrl(rawTrackingNumber: string): string {

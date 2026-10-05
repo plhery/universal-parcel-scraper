@@ -20,6 +20,10 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
 
 ## Notes
 
+- Labels print a check character after the fourteen digits. A number typed with
+  it is looked up by its digits; a character that does not match is refused as
+  a typo. The German and UK adapters do the same. Detection does not offer DPD
+  for that fifteen-character form, so the carrier has to be chosen.
 - A delivery postcode is optional and sent only to DPD. It unlocks verified
   scans, places and the delivery window. A rejected postcode is retried once
   without verification, with `dpd_postcode_verified: false`.

@@ -74,6 +74,11 @@
       "id": "ninja-van-2",
       "pattern": "^NV(?:SG|MY|PH|ID|TH|VN)[A-Z0-9]{8,20}$",
       "confidence": "low"
+    },
+    {
+      "id": "ninja-van-3",
+      "pattern": "^NJVTT\\d{11}$",
+      "confidence": "high"
     }
   ]
 }

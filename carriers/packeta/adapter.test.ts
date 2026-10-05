@@ -34,10 +34,12 @@ function response(value: unknown, status = 200) {
 afterEach(() => vi.restoreAllMocks());
 
 describe('Packeta tracking normalization', () => {
-  it('accepts the Z barcode case-insensitively and rejects other shapes', () => {
+  it('accepts the barcode with or without its Z and rejects other shapes', () => {
     expect(normalizePacketaTrackingNumber('z1234567890')).toBe(TRACKING_NUMBER);
     expect(normalizePacketaTrackingNumber('Z1234567890')).toBe(TRACKING_NUMBER);
-    for (const raw of ['1234567890', 'Z123456789', 'Z12345678901', 'ZA234567890', '']) {
+    expect(normalizePacketaTrackingNumber('Z 123 456 7890')).toBe(TRACKING_NUMBER);
+    expect(normalizePacketaTrackingNumber('1234567890')).toBe(TRACKING_NUMBER);
+    for (const raw of ['123456789', '12345678901', 'Z123456789', 'Z12345678901', 'ZA234567890', 'ZZ1234567890', '']) {
       expect(() => normalizePacketaTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(packetaTrackingUrl(TRACKING_NUMBER)).toBe('https://tracking.packeta.com/en/Z1234567890');
