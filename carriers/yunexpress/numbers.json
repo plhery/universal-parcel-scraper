@@ -29,27 +29,6 @@
       "note": "Publicly reported shipment number; the attribution was not independently verified."
     },
     {
-      "number": "3286039719",
-      "role": "quarantined",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://www.trustpilot.com/review/www.yunexpress.com"
-      },
-      "quarantine": true,
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl",
-          "mondial-relay",
-          "relais-colis",
-          "tipsa",
-          "estafeta"
-        ]
-      },
-      "note": "The reviewer calls this a YunExpress tracking number, but the numeric reference could identify an order, forwarder or last-mile parcel. Issuer and identifier role remain unconfirmed."
-    },
-    {
       "number": "YT2533100705018315",
       "role": "shipment",
       "evidence": "public_shipment_report",

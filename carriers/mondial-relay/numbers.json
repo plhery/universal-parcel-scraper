@@ -208,6 +208,9 @@
         "url": "https://forum.quechoisir.org/pb-mondial-relay-vinted-t361334.html",
         "date": "2024-12-01"
       },
+      "context": {
+        "assessment": "review"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

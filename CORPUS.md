@@ -26,6 +26,15 @@ which is attribution enough for a report of one; the delivery carrier can differ
 documentation placeholder whose check digit fails is a negative. Matching official history
 resolves a quarantined record; an absent result can reflect expired records.
 
+Every quarantined record names its reason in `context.assessment`:
+
+- `scope_review`: a real number of a service or network the folder's carrier may not cover.
+- `review`: the source does not establish the carrier or what the identifier is.
+- `quarantine`: the carrier or the source disputes the number.
+- `auxiliary`: a related reference that is not a tracking number.
+
+A record that nothing could settle is removed, not kept in quarantine.
+
 Relationships link a child to its master, a return to its outward shipment or a pickup
 booking to its parcel. Each cites its own evidence and targets another record in the same
 carrier corpus. A shared prefix or appended counter does not establish a relationship.

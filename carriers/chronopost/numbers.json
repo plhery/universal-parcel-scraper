@@ -155,6 +155,9 @@
         "url": "https://forum.quechoisir.org/colis-non-remis-a-chrono-poste-t18700.html",
         "date": "2013-08-22"
       },
+      "context": {
+        "assessment": "auxiliary"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"

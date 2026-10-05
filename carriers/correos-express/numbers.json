@@ -66,18 +66,24 @@
     },
     {
       "number": "93005001081690801339400",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/problema-con-el-repartidor/e30b27faaae7c53755",
-        "date": "2025-02-25"
+        "date": "2025-02-25",
+        "access": "full_page"
       },
-      "quarantine": true,
+      "context": {
+        "assessment": "candidate"
+      },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "correos-express"
+        ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Correos Express; no rule matches this shape."
+      "note": "Customer sends this as the tracking number in a complaint to Correos Express, whose tracker takes 23-digit references whole."
     },
     {
       "number": "149189307",
@@ -293,45 +299,49 @@
     },
     {
       "number": "63300084071073601363706",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/entrega-no-reliazada/8542f7d6b4f5c324da",
         "date": "2025-03-31",
         "dateKind": "publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
-        "reportedRole": "unclassified_reference"
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "correos-express"
+        ]
       },
-      "note": "Long AliExpress-related tracking identifier in Correos Express complaint; canonical vs partner identifier not established."
+      "note": "Customer gives this as the tracking number of an AliExpress order in a Correos Express complaint."
     },
     {
       "number": "93333300545224001280445",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/pedido-direccion-incorrecta/8a6913b3112984d2b1",
         "date": "2024-08-07",
         "dateKind": "publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review",
-        "reportedRole": "unclassified_reference"
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "correos-express"
+        ]
       },
-      "note": "Customer calls this the Correos Express tracking ID. The carrier's reply asks for the tracking number instead, so this is not the sixteen-digit reference its tracking takes."
+      "note": "Customer calls this the Correos Express tracking ID. The carrier's agent asked for the tracking number again, though its tracker takes 23-digit references."
     }
   ]
 }

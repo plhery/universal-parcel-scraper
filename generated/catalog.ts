@@ -2049,6 +2049,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{16}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{23}$",
+        "confidence": "low"
       }
     ]
   },
@@ -4029,6 +4033,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^JX\\d{10}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^J[A-Z]\\d{10}$",
+        "confidence": "low"
       }
     ]
   },

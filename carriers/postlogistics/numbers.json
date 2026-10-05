@@ -15,11 +15,10 @@
     },
     {
       "number": "12345678002",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "observed_request",
       "shapeConfirmed": "2026-09-30",
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

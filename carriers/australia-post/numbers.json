@@ -23,6 +23,9 @@
         "url": "https://github.com/clooney/australia-post-tracking-api/blob/master/australia-post-tracking-api-python.md"
       },
       "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

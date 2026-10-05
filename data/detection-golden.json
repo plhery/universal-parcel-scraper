@@ -2971,22 +2971,6 @@
     ]
   },
   {
-    "input": "3286039719",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "dhl",
-      "mondial-relay",
-      "relais-colis",
-      "tipsa",
-      "estafeta"
-    ],
-    "asked": [
-      "relais-colis",
-      "tipsa"
-    ]
-  },
-  {
     "input": "32971514560102447849175802862014",
     "carrier": "unknown",
     "confidence": "none",
@@ -4034,8 +4018,13 @@
   {
     "input": "63300084071073601363706",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "correos-express"
+    ],
+    "asked": [
+      "correos-express"
+    ]
   },
   {
     "input": "640000000000000000000001",
@@ -4797,14 +4786,24 @@
   {
     "input": "93005001081690801339400",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "correos-express"
+    ],
+    "asked": [
+      "correos-express"
+    ]
   },
   {
     "input": "93333300545224001280445",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "correos-express"
+    ],
+    "asked": [
+      "correos-express"
+    ]
   },
   {
     "input": "9361269903500011492028",
@@ -6425,7 +6424,8 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "colis-prive"
+      "colis-prive",
+      "j-and-t"
     ],
     "asked": [
       "colis-prive"
@@ -7871,14 +7871,6 @@
   },
   {
     "input": "SF6043795381767",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "sf-express"
-    ]
-  },
-  {
-    "input": "SF6047381042488",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [

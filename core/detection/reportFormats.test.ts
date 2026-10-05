@@ -62,6 +62,19 @@ describe('evidence-backed tracking formats', () => {
     }
   });
 
+  it('suggests J&T for its other two-letter waybills without selecting it', () => {
+    for (const number of ['JP1234567890', 'JO1234567890', 'JT1234567890']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['colis-prive', 'j-and-t'] });
+    }
+    expect(detectCarrierMatch('J11234567890').candidates).not.toContain('j-and-t');
+  });
+
+  it('offers Correos Express for a 23-digit reference and nothing shorter or longer', () => {
+    expect(detectCarrierMatch('90000000000000000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['correos-express'] });
+    expect(detectCarrierMatch('9000000000000000000001').candidates).not.toContain('correos-express');
+    expect(detectCarrierMatch('900000000000000000000001').candidates).not.toContain('correos-express');
+  });
+
   it('offers UPS for an H waybill without selecting it', () => {
     expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
     expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');

@@ -15,7 +15,9 @@ is a separate Indonesian network with its own site and the same prompt.
 ## Limitations
 
 The catalog includes several national number formats. Numeric matches are ambiguous and
-must not select a country or establish carrier ownership. Twelve-digit J&T Cargo waybills
+must not select a country or establish carrier ownership. J&T Indonesia's help centre says
+its waybills usually start with two letters, such as `JO` or `JP`; the prefixes with enough
+public reports select J&T, and the others only suggest it. Twelve-digit J&T Cargo waybills
 share that numeric shape and are not J&T Express parcels.
 
 ## Testing

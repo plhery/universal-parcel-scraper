@@ -48,6 +48,12 @@ describe('number evidence metadata', () => {
     },
   );
 
+  it('refuses a quarantine that does not say why', () => {
+    expect(validate(document({ ...published, quarantine: true }))).toBe(false);
+    expect(validate(document({ ...published, quarantine: true, context: { assessment: 'candidate' } }))).toBe(false);
+    expect(validate(document({ ...published, quarantine: true, context: { assessment: 'review' } }))).toBe(true);
+  });
+
   it('does not give an absent date a publication meaning', () => {
     expect(validate(document({ ...published,
       source: { url: published.source.url, dateKind: 'publication' },

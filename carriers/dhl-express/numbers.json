@@ -25,11 +25,12 @@
     },
     {
       "number": "5126149092",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.trustpilot.com/reviews/6a2c5fdea14e3bff06c7d1ff",
-        "date": "2026-06-12"
+        "date": "2026-06-12",
+        "access": "full_page"
       },
       "expect": {
         "carrier": "unknown",
@@ -43,8 +44,7 @@
           "estafeta"
         ]
       },
-      "note": "Publicly reported Apple shipment attributed to DHL Express; the attribution is unverified and available providers returned no history.",
-      "quarantine": true
+      "note": "Reviewer gives this as the tracking number of an Apple delivery in Portugal on DHL Express's review page. It passes the waybill check; DHL's trackers hold no record of it."
     },
     {
       "number": "7633033634",

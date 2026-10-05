@@ -1,7 +1,8 @@
 # Correos Express
 
-Tracks 16-digit shipment references through the anonymous public tracking form.
-Other reference formats use the universal providers.
+Tracks 16-digit shipment references through the anonymous public tracking form,
+and the 23-digit references some marketplace senders issue. Other reference
+formats use the universal providers.
 
 ## How it works
 
@@ -10,6 +11,11 @@ label and hidden shipment field must match the requested reference. No session
 bootstrap, postcode or browser is needed.
 
 ## Notes
+
+The form looks an input up as a shipment number and as a sender's own reference,
+so a short input can return someone else's shipment. That is why the label and
+the hidden field must both echo the request. A 23-digit reference is tracked
+whole; its first sixteen digits are not a shipment number.
 
 Scans retain the carrier's newest-first order. Their clocks have no stated zone,
 so valid digits remain local time and unresolved labels remain provider text.

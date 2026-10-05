@@ -12,7 +12,9 @@ const FAILED_ROUND = 'Su envío no ha podido ser entregado';
 
 export function normalizeCorreosExpressNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^\d{16}$/.test(number)) throw new InvalidInputError('Correos Express', 'Correos Express requires a 16-digit shipment number');
+  // The public form tracks sixteen-digit shipment numbers and the twenty-three-digit
+  // references of some marketplace senders. The longer one is not the shorter one extended.
+  if (!/^(?:\d{16}|\d{23})$/.test(number)) throw new InvalidInputError('Correos Express', 'Correos Express requires a 16-digit or 23-digit shipment number');
   return number;
 }
 

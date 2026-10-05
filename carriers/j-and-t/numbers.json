@@ -421,27 +421,27 @@
     },
     {
       "number": "JT0374574274",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://mediakonsumen.com/2025/05/16/surat-pembaca/pesanan-di-tokopedia-dibatalkan-sistem-karena-resi-dinyatakan-tidak-sah-oleh-jt-tapi-retur-belum-dikirim-ke-seller",
         "date": "2025-05-16",
         "dateKind": "publication",
-        "access": "indexed_excerpt"
+        "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "quarantine",
+        "assessment": "candidate",
         "reportedRole": "reported_shipment"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive"
+          "colis-prive",
+          "j-and-t"
         ]
       },
-      "note": "Seller reports this identifier was declared invalid by carrier. Do not promote as a positive format example."
+      "note": "Seller gives this as the J&T waybill of a Tokopedia order. J&T later declared the waybill void, which cancelled the order."
     },
     {
       "number": "200252251046",

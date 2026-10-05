@@ -269,6 +269,9 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/amazon.json"
       },
       "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
@@ -283,6 +286,9 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/amazon.json"
       },
       "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"

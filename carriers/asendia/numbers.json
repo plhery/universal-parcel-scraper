@@ -167,6 +167,9 @@
         "url": "https://gist.github.com/zxp/e83a4a1b7294a5ed6207"
       },
       "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
       "expect": {
         "carrier": "intl-post",
         "confidence": "high"

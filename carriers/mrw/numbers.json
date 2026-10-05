@@ -258,7 +258,7 @@
           "estafeta"
         ]
       },
-      "note": "MRW explicitly rejects the carrier attribution in its reply; useful negative attribution evidence, not a positive sample."
+      "note": "MRW's reply says its shipment numbers have twelve digits. Digits 7 to 18 have the shape of an MRW number, but MRW's tracking returns nothing for either form."
     }
   ]
 }

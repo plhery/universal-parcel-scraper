@@ -66,6 +66,11 @@
       "id": "j-and-t-5",
       "pattern": "^JX\\d{10}$",
       "confidence": "high"
+    },
+    {
+      "id": "j-and-t-6",
+      "pattern": "^J[A-Z]\\d{10}$",
+      "confidence": "low"
     }
   ]
 }

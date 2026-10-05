@@ -57,6 +57,9 @@
         "url": "https://github.com/trackingmore100/tracking-sdk-php/blob/master/README.md"
       },
       "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
       "expect": {
         "carrier": "intl-post",
         "confidence": "high"

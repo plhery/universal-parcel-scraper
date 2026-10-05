@@ -47,23 +47,6 @@
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SF Express, which stays one candidate among several."
     },
     {
-      "number": "SF6047381042488",
-      "role": "quarantined",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://www.paketda.de/fragen-antworten"
-      },
-      "quarantine": true,
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "sf-express"
-        ]
-      },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SF Express, which stays one candidate among several."
-    },
-    {
       "number": "SF6042542297687",
       "role": "shipment",
       "evidence": "public_shipment_report",
