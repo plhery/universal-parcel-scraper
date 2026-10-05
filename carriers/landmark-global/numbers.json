@@ -53,6 +53,169 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "LTN409593073N1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/landmarkglobal.com",
+        "date": "2025-11-28",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Public customer shipment report with N1 suffix."
+    },
+    {
+      "number": "LTN413594884N1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/review/landmarkglobal.com",
+        "date": "2026-02-26",
+        "dateKind": "review date as displayed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "label created only",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Customer tracking number; carrier response says electronic information received but not physical parcel."
+    },
+    {
+      "number": "LTN416686164",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/landmarkglobal.com",
+        "date": "2025-12-02",
+        "dateKind": "review date as displayed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Customer tracking reference; carrier reply reports out for delivery."
+    },
+    {
+      "number": "LTN422005703",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/review/landmarkglobal.com",
+        "date": "2026-01-31",
+        "dateKind": "review updated",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Public customer report of international parcel."
+    },
+    {
+      "number": "LTN452129593N1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/landmarkglobal.com",
+        "date": "2026-05-15",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Explicit tracking number in customer review; carrier acknowledges delivery issue."
+    },
+    {
+      "number": "LTN457277869N1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/landmarkglobal.com",
+        "date": "2026-06-11",
+        "dateKind": "review updated",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "redirected shipment",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Review explicitly labels this as a tracking number; N1 suffix retained."
+    },
+    {
+      "number": "LTN461901299",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/landmarkglobal.com",
+        "date": "2026-06-30",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Customer reports a delayed parcel; carrier reply acknowledges processing."
+    },
+    {
+      "number": "LTN422206722",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/landmarkglobal.com",
+        "date": "2025-12-20",
+        "dateKind": "review date as displayed",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "landmark-global",
+        "confidence": "high"
+      },
+      "note": "Carrier response says the provided number does not match its records. Do not promote to positive detection evidence."
     }
   ]
 }

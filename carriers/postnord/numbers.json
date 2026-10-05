@@ -61,6 +61,27 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "LY016870044SE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/42-days-ago-i-gave-postnord-to-carrie-parcel-to-china-140228/",
+        "date": "2024-09-26",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international parcel returned",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "postnord",
+        "confidence": "high"
+      },
+      "note": "Sender names PostNord; reply includes origin scans and return movement. No sender details retained."
     }
   ]
 }

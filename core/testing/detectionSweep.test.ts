@@ -144,6 +144,19 @@ describe('number corpus', () => {
       expect(`${file.carrier}: ${new Set(normalized).size}`).toBe(`${file.carrier}: ${normalized.length}`);
     }
   });
+
+  it('binds reported relationships to distinct identifiers in the same corpus', () => {
+    for (const file of loadNumberCorpusFiles()) {
+      const numbers = new Set(file.records.map((record) => normalizeTrackingNumber(record.number)));
+      for (const record of file.records) {
+        for (const relationship of record.relationships ?? []) {
+          const target = normalizeTrackingNumber(relationship.number);
+          expect(numbers.has(target), `${file.carrier}: relationship target is absent`).toBe(true);
+          expect(target, `${file.carrier}: relationship points to itself`).not.toBe(normalizeTrackingNumber(record.number));
+        }
+      }
+    }
+  });
 });
 
 describe('detection expectations', () => {

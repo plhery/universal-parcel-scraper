@@ -40,6 +40,88 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "UJ988405149YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/parcel-tracking-enquiry-uj988405149yp-144834/",
+        "date": "2025-03-03",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "economy cross border",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "Customer number; reply includes Yanwen pickup and facility scans. Suffix YP is not proof of UPU S10 validity."
+    },
+    {
+      "number": "UK210183839YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/yanwen-package-delivery-postponed-149411/",
+        "date": "2025-06-06",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly identifies Yanwen and tracking number."
+    },
+    {
+      "number": "UK692829693YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/lost-uk692829693yp-155428/",
+        "date": "2025-12-11",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "cross border handoff",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "Customer names Yanwen; pasted reply includes Yanwen scans and a USPS handoff, without a second number."
+    },
+    {
+      "number": "VR704132916YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/wheres-my-order-145534/",
+        "date": "2025-03-19",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "Customer tracking number; reply attributes it to Yanwen and includes Yanwen scans."
     }
   ]
 }

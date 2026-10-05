@@ -697,6 +697,26 @@
     "carriers": [
       "colis-prive",
       "fedex",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "A twelve-digit identifier can fall in both the Purolator and LBC ranges and pass the GLS check. Those matches remain candidates; neither the checksum nor a Cargo report establishes Express or national network ownership."
+  },
+  {
+    "shape": "9{12}",
+    "carriers": [
+      "colis-prive",
+      "fedex",
       "j-and-t",
       "lbc-express",
       "mondial-relay",

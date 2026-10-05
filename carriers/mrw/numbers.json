@@ -112,6 +112,153 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "00307A046991",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/paquete-extraviado-y-sin-indem/925bdf3f6a09a1c9ad",
+        "date": "2025-09-26",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "person to person parcel",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Shipment number explicitly identified in lost-parcel complaint."
+    },
+    {
+      "number": "00802A058845",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/robo-de-contenido-de-env-C3-ADo-mrw/9fd4ee0889df00a1f8",
+        "date": "2025-01-08",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Explicit shipment number in OCU complaint; A series, leading zeros retained."
+    },
+    {
+      "number": "02656A088018",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/retraso-en-recibir-en-mi-domic/a9b4c113df50836c87",
+        "date": "2025-01-03",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly labels this tracking number and names MRW in follow-up."
+    },
+    {
+      "number": "02720F088602",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/problema-con-un-env-C3-ADo-y-la-web/4694879330752674f7",
+        "date": "2025-01-10",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly identifies the shipment in an OCU complaint against MRW."
+    },
+    {
+      "number": "04316F377803",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/problemas-con-el-envio/9c6144607cbcabc0b5",
+        "date": "2025-01-03",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Customer supplies identifier in follow-up; MRW replies that shipment is out for delivery."
+    },
+    {
+      "number": "08000F422387",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/env-C3-ADo-08000f422387-no-entregad/49333c64f912649391",
+        "date": "2025-06-14",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Shipment identifier appears in complaint title; customer describes failed deliveries."
+    },
+    {
+      "number": "2044000269501958223001",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/problema-con-el-reparto-de-un-/2965dacf1e1d87dcef",
+        "date": "2025-01-04",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "MRW explicitly rejects the carrier attribution in its reply; useful negative attribution evidence, not a positive sample."
     }
   ]
 }

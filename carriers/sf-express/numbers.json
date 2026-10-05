@@ -62,6 +62,75 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SF Express, which stays one candidate among several."
+    },
+    {
+      "number": "SF6042542297687",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/sf-express.com",
+        "date": "2023-09-27",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express"
+        ]
+      },
+      "note": "Customer explicitly supplies shipment number."
+    },
+    {
+      "number": "SF6043681962428",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/sf-express.com",
+        "date": "2023-07-17",
+        "dateKind": "review date as displayed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express"
+        ]
+      },
+      "note": "Tracking number appears in review title and body."
+    },
+    {
+      "number": "SF6043795381767",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/sf-express.com",
+        "date": "2023-11-11",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express"
+        ]
+      },
+      "note": "Customer explicitly supplies shipment number."
     }
   ]
 }

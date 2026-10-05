@@ -37,6 +37,26 @@ export type SyntheticOrigin =
 export interface NumberSource {
   readonly url: string;
   readonly date?: string;
+  /** How the cited observation was read; absent means unspecified. */
+  readonly access?: 'full_page' | 'indexed_excerpt';
+  /** What the source date refers to, such as a comment or carrier reply. */
+  readonly dateKind?: string;
+}
+
+export interface NumberContext {
+  /** Source-labelled service, without inferring it from the number's shape. */
+  readonly service?: string;
+  /** The source's description of the identifier, separate from its corpus role. */
+  readonly reportedRole?: string;
+  /** Evidence assessment, independent of the detector's recorded answer. */
+  readonly assessment: 'candidate' | 'scope_review' | 'review' | 'quarantine' | 'auxiliary';
+}
+
+export interface NumberRelationship {
+  readonly kind: 'child_of' | 'return_of' | 'pickup_for';
+  /** A published identifier in the same carrier corpus, never an inferred suffix. */
+  readonly number: string;
+  readonly source: NumberSource;
 }
 
 export type NumberExpectation =
@@ -61,6 +81,8 @@ export interface NumberRecord {
   readonly shapeConfirmed?: string;
   /** Never a positive oracle; the expectation only records today's answer. */
   readonly quarantine?: true;
+  readonly context?: NumberContext;
+  readonly relationships?: readonly NumberRelationship[];
   readonly expect: NumberExpectation;
   readonly note?: string;
 }

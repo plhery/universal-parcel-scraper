@@ -48,6 +48,27 @@
         ]
       },
       "note": "The reviewer calls this a YunExpress tracking number, but the numeric reference could identify an order, forwarder or last-mile parcel. Issuer and identifier role remain unconfirmed."
+    },
+    {
+      "number": "YT2533100705018315",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/its-th%C3%A9-missing-invoice-156164/",
+        "date": "2026-01-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "cross border handoff",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "yunexpress",
+        "confidence": "high"
+      },
+      "note": "Customer-pasted shipment reference and reply naming YunExpress. Last mile GOFO France is reported; no GOFO identifier is supplied."
     }
   ]
 }

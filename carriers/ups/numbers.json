@@ -185,6 +185,585 @@
         "confidence": "high"
       },
       "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+    },
+    {
+      "number": "1Z0F2R789591320579",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2026-01-13",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "repair return",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Customer reports collection for repair return."
+    },
+    {
+      "number": "1Z0Y59X66829152727",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-06-06",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "pickup point redirection",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1z1wr3326806776473",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-04-15",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z1WR3326856341768",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-10-24",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international envelope",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z1WR3326866084803",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-07-26",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "delivery dispute",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z1WR3326867767243",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-03-19",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z1WR3326870870884",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-03-21",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "access point",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z1WR332 68 83540019",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-03-17",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "reported partner handoff",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "UPS booked; customer reports DPD delivery. No DPD ID."
+    },
+    {
+      "number": "1Z1WR3326884599625",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-03-13",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "delivery dispute",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z1WR3326886001999",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-07-31",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "access point",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z2Y363W6790639911",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-08-23",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international customs",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z30R55F6867987158",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-05-16",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "pickup point redirection",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z4213X36896052063",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-08-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "collection not made",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z5P2TB0D600015019",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-10-30",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z60699Y0484426752",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-06-11",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international collection",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z749EF46815786810",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-06-07",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "delivery attempt",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z89V2176816766388",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-02-17",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1Z930A320444063661",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-09-16",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZA222W76821641509",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-07-27",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZA70B226827462186",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-05-16",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZE92E756882024549",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-07-13",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international customs",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZG3R9756823723900",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-10-05",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZH813516812398103",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-03-03",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZKE19536807316787",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-08-11",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZV8J9680404615654",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-11-04",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZW344W07914293490",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2024-11-14",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "1ZWE22716899180343",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-05-27",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "access point",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS review field."
+    },
+    {
+      "number": "H9628165941",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ups",
+        "date": "2025-12-14",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_waybill"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "Public UPS review reference matching the open-source H-waybill family. The detector currently offers another carrier; UPS issuance and direct retrieval remain unconfirmed. The source attribution is retained in quarantine because current detection does not include this carrier."
     }
   ]
 }

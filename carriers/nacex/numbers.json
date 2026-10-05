@@ -42,6 +42,26 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "2827/13927627",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/www.nacex.com",
+        "date": "2026-06-30",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_composite_reference"
+      },
+      "expect": {
+        "carrier": "nacex",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly labels this shipment reference. Slash retained; investigate agency/consignment composite."
     }
   ]
 }

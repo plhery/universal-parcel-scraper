@@ -27,6 +27,26 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "4PX3001648720814CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/update-on-my-order--2502274589-144965/",
+        "date": "2025-03-05",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "four-px",
+        "confidence": "high"
+      },
+      "note": "Customer provides tracking identifier; response includes 4PX scans. The numeric order ID in the title is deliberately excluded."
     }
   ]
 }

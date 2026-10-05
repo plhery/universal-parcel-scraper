@@ -280,6 +280,94 @@
         "confidence": "none"
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
+    },
+    {
+      "number": "CH056695198US",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/where-is-my-package-16416/",
+        "date": "2018-12-30",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "service": "international postal",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly reports a parcel sent from the USA. Issuer inferred from origin and identifier."
+    },
+    {
+      "number": "LA059565532US",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-tracking-help-please-3067/",
+        "date": "2016-09-21",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "service": "international postal",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports US-origin shipment. Postal issuer attribution rests on origin and identifier, not an independently checked carrier response."
+    },
+    {
+      "number": "LC960517794US",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/a-parcel-was-sent-to-me-from-usa-and-i-have-not-received-it-2307/",
+        "date": "2016-08-03",
+        "dateKind": "comment publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "service": "international postal",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports their own US-origin parcel in a comment. Issuer inferred from origin and identifier."
+    },
+    {
+      "number": "LH194723189US",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/is-the-package-being-held-by-china-customs-15637/2/",
+        "date": "2023-04-28",
+        "dateKind": "comment publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "service": "international customs",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports an international postal item held by customs. USPS attribution inferred from identifier."
     }
   ]
 }

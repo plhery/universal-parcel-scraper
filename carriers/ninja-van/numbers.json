@@ -62,6 +62,247 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The source attributes it to Ninja Van, which stays one candidate among several."
+    },
+    {
+      "number": "NJVTT80134490007",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/09/11/surat-pembaca/ekspedisi-ninja-xpress-bermasalah",
+        "date": "2025-09-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Customer names two separate Ninja Xpress shipments. Later comment reports the first delivered. The source attribution is retained in quarantine because current detection does not include this carrier."
+    },
+    {
+      "number": "NJVTT80422730008",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/09/11/surat-pembaca/ekspedisi-ninja-xpress-bermasalah",
+        "date": "2025-09-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Customer names two separate Ninja Xpress shipments. Later comment reports the first delivered. The source attribution is retained in quarantine because current detection does not include this carrier."
+    },
+    {
+      "number": "NJVTT80995860009",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/09/11/surat-pembaca/ekspedisi-ninja-xpress-bermasalah",
+        "date": "2025-10-13",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another customer posts their own shipment number in comments. The source attribution is retained in quarantine because current detection does not include this carrier."
+    },
+    {
+      "number": "NLIDAP1370713802",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2022/06/10/surat-pembaca/paket-jualan-di-lazada-dinyatakan-rusak-oleh-ninja-xpress-tapi-barang-tidak-dikembalikan-atau-dibayarkan-oleh-lazada/comment-page-2",
+        "date": "2022-06-10",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "cash on delivery",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller reports cash-on-delivery shipment."
+    },
+    {
+      "number": "NLIDAP1808708134",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/02/07/surat-pembaca/pemotongan-biaya-selisih-ongkir-yang-mengada-ada-oleh-ninja-xpress-dan-lazada",
+        "date": "2025-02-07",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller explicitly publishes Ninja Xpress waybill."
+    },
+    {
+      "number": "NLIDAP8003322843",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/06/02/surat-pembaca/kerugian-selisih-ongkir-akibat-kecurangan-pengukuran-dimensi-paket",
+        "date": "2025-06-02",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller explicitly lists five Ninja Xpress waybills separately from order IDs."
+    },
+    {
+      "number": "NLIDAP8003322844",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/06/02/surat-pembaca/kerugian-selisih-ongkir-akibat-kecurangan-pengukuran-dimensi-paket",
+        "date": "2025-06-02",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller explicitly lists five Ninja Xpress waybills separately from order IDs."
+    },
+    {
+      "number": "NLIDAP8003323022",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/06/02/surat-pembaca/kerugian-selisih-ongkir-akibat-kecurangan-pengukuran-dimensi-paket",
+        "date": "2025-06-02",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller explicitly lists five Ninja Xpress waybills separately from order IDs."
+    },
+    {
+      "number": "NLIDAP8003483550",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/06/02/surat-pembaca/kerugian-selisih-ongkir-akibat-kecurangan-pengukuran-dimensi-paket",
+        "date": "2025-06-02",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller explicitly lists five Ninja Xpress waybills separately from order IDs."
+    },
+    {
+      "number": "NLIDAP8003788597",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2025/06/02/surat-pembaca/kerugian-selisih-ongkir-akibat-kecurangan-pengukuran-dimensi-paket",
+        "date": "2025-06-02",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "Seller explicitly lists five Ninja Xpress waybills separately from order IDs."
+    },
+    {
+      "number": "1224555672638984",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2023/09/07/tanggapan/tanggapan-perihal-selisih-ongkir-yang-gak-ngotak",
+        "date": "2023-09-07",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "order_number_mislabelled_as_waybill"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "The carrier response calls this a waybill, while the original complaint calls it a Lazada order number. Identifier role remains disputed. The original complaint is https://mediakonsumen.com/2023/09/02/surat-pembaca/selisih-ongkir-yang-gak-ngotak."
     }
   ]
 }

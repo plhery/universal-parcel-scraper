@@ -143,6 +143,112 @@
         "confidence": "high"
       },
       "note": "Public parcel report with a pasted history naming China Post acceptance and Japan Post delivery; not independently verified."
+    },
+    {
+      "number": "CY028810153CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-stuck-in-transit-cy028810153cn-151074/",
+        "date": "2025-07-18",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international air mail",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly describes a China Post air-mail shipment to Australia."
+    },
+    {
+      "number": "LZ299755813CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-not-delivered-153529/",
+        "date": "2025-10-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "service": "international customs",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports customs delay on parcel to Australia."
+    },
+    {
+      "number": "ui025626538cn",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/where-is-my-package-16416/",
+        "date": "2019-01-05",
+        "dateKind": "comment publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Customer comment supplies own lower-case shipment number."
+    },
+    {
+      "number": "UN392483044CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/where-is-my-package-16416/",
+        "date": "2019-01-10",
+        "dateKind": "comment publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Another customer supplies own shipment number."
+    },
+    {
+      "number": "UU366745515CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/no-update-on-package-status-113845/",
+        "date": "2022-04-15",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Customer supplies postal identifier; no extra service is inferred from the UU prefix."
     }
   ]
 }

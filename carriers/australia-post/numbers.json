@@ -61,6 +61,48 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Australia Post; detection falls back to the generic postal rule."
+    },
+    {
+      "number": "EJ205870830AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/help-scam-buyer-3959/",
+        "date": "2016-11-03",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international recall request",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Sender explicitly names Australia Post and requests shipment recall."
+    },
+    {
+      "number": "EJ206359769AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/help-scam-buyer-3959/",
+        "date": "2016-11-18",
+        "dateKind": "comment publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international recall request",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Another customer posts their own Australia Post shipment."
     }
   ]
 }

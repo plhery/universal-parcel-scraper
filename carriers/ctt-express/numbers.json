@@ -54,6 +54,47 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "0079350082809726059741",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/paquete-no-entregado/2db94a5e18722644d4",
+        "date": "2025-05-26",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "ctt-express",
+        "confidence": "high"
+      },
+      "note": "Customer shipment reference in complaint against CTT Express."
+    },
+    {
+      "number": "0082800082909715943073001",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/incidencia-env-C3-ADo/cd1afa1286925151a9",
+        "date": "2025-01-03",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Customer explicitly calls this the tracking number. Long numeric identifier ending 001; do not truncate or assume its component structure. The source attribution is retained in quarantine because current detection does not include this carrier."
     }
   ]
 }

@@ -197,6 +197,106 @@
         "confidence": "none"
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to FedEx; no rule matches this shape."
+    },
+    {
+      "number": "271272514871",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/faq/poznaj-opinie-naszych-klientow",
+        "date": "2024-03-01",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international parcel",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Sender explicitly names FedEx for Poland-to-Asia delivery."
+    },
+    {
+      "number": "279403051467",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/fedex.it",
+        "date": "2024-11-17",
+        "dateKind": "review date as displayed",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international customs",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Customer explicitly publishes FedEx tracking number in international customs report."
+    },
+    {
+      "number": "6232030133050",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-fedex-trade-networks",
+        "date": "2024-01-30",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "scope_review",
+        "service": "poland domestic network unverified",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "Thirteen-digit reference on FedEx Trade Networks category page; customer describes Polish domestic brokerage. Actual FedEx service and identifier role unverified."
     }
   ]
 }

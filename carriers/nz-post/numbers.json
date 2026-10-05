@@ -44,6 +44,27 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The S10 check digit does not validate. The source attributes it to NZ Post, which no rule claims."
+    },
+    {
+      "number": "EP559083729NZ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/parcel-not-delivered-yet-156048/",
+        "date": "2026-01-07",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international parcel",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "nz-post",
+        "confidence": "high"
+      },
+      "note": "Customer shipment report; related post explicitly names NZ Post."
     }
   ]
 }

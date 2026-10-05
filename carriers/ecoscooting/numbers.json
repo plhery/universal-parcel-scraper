@@ -286,6 +286,78 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Ecoscooting; detection selects DHL."
+    },
+    {
+      "number": "010050000023791274",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/notificaci-C3-B3n-de-reclamaci-C3-B3n-y-/6a5477e2f89b2628e6",
+        "date": "2025-06-05",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "Tracking number explicitly identified; leading zero preserved."
+    },
+    {
+      "number": "280270000102949702",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/ecoscooting-pierde-pedidos-ot/0bcbb99414b930ed63",
+        "date": "2026-08-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "Customer explicitly identifies two separate parcels delivered by Ecoscooting. A third number labelled complaint ID is excluded."
+    },
+    {
+      "number": "280270000104132526",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/ecoscooting-pierde-pedidos-ot/0bcbb99414b930ed63",
+        "date": "2026-08-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "Customer explicitly identifies two separate parcels delivered by Ecoscooting. A third number labelled complaint ID is excluded."
     }
   ]
 }

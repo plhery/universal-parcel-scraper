@@ -98,6 +98,28 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "RF038017031BE",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/delivery-of-registered-mail-7639/",
+        "date": "2017-03-24",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "service": "international registered letter",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "bpost",
+        "confidence": "high"
+      },
+      "note": "Sender explicitly describes registered mail from Belgium to China."
     }
   ]
 }

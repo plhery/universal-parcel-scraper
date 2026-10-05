@@ -143,6 +143,27 @@
         ]
       },
       "note": "Official reference example with the widget’s appended check digit, not a real shipment."
+    },
+    {
+      "number": "PX2121532015",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-poczta-polska",
+        "date": "2026-06-08",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "pocztex",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      },
+      "note": "Public positive delivery review explicitly supplies this tracking number."
     }
   ]
 }

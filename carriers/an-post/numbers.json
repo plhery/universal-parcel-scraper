@@ -28,6 +28,27 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "RL 678 194 950 IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/rl-678-194-950-ie-8012/",
+        "date": "2017-04-27",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "international registered",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      },
+      "note": "Sender names An Post and registered shipment from Ireland to China."
     }
   ]
 }
