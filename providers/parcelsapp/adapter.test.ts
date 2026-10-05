@@ -422,6 +422,23 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
+  it('reads scans named "Spain Post" on Correos\'s Madrid clock and proposes Correos', () => {
+    // ParcelsApp relays Correos' wall clocks labelled as UTC, under its own name for the operator.
+    const spanish = 'RR123456785ES';
+    const reply = parseParcelsAppResponse({
+      carriers: ['Spain Post'],
+      states: [
+        { date: '2026-07-02T18:30:00Z', status: 'En reparto', carrier: 0, location: '2830594' },
+        { date: '2026-01-14T09:15:00Z', status: 'Admitido', carrier: 0 },
+      ],
+    }, spanish, identity(spanish));
+    expect(reply.events?.map((scan) => scan.time)).toEqual([
+      '2026-07-02T16:30:00.000Z', // summer: CEST
+      '2026-01-14T08:15:00.000Z', // winter: CET
+    ]);
+    expect(reply).toMatchObject({ reported_carriers: ['Spain Post'], discovered_carrier: 'correos-spain' });
+  });
+
   it('keeps the UTC instants ParcelsApp gives TNT international scans', () => {
     // Checked against tnt.com's offsets (2026-09-28); a TNT France number keeps the French clock.
     const scan = (trackingNumber: string) => parseParcelsAppResponse({

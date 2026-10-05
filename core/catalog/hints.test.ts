@@ -62,6 +62,7 @@ describe('carrier names reported by universal providers', () => {
     ['UPS', 'ups'], ['La Poste (Colissimo)', 'la-poste'], ['Chronopost France', 'chronopost'],
     ['Chronopost (France)', 'chronopost'], ['Posti Finland', 'posti'], ['Swiss Post CH', 'swiss-post'],
     ['Finland Post', 'posti'], ['Spain Post', 'correos-spain'],
+    ['Correos de España', 'correos-spain'], ['Correos Spain', 'correos-spain'],
     ['Intelcom', 'intelcom'], ['Dragonfly', 'intelcom'], ['Orange Connex', 'speedpak'],
     ['Evri International', 'evri'], ['Hermes UK', 'evri-uk'], ['DPD Germany', 'dpd-de'], ['DPD UK', 'dpd-uk'],
   ])('maps %s, a carrier followed by its own country included', (name, expected) => {
@@ -78,7 +79,7 @@ describe('carrier names reported by universal providers', () => {
   it.each([
     'La Poste', 'La Poste (Colissimo)', 'Chronopost France', 'FedEx', 'India Post', 'Posti', 'UPS',
     'Chronopost Portugal', 'Correos Chile', 'Royal Mail (UK)', 'DHL', 'DHL Express', 'GLS Italy', 'DPD UK',
-    'Finland Post', 'Spain Post',
+    'Finland Post', 'Spain Post', 'Correos de España', 'Correos Spain',
   ])('knows %s from the catalog', (name) => {
     expect(isKnownCarrierName(name)).toBe(true);
   });

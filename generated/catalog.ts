@@ -3862,6 +3862,7 @@ export const CARRIER_CATALOG = {
     "color": "#ffcd00",
     "aliases": [
       "Correos España",
+      "Correos de España",
       "Correos y Telégrafos",
       "Sociedad Estatal Correos y Telégrafos"
     ],
@@ -3869,7 +3870,7 @@ export const CARRIER_CATALOG = {
       "ES"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Madrid",
     "tracking": {
       "mode": "automatic",
       "adapter": "correos-spain"

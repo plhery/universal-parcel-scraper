@@ -47,6 +47,9 @@ Correos de Chile (`correos-chile`) are separate carriers.
   sync records it.
 - Times come split as `fecEvento` (`DD/MM/YYYY`) and `horEvento` (`HH:MM:SS`, midnight when
   absent) and are read as `Europe/Madrid`.
+- The catalog zone is `Europe/Madrid` too. ParcelsApp ("Spain Post") and Ship24 ("Correos de
+  España") relay the same wall clocks without a real offset, so they are read on that clock and
+  land on the instants the adapter gives.
 - The office (`nom_codired`) becomes `pickup_point` only while the parcel awaits collection.
   On a delivered parcel it is where the parcel *was* held and would read as a false pickup
   instruction.

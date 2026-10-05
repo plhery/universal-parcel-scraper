@@ -3,6 +3,7 @@
   "displayName": "Correos",
   "aliases": [
     "Correos España",
+    "Correos de España",
     "Correos y Telégrafos",
     "Sociedad Estatal Correos y Telégrafos"
   ],
@@ -15,7 +16,7 @@
     "color": "#ffcd00"
   },
   "selectable": true,
-  "timezone": "UTC",
+  "timezone": "Europe/Madrid",
   "tracking": {
     "mode": "automatic",
     "adapter": "correos-spain",

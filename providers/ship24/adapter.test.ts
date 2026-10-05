@@ -38,6 +38,15 @@ describe('Ship24 result parsing', () => {
     expect(JSON.stringify(parsed)).not.toMatch(/PRIVATE|PIN:|signed by/i);
   });
 
+  it('reads offset-less scans named "Correos de España" on Correos\'s Madrid clock', () => {
+    const result = parseShip24Response({ data: { tracking_number: number,
+      couriers: [{ translation: { name: 'Correos de España' } }],
+      events: [{ timestamp: '2026-07-02T18:30:00', status: 'Delivered', dispatch_code_id: 7 },
+        { timestamp: '2026-01-14T09:15:00', status: 'Admitted' }] } }, number);
+    expect(result.events?.map((scan) => scan.time)).toEqual(['2026-07-02T16:30:00.000Z', '2026-01-14T08:15:00.000Z']);
+    expect(result).toMatchObject({ reported_carriers: ['Correos de España'], discovered_carrier: 'correos-spain' });
+  });
+
   it('rejects history that belongs to another shipment', () => {
     expect(() => parseShip24Response({ data: { tracking_number: 'OTHER123', events: [] } }, number))
       .toThrow('no matching shipment history');
