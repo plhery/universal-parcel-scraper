@@ -109,6 +109,112 @@
       "note": "Expedition-code shape outside the Correos product prefixes."
     },
     {
+      "number": "PH00ZZ000000001A",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Expedition-code shape whose check letter does not validate."
+    },
+    {
+      "number": "PL00ZZ0000000010100000Z",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Parcel-code shape whose check letter does not validate."
+    },
+    {
+      "number": "CD00ZZ0600000004191139V",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/env-C3-ADo-no-entregado/ab449eeeddeb617eb9",
+        "date": "2026-07-17",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "certified letter",
+        "reportedRole": "shipment_code"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "Reported as a certified letter's shipment code. Correos' own tracker returns its history."
+    },
+    {
+      "number": "CD0D4D0001619000008290W",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/reclamacion-por-paquete-reteni/a6a466a9d5eb58a4ea",
+        "date": "2026-07-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "certified letter",
+        "reportedRole": "shipment_code"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "Reported as a certified item's number. Correos' own tracker returns its history."
+    },
+    {
+      "number": "CD0CLX0000336610008205C",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/eclamaci-C3-B3n-formal-contra-corre/b37f67c6beabe0704d",
+        "date": "2026-04-28",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "certified letter",
+        "reportedRole": "shipment_code"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "Reported as the shipment number of a complaint. Correos' own tracker returns its history."
+    },
+    {
+      "number": "CD0CBM0000904620028007A",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/reclamaciones-a-correos-no-ate/d0d27679942f2c9864",
+        "date": "2026-01-13",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "certified letter",
+        "reportedRole": "shipment_code"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "Reported as a tracking number. Correos' own tracker returns its history."
+    },
+    {
       "number": "PK8M1C0710676040123005H",
       "role": "shipment",
       "evidence": "public_shipment_report",

@@ -3893,8 +3893,9 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^[PD][A-Z][A-Z0-9]{4}\\d{16}[A-Z]$",
-        "confidence": "high"
+        "pattern": "^(?:[PD][A-Z]|CD)[A-Z0-9]{4}\\d{16}[A-Z]$",
+        "confidence": "high",
+        "checksum": "correos-spain"
       },
       {
         "pattern": "^[A-Z]{2}\\d{9}ES$",
@@ -3903,7 +3904,8 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^[PD][A-Z][A-Z0-9]{4}\\d{9}[A-Z]$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "correos-spain"
       }
     ]
   },

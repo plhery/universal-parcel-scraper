@@ -426,7 +426,8 @@
             "gls",
             "dhl-express",
             "tnt",
-            "poczta-polska"
+            "poczta-polska",
+            "correos-spain"
           ]
         },
         "preferred": {

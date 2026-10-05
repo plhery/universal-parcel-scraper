@@ -18,6 +18,7 @@ export {
   keywordNumberInText,
   recognizedNumberInText,
 } from './candidates.js';
+export { isValidCorreosSpainCheckLetter } from './correosSpain.js';
 export { detectCarrier, detectCarrierMatch } from './detect.js';
 export { isValidGlsParcelNumber } from './gls.js';
 export { isValidHermesParcelNumber } from './hermes.js';

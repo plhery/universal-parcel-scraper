@@ -42,6 +42,13 @@
     { "code": "H01R390V", "wording": "Realizado intento de entrega", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-09-26", "note": "" },
     { "code": "H01R420V", "wording": "Intento de entrega. Ausente", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-09-26", "note": "Recipient absent." },
     { "code": "L03D320R", "wording": "Finalizado plazo retirada", "language": "es", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-09-26", "note": "Pickup window closed; the parcel goes back to the sender. Reported as status 'exception', like other carriers' uncollected codes." },
-    { "code": "A170000V", "wording": "Depositado para admisión", "language": "es", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "The sender left the parcel in a Citypaq locker and Correos has not admitted it yet. The public tracker files it under pre-admission, with the pre-registration." }
+    { "code": "A170000V", "wording": "Depositado para admisión", "language": "es", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "The sender left the parcel in a Citypaq locker and Correos has not admitted it yet. The public tracker files it under pre-admission, with the pre-registration." },
+    { "code": "E000001V", "wording": "Inicio de tramitación aduanera", "language": "es", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "Arrived at Correos' facilities; customs processing starts." },
+    { "code": "E040990V", "wording": "Pendiente de tramitación aduanera", "language": "es", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "" },
+    { "code": "I020000V", "wording": "Entregado al remitente", "language": "es", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "Handed back to the sender, not to the recipient. Reported as status 'exception', like the other return codes." },
+    { "code": "I01H230V", "wording": "Devuelto al remitente en oficina", "language": "es", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "Handed back to the sender at an office." },
+    { "code": "O130000V", "wording": "En proceso de devolución", "language": "es", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "The delivery unit holds it for return at the sender's request." },
+    { "code": "L031070R", "wording": "En proceso de devolución", "language": "es", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "Returned for missing customs documents." },
+    { "code": "L03D240R", "wording": "Destinatario desconocido", "language": "es", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "Recipient unknown at the address; the item goes back to the sender." }
   ]
 }

@@ -62,6 +62,15 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'L03D320R': { status: 'exception', stage: 'returned' },
   // The sender left the parcel in a Citypaq locker; Correos admits it later.
   'A170000V': { status: 'pending', stage: 'registered' },
+  // Observed live on public certified letters in the number corpus.
+  'E000001V': { status: 'in_transit', stage: 'customs' },
+  'E040990V': { status: 'in_transit', stage: 'customs' },
+  // Handed back to the sender, or on the way back: never a delivery to the recipient.
+  'I020000V': { status: 'exception', stage: 'returned' },
+  'I01H230V': { status: 'exception', stage: 'returned' },
+  'O130000V': { status: 'exception', stage: 'returned' },
+  'L031070R': { status: 'exception', stage: 'returned' },
+  'L03D240R': { status: 'exception', stage: 'returned' },
 };
 
 /** The stage and status for a Correos `codEvento`, or undefined when unmapped. */

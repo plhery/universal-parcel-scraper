@@ -63,6 +63,7 @@
       "inferStage",
       "isAmazonTrackingNumber",
       "isPlanzerSharedTrackingNumber",
+      "isValidCorreosSpainCheckLetter",
       "isValidDhlExpressWaybill",
       "isValidGlsParcelNumber",
       "isValidHermesParcelNumber",

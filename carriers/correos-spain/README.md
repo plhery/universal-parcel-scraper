@@ -25,17 +25,16 @@ Correos de Chile (`correos-chile`) are separate carriers.
 ## Notes
 
 - Detection covers checksum-valid `…ES` S10 numbers, `PR` + 15 digits + `C`, and the
-  23-character parcel codes: a product prefix (`P…` parcels such as `PQ`, `PK`, `PH`; `D…`
-  returns), a 4-character label code, 16 digits and a check letter. Correos Express's all-digit
-  23-character numbers don't match. The adapter itself accepts any code and lets the
-  envelope decide.
+  23-character codes: a product prefix (`P…` parcels such as `PQ`, `PK`, `PH`; `D…`
+  returns; `CD` certified letters), a 4-character label code, 16 digits and a check letter.
+  Correos Express's all-digit 23-character numbers don't match. The adapter itself accepts any
+  code and lets the envelope decide.
 - An expedition code is the 16-character number Correos gives a sender for a whole consignment:
-  the first fifteen characters of its parcel code and a check letter of its own. Detection and
-  the adapter share the shape through `core/detection/correosSpain.ts`.
+  the first fifteen characters of its parcel code and a check letter of its own.
 - The check letter of both codes is `TRWAGMYFPDXBNJZSQVHLCKE` at the sum of the other
   characters' codes modulo 23. Correos publishes no formula; this one holds for every public
-  code in `numbers.json`. The rules still check only the shape: a checksum kind has to exist in
-  every port of the detection engine before a rule can name it.
+  code in `numbers.json`. Detection and the adapter share it through
+  `core/detection/correosSpain.ts`. A sum cannot see two characters swapped.
 - An expedition of several parcels is inconclusive: one parcel's history does not describe the
   others. Each parcel can still be tracked by its own code.
 - The search endpoint is not used for history. Its events carry Spanish text and a phase but no

@@ -12,6 +12,7 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionRule } from '../catalog/types.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { isValidCorreosSpainCheckLetter } from './correosSpain.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
 import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
@@ -29,6 +30,7 @@ function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   if (rule.checksum === 'dhl-express') return isValidDhlExpressWaybill(trackingNumber);
   if (rule.checksum === 'tnt') return isValidTntConsignmentNumber(trackingNumber);
   if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(trackingNumber);
+  if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(trackingNumber);
   return true;
 }
 
