@@ -8,6 +8,16 @@
 - `/app` contains helpers coupled to the parcel app's data model or behavior. It has no backward-compatibility guarantee; coordinate breaking changes with the app. General-purpose tracking and catalog APIs belong in the stable entry points.
 - Commercial universal providers are opt-in. Consumers own polling and persistence.
 
+## Scraper investigations
+
+- Trace the full path through detection, recognition eligibility, adapter steps and consumer routing before changing a number rule. An adapter accepting an identifier does not mean preflight will ask it. HTTP recognition stays HTTP-only; browser recognition is a separate opt-in phase. Enabled universal providers can help preflight and their history can be reused when saving, but their carrier hints do not replace direct confirmation. See [ARCHITECTURE.md](ARCHITECTURE.md).
+- Keep carrier scope separate from brand scope. Shared portals and overlapping numeric formats need a matching whole identifier and evidence of the service or national network. Checksums filter or prioritize candidates; they do not establish carrier ownership or shipment existence. Share validation between detection and the adapter through [core/detection](core/detection), using official request builders or specifications as evidence.
+- Put public sample numbers and their source URLs in the carrier's `numbers.json`. A review's carrier attribution is evidence to investigate, not confirmation. Preserve uncertain samples as quarantined evidence. Use synthetic parser fixtures and private environment inputs for live tests; do not copy samples into prose.
+- Use the adapter's supplied transport, step runner, signal and remaining budget. Preserve failure kinds and recovery provenance. A blocked HTML response, including HTTP 200, is not a missing parcel; rate limits and malformed replies must not silently become not-found.
+- Keep carrier-specific browser changes scoped to the carrier. For TRAWL capture helpers, observe before navigation, bind the endpoint and request to the whole identifier, and retain the bounded response sequence through verification and automatic retries. Reserve time for context cleanup and retain challenge status without tokens or rendered recipient details. The [DHL Express helper](trawl/dhl-express-browser.mjs) demonstrates this flow.
+- Compare alternative sources by identity, milestones, completeness and scan clocks. Facility-local times must not acquire invented offsets, and sparse fast answers must not suppress richer history. Separate parser tests, live retrieval, packaged service compatibility and deployed consumer behavior when assessing a fix.
+- Keep APKs, extracted bundles, application credentials and raw live diagnostics outside Git. Do not commit an embedded key or its encoded form. Record non-secret endpoint leads and their access requirements in the carrier README; [DHL Express](carriers/dhl-express/README.md) includes the public browser flow and mobile API lead. Project policy belongs here or in architecture documentation; reusable investigation methods belong in the reverse engineering skill.
+
 ## Documentation
 
 Keep docs short, plain and current. No dates, verification logs, changelogs, one-off timings or hedging. Do not copy catalog, sample-number or status facts out of their machine-readable source. No status or field tables in READMEs.
