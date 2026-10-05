@@ -9,11 +9,14 @@
         "url": "https://ie.trustpilot.com/reviews/6a90f17ecd0f0d3f7a9afab5",
         "date": "2026-09-20"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Quoted in a merchant's reply. The source attributes it to Australia Post; no rule matches this shape."
+      "note": "Quoted in a merchant's public reply and attributed to Australia Post, whose tracking shows it delivered. No rule matches this shape."
     },
     {
       "number": "0301006785462006320995",

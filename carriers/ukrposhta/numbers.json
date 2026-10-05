@@ -9,6 +9,9 @@
         "url": "https://www.vidhuk.ua/uk/ukrposhta-ukrpochta/review-2374754",
         "date": "2026-09-07"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -20,7 +23,7 @@
           "yunda"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Ukrposhta, which no rule claims. Domestic parcel."
+      "note": "Public report of a domestic parcel attributed to Ukrposhta, whose tracking returns its history. Thirteen digits are shared with other carriers and no rule offers Ukrposhta."
     },
     {
       "number": "CA315000362UA",

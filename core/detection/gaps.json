@@ -38,7 +38,7 @@
     "carrier": "australia-post",
     "pattern": "^7T\\d{19}$",
     "kind": "open",
-    "reason": "Australia Post has no detection rule."
+    "reason": "One confirmed article ID. Australia Post has no detection rule, and one sample does not establish a family."
   },
   {
     "carrier": "brt",
@@ -55,7 +55,7 @@
     "carrier": "colisweb",
     "pattern": "^\\d{8}$",
     "kind": "open",
-    "reason": "Eight digits are shared with Mondial Relay and Heppner, and no rule offers Colisweb."
+    "reason": "A confirmed number. Eight digits are shared with Mondial Relay and Heppner, and offering Colisweb would lengthen every such suggestion."
   },
   {
     "carrier": "dachser",
@@ -140,6 +140,6 @@
     "carrier": "ukrposhta",
     "pattern": "^\\d{13}$",
     "kind": "open",
-    "reason": "No rule for domestic thirteen-digit barcodes."
+    "reason": "A confirmed domestic barcode. Thirteen digits are shared with other carriers, and offering Ukrposhta would lengthen every such suggestion."
   }
 ]
