@@ -1167,7 +1167,7 @@ export const CARRIER_CATALOG = {
   },
   "colis-prive": {
     "displayName": "Colis Privé",
-    "color": "#e30613",
+    "color": "#aa78ff",
     "aliases": [
       "Colis Prive"
     ],
@@ -1240,7 +1240,7 @@ export const CARRIER_CATALOG = {
   },
   "colisweb": {
     "displayName": "Colisweb",
-    "color": "#ff8a00",
+    "color": "#15cbe3",
     "countries": [
       "FR"
     ],
@@ -1339,7 +1339,7 @@ export const CARRIER_CATALOG = {
   },
   "ciblex": {
     "displayName": "Ciblex",
-    "color": "#e30613",
+    "color": "#0160ab",
     "aliases": [
       "Ciblex Express"
     ],
@@ -1425,7 +1425,7 @@ export const CARRIER_CATALOG = {
   },
   "asendia": {
     "displayName": "Asendia",
-    "color": "#ef7d00",
+    "color": "#005d69",
     "aliases": [
       "Asendia Management",
       "Asendia UK",
@@ -2998,7 +2998,7 @@ export const CARRIER_CATALOG = {
   },
   "four-px": {
     "displayName": "4PX",
-    "color": "#f58220",
+    "color": "#005add",
     "countries": [
       "CN"
     ],
