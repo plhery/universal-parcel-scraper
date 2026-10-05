@@ -1,4 +1,96 @@
 {
   "carrier": "nova-poshta",
-  "entries": []
+  "entries": [
+    {
+      "code": "4",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "5",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "6",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "7",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "8",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "9",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "80",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "81",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "115",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "120",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "121",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "122",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    },
+    {
+      "code": "199",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Status code in the current public movement feed."
+    }
+  ]
 }

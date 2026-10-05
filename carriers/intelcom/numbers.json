@@ -2,6 +2,32 @@
   "carrier": "intelcom",
   "records": [
     {
+      "number": "CRIN26082718020483",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://intelcom.ca/en/track-your-package/?tracking-id=CRIN26082718020483"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Published on the public official tracker. This merchant reference requires explicit carrier selection."
+    },
+    {
+      "number": "CRIN26062320118472",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://intelcom.ca/en/track-your-package/?tracking-id=CRIN26062320118472"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Published on the public official tracker. The service identifies this shipment as lost, rather than absent."
+    },
+    {
       "number": "INTLCM1657986256",
       "role": "shipment",
       "evidence": "public_shipment_report",

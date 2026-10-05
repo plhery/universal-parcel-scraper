@@ -1,4 +1,59 @@
 {
   "carrier": "spx-ph",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Parcel has been delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel is out for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has arrived at the delivery hub : Upper Marikina Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has arrived and to be received by the delivery hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has departed from sorting facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel is loaded into truck, to leave sorting center soon",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has arrived at sorting facility : SOC 4",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been picked up by our logistics partner",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Sender is preparing to ship your parcel",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    }
+  ]
 }

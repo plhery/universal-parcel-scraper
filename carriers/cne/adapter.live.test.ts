@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { createTracker } from '../../facade/index.js';
+import { CneTracker } from './adapter.js';
 
-describe('CNE live provider retrieval', () => {
-  it.skipIf(!process.env.CNE_TRACKING_NUMBER)('retrieves an explicitly selected shipment through an enabled provider', async () => {
-    const answer = await createTracker({ providers: ['ParcelsApp'] }).track({ number: process.env.CNE_TRACKING_NUMBER!, carrier: 'cne' });
-    expect(answer.carrier).toBe('cne');
-    expect(answer.source).toBe('ParcelsApp');
-    expect(answer.result.events.length).toBeGreaterThan(0);
+describe('CNE live direct retrieval', () => {
+  it.skipIf(!process.env.CNE_TRACKING_NUMBER)('retrieves shipment movements from the public website API', async () => {
+    const result = await new CneTracker().fetch(process.env.CNE_TRACKING_NUMBER!);
+    expect(result.events!.length).toBeGreaterThan(0);
+    expect(result.last_status_text).toBeTruthy();
   });
 });

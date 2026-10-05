@@ -9,11 +9,12 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
-import { royalMailStage, royalMailSummaryStage, statusForStage } from './status.js';
+import { royalMailEventStage, royalMailStage, royalMailSummaryStage, statusForStage } from './status.js';
 
 /** Read the response produced by Royal Mail's form and hCaptcha callback. */
 const TRACKING_BASE = 'https://www.royalmail.com/track-your-item';
 const SUMMARY_API_PREFIX = 'https://api-web.royalmail.com/mailpieces/microsummary/v1/summary/';
+const EVENTS_API_PREFIX = 'https://api-web.royalmail.com/mailpieces/v3/';
 const MAX_BYTES = 10_000_000;
 const DEFAULT_TIMEOUT_MS = 60_000;
 // How long the browser may wait for the page's own summary call after the page settles.
@@ -38,10 +39,16 @@ export function royalMailSummaryApiUrl(trackingNumber: string): string {
   return `${SUMMARY_API_PREFIX}${normalizeRoyalMailNumber(trackingNumber)}`;
 }
 
+export function royalMailEventsApiUrl(trackingNumber: string): string {
+  return `${EVENTS_API_PREFIX}${normalizeRoyalMailNumber(trackingNumber)}/events`;
+}
+
 /** Preserve offset-free wall time instead of assigning a zone to overseas scans. */
-function eventTime(value: unknown): string {
+function eventTime(value: unknown): string | null {
   const raw = cleanScalar(value, 64);
-  return explicitOffsetTime(raw)?.iso ?? raw;
+  // A date or wall clock must never acquire the carrier's default timezone.
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-](?:(?:0\d|1[0-3]):?[0-5]\d|14:?00))$/i.test(raw)) return null;
+  return explicitOffsetTime(raw)?.iso ?? null;
 }
 
 /** A delivery estimate reduced to its calendar day. */
@@ -62,7 +69,7 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   if (String(payload.httpCode) === '429') throw new RateLimitedError('Royal Mail');
   if (errors.length) throw new IndeterminateError('Royal Mail', 'Royal Mail could not confirm the tracking status');
   const mailpiece = payload.mailPieces;
-  // The microsummary endpoint returns one object, not the array used by the
+  // Both summary and events endpoints return one object, not the array used by the
   // recent-items endpoint. Never treat a gateway 404 or schema drift as not-found.
   if (!isRecord(mailpiece) || !isRecord(mailpiece.summary)) {
     throw new SchemaError('Royal Mail', 'Royal Mail returned an invalid tracking response');
@@ -79,31 +86,37 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
   for (const raw of scans.slice(0, MAX_EVENTS_TO_INSPECT)) {
-    if (!isRecord(raw)) continue;
-    const description = cleanScalar(raw.eventName);
-    if (!description) continue;
-    const stage = royalMailStage(description) ?? undefined;
-    const time = eventTime(raw.eventDateTime);
-    const location = cleanScalar(raw.locationName, 250);
+    if (!isRecord(raw)) throw new SchemaError('Royal Mail', 'Royal Mail returned invalid tracking events');
+    // The website returns Markdown emphasis, including "**Delivered by**".
+    // Normalize it before classification so delivery prose is still redacted.
+    const description = cleanScalar(raw.eventName).replace(/\*\*/g, '').trim();
+    if (!description) throw new SchemaError('Royal Mail', 'Royal Mail returned invalid tracking events');
     const code = cleanScalar(raw.eventCode, 64);
+    const mapped = royalMailEventStage(code);
+    const stage = mapped ?? royalMailStage(description) ?? undefined;
+    const time = eventTime(raw.eventDateTime);
+    const timeText = cleanScalar(raw.eventDateTime, 64);
+    const location = cleanScalar(raw.locationName, 250);
     const event: CarrierEvent = {
       ...(time ? { time } : {}),
+      ...(!time && timeText ? { provider_time_text: timeText } : {}),
       ...(location ? { location } : {}),
       description: stage === 'delivered' ? 'Delivered' : description,
       ...(stage ? { stage } : {}),
+      ...(mapped ? { stage_source: 'carrier_map' } : {}),
       ...(/^[A-Za-z0-9_-]+$/.test(code) ? { provider_code: code } : {}),
     };
-    const identity = JSON.stringify([time, location, event.description]);
+    const identity = JSON.stringify([time ?? timeText, location, event.description]);
     if (seen.has(identity)) continue;
     seen.add(identity);
     events.push(event);
   }
   // Royal Mail also sorts the history; upstream order is not guaranteed.
-  events.sort((a, b) => {
-    const left = Date.parse(a.time ?? '');
-    const right = Date.parse(b.time ?? '');
-    return Number.isFinite(left) && Number.isFinite(right) ? right - left : 0;
-  });
+  // A partial comparator can move resolved scans across unresolved overseas
+  // clocks. Preserve provider order unless every scan denotes an instant.
+  if (events.every(event => event.time)) {
+    events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
+  }
   const trimmed = events.slice(0, MAX_EVENTS_TO_RETURN);
   const summaryCategory = cleanScalar(summary.statusCategory);
   const statusText = summaryText || summaryCategory || trimmed[0]?.description;
@@ -118,6 +131,7 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
     expected_delivery: delivered || !isRecord(mailpiece.estimatedDelivery)
       ? null : expectedDelivery(mailpiece.estimatedDelivery.date),
     events: trimmed,
+    ...(trimmed.length ? {} : { summary_only: true }),
   };
 }
 
@@ -144,6 +158,8 @@ export interface RoyalMailTrackerOptions {
   trawl?: TrawlClient | null;
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
+  /** Request the page's separate events flow; summary-only calls remain the default. */
+  fullHistory?: boolean;
 }
 
 export class RoyalMailTracker {
@@ -152,6 +168,7 @@ export class RoyalMailTracker {
   readonly #trawl: TrawlClient | null | undefined;
   readonly #fetcher: typeof fetch | undefined;
   readonly #recorder: StepRecorder;
+  readonly #fullHistory: boolean;
 
   constructor(options: RoyalMailTrackerOptions = {}) {
     if (options.timeoutMs !== undefined && (!Number.isFinite(options.timeoutMs) || options.timeoutMs <= 0)) {
@@ -162,6 +179,7 @@ export class RoyalMailTracker {
     this.#trawl = options.trawl;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;
+    this.#fullHistory = options.fullHistory ?? false;
   }
 
   /** The injected browser service, or one built from the configured URL. */
@@ -192,19 +210,20 @@ export class RoyalMailTracker {
   }
 
   /**
-   * A real browser loads the page and makes the summary call itself; the
+   * A real browser loads the page and makes the tracking calls itself; the
    * service hands that reply back. The browser's session is never replayed
    * over plain HTTP: the edge accepts the call only from the session it
    * validated. The page the browser rendered only tells a challenge apart.
    */
   async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     const summaryUrl = royalMailSummaryApiUrl(number);
+    const eventsUrl = royalMailEventsApiUrl(number);
     const page = await trawl.scrape({
       url: royalMailTrackingUrl(number),
       skipHttp: true,
       maxTier: 3,
       maxTimeout: timeoutMs,
-      captureResponses: [summaryUrl],
+      captureResponses: this.#fullHistory ? [summaryUrl, eventsUrl] : [summaryUrl],
       settleTimeout: SETTLE_TIMEOUT_MS,
     }, {
       provider: 'TRAWL while fetching Royal Mail',
@@ -220,32 +239,59 @@ export class RoyalMailTracker {
       throw new TransportError('Royal Mail', 'The browser service did not load the Royal Mail tracking page');
     }
     let captureError: unknown;
-    // Newest first: a later reply is the page's final answer. The entry URL
-    // itself carries the number, so only the exact requested call is read.
-    for (const entry of page.capturedResponses.slice(0, MAX_CAPTURED).reverse()) {
-      if (entry.url !== summaryUrl) continue;
-      if (entry.status === 429) {
-        const retry = entry.headers['retry-after'];
-        const retryMs = retry && /^\d+$/.test(retry) ? Number(retry) * 1_000 : undefined;
-        throw new RateLimitedError('Royal Mail', retryMs);
-      }
-      if ([401, 403].includes(entry.status)) throw new ChallengeError('Royal Mail');
-      if (entry.status === 404 && entry.body && !entry.truncated && !entry.base64Encoded && !entry.error) {
-        let payload: unknown;
-        try { payload = JSON.parse(entry.body); } catch { /* Keep the HTTP failure below. */ }
-        if (isRecord(payload) && Array.isArray(payload.errors)
-          && payload.errors.some(error => isRecord(error) && error.errorCode === 'E1142')) {
-          throw new IndeterminateError('Royal Mail', 'Royal Mail could not confirm the tracking status');
+    const readCaptured = (targetUrl: string): unknown => {
+      // Newest first: a later reply is the page's final answer. The entry URL
+      // itself carries the number, so only the exact requested call is read.
+      for (const entry of page.capturedResponses.slice(0, MAX_CAPTURED).reverse()) {
+        if (entry.url !== targetUrl) continue;
+        if (entry.status === 429) {
+          const retry = entry.headers['retry-after'];
+          const retryMs = retry && /^\d+$/.test(retry) ? Number(retry) * 1_000 : undefined;
+          throw new RateLimitedError('Royal Mail', retryMs);
+        }
+        if ([401, 403].includes(entry.status)) throw new ChallengeError('Royal Mail');
+        if (entry.status === 404 && entry.body && !entry.truncated && !entry.base64Encoded && !entry.error) {
+          let payload: unknown;
+          try { payload = JSON.parse(entry.body); } catch { /* Keep the HTTP failure below. */ }
+          if (isRecord(payload) && Array.isArray(payload.errors)
+            && payload.errors.some(error => isRecord(error) && error.errorCode === 'E1142')) {
+            throw new IndeterminateError('Royal Mail', 'Royal Mail could not confirm the tracking status');
+          }
+        }
+        if (entry.status >= 400) throw new UpstreamHttpError('Royal Mail', entry.status);
+        if (entry.status !== 200 || entry.truncated || entry.base64Encoded || entry.error || entry.body === null) continue;
+        try {
+          return JSON.parse(entry.body) as unknown;
+        } catch (error) {
+          // An unreadable or unrelated reply; the rendered page may still name a challenge.
+          if (!(error instanceof SyntaxError)) throw error;
+          captureError = error;
         }
       }
-      if (entry.status >= 400) throw new UpstreamHttpError('Royal Mail', entry.status);
-      if (entry.status !== 200 || entry.truncated || entry.base64Encoded || entry.error || entry.body === null) continue;
-      try {
-        return this.#structuredResult(number, JSON.parse(entry.body));
-      } catch (error) {
-        // An unreadable or unrelated reply; the rendered page may still name a challenge.
-        if (!(error instanceof SyntaxError)) throw error;
-        captureError = error;
+      return undefined;
+    };
+    const summaryPayload = readCaptured(summaryUrl);
+    if (summaryPayload !== undefined) {
+      // Validate the summary independently before merging its status with history.
+      const summaryResult = this.#structuredResult(number, summaryPayload);
+      if (!this.#fullHistory) return summaryResult;
+      const historyPayload = readCaptured(eventsUrl);
+      if (historyPayload !== undefined) {
+        if (!isRecord(historyPayload)) throw new SchemaError('Royal Mail', 'Royal Mail returned invalid tracking events');
+        // Preserve the same error vocabulary as the summary endpoint.
+        if (historyPayload.errors !== undefined || historyPayload.httpCode !== undefined) {
+          parseRoyalMailTrackingResponse(historyPayload, number);
+        }
+        const historyPiece = historyPayload.mailPieces;
+        if (!isRecord(historyPiece) || cleanScalar(historyPiece.mailPieceId).toUpperCase() !== number
+          || !Array.isArray(historyPiece.events)) {
+          throw new SchemaError('Royal Mail', 'Royal Mail did not return the requested parcel history');
+        }
+        const summaryPiece = (summaryPayload as { mailPieces: Record<string, unknown> }).mailPieces;
+        return this.#structuredResult(number, { mailPieces: {
+          mailPieceId: number, summary: summaryPiece.summary,
+          estimatedDelivery: summaryPiece.estimatedDelivery, events: historyPiece.events,
+        } });
       }
     }
     if (parseRoyalMailTrackingHtml(page.html) === 'challenged') {
@@ -267,6 +313,7 @@ export const adapter: AdapterFactory = (environment) => {
     fetcher: environment.fetcher,
     trawl: environment.trawl,
     recorder: environment.recorder,
+    fullHistory: true,
   });
   return {
     id: 'royal-mail', recordsSteps: true,

@@ -25,6 +25,22 @@
         "confidence": "high"
       },
       "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    },
+    {
+      "number": "PH2542959127193",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reddit.com/r/ShopeePH/comments/1i67ifq/"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "spx-ph"
+        ]
+      },
+      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
     }
   ]
 }

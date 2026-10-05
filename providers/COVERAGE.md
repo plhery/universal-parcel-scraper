@@ -133,13 +133,13 @@ about current coverage.
 | [DPD UK](../carriers/dpd-uk/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Evri UK](../carriers/evri-uk/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
 | [SpeedPAK](../carriers/speedpak/README.md) | Yes | ✓ 14 | Unverified | Unverified | Unverified | Unverified | N/A |
-| [Intelcom / Dragonfly](../carriers/intelcom/README.md) | Yes (Canada) | Not found | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Intelcom / Dragonfly](../carriers/intelcom/README.md) | Yes (Canada) | Not found; alternate ✓ 6 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Ekart](../carriers/ekart/README.md) | Yes (ecommerce) | ✓ 1 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Xpressbees](../carriers/xpressbees/README.md) | Yes (seller-platform AWBs) | Alternative ✓ 42 | Unverified | Unverified | Unverified | Unverified | N/A |
-| [LBC Express](../carriers/lbc-express/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
-| [Nova Poshta (Ukraine)](../carriers/nova-poshta/README.md) | Yes (Ukraine; summary) | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
-| [SPX Express Philippines](../carriers/spx-ph/README.md) | Yes (Philippines) | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
-| [CNE Express](../carriers/cne/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [LBC Express](../carriers/lbc-express/README.md) | Yes (local Chromium) | Unverified; alternate ✓ 6 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Nova Poshta (Ukraine)](../carriers/nova-poshta/README.md) | Yes (Ukraine) | ✓ 10 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [SPX Express Philippines](../carriers/spx-ph/README.md) | Yes (Philippines) | ✓ 10 | Unverified | Unverified | Unverified | Unverified | N/A |
+| [CNE Express](../carriers/cne/README.md) | Yes | ✓ 9 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Sagawa Express](../carriers/sagawa/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
 <!-- /GENERATED:coverage -->
 

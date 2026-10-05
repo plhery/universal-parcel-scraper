@@ -2,6 +2,7 @@
 // This compatibility adapter observes the browser's own reply for a few exact
 // tracking endpoints, each on its public page with one valid number. Every
 // other capture request keeps TRAWL's stock behaviour.
+import { attachRoyalMailHistoryCapture, ROYAL_MAIL_OPT_OUT } from './royal-mail-history.mjs';
 
 // Run inside the carrier page: its anonymous tracking API is independent of
 // the optional account iframe, which can be challenged while tracking works.
@@ -217,20 +218,14 @@ const SITES = [
   },
 ];
 
-// Royal Mail's TrustArc "Decline all" preferences. These contain no consent
-// identifier, browser identity or session token. Keep them as session cookies.
-const ROYAL_MAIL_OPT_OUT = {
-  notice_preferences: '0:',
-  notice_gdpr_prefs: '0::implied,eu',
-  cmapi_cookie_privacy: 'permit 1 required',
-  cmapi_gtm_bl: 'ga-ms-ua-ta-asp-bzi-sp-awct-cts-csm-img-flc-fls-mpm-mpr-m6d-tc-tdc',
-};
 const NETWORK_ERRORS = new Set([
   'NS_ERROR_NET_RESET', 'NS_ERROR_NET_TIMEOUT', 'NS_ERROR_UNKNOWN_HOST',
   'net::ERR_CONNECTION_RESET', 'net::ERR_HTTP2_PROTOCOL_ERROR', 'net::ERR_TIMED_OUT',
 ]);
 
 export async function attachTrackingCapture(page, url, options) {
+  const history = await attachRoyalMailHistoryCapture(page, url, options);
+  if (history) return history;
   const target = new URL(url);
   const requested = options.captureResponses ?? [];
   const site = SITES.find(candidate => candidate.number(target)

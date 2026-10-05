@@ -5,6 +5,7 @@ import {
   parseRoyalMailTrackingHtml,
   parseRoyalMailTrackingResponse,
   RoyalMailTracker,
+  royalMailEventsApiUrl,
   royalMailSummaryApiUrl,
   royalMailTrackingUrl,
 } from './adapter.js';
@@ -120,6 +121,39 @@ describe('Royal Mail structured response', () => {
     expect(serialized).not.toContain('PRIVATE RECIPIENT');
   });
 
+  it('uses full-history codes before repeated wording and removes Markdown delivery prose', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER,
+      summary: { statusCategory: 'Delivered', statusDescription: 'Delivered' },
+      deliveryInfo: { recipientName: 'PRIVATE RECIPIENT', proofImage: 'PRIVATE PROOF' },
+      events: [
+        { eventCode: 'EVKOP', eventName: '**Delivered by** PRIVATE SIGNATORY', eventDateTime: '2026-01-03T09:56:31+00:00', locationName: 'Example office' },
+        { eventCode: 'EVGPD', eventName: '**Due to be delivered today by**', eventDateTime: '2026-01-03T07:02:16+00:00' },
+        { eventCode: 'EVIMC', eventName: '**Item Received**', eventDateTime: '2026-01-03T04:14:41+00:00' },
+        { eventCode: 'EVIAV', eventName: '**Item Received**', eventDateTime: '2026-01-03T04:09:29+00:00' },
+        { eventCode: 'EVDAC', eventName: '**Item Received**', eventDateTime: '2026-01-02T10:24:45+00:00' },
+        { eventCode: 'EVDAV', eventName: '**Item Received**', eventDateTime: '2026-01-02T10:23:03+00:00' },
+        { eventCode: 'EVAIP', eventName: 'Sender has despatched item', eventDateTime: '2026-01-01T18:37:05+00:00' },
+      ],
+    } }, DELIVERED_NUMBER);
+    expect(result.events?.map(event => event.stage)).toEqual([
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
+    ]);
+    expect(result.events?.every(event => event.stage_source === 'carrier_map')).toBe(true);
+    expect(result.events?.[0]?.description).toBe('Delivered');
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    expect(JSON.stringify(result)).not.toContain('**');
+  });
+
+  it('leaves an unknown full-history code and future wording unstaged', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER, summary: { statusCategory: 'No Status', statusDescription: 'New status' },
+      events: [{ eventCode: 'UNKNOWN', eventName: '**Your item will be delivered tomorrow**', eventDateTime: '2026-01-03T09:00:00Z' }],
+    } }, DELIVERED_NUMBER);
+    expect(result.events?.[0]).toMatchObject({ description: 'Your item will be delivered tomorrow', provider_code: 'UNKNOWN' });
+    expect(result.events?.[0]).not.toHaveProperty('stage');
+  });
+
   it('produces every capability carrier.json declares', () => {
     expect(CAPABILITIES).toEqual(['history', 'location', 'eta']);
     const result = parseRoyalMailTrackingResponse(structuredClone(DELIVERED), DELIVERED_NUMBER);
@@ -153,14 +187,102 @@ describe('Royal Mail structured response', () => {
     (piece.events as unknown[]).reverse();
     expect(parseRoyalMailTrackingResponse(payload, DELIVERED_NUMBER).events?.[0]?.stage).toBe('delivered');
     delete piece.events;
-    expect(parseRoyalMailTrackingResponse(payload, DELIVERED_NUMBER)).toMatchObject({status: 'delivered', events: []});
+    expect(parseRoyalMailTrackingResponse(payload, DELIVERED_NUMBER)).toMatchObject({status: 'delivered', events: [], summary_only: true});
     (piece.summary as Record<string, unknown>).statusDescription = 'New provider status';
     expect(parseRoyalMailTrackingResponse(payload, DELIVERED_NUMBER).status).toBe('unknown');
+  });
+
+  it.each(['2026-03-12T09:30:00', '2026-02-30T09:30:00Z', '2026-03-12T09:30:00+01:99',
+    '2026-03-12T09:30:00+14:01', '2026-03-12T09:30:00+23:00',
+    '2026-03-12', 'not a clock'])('preserves an unresolved clock without assigning an instant: %s', (clock) => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER,
+      summary: { statusDescription: 'In transit', lastEventDateTime: clock },
+      events: [{ eventName: 'Item received', eventDateTime: clock }],
+    } }, DELIVERED_NUMBER);
+    expect(result.last_update).toBeNull();
+    expect(result.events?.[0]).toMatchObject({ provider_time_text: clock });
+    expect(result.events?.[0]).not.toHaveProperty('time');
+  });
+
+  it('preserves provider order when only some event instants resolve', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER, summary: { statusDescription: 'In transit' },
+      events: [
+        { eventName: 'First provider row', eventDateTime: '2026-01-01T09:00:00Z' },
+        { eventName: 'Unresolved overseas row', eventDateTime: '2026-01-02T09:00:00' },
+        { eventName: 'Last provider row', eventDateTime: '2026-01-03T09:00:00Z' },
+      ],
+    } }, DELIVERED_NUMBER);
+    expect(result.events?.map(event => event.description)).toEqual([
+      'First provider row', 'Unresolved overseas row', 'Last provider row',
+    ]);
+    expect(result.events?.[1]).toMatchObject({ provider_time_text: '2026-01-02T09:00:00' });
+  });
+
+  it.each([{}, [null], [{ eventDateTime: '2026-01-03T09:00:00Z' }]])('rejects malformed history instead of claiming an empty summary: %j', (events) => {
+    expect(() => parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER, summary: { statusDescription: 'Delivered' }, events,
+    } }, DELIVERED_NUMBER)).toThrow('invalid tracking events');
   });
 
 });
 
 describe('Royal Mail lookup steps', () => {
+  it('merges the exact summary with the requested history and discards response extras', async () => {
+    const summaryPiece = { mailPieceId: DELIVERED_NUMBER,
+      summary: { statusCategory: 'Delivered', statusDescription: 'Delivered by PRIVATE SIGNATORY' } };
+    const fetcher = vi.fn().mockResolvedValue(Response.json({
+      tier: 3, statusCode: 200, html: '<html>tracking app</html>', capturedResponses: [
+        { url: royalMailSummaryApiUrl(DELIVERED_NUMBER), status: 200, headers: {}, body: JSON.stringify({ mailPieces: summaryPiece }) },
+        { url: royalMailEventsApiUrl(DELIVERED_NUMBER), status: 200, headers: {}, body: JSON.stringify({ mailPieces: {
+          mailPieceId: DELIVERED_NUMBER, deliveryInfo: { recipient: 'PRIVATE RECIPIENT' },
+          events: [{ eventCode: 'EVKOP', eventName: '**Delivered by** PRIVATE SIGNATORY', eventDateTime: '2026-01-03T09:00:00Z' }],
+        } }) },
+      ],
+    }));
+    const result = await new RoyalMailTracker({ trawlUrl: TRAWL_URL, fetcher, fullHistory: true }).fetch(DELIVERED_NUMBER);
+    expect(result.events).toHaveLength(1);
+    expect(result.events?.[0]).toMatchObject({ stage: 'delivered', stage_source: 'carrier_map' });
+    expect(result).not.toHaveProperty('summary_only');
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toMatchObject({
+      captureResponses: [royalMailSummaryApiUrl(DELIVERED_NUMBER), royalMailEventsApiUrl(DELIVERED_NUMBER)],
+    });
+  });
+
+  it.each([
+    [undefined, 200, 'TransportError'],
+    [{ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER, events: [] } }, 200, 'SchemaError'],
+    [{ mailPieces: { mailPieceId: DELIVERED_NUMBER } }, 200, 'SchemaError'],
+    [{ errors: [{ errorCode: 'E0015' }] }, 401, 'ChallengeError'],
+    [{ errors: [{ errorCode: 'E1142' }] }, 404, 'IndeterminateError'],
+  ])('does not claim full history when the details flow is missing or invalid: %j', async (payload, status, name) => {
+    const summaryOnly = structuredClone(DELIVERED);
+    delete (summaryOnly.mailPieces as Record<string, unknown>).events;
+    const fetcher = vi.fn().mockResolvedValue(Response.json({
+      tier: 3, statusCode: 200, html: '<html>tracking app</html>', capturedResponses: [
+        { url: royalMailSummaryApiUrl(DELIVERED_NUMBER), status: 200, headers: {}, body: JSON.stringify(summaryOnly) },
+        ...(payload === undefined ? [] : [{ url: royalMailEventsApiUrl(DELIVERED_NUMBER), status, headers: {}, body: JSON.stringify(payload) }]),
+      ],
+    }));
+    await expect(new RoyalMailTracker({ trawlUrl: TRAWL_URL, fetcher, fullHistory: true }).fetch(DELIVERED_NUMBER))
+      .rejects.toMatchObject({ name });
+  });
+
+  it('marks a valid empty events response as summary only', async () => {
+    const fetcher = vi.fn().mockResolvedValue(Response.json({
+      tier: 3, statusCode: 200, html: '<html>tracking app</html>', capturedResponses: [
+        { url: royalMailSummaryApiUrl(DELIVERED_NUMBER), status: 200, headers: {}, body: JSON.stringify(DELIVERED) },
+        { url: royalMailEventsApiUrl(DELIVERED_NUMBER), status: 200, headers: {}, body: JSON.stringify({
+          mailPieces: { mailPieceId: DELIVERED_NUMBER, events: [] },
+        }) },
+      ],
+    }));
+    await expect(new RoyalMailTracker({ trawlUrl: TRAWL_URL, fetcher, fullHistory: true }).fetch(DELIVERED_NUMBER))
+      .resolves.toMatchObject({ events: [], summary_only: true });
+  });
+
   it('reports the missing browser service without any request', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('must not fetch'));
@@ -286,6 +408,8 @@ describe('Royal Mail lookup steps', () => {
       `https://www.royalmail.com/track-your-item#/tracking-results/${DELIVERED_NUMBER}`);
     expect(royalMailSummaryApiUrl(DELIVERED_NUMBER)).toBe(
       `https://api-web.royalmail.com/mailpieces/microsummary/v1/summary/${DELIVERED_NUMBER}`);
+    expect(royalMailEventsApiUrl(DELIVERED_NUMBER)).toBe(
+      `https://api-web.royalmail.com/mailpieces/v3/${DELIVERED_NUMBER}/events`);
   });
 });
 

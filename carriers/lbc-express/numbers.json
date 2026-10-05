@@ -2,6 +2,31 @@
   "carrier": "lbc-express",
   "records": [
     {
+      "number": "100000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Synthetic tracking-number shape for offline detection and transport tests."
+    },
+    {
       "number": "162187179777",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -19,6 +44,33 @@
           "gls-fr",
           "colis-prive",
           "gls-de",
+          "mrw",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+    },
+    {
+      "number": "142062960271",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/review/www.lbcexpress.com"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
           "mrw",
           "purolator",
           "sf-express",

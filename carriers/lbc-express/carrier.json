@@ -16,20 +16,33 @@
   "timezone": "Asia/Manila",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "lbc-express",
+    "steps": [
+      "browser"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
-    "url": "https://www.lbcexpress.com/track/?tracking_no={trackingNumber}",
     "canaryUrl": "https://www.lbcexpress.com/track/",
     "shows": [
       "status",
       "history"
     ],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "recipient_name"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "pickup_point"
+    ]
   },
   "links": [
     {

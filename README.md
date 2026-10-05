@@ -13,7 +13,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 [![License: Apache-2.0](https://img.shields.io/badge/core-Apache--2.0-blue.svg)](LICENSE)
 
 <!-- GENERATED:summary -->
-**3,500+ carriers** through **94 dedicated adapters** and **5 universal fallbacks**
+**3,500+ carriers** through **96 dedicated adapters** and **5 universal fallbacks**
 
 <sub>119 catalog entries · 58 countries represented</sub>
 <!-- /GENERATED:summary -->
@@ -33,9 +33,9 @@ its own as a command, a Node library or an HTTP server.
 ## Benchmark
 
 <!-- GENERATED:coverage -->
-In a curated benchmark of 113 carriers, dedicated adapters return tracking history for **66**, rising to **79** with all fallbacks enabled. The best single aggregator returns 53.
+In a curated benchmark of 113 carriers, dedicated adapters return tracking history for **69**, rising to **82** with all fallbacks enabled. The best single aggregator returns 53.
 
-<img src="docs/assets/coverage.svg" alt="Carriers with tracking history: This project, all fallbacks enabled 79, This project, dedicated adapters alone 66, ParcelsApp 53, Postal Ninja 43, 17TRACK 40, Ship24 42, UPU 12." width="760">
+<img src="docs/assets/coverage.svg" alt="Carriers with tracking history: This project, all fallbacks enabled 82, This project, dedicated adapters alone 69, ParcelsApp 53, Postal Ninja 43, 17TRACK 40, Ship24 42, UPU 12." width="760">
 <!-- /GENERATED:coverage -->
 
 [Method and results per carrier](providers/COVERAGE.md)
@@ -149,7 +149,7 @@ createTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', '
 <!-- GENERATED:stages -->
 <img src="docs/assets/stages.svg" alt="DHL: Die Sendung wurde in das Zustellfahrzeug geladen.; Mondial Relay: En cours de livraison; Correios Brazil: Objeto saiu para entrega ao destinatário; Correos Express: EN REPARTO; Yamato Transport: 配達中; La Poste / Colissimo: DISTOU. All are filed under out_for_delivery." width="760">
 
-The carrier folders record 1,730 such statuses, each filed under one stage.
+The carrier folders record 1,779 such statuses, each filed under one stage.
 <!-- /GENERATED:stages -->
 
 Wording nobody recorded yet goes through a classifier that reads seven European languages.

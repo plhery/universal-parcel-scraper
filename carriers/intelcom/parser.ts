@@ -7,6 +7,12 @@ import { clean, cleanScalar, textFromHtml } from '../../core/transport/index.js'
 import { isRecord } from '../../core/types.js';
 
 const PROVIDER = 'Intelcom / Dragonfly';
+// Codes observed in the public Canadian tracking service. The short labels
+// are often marketing phrases rather than literal milestone names.
+const STAGES: Readonly<Record<string, Stage>> = {
+  '0': 'registered', '105': 'accepted', '106': 'in_transit', '108': 'in_transit',
+  '300': 'out_for_delivery', '601': 'delivered', '860': 'exception',
+};
 
 export function normalizeIntelcomNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -39,9 +45,10 @@ function scan(raw: unknown): CarrierEvent {
   // short milestone wording; never expand them using the address object.
   const description = textFromHtml((clean(nested.en) || clean(direct.en)).replace(/\{[^}]+\}/g, '')).trim();
   if (!description) throw new SchemaError(PROVIDER, 'Intelcom returned no English milestone label');
-  const mapped = classifyWording(description, 'pending');
-  const time = scanTime(raw.timestamp);
   const code = cleanScalar(raw.statusCode) || cleanScalar(raw.status);
+  const stage = STAGES[code] ?? (raw.isDelivered === true ? 'delivered' : undefined);
+  const mapped = stage ? { stage, source: 'carrier_map' } : classifyWording(description, 'pending');
+  const time = scanTime(raw.timestamp);
   return { description, provider_code: code, ...(time ? { time: time.iso } : { provider_time_text: cleanScalar(raw.timestamp) || undefined }),
     ...(mapped.source !== 'none' ? { stage: mapped.stage, stage_source: mapped.source } : {}) };
 }

@@ -52,6 +52,19 @@
         "confidence": "high"
       },
       "note": "Public customer report of an inbound shipment intended for Royal Mail. An identity-matched direct summary was verified on 2026-09-21. Status can change; not a permanent live-status oracle."
+    },
+    {
+      "number": "YT660296803GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "Public customer report with a reply reporting delivery. Status can change; this is not a permanent live-status oracle."
     }
   ]
 }

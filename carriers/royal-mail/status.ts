@@ -23,6 +23,22 @@ const ACCEPTED_TERMS = ['accepted', 'received', 'item received', 'collected', 'p
 const CUSTOMS_TERMS = ['customs', 'clearance'];
 const IN_TRANSIT_TERMS = ['despatched', 'dispatched', 'redirected', 'in transit', 'on its way', 'in-transit', 'arrived', 'departed', 'processing', 'distribution centre', 'distribution center', 'mail centre', 'delivery office'];
 
+// Codes present in the public tracking application's full-history response.
+// Several movement scans share "Item Received", which alone cannot place them.
+const EVENT_STAGES = new Map<string, Stage>([
+  ['EVKOP', 'delivered'],
+  ['EVGPD', 'out_for_delivery'],
+  ['EVIMC', 'in_transit'],
+  ['EVIAV', 'in_transit'],
+  ['EVDAC', 'in_transit'],
+  ['EVDAV', 'in_transit'],
+  ['EVAIP', 'in_transit'],
+]);
+
+export function royalMailEventStage(code: string): Stage | null {
+  return EVENT_STAGES.get(code) ?? null;
+}
+
 const SUMMARY_STAGES = new Map<string, Stage>([
   ["we're expecting it", 'registered'],
   ["we've got it", 'accepted'],

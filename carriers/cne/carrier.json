@@ -17,10 +17,15 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "cne",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.cne.com/en/track?no={trackingNumber}",
     "canaryUrl": "https://www.cne.com/track",
@@ -30,8 +35,15 @@
       "location",
       "delivery_partner"
     ],
-    "scraped": [],
-    "discarded": [],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "transfer_reference",
+      "merchant_reference"
+    ],
     "unavailable": [
       "eta",
       "weight"

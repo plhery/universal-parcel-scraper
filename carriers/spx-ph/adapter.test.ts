@@ -21,6 +21,15 @@ describe('SPX Philippines parser', () => {
     delete value.data.order_info.sls_tn; value.data.requested = NUMBER;
     expect(() => parseSpxPh(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
+  it('accepts marketplace history identified by the returned SLS tracking object', () => {
+    const value = fixture(); delete value.data.order_info;
+    value.data.sls_tracking_info.sls_tn = NUMBER;
+    expect(parseSpxPh(value, NUMBER)).toMatchObject({ status: 'delivered', events: [{ description: 'Delivered' }, { description: 'Out for delivery' }] });
+    value.data.sls_tracking_info.sls_tn = 'PH000000000002';
+    expect(() => parseSpxPh(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    delete value.data.sls_tracking_info.sls_tn; value.data.requested = NUMBER;
+    expect(() => parseSpxPh(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
   it('excludes hidden modern records and keeps all-hidden history inconclusive', () => {
     const value = fixture(); value.data.sls_tracking_info.records[0].display_flag = 0;
     const result = parseSpxPh(value, NUMBER);
@@ -50,6 +59,16 @@ describe('SPX Philippines parser', () => {
     const result = parseSpxPh(value, NUMBER);
     expect(result).toMatchObject({ status: 'unknown', last_update: null, events: [{ provider_time_text: '1767456000000' }] });
     expect(result.current_stage).toBeUndefined();
+  });
+  it('preserves the entire native sequence when any scan clock is unresolved', () => {
+    const value = fixture();
+    value.data.sls_tracking_info.records = [1, 4, null, 3, 5].map((offset, index) => ({
+      description: `Operation ${index}`, actual_time: offset === null ? 'unresolved' : 1767456000 + offset,
+    }));
+    const result = parseSpxPh(value, NUMBER);
+    expect(result.events?.map(event => event.description)).toEqual(['Operation 0', 'Operation 1', 'Operation 2', 'Operation 3', 'Operation 4']);
+    expect(result.events?.[2]).toMatchObject({ provider_time_text: 'unresolved' });
+    expect(result.last_status_text).toBe('Operation 0');
   });
 });
 describe('SPX Philippines retrieval', () => {

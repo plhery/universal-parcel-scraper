@@ -4,7 +4,7 @@ Catalog support for Sagawa's Japanese domestic parcels. Explicit carrier selecti
 
 ## Retrieval
 
-There is no dedicated adapter. The public tracking service rejects automated HTTP and browser requests. Its access-denied page does not establish parcel absence.
+There is no dedicated adapter. The public tracking service rejects direct HTTP requests and submissions from the corporate site's current tracking form in an ordinary browser. Its access-denied page does not establish parcel absence.
 
 ## Limitations
 

@@ -1113,5 +1113,21 @@
       "xpressbees"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14-digit Nova Poshta family passing the Hermes checksum",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "hermes-de",
+      "nova-poshta",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Nova Poshta waybills overlap other numeric families; a valid Hermes checksum cannot establish carrier ownership."
   }
 ]

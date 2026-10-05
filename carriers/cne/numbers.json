@@ -1,5 +1,31 @@
 {
   "carrier": "cne",
-  "gap": "no public sample found yet",
-  "records": []
+  "records": [
+    {
+      "number": "3A5V721250488",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ca.trustpilot.com/review/firalli.com?page=8"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Customer report explicitly attributes the number to CNE. Requires explicit carrier selection."
+    },
+    {
+      "number": "3A5V609829713",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://nz.trustpilot.com/review/oriental-secrets.com"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Customer report explicitly attributes the number to CNE and describes a return."
+    }
+  ]
 }

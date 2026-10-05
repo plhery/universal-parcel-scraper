@@ -7,6 +7,29 @@ const NUMBER = 'INTLCM0000000000';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 
 describe('Canadian Intelcom / Dragonfly response', () => {
+  it('uses observed status codes for the website\'s marketing milestone labels', () => {
+    const payload = JSON.parse(readFileSync(new URL('./fixtures/website-history.json', import.meta.url), 'utf8'));
+    const result = parseIntelcom(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Hooray! Your package is here', delivered_at: '2026-01-03T17:00:00Z' });
+    expect(result.events?.map(row => row.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'accepted', 'registered']);
+    expect(result.events?.every(row => row.stage_source === 'carrier_map')).toBe(true);
+    expect(JSON.stringify(result)).not.toContain('PRIVATE-SYNTHETIC');
+    payload.data.result.last_status.status = 860; payload.data.result.last_status.statusCode = 860;
+    payload.data.result.last_status.step = -2; payload.data.result.last_status.isDelivered = false;
+    payload.data.result.last_status.labels.shortLabel.en = "Uh-oh! We're unable to locate your package";
+    expect(parseIntelcom(payload, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(parseIntelcom(payload, NUMBER).delivered_at).toBeUndefined();
+  });
+
+  it('uses the explicit delivered flag for an unmapped code and leaves other new codes unmapped', () => {
+    const payload = fixture(); payload.data.result.last_status.statusCode = 9999;
+    payload.data.result.last_status.labels.shortLabel.en = 'A new milestone';
+    expect(parseIntelcom(payload, NUMBER)).toMatchObject({ status: 'unknown' });
+    payload.data.result.last_status.isDelivered = true;
+    expect(parseIntelcom(payload, NUMBER)).toMatchObject({ status: 'delivered', current_stage_source: 'carrier_map' });
+  });
+
   it('projects English milestone labels and explicit scan clocks without recipient or driver details', () => {
     const result = parseIntelcom(fixture(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-03T17:00:00Z' });

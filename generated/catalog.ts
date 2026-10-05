@@ -4056,7 +4056,7 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cne"
     },
     "canaryUrl": "https://www.cne.com/track",
     "trackingUrlTemplate": "https://www.cne.com/en/track?no={trackingNumber}",
@@ -4318,10 +4318,10 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lbc-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.lbcexpress.com/track/",
-    "trackingUrlTemplate": "https://www.lbcexpress.com/track/?tracking_no={trackingNumber}",
     "linkRules": [
       {
         "domains": [

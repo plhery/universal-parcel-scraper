@@ -15,6 +15,7 @@ import { adapter as cChezVous } from '../carriers/c-chez-vous/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
 import { adapter as ciblex } from '../carriers/ciblex/adapter.js';
+import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
 import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
 import { adapter as correiosBr } from '../carriers/correios-br/adapter.js';
@@ -55,6 +56,7 @@ import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
 import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
 import { adapter as laPoste } from '../carriers/la-poste/adapter.js';
 import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.js';
+import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
@@ -113,6 +115,7 @@ export const REGISTRY: RegistryDefinition = {
     "canada-post": canadaPost,
     "canpar": canpar,
     "ciblex": ciblex,
+    "cne": cne,
     "colis-prive": colisPrive,
     "colisweb": colisweb,
     "correios-br": correiosBr,
@@ -153,6 +156,7 @@ export const REGISTRY: RegistryDefinition = {
     "korea-post": koreaPost,
     "la-poste": laPoste,
     "landmark-global": landmarkGlobal,
+    "lbc-express": lbcExpress,
     "mondial-relay": mondialRelay,
     "mrw": mrw,
     "nacex": nacex,
@@ -214,7 +218,7 @@ export const REGISTRY: RegistryDefinition = {
     "china-post": "universal",
     "chronopost": "la-poste",
     "ciblex": "ciblex",
-    "cne": "universal",
+    "cne": "cne",
     "colis-prive": "colis-prive",
     "colisweb": "colisweb",
     "correios-br": "correios-br",
@@ -261,7 +265,7 @@ export const REGISTRY: RegistryDefinition = {
     "korea-post": "korea-post",
     "la-poste": "la-poste",
     "landmark-global": "landmark-global",
-    "lbc-express": "universal",
+    "lbc-express": "lbc-express",
     "mondial-relay": "mondial-relay",
     "mrw": "mrw",
     "nacex": "nacex",

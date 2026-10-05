@@ -1,5 +1,22 @@
 {
   "carrier": "evri-uk",
-  "gap": "no public sample found yet",
-  "records": []
+  "records": [
+    {
+      "number": "H00RVA0538924343",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/printerval.co.uk"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri",
+          "evri-uk"
+        ]
+      },
+      "note": "Public merchant reply with an Evri UK tracking link. The barcode shape alone does not identify domestic or international service."
+    }
+  ]
 }

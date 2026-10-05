@@ -19,7 +19,7 @@ describe('Royal Mail live browser tracking', () => {
   it.runIf(Boolean(LIVE_TRACKING_NUMBER))(
     'normalizes a caller-supplied real shipment without retaining private response fields',
     async () => {
-      const result = await new RoyalMailTracker({ trawlUrl: process.env.FLARESOLVERR_URL, timeoutMs: 60_000 }).fetch(LIVE_TRACKING_NUMBER);
+      const result = await new RoyalMailTracker({ trawlUrl: process.env.FLARESOLVERR_URL, timeoutMs: 60_000, fullHistory: true }).fetch(LIVE_TRACKING_NUMBER);
       expect(result.status).not.toBe('unknown');
       expect(result.last_status_text).toEqual(expect.any(String));
       expect(Array.isArray(result.events)).toBe(true);
@@ -33,6 +33,7 @@ describe('Royal Mail live browser tracking', () => {
           'events',
           'tracking_source',
           'tracking_url',
+          'summary_only',
         ]).toContain(key);
       }
       for (const event of result.events ?? []) {
@@ -41,7 +42,9 @@ describe('Royal Mail live browser tracking', () => {
           'location',
           'provider_code',
           'stage',
+          'stage_source',
           'time',
+          'provider_time_text',
         ].includes(key))).toBe(true);
       }
     },

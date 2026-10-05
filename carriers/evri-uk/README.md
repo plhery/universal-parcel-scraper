@@ -8,8 +8,9 @@ Automatic history uses the universal providers enabled by the caller.
 The official page resolves a barcode through the customer-tracking search or
 platform reference API, then reads the parcel's history by its returned URN.
 Both APIs use rotating keys issued by a page request protected by AWS WAF.
-The key request can fail with HTTP 403 in plain HTTP and a fresh Chromium
-session, leaving the tracking application without parcel data.
+After a successful page bootstrap, the anonymous API exposes dated tracking
+events without a postcode. The key request can fail with HTTP 403 in plain HTTP
+and a fresh Chromium session, leaving the application without parcel data.
 
 ## Notes
 
@@ -20,8 +21,9 @@ session, leaving the tracking application without parcel data.
 
 ## Limitations
 
-No dedicated adapter is registered. The official page's key bootstrap must
-work before a direct history implementation can be validated.
+No dedicated adapter is registered. Fresh automated sessions have not
+reproduced the successful interactive key bootstrap, so direct history
+retrieval remains unvalidated.
 
 ## Testing
 

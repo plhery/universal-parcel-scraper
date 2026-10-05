@@ -353,6 +353,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  cne: 'the tracking portal redirects inspected Chrome sessions to about:blank through its anti-debug script, preventing a stable rendered-page check',
   'colis-prive': 'an unknown number-and-postcode credential redirects to the homepage, so only a real parcel verifies the link',
   dtdc: 'the MyDTDC Flutter page exposes no visible body text until accessibility is enabled, and the portal link opens its home page',
   'poste-italiane': 'the results page exposes no readable text to headless Chrome',

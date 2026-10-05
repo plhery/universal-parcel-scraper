@@ -3,6 +3,7 @@ LABEL org.opencontainers.image.source="https://github.com/plhery/universal-parce
       org.opencontainers.image.licenses="AGPL-3.0-only"
 COPY LICENSE /usr/share/licenses/trawl/LICENSE
 COPY tracking-capture.mjs /app/packages/tiers/src/utils/tracking-capture.mjs
+COPY royal-mail-history.mjs /app/packages/tiers/src/utils/royal-mail-history.mjs
 COPY fedex-session.mjs /app/packages/tiers/src/utils/fedex-session.mjs
 COPY australia-post-browser.mjs /app/packages/tiers/src/utils/australia-post-browser.mjs
 COPY sf-express-session.mjs /app/packages/tiers/src/utils/sf-express-session.mjs

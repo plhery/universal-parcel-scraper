@@ -150,6 +150,10 @@
             "Postal Ninja": 4,
             "UPU": "no_history"
           }
+        },
+        {
+          "note": "Alternate public reference returned eight identity-bound full-history scans in an interactive official session; fresh automated browser retrieval remains denied: https://www.reddit.com/r/royalmail/comments/1wh27pw/cant_track_my_shipment/",
+          "results": {}
         }
       ]
     },
@@ -1933,7 +1937,7 @@
       "sample": "Blocked",
       "references": [
         {
-          "note": "Domestic UK bootstrap requires a challenge; Evri International is a separate adapter.",
+          "note": "The official interactive navigation flow obtained rotating keys and six dated parcel scans. Fresh automated browser sessions are denied the keys: https://www.trustpilot.com/review/printerval.co.uk",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -1964,10 +1968,10 @@
     {
       "carrier": "intelcom",
       "direct": "Yes (Canada)",
-      "sample": "Not found",
+      "sample": "Not found; alternate \u2713 6",
       "references": [
         {
-          "note": "Public Intelcom reference returned not_found; successful live history is unverified: https://www.justanswer.com/software/vud02-intelcom-package-not-delivered-address-dispute.html",
+          "note": "Comparison reference returned not_found: https://www.justanswer.com/software/vud02-intelcom-package-not-delivered-address-dispute.html. An alternate public reference returned six scans: https://intelcom.ca/en/track-your-package/?tracking-id=CRIN26082718020483",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -2014,11 +2018,11 @@
     },
     {
       "carrier": "lbc-express",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes (local Chromium)",
+      "sample": "Unverified; alternate \u2713 6",
       "references": [
         {
-          "note": "Public LBC reference: https://www.trustpilot.com/review/www.lbcexpress.com. Official anonymous retrieval is blocked.",
+          "note": "Original comparison reference has not been retried through the implemented browser flow: https://www.trustpilot.com/review/www.lbcexpress.com. An alternate public reference returned six unique date-only scans in a fresh automated browser: https://uk.trustpilot.com/review/www.lbcexpress.com",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -2031,11 +2035,11 @@
     },
     {
       "carrier": "nova-poshta",
-      "direct": "Yes (Ukraine; summary)",
-      "sample": "Unverified",
+      "direct": "Yes (Ukraine)",
+      "sample": "\u2713 10",
       "references": [
         {
-          "note": "Anonymous summary schema and explicit not-found response are established; successful live retrieval is unverified.",
+          "note": "Public Ukrainian waybill returned ten identity-bound movement scans: https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2377100. A redirected import waybill returned twenty-two scans: https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2376836",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -2049,10 +2053,10 @@
     {
       "carrier": "spx-ph",
       "direct": "Yes (Philippines)",
-      "sample": "Unverified",
+      "sample": "\u2713 10",
       "references": [
         {
-          "note": "Anonymous single-parcel schema is established; successful live history is unverified.",
+          "note": "Public marketplace reference returned ten visible identity-bound scans: https://www.reddit.com/r/ShopeePH/comments/1i67ifq/",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -2065,11 +2069,11 @@
     },
     {
       "carrier": "cne",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes",
+      "sample": "\u2713 9",
       "references": [
         {
-          "note": "Official tracking requires a generated signature and challenges anonymous retrieval.",
+          "note": "Public CNE reference returned nine movement scans with unresolved unqualified clocks: https://nz.trustpilot.com/review/oriental-secrets.com. A second public reference returned a registration scan: https://ca.trustpilot.com/review/firalli.com?page=8",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
@@ -2086,7 +2090,7 @@
       "sample": "Blocked",
       "references": [
         {
-          "note": "Official tracking front door blocks anonymous retrieval.",
+          "note": "The current corporate tracking form posts to the public tracking service, which returns access denied. This is not evidence of parcel absence.",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",

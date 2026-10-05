@@ -11,11 +11,11 @@
   <path d="M480.5 44V282" stroke="#3a382e"/>
   <path d="M690.5 44V282" stroke="#3a382e"/>
   <text x="0" y="65.5" fill="#fffaf0" font-weight="600">This project, all fallbacks enabled</text>
-  <path d="M270 52h290a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-290z" fill="#f3cf48"/>
-  <text x="572" y="65.5" fill="#fffaf0" font-weight="600">79</text>
+  <path d="M270 52h301a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-301z" fill="#f3cf48"/>
+  <text x="583" y="65.5" fill="#fffaf0" font-weight="600">82</text>
   <text x="0" y="99.5" fill="#fffaf0" font-weight="600">This project, dedicated adapters alone</text>
-  <path d="M270 86h241a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-241z" fill="#f3cf48"/>
-  <text x="523" y="99.5" fill="#fffaf0" font-weight="600">66</text>
+  <path d="M270 86h252a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-252z" fill="#f3cf48"/>
+  <text x="534" y="99.5" fill="#fffaf0" font-weight="600">69</text>
   <text x="0" y="133.5" fill="#fffaf0">ParcelsApp</text>
   <path d="M270 120h193a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-193z" fill="#6b6859"/>
   <text x="475" y="133.5" fill="#fffaf0">53</text>

@@ -20,18 +20,32 @@
     "mode": "automatic",
     "adapter": "nova-poshta",
     "steps": [
-      "direct"
+      "direct",
+      "summary"
     ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "weight"
+  ],
   "portal": {
     "url": "https://novaposhta.ua/en/tracking/{trackingNumber}",
     "canaryUrl": "https://novaposhta.ua/en/tracking/",
     "shows": [
-      "status"
+      "status",
+      "history",
+      "location",
+      "eta",
+      "weight"
     ],
     "scraped": [
-      "status"
+      "status",
+      "history",
+      "location",
+      "eta",
+      "weight"
     ],
     "discarded": [
       "recipient_details",
@@ -40,8 +54,6 @@
       "payment_details"
     ],
     "unavailable": [
-      "history",
-      "eta",
       "pickup_point"
     ]
   },

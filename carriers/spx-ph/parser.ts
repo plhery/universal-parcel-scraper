@@ -20,16 +20,18 @@ export function parseSpxPh(payload: unknown, raw: string, legacy = false): Carri
   const data = payload.data;
   if (!Object.keys(data).length) throw new IndeterminateError(PROVIDER, 'SPX Philippines returned no tracking history');
   const order = isRecord(data.order_info) ? data.order_info : {};
-  const aliases = (legacy ? [data.sls_tracking_number] : [order.spx_tn, order.sls_tn])
+  const tracking = isRecord(data.sls_tracking_info) ? data.sls_tracking_info : {};
+  const aliases = (legacy ? [data.sls_tracking_number] : [order.spx_tn, order.sls_tn, tracking.sls_tn])
     .filter((identity): identity is string => typeof identity === 'string' && Boolean(identity.trim()))
     .map(normalizeTrackingNumber);
-  // The official client reads both references from the same returned order.
+  // Marketplace replies identify their shipment in the tracking object;
+  // standalone orders also carry the order's references.
   // A queried alias must still match one of these carrier-supplied identities.
   if (!aliases.includes(number)) throw new SchemaError(PROVIDER, 'SPX Philippines returned a different shipment');
   // Parent/child freight orders require package-level aggregation; one child's
   // delivery does not complete the parent. This adapter handles single parcels.
   if (Array.isArray(data.children) && data.children.length) throw new IndeterminateError(PROVIDER, 'SPX freight orders require package-level tracking');
-  const rawEvents = legacy ? data.tracking_list : isRecord(data.sls_tracking_info) ? data.sls_tracking_info.records : undefined;
+  const rawEvents = legacy ? data.tracking_list : tracking.records;
   if (!Array.isArray(rawEvents) || rawEvents.length > 1000) throw new SchemaError(PROVIDER);
   if (!rawEvents.length) throw new IndeterminateError(PROVIDER, 'SPX Philippines returned no tracking history');
   const events: CarrierEvent[] = rawEvents.flatMap(row => {
@@ -49,7 +51,10 @@ export function parseSpxPh(payload: unknown, raw: string, legacy = false): Carri
       ...(location ? { location } : {}), ...(mapped.source !== 'none' ? { stage: mapped.stage, stage_source: mapped.source } : {}) }];
   });
   if (!events.length) throw new IndeterminateError(PROVIDER, 'SPX Philippines returned no visible tracking history');
-  events.sort((a, b) => a.time && b.time ? Date.parse(b.time) - Date.parse(a.time) : 0);
+  // A partial-clock comparator is not transitive and can move unresolved rows
+  // across the provider's current-first sequence. Only fully dated history
+  // can be reordered chronologically.
+  if (events.every(event => event.time)) events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const unique = events.filter((row, index) => events.findIndex(other => JSON.stringify(other) === JSON.stringify(row)) === index);
   const latest = unique[0]!;
   const status: CarrierStatus = latest.stage === 'delivered' ? 'delivered' : latest.stage === 'out_for_delivery' ? 'out_for_delivery'
