@@ -89,6 +89,12 @@
       "id": "dpd-de-1",
       "pattern": "^\\d{14}$",
       "confidence": "low"
+    },
+    {
+      "id": "dpd-de-2",
+      "pattern": "^\\d{14}[0-9A-Z]$",
+      "confidence": "low",
+      "checksum": "dpd"
     }
   ]
 }

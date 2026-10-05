@@ -19,6 +19,7 @@ import { describe, expect, it } from 'vitest';
 import {
   detectCarrierMatch,
   isValidCorreosSpainCheckLetter,
+  isValidDpdParcelNumber,
   isValidDhlExpressWaybill,
   isValidGlsParcelNumber,
   isValidHermesParcelNumber,
@@ -43,7 +44,7 @@ interface DetectionRule {
   readonly pattern: string;
   readonly rawPattern?: string;
   readonly confidence: 'high' | 'low';
-  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain';
+  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd';
   readonly preferred?: true;
 }
 
@@ -83,6 +84,7 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'tnt') return isValidTntConsignmentNumber(value);
   if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(value);
   if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(value);
+  if (rule.checksum === 'dpd') return isValidDpdParcelNumber(value);
   return true;
 }
 

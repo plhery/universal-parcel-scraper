@@ -31,8 +31,8 @@
   {
     "carrier": "asendia",
     "pattern": "^EEUS\\d{9}[A-Z]{2}\\d$",
-    "kind": "open",
-    "reason": "eBay International Shipping numbers Asendia has carried; whether Asendia carries the whole family is not established."
+    "kind": "by_design",
+    "reason": "eBay International Shipping numbers. Asendia's tracker takes them, but they are not specific to Asendia."
   },
   {
     "carrier": "australia-post",
@@ -69,12 +69,6 @@
     "reason": "A USPS-format number. USPS is offered and delivers it."
   },
   {
-    "carrier": "dpd-de",
-    "pattern": "^\\d{14}[A-Z]$",
-    "kind": "open",
-    "reason": "A parcel number typed with its check letter. The rule has to change together with the answer the parcel app pins for this shape."
-  },
-  {
     "carrier": "gls-de",
     "pattern": "^[A-Z]{6}$",
     "kind": "by_design",
@@ -83,8 +77,8 @@
   {
     "carrier": "hermes",
     "pattern": "^\\d{17}$",
-    "kind": "open",
-    "reason": "No rule for the seventeen-digit furniture-delivery number."
+    "kind": "by_design",
+    "reason": "The delivery-note number is too generic for a rule; the carrier is picked by hand."
   },
   {
     "carrier": "inpost",

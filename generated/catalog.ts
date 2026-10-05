@@ -851,6 +851,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd"
       }
     ]
   },
@@ -2028,6 +2033,10 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "s10",
         "preferred": true
+      },
+      {
+        "pattern": "^JJFI\\d{17}$",
+        "confidence": "high"
       }
     ]
   },
@@ -4198,6 +4207,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd"
       }
     ]
   },
@@ -4235,6 +4249,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd"
       }
     ]
   },

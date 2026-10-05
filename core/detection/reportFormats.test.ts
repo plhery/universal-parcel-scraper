@@ -90,6 +90,13 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('0000100000101234567890001')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
   });
 
+  it('selects Posti for its 21-character parcel ID', () => {
+    expect(detectCarrierMatch('JJFI 654321 55555123456')).toMatchObject({ carrier: 'posti', confidence: 'high' });
+    for (const number of ['JJFI6543215555512345', 'JJFI654321555551234567', 'JJSE65432155555123456']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('posti');
+    }
+  });
+
   it('offers UPS for an H waybill without selecting it', () => {
     expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
     expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');

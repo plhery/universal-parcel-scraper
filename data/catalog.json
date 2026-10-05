@@ -849,6 +849,11 @@
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd"
       }
     ]
   },
@@ -2026,6 +2031,10 @@
         "confidence": "low",
         "checksum": "s10",
         "preferred": true
+      },
+      {
+        "pattern": "^JJFI\\d{17}$",
+        "confidence": "high"
       }
     ]
   },
@@ -4196,6 +4205,11 @@
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd"
       }
     ]
   },
@@ -4233,6 +4247,11 @@
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd"
       }
     ]
   },

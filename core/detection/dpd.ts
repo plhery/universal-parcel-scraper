@@ -21,6 +21,11 @@ function checkCharacter(digits: string): string {
   return ALPHABET[(37 - remainder) % 36]!;
 }
 
+/** Fourteen digits followed by their matching check character: what the `"dpd"` detection rules require. */
+export function isValidDpdParcelNumber(value: string): boolean {
+  return /^\d{14}[0-9A-Z]$/.test(value) && value[14] === checkCharacter(value.slice(0, 14));
+}
+
 /**
  * The fourteen-digit parcel number DPD's tracking takes, from the number alone
  * or followed by its check character. A character that does not match is a typo,

@@ -5,6 +5,7 @@ through the anonymous consumer GraphQL flow behind [posti.fi/en/tracking](https:
 Finnish-issued postal numbers are candidates for recognition through the same anonymous
 lookup. The [UPU S10 standard](https://www.upu.int/UPU/media/upu/files/postalSolutions/programmesAndServices/standards/S10-12.pdf)
 names the issuing country, not the deliverer, so the suffix alone never selects Posti.
+Posti's own 21-character parcel IDs, `JJFI` and seventeen digits, do select it.
 Foreign-issued numbers are reached through a `posti.fi` link, an explicit pick or routing.
 
 ## How it works

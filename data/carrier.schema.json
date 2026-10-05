@@ -427,7 +427,8 @@
             "dhl-express",
             "tnt",
             "poczta-polska",
-            "correos-spain"
+            "correos-spain",
+            "dpd"
           ]
         },
         "preferred": {

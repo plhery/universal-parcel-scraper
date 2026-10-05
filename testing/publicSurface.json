@@ -65,6 +65,7 @@
       "isPlanzerSharedTrackingNumber",
       "isValidCorreosSpainCheckLetter",
       "isValidDhlExpressWaybill",
+      "isValidDpdParcelNumber",
       "isValidGlsParcelNumber",
       "isValidHermesParcelNumber",
       "isValidMondialRelayBarcode",

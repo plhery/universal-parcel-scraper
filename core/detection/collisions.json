@@ -1157,5 +1157,26 @@
       "colis-prive"
     ],
     "reason": "Colis Privé accepts generic seventeen-character composites, so it overlaps Cainiao's CNG numbers; both stay suggestions."
+  },
+  {
+    "shape": "Fourteen digits and their DPD check character",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "reason": "DPD prints a check character after the parcel number, and Chronopost delivers DPD parcels under the same label. Direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "870 or 880, eleven digits and their check letter",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "la-poste"
+    ],
+    "reason": "La Poste's tracked-letter numbers end in the same ISO 7064 check character DPD prints; La Poste's high-confidence rule decides."
   }
 ]

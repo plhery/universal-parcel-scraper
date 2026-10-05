@@ -62,10 +62,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "chronopost"
+          "dpd",
+          "chronopost",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
-      "note": "Parcel number with its printed check character, from the German consumer forum. DPD Germany's tracking shows the fourteen-digit parcel. Detection offers only Chronopost for this shape."
+      "note": "Parcel number with its printed check character, from the German consumer forum. DPD Germany's tracking shows the fourteen-digit parcel."
     },
     {
       "number": "09447430407578",

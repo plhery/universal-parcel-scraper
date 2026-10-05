@@ -72,6 +72,22 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Posti; detection selects the generic postal carrier. US item inbound to Finland."
+    },
+    {
+      "number": "JJFI65432155555123456",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posti.fi/mzj3zpe8qb7p/UCgUiqlnAamLSgye1Lpt0/103a6dadb3e9b816db64d3a5285c3a95/posti-yrityksen-noutopiste-palvelukuvaus-20221101.pdf",
+        "date": "2022-11-01",
+        "dateKind": "document date",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "posti",
+        "confidence": "high"
+      },
+      "note": "Example of Posti's 21-character shipment ID in its service description for company pickup points, not a real shipment."
     }
   ]
 }

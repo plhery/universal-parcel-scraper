@@ -66,6 +66,12 @@
       "id": "dpd-uk-1",
       "pattern": "^\\d{14}$",
       "confidence": "low"
+    },
+    {
+      "id": "dpd-uk-2",
+      "pattern": "^\\d{14}[0-9A-Z]$",
+      "confidence": "low",
+      "checksum": "dpd"
     }
   ]
 }

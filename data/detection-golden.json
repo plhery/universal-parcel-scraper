@@ -287,9 +287,13 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "chronopost"
+      "dpd",
+      "chronopost",
+      "dpd-de",
+      "dpd-uk"
     ],
     "asked": [
+      "dpd",
       "chronopost"
     ]
   },
@@ -6395,6 +6399,14 @@
     "confidence": "high",
     "candidates": [
       "dhl"
+    ]
+  },
+  {
+    "input": "JJFI65432155555123456",
+    "carrier": "posti",
+    "confidence": "high",
+    "candidates": [
+      "posti"
     ]
   },
   {

@@ -75,6 +75,11 @@
       "confidence": "low",
       "preferred": true,
       "checksum": "s10"
+    },
+    {
+      "id": "posti-2",
+      "pattern": "^JJFI\\d{17}$",
+      "confidence": "high"
     }
   ]
 }

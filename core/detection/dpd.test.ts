@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { recognitionAskedCarriers } from '../catalog/recognition.js';
 import { dpdParcelNumber } from './dpd.js';
+import { detectCarrierMatch, isValidDpdParcelNumber } from './index.js';
 
 describe('DPD parcel number check character', () => {
   it('reads the fourteen digits with or without the printed character', () => {
@@ -12,6 +14,26 @@ describe('DPD parcel number check character', () => {
   it('refuses a character that does not match and any other length', () => {
     for (const value of ['12345678901234F', '123456789012343', '1234567890123', '1234567890123E', '12345678901234EE', '12345678901234e', '12345678901234\n']) {
       expect(dpdParcelNumber(value)).toBeNull();
+      expect(isValidDpdParcelNumber(value)).toBe(false);
+    }
+    // The check needs the character: fourteen digits alone have nothing to verify.
+    expect(isValidDpdParcelNumber('12345678901234')).toBe(false);
+  });
+
+  it('offers the DPD networks for a label typed with its matching character', () => {
+    const letter = detectCarrierMatch('1234 5678 9012 34 E');
+    expect(letter).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(letter.candidates).toEqual(expect.arrayContaining(['dpd', 'dpd-de', 'dpd-uk', 'chronopost']));
+    expect(recognitionAskedCarriers('12345678901234E')).toContain('dpd');
+    // A digit can be the check character too.
+    expect(isValidDpdParcelNumber('012345678901233')).toBe(true);
+    expect(detectCarrierMatch('012345678901233').candidates).toEqual(expect.arrayContaining(['dpd', 'dpd-de', 'dpd-uk']));
+  });
+
+  it('keeps a mistyped character away from DPD', () => {
+    expect(detectCarrierMatch('12345678901234Q').candidates).toEqual(['chronopost']);
+    for (const carrier of ['dpd', 'dpd-de', 'dpd-uk']) {
+      expect(detectCarrierMatch('012345678901234').candidates).not.toContain(carrier);
     }
   });
 });
