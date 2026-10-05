@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
-import { adapter, DhlExpressTracker, normalizeNumber, parse, parseUnified } from './adapter.js';
+import { adapter, DhlExpressTracker, normalizeNumber, parse, parseMobile, parseUnified } from './adapter.js';
 
 const number = '1234567891';
 const payload = () => ({ results: [{ id: number, duplicate: false, hasDuplicateShipment: false,
@@ -25,6 +25,11 @@ const captured = (body: unknown = unifiedPayload(), status = 200, url = `https:/
   url, status, headers: {}, body: JSON.stringify(body), truncated: false, base64Encoded: false, error: null,
 });
 const environment = (fetcher: typeof fetch, trawl: TrawlClient | null = null) => ({ fetcher, trawl, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
+const settings = [{ name: 'api_awb_encryption', value: 'N' }];
+const mobilePayload = () => payload().results.map((shipment) => ({ ...shipment, status: '',
+  checkpoints: shipment.checkpoints.map((row, index) => ({ ...row, date: 'localized date', date_en: row.date, counter: 3 - index, pIds: ['PRIVATE'] })) }));
+const mobileFetcher = (reply: unknown = mobilePayload(), configuration: unknown = settings) => vi.fn<typeof fetch>()
+  .mockImplementation(async (_url, init) => new Response(JSON.stringify(JSON.parse(String(init?.body)).method === 'tracking' ? reply : configuration)));
 
 describe('DHL Express projection', () => {
   it('distinguishes a matching not-found envelope from malformed or foreign errors', () => {
@@ -57,19 +62,31 @@ describe('DHL Express projection', () => {
 
 describe('DHL Express retrieval', () => {
   it('recognizes over HTTP without invoking the browser', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
+    const fetcher = mobileFetcher();
     const carrier = adapter(environment(fetcher));
     expect(await carrier.recognize!(number, { budgetMs: 1000 })).toEqual({ known: true, lastActivityAt: null });
-    expect(String(fetcher.mock.calls[0]?.[0])).toContain(`AWB=${number}`);
-    expect(fetcher).toHaveBeenCalledOnce();
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(String(fetcher.mock.calls[0]?.[0])).toBe('https://dhle.dhl.com/access/access/com.dhl.exp.dhlmobile?appVersion=6.1.0&service=common-countrySettingsBySettingName');
+    expect(String(fetcher.mock.calls[1]?.[0])).toContain('service=shipments-tracking');
+    const init = fetcher.mock.calls[1]![1]!;
+    expect(init).toMatchObject({ method: 'POST', signal: expect.any(AbortSignal) });
+    expect(new Headers(init.headers).get('authorization')).toMatch(/^Bearer \S+$/);
+    expect(JSON.parse(String(init.body))).toMatchObject({ service: 'shipments', method: 'tracking',
+      authentication: { provider: 'DEMP.RS1', login: '', token: '' },
+      data: { airWayBill: number, countryCode: 'GB', languageCd: 'en', addShipmentToODD: 'N', moreDetails: 'Y', captchaVerificationData: {} } });
   });
   it('recovers a blocked HTTP request by capturing the exact waybill response', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('<html>blocked</html>'));
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(JSON.stringify(settings)))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ error: 'DRG10012' }), { status: 503 }));
     const trawl = new TrawlClient('https://browser.example');
     const scrape = vi.spyOn(trawl, 'scrape').mockResolvedValue({ url: '', html: '', cookies: [], userAgent: null, tier: 2, statusCode: 200, raw: {},
       capturedResponses: [{ url: `https://www.dhl.com/utapi?trackingNumber=${number}`, status: 200, headers: {},
         body: JSON.stringify(unifiedPayload()), truncated: false, base64Encoded: false, error: null }] });
-    expect(await new DhlExpressTracker(environment(fetcher, trawl)).fetch(number)).toMatchObject({ status: 'delivered' });
+    const recorder = { ...NOOP_RECORDER, step: vi.fn() };
+    expect(await new DhlExpressTracker({ ...environment(fetcher, trawl), recorder }).fetch(number)).toMatchObject({ status: 'delivered' });
+    expect(recorder.step).toHaveBeenLastCalledWith(expect.objectContaining({ step: 'trawl', fallbackFrom: 'direct', fallbackReason: 'challenge',
+      fallbackErrorType: 'ChallengeError', fallbackError: expect.objectContaining({ status: 503 }) }));
     expect(scrape).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ skipHttp: true, captureResponses: ['https://www.dhl.com/utapi'] }), expect.objectContaining({ signal: expect.any(AbortSignal) }));
     expect(await adapter(environment(fetcher, trawl)).recognizeWithBrowser!(number, { budgetMs: 20_000 })).toMatchObject({ known: true, result: { events: expect.any(Array) } });
     const request = scrape.mock.calls.at(-1)![0];
@@ -79,7 +96,7 @@ describe('DHL Express retrieval', () => {
   it('does not accept a foreign capture or retry a schema failure in a browser', async () => {
     const trawl = new TrawlClient('https://browser.example');
     const scrape = vi.spyOn(trawl, 'scrape').mockResolvedValue({ url: '', html: '', cookies: [], userAgent: null, tier: 2, statusCode: 200, raw: {}, capturedResponses: [] });
-    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ results: [{ id: '1234567880', checkpoints: [] }] })));
+    const fetcher = mobileFetcher([{ id: '1234567880', checkpoints: [] }]);
     await expect(new DhlExpressTracker(environment(fetcher, trawl)).fetch(number)).rejects.toThrow(SchemaError);
     expect(scrape).not.toHaveBeenCalled();
     scrape.mockResolvedValue({ url: '', html: '', cookies: [], userAgent: null, tier: 2, statusCode: 200, raw: {},
@@ -95,6 +112,71 @@ describe('DHL Express retrieval', () => {
     await expect(carrier.track({ number }, { signal: AbortSignal.abort() })).rejects.toThrow();
     await expect(carrier.track({ number }, { budgetMs: 0 })).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();
+  });
+});
+
+describe('DHL mobile API', () => {
+  it('derives status from sorted scans, uses English local dates and discards recipient and piece data', () => {
+    const data = mobilePayload(); data[0]!.checkpoints.reverse();
+    const result = parseMobile(data, number);
+    expect(result).toMatchObject({ status: 'delivered', last_update: '2026-10-05T15:06:00',
+      events: [{ stage: 'delivered', time: '2026-10-05T15:06:00' }, { stage: 'out_for_delivery' }, { stage: 'accepted' }] });
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private|signature|signatory|pIds|counter|pieces/);
+  });
+  it('rejects foreign identities, duplicate shipments, invalid counters and empty histories', () => {
+    expect(() => parseMobile(mobilePayload(), '1234567880')).toThrow(SchemaError);
+    const data = mobilePayload(); data.push(data[0]!);
+    expect(() => parseMobile(data, number)).toThrow(IndeterminateError);
+    for (const counter of [0, 1.5, NaN, 2]) {
+      const invalid = mobilePayload(); invalid[0]!.checkpoints[0]!.counter = counter;
+      expect(() => parseMobile(invalid, number)).toThrow(SchemaError);
+    }
+    expect(() => parseMobile([{ id: number, checkpoints: [] }], number)).toThrow(IndeterminateError);
+    expect(() => parseMobile([null], number)).toThrow(SchemaError);
+  });
+  it('accepts an empty list only after the configuration answered and never invokes the browser for not-found', async () => {
+    const fetcher = mobileFetcher([]); const carrier = adapter(environment(fetcher));
+    expect(await carrier.recognize!(number)).toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    await expect(carrier.track({ number })).rejects.toThrow(NotFoundError);
+  });
+  it('rejects missing, duplicate or malformed settings before sending a waybill', async () => {
+    for (const configuration of [[], [null], [...settings, ...settings], [{ name: 'api_awb_encryption', value: {} }]]) {
+      const fetcher = mobileFetcher([], configuration);
+      await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toThrow(SchemaError);
+      expect(fetcher).toHaveBeenCalledOnce();
+    }
+  });
+  it('keeps changed encryption recoverable without sending a plaintext waybill', async () => {
+    const fetcher = mobileFetcher([], [{ name: 'api_awb_encryption', value: 'Y' }]);
+    await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toThrow(ChallengeError);
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+  it.each([
+    ['DRG10012', ChallengeError], [{ error: { error: 'DRG10013' } }, ChallengeError],
+    [{ statusCode: 401 }, ChallengeError], ['temporary_blocked', RateLimitedError],
+    [{ error: 'max_attempts_reached' }, RateLimitedError], [{ statusCode: 429 }, RateLimitedError],
+    [{ statusCode: 404, error: 'Not Found' }, SchemaError],
+  ])('preserves a mobile rejection without treating it as a missing shipment', async (reply, kind) => {
+    await expect(new DhlExpressTracker(environment(mobileFetcher(reply))).direct(number)).rejects.toThrow(kind);
+  });
+  it('preserves HTTP throttles and distinguishes a missing API route from a missing shipment', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('{}', { status: 429, headers: { 'Retry-After': '120' } }));
+    await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 120_000 });
+    fetcher.mockResolvedValue(new Response('{}', { status: 404 }));
+    await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toThrow(TransportError);
+  });
+  it('recognizes the mobile CAPTCHA code inside HTTP 503 and preserves its status for browser recovery', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify({ error: 'DRG10012' }), { status: 503 }));
+    await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toMatchObject({ kind: 'challenge', status: 503 });
+    fetcher.mockResolvedValue(new Response('{}', { status: 503 }));
+    await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+  });
+  it('does not send a second request when the caller cancels during configuration', async () => {
+    const controller = new AbortController();
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => { controller.abort(); return new Response(JSON.stringify(settings)); });
+    await expect(new DhlExpressTracker(environment(fetcher)).direct(number, { signal: controller.signal })).rejects.toThrow();
+    expect(fetcher).toHaveBeenCalledOnce();
   });
 });
 

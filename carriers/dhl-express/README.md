@@ -1,6 +1,6 @@
 # DHL Express
 
-DHL Express waybills through MyDHL+ and DHL's public tracking portal, separate from
+DHL Express waybills through its mobile guest API and public tracking portal, separate from
 the German DHL Paket adapter.
 
 Detection shares the [MyDHL+ tracking page](https://mydhl.express.dhl/gb/en/tracking.html)'s
@@ -9,7 +9,10 @@ not confirm the carrier or the existence of a shipment.
 
 ## Retrieval
 
-`direct` asks the public `shipmentTracking` JSON endpoint for one waybill.
+`direct` asks the mobile guest API for one waybill. It checks the application's
+current waybill-encryption setting before tracking, so a configuration or
+authentication failure cannot look like a missing shipment. The shared
+application bearer is included; consumers need no DHL account or key setup.
 After an HTTP challenge or transport failure, `trawl` loads DHL's global tracking
 page in a fresh context and captures its matching `utapi` response. The browser
 lets the page complete its verification and repeat tracking after an HTTP 428;
@@ -27,13 +30,12 @@ is another route, separate from the public portal. It requires a consumer-owned
 subscription key in `DHL-API-Key`; its demo key and Try Now responses are mocked
 and cannot establish live tracking coverage.
 
-## Mobile API lead
+## Mobile API
 
 The [official Android app](https://play.google.com/store/apps/details?id=com.dhl.exp.dhlmobile)
 has package id `com.dhl.exp.dhlmobile`; DHL publishes its signing fingerprints in
 [assetlinks.json](https://dhle.dhl.com/.well-known/assetlinks.json).
-Its hybrid UI uses native pinned HTTP for tracking. The adapter does not use
-this route.
+Its hybrid UI uses native pinned HTTP for tracking.
 
 Guest tracking posts to `https://dhle.dhl.com/access/access/com.dhl.exp.dhlmobile`
 with query parameters `appVersion` and `service=shipments-tracking`, and a JSON
@@ -42,20 +44,24 @@ body naming `service: "shipments"` and `method: "tracking"`. The data includes
 and device metadata. Guest reads use empty user credentials but still require
 the app's application bearer credential; missing application authentication
 returns 401. The body includes an `authentication` object with provider
-`DEMP.RS1` and empty `token` and `login` fields. Keep credentials outside Git.
+`DEMP.RS1` and empty `token` and `login` fields. `addShipmentToODD` stays disabled
+so tracking does not save a shipment to an account.
 
 The app reads `countrySettingsBySettingName` under the `common` service;
 `api_awb_encryption` controls waybill encryption. The tracking flow also supports
 `captchaVerificationData`. Returned shipments use `id` and `checkpoints`, with
 localized `date`/`date_en` and `time` fields. Summary status can be empty despite
-usable scans, so evaluate each event and preserve facility-local clocks. Match
-the whole waybill and compare milestones before adopting this alternative.
+usable scans, so the adapter derives status from checkpoints ordered by their
+counter and uses `date_en` for English facility-local clocks. An encryption
+requirement or CAPTCHA stays a challenge and can recover through the browser.
+The mobile API can report its CAPTCHA code inside HTTP 503; that explicit code
+is verification evidence rather than a maintenance or missing-shipment answer.
 
 ## Limits
 
 The returned identity must match the whole waybill and the browser response must
 identify the Express division. Reused waybills and empty histories stay inconclusive.
-MyDHL+ facility clocks are preserved without invented offsets; the global portal's
+Mobile facility clocks are preserved without invented offsets; the global portal's
 explicit offsets provide dated instants. Recipient details, piece identifiers and
 proof-of-delivery links are discarded. A blocked HTTP request requires a configured
 browser service with the DHL Express capture helper.
@@ -64,6 +70,7 @@ browser service with the DHL Express capture helper.
 
 `npm run test:carriers:live -- carriers/dhl-express`
 
-Set `DHL_EXPRESS_LIVE_TRACKING_NUMBER` and `TRAWL_URL` to exercise browser retrieval.
+Set `DHL_EXPRESS_LIVE_TRACKING_NUMBER` to exercise mobile retrieval. Add `TRAWL_URL`
+to exercise the separate browser path.
 Carrier protection can reject HTTP and browser sessions. These failures stay
 distinct from a missing waybill.

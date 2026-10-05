@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { randomUUID } from 'node:crypto';
 import { accepted, lookupBudget, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type AdapterEnvironment, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidDhlExpressWaybill } from '../../core/detection/numericChecksums.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
@@ -6,11 +7,11 @@ import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/resu
 import { runSteps } from '../../core/runner/index.js';
 import { classifyWording, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { mobileTracking } from './mobile.js';
 
 const PROVIDER = 'DHL Express';
-const API = 'https://mydhl.express.dhl/shipmentTracking';
 const BROWSER_API = 'https://www.dhl.com/utapi';
 const MAX_BYTES = 1_000_000;
 // The scoped browser runner bounds context cleanup to 1.5 seconds. Leave room
@@ -27,11 +28,6 @@ export function normalizeNumber(raw: string): string {
 
 export function trackingUrl(raw: string): string {
   return `https://mydhl.express.dhl/gb/en/tracking.html#/results?id=${normalizeNumber(raw)}`;
-}
-
-function apiUrl(number: string): string {
-  return `${API}?${new URLSearchParams({ AWB: number, clientApp: 'mydhlplus', countryCode: 'gb', languageCode: 'en',
-    requestAdditionalDetails: 'controlledAccessDataCodes,productCode,shipmentActivationDate,countryCodes' }).toString().replace(/%2C/g, ',')}`;
 }
 
 /** MyDHL clocks are local to each facility; they do not carry a UTC offset. */
@@ -120,16 +116,32 @@ export function parse(payload: unknown, raw: string): CarrierResult {
       ? { destination_country: shipment.consigneeCountryCode } : {}) };
 }
 
+/** Guest mobile history has facility-local clocks and orders scans by counter. */
+export function parseMobile(payload: unknown, raw: string): CarrierResult {
+  const number = normalizeNumber(raw);
+  if (!Array.isArray(payload) || payload.length > 20 || payload.some((shipment) => !isRecord(shipment))) throw new SchemaError(PROVIDER, 'DHL mobile tracking returned invalid shipments');
+  if (!payload.length) throw new NotFoundError(PROVIDER);
+  const shipments = payload.filter(isRecord).map((shipment) => {
+    if (!Array.isArray(shipment.checkpoints) || shipment.checkpoints.length > 1000) throw new SchemaError(PROVIDER, 'DHL mobile tracking returned invalid checkpoints');
+    const counters = new Set<number>();
+    const checkpoints = shipment.checkpoints.map((row) => {
+      if (!isRecord(row) || typeof row.counter !== 'number' || !Number.isSafeInteger(row.counter) || row.counter < 1 || counters.has(row.counter)) throw new SchemaError(PROVIDER, 'DHL mobile tracking returned an invalid checkpoint counter');
+      counters.add(row.counter);
+      return { ...row, counter: row.counter, date: typeof row.date_en === 'string' ? row.date_en : row.date };
+    }).sort((a, b) => b.counter - a.counter);
+    return { ...shipment, checkpoints };
+  });
+  return parse({ results: shipments }, number);
+}
+
 export class DhlExpressTracker {
+  private readonly mobileDevice = randomUUID();
   constructor(private readonly environment: AdapterEnvironment) {}
 
   async direct(number: string, context?: TrackingContext): Promise<CarrierResult> {
+    const normalized = normalizeNumber(number);
     const budget = lookupBudget(context, 10_000, PROVIDER);
-    const { bytes } = await fetchBounded(apiUrl(normalizeNumber(number)), {
-      headers: { accept: 'application/json', 'user-agent': this.environment.userAgent ?? 'Mozilla/5.0' }, signal: budget.signal,
-    }, { provider: PROVIDER, timeoutMs: budget.remainingMs(), maxBytes: MAX_BYTES, fetcher: this.environment.fetcher });
-    if (/^\s*</.test(decodeText(bytes))) throw new ChallengeError(PROVIDER, 'DHL Express rejected the tracking request');
-    return this.decode(bytes, number);
+    return parseMobile(await mobileTracking(normalized, budget, this.environment, this.mobileDevice), normalized);
   }
 
   async browser(number: string, context?: TrackingContext): Promise<CarrierResult> {
@@ -162,13 +174,6 @@ export class DhlExpressTracker {
     if (response.body === null) throw new TransportError(PROVIDER, 'DHL Express returned no complete matching browser response');
     if (response.status !== 200 || Buffer.byteLength(response.body) > MAX_BYTES) throw new SchemaError(PROVIDER, 'DHL Express returned invalid browser data');
     return parseUnified(parseJsonBytes(new TextEncoder().encode(response.body), PROVIDER), number);
-  }
-
-  private decode(bytes: Uint8Array, number: string): CarrierResult {
-    let payload: unknown;
-    try { payload = parseJsonBytes(bytes, PROVIDER); }
-    catch (error) { throw new SchemaError(PROVIDER, 'DHL Express returned invalid tracking JSON', { cause: error }); }
-    return parse(payload, number);
   }
 
   fetch(raw: string, context?: TrackingContext): Promise<CarrierResult> {

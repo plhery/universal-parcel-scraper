@@ -106,6 +106,9 @@ Recognition uses HTTP by default. Consumers can request `recognitionCandidates` 
 recipient inputs exclude a candidate. Browser confirmation requires dated shipment activity
 and returns its tracking result for reuse. An ambiguous ten-digit number includes DHL Express among its direct candidates when its waybill check passes. Its
 facility-local clocks stay unresolved; universal history can supply verified offsets.
+DHL Express's HTTP path uses its mobile guest API and includes the shared
+application bearer. Application settings and authentication failures stay distinct
+from a missing waybill; verification failures can recover through its public browser page.
 Consumers can ask enabled universal providers during preflight and reuse those results
 when saving, while retaining direct confirmation for carrier identity.
 Shared tracking portals marked `detectFromNumber` preserve ambiguity when the
