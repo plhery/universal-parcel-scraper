@@ -323,6 +323,7 @@ export interface ParcelsAppOptions {
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
   timeoutMs?: number;
+  userAgent?: string;
   /** Null runs only the existing browser capture tier. */
   httpClient?: ParcelsAppHttpClient | null;
 }
@@ -331,7 +332,7 @@ export class ParcelsAppTracker {
   private readonly http: ParcelsAppHttpClient | null;
 
   constructor(readonly options: ParcelsAppOptions = {}) {
-    this.http = options.httpClient === undefined ? new ParcelsAppHttpClient(options.fetcher) : options.httpClient;
+    this.http = options.httpClient === undefined ? new ParcelsAppHttpClient(options.fetcher, options.userAgent) : options.httpClient;
   }
 
   async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? PARCELSAPP_BUDGET_MS, postcode?: string | null, timezone: string | null = null, signal?: AbortSignal, countryHint?: string | null): Promise<CarrierResult> {
@@ -394,7 +395,7 @@ export class ParcelsAppTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new ParcelsAppTracker({
-    trawl: environment.trawl, fetcher: environment.fetcher, recorder: environment.recorder,
+    trawl: environment.trawl, fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent,
   });
   return {
     id: SOURCE,

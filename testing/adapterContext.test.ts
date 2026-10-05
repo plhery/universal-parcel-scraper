@@ -42,8 +42,6 @@ const BUDGET_SETTLE_MS = 500;
 const HOST_USER_AGENT = 'ConformanceHost/1.0';
 /** A browser's own User-Agent, unlike a client that names itself in a `compatible` clause. */
 const BROWSER_USER_AGENT = /^Mozilla\/5\.0 \((?!compatible;)/;
-/** Subjects whose request names no client and goes out under the runtime's default. */
-const UNNAMED: ReadonlySet<string> = new Set(['ParcelsApp']);
 const BROWSER_SERVICE = 'http://trawl.invalid';
 /** Credentials the corpus does not hold: Colis Privé looks a number up only with its postcode appended. */
 const COMPOSITE: Readonly<Record<string, (number: string) => string>> = { 'colis-prive': (number) => `${number}75001` };
@@ -264,8 +262,8 @@ describe.each(Object.entries(ENVIRONMENTS))('%s', (_, browsers) => {
           const pending = lookup(adapter, sample, { signal: controller.signal });
           await firstRequest;
           await finish(controller, pending);
-          const named = (sent: string | null) => sent === null ? UNNAMED.has(subject) : sent === HOST_USER_AGENT || BROWSER_USER_AGENT.test(sent);
-          expect(userAgents().filter((sent) => !named(sent)), JSON.stringify(sample)).toEqual([]);
+          expect(userAgents().filter((sent) => sent !== HOST_USER_AGENT && !(sent !== null && BROWSER_USER_AGENT.test(sent))),
+            JSON.stringify(sample)).toEqual([]);
         }
       });
 

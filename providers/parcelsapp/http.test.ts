@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
+import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 import { parcelsAppChecksum, parcelsAppRequest, ParcelsAppHttpClient, PARCELSAPP_API } from './http.js';
 
 describe('ParcelsApp public request protocol', () => {
@@ -50,6 +51,7 @@ describe('ParcelsApp public request protocol', () => {
     }));
     const headers = new Headers(fetcher.mock.calls[0]![1]!.headers);
     expect(headers.get('Content-Type')).toContain('application/x-www-form-urlencoded');
+    expect(headers.get('User-Agent')).toBe(DEFAULT_USER_AGENT);
     expect(headers.has('cookie')).toBe(false);
   });
 

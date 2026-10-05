@@ -1,5 +1,5 @@
 
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { numberOf } from '../shared/result.js';
 import { countryCode } from '../../core/time/index.js';
 
@@ -58,7 +58,11 @@ export function parcelsAppRequest(trackingNumber: string, postcode?: string | nu
 }
 
 export class ParcelsAppHttpClient {
-  constructor(readonly fetcher?: typeof fetch) {}
+  readonly #userAgent: string;
+
+  constructor(readonly fetcher?: typeof fetch, userAgent?: string) {
+    this.#userAgent = userAgentOf(userAgent);
+  }
 
   async fetch(trackingNumber: string, timeoutMs: number, postcode?: string | null, signal?: AbortSignal, countryHint?: string | null): Promise<unknown> {
     const number = numberOf(trackingNumber);
@@ -68,7 +72,7 @@ export class ParcelsAppHttpClient {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         Origin: 'https://parcelsapp.com', Referer: `https://parcelsapp.com/en/tracking/${number}`,
-        'X-Requested-With': 'XMLHttpRequest',
+        'User-Agent': this.#userAgent, 'X-Requested-With': 'XMLHttpRequest',
       },
       body: parcelsAppRequest(number, postcode, countryHint),
     }, { provider: 'ParcelsApp', fetcher: this.fetcher, timeoutMs: Math.floor(timeoutMs), maxBytes: 2_000_000 });
