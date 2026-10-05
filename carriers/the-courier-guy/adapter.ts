@@ -2,13 +2,13 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeCourierGuyNumber, normalizeCourierGuyRecognitionNumber, parseCourierGuy } from './parser.js';
 
 const ENDPOINT = 'https://api.portal.thecourierguy.co.za/tracking/shipments';
 
 export class CourierGuyTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeCourierGuyNumber(raw);
@@ -19,7 +19,7 @@ export class CourierGuyTracker {
       url.searchParams.set('tracking_reference', number);
       // Public provider identity returned by /providers for the official portal.
       url.searchParams.set('provider_id', '7');
-      const { response, bytes } = await fetchBounded(url, { signal, headers: { Accept: 'application/json' } }, {
+      const { response, bytes } = await fetchBounded(url, { signal, headers: { Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } }, {
         provider: 'The Courier Guy', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
         allowHttpStatuses: [404, 410], fetcher: this.options.fetcher,
       });
@@ -37,7 +37,7 @@ export class CourierGuyTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new CourierGuyTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new CourierGuyTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'the-courier-guy', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeCourierGuyRecognitionNumber(number))) };

@@ -5,7 +5,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { koreaPostStatus } from './status.js';
 
 const ENDPOINT = 'https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttSVL';
@@ -63,7 +63,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
 }
 
 export class KoreaPostTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeKoreaPostNumber(raw);
@@ -72,7 +72,7 @@ export class KoreaPostTracker {
     context.signal?.throwIfAborted();
     try {
       const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'text/html,*/*;q=0.8' },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'text/html,*/*;q=0.8', 'User-Agent': userAgentOf(this.options.userAgent) },
         body: new URLSearchParams({ target_command: 'kpl.tts.tt.epost.cmd.RetrieveEmsTraceEngCmd',
           JspURI: '/xtts/tt/epost/ems/EmsSearchResultEng.jsp', POST_CODE: number }).toString(),
       }, { provider: 'Korea Post', timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
@@ -89,7 +89,7 @@ export class KoreaPostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new KoreaPostTracker({ fetcher: environment.fetcher });
+  const tracker = new KoreaPostTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return { id: 'korea-post', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'korea-post', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

@@ -2,13 +2,13 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { SchemaError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeCanparNumber, parseCanpar } from './parser.js';
 
 const ENDPOINT = 'https://canship.canpar.com/api/CanparAddons/trackByBarcodeV2';
 
 export class CanparTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeCanparNumber(raw);
@@ -16,7 +16,7 @@ export class CanparTracker {
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       signal.throwIfAborted();
       const { response, bytes } = await fetchBounded(ENDPOINT, { method: 'POST', signal,
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json; charset=utf-8' },
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json; charset=utf-8', 'User-Agent': userAgentOf(this.options.userAgent) },
         body: JSON.stringify({ barcode: number, track_shipment: false }),
       }, { provider: 'Canpar', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
         allowHttpStatuses: [404, 410], fetcher: this.options.fetcher });
@@ -30,7 +30,7 @@ export class CanparTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new CanparTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new CanparTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'canpar', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeCanparNumber(number))) };

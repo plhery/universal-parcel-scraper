@@ -2,7 +2,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeJdNumber, parseJdLogistics } from './parser.js';
 
 // Request builder in the official international Tracking page's proxy client.
@@ -14,14 +14,14 @@ const HEADERS = {
 };
 
 export class JdLogisticsTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeJdNumber(raw);
     return runSteps({ carrier: 'jd-logistics', signal: context.signal, budgetMs: context.budgetMs ?? 15_000,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       try {
-        const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST', signal, headers: HEADERS,
+        const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST', signal, headers: { ...HEADERS, 'User-Agent': userAgentOf(this.options.userAgent) },
           body: JSON.stringify([{ magicNoList: [number], clientIp: '$cooMrdGatewayIp$', lang: 'en', timeZone: 'UTC' }]),
         }, { provider: 'JD Logistics', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000, fetcher: this.options.fetcher });
         return parseJdLogistics(parseJsonBytes(bytes, 'JD Logistics'), number);
@@ -36,6 +36,6 @@ export class JdLogisticsTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new JdLogisticsTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new JdLogisticsTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'jd-logistics', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

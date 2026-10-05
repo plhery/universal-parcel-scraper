@@ -2,7 +2,7 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser.js';
 
 const ORIGIN = 'https://www.nacex.es';
@@ -42,7 +42,7 @@ function detailUrl(location: string | null, number: string): URL {
 }
 
 export class NacexTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeNacexNumber(raw);
@@ -51,11 +51,12 @@ export class NacexTracker {
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       signal.throwIfAborted();
       const deadline = performance.now() + remainingMs;
-      const read = async (url: string | URL, init: RequestInit = {}) => {
+      const read = async (url: string | URL, init: RequestInit & { headers?: Record<string, string> } = {}) => {
         const left = deadline - performance.now();
         if (left <= 0) throw new BudgetExceededError('NACEX', context.budgetMs ?? 15_000);
         signal.throwIfAborted();
-        const result = await fetchBounded(url, { ...init, signal }, {
+        const headers = { ...init.headers, 'User-Agent': userAgentOf(this.options.userAgent) };
+        const result = await fetchBounded(url, { ...init, headers, signal }, {
           provider: 'NACEX', timeoutMs: Math.max(1, Math.floor(left)), maxBytes: 1_000_000,
           redirect: 'manual', allowHttpStatuses: [302, 404, 410], fetcher: this.options.fetcher,
         });
@@ -81,7 +82,7 @@ export class NacexTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new NacexTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new NacexTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'nacex', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeNacexNumber(number))) };
 };

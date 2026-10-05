@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { adapter, EvriTracker, normalizeEvriNumber, parse } from './adapter.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 
 const NUMBER = 'H000000000000001';
 const UNKNOWN = 'H000000000000000';
@@ -103,7 +104,7 @@ describe('Evri International retrieval', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledWith('https://globaleco.app/track', expect.objectContaining({
       method: 'POST', body: `tracking_number=${NUMBER}`, cache: 'no-store', redirect: 'error', signal: expect.any(AbortSignal),
-      headers: { Accept: 'text/html', 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { Accept: 'text/html', 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': DEFAULT_USER_AGENT },
     }));
   });
 

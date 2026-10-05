@@ -2,13 +2,13 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeCttExpressNumber, parseCttExpress } from './parser.js';
 
 const ENDPOINT = 'https://wct.cttexpress.com/p_track_redis_v2.php';
 
 export class CttExpressTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeCttExpressNumber(raw);
@@ -18,7 +18,7 @@ export class CttExpressTracker {
       const url = new URL(ENDPOINT);
       url.searchParams.set('sc', number);
       const { response, bytes } = await fetchBounded(url, { signal, headers: { Accept: 'application/json',
-        Origin: 'https://shipping-tracking.production.cloud2.cttexpress.com',
+        Origin: 'https://shipping-tracking.production.cloud2.cttexpress.com', 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: 'CTT Express', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
         allowHttpStatuses: [404, 410], fetcher: this.options.fetcher });
       if (response.status !== 200) throw new IndeterminateError('CTT Express', 'CTT Express tracking endpoint is unavailable');
@@ -31,7 +31,7 @@ export class CttExpressTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new CttExpressTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new CttExpressTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'ctt-express', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeCttExpressNumber(number))) };
 };

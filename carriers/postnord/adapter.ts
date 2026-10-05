@@ -3,7 +3,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { BudgetExceededError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { normalizePostnordNumber, parsePostnord } from './parser.js';
 
@@ -26,7 +26,7 @@ async function requestProof(number: string, signal: AbortSignal, deadline: numbe
 }
 
 export class PostnordTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizePostnordNumber(raw);
@@ -44,6 +44,7 @@ export class PostnordTracker {
         url.searchParams.set('timeZone', 'UTC');
         const { response, bytes } = await fetchBounded(url.href, { signal, headers: {
           Accept: 'application/json', Origin: ORIGIN, 'x-bap-key': 'web-tracking-sc', 'X-CustomHeader': proof,
+          'User-Agent': userAgentOf(this.options.userAgent),
         } }, { provider: 'PostNord', timeoutMs: Math.max(1, Math.floor(left)), maxBytes: 1_000_000,
           allowHttpStatuses: [404, 410], fetcher: this.options.fetcher });
         if (response.status === 404 || response.status === 410) {
@@ -62,6 +63,6 @@ export class PostnordTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PostnordTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new PostnordTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'postnord', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

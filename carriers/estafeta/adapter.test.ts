@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 import { adapter, EstafetaTracker } from './adapter.js';
 import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
 import { estafetaStatus } from './status.js';
@@ -152,6 +153,7 @@ describe('Estafeta direct retrieval', () => {
       const [rawUrl, init] = fetcher.mock.calls[index]!; const url = new URL(String(rawUrl));
       expect(init).toMatchObject({ cache: 'no-store', redirect: 'error' }); expect(init?.signal).toBeInstanceOf(AbortSignal);
       const headers = new Headers(init?.headers); expect(headers.has('Cookie') || headers.has('Authorization')).toBe(false);
+      expect(headers.get('User-Agent')).toBe(DEFAULT_USER_AGENT);
       if (index % 2 === 0) expect(Object.fromEntries(url.searchParams)).toEqual({ wayBill: index === 0 ? NUMBER : GUIDE, wayBillType: index === 0 ? '0' : '1', isShipmentDetail: 'True' });
       else { expect(url.origin + url.pathname).toBe('https://cs.estafeta.com/es/Tracking/GetTrackingItemHistory'); expect(init?.method).toBe('POST'); expect(Object.fromEntries(new URLSearchParams(String(init?.body)))).toEqual({ waybill: GUIDE }); }
     }

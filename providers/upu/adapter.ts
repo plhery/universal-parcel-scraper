@@ -6,7 +6,7 @@ import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyEvent, hasPrivateDeliveryDetails, isNotice, numberOf, result, text } from '../shared/result.js';
 
@@ -93,7 +93,8 @@ export const adapter: AdapterFactory = (environment) => ({
       id: 'direct',
       run: async ({ remainingMs, signal }) => {
         const { bytes } = await fetchBounded(
-          `https://globaltracktrace.ptc.post/gtt.api/service.svc/rest/ItemTTWithTrans/${number}/EN`, {},
+          `https://globaltracktrace.ptc.post/gtt.api/service.svc/rest/ItemTTWithTrans/${number}/EN`,
+          { headers: { 'User-Agent': userAgentOf(environment.userAgent) } },
           { provider: SOURCE, timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 2_000_000,
             fetcher: (url, init) => (environment.fetcher ?? fetch)(url, {
               ...init, signal: AbortSignal.any([signal, ...(init?.signal ? [init.signal] : [])]),

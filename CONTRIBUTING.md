@@ -63,9 +63,9 @@ The script writes the folder. From there:
 
 Every adapter follows these rules:
 
-- It passes the caller's signal and budget into every request and, where it names a client,
-  takes its User-Agent from the environment. `testing/adapterContext.test.ts` and
-  `testing/adapterContextSource.test.ts` check both for every registered adapter.
+- It passes the caller's signal and budget into every request and takes its User-Agent from
+  the environment, unless its carrier only answers a browser. `testing/adapterContext.test.ts`
+  and `testing/adapterContextSource.test.ts` check both for every registered adapter.
 - A number the carrier does not issue is an `InvalidInputError`.
 - It declares recognition only when a cheap anonymous HTTP lookup can positively tell a known
   parcel from an unknown one.

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { adapter, parseUpuResponse } from './adapter.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 
 const number = 'EB000000005CN';
 const scan = (EventCd = 'EMA', EventNm = 'Posting/Collection', EventDT = '/Date(1789202880000+0200)/') =>
@@ -78,7 +79,7 @@ describe('UPU postal tracking', () => {
     expect(fetcher).toHaveBeenCalledOnce();
     expect(fetcher.mock.calls[0]![0]).toBe(`https://globaltracktrace.ptc.post/gtt.api/service.svc/rest/ItemTTWithTrans/${number}/EN`);
     expect(fetcher.mock.calls[0]![1]).toMatchObject({ cache: 'no-store', redirect: 'error', signal: expect.any(AbortSignal) });
-    expect(fetcher.mock.calls[0]![1]?.headers).toBeUndefined();
+    expect(fetcher.mock.calls[0]![1]?.headers).toEqual({ 'User-Agent': DEFAULT_USER_AGENT });
     expect(fetcher.mock.calls[0]![1]?.body).toBeUndefined();
   });
 

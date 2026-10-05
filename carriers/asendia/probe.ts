@@ -374,6 +374,7 @@ export class AsendiaTracker {
       headers: {
         Accept: 'application/javascript,text/javascript,*/*;q=0.8',
         Referer: `${TRACKING_PAGE}/`,
+        'User-Agent': this.userAgent,
       },
     }, {
       provider,

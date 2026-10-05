@@ -5,7 +5,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { yamatoStatus } from './status.js';
 
 const PROVIDER = 'Yamato Transport';
@@ -93,7 +93,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
 }
 
 export class YamatoTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeYamatoNumber(raw);
@@ -102,7 +102,7 @@ export class YamatoTracker {
     context.signal?.throwIfAborted();
     try {
       const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': userAgentOf(this.options.userAgent) },
         body: new URLSearchParams({ number00: '1', number01: number }) }, {
         provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
         fetcher: (input, init) => (this.options.fetcher ?? fetch)(input, { ...init,
@@ -120,6 +120,6 @@ export class YamatoTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new YamatoTracker({ fetcher: environment.fetcher });
+  const tracker = new YamatoTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return { id: 'yamato', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

@@ -6,7 +6,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { solveYundaSlider } from './challenge.js';
 import { normalizeYundaNumber, parseYunda, yundaEnvelope } from './parser.js';
@@ -17,7 +17,7 @@ const ORIGIN = 'https://web.yundaex.com';
 const CLIENT_CONSTANT = '2024YdWeb';
 
 export class YundaTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeYundaNumber(raw);
@@ -30,9 +30,10 @@ export class YundaTracker {
       const timeStamp = String(Date.now());
       const signature = createHash('md5').update(createHash('sha1').update(randomStr + CLIENT_CONSTANT + timeStamp).digest('hex')).digest('hex').toUpperCase();
       const params = new URLSearchParams({ wid: '22', randomStr, timeStamp, signature });
-      const request = async (path: string, init: RequestInit = {}) => {
+      const request = async (path: string, init: RequestInit & { headers?: Record<string, string> } = {}) => {
+        const headers = { ...init.headers, 'User-Agent': userAgentOf(this.options.userAgent) };
         try {
-          const { bytes } = await fetchBounded(ORIGIN + path, { ...init, signal }, {
+          const { bytes } = await fetchBounded(ORIGIN + path, { ...init, headers, signal }, {
             provider: 'Yunda Express', timeoutMs: Math.max(1, Math.floor(remainingMs - (Date.now() - started))),
             maxBytes: 1_000_000, fetcher: sessionFetch });
           return parseJsonBytes(bytes, 'Yunda Express');
@@ -58,6 +59,6 @@ export class YundaTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new YundaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new YundaTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'yunda', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

@@ -5,7 +5,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { japanPostStatus } from './status.js';
 
 const PROVIDER = 'Japan Post';
@@ -128,7 +128,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
 }
 
 export class JapanPostTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeJapanPostNumber(raw);
@@ -137,7 +137,7 @@ export class JapanPostTracker {
     context.signal?.throwIfAborted();
     const url = `${ENDPOINT}?${new URLSearchParams({ reqCodeNo1: number, locale: 'en' })}`;
     try {
-      const { bytes } = await fetchBounded(url, {}, {
+      const { bytes } = await fetchBounded(url, { headers: { 'User-Agent': userAgentOf(this.options.userAgent) } }, {
         provider: PROVIDER, maxBytes: MAX_RESPONSE_BYTES, timeoutMs: Math.max(1, Math.floor(budgetMs)),
         fetcher: (input, init) => (this.options.fetcher ?? fetch)(input, {
           ...init,
@@ -156,6 +156,6 @@ export class JapanPostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new JapanPostTracker({ fetcher: environment.fetcher });
+  const tracker = new JapanPostTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return { id: 'japan-post', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

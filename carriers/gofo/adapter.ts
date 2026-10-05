@@ -2,20 +2,21 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { GOFO_CLOCK_ZONE, normalizeGofoNumber, parseGofo } from './parser.js';
 
 const ENDPOINT = 'https://www.gofo.com/us/cnee-api/consignee/track/query/page';
 
 export class GofoTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeGofoNumber(raw);
     return runSteps({ carrier: 'gofo', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       try {
         const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST', signal,
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json', lang: 'en', 'User-Time-Zone': GOFO_CLOCK_ZONE },
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json', lang: 'en', 'User-Time-Zone': GOFO_CLOCK_ZONE,
+            'User-Agent': userAgentOf(this.options.userAgent) },
           body: JSON.stringify({ numberList: [number] }) }, { provider: 'GOFO', timeoutMs: Math.max(1, Math.floor(remainingMs)),
           maxBytes: 1_000_000, fetcher: this.options.fetcher });
         let payload: unknown;
@@ -30,6 +31,6 @@ export class GofoTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new GofoTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new GofoTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'gofo', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

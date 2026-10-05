@@ -2,13 +2,13 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeNzPostNumber, parseNzPost } from './parser.js';
 
 const ENDPOINT = 'https://tools.nzpost.co.nz/tracking/api/parceltrack/parcels';
 
 export class NzPostTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeNzPostNumber(raw);
@@ -18,7 +18,7 @@ export class NzPostTracker {
       const url = new URL(ENDPOINT); url.searchParams.set('tracking_reference', number);
       let bytes: Uint8Array;
       try {
-        ({ bytes } = await fetchBounded(url, { signal, headers: { Accept: 'application/json', 'Content-Type': 'application/json' } },
+        ({ bytes } = await fetchBounded(url, { signal, headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } },
           { provider: 'nz-post', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000, fetcher: this.options.fetcher }));
       } catch (error) {
         if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {
@@ -35,7 +35,7 @@ export class NzPostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new NzPostTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new NzPostTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'nz-post', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeNzPostNumber(number))) };
 };

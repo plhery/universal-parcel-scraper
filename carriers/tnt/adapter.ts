@@ -5,7 +5,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
-import { clean, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { tntExpressStatus, tntFranceStatus } from './status.js';
 
@@ -27,12 +27,12 @@ export function normalizeTntExpressNumber(raw: string): string {
   return number;
 }
 
-async function fetchTnt(url: URL, accept: string, provider: string, context: TrackingContext, options: { fetcher?: typeof fetch; timeoutMs?: number }) {
+async function fetchTnt(url: URL, accept: string, provider: string, context: TrackingContext, options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string }) {
   const budgetMs = context.budgetMs ?? options.timeoutMs ?? 15_000;
   if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError(`${provider} timeout must be positive`);
   context.signal?.throwIfAborted();
   try {
-    const fetched = await fetchBounded(url, { headers: { Accept: accept } }, {
+    const fetched = await fetchBounded(url, { headers: { Accept: accept, 'User-Agent': userAgentOf(options.userAgent) } }, {
       provider, maxBytes: 1_000_000, timeoutMs: Math.max(1, Math.floor(budgetMs)),
       fetcher: (input, init) => (options.fetcher ?? fetch)(input, {
         ...init, signal: AbortSignal.any([...(context.signal ? [context.signal] : []), ...(init?.signal ? [init.signal] : [])]),
@@ -158,7 +158,7 @@ export function parseTntExpressResponse(payload: unknown, rawNumber: string): Ca
 }
 
 export class TntFranceTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {}
 
   async fetch(rawNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeTntFranceNumber(rawNumber);
@@ -171,7 +171,7 @@ export class TntFranceTracker {
 }
 
 export class TntExpressTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {}
 
   async fetch(rawNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeTntExpressNumber(rawNumber);
@@ -183,8 +183,8 @@ export class TntExpressTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const france = new TntFranceTracker({ fetcher: environment.fetcher });
-  const express = new TntExpressTracker({ fetcher: environment.fetcher });
+  const france = new TntFranceTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
+  const express = new TntExpressTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   // TNT France consignments have 16 digits; tnt.com rejects them.
   const lookup = (number: string, context?: TrackingContext) => /^\d{16}$/.test(normalizeTrackingNumber(number))
     ? france.fetch(number, context) : express.fetch(number, context);

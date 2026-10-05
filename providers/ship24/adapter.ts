@@ -141,7 +141,7 @@ export class Ship24Tracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new Ship24Tracker({
-    httpClient: new Ship24HttpClient(environment.fetcher),
+    httpClient: new Ship24HttpClient(environment.fetcher, environment.userAgent),
     executablePath: environment.browserExecutablePath ?? undefined,
     recorder: environment.recorder,
   });

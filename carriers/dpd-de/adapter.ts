@@ -8,6 +8,7 @@ export const adapter: AdapterFactory = (environment) => {
     fetcher: environment.fetcher,
     firebaseApiKey: environment.env.DPD_FIREBASE_API_KEY,
     recorder: environment.recorder,
+    userAgent: environment.userAgent,
   });
   return {
     id: 'dpd-de', recordsSteps: true, steps: ['direct'],

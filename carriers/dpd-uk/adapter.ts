@@ -2,13 +2,13 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { CarrierError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isDpdUkReferenceAbsent, normalizeDpdUkNumber, parseDpdUkHistory, parseDpdUkReference, PROVIDER, validateDpdUkParcel } from './parser.js';
 
 const API = 'https://apis.track.dpd.co.uk/v1';
 
 export class DpdUkTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeDpdUkNumber(raw);
@@ -18,7 +18,7 @@ export class DpdUkTracker {
       const read = async (path: string, reference = false): Promise<unknown> => {
         try {
           signal.throwIfAborted();
-          const { bytes, response } = await fetchBounded(`${API}${path}`, { signal, headers: { Accept: 'application/json' } },
+          const { bytes, response } = await fetchBounded(`${API}${path}`, { signal, headers: { Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } },
             { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(deadline - performance.now())), maxBytes: 1_000_000,
               fetcher: this.options.fetcher, allowHttpStatuses: [404, 410] });
           let payload: unknown;
@@ -50,6 +50,6 @@ export class DpdUkTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new DpdUkTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new DpdUkTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'dpd-uk', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

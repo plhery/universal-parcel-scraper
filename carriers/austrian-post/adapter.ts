@@ -4,7 +4,7 @@ import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/de
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { austrianPostEventStatus, austrianPostSummaryStatus } from './status.js';
 
@@ -58,7 +58,7 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
 }
 
 export class AustrianPostTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; userAgent?: string } = {}) {}
 
   async fetch(rawNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeAustrianPostNumber(rawNumber);
@@ -68,7 +68,7 @@ export class AustrianPostTracker {
     const query = `query { einzelsendung(sendungsnummer: "${number}") { sendungsnummer status weight sendungsEvents { timestamp status reasontypecode trackingDesc eventPlaceName } } }`;
     try {
       const { bytes } = await fetchBounded(ENDPOINT, {
-        method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ query }),
+        method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) }, body: JSON.stringify({ query }),
       }, {
         provider: PROVIDER, maxBytes: 1_000_000, timeoutMs: Math.max(1, Math.floor(budgetMs)),
         fetcher: (input, init) => (this.options.fetcher ?? fetch)(input, {
@@ -85,7 +85,7 @@ export class AustrianPostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new AustrianPostTracker({ fetcher: environment.fetcher });
+  const tracker = new AustrianPostTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'austrian-post', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeAustrianPostNumber(number))),

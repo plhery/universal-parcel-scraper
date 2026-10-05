@@ -9,7 +9,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
-import { TrawlClient, decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { TrawlClient, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   API_LABELS, PROOF_OF_DELIVERY_SCAN, apiStage, apiStatus, scanStage, wordingStatus,
@@ -542,6 +542,7 @@ export interface DPDTrackerOptions {
   fetcher?: typeof fetch;
   trawl?: TrawlClient | null;
   recorder?: StepRecorder;
+  userAgent?: string;
 }
 
 export class DPDTracker {
@@ -553,6 +554,7 @@ export class DPDTracker {
   private readonly fetcher?: typeof fetch;
   private readonly trawl?: TrawlClient | null;
   private readonly recorder?: StepRecorder;
+  private readonly userAgent: string;
   #accessToken = '';
   #accessTokenExpiresAt = 0;
   #basicToken = '';
@@ -571,6 +573,7 @@ export class DPDTracker {
     this.fetcher = options.fetcher;
     this.trawl = options.trawl;
     this.recorder = options.recorder;
+    this.userAgent = userAgentOf(options.userAgent);
   }
 
   /** The browser service, resolved late so a malformed URL fails the page step, not construction. */
@@ -843,6 +846,7 @@ export class DPDTracker {
       'X-Goog-Api-Key': this.firebaseApiKey,
       'X-Android-Package': ANDROID_PACKAGE,
       'X-Android-Cert': ANDROID_CERT,
+      'User-Agent': this.userAgent,
       ...extra,
     };
   }
@@ -959,6 +963,7 @@ export const adapter: AdapterFactory = (environment) => {
     fetcher: environment.fetcher,
     trawl: environment.trawl,
     recorder: environment.recorder,
+    userAgent: environment.userAgent,
     // A host can follow a rotated key without waiting for a release.
     firebaseApiKey: environment.env.DPD_FIREBASE_API_KEY?.trim() || undefined,
   });

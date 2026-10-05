@@ -2,13 +2,13 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { BudgetExceededError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
 
 const ORIGIN = 'https://cs.estafeta.com';
 
 export class EstafetaTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeEstafetaNumber(raw);
     const budgetMs = context.budgetMs ?? 15_000;
@@ -23,13 +23,13 @@ export class EstafetaTracker {
         };
         try {
           const params = new URLSearchParams({ wayBill: number, wayBillType: number.length === 10 ? '0' : '1', isShipmentDetail: 'True' });
-          const first = await fetchBounded(`${ORIGIN}/es/Tracking/searchByGet?${params}`, { signal },
+          const first = await fetchBounded(`${ORIGIN}/es/Tracking/searchByGet?${params}`, { signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent) } },
             { provider: 'Estafeta', timeoutMs: timeout(), maxBytes: 1_000_000, fetcher: this.options.fetcher });
           const lookup = parseEstafetaLookup(decodeText(first.bytes), number);
           // Only the identity-bound canonical guide controls this read-only
           // history request. No account, issued session or report API is used.
           const history = await fetchBounded(`${ORIGIN}/es/Tracking/GetTrackingItemHistory`, { method: 'POST', signal,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ waybill: lookup.guide }).toString() },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': userAgentOf(this.options.userAgent) }, body: new URLSearchParams({ waybill: lookup.guide }).toString() },
             { provider: 'Estafeta', timeoutMs: timeout(), maxBytes: 1_000_000, fetcher: this.options.fetcher });
           return parseEstafetaHistory(decodeText(history.bytes), lookup);
         } catch (error) {
@@ -41,6 +41,6 @@ export class EstafetaTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new EstafetaTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new EstafetaTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'estafeta', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };

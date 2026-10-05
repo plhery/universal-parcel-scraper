@@ -2,11 +2,11 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeBrtNumber, parseBrt } from './parser.js';
 
 export class BrtTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeBrtNumber(raw);
@@ -15,7 +15,7 @@ export class BrtTracker {
       signal.throwIfAborted();
       const deadline = performance.now() + remainingMs;
       const { response, bytes } = await fetchBounded(`https://vas.brt.it/vas/sped_det_new.htm?brtCode=${number}&lang=en`,
-        { signal }, { provider: 'BRT', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
+        { signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent) } }, { provider: 'BRT', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
           redirect: 'manual', allowHttpStatuses: [302, 404, 410], fetcher: this.options.fetcher });
       if (performance.now() >= deadline) throw new BudgetExceededError('BRT', context.budgetMs ?? 15_000);
       signal.throwIfAborted();
@@ -28,7 +28,7 @@ export class BrtTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new BrtTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new BrtTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'brt', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeBrtNumber(number))) };
 };

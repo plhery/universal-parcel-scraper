@@ -5,7 +5,7 @@ import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, Tran
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { singaporePostStatus } from './status.js';
 
@@ -67,7 +67,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
 }
 
 export class SingaporePostTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeSingaporePostNumber(raw);
@@ -76,7 +76,8 @@ export class SingaporePostTracker {
     context.signal?.throwIfAborted();
     try {
       const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ trackingNumber: number }),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) },
+        body: JSON.stringify({ trackingNumber: number }),
       }, { provider: 'Singapore Post', timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
         fetcher: (input, init) => (this.options.fetcher ?? fetch)(input, { ...init,
           signal: AbortSignal.any([...(context.signal ? [context.signal] : []), ...(init?.signal ? [init.signal] : [])]) }),
@@ -91,7 +92,7 @@ export class SingaporePostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new SingaporePostTracker({ fetcher: environment.fetcher });
+  const tracker = new SingaporePostTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return { id: 'singapore-post', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'singapore-post', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

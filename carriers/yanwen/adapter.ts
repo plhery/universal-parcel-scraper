@@ -6,7 +6,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { yanwenStatus } from './status.js';
 
 // This constant is shipped in the public browser script; it is part of the
@@ -92,7 +92,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
 }
 
 export class YanwenTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeYanwenNumber(raw);
@@ -101,7 +101,7 @@ export class YanwenTracker {
     context.signal?.throwIfAborted();
     try {
       const { bytes } = await fetchBounded(yanwenTrackingUrl(number), { method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'text/html' }, body: 'timeZone=1',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'text/html', 'User-Agent': userAgentOf(this.options.userAgent) }, body: 'timeZone=1',
       }, { provider: 'Yanwen', timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
         fetcher: (input, init) => (this.options.fetcher ?? fetch)(input, { ...init,
           signal: AbortSignal.any([...(context.signal ? [context.signal] : []), ...(init?.signal ? [init.signal] : [])]) }),
@@ -116,7 +116,7 @@ export class YanwenTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new YanwenTracker({ fetcher: environment.fetcher });
+  const tracker = new YanwenTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return { id: 'yanwen', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'yanwen', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

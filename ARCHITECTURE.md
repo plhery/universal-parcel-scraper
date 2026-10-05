@@ -58,11 +58,12 @@ Adapters check required payload fields before projecting them; objects and array
 supply shipment identity, scan text or status codes.
 
 Every adapter passes the caller's signal and budget into each request it makes. An adapter
-that names a client uses the host's `userAgent`, and one whose carrier only answers a browser
-keeps its own. `testing/adapterContext.test.ts` holds both by driving every registered adapter
-and provider against a transport that never answers. `testing/adapterContextSource.test.ts`
-checks that each later request and wait takes the signal too. Lookups that need the local
-Chromium share one browser, and each waits its turn inside its own budget.
+names its client with the host's `userAgent`, never the runtime's default, and one whose
+carrier only answers a browser keeps its own. `testing/adapterContext.test.ts` holds both by
+driving every registered adapter and provider against a transport that never answers.
+`testing/adapterContextSource.test.ts` checks that each later request and wait takes the
+signal too. Lookups that need the local Chromium share one browser, and each waits its turn
+inside its own budget.
 
 Browser and image dependencies load only when the step that needs them runs. Packaged
 workers, models and geographic data resolve against their own module, never the caller's

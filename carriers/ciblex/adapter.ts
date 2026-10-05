@@ -3,7 +3,7 @@ import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { decodeText, fetchBounded } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { ciblexTrackingUrl, normalizeCiblexTrackingNumber, parseCiblexTrackingHtml } from './parser.js';
 
 export { ciblexTrackingUrl, normalizeCiblexTrackingNumber, parseCiblexTrackingHtml } from './parser.js';
@@ -15,17 +15,20 @@ export interface CiblexTrackerOptions {
   timeoutMs?: number;
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
+  userAgent?: string;
 }
 
 export class CiblexTracker {
   readonly timeoutMs: number;
   readonly fetcher?: typeof fetch;
   private readonly recorder: StepRecorder;
+  private readonly userAgent: string;
 
   constructor(options: CiblexTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
     this.recorder = options.recorder ?? NOOP_RECORDER;
+    this.userAgent = userAgentOf(options.userAgent);
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) throw new TypeError('Ciblex timeout must be positive');
   }
 
@@ -36,7 +39,7 @@ export class CiblexTracker {
       [{ id: 'direct', run: async ({ signal, remainingMs }) => {
         signal.throwIfAborted();
         const deadline = performance.now() + remainingMs;
-        const { response, bytes } = await fetchBounded(ciblexTrackingUrl(number), { signal },
+        const { response, bytes } = await fetchBounded(ciblexTrackingUrl(number), { signal, headers: { 'User-Agent': this.userAgent } },
           { provider: 'Ciblex', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: MAX_RESPONSE_BYTES,
             redirect: 'manual', allowHttpStatuses: [302, 404, 410], fetcher: this.fetcher });
         if (performance.now() >= deadline) throw new BudgetExceededError('Ciblex', budgetMs);
@@ -51,7 +54,7 @@ export class CiblexTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new CiblexTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new CiblexTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'ciblex', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeCiblexTrackingNumber(number))) };
 };

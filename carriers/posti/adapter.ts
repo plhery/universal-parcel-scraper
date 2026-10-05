@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { postiEventStage, postiStatus } from './status.js';
 
@@ -122,16 +122,17 @@ function expiry(token: string): number {
 export class PostiTracker {
   private session?: Session;
 
-  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; timeoutMs?: number; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizePostiTrackingNumber(trackingNumber);
     const budgetMs = context.budgetMs ?? this.options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError('Posti timeout must be positive');
     const deadline = performance.now() + budgetMs;
-    const request = async (url: string, init: RequestInit, step: StepContext): Promise<unknown> => {
+    const request = async (url: string, init: RequestInit & { headers?: Record<string, string> }, step: StepContext): Promise<unknown> => {
       step.signal.throwIfAborted();
-      const { bytes } = await fetchBounded(url, init, {
+      const headers = { ...init.headers, 'User-Agent': userAgentOf(this.options.userAgent) };
+      const { bytes } = await fetchBounded(url, { ...init, headers }, {
         provider: 'Posti', maxBytes: 2_000_000,
         timeoutMs: Math.max(1, Math.floor(deadline - performance.now())),
         fetcher: (input, options) => (this.options.fetcher ?? fetch)(input, {
@@ -184,7 +185,7 @@ export class PostiTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new PostiTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new PostiTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
     id: 'posti', recordsSteps: true, steps: ['direct', 'refresh'],
     track: (input, context) => tracker.fetch(input.number, context),

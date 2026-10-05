@@ -3,7 +3,7 @@ import { accepted, recognizeFromLookup } from '../../core/adapter/index.js';
 import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeBpostNumber, parseBpost } from './parser.js';
 
 // The official frontend's getItemsByBarcodeArray request returns minimized
@@ -11,7 +11,7 @@ import { normalizeBpostNumber, parseBpost } from './parser.js';
 const ENDPOINT = 'https://track.bpost.cloud/track/items';
 
 export class BpostTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeBpostNumber(raw);
@@ -20,7 +20,8 @@ export class BpostTracker {
       let bytes: Uint8Array;
       try {
         ({ bytes } = await fetchBounded(ENDPOINT, { method: 'POST', signal,
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ barcodes: [number] }),
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) },
+          body: JSON.stringify({ barcodes: [number] }),
         }, { provider: 'bpost', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000, fetcher: this.options.fetcher }));
       } catch (error) {
         if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {
@@ -37,7 +38,7 @@ export class BpostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new BpostTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new BpostTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'bpost', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeBpostNumber(number))) };
 };

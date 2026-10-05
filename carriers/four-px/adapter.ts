@@ -4,7 +4,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { clean, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { fourPxStatus } from './status.js';
 
@@ -72,7 +72,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
 }
 
 export class FourPxTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeFourPxNumber(raw);
@@ -81,7 +81,7 @@ export class FourPxTracker {
     context.signal?.throwIfAborted();
     try {
       const { bytes } = await fetchBounded(ENDPOINT, {
-        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) },
         body: JSON.stringify({ queryCodes: [number], language: 'en-us', translateLanguage: '' }),
       }, {
         provider: '4PX', timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
@@ -98,7 +98,7 @@ export class FourPxTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new FourPxTracker({ fetcher: environment.fetcher });
+  const tracker = new FourPxTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return { id: 'four-px', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'four-px', budgetMs: context.budgetMs ?? 15_000,
     signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
 };

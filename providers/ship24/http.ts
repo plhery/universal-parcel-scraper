@@ -9,7 +9,7 @@
  * browser fingerprint or issued token is involved. See README.md.
  */
 import { createHash, createHmac } from 'node:crypto';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
 const PAGE = 'https://www.ship24.com/tracking';
@@ -56,7 +56,11 @@ function token(number: string): string {
 }
 
 export class Ship24HttpClient {
-  constructor(readonly fetcher?: typeof fetch) {}
+  readonly #userAgent: string;
+
+  constructor(readonly fetcher?: typeof fetch, userAgent?: string) {
+    this.#userAgent = userAgentOf(userAgent);
+  }
 
   async fetch(number: string, timeoutMs: number, signal?: AbortSignal): Promise<unknown> {
     if (!/^(?=.*\d)[A-Z0-9]{4,40}$/.test(number)) throw new InvalidInputError('Ship24', 'Invalid Ship24 tracking number');
@@ -64,7 +68,7 @@ export class Ship24HttpClient {
     const { bytes } = await fetchBounded(`https://api.ship24.com/api/parcels/${number}?lang=en`, {
       method: 'POST', signal,
       headers: { 'Content-Type': 'application/json', Origin: 'https://www.ship24.com',
-        Referer: PAGE, 'x-ship24-token': token(number) },
+        Referer: PAGE, 'User-Agent': this.#userAgent, 'x-ship24-token': token(number) },
       body: JSON.stringify({ userAgent: '', os: 'Linux', browser: 'Unknown', device: 'Unknown',
         os_version: 'unknown', browser_version: 'unknown', deviceType: 'desktop',
         orientation: 'landscape', uL: 'en-US' }),

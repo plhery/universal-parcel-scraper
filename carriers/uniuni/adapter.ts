@@ -2,7 +2,7 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser.js';
 
 const ENDPOINT = 'https://tracking-service-api.uniuni.ca/tracking/trackinguniuninew';
@@ -11,7 +11,7 @@ const ENDPOINT = 'https://tracking-service-api.uniuni.ca/tracking/trackinguniuni
 const WEB_KEY = 'SMq45nJhQuNR3WHsJA6N'; // gitleaks:allow
 
 export class UniuniTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeUniuniNumber(raw);
@@ -20,7 +20,7 @@ export class UniuniTracker {
       let bytes: Uint8Array;
       try {
         const params = new URLSearchParams({ id: number, key: WEB_KEY, source: 'web' });
-        ({ bytes } = await fetchBounded(`${ENDPOINT}?${params}`, { signal, headers: { Accept: 'application/json' } }, {
+        ({ bytes } = await fetchBounded(`${ENDPOINT}?${params}`, { signal, headers: { Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } }, {
           provider: 'UniUni', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000, fetcher: this.options.fetcher,
         }));
       } catch (error) {
@@ -38,7 +38,7 @@ export class UniuniTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new UniuniTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new UniuniTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'uniuni', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeUniuniRecognitionNumber(number))) };

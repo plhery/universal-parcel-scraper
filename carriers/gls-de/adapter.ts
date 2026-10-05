@@ -2,7 +2,7 @@
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import {
   glsSwitzerlandDetailApiUrl,
@@ -26,6 +26,7 @@ export interface GLSGermanyOptions {
   now?: () => number;
   /** Test seam; production uses the global fetch. */
   fetcher?: typeof fetch;
+  userAgent?: string;
 }
 
 /** Kept as a named class: the host's grouped live suite asserts this error's name. */
@@ -40,15 +41,17 @@ export class GLSGermanyTracker {
   readonly timeoutMs: number;
   readonly now: () => number;
   readonly #fetcher: typeof fetch | undefined;
+  readonly #userAgent: string;
 
   constructor(options: number | GLSGermanyOptions = {}) {
-    const { timeoutMs = DEFAULT_TIMEOUT_MS, now = Date.now, fetcher } = typeof options === 'number'
-      ? { timeoutMs: options, now: Date.now, fetcher: undefined }
+    const { timeoutMs = DEFAULT_TIMEOUT_MS, now = Date.now, fetcher, userAgent } = typeof options === 'number'
+      ? { timeoutMs: options, now: Date.now, fetcher: undefined, userAgent: undefined }
       : options;
     if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new TypeError('GLS Germany timeout must be positive');
     this.timeoutMs = timeoutMs;
     this.now = now;
     this.#fetcher = fetcher;
+    this.#userAgent = userAgentOf(userAgent);
   }
 
   async fetch(rawTrackingNumber: string, rawPostcode: string, context: TrackingContext = {}): Promise<CarrierResult> {
@@ -108,7 +111,7 @@ export class GLSGermanyTracker {
   private async request(url: string, budget: LookupBudget): Promise<unknown> {
     const { response, bytes } = await fetchBounded(url, {
       signal: budget.signal,
-      headers: { Accept: 'application/json', Referer: 'https://gls-group.eu/EU/en/parcel-tracking' },
+      headers: { Accept: 'application/json', Referer: 'https://gls-group.eu/EU/en/parcel-tracking', 'User-Agent': this.#userAgent },
     }, {
       provider: PROVIDER,
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
@@ -127,7 +130,7 @@ export class GLSGermanyTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new GLSGermanyTracker({ fetcher: environment.fetcher });
+  const tracker = new GLSGermanyTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'gls-de',
     steps: ['direct'],
