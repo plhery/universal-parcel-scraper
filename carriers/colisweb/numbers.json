@@ -17,10 +17,11 @@
         "confidence": "low",
         "candidates": [
           "mondial-relay",
+          "colisweb",
           "heppner"
         ]
       },
-      "note": "Public report attributed to Colisweb, whose tracking returns its history. Eight digits are shared with other carriers and no rule offers Colisweb."
+      "note": "Public report attributed to Colisweb, whose tracking returns its history. Eight digits are shared with other carriers, so Colisweb is one suggestion among several."
     },
     {
       "number": "87654321",
@@ -33,6 +34,7 @@
         "confidence": "low",
         "candidates": [
           "mondial-relay",
+          "colisweb",
           "heppner"
         ]
       },

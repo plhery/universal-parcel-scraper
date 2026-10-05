@@ -11,7 +11,7 @@ check proves the tracker knows it.
 1. `direct`: `GET {origin}/api/tracker/{number}` with the public tracking page as `Referer`
    (15 s timeout, 2 MB cap). The origin comes from the number's prefix
    (`core/catalog/amazon.ts`): `IT`, `ES` and `UK`/`GB` have their own `track.amazon.*`
-   host, `TBA` uses `.com`, every other European prefix uses `track.amazon.fr`.
+   host, `TBA`, `TBC` and `TBM` use `.com`, every other European prefix uses `track.amazon.fr`.
 
 Checks, before any history is read:
 
@@ -36,9 +36,9 @@ Checks, before any history is read:
   `AmazonShippingHistoryExpiredError` extends `IndeterminateError`, not `NotFoundError`: the
   host's `isUnannouncedTrackingError()` treats any 404 as "not announced yet", the opposite
   of what expiry means.
-- Timezone comes from the prefix (default `Europe/Paris`). `TBA` numbers identify no country,
-  so offset-free event times are dropped and the result has no `timezone`: stamping UTC would
-  shift every event by hours.
+- Timezone comes from the prefix (default `Europe/Paris`). `TBA`, `TBC` and `TBM` numbers
+  identify no time zone, so offset-free event times are dropped and the result has no
+  `timezone`: stamping UTC would shift every event by hours.
 - Dates mix ISO-8601, RFC 2822 and US long form ("Aug 11, 2026, 4:31:56 PM"), so the adapter
   uses its own parser instead of a `core/time` helper.
 - `DELAYED` / `LATE` map to `in_transit`: a delay is not an exception.

@@ -180,7 +180,7 @@ function metadataValue(metadata: JsonObject, field: string): unknown {
 export function normalizeAmazonShippingTrackingNumber(raw: string): string {
   const value = raw.trim().toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!isAmazonTrackingNumber(value)) {
-    throw new InvalidInputError(PROVIDER, 'Amazon tracking numbers need a European country prefix and 10 digits, or TBA and 12 digits');
+    throw new InvalidInputError(PROVIDER, 'Amazon tracking numbers need a European country prefix and 10 digits, or TBA, TBC or TBM and 12 digits');
   }
   return value;
 }
@@ -276,7 +276,7 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
 }
 
 export function amazonShippingTimezone(number: string): string | null {
-  if (number.startsWith('TBA')) return null; // A US number cannot establish a local timezone.
+  if (number.startsWith('TB')) return null; // A North American number cannot establish a local timezone.
   const zones: Record<string, string> = {
     UK: 'Europe/London', GB: 'Europe/London', IE: 'Europe/Dublin', PT: 'Europe/Lisbon',
     FI: 'Europe/Helsinki', EE: 'Europe/Tallinn', LV: 'Europe/Riga', LT: 'Europe/Vilnius',

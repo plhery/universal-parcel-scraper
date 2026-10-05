@@ -19,8 +19,9 @@ Tracked through the public recipient search.
 - A validly shaped unknown number answers an empty HTTP 500. Colisweb's UI shows its
   "not found" card for it, but a broken backend returns the same bytes. Mapping it to 404
   would stop retries and tell the user something we don't know.
-- Numbers are 8–32 digits. No detection rule: the shape collides with too many carriers, so
-  Colisweb is reached by pasting a `colisweb.com` link or picking the carrier.
+- Numbers are 8–32 digits. Detection suggests Colisweb for eight digits, a length two other
+  carriers share. Longer numbers collide with too many carriers, so they are reached by
+  pasting a `colisweb.com` link or picking the carrier.
 - Events are the three milestone timestamps (`deliveryConfirmationDate`, `pickedUpDate`,
   `deliveredDate`), newest first. When no milestone carries the current step's stage, one
   time-less entry is prepended so the stage stays visible.

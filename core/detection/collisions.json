@@ -424,10 +424,11 @@
   {
     "shape": "9{8}",
     "carriers": [
+      "colisweb",
       "heppner",
       "mondial-relay"
     ],
-    "reason": "8-digit numbers are shared by Heppner and Mondial Relay; the number stays a low-confidence suggestion."
+    "reason": "8-digit numbers are shared by Colisweb, Heppner and Mondial Relay; the number stays a low-confidence suggestion."
   },
   {
     "shape": "AA9{11}",

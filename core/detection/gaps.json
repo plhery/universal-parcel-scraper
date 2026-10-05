@@ -1,12 +1,6 @@
 [
   {
     "carrier": "amazon-logistics",
-    "pattern": "^TB[CM]\\d{12}$",
-    "kind": "open",
-    "reason": "The shared Amazon pattern covers TBA only; the marketplace link and the native clients read the same pattern."
-  },
-  {
-    "carrier": "amazon-logistics",
     "pattern": "^ZZ\\d{10}$",
     "kind": "by_design",
     "reason": "An invented prefix outside the marketplace list, kept as a shape check."
@@ -50,12 +44,6 @@
     "carrier": "c-chez-vous",
     "kind": "by_design",
     "reason": "The printed composite carries the postcode after its dashes and is entered with the carrier chosen."
-  },
-  {
-    "carrier": "colisweb",
-    "pattern": "^\\d{8}$",
-    "kind": "open",
-    "reason": "A confirmed number. Eight digits are shared with Mondial Relay and Heppner, and offering Colisweb would lengthen every such suggestion."
   },
   {
     "carrier": "dachser",

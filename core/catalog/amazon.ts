@@ -14,7 +14,11 @@ export function requiresAmazonAccount(carrier: string, trackingNumber = ''): boo
 }
 
 export function amazonMarketplace(raw: string): string {
-  const prefix = raw.replace(/[\s.-]/g, '').toUpperCase().slice(0, 2);
+  const number = raw.replace(/[\s.-]/g, '').toUpperCase();
+  // TBA names no country; its Canadian and Mexican siblings do.
+  if (number.startsWith('TBC')) return 'ca';
+  if (number.startsWith('TBM')) return 'com.mx';
+  const prefix = number.slice(0, 2);
   const marketplaces: Record<string, string> = {
     FR: 'fr', DE: 'de', AT: 'de', BE: 'com.be', UK: 'co.uk', GB: 'co.uk',
     IT: 'it', ES: 'es', PT: 'es', NL: 'nl', IE: 'ie', PL: 'pl', SE: 'se', TR: 'com.tr',

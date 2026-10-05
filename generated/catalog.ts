@@ -611,7 +611,9 @@ export const CARRIER_CATALOG = {
       "IS",
       "LI",
       "TR",
-      "US"
+      "US",
+      "CA",
+      "MX"
     ],
     "selectable": true,
     "timezone": "UTC",
@@ -635,7 +637,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:(?:FR|DE|BE|UK|GB|IT|ES|NL|AT|IE|PL|SE|PT|LU|DK|FI|CZ|SK|HU|RO|BG|HR|SI|EE|LV|LT|GR|CY|MT|CH|NO|IS|LI|TR)[0-9]{10}|TBA[0-9]{12})$",
+        "pattern": "^(?:(?:FR|DE|BE|UK|GB|IT|ES|NL|AT|IE|PL|SE|PT|LU|DK|FI|CZ|SK|HU|RO|BG|HR|SI|EE|LV|LT|GR|CY|MT|CH|NO|IS|LI|TR)[0-9]{10}|TB[ACM][0-9]{12})$",
         "confidence": "high"
       }
     ]
@@ -1263,7 +1265,12 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "c-chez-vous": {
     "displayName": "C Chez Vous",

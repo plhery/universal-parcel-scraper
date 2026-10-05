@@ -8,7 +8,7 @@ adapter, and sync marks these parcels unsupported without calling any tracker.
 
 - The link is `https://www.amazon.{marketplace}/gp/your-account/order-history`, with the
   marketplace derived from the number's prefix (`core/catalog/amazon.ts`).
-- The number formats (European country prefix + 10 digits, or `TBA` + 12 digits) are shared
+- The number formats (European country prefix + 10 digits, or `TBA`, `TBC` or `TBM` + 12 digits) are shared
   with [`amazon-shipping`](../amazon-shipping/README.md), the publicly trackable SWA/MCF
   service. Detection resolves them here first. A parcel moves to `amazon-shipping` only
   after Amazon's public tracker returns a structured `SWA` or `MCF` reply for it; guessing

@@ -59,5 +59,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "colisweb-1",
+      "pattern": "^\\d{8}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -104,6 +104,18 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('050000000001').candidates).not.toContain('ukrposhta');
   });
 
+  it('suggests Colisweb for eight digits and nothing longer', () => {
+    expect(detectCarrierMatch('12345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['mondial-relay', 'colisweb', 'heppner'] });
+    expect(detectCarrierMatch('123456789').candidates).not.toContain('colisweb');
+  });
+
+  it('files the Canadian and Mexican Amazon prefixes with Amazon Logistics', () => {
+    for (const number of ['TBA123456789012', 'TBC 123456789012', 'tbm123456789012']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'amazon-logistics', confidence: 'high' });
+    }
+    expect(detectCarrierMatch('TBB123456789012').carrier).toBe('unknown');
+  });
+
   it('offers UPS for an H waybill without selecting it', () => {
     expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
     expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');
