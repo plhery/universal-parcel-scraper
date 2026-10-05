@@ -18,12 +18,13 @@
         "candidates": [
           "dpd-fr",
           "la-poste",
+          "ukrposhta",
           "correos-chile",
           "delhivery",
           "yunda"
         ]
       },
-      "note": "Public report of a domestic parcel attributed to Ukrposhta, whose tracking returns its history. Thirteen digits are shared with other carriers and no rule offers Ukrposhta."
+      "note": "Public report of a domestic parcel attributed to Ukrposhta, whose tracking returns its history. Thirteen digits are shared with other carriers, so Ukrposhta is one suggestion among several."
     },
     {
       "number": "CA315000362UA",

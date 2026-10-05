@@ -22,6 +22,8 @@ transport remains active until a delivery scan completes that leg.
 
 ## Limitations
 
+Detection only suggests Ukrposhta for a thirteen-digit domestic barcode, a length
+other carriers share. International references follow the issuing post.
 Retrieval needs `TRACKING_CHROMIUM_PATH`. Multiple-piece shipments, count changes
 between requests and conflicting current scans are inconclusive. The portal's
 not-found reply omits the barcode, so it cannot establish parcel absence. Delivery

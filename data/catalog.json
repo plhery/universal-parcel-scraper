@@ -2430,7 +2430,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{13}$",
+        "confidence": "low"
+      }
+    ]
   },
   "usps": {
     "displayName": "USPS",

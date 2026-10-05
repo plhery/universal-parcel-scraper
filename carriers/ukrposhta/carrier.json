@@ -58,5 +58,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "ukrposhta-1",
+      "pattern": "^\\d{13}$",
+      "confidence": "low"
+    }
+  ]
 }

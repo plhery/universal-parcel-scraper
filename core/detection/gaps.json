@@ -37,8 +37,8 @@
   {
     "carrier": "australia-post",
     "pattern": "^7T\\d{19}$",
-    "kind": "open",
-    "reason": "One confirmed article ID. Australia Post has no detection rule, and one sample does not establish a family."
+    "kind": "by_design",
+    "reason": "A confirmed article ID. Domestic IDs start with a merchant location code and vary by product, so there is no carrier-wide shape to match."
   },
   {
     "carrier": "brt",
@@ -135,11 +135,5 @@
     "pattern": "^[A-Z0-9]{5,6}$",
     "kind": "by_design",
     "reason": "Short waybills are too generic for a rule."
-  },
-  {
-    "carrier": "ukrposhta",
-    "pattern": "^\\d{13}$",
-    "kind": "open",
-    "reason": "A confirmed domestic barcode. Thirteen digits are shared with other carriers, and offering Ukrposhta would lengthen every such suggestion."
   }
 ]

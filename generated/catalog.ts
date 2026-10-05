@@ -2432,7 +2432,12 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{13}$",
+        "confidence": "low"
+      }
+    ]
   },
   "usps": {
     "displayName": "USPS",

@@ -375,9 +375,10 @@
       "delhivery",
       "korea-post",
       "la-poste",
+      "ukrposhta",
       "yunda"
     ],
-    "reason": "13-digit numbers starting with 6, Korea Post domestic parcels among them, are shared by five carriers; the number stays a low-confidence suggestion."
+    "reason": "13-digit numbers starting with 6, Korea Post domestic parcels among them, are shared by six carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "A{3}9{16}",
@@ -551,9 +552,10 @@
       "correos-chile",
       "delhivery",
       "la-poste",
+      "ukrposhta",
       "yunda"
     ],
-    "reason": "13-digit numbers are shared by four carriers; the number stays a low-confidence suggestion."
+    "reason": "13-digit numbers are shared by five carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{13}",
@@ -562,9 +564,10 @@
       "delhivery",
       "dpd-fr",
       "la-poste",
+      "ukrposhta",
       "yunda"
     ],
-    "reason": "13-digit numbers starting with 0 or 1 add DPD France to the four carriers already sharing that length; the number stays a suggestion."
+    "reason": "13-digit numbers starting with 0 or 1 add DPD France to the five carriers already sharing that length; the number stays a suggestion."
   },
   {
     "shape": "9{13}",
@@ -573,9 +576,10 @@
       "delhivery",
       "la-poste",
       "planzer",
+      "ukrposhta",
       "yunda"
     ],
-    "reason": "The Planzer 99990 range sits inside the 13-digit space four carriers match broadly; the Planzer rule decides."
+    "reason": "The Planzer 99990 range sits inside the 13-digit space five carriers match broadly; the Planzer rule decides."
   },
   {
     "shape": "9{14}",

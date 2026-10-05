@@ -97,6 +97,13 @@ describe('evidence-backed tracking formats', () => {
     }
   });
 
+  it('suggests Ukrposhta for a thirteen-digit domestic barcode among the carriers sharing that length', () => {
+    const match = detectCarrierMatch('0500000000001');
+    expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(match.candidates).toEqual(expect.arrayContaining(['ukrposhta', 'la-poste']));
+    expect(detectCarrierMatch('050000000001').candidates).not.toContain('ukrposhta');
+  });
+
   it('offers UPS for an H waybill without selecting it', () => {
     expect(detectCarrierMatch('H1234567890')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ups', 'dtdc'] });
     expect(detectCarrierMatch('A1234567890').candidates).not.toContain('ups');
