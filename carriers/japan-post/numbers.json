@@ -30,6 +30,139 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The S10 check digit does not validate. The source attributes it to Japan Post, which no rule claims."
+    },
+    {
+      "number": "EN357239493JP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/parcel-sent-from-japan-by-ems-en357239493jp-143369/",
+        "date": "2024-12-26"
+      },
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Sender reports an EMS parcel posted at a Japanese post office; not independently verified."
+    },
+    {
+      "number": "RX067132330JP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-74058/",
+        "date": "2020-12-03"
+      },
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Sender reports a Japan-to-China shipment and refers to contacting Japan Post; not independently verified."
+    },
+    {
+      "number": "CN 022 918 231 JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-74058/",
+        "date": "2021-11-22"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a Japan Post discussion; this reply does not name its issuing carrier. Original spacing is preserved."
+    },
+    {
+      "number": "CN 022 808 960 JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-74058/",
+        "date": "2021-11-22"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a Japan Post discussion; this reply does not name its issuing carrier. Original spacing is preserved."
+    },
+    {
+      "number": "CN 022 808 704 JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-74058/",
+        "date": "2021-11-22"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a Japan Post discussion; this reply does not name its issuing carrier. Original spacing is preserved."
+    },
+    {
+      "number": "CN 022 964 117 JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-74058/",
+        "date": "2021-11-22"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a Japan Post discussion; this reply does not name its issuing carrier. Original spacing is preserved."
+    },
+    {
+      "number": "CN 022 962 836 JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-74058/",
+        "date": "2021-11-22"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a Japan Post discussion; this reply does not name its issuing carrier. Original spacing is preserved."
+    },
+    {
+      "number": "EL 439 549 911 JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/import-stopped-94592/",
+        "date": "2021-07-28"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Sender reports a parcel from Japan to a Chinese warehouse but does not name its issuing carrier. Original spacing is preserved."
+    },
+    {
+      "number": "EN157656352JP",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/my-package-reached-shenzhen-but-then-went-back-to-shanghai-111001/",
+        "date": "2022-02-21"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports a parcel from Japan to China but does not name the issuing carrier. Its valid S10 suffix alone does not establish attribution."
     }
   ]
 }

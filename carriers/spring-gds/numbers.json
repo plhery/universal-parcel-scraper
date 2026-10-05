@@ -219,6 +219,51 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The S10 check digit does not validate. The source attributes it to PostNL, which no rule claims."
+    },
+    {
+      "number": "CH105792445NL",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packet-stuck-in-liege-linehaul-68041/",
+        "date": "2020-12-22"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Public AliExpress parcel report in a PostNL discussion. This reply does not name the issuing carrier or establish Spring GDS involvement."
+    },
+    {
+      "number": "LT392989842NL",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packet-stuck-in-liege-linehaul-68041/",
+        "date": "2020-12-30"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a PostNL discussion. This reply does not name the issuing carrier or establish Spring GDS involvement."
+    },
+    {
+      "number": "LT403573975NL",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packet-stuck-in-liege-linehaul-68041/",
+        "date": "2021-01-05"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Public parcel report in a PostNL discussion. This reply does not name the issuing carrier or establish Spring GDS involvement."
     }
   ]
 }

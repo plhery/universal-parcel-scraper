@@ -126,6 +126,307 @@
         ]
       },
       "note": "Valid barcode with the first check digit changed. Filed under Mondial Relay; no rule matches this shape."
+    },
+    {
+      "number": "44620855",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-bloque-a-l-agence-de-beauchamps-t255991.html",
+        "date": "2019-12-06"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "The customer also names 887996564309 for the same shipment; their technical relationship is unverified. Mondial Relay replies about the parcel investigation. Detection remains ambiguous."
+    },
+    {
+      "number": "887996564309",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-bloque-a-l-agence-de-beauchamps-t255991.html",
+        "date": "2019-12-06"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The customer also names 44620855 for the same shipment; this pair does not follow the documented embedded shipment mapping. No conversion rule is inferred. Detection remains ambiguous."
+    },
+    {
+      "number": "61376870",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/refus-remboursement-apres-retour-article-t380674.html",
+        "date": "2026-04-28"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "The customer reports a Mondial Relay delivery confirmation for an Amazon return, also named 8561376870. The correspondence fits the documented brand-prefixed form. Detection remains ambiguous."
+    },
+    {
+      "number": "8561376870",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/refus-remboursement-apres-retour-article-t380674.html",
+        "date": "2026-04-28"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer also names 61376870 for the same Amazon return. The correspondence fits the documented brand-prefixed form; it does not establish a universal 85 prefix. Detection remains ambiguous."
+    },
+    {
+      "number": "49-55636302",
+      "role": "composite",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/pb-mondial-relay-vinted-t361334.html",
+        "date": "2024-12-01"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "Published literally as the tracking reference for a Vinted shipment attributed to Mondial Relay. The prefix role is unresolved; do not infer a canonical shipment by removing it. Detection characterizes the normalized input only.",
+      "quarantine": true
+    },
+    {
+      "number": "82547066970101107373021207",
+      "role": "full_barcode",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-expedie-le-01-09-toujours-pas-livre-t326896.html",
+        "date": "2022-10-12"
+      },
+      "expect": {
+        "carrier": "mondial-relay",
+        "confidence": "high"
+      },
+      "note": "Published in the official tracker URL by the customer. Both barcode check digits and the parcel sequence validate; the shipment was not independently verified."
+    },
+    {
+      "number": "72402550",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-expedie-le-01-09-toujours-pas-livre-t326896.html",
+        "date": "2022-10-05"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "A separate parcel in the same discussion as the full barcode. No alias relationship to the barcode is inferred. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "12053959",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-depose-mais-statut-en-preparation-chez-l-expediteur-t366208.html",
+        "date": "2025-04-04"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "28081219",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/mondial-relay-et-vinted-les-arnaqueurs-1ere-classe-t366724.html",
+        "date": "2025-04-24"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "83581161",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/mondial-relay-et-vinted-les-arnaqueurs-1ere-classe-t366724.html",
+        "date": "2025-04-24"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "71445621",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/probleme-colis-mondial-relay-t337486.html",
+        "date": "2023-06-19"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "68146075",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/mondial-relay-plateforme-de-lieusaint-t332438.html",
+        "date": "2023-02-16"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "79505665",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-mondialrelay-depose-mais-toujours-en-colis-en-preparation-chez-l-expediteur-t359666.html",
+        "date": "2024-10-25"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "99451046",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/mondial-relay-ne-repond-pas-et-ne-rembourse-pas-t284487.html",
+        "date": "2020-11-11"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "47258958",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-indisponible-depuis-7-semaines-t273631.html",
+        "date": "2020-06-30"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Reported outbound shipment. The customer gives 92986041 for its return leg; these are separate tracking identities. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "92986041",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-indisponible-depuis-7-semaines-t273631.html",
+        "date": "2020-06-30"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "heppner"
+        ]
+      },
+      "note": "Reported return shipment associated with outbound number 47258958. The two numbers are not interchangeable aliases. Numeric detection remains ambiguous."
     }
   ]
 }

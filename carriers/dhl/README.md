@@ -24,6 +24,9 @@ once.
 
 ## Notes
 
+- Some identifiers are shared with DHL eCommerce Netherlands. Detection keeps
+  both divisions as candidates; a carrier lookup decides which
+  endpoint owns the shipment.
 - Sessions are replaced at 100 minutes because DHL's edge stops answering a
   session about two hours old instead of rejecting it. Without the cap, the
   lookup that crosses that age waits out the 15-second timeout before renewing.

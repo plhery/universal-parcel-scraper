@@ -80,6 +80,20 @@
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Canada Post, which stays one candidate among several."
+    },
+    {
+      "number": "EE187921626CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/item-returned-from-customs-11207/",
+        "date": "2018-01-22"
+      },
+      "expect": {
+        "carrier": "canada-post",
+        "confidence": "high"
+      },
+      "note": "Sender explicitly calls this a Canada Post tracking number; shipment and attribution were not independently verified."
     }
   ]
 }

@@ -36,6 +36,10 @@ addresses and customer references are excluded.
 
 ## Limitations
 
+Identifiers used by the Netherlands network stay ambiguous with DHL Paket
+until a carrier lookup confirms the division. They do not establish Webtrack
+coverage.
+
 Webtrack has regional coverage. The global route needs local Chromium because
 UTAPI challenges direct requests. The browser helper waits for successful API
 responses, so an API error can end as a timeout. Sender names and estimates are

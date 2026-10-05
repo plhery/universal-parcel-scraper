@@ -55,6 +55,15 @@ describe('Aramex direct tracking', () => {
     expect(fetcher.mock.calls.map(c => new Headers(c[1]?.headers).get('user-agent')))
       .toEqual([DEFAULT_USER_AGENT, DEFAULT_USER_AGENT]);
   });
+  it('accepts an explicitly selected ten-digit shipment and still verifies both response identities', async () => {
+    const shortNumber = '0000000001';
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(overview().replace(NUMBER, shortNumber)))
+      .mockResolvedValueOnce(new Response(html.replaceAll(NUMBER, shortNumber)));
+    await expect(new AramexTracker({ fetcher }).fetch('00000 00001')).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher.mock.calls[0]?.[0]).toBe(`https://www.aramex.com/us/en/track/shipments?ShipmentNumber=${shortNumber}`);
+    expect(() => parseAramex(html, shortNumber)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => aramexDetailUrl(overview(), shortNumber)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
   it('does not start a detail request after cancellation during the overview', async () => {
     const controller = new AbortController();
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => {

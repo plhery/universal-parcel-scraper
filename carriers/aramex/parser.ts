@@ -7,7 +7,7 @@ import { classifyAramexStatus } from './status.js';
 
 export function normalizeAramexNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
-  if (!/^\d{11,12}$/.test(number)) throw new InvalidInputError('Aramex', 'Aramex requires an eleven- or twelve-digit shipment number');
+  if (!/^\d{10,12}$/.test(number)) throw new InvalidInputError('Aramex', 'Aramex requires a ten- to twelve-digit shipment number');
   return number;
 }
 

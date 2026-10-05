@@ -126,6 +126,24 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The source attributes it to DHL eCommerce, which no rule claims."
+    },
+    {
+      "number": "JVGL08035717002011328118",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ie.trustpilot.com/review/dhlecommerce.nl",
+        "date": "2026-09-21"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "dhl-ecommerce"
+        ]
+      },
+      "note": "Public report explicitly names DHL eCommerce Netherlands for a shipment to Switzerland. Read from the source page's search-index excerpt; no Americas Webtrack coverage is established."
     }
   ]
 }

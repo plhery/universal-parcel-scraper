@@ -56,7 +56,17 @@
   "links": [
     {
       "domains": [
-        "dhl.com",
+        "dhl.com"
+      ],
+      "params": [
+        "tracking-id",
+        "trackingId",
+        "piececode"
+      ],
+      "detectFromNumber": true
+    },
+    {
+      "domains": [
         "dhl.de",
         "deutschepost.de"
       ],
@@ -76,7 +86,7 @@
     },
     {
       "id": "dhl-2",
-      "pattern": "^(JJD|JVGL)[A-Z0-9]{8,}$",
+      "pattern": "^(?:JJD[A-Z0-9]{8,}|JVGL(?![0-9]{20}$)[A-Z0-9]{8,})$",
       "confidence": "high"
     },
     {
@@ -93,6 +103,11 @@
       "id": "dhl-5",
       "pattern": "^00340434\\d{12}$",
       "confidence": "high"
+    },
+    {
+      "id": "dhl-6",
+      "pattern": "^JVGL[0-9]{20}$",
+      "confidence": "low"
     }
   ]
 }

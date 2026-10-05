@@ -54,6 +54,95 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "RE012054200CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
+        "date": "2020-05-01"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+    },
+    {
+      "number": "RE019650569CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
+        "date": "2020-05-01"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+    },
+    {
+      "number": "UW510368425CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
+        "date": "2020-05-01"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+    },
+    {
+      "number": "UJ173293206CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
+        "date": "2020-05-01"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report of packages stuck in Shanghai. The page does not name the issuing carrier; a valid CN S10 suffix alone does not establish attribution."
+    },
+    {
+      "number": "LZ241238634CN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-says-delivered-but-it-is-in-the-wrong-city-148972/",
+        "date": "2025-05-28"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports a shipment; the reply names Canada Post as the delivery carrier but does not name its issuer. A valid CN S10 suffix alone does not establish attribution."
+    },
+    {
+      "number": "LP165048889CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/delivery-status-154937/",
+        "date": "2025-11-20"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Public parcel report with a pasted history naming China Post acceptance and Japan Post delivery; not independently verified."
     }
   ]
 }

@@ -50,6 +50,35 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "LT383724833CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/customs-clearance-assistance-required--lt383724833ch-161173/",
+        "date": "2026-09-22"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "Sender reports a Switzerland-to-China shipment and an investigation through Swiss Post; not independently verified."
+    },
+    {
+      "number": "CE273792195CH",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/packages-are-stuck-42651/",
+        "date": "2020-07-02"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "Sender reports a parcel from Switzerland to China but does not name the issuing carrier. The valid S10 suffix alone does not establish attribution."
     }
   ]
 }

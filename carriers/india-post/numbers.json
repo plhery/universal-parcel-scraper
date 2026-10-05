@@ -53,6 +53,48 @@
         "confidence": "high"
       },
       "note": "Invented S10 identifier with a valid check digit."
+    },
+    {
+      "number": "JM218901045IN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ie.trustpilot.com/review/pvccardprinting.in",
+        "date": "2025-10-07"
+      },
+      "expect": {
+        "carrier": "india-post",
+        "confidence": "high"
+      },
+      "note": "Merchant reply reports dispatch via India Post; shipment and attribution were not independently verified."
+    },
+    {
+      "number": "JM218940123IN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ie.trustpilot.com/review/pvccardprinting.in",
+        "date": "2025-10-07"
+      },
+      "expect": {
+        "carrier": "india-post",
+        "confidence": "high"
+      },
+      "note": "Merchant reply reports dispatch via India Post Speed Post; shipment and attribution were not independently verified."
+    },
+    {
+      "number": "RM419394835IN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ca.trustpilot.com/review/pvccardprinting.in",
+        "date": "2025-10-07"
+      },
+      "expect": {
+        "carrier": "india-post",
+        "confidence": "high"
+      },
+      "note": "Merchant reply reports dispatch via India Post; shipment and attribution were not independently verified."
     }
   ]
 }

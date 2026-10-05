@@ -86,7 +86,8 @@
       "params": [
         "tracking-id",
         "trackingId"
-      ]
+      ],
+      "detectFromNumber": true
     }
   ],
   "detection": [
@@ -98,6 +99,11 @@
     {
       "id": "dhl-ecommerce-2",
       "pattern": "^[0-9]{16,17}$",
+      "confidence": "low"
+    },
+    {
+      "id": "dhl-ecommerce-3",
+      "pattern": "^JVGL[0-9]{20}$",
       "confidence": "low"
     }
   ]

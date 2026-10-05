@@ -18,6 +18,10 @@ non-browser client.
    wraps it in. `Expedition.Numero` must match the requested number or its
    embedded 8-digit shipment before anything else is read.
 
+A customer-reported association between references does not override this
+identity check. Outbound and return legs keep separate tracking identities;
+references with an unresolved prefix remain corpus evidence.
+
 Without a browser service (`FLARESOLVERR_URL`) the lookup fails at once with a
 `ChallengeError`. Lookups are serialized per adapter instance (`singleFlight`)
 so the token and the API call stay on one browser identity. Errors: warning

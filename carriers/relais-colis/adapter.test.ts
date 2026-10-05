@@ -329,6 +329,18 @@ describe('Relais Colis HTML normalization', () => {
 });
 
 describe('Relais Colis tracker', () => {
+  it('posts a numeric reference intact and rejects a reply for a shortened reference', async () => {
+    const number = '53701234567801';
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(responseAt(bootstrapPage()))
+      .mockResolvedValueOnce(responseAt(trackingPage({ trackingNumber: number })));
+    await expect(new RelaisColisTracker({ fetcher }).fetch(number)).resolves.toMatchObject({ status: 'exception' });
+    const body = new URLSearchParams(String(fetcher.mock.calls[1]![1]?.body));
+    expect(body.get('track_package[trackingNumber]')).toBe(number);
+    expect(() => parseRelaisColisTrackingHtml(trackingPage({ trackingNumber: number.slice(0, 10) }), number))
+      .toThrow('different shipment');
+  });
+
   it('establishes a bounded CSRF session and posts the official form fields', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch');
     fetcher.mockResolvedValueOnce(responseAt(bootstrapPage(), {

@@ -107,6 +107,44 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to GLS Germany, which stays one candidate among several."
+    },
+    {
+      "number": "AALZJR",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=AALZJR",
+        "date": "2026-08-05"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Public GLS delivery complaint. The reference role and issuing country are unestablished; the forum generates a GLS Italy link and a respondent gives GLS Germany contact details. Do not infer a six-letter parcel-number rule."
+    },
+    {
+      "number": "83852070139",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=83852070139",
+        "date": "2026-08-03"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex"
+        ]
+      },
+      "note": "Public GLS shipment complaint; the issuing country is unestablished. Filed here for investigation, without establishing GLS Germany adapter coverage."
     }
   ]
 }

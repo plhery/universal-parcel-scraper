@@ -66,6 +66,50 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Aramex, which stays one candidate among several. Domestic delivery in the UAE."
+    },
+    {
+      "number": "9680012996",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://au.trustpilot.com/reviews/695409aafec0e5f62891de29",
+        "date": "2025-12-30"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."
+    },
+    {
+      "number": "9680239984",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://au.trustpilot.com/reviews/695409aafec0e5f62891de29",
+        "date": "2025-12-30"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."
     }
   ]
 }

@@ -72,6 +72,20 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The S10 check digit does not validate. The source attributes it to Singapore Post, which no rule claims."
+    },
+    {
+      "number": "EX232685554SG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/stuck-in-hand-over-to-airline-43677/",
+        "date": "2021-09-23"
+      },
+      "expect": {
+        "carrier": "singapore-post",
+        "confidence": "high"
+      },
+      "note": "Customer reports checking the number with SingPost, which had received the order but not the item. Carrier acceptance is not established."
     }
   ]
 }

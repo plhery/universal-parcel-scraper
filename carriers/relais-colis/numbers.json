@@ -60,6 +60,228 @@
         "confidence": "high"
       },
       "note": "Invented number following the published Relais Colis format."
+    },
+    {
+      "number": "53708154203001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/suivi-relais-colis-t30004.html",
+        "date": "2014-11-06"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "The customer names the Relais Colis tracking reference and reports that history appeared. The merchant confirms carrier acceptance. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "7522427122",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/annulation-de-mon-colis-reexpedition-t84901.html",
+        "date": "2016-12-21"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer identifies this as the Relais Colis tracking number before a disputed return and promised replacement by Chronopost. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1890000110",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1890000107",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1880000230",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1880000228",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1880000223",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1880000222",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1880000221",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "1880000220",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/un-point-de-relaiscolis-tente-de-refuser-mes-cartons-et-un-autre-reduit-le-delai-de-reception-a-3-jours-au-lieu-de-10-t80301.html",
+        "date": "2016-10-15"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-express"
+        ]
+      },
+      "note": "The customer explicitly separates carrier tracking numbers from order and invoice references for eight parcels. This is one parcel, not an alias. Numeric detection remains ambiguous."
     }
   ]
 }

@@ -74,6 +74,7 @@ describe('La Poste tracking input', () => {
     expect(normalizeLaPosteTrackingNumber('12345678901234q')).toBe('12345678901234Q');
     expect(normalizeLaPosteTrackingNumber('87 0012 3456 7890')).toBe('87001234567890');
     expect(normalizeLaPosteTrackingNumber('87 0012 3456 78901')).toBe('870012345678901');
+    expect(normalizeLaPosteTrackingNumber('88 0012 3456 7890a')).toBe('88001234567890A');
 
     const page = new URL(laPosteTrackingUrl(TRACKING_NUMBER));
     expect(page.origin).toBe('https://www.laposte.fr');
@@ -81,6 +82,18 @@ describe('La Poste tracking input', () => {
     const api = new URL(laPosteTrackingApiUrl(TRACKING_NUMBER));
     expect(api.pathname).toBe(`/ssu/sun/back/suivi-unifie/${TRACKING_NUMBER}`);
     expect(api.searchParams.get('lang')).toBe('fr');
+  });
+
+  it('preserves a tracked-mail suffix in requests and enforces its returned identity', async () => {
+    const number = '88001234567890A';
+    const fixture = deliveredFixture();
+    fixture[0]!.shipment.idShip = number;
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(fixture));
+    await expect(new LaPosteTracker({ fetcher }).fetch('88 0012 3456 7890a'))
+      .resolves.toMatchObject({ status: 'delivered' });
+    const url = new URL(String(fetcher.mock.calls[0]![0]));
+    expect(url.pathname).toBe(`/ssu/sun/back/suivi-unifie/${number}`);
+    expect(() => parseLaPosteTrackingResponse(fixture, '88001234567890B')).toThrow('different shipment');
   });
 
   it.each([

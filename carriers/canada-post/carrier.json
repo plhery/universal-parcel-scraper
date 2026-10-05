@@ -72,6 +72,12 @@
       "id": "canada-post-1",
       "pattern": "^\\d{16}$",
       "confidence": "low"
+    },
+    {
+      "id": "canada-post-2",
+      "pattern": "^[A-Z]{2}\\d{9}CA$",
+      "confidence": "high",
+      "checksum": "s10"
     }
   ]
 }

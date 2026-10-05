@@ -93,6 +93,38 @@
         ]
       },
       "note": "Published integration example, not a real shipment. The source attributes it to Colis Privé, which stays one candidate among several."
+    },
+    {
+      "number": "Q21400220470",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/livraison-colis-prive-rime-avec-malhonnetete-t343206.html",
+        "date": "2023-11-09"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified. The sender reports that Colis Privé located the parcel by this reference."
+    },
+    {
+      "number": "3SKABA3131106",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-prive-de-colis-arnaque-t267187.html",
+        "date": "2020-07-16"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Published in a Colis Privé delivery complaint with instructions to track through the PostNL international portal. The last-mile complaint does not identify the issuer."
     }
   ]
 }

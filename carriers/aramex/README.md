@@ -10,6 +10,9 @@ return the requested shipment number. No account, cookie bootstrap or browser is
 The portal may redirect that link once to a regional English tracking page; the signed
 query must remain unchanged.
 
+Global Shopper numbers can be submitted with an explicit Aramex selection. Their
+numeric shape alone does not select Aramex automatically.
+
 Requests use an application user agent because the edge rejects Node's default user
 agent on server networks. The same header is sent on the overview, detail and regional
 redirect requests.

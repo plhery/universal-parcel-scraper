@@ -45,6 +45,37 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to DTDC, which stays one candidate among several."
+    },
+    {
+      "number": "v34336783",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/www.dtdc.com?page=9",
+        "date": "2016-12-24"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified. Preserve the published lowercase input; normalization uppercases the consignment number."
+    },
+    {
+      "number": "N20527879",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/www.dtdc.com",
+        "date": "2023-05-30"
+      },
+      "expect": {
+        "carrier": "dtdc",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified. The review excerpt labels it as the DTDC AWB and separately mentions a FedEx partner number."
     }
   ]
 }

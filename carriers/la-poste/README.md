@@ -8,6 +8,11 @@ Numeric tracked-mail identifiers reach the same feed without truncation or
 conversion to a parcel number. Their detection rules live in `carrier.json`;
 generic numeric lengths alone do not identify La Poste.
 
+Printed control suffixes are preserved in requests and checked against the
+returned shipment identity. La Poste's
+[Smart Data guide](https://www.espacetechniqueetqualite.laposte.fr/system/files/public/FICHE%20PRATIQUE_Utilisation%20des%20num%C3%A9ros%20de%20suivi%20SD_Lettre%20suivie.pdf)
+describes their use; a suffix alone does not identify the carrier.
+
 ## How it works
 
 1. `direct`: one keyless GET of

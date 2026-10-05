@@ -69,12 +69,17 @@
   "detection": [
     {
       "id": "la-poste-1",
-      "pattern": "^[68][A-Z]\\d{11}$",
+      "pattern": "^(?:[68][A-Z]|5[N-Z])\\d{11}$",
       "confidence": "high"
     },
     {
       "id": "la-poste-4",
       "pattern": "^870\\d{11,12}$",
+      "confidence": "high"
+    },
+    {
+      "id": "la-poste-5",
+      "pattern": "^(?:870|880)\\d{11}[A-Z]$",
       "confidence": "high"
     },
     {

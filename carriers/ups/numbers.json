@@ -129,6 +129,62 @@
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to UPS, which stays one candidate among several."
+    },
+    {
+      "number": "1ZH32106DK48771633",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=1ZH32106DK48771633",
+        "date": "2026-08-14"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+    },
+    {
+      "number": "1Z97W1636811640653",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=1Z97W1636811640653",
+        "date": "2026-08-01"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+    },
+    {
+      "number": "1Z804W906858079845",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=1Z804W906858079845",
+        "date": "2026-07-31"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+    },
+    {
+      "number": "1Z000Y770414233027",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=1Z000Y770414233027",
+        "date": "2026-07-31"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
     }
   ]
 }

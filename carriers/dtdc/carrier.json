@@ -72,6 +72,11 @@
       "id": "dtdc-3",
       "pattern": "^[BDHPTUV]\\d{10}$",
       "confidence": "low"
+    },
+    {
+      "id": "dtdc-4",
+      "pattern": "^V\\d{8}$",
+      "confidence": "low"
     }
   ]
 }

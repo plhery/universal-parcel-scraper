@@ -18,6 +18,10 @@ The number shown must equal the requested one after normalization. Pages with a
 second or unlabelled banner or a conflicting form value are rejected, and so is
 history without a banner: the form value only echoes the request.
 
+Numeric references remain detection candidates because other carriers share
+their shapes. The adapter submits the complete normalized reference and never
+shortens it to make a returned parcel match.
+
 ## Normalization
 
 Scan sentences supply the status. Paris wall clocks become timestamps; date-only

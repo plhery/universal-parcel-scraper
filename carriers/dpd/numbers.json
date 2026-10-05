@@ -14,6 +14,7 @@
         "candidates": [
           "dpd",
           "dpd-fr",
+          "relais-colis",
           "ciblex",
           "seur",
           "brt",
@@ -40,6 +41,32 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to DPD, which no rule claims."
+    },
+    {
+      "number": "09447430407578",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=09447430407578",
+        "date": "2026-08-14"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public DPD shipment report on the German consumer forum. The issuing country is unestablished; this does not establish coverage by the Swiss adapter."
     }
   ]
 }

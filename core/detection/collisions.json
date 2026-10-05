@@ -5,7 +5,7 @@
       "colis-prive",
       "omgo"
     ],
-    "reason": "Colis Priv\u00e9 accepts generic seventeen-character composites; the specific OMGO prefix is the only high-confidence rule."
+    "reason": "Colis Privé accepts generic seventeen-character composites; the specific OMGO prefix is the only high-confidence rule."
   },
   {
     "shape": "AA9{10}",
@@ -13,7 +13,7 @@
       "amazon-logistics",
       "colis-prive"
     ],
-    "reason": "Amazon marketplace numbers are 12 characters, which Colis Priv\u00e9 also accepts; the Amazon rule is the only high-confidence one."
+    "reason": "Amazon marketplace numbers are 12 characters, which Colis Privé also accepts; the Amazon rule is the only high-confidence one."
   },
   {
     "shape": "AA9{9}AA",
@@ -29,7 +29,7 @@
       "asendia",
       "chronopost"
     ],
-    "reason": "Chronopost's low-confidence rule accepts any S10 shape, so it overlaps Asendia USA AS\u2026US numbers; the Asendia high-confidence rule decides."
+    "reason": "Chronopost's low-confidence rule accepts any S10 shape, so it overlaps Asendia USA AS…US numbers; the Asendia high-confidence rule decides."
   },
   {
     "shape": "AHOY then 8 characters mixing letters and digits",
@@ -37,7 +37,7 @@
       "asendia",
       "colis-prive"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps Pirate Ship AHOY numbers carried by Asendia USA; the Asendia high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps Pirate Ship AHOY numbers carried by Asendia USA; the Asendia high-confidence rule decides."
   },
   {
     "shape": "AA9{9}AA",
@@ -279,7 +279,7 @@
       "colis-prive",
       "dhl-ecommerce"
     ],
-    "reason": "17-digit numbers are claimed by both the DHL eCommerce and Colis Priv\u00e9 low-confidence rules; the pair stays a suggestion."
+    "reason": "17-digit numbers are claimed by both the DHL eCommerce and Colis Privé low-confidence rules; the pair stays a suggestion."
   },
   {
     "shape": "12 characters mixing letters and digits",
@@ -287,7 +287,7 @@
       "colis-prive",
       "geodis"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps GEODIS letter-and-digit references; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps GEODIS letter-and-digit references; the specific high-confidence rule decides."
   },
   {
     "shape": "AA9{10}",
@@ -295,7 +295,7 @@
       "colis-prive",
       "j-and-t"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps J&T Indonesia JY and JD numbers; the JY rule decides, JD numbers stay a suggestion."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps J&T Indonesia JY and JD numbers; the JY rule decides, JD numbers stay a suggestion."
   },
   {
     "shape": "9{5}A9{6}",
@@ -303,7 +303,7 @@
       "colis-prive",
       "mrw"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps MRW numbers with an embedded letter; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps MRW numbers with an embedded letter; the specific high-confidence rule decides."
   },
   {
     "shape": "9AA9{14}",
@@ -311,7 +311,7 @@
       "colis-prive",
       "ontrac"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps OnTrac 1LS waybills once punctuation is stripped; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps OnTrac 1LS waybills once punctuation is stripped; the specific high-confidence rule decides."
   },
   {
     "shape": "AA9{10}",
@@ -319,7 +319,7 @@
       "colis-prive",
       "poczta-polska"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps Poczta Polska PX numbers; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps Poczta Polska PX numbers; the specific high-confidence rule decides."
   },
   {
     "shape": "A{3}9{9}",
@@ -327,7 +327,7 @@
       "colis-prive",
       "purolator"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps Purolator three-letter numbers; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps Purolator three-letter numbers; the specific high-confidence rule decides."
   },
   {
     "shape": "LTN9{9}",
@@ -335,7 +335,7 @@
       "colis-prive",
       "landmark-global"
     ],
-    "reason": "Landmark's nine-digit LTN references overlap Colis Priv\u00e9's broad twelve-character rule; the specific Landmark rule decides, and Purolator excludes the LTN prefix."
+    "reason": "Landmark's nine-digit LTN references overlap Colis Privé's broad twelve-character rule; the specific Landmark rule decides, and Purolator excludes the LTN prefix."
   },
   {
     "shape": "A{3}9{9}",
@@ -343,7 +343,7 @@
       "colis-prive",
       "yanwen"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps Yanwen three-letter numbers; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps Yanwen three-letter numbers; the specific high-confidence rule decides."
   },
   {
     "shape": "A9{11}",
@@ -351,7 +351,7 @@
       "colis-prive",
       "yto"
     ],
-    "reason": "Colis Priv\u00e9 accepts any 12-character alphanumeric, so it overlaps YTO letter-prefixed numbers; the specific high-confidence rule decides."
+    "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps YTO letter-prefixed numbers; the specific high-confidence rule decides."
   },
   {
     "shape": "69{12}",
@@ -928,5 +928,175 @@
       "hermes-de"
     ],
     "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "S10 postal identifier ending CA",
+    "carriers": [
+      "canada-post",
+      "chronopost"
+    ],
+    "reason": "Canada Post owns the checksum-valid Canadian S10 suffix while the generic Chronopost shape remains a low-confidence suggestion."
+  },
+  {
+    "shape": "JVGL followed by 20 digits",
+    "carriers": [
+      "dhl",
+      "dhl-ecommerce"
+    ],
+    "reason": "DHL eCommerce Netherlands and DHL Paket share this family; a carrier lookup must establish the division."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "relais-colis",
+      "seur",
+      "xpressbees"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "hermes-de",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "hermes-de",
+      "relais-colis",
+      "seur",
+      "xpressbees"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "hermes-de",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "hermes-de",
+      "la-poste",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "la-poste",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta",
+      "relais-colis",
+      "seur"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "relais-colis",
+      "seur",
+      "xpressbees"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   }
 ]

@@ -19,6 +19,9 @@ Some legacy consignments are unavailable in this feed. Its generic failure
 message does not prove that a number is unknown. Recipient details, addresses,
 booking information and unlabelled weight values are excluded.
 
+Published legacy references can suggest DTDC without establishing that the
+current feed retains their history. Detection keeps that distinction.
+
 ## Testing
 
 Set `DTDC_TRACKING_NUMBER` outside the repository and run

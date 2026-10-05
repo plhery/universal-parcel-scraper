@@ -118,6 +118,49 @@
         "confidence": "high"
       },
       "note": "Publicly reported Chronopost reference linked to a German DPD waybill. The reported linkage must be confirmed against carrier history."
+    },
+    {
+      "number": "KU990760364FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-non-remis-a-chrono-poste-t18700.html",
+        "date": "2013-08-22"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "The customer’s pasted Chronopost history labels this as the master shipment for a multi-parcel delivery. KU990760381FR is the child named by the merchant; GEO/KU9907603812489 is its partner reference. Detection selects the shared La Poste feed."
+    },
+    {
+      "number": "KU990760381FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-non-remis-a-chrono-poste-t18700.html",
+        "date": "2013-08-23"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "The merchant independently names this Chronopost child parcel. The preceding history labels KU990760364FR as master and GEO/KU9907603812489 as partner reference; this identifier was not reconstructed. Detection selects the shared La Poste feed."
+    },
+    {
+      "number": "GEO/KU9907603812489",
+      "role": "composite",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-non-remis-a-chrono-poste-t18700.html",
+        "date": "2013-08-22"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The pasted Chronopost history explicitly labels this as the partner reference of the child shipment later named KU990760381FR. Preserve the literal reference; it is not a canonical shipment number or an adapter credential.",
+      "quarantine": true
     }
   ]
 }

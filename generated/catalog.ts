@@ -419,7 +419,17 @@ export const CARRIER_CATALOG = {
     "linkRules": [
       {
         "domains": [
-          "dhl.com",
+          "dhl.com"
+        ],
+        "params": [
+          "tracking-id",
+          "trackingId",
+          "piececode"
+        ],
+        "detectFromNumber": true
+      },
+      {
+        "domains": [
           "dhl.de",
           "deutschepost.de"
         ],
@@ -437,7 +447,7 @@ export const CARRIER_CATALOG = {
         "checksum": "s10"
       },
       {
-        "pattern": "^(JJD|JVGL)[A-Z0-9]{8,}$",
+        "pattern": "^(?:JJD[A-Z0-9]{8,}|JVGL(?![0-9]{20}$)[A-Z0-9]{8,})$",
         "confidence": "high"
       },
       {
@@ -451,6 +461,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^00340434\\d{12}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^JVGL[0-9]{20}$",
+        "confidence": "low"
       }
     ]
   },
@@ -497,7 +511,8 @@ export const CARRIER_CATALOG = {
         "params": [
           "tracking-id",
           "trackingId"
-        ]
+        ],
+        "detectFromNumber": true
       }
     ],
     "detectionRules": [
@@ -507,6 +522,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^[0-9]{16,17}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^JVGL[0-9]{20}$",
         "confidence": "low"
       }
     ]
@@ -968,7 +987,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^\\d{10}$",
+        "pattern": "^(?:\\d{10}|\\d{14})$",
         "confidence": "low"
       }
     ]
@@ -1005,11 +1024,15 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^[68][A-Z]\\d{11}$",
+        "pattern": "^(?:[68][A-Z]|5[N-Z])\\d{11}$",
         "confidence": "high"
       },
       {
         "pattern": "^870\\d{11,12}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^(?:870|880)\\d{11}[A-Z]$",
         "confidence": "high"
       },
       {
@@ -1662,7 +1685,7 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^(?![CL][A-Z]\\d{9}DE$)(?!AS\\d{9}US$)(?!(?:PZ|XU|XW|XY))[A-Z]{2}\\d{9}(?!CH$|FR$|IN$|NL$|GB$|IE$|BE$|PT$|NZ$|SG$|JP$|KR$|TH$|HK$|MY$|CN$|NO$|BR$|ES$|SE$|DK$|AT$|YP$|CL$)[A-Z]{2}$",
+        "pattern": "^(?![CL][A-Z]\\d{9}DE$)(?!AS\\d{9}US$)(?!(?:PZ|XU|XW|XY))[A-Z]{2}\\d{9}(?!CA$|CH$|FR$|IN$|NL$|GB$|IE$|BE$|PT$|NZ$|SG$|JP$|KR$|TH$|HK$|MY$|CN$|NO$|BR$|ES$|SE$|DK$|AT$|YP$|CL$)[A-Z]{2}$",
         "confidence": "high",
         "checksum": "s10"
       }
@@ -2456,6 +2479,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{16}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}CA$",
+        "confidence": "high",
+        "checksum": "s10"
       }
     ]
   },
@@ -3454,6 +3482,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^[BDHPTUV]\\d{10}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^V\\d{8}$",
         "confidence": "low"
       }
     ]

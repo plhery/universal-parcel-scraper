@@ -107,6 +107,62 @@
         ]
       },
       "note": "SPX followed only by digits, without the hub letters, must not resolve to SpeedX."
+    },
+    {
+      "number": "SPXSFO007852604130001175",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/speedx.io",
+        "date": "2026-04-17"
+      },
+      "expect": {
+        "carrier": "speedx",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified."
+    },
+    {
+      "number": "SPXMFE056775461351",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/speedx.io",
+        "date": "2025-12-09"
+      },
+      "expect": {
+        "carrier": "speedx",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified."
+    },
+    {
+      "number": "SPXMIA056749010616",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/speedx.io",
+        "date": "2025-08-13"
+      },
+      "expect": {
+        "carrier": "speedx",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified."
+    },
+    {
+      "number": "SPXMIA056749412630",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/review/speedx.io",
+        "date": "2025-08-13"
+      },
+      "expect": {
+        "carrier": "speedx",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified."
     }
   ]
 }

@@ -61,13 +61,10 @@
         "url": "https://marketplace.fnacdarty.com/s/article/Dois-je-obligatoirement-renseigner-un-num%C3%A9ro-de-suivi-tracking-pour-ma-commande?language=fr_BE"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "chronopost"
-        ]
+        "carrier": "la-poste",
+        "confidence": "high"
       },
-      "note": "Published integration example, not a real shipment. The source attributes it to La Poste / Colissimo, which no rule claims."
+      "note": "Published integration example, not a real shipment. The Smart Data family is corroborated by a public tracked-mail report."
     },
     {
       "number": "8G12345678901",
@@ -132,6 +129,34 @@
         "confidence": "high"
       },
       "note": "Made-up numeric tracked-mail identifier; La Poste documents fifteen-character tracked mail."
+    },
+    {
+      "number": "88000012680741A",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/la-poste-lettre-suivi-a-eviter-et-demander-a-vos-expediteurs-de-l-eviter-t362848.html",
+        "date": "2025-01-14"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "The recipient reports a tracked letter and a delivery result on La Poste’s portal. The shipment was not independently verified."
+    },
+    {
+      "number": "5N30053962734",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6abe6b377034c0d803771153",
+        "date": "2026-10-01"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "The sender describes a Colissimo parcel and its proof-of-posting number. The shipment was not independently verified."
     }
   ]
 }

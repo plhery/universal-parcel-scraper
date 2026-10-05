@@ -77,11 +77,12 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
         const trackingNumber = numberFromRule(url, firstRule);
         if (trackingNumber) {
           const detected = detectCarrierMatch(trackingNumber);
-          if (firstRule.detectFromNumber && detected.confidence === 'high') {
-            return { trackingNumber, ...detected, source: 'link' };
-          }
           const suggestedRules = rules.filter((candidate) => detected.candidates.includes(candidate.carrier));
           const suggestedCarriers = new Set(suggestedRules.map((candidate) => candidate.carrier));
+          if (firstRule.detectFromNumber && (detected.confidence === 'high'
+            || (detected.confidence === 'low' && suggestedCarriers.size > 1))) {
+            return { trackingNumber, ...detected, source: 'link' };
+          }
           const rule = detected.confidence === 'high'
             ? rules.find((candidate) => candidate.carrier === detected.carrier) ?? firstRule
             : suggestedCarriers.size === 1 ? suggestedRules[0]! : firstRule;

@@ -2,6 +2,8 @@
 
 Tracks parcel PINs and Canadian postal numbers through the public tracking application's anonymous JSON service. Delivery-notice and numeric reference lookups resolve one parcel PIN before retrieving its history.
 
+Checksum validation prevents malformed postal references from selecting this adapter.
+
 ## How retrieval works
 
 A PIN lookup reads the detail response directly. An alias lookup first requires one exact returned reference and its PIN, then checks the detail response against that PIN. The public application's empty Basic credential is sufficient; no session or browser is required. Both requests share one bounded deadline.

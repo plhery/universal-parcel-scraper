@@ -54,6 +54,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "relais-colis",
           "ciblex",
           "seur",
           "brt",
@@ -77,6 +78,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "relais-colis",
           "ciblex",
           "seur",
           "brt",
@@ -100,6 +102,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "relais-colis",
           "ciblex",
           "seur",
           "brt",
@@ -109,6 +112,30 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Delhivery, which stays one candidate among several."
+    },
+    {
+      "number": "34791191442900",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://nz.trustpilot.com/review/sirphire.com?page=2",
+        "date": "2026-09-17"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified. The updated review explicitly labels this as a newly generated Delhivery AWB."
     }
   ]
 }

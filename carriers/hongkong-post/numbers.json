@@ -27,6 +27,20 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "EA322573658HK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/my-speed-post-from-hong-kong-is-held-by-customs-for-23-days-118363/",
+        "date": "2022-08-29"
+      },
+      "expect": {
+        "carrier": "hongkong-post",
+        "confidence": "high"
+      },
+      "note": "Sender reports a Hong Kong Speed Post shipment to China; not independently verified."
     }
   ]
 }

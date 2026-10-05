@@ -302,6 +302,34 @@
         "confidence": "none"
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Amazon Logistics; no rule matches this shape."
+    },
+    {
+      "number": "DE5679225276",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=DE5679225276",
+        "date": "2026-08-05"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "Public Amazon Logistics shipment report on the German consumer forum."
+    },
+    {
+      "number": "DE5727055665",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=DE5727055665",
+        "date": "2026-08-05"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "Public Amazon Logistics shipment report on the German consumer forum."
     }
   ]
 }

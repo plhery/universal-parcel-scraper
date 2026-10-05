@@ -16,6 +16,8 @@ Poste's unified feed answers Chronopost numbers, so tracking runs through
   portal for no extra field).
 
 The unified feed's identity checks and limitations follow the shared adapter.
+Master and child parcels retain separate shipment identities. A partner
+reference copied from history does not become the child's adapter credential.
 
 `npm run test:carriers:live -- testing/frenchDirectCarriers.live.test.ts` checks
 wrong-number handling without supplied credentials.

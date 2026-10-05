@@ -144,6 +144,33 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "520769802262",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/www.purolator.com",
+        "date": "2026-09-28"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Publicly reported shipment number; carrier attribution was not independently verified. The reviewer explicitly labels it as the tracking number."
     }
   ]
 }

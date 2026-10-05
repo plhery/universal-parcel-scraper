@@ -49,6 +49,20 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. EMS item to Japan."
+    },
+    {
+      "number": "EE299377630KR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/post-arrived-to-china-on-saturday-from-korea-why-is-stagnated-since-there-92344/",
+        "date": "2021-07-07"
+      },
+      "expect": {
+        "carrier": "korea-post",
+        "confidence": "high"
+      },
+      "note": "Customer gives this number in a follow-up to a shipment report explicitly naming Korea Post; not independently verified."
     }
   ]
 }

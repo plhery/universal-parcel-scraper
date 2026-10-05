@@ -108,6 +108,9 @@ and returns its tracking result for reuse. An ambiguous ten-digit number include
 facility-local clocks stay unresolved; universal history can supply verified offsets.
 Consumers can ask enabled universal providers during preflight and reuse those results
 when saving, while retaining direct confirmation for carrier identity.
+Shared tracking portals marked `detectFromNumber` preserve ambiguity when the
+number suggests several divisions served by the URL. A country-specific portal
+can still identify its own operation.
 Consumers bound concurrency, cache answers and
 decide when another check is due. `recognizeAll` passes cancellation and its budget to each
 callback and discards late answers.
