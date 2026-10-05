@@ -128,6 +128,28 @@ describe('Cainiao projection', () => {
     expect(scan(undefined)).toBe('2026-06-10 07:40:00');
   });
 
+  it('reads a zone-less notice that Cainiao recorded itself on the Beijing clock', () => {
+    const scan = (timeStr: string, time: unknown, timeZone?: string) => ({ actionCode: 'LAST_MILE_ASN_NOTIFY', timeStr, time, timeZone });
+    const departed = { actionCode: 'SC_OUTBOUND_SUCCESS', timeStr: '2026-06-10 07:39:39', timeZone: 'GMT+8', time: 1781048379000 };
+    // The notice's epoch keeps milliseconds and renders to its timeStr in Beijing.
+    const notice = scan('2026-06-10 07:40:16', 1781048416947, '');
+    const result = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
+      latestTrace: notice, detailList: [notice, departed],
+    }] }, 'LP00000000000001');
+    expect(result.last_update).toBe('2026-06-10T07:40:16+08:00');
+    expect(result.events?.map((event) => event.time)).toEqual(['2026-06-10T07:40:16+08:00', '2026-06-10T07:39:39+08:00']);
+    const time = (latestTrace: unknown) => parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
+      latestTrace, detailList: [],
+    }] }, 'LP00000000000001').last_update;
+    expect(time(scan('2026-06-10 07:40:16', 1781048416947))).toBe('2026-06-10T07:40:16+08:00');
+    // A whole-second epoch can be a reading of the text, and one that disagrees with it is no record of it.
+    expect(time(scan('2026-06-10 07:40:16', 1781048416000, ''))).toBe('2026-06-10 07:40:16');
+    expect(time(scan('2026-06-10 01:40:16', 1781048416947, ''))).toBe('2026-06-10 01:40:16');
+    expect(time(scan('2026-06-10 07:40:16', '1781048416947', ''))).toBe('2026-06-10 07:40:16');
+    // A zone the adapter cannot read is still a zone: it is not replaced by Beijing's.
+    expect(time(scan('2026-06-10 07:40:16', 1781048416947, 'CET'))).toBe('2026-06-10 07:40:16');
+  });
+
   it.each(['ra 123.456-785 ch', 'RA123456785CH'])('normalizes the machine-readable partner reference before host validation: %s', (reference) => {
     const result = normalizeCarrierResult(parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
       copyRealMailNo: reference, latestTrace: { actionCode: 'LH_ARRIVE' }, detailList: [],

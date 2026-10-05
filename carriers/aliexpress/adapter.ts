@@ -73,14 +73,36 @@ function cainiaoHandoffNumber(trackingModule: JsonObject): string {
  * its offset. `timeStr` alone is not UTC, and the epoch `time` field is not
  * the instant either: it reads `timeStr` as Beijing time even for European
  * scans, putting a morning "out for delivery" in the middle of the night
- * (checked 2026-09-22). Without a zone the text is kept.
+ * (checked 2026-09-22). Without a zone the text is kept, unless Cainiao
+ * recorded the scan itself (`recordedInBeijing`).
  */
 function scanTime(scan: JsonObject): string {
   const wall = text(scan.timeStr);
   const zone = /^(?:GMT|UTC)\s*(?:([+-])(\d{1,2})(?::?(\d{2}))?)?$/i.exec(text(scan.timeZone));
-  if (!wall || !zone) return wall;
+  if (!wall) return wall;
+  if (!zone) {
+    if (text(scan.timeZone).trim() || !recordedInBeijing(scan, wall)) return wall;
+    return explicitOffsetTime(`${wall.replace(' ', 'T')}+08:00`)?.iso ?? wall;
+  }
   const offset = zone[1] ? `${zone[1]}${zone[2]!.padStart(2, '0')}:${zone[3] ?? '00'}` : 'Z';
   return explicitOffsetTime(`${wall.replace(' ', 'T')}${offset}`)?.iso ?? wall;
+}
+
+const BEIJING_OFFSET_MS = 8 * 3_600_000;
+
+/**
+ * Whether a zone-less scan is Cainiao's own record on the Beijing clock. Its
+ * notices (`LAST_MILE_ASN_NOTIFY`, "Carrier update") come from no facility, so
+ * they carry no `timeZone`, and their epoch keeps milliseconds that `timeStr`
+ * cannot hold: the epoch is then the recorded instant and `timeStr` its
+ * Beijing rendering, not the other way round. A whole-second epoch could be
+ * read from the text, so it proves nothing.
+ */
+function recordedInBeijing(scan: JsonObject, wall: string): boolean {
+  const epoch = scan.time;
+  if (typeof epoch !== 'number' || !Number.isSafeInteger(epoch) || epoch % 1000 === 0) return false;
+  const beijing = new Date(epoch + BEIJING_OFFSET_MS);
+  return Number.isFinite(beijing.getTime()) && beijing.toISOString().slice(0, 19).replace('T', ' ') === wall;
 }
 
 /** Projects one `detail.json` payload. Pure: the offline tests target this. */

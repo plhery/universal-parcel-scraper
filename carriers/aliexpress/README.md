@@ -38,8 +38,12 @@ the last-mile carrier.
 - An empty module is not-found only when `mailNoSource` is `EXTERNAL`. Otherwise the seller has
   not shipped yet and the parcel stays pending; a 404 would make the sync give up on an early parcel.
 - Scan time is `timeStr` (local wall clock) plus `timeZone` (`GMT+2`, `GMT+8`…). `timeStr` alone
-  would be read as UTC, the catalog timezone. The epoch `time` field is ignored: it treats `timeStr`
-  as Beijing time even for European scans. A scan without `timeZone` keeps its raw text.
+  would be read as UTC, the catalog timezone. The epoch `time` field is not the instant: it treats
+  `timeStr` as Beijing time even for European scans.
+- Cainiao's own notices (`LAST_MILE_ASN_NOTIFY`, "Carrier update") carry no `timeZone`. Their epoch
+  keeps milliseconds that `timeStr` cannot hold, so the epoch is the recorded instant and `timeStr`
+  its Beijing rendering: such a scan is read at `+08:00`. Any other scan without `timeZone` keeps its
+  raw text, because a whole-second epoch may only be a reading of that text.
 - Unknown action codes leave the event without a stage; the sync classifies the wording and records
   it for review.
 
