@@ -6,6 +6,7 @@ COPY tracking-capture.mjs /app/packages/tiers/src/utils/tracking-capture.mjs
 COPY royal-mail-history.mjs /app/packages/tiers/src/utils/royal-mail-history.mjs
 COPY fedex-session.mjs /app/packages/tiers/src/utils/fedex-session.mjs
 COPY australia-post-browser.mjs /app/packages/tiers/src/utils/australia-post-browser.mjs
+COPY dhl-express-browser.mjs /app/packages/tiers/src/utils/dhl-express-browser.mjs
 COPY sf-express-session.mjs /app/packages/tiers/src/utils/sf-express-session.mjs
 COPY sf-express-gap.mjs /app/packages/tiers/src/utils/sf-express-gap.mjs
 COPY install.mjs /tmp/install-tracking-capture.mjs

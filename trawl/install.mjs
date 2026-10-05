@@ -12,6 +12,11 @@ for (const tier of [2, 3]) {
   const start = 'const start = Date.now()';
   if (source.split(start).length !== 2) throw new Error('TRAWL tier entry changed');
   const carrierRunners = `if (${tier === 3 ? '!proxyUrl && ' : ''}!screenshot && (!method || method === "GET")
+    && !body && !Object.keys(extraHeaders ?? {}).length && dhlExpressBrowserNumber(url, capture)) {
+    return await runDhlExpressBrowser({ url, handle, tier: ${tier}, maxTimeout, capture,
+      installPolicy: page => installOutboundPolicy(page, validateOutboundUrl) })
+  }
+  if (${tier === 3 ? '!proxyUrl && ' : ''}!screenshot && (!method || method === "GET")
     && !body && !Object.keys(extraHeaders ?? {}).length && sfExpressSessionNumber(url, capture)) {
     return await sfExpressSessions.run({ url, handle, tier: ${tier}, maxTimeout, capture,
       installPolicy: page => installOutboundPolicy(page, validateOutboundUrl) })
@@ -28,6 +33,7 @@ for (const tier of [2, 3]) {
   }
   ${start}`;
   writeFileSync(path, 'import { attachTrackingCapture } from "../utils/tracking-capture.mjs"\n'
+    + 'import { dhlExpressBrowserNumber, runDhlExpressBrowser } from "../utils/dhl-express-browser.mjs"\n'
     + 'import { australiaPostBrowserRequest, runAustraliaPostBrowser } from "../utils/australia-post-browser.mjs"\n'
     + 'import { sfExpressSessionNumber, sfExpressSessions } from "../utils/sf-express-session.mjs"\n'
     + 'import { fedexSessions, fedexSessionNumber } from "../utils/fedex-session.mjs"\n'
