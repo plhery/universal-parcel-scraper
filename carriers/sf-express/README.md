@@ -41,6 +41,11 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   stripped from remarks, and delivered scans read `Delivered`.
 - Not used: [SF International](https://www.sf-international.com/us/en/support/querySupport/waybill)
   (Tencent verification) and the Mainland China portal (GeeTest plus phone verification).
+- Not used: SF's Android apps. `com.sf.hmto` posts to
+  `https://hmto.sf-express.com/cx-app-query/query/app/waybillNo/queryWaybillByBNo` with a signature
+  computed in a packed native library, and asks for the last four digits of a phone number. Its
+  scans carry a date and a time with no zone. `com.sf.iapp` posts to
+  `https://iccsp.sf-international.com/iccsp/api/app/queryRouteV1`, which requires a signed-in token.
 
 ## Limitations
 

@@ -51,6 +51,9 @@ once.
   ignored.
 - Not used: Deutsche Post's business tracking API — needs contractual
   credentials for data the recipient page exposes publicly.
+- Not used: the Post & DHL app (`de.dhl.paket`). Its tracking tab is a web view
+  of the same page, calling the same `/int-verfolgen/data` endpoints behind the
+  same protection. Its native API clients serve signed-in accounts only.
 
 ## Limitations
 

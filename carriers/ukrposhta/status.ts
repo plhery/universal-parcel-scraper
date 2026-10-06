@@ -34,5 +34,5 @@ export function ukrposhtaStatus(code: string): ClassifiedStatus | undefined {
 // "Returned to Sender" is the decision to start the journey back. The
 // separate "Return: Delivered to Sender" scan confirms its completion.
 export function ukrposhtaReturnCue(label: string): boolean {
-  return /^Return: /i.test(label) || /^Returned to Sender(?:\s|\()/i.test(label);
+  return /^Return: /i.test(label) || /^Returned to Sender(?:\s|\()/i.test(label) || /^Повернення[.:]/i.test(label);
 }

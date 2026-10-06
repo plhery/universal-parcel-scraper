@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { clean } from '../../core/transport/text.js';
+import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { ukrposhtaReturnCue, ukrposhtaStatus } from './status.js';
 
@@ -65,6 +65,64 @@ export function parseUkrposhtaOverview(payload: unknown, requested: string): Ukr
     label: text(row.eventName, 'overview status', true), location: text(row.name, 'overview location'), country: text(row.country, 'overview country') };
 }
 
+interface ScanRow { date: string; code: string; label: string; location: string; country: string; reason: string }
+
+/** One result from current-first scans, following a return decision into its own leg. */
+function project(rows: ScanRow[]): CarrierResult {
+  const latest = rows[0]!;
+  // Both native histories are current-first. Keep that order across foreign
+  // wall clocks or missing dates instead of sorting them as UTC instants.
+  let returnLeg = false;
+  const events = new Array<CarrierEvent>(rows.length);
+  for (let index = rows.length - 1; index >= 0; index--) {
+    const row = rows[index]!;
+    if (ukrposhtaReturnCue(row.label)) returnLeg = true;
+    let classified = ukrposhtaStatus(row.code);
+    if (row.reason === '65' || row.reason === '66') classified = { status: 'exception', stage: 'exception' };
+    if (classified?.stage === 'delivered' && returnLeg) classified = { status: 'exception', stage: 'returned' };
+    const local = ukrposhtaWallClock(row.date);
+    events[index] = {
+      description: row.label, provider_code: row.code,
+      ...(row.location || row.country ? { location: [row.location, row.country].filter(Boolean).join(', ') } : {}),
+      ...(local ? { local_time: local } : row.date ? { provider_time_text: row.date } : {}),
+      ...(classified ? { stage: classified.stage } : {}), ...(returnLeg ? { provider_leg: 'return' } : {}),
+    };
+  }
+  const current = events[0]!;
+  const stage = current.stage;
+  const status = stage === 'returned' || stage === 'exception' ? 'exception' : ukrposhtaStatus(latest.code)?.status ?? 'unknown';
+  const seen = new Set<string>();
+  const deduplicated = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
+  return { status, ...(stage ? { current_stage: stage } : {}), last_status_text: latest.label, last_update: null, events: deduplicated.slice(0, 100) };
+}
+
+/**
+ * The status-tracking API's reply to one barcode: a bare array of scans, each naming the
+ * barcode and its position in the history.
+ */
+export function parseUkrposhtaStatuses(payload: unknown, requested: string): CarrierResult {
+  const number = normalizeUkrposhtaNumber(requested);
+  if (!Array.isArray(payload)) throw new SchemaError(PROVIDER, 'Ukrposhta returned an invalid tracking response');
+  if (!payload.length) throw new IndeterminateError(PROVIDER);
+  if (payload.length > MAX_SCANS) throw new SchemaError(PROVIDER, 'Ukrposhta returned excessive history');
+  const steps = new Set<number>();
+  const rows = payload.map((raw: unknown) => {
+    if (!isRecord(raw)) throw new SchemaError(PROVIDER, 'Ukrposhta returned an invalid history row');
+    if (text(raw.barcode, 'history identity', true).toUpperCase() !== number) throw new SchemaError(PROVIDER, 'Ukrposhta returned a different history identity');
+    if (!Number.isInteger(raw.step) || Number(raw.step) < 1 || steps.has(Number(raw.step))) throw new SchemaError(PROVIDER, 'Ukrposhta returned an invalid history position');
+    steps.add(Number(raw.step));
+    if (!['string', 'number'].includes(typeof raw.event)) throw new SchemaError(PROVIDER, 'Ukrposhta returned an invalid scan code');
+    const reason = raw.eventReason_id == null ? '' : cleanScalar(raw.eventReason_id, 16);
+    if (raw.eventReason_id != null && !/^\d{1,9}$/.test(reason)) throw new SchemaError(PROVIDER, 'Ukrposhta returned an invalid scan reason code');
+    return { step: Number(raw.step), date: text(raw.date, 'scan clock'), code: cleanScalar(raw.event, 64),
+      label: text(raw.eventName, 'scan status', true), location: text(raw.name, 'scan location'), country: text(raw.country, 'scan country'),
+      reason };
+  });
+  if (rows.some(row => !row.code)) throw new SchemaError(PROVIDER, 'Ukrposhta omitted scan code');
+  // The API lists scans oldest first; the position, not the foreign wall clock, orders them.
+  return project(rows.sort((a, b) => b.step - a.step));
+}
+
 export function parseUkrposhtaHistory(payload: unknown, overview: UkrposhtaOverview): CarrierResult {
   const data = envelope(payload);
   if (!isRecord(data.from_to) || !Array.isArray(data.result)) throw new SchemaError(PROVIDER, 'Ukrposhta omitted its parcel history');
@@ -96,28 +154,6 @@ export function parseUkrposhtaHistory(payload: unknown, overview: UkrposhtaOverv
   if (!sameClock || latest.code !== overview.code || latest.label !== overview.label
     || latest.location !== overview.location || latest.country !== overview.country) throw new IndeterminateError(PROVIDER, 'Ukrposhta overview and current history disagree');
 
-  // Both native histories are current-first. Keep that order across foreign
-  // wall clocks or missing dates instead of sorting them as UTC instants.
-  let returnLeg = false;
-  const events = new Array<CarrierEvent>(rows.length);
-  for (let index = rows.length - 1; index >= 0; index--) {
-    const row = rows[index]!;
-    if (ukrposhtaReturnCue(row.label)) returnLeg = true;
-    let classified = ukrposhtaStatus(row.code);
-    if (row.reason === '65' || row.reason === '66') classified = { status: 'exception', stage: 'exception' };
-    if (classified?.stage === 'delivered' && returnLeg) classified = { status: 'exception', stage: 'returned' };
-    const local = ukrposhtaWallClock(row.date);
-    events[index] = {
-      description: row.label, provider_code: row.code,
-      ...(row.location || row.country ? { location: [row.location, row.country].filter(Boolean).join(', ') } : {}),
-      ...(local ? { local_time: local } : row.date ? { provider_time_text: row.date } : {}),
-      ...(classified ? { stage: classified.stage } : {}), ...(returnLeg ? { provider_leg: 'return' } : {}),
-    };
-  }
-  const current = events[0]!;
-  const stage = current.stage;
-  const status = stage === 'returned' || stage === 'exception' ? 'exception' : ukrposhtaStatus(latest.code)?.status ?? 'unknown';
-  const seen = new Set<string>();
-  const deduplicated = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
-  return { status, ...(stage ? { current_stage: stage } : {}), last_status_text: latest.label, last_update: null, events: deduplicated.slice(0, 100) };
+  return project(rows);
 }
+

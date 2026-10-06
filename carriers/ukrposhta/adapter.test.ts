@@ -3,8 +3,8 @@ import { chromium, type Browser } from 'playwright-core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { adapter, UKRPOSHTA_API, UkrposhtaTracker, ukrposhtaTrackingUrl } from './adapter.js';
-import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview, ukrposhtaWallClock } from './parser.js';
+import { adapter, UKRPOSHTA_API, UKRPOSHTA_STATUS_API, UkrposhtaTracker, ukrposhtaTrackingUrl } from './adapter.js';
+import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview, parseUkrposhtaStatuses, ukrposhtaWallClock } from './parser.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '0000000000091';
@@ -134,14 +134,14 @@ describe('Ukrposhta native history projection', () => {
   });
 });
 
-function browserSeam(pair = fixture()) {
+function browserSeam(pair = fixture(), number = NUMBER) {
   const frame = {}, replies = [pair.overview, pair.history];
   let current = 0;
   const page = {
     mainFrame: () => frame,
     waitForResponse: vi.fn(async () => {
       const index = current++;
-      const input = index === 0 ? `${NUMBER},${NUMBER}` : NUMBER;
+      const input = index === 0 ? `${number},${number}` : number;
       return { url: () => UKRPOSHTA_API, status: (): number => 200, headers: () => ({}),
         request: () => ({ method: () => 'POST', frame: () => frame, postDataJSON: () => ({ barcode: input, lang: 'EN' }) }),
         body: async () => Buffer.from(JSON.stringify(replies[index])) };
@@ -153,6 +153,110 @@ function browserSeam(pair = fixture()) {
   const launch = vi.spyOn(chromium, 'launch').mockResolvedValue(browser as never);
   return { page, context, browser, launch };
 }
+
+const TOKEN = 'synthetic-token-0001';
+const statuses = () => fixture('statuses');
+const statusApi = (body: unknown = statuses(), status = 200, headers: Record<string, string> = {}) =>
+  vi.fn<typeof fetch>().mockImplementation(async () => new Response(typeof body === 'string' ? body : JSON.stringify(body), { status, headers }));
+
+describe('Ukrposhta status API projection', () => {
+  it('reads the oldest-first reply as the portal history, with second precision', () => {
+    const result = normalizeCarrierResult(parseUkrposhtaStatuses(statuses(), NUMBER));
+    const portal = parsed();
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_update: null });
+    expect(result.events?.map(event => [event.stage, event.provider_code, event.provider_leg])).toEqual(
+      portal.events?.map(event => [event.stage, event.provider_code, event.provider_leg]));
+    expect(result.events?.[0]).toMatchObject({ local_time: '2026-03-29T16:03:37', description: 'Return: Delivered to Sender' });
+    expect(result.events?.every(event => event.local_time && !event.time)).toBe(true);
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+  });
+
+  it('orders by position, whatever order the reply or its clocks arrive in', () => {
+    const rows = statuses().reverse();
+    rows[0].date = '2020-01-01T00:00:00';
+    expect(parseUkrposhtaStatuses(rows, NUMBER).events?.[0]).toMatchObject({ provider_code: '41000', local_time: '2020-01-01T00:00:00' });
+  });
+
+  it('follows a return under the Ukrainian wording too', () => {
+    const rows = statuses();
+    for (const row of rows) row.eventName = String(row.eventName).replace(/^Return: /, 'Повернення. ');
+    rows[1].eventName = 'Повернення. Відмова одержувача';
+    expect(parseUkrposhtaStatuses(rows, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned' });
+  });
+
+  it.each(['identity', 'missing identity', 'duplicate position', 'position', 'code', 'reason', 'label', 'row', 'envelope', 'too many'])('rejects a changed %s', mode => {
+    const rows: unknown[] = statuses(), row = rows[2] as Record<string, unknown>;
+    if (mode === 'identity') row.barcode = '0000000000092';
+    if (mode === 'missing identity') delete row.barcode;
+    if (mode === 'duplicate position') row.step = 1;
+    if (mode === 'position') row.step = '3';
+    if (mode === 'code') row.event = null;
+    if (mode === 'reason') row.eventReason_id = {};
+    if (mode === 'label') row.eventName = '';
+    if (mode === 'row') rows[2] = null;
+    const payload = mode === 'envelope' ? { result: rows } : mode === 'too many' ? Array.from({ length: 501 }, (_, step) => ({ ...row, step: step + 1 })) : rows;
+    expect(() => parseUkrposhtaStatuses(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('keeps an empty history inconclusive', () => {
+    expect(() => parseUkrposhtaStatuses([], NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+});
+
+describe('Ukrposhta direct status API retrieval', () => {
+  it('asks once with the configured bearer and starts no browser', async () => {
+    const seam = browserSeam(), fetcher = statusApi(), recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const instance = adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder, fetcher, env: { UKRPOSHTA_TRACKING_TOKEN: ` Bearer ${TOKEN} ` } });
+    await expect(instance.track({ number: NUMBER })).resolves.toMatchObject({ current_stage: 'returned' });
+    const [url, init] = fetcher.mock.calls[0]!;
+    expect(String(url)).toBe(`${UKRPOSHTA_STATUS_API}?barcode=${NUMBER}&lang=en`);
+    expect(Object.fromEntries(new Headers(init!.headers))).toEqual({ accept: 'application/json', authorization: `Bearer ${TOKEN}` });
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(seam.launch).not.toHaveBeenCalled();
+    expect(recorder.step).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ step: 'direct', outcome: 'ok' }));
+  });
+
+  it('skips the API without a usable token', async () => {
+    const fetcher = statusApi(), launches: unknown[] = [];
+    for (const token of [undefined, '', 'short', 'two words here', 'line\nbreak-token']) {
+      launches.push(browserSeam().launch);
+      await expect(new UkrposhtaTracker({ executablePath: '/synthetic/chromium', token, fetcher }).fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'returned' });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(launches).toHaveLength(5);
+    for (const launch of launches) expect(launch).toHaveBeenCalled();
+    expect(() => new UkrposhtaTracker({ fetcher }).fetch(NUMBER)).toThrow(expect.objectContaining({ kind: 'challenge' }));
+  });
+
+  it.each([[401, 'challenge'], [403, 'challenge'], [500, 'indeterminate']] as const)('hands HTTP %s to the browser', async (status, kind) => {
+    const seam = browserSeam(), recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const tracker = new UkrposhtaTracker({ executablePath: '/synthetic/chromium', token: TOKEN, fetcher: statusApi('<html>403 Forbidden</html>', status), recorder });
+    await expect(tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'returned' });
+    expect(seam.launch).toHaveBeenCalledOnce();
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'direct', outcome: kind }));
+    await expect(new UkrposhtaTracker({ token: TOKEN, fetcher: statusApi('<html>403 Forbidden</html>', status) }).fetch(NUMBER)).rejects.toMatchObject({ kind });
+  });
+
+  it('leaves an unknown domestic barcode inconclusive and gives an international one its second source', async () => {
+    const international = 'RR000000005UA';
+    const seam = browserSeam({ overview: fixture('unknown'), history: fixture().history }, international);
+    const unknown = () => statusApi({ message: 'Shipment not found' }, 404);
+    const options = { executablePath: '/synthetic/chromium', token: TOKEN };
+    await expect(new UkrposhtaTracker({ ...options, fetcher: unknown() }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(seam.launch).not.toHaveBeenCalled();
+    await expect(new UkrposhtaTracker({ ...options, fetcher: unknown() }).fetch(international)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(seam.launch).toHaveBeenCalledOnce();
+  });
+
+  it('keeps rate limits, a missing endpoint and changed replies apart from absence', async () => {
+    browserSeam();
+    const run = (fetcher: typeof fetch) => new UkrposhtaTracker({ token: TOKEN, fetcher }).fetch(NUMBER);
+    await expect(run(statusApi('{}', 429, { 'retry-after': '20' }))).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 20_000 });
+    await expect(run(statusApi({ message: 'no Route matched' }, 404))).rejects.toMatchObject({ kind: 'transport' });
+    await expect(run(statusApi('<html></html>'))).rejects.toMatchObject({ kind: 'schema' });
+    await expect(run(statusApi({ message: 'Shipment not found' }))).rejects.toMatchObject({ kind: 'schema' });
+  });
+});
 
 describe('Ukrposhta bounded anonymous browser retrieval', () => {
   it('uses a fresh context and two native requests inside one recorded lookup', async () => {

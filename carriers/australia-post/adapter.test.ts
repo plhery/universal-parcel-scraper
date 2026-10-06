@@ -129,17 +129,72 @@ function service(captures: Array<Record<string, unknown>> = [capture()], extra: 
   return { url: australiaPostTrackingUrl(NUMBER), html: '<html/>', tier: 2, statusCode: 200,
     capturedResponses: captures, ...extra };
 }
+const refused = () => vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}', { status: 403 }));
+/** A tracker whose direct request is refused, so the browser service answers. */
 function tracker(payload: unknown) {
   const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(payload));
   const trawl = new TrawlClient('https://browser.example.test', fetcher);
-  return { fetcher, trawl, tracker: new AustraliaPostTracker({ trawl }) };
+  const direct = refused();
+  return { fetcher, trawl, direct, tracker: new AustraliaPostTracker({ trawl, fetcher: direct }) };
 }
+function direct(body: unknown = fixture(), status = 200, headers: Record<string, string> = {}) {
+  const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(typeof body === 'string' ? body : JSON.stringify(body), { status, headers }));
+  const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(service()));
+  return { fetcher, browser, tracker: new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher }) };
+}
+
+describe('Australia Post direct retrieval', () => {
+  it('asks the gateway as the official app does and never starts a browser after an answer', async () => {
+    const { tracker: client, fetcher, browser } = direct();
+    await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    const [url, init] = fetcher.mock.calls[0]!;
+    expect(url).toBe(australiaPostApiUrl(NUMBER));
+    expect(init!.cache).toBe('no-cache');
+    expect(Object.fromEntries(new Headers(init!.headers))).toEqual({ accept: 'application/json', ap_app_id: 'MYPOST',
+      ap_channel_name: 'ANDROID', 'user-agent': 'okhttp/4.12.0', 'accept-language': 'en-AU' });
+    const unknown = empty(); unknown[0].trackingIds = [NUMBER];
+    const missing = direct(unknown);
+    await expect(missing.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
+    expect(browser).not.toHaveBeenCalled();
+    expect(missing.browser).not.toHaveBeenCalled();
+  });
+
+  it('hands a refused or failed request to the browser service', async () => {
+    for (const status of [401, 403, 500]) {
+      const { tracker: client, browser } = direct('<html>blocked</html>', status);
+      await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+      expect(browser).toHaveBeenCalledTimes(1);
+    }
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const { fetcher, browser } = direct('{}', 403);
+    await adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher, recorder, env: {}, browserExecutablePath: null }).track({ number: NUMBER });
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'direct', outcome: 'challenge' }));
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'ok', fallbackFrom: 'direct' }));
+  });
+
+  it('keeps rate limits, changed schemas and unprocessable references away from the browser', async () => {
+    const limited = direct('{}', 429, { 'retry-after': '30' });
+    await expect(limited.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 30_000 });
+    const html = direct('<html>blocked</html>');
+    await expect(html.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    const internal = direct([{ status: 500, trackingIds: [NUMBER], error: { errorCode: -1, message: 'Unexpected exception' } }]);
+    await expect(internal.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    for (const client of [limited, html, internal]) expect(client.browser).not.toHaveBeenCalled();
+  });
+
+  it('answers without a browser service and names it only when the gateway refuses', async () => {
+    const answered = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(fixture()));
+    await expect(new AustraliaPostTracker({ trawl: null, fetcher: answered }).fetch(NUMBER, { budgetMs: 5_000 })).resolves.toMatchObject({ status: 'delivered' });
+    await expect(new AustraliaPostTracker({ trawl: null, fetcher: refused() }).fetch(NUMBER))
+      .rejects.toMatchObject({ kind: 'challenge', message: expect.stringContaining('browser tracking service') });
+  });
+});
 
 describe('Australia Post browser retrieval', () => {
   it('serializes exact capture and page URLs, reserves transport time and records the step', async () => {
-    const { trawl, fetcher } = tracker(service());
+    const { trawl, fetcher, direct: refusedDirect } = tracker(service());
     const recorder = { step: vi.fn(), lookup: vi.fn() };
-    const carrier = adapter({ trawl, recorder, env: {}, browserExecutablePath: null });
+    const carrier = adapter({ trawl, fetcher: refusedDirect, recorder, env: {}, browserExecutablePath: null });
     await expect(carrier.track({ number: NUMBER })).resolves.toMatchObject({ status: 'delivered' });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const request = JSON.parse(String(fetcher.mock.calls[0]![1]!.body));
@@ -149,7 +204,7 @@ describe('Australia Post browser retrieval', () => {
     expect(request.maxTimeout).toBeLessThanOrEqual(30_000);
     expect(JSON.stringify(request)).not.toMatch(/api-key|Cookie|Authorization/);
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'australia-post', step: 'trawl', outcome: 'ok' }));
-    expect(recorder.lookup).toHaveBeenCalledWith(expect.objectContaining({ outcome: 'ok', attempts: 1 }));
+    expect(recorder.lookup).toHaveBeenCalledWith(expect.objectContaining({ outcome: 'ok', attempts: 2 }));
   });
 
   it('uses only the latest exact response, ignoring preflight and unrelated numbers', async () => {
@@ -179,14 +234,13 @@ describe('Australia Post browser retrieval', () => {
     ]) await expect(tracker(value).tracker.fetch(NUMBER)).rejects.toThrow();
   });
 
-  it('requires a browser, validates input and honors cancellation and caller budgets', async () => {
-    await expect(new AustraliaPostTracker({ trawl: null }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+  it('validates input and honors cancellation and caller budgets', async () => {
     const { tracker: client, fetcher } = tracker(service());
     await expect(client.fetch('bad')).rejects.toMatchObject({ kind: 'invalid_input' });
     await expect(client.fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     for (const budgetMs of [0, -1, Infinity, 60_001]) await expect(client.fetch(NUMBER, { budgetMs })).rejects.toThrow('budget');
-    for (const budgetMs of [1, 15_000]) await expect(client.fetch(NUMBER, { budgetMs })).rejects.toMatchObject({ kind: 'budget' });
     await expect(client.fetch('7'.repeat(35))).rejects.toMatchObject({ kind: 'invalid_input' });
+    await expect(client.fetch(NUMBER, { budgetMs: 15_000 })).rejects.toMatchObject({ kind: 'budget' });
     expect(fetcher).not.toHaveBeenCalled();
     await client.fetch(NUMBER, { budgetMs: 20_000 });
     expect(JSON.parse(String(fetcher.mock.calls[0]![1]!.body)).maxTimeout).toBeLessThanOrEqual(5000);
@@ -194,8 +248,8 @@ describe('Australia Post browser retrieval', () => {
   });
 
   it('also works through an adapter with the no-op recorder', async () => {
-    const { trawl } = tracker(service());
-    await expect(adapter({ trawl, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null }).track({ number: NUMBER }))
+    const { trawl, direct: fetcher } = tracker(service());
+    await expect(adapter({ trawl, fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null }).track({ number: NUMBER }))
       .resolves.toMatchObject({ status: 'delivered' });
   });
 });

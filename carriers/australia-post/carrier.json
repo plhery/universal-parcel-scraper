@@ -16,6 +16,7 @@
     "mode": "automatic",
     "adapter": "australia-post",
     "steps": [
+      "direct",
       "trawl"
     ]
   },

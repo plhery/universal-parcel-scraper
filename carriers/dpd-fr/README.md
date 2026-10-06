@@ -52,6 +52,12 @@ non-2xx statuses are indeterminate.
 
 - A JSON feed behind the page: there is none; the timeline exists only as
   markup.
+- The myDPD app (`com.dpdgroup.chatbot.lemny.prod`): its guest lookup is the DPD
+  Group service the [`dpd`](../dpd/README.md) adapter already reads,
+  `POST https://www.dpdgroup.com/concept/webservice/v10/parcels/details/{number}`
+  with a `businessUnit`. The app lists `DPD-FR` among its business units but
+  sends French parcels to the website, and Cloudflare blocks the call for that
+  unit. Without a postcode the service also returns less than the trace page.
 
 ## Limitations
 

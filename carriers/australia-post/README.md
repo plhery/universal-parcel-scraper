@@ -1,13 +1,17 @@
 # Australia Post
 
 Australia Post articles and consignments (10–34 alphanumeric characters), tracked through the
-anonymous shipments API behind the official [tracking app](https://auspost.com.au/mypost/track/),
-driven by the TRAWL browser service. Plain HTTP is challenged.
+anonymous shipments API behind the official [tracking app](https://auspost.com.au/mypost/track/).
+Plain HTTP answers when the request looks like the official Android app's; the TRAWL browser
+service takes over when it is refused.
 
 ## How it works
 
-1. `trawl`: TRAWL opens `/mypost/track/details/{number}` (tiers 2–3, no plain HTTP) and captures
-   exactly `GET https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments?trackingIds={number}`.
+1. `direct`: one `GET https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments?trackingIds={number}`
+   with the Android app's `AP_APP_ID`, `AP_CHANNEL_NAME` and HTTP client name, 10 s timeout. No key,
+   cookie or token is sent. 401/403 is a challenge and hands over to `trawl`; 429 is rate limited.
+2. `trawl`: TRAWL opens `/mypost/track/details/{number}` (tiers 2–3, no plain HTTP) and captures
+   exactly the same GET.
    - The Australia Post helper ([`australia-post-browser.mjs`](../../trawl/australia-post-browser.mjs),
      see [`trawl/README.md`](../../trawl/README.md)) reads the current public API key
      from the page's app module and makes that GET inside the browser session with
@@ -15,9 +19,23 @@ driven by the TRAWL browser service. Plain HTTP is challenged.
      over plain HTTP.
    - Each lookup gets a fresh browser context that is closed afterwards.
 
-Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance; 15 s or less fails
-before dispatch. The capture is capped at 1 MB. On the capture, 401/403 is a challenge and 429 is rate
+Budget: 45 s by default (max 60 s). `trawl` keeps a 15 s transport allowance and fails when less
+remains. Either reply is capped at 1 MB. On the capture, 401/403 is a challenge and 429 is rate
 limited; a missing capture or changed schema is an error for normal provider fallback.
+
+## Mobile app
+
+The [official Android app](https://play.google.com/store/apps/details?id=au.com.auspost.android)
+has package id `au.com.auspost.android`; Australia Post publishes its signing fingerprint in
+[assetlinks.json](https://auspost.com.au/.well-known/assetlinks.json). Its guest tracking reads the
+same gateway route as the website through OkHttp, with `AP_APP_ID: MYPOST` and
+`AP_CHANNEL_NAME: ANDROID`.
+
+The gateway's DataDome protection decides on the HTTP client name: the app's OkHttp name gets JSON,
+and any other name gets a captcha reply with HTTP 403, whatever the channel. Two defaults of
+`fetch` get the same refusal, so the adapter replaces them: `Accept-Language: *`, and the reload
+cache headers of the `no-store` mode. The app also sends an
+`API-KEY` and carries the DataDome SDK; the gateway answers without the key or a DataDome cookie.
 
 ## Notes
 
@@ -33,7 +51,9 @@ limited; a missing capture or changed schema is an error for normal provider fal
   rejected as ambiguous, since one delivered sibling doesn't mean the consignment is delivered. An
   exact article number selects its own history; sibling and shipment-wide states never classify it.
 - Not-found is only the HTTP 200 entry with `status: 400`, `errorCode: 21`, `Invalid Tracking ID`,
-  `Failed`. Empty arrays, other identities and other errors are schema failures.
+  `Failed`. An entry with `status: 500` is the gateway failing on a reference it cannot process: it
+  is inconclusive, and the browser is not asked the same question. Empty arrays, other identities
+  and other errors are schema failures.
 - Each scan is classified by its own `eventCode`, then its milestone label. Awaiting collection,
   attempted delivery and returns are not delivery.
 - Event time comes from `localeDateTime` (explicit offset), else the epoch-ms `dateTime`. If both
@@ -50,5 +70,6 @@ limited; a missing capture or changed schema is an error for normal provider fal
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/australia-post` with `FLARESOLVERR_URL`. Add
-`AUSTRALIA_POST_TRACKING_NUMBER` for the positive case; the synthetic not-found runs without it.
+`npm run test:carriers:live -- carriers/australia-post`. The direct not-found runs with no
+configuration; add `AUSTRALIA_POST_TRACKING_NUMBER` for the positive case and `FLARESOLVERR_URL`
+for the browser tier.

@@ -42,6 +42,8 @@ const BUDGET_SETTLE_MS = 500;
 const HOST_USER_AGENT = 'ConformanceHost/1.0';
 /** A browser's own User-Agent, unlike a client that names itself in a `compatible` clause. */
 const BROWSER_USER_AGENT = /^Mozilla\/5\.0 \((?!compatible;)/;
+/** Carriers whose gateway answers only its own mobile app's HTTP client, with the client they name. */
+const APP_USER_AGENT: Readonly<Record<string, string>> = { 'australia-post': 'okhttp/4.12.0' };
 const BROWSER_SERVICE = 'http://trawl.invalid';
 /** Credentials the corpus does not hold: Colis Privé looks a number up only with its postcode appended. */
 const COMPOSITE: Readonly<Record<string, (number: string) => string>> = { 'colis-prive': (number) => `${number}75001` };
@@ -61,7 +63,7 @@ const ENVIRONMENTS: Readonly<Record<string, Browsers>> = {
  * request. Every other lookup reaches its transport in every environment.
  */
 const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
-  'australia-post': ['service'], fedex: ['service'], 'mondial-relay': ['service'], 'royal-mail': ['chromium'],
+  fedex: ['service'], 'mondial-relay': ['service'], 'royal-mail': ['chromium'],
   'sf-express': ['service'], usps: ['service'], '17TRACK': ['service'],
   ukrposhta: ['chromium'], 'lbc-express': ['chromium'], 'evri-uk': ['chromium'],
   yunexpress: ['service', 'chromium'], 'Postal Ninja': ['service', 'chromium'],
@@ -255,14 +257,14 @@ describe.each(Object.entries(ENVIRONMENTS))('%s', (_, browsers) => {
 
       if (browserless) return;
 
-      it("sends a carrier the host's User-Agent or a browser's", async () => {
+      it("sends a carrier the host's User-Agent, a browser's or its app's", async () => {
         for (const sample of await reached()) {
           const { adapter, firstRequest, userAgents } = harness(subject, browsers);
           const controller = new AbortController();
           const pending = lookup(adapter, sample, { signal: controller.signal });
           await firstRequest;
           await finish(controller, pending);
-          expect(userAgents().filter((sent) => sent !== HOST_USER_AGENT && !(sent !== null && BROWSER_USER_AGENT.test(sent))),
+          expect(userAgents().filter((sent) => sent !== HOST_USER_AGENT && sent !== APP_USER_AGENT[subject] && !(sent !== null && BROWSER_USER_AGENT.test(sent))),
             JSON.stringify(sample)).toEqual([]);
         }
       });

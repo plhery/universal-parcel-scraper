@@ -1,11 +1,11 @@
 
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, ChallengeError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { runSteps } from '../../core/runner/index.js';
+import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { explicitOffsetTime, epochMillisTime } from '../../core/time/index.js';
-import { clean, TrawlClient } from '../../core/transport/index.js';
+import { clean, fetchBounded, TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { australiaPostStatus } from './status.js';
 
@@ -14,6 +14,14 @@ const DETAIL = 'https://auspost.com.au/mypost/track/details/';
 const API = 'https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments';
 const MAX_BYTES = 1_000_000;
 const TRANSPORT_ALLOWANCE_MS = 15_000;
+const DIRECT_TIMEOUT_MS = 10_000;
+// The gateway's bot protection passes the official Android app's HTTP client and
+// channel; other clients get a captcha reply. So does fetch's default `Accept-Language: *`.
+const APP_HEADERS = { Accept: 'application/json', 'Accept-Language': 'en-AU', AP_APP_ID: 'MYPOST', AP_CHANNEL_NAME: 'ANDROID',
+  'User-Agent': 'okhttp/4.12.0' };
+// fetch's `no-store` adds a browser reload's cache headers, which the gateway refuses
+// from this client. `no-cache` still takes every reply from the gateway.
+const asApp = (fetcher?: typeof fetch): typeof fetch => (input, init) => (fetcher ?? fetch)(input, { ...init, cache: 'no-cache' });
 
 export function normalizeAustraliaPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
@@ -40,6 +48,9 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const entries = payload.filter(isRecord).filter((entry) => Array.isArray(entry.trackingIds) && entry.trackingIds.includes(number));
   if (entries.length !== 1) throw new SchemaError(PROVIDER, 'Australia Post returned a different or ambiguous lookup');
   const entry = entries[0]!;
+  // The gateway answers a reference it cannot process with an internal error, which says
+  // nothing about the parcel.
+  if (entry.status === 500 && entry.shipment === undefined) throw new IndeterminateError(PROVIDER);
   if (entry.status === 400 && isRecord(entry.error) && entry.error.errorCode === 21
     && entry.error.error === 'Invalid Tracking ID' && entry.error.status === 'Failed'
     && entry.shipment === undefined) throw new NotFoundError(PROVIDER);
@@ -114,6 +125,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
 
 export interface AustraliaPostTrackerOptions {
   trawl: TrawlClient | null;
+  fetcher?: typeof fetch;
   timeoutMs?: number;
   recorder?: StepRecorder;
 }
@@ -126,15 +138,32 @@ export class AustraliaPostTracker {
     const budgetMs = context.budgetMs ?? this.options.timeoutMs ?? 45_000;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 60_000) throw new TypeError('Australia Post budget must be between 1 and 60000 ms');
     context.signal?.throwIfAborted();
-    if (budgetMs <= TRANSPORT_ALLOWANCE_MS) throw new BudgetExceededError(PROVIDER, budgetMs);
     const trawl = this.options.trawl;
-    if (!trawl) throw new ChallengeError(PROVIDER, 'Australia Post requires the browser tracking service');
     return runSteps({ carrier: 'australia-post', budgetMs, signal: context.signal, recorder: this.options.recorder }, [{
+      id: 'direct', run: async ({ signal, remainingMs }) => {
+        const { response, bytes } = await fetchBounded(australiaPostApiUrl(number), { signal, headers: APP_HEADERS }, {
+          provider: PROVIDER, timeoutMs: Math.max(1, Math.min(DIRECT_TIMEOUT_MS, Math.floor(remainingMs))),
+          maxBytes: MAX_BYTES, allowHttpStatuses: [401, 403, 429], fetcher: asApp(this.options.fetcher),
+        });
+        if (response.status === 429) {
+          const retry = response.headers.get('retry-after');
+          throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
+        }
+        if (response.status !== 200) {
+          throw new ChallengeError(PROVIDER, trawl ? undefined : 'Australia Post requires the browser tracking service');
+        }
+        let payload: unknown;
+        try { payload = JSON.parse(new TextDecoder().decode(bytes)); } catch { throw new SchemaError(PROVIDER, 'Australia Post returned invalid tracking JSON'); }
+        return parse(payload, number);
+      },
+    }, {
+      // The browser reads the same gateway, so it cannot improve on an inconclusive entry.
+      enabled: trawl !== null, recovers: (error) => recoverableByDefault(error) && !(error instanceof IndeterminateError),
       id: 'trawl', run: async ({ signal, remainingMs }) => {
         const timeoutMs = Math.floor(remainingMs - TRANSPORT_ALLOWANCE_MS);
         if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, budgetMs);
         const apiUrl = australiaPostApiUrl(number);
-        const page = await trawl.scrape({ url: australiaPostTrackingUrl(number), skipHttp: true, maxTier: 3,
+        const page = await trawl!.scrape({ url: australiaPostTrackingUrl(number), skipHttp: true, maxTier: 3,
           maxTimeout: timeoutMs, captureResponses: [apiUrl], settleTimeout: Math.min(timeoutMs, 10_000),
         }, { provider: 'TRAWL while fetching Australia Post', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
         signal.throwIfAborted();
@@ -163,6 +192,6 @@ export class AustraliaPostTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new AustraliaPostTracker({ trawl: environment.trawl, recorder: environment.recorder });
-  return { id: 'australia-post', recordsSteps: true, steps: ['trawl'], track: (input, context) => tracker.fetch(input.number, context) };
+  const tracker = new AustraliaPostTracker({ trawl: environment.trawl, fetcher: environment.fetcher, recorder: environment.recorder });
+  return { id: 'australia-post', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

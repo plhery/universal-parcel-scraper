@@ -16,6 +16,7 @@
     "mode": "automatic",
     "adapter": "ukrposhta",
     "steps": [
+      "direct",
       "browser"
     ],
     "localClocks": true
