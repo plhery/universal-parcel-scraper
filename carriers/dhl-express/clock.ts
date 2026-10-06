@@ -17,6 +17,12 @@ const CANADA_PROVINCES: Readonly<Record<string, string>> = {
   'NOVA SCOTIA': 'NS', 'NORTHWEST TERRITORIES': 'NT', NUNAVUT: 'NU', ONTARIO: 'ON', 'PRINCE EDWARD ISLAND': 'PE',
   QUEBEC: 'QC', SASKATCHEWAN: 'SK', YUKON: 'YT',
 };
+// DHL's own names for countries the English ones do not cover: the forms on its
+// scans, and those of its country list for the countries whose zone is known.
+const COUNTRIES: Readonly<Record<string, string>> = {
+  UK: 'GB', "PEOPLE'S REPUBLIC OF CHINA": 'CN', 'CHINA, PEOPLES REPUBLIC': 'CN', 'CZECH REPUBLIC': 'CZ',
+  'IRELAND, REPUBLIC OF': 'IE', 'KOREA, REPUBLIC OF (SOUTH K.)': 'KR', TURKEY: 'TR',
+};
 // Island groups an hour behind their mainland, which DHL files under the country.
 const ISLANDS: Readonly<Record<string, { group: string; zone: string }>> = {
   'Europe/Madrid': { group: 'ES-CN', zone: 'Atlantic/Canary' },
@@ -29,10 +35,10 @@ function regionCode(region: string, names: Readonly<Record<string, string>>): st
 }
 
 /**
- * The zone of a DHL Express facility, from its location: "CITY - COUNTRY", or
- * "CITY - REGION - COUNTRY" in the USA and Canada. Null when the location does
- * not settle one: a country with several clocks and no region DHL names, or a
- * country it writes in a form this does not know.
+ * The zone of a DHL Express facility, from its location: "CITY - COUNTRY", and
+ * in the USA and Canada "CITY - REGION - COUNTRY" or "CITY, ST - COUNTRY". Null
+ * when the location does not settle one: a country with several clocks and no
+ * region DHL names, or a country it writes in a form this does not know.
  *
  * A US state or Canadian province with several clocks takes its majority zone.
  * Spain and Portugal take their mainland's, except for a town or island of the
@@ -41,12 +47,13 @@ function regionCode(region: string, names: Readonly<Record<string, string>>): st
 export function facilityZone(location: string): string | null {
   const parts = location.split(' - ').map((part) => part.trim());
   const country = parts.length > 1 ? parts.at(-1)!.toUpperCase() : '';
-  const region = parts.length > 2 ? parts.at(-2)! : '';
+  // The region is a part of its own, or the code that ends the city's.
+  const region = parts.length > 2 ? parts.at(-2)! : /, ([A-Z]{2})$/i.exec(parts[0]!)?.[1] ?? '';
   if (country === 'USA') return usStateTimeZone(regionCode(region, US_STATES));
   if (country === 'CANADA') return canadaProvinceTimeZone(regionCode(region, CANADA_PROVINCES));
-  if (country === 'UK') return 'Europe/London';
-  // DHL writes some countries article last, and some with a comma: "NETHERLANDS, THE".
-  const zone = countryTimeZone(country.replace(/, THE$/, '').replaceAll(',', ''));
+  // DHL writes the article first or last: "THE PEOPLE'S REPUBLIC OF CHINA", "NETHERLANDS, THE".
+  const name = country.replace(/^THE /, '').replace(/, THE$/, '');
+  const zone = countryTimeZone(COUNTRIES[name] ?? name.replaceAll(',', ''));
   const islands = zone ? ISLANDS[zone] : undefined;
   return islands && regionHasTown(islands.group, parts[0]!) ? islands.zone : zone;
 }

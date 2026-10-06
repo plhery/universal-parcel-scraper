@@ -9,6 +9,7 @@
  * the provider's own rejection codes into typed errors so routing can tell a
  * verification wall from an outage.
  */
+import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
 import { ChallengeError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -18,6 +19,7 @@ import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
+import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { seventeenTrackEvent } from './events.js';
 
@@ -76,6 +78,13 @@ function lookupError(code: number, providerMessage?: string): Error {
     : new SeventeenTrackLookupError('lookup_unavailable', code, providerMessage);
 }
 
+/** The offset-less clock of a scan whose offset 17TRACK added itself. */
+function facilityWall(raw: Record<string, unknown>): string | null {
+  const clock = isRecord(raw.time_raw) && raw.time_raw.timezone === null ? raw.time_raw : null;
+  return clock && typeof clock.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(clock.date)
+    && typeof clock.time === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(clock.time) ? `${clock.date}T${clock.time}` : null;
+}
+
 export function parse17TrackResponse(payload: unknown, trackingNumber: string): CarrierResult {
   const number = numberOf(trackingNumber);
   if (!isRecord(payload) || !isRecord(payload.meta) || !Number.isInteger(payload.meta.code)) {
@@ -108,6 +117,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string): 
   const events: CarrierEvent[] = [];
   let count = 0;
   let undated = 0;
+  const latest = new LatestScan(SOURCE);
   for (const provider of tracking.providers) {
     if (!isRecord(provider) || !Array.isArray(provider.events)) throw new SchemaError(SOURCE, '17TRACK returned invalid provider history');
     const reported = isRecord(provider.provider) ? provider.provider : {};
@@ -117,12 +127,22 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string): 
     for (const raw of provider.events) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (raw.time_utc == null && raw.time_iso == null) undated++;
+      // A facility's clock, on which 17TRACK puts one offset for the whole parcel.
+      const wall = relaysFacilityClock(name) ? facilityWall(raw) : null;
+      const zone = wall ? facilityZone(text(raw.location)) : null;
+      const placed = wall && zone ? DateTime.fromISO(wall, { zone }) : null;
       let parsed: CarrierEvent | null;
-      try { parsed = seventeenTrackEvent(raw, operator); }
+      try { parsed = seventeenTrackEvent(placed?.isValid ? { ...raw, time_utc: placed.toUTC().toISO() } : raw, operator); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
-      if (parsed) events.push(parsed);
+      if (!parsed) continue;
+      const unplaced = wall !== null && !placed?.isValid;
+      latest.see(wall ?? String(raw.time_iso ?? raw.time_utc).slice(0, 19), unplaced);
+      // With no zone for the facility it is a wall time, counted like a row without a date.
+      if (unplaced) undated++;
+      else events.push(parsed);
     }
   }
+  latest.check();
   if (count === 0 && isRecord(shipment.latest_status) && shipment.latest_status.status === 'NotFound') {
     throw new NotFoundError(SOURCE);
   }

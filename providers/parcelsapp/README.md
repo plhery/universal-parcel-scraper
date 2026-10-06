@@ -104,8 +104,8 @@ step exists for future protocol changes.
 - DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
   the same clocks scan for scan, and Ship24 gives them with the facility's offset. They
   skip the steps above and take the zone the
-  [DHL Express rule](../../carriers/dhl-express/clock.ts) reads from their location
-  (`CITY - COUNTRY`, `CITY - REGION - COUNTRY`). A scan the rule cannot place is a wall
+  [DHL Express rule](../../carriers/dhl-express/clock.ts) reads from their location. A scan
+  the rule cannot place is a wall
   time: it is left out and counted like an undated state. When it is the reply's latest
   scan the reply is inconclusive, so an older scan does not stand in for the parcel's
   state and routing asks the next source. The rendered page prints no location, so it

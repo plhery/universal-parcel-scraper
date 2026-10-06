@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { carrierErrorKind } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { parse17TrackResponse, SeventeenTrackTracker } from './adapter.js';
 
@@ -140,6 +141,34 @@ describe('17TRACK result parsing', () => {
     expect(result.events?.[0]?.time_provenance).toBe('carrier_reported');
     expect(() => parse17TrackResponse(postalHistory([{ ...postalScan('InTransit_Other'), time_utc: 'broken' }]), number))
       .toThrow('invalid tracking event');
+  });
+
+  it('reads DHL Express scans on their facility\'s clock, not on the one offset 17TRACK gives the parcel', () => {
+    // Public shape: every scan stamped with the destination's offset, the facility's clock in time_raw.
+    const scan = (date: string, time: string, location: string, description = 'Processed') => ({
+      time_iso: `${date}T${time}+02:00`, time_utc: `${date}T${time}Z`, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (events: Record<string, unknown>[], name = 'DHL Express'): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key: 100001, name }, events }] } } }] });
+    const result = parse17TrackResponse(reply([
+      scan('2026-10-05', '09:13:00', 'EXAMPLE CITY - ITALY'),
+      scan('2026-10-04', '17:34:00', 'EXAMPLE CITY - HONG KONG SAR, CHINA'),
+      scan('2026-10-04', '11:13:00', 'EXAMPLE CITY - CHINA, PEOPLES REPUBLIC'),
+      scan('2026-10-04', '09:20:00', 'EXAMPLE CITY - THE PEOPLE\'S REPUBLIC OF CHINA'),
+      scan('2026-10-03', '18:00:00', 'EXAMPLE CITY - EXAMPLELAND'),
+    ]), number);
+    expect(result.events?.map((event) => event.time)).toEqual([
+      '2026-10-05T07:13:00.000Z', '2026-10-04T09:34:00.000Z', '2026-10-04T03:13:00.000Z', '2026-10-04T01:20:00.000Z']);
+    // The provider's own reading stays on the scan; a facility it cannot place is counted, not dated.
+    expect(result.undated_event_count).toBe(1);
+    expect(result.events?.[0]).toMatchObject({ provider_time_iso: '2026-10-05T09:13:00+02:00', time_provenance: 'provider_inferred' });
+    // Unplaced as the latest scan, the reply cannot say where the parcel is.
+    expect(carrierErrorKind(thrown(() => parse17TrackResponse(reply([
+      scan('2026-10-05', '09:13:00', 'EXAMPLE CITY - EXAMPLELAND'), scan('2026-10-04', '09:20:00', 'EXAMPLE CITY - ITALY'),
+    ]), number)))).toBe('indeterminate');
+    // Another carrier's scans keep 17TRACK's reading.
+    expect(parse17TrackResponse(reply([scan('2026-10-05', '09:13:00', 'EXAMPLE CITY - ITALY')], 'Example Parcel Co'), number).events?.[0]?.time)
+      .toBe('2026-10-05T09:13:00.000Z');
   });
 
   it('requires a completed identity-matched NotFound and an empty history for a negative answer', () => {

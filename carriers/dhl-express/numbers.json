@@ -2,6 +2,28 @@
   "carrier": "dhl-express",
   "records": [
     {
+      "number": "2522622410",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/iFoxz17/sc-delay-prediction/blob/b9e2f99fcdc157b4fb5ff3b0903e79f75f6b32cb/code/m4estro/LambdaTS/Carrier/sample.json",
+        "date": "2025-08-30"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta"
+        ]
+      },
+      "note": "A provider's reply for a DHL Express waybill, published as sample data with its scans. DHL has since issued the waybill to another shipment."
+    },
+    {
       "number": "3408372365",
       "role": "shipment",
       "evidence": "public_shipment_report",

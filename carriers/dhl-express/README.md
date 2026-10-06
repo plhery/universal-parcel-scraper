@@ -73,8 +73,10 @@ samples.
 
 A scan whose location settles no zone keeps its clock as `local_time`: a country with
 several clocks and no region, or a country DHL writes in a form the rule does not know.
-The rule knows English country names and the forms seen on DHL's scans (`UK`, `USA`,
-`NETHERLANDS, THE`). The global portal's explicit offsets provide dated instants. Recipient details, piece identifiers and
+The rule knows English country names, the forms on DHL's scans (`UK`, `USA`, `NETHERLANDS,
+THE`, `THE PEOPLE'S REPUBLIC OF CHINA`) and those of DHL's country list. DHL has renamed a
+country on its scans before, so a scan can meet a form the rule has yet to learn. The global
+portal's explicit offsets provide dated instants. Recipient details, piece identifiers and
 proof-of-delivery links are discarded. A blocked HTTP request requires a configured
 browser service with the DHL Express capture helper.
 

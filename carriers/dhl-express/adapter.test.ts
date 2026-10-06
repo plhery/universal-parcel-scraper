@@ -70,6 +70,16 @@ describe('DHL Express projection', () => {
     expect(clock('EXAMPLE CITY - VIRGINIA,VA - USA')).toBe('2026-10-05T12:00:00-04:00');
     expect(clock('EXAMPLE CITY - ON - CANADA')).toBe('2026-10-05T12:00:00-04:00');
     expect(clock('EXAMPLE SERVICE AREA - ONTARIO - CANADA')).toBe('2026-10-05T12:00:00-04:00');
+    expect(clock('EXAMPLE CITY, CA - USA')).toBe('2026-10-05T12:00:00-07:00');
+    // DHL's own names for countries.
+    expect(clock("EXAMPLE CITY - THE PEOPLE'S REPUBLIC OF CHINA")).toBe('2026-10-05T12:00:00+08:00');
+    expect(clock('EXAMPLE CITY - CHINA, PEOPLES REPUBLIC')).toBe('2026-10-05T12:00:00+08:00');
+    expect(clock('EXAMPLE CITY - HONG KONG SAR, CHINA')).toBe('2026-10-05T12:00:00+08:00');
+    expect(clock('EXAMPLE CITY - KOREA, REPUBLIC OF (SOUTH K.)')).toBe('2026-10-05T12:00:00+09:00');
+    expect(clock('EXAMPLE CITY - CZECH REPUBLIC, THE')).toBe('2026-10-05T12:00:00+02:00');
+    expect(clock('EXAMPLE CITY - IRELAND, REPUBLIC OF')).toBe('2026-10-05T12:00:00+01:00');
+    expect(clock('EXAMPLE CITY - TURKEY')).toBe('2026-10-05T12:00:00+03:00');
+    expect(clock('EXAMPLE CITY - THAILAND')).toBe('2026-10-05T12:00:00+07:00');
     // Spain and Portugal file their islands under the country: the town tells.
     expect(clock('EXAMPLE CITY - SPAIN')).toBe('2026-10-05T12:00:00+02:00');
     expect(clock('TENERIFE - SPAIN')).toBe('2026-10-05T12:00:00+01:00');
@@ -77,7 +87,7 @@ describe('DHL Express projection', () => {
     expect(clock('PONTA DELGADA - PORTUGAL')).toBe('2026-10-05T12:00:00+00:00');
     // Several clocks and no region DHL names, an unknown country, or no country at all.
     for (const location of ['EXAMPLE CITY - USA', 'EXAMPLE CITY - Example - USA', 'EXAMPLE CITY - CANADA',
-      'EXAMPLE CITY - EXAMPLELAND', 'FRANCE', '']) {
+      'EXAMPLE CITY - UNITED STATES OF AMERICA', 'EXAMPLE CITY - EXAMPLELAND', 'FRANCE', '']) {
       expect(clock(location)).toBe('local 2026-10-05T12:00:00');
     }
   });

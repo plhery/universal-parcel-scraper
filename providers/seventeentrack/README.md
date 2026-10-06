@@ -67,6 +67,11 @@ carrier.
   name and key. The timeline still uses 17TRACK's UTC, and mirrored scans from two
   operators are not deduplicated. That is why a scoped China Post success skips
   timestamp-based shadow comparisons.
+- DHL Express scans carry the facility's clock in `time_raw`, and 17TRACK puts one offset
+  on all of them, so a scan in Shenzhen gets the destination's. They take the zone the
+  [DHL Express rule](../../carriers/dhl-express/clock.ts) reads from their location
+  instead. A scan the rule cannot place is counted in `undated_event_count`, and when it
+  is the reply's latest scan the reply is inconclusive.
 - Original scan text is kept. The English interface does not translate descriptions.
 - At most 20 carrier legs and 1000 events. `shipping_info` and per-event `address` are
   never read.
