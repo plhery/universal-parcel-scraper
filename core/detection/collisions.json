@@ -1,7 +1,7 @@
 [
   {
     "shape": "Ten digits that fail the DHL Express waybill check",
-    "carriers": ["dhl", "estafeta", "mondial-relay", "relais-colis", "tipsa"],
+    "carriers": ["dhl", "estafeta", "mondial-relay", "relais-colis", "tipsa", "dhl-ecommerce-es"],
     "reason": "These carriers accept the same numeric length without a DHL Express checksum. Direct tracking must confirm the carrier."
   },
   {
@@ -518,7 +518,8 @@
       "gls-ch",
       "gls-de",
       "gls-fr",
-      "postlogistics"
+      "postlogistics",
+      "dhl-ecommerce-pl"
     ],
     "reason": "Compact 11-digit numbers are ambiguous; the printed eight-plus-three dash is high-confidence evidence for PostLogistics."
   },
@@ -530,9 +531,10 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "dhl-express"
+      "dhl-express",
+      "dhl-ecommerce-es"
     ],
-    "reason": "10-digit numbers are shared by five carriers; the number stays a low-confidence suggestion."
+    "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{11} with an Old Dominion prefix",
@@ -543,7 +545,8 @@
       "gls-de",
       "gls-fr",
       "old-dominion",
-      "postlogistics"
+      "postlogistics",
+      "dhl-ecommerce-pl"
     ],
     "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape."
   },
@@ -996,7 +999,8 @@
       "dpd-fr",
       "dpd-uk",
       "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1012,7 +1016,8 @@
       "dpd-uk",
       "relais-colis",
       "seur",
-      "xpressbees"
+      "xpressbees",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1026,23 +1031,8 @@
       "dpd-de",
       "dpd-uk",
       "relais-colis",
-      "seur"
-    ],
-    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
-  },
-  {
-    "shape": "14 digits",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "delhivery",
-      "dpd",
-      "dpd-de",
-      "dpd-fr",
-      "dpd-uk",
-      "hermes-de",
-      "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1059,7 +1049,25 @@
       "hermes-de",
       "relais-colis",
       "seur",
-      "xpressbees"
+      "dhl-ecommerce-uk"
+    ],
+    "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "hermes-de",
+      "relais-colis",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1074,7 +1082,8 @@
       "dpd-uk",
       "hermes-de",
       "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1090,7 +1099,8 @@
       "hermes-de",
       "la-poste",
       "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1105,7 +1115,8 @@
       "dpd-uk",
       "la-poste",
       "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1120,7 +1131,8 @@
       "dpd-uk",
       "nova-poshta",
       "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1135,7 +1147,8 @@
       "dpd-uk",
       "relais-colis",
       "seur",
-      "xpressbees"
+      "xpressbees",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
@@ -1151,7 +1164,8 @@
       "hermes-de",
       "nova-poshta",
       "relais-colis",
-      "seur"
+      "seur",
+      "dhl-ecommerce-uk"
     ],
     "reason": "Nova Poshta waybills overlap other numeric families; a valid Hermes checksum cannot establish carrier ownership."
   },
@@ -1209,5 +1223,15 @@
       "zto"
     ],
     "reason": "J&T Cargo waybills start with 20 inside the twelve-digit space eleven carriers match broadly; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twenty-two digits starting with 9261 or 9361",
+    "carriers": ["austrian-post", "dhl-ecommerce", "estafeta", "usps"],
+    "reason": "DHL eCommerce hands these US parcels to USPS under a USPS number and tracks them itself too. Direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Two letters, seven digits and a final zero",
+    "carriers": ["dhl-ecommerce-es", "ontrac"],
+    "reason": "DHL's Iberian alias for an inbound parcel fits OnTrac's letter-prefixed shape. Direct tracking must confirm the carrier."
   }
 ]

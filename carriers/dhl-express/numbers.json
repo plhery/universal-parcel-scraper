@@ -18,7 +18,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "A provider's reply for a DHL Express waybill, published as sample data with its scans. DHL has since issued the waybill to another shipment."
@@ -40,7 +41,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
@@ -63,7 +65,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Reviewer gives this as the tracking number of an Apple delivery in Portugal on DHL Express's review page. It passes the waybill check; DHL's trackers hold no record of it."
@@ -85,10 +88,104 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
+    },
+    {
+      "number": "1234577890",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.dhl.com/discover/en-my/ship-with-dhl/track"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Official documentation example, not a real shipment."
+    },
+    {
+      "number": "7777777770",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://developer.dhl.com/api-reference/shipment-tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Official documentation example, not a real shipment."
+    },
+    {
+      "number": "9937575115",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ca.trustpilot.com/review/www.dhl.com",
+        "date": "2025-10-26"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "8377686111",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/www.dhl.se?page=4"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Posted in a review of DHL Freight Sweden, a network without an adapter. The ten digits are also the DHL Express shape."
     }
   ]
 }

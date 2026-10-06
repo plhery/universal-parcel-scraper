@@ -52,9 +52,57 @@
   },
   {
     "carrier": "dhl-ecommerce",
-    "pattern": "^9[23]\\d{20}$",
+    "pattern": "^7\\d{13}$",
+    "kind": "open",
+    "reason": "One documentation example from Malaysia; the family is not established."
+  },
+  {
+    "carrier": "dhl-ecommerce-es",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve digits are shared by several carriers and nothing in the number points to this network."
+  },
+  {
+    "carrier": "dhl-ecommerce-es",
+    "pattern": "^CH\\d{9,10}DE$",
     "kind": "by_design",
-    "reason": "A USPS-format number. USPS is offered and delivers it."
+    "reason": "Documentation placeholders: one fails the S10 check digit and the other has a digit too many."
+  },
+  {
+    "carrier": "dhl-ecommerce-es",
+    "pattern": "^FVGL\\d{10}$",
+    "kind": "by_design",
+    "reason": "A documentation placeholder whose prefix the page itself spells differently elsewhere."
+  },
+  {
+    "carrier": "dhl-ecommerce-nl",
+    "pattern": "^3S[A-Z]{3}\\d{9}$",
+    "kind": "open",
+    "reason": "One documentation placeholder; no real number of this length has been seen."
+  },
+  {
+    "carrier": "dhl-ecommerce-pl",
+    "pattern": "^JJD",
+    "kind": "by_design",
+    "reason": "The JJD licence plate is shared by DHL's European parcel networks and detected as DHL. The Polish portal reads it when the carrier is named."
+  },
+  {
+    "carrier": "dhl-ecommerce-pl",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve digits are shared by several carriers and nothing in the number points to this network."
+  },
+  {
+    "carrier": "dhl-ecommerce-uk",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "A calling card number, which the portal reads only with the delivery postcode."
+  },
+  {
+    "carrier": "dhl-ecommerce-uk",
+    "pattern": "^9\\d{8}$",
+    "kind": "open",
+    "reason": "One documentation example of a return number; the family is not established."
   },
   {
     "carrier": "hermes",

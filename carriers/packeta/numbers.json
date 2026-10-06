@@ -171,7 +171,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "The broker review shows the ten digits without the label's Z; customer reports Poland-to-Hungary delivery."
@@ -198,7 +199,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "The broker review shows the ten digits without the label's Z. Packeta's tracking returns the history of the Z-prefixed barcode."

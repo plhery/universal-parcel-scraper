@@ -1,0 +1,182 @@
+{
+  "carrier": "dhl-ecommerce-es",
+  "records": [
+    {
+      "number": "2800000007",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Made-up ten-digit shipment number. Its shape overlaps other carriers; the portal's answer attributes it."
+    },
+    {
+      "number": "ES00000010",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Made-up number in the short form of two letters, seven digits and a zero."
+    },
+    {
+      "number": "DE99999990",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mydhl.express.dhl/es/en/forms/tracking-number-not-10-digits.html"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Placeholder DHL Spain shows for the short form of a parcel number."
+    },
+    {
+      "number": "5001191987",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/reviews/6a84652fcca519fc5823caf7",
+        "date": "2026-08-18"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Public report naming DHL Parcel Spain for a domestic parcel; the portal returned the history."
+    },
+    {
+      "number": "CC502655557DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/reviews/6a9eaa3163863b88e9e12967",
+        "date": "2026-09-07"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Public report naming DHL Parcel Spain for a parcel sent from Germany; the portal returned the history. The number is DHL Paket's and detection leaves it there."
+    },
+    {
+      "number": "CA732400595DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/reviews/6ac49bcee7e7b3a98bf827c6",
+        "date": "2026-10-06"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Public report on DHL Spain's page for a parcel sent from Germany that CTT Express delivered; the portal returned the history."
+    },
+    {
+      "number": "999999999999",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mydhl.express.dhl/es/en/forms/tracking-number-not-10-digits.html"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Official documentation example, not a real shipment. No rule offers this network for twelve digits; the adapter reads one when the carrier is named."
+    },
+    {
+      "number": "CH400397205DE",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mydhl.express.dhl/es/en/forms/tracking-number-not-10-digits.html"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "Example of a shipment from Europe on the Spanish help page, not a real shipment. Its check digit is wrong."
+    },
+    {
+      "number": "CH9999999999DE",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mydhl.express.dhl/es/en/forms/tracking-number-not-10-digits.html"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Placeholder on the Spanish help page with one digit too many, not a real shipment."
+    },
+    {
+      "number": "FVGL9999999999",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mydhl.express.dhl/es/en/forms/tracking-number-not-10-digits.html"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Placeholder on the Spanish help page, not a real shipment. The page names the JVGL and VGL prefixes; this spelling matches neither."
+    }
+  ]
+}

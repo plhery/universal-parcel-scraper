@@ -1,0 +1,93 @@
+{
+  "carrier": "dhl-ecommerce-pl",
+  "records": [
+    {
+      "number": "99999999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Made-up waybill in the eleven-digit shape the portal answers with; several carriers share the shape."
+    },
+    {
+      "number": "JJD000030214008000129555645",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://spolecznosc.allegro.pl/t5/allegro-delivery/problem-ze-zwrotem-dhl/m-p/1203601",
+        "date": "2026-07-14",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Public report of a return carried by DHL in Poland; the portal returned its status. Detection gives the JJD licence plate to DHL Paket."
+    },
+    {
+      "number": "15467388748",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://sprawdz.dhl.com.pl/snstatushistory.aspx?lang=en-gb"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Official documentation example, not a real shipment."
+    },
+    {
+      "number": "422891590640",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://sprawdz.dhl.com.pl/snstatushistory.aspx?lang=en-gb"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Official documentation example, not a real shipment. No rule offers this network for twelve digits; the adapter reads one when the carrier is named."
+    }
+  ]
+}

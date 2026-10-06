@@ -101,6 +101,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-ecommerce",
           "austrian-post",
           "usps",
           "estafeta"
@@ -277,7 +278,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce"
+        ]
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
     },

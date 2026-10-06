@@ -9,26 +9,28 @@ const now = new Date('2026-09-10T12:00:00Z');
 
 describe('recognition candidates', () => {
   it('keeps the carriers that can answer, hint first, then number evidence, then popularity', () => {
-    expect(recognitionCandidates('12345678901231').map((candidate) => candidate.carrier)).toEqual(['dpd', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex']);
+    expect(recognitionCandidates('12345678901231').map((candidate) => candidate.carrier)).toEqual(['dpd', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk']);
     expect(recognitionCandidates('06080000000002')).toEqual([
       { carrier: 'dpd', needsInput: null, preferred: true },
       { carrier: 'seur', needsInput: null, preferred: false },
       { carrier: 'brt', needsInput: null, preferred: false },
       { carrier: 'relais-colis', needsInput: null, preferred: false },
       { carrier: 'ciblex', needsInput: null, preferred: false },
+      { carrier: 'dhl-ecommerce-uk', needsInput: null, preferred: false },
     ]);
     expect(recognitionCandidates('12345678901', { hint: 'gls-de' })).toEqual([
       { carrier: 'gls-de', needsInput: 'postcode', preferred: false },
       { carrier: 'gls-ch', needsInput: 'postcode', preferred: false },
       { carrier: 'postlogistics', needsInput: null, preferred: false },
+      { carrier: 'dhl-ecommerce-pl', needsInput: null, preferred: false },
     ]);
     expect(recognitionCandidates('06080000000002', { skip: (carrier) => carrier === 'dpd' }).map((candidate) => candidate.carrier))
-      .toEqual(['seur', 'brt', 'relais-colis', 'ciblex']);
+      .toEqual(['seur', 'brt', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk']);
     // A selected carrier needs no recognition.
     expect(recognitionCandidates('1Z999AA10123456784')).toEqual([]);
     // A DPD France depot: DPD France cannot be asked, and DPD Switzerland's
     // group-wide answer would file its parcel under the wrong network.
-    expect(recognitionCandidates('10000000000001').map((candidate) => candidate.carrier)).toEqual(['seur', 'brt', 'relais-colis', 'ciblex']);
+    expect(recognitionCandidates('10000000000001').map((candidate) => candidate.carrier)).toEqual(['seur', 'brt', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk']);
   });
 
   it('can ask bpost about an ambiguous numeric barcode without a recipient postcode', () => {
@@ -97,9 +99,9 @@ describe('asking carriers', () => {
       if (carrier === 'seur' || carrier === 'brt') return { known: false };
       return new Promise(() => undefined);
     }, 20);
-    expect(started).toEqual(['dpd', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex']);
+    expect(started).toEqual(['dpd', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk']);
     expect(outcomes.map(({ carrier, status }) => [carrier, status])).toEqual([
-      ['dpd', 'known'], ['seur', 'unknown'], ['brt', 'unknown'], ['hermes-de', 'failed'], ['relais-colis', 'failed'], ['ciblex', 'failed'],
+      ['dpd', 'known'], ['seur', 'unknown'], ['brt', 'unknown'], ['hermes-de', 'failed'], ['relais-colis', 'failed'], ['ciblex', 'failed'], ['dhl-ecommerce-uk', 'failed'],
     ]);
     expect(outcomes[0]!.lastActivityAt).toBe('2026-09-09T08:00:00Z');
   });

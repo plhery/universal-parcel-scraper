@@ -1,0 +1,78 @@
+{
+  "carrier": "dhl-ecommerce-nl",
+  "records": [
+    {
+      "number": "JVGL0099999999",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "Made-up number that follows the published format."
+    },
+    {
+      "number": "JVGL06289524001751165708",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/dhlecommerce.nl",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "Public report naming DHL eCommerce Netherlands; its tracking gateway returned the history."
+    },
+    {
+      "number": "JVGL08035717002011328118",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ie.trustpilot.com/review/dhlecommerce.nl",
+        "date": "2026-09-21",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "Public report naming DHL eCommerce Netherlands for a shipment to Switzerland; its tracking gateway returned the history."
+    },
+    {
+      "number": "JVGL9999999999",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.mydhli.com/tr-en/home/tracking.html"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "Official documentation example, not a real shipment."
+    },
+    {
+      "number": "3SBCC000123456",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.mydhli.com/tr-en/home/tracking.html"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Official documentation example, not a real shipment. No rule matches fourteen characters after 3S."
+    }
+  ]
+}

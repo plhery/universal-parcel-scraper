@@ -28,7 +28,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Mondial Relay, which stays one candidate among several."
@@ -199,7 +200,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "The customer also names 61376870 for the same Amazon return. The correspondence fits the documented brand-prefixed form; it does not establish a universal 85 prefix. Detection remains ambiguous."
@@ -224,7 +226,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Published literally as the tracking reference for a Vinted shipment attributed to Mondial Relay. The prefix role is unresolved; do not infer a canonical shipment by removing it. Detection characterizes the normalized input only.",

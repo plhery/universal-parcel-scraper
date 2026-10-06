@@ -20,6 +20,7 @@
           "seur",
           "brt",
           "delhivery",
+          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]
@@ -45,6 +46,7 @@
           "seur",
           "brt",
           "delhivery",
+          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]
@@ -71,7 +73,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Reviewer attributes this ten-digit number to Hermes Germany, whose tracking does not know it."
@@ -95,6 +98,7 @@
           "seur",
           "brt",
           "delhivery",
+          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk",
           "xpressbees"
@@ -120,6 +124,7 @@
           "seur",
           "brt",
           "delhivery",
+          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]

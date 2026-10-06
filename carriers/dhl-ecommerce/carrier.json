@@ -8,7 +8,6 @@
   "region": {
     "countries": [
       "DE",
-      "NL",
       "US"
     ]
   },
@@ -102,8 +101,13 @@
       "confidence": "low"
     },
     {
-      "id": "dhl-ecommerce-3",
-      "pattern": "^JVGL[0-9]{20}$",
+      "id": "dhl-ecommerce-4",
+      "pattern": "^(?:420\\d{5})?9[23]61\\d{18}$",
+      "confidence": "low"
+    },
+    {
+      "id": "dhl-ecommerce-5",
+      "pattern": "^0031\\d{27}$",
       "confidence": "low"
     }
   ]

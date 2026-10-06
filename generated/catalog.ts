@@ -451,7 +451,7 @@ export const CARRIER_CATALOG = {
         "checksum": "s10"
       },
       {
-        "pattern": "^(?:JJD[A-Z0-9]{8,}|JVGL(?![0-9]{20}$)[A-Z0-9]{8,})$",
+        "pattern": "^JJD[A-Z0-9]{8,}$",
         "confidence": "high"
       },
       {
@@ -463,12 +463,8 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^0034043[45]\\d{12}$",
+        "pattern": "^0034043[345]\\d{12}$",
         "confidence": "high"
-      },
-      {
-        "pattern": "^JVGL[0-9]{20}$",
-        "confidence": "low"
       }
     ]
   },
@@ -481,7 +477,6 @@ export const CARRIER_CATALOG = {
     ],
     "countries": [
       "DE",
-      "NL",
       "US"
     ],
     "selectable": true,
@@ -529,7 +524,11 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       },
       {
-        "pattern": "^JVGL[0-9]{20}$",
+        "pattern": "^(?:420\\d{5})?9[23]61\\d{18}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^0031\\d{27}$",
         "confidence": "low"
       }
     ]
@@ -4141,6 +4140,171 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "dhl-ecommerce-es": {
+    "displayName": "DHL eCommerce Iberia",
+    "color": "#ffcc00",
+    "aliases": [
+      "DHL Parcel Spain",
+      "DHL Parcel Iberia",
+      "DHL eCommerce Spain",
+      "DHL Parcel Portugal"
+    ],
+    "countries": [
+      "ES",
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dhl-ecommerce-es",
+      "recognitionRank": 19,
+      "localClocks": true
+    },
+    "canaryUrl": "https://clientesparcel.dhl.es/LiveTracking/",
+    "trackingUrlTemplate": "https://clientesparcel.dhl.es/LiveTracking/ModificarEnvio/{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "clientesparcel.dhl.es"
+        ],
+        "path": "^/LiveTracking/ModificarEnvio/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{10}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{7}0$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "dhl-ecommerce-nl": {
+    "displayName": "DHL eCommerce Netherlands",
+    "color": "#ffcc00",
+    "aliases": [
+      "DHL Parcel Netherlands",
+      "DHL Parcel Benelux",
+      "DHL eCommerce Benelux"
+    ],
+    "countries": [
+      "NL",
+      "BE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dhl-ecommerce-nl",
+      "recognitionRank": 22
+    },
+    "canaryUrl": "https://my.dhlecommerce.nl/home/tracktrace",
+    "trackingUrlTemplate": "https://my.dhlecommerce.nl/home/tracktrace/{trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "dhlecommerce.nl",
+          "dhlparcel.nl",
+          "dhlecommerce.be",
+          "dhlparcel.be"
+        ],
+        "path": "^/home/tracktrace/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JVGL[A-Z0-9]{8,}$",
+        "confidence": "high"
+      }
+    ]
+  },
+  "dhl-ecommerce-pl": {
+    "displayName": "DHL eCommerce Poland",
+    "color": "#ffcc00",
+    "aliases": [
+      "DHL Parcel Poland",
+      "DHL Parcel Polska",
+      "DHL eCommerce Polska"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dhl-ecommerce-pl",
+      "recognitionRank": 18
+    },
+    "canaryUrl": "https://mojdhl.pl/tracking",
+    "trackingUrlTemplate": "https://mojdhl.pl/tracking?paczki={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "mojdhl.pl"
+        ],
+        "params": [
+          "paczki"
+        ]
+      },
+      {
+        "domains": [
+          "sprawdz.dhl.com.pl"
+        ],
+        "params": [
+          "sn"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{11}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "dhl-ecommerce-uk": {
+    "displayName": "DHL eCommerce UK",
+    "color": "#ffcc00",
+    "aliases": [
+      "DHL Parcel UK",
+      "DHL eCommerce United Kingdom",
+      "UK Mail"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dhl-ecommerce-uk",
+      "recognitionRank": 17
+    },
+    "canaryUrl": "https://track.dhlecommerce.co.uk/",
+    "trackingUrlTemplate": "https://track.dhlecommerce.co.uk/?con={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "track.dhlecommerce.co.uk",
+          "track.dhlparcel.co.uk"
+        ],
+        "params": [
+          "con",
+          "consignmentnumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "dhl-express": {
     "displayName": "DHL Express",
     "color": "#ffcc00",
@@ -4796,6 +4960,10 @@ export const CARRIER_IDS = [
   "j-and-t",
   "ems",
   "cne",
+  "dhl-ecommerce-es",
+  "dhl-ecommerce-nl",
+  "dhl-ecommerce-pl",
+  "dhl-ecommerce-uk",
   "dhl-express",
   "dpd-de",
   "dpd-uk",

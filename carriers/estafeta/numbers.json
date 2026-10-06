@@ -17,7 +17,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Publicly reported short tracking code; the native single-parcel response pairs it with its full guide. The shape remains ambiguous pending a matching lookup."
@@ -37,7 +38,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Estafeta, which stays one candidate among several."

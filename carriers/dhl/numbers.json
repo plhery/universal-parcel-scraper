@@ -2,6 +2,19 @@
   "carrier": "dhl",
   "records": [
     {
+      "number": "00340433982034779798",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://sprawdz.dhl.com.pl/snstatushistory.aspx?lang=en-gb"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Example DHL's Polish tracking page prints for a German parcel number, in the first 0034043 range."
+    },
+    {
       "number": "00340434633751428115",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -48,7 +61,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Published integration example, not a real shipment. The source attributes it to DHL, which stays one candidate among several."
@@ -94,18 +108,6 @@
     },
     {
       "number": "JJD0099999999",
-      "role": "shipment",
-      "evidence": "synthetic",
-      "derivedFrom": "official_shape",
-      "shapeConfirmed": "2026-09-12",
-      "expect": {
-        "carrier": "dhl",
-        "confidence": "high"
-      },
-      "note": "Made-up number that follows the published format."
-    },
-    {
-      "number": "JVGL0099999999",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "official_shape",
@@ -166,6 +168,59 @@
         "confidence": "high"
       },
       "note": "Made-up number that follows the published format."
+    },
+    {
+      "number": "JJD000030247489000000075290",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/www.dhl.de",
+        "date": "2026-09-11"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "CQ347708400DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/dhl.pt"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "CY730190157DE",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://sprawdz.dhl.com.pl/snstatushistory.aspx?lang=en-gb"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Official documentation example, not a real shipment."
+    },
+    {
+      "number": "JJD149020000300000000173",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://sprawdz.dhl.com.pl/snstatushistory.aspx?lang=en-gb"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Example on the Polish network's tracking page, not a real shipment. The JJD prefix is shared; detection gives it to DHL Paket."
     }
   ]
 }

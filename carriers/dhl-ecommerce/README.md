@@ -1,7 +1,9 @@
 # DHL eCommerce
 
 DHL's webshop parcel division, formerly DHL Global Mail. German DHL Paket is
-[dhl](../dhl/README.md).
+[dhl](../dhl/README.md). The national parcel networks have their own carriers:
+[Benelux](../dhl-ecommerce-nl/README.md), [UK](../dhl-ecommerce-uk/README.md),
+[Iberia](../dhl-ecommerce-es/README.md) and [Poland](../dhl-ecommerce-pl/README.md).
 
 ## Retrieval
 
@@ -36,9 +38,9 @@ addresses and customer references are excluded.
 
 ## Limitations
 
-Identifiers used by the Netherlands network stay ambiguous with DHL Paket
-until a carrier lookup confirms the division. They do not establish Webtrack
-coverage.
+US parcels handed to USPS carry a USPS number, with or without the 420 routing
+prefix. Detection offers DHL eCommerce next to USPS for the `9261` and `9361`
+families and Webtrack's answer attributes the parcel.
 
 Webtrack has regional coverage. The global route needs local Chromium because
 UTAPI challenges direct requests. The browser helper waits for successful API

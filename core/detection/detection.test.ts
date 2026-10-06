@@ -84,7 +84,7 @@ describe('the detection engine', () => {
     // DPD Switzerland, 10xx DPD France. Other 14-digit carriers stay candidates.
     expect(detectCarrierMatch('06080000000002')).toMatchObject({
       carrier: 'unknown', confidence: 'low', preferred: ['dpd'],
-      candidates: ['dpd', 'dpd-fr', 'relais-colis', 'ciblex', 'seur', 'brt', 'delhivery', 'dpd-de', 'dpd-uk'],
+      candidates: ['dpd', 'dpd-fr', 'relais-colis', 'ciblex', 'seur', 'brt', 'delhivery', 'dhl-ecommerce-uk', 'dpd-de', 'dpd-uk'],
     });
     expect(detectCarrierMatch('10000000000001')).toMatchObject({
       carrier: 'unknown', confidence: 'low', preferred: ['dpd-fr'],

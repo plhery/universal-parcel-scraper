@@ -18,7 +18,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Dachser, which no rule claims. Consignment within Spain."
@@ -39,7 +40,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Dachser, which no rule claims. Consignment number from a delivery SMS the recipient did not expect."

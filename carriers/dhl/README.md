@@ -24,9 +24,11 @@ once.
 
 ## Notes
 
-- Some identifiers are shared with DHL eCommerce Netherlands. Detection keeps
-  both divisions as candidates; a carrier lookup decides which
-  endpoint owns the shipment.
+- `JVGL` numbers belong to [DHL eCommerce Netherlands](../dhl-ecommerce-nl/README.md):
+  this endpoint answers them as another DHL service.
+- `JJD` licence plates are shared by DHL's European parcel networks and detected
+  as DHL Paket. The adapter of another network, such as
+  [Poland's](../dhl-ecommerce-pl/README.md), reads one when its carrier is named.
 - Sessions are replaced at 100 minutes because DHL's edge stops answering a
   session about two hours old instead of rejecting it. Without the cap, the
   lookup that crosses that age waits out the 15-second timeout before renewing.

@@ -18,7 +18,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Aramex, which stays one candidate among several."
@@ -40,7 +41,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Aramex, which stays one candidate among several."
@@ -62,7 +64,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Aramex, which stays one candidate among several. Domestic delivery in the UAE."
@@ -84,7 +87,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."
@@ -106,7 +110,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."

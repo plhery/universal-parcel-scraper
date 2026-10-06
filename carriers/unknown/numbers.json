@@ -35,6 +35,7 @@
           "seur",
           "brt",
           "delhivery",
+          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]
@@ -58,6 +59,7 @@
           "seur",
           "brt",
           "delhivery",
+          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk",
           "xpressbees"
@@ -91,7 +93,8 @@
           "mondial-relay",
           "relais-colis",
           "tipsa",
-          "estafeta"
+          "estafeta",
+          "dhl-ecommerce-es"
         ]
       },
       "note": "Shared numeric shape that must stay a suggestion rather than a carrier."
@@ -154,7 +157,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Shared numeric shape that must stay a suggestion rather than a carrier."

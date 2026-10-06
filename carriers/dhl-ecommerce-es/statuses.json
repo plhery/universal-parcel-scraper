@@ -1,0 +1,20 @@
+{
+  "carrier": "dhl-ecommerce-es",
+  "entries": [
+    {"code": "DOC", "wording": "Shipment data received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The row has no Code; DOC is its SolutionCode."},
+    {"code": "ZZZ", "wording": "Arrived at", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The portal appends the row's Town."},
+    {"code": "ZZZ", "wording": "In transit in", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The portal appends the row's Town."},
+    {"code": "ZZZ", "wording": "Llegada a", "language": "es", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "ZZZ", "wording": "Tránsito en", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "Also sent without any code."},
+    {"code": "ZZZ", "wording": "Salida de", "language": "es", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "A", "wording": "Out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"code": "R", "wording": "Entregado", "language": "es", "stage": "delivered", "confirmedBy": "live"},
+    {"code": "NH", "wording": "The delivery could not be made due to consignee absent", "language": "en", "stage": "failed_attempt", "confirmedBy": "live"},
+    {"code": "GT", "wording": "An attempt was made to contact the recipient by phone", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "AS", "wording": "Parcel will be delivered to a DHL ServicePoint", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "ES", "wording": "Parcel is on it's way to our DHL ServicePoint", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "IS", "wording": "Delivered to DHL ServicePoint, ready for collection by the recipient", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live"},
+    {"code": "RS", "wording": "Parcel picked up by recipient", "language": "en", "stage": "delivered", "confirmedBy": "live"},
+    {"code": "AI", "wording": "Envío cargado en una ruta incorrecta/ Se entregará a la mayor brevedad posible", "language": "es", "stage": "exception", "confirmedBy": "live"}
+  ]
+}

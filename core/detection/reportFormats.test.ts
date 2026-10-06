@@ -40,12 +40,14 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('V123456789').candidates).not.toContain('dtdc');
   });
 
-  it('keeps a shared DHL family ambiguous without changing GM routing', () => {
+  it('gives the JVGL family to the Benelux network without changing GM routing', () => {
     expect(detectCarrierMatch('JVGL01234567890123456789')).toMatchObject({
-      carrier: 'unknown', confidence: 'low', candidates: ['dhl', 'dhl-ecommerce'],
+      carrier: 'dhl-ecommerce-nl', confidence: 'high', candidates: ['dhl-ecommerce-nl'],
     });
     expect(parseTrackingInput('https://www.dhl.com/ch-en/home/tracking.html?tracking-id=JVGL01234567890123456789&submit=1'))
-      .toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhl', 'dhl-ecommerce'], source: 'link' });
+      .toMatchObject({ carrier: 'dhl-ecommerce-nl', confidence: 'high', source: 'link' });
+    expect(parseTrackingInput('https://my.dhlecommerce.nl/home/tracktrace/JVGL01234567890123456789?lang=nl-NL'))
+      .toMatchObject({ carrier: 'dhl-ecommerce-nl', trackingNumber: 'JVGL01234567890123456789', source: 'link' });
     expect(parseTrackingInput('https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode=JVGL01234567890123456789'))
       .toMatchObject({ carrier: 'dhl', confidence: 'high', source: 'link' });
     expect(detectCarrierMatch('GM1234567890123456')).toMatchObject({ carrier: 'dhl-ecommerce', confidence: 'high' });

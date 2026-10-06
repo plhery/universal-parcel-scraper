@@ -18,7 +18,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Blue Dart, which stays one candidate among several."
@@ -40,7 +41,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Blue Dart, which stays one candidate among several."
@@ -61,7 +63,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Official documentation example, not a real shipment. The source attributes it to Blue Dart, which stays one candidate among several."
@@ -82,7 +85,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Official documentation example, not a real shipment. The source attributes it to Blue Dart, which stays one candidate among several."
@@ -104,7 +108,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Blue Dart, which stays one candidate among several."

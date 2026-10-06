@@ -1,0 +1,82 @@
+{
+  "id": "dhl-ecommerce-pl",
+  "displayName": "DHL eCommerce Poland",
+  "aliases": [
+    "DHL Parcel Poland",
+    "DHL Parcel Polska",
+    "DHL eCommerce Polska"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#ffcc00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dhl-ecommerce-pl",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 18
+    }
+  },
+  "capabilities": [
+    "eta",
+    "delivered_at"
+  ],
+  "portal": {
+    "url": "https://mojdhl.pl/tracking?paczki={trackingNumber}",
+    "canaryUrl": "https://mojdhl.pl/tracking",
+    "shows": [
+      "status",
+      "eta",
+      "delivered_at",
+      "sender_name",
+      "tracking_alias"
+    ],
+    "scraped": [
+      "status",
+      "eta",
+      "delivered_at"
+    ],
+    "discarded": [
+      "sender_name",
+      "tracking_alias"
+    ],
+    "unavailable": [
+      "history",
+      "location"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "mojdhl.pl"
+      ],
+      "params": [
+        "paczki"
+      ]
+    },
+    {
+      "domains": [
+        "sprawdz.dhl.com.pl"
+      ],
+      "params": [
+        "sn"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "dhl-ecommerce-pl-1",
+      "pattern": "^\\d{11}$",
+      "confidence": "low"
+    }
+  ]
+}

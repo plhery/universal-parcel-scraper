@@ -94,6 +94,19 @@
         "confidence": "high"
       },
       "note": "Official tracking binds both returned identities to this complete package code and supplies dated history. The sole-package counter is retained in the request."
+    },
+    {
+      "number": "0082800082909720036383",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/dhlparcel.es"
+      },
+      "expect": {
+        "carrier": "ctt-express",
+        "confidence": "high"
+      },
+      "note": "Posted in a review of DHL Parcel Spain, whose domestic parcels CTT Express carries. The attribution was not independently verified."
     }
   ]
 }

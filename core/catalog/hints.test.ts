@@ -118,7 +118,11 @@ describe('zones implied by carrier names', () => {
 
   it('resolves supported national names and keeps uncatalogued networks ambiguous', () => {
     expect(carrierIdFromName('DPD UK')).toBe('dpd-uk');
-    for (const name of ['GLS Italy', 'DHL Parcel Netherlands', 'DPD Group']) expect(carrierIdFromName(name)).toBeUndefined();
+    expect(carrierIdFromName('DHL Parcel Netherlands')).toBe('dhl-ecommerce-nl');
+    expect(carrierIdFromName('DHL Parcel Spain')).toBe('dhl-ecommerce-es');
+    expect(carrierIdFromName('DHL Parcel UK')).toBe('dhl-ecommerce-uk');
+    expect(carrierIdFromName('DHL Parcel Poland')).toBe('dhl-ecommerce-pl');
+    for (const name of ['GLS Italy', 'DHL Parcel Italy', 'DPD Group']) expect(carrierIdFromName(name)).toBeUndefined();
   });
 
   it('lists the zones of a bare brand only when all of its carriers keep a local clock', () => {

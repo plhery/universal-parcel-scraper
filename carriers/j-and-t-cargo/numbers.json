@@ -26,7 +26,8 @@
           "gls-fr",
           "gls-de",
           "blue-dart",
-          "aramex"
+          "aramex",
+          "dhl-ecommerce-pl"
         ]
       },
       "note": "Eleven-digit reported J&T Cargo number differs from other twelve-digit samples. Possible transcription error; never pad or repair it."

@@ -1,0 +1,10 @@
+{
+  "carrier": "dhl-ecommerce-uk",
+  "entries": [
+    {"wording": "Your shipment has been collected", "language": "en", "stage": "accepted", "confirmedBy": "live"},
+    {"wording": "Your shipment is at the delivery depot", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Your shipment is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"wording": "Your shipment is delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"},
+    {"wording": "We're sorry but the delivery of your shipment has been delayed. We expect to deliver on the next working day", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+  ]
+}

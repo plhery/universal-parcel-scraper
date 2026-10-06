@@ -86,7 +86,7 @@
     },
     {
       "id": "dhl-2",
-      "pattern": "^(?:JJD[A-Z0-9]{8,}|JVGL(?![0-9]{20}$)[A-Z0-9]{8,})$",
+      "pattern": "^JJD[A-Z0-9]{8,}$",
       "confidence": "high"
     },
     {
@@ -101,13 +101,8 @@
     },
     {
       "id": "dhl-5",
-      "pattern": "^0034043[45]\\d{12}$",
+      "pattern": "^0034043[345]\\d{12}$",
       "confidence": "high"
-    },
-    {
-      "id": "dhl-6",
-      "pattern": "^JVGL[0-9]{20}$",
-      "confidence": "low"
     }
   ]
 }

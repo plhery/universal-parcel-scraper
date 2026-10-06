@@ -70,7 +70,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce"
+        ]
       },
       "note": "Official documentation example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to DHL eCommerce; no rule matches this shape."
     },
@@ -83,7 +86,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce"
+        ]
       },
       "note": "Official documentation example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to DHL eCommerce; no rule matches this shape."
     },
@@ -98,6 +104,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-ecommerce",
           "austrian-post",
           "usps",
           "estafeta"
@@ -116,6 +123,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-ecommerce",
           "austrian-post",
           "usps",
           "estafeta"
@@ -124,22 +132,128 @@
       "note": "Official documentation example, not a real shipment. A USPS-format number DHL eCommerce issues in the Americas; no rule claims DHL eCommerce for it."
     },
     {
-      "number": "JVGL08035717002011328118",
+      "number": "420999999261999900000000000000",
       "role": "shipment",
-      "evidence": "public_shipment_report",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce"
+        ]
+      },
+      "note": "Made-up number in the shape Webtrack answers for a US parcel: the 420 routing prefix and ZIP code in front of the 22 digits."
+    },
+    {
+      "number": "71234567891234",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
       "source": {
-        "url": "https://ie.trustpilot.com/review/dhlecommerce.nl",
-        "date": "2026-09-21"
+        "url": "https://www.dhl.com/discover/en-my/ship-with-dhl/track"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "dhl",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "DHL eCommerce example on the Malaysian tracking page, not a real shipment. No rule offers this carrier for fourteen digits."
+    },
+    {
+      "number": "420127019261290376171425385106",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://webtrack.dhlglobalmail.com/?trackingnumber=420127019261290376171425385106"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
           "dhl-ecommerce"
         ]
       },
-      "note": "Public report explicitly names DHL eCommerce Netherlands for a shipment to Switzerland. Read from the source page's search-index excerpt; no Americas Webtrack coverage is established."
+      "note": "Public tracking link; the tracking page returned the history."
+    },
+    {
+      "number": "9261290316844317469885",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://webtrack.dhlglobalmail.com/?trackingnumber=9261290316844317469885"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Public tracking link; the tracking page returned the history."
+    },
+    {
+      "number": "9261290376171504812868",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://webtrack.dhlglobalmail.com/?trackingnumber=9261290376171504812868"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Public tracking link; the tracking page returned the history."
+    },
+    {
+      "number": "9261290376171505101329",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://webtrack.dhlglobalmail.com/?trackingnumber=9261290376171505101329"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Public tracking link; the tracking page returned the history."
     }
   ]
 }

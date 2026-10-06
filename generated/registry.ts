@@ -28,6 +28,10 @@ import { adapter as dachser } from '../carriers/dachser/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as dhl } from '../carriers/dhl/adapter.js';
 import { adapter as dhlEcommerce } from '../carriers/dhl-ecommerce/adapter.js';
+import { adapter as dhlEcommerceEs } from '../carriers/dhl-ecommerce-es/adapter.js';
+import { adapter as dhlEcommerceNl } from '../carriers/dhl-ecommerce-nl/adapter.js';
+import { adapter as dhlEcommercePl } from '../carriers/dhl-ecommerce-pl/adapter.js';
+import { adapter as dhlEcommerceUk } from '../carriers/dhl-ecommerce-uk/adapter.js';
 import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdDe } from '../carriers/dpd-de/adapter.js';
@@ -130,6 +134,10 @@ export const REGISTRY: RegistryDefinition = {
     "delhivery": delhivery,
     "dhl": dhl,
     "dhl-ecommerce": dhlEcommerce,
+    "dhl-ecommerce-es": dhlEcommerceEs,
+    "dhl-ecommerce-nl": dhlEcommerceNl,
+    "dhl-ecommerce-pl": dhlEcommercePl,
+    "dhl-ecommerce-uk": dhlEcommerceUk,
     "dhl-express": dhlExpress,
     "dpd": dpd,
     "dpd-de": dpdDe,
@@ -236,6 +244,10 @@ export const REGISTRY: RegistryDefinition = {
     "delivengo": "la-poste",
     "dhl": "dhl",
     "dhl-ecommerce": "dhl-ecommerce",
+    "dhl-ecommerce-es": "dhl-ecommerce-es",
+    "dhl-ecommerce-nl": "dhl-ecommerce-nl",
+    "dhl-ecommerce-pl": "dhl-ecommerce-pl",
+    "dhl-ecommerce-uk": "dhl-ecommerce-uk",
     "dhl-express": "dhl-express",
     "dpd": "dpd",
     "dpd-de": "dpd-de",
