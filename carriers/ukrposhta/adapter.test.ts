@@ -206,14 +206,27 @@ describe('Ukrposhta status API projection', () => {
 describe('Ukrposhta direct status API retrieval', () => {
   it('asks once with the configured bearer and starts no browser', async () => {
     const seam = browserSeam(), fetcher = statusApi(), recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
-    const instance = adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder, fetcher, env: { UKRPOSHTA_TRACKING_TOKEN: ` Bearer ${TOKEN} ` } });
+    const instance = adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder, fetcher, userAgent: 'Host/1.0', env: { UKRPOSHTA_TRACKING_TOKEN: ` Bearer ${TOKEN} ` } });
     await expect(instance.track({ number: NUMBER })).resolves.toMatchObject({ current_stage: 'returned' });
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`${UKRPOSHTA_STATUS_API}?barcode=${NUMBER}&lang=en`);
-    expect(Object.fromEntries(new Headers(init!.headers))).toEqual({ accept: 'application/json', authorization: `Bearer ${TOKEN}` });
+    expect(Object.fromEntries(new Headers(init!.headers))).toEqual({ accept: 'application/json', authorization: `Bearer ${TOKEN}`, 'user-agent': 'Host/1.0' });
     expect(fetcher).toHaveBeenCalledOnce();
     expect(seam.launch).not.toHaveBeenCalled();
     expect(recorder.step).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ step: 'direct', outcome: 'ok' }));
+  });
+
+  it("uses the app's own bearer unless the host supplies one", async () => {
+    browserSeam();
+    const sent = async (env: Record<string, string>) => {
+      const fetcher = statusApi();
+      await adapter({ browserExecutablePath: null, trawl: null, recorder: NOOP_RECORDER, fetcher, env }).track({ number: NUMBER });
+      return new Headers(fetcher.mock.calls[0]![1]!.headers).get('authorization');
+    };
+    const builtIn = await sent({});
+    expect(builtIn).toMatch(/^Bearer \S{8,}$/);
+    expect(await sent({ UKRPOSHTA_TRACKING_TOKEN: '  ' })).toBe(builtIn);
+    expect(await sent({ UKRPOSHTA_TRACKING_TOKEN: TOKEN })).toBe(`Bearer ${TOKEN}`);
   });
 
   it('skips the API without a usable token', async () => {
@@ -261,7 +274,8 @@ describe('Ukrposhta direct status API retrieval', () => {
 describe('Ukrposhta bounded anonymous browser retrieval', () => {
   it('uses a fresh context and two native requests inside one recorded lookup', async () => {
     const seam = browserSeam(), recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
-    const instance = adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder, env: {} });
+    const fetcher = statusApi('<html>403 Forbidden</html>', 403);
+    const instance = adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder, fetcher, env: {} });
     await expect(instance.track({ number: NUMBER }, { budgetMs: 5000 })).resolves.toMatchObject({ current_stage: 'returned' });
     expect(seam.page.goto.mock.calls.map(call => call[0])).toEqual([ukrposhtaTrackingUrl(`${NUMBER},${NUMBER}`), ukrposhtaTrackingUrl(NUMBER)]);
     expect(Object.keys(seam.launch.mock.calls[0]![0]!.env!)).toEqual(['PATH', 'HOME', 'LANG']);

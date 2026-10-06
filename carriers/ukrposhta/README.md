@@ -7,7 +7,8 @@ scans when it supplies them.
 ## How it works
 
 `direct` asks the status API that Ukrposhta's Android app uses, over plain HTTP.
-It needs the app's bearer in `UKRPOSHTA_TRACKING_TOKEN` and is skipped without it.
+The app's shared application bearer is included; consumers need no key setup.
+`UKRPOSHTA_TRACKING_TOKEN` can replace it.
 The reply is a list of scans, each naming its barcode and its position in the
 history. Every row must name the requested barcode.
 
@@ -24,9 +25,8 @@ profile or recipient details are used.
 The endpoint comes from the Android app `ua.ukrposhta.android.app`:
 `GET https://www.ukrposhta.ua/status-tracking/0.0.1/statuses` with `barcode` and
 `lang`, and an `Authorization: Bearer` header carrying one credential shared by
-every install. The app stores it encrypted. It is an application credential, so
-this package does not ship it: the consumer supplies it. A request without it gets
-an HTML refusal, which the adapter treats as a challenge.
+every install. A request without it, or with one Ukrposhta has retired, gets an
+HTML refusal. The adapter treats that as a challenge and the browser takes over.
 
 The newer Flutter app `ua.ukrposhta.ukrposhta` tracks through account routes on
 `my.ukrposhta.ua` and offers no guest lookup.
@@ -48,7 +48,7 @@ the portal, which also shows the destination post's scans.
 
 Detection only suggests Ukrposhta for a thirteen-digit domestic barcode, a length
 other carriers share. International references follow the issuing post.
-Retrieval needs `UKRPOSHTA_TRACKING_TOKEN` or `TRACKING_CHROMIUM_PATH`. Neither
+The fallback needs `TRACKING_CHROMIUM_PATH`. Neither
 not-found reply names the barcode, so neither can establish parcel absence. On the
 portal, multiple-piece shipments, count changes between requests and conflicting
 current scans are inconclusive. Delivery and estimate dates are not inferred from
@@ -58,6 +58,6 @@ universal providers.
 
 ## Testing
 
-Run `npm run test:carriers:live -- carriers/ukrposhta` with `UKRPOSHTA_TRACKING_NUMBER`
-and either `UKRPOSHTA_TRACKING_TOKEN` or `TRACKING_CHROMIUM_PATH` supplied outside
-the repository.
+Run `npm run test:carriers:live -- carriers/ukrposhta`. `UKRPOSHTA_TRACKING_NUMBER`
+adds a positive lookup and `TRACKING_CHROMIUM_PATH` the browser checks; supply both
+outside the repository.

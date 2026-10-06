@@ -5,20 +5,21 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 
 const executablePath = process.env.TRACKING_CHROMIUM_PATH;
-const token = process.env.UKRPOSHTA_TRACKING_TOKEN;
 const number = process.env.UKRPOSHTA_TRACKING_NUMBER;
 const UNKNOWN = '0000000000001';
-const direct = () => adapter({ browserExecutablePath: null, trawl: null, recorder: NOOP_RECORDER, env: { UKRPOSHTA_TRACKING_TOKEN: token } });
-const browser = () => adapter({ browserExecutablePath: executablePath ?? null, trawl: null, recorder: NOOP_RECORDER, env: {} });
+const direct = () => adapter({ browserExecutablePath: null, trawl: null, recorder: NOOP_RECORDER, env: {} });
+/** The browser tier alone: the status API request is refused before it leaves. */
+const refused: typeof fetch = async () => new Response('', { status: 403 });
+const browser = () => adapter({ browserExecutablePath: executablePath ?? null, trawl: null, recorder: NOOP_RECORDER, fetcher: refused, env: {} });
 
 describe('Ukrposhta status API live', () => {
-  it.skipIf(!token || !number)('returns history over plain HTTP', async () => {
+  it.skipIf(!number)('returns history over plain HTTP', async () => {
     const result = normalizeCarrierResult(await direct().track({ number: number! }));
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.every(event => event.local_time)).toBe(true);
     expect(result.last_update).toBeNull();
   });
-  it.skipIf(!token)('keeps a synthetic unknown barcode inconclusive', async () => {
+  it('keeps a synthetic unknown barcode inconclusive', async () => {
     await expect(direct().track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'indeterminate' });
   });
 });
