@@ -101,10 +101,15 @@ step exists for future protocol changes.
   offset-less date that no zone resolves, has no instant. It is skipped and counted in
   `undated_event_count`, so it never becomes the latest scan, sets the stage or
   `last_update`, or moves the freshness watermark. A malformed date still fails the reply.
-- DHL Express scans carry the facility's clock: DHL's mobile API gives the same clocks
-  scan for scan. Their `location` reads `CITY - COUNTRY`, which step 2 does not parse, so
-  they take the facility's zone from the [DHL Express rule](../../carriers/dhl-express/clock.ts)
-  before it. A facility in a country with several clocks stays as labeled.
+- DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
+  the same clocks scan for scan, and Ship24 gives them with the facility's offset. They
+  skip the steps above and take the zone the
+  [DHL Express rule](../../carriers/dhl-express/clock.ts) reads from their location
+  (`CITY - COUNTRY`, `CITY - REGION - COUNTRY`). A scan the rule cannot place is a wall
+  time: it is left out and counted like an undated state. When it is the reply's latest
+  scan the reply is inconclusive, so an older scan does not stand in for the parcel's
+  state and routing asks the next source. The rendered page prints no location, so it
+  places none of them.
 - TNT's international scans (9-digit numbers) skip these steps. tnt.com gives them
   offsets, and ParcelsApp's `date` is already their UTC instant.
 - So do scans named "Asendia United States" or "Asendia USA", wherever they happened.

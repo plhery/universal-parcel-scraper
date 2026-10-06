@@ -124,6 +124,13 @@ describe('time policies', () => {
     expect(regionHasTown('NL', "St. John's")).toBe(true);
     // Only the codes shared with a single-clock country have lists.
     expect(regionHasTown('NY', 'New York')).toBe(false);
+    // Island groups on another clock than their country, without the names the mainland shares.
+    expect(regionHasTown('ES-CN', 'TENERIFE')).toBe(true);
+    expect(regionHasTown('ES-CN', 'Las Palmas de Gran Canaria')).toBe(true);
+    expect(regionHasTown('ES-CN', 'Madrid')).toBe(false);
+    expect(regionHasTown('PT-20', 'Ponta Delgada')).toBe(true);
+    expect(regionHasTown('PT-20', 'Lagoa')).toBe(false);
+    expect(regionHasTown('PT-20', 'Lisboa')).toBe(false);
   });
 
   it('maps a zone back to its single-zone country only', () => {

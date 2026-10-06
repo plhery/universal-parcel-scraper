@@ -61,11 +61,20 @@ is verification evidence rather than a maintenance or missing-shipment answer.
 
 The returned identity must match the whole waybill and the browser response must
 identify the Express division. Reused waybills and empty histories stay inconclusive.
-A mobile scan carries its facility's clock and a `CITY - COUNTRY` location, without an
-offset. It takes its country's offset when that country keeps one civil time. Spain and
-Portugal are left out because their islands run an hour behind the mainland. Any other
-mobile scan keeps its clock as `local_time`; the global portal's explicit offsets provide
-dated instants. Recipient details, piece identifiers and
+A mobile scan carries its facility's clock and its location, without an offset. The
+location reads `CITY - COUNTRY`, or `CITY - REGION - COUNTRY` in the USA and Canada, where
+the region is a state's or province's name or code. [clock.ts](clock.ts) reads the clock in
+the country's zone when the country keeps one civil time, and in the majority zone of the
+state or province, so a facility in its other zone is an hour off. Spain and Portugal file
+their islands under the country: a town or island of the Canary Islands or the Azores takes
+the islands' clock, unless the mainland has a town of that name. Ship24 relays the same
+scans with DHL's own offsets, and the rule agrees with them on every scan of the public
+samples.
+
+A scan whose location settles no zone keeps its clock as `local_time`: a country with
+several clocks and no region, or a country DHL writes in a form the rule does not know.
+The rule knows English country names and the forms seen on DHL's scans (`UK`, `USA`,
+`NETHERLANDS, THE`). The global portal's explicit offsets provide dated instants. Recipient details, piece identifiers and
 proof-of-delivery links are discarded. A blocked HTTP request requires a configured
 browser service with the DHL Express capture helper.
 

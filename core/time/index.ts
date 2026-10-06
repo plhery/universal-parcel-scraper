@@ -242,8 +242,11 @@ const REGION_TOWN_SETS = new Map(Object.entries(REGION_TOWNS).map(([code, towns]
 /**
  * Whether a town of this name lies in the US state or Canadian province whose
  * code also names a single-clock country: Chicago is in Illinois, not Israel,
- * and Koeln is not in Delaware. Only DE, IL, IN, MT, NL and SK have town lists
- * (generated from GeoNames); false for any other code.
+ * and Koeln is not in Delaware. Also whether it lies in an island group that
+ * keeps another clock than its country, by ISO 3166-2 code: the Canary Islands
+ * (`ES-CN`) and the Azores (`PT-20`), without the names their mainland also
+ * has. Only DE, IL, IN, MT, NL, SK and these two have town lists (generated
+ * from GeoNames); false for any other code.
  */
 export function regionHasTown(code: string, town: string): boolean {
   return REGION_TOWN_SETS.get(code.trim().toUpperCase())?.has(townKey(town)) ?? false;

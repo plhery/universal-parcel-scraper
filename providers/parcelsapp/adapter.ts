@@ -128,6 +128,29 @@ function regionScanZone(name: unknown, location: string, inNorthAmerica: boolean
   return region && (region.certain || inNorthAmerica) ? region : null;
 }
 
+/** A DHL Express date with no zone for its facility: a wall time that no label makes an instant. */
+function isFacilityClock(payload: Record<string, unknown>, state: Record<string, unknown>): boolean {
+  const name = stateCarrierName(payload, state);
+  return typeof name === 'string' && carrierIdFromName(name) === 'dhl-express';
+}
+
+/**
+ * The newest wall clock of a reply, and whether that scan was left without an
+ * instant. A reply whose latest scan has none cannot say where the parcel is,
+ * and an older scan must not stand in for it.
+ */
+class LatestScan {
+  private wall = '';
+  private unplaced = false;
+  see(date: unknown, unplaced: boolean): void {
+    const wall = mislabeledWallTime(date) ?? '';
+    if (wall > this.wall || (wall === this.wall && unplaced)) [this.wall, this.unplaced] = [wall, unplaced];
+  }
+  check(): void {
+    if (this.unplaced) throw new IndeterminateError(SOURCE, 'ParcelsApp cannot place the latest DHL Express scan');
+  }
+}
+
 function scanZone(payload: Record<string, unknown>, state: Record<string, unknown>, fallback: string | null, number: string, inNorthAmerica = false): string | null {
   const name = stateCarrierName(payload, state);
   const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
@@ -138,11 +161,10 @@ function scanZone(payload: Record<string, unknown>, state: Record<string, unknow
   // scan location. Keep its clock as a guess even when the alias is catalogued.
   if (zone !== 'UTC' && !(typeof name === 'string' && carrierNameCountryZone(name))) return zone;
   const location = typeof state.location === 'string' ? state.location.trim() : '';
-  // DHL Express dates are its facility's clock and its locations read "CITY -
-  // COUNTRY": its mobile API gives the same clocks scan for scan, and scans
-  // were relayed before the instant their label claims (checked 2026-10-06).
-  const facility = carrier === 'dhl-express' ? facilityZone(location) : null;
-  if (facility) return facility;
+  // DHL Express dates are its facility's clock, whatever the label: its mobile
+  // API gives the same clocks scan for scan, and Ship24 the same clocks with
+  // the facility's offset (checked 2026-10-06). No other step applies to them.
+  if (carrier === 'dhl-express') return facilityZone(location);
   const place = location.split(',').at(-1);
   // A state or province the town confirms beats the country its code also
   // names ("Chicago, IL"); a merely possible one comes after ("Koeln, DE").
@@ -223,10 +245,13 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     return wall && text ? `${wall}|${text}` : '';
   };
   const localClocks = new Map(entries.filter((entry) => entry.local).map((entry) => [copyKey(entry), entry.zone!] as const).filter(([key]) => key));
+  const latest = new LatestScan();
   for (const entry of entries) {
     const { raw, name, scan } = entry;
     const zone = (localClocks.size && !entry.local ? localClocks.get(copyKey(entry)) : undefined) ?? entry.zone;
-    const parsed = localEvent((zone ? mislabeledLocalTime(raw.date, zone)?.iso : undefined) ?? raw.date, entry.wording);
+    const facilityClock = !zone && isFacilityClock(payload, raw);
+    const parsed = localEvent((zone ? mislabeledLocalTime(raw.date, zone)?.iso : facilityClock ? mislabeledWallTime(raw.date) : undefined) ?? raw.date, entry.wording);
+    if (parsed) latest.see(raw.date, facilityClock);
     // Nor has an offset-less date that no zone resolves: a wall time, not an instant.
     if (parsed && !parsed.time) {
       undated++;
@@ -242,6 +267,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage, stage_source: 'carrier_map' }), scan });
   }
   markReturnLeg(scans);
+  latest.check();
   if (!events.length) {
     const fields = payload.states.flatMap((raw: unknown): unknown[] => isRecord(raw) && Array.isArray(raw.require_fields) ? raw.require_fields : []);
     if (fields.some((field: unknown) => isRecord(field) && field.name === 'zipcode')) {
@@ -290,6 +316,7 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
   const carriers: string[] = [];
   const scans: { event: CarrierEvent; scan: CarrierScan }[] = [];
   let undated = 0;
+  const latest = new LatestScan();
   nodes.each((_, node) => {
     const row = $(node);
     if (row.find('input, select, form').length) return;
@@ -315,11 +342,19 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
     const state = { date: labeled.toISO(), ...(name ? { carrier: carriers.indexOf(name) } : {}) };
     const zone = scanZone({ carriers }, state, timezone, numberOf(trackingNumber));
     const scan = carrierScan(name ? carrierIdFromName(name) : undefined, description);
+    // The page prints no location, so no DHL Express scan has a facility to read its clock in.
+    const facilityClock = !zone && isFacilityClock({ carriers }, state);
+    latest.see(state.date, facilityClock);
+    if (facilityClock) {
+      undated++;
+      return;
+    }
     const parsed = event((zone ? mislabeledLocalTime(state.date, zone)?.iso : undefined) ?? state.date, scan?.wording ?? description);
     if (parsed) events.push(parsed);
     if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage, stage_source: 'carrier_map' }), scan });
   });
   markReturnLeg(scans);
+  latest.check();
   return { ...result(events, SOURCE), ...(undated ? { undated_event_count: undated } : {}),
     ...universalCarrierHints(carriers.slice(0, 20), numberOf(trackingNumber)) };
 }

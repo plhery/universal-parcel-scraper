@@ -4,7 +4,7 @@ import timers from 'node:timers/promises';
 import { DateTime } from 'luxon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TrawlClient } from '../../core/transport/index.js';
-import { carrierErrorKind, NoHistoryError } from '../../core/errors/index.js';
+import { carrierErrorKind, IndeterminateError, NoHistoryError } from '../../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { ParcelsAppTracker, parseParcelsAppHtml, parseParcelsAppResponse } from './adapter.js';
 
@@ -440,18 +440,38 @@ describe('ParcelsApp result parsing', () => {
   });
 
   it('reads DHL Express scans on the clock of the facility their location names', () => {
-    // Live shape (2026-10-06): the facility's clock labeled UTC, at "CITY - COUNTRY".
-    const scan = (location?: string, carriers = ['DHL Express']) => parseParcelsAppResponse({
-      carriers, states: [{ date: '2026-10-06T06:34:00.000Z', status: 'Processed', carrier: 0, ...(location ? { location } : {}) }],
-    }, number, identity()).events?.[0]?.time;
-    expect(scan('EXAMPLE CITY - FRANCE')).toBe('2026-10-06T04:34:00.000Z');
-    expect(scan('EXAMPLE CITY - NETHERLANDS, THE')).toBe('2026-10-06T04:34:00.000Z');
-    // Several clocks, islands on another clock, or no country: kept as labeled.
-    for (const location of ['EXAMPLE CITY, OH - USA', 'EXAMPLE CITY - SPAIN', 'EXAMPLE CITY', undefined]) {
-      expect(scan(location)).toBe('2026-10-06T06:34:00.000Z');
+    // Live shape (2026-10-06): the facility's clock labeled UTC. Ship24 gives the
+    // same clocks with the offsets below.
+    const state = (location?: string, date = '2026-10-05T12:00:00Z') => ({ date, status: 'Processed', carrier: 0, ...(location ? { location } : {}) });
+    const scans = (states: unknown[], carriers = ['DHL Express']) => parseParcelsAppResponse({ carriers, states }, number, identity());
+    const scan = (location?: string, carriers?: string[]) => scans([state(location)], carriers).events?.[0]?.time;
+    expect(scan('EXAMPLE CITY - FRANCE')).toBe('2026-10-05T10:00:00.000Z');
+    expect(scan('EXAMPLE CITY - NETHERLANDS, THE')).toBe('2026-10-05T10:00:00.000Z');
+    expect(scan('EXAMPLE-CITY - UK')).toBe('2026-10-05T11:00:00.000Z');
+    expect(scan('EXAMPLE HUB - Ohio - USA')).toBe('2026-10-05T16:00:00.000Z');
+    expect(scan('EXAMPLE GATEWAY - California - USA')).toBe('2026-10-05T19:00:00.000Z');
+    expect(scan('EXAMPLE CITY - VIRGINIA,VA - USA')).toBe('2026-10-05T16:00:00.000Z');
+    expect(scan('EXAMPLE CITY - ON - CANADA')).toBe('2026-10-05T16:00:00.000Z');
+    expect(scan('EXAMPLE SERVICE AREA - ONTARIO - CANADA')).toBe('2026-10-05T16:00:00.000Z');
+    expect(scan('TENERIFE - SPAIN')).toBe('2026-10-05T11:00:00.000Z');
+    // The shape is DHL Express's own: another carrier's label stands.
+    expect(scan('EXAMPLE CITY - FRANCE', ['Example Parcel Co'])).toBe('2026-10-05T12:00:00.000Z');
+  });
+
+  it('gives no instant to a DHL Express clock whose facility it cannot place', () => {
+    const state = (location: string | undefined, date: string) => ({ date, status: 'Processed', carrier: 0, ...(location ? { location } : {}) });
+    const scans = (states: unknown[]) => parseParcelsAppResponse({ carriers: ['DHL Express'], states }, number, identity());
+    // An older one is left out and counted.
+    const earlier = scans([state('EXAMPLE CITY - FRANCE', '2026-10-05T12:00:00Z'), state('EXAMPLE CITY - USA', '2026-10-03T12:00:00Z')]);
+    expect(earlier).toMatchObject({ undated_event_count: 1, last_update: '2026-10-05T10:00:00.000Z' });
+    expect(earlier.events).toHaveLength(1);
+    // The latest one leaves the reply unable to say where the parcel is, whatever the order of its states.
+    for (const location of ['EXAMPLE CITY - USA', 'EXAMPLE CITY - EXAMPLELAND', 'EXAMPLE CITY', undefined]) {
+      expect(() => scans([state(location, '2026-10-05T12:00:00Z')])).toThrow(IndeterminateError);
+      expect(() => scans([state('EXAMPLE CITY - FRANCE', '2026-10-03T12:00:00Z'), state(location, '2026-10-05T12:00:00Z')])).toThrow(IndeterminateError);
     }
-    // The shape is DHL Express's own.
-    expect(scan('EXAMPLE CITY - FRANCE', ['Example Parcel Co'])).toBe('2026-10-06T06:34:00.000Z');
+    // The rendered page prints no location at all.
+    expect(() => parseParcelsAppHtml(rendered(carrierRow('05 Oct 2026', '12:00', 'Processed', 'DHL Express')), number)).toThrow(IndeterminateError);
   });
 
   it('keeps the UTC instants ParcelsApp gives TNT international scans', () => {

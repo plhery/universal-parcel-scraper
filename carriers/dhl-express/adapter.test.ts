@@ -49,21 +49,37 @@ describe('DHL Express projection', () => {
     expect(result.events?.some((event) => 'time' in event)).toBe(false);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private|signature|signatory/);
   });
-  it('dates a scan only where its country keeps one civil time', () => {
-    const data = payload();
-    data.results[0]!.checkpoints = [
-      { description: 'Processed', date: 'Tuesday, October 06, 2026', time: '06:34', location: 'EXAMPLE CITY - FRANCE' },
-      { description: 'Processed', date: 'Monday, October 05, 2026', time: '21:22', location: 'EXAMPLE CITY - NETHERLANDS, THE' },
-      { description: 'Processed', date: 'Monday, October 05, 2026', time: '20:00', location: 'EXAMPLE CITY - SPAIN' },
-      { description: 'Processed', date: 'Monday, October 05, 2026', time: '19:00', location: 'FRANCE' },
-      { description: 'Processed', date: 'Monday, January 05, 2026', time: '10:00', location: 'EXAMPLE - CITY - FRANCE' },
-    ];
-    const result = parse(data, number);
-    expect(result.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-10-06T06:34:00+02:00',
-      '2026-10-05T21:22:00+02:00', '2026-10-05T20:00:00', '2026-10-05T19:00:00', '2026-01-05T10:00:00+01:00']);
-    expect(result.events?.map((event) => 'time' in event)).toEqual([true, true, false, false, true]);
-    expect(result).toMatchObject({ last_update: '2026-10-06T06:34:00+02:00' });
-    expect(result).not.toHaveProperty('last_update_local');
+  it('dates a scan where its location settles the facility zone', () => {
+    const clock = (location: string, date = 'Monday, October 05, 2026') => {
+      const data = payload();
+      data.results[0]!.checkpoints = [{ description: 'Processed', date, time: '12:00', location }];
+      const result = parse(data, number);
+      const scan = result.events![0]!;
+      expect(result.last_update).toBe(scan.time ?? null);
+      expect('last_update_local' in result).toBe(!scan.time);
+      return scan.time ?? `local ${String(scan.local_time)}`;
+    };
+    // The shapes DHL writes, with the offsets its public page gives those facilities.
+    expect(clock('EXAMPLE CITY - FRANCE')).toBe('2026-10-05T12:00:00+02:00');
+    expect(clock('EXAMPLE CITY - FRANCE', 'Monday, January 05, 2026')).toBe('2026-01-05T12:00:00+01:00');
+    expect(clock('EXAMPLE CITY - NETHERLANDS, THE')).toBe('2026-10-05T12:00:00+02:00');
+    expect(clock('EXAMPLE-CITY - UK')).toBe('2026-10-05T12:00:00+01:00');
+    expect(clock('EXAMPLE HUB - Ohio - USA')).toBe('2026-10-05T12:00:00-04:00');
+    expect(clock('EXAMPLE CITY - New York - USA')).toBe('2026-10-05T12:00:00-04:00');
+    expect(clock('EXAMPLE GATEWAY - California - USA')).toBe('2026-10-05T12:00:00-07:00');
+    expect(clock('EXAMPLE CITY - VIRGINIA,VA - USA')).toBe('2026-10-05T12:00:00-04:00');
+    expect(clock('EXAMPLE CITY - ON - CANADA')).toBe('2026-10-05T12:00:00-04:00');
+    expect(clock('EXAMPLE SERVICE AREA - ONTARIO - CANADA')).toBe('2026-10-05T12:00:00-04:00');
+    // Spain and Portugal file their islands under the country: the town tells.
+    expect(clock('EXAMPLE CITY - SPAIN')).toBe('2026-10-05T12:00:00+02:00');
+    expect(clock('TENERIFE - SPAIN')).toBe('2026-10-05T12:00:00+01:00');
+    expect(clock('EXAMPLE CITY - PORTUGAL')).toBe('2026-10-05T12:00:00+01:00');
+    expect(clock('PONTA DELGADA - PORTUGAL')).toBe('2026-10-05T12:00:00+00:00');
+    // Several clocks and no region DHL names, an unknown country, or no country at all.
+    for (const location of ['EXAMPLE CITY - USA', 'EXAMPLE CITY - Example - USA', 'EXAMPLE CITY - CANADA',
+      'EXAMPLE CITY - EXAMPLELAND', 'FRANCE', '']) {
+      expect(clock(location)).toBe('local 2026-10-05T12:00:00');
+    }
   });
   it('rejects a foreign shipment and keeps reused waybills inconclusive', () => {
     expect(() => parse(payload(), '1234567880')).toThrow(SchemaError);
