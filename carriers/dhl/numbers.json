@@ -16,6 +16,23 @@
       "note": "Publicly reported shipment number; the attribution was not independently verified."
     },
     {
+      "number": "00340435061352161527",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/www.dhl.de",
+        "date": "2026-10-07"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number in the second 0034043 range; DHL's recipient endpoint returned its history."
+    },
+    {
       "number": "8449089972",
       "role": "shipment",
       "evidence": "merchant_published_example",

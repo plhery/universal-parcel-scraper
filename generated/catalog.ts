@@ -463,7 +463,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^00340434\\d{12}$",
+        "pattern": "^0034043[45]\\d{12}$",
         "confidence": "high"
       },
       {

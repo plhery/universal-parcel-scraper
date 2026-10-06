@@ -394,7 +394,7 @@
       "dhl",
       "usps"
     ],
-    "reason": "The DHL 00340434 range sits inside the 20-digit space USPS matches broadly; the DHL rule decides."
+    "reason": "The DHL 0034043 ranges sit inside the 20-digit space USPS matches broadly; the DHL rule decides."
   },
   {
     "shape": "9{15}",
