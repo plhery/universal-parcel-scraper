@@ -16,7 +16,7 @@ it.skipIf(!liveNumber)('retrieves matching mobile history over HTTP', async () =
   const carrier = adapter({ trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
   const result = await carrier.track({ number: liveNumber! }, { budgetMs: 10_000 });
   expect(result.events?.length).toBeGreaterThan(0);
-  expect(result.events?.some((event) => event.time)).toBe(true);
+  expect(result.events?.some((event) => event.time ?? event.local_time)).toBe(true);
   expect(await carrier.recognize!(liveNumber!, { budgetMs: 10_000 })).toMatchObject({ known: true });
 }, 25_000);
 it.skipIf(!liveNumber || !trawlUrl)('retrieves dated Express history through the public tracking page', async () => {

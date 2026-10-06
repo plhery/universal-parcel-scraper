@@ -41,11 +41,29 @@ describe('DHL Express projection', () => {
   it('binds the waybill, maps milestones and preserves facility-local clocks without recipient data', () => {
     const result = parse(payload(), number);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', destination_country: 'CA',
-      last_update: '2026-10-05T15:06:00', events: [
-        { time: '2026-10-05T15:06:00', stage: 'delivered' },
-        { stage: 'out_for_delivery' }, { stage: 'accepted' },
+      last_update: null, last_update_local: '2026-10-05T15:06:00', events: [
+        { local_time: '2026-10-05T15:06:00', stage: 'delivered' },
+        { local_time: '2026-10-05T12:35:00', stage: 'out_for_delivery' }, { local_time: '2026-10-02T17:18:00', stage: 'accepted' },
       ] });
+    // A consumer reads an offset-less `time` in the catalog zone, which is UTC here.
+    expect(result.events?.some((event) => 'time' in event)).toBe(false);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private|signature|signatory/);
+  });
+  it('dates a scan only where its country keeps one civil time', () => {
+    const data = payload();
+    data.results[0]!.checkpoints = [
+      { description: 'Processed', date: 'Tuesday, October 06, 2026', time: '06:34', location: 'EXAMPLE CITY - FRANCE' },
+      { description: 'Processed', date: 'Monday, October 05, 2026', time: '21:22', location: 'EXAMPLE CITY - NETHERLANDS, THE' },
+      { description: 'Processed', date: 'Monday, October 05, 2026', time: '20:00', location: 'EXAMPLE CITY - SPAIN' },
+      { description: 'Processed', date: 'Monday, October 05, 2026', time: '19:00', location: 'FRANCE' },
+      { description: 'Processed', date: 'Monday, January 05, 2026', time: '10:00', location: 'EXAMPLE - CITY - FRANCE' },
+    ];
+    const result = parse(data, number);
+    expect(result.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-10-06T06:34:00+02:00',
+      '2026-10-05T21:22:00+02:00', '2026-10-05T20:00:00', '2026-10-05T19:00:00', '2026-01-05T10:00:00+01:00']);
+    expect(result.events?.map((event) => 'time' in event)).toEqual([true, true, false, false, true]);
+    expect(result).toMatchObject({ last_update: '2026-10-06T06:34:00+02:00' });
+    expect(result).not.toHaveProperty('last_update_local');
   });
   it('rejects a foreign shipment and keeps reused waybills inconclusive', () => {
     expect(() => parse(payload(), '1234567880')).toThrow(SchemaError);
@@ -55,7 +73,8 @@ describe('DHL Express projection', () => {
   });
   it('does not invent an instant from an invalid clock or turn empty history into movement', () => {
     const invalid = payload(); invalid.results[0]!.checkpoints[0]!.time = '25:06';
-    expect(parse(invalid, number).events?.[0]?.time).toBeUndefined();
+    expect(parse(invalid, number).events?.[0]).not.toHaveProperty('time');
+    expect(parse(invalid, number).events?.[0]).not.toHaveProperty('local_time');
     expect(() => parse({ results: [{ id: number, checkpoints: [] }] }, number)).toThrow(IndeterminateError);
   });
 });
@@ -119,8 +138,8 @@ describe('DHL mobile API', () => {
   it('derives status from sorted scans, uses English local dates and discards recipient and piece data', () => {
     const data = mobilePayload(); data[0]!.checkpoints.reverse();
     const result = parseMobile(data, number);
-    expect(result).toMatchObject({ status: 'delivered', last_update: '2026-10-05T15:06:00',
-      events: [{ stage: 'delivered', time: '2026-10-05T15:06:00' }, { stage: 'out_for_delivery' }, { stage: 'accepted' }] });
+    expect(result).toMatchObject({ status: 'delivered', last_update: null, last_update_local: '2026-10-05T15:06:00',
+      events: [{ stage: 'delivered', local_time: '2026-10-05T15:06:00' }, { stage: 'out_for_delivery' }, { stage: 'accepted' }] });
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private|signature|signatory|pIds|counter|pieces/);
   });
   it('rejects foreign identities, duplicate shipments, invalid counters and empty histories', () => {

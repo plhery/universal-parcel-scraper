@@ -61,8 +61,11 @@ is verification evidence rather than a maintenance or missing-shipment answer.
 
 The returned identity must match the whole waybill and the browser response must
 identify the Express division. Reused waybills and empty histories stay inconclusive.
-Mobile facility clocks are preserved without invented offsets; the global portal's
-explicit offsets provide dated instants. Recipient details, piece identifiers and
+A mobile scan carries its facility's clock and a `CITY - COUNTRY` location, without an
+offset. It takes its country's offset when that country keeps one civil time. Spain and
+Portugal are left out because their islands run an hour behind the mainland. Any other
+mobile scan keeps its clock as `local_time`; the global portal's explicit offsets provide
+dated instants. Recipient details, piece identifiers and
 proof-of-delivery links are discarded. A blocked HTTP request requires a configured
 browser service with the DHL Express capture helper.
 

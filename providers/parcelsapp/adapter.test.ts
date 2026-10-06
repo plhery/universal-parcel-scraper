@@ -439,6 +439,21 @@ describe('ParcelsApp result parsing', () => {
     expect(reply).toMatchObject({ reported_carriers: ['Spain Post'], discovered_carrier: 'correos-spain' });
   });
 
+  it('reads DHL Express scans on the clock of the facility their location names', () => {
+    // Live shape (2026-10-06): the facility's clock labeled UTC, at "CITY - COUNTRY".
+    const scan = (location?: string, carriers = ['DHL Express']) => parseParcelsAppResponse({
+      carriers, states: [{ date: '2026-10-06T06:34:00.000Z', status: 'Processed', carrier: 0, ...(location ? { location } : {}) }],
+    }, number, identity()).events?.[0]?.time;
+    expect(scan('EXAMPLE CITY - FRANCE')).toBe('2026-10-06T04:34:00.000Z');
+    expect(scan('EXAMPLE CITY - NETHERLANDS, THE')).toBe('2026-10-06T04:34:00.000Z');
+    // Several clocks, islands on another clock, or no country: kept as labeled.
+    for (const location of ['EXAMPLE CITY, OH - USA', 'EXAMPLE CITY - SPAIN', 'EXAMPLE CITY', undefined]) {
+      expect(scan(location)).toBe('2026-10-06T06:34:00.000Z');
+    }
+    // The shape is DHL Express's own.
+    expect(scan('EXAMPLE CITY - FRANCE', ['Example Parcel Co'])).toBe('2026-10-06T06:34:00.000Z');
+  });
+
   it('keeps the UTC instants ParcelsApp gives TNT international scans', () => {
     // Checked against tnt.com's offsets (2026-09-28); a TNT France number keeps the French clock.
     const scan = (trackingNumber: string) => parseParcelsAppResponse({

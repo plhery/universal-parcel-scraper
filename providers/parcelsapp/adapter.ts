@@ -11,6 +11,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import timers from 'node:timers/promises';
+import { facilityZone } from '../../carriers/dhl-express/clock.js';
 import type { AdapterFactory } from '../../core/adapter/index.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
@@ -137,6 +138,11 @@ function scanZone(payload: Record<string, unknown>, state: Record<string, unknow
   // scan location. Keep its clock as a guess even when the alias is catalogued.
   if (zone !== 'UTC' && !(typeof name === 'string' && carrierNameCountryZone(name))) return zone;
   const location = typeof state.location === 'string' ? state.location.trim() : '';
+  // DHL Express dates are its facility's clock and its locations read "CITY -
+  // COUNTRY": its mobile API gives the same clocks scan for scan, and scans
+  // were relayed before the instant their label claims (checked 2026-10-06).
+  const facility = carrier === 'dhl-express' ? facilityZone(location) : null;
+  if (facility) return facility;
   const place = location.split(',').at(-1);
   // A state or province the town confirms beats the country its code also
   // names ("Chicago, IL"); a merely possible one comes after ("Koeln, DE").

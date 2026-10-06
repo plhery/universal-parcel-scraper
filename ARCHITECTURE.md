@@ -110,7 +110,8 @@ Recognition uses HTTP by default. Consumers can request `recognitionCandidates` 
 `recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank;
 recipient inputs exclude a candidate. Browser confirmation requires dated shipment activity
 and returns its tracking result for reuse. An ambiguous ten-digit number includes DHL Express among its direct candidates when its waybill check passes. Its
-facility-local clocks stay unresolved; universal history can supply verified offsets.
+facility clocks are dated where the scan's country keeps one civil time and stay unresolved
+elsewhere; universal history can supply verified offsets.
 DHL Express's HTTP path uses its mobile guest API and includes the shared
 application bearer. Application settings and authentication failures stay distinct
 from a missing waybill; verification failures can recover through its public browser page.
@@ -151,7 +152,9 @@ Universal providers preserve Posti's handling labels, where registration can rec
 physical handling rather than electronic pre-advice.
 
 `resolveResult()` exposes an `instant` only for a scan clock with a verified UTC offset.
-Local clocks keep their original fields. More rows alone do not prove a fresher or more
+Local clocks keep their original fields. An adapter puts a clock whose zone the feed does
+not establish in `local_time`: a consumer reads an offset-less `time` in the result's zone,
+else in the carrier's catalog zone. More rows alone do not prove a fresher or more
 complete history.
 
 The app's scan-identity policies let Swiss Post and universal scans gain a location in

@@ -6,9 +6,10 @@ import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputEr
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { classifyWording, type Stage } from '../../core/status/index.js';
-import { explicitOffsetTime } from '../../core/time/index.js';
+import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
 import { clean, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { facilityZone } from './clock.js';
 import { mobileTracking } from './mobile.js';
 
 const PROVIDER = 'DHL Express';
@@ -30,11 +31,20 @@ export function trackingUrl(raw: string): string {
   return `https://mydhl.express.dhl/gb/en/tracking.html#/results?id=${normalizeNumber(raw)}`;
 }
 
-/** MyDHL clocks are local to each facility; they do not carry a UTC offset. */
-function clock(date: unknown, time: unknown): string | undefined {
-  if (typeof date !== 'string' || typeof time !== 'string' || !/^\d{2}:\d{2}$/.test(time)) return undefined;
-  const parsed = DateTime.fromFormat(`${date} ${time}`, 'cccc, MMMM dd, yyyy HH:mm', { locale: 'en', zone: 'utc' });
-  return parsed.isValid ? parsed.toFormat("yyyy-MM-dd'T'HH:mm:ss") : undefined;
+const CLOCK_FORMAT = 'cccc, MMMM dd, yyyy HH:mm';
+
+/**
+ * MyDHL clocks are local to each facility and carry no UTC offset. A scan is
+ * dated only when its facility's zone is known; any other keeps its clock.
+ */
+function clock(date: unknown, time: unknown, location: string): Pick<CarrierEvent, 'time'> & { local_time?: string } {
+  if (typeof date !== 'string' || typeof time !== 'string' || !/^\d{2}:\d{2}$/.test(time)) return {};
+  const wall = `${date} ${time}`;
+  const local = DateTime.fromFormat(wall, CLOCK_FORMAT, { locale: 'en', zone: 'utc' });
+  if (!local.isValid) return {};
+  const zone = facilityZone(location);
+  const instant = zone ? zonedTime(wall, CLOCK_FORMAT, zone, { locale: 'en' }) : null;
+  return instant ? { time: instant.iso } : { local_time: local.toFormat("yyyy-MM-dd'T'HH:mm:ss") };
 }
 
 function stage(description: string): { stage: Stage; source: string } {
@@ -102,8 +112,8 @@ export function parse(payload: unknown, raw: string): CarrierResult {
     if (!isRecord(row) || typeof row.description !== 'string' || !row.description.trim()) throw new SchemaError(PROVIDER, 'DHL Express returned an invalid checkpoint');
     const description = clean(row.description).slice(0, 1000);
     const mapped = stage(description);
-    return { description, ...(clock(row.date, row.time) ? { time: clock(row.date, row.time) } : {}),
-      ...(typeof row.location === 'string' ? { location: clean(row.location).slice(0, 300) } : {}),
+    const location = typeof row.location === 'string' ? clean(row.location).slice(0, 300) : '';
+    return { description, ...clock(row.date, row.time, location), ...(typeof row.location === 'string' ? { location } : {}),
       stage: mapped.stage, stage_source: mapped.source };
   });
   const current = events[0]!;
@@ -111,7 +121,8 @@ export function parse(payload: unknown, raw: string): CarrierResult {
     : ['exception', 'failed_attempt', 'returned'].includes(current.stage!) ? 'exception'
       : ['pending', 'registered'].includes(current.stage!) ? 'pending' : 'in_transit';
   return { status, current_stage: current.stage, current_stage_source: current.stage_source,
-    last_status_text: current.description, last_update: current.time ?? null, events,
+    last_status_text: current.description, last_update: current.time ?? null,
+    ...(typeof current.local_time === 'string' ? { last_update_local: current.local_time } : {}), events,
     ...(typeof shipment.consigneeCountryCode === 'string' && /^[A-Z]{2}$/.test(shipment.consigneeCountryCode)
       ? { destination_country: shipment.consigneeCountryCode } : {}) };
 }
