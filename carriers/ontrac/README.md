@@ -9,6 +9,10 @@ match the request. A generic missing-resource problem response cannot distinguis
 unknown parcel from an unavailable endpoint, so it remains inconclusive. An empty or
 mismatched package list is inconclusive or a schema failure.
 
+The `C` and `D` number families remain suggestions because their shape alone
+does not establish the operator. HTTP recognition requires matching shipment scans; an unavailable
+tracking resource remains a failed probe.
+
 ## Notes
 
 The endpoint's newest-first order is preserved, including scans without offsets. Valid

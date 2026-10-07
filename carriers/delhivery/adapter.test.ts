@@ -1,13 +1,30 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { DelhiveryTracker } from './adapter.js';
+import { adapter, DelhiveryTracker } from './adapter.js';
 import { parseDelhivery } from './parser.js';
 import { resolveResult } from '../../core/result/resolve.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = '0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 const payload = () => structuredClone(fixture);
 describe('Delhivery direct tracking', () => {
+  it('recognizes shared numeric formats through matching HTTP shipment activity', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!(NUMBER, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T08:30:00.000Z' });
+    await expect(instance.recognize!('YT0000000000000001')).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('separates explicit missing waybills from malformed recognition replies', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ statusCode: 200, data: [], message: 'invalid AWB or very old package' })))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ statusCode: 200, data: [] })));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!(NUMBER, { budgetMs: 1000 })).resolves.toEqual({ known: false });
+    await expect(instance.recognize!(NUMBER, { budgetMs: 1000 })).rejects.toMatchObject({ kind: 'schema' });
+  });
   it('uses the current timestamp once and excludes future rails and private fields', () => {
     const result = parseDelhivery(payload(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', last_update: '2026-01-03T14:00:00+05:30', delivered_at: '2026-01-03T14:00:00+05:30' });

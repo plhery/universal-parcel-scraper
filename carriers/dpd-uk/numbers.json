@@ -52,6 +52,35 @@
         ]
       },
       "note": "Prime Paint's public reply identifies this as DPD UK. A numeric shape alone does not identify the service. Tracking numbers can be reused; current history need not belong to the original report."
+    },
+    {
+      "number": "15503215399048",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/roger296/smmta-next/pull/106",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "xpressbees"
+        ]
+      }
     }
   ]
 }

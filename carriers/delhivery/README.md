@@ -8,6 +8,9 @@ One GET with the website's Origin and Referer headers returns an identity-bound 
 It needs no merchant API token or account. An explicit invalid-or-old waybill response is
 not-found; other empty replies remain schema failures.
 
+Shared numeric waybill formats remain suggestions. HTTP recognition asks the same
+feed and confirms Delhivery only when its identity-bound result contains shipment activity.
+
 ## Notes
 
 Future progress labels are excluded. Current status becomes a snapshot when no scan

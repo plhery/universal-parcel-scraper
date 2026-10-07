@@ -9,12 +9,12 @@
  */
 
 import { DateTime } from 'luxon';
-import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidGlsParcelNumber } from '../../core/detection/index.js';
-import { InvalidInputError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { InvalidInputError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   FAILED_DELAYED_DELIVERY,
@@ -239,7 +239,7 @@ export class GLSFranceTracker {
   }
 
   private async lookup(code: string, normalized: string, budget: LookupBudget): Promise<CarrierResult> {
-    const { bytes } = await fetchBounded(`${TRACKING_API}/${encodeURIComponent(code)}`, {
+    const { response, bytes } = await fetchBounded(`${TRACKING_API}/${encodeURIComponent(code)}`, {
       signal: budget.signal,
       headers: {
         Accept: 'application/json',
@@ -253,7 +253,17 @@ export class GLSFranceTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       fetcher: this.#fetcher,
+      allowHttpStatuses: [404, 410],
     });
+    budget.signal.throwIfAborted();
+    if ([404, 410].includes(response.status)) {
+      // The native negative names the complete submitted code. An absent API
+      // route or gateway response says nothing about the parcel.
+      if (response.status === 404 && decodeText(bytes).trim() === `404 No command found for code: ${code}`) {
+        throw new UpstreamHttpError('GLS France tracking', 404);
+      }
+      throw new TransportError(PROVIDER, 'GLS France tracking endpoint is unavailable', { status: response.status });
+    }
     return parseGLSFranceTrackingResponse(parseJsonBytes(bytes, PROVIDER), normalized);
   }
 }
@@ -264,5 +274,9 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'gls-fr',
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(
+      () => tracker.fetch(number, context),
+      () => accepted(() => normalizeGLSFranceTrackingNumber(number)),
+    ),
   };
 };

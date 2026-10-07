@@ -1,6 +1,7 @@
 
-import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { isPosteItalianeTrackingNumber } from '../../core/detection/posteItaliane.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
@@ -59,15 +60,15 @@ function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
   const millis = typeof value === 'number' ? value
     : typeof value === 'string' && value.trim() !== '' ? Number(value) : NaN;
   if (!Number.isFinite(millis) || millis <= 0) return null;
-  const iso = new Date(millis).toISOString();
+  const date = new Date(millis);
+  if (!Number.isFinite(date.getTime())) return null;
+  const iso = date.toISOString();
   return { iso, timestamp: millis };
 }
 
 export function normalizePosteItalianeTrackingNumber(raw: string): string {
-  // Mirrors number detection: RA/1UW/3UW/5P/2IMA families. Anything else stays
-  // with the generic postal fallback — those routes were never sampled here.
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^(?:RA\d{11}|[13]UW[A-Z0-9]{10}|5P[A-Z0-9]{11}|2IMA\d{10})$/.test(value)) {
+  if (!isPosteItalianeTrackingNumber(value)) {
     throw new InvalidInputError('Poste Italiane', 'Poste Italiane tracking requires a Poste Italiane parcel identifier');
   }
   return value;
@@ -84,17 +85,18 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
   if (!returned) throw new SchemaError('Poste Italiane', 'Poste Italiane did not return a shipment identifier');
   if (returned !== requested) throw new SchemaError('Poste Italiane', 'Poste Italiane returned a different shipment');
   const esito = clean(payload.esitoRicerca, 8);
-  // Documented unknown outcomes: esito "1"/"2". Old expired parcels omit
-  // esitoRicerca and carry empty movements — unknown-or-expired are
-  // indistinguishable by design, and both are clean 404s, never failures.
+  // Native negative outcomes remain distinct from HTTP endpoint failures.
   if (esito === '1' || esito === '2') throw new NotFoundError('Poste Italiane');
+  if (Object.hasOwn(payload, 'esitoRicerca') && esito !== '3') {
+    throw new SchemaError('Poste Italiane', 'Poste Italiane returned an invalid result envelope');
+  }
   const rawMovements = payload.listaMovimenti;
-  if (rawMovements !== undefined && !Array.isArray(rawMovements)) {
+  if (!Array.isArray(rawMovements)) {
     throw new SchemaError('Poste Italiane', 'Poste Italiane returned invalid tracking history');
   }
   const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number }> = [];
   const seen = new Set<string>();
-  (Array.isArray(rawMovements) ? rawMovements : []).filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
+  rawMovements.filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
     const wording = clean(rawEvent.statoLavorazione, 500);
     const time = parsedTime(rawEvent.dataOra);
     if (!time || !wording) return;
@@ -121,6 +123,9 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
   });
   parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
+  if (rawMovements.length > 0 && events.length === 0) {
+    throw new SchemaError('Poste Italiane', 'Poste Italiane returned unusable tracking history');
+  }
   // Envelope stato "5" forces delivered; otherwise the newest mapped event wins
   // and unmapped wording stays unknown with its raw text preserved.
   if (payload.stato === '5' || payload.stato === 5) {
@@ -156,7 +161,13 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
         events,
       };
     }
-    throw new NotFoundError('Poste Italiane');
+    // The observed expired parcel carries a native parcel type and an explicit
+    // empty movement array, with no search outcome. An echoed identifier alone
+    // or another unrecognized envelope is not this negative contract.
+    if (!Object.hasOwn(payload, 'esitoRicerca') && payload.tipoSpedizione === 'P') {
+      throw new NotFoundError('Poste Italiane');
+    }
+    throw new IndeterminateError('Poste Italiane', 'Poste Italiane returned no shipment activity or native result');
   }
   return {
     status: latest.classified!.status,
@@ -206,6 +217,12 @@ export class PosteItalianeTracker {
       allowHttpError: true,
       fetcher: this.fetcher,
     });
+    budget.signal.throwIfAborted();
+    if ([404, 410].includes(response.status)) {
+      throw new TransportError('Poste Italiane', 'Poste Italiane tracking endpoint is unavailable', {
+        cause: new UpstreamHttpError('Poste Italiane tracking', response.status),
+      });
+    }
     if (!response.ok) throw new UpstreamHttpError('Poste Italiane tracking', response.status);
     return parsePosteItalianeTrackingResponse(parseJsonBytes(bytes, 'Poste Italiane tracking'), trackingNumber);
   }
@@ -217,5 +234,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'poste-italiane',
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizePosteItalianeTrackingNumber(number))),
   };
 };

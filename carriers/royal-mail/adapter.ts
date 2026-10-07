@@ -1,4 +1,4 @@
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -194,5 +194,10 @@ export const adapter: AdapterFactory = environment => {
       if (!environment.browserExecutablePath) throw new ChallengeError('Royal Mail', 'Royal Mail requires TRACKING_CHROMIUM_PATH');
       return tracker.fetch(input.number, context);
     },
+    recognizeWithBrowser: (number, context) => recognizeFromBrowserLookup(() => {
+      normalizeRoyalMailNumber(number);
+      if (!environment.browserExecutablePath) throw new ChallengeError('Royal Mail', 'Royal Mail requires TRACKING_CHROMIUM_PATH');
+      return tracker.fetch(number, context);
+    }),
   };
 };

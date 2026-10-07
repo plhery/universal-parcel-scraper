@@ -17,6 +17,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "sf-express",
           "sto",
           "zto",
@@ -412,6 +413,30 @@
         ]
       },
       "note": "Seller gives this as the J&T waybill of a Tokopedia order. J&T later declared the waybill void, which cancelled the order."
+    },
+    {
+      "number": "JO0325558414",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tanyapaket.cekresi.com/question/paket-tidak-bergerak-345",
+        "access": "full_page",
+        "date": "2026-07-04",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "j-and-t"
+        ]
+      },
+      "note": "Customer reports a shipment in the JNT Express category; the reply supplies tracking activity."
     }
   ]
 }

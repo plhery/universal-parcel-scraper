@@ -122,6 +122,26 @@
         "confidence": "high"
       },
       "note": "Customer tracking number; reply attributes it to Yanwen and includes Yanwen scans."
+    },
+    {
+      "number": "S00000024418131",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://leafeel.tistory.com/2",
+        "access": "full_page",
+        "date": "2023-04-06",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The author attributes this reference to Yanwen; no rule establishes the family."
     }
   ]
 }

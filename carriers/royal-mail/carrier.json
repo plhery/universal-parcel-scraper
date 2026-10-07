@@ -17,7 +17,10 @@
     "adapter": "royal-mail",
     "steps": [
       "browser"
-    ]
+    ],
+    "browserRecognition": {
+      "rank": 90
+    }
   },
   "capabilities": [
     "history",
@@ -62,6 +65,16 @@
       "pattern": "^(?!(?:EA|EB|EC|ED|EE|CP|GI))[A-Z]{2}\\d{9}GB$",
       "confidence": "high",
       "checksum": "s10"
+    },
+    {
+      "id": "royal-mail-2",
+      "pattern": "^32\\d{11}[A-F0-9]{8}$",
+      "confidence": "low"
+    },
+    {
+      "id": "royal-mail-3",
+      "pattern": "^(?=[A-F0-9]*[A-F])(?=[A-F0-9]*\\d)[A-F0-9]{16}$",
+      "confidence": "low"
     }
   ]
 }

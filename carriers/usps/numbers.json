@@ -101,9 +101,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce",
           "austrian-post",
-          "usps",
           "estafeta"
         ]
       },
@@ -120,8 +120,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -138,8 +138,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -156,8 +156,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -174,8 +174,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -226,7 +226,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
     },
@@ -239,7 +242,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
     },
@@ -265,7 +271,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
     },
@@ -280,6 +289,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce"
         ]
       },
@@ -368,6 +378,162 @@
         "confidence": "high"
       },
       "note": "Sender reports an item held by Chinese customs. The suffix names USPS as the issuing postal operator."
+    },
+    {
+      "number": "9361289722660264016923",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/egg-/delivery-tracker/issues/41",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
+        ]
+      }
+    },
+    {
+      "number": "9434611206217011894085",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/USPS/api-examples/issues/34",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "USPS CAT sandbox",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "austrian-post",
+          "estafeta"
+        ]
+      },
+      "note": "Public sandbox example; not evidence of a consumer shipment."
+    },
+    {
+      "number": "92026124161170148800003176",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/USPS/api-examples/issues/34",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "USPS CAT sandbox",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
+      },
+      "note": "Public sandbox example; not evidence of a consumer shipment."
+    },
+    {
+      "number": "420117419361289691090029427113",
+      "role": "full_barcode",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/USPS/api-examples/issues/34",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "USPS CAT sandbox",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce"
+        ]
+      },
+      "note": "Public sandbox example; not evidence of a consumer shipment."
+    },
+    {
+      "number": "4203278000009205596900893430673167",
+      "role": "full_barcode",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/USPS/api-examples/issues/34",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "USPS CAT sandbox",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
+      },
+      "note": "Public sandbox example; not evidence of a consumer shipment."
+    },
+    {
+      "number": "9261290278831107521763",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://complain.biz/evri/complaint/missing-parcel-h04g0c0005637761/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Cross Border Connect OSM reference",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
+        ]
+      },
+      "quarantine": true,
+      "note": "The complaint attributes the reference to OSM and reports no matching history; USPS delivery is not independently established."
+    },
+    {
+      "number": "9589071052700675045600",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://storage.courtlistener.com/recap/gov.uscourts.wawd.344431/gov.uscourts.wawd.344431.90.6.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A public court exhibit contains a USPS tracking printout for this identifier."
     }
   ]
 }

@@ -1,17 +1,31 @@
 [
   {
     "shape": "Ten digits that fail the DHL Express waybill check",
-    "carriers": ["dhl", "estafeta", "mondial-relay", "relais-colis", "tipsa", "dhl-ecommerce-es"],
+    "carriers": [
+      "dhl",
+      "estafeta",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
+    ],
     "reason": "These carriers accept the same numeric length without a DHL Express checksum. Direct tracking must confirm the carrier."
   },
   {
     "shape": "Twenty digits that fail the Polish barcode check",
-    "carriers": ["nz-post", "planzer", "usps"],
+    "carriers": [
+      "nz-post",
+      "planzer",
+      "usps"
+    ],
     "reason": "The remaining numeric formats overlap. Direct tracking must confirm the carrier."
   },
   {
     "shape": "Twenty digits outside Planzer's prefix that fail the Polish barcode check",
-    "carriers": ["nz-post", "usps"],
+    "carriers": [
+      "nz-post",
+      "usps"
+    ],
     "reason": "These numeric formats overlap. Direct tracking must confirm the carrier."
   },
   {
@@ -1226,12 +1240,172 @@
   },
   {
     "shape": "Twenty-two digits starting with 9261 or 9361",
-    "carriers": ["austrian-post", "dhl-ecommerce", "estafeta", "usps"],
+    "carriers": [
+      "austrian-post",
+      "dhl-ecommerce",
+      "estafeta",
+      "usps"
+    ],
     "reason": "DHL eCommerce hands these US parcels to USPS under a USPS number and tracks them itself too. Direct tracking must confirm the carrier."
   },
   {
     "shape": "Two letters, seven digits and a final zero",
-    "carriers": ["dhl-ecommerce-es", "ontrac"],
+    "carriers": [
+      "dhl-ecommerce-es",
+      "ontrac"
+    ],
     "reason": "DHL's Iberian alias for an inbound parcel fits OnTrac's letter-prefixed shape. Direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "30-digit numeric identifier",
+    "carriers": [
+      "dhl-ecommerce",
+      "usps"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-digit numeric identifier",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "j-and-t-cargo",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+  },
+  {
+    "shape": "12-character alphanumeric identifier",
+    "carriers": [
+      "colis-prive",
+      "relais-colis"
+    ],
+    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
   }
 ]

@@ -10,6 +10,7 @@ import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '99000000000002';
 const OTHER = '99000000000003';
+const SHIPMENT = '990000000001';
 const html = readFileSync(new URL('./fixtures/history.html', import.meta.url), 'utf8');
 const negative = (number = NUMBER) => `<div id="box_tool_content"><div id="toolbar_sx"><h3>Rintraccia</h3></div><h3 class="separatore">Errori riscontrati</h3><div id="box_contenuti">TIS0868 Parcel Label number ${number} not found</div></div>`;
 const edit = (fn: (document: ReturnType<typeof load>) => void) => { const $ = load(html); fn($); return $.html(); };
@@ -45,6 +46,29 @@ describe('BRT direct tracking', () => {
       edit($ => $('.table_stato_dati').clone().appendTo('body'))]) {
       expect(() => parseBrt(body, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     }
+  });
+
+  it('keeps shipment numbers separate from BRTcodes and binds the complete identifier', async () => {
+    const shipmentHtml = edit($ => {
+      const identity = $('.table_dati_spedizione tr').eq(1).children('td');
+      identity.first().text('N. spedizione'); identity.last().text(SHIPMENT);
+    });
+    const fetcher = vi.fn<typeof fetch>(async (url, init) => {
+      expect(String(url)).toBe('https://vas.brt.it/vas/sped_det_show.hsm?lang=en');
+      expect(init?.method).toBe('POST');
+      expect(new Headers(init?.headers).get('content-type')).toBe('application/x-www-form-urlencoded');
+      expect(Object.fromEntries(new URLSearchParams(String(init?.body)))).toEqual({ Nspediz: SHIPMENT,
+        referer: 'sped_numspe_par.htm', RicercaNumeroSpedizione: 'Ricerca', lang: 'en' });
+      expect(init?.signal).toBeInstanceOf(AbortSignal);
+      return response(shipmentHtml);
+    });
+    expect(await adapter(environment(fetcher)).recognize!(SHIPMENT)).toEqual({ known: true, lastActivityAt: null });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(() => parseBrt(shipmentHtml.replace(SHIPMENT, '990000000002'), SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseBrt(shipmentHtml.replace('N. spedizione', 'BRTcode'), SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseBrt(shipmentHtml + shipmentHtml, SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseBrt(negative(SHIPMENT), SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => normalizeBrtNumber(SHIPMENT + '0')).toThrow(InvalidInputError);
   });
 
   it('reports only the scoped matching TIS0868 parcel-label negative', () => {

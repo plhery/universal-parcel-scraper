@@ -88,8 +88,11 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -101,8 +104,11 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -114,8 +120,11 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -127,8 +136,11 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },

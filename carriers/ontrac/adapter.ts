@@ -1,4 +1,5 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup } from '../../core/adapter/index.js';
 import { IndeterminateError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -32,5 +33,6 @@ export class OntracTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new OntracTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'ontrac', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'ontrac', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeOntracNumber(number))) };
 };

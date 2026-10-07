@@ -1,8 +1,9 @@
 
 import { DateTime } from 'luxon';
 import { load } from 'cheerio';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import { ChallengeError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -35,10 +36,12 @@ const MAX_EVENTS_TO_RETURN = 100;
 
 export function normalizeUSPSNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+  const pic = uspsPackageIdentifier(value);
+  if (pic) return pic;
   // The S10 suffix identifies the issuing country, not the destination.
   // Incoming international mail keeps that number when USPS takes over.
   if (!/^\d{20}$/.test(value) && !/^\d{22}$/.test(value) && !isValidS10TrackingNumber(value)) {
-    throw new InvalidInputError('USPS', 'USPS tracking numbers must contain 20 or 22 digits, or be a checksum-valid UPU S10 number');
+    throw new InvalidInputError('USPS', 'USPS tracking numbers must contain 20 or 22 digits, a checksum-valid IMpb, or a checksum-valid UPU S10 number');
   }
   return value;
 }
@@ -295,5 +298,6 @@ export const adapter: AdapterFactory = (environment) => {
     // Akamai refuses every non-browser client, so there is no direct tier.
     steps: ['trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognizeWithBrowser: (number, context) => recognizeFromBrowserLookup(() => tracker.fetch(number, context)),
   };
 };

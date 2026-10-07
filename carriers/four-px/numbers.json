@@ -47,6 +47,86 @@
         "confidence": "high"
       },
       "note": "Customer provides tracking identifier; response includes 4PX scans. The numeric order ID in the title is deliberately excluded."
+    },
+    {
+      "number": "LP1000017869200CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justanswer.com/software/ttyz6-unauthorized-4px-package-delivery-query.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "four-px"
+        ]
+      },
+      "note": "Customer reports a 4PX parcel; the official tracking feed returns matching scan history. The prefix is retained as a suggestion."
+    },
+    {
+      "number": "MS02712561XSG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://leafeel.tistory.com/2",
+        "date": "2023-04-06",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "OM Pro",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The author attributes this reference to 4PX OM Pro; no rule establishes the family."
+    },
+    {
+      "number": "300004122647",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/why-is-4px-express-holding-my-packges-56099",
+        "access": "full_page",
+        "date": "2020-06-26",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "unresolved_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Customer attributes the parcel to 4PX, while the reply attributes it to WishPost. The carrier is disputed.",
+      "quarantine": true
     }
   ]
 }

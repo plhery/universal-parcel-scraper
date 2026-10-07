@@ -34,6 +34,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -61,6 +62,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -88,6 +90,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -114,6 +117,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "sf-express",
           "sto",
           "zto",
@@ -224,6 +228,7 @@
           "colis-prive",
           "gls-de",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -258,6 +263,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -298,6 +304,30 @@
         ]
       },
       "note": "Thirteen-digit reference on FedEx Trade Networks category page; customer describes Polish domestic brokerage. Actual FedEx service and identifier role unverified."
+    },
+    {
+      "number": "9612804882227378545377",
+      "role": "full_barcode",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/duckduckgo/zeroclickinfo-goodies/issues/393",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "auxiliary",
+        "reportedRole": "FedEx Ground label barcode"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "quarantine": true,
+      "note": "The public report distinguishes this barcode from its fifteen-digit tracking identifier. The adapter accepts the tracking identifier only."
     }
   ]
 }

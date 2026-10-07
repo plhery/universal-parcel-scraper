@@ -48,6 +48,34 @@
         "confidence": "high"
       },
       "note": "Customer-pasted shipment reference and reply naming YunExpress. Last mile GOFO France is reported; no GOFO identifier is supplied."
+    },
+    {
+      "number": "3286039719",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://au.trustpilot.com/review/www.yunexpress.com",
+        "access": "indexed_excerpt",
+        "date": "2026-09-21",
+        "dateKind": "review update"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "unresolved_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "Customer attributes this numeric tracking reference to YunExpress. The dedicated adapter accepts YT references; no rule establishes this numeric family."
     }
   ]
 }

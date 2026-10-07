@@ -4,6 +4,10 @@ SF Express waybills (12 digits, or `SF` + 13 digits), tracked through the anonym
 behind the official [Taiwan tracking page](https://htm.sf-express.com/tw/en/dynamic_function/waybill/),
 driven by the TRAWL browser service.
 
+The `SF` family identifies the carrier, following the official
+[waybill layout](https://open.sf-express.com/InternalWaybillGuide).
+Unprefixed waybills remain ambiguous with other carriers.
+
 ## How it works
 
 1. `trawl`: TRAWL opens the Taiwan page for the number (tiers 2–3, no plain HTTP) and captures the

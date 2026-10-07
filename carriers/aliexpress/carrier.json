@@ -21,7 +21,10 @@
     "upstreamName": "AliExpress",
     "steps": [
       "direct"
-    ]
+    ],
+    "recognition": {
+      "rank": 14
+    }
   },
   "capabilities": [
     "history",
@@ -64,6 +67,11 @@
     {
       "id": "aliexpress-2",
       "pattern": "^CNG\\d{14}$",
+      "confidence": "low"
+    },
+    {
+      "id": "aliexpress-lp-reference",
+      "pattern": "^LP\\d{14}$",
       "confidence": "low"
     }
   ]

@@ -262,6 +262,69 @@
         "confidence": "high"
       },
       "note": "Customer reports a parcel held in Liège in a PostNL discussion. The suffix names PostNL as the issuing postal operator."
+    },
+    {
+      "number": "3SINHW532911189",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.klacht.nl/postnl/klacht/pakket-niet-aangekomen-bij-klant/",
+        "access": "full_page",
+        "date": "2026-10-03",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "PostNL",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "3SIJVT016274357",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.klacht.nl/postnl/klacht/pakket-volgens-track-trace-bezorgd-maar-niet-ontvangen/",
+        "access": "full_page",
+        "date": "2026-06-02",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "PostNL",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "3SOPKD6075402",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/pacco-non-consegnato-o-consegn/c511363cffe6bd3f05",
+        "access": "full_page",
+        "date": "2026-01-26",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "PostNL",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

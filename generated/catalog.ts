@@ -181,7 +181,8 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "aliexpress",
-      "upstreamName": "AliExpress"
+      "upstreamName": "AliExpress",
+      "recognitionRank": 14
     },
     "canaryUrl": "https://global.cainiao.com/",
     "trackingUrlTemplate": "https://global.cainiao.com/detail.htm?mailNoList={trackingNumber}",
@@ -202,6 +203,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^CNG\\d{14}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^LP\\d{14}$",
         "confidence": "low"
       }
     ]
@@ -1002,6 +1007,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^(?:\\d{10}|\\d{14})$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^VD\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
@@ -1121,6 +1130,7 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "gls-fr",
+      "recognitionRank": 61,
       "refresh": {
         "minMinutes": 60,
         "afterFailureMinutes": 240
@@ -1765,7 +1775,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "royal-mail"
+      "adapter": "royal-mail",
+      "browserRecognitionRank": 90
     },
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "trackingUrlTemplate": "https://www.royalmail.com/portal/rm/track?trackNumber={trackingNumber}",
@@ -1784,6 +1795,14 @@ export const CARRIER_CATALOG = {
         "pattern": "^(?!(?:EA|EB|EC|ED|EE|CP|GI))[A-Z]{2}\\d{9}GB$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^32\\d{11}[A-F0-9]{8}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^(?=[A-F0-9]*[A-F])(?=[A-F0-9]*\\d)[A-F0-9]{16}$",
+        "confidence": "low"
       }
     ]
   },
@@ -1930,6 +1949,11 @@ export const CARRIER_CATALOG = {
     "trackingUrlTemplate": "https://track.bpost.cloud/",
     "linkRules": [],
     "detectionRules": [
+      {
+        "pattern": "^(?:3232\\d{14}|(?:3232|3299)\\d{20})$",
+        "confidence": "low",
+        "preferred": true
+      },
       {
         "pattern": "^\\d{18}$",
         "confidence": "low"
@@ -2284,7 +2308,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "poste-italiane"
+      "adapter": "poste-italiane",
+      "recognitionRank": 46
     },
     "canaryUrl": "https://www.poste.it/",
     "trackingUrlTemplate": "https://www.poste.it/cerca/index.html#/risultati-spedizioni/{trackingNumber}",
@@ -2308,6 +2333,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^2IMA\\d{10}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^(?:\\d{6}[A-Z]\\d{6}|3C\\d{4}[A-Z]\\d{6}|\\d{3}[A-Z]\\d{8}[A-Z])$",
+        "confidence": "low"
       }
     ]
   },
@@ -2341,6 +2370,10 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^\\d{14}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{12}$",
         "confidence": "low"
       }
     ]
@@ -2465,7 +2498,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "usps"
+      "adapter": "usps",
+      "browserRecognitionRank": 65
     },
     "canaryUrl": "https://www.usps.com/",
     "trackingUrlTemplate": "https://tools.usps.com/go/TrackConfirmAction?tLabels={trackingNumber}",
@@ -2482,12 +2516,24 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
+        "pattern": "^9[234]\\d{20}(?:\\d{4})?$",
+        "confidence": "low",
+        "checksum": "usps",
+        "preferred": true
+      },
+      {
         "pattern": "^\\d{20}$",
         "confidence": "low"
       },
       {
         "pattern": "^\\d{22}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^420(?:\\d{5}9[234]\\d{20}(?:\\d{4})?|\\d{9}9[234]\\d{20})$",
+        "confidence": "low",
+        "checksum": "usps",
+        "preferred": true
       }
     ]
   },
@@ -2541,6 +2587,7 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "purolator",
+      "recognitionRank": 12,
       "localClocks": true
     },
     "canaryUrl": "https://www.purolator.com/en/shipping/tracker",
@@ -2613,6 +2660,7 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "ontrac",
+      "recognitionRank": 21,
       "localClocks": true
     },
     "canaryUrl": "https://www.ontrac.com/tracking/",
@@ -2630,7 +2678,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^[CD]\\d{14}$",
-        "confidence": "high"
+        "confidence": "low"
       },
       {
         "pattern": "^L[AIEHNX]\\d{8}$",
@@ -3020,6 +3068,7 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "four-px",
+      "recognitionRank": 13,
       "localClocks": true
     },
     "canaryUrl": "https://track.4px.com/",
@@ -3037,6 +3086,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^4PX\\d{13}CN$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^LP\\d{13}CN$",
+        "confidence": "low"
       }
     ]
   },
@@ -3083,6 +3136,7 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "delhivery",
+      "recognitionRank": 16,
       "localClocks": true
     },
     "canaryUrl": "https://www.delhivery.com/tracking",
@@ -3239,7 +3293,7 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^SF\\d{13}$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },
@@ -4550,6 +4604,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^CRIN\\d{14}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^INTLCMD\\d{9}$",
+        "confidence": "high"
       }
     ]
   },

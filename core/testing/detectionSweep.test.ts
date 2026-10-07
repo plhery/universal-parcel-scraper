@@ -16,6 +16,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { isValidUspsPackageBarcode } from '../detection/usps.js';
 import {
   detectCarrierMatch,
   isValidCorreosSpainCheckLetter,
@@ -44,7 +45,7 @@ interface DetectionRule {
   readonly pattern: string;
   readonly rawPattern?: string;
   readonly confidence: 'high' | 'low';
-  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd';
+  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps';
   readonly preferred?: true;
 }
 
@@ -85,6 +86,7 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(value);
   if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(value);
   if (rule.checksum === 'dpd') return isValidDpdParcelNumber(value);
+  if (rule.checksum === 'usps') return isValidUspsPackageBarcode(value);
   return true;
 }
 

@@ -1,6 +1,7 @@
 
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -99,6 +100,8 @@ export class FourPxTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new FourPxTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
-  return { id: 'four-px', recordsSteps: true, steps: ['direct'], track: (input, context = {}) => runSteps({ carrier: 'four-px', budgetMs: context.budgetMs ?? 15_000,
-    signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(input.number, { signal, budgetMs: remainingMs }) }]) };
+  const lookup = (number: string, context: TrackingContext = {}) => runSteps({ carrier: 'four-px', budgetMs: context.budgetMs ?? 15_000,
+    signal: context.signal, recorder: environment.recorder }, [{ id: 'direct', run: ({ signal, remainingMs }) => tracker.fetch(number, { signal, budgetMs: remainingMs }) }]);
+  return { id: 'four-px', recordsSteps: true, steps: ['direct'], track: (input, context) => lookup(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => lookup(number, context), () => accepted(() => normalizeFourPxNumber(number))) };
 };

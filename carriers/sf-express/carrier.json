@@ -72,7 +72,7 @@
     {
       "id": "sf-express-2",
       "pattern": "^SF\\d{13}$",
-      "confidence": "low"
+      "confidence": "high"
     }
   ]
 }

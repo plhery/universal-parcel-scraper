@@ -764,6 +764,56 @@
         ]
       },
       "note": "Broker review of a UPS shipment from Poland to Spain. The H waybill passes the mod-10 check of the open-source UPS waybill definition."
+    },
+    {
+      "number": "802269919937015457",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/sailrish/shipit/issues/38",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "UPS numeric tracking reference",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "quarantine": true,
+      "note": "Public UPS report of a numeric identifier; the parcel adapter accepts 1Z identifiers only. The report does not establish its service."
+    },
+    {
+      "number": "1058233044",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/EasyPost/easypost-python/issues/110",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "UPS Freight",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "quarantine": true,
+      "note": "Publicly reported numeric identifier of a separate UPS service; the parcel adapter accepts 1Z identifiers only."
     }
   ]
 }

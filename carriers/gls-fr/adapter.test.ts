@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SchemaError } from '../../core/errors/index.js';
 import {
   GLSFranceTracker,
+  adapter,
   glsFranceTrackingApiUrl,
   glsFranceTrackingUrl,
   normalizeGLSFranceTrackingNumber,
@@ -65,6 +66,68 @@ describe('GLS France tracking input', () => {
     ]) {
       expect(() => normalizeGLSFranceTrackingNumber(value)).toThrow('8 letters or digits, or 11 digits');
     }
+  });
+});
+
+describe('GLS France HTTP recognition', () => {
+  const createAdapter = (fetcher: typeof fetch) => adapter({
+    fetcher, trawl: null, browserExecutablePath: null, env: {},
+    recorder: { step() {}, lookup() {} },
+  });
+
+  it('confirms the requested parcel through the French endpoint and reports its scan clock', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(deliveredFixture())));
+    await expect(createAdapter(fetcher).recognize!(TRACKING_NUMBER, { budgetMs: 1_000 })).resolves.toEqual({
+      known: true, lastActivityAt: '2026-08-29T09:42:00.000Z',
+    });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(String(fetcher.mock.calls[0]![0])).toBe(glsFranceTrackingApiUrl(TRACKING_NUMBER));
+  });
+
+  it('returns unknown without I/O for unsupported numbers and for definite absence', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(`404 No command found for code: ${TRACKING_NUMBER}`, { status: 404 }));
+    const instance = createAdapter(fetcher);
+    await expect(instance.recognize!('ABC1234')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
+    await expect(instance.recognize!(TRACKING_NUMBER)).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps generic missing routes and mismatched negative replies as failures', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('Not Found', { status: 404 }))
+      .mockResolvedValueOnce(new Response('Gone', { status: 410 }))
+      .mockResolvedValueOnce(new Response('404 No command found for code: 00EF34GH', { status: 404 }));
+    const instance = createAdapter(fetcher);
+    for (const status of [404, 410, 404]) {
+      await expect(instance.recognize!(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'transport', status });
+    }
+  });
+
+  it('keeps unmatched identity and endpoint failures inconclusive', async () => {
+    const fixture = deliveredFixture();
+    fixture.colis.trackid = '00EF34GH';
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(JSON.stringify(fixture)))
+      .mockResolvedValueOnce(new Response('Too many requests', { status: 429 }))
+      .mockResolvedValueOnce(new Response('<html>Verification required</html>'));
+    const instance = createAdapter(fetcher);
+    await expect(instance.recognize!(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    await expect(instance.recognize!(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', status: 429 });
+    await expect(instance.recognize!(TRACKING_NUMBER)).rejects.toThrow('invalid tracking response');
+  });
+
+  it('propagates caller cancellation and the recognition budget', async () => {
+    const controller = new AbortController();
+    controller.abort(new Error('caller cancelled'));
+    const fetcher = vi.fn<typeof fetch>(async (_url, init) => {
+      await new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal?.reason), { once: true }));
+      return new Response('{}');
+    });
+    const instance = createAdapter(fetcher);
+    await expect(instance.recognize!(TRACKING_NUMBER, { signal: controller.signal })).rejects.toThrow('caller cancelled');
+    expect(fetcher).not.toHaveBeenCalled();
+    await expect(instance.recognize!(TRACKING_NUMBER, { budgetMs: 20 })).rejects.toThrow();
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(fetcher.mock.calls[0]?.[1]?.signal?.aborted).toBe(true);
   });
 });
 
@@ -301,10 +364,18 @@ describe('GLS France response normalization', () => {
     fallback.mockRestore();
 
     // Two not-founds stay a not-found; an 11-digit number is asked once.
-    const missing = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => new Response('404 No command found', { status: 404 }));
+    const missing = vi.spyOn(globalThis, 'fetch').mockImplementation(async url =>
+      new Response(`404 No command found for code: ${String(url).split('/').at(-1)}`, { status: 404 }));
     await expect(new GLSFranceTracker({ timeoutMs: 1_000 }).fetch(PRINTED_TRACKING_NUMBER)).rejects.toMatchObject({ status: 404, kind: 'not_found' });
     await expect(new GLSFranceTracker({ timeoutMs: 1_000 }).fetch(NUMERIC_TRACKING_NUMBER)).rejects.toMatchObject({ status: 404 });
     expect(missing).toHaveBeenCalledTimes(3);
+  });
+
+  it('does not retry a printed number after an unavailable API route', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Not Found', { status: 404 }));
+    await expect(new GLSFranceTracker({ fetcher }).fetch(PRINTED_TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'transport', status: 404 });
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
   it('does not ask for the number as printed once the caller has cancelled', async () => {

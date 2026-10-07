@@ -28,4 +28,5 @@ export { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidTntConsign
 export { formatTrackingNumber, isPlanzerSharedTrackingNumber, normalizeTrackingNumber } from './normalize.js';
 export { parseTrackingInput } from './parse.js';
 export { isValidS10TrackingNumber, supportsSwissPostHandoff } from './s10.js';
+export { isValidUspsPackageBarcode } from './usps.js';
 export { validTrackingNumber } from './valid.js';

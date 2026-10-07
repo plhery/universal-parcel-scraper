@@ -83,6 +83,53 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. Seven-digit references are ambiguous and require a matching native lookup."
+    },
+    {
+      "number": "REC000061812400",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/seur.com",
+        "access": "indexed_excerpt",
+        "date": "2025-05-18",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "auxiliary",
+        "service": "SEUR",
+        "reportedRole": "pickup_booking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "REC is a pickup-booking reference family; the source labels this identifier as tracking but its parcel relationship is unconfirmed.",
+      "quarantine": true
+    },
+    {
+      "number": "866823388853191",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/p-C3-A9rdida-o-extrav-C3-ADo-de-un-paque/611a517e7bd1396ee4",
+        "access": "full_page",
+        "date": "2026-02-04",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SEUR",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "yunda"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

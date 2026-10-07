@@ -6,6 +6,7 @@ import {
   posteItalianeTrackingUrl,
   parsePosteItalianeTrackingResponse,
   PosteItalianeTracker,
+  adapter,
 } from './adapter.js';
 import { classifyPosteItalianeStatus } from './status.js';
 
@@ -50,9 +51,45 @@ describe('Poste Italiane tracking normalization', () => {
       'https://www.poste.it/cerca/index.html#/risultati-spedizioni/RA00000000001',
     );
   });
+
+  it('uses complete SDA candidates for the request and recognition identity', async () => {
+    const environment = (fetcher: typeof fetch) => ({ fetcher, env: {}, trawl: null, browserExecutablePath: null,
+      recorder: { step() {}, lookup() {} } });
+    for (const number of ['990001A000001', '3C9900A000001', '990A00000001A']) {
+      expect(normalizePosteItalianeTrackingNumber(number.toLowerCase())).toBe(number);
+      const fetcher = vi.fn<typeof fetch>(async (_url, init) => {
+        expect(JSON.parse(String(init?.body)).codiceSpedizione).toBe(number);
+        expect(init?.signal).toBeInstanceOf(AbortSignal);
+        return response(parcel({ idTracciatura: number }));
+      });
+      expect(await adapter(environment(fetcher)).recognize!(number)).toEqual({ known: true, lastActivityAt: '2026-01-04T00:00:00.000Z' });
+      expect(fetcher).toHaveBeenCalledTimes(1);
+      const wrong = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ idTracciatura: TRACKING_NUMBER })));
+      await expect(adapter(environment(wrong)).recognize!(number)).rejects.toMatchObject({ kind: 'schema' });
+    }
+    const empty = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ idTracciatura: '990001A000001', esitoRicerca: '2', listaMovimenti: [] })));
+    expect(await adapter(environment(empty)).recognize!('990001A000001')).toEqual({ known: false });
+    for (const number of ['990001AA000001', '3C9900A0000010', 'ABCDEF0000001']) {
+      expect(() => normalizePosteItalianeTrackingNumber(number)).toThrow(InvalidInputError);
+    }
+  });
 });
 
 describe('Poste Italiane response parsing', () => {
+  it('rejects identity-only shells and invalid-only history without reporting parcel absence', () => {
+    for (const payload of [
+      { idTracciatura: TRACKING_NUMBER },
+      { idTracciatura: TRACKING_NUMBER, esitoRicerca: '3' },
+      parcel({ listaMovimenti: [null, 'not a record', {}, movement('', 1767484800000), movement('Delivered', -1)] }),
+      parcel({ listaMovimenti: [movement('Delivered', 1e100)] }),
+      parcel({ esitoRicerca: 'unexpected', listaMovimenti: [] }),
+    ]) {
+      expect(() => parsePosteItalianeTrackingResponse(payload, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    }
+    expect(() => parsePosteItalianeTrackingResponse({ idTracciatura: TRACKING_NUMBER, listaMovimenti: [] }, TRACKING_NUMBER))
+      .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+
   it('uses scalar envelope codes without treating an array as delivered', () => {
     const active = { listaMovimenti: [movement('la spedizione è in transito presso', Date.UTC(2026, 0, 2))] };
     for (const stato of ['5', 5]) {
@@ -185,6 +222,34 @@ describe('Poste Italiane response parsing', () => {
 });
 
 describe('PosteItalianeTracker fetch', () => {
+  it('keeps recognition failures distinct from explicit native negatives and meaningful status summaries', async () => {
+    const environment = (fetcher: typeof fetch) => ({ fetcher, env: {}, trawl: null, browserExecutablePath: null,
+      recorder: { step() {}, lookup() {} } });
+    for (const status of [404, 410]) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response({ idTracciatura: TRACKING_NUMBER, esitoRicerca: '2' }, status));
+      await expect(adapter(environment(fetcher)).recognize!(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+      expect(fetcher).toHaveBeenCalledTimes(1);
+    }
+    for (const body of [
+      { idTracciatura: TRACKING_NUMBER },
+      parcel({ listaMovimenti: [movement('', 1767484800000)] }),
+      parcel({ idTracciatura: 'RA00000000002', esitoRicerca: '2' }),
+    ]) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response(body));
+      await expect(adapter(environment(fetcher)).recognize!(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    }
+    for (const esitoRicerca of ['1', '2']) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response({ idTracciatura: TRACKING_NUMBER, esitoRicerca }));
+      expect(await adapter(environment(fetcher)).recognize!(TRACKING_NUMBER)).toEqual({ known: false });
+    }
+    const expired = vi.fn<typeof fetch>().mockResolvedValue(response({ idTracciatura: TRACKING_NUMBER, tipoSpedizione: 'P', listaMovimenti: [] }));
+    expect(await adapter(environment(expired)).recognize!(TRACKING_NUMBER)).toEqual({ known: false });
+    const pending = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ stato: '4', listaMovimenti: [] })));
+    expect(await adapter(environment(pending)).recognize!(TRACKING_NUMBER)).toEqual({ known: false, lastActivityAt: null });
+    const summary = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ listaMovimenti: [] })));
+    expect(await adapter(environment(summary)).recognize!(TRACKING_NUMBER)).toEqual({ known: true, lastActivityAt: null });
+  });
+
   it('posts the DoveQuando body with web-channel headers', async () => {
     const seen: Array<{ url: string; body: string }> = [];
     vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {

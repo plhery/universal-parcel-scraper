@@ -18,7 +18,10 @@
     "steps": [
       "direct"
     ],
-    "localClocks": true
+    "localClocks": true,
+    "recognition": {
+      "rank": 21
+    }
   },
   "capabilities": [
     "history",
@@ -60,7 +63,7 @@
     {
       "id": "ontrac-1",
       "pattern": "^[CD]\\d{14}$",
-      "confidence": "high"
+      "confidence": "low"
     },
     {
       "id": "ontrac-2",

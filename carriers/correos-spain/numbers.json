@@ -459,6 +459,27 @@
         ]
       },
       "note": "Open-source project example, not a real shipment. The S10 check digit does not validate. The source attributes it to Correos, which no rule claims."
+    },
+    {
+      "number": "L35HNS0712389090108070V",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/error-en-el-env-C3-ADo-de-paquetes/f56eb19ccededa9e1c",
+        "access": "full_page",
+        "date": "2025-02-13",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Correos",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

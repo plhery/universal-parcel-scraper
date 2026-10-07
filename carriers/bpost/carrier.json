@@ -62,6 +62,12 @@
   "links": [],
   "detection": [
     {
+      "id": "bpost-numeric-prefix",
+      "pattern": "^(?:3232\\d{14}|(?:3232|3299)\\d{20})$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
       "id": "bpost-1",
       "pattern": "^\\d{18}$",
       "confidence": "low"

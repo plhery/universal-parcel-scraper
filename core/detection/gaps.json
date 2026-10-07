@@ -35,6 +35,12 @@
     "reason": "A confirmed article ID. Domestic IDs start with a merchant location code and vary by product, so there is no carrier-wide shape to match."
   },
   {
+    "carrier": "austrian-post",
+    "pattern": "^\\d{14}$",
+    "kind": "open",
+    "reason": "A public Austrian parcel report uses fourteen digits; the national request builder does not establish this family."
+  },
+  {
     "carrier": "brt",
     "pattern": "^\\d{15}$",
     "kind": "open",
@@ -46,21 +52,27 @@
     "reason": "The printed composite carries the postcode after its dashes and is entered with the carrier chosen."
   },
   {
+    "carrier": "correos-spain",
+    "pattern": "^L[A-Z0-9]{22}$",
+    "kind": "open",
+    "reason": "A public report uses a checksum-valid L reference, but the service and complete family remain unconfirmed."
+  },
+  {
     "carrier": "dachser",
     "kind": "by_design",
     "reason": "Dachser tracking needs its capability link; the numbers alone are generic numeric shapes."
+  },
+  {
+    "carrier": "dhl",
+    "pattern": "^JJS\\d{18}$",
+    "kind": "open",
+    "reason": "A public DHL parcel report uses JJS; an inconclusive tracking challenge does not establish the family."
   },
   {
     "carrier": "dhl-ecommerce",
     "pattern": "^7\\d{13}$",
     "kind": "open",
     "reason": "One documentation example from Malaysia; the family is not established."
-  },
-  {
-    "carrier": "dhl-ecommerce-es",
-    "pattern": "^\\d{12}$",
-    "kind": "collision",
-    "reason": "Twelve digits are shared by several carriers and nothing in the number points to this network."
   },
   {
     "carrier": "dhl-ecommerce-es",
@@ -73,6 +85,12 @@
     "pattern": "^FVGL\\d{10}$",
     "kind": "by_design",
     "reason": "A documentation placeholder whose prefix the page itself spells differently elsewhere."
+  },
+  {
+    "carrier": "dhl-ecommerce-es",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve digits are shared by several carriers and nothing in the number points to this network."
   },
   {
     "carrier": "dhl-ecommerce-nl",
@@ -94,15 +112,21 @@
   },
   {
     "carrier": "dhl-ecommerce-uk",
+    "pattern": "^9\\d{8}$",
+    "kind": "open",
+    "reason": "One documentation example of a return number; the family is not established."
+  },
+  {
+    "carrier": "dhl-ecommerce-uk",
     "pattern": "^\\d{7}$",
     "kind": "by_design",
     "reason": "A calling card number, which the portal reads only with the delivery postcode."
   },
   {
-    "carrier": "dhl-ecommerce-uk",
-    "pattern": "^9\\d{8}$",
+    "carrier": "four-px",
+    "pattern": "^MS\\d{8}XSG$",
     "kind": "open",
-    "reason": "One documentation example of a return number; the family is not established."
+    "reason": "A public experience table attributes this reference to 4PX OM Pro; no official source establishes the family."
   },
   {
     "carrier": "hermes",
@@ -112,15 +136,15 @@
   },
   {
     "carrier": "inpost",
-    "pattern": "^\\d{8}$",
-    "kind": "by_design",
-    "reason": "A legacy Yodel reference the adapter does not take."
-  },
-  {
-    "carrier": "inpost",
     "pattern": "^JJD\\d{16}$",
     "kind": "collision",
     "reason": "DHL's high-confidence JJD rule claims Yodel's JJD numbers, so the carrier comes from a link or a pick."
+  },
+  {
+    "carrier": "inpost",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "A legacy Yodel reference the adapter does not take."
   },
   {
     "carrier": "j-and-t-cargo",
@@ -163,9 +187,21 @@
     "reason": "No rule offers Posti for its twenty-digit SSCC numbers."
   },
   {
+    "carrier": "seur",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "A public SEUR report uses fifteen digits; the service and accepted reference format remain unconfirmed."
+  },
+  {
     "carrier": "shipup",
     "kind": "by_design",
     "reason": "An invented shape check; ShipUp has no number shape of its own."
+  },
+  {
+    "carrier": "sunyou",
+    "pattern": "^LP\\d{14}$",
+    "kind": "collision",
+    "reason": "The public report attributes an LP reference to SunYou, while the same family is used by Cainiao; direct SunYou issuance remains unconfirmed."
   },
   {
     "carrier": "swiss-post-cargo",
@@ -177,5 +213,17 @@
     "pattern": "^[A-Z0-9]{5,6}$",
     "kind": "by_design",
     "reason": "Short waybills are too generic for a rule."
+  },
+  {
+    "carrier": "yanwen",
+    "pattern": "^S\\d{14}$",
+    "kind": "open",
+    "reason": "A public experience table attributes this reference to Yanwen; no official source establishes the family."
+  },
+  {
+    "carrier": "yunexpress",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "The customer attributes a numeric reference to YunExpress, but the dedicated adapter accepts YT identifiers and the report does not establish YunExpress issuance."
   }
 ]

@@ -3,7 +3,7 @@
 Cainiao is Alibaba's logistics network and carries the international leg of most AliExpress
 orders. It rarely does the last mile: it hands the parcel to a local post or courier and
 publishes that partner's number when it has one. The catalog recognizes a specific Cainiao
-shipment-number family and suggests AliExpress for `CNG` numbers; other ambiguous formats
+shipment-number family and suggests AliExpress for `CNG` and numeric `LP` references; other ambiguous formats
 need the user to pick AliExpress or paste a `global.cainiao.com` link. Detection does not
 select the last-mile carrier.
 
@@ -11,6 +11,9 @@ select the last-mile carrier.
 
 1. `direct`: one keyless GET to `https://global.cainiao.com/global/detail.json?mailNos={number}&lang=en-US`,
    the JSON behind the consumer page. No session, cookie or token. 10 s timeout, no fallback tier.
+
+HTTP recognition uses that same feed for ambiguous references. Matching shipment
+activity confirms the Cainiao tracking leg; an empty internal pending module does not.
 
 ## Handoff
 

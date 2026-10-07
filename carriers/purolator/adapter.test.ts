@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
-import { PurolatorTracker } from './adapter.js';
+import { adapter, PurolatorTracker } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { normalizePurolatorNumber, parsePurolator } from './parser.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
@@ -11,6 +12,17 @@ const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', imp
 const payload = () => structuredClone(fixture);
 
 describe('Purolator direct tracking', () => {
+  it('confirms ambiguous PINs through HTTP while preserving identity and failure kinds', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
+    const carrier = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    await expect(carrier.recognize!(NUMBER, { budgetMs: 1000 })).resolves.toMatchObject({ known: true, lastActivityAt: null });
+    await expect(carrier.recognize!('invalid')).resolves.toMatchObject({ known: false });
+    expect(fetcher).toHaveBeenCalledOnce();
+    fetcher.mockResolvedValue(new Response(JSON.stringify(payload())));
+    await expect(carrier.recognize!(OTHER)).rejects.toMatchObject({ kind: 'schema' });
+    fetcher.mockResolvedValue(new Response('Too many requests', { status: 429, headers: { 'Retry-After': '60' } }));
+    await expect(carrier.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 60_000 });
+  });
   it('maps each historical code and preserves cross-country clocks without assigning a zone', () => {
     const result = normalizeCarrierResult(parsePurolator(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Shipment delivered',

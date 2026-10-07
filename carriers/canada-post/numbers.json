@@ -94,6 +94,29 @@
         "confidence": "high"
       },
       "note": "Sender explicitly calls this a Canada Post tracking number; shipment and attribution were not independently verified."
+    },
+    {
+      "number": "7310061500015768",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/christonog/ltracker/issues/2",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      }
     }
   ]
 }

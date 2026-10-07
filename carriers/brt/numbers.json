@@ -98,6 +98,42 @@
         ]
       },
       "note": "Customer gives this as the shipment number in a complaint addressed to BRT. It has fifteen digits, one more than the BRTcode the adapter looks up."
+    },
+    {
+      "number": "175010008415",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/tracking-non-attivo-consegna-/85daef195b0595c8e5",
+        "access": "full_page",
+        "date": "2026-01-15",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "BRT",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Public shipment report; the official shipment-number lookup returns matching tracking history."
     }
   ]
 }

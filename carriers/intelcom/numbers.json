@@ -51,6 +51,22 @@
         "confidence": "high"
       },
       "note": "Lower-confidence customer report: spaces in the source were removed. Attribution was not independently verified."
+    },
+    {
+      "number": "INTLCMD417499538",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/brave/adblock-lists/issues/970",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intelcom",
+        "confidence": "high"
+      }
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { isBrtTrackingNumber } from '../../core/detection/brt.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -7,7 +8,7 @@ import { classifyBrtStatus } from './status.js';
 
 export function normalizeBrtNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');
-  if (!/^\d{14}$/.test(number)) throw new InvalidInputError('BRT', 'BRT requires a fourteen-digit BRTcode');
+  if (!isBrtTrackingNumber(number)) throw new InvalidInputError('BRT', 'BRT requires a twelve-digit shipment number or fourteen-digit BRTcode');
   return number;
 }
 
@@ -32,14 +33,15 @@ export function parseBrt(html: string, raw: string): CarrierResult {
     const heading = scope.children('h3.separatore');
     const errors = scope.children('#box_contenuti').clone();
     errors.find('script, style').remove();
-    if (scope.length === 1 && errors.length === 1 && heading.length === 1 && clean(heading.text(), 80) === 'Errori riscontrati'
+    if (number.length === 14 && scope.length === 1 && errors.length === 1 && heading.length === 1 && clean(heading.text(), 80) === 'Errori riscontrati'
       && clean(errors.text(), 300) === `TIS0868 Parcel Label number ${number} not found`) {
       throw new NotFoundError('BRT');
     }
     throw new IndeterminateError('BRT', 'BRT did not return shipment history');
   }
   if (metadata.length !== 1 || history.length > 1) throw new SchemaError('BRT', 'BRT returned ambiguous shipment details');
-  const identityRows = metadata.find('tr').filter((_, node) => clean($(node).children('td').first().text(), 40) === 'BRTcode');
+  const identityLabel = number.length === 12 ? 'N. spedizione' : 'BRTcode';
+  const identityRows = metadata.find('tr').filter((_, node) => clean($(node).children('td').first().text(), 40) === identityLabel);
   const identity = identityRows.children('td');
   if (identityRows.length !== 1 || identity.length !== 2 || clean(identity.last().text(), 40) !== number) {
     throw new SchemaError('BRT', 'BRT returned a different or incomplete shipment');

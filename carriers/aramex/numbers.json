@@ -115,6 +115,33 @@
         ]
       },
       "note": "Public report explicitly identifies a separate Aramex Global Shopper shipment from the UK to South Africa. The general portal was not independently confirmed; the numeric shape does not identify Aramex."
+    },
+    {
+      "number": "33869090566",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/my-package-may-be-stuck-93532/",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "The public reply names transit facilities but no carrier; the route does not establish Aramex ownership."
     }
   ]
 }

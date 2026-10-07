@@ -14,8 +14,13 @@ export class BrtTracker {
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       signal.throwIfAborted();
       const deadline = performance.now() + remainingMs;
-      const { response, bytes } = await fetchBounded(`https://vas.brt.it/vas/sped_det_new.htm?brtCode=${number}&lang=en`,
-        { signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent) } }, { provider: 'BRT', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
+      const shipmentNumber = number.length === 12;
+      const url = shipmentNumber ? 'https://vas.brt.it/vas/sped_det_show.hsm?lang=en'
+        : `https://vas.brt.it/vas/sped_det_new.htm?brtCode=${number}&lang=en`;
+      const { response, bytes } = await fetchBounded(url,
+        { signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent), ...(shipmentNumber ? { 'Content-Type': 'application/x-www-form-urlencoded' } : {}) },
+          ...(shipmentNumber ? { method: 'POST', body: new URLSearchParams({ Nspediz: number, referer: 'sped_numspe_par.htm', RicercaNumeroSpedizione: 'Ricerca', lang: 'en' }).toString() } : {}) },
+        { provider: 'BRT', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
           redirect: 'manual', allowHttpStatuses: [302, 404, 410], fetcher: this.options.fetcher });
       if (performance.now() >= deadline) throw new BudgetExceededError('BRT', context.budgetMs ?? 15_000);
       signal.throwIfAborted();

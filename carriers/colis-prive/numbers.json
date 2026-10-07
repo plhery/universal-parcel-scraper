@@ -17,6 +17,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -128,6 +129,314 @@
         "confidence": "high"
       },
       "note": "Published in a Colis Privé delivery complaint with instructions to track through the PostNL international portal. The last-mile complaint does not identify the issuer."
+    },
+    {
+      "number": "C80 000 227 409",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-05-26",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The customer reports Sinotrans handing this parcel to Colis Privé. The official shipment format fits, but carrier history is not independently confirmed."
+    },
+    {
+      "number": "516 500 004 348",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-05-26",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The customer explicitly lists this among Colis Privé parcels. Its numeric format remains ambiguous and does not establish carrier ownership."
+    },
+    {
+      "number": "511005385704",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-05-26",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The customer explicitly lists this among Colis Privé parcels. Its numeric format remains ambiguous and does not establish carrier ownership."
+    },
+    {
+      "number": "521 400 045 230",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-05-26",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The customer explicitly lists this among Colis Privé parcels. Its numeric format remains ambiguous and does not establish carrier ownership."
+    },
+    {
+      "number": "521 003 106 580",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-05-26",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The customer explicitly lists this among Colis Privé parcels. Its numeric format remains ambiguous and does not establish carrier ownership."
+    },
+    {
+      "number": "C80000389116",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-06-03",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The customer reports a Sinotrans handoff to Colis Privé. The reference fits the official shipment format; direct tracking requires a separate recipient credential."
+    },
+    {
+      "number": "HE0000451419",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-est-une-arnaque-t143812-50.html",
+        "date": "2020-06-11",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The customer quotes a Colis Privé notification naming Clevy Chine and this parcel. A handoff report does not independently confirm shipment issuance."
+    },
+    {
+      "number": "N90 001 808 173",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-arnaque-a-grande-echelle-t327719.html",
+        "date": "2022-10-31",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The quoted carrier email separately names this bare shipment reference for Spring XBS. The report disputes the delivery; no recipient credential is retained.",
+      "quarantine": true
+    },
+    {
+      "number": "C80 016 719 068",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-prive-comment-voler-legalement-t317491.html",
+        "date": "2022-01-31",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The customer names this Colis Privé parcel and reports a disputed delivery. It fits the official shipment format without proving current trackability."
+    },
+    {
+      "number": "CN0 000 003 971",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.60millions-mag.com/forum/d/1370-colis-prive-adrexo",
+        "date": "2012-11-20",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The customer explicitly names an Asos shipment sent through Colis Privé. The public report supplies carrier context; the shared alphanumeric shape alone does not confirm it."
+    },
+    {
+      "number": "740 011 063 677",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.60millions-mag.com/forum/d/1370-colis-prive-adrexo",
+        "date": "2013-09-04",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The customer quotes a Colis Privé reply acknowledging receipt and subsequent loss of this Pixmania parcel. It remains a reported carrier association without independently matching history."
     }
   ]
 }

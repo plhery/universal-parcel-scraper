@@ -58,6 +58,7 @@
           "colis-prive",
           "gls-de",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -110,6 +111,60 @@
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to GLS France, which stays one candidate among several."
+    },
+    {
+      "number": "42841608482",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.60millions-mag.com/forum/d/5642-livraison-par-transporteur-gls?page=29",
+        "date": "2019-07-10",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "The customer explicitly names this GLS parcel and disputes delivery. Numeric detection remains shared with other services; the French endpoint must confirm the requested identity."
+    },
+    {
+      "number": "00CQWNQE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.60millions-mag.com/forum/d/5642-livraison-par-transporteur-gls?page=29",
+        "date": "2019-08-08",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de"
+        ]
+      },
+      "note": "The customer names this GLS parcel at the Artigues delivery agency and contact with GLS France. The report is evidence of the French service without independently confirming shipment history."
     }
   ]
 }

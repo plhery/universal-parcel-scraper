@@ -72,6 +72,11 @@
       "id": "relais-colis-2",
       "pattern": "^(?:\\d{10}|\\d{14})$",
       "confidence": "low"
+    },
+    {
+      "id": "relais-colis-3",
+      "pattern": "^VD\\d{10}$",
+      "confidence": "low"
     }
   ]
 }

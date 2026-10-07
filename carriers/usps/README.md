@@ -6,8 +6,14 @@ its original S10 number when USPS delivers it.
 
 ## How it works
 
-The adapter accepts 20- or 22-digit labels and checksum-valid UPU S10 numbers with any
-country suffix, and rejects anything else before any request. Without a browser service it
+The adapter accepts 20- or 22-digit labels, checksum-valid 26-digit IMpb identifiers,
+and checksum-valid UPU S10 numbers with any country suffix. Scanned IMpb barcodes
+may include a five- or nine-digit routing ZIP after `420`; the adapter strips only
+a uniquely valid routing prefix before querying and checking response identity.
+[Publication 199](https://postalpro.usps.com/pub199) defines that structure and
+the PIC checksum. Matching IMpb rules prioritize USPS as a candidate; they do
+not establish shipment existence. Opt-in browser recognition reuses the lookup
+and requires dated activity. Anything else is rejected before a request. Without a browser service it
 fails at once with `ChallengeError('USPS challenged direct tracking; configure
 FLARESOLVERR_URL for browser fallback')`.
 

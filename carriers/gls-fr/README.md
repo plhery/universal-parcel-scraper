@@ -9,7 +9,8 @@ GROUP service used by [gls-ch](../gls-ch/README.md) and [gls-de](../gls-de/READM
 `direct`: one `GET https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v1/command/public/codes/{number}`
 with the portal's `Origin` and `Referer`. No session or token; 12 s timeout,
 750 kB cap. An unknown valid-shaped number returns HTTP 404 with a "no command
-found" body, which is a definite not-found.
+found" body naming the complete requested code, which is a definite not-found.
+A generic 404 or 410 means the endpoint is unavailable and stays a failure.
 
 The parser:
 
@@ -18,6 +19,11 @@ The parser:
 2. reads up to 500 events, dedupes on (time, location, code), sorts newest
    first and keeps 100;
 3. takes the parcel status from `statutColis`, falling back to the newest event.
+
+HTTP recognition uses the same French endpoint and identity check. Unsupported
+numbers and definite not-found replies remain unknown; endpoint failures and
+mismatched shipments remain failures. Shared GLS number shapes still require
+this confirmation before they can identify the French network.
 
 ## Notes
 

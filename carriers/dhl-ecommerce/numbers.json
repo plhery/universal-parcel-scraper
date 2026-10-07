@@ -123,9 +123,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce",
           "austrian-post",
-          "usps",
           "estafeta"
         ]
       },
@@ -141,6 +141,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce"
         ]
       },
@@ -184,6 +185,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce"
         ]
       },
@@ -203,9 +205,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce",
           "austrian-post",
-          "usps",
           "estafeta"
         ]
       },
@@ -225,9 +227,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce",
           "austrian-post",
-          "usps",
           "estafeta"
         ]
       },
@@ -247,9 +249,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "usps",
           "dhl-ecommerce",
           "austrian-post",
-          "usps",
           "estafeta"
         ]
       },

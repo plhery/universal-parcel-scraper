@@ -335,6 +335,24 @@
         "confidence": "high"
       },
       "note": "Public Amazon Logistics shipment report on the German consumer forum."
+    },
+    {
+      "number": "TBAONT500361196",
+      "role": "quarantined",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://parcelsapp.com/en/carriers/amazon-logistics",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "quarantine": true,
+      "note": "Third-party tracking-site illustration; no Amazon source establishes this alphabetic TBA suffix family."
     }
   ]
 }

@@ -221,6 +221,27 @@
         "confidence": "high"
       },
       "note": "Example on the Polish network's tracking page, not a real shipment. The JJD prefix is shared; detection gives it to DHL Paket."
+    },
+    {
+      "number": "JJS000390015480117223",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/213941-dhl-bonn-meine-sendung-eiert-herum-zwischen-ruedersdorf-und-fehlleitung",
+        "access": "full_page",
+        "date": "2020-07-19",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "DHL Paket DE (Amazon parcel handled by DHL)",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

@@ -158,6 +158,108 @@
         ]
       },
       "note": "Invented shared H-prefixed barcode; country and service require recognition or an explicit carrier link."
+    },
+    {
+      "number": "02276124008422",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/217684-hermes-hamburg-zwei-hermes-sendungen",
+        "access": "full_page",
+        "date": "2020-10-07",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Hermes DE",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "02278107002274",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/217684-hermes-hamburg-zwei-hermes-sendungen",
+        "access": "full_page",
+        "date": "2020-10-07",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Hermes DE",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "01191131834417",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/196655-hermes-hamburg-wenn-man-die-sendungsnummer-auswendig-kann",
+        "access": "full_page",
+        "date": "2019-07-29",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Hermes DE",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

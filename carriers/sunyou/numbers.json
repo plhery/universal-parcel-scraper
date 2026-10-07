@@ -39,6 +39,29 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "LP00061214526423",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://leafeel.tistory.com/2",
+        "access": "full_page",
+        "date": "2023-04-06",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress"
+        ]
+      },
+      "note": "The author attributes this reference to SunYou. Its LP family is shared with Cainiao and remains unresolved for SunYou detection."
     }
   ]
 }

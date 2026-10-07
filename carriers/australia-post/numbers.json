@@ -107,6 +107,25 @@
         "confidence": "high"
       },
       "note": "Another customer posts their own Australia Post shipment."
+    },
+    {
+      "number": "33QAG752421901000931500",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-stuck-not-moving-to-australia-where-is-it-is-china-post-a-scam-126566/",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review",
+        "reportedRole": "Reference Number in a China-origin parcel history"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The source does not name Australia Post; the destination and prefix do not establish carrier ownership."
     }
   ]
 }

@@ -75,6 +75,11 @@
       "id": "brt-1",
       "pattern": "^\\d{14}$",
       "confidence": "low"
+    },
+    {
+      "id": "brt-shipment-number",
+      "pattern": "^\\d{12}$",
+      "confidence": "low"
     }
   ]
 }

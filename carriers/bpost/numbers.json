@@ -13,9 +13,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "bpost",
           "ciblex",
-          "inpost",
-          "bpost"
+          "inpost"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to bpost, which stays one candidate among several."
@@ -50,9 +50,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "bpost",
           "ciblex",
-          "inpost",
-          "bpost"
+          "inpost"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to bpost, which stays one candidate among several."
@@ -119,6 +119,140 @@
         "confidence": "high"
       },
       "note": "Sender describes a registered letter from Belgium to China. The suffix names bpost as the issuing postal operator."
+    },
+    {
+      "number": "323200341159927516101030",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.test-aankoop.be/klagen/publieke-klachten/zeb-pakket-verloren/CPTBE01830025-23",
+        "access": "full_page",
+        "date": "2023-07-10",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "bpost",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ciblex",
+          "inpost"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "323207992302121426",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.test-aankoop.be/klagen/publieke-klachten/bpost-bpack-24h-mini-3-verdwen/CPTBE00310753-62",
+        "access": "full_page",
+        "date": "2017-12-26",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "bpost",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "323200974300000090666247",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.test-aankoop.be/klagen/publieke-klachten/pakje-niet-geleverd/CPTBE01409924-29",
+        "access": "full_page",
+        "date": "2021-12-02",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "bpost",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ciblex",
+          "inpost"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "LVS192952114549136",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://leafeel.tistory.com/2",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "scope_review",
+        "service": "bpost international",
+        "reportedRole": "shipment_tracking"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Published format list attributes this identifier to bpost; its shipment identity and service are unconfirmed."
+    },
+    {
+      "number": "329998745632147852365873",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.bpost.be/en/faq/what-does-barcode-look-and-where-can-i-find-it",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ciblex",
+          "inpost"
+        ]
+      },
+      "note": "Official parcel-barcode example; the documented prefix prioritizes recognition without asserting shipment existence."
+    },
+    {
+      "number": "323256984521032569",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.bpost.be/en/faq/what-does-barcode-look-and-where-can-i-find-it",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "Official parcel-barcode example; the documented prefix prioritizes recognition without asserting shipment existence."
     }
   ]
 }

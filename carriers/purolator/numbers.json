@@ -16,6 +16,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -42,6 +43,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -68,6 +70,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -161,6 +164,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -171,6 +175,36 @@
         ]
       },
       "note": "Publicly reported shipment number; carrier attribution was not independently verified. The reviewer explicitly labels it as the tracking number."
+    },
+    {
+      "number": "335681489381",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/webcompat/web-bugs/issues/182073",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      }
     }
   ]
 }

@@ -2,8 +2,8 @@
 
 The Italian postal operator. Tracked through the keyless DoveQuando REST endpoint behind the
 `poste.it/cerca` tracker. Dutch handoffs of Poste Italiane consignments stay with
-[PostNL](../spring-gds/README.md); postal shapes outside the three detection rules use the
-generic postal fallback.
+[PostNL](../spring-gds/README.md). SDA parcel shapes are recognition candidates;
+matching native Poste status or progress confirms them. Other postal shapes use the generic postal fallback.
 
 ## How it works
 
@@ -12,14 +12,19 @@ generic postal fallback.
    `Origin`/`Referer`. No cookies, token or account. The echoed `idTracciatura` must match.
    The envelope decides the outcome, not the HTTP status (unknown numbers answer 200):
    - `esitoRicerca` `1` or `2`: not-found.
-   - No `esitoRicerca` and empty `listaMovimenti`: an old expired parcel, also not-found.
+   - No `esitoRicerca`, parcel type `P` and explicit empty `listaMovimenti`: an old expired parcel, also not-found.
      Unknown and expired look identical to an anonymous caller.
    - `esitoRicerca` `3` with no movements: the parcel exists but is unscanned, so
      `pending`/`registered`, not unknown.
-   - Non-200 is `UpstreamHttpError`.
+   - HTTP 404/410 means the tracking endpoint is unavailable. Other non-200 replies remain upstream errors.
+   - Missing or unusable history is a schema failure. Unrecognized empty envelopes remain inconclusive.
 
 ## Notes
 
+- SDA delivery services use [Poste's shipment search](https://business.cert.poste.it/business/files/1476520760931/poste-delivery-business-express-standard-scheda-prodotto.pdf).
+  Its [official request builder](https://www.poste.it/cerca-app/js/module/forms-ricerche-directive.js)
+  submits the complete code. Detection and adapter eligibility share the catalog rules;
+  neither a matching shape nor an expired reply confirms issuance.
 - Envelope `stato` `5` forces `delivered` whatever the movement wording says: a delivered
   parcel sometimes carries a truncated last line.
 - Stages come from Italian `statoLavorazione` wording. Both the typographic and the ASCII

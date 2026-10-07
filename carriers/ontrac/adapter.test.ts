@@ -1,14 +1,35 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { OntracTracker } from './adapter.js';
+import { adapter, OntracTracker } from './adapter.js';
 import { normalizeOntracNumber, parseOntrac } from './parser.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = '1LS0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 const payload = () => structuredClone(fixture);
 
 describe('OnTrac direct tracking', () => {
+  it('confirms the whole C-family number only from matching HTTP scans', async () => {
+    const number = 'C00000000000001';
+    const value = payload(); value.Packages[0].Tracking = number;
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(value)));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T22:00:00.000Z' });
+    expect(fetcher.mock.calls[0]?.[0]).toBe(`https://webtrack.ontrac.com/PackageServices/tracking/${number}`);
+    await expect(instance.recognize!('OTHER000001')).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps missing resources and wrong identities as failed recognition probes', async () => {
+    for (const response of [new Response('{}', { status: 404 }), new Response(JSON.stringify({ Packages: [] }))]) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response);
+      const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+      await expect(instance.recognize!('C00000000000001', { budgetMs: 1000 })).rejects.toMatchObject({
+        kind: response.status === 404 ? 'indeterminate' : 'schema',
+      });
+    }
+  });
   it('preserves offset scans and maps each code independently', () => {
     const result = parseOntrac(payload(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-03T14:00:00-08:00', expected_delivery: null });

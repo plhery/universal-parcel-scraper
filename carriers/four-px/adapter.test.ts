@@ -9,6 +9,26 @@ const NUMBER = '4PX0000000000001CN';
 const fixture = (name = 'delivered') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
 
 describe('4PX result projection', () => {
+  it('confirms an LP reference only through matching shipment scans', async () => {
+    const number = 'LP0000000000001CN';
+    const value = fixture(); value.data[0].queryCode = number;
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(value)));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-28T18:30:03.000Z' });
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body)).queryCodes).toEqual([number]);
+    await expect(instance.recognize!('INVALID')).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps wrong-identity recognition replies distinct from the explicit missing result', async () => {
+    const number = 'LP0000000000001CN';
+    const missing = fixture('not-found'); missing.data[0].queryCode = number;
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(JSON.stringify(missing)))
+      .mockResolvedValueOnce(new Response(JSON.stringify(fixture())));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: false });
+    await expect(instance.recognize!(number, { budgetMs: 1000 })).rejects.toMatchObject({ kind: 'schema' });
+  });
   it('binds the parcel and uses the displayed clock with its per-scan offset', () => {
     const result = normalizeCarrierResult(parse(fixture(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-03-28T14:30:03-04:00',

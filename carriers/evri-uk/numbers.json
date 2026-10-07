@@ -17,6 +17,46 @@
         ]
       },
       "note": "Public merchant reply with an Evri UK tracking link. The barcode shape alone does not identify domestic or international service."
+    },
+    {
+      "number": "H01ZUA0013877550",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.mig-welding.co.uk/forum/threads/evri-unknown-parcel-delivery.137500/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri",
+          "evri-uk"
+        ]
+      }
+    },
+    {
+      "number": "H04G0C0005637761",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://complain.biz/evri/complaint/missing-parcel-h04g0c0005637761/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri",
+          "evri-uk"
+        ]
+      }
     }
   ]
 }

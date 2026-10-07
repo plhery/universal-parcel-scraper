@@ -18,7 +18,10 @@
     "steps": [
       "direct"
     ],
-    "localClocks": true
+    "localClocks": true,
+    "recognition": {
+      "rank": 13
+    }
   },
   "capabilities": [
     "history",
@@ -55,6 +58,11 @@
       "id": "four-px-1",
       "pattern": "^4PX\\d{13}CN$",
       "confidence": "high"
+    },
+    {
+      "id": "four-px-cainiao-reference",
+      "pattern": "^LP\\d{13}CN$",
+      "confidence": "low"
     }
   ]
 }

@@ -74,6 +74,73 @@
         ]
       },
       "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+    },
+    {
+      "number": "20451277260031",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/novaya-pochta-nova-poshta/review-2263481",
+        "access": "full_page",
+        "date": "2025-11-08",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "20451513915086",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/novaya-pochta-nova-poshta/review-2369305",
+        "access": "full_page",
+        "date": "2026-08-21",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

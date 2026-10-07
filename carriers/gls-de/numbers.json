@@ -41,6 +41,7 @@
           "colis-prive",
           "gls-de",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -158,6 +159,243 @@
         ]
       },
       "note": "Public GLS shipment complaint. GLS group tracking shows the parcel; the issuing country is unestablished."
+    },
+    {
+      "number": "37390065090",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/254878-gls-neuenstein-paket-ohne-zustellversuch-im-paketshop-abgekippt",
+        "access": "full_page",
+        "date": "2026-08-24",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "GLS DE",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "841225178292",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/172285-gls-neuenstein-paket-nicht-zugestellt",
+        "access": "full_page",
+        "date": "2018-07-24",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "GLS DE",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "98281706456",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.reclabox.com/beschwerde/199179-gls-neuenstein-keine-paketzustellung-an-der-haustuer-gls-deutschland",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "GLS DE",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "681436581661",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://at.reclabox.com/beschwerde/246050-gls-austria-ansfelden-zustellung-anders",
+        "access": "full_page",
+        "date": "2023-11-03",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "scope_review",
+        "service": "GLS Austria",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Reported national GLS service is outside the German adapter scope; the shared number shape does not establish German ownership.",
+      "quarantine": true
+    },
+    {
+      "number": "30000010504407",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://at.reclabox.com/beschwerde/221166-gls-austria-ansfelden-paket-hat-das-paketzentrum-verlassen-seit-ueber-einem-monat",
+        "access": "full_page",
+        "date": "2021-01-12",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "review",
+        "service": "GLS Austria",
+        "reportedRole": "customer_or_order_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Reported under GLS Austria in a generic customer or order-number field; the identifier role is unresolved.",
+      "quarantine": true
+    },
+    {
+      "number": "00909355962431",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.klacht.nl/gls-netherlands/klacht/pakket-niet-ontvangen-verkeerde-levering-in-pakketautomaat/",
+        "access": "full_page",
+        "date": "2026-07-23",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "scope_review",
+        "service": "GLS Netherlands",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Reported national GLS service is outside the German adapter scope; the shared number shape does not establish German ownership.",
+      "quarantine": true
+    },
+    {
+      "number": "00500442303337",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.klacht.nl/gls-netherlands/klacht/probleem-met-bezorging-van-pakket-00500442303337/",
+        "access": "full_page",
+        "date": "2026-07-08",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "scope_review",
+        "service": "GLS Netherlands",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Reported national GLS service is outside the German adapter scope; the shared number shape does not establish German ownership.",
+      "quarantine": true
     }
   ]
 }

@@ -17,6 +17,8 @@ scan's English wording; pickup availability remains distinct from delivery.
 Delivery to the sender is a return milestone; an ambiguous return delivery is
 inconclusive. The same cheap lookup lets carrier recognition resolve ambiguous
 numeric barcodes; only the batch service's explicit absence reply is negative.
+The [documented parcel prefixes](https://www.bpost.be/en/faq/what-does-barcode-look-and-where-can-i-find-it)
+prioritize recognition while retaining numeric ambiguity.
 
 ## Limitations
 

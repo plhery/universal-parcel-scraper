@@ -20,6 +20,9 @@
     "steps": [
       "direct"
     ],
+    "recognition": {
+      "rank": 61
+    },
     "refresh": {
       "minMinutes": 60,
       "afterFailureMinutes": 240

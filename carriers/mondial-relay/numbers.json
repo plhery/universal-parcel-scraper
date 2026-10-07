@@ -155,6 +155,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "sf-express",
           "sto",
           "zto",
@@ -436,6 +437,226 @@
         ]
       },
       "note": "Reported return shipment associated with outbound number 47258958. The two numbers are not interchangeable aliases. Numeric detection remains ambiguous."
+    },
+    {
+      "number": "7310286746010",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/probleme-colis-mondial-relay-gls-t286523.html",
+        "date": "2020-12-02",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "review",
+        "service": "GLS ShopReturnService collection",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "ukrposhta",
+          "correos-chile",
+          "delhivery",
+          "yunda"
+        ]
+      },
+      "note": "Reported as a Mondial Relay tracking reference on a GLS partner return. Its thirteen digits do not match the documented public shipment formats, so its representation remains unresolved and must not be split into a lookup credential.",
+      "quarantine": true
+    },
+    {
+      "number": "7310297301",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/probleme-colis-mondial-relay-gls-t286523.html",
+        "date": "2020-12-04",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "GLS partner return collection",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "The customer explicitly names this as the Mondial Relay collection reference and separately names a GLS return reference. The partner legs do not establish interchangeable tracking identities."
+    },
+    {
+      "number": "78471942",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/indisponibilite-de-relais-colis-t322392.html",
+        "date": "2022-06-01",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The customer explicitly identifies Mondial Relay and this parcel. The short reference remains one candidate among carriers sharing its numeric length."
+    },
+    {
+      "number": "54499091",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/indisponibilite-de-relais-colis-t322392.html",
+        "date": "2022-06-06",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The customer explicitly identifies Mondial Relay and this parcel. The short reference remains one candidate among carriers sharing its numeric length."
+    },
+    {
+      "number": "99314384",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-perdu-relance-sans-reponse-t301302.html",
+        "date": "2021-05-27",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The customer names Mondial Relay and separates the outward shipment from its return. The carrier association remains a public report."
+    },
+    {
+      "number": "92673858",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.quechoisir.org/colis-perdu-relance-sans-reponse-t301302.html",
+        "date": "2021-05-27",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The customer explicitly labels this as the return of the separately named outward shipment. The short numeric format remains ambiguous.",
+      "relationships": [
+        {
+          "kind": "return_of",
+          "number": "99314384",
+          "source": {
+            "url": "https://forum.quechoisir.org/colis-perdu-relance-sans-reponse-t301302.html",
+            "date": "2021-05-27",
+            "access": "full_page",
+            "dateKind": "forum_post"
+          }
+        }
+      ]
+    },
+    {
+      "number": "92726304",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.60millions-mag.com/forum/d/65678-mondial-relay-coplis-irrecuperable?page=5",
+        "date": "2021-01-01",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "return tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The customer labels this Mondial Relay reference as the second tracking number for a SAV return and pastes its carrier scans. The report does not establish an interchangeable alias for the outward parcel."
+    },
+    {
+      "number": "93076861",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.60millions-mag.com/forum/d/65678-mondial-relay-coplis-irrecuperable?page=5",
+        "date": "2021-01-06",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "return tracking number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The customer explicitly identifies Mondial Relay and a replacement return reference. The separately named earlier parcel is not shortened or substituted for this identifier."
     }
   ]
 }

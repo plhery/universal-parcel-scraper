@@ -5,6 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
+import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
 import { royalMailEventStage, royalMailStage, royalMailSummaryStage, statusForStage } from './status.js';
 
 /** Read the response produced by Royal Mail's form and hCaptcha callback. */
@@ -15,8 +16,8 @@ const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
 export function normalizeRoyalMailNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^[A-Z]{2}\d{9}GB$/.test(value)) {
-    throw new InvalidInputError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format');
+  if (!/^[A-Z]{2}\d{9}GB$/.test(value) && !isRoyalMailDomesticReference(value)) {
+    throw new InvalidInputError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format or a domestic 2D reference');
   }
   return value;
 }

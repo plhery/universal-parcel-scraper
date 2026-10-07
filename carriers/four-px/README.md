@@ -5,6 +5,9 @@ The adapter selects the exact requested parcel and keeps its newest-first scan
 order. Multi-package orders require separate parcel histories and fall back to
 the providers.
 
+Cainiao-style `LP` references ending in `CN` suggest 4PX without selecting it.
+HTTP recognition uses the same identity-bound feed to confirm matching shipment activity.
+
 The portal displays each scan's `tkDateStr` with `tkTimezone`. The adapter uses
 that pair because `tkDate` carries different clock digits. A scan without an
 offset is retained as `local_time`, without an invented instant. The server

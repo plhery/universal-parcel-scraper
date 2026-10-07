@@ -51,7 +51,7 @@
           "colis-prive"
         ]
       },
-      "note": "Public report on the German consumer forum. Cainiao's tracking returns its history. Detection suggests AliExpress beside Colis Privé's generic rule."
+      "note": "Public report on the German consumer forum. Cainiao's tracking returns its history. Detection suggests AliExpress beside Colis Priv\u00e9's generic rule."
     },
     {
       "number": "UB209300714LV",
@@ -69,6 +69,53 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to AliExpress / Cainiao; detection falls back to the generic postal rule."
+    },
+    {
+      "number": "LP00492448725445",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-stuck-on-hand-over-to-airline-for-4-days-now-109842/",
+        "date": "2022-01-26",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment",
+        "service": "Cainiao Standard SG Air"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress"
+        ]
+      },
+      "note": "Customer explicitly names Cainiao Standard SG Air; the reply supplies shipment activity. The numeric LP family stays a candidate."
+    },
+    {
+      "number": "LP00556974255814",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/help-with-orders-from-aliexpress-that-are-stuck-in-transit-in-linehaul-office-125172",
+        "access": "full_page",
+        "date": "2023-03-17",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress"
+        ]
+      },
+      "note": "Customer reports an AliExpress tracking reference and linehaul history; the format does not select a delivery carrier."
     }
   ]
 }

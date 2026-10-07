@@ -1,6 +1,6 @@
 # Royal Mail
 
-UK S10 parcel history through the public tracking application. Automatic
+UK S10 and domestic 2D-reference parcel history through the public tracking application. Automatic
 tracking uses a fresh local Chromium configured by `TRACKING_CHROMIUM_PATH`.
 
 ## Retrieval
@@ -12,7 +12,8 @@ the adapter follows its validated destination in the same context.
 
 The page obtains its own CAPTCHA token for the microsummary, then `Get more
 details` uses the issued API session for history. The application can refresh
-an expired session itself. Tokens and cookies stay inside the browser.
+an expired session itself. Tokens and cookies stay inside the browser. Opt-in browser recognition uses
+the same lookup, requires dated activity and returns the history for reuse.
 The carrier's launch settings and installed-version User-Agent are scoped to
 this adapter.
 
@@ -60,7 +61,9 @@ tokens stay outside Git.
 
 Akamai or an interactive CAPTCHA can block anonymous retrieval. Browser build
 and network affect access; enabled universal providers can handle a failed
-direct lookup. Other barcode formats and postcode-gated delivery options are
+direct lookup. Domestic hexadecimal references remain low-confidence candidates because their
+shape can overlap unrelated identifiers. Printed spaces and hyphens are stripped
+before submission. Other barcode formats and postcode-gated delivery options are
 outside this adapter's scope.
 
 ## Testing

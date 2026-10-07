@@ -126,6 +126,32 @@
         "confidence": "high"
       },
       "note": "Published integration example, not a real shipment. The source calls it a direct Yodel number, InPost's UK network; DHL's rule for the JJD prefix selects DHL."
+    },
+    {
+      "number": "600000728632002019026599",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://wykop.pl/wpis/86700611/czesc-wykopki-potrzebuje-efektu-streisanda-bo-inpo",
+        "access": "indexed_excerpt",
+        "date": "2026-06-29",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "InPost PL",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ciblex",
+          "inpost",
+          "bpost"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

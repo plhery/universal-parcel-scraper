@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { BrtTracker } from './adapter.js';
 
 describe('BRT anonymous live history', () => {
-  it.skipIf(!process.env.BRT_TRACKING_NUMBER)('retrieves exact BRTcode tracking scans', async () => {
+  it.skipIf(!process.env.BRT_TRACKING_NUMBER)('retrieves tracking scans for the exact shipment identifier', async () => {
     const result = await new BrtTracker().fetch(process.env.BRT_TRACKING_NUMBER!);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.last_update).toBeNull();

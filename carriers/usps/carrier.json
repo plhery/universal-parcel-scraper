@@ -19,7 +19,10 @@
     "adapter": "usps",
     "steps": [
       "trawl"
-    ]
+    ],
+    "browserRecognition": {
+      "rank": 65
+    }
   },
   "capabilities": [
     "history",
@@ -61,6 +64,13 @@
   ],
   "detection": [
     {
+      "id": "usps-3",
+      "pattern": "^9[234]\\d{20}(?:\\d{4})?$",
+      "confidence": "low",
+      "checksum": "usps",
+      "preferred": true
+    },
+    {
       "id": "usps-1",
       "pattern": "^\\d{20}$",
       "confidence": "low"
@@ -69,6 +79,13 @@
       "id": "usps-2",
       "pattern": "^\\d{22}$",
       "confidence": "low"
+    },
+    {
+      "id": "usps-4",
+      "pattern": "^420(?:\\d{5}9[234]\\d{20}(?:\\d{4})?|\\d{9}9[234]\\d{20})$",
+      "confidence": "low",
+      "checksum": "usps",
+      "preferred": true
     }
   ]
 }

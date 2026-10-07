@@ -112,6 +112,103 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
+    },
+    {
+      "number": "3C7366B112131",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/firma-falsificata-e-mancato-re/5854938dd18141b2c2",
+        "access": "full_page",
+        "date": "2024-07-24",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SDA",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poste-italiane"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "282112I153507",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/firma-falsificata-e-mancato-re/5854938dd18141b2c2",
+        "access": "full_page",
+        "date": "2024-07-24",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SDA",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poste-italiane"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "288941G176113",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/mancata-consegna-per-dati-comp/CPTIT00875244-13",
+        "access": "indexed_excerpt",
+        "date": "2020-04-16",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "review",
+        "service": "SDA",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poste-italiane"
+        ]
+      },
+      "note": "The supplied report is unavailable and the identifier cannot be independently checked against its source.",
+      "quarantine": true
+    },
+    {
+      "number": "988C01701257F",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.consumatori.it/reclami/bacheca/sda/pacco-non-pervenuto-da-tracciamento-mi-dice-consegnato-il-17-gennaio-2023-290431/",
+        "access": "full_page",
+        "date": "2023-01-21",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SDA",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poste-italiane"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

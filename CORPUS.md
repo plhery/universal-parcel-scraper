@@ -39,8 +39,9 @@ Relationships link a child to its master, a return to its outward shipment or a 
 booking to its parcel. Each cites its own evidence and targets another record in the same
 carrier corpus. A shared prefix or appended counter does not establish a relationship.
 
-A numeric shape that several carriers share only suggests a carrier. A distinctive family or
-a verified checksum can select one. The corpus tests reject collisions nobody declared and
+A numeric shape that several carriers share only suggests a carrier. A distinctive family
+can identify one. Checksums filter or prioritize candidates; they do not establish network
+ownership or shipment existence. The corpus tests reject collisions nobody declared and
 make sure every detection rule has an example.
 
 A record whose own carrier detection does not offer is a gap, and

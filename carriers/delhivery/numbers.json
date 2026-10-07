@@ -142,6 +142,33 @@
         ]
       },
       "note": "Publicly reported shipment number; carrier attribution was not independently verified. The updated review explicitly labels this as a newly generated Delhivery AWB."
+    },
+    {
+      "number": "2827785390420",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ca.trustpilot.com/review/www.delhivery.com?page=10",
+        "access": "indexed_excerpt",
+        "date": "2026-04-27",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "ukrposhta",
+          "correos-chile",
+          "delhivery",
+          "yunda"
+        ]
+      },
+      "note": "Customer reports an AWB for a shipment of several boxes. Shared numeric formats require carrier recognition."
     }
   ]
 }

@@ -22,6 +22,10 @@ Numeric references remain detection candidates because other carriers share
 their shapes. The adapter submits the complete normalized reference and never
 shortens it to make a returned parcel match.
 
+The [official tracking help](https://aide.relaiscolis.com/hc/fr/articles/12437714695837-Comment-suivre-mon-colis)
+describes complete references. Alphanumeric references that overlap Colis Privé
+keep their ambiguity until the recipient form confirms a matching history.
+
 ## Normalization
 
 Scan sentences supply the status. Paris wall clocks become timestamps; date-only

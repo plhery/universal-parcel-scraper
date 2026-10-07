@@ -65,6 +65,64 @@
         "confidence": "high"
       },
       "note": "Public customer report with a reply reporting delivery. Status can change; this is not a permanent live-status oracle."
+    },
+    {
+      "number": "320019254000221BB4EFC",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.aimcosoftware.co.uk/forum/viewtopic.php?pid=2501",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "royal-mail"
+        ]
+      }
+    },
+    {
+      "number": "32-053 040 3000-10F 7FD 4BC",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://aimcosoftware.co.uk/V4/forum/viewtopic.php?id=614",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "royal-mail"
+        ]
+      }
+    },
+    {
+      "number": "021115C902CF0C99",
+      "role": "shipment",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://www.aimcosoftware.co.uk/forum/viewtopic.php?pid=2501",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "royal-mail"
+        ]
+      },
+      "note": "Packing Partner discussion quotes a Royal Mail domestic reference example; it is not a reported shipment."
     }
   ]
 }

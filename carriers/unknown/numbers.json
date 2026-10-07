@@ -114,6 +114,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -266,6 +267,169 @@
         "confidence": "none"
       },
       "note": "Plain word that must never look like a tracking number."
+    },
+    {
+      "number": "YTG852000330450",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/parcel-status-stuck-for-weeks-129356/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "review",
+        "reportedRole": "unresolved_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Customer reports a China-origin parcel to Australia without naming the carrier. The prefix does not establish YunExpress.",
+      "quarantine": true
+    },
+    {
+      "number": "C24110206842444",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/package-stuck-in-transit-141810/",
+        "access": "full_page",
+        "date": "2024-11-19",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "review",
+        "reportedRole": "unresolved_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
+      },
+      "note": "Customer reports a Shein order at LGG without identifying its logistics provider. The C family does not establish OnTrac.",
+      "quarantine": true
+    },
+    {
+      "number": "SPXID065174460027",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tanyapaket.cekresi.com/question/spxid065174460027-stuk-sudah-4-hari/",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Shopee Express (SPX Indonesia)",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The public source names a service outside the catalog; this identifier must not identify another national network by brand or shape alone."
+    },
+    {
+      "number": "SPXID04224372226C",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tanyapaket.cekresi.com/question/paket-tidak-bergerak-86/",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Shopee Express (SPX Indonesia, 'spx standard')",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public source names a service outside the catalog; this identifier must not identify another national network by brand or shape alone."
+    },
+    {
+      "number": "SPXID040656157609",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tanyapaket.cekresi.com/question/paket-stuck-7/",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Shopee Express (SPX Indonesia)",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The public source names a service outside the catalog; this identifier must not identify another national network by brand or shape alone."
+    },
+    {
+      "number": "SPXMY04481045210C",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://old.tracking.my/shopee/SPXMY04481045210C",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Shopee Express Malaysia",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public source names a service outside the catalog; this identifier must not identify another national network by brand or shape alone."
+    },
+    {
+      "number": "JNTCU5900492581YQ",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://leafeel.tistory.com/2",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "J-NET (AliExpress)",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public source names a service outside the catalog; this identifier must not identify another national network by brand or shape alone."
+    },
+    {
+      "number": "BUFZA3070231229YQ",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/my-package-may-be-stuck-93532/",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Buffalo (China->South Africa)",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public source names a service outside the catalog; this identifier must not identify another national network by brand or shape alone."
     }
   ]
 }

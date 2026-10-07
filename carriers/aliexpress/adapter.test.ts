@@ -3,7 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult, type CarrierResult } from '../../core/result/index.js';
-import { CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse } from './adapter.js';
+import { adapter, CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(
@@ -27,6 +28,24 @@ afterEach(() => {
 });
 
 describe('Cainiao wrong-number handling', () => {
+  it('recognizes LP references through matching HTTP activity', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(fixture('delivered.json')));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!('LP00000000000001', { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:15:00.000Z' });
+    const url = new URL(String(fetcher.mock.calls[0]?.[0]));
+    expect(url.searchParams.get('mailNos')).toBe('LP00000000000001');
+    await expect(instance.recognize!('not a parcel')).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not recognize empty internal pending modules or hide wrong identities', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(jsonResponse({ module: [{ mailNo: CAINIAO_WRONG_NUMBER, mailNoSource: 'INTERNAL', detailList: [] }] }))
+      .mockResolvedValueOnce(jsonResponse({ module: [{ mailNo: 'LP11111111111111', detailList: [] }] }));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!(CAINIAO_WRONG_NUMBER, { budgetMs: 1000 })).resolves.toEqual({ known: false, lastActivityAt: null });
+    await expect(instance.recognize!(CAINIAO_WRONG_NUMBER, { budgetMs: 1000 })).rejects.toMatchObject({ kind: 'schema' });
+  });
   it('maps a matching empty external module to a privacy-safe 404', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(jsonResponse({
       module: [{

@@ -18,6 +18,7 @@
           "mondial-relay",
           "colis-prive",
           "mrw",
+          "brt",
           "purolator",
           "sf-express",
           "sto",
@@ -38,13 +39,10 @@
         "date": "2026-08-27"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "sf-express"
-        ]
+        "carrier": "sf-express",
+        "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SF Express, which stays one candidate among several."
+      "note": "Publicly reported shipment number; issuance was not independently confirmed."
     },
     {
       "number": "SF6042542297687",
@@ -61,11 +59,8 @@
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "sf-express"
-        ]
+        "carrier": "sf-express",
+        "confidence": "high"
       },
       "note": "Customer explicitly supplies shipment number."
     },
@@ -84,11 +79,8 @@
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "sf-express"
-        ]
+        "carrier": "sf-express",
+        "confidence": "high"
       },
       "note": "Tracking number appears in review title and body."
     },
@@ -107,13 +99,44 @@
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "sf-express"
-        ]
+        "carrier": "sf-express",
+        "confidence": "high"
       },
       "note": "Customer explicitly supplies shipment number."
+    },
+    {
+      "number": "SF6047227701780",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/696a4853722b4cb98b6e70ce",
+        "date": "2026-01-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "sf-express",
+        "confidence": "high"
+      },
+      "note": "Customer explicitly supplies shipment identifier on the carrier review page."
+    },
+    {
+      "number": "SF8888888888888",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://open.sf-express.com/InternalWaybillGuide",
+        "access": "indexed_excerpt"
+      },
+      "expect": {
+        "carrier": "sf-express",
+        "confidence": "high"
+      },
+      "note": "Official waybill layout shows the prefixed fifteen-character identifier."
     }
   ]
 }

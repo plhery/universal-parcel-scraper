@@ -67,6 +67,89 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. The S10 check digit does not validate. The source attributes it to Austrian Post, which no rule claims."
+    },
+    {
+      "number": "1022755012554320168504",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://at.reclabox.com/beschwerde/203236-oesterreichische-post-wien-pakete-werden-nicht-zugestellt",
+        "access": "full_page",
+        "date": "2019-12-07",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Österreichische Post",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "1034111503111560211207",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://at.reclabox.com/beschwerde/221160-oesterreichische-post-wien-kein-zustellversuch-dhl-paket-bitte-nicht-retournieren",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Österreichische Post",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "50169189000593",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://at.reclabox.com/beschwerde/213735-oesterreichische-post-wien-keine-zustellung-paket-seit-22-6-2020-in-verteilung-2005",
+        "access": "full_page",
+        "date": "2020-07-15",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "Österreichische Post",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public report names this carrier; shipment identity remains unconfirmed."
     }
   ]
 }

@@ -21,6 +21,7 @@ import { isValidMondialRelayBarcode } from './mondialRelay.js';
 import { normalizeTrackingNumber } from './normalize.js';
 import { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidTntConsignmentNumber } from './numericChecksums.js';
 import { isValidS10TrackingNumber } from './s10.js';
+import { isValidUspsPackageBarcode } from './usps.js';
 import type { CarrierDetection } from './types.js';
 
 function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
@@ -33,6 +34,7 @@ function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(trackingNumber);
   if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(trackingNumber);
   if (rule.checksum === 'dpd') return isValidDpdParcelNumber(trackingNumber);
+  if (rule.checksum === 'usps') return isValidUspsPackageBarcode(trackingNumber);
   return true;
 }
 

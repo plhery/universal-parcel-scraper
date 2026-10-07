@@ -13,8 +13,9 @@
  * only when `mailNoSource` is `EXTERNAL`; otherwise Cainiao is still waiting
  * for the seller and the parcel is simply pending.
  */
-import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
+import { validTrackingNumber } from '../../core/detection/valid.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
@@ -227,5 +228,6 @@ export const adapter: AdapterFactory = (environment) => {
     // One keyless GET; there is no second tier to fall back to.
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => validTrackingNumber(number)),
   };
 };

@@ -95,8 +95,11 @@
         "date": "2025-07-10"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack; detection selects OnTrac."
     }

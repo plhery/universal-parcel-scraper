@@ -428,7 +428,8 @@
             "tnt",
             "poczta-polska",
             "correos-spain",
-            "dpd"
+            "dpd",
+            "usps"
           ]
         },
         "preferred": {
