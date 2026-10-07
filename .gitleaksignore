@@ -1,5 +1,7 @@
-# Public frontend constants and synthetic fixtures; no account credentials.
+# Public frontend and app constants and synthetic fixtures; no account credentials.
 4da0322b46a48da9a981b25bd478ef9c4a1c869e:src/server/ship24Http.ts:generic-api-key:11
 61d987f01ef5ed8632533e2e26de7283ed9f4a88:carriers/purolator/adapter.ts:generic-api-key:12
 dc835d6358d8d8e807e0d7fbd31d2793c949a1ae:carriers/uniuni/adapter.ts:generic-api-key:12
 dc835d6358d8d8e807e0d7fbd31d2793c949a1ae:carriers/uniuni/adapter.test.ts:generic-api-key:156
+2d6671fa34cdd12a37dd2993484dc957da9e265b:carriers/evri-uk/mobile.ts:generic-api-key:12
+2d6671fa34cdd12a37dd2993484dc957da9e265b:carriers/dpd-de/app.test.ts:generic-api-key:168
