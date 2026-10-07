@@ -2,8 +2,8 @@
 
 Evri International, through the [GlobalEco tracker](https://globaleco.app/track/)
 that the official Evri tracking page links for international parcels. Domestic
-UK tracking is a separate [Evri UK](../evri-uk/README.md) service; it relies on the
-universal providers. A not-found here says nothing about Evri UK.
+UK tracking is a separate [Evri UK](../evri-uk/README.md) service with its own
+browser adapter. A not-found here says nothing about Evri UK.
 
 ## How it works
 
@@ -40,7 +40,7 @@ universal providers. A not-found here says nothing about Evri UK.
 
 ## Limitations
 
-- International only; domestic UK numbers need universal providers.
+- International only; domestic UK numbers use the Evri UK adapter.
 - Sender names, destination, comments, tracking aliases and outbound links are
   never read.
 

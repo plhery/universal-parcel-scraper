@@ -6,6 +6,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeLbcNumber, parseLbc } from './parser.js';
+import { readLbcMobile } from './mobile.js';
 
 const ORIGIN = 'https://www.lbcexpress.com';
 const MAX_BYTES = 1_000_000;
@@ -112,20 +113,27 @@ function localBrowser(number: string, executablePath: string, signal: AbortSigna
 }
 
 export class LbcExpressTracker {
-  constructor(private readonly options: { executablePath?: string | null; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: { executablePath?: string | null; recorder?: StepRecorder;
+    key?: string | null; fetcher?: typeof fetch; userAgent?: string } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeLbcNumber(raw);
     const budgetMs = context.budgetMs ?? 45_000;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 60_000) throw new TypeError('LBC budget must be between 1 and 60000 ms');
-    if (!this.options.executablePath) throw new ChallengeError('lbc-express', 'LBC requires a configured tracking browser');
+    if (this.options.key === null && !this.options.executablePath) throw new ChallengeError('lbc-express', 'LBC requires a tracking API key or a configured browser');
     return runSteps({ carrier: 'lbc-express', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'browser', run: ({ signal, remainingMs }) => localBrowser(number, this.options.executablePath!, signal, Math.max(1, Math.floor(remainingMs))) },
+      { id: 'direct', enabled: this.options.key !== null, run: ({ signal, remainingMs }) => readLbcMobile(number, {
+        key: this.options.key, fetcher: this.options.fetcher, userAgent: this.options.userAgent, signal,
+        timeoutMs: Math.max(1, Math.min(10_000, Math.floor(remainingMs))),
+      }) },
+      { id: 'browser', enabled: Boolean(this.options.executablePath), run: ({ signal, remainingMs }) => localBrowser(number, this.options.executablePath!, signal, Math.max(1, Math.floor(remainingMs))) },
     ]);
   }
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new LbcExpressTracker({ executablePath: environment.browserExecutablePath, recorder: environment.recorder });
-  return { id: 'lbc-express', recordsSteps: true, steps: ['browser'], track: (input, context) => tracker.fetch(input.number, context) };
+  const key = environment.env.LBC_TRACKING_KEY;
+  const tracker = new LbcExpressTracker({ executablePath: environment.browserExecutablePath, recorder: environment.recorder,
+    key: key === undefined ? undefined : key.trim() || null, fetcher: environment.fetcher, userAgent: environment.userAgent });
+  return { id: 'lbc-express', recordsSteps: true, steps: ['direct', 'browser'], track: (input, context) => tracker.fetch(input.number, context) };
 };

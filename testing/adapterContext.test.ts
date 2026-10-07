@@ -65,7 +65,7 @@ const ENVIRONMENTS: Readonly<Record<string, Browsers>> = {
 const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   fedex: ['service'], 'mondial-relay': ['service'], 'royal-mail': ['chromium'],
   'sf-express': ['service'], usps: ['service'], '17TRACK': ['service'],
-  'lbc-express': ['chromium'], 'evri-uk': ['chromium'],
+  'evri-uk': ['chromium'],
   yunexpress: ['service', 'chromium'], 'Postal Ninja': ['service', 'chromium'],
 };
 

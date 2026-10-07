@@ -57,6 +57,12 @@ classifying the number as unknown. Without a postcode, places and verified
 scans are unavailable. Recipient details, addresses, delivery-proof URLs and
 preference links are discarded.
 
+The [Dutch myDPD page](https://www.dpd.com/nl/nl/ontvangen/) links to the same
+Geopost Android package, `com.dpdgroup.chatbot.lemny.prod`. Its country selector
+does not establish a separate Dutch API or authorize treating Dutch parcels as
+Swiss. The German national app has a separate
+[SOAP flow](../dpd-de/README.md#mobile-api-alternative).
+
 ## Testing
 
 `npm run test:carriers:live -- carriers/dpd` checks the anonymous negative path.

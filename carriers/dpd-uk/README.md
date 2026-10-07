@@ -28,6 +28,14 @@ adapter's scope. Delivery options and proof of delivery behind the postcode
 form are not queried. A generic HTTP 404 does not establish parcel absence;
 only the reference service's explicit unknown-reference response does.
 
+The [UK Android app](https://play.google.com/store/apps/details?id=com.dpd.yourdpd)
+uses a separate consumer API at `https://apis.consumers.dpdgroup.co.uk`.
+Its client supplies a Firebase bearer token and `dpdSession` header; saved-parcel
+history uses `consumers/{consumerId}/parcels/{parcelCode}/events`. Manual
+tracking resolves a number through `parcels/{number}/types/parcelOrCon` before
+reading `parcels/{parcelCode}`. This account/session flow provides no simpler
+replacement for the public tracking reads above.
+
 ## Testing
 
 ```sh

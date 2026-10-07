@@ -18,6 +18,7 @@
     "mode": "automatic",
     "adapter": "lbc-express",
     "steps": [
+      "direct",
       "browser"
     ],
     "localClocks": true

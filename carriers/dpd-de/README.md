@@ -23,6 +23,24 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
   share the same civil-clock rules for the supported tracking history.
 - The Swiss page fallback is not used for German lookups.
 
+## Mobile API alternative
+
+The separate German [DPD app](https://play.google.com/store/apps/details?id=de.dpd.mobile)
+uses SOAP at `https://api.paketnavigator.de/services/v1/Navigator3Service.asmx`
+([service schema](https://api.paketnavigator.de/services/v1/Navigator3Service.asmx?WSDL)).
+`getSessionFullState` opens an anonymous device session; `getTrackingData` reads
+the whole parcel number, and `getTrackingScanList` supplies its scan history.
+The request language is `de_DE` or `de_EN`. A delivery postcode unlocks verified
+details. Keep `UpdateNewDeliveryData` and `addParcelIfNoTrackingdataAvailable`
+false for an independent read.
+
+Each call uses the app's shared partner token and a time-dependent `KeyPhase`
+derived from its shared partner password. These credentials are independent of
+the device and account. The app also supplies a runtime Firebase App Check
+`AppToken`; issued app and session tokens must remain private. This SOAP flow
+is an alternative to the group API, not an adapter tier. Parcel identity and
+national-network evidence still need validation before recognition.
+
 ## Limitations
 
 Recipient details, addresses, delivery proofs and preference links are discarded.

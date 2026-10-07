@@ -18,6 +18,12 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "We tried to deliver your shipment but the house was closed and no one was present. We will re-deliver on the next business day.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
     }
   ]
 }

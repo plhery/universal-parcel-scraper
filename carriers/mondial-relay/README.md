@@ -1,8 +1,8 @@
 # Mondial Relay
 
 French parcel-shop network (last mile in FR, BE, ES, LU, PT). Tracked through
-the French recipient flow in a real browser, because Cloudflare blocks every
-non-browser client.
+the French recipient website in a real browser, because Cloudflare blocks
+direct requests to that flow.
 
 ## How it works
 
@@ -48,6 +48,21 @@ for another shipment → `SchemaError`.
   the sync would otherwise fall back to "out for delivery".
 - Timestamps are offset-less Paris wall-clock. A bare calendar day stays a day.
   The estimate is reduced to a day and dropped once delivered or in exception.
+
+## Mobile API
+
+The official [consumer Android app](https://play.google.com/store/apps/details?id=com.mondialrelay.mobile)
+uses `https://mobile-app-bff.mondialrelay.app/`. Requests carry a shared app
+signature with a nonce and Unix timestamp. `GET /api/parcels-search` accepts
+`shipmentUid` and `postcode`; `GET /api/parcels-detail` accepts `shipmentUids`
+and `parcelType`. Both also require an account JWT.
+
+`GET /api/parcel-detail-not-migrated?shipmentUid=…` accepts the app signature
+without an account JWT or postcode. The app uses it for non-exported sent
+labels. Its summary replies contain shipment identity and delivery metadata,
+without tracking events or scan times, so they cannot replace the public
+website history. The returned numeric UID combines the brand and the complete
+eight-digit shipment number; the brand remains part of the identity.
 
 ## Rejected approaches
 

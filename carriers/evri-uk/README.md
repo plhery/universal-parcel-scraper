@@ -12,6 +12,11 @@ customer search supplies parcel identifiers; the application constructs a
 lookup-day URN and reads the anonymous history feed without a postcode.
 Keys and tokens remain inside the browser.
 
+The protected `/protected/keys.json` response supplies separate keys for
+`api.evri.com/customer-tracking/v1/search/{barcode}` and
+`tracking.platform-apis.evri.com/v1/parcels?uniqueIds={urn}`. The keys are fetched
+at runtime and are not embedded in the adapter.
+
 The browser's automation flag and installed-version User-Agent are configured
 for this carrier because the protected key request rejects the default
 automated launch. The context is closed after each lookup and shares the
