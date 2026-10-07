@@ -73,7 +73,7 @@ const corpus = new Map(loadNumberCorpusFiles().map((file) => [file.carrier, file
 
 function credential(validator: string, number: string): string {
   switch (validator) {
-    case 'swissPostcode': case 'swissOrFrancePostcode': return '8000';
+    case 'swissPostcode': case 'swissOrFrancePostcode': case 'internationalPostcode': return '8000';
     case 'francePostcode': return '75001';
     case 'germanyPostcode': return '00000';
     case 'paackPostcode': return '28001';

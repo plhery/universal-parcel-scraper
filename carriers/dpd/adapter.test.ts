@@ -537,6 +537,35 @@ describe('DPDTracker steps', () => {
     expect(fetcher).toHaveBeenCalledTimes(requests);
   });
 
+  it.each([
+    ['75001', 'dataForVerification=75001'],
+    [' sw1a  1aa ', 'dataForVerification=SW1A+1AA'],
+    ['00-001', 'dataForVerification=00-001'],
+  ])('sends the postcode of a delivery abroad for verification: %s', async (postcode, query) => {
+    const fetcher = mockGuestApi(Response.json(READY_FOR_COLLECTION));
+
+    const result = await new DPDTracker({ timeoutMs: 1_000, trawl: null }).fetch(TRACKING_NUMBER, postcode);
+
+    expect(result.dpd_postcode_verified).toBe(true);
+    expect(String(fetcher.mock.calls[3]?.[0])).toContain(query);
+  });
+
+  it.each(['12', 'ABCDE', '1'.repeat(13), '75001/2'])('refuses a postcode no country writes before asking DPD: %s', async (postcode) => {
+    const fetcher = vi.spyOn(globalThis, 'fetch');
+
+    await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null }).fetch(TRACKING_NUMBER, postcode))
+      .rejects.toMatchObject({ kind: 'invalid_input' });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('holds the German unit to a German postcode', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch');
+
+    await expect(new DPDTracker({ country: 'DE', timeoutMs: 1_000, trawl: null }).fetch(TRACKING_NUMBER, '8000'))
+      .rejects.toMatchObject({ kind: 'invalid_input' });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
   it('retries without verification when DPD rejects the postcode, and says so', async () => {
     const fetcher = mockGuestApi(new Response('', { status: 400 }))
       .mockResolvedValueOnce(Response.json(READY_FOR_COLLECTION));

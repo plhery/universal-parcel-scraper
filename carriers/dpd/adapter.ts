@@ -25,7 +25,8 @@ import {
 //   the delivery window; without it the lookup continues with
 //   `continueWithoutVerification=true`. A rejected postcode (HTTP 400) is
 //   retried once without verification and reported as unverified rather than
-//   failing the lookup.
+//   failing the lookup. DPD answers a postcode of another country's shape the
+//   same way as a wrong one.
 // - The consignee web page is the fallback when the guest API is inconclusive,
 //   except HTTP 503: the service is down, irrespective of the parcel number.
 //   It sits behind Cloudflare, so it is fetched through the browser service's
@@ -52,6 +53,8 @@ const TOKEN_FAILURE_MEMORY_MS = 30_000;
 /** The browser service may spend the whole request timeout plus its own transport allowance. */
 const SOLVER_ALLOWANCE_MS = 15_000;
 const MAX_BYTES = 10_000_000;
+/** Any country's postcode, as the catalog's `internationalPostcode` input takes it. */
+const DELIVERY_POSTCODE = /^(?=.{3,12}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/;
 
 /** Cloudflare interrupted the consignee page with an interactive challenge. */
 export class DPDChallengeError extends ChallengeError {
@@ -588,9 +591,14 @@ export class DPDTracker {
     if (!trackingNumber) {
       throw new InvalidInputError('DPD', 'DPD tracking numbers must contain 14 digits, with or without their check character');
     }
-    const resolvedPostcode = postcode.trim();
-    if (resolvedPostcode && !(this.country === 'DE' ? /^\d{5}$/ : /^\d{4}$/).test(resolvedPostcode)) {
-      throw new InvalidInputError('DPD', `DPD postcode must contain exactly ${this.country === 'DE' ? 5 : 4} digits`);
+    // DPD checks the postcode against the recipient's, and the service this
+    // adapter asks also answers for parcels delivered in other countries: any
+    // country's postcode goes through. The German unit reads German deliveries.
+    const resolvedPostcode = postcode.trim().toUpperCase().replace(/\s+/g, ' ');
+    if (resolvedPostcode && !(this.country === 'DE' ? /^\d{5}$/ : DELIVERY_POSTCODE).test(resolvedPostcode)) {
+      throw new InvalidInputError('DPD', this.country === 'DE'
+        ? 'DPD postcode must contain exactly 5 digits'
+        : 'DPD postcode must be 3 to 12 letters and digits with a digit, in groups joined by a space or hyphen');
     }
     // One signal and one clock for both tiers and the guest login they share with `recognizes`.
     const carrier = this.country === 'DE' ? 'dpd-de' : 'dpd';

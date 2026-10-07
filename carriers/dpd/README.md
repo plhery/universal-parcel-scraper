@@ -27,6 +27,10 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
 - A delivery postcode is optional and sent only to DPD. It unlocks verified
   scans, places and the delivery window. A rejected postcode is retried once
   without verification, with `dpd_postcode_verified: false`.
+- The postcode is the recipient's, in any country's format. The guest service
+  also answers for parcels DPD delivers outside Switzerland, and a parcel filed
+  under this carrier can be one of them, so the input is not held to four
+  digits. DPD answers a postcode of the wrong shape like a wrong postcode.
 - Automatic recognition requires the requested identity, dated activity and
   an explicit Swiss current country. Another country returns false; missing
   country evidence is inconclusive. A scan country is not a verified

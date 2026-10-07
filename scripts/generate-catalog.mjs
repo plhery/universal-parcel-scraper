@@ -61,6 +61,7 @@ const carrierInputValidators = {
     'francePostcode',
     'germanyPostcode',
     'swissOrFrancePostcode',
+    'internationalPostcode',
     'paackPostcode',
   ]),
 };

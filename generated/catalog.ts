@@ -819,15 +819,14 @@ export const CARRIER_CATALOG = {
       "requirements": [
         {
           "field": "postcode",
-          "validator": "swissPostcode",
+          "validator": "internationalPostcode",
           "optional": true,
           "label": "Delivery postcode",
           "type": "text",
-          "placeholder": "8000",
           "help": "Optional. DPD uses it to unlock verified scans and the delivery window.",
-          "pattern": "^[0-9]{4}$",
-          "maxLength": 4,
-          "inputMode": "numeric",
+          "pattern": "^(?=.{3,12}$)(?=.*[0-9])[A-Za-z0-9]+(?:[ \\-][A-Za-z0-9]+)*$",
+          "maxLength": 12,
+          "inputMode": "text",
           "autoComplete": "postal-code"
         }
       ],
@@ -4360,6 +4359,7 @@ export const CARRIER_CATALOG = {
           "optional": true,
           "label": "Delivery postcode",
           "type": "text",
+          "placeholder": "10115",
           "pattern": "^[0-9]{5}$",
           "maxLength": 5,
           "inputMode": "numeric",

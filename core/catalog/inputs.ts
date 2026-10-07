@@ -108,6 +108,13 @@ export function normalizeCarrierInputs(
           );
         }
         break;
+      case 'internationalPostcode':
+        // The carrier delivers abroad too: any country's postcode, checked by the carrier itself.
+        if (!POSTCODE_SHAPE.test(postcodeText(value))) {
+          throw new TypeError(`${carrierDefinition(carrierId).displayName} requires a valid delivery postcode`);
+        }
+        supplied[field] = postcodeText(value);
+        break;
       case 'paackPostcode': {
         const rawPostcode = value.toLocaleUpperCase('en-US');
         if (!/^(?=.{3,10}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/.test(rawPostcode)) {
@@ -123,10 +130,17 @@ export function normalizeCarrierInputs(
   return supplied;
 }
 
+/** Any country's postcode: 3 to 12 characters with a digit, in groups joined by one space or hyphen. */
+const POSTCODE_SHAPE = /^(?=.{3,12}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/;
+
+function postcodeText(value: string): string {
+  return value.trim().toUpperCase().replace(/\s+/g, ' ');
+}
+
 /** A recipient postcode for universal providers; independent of a carrier's own credentials. */
 export function normalizeDeliveryPostcode(value: string): string {
-  const normalized = value.trim().toUpperCase().replace(/\s+/g, ' ');
-  if (!/^(?=.{3,12}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/.test(normalized)) {
+  const normalized = postcodeText(value);
+  if (!POSTCODE_SHAPE.test(normalized)) {
     throw new TypeError('A valid delivery postcode is required');
   }
   return normalized;
