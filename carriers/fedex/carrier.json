@@ -73,7 +73,9 @@
     {
       "id": "fedex-2",
       "pattern": "^\\d{15}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "gs1",
+      "preferred": true
     }
   ]
 }

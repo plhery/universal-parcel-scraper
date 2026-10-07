@@ -140,7 +140,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "la-poste",
           "yunda"
         ]

@@ -125,7 +125,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "yunda"
         ]
       },

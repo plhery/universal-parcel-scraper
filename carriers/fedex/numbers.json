@@ -316,6 +316,177 @@
       },
       "quarantine": true,
       "note": "The public report distinguishes this barcode from its fifteen-digit tracking identifier. The adapter accepts the tracking identifier only."
+    },
+    {
+      "number": "449044304137821",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://developer.fedex.com/wirc/jsonapi-collections/api_groups/Track/TrackAPI_collection.json"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "yunda"
+        ]
+      },
+      "note": "Track API sandbox example from FedEx, not a real shipment. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "020207021381215",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://developer.fedex.com/wirc/jsonapi-collections/api_groups/Track/TrackAPI_collection.json"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "yunda"
+        ]
+      },
+      "note": "Track API sandbox example from FedEx, not a real shipment. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "509466710003247",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://developer.fedex.com/wirc/jsonapi-collections/api_groups/Track/TrackAPI_collection.json"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "yunda"
+        ]
+      },
+      "note": "Track API sandbox example FedEx names as a Ground delivery, not a real shipment. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "042332561009656",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://storage.courtlistener.com/recap/gov.uscourts.nysb.164047/gov.uscourts.nysb.164047.499.2.pdf",
+        "date": "2008-04-07",
+        "dateKind": "filing",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "FedEx Ground",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "yunda"
+        ]
+      },
+      "note": "A public court exhibit holds FedEx Ground's proof-of-delivery letter for this tracking number. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "307349610001114",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://storage.courtlistener.com/recap/gov.uscourts.nysb.137477/gov.uscourts.nysb.137477.19482.3.pdf",
+        "date": "2010-02-17",
+        "dateKind": "filing",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "FedEx Ground",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "yunda"
+        ]
+      },
+      "note": "A public court exhibit quotes a FedEx shipment notification naming it the master number of a twelve-piece FedEx Ground shipment. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "760135915575222",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20140314131802/http://www.complaintsboard.com:80/complaints/fedex-home-very-late-delivery-c703352.html",
+        "date": "2014-03-10",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "FedEx Home Delivery",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "yunda"
+        ]
+      },
+      "note": "A customer's public complaint about a late FedEx Home delivery gives it as the tracking number. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "102342415431466",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20120127021537/http://www.consumeraffairs.com:80/delivery/fedex_no_deliver.html",
+        "date": "2011-07-23",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "yunda"
+        ]
+      },
+      "note": "A shipper's public complaint gives it as the tracking number of a FedEx package delivered to the wrong address. Its last digit is the GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "449044304137820",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "yunda"
+        ],
+        "not": [
+          "fedex"
+        ]
+      },
+      "note": "FedEx's Track API example with its GS1 check digit changed, so FedEx is not suggested."
     }
   ]
 }

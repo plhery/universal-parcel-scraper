@@ -22,7 +22,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "dpd-fr",
       "yunda"
     ]
@@ -635,6 +634,19 @@
     ]
   },
   {
+    "input": "020207021381215",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dpd-fr",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ]
+  },
+  {
     "input": "021115C902CF0C99",
     "carrier": "unknown",
     "confidence": "low",
@@ -810,6 +822,9 @@
       "fedex",
       "dpd-fr",
       "yunda"
+    ],
+    "preferred": [
+      "fedex"
     ]
   },
   {
@@ -1004,6 +1019,22 @@
       "fedex",
       "dpd-fr",
       "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ]
+  },
+  {
+    "input": "042332561009656",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dpd-fr",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
     ]
   },
   {
@@ -1546,6 +1577,19 @@
     ]
   },
   {
+    "input": "102342415431466",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dpd-fr",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ]
+  },
+  {
     "input": "10272483975",
     "carrier": "unknown",
     "confidence": "low",
@@ -1729,7 +1773,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "dpd-fr",
       "yunda"
     ]
@@ -1980,7 +2023,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "dpd-fr",
       "yunda"
     ]
@@ -3138,7 +3180,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "yunda"
     ]
   },
@@ -3746,6 +3787,18 @@
     "asked": [
       "la-poste",
       "delhivery"
+    ]
+  },
+  {
+    "input": "307349610001114",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
     ]
   },
   {
@@ -4878,6 +4931,26 @@
     ]
   },
   {
+    "input": "449044304137820",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "yunda"
+    ]
+  },
+  {
+    "input": "449044304137821",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ]
+  },
+  {
     "input": "460150000103706789",
     "carrier": "unknown",
     "confidence": "low",
@@ -5111,6 +5184,18 @@
     "confidence": "high",
     "candidates": [
       "estafeta"
+    ]
+  },
+  {
+    "input": "509466710003247",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
     ]
   },
   {
@@ -6049,6 +6134,18 @@
     ]
   },
   {
+    "input": "760135915575222",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ]
+  },
+  {
     "input": "7633033634",
     "carrier": "unknown",
     "confidence": "low",
@@ -6454,7 +6551,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "yunda"
     ]
   },
@@ -6487,7 +6583,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "la-poste",
       "yunda"
     ],
@@ -6520,7 +6615,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "yunda"
     ]
   },
@@ -7261,7 +7355,6 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "fedex",
       "yunda"
     ]
   },

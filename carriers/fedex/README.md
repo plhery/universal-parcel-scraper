@@ -9,9 +9,12 @@ universal-provider fallback does a lot of the work.
 The adapter accepts 12- or 15-digit numbers (spaces, dots and dashes stripped) and rejects
 anything else, including longer label barcodes, before any request. Detection prefers FedEx
 for a 12-digit number whose last digit matches (weights 3, 1, 7 from the left, sum mod 11,
-then mod 10) and drops it otherwise; the shape stays shared. Without a browser
-service it fails at once with `ChallengeError('FedEx challenged direct tracking; configure
-FLARESOLVERR_URL for browser fallback')`.
+then mod 10) and for a 15-digit Ground number whose last digit is its GS1 mod 10 check, and
+drops it otherwise; both shapes stay shared. Label barcodes end in a check digit too, but no
+rule reads them: the 22-digit `96` Ground barcode checks only its last 15 digits, and the
+34-digit barcode runs the 12-digit check over the 13 digits before its own. Without a
+browser service it fails at once with `ChallengeError('FedEx challenged direct tracking;
+configure FLARESOLVERR_URL for browser fallback')`.
 
 1. `trawl`: loads `https://www.fedex.com/fedextrack/?trknbr=…` (a shell) with
    `captureResponses` on `POST https://api.fedex.com/track/v2/shipments` and parses the

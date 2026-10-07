@@ -383,21 +383,29 @@
     "reason": "InPost tracks DHL JJD air waybills, so both claim the JJD family; the DHL rule is the high-confidence one."
   },
   {
-    "shape": "9{15}",
+    "shape": "Fifteen digits starting with 0 or 1 that pass the GS1 check",
     "carriers": [
       "dpd-fr",
       "fedex",
       "yunda"
     ],
-    "reason": "15-digit numbers starting with 0 or 1 are shared by DPD France, FedEx and Yunda; the number stays a low-confidence suggestion."
+    "reason": "A passing GS1 check digit adds FedEx to DPD France and Yunda, which accept these numbers without one; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{15}",
+    "shape": "Fifteen digits outside DPD France's 0/1 prefixes that pass the GS1 check",
     "carriers": [
       "fedex",
       "yunda"
     ],
-    "reason": "15-digit numbers outside DPD France's 0/1 prefixes are shared by FedEx and Yunda; the number stays a low-confidence suggestion."
+    "reason": "A passing GS1 check digit adds FedEx to Yunda, which accepts any fifteen digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Fifteen digits starting with 0 or 1 that fail the GS1 check",
+    "carriers": [
+      "dpd-fr",
+      "yunda"
+    ],
+    "reason": "Without a GS1 check digit FedEx drops out; DPD France and Yunda still share the shape, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "A9{10}",
@@ -592,13 +600,12 @@
     "reason": "CTT Express numbers share TIPSA's agency, agency, waybill layout. The CTT Express prefix is the only high-confidence rule, so TIPSA references starting 00 are read as CTT Express; the 000010 account stays a low-confidence suggestion, TIPSA first."
   },
   {
-    "shape": "870 or 880 followed by twelve digits that fail DPD's check character",
+    "shape": "870 or 880 followed by twelve digits that fail both DPD's check character and the GS1 check",
     "carriers": [
-      "fedex",
       "la-poste",
       "yunda"
     ],
-    "reason": "Without DPD's check character La Poste matches only its low-confidence fallback, which the fifteen-digit FedEx and Yunda rules share; the number stays a low-confidence suggestion."
+    "reason": "Without DPD's check character La Poste matches only its low-confidence fallback, which the fifteen-digit Yunda rule shares; the number stays a low-confidence suggestion."
   },
   {
     "shape": "16-character alphanumeric reference",
@@ -1175,17 +1182,16 @@
     "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "870 or 880, eleven digits and their check digit",
+    "shape": "870 or 880, eleven digits and their check digit, that fail the GS1 check",
     "carriers": [
       "chronopost",
       "dpd",
       "dpd-de",
       "dpd-uk",
-      "fedex",
       "la-poste",
       "yunda"
     ],
-    "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit FedEx and Yunda rules match too. La Poste's high-confidence rule decides."
+    "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit Yunda rule matches too. La Poste's high-confidence rule decides."
   },
   {
     "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and Yamato checks",

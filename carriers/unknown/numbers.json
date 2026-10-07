@@ -134,7 +134,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "dpd-fr",
           "yunda"
         ]

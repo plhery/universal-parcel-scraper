@@ -35,6 +35,15 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('1234567890123456').candidates).toContain('tnt');
   });
 
+  it('prefers FedEx for fifteen-digit Ground numbers that end in their GS1 check', () => {
+    expect(detectCarrierMatch('449044304137821')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fedex'] });
+    expect(detectCarrierMatch('449 044 304 137 821').candidates[0]).toBe('fedex');
+    expect(detectCarrierMatch('449044304137820').candidates).not.toContain('fedex');
+    expect(detectCarrierMatch('449044304137820').candidates).toContain('yunda');
+    // The 22-digit label barcode checks only its last 15 digits, so no FedEx rule reads it.
+    expect(detectCarrierMatch('9611020987654312345672').candidates).not.toContain('fedex');
+  });
+
   it('checks full Polish barcodes while preserving aliases without a check digit', () => {
     for (const number of ['00159007731234567899', '00059007730000000007']) {
       expect(isValidPocztaPolskaBarcode(number)).toBe(true);

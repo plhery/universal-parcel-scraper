@@ -13,7 +13,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "dpd-fr",
           "yunda"
         ]
@@ -69,7 +68,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "yunda"
         ]
       },
@@ -98,7 +96,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "yunda"
         ]
       },

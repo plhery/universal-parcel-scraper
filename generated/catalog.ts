@@ -754,7 +754,9 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^\\d{15}$",
-        "confidence": "low"
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
       }
     ]
   },

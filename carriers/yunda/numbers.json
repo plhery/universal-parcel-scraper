@@ -32,12 +32,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "dpd-fr",
           "yunda"
         ]
       },
-      "note": "Synthetic domestic waybill shape; its length is shared with FedEx and DPD France, so it stays ambiguous."
+      "note": "Synthetic domestic waybill shape; DPD France shares its length, so it stays ambiguous."
     }
   ]
 }
