@@ -546,6 +546,13 @@ export interface DPDTrackerOptions {
   trawl?: TrawlClient | null;
   recorder?: StepRecorder;
   userAgent?: string;
+  /** A further German tier, and the failures of the guest tier it may answer after. */
+  app?: DPDAppTier;
+}
+
+export interface DPDAppTier {
+  run(number: string, context: { signal: AbortSignal; timeoutMs: number }): Promise<CarrierResult>;
+  recovers(error: unknown): boolean;
 }
 
 export class DPDTracker {
@@ -558,6 +565,7 @@ export class DPDTracker {
   private readonly trawl?: TrawlClient | null;
   private readonly recorder?: StepRecorder;
   private readonly userAgent: string;
+  private readonly app?: DPDAppTier;
   #accessToken = '';
   #accessTokenExpiresAt = 0;
   #basicToken = '';
@@ -577,6 +585,7 @@ export class DPDTracker {
     this.trawl = options.trawl;
     this.recorder = options.recorder;
     this.userAgent = userAgentOf(options.userAgent);
+    this.app = options.app;
   }
 
   /** The browser service, resolved late so a malformed URL fails the page step, not construction. */
@@ -626,6 +635,10 @@ export class DPDTracker {
         id: 'page',
         recovers: pageRecovers,
         run: ({ previousError }: { previousError?: unknown }) => this.pageFetch(trackingNumber, previousError !== undefined, lookup),
+      }] : this.app ? [{
+        id: 'app',
+        recovers: (error: unknown) => !context.signal?.aborted && this.app!.recovers(error),
+        run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => this.app!.run(trackingNumber, { signal, timeoutMs: remainingMs }),
       }] : []),
     ]);
     result.tracking_url = this.country === 'DE'
@@ -680,7 +693,7 @@ export class DPDTracker {
     if (this.country === 'DE' && isRecord(payload.status)) {
       const country = known(payload.status.countryCode).toUpperCase();
       if (/^[A-Z]{2}$/.test(country) && country !== 'DE') {
-        throw new IndeterminateError('DPD Germany', 'DPD returned activity in another country');
+        throw new IndeterminateError('DPD Germany', 'DPD returned activity in another country', { reason: 'other_country' });
       }
     }
     if (this.country === 'DE') requireGuestActivity(payload, result);

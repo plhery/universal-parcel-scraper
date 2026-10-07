@@ -55,7 +55,10 @@ The official [consumer Android app](https://play.google.com/store/apps/details?i
 uses `https://mobile-app-bff.mondialrelay.app/`. Requests carry a shared app
 signature with a nonce and Unix timestamp. `GET /api/parcels-search` accepts
 `shipmentUid` and `postcode`; `GET /api/parcels-detail` accepts `shipmentUids`
-and `parcelType`. Both also require an account JWT.
+and `parcelType`, and returns history as `detail.steps[].events[]`. Both also
+require an account JWT, issued to one user by an InPost authorization-code
+sign-in with PKCE. The app's add-parcel screen sends a postcode only with an
+eight-digit number.
 
 `GET /api/parcel-detail-not-migrated?shipmentUid=…` accepts the app signature
 without an account JWT or postcode. The app uses it for non-exported sent

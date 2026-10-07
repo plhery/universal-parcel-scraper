@@ -33,6 +33,139 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-05",
       "note": "A retry, not a terminal state: the result status stays in_transit."
+    },
+    {
+      "wording": "Order information has been transmitted to DPD.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "wording": "Parcel handed to Pickup parcelshop by consignor.",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "wording": "In transit.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "wording": "At parcel delivery centre.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "wording": "Transfer to DPD Pickup station by DPD driver.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "wording": "Out for delivery.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "wording": "Unfortunately we have not been able to deliver your parcel.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only. Matches the guest API's UNSUCCESSFUL_DELIVERY_ATTEMPT at the same minute."
+    },
+    {
+      "wording": "We're sorry but your parcel couldn't be delivered as arranged.",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only. Mapped whole because the shared classifier reads it as a delivery."
+    },
+    {
+      "wording": "Delivered by driver to DPD Pickup parcelshop/ station.",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only. Mapped whole because the shared classifier reads it as a delivery."
+    },
+    {
+      "wording": "Picked up from DPD Pickup station by consignee.",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only. Mapped whole because the shared classifier reads it as an acceptance."
+    },
+    {
+      "wording": "Delivered.",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Seen in the German app's scan list, which carries wording only."
+    },
+    {
+      "code": "ACCEPTED",
+      "wording": "Paketinfo an DPD übergeben",
+      "language": "de",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "The German app's progress rail, one state for the whole parcel."
+    },
+    {
+      "code": "ON_THE_ROAD",
+      "wording": "Paket unterwegs",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "The German app's progress rail, one state for the whole parcel."
+    },
+    {
+      "code": "AT_DELIVERY_DEPOT",
+      "wording": "At parcel delivery centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "The German app's progress rail, one state for the whole parcel."
+    },
+    {
+      "code": "DELIVERED",
+      "wording": "Parcel delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "The German app's progress rail, one state for the whole parcel."
+    },
+    {
+      "code": "OUT_FOR_DELIVERY",
+      "wording": "In Zustellung",
+      "language": "de",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "The German app's progress rail, one state for the whole parcel. Seen as a state the parcel had not reached."
     }
   ]
 }

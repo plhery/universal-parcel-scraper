@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { DPDTracker } from '../dpd/adapter.js';
+import { DpdDeAppClient } from './app.js';
 
 const number = (process.env.DPD_DE_TRACKING_NUMBER ?? '').trim();
 
@@ -11,4 +12,16 @@ describe('DPD Germany live guest tracking', () => {
     expect(result.status).not.toBe('unknown');
     expect(result).not.toHaveProperty('receiver');
   }, 25_000);
+
+  it.runIf(Boolean(number))('returns the same parcel from the app service and reuses its session', async () => {
+    const app = new DpdDeAppClient();
+    const first = await app.track(number, { signal: AbortSignal.timeout(110_000), timeoutMs: 110_000 });
+    expect(first.events?.length).toBeGreaterThan(0);
+    expect(first.status).not.toBe('unknown');
+    expect(JSON.stringify(first)).not.toMatch(/receiver|recipient|street|phone/i);
+    const started = performance.now();
+    const again = await app.track(number, { signal: AbortSignal.timeout(15_000), timeoutMs: 15_000 });
+    expect(again.events).toEqual(first.events);
+    expect(performance.now() - started).toBeLessThan(15_000);
+  }, 130_000);
 });

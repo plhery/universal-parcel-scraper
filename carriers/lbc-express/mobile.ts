@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import { SaxesParser } from 'saxes';
 import { CarrierError, ChallengeError, IndeterminateError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 import { normalizeLbcNumber } from './parser.js';
 
 export const LBC_MOBILE_API = 'https://lbcapigateway.lbcapps.com/lbctrackingapi2/v2';
@@ -13,35 +13,7 @@ const MAX_BYTES = 1_000_000;
 // Shared guest-tracking application key, distributed with the maintainer's approval.
 const APPLICATION_KEY = '4dc2cebad70043c79346dc66d5a94fa8';
 
-interface XmlNode { name: string; uri: string; text: string; children: XmlNode[] }
-
 function invalidXml(): never { throw new SchemaError('lbc-express', 'LBC returned invalid tracking XML'); }
-
-function document(xml: string): XmlNode {
-  if (new TextEncoder().encode(xml).byteLength > MAX_BYTES) invalidXml();
-  const parser = new SaxesParser({ xmlns: true });
-  const stack: XmlNode[] = [];
-  let root: XmlNode | undefined;
-  let count = 0;
-  parser.on('error', invalidXml);
-  parser.on('doctype', invalidXml);
-  parser.on('opentag', tag => {
-    if (++count > 20_000 || stack.length > 24) invalidXml();
-    const node = { name: tag.local, uri: tag.uri, text: '', children: [] };
-    if (stack.length) stack.at(-1)!.children.push(node);
-    else if (root) invalidXml();
-    else root = node;
-    stack.push(node);
-  });
-  const text = (value: string) => { if (stack.length) stack.at(-1)!.text += value; };
-  parser.on('text', text);
-  parser.on('cdata', text);
-  parser.on('closetag', () => { stack.pop(); });
-  try { parser.write(xml).close(); }
-  catch { invalidXml(); }
-  if (!root || stack.length) invalidXml();
-  return root;
-}
 
 function children(node: XmlNode, name: string, uri = SERVICE): XmlNode[] {
   return node.children.filter(child => child.name === name && child.uri === uri);
@@ -84,7 +56,7 @@ function scanClock(day: string, time: string): string | null {
 
 export function parseLbcMobile(xml: string, raw: string): CarrierResult {
   const number = normalizeLbcNumber(raw);
-  const root = document(xml);
+  const root = xmlDocument(xml, MAX_BYTES) ?? invalidXml();
   if (root.name !== 'Envelope' || root.uri !== SOAP) invalidXml();
   const body = one(root, 'Body', SOAP);
   if (children(body, 'Fault', SOAP).length) throw new IndeterminateError('lbc-express', 'LBC returned a tracking service fault');

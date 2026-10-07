@@ -20,6 +20,7 @@
     "mode": "automatic",
     "adapter": "evri-uk",
     "steps": [
+      "direct",
       "browser"
     ]
   },

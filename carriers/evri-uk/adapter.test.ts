@@ -3,6 +3,7 @@ import { runInNewContext } from 'node:vm';
 import { describe, expect, it } from 'vitest';
 import { EvriUkTracker } from './adapter.js';
 import { requestEvriUkInPage } from './browser.js';
+import { EVRI_UK_MOBILE_API, readEvriUkMobile } from './mobile.js';
 import { evriUkTrackingUrl, normalizeEvriUkNumber, parseEvriUk } from './parser.js';
 
 // All identifiers, clocks, credentials and private-field markers here are invented.
@@ -95,8 +96,124 @@ describe('Evri UK anonymous history', () => {
     expect(normalizeEvriUkNumber('h000 0000 0000 0001')).toBe(NUMBER);
     expect(evriUkTrackingUrl(NUMBER)).toContain(`/parcel/${NUMBER}/details`);
     expect(() => normalizeEvriUkNumber('12345678')).toThrow('16-character');
-    expect(() => new EvriUkTracker().fetch(NUMBER)).toThrow('TRACKING_CHROMIUM_PATH');
+    expect(() => new EvriUkTracker({ key: '' }).fetch(NUMBER)).toThrow('TRACKING_CHROMIUM_PATH');
     expect(() => new EvriUkTracker().fetch('wrong')).toThrow('16-character');
+  });
+});
+
+describe('Evri UK guest API', () => {
+  const reference = (identifiers: unknown[] = [{ urn: URN, redirectUrl: null }]) => Response.json({ parcelIdentifiers: identifiers });
+  const rejected = (status: number) => Response.json({ errors: [{ status, errorType: 'SyntheticException', message: 'PRIVATE_MARKER' }] }, { status });
+  const service = (replies: Response[]) => {
+    const calls: Array<{ url: string; headers: Headers; signal?: AbortSignal | null }> = [];
+    const fetcher = ((url: string | URL, init?: RequestInit) => {
+      calls.push({ url: String(url), headers: new Headers(init?.headers), signal: init?.signal });
+      const response = replies.shift();
+      return response ? Promise.resolve(response) : Promise.reject(new Error('Unexpected request'));
+    }) as typeof fetch;
+    return { calls, fetcher };
+  };
+  const read = (fetcher: typeof fetch, key: string | null | undefined = 'SYNTHETIC_GUEST_KEY') =>
+    readEvriUkMobile(NUMBER, { key, fetcher, userAgent: 'Host/1.0', signal: new AbortController().signal, timeoutMs: 1_000 });
+
+  it('resolves the barcode to its handle and reads the bound history over plain HTTP', async () => {
+    const { calls, fetcher } = service([reference(), Response.json(history())]);
+    const result = await read(fetcher);
+    expect(result).toMatchObject({ status: 'delivered', last_update: '2026-01-03T19:00:00Z' });
+    expect(result.events).toHaveLength(6);
+    expect(calls.map(call => call.url)).toEqual([`${EVRI_UK_MOBILE_API}/parcels/reference/${NUMBER}`,
+      `${EVRI_UK_MOBILE_API}/parcels/?uniqueIds=${encodeURIComponent(URN)}`]);
+    expect(calls.every(call => call.headers.get('apiKey') === 'SYNTHETIC_GUEST_KEY' && call.headers.get('user-agent') === 'Host/1.0'
+      && call.signal instanceof AbortSignal)).toBe(true);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|SYNTHETIC/);
+  });
+
+  it.each([
+    ['no parcel', () => reference([])],
+    ['several parcels', () => reference([{ urn: URN, redirectUrl: null }, { urn: URN, redirectUrl: null }])],
+    ['an international redirect', () => reference([{ urn: URN, redirectUrl: 'https://private.example/opaque' }])],
+    ['a rejected reference', () => rejected(400)],
+    ['an unknown reference', () => rejected(404)],
+  ])('leaves %s inconclusive without asking for history', async (_, reply) => {
+    const { calls, fetcher } = service([reply()]);
+    await expect(read(fetcher)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'parcel_unconfirmed' });
+    expect(calls).toHaveLength(1);
+  });
+
+  it.each(['another barcode', 'another shape', 'a missing handle'])('rejects %s before asking for history', async kind => {
+    const urn = kind === 'another barcode' ? URN.replace(NUMBER, 'H000000000000002') : kind === 'another shape' ? `${URN}&x=1` : undefined;
+    const { calls, fetcher } = service([reference([{ urn, redirectUrl: null }])]);
+    await expect(read(fetcher)).rejects.toMatchObject({ kind: 'schema' });
+    expect(calls).toHaveLength(1);
+  });
+
+  it('keeps empty and failed history inconclusive and a foreign history a schema error', async () => {
+    const empty = history(); empty.results = [];
+    await expect(read(service([reference(), Response.json(empty)]).fetcher)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'parcel_unconfirmed' });
+    await expect(read(service([reference(), rejected(400)]).fetcher)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'parcel_unconfirmed' });
+    const foreign = history(); foreign.results[0].parcelIdentifiers[0].value = 'H000000000000002';
+    await expect(read(service([reference(), Response.json(foreign)]).fetcher)).rejects.toMatchObject({ kind: 'schema' });
+  });
+
+  it.each([
+    [401, 'challenge'], [403, 'challenge'], [404, 'transport'], [410, 'transport'], [429, 'rate_limited'],
+    [500, 'indeterminate'], [503, 'maintenance'],
+  ])('keeps a bare HTTP %s a %s failure, never a missing parcel', async (status, kind) => {
+    const { fetcher } = service([new Response('<html>PRIVATE_MARKER</html>', { status, headers: { 'retry-after': '120' } })]);
+    const failure = await read(fetcher).catch((error: unknown) => error);
+    expect(failure).toMatchObject({ kind, ...(status === 429 ? { retryAfterMs: 120_000 } : {}) });
+    expect((failure as { reason?: string }).reason).toBeUndefined();
+    expect(JSON.stringify(failure) + String((failure as Error).message)).not.toMatch(/PRIVATE_MARKER|SYNTHETIC_GUEST_KEY/);
+    expect(failure).not.toHaveProperty('request');
+  });
+
+  it('reports malformed replies and transport failures without their contents', async () => {
+    await expect(read(service([new Response('not JSON')]).fetcher)).rejects.toMatchObject({ kind: 'schema' });
+    await expect(read(service([Response.json({ parcelIdentifiers: 'PRIVATE_MARKER' })]).fetcher)).rejects.toMatchObject({ kind: 'schema' });
+    const failure = await read(service([]).fetcher).catch((error: unknown) => error);
+    expect(failure).toMatchObject({ kind: 'transport' });
+    expect(failure).not.toHaveProperty('cause');
+  });
+
+  it('needs a usable key and sends nothing without one', async () => {
+    for (const key of [null, '', ' ', 'short', 'has space in it']) {
+      const { calls, fetcher } = service([]);
+      await expect(read(fetcher, key)).rejects.toMatchObject({ kind: 'challenge' });
+      expect(calls).toHaveLength(0);
+    }
+  });
+});
+
+describe('Evri UK tiers', () => {
+  const reference = () => Response.json({ parcelIdentifiers: [{ urn: URN, redirectUrl: null }] });
+  const steps = () => {
+    const seen: Array<{ step: string; outcome: string }> = [];
+    return { seen, recorder: { step: (event: { step: string; outcome: string }) => { seen.push({ step: event.step, outcome: event.outcome }); }, lookup: () => {} } };
+  };
+
+  it('answers from the guest API without a browser', async () => {
+    const replies = [reference(), Response.json(history())];
+    const { seen, recorder } = steps();
+    const result = await new EvriUkTracker({ key: 'SYNTHETIC_GUEST_KEY', recorder, fetcher: (() => Promise.resolve(replies.shift()!)) }).fetch(NUMBER);
+    expect(result.events).toHaveLength(6);
+    expect(seen).toEqual([{ step: 'direct', outcome: 'ok' }]);
+  });
+
+  it('does not open the page for a parcel the history service did not confirm', async () => {
+    const { seen, recorder } = steps();
+    const tracker = new EvriUkTracker({ key: 'SYNTHETIC_GUEST_KEY', recorder, executablePath: '/nonexistent/chromium',
+      fetcher: (() => Promise.resolve(Response.json({ parcelIdentifiers: [] }))) });
+    await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'parcel_unconfirmed' });
+    expect(seen).toEqual([{ step: 'direct', outcome: 'indeterminate' }]);
+  });
+
+  it('lets the page recover a refused key', async () => {
+    const { seen, recorder } = steps();
+    const tracker = new EvriUkTracker({ key: 'SYNTHETIC_GUEST_KEY', recorder, executablePath: '/nonexistent/chromium',
+      fetcher: (() => Promise.resolve(new Response('', { status: 403 }))) });
+    await expect(tracker.fetch(NUMBER, { budgetMs: 5_000 })).rejects.toBeDefined();
+    expect(seen.map(event => event.step)).toEqual(['direct', 'browser']);
+    expect(seen[0]).toEqual({ step: 'direct', outcome: 'challenge' });
   });
 });
 

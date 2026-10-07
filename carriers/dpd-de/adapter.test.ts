@@ -1,12 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { adapter } from './adapter.js';
+import type { TrackingContext } from '../../core/adapter/index.js';
+import { DPDTracker } from '../dpd/adapter.js';
 
 const NUMBER = '01000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8')) as Record<string, unknown>;
+/** The guest tier alone; the app tier and their order are covered in app.test.ts. */
 function tracking(fetcher: typeof fetch) {
-  return adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+  const tracker = new DPDTracker({ country: 'DE', fetcher });
+  return { track: (input: { number: string; postcode?: string }, context?: TrackingContext) => tracker.fetch(input.number, input.postcode ?? '', context) };
 }
 function guest(reply: Response) {
   return vi.fn<typeof fetch>()
@@ -27,7 +29,6 @@ describe('DPD Germany guest tracking', () => {
     expect(url.searchParams.get('continueWithoutVerification')).toBe('true');
     expect(result).not.toHaveProperty('receiver');
     expect(result.events?.[0]?.time).toBe('2026-07-16T10:12:00+02:00');
-    expect(tracking(fetcher).steps).toEqual(['direct']);
   });
 
   it('rejects another country rather than letting a group-wide match establish Germany', async () => {

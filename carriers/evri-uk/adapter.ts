@@ -1,21 +1,39 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { carrierErrorKind, ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
-import { runSteps } from '../../core/runner/index.js';
+import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { requestEvriUkInPage } from './browser.js';
+import { EVRI_UK_UNCONFIRMED, readEvriUkMobile } from './mobile.js';
 import { normalizeEvriUkNumber, parseEvriUk } from './parser.js';
 
+/** How long the guest API may take while the page can still answer. */
+const DIRECT_TIMEOUT_MS = 10_000;
+
 export class EvriUkTracker {
-  constructor(private readonly options: { executablePath?: string | null; recorder?: StepRecorder } = {}) {}
+  constructor(private readonly options: {
+    executablePath?: string | null; recorder?: StepRecorder; fetcher?: typeof fetch; userAgent?: string;
+    /** Guest API key. Omit for the included key; null or blank leaves the page as the only tier. */
+    key?: string | null;
+  } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeEvriUkNumber(raw);
     const budgetMs = context.budgetMs ?? 45_000;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 60_000) throw new TypeError('Evri UK budget must be between 1 and 60000 ms');
-    if (!this.options.executablePath) throw new ChallengeError('Evri UK', 'Evri UK requires TRACKING_CHROMIUM_PATH');
+    const direct = this.options.key === undefined || Boolean(this.options.key?.trim());
+    const browser = Boolean(this.options.executablePath);
+    if (!direct && !browser) throw new ChallengeError('Evri UK', 'Evri UK requires TRACKING_CHROMIUM_PATH');
     return runSteps({ carrier: 'evri-uk', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER }, [{
-      id: 'browser', run: ({ signal, remainingMs: remaining }) => withLocalBrowser({ provider: 'Evri UK',
+      id: 'direct', enabled: direct, run: ({ signal, remainingMs }) => readEvriUkMobile(number, {
+        key: this.options.key, fetcher: this.options.fetcher, userAgent: this.options.userAgent, signal,
+        timeoutMs: browser ? Math.min(remainingMs, DIRECT_TIMEOUT_MS) : remainingMs,
+      }),
+    }, {
+      id: 'browser', enabled: browser,
+      // The page reads the same history service, so its answer about the parcel would not differ.
+      recovers: error => recoverableByDefault(error) && !(error instanceof CarrierError && error.reason === EVRI_UK_UNCONFIRMED),
+      run: ({ signal, remainingMs: remaining }) => withLocalBrowser({ provider: 'Evri UK',
         executablePath: this.options.executablePath!, signal, timeoutMs: Math.max(1, Math.floor(remaining)),
         args: ['--disable-blink-features=AutomationControlled'],
       }, async ({ browser, signal: session, remainingMs }) => {
@@ -65,6 +83,9 @@ export class EvriUkTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new EvriUkTracker({ executablePath: environment.browserExecutablePath, recorder: environment.recorder });
-  return { id: 'evri-uk', recordsSteps: true, steps: ['browser'], track: (input, context) => tracker.fetch(input.number, context) };
+  const tracker = new EvriUkTracker({
+    executablePath: environment.browserExecutablePath, recorder: environment.recorder, fetcher: environment.fetcher,
+    userAgent: environment.userAgent, key: environment.env.EVRI_UK_TRACKING_KEY,
+  });
+  return { id: 'evri-uk', recordsSteps: true, steps: ['direct', 'browser'], track: (input, context) => tracker.fetch(input.number, context) };
 };
