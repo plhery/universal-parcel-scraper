@@ -25,12 +25,13 @@ try {
     import catalog from 'universal-parcel-scraper/data/catalog.json' with { type: 'json' };
     import stages from 'universal-parcel-scraper/data/stages.json' with { type: 'json' };
     import golden from 'universal-parcel-scraper/data/detection-golden.json' with { type: 'json' };
+    import checksumVectors from 'universal-parcel-scraper/data/checksum-vectors.json' with { type: 'json' };
     import schema from 'universal-parcel-scraper/data/carrier.schema.json' with { type: 'json' };
     const match = parseTrackingInput('1Z999AA10123456784');
     assert.equal(match.carrier, 'ups');
     assert.equal(createTracker({ providers: [] }).detect(match.trackingNumber).carrier, 'ups');
     assert.deepEqual(catalog, CARRIER_CATALOG);
-    assert(stages.includes('delivered') && golden.length > 0 && schema.type === 'object');
+    assert(stages.includes('delivered') && golden.length > 0 && checksumVectors.vectors.ups.length > 0 && schema.type === 'object');
     assert.equal(locatePlace('Paris, FR').country, 'FR');
     assert.equal(typeof carrierTrackingHintKey('ups'), 'string');
     assert(!('carrierTrackingHintKey' in tracking));

@@ -12,55 +12,10 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionRule } from '../catalog/types.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
-import { isValidColissimoParcelNumber } from './colissimo.js';
-import { isValidCorreosSpainCheckLetter } from './correosSpain.js';
-import { isValidDpdParcelNumber } from './dpd.js';
+import { CHECKSUMS } from './checksums.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
-import { isValidEvriParcelNumber } from './evri.js';
-import { isValidGlsParcelNumber } from './gls.js';
-import { isValidHermesParcelNumber } from './hermes.js';
-import { isValidMondialRelayBarcode } from './mondialRelay.js';
 import { normalizeTrackingNumber } from './normalize.js';
-import {
-  hasGs1CheckDigit,
-  hasLuhnCheckDigit,
-  hasMod7CheckDigit,
-  isValidDhlExpressWaybill,
-  isValidFedExTrackingNumber,
-  isValidPocztaPolskaBarcode,
-  isValidSscc,
-  isValidTntConsignmentNumber,
-  isValidUkrposhtaBarcode,
-} from './numericChecksums.js';
-import { isValidS10TrackingNumber } from './s10.js';
-import { isValidSfExpressWaybill } from './sfExpress.js';
-import { isValidOnTracTrackingNumber, isValidUpsTrackingNumber } from './ups.js';
-import { isValidUspsPackageBarcode } from './usps.js';
 import type { CarrierDetection } from './types.js';
-
-const CHECKSUMS: Record<NonNullable<DetectionRule['checksum']>, (trackingNumber: string) => boolean> = {
-  'mondial-relay': isValidMondialRelayBarcode,
-  s10: isValidS10TrackingNumber,
-  hermes: isValidHermesParcelNumber,
-  gls: isValidGlsParcelNumber,
-  'dhl-express': isValidDhlExpressWaybill,
-  tnt: isValidTntConsignmentNumber,
-  'poczta-polska': isValidPocztaPolskaBarcode,
-  'correos-spain': isValidCorreosSpainCheckLetter,
-  dpd: isValidDpdParcelNumber,
-  usps: isValidUspsPackageBarcode,
-  sscc: isValidSscc,
-  ups: isValidUpsTrackingNumber,
-  colissimo: isValidColissimoParcelNumber,
-  ukrposhta: isValidUkrposhtaBarcode,
-  evri: isValidEvriParcelNumber,
-  mod7: hasMod7CheckDigit,
-  gs1: hasGs1CheckDigit,
-  ontrac: isValidOnTracTrackingNumber,
-  luhn: hasLuhnCheckDigit,
-  fedex: isValidFedExTrackingNumber,
-  'sf-express': isValidSfExpressWaybill,
-};
 
 function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   return rule.checksum === undefined || CHECKSUMS[rule.checksum](trackingNumber);
