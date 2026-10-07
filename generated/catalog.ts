@@ -830,10 +830,9 @@ export const CARRIER_CATALOG = {
     ]
   },
   "dpd": {
-    "displayName": "DPD",
+    "displayName": "DPD Switzerland",
     "color": "#dc0032",
     "aliases": [
-      "DPD Switzerland",
       "DPD (Schweiz) AG",
       "myDPD"
     ],

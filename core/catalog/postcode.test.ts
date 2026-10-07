@@ -20,7 +20,7 @@ describe('DPD postcode', () => {
     expect(normalizeCarrierInputs('dpd', '06080000000001', '', typed)).toEqual({ trackingUrl: null, postcode: stored });
   });
   it.each(['12', 'ABCDE', '1'.repeat(13), '75001/2', '75 - 001'])('rejects what no country writes: %s', (postcode) => {
-    expect(() => normalizeCarrierInputs('dpd', '06080000000001', '', postcode)).toThrow('DPD requires a valid delivery postcode');
+    expect(() => normalizeCarrierInputs('dpd', '06080000000001', '', postcode)).toThrow('DPD Switzerland requires a valid delivery postcode');
   });
   it('asks the form for the same shape', () => {
     const [requirement] = carrierRequirements('dpd', '06080000000001');

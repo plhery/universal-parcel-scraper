@@ -38,7 +38,7 @@ about current coverage.
 | [Royal Mail](../carriers/royal-mail/README.md) | Yes (local Chromium) | ✓ 8 | No history | ✓ 1 | No history | ✓ 4 | No history |
 | [Swiss Post](../carriers/swiss-post/README.md) | Yes | ✓ 8 | ✓ 8 | ✓ 8 | ✓ 8 | No history | N/A |
 | [La Poste / Colissimo](../carriers/la-poste/README.md) | Yes | ✓ 15 | ✓ 11, partial | ✓ 16 | ✓ 14 | ✓ 26 | No history |
-| [DPD](../carriers/dpd/README.md) | Yes (Switzerland; optional postcode) | ✓ 4 | ✓ 1, partial | ✓ 4 | ✓ 4 | ✓ 4 | N/A |
+| [DPD Switzerland](../carriers/dpd/README.md) | Yes (Switzerland; optional postcode) | ✓ 4 | ✓ 1, partial | ✓ 4 | ✓ 4 | ✓ 4 | N/A |
 | [DHL eCommerce](../carriers/dhl-ecommerce/README.md) | Yes | ✓ 16 | ✓ 11, partial | ✓ 36 | No history | ✓ 34 | N/A |
 | [AliExpress / Cainiao](../carriers/aliexpress/README.md) | Yes | ✓ 17 | No history | ✓ 17 | ✓ 17 | ✓ 17 | N/A |
 | [China Post](../carriers/china-post/README.md) | No adapter | Blocked | ✓ 1, partial | ✓ 1, partial | ✓ 39 | ✓ 17 | ✓ 1 |
@@ -161,7 +161,7 @@ With Postal Ninja enabled, carriers without their own order use ParcelsApp → S
 | Royal Mail | ParcelsApp → Postal Ninja → Ship24 → 17TRACK |
 | Swiss Post | ParcelsApp → Ship24 → 17TRACK → Postal Ninja |
 | La Poste / Colissimo | ParcelsApp → Postal Ninja → 17TRACK → Ship24 |
-| DPD | ParcelsApp → Postal Ninja → 17TRACK → Ship24 |
+| DPD Switzerland | ParcelsApp → Postal Ninja → 17TRACK → Ship24 |
 | DHL eCommerce | ParcelsApp → Postal Ninja → Ship24 → 17TRACK |
 | AliExpress / Cainiao | ParcelsApp → Postal Ninja → 17TRACK → Ship24 |
 | China Post | Postal Ninja → 17TRACK → ParcelsApp → Ship24 |
