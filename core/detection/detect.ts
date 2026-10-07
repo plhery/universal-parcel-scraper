@@ -4,40 +4,53 @@
  * What it is: matches a tracking number against every carrier's catalog
  * detection rules and their checksums. Exactly one high-confidence match
  * selects a carrier; zero or several keep the number as a low-confidence
- * suggestion and return the candidates.
+ * suggestion and return the candidates. It can also name the rules whose
+ * failed checksum kept their carrier out of those candidates.
  * What it is not: no network lookup, no provider I/O, no carrier ranking by
  * popularity — only the rules declared in the catalog decide. A `preferred`
  * rule only moves its carrier to the front of the suggestions.
  */
-import type { CarrierId } from '../../generated/catalog.js';
+import { DETECTION_RULE_IDS, type CarrierId } from '../../generated/catalog.js';
 import type { DetectionRule } from '../catalog/types.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { CHECKSUMS } from './checksums.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
 import { normalizeTrackingNumber } from './normalize.js';
-import type { CarrierDetection } from './types.js';
+import type { CarrierDetection, ChecksumRejection } from './types.js';
 
 function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   return rule.checksum === undefined || CHECKSUMS[rule.checksum](trackingNumber);
 }
 
-/** Return only a high-confidence carrier; preserve ambiguous candidates for the UI. */
-export function detectCarrierMatch(raw: string): CarrierDetection {
+interface RejectedRule { carrier: CarrierId; id: string; rule: DetectionRule }
+
+/**
+ * A carrier's first rule whose pattern, rawPattern and checksum all pass: it
+ * decides the carrier's confidence and preference. The rules before it that
+ * fit the number but failed their checksum are added to `rejected`.
+ */
+function decisiveRule(carrier: CarrierId, trackingNumber: string, printed: string, rejected: RejectedRule[]): DetectionRule | undefined {
+  for (const [index, rule] of CARRIER_DEFINITIONS[carrier].detectionRules.entries()) {
+    if (!new RegExp(rule.pattern).test(trackingNumber) || (rule.rawPattern && !new RegExp(rule.rawPattern).test(printed))) continue;
+    if (checksumPasses(rule, trackingNumber)) return rule;
+    rejected.push({ carrier, id: DETECTION_RULE_IDS[carrier][index]!, rule });
+  }
+  return undefined;
+}
+
+function detect(raw: string): { detection: CarrierDetection; rejections: ChecksumRejection[] } {
   const printed = raw.trim().toUpperCase();
   const trackingNumber = normalizeTrackingNumber(raw);
   if (!trackingNumber) {
-    return { carrier: 'unknown', confidence: 'none', candidates: [], preferred: [] };
+    return { detection: { carrier: 'unknown', confidence: 'none', candidates: [], preferred: [] }, rejections: [] };
   }
 
   const matches: { carrier: CarrierId; confidence: 'high' | 'low'; preferred: boolean }[] = [];
-  for (const [carrier, definition] of Object.entries(CARRIER_DEFINITIONS)) {
+  const rejected: RejectedRule[] = [];
+  for (const carrier of Object.keys(CARRIER_DEFINITIONS) as CarrierId[]) {
     if (carrier === 'ctt-express' && !isCttExpressTrackingNumber(trackingNumber)) continue;
-    // A carrier's first matching rule decides its confidence and preference.
-    const rule = definition.detectionRules.find((candidate) =>
-      new RegExp(candidate.pattern).test(trackingNumber)
-      && (!candidate.rawPattern || new RegExp(candidate.rawPattern).test(printed))
-      && checksumPasses(candidate, trackingNumber));
-    if (rule) matches.push({ carrier: carrier as CarrierId, confidence: rule.confidence, preferred: rule.preferred === true });
+    const rule = decisiveRule(carrier, trackingNumber, printed, rejected);
+    if (rule) matches.push({ carrier, confidence: rule.confidence, preferred: rule.preferred === true });
   }
 
   const highConfidence = matches.filter((match) => match.confidence === 'high');
@@ -45,15 +58,33 @@ export function detectCarrierMatch(raw: string): CarrierDetection {
   // Number evidence first; catalog order otherwise.
   const preferred = ranked.filter((match) => match.preferred).map((match) => match.carrier);
   const candidates = [...preferred, ...ranked.filter((match) => !match.preferred).map((match) => match.carrier)];
+  // A rule counts when passing its checksum would have listed its carrier: a
+  // low-confidence rule would still be hidden by a high-confidence match.
+  const rejections = rejected
+    .filter(({ carrier, rule }) => !candidates.includes(carrier) && (rule.confidence === 'high' || highConfidence.length === 0))
+    .map(({ carrier, id, rule }) => ({ carrier, rule: id, checksum: rule.checksum! }));
   if (highConfidence.length === 1) {
-    return { carrier: highConfidence[0]!.carrier, confidence: 'high', candidates, preferred };
+    return { detection: { carrier: highConfidence[0]!.carrier, confidence: 'high', candidates, preferred }, rejections };
   }
   return {
-    carrier: 'unknown',
-    confidence: matches.length > 0 ? 'low' : 'none',
-    candidates,
-    preferred,
+    detection: { carrier: 'unknown', confidence: matches.length > 0 ? 'low' : 'none', candidates, preferred },
+    rejections,
   };
+}
+
+/** Return only a high-confidence carrier; preserve ambiguous candidates for the UI. */
+export function detectCarrierMatch(raw: string): CarrierDetection {
+  return detect(raw).detection;
+}
+
+/**
+ * The detection rules whose pattern, and rawPattern on the printed input, fit
+ * the number but whose checksum failed, when that kept their carrier out of
+ * `detectCarrierMatch`'s candidates. A caller that later confirms one of these
+ * carriers for the number has found a check that may be wrong for real numbers.
+ */
+export function checksumRejections(raw: string): ChecksumRejection[] {
+  return detect(raw).rejections;
 }
 
 /** Guess only when the tracking-number shape identifies one carrier confidently. */

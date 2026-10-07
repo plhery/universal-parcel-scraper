@@ -9,6 +9,7 @@
  */
 export type {
   CarrierDetection,
+  ChecksumRejection,
   DetectionConfidence,
   TrackingInputMatch,
 } from './types.js';
@@ -20,7 +21,7 @@ export {
 } from './candidates.js';
 export { isValidCorreosSpainCheckLetter } from './correosSpain.js';
 export { isValidDpdParcelNumber } from './dpd.js';
-export { detectCarrier, detectCarrierMatch } from './detect.js';
+export { checksumRejections, detectCarrier, detectCarrierMatch } from './detect.js';
 export { isValidGlsParcelNumber } from './gls.js';
 export { isValidHermesParcelNumber } from './hermes.js';
 export { isValidMondialRelayBarcode } from './mondialRelay.js';

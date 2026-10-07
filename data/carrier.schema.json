@@ -400,7 +400,7 @@
       ],
       "properties": {
         "id": {
-          "description": "Stable rule id, unique across the catalog; the sweep and the collision file refer to it.",
+          "description": "Stable rule id, unique across the catalog; the sweep, the collision file and checksumRejections refer to it.",
           "type": "string",
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
         },

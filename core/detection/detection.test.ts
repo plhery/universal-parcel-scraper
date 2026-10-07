@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { DETECTION_RULE_IDS } from '../../generated/catalog.js';
+import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { recognitionAskedCarriers } from '../catalog/recognition.js';
 import {
+  checksumRejections,
   detectCarrier,
   detectCarrierMatch,
   formatTrackingNumber,
+  isValidDpdParcelNumber,
   isValidGlsParcelNumber,
   isValidHermesParcelNumber,
   isValidMondialRelayBarcode,
@@ -191,6 +195,49 @@ describe('the detection engine', () => {
     for (const host of ['apv', 'tt']) {
       expect(parseTrackingInput(`https://${host}.swisspost-cargo.com/public/trackandtrace/AB-12345678`))
         .toMatchObject({ trackingNumber: 'AB-12345678', carrier: 'swiss-post-cargo', confidence: 'high', source: 'link' });
+    }
+  });
+});
+
+describe('checksum rejections', () => {
+  it('names the rule whose failed checksum kept its carrier out of the suggestions', () => {
+    expect(checksumRejections('1234567890')).toEqual([{ carrier: 'dhl-express', rule: 'dhl-express-waybill', checksum: 'dhl-express' }]);
+    expect(checksumRejections('1 234 567-890')).toEqual(checksumRejections('1234567890'));
+    expect(checksumRejections('1234567891')).toEqual([]);
+    expect(checksumRejections('RA123456789CH')).toContainEqual({ carrier: 'swiss-post', rule: 'swiss-post-1', checksum: 's10' });
+    expect(checksumRejections('RA123456785CH')).toEqual([]);
+    expect(checksumRejections('')).toEqual([]);
+  });
+
+  it('judges each number on its own check digit', () => {
+    // The same 12 digits fail Yamato's mod 7 with one last digit and FedEx's check with the next.
+    expect(checksumRejections('123456789012').map(({ rule }) => rule)).toContain('yamato-1');
+    expect(checksumRejections('123456789012').map(({ carrier }) => carrier)).not.toContain('fedex');
+    expect(checksumRejections('123456789013').map(({ rule }) => rule)).toContain('fedex-1');
+    expect(checksumRejections('123456789013').map(({ carrier }) => carrier)).not.toContain('yamato');
+    for (const number of ['1234567890', '123456789012', '123456789013', '123456789012345']) {
+      const { candidates } = detectCarrierMatch(number);
+      expect(checksumRejections(number).filter(({ carrier }) => candidates.includes(carrier))).toEqual([]);
+    }
+  });
+
+  it('leaves out a carrier that another of its rules still suggests', () => {
+    // A failed UPS check keeps UPS among the suggestions through its shape-only rule.
+    expect(detectCarrierMatch('1Z999AA10123456785').candidates).toEqual(['ups']);
+    expect(checksumRejections('1Z999AA10123456785')).toEqual([]);
+  });
+
+  it('leaves out a low-confidence rule that a high-confidence match would hide even if it passed', () => {
+    expect(checksumRejections('123456789012345')).toContainEqual({ carrier: 'dpd', rule: 'dpd-3', checksum: 'dpd' });
+    // DPD France's 250 range selects DPD France, which hides DPD's suggestion whatever its check says.
+    expect(isValidDpdParcelNumber('250123456789010')).toBe(false);
+    expect(detectCarrierMatch('250123456789010')).toMatchObject({ carrier: 'dpd-fr', confidence: 'high' });
+    expect(checksumRejections('250123456789010')).toEqual([]);
+  });
+
+  it('has one id for each catalog rule', () => {
+    for (const [carrier, definition] of Object.entries(CARRIER_DEFINITIONS)) {
+      expect(DETECTION_RULE_IDS[carrier as keyof typeof DETECTION_RULE_IDS]).toHaveLength(definition.detectionRules.length);
     }
   });
 });

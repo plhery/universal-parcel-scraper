@@ -7,6 +7,7 @@
  * declarations are erased at build time and safe to import from anywhere.
  */
 import type { CarrierId } from '../../generated/catalog.js';
+import type { DetectionRule } from '../catalog/types.js';
 
 export type DetectionConfidence = 'high' | 'low' | 'none';
 
@@ -22,4 +23,12 @@ export interface TrackingInputMatch extends CarrierDetection {
   trackingNumber: string;
   trackingUrl?: string;
   source: 'number' | 'link' | 'text' | 'none';
+}
+
+/** A detection rule whose checksum failed for a number its pattern fits. */
+export interface ChecksumRejection {
+  carrier: CarrierId;
+  /** The rule's stable id in the carrier's `carrier.json`. */
+  rule: string;
+  checksum: NonNullable<DetectionRule['checksum']>;
 }

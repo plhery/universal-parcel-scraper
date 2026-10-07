@@ -139,6 +139,12 @@ These signals do not add candidates, confirm ownership or change how answers are
 aggregate analysis. Keep direct-confirmed live inputs outside Git; repeated observations
 of one number do not establish independent evidence.
 
+Some checksums are inferred from public samples. `checksumRejections` names, by their
+`carrier.json` ids, the rules whose pattern fit a number but whose checksum failed when
+that kept their carrier out of the suggestions. A consumer that later confirms one of those
+carriers for the number can count the carrier and rule, without the number, to find a
+check that real numbers fail.
+
 After building, `node scripts/analyze-recognition.mjs --input <private.jsonl>
 --output <private-priorities.json>` reads rows containing `number`, `carrier` and
 `confirmation: "direct"`. It discards conflicting labels, reports independent holdout
