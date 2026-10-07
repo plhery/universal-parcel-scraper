@@ -37,6 +37,21 @@
         ]
       },
       "note": "Invented SSCC behind the 00 identifier, with a valid GS1 check digit, in the form eos tracks freight barcodes; not a known shipment."
+    },
+    {
+      "number": "PL-12345678",
+      "role": "order_reference",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo"
+        ]
+      },
+      "note": "Invented customer reference in the printed PL- and eight-digit form eos answers as a reference; not a known shipment."
     }
   ]
 }

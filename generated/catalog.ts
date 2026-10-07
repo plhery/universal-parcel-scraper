@@ -74,6 +74,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^00\\d{18}$",
         "confidence": "low",
         "checksum": "sscc"
+      },
+      {
+        "pattern": "^PL\\d{8}$",
+        "confidence": "low"
       }
     ]
   },

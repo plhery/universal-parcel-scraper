@@ -5,8 +5,10 @@ tracks freight barcodes and customer references, not parcels (those go to
 [swiss-post](../swiss-post/README.md)). Freight barcodes are often the shipper's
 SSCC behind the `00` identifier. A valid one names its shipper rather than a
 carrier, so detection only suggests Swiss Post Cargo and carrier recognition
-asks eos. Other identifiers are too generic to detect and arrive by manual
-carrier choice or a tracking link from either tracker host, `tt.` or `apv.`.
+asks eos. Customer references printed as `PL-` and eight digits are suggested
+and confirmed the same way. Other identifiers are too generic to detect and
+arrive by manual carrier choice or a tracking link from either tracker host,
+`tt.` or `apv.`.
 
 ## How it works
 

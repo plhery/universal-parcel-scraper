@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { recognitionAskedCarriers } from '../catalog/recognition.js';
 import {
   detectCarrier,
   detectCarrierMatch,
@@ -174,6 +175,16 @@ describe('the detection engine', () => {
       .toMatchObject({ trackingNumber: '12345678-001', carrier: 'postlogistics', source: 'link' });
     expect(formatTrackingNumber('12345678001', 'postlogistics')).toBe('12345678-001');
     expect(formatTrackingNumber('12345678001')).toBe('12345678001');
+  });
+
+  it('suggests Swiss Post Cargo for a PL reference, printed or compact, and asks it to confirm', () => {
+    for (const number of ['PL-12345678', 'pl12345678']) {
+      expect(parseTrackingInput(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['swiss-post-cargo'] });
+      expect(recognitionAskedCarriers(number)).toEqual(['swiss-post-cargo']);
+    }
+    for (const number of ['PL-1234567', 'PL-123456789', 'PX-12345678']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('swiss-post-cargo');
+    }
   });
 
   it('reads Swiss Post Cargo links from both tracker hosts, keeping a reference as printed', () => {

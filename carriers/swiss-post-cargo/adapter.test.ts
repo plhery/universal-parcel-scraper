@@ -212,6 +212,18 @@ describe('Swiss Post Cargo recognition', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
+  it('knows a compact PL reference under its printed spelling', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ Data: null }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify(fixture('shared-reference')), { status: 200 }));
+    await expect(new SwissPostCargoTracker({ fetcher, now: () => Date.parse('2026-09-01T12:00:00Z') }).recognizes('PL12345678'))
+      .resolves.toMatchObject({ known: true });
+    expect(fetcher.mock.calls.map(([, init]) => init?.body)).toEqual([
+      JSON.stringify({ Identifier: 'PL12345678' }),
+      JSON.stringify({ Identifier: 'PL-12345678' }),
+    ]);
+  });
+
   it('reports an unknown SSCC as unknown and an outage as a failure', async () => {
     await expect(new SwissPostCargoTracker({ fetcher: answer({ Data: null }) }).recognizes(sscc))
       .resolves.toEqual({ known: false });
