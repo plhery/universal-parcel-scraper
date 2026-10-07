@@ -41,13 +41,16 @@ carrier corpus. A shared prefix or appended counter does not establish a relatio
 
 A numeric shape that several carriers share only suggests a carrier. A distinctive family
 can identify one. Checksums filter or prioritize candidates; they do not establish network
-ownership or shipment existence. The corpus tests reject collisions nobody declared and
-make sure every detection rule has an example.
+ownership or shipment existence. The corpus tests reject collisions nobody declared in
+[collisions.json](core/detection/collisions.json) and make sure every detection rule has an
+example.
 
 A record whose own carrier detection does not offer is a gap, and
 [gaps.json](core/detection/gaps.json) has to declare it. `by_design` and `collision` say why
-the gap stays; `open` ones are the worklist. A declaration that no record needs any more
-fails the sweep, so the list only holds what is still true.
+the gap stays; `open` ones are the worklist.
+
+A collision or gap declaration that no record needs any more fails the sweep, so both lists
+only hold what is still true.
 
 ```sh
 npm test -- core/testing/detectionSweep

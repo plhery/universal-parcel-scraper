@@ -6,7 +6,8 @@
  * carrier claims a positive record, reports detection rules that still have no
  * sample, requires every carrier overlap to be declared in `collisions.json`
  * and every record whose own carrier is not offered to be declared in
- * `gaps.json`, and compares the committed Swift golden file with the computed one.
+ * `gaps.json`, fails on declarations in either list that no record needs, and
+ * compares the committed Swift golden file with the computed one.
  *
  * The corpus is a characterization of today's engine. A failure here means
  * detection changed: decide whether that change was intended, then update the
@@ -269,13 +270,12 @@ describe('declared collisions', () => {
     expect(declared.size).toBe(collisions.length);
   });
 
-  it('reports declarations the corpus no longer reaches', () => {
+  it('drops a declaration once no record produces it', () => {
     const seen = new Set(records
       .map((record) => matchingCarriers(record.number).sort().join(','))
       .filter((key) => key.includes(',')));
     const stale = [...declared.keys()].filter((key) => !seen.has(key));
-    if (stale.length > 0) console.warn(`Declared collisions with no sample number:\n  ${stale.join('\n  ')}`);
-    expect(stale.length).toBeLessThanOrEqual(collisions.length);
+    expect(stale).toEqual([]);
   });
 });
 
