@@ -70,8 +70,11 @@ describe('the catalog lookups the server reads', () => {
   it('anchors the server requirement filter and leaves the form filter unanchored', () => {
     // A 26-digit Mondial Relay label barcode carries its own check digits.
     expect(activeRequirements('mondial-relay', '12123456780101006623123454')).toEqual([]);
-    expect(activeRequirements('mondial-relay', '12345678').map((item) => item.validator)).toEqual(['francePostcode']);
+    expect(activeRequirements('mondial-relay', '12345678').map((item) => item.validator)).toEqual(['internationalPostcode']);
     expect(carrierRequirements('mondial-relay', '12345678').map((item) => item.field)).toEqual(['postcode']);
+    // The brand forms are found without a postcode.
+    expect(activeRequirements('mondial-relay', '1212345678')).toEqual([]);
+    expect(activeRequirements('mondial-relay', '121234567801')).toEqual([]);
     expect(activeRequirements('swiss-post', 'RA123456785CH')).toEqual([]);
   });
 

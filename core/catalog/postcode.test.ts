@@ -40,3 +40,36 @@ describe('DPD Germany postcode', () => {
     expect(() => normalizeCarrierInputs('dpd-de', '01000000000001', '', postcode)).toThrow('five-digit delivery postcode');
   });
 });
+
+describe.each([
+  ['mondial-relay', 'Mondial Relay', '12345678'],
+  ['gls-de', 'GLS Germany', '123456789018'],
+] as const)('%s postcode', (carrier, name, number) => {
+  it('stays required', () => {
+    expect(() => normalizeCarrierInputs(carrier, number, '', '')).toThrow(`${name} requires the delivery postcode`);
+  });
+  it.each([
+    ['75001', '75001'], ['1000', '1000'], [' 1012 ab ', '1012 AB'], ['1000-001', '1000-001'], ['L-1234', 'L-1234'],
+  ])('takes the postcode of any country it delivers in: %s', (typed, stored) => {
+    expect(normalizeCarrierInputs(carrier, number, '', typed)).toEqual({ trackingUrl: null, postcode: stored });
+  });
+  it.each(['12', 'ABCDE', '1'.repeat(13), '75001/2'])('rejects what no country writes: %s', (postcode) => {
+    expect(() => normalizeCarrierInputs(carrier, number, '', postcode)).toThrow(`${name} requires a valid delivery postcode`);
+  });
+  it('asks the form for the same shape, with no example of its own', () => {
+    const [requirement] = carrierRequirements(carrier, number);
+    expect(requirement).toMatchObject({ validator: 'internationalPostcode', maxLength: 12, inputMode: 'text' });
+    expect(requirement!.placeholder).toBeUndefined();
+    for (const value of ['1000', '75001', '1012 AB', '1000-001']) expect(requirementSatisfied(requirement!, value)).toBe(true);
+    for (const value of ['12', 'ABCDE', '75001/2']) expect(requirementSatisfied(requirement!, value)).toBe(false);
+  });
+});
+
+describe('Mondial Relay numbers that need no postcode', () => {
+  it.each(['1212345678', '121234567801'])('asks no postcode for the brand form %s, and keeps one an older client sends', (number) => {
+    expect(carrierRequirements('mondial-relay', number)).toEqual([]);
+    expect(normalizeCarrierInputs('mondial-relay', number, '', '')).toEqual({ trackingUrl: null, postcode: null });
+    expect(normalizeCarrierInputs('mondial-relay', number, '', '1012 ab')).toEqual({ trackingUrl: null, postcode: '1012 AB' });
+    expect(() => normalizeCarrierInputs('mondial-relay', number, '', '12')).toThrow('requires a valid delivery postcode');
+  });
+});

@@ -3,6 +3,7 @@ import { activeRequirements, carrierDefinition, type CarrierRequirementRule } fr
 import { isValidMondialRelayBarcode } from '../detection/index.js';
 import { validateDachserTrackingUrl } from './urls.js';
 import { validatePlanzerSharedUrl } from './urls.js';
+import { DELIVERY_POSTCODE, deliveryPostcodeText } from './postcode.js';
 
 export {
   AUTOMATIC_CARRIER_IDS,
@@ -35,10 +36,13 @@ export function normalizeCarrierInputs(
   const requirements = new Map<'trackingUrl' | 'postcode', CarrierRequirementRule>(
     activeRequirements(carrierId, trackingNumber).map((item) => [item.field, item]),
   );
-  // Older clients may still supply a postcode for label barcodes. Validate it
-  // when present, while allowing the public alias to work without one.
-  if (mondialBarcode && supplied.postcode) {
-    requirements.set('postcode', { field: 'postcode', validator: 'francePostcode' });
+  // Older clients may still supply a postcode for Mondial Relay numbers that
+  // need none: label barcodes and the 10- and 12-digit forms. Validate it when
+  // present, while allowing them to work without one.
+  const mondialWithoutPostcode = mondialBarcode
+    || (carrierId === 'mondial-relay' && /^(?:\d{10}|\d{12})$/.test(trackingNumber));
+  if (mondialWithoutPostcode && supplied.postcode) {
+    requirements.set('postcode', { field: 'postcode', validator: 'internationalPostcode' });
   }
   for (const [field, value] of Object.entries(supplied) as Array<[
     'trackingUrl' | 'postcode',
@@ -110,10 +114,10 @@ export function normalizeCarrierInputs(
         break;
       case 'internationalPostcode':
         // The carrier delivers abroad too: any country's postcode, checked by the carrier itself.
-        if (!POSTCODE_SHAPE.test(postcodeText(value))) {
+        if (!DELIVERY_POSTCODE.test(deliveryPostcodeText(value))) {
           throw new TypeError(`${carrierDefinition(carrierId).displayName} requires a valid delivery postcode`);
         }
-        supplied[field] = postcodeText(value);
+        supplied[field] = deliveryPostcodeText(value);
         break;
       case 'paackPostcode': {
         const rawPostcode = value.toLocaleUpperCase('en-US');
@@ -130,17 +134,10 @@ export function normalizeCarrierInputs(
   return supplied;
 }
 
-/** Any country's postcode: 3 to 12 characters with a digit, in groups joined by one space or hyphen. */
-const POSTCODE_SHAPE = /^(?=.{3,12}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/;
-
-function postcodeText(value: string): string {
-  return value.trim().toUpperCase().replace(/\s+/g, ' ');
-}
-
 /** A recipient postcode for universal providers; independent of a carrier's own credentials. */
 export function normalizeDeliveryPostcode(value: string): string {
-  const normalized = postcodeText(value);
-  if (!POSTCODE_SHAPE.test(normalized)) {
+  const normalized = deliveryPostcodeText(value);
+  if (!DELIVERY_POSTCODE.test(normalized)) {
     throw new TypeError('A valid delivery postcode is required');
   }
   return normalized;

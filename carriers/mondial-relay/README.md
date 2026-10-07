@@ -39,16 +39,23 @@ references with an unresolved prefix remain corpus evidence.
 Without the app step or a browser service (`FLARESOLVERR_URL`) the lookup fails
 at once with a `ChallengeError`. Lookups are serialized per adapter instance
 (`singleFlight`) so the token and the API call stay on one browser identity. Errors: warning
-reply → `NotFoundError`; no token → `ChallengeError`; well-shaped number without
+reply → `NotFoundError`; no token → `ChallengeError`; 8-digit shipment without
 a postcode → `InputRequiredError`; malformed number → `InvalidInputError`; a reply
 for another shipment → `SchemaError`.
 
 ## Notes
 
-- Credentials: short numbers (8, 10 or 12 digits) need the 5-digit French
-  recipient postcode, typed separately or appended. 10- and 12-digit forms are
-  a 2-digit brand plus the 8-digit shipment (plus parcel sequence); the API
-  echoes only the 8-digit shipment.
+- Credentials: an 8-digit shipment needs the recipient postcode, typed
+  separately or, for a French one, appended. 10- and 12-digit forms are a
+  2-digit brand plus the 8-digit shipment (plus parcel sequence) and need no
+  postcode: the website hides its field for them and finds them with none or a
+  wrong one, so a postcode typed for them is not sent. The API echoes only the
+  8-digit shipment.
+- The postcode is compared with the recipient's as typed, in any country's
+  format: a Belgian recipient gives a Belgian one. `codePays` only picks the
+  reply's language (the same parcel is found under `fr`, `be`, `pt` or none)
+  and stays `fr`, which the parsers read. A wrong postcode, whatever its shape,
+  is a "no parcel" warning.
 - 26-digit label barcodes need no postcode. Both modulo-11 check digits and the
   parcel sequence are validated; the first 12 digits are the public alias used
   for links and lookups.

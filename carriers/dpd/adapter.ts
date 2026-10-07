@@ -3,6 +3,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { randomBytes } from 'node:crypto';
 import { load } from 'cheerio';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -53,8 +54,6 @@ const TOKEN_FAILURE_MEMORY_MS = 30_000;
 /** The browser service may spend the whole request timeout plus its own transport allowance. */
 const SOLVER_ALLOWANCE_MS = 15_000;
 const MAX_BYTES = 10_000_000;
-/** Any country's postcode, as the catalog's `internationalPostcode` input takes it. */
-const DELIVERY_POSTCODE = /^(?=.{3,12}$)(?=.*\d)[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/;
 
 /** Cloudflare interrupted the consignee page with an interactive challenge. */
 export class DPDChallengeError extends ChallengeError {
@@ -605,7 +604,7 @@ export class DPDTracker {
     // DPD checks the postcode against the recipient's, and the service this
     // adapter asks also answers for parcels delivered in other countries: any
     // country's postcode goes through. The German unit reads German deliveries.
-    const resolvedPostcode = postcode.trim().toUpperCase().replace(/\s+/g, ' ');
+    const resolvedPostcode = deliveryPostcodeText(postcode);
     if (resolvedPostcode && !(this.country === 'DE' ? /^\d{5}$/ : DELIVERY_POSTCODE).test(resolvedPostcode)) {
       throw new InvalidInputError('DPD', this.country === 'DE'
         ? 'DPD postcode must contain exactly 5 digits'

@@ -47,7 +47,7 @@ export const http1Fetch: typeof fetch = (input, init = {}) => new Promise<Respon
   outgoing.end(body);
 });
 
-/** A normalized credential: 8, 10 or 12 digits, or a barcode's 12-digit alias, and a postcode. */
+/** A normalized credential: 8, 10 or 12 digits, or a barcode's 12-digit alias, and the postcode an 8-digit one needs. */
 export interface MondialRelayAppQuery {
   shipment: string;
   postcode: string;

@@ -21,14 +21,13 @@
     "requirements": [
       {
         "field": "postcode",
-        "validator": "swissOrFrancePostcode",
+        "validator": "internationalPostcode",
         "label": "Delivery postcode",
         "type": "text",
-        "placeholder": "10115",
-        "help": "GLS requires the four- or five-digit delivery postcode to show the detailed event history.",
-        "pattern": "^[0-9]{4,5}$",
-        "maxLength": 5,
-        "inputMode": "numeric",
+        "help": "GLS requires the delivery postcode to show the detailed event history.",
+        "pattern": "^(?=.{3,12}$)(?=.*[0-9])[A-Za-z0-9]+(?:[ \\-][A-Za-z0-9]+)*$",
+        "maxLength": 12,
+        "inputMode": "text",
         "autoComplete": "postal-code"
       }
     ],

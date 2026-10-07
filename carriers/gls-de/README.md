@@ -22,8 +22,11 @@ is sent, so a wrong or expired number never transmits it.
   Otherwise it stays an upstream error: the service also returns 404 for
   challenges and invalid postcodes, which must not look like an expired parcel.
   Delivered parcels age out of public history and then return `E000`.
-- Postcodes may be four or five digits: the same parcel can be delivered on
-  either side of the Swiss–German border.
+- The postcode is the recipient's, in any country's format: the GROUP service
+  answers for parcels GLS delivers across its network, and this carrier is
+  where a GLS parcel from another country is filed. GLS refuses fewer than three
+  characters or a symbol as a wrong format (HTTP 400) and answers any other
+  postcode that does not match with the same `E800` 404 as a wrong one.
 - The result's timezone is relabelled `Europe/Berlin`. Both services run on
   CET/CEST, so only the label changes.
 - `recognizes(number)`, the adapter's `recognize()`, queries the overview on

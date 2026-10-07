@@ -90,18 +90,19 @@ describe('Mondial Relay tracking input', () => {
       shipment: OFFICIAL_PAGE_SHIPMENT,
       postcode: OFFICIAL_PAGE_POSTCODE,
     });
+    // The brand forms are found without a postcode, so an appended one is not sent.
     expect(normalizeMondialRelayCredential(
       `${SYNTHETIC_TEN_DIGIT_BOUNDARY}${OFFICIAL_PAGE_POSTCODE}`,
     )).toEqual({
       shipment: SYNTHETIC_TEN_DIGIT_BOUNDARY,
-      postcode: OFFICIAL_PAGE_POSTCODE,
+      postcode: '',
       canonicalShipment: '00000000',
     });
     expect(normalizeMondialRelayCredential(
       `${OFFICIAL_TWELVE_DIGIT_SHIPMENT}${OFFICIAL_PAGE_POSTCODE}`,
     )).toEqual({
       shipment: OFFICIAL_TWELVE_DIGIT_SHIPMENT,
-      postcode: OFFICIAL_PAGE_POSTCODE,
+      postcode: '',
       canonicalShipment: '73685166',
     });
     expect(mondialRelayTrackingUrl(PUBLIC_CREDENTIAL)).toBe(
@@ -112,20 +113,39 @@ describe('Mondial Relay tracking input', () => {
     expect(publicUrl.searchParams.has('postcode')).toBe(false);
   });
 
+  it.each([['1000', '1000'], [' 1012 ab ', '1012 AB'], ['1000-001', '1000-001'], ['L-1234', 'L-1234'], ['28001', '28001']])(
+    'takes the recipient postcode of any country for an 8-digit shipment: %s',
+    (typed, sent) => {
+      expect(normalizeMondialRelayCredential(OFFICIAL_PDF_SHIPMENT, typed)).toEqual({ shipment: OFFICIAL_PDF_SHIPMENT, postcode: sent });
+    },
+  );
+
+  it('asks the 10- and 12-digit forms without a postcode, even one typed for them', () => {
+    for (const postcode of ['', OFFICIAL_PAGE_POSTCODE]) {
+      expect(normalizeMondialRelayCredential(SYNTHETIC_TEN_DIGIT_BOUNDARY, postcode))
+        .toEqual({ shipment: SYNTHETIC_TEN_DIGIT_BOUNDARY, postcode: '', canonicalShipment: '00000000' });
+      expect(normalizeMondialRelayCredential(OFFICIAL_TWELVE_DIGIT_SHIPMENT, postcode))
+        .toEqual({ shipment: OFFICIAL_TWELVE_DIGIT_SHIPMENT, postcode: '', canonicalShipment: '73685166' });
+    }
+  });
+
   it('rejects incomplete credentials, invalid postcodes, and parameter injection', () => {
-    // A well-shaped number lacks only its postcode; any other number is one Mondial Relay does not issue.
+    // An 8-digit shipment lacks only its postcode; any other number is one Mondial Relay does not issue.
     for (const [shipment, postcode, kind] of [
       [OFFICIAL_PDF_SHIPMENT, '', 'input_required'],
       ['1718596', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
       ['17185966000', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
-      [OFFICIAL_PDF_SHIPMENT, '00000', 'input_required'],
-      [OFFICIAL_PDF_SHIPMENT, '96000', 'input_required'],
-      [OFFICIAL_PDF_SHIPMENT, '5965A', 'input_required'],
+      [OFFICIAL_PDF_SHIPMENT, '12', 'input_required'],
+      [OFFICIAL_PDF_SHIPMENT, 'ABCDE', 'input_required'],
+      [OFFICIAL_PDF_SHIPMENT, '75001/2', 'input_required'],
+      [OFFICIAL_PDF_SHIPMENT, '1'.repeat(13), 'input_required'],
+      // Only a French postcode is read off the end of a number.
+      [`${OFFICIAL_PDF_SHIPMENT}96000`, '', 'invalid_input'],
       [`${PUBLIC_CREDENTIAL}&admin=true`, '', 'invalid_input'],
       ['1718596É', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
     ] as const) {
       expect(() => normalizeMondialRelayCredential(shipment, postcode))
-        .toThrow('8-, 10-, or 12-digit shipment number');
+        .toThrow('10- or 12-digit shipment number');
       expect(() => normalizeMondialRelayCredential(shipment, postcode))
         .toThrow(expect.objectContaining({ kind }));
     }

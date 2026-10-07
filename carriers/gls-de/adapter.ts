@@ -15,8 +15,9 @@ import {
   selectGLSParcel,
 } from '../gls-ch/adapter.js';
 
-// GLS's GROUP recipient service covers German and Swiss parcels. Keep the
-// shared response parser; the delivery postcode can be Swiss or German.
+// GLS's GROUP recipient service covers the parcels GLS delivers across its
+// network, so the delivery postcode can be any country's. Keep the shared
+// response parser.
 const PROVIDER = 'GLS Germany tracking';
 const CARRIER = 'GLS Germany';
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -56,7 +57,7 @@ export class GLSGermanyTracker {
 
   async fetch(rawTrackingNumber: string, rawPostcode: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeGLSSwitzerlandTrackingNumber(rawTrackingNumber);
-    const postcode = normalizeGLSSwitzerlandPostcode(rawPostcode, '4,5');
+    const postcode = normalizeGLSSwitzerlandPostcode(rawPostcode, 'any');
     // Two requests, each with the full request timeout.
     const budget = lookupBudget(context, 2 * this.timeoutMs);
     const overview = await this.request(glsSwitzerlandOverviewApiUrl(number, this.now()), budget);
@@ -77,7 +78,7 @@ export class GLSGermanyTracker {
     const owners = Array.isArray(parcel.owners) ? parcel.owners.filter(isRecord) : [];
     const owner = owners.find((row) => row.type === 'REQUEST');
     const detail = await this.request(glsSwitzerlandDetailApiUrl(
-      String(parcel.tuNo), postcode, this.now(), cleanScalar(owner?.code, 64), '4,5',
+      String(parcel.tuNo), postcode, this.now(), cleanScalar(owner?.code, 64), 'any',
     ), budget);
     try {
       const result = parseGLSSwitzerlandTrackingResponse(detail, String(parcel.tuNo));

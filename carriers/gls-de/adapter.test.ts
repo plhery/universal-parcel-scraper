@@ -83,9 +83,20 @@ describe('GLS Germany', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
-  it.each(['', '800', '123456', 'ABCDE'])('rejects invalid postcode %s before the network request', async (postcode) => {
+  it.each([['1012 ab', '1012 AB'], ['SW1A  1AA', 'SW1A 1AA'], ['00-001', '00-001'], [' 8000 ', '8000']])(
+    'sends the postcode of another country GLS delivers in: %s',
+    async (typed, sent) => {
+      const fetcher = vi.fn<typeof fetch>()
+        .mockResolvedValueOnce(Response.json({ tuStatus: [parcel()] }))
+        .mockResolvedValueOnce(Response.json(parcel()));
+      await new GLSGermanyTracker({ fetcher }).fetch(NUMBER, typed);
+      expect(new URL(String(fetcher.mock.calls[1]![0])).searchParams.get('postalCode')).toBe(sent);
+    },
+  );
+
+  it.each(['', '12', 'ABCDE', '1'.repeat(13), '75001/2'])('rejects invalid postcode %s before the network request', async (postcode) => {
     const fetcher = vi.spyOn(globalThis, 'fetch');
-    await expect(new GLSGermanyTracker().fetch(NUMBER, postcode)).rejects.toThrow('4- or 5-digit recipient postcode');
+    await expect(new GLSGermanyTracker().fetch(NUMBER, postcode)).rejects.toThrow('requires the recipient postcode');
     expect(fetcher).not.toHaveBeenCalled();
   });
 

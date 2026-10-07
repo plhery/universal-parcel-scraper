@@ -2,6 +2,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { isValidMondialRelayBarcode } from '../../core/detection/index.js';
 import { ChallengeError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -29,11 +30,12 @@ const DEFAULT_TIMEOUT_MS = 90_000;
 /** The app answers in about a second; past this the website gets the rest of the budget. */
 const DEFAULT_DIRECT_TIMEOUT_MS = 10_000;
 const ZONE = 'Europe/Paris';
-const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires an 8-, 10-, or 12-digit shipment number followed by '
-  + 'the 5-digit recipient postcode';
+const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires a 26-digit label barcode, a 10- or 12-digit shipment '
+  + 'number, or an 8-digit shipment number with the recipient postcode';
 
 interface MondialRelayCredential {
   shipment: string;
+  /** The recipient's, as typed; empty when the number needs none. */
   postcode: string;
   canonicalShipment?: string;
   /** Read from a checksummed label barcode, which needs no postcode. */
@@ -58,35 +60,41 @@ function plausibleFrenchPostcode(value: string): boolean {
   return /^(?:0[1-9]|[1-8]\d|9[0-5]|97|98)\d{3}$/.test(value);
 }
 
+/**
+ * The shipment and the postcode Mondial Relay is asked with. The postcode is
+ * compared with the recipient's as typed, in any country's format: the country
+ * sent alongside only picks the reply's language. Only an 8-digit shipment
+ * needs it; the 10- and 12-digit forms carry the brand and are found without
+ * one, so a postcode typed for them is not sent.
+ */
 export function normalizeMondialRelayCredential(
   rawShipment: string,
   rawPostcode = '',
 ): MondialRelayCredential {
   let shipment = rawShipment.trim().replace(/[\s.-]/g, '');
-  let postcode = rawPostcode.trim();
+  let postcode = deliveryPostcodeText(rawPostcode);
   if (/^\d{26}$/.test(shipment)) {
-    if (!isValidMondialRelayBarcode(shipment) || (postcode && !plausibleFrenchPostcode(postcode))) {
+    if (!isValidMondialRelayBarcode(shipment) || (postcode && !DELIVERY_POSTCODE.test(postcode))) {
       throw new InvalidInputError('Mondial Relay', 'Invalid Mondial Relay barcode or postcode');
     }
     // The public alias carries brand/shipment/parcel sequence, not a postcode.
     return { shipment: shipment.slice(0, 12), postcode, canonicalShipment: shipment.slice(2, 10), barcode: true };
   }
   if (!postcode && /^(?:\d{13}|\d{15}|\d{17})$/.test(shipment)) {
+    // A French label prints the shipment followed by the 5-digit postcode.
+    if (!plausibleFrenchPostcode(shipment.slice(-5))) throw new InvalidInputError('Mondial Relay', CREDENTIAL_MESSAGE);
     postcode = shipment.slice(-5);
     shipment = shipment.slice(0, -5);
   }
-  const shapedShipment = /^(?:\d{8}|\d{10}|\d{12})$/.test(shipment);
-  if (!shapedShipment || !plausibleFrenchPostcode(postcode)) {
-    // A well-shaped number without a usable postcode is a missing credential;
-    // anything else is a number this carrier cannot address at all.
-    throw shapedShipment
-      ? new InputRequiredError('Mondial Relay', 'the recipient postcode', CREDENTIAL_MESSAGE)
-      : new InvalidInputError('Mondial Relay', CREDENTIAL_MESSAGE);
+  if (!/^(?:\d{8}|\d{10}|\d{12})$/.test(shipment)) throw new InvalidInputError('Mondial Relay', CREDENTIAL_MESSAGE);
+  if (shipment.length === 8 && !DELIVERY_POSTCODE.test(postcode)) {
+    // A well-shaped number without a usable postcode is a missing credential.
+    throw new InputRequiredError('Mondial Relay', 'the recipient postcode', CREDENTIAL_MESSAGE);
   }
   // The longer forms put the 2-digit brand before the 8-digit shipment (the
   // 12-digit one adds the parcel sequence), and the API echoes the shipment.
   return shipment.length > 8
-    ? { shipment, postcode, canonicalShipment: shipment.slice(2, 10) }
+    ? { shipment, postcode: '', canonicalShipment: shipment.slice(2, 10) }
     : { shipment, postcode };
 }
 
@@ -102,6 +110,8 @@ function trackingApiUrl(credential: MondialRelayCredential, brand = ''): string 
   url.searchParams.set('shipment', credential.shipment);
   url.searchParams.set('postcode', credential.postcode);
   url.searchParams.set('brand', brand);
+  // Only the reply's language: the postcode matches whatever country it is from.
+  // The status and event parsers read French.
   url.searchParams.set('codePays', 'fr');
   return url.toString();
 }

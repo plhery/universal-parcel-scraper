@@ -2,6 +2,7 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
+import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
@@ -73,11 +74,18 @@ export function normalizeGLSSwitzerlandTrackingNumber(raw: string): string {
   return value;
 }
 
-export function normalizeGLSSwitzerlandPostcode(raw: string, digits: 4 | 5 | '4,5' = 4): string {
-  const value = raw.trim();
-  if (!new RegExp(`^\\d{${digits}}$`).test(value)) {
-    const shape = `${digits === '4,5' ? '4- or 5' : digits}-digit recipient postcode`;
-    throw new InputRequiredError('GLS', `the ${shape}`, `GLS detailed tracking requires the ${shape}`);
+export type GLSPostcodeShape = 4 | 'any';
+
+/**
+ * The recipient postcode: four Swiss digits, or with `any` the postcode of any
+ * country GLS delivers in. GLS refuses only what no country writes, such as a
+ * symbol or fewer than three characters.
+ */
+export function normalizeGLSSwitzerlandPostcode(raw: string, shape: GLSPostcodeShape = 4): string {
+  const value = shape === 'any' ? deliveryPostcodeText(raw) : raw.trim();
+  if (!(shape === 'any' ? DELIVERY_POSTCODE : /^\d{4}$/).test(value)) {
+    const wanted = shape === 'any' ? 'recipient postcode' : '4-digit recipient postcode';
+    throw new InputRequiredError('GLS', `the ${wanted}`, `GLS detailed tracking requires the ${wanted}`);
   }
   return value;
 }
@@ -105,7 +113,7 @@ export function glsSwitzerlandDetailApiUrl(
   rawPostcode: string,
   millis = Date.now(),
   ownerCode = '',
-  postcodeDigits: 4 | 5 | '4,5' = 4,
+  postcodeShape: GLSPostcodeShape = 4,
 ): string {
   const parcelNumber = normalizeGLSSwitzerlandTrackingNumber(rawParcelNumber);
   if (!/^\d{11,14}$/.test(parcelNumber)) {
@@ -114,7 +122,7 @@ export function glsSwitzerlandDetailApiUrl(
   const url = new URL(`${TRACKING_API}/rstt028/${encodeURIComponent(parcelNumber)}`);
   url.searchParams.set('caller', 'witt002');
   url.searchParams.set('millis', String(millis));
-  url.searchParams.set('postalCode', normalizeGLSSwitzerlandPostcode(rawPostcode, postcodeDigits));
+  url.searchParams.set('postalCode', normalizeGLSSwitzerlandPostcode(rawPostcode, postcodeShape));
   const owner = text(ownerCode, 32);
   if (owner && /^[A-Z0-9_-]+$/i.test(owner)) url.searchParams.set('tuOwnerCode', owner);
   return url.toString();
