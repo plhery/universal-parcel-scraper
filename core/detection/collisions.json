@@ -892,6 +892,38 @@
     "reason": "NZ Post, Poczta Polska and USPS share the broad 20-digit barcode space; anonymous recognition must establish the carrier."
   },
   {
+    "shape": "9{20}",
+    "carriers": [
+      "dhl",
+      "nz-post",
+      "poczta-polska",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "DHL's high-confidence leading range also reads as an SSCC behind the 00 identifier, which Swiss Post Cargo and the broad NZ Post, Poczta Polska and USPS 20-digit candidates accept; the specific DHL rule decides."
+  },
+  {
+    "shape": "9{20}",
+    "carriers": [
+      "nz-post",
+      "poczta-polska",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "An SSCC behind the 00 identifier names its shipper, not its carrier. Swiss Post Cargo tracks them, and the broad NZ Post, Poczta Polska and USPS 20-digit candidates accept them too; anonymous recognition must establish the carrier."
+  },
+  {
+    "shape": "9{20}",
+    "carriers": [
+      "nz-post",
+      "poczta-polska",
+      "postnord",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "Nordic SSCC prefixes overlap Swiss Post Cargo's SSCC candidate and the broad NZ Post, Poczta Polska and USPS 20-digit candidates; the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "9{24}",
     "carriers": [
       "bpost",

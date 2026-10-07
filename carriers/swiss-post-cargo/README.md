@@ -2,9 +2,11 @@
 
 Swiss Post's domestic freight and pallet network (also trading as Hugger). It
 tracks freight barcodes and customer references, not parcels (those go to
-[swiss-post](../swiss-post/README.md)). The 6–40 character alphanumeric format
-is too generic to detect, so numbers arrive only by manual carrier choice or a
-pasted tracking link.
+[swiss-post](../swiss-post/README.md)). Freight barcodes are often the shipper's
+SSCC behind the `00` identifier. A valid one names its shipper rather than a
+carrier, so detection only suggests Swiss Post Cargo and carrier recognition
+asks eos. Other identifiers are too generic to detect and arrive by manual
+carrier choice or a tracking link from either tracker host, `tt.` or `apv.`.
 
 ## How it works
 
@@ -16,6 +18,11 @@ its published source map).
 - `Data: null` is the not-found answer. The endpoint returns HTTP 200 for
   unknown identifiers, so the status code cannot tell them apart; any other
   unexpected shape is a `SchemaError`.
+- eos matches an identifier exactly except for case, and stored numbers lose
+  their punctuation. After a `Data: null`, a letter prefix followed by digits is
+  asked again with a dash between them, the way such references are printed,
+  unless that spelling would pass 20 characters, which eos is slow to refuse.
+  The result links the portal to the spelling eos knew.
 - `Type: 1` is a barcode lookup: rows must echo the requested barcode and other
   rows are dropped.
 - `Type: 2` is a customer reference, and references are not unique: the
@@ -63,7 +70,8 @@ its published source map).
 ## Testing
 
 `npm run test:carriers:live -- carriers/swiss-post-cargo` checks
-the clean 404 for an unknown number. Set `SWISS_POST_CARGO_TRACKING_NUMBER`
+the clean 404 for an unknown number. Recognition reuses the same lookup and
+needs a dated scan to claim a number. Set `SWISS_POST_CARGO_TRACKING_NUMBER`
 outside the repository to a current barcode or reference to check a shipment, or
 `SWISS_POST_TRACKING_NUMBER` to a current Swiss Post parcel barcode to check the
 `Type: 3` relay's 404.

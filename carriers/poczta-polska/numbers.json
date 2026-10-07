@@ -134,6 +134,7 @@
         "confidence": "low",
         "candidates": [
           "poczta-polska",
+          "swiss-post-cargo",
           "usps",
           "nz-post"
         ]

@@ -71,6 +71,7 @@
       "isValidMondialRelayBarcode",
       "isValidPocztaPolskaBarcode",
       "isValidS10TrackingNumber",
+      "isValidSscc",
       "isValidTntConsignmentNumber",
       "isValidUspsPackageBarcode",
       "isoTime",

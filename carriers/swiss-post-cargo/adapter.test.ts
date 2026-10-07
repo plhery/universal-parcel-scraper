@@ -6,6 +6,7 @@ import {
   normalizeSwissPostCargoTrackingNumber,
   parseSwissPostCargoResponse,
   SwissPostCargoTracker,
+  swissPostCargoIdentifiers,
   swissPostCargoTrackingUrl,
 } from './adapter.js';
 import { statusFor } from './status.js';
@@ -189,6 +190,36 @@ describe('Swiss Post Cargo tracking', () => {
   });
 });
 
+describe('Swiss Post Cargo recognition', () => {
+  const sscc = '00312345670000000016';
+  const answer = (payload: unknown) => vi.fn<typeof fetch>().mockResolvedValue(
+    new Response(JSON.stringify(payload), { status: 200 }),
+  );
+
+  it('knows an SSCC eos has dated scans for', async () => {
+    const fetcher = answer({
+      Type: 1,
+      Data: [{
+        Identifier: sscc,
+        History: [
+          { TimeStamp: '2026-08-29T10:00:00', Status: 'NTF', Description: 'Dateneingang Post' },
+          { TimeStamp: '2026-08-29T18:30:00', Status: 'RFS', Description: 'Wareneingang POST', City: 'Hub Dintikon' },
+        ],
+      }],
+    });
+    await expect(new SwissPostCargoTracker({ fetcher }).recognizes(sscc))
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-08-29T16:30:00.000Z' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('reports an unknown SSCC as unknown and an outage as a failure', async () => {
+    await expect(new SwissPostCargoTracker({ fetcher: answer({ Data: null }) }).recognizes(sscc))
+      .resolves.toEqual({ known: false });
+    await expect(new SwissPostCargoTracker({ fetcher: answer({ Data: 'unexpected' }) }).recognizes(sscc))
+      .rejects.toMatchObject({ kind: 'schema' });
+  });
+});
+
 describe('Swiss Post Cargo customer references', () => {
   // A week after the fixture's current consignment was delivered.
   const NOW = Date.parse('2026-09-01T12:00:00Z');
@@ -225,6 +256,38 @@ describe('Swiss Post Cargo customer references', () => {
         status: 404,
         message: 'Swiss Post Cargo only has older shipments for this reference',
       }));
+  });
+
+  it('asks again with the printed dash once eos does not know the compact reference', async () => {
+    expect(swissPostCargoIdentifiers('ab-12345678')).toEqual(['AB12345678', 'AB-12345678']);
+    expect(swissPostCargoIdentifiers('12345678')).toEqual(['12345678']);
+    expect(swissPostCargoIdentifiers('AB12CD34')).toEqual(['AB12CD34']);
+    expect(swissPostCargoIdentifiers('ABCDEFGHIJKL12345678')).toEqual(['ABCDEFGHIJKL12345678']);
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ Data: null }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify(sharedReference()), { status: 200 }));
+    const result = await new SwissPostCargoTracker({ fetcher, now: () => NOW }).fetch('AB12345678');
+
+    expect(fetcher.mock.calls.map(([, init]) => init?.body)).toEqual([
+      JSON.stringify({ Identifier: 'AB12345678' }),
+      JSON.stringify({ Identifier: 'AB-12345678' }),
+    ]);
+    expect(result).toMatchObject({
+      status: 'delivered',
+      tracking_url: 'https://apv.swisspost-cargo.com/public/trackandtrace/AB-12345678',
+    });
+  });
+
+  it('keeps a compact reference eos knows, and the 404 of one it never knew', async () => {
+    const known = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(sharedReference()), { status: 200 }));
+    await expect(new SwissPostCargoTracker({ fetcher: known, now: () => NOW }).fetch('AB12345678'))
+      .resolves.toMatchObject({ tracking_url: 'https://apv.swisspost-cargo.com/public/trackandtrace/AB12345678' });
+    expect(known).toHaveBeenCalledTimes(1);
+
+    const unknown = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ Data: null }), { status: 200 }));
+    await expect(new SwissPostCargoTracker({ fetcher: unknown }).fetch('AB12345678'))
+      .rejects.toMatchObject({ name: 'NotFoundError', status: 404 });
+    expect(unknown).toHaveBeenCalledTimes(2);
   });
 
   it('refuses a reference that names two current consignments', () => {

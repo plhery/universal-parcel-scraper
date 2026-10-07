@@ -39,6 +39,7 @@
         "confidence": "low",
         "candidates": [
           "poczta-polska",
+          "swiss-post-cargo",
           "postnord",
           "usps",
           "nz-post"

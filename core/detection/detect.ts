@@ -19,7 +19,7 @@ import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
 import { isValidMondialRelayBarcode } from './mondialRelay.js';
 import { normalizeTrackingNumber } from './normalize.js';
-import { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidTntConsignmentNumber } from './numericChecksums.js';
+import { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './numericChecksums.js';
 import { isValidS10TrackingNumber } from './s10.js';
 import { isValidUspsPackageBarcode } from './usps.js';
 import type { CarrierDetection } from './types.js';
@@ -35,6 +35,7 @@ function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(trackingNumber);
   if (rule.checksum === 'dpd') return isValidDpdParcelNumber(trackingNumber);
   if (rule.checksum === 'usps') return isValidUspsPackageBarcode(trackingNumber);
+  if (rule.checksum === 'sscc') return isValidSscc(trackingNumber);
   return true;
 }
 

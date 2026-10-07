@@ -27,6 +27,7 @@ import {
   isValidMondialRelayBarcode,
   isValidPocztaPolskaBarcode,
   isValidS10TrackingNumber,
+  isValidSscc,
   isValidTntConsignmentNumber,
   normalizeTrackingNumber,
 } from '../detection/index.js';
@@ -45,7 +46,7 @@ interface DetectionRule {
   readonly pattern: string;
   readonly rawPattern?: string;
   readonly confidence: 'high' | 'low';
-  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps';
+  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc';
   readonly preferred?: true;
 }
 
@@ -87,6 +88,7 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(value);
   if (rule.checksum === 'dpd') return isValidDpdParcelNumber(value);
   if (rule.checksum === 'usps') return isValidUspsPackageBarcode(value);
+  if (rule.checksum === 'sscc') return isValidSscc(value);
   return true;
 }
 

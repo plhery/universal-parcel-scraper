@@ -175,4 +175,11 @@ describe('the detection engine', () => {
     expect(formatTrackingNumber('12345678001', 'postlogistics')).toBe('12345678-001');
     expect(formatTrackingNumber('12345678001')).toBe('12345678001');
   });
+
+  it('reads Swiss Post Cargo links from both tracker hosts, keeping a reference as printed', () => {
+    for (const host of ['apv', 'tt']) {
+      expect(parseTrackingInput(`https://${host}.swisspost-cargo.com/public/trackandtrace/AB-12345678`))
+        .toMatchObject({ trackingNumber: 'AB-12345678', carrier: 'swiss-post-cargo', confidence: 'high', source: 'link' });
+    }
+  });
 });

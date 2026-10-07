@@ -429,7 +429,8 @@
             "poczta-polska",
             "correos-spain",
             "dpd",
-            "usps"
+            "usps",
+            "sscc"
           ]
         },
         "preferred": {

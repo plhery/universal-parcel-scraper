@@ -53,19 +53,27 @@
     "timezone": "Europe/Zurich",
     "tracking": {
       "mode": "automatic",
-      "adapter": "swiss-post-cargo"
+      "adapter": "swiss-post-cargo",
+      "recognitionRank": 11
     },
     "canaryUrl": "https://apv.swisspost-cargo.com/public/trackandtrace",
     "trackingUrlTemplate": "https://apv.swisspost-cargo.com/public/trackandtrace/{trackingNumber}",
     "linkRules": [
       {
         "domains": [
-          "apv.swisspost-cargo.com"
+          "apv.swisspost-cargo.com",
+          "tt.swisspost-cargo.com"
         ],
         "path": "^/public/trackandtrace/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^00\\d{18}$",
+        "confidence": "low",
+        "checksum": "sscc"
+      }
+    ]
   },
   "quickpac": {
     "displayName": "Quickpac",

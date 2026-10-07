@@ -16,9 +16,23 @@ export function isValidTntConsignmentNumber(value: string): boolean {
   return (digit === 11 ? 5 : digit === 10 ? 0 : digit) === check;
 }
 
+/** GS1 mod 10: counted from the check digit, the digits before it weigh 3, 1, 3, … */
+function hasGs1CheckDigit(value: string): boolean {
+  const sum = [...value.slice(0, -1)].reverse()
+    .reduce((total, digit, index) => total + Number(digit) * (index % 2 ? 1 : 3), 0);
+  return (10 - sum % 10) % 10 === Number(value.at(-1));
+}
+
 /** The eMonitoring widget appends this GS1 digit to its 19-digit numeric alias. */
 export function isValidPocztaPolskaBarcode(value: string): boolean {
-  if (value.length !== 20 || !/^\d{20}$/.test(value)) return false;
-  const sum = [...value.slice(0, 19)].reduce((total, digit, index) => total + Number(digit) * (index % 2 ? 1 : 3), 0);
-  return (10 - sum % 10) % 10 === Number(value[19]);
+  return value.length === 20 && /^\d{20}$/.test(value) && hasGs1CheckDigit(value);
+}
+
+/**
+ * An SSCC behind its GS1 application identifier `00`, as freight labels print
+ * it. Shippers issue SSCCs under their own company prefix, so a valid one names
+ * no carrier.
+ */
+export function isValidSscc(value: string): boolean {
+  return value.length === 20 && /^00\d{18}$/.test(value) && hasGs1CheckDigit(value);
 }

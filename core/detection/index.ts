@@ -24,7 +24,7 @@ export { detectCarrier, detectCarrierMatch } from './detect.js';
 export { isValidGlsParcelNumber } from './gls.js';
 export { isValidHermesParcelNumber } from './hermes.js';
 export { isValidMondialRelayBarcode } from './mondialRelay.js';
-export { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidTntConsignmentNumber } from './numericChecksums.js';
+export { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './numericChecksums.js';
 export { formatTrackingNumber, isPlanzerSharedTrackingNumber, normalizeTrackingNumber } from './normalize.js';
 export { parseTrackingInput } from './parse.js';
 export { isValidS10TrackingNumber, supportsSwissPostHandoff } from './s10.js';

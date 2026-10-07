@@ -1,8 +1,8 @@
 
-import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { lookupBudget, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
+import { explicitOffsetTime, isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { referenceConsignment } from './reference.js';
@@ -49,8 +49,26 @@ export function normalizeSwissPostCargoTrackingNumber(raw: string): string {
   return value;
 }
 
+/**
+ * The spellings to ask for, in order. eos matches an identifier exactly except
+ * for case, while stored numbers lose their punctuation: a reference printed
+ * `AB-12345678` arrives as `AB12345678`. A letter prefix followed by digits is
+ * asked again with the dash between them once eos does not know the compact form.
+ * eos takes seconds to refuse anything longer than an SSCC's 20 characters, so
+ * a dash is not guessed past that length.
+ */
+export function swissPostCargoIdentifiers(raw: string): string[] {
+  const compact = normalizeSwissPostCargoTrackingNumber(raw);
+  const prefixed = compact.length < 20 ? /^([A-Z]+)(\d+)$/.exec(compact) : null;
+  return prefixed ? [compact, `${prefixed[1]}-${prefixed[2]}`] : [compact];
+}
+
 export function swissPostCargoTrackingUrl(raw: string): string {
   return `${TRACKING_PAGE}/${encodeURIComponent(normalizeSwissPostCargoTrackingNumber(raw))}`;
+}
+
+function comparableIdentifier(value: unknown): string {
+  return cleanScalar(value, 64).toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
 }
 
 export function parseSwissPostCargoResponse(
@@ -76,7 +94,7 @@ export function parseSwissPostCargoResponse(
   }
   if (responseType !== 2) {
     const identifiers = shipments
-      .map((shipment) => cleanScalar(shipment.Identifier, 64).toLocaleUpperCase('en-US'))
+      .map((shipment) => comparableIdentifier(shipment.Identifier))
       .filter(Boolean);
     if (identifiers.length === 0) {
       throw new SchemaError(PROVIDER, 'Swiss Post Cargo returned no shipment identifier');
@@ -84,9 +102,7 @@ export function parseSwissPostCargoResponse(
     if (!identifiers.includes(trackingNumber)) {
       throw new SchemaError(PROVIDER, 'Swiss Post Cargo returned a different shipment');
     }
-    shipments = shipments.filter((shipment) => (
-      cleanScalar(shipment.Identifier, 64).toLocaleUpperCase('en-US') === trackingNumber
-    ));
+    shipments = shipments.filter((shipment) => comparableIdentifier(shipment.Identifier) === trackingNumber);
   }
   // Type 3, which the tracker's source map does not name, relays Swiss Post's
   // own scans (placeholder `PST` codes, no place) for a parcel barcode the eos
@@ -173,27 +189,53 @@ export class SwissPostCargoTracker {
   }
 
   async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
-    const trackingNumber = normalizeSwissPostCargoTrackingNumber(rawTrackingNumber);
+    const identifiers = swissPostCargoIdentifiers(rawTrackingNumber);
     const budget = lookupBudget(context, this.timeoutMs);
-    const { bytes } = await fetchBounded(TRACKING_API, {
-      method: 'POST',
-      signal: budget.signal,
-      headers: {
-        Accept: 'application/json',
-        'Accept-Language': 'en-CH,en;q=0.9',
-        'Content-Type': 'application/json',
-        Origin: 'https://apv.swisspost-cargo.com',
-        Referer: `${TRACKING_PAGE}/`,
-        'User-Agent': this.#userAgent,
-      },
-      body: JSON.stringify({ Identifier: trackingNumber }),
-    }, {
-      provider: 'Swiss Post Cargo tracking',
-      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
-      maxBytes: MAX_RESPONSE_BYTES,
-      ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
-    });
-    return parseSwissPostCargoResponse(parseJsonBytes(bytes, PROVIDER), trackingNumber, this.#now());
+    for (const [index, identifier] of identifiers.entries()) {
+      const { bytes } = await fetchBounded(TRACKING_API, {
+        method: 'POST',
+        signal: budget.signal,
+        headers: {
+          Accept: 'application/json',
+          'Accept-Language': 'en-CH,en;q=0.9',
+          'Content-Type': 'application/json',
+          Origin: 'https://apv.swisspost-cargo.com',
+          Referer: `${TRACKING_PAGE}/`,
+          'User-Agent': this.#userAgent,
+        },
+        body: JSON.stringify({ Identifier: identifier }),
+      }, {
+        provider: 'Swiss Post Cargo tracking',
+        timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
+        maxBytes: MAX_RESPONSE_BYTES,
+        ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
+      });
+      const payload = parseJsonBytes(bytes, PROVIDER);
+      // Only an identifier eos does not know at all is worth another spelling.
+      if (index < identifiers.length - 1 && isRecord(payload) && payload.Data === null) continue;
+      return {
+        ...parseSwissPostCargoResponse(payload, identifiers[0]!, this.#now()),
+        // The portal finds the shipment only under the spelling eos knows.
+        tracking_url: `${TRACKING_PAGE}/${encodeURIComponent(identifier)}`,
+      };
+    }
+    throw new NotFoundError(PROVIDER);
+  }
+
+  /** Known when eos returns dated scans for the number; its 404s are the unknown answer. */
+  async recognizes(trackingNumber: string, context: TrackingContext = {}): Promise<Recognition> {
+    try {
+      const result = await this.fetch(trackingNumber, context);
+      const times = (result.events ?? []).map((event) => explicitOffsetTime(event.time)?.timestamp)
+        .filter((value): value is number => value !== undefined);
+      return {
+        known: times.length > 0,
+        lastActivityAt: times.length ? new Date(Math.max(...times)).toISOString() : null,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundError) return { known: false };
+      throw error;
+    }
   }
 }
 
@@ -203,5 +245,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'swiss-post-cargo',
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => tracker.recognizes(number, context),
   };
 };

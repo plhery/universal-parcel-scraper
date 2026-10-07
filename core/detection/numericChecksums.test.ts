@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
-import { detectCarrierMatch, isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidTntConsignmentNumber } from './index.js';
+import { detectCarrierMatch, isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './index.js';
 
 describe('numeric checksum candidates', () => {
   it('prioritizes checksum-valid DHL Express waybills without assigning the carrier', () => {
@@ -47,5 +47,16 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('12345678901234567891').candidates).not.toContain('poczta-polska');
     expect(detectCarrierMatch('1234567890123456789').candidates).toContain('poczta-polska');
     expect(detectCarrierMatch('PX1234567890')).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
+  });
+
+  it('asks Swiss Post Cargo about an SSCC behind its 00 identifier without assigning it', () => {
+    expect(isValidSscc('00312345670000000016')).toBe(true);
+    for (const number of ['00312345670000000017', '312345670000000016', '10312345670000000013', '00312345670000000016\n']) {
+      expect(isValidSscc(number)).toBe(false);
+    }
+    expect(detectCarrierMatch('00 3 1234567 000000001 6')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('00312345670000000016').candidates).toContain('swiss-post-cargo');
+    expect(recognitionAskedCarriers('00312345670000000016')).toContain('swiss-post-cargo');
+    expect(detectCarrierMatch('00312345670000000017').candidates).not.toContain('swiss-post-cargo');
   });
 });
