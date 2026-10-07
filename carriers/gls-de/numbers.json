@@ -16,8 +16,6 @@
           "gls-ch",
           "gls-fr",
           "gls-de",
-          "blue-dart",
-          "aramex",
           "dhl-ecommerce-pl"
         ]
       },
@@ -33,7 +31,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
+          "sf-express",
           "gls-ch",
           "dpd-fr",
           "mondial-relay",
@@ -42,11 +40,8 @@
           "gls-de",
           "mrw",
           "brt",
-          "purolator",
-          "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -68,8 +63,6 @@
           "gls-ch",
           "gls-fr",
           "gls-de",
-          "blue-dart",
-          "aramex",
           "dhl-ecommerce-pl"
         ]
       },
@@ -153,8 +146,6 @@
           "gls-ch",
           "gls-fr",
           "gls-de",
-          "blue-dart",
-          "aramex",
           "dhl-ecommerce-pl"
         ]
       },
@@ -209,7 +200,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "gls-ch",
           "mondial-relay",
           "gls-fr",
@@ -220,7 +210,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -285,7 +274,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]

@@ -66,7 +66,8 @@
     {
       "id": "yamato-1",
       "pattern": "^\\d{12}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "mod7"
     }
   ]
 }

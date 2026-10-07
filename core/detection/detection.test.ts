@@ -129,7 +129,7 @@ describe('the detection engine', () => {
     });
   });
 
-  it.each(['87001234567890', '870012345678901'])('selects La Poste for numeric tracked mail: %s', (number) => {
+  it.each(['87001234567890', '870012345678049'])('selects La Poste for numeric tracked mail: %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'la-poste', confidence: 'high' });
     expect(parseTrackingInput(`Suivi : ${number}`)).toMatchObject({
       trackingNumber: number, carrier: 'la-poste', confidence: 'high', source: 'text',

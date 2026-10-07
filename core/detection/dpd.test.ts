@@ -31,7 +31,7 @@ describe('DPD parcel number check character', () => {
   });
 
   it('keeps a mistyped character away from DPD', () => {
-    expect(detectCarrierMatch('12345678901234Q').candidates).toEqual(['chronopost']);
+    expect(detectCarrierMatch('12345678901234Q').candidates).toEqual([]);
     for (const carrier of ['dpd', 'dpd-de', 'dpd-uk']) {
       expect(detectCarrierMatch('012345678901234').candidates).not.toContain(carrier);
     }

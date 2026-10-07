@@ -14,8 +14,6 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "correos-express",
-          "canada-post",
           "tnt",
           "evri-uk"
         ]
@@ -35,8 +33,6 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "correos-express",
-          "canada-post",
           "tnt",
           "evri-uk"
         ]
@@ -95,7 +91,6 @@
         "candidates": [
           "dpd-fr",
           "la-poste",
-          "ukrposhta",
           "correos-chile",
           "delhivery",
           "yunda"

@@ -3,7 +3,8 @@
 Evri International, through the [GlobalEco tracker](https://globaleco.app/track/)
 that the official Evri tracking page links for international parcels. Domestic
 UK tracking is a separate [Evri UK](../evri-uk/README.md) service with its own
-browser adapter. A not-found here says nothing about Evri UK.
+browser adapter. A not-found here says nothing about Evri UK. Detection checks
+the 16-character barcode's last digit as described there.
 
 ## How it works
 

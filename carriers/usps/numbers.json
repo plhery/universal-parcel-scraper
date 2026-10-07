@@ -12,7 +12,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "poczta-polska",
           "usps",
           "nz-post"
         ]
@@ -30,7 +29,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "poczta-polska",
           "usps",
           "nz-post"
         ]
@@ -48,7 +46,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "poczta-polska",
           "usps",
           "nz-post"
         ]
@@ -83,8 +80,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -192,8 +189,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -210,8 +207,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },
@@ -231,7 +228,7 @@
           "usps"
         ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
     },
     {
       "number": "4201028200009261290113185417468510",
@@ -247,7 +244,7 @@
           "usps"
         ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
     },
     {
       "number": "420221539101026837331000039521",
@@ -258,9 +255,12 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The legacy 91 tracking number after the ZIP passes the USPS check."
     },
     {
       "number": "420787459400111206206406260787",
@@ -276,7 +276,7 @@
           "usps"
         ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
     },
     {
       "number": "420902459261290336128704042634",
@@ -293,7 +293,7 @@
           "dhl-ecommerce"
         ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
     },
     {
       "number": "CH056695198US",
@@ -528,8 +528,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "austrian-post",
           "usps",
+          "austrian-post",
           "estafeta"
         ]
       },

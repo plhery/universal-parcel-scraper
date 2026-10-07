@@ -430,7 +430,17 @@
             "correos-spain",
             "dpd",
             "usps",
-            "sscc"
+            "sscc",
+            "ups",
+            "colissimo",
+            "ukrposhta",
+            "evri",
+            "mod7",
+            "gs1",
+            "ontrac",
+            "luhn",
+            "fedex",
+            "sf-express"
           ]
         },
         "preferred": {

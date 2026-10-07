@@ -1,6 +1,7 @@
 # Purolator
 
 Tracks individual Purolator PINs through the anonymous JSON endpoint used by the official portal.
+Detection offers a 12-digit PIN only when it passes the Luhn check.
 
 ## How it works
 

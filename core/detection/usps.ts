@@ -2,9 +2,12 @@ import { normalizeTrackingNumber } from './normalize.js';
 
 // USPS Publication 199, sections 4.1–4.6: the routing AI and ZIP precede
 // the PIC, and only the PIC participates in its alternating MOD10 check.
+// Channel 95 is USPS retail and 91 the legacy tracking construct; both are
+// read only at 22 digits, so a ZIP+4 add-on starting 91 or 95 never makes a
+// 34-digit scan ambiguous.
 // https://postalpro.usps.com/pub199
 function validPic(number: string): boolean {
-  if (!/^9[234]\d{20}(?:\d{4})?$/.test(number)) return false;
+  if (!/^(?:9[1-5]\d{20}|9[2-4]\d{24})$/.test(number)) return false;
   let sum = 0;
   for (let i = number.length - 1; i >= 0; i--) {
     sum += Number(number[i]) * ((number.length - 1 - i) % 2 === 0 ? 1 : 3);

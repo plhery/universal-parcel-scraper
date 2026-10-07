@@ -16,7 +16,7 @@
       "note": "Publicly reported label code, called the tracking number next to the S10 shipment code. The source attributes it to Chronopost; no rule matches this shape."
     },
     {
-      "number": "12345678901234Q",
+      "number": "12345678901234E",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "invented",
@@ -25,7 +25,10 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "chronopost"
+          "dpd",
+          "chronopost",
+          "dpd-de",
+          "dpd-uk"
         ]
       },
       "note": "Invented placeholder used as a shape check. Filed under Chronopost, which stays one candidate among several."

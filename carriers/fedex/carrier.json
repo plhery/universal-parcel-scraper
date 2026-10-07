@@ -66,7 +66,9 @@
     {
       "id": "fedex-1",
       "pattern": "^\\d{12}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "fedex",
+      "preferred": true
     },
     {
       "id": "fedex-2",

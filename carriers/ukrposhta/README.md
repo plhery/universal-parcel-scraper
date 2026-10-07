@@ -2,7 +2,9 @@
 
 Tracks domestic barcodes and international postal references through Ukrposhta's
 status API and the official consumer tracker, including the destination post's
-scans when it supplies them.
+scans when it supplies them. Detection offers a 13-digit barcode only when its
+last digit passes the mod 11 check (weights 2 to 7 from the right); other
+carriers share that length, so it stays a suggestion.
 
 ## How it works
 

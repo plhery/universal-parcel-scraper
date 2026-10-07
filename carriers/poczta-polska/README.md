@@ -12,7 +12,9 @@ the official widget appends before lookup.
 
 Local detection checks complete numeric barcodes against the
 [widget's check-digit calculation](https://emonitoring.poczta-polska.pl/widget/widget.tracking.min.js).
-Passing checks prioritize a candidate without confirming a shipment. Shorter
+Only 20-digit barcodes under Poczta Polska's GS1 prefix `5900773` are
+prioritized; other SSCCs belong to their shippers. Passing checks prioritize a
+candidate without confirming a shipment. Shorter
 aliases have no check digit to validate and remain shape-based suggestions.
 
 ## Notes

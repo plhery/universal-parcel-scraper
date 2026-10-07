@@ -67,7 +67,7 @@
       "note": "Published integration example, not a real shipment. The Smart Data family is corroborated by a public tracked-mail report."
     },
     {
-      "number": "8G12345678901",
+      "number": "8G12345678905",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "official_shape",
@@ -119,7 +119,7 @@
       "note": "Made-up number that follows the published format."
     },
     {
-      "number": "870012345678901",
+      "number": "870012345678049",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "official_shape",
@@ -129,6 +129,23 @@
         "confidence": "high"
       },
       "note": "Made-up numeric tracked-mail identifier; La Poste documents fifteen-character tracked mail."
+    },
+    {
+      "number": "870012345678901",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-07",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "la-poste",
+          "yunda"
+        ]
+      },
+      "note": "Invented fifteen-digit tracked-mail identifier whose last digit is not La Poste's key, so La Poste stays one suggestion."
     },
     {
       "number": "88000012680741A",

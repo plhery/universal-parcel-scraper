@@ -12,21 +12,21 @@
     "reason": "These carriers accept the same numeric length without a DHL Express checksum. Direct tracking must confirm the carrier."
   },
   {
-    "shape": "Twenty digits that fail the Polish barcode check",
+    "shape": "Twenty digits in Planzer's 91346097 range",
     "carriers": [
       "nz-post",
       "planzer",
       "usps"
     ],
-    "reason": "The remaining numeric formats overlap. Direct tracking must confirm the carrier."
+    "reason": "Planzer's high-confidence range sits inside the broad NZ Post and USPS 20-digit candidates; the Planzer rule decides."
   },
   {
-    "shape": "Twenty digits outside Planzer's prefix that fail the Polish barcode check",
+    "shape": "Twenty digits outside the Planzer, DHL and Nordic ranges that are not a valid SSCC",
     "carriers": [
       "nz-post",
       "usps"
     ],
-    "reason": "These numeric formats overlap. Direct tracking must confirm the carrier."
+    "reason": "Only the broad NZ Post and USPS 20-digit candidates remain. Direct tracking must confirm the carrier."
   },
   {
     "shape": "OMGO followed by thirteen digits ending in a French postcode range",
@@ -383,18 +383,6 @@
     "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps YTO letter-prefixed numbers; the specific high-confidence rule decides."
   },
   {
-    "shape": "69{12}",
-    "carriers": [
-      "correos-chile",
-      "delhivery",
-      "korea-post",
-      "la-poste",
-      "ukrposhta",
-      "yunda"
-    ],
-    "reason": "13-digit numbers starting with 6, Korea Post domestic parcels among them, are shared by six carriers; the number stays a low-confidence suggestion."
-  },
-  {
     "shape": "A{3}9{16}",
     "carriers": [
       "dhl",
@@ -585,19 +573,7 @@
       "ukrposhta",
       "yunda"
     ],
-    "reason": "13-digit numbers starting with 0 or 1 add DPD France to the five carriers already sharing that length; the number stays a suggestion."
-  },
-  {
-    "shape": "9{13}",
-    "carriers": [
-      "correos-chile",
-      "delhivery",
-      "la-poste",
-      "planzer",
-      "ukrposhta",
-      "yunda"
-    ],
-    "reason": "The Planzer 99990 range sits inside the 13-digit space five carriers match broadly; the Planzer rule decides."
+    "reason": "13-digit numbers starting with 0, 1 or 250 add DPD France to the five carriers already sharing that length; the number stays a suggestion."
   },
   {
     "shape": "9{14}",
@@ -853,75 +829,14 @@
     "reason": "SSCCs with a Nordic GS1 company prefix sit inside the 20-digit space USPS matches broadly; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{20}",
-    "carriers": [
-      "dhl",
-      "nz-post",
-      "poczta-polska",
-      "usps"
-    ],
-    "reason": "DHL's high-confidence leading range overlaps the broad NZ Post, Poczta Polska and USPS 20-digit candidates; the specific DHL rule decides."
-  },
-  {
-    "shape": "9{20}",
-    "carriers": [
-      "nz-post",
-      "planzer",
-      "poczta-polska",
-      "usps"
-    ],
-    "reason": "Planzer's high-confidence leading range overlaps the broad NZ Post, Poczta Polska and USPS 20-digit candidates; the specific Planzer rule decides."
-  },
-  {
-    "shape": "9{20}",
-    "carriers": [
-      "nz-post",
-      "poczta-polska",
-      "postnord",
-      "usps"
-    ],
-    "reason": "Nordic SSCC prefixes overlap the broad NZ Post, Poczta Polska and USPS 20-digit candidates; the number stays a low-confidence suggestion."
-  },
-  {
-    "shape": "9{20}",
-    "carriers": [
-      "nz-post",
-      "poczta-polska",
-      "usps"
-    ],
-    "reason": "NZ Post, Poczta Polska and USPS share the broad 20-digit barcode space; anonymous recognition must establish the carrier."
-  },
-  {
-    "shape": "9{20}",
-    "carriers": [
-      "dhl",
-      "nz-post",
-      "poczta-polska",
-      "swiss-post-cargo",
-      "usps"
-    ],
-    "reason": "DHL's high-confidence leading range also reads as an SSCC behind the 00 identifier, which Swiss Post Cargo and the broad NZ Post, Poczta Polska and USPS 20-digit candidates accept; the specific DHL rule decides."
-  },
-  {
-    "shape": "9{20}",
+    "shape": "9{20} SSCC under Poczta Polska's GS1 prefix 5900773",
     "carriers": [
       "nz-post",
       "poczta-polska",
       "swiss-post-cargo",
       "usps"
     ],
-    "reason": "An SSCC behind the 00 identifier names its shipper, not its carrier. Swiss Post Cargo tracks them, and the broad NZ Post, Poczta Polska and USPS 20-digit candidates accept them too; anonymous recognition must establish the carrier."
-  },
-  {
-    "shape": "9{20}",
-    "carriers": [
-      "nz-post",
-      "poczta-polska",
-      "postnord",
-      "swiss-post-cargo",
-      "usps"
-    ],
-    "reason": "Nordic SSCC prefixes overlap Swiss Post Cargo's SSCC candidate and the broad NZ Post, Poczta Polska and USPS 20-digit candidates; the number stays a low-confidence suggestion."
+    "reason": "Poczta Polska's own SSCCs are SSCCs Swiss Post Cargo tracks too, and NZ Post and USPS accept any twenty digits. The passing check lists Poczta Polska first; anonymous recognition must establish the carrier."
   },
   {
     "shape": "9{24}",
@@ -993,28 +908,19 @@
     "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
-    "shape": "870 followed by twelve digits",
+    "shape": "870 or 880 followed by twelve digits that fail DPD's check character",
     "carriers": [
       "fedex",
       "la-poste",
       "yunda"
     ],
-    "reason": "La Poste numeric tracked mail overlaps generic fifteen-digit rules; the specific La Poste prefix decides."
+    "reason": "Without DPD's check character La Poste matches only its low-confidence fallback, which the fifteen-digit FedEx and Yunda rules share; the number stays a low-confidence suggestion."
   },
   {
     "shape": "16-character alphanumeric reference",
     "carriers": [
       "evri",
       "evri-uk"
-    ],
-    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
-  },
-  {
-    "shape": "16-character alphanumeric reference",
-    "carriers": [
-      "evri",
-      "evri-uk",
-      "hermes-de"
     ],
     "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
@@ -1293,43 +1199,6 @@
     "carriers": [
       "brt",
       "colis-prive",
-      "dpd-fr",
-      "fedex",
-      "j-and-t",
-      "lbc-express",
-      "mondial-relay",
-      "mrw",
-      "purolator",
-      "sf-express",
-      "sto",
-      "yamato",
-      "zto"
-    ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
-  },
-  {
-    "shape": "12-digit numeric identifier",
-    "carriers": [
-      "brt",
-      "colis-prive",
-      "fedex",
-      "j-and-t",
-      "lbc-express",
-      "mondial-relay",
-      "mrw",
-      "purolator",
-      "sf-express",
-      "sto",
-      "yamato",
-      "zto"
-    ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
-  },
-  {
-    "shape": "12-digit numeric identifier",
-    "carriers": [
-      "brt",
-      "colis-prive",
       "fedex",
       "j-and-t",
       "lbc-express",
@@ -1351,53 +1220,202 @@
     "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
   },
   {
-    "shape": "12-digit numeric identifier",
+    "shape": "12-character alphanumeric identifier",
     "carriers": [
-      "brt",
       "colis-prive",
-      "fedex",
-      "gls-ch",
-      "gls-de",
-      "gls-fr",
-      "j-and-t",
-      "lbc-express",
-      "mondial-relay",
-      "mrw",
-      "purolator",
-      "sf-express",
-      "sto",
-      "yamato",
-      "zto"
+      "relais-colis"
     ],
     "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
   },
   {
-    "shape": "12-digit numeric identifier",
-    "carriers": [
-      "brt",
-      "colis-prive",
-      "fedex",
-      "gls-ch",
-      "gls-de",
-      "gls-fr",
-      "j-and-t",
-      "lbc-express",
-      "mondial-relay",
-      "mrw",
-      "sf-express",
-      "sto",
-      "yamato",
-      "zto"
-    ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
-  },
-  {
-    "shape": "12-digit numeric identifier",
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the FedEx and Purolator checks",
     "carriers": [
       "brt",
       "colis-prive",
       "dpd-fr",
       "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass none of the FedEx, GLS, Purolator and Yamato checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Yamato check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "A passing check digit adds Yamato to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "9{13} that fails the Ukrposhta check",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "Without Ukrposhta's check digit, 13-digit numbers are shared by four carriers; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "9{11} that fails the mod 7 check",
+    "carriers": [
+      "dhl-ecommerce-pl",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "postlogistics"
+    ],
+    "reason": "Without the mod 7 check digit Blue Dart and Aramex drop out; compact 11-digit numbers stay a low-confidence suggestion."
+  },
+  {
+    "shape": "9{20} in DHL's 0034043 range",
+    "carriers": [
+      "dhl",
+      "nz-post",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "DHL's high-confidence range also reads as an SSCC behind the 00 identifier, which Swiss Post Cargo and the broad NZ Post and USPS 20-digit candidates accept; the specific DHL rule decides."
+  },
+  {
+    "shape": "9{16} that fails the GS1 check",
+    "carriers": [
+      "dhl-ecommerce",
+      "evri-uk",
+      "tnt"
+    ],
+    "reason": "Without a GS1 check digit Canada Post and Correos Express drop out; the remaining 16-digit candidates stay a low-confidence suggestion."
+  },
+  {
+    "shape": "9{13} starting with 0, 1 or 250 that fails the Ukrposhta check",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "dpd-fr",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "13-digit numbers starting with 0, 1 or 250 add DPD France to the four carriers sharing that length; the number stays a suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the FedEx check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the FedEx and GLS checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds FedEx and GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "69{12} that fails the Ukrposhta check",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "korea-post",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "13-digit numbers starting with 6, Korea Post domestic parcels among them, are shared by five carriers; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the GLS check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the GLS check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the GLS and Purolator checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
       "gls-ch",
       "gls-de",
       "gls-fr",
@@ -1408,13 +1426,28 @@
       "purolator",
       "sf-express",
       "sto",
-      "yamato",
       "zto"
     ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+    "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "12-digit numeric identifier",
+    "shape": "Twelve digits starting with 20 that pass none of the FedEx, GLS, Purolator and Yamato checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "j-and-t-cargo",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the FedEx check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -1424,20 +1457,193 @@
       "lbc-express",
       "mondial-relay",
       "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the Purolator check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "j-and-t-cargo",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
       "purolator",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the Yamato check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "j-and-t-cargo",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
       "sf-express",
       "sto",
       "yamato",
       "zto"
     ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+    "reason": "A passing check digit adds Yamato to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "12-character alphanumeric identifier",
+    "shape": "Twelve digits that pass the GLS and Purolator checks",
     "carriers": [
+      "brt",
       "colis-prive",
-      "relais-colis"
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto"
     ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+    "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "870 or 880, eleven digits and their check digit",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "fedex",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit FedEx and Yunda rules match too. La Poste's high-confidence rule decides."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and Yamato checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "9{11} with an Old Dominion prefix that fails the mod 7 check",
+    "carriers": [
+      "dhl-ecommerce-pl",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "old-dominion",
+      "postlogistics"
+    ],
+    "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape."
+  },
+  {
+    "shape": "9{13} in the Planzer 99990 range",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "la-poste",
+      "planzer",
+      "yunda"
+    ],
+    "reason": "The Planzer 99990 range sits inside the 13-digit space four carriers match broadly; the Planzer rule decides."
+  },
+  {
+    "shape": "9{20} with a Nordic GS1 prefix",
+    "carriers": [
+      "nz-post",
+      "postnord",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "Nordic SSCC prefixes overlap Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates; the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the FedEx and Purolator checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Purolator check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the FedEx check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "9{20} behind the 00 identifier, outside Poczta Polska's GS1 prefix",
+    "carriers": [
+      "nz-post",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "An SSCC behind the 00 identifier names its shipper, not its carrier. Swiss Post Cargo tracks them, and the broad NZ Post and USPS 20-digit candidates accept them too; anonymous recognition must establish the carrier."
+  },
+  {
+    "shape": "H and fifteen digits that pass the Evri check",
+    "carriers": [
+      "evri",
+      "evri-uk",
+      "hermes-de"
+    ],
+    "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   }
 ]

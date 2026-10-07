@@ -151,7 +151,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "mondial-relay",
           "colis-prive",
           "mrw",
@@ -159,7 +158,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -458,7 +456,6 @@
         "confidence": "low",
         "candidates": [
           "la-poste",
-          "ukrposhta",
           "correos-chile",
           "delhivery",
           "yunda"

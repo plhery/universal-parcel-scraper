@@ -6,6 +6,7 @@
  * What it is not: no carrier lookup and no provider I/O. The caller passes an
  * already-normalized number; anything else fails the digits-only shape test.
  */
+import { mod11CheckDigit } from './numericChecksums.js';
 
 /** Mondial Relay label specification v2.4, pages 5–7 (July 2024).
  * https://storage.mondialrelay.fr/etiquette-mondial-relay-v-24.pdf
@@ -13,11 +14,7 @@
  */
 export function isValidMondialRelayBarcode(value: string): boolean {
   if (!/^\d{26}$/.test(value)) return false;
-  const check = (digits: string) => {
-    const sum = [...digits].reverse().reduce((total, digit, i) => total + Number(digit) * (2 + i % 6), 0);
-    const remainder = 11 - sum % 11;
-    return String(remainder >= 10 ? 0 : remainder);
-  };
+  const check = (digits: string) => String(mod11CheckDigit(digits));
   const sequence = Number(value.slice(10, 12));
   const count = Number(value.slice(12, 14));
   return sequence > 0 && sequence <= count

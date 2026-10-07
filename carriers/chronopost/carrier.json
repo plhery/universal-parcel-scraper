@@ -72,8 +72,9 @@
     },
     {
       "id": "chronopost-2",
-      "pattern": "^\\d{14}[A-Z]$",
-      "confidence": "low"
+      "pattern": "^\\d{14}[0-9A-Z]$",
+      "confidence": "low",
+      "checksum": "dpd"
     },
     {
       "id": "chronopost-3",

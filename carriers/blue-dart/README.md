@@ -1,6 +1,8 @@
 # Blue Dart
 
 Tracks domestic waybills through the official server-rendered third-party tracking page.
+Detection offers an 11-digit waybill only when the first ten digits, divided by seven,
+leave the last digit. Aramex numbers pass the same check, so the shape stays shared.
 
 ## How it works
 

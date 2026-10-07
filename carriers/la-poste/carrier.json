@@ -70,17 +70,24 @@
     {
       "id": "la-poste-1",
       "pattern": "^(?:[68][A-Z]|5[N-Z])\\d{11}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "colissimo"
     },
     {
       "id": "la-poste-4",
-      "pattern": "^870\\d{11,12}$",
+      "pattern": "^870\\d{11}$",
       "confidence": "high"
     },
     {
       "id": "la-poste-5",
-      "pattern": "^(?:870|880)\\d{11}[A-Z]$",
-      "confidence": "high"
+      "pattern": "^(?:870|880)\\d{11}[0-9A-Z]$",
+      "confidence": "high",
+      "checksum": "dpd"
+    },
+    {
+      "id": "la-poste-6",
+      "pattern": "^(?:870|880)\\d{11}[0-9A-Z]$",
+      "confidence": "low"
     },
     {
       "id": "la-poste-2",

@@ -3,6 +3,9 @@
 Domestic UK parcel history. Evri International stays under
 [evri](../evri/README.md). A barcode's shape alone does not establish which
 service owns it; select Evri UK explicitly or use its official tracking link.
+Detection offers both services only when the barcode's last digit matches: a
+letter counts as its ASCII code minus 63, mod 10, and the first fifteen
+characters weigh 2, 1 from the left, summed mod 10.
 
 ## Retrieval
 

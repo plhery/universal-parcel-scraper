@@ -53,7 +53,8 @@
     {
       "id": "blue-dart-1",
       "pattern": "^\\d{11}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "mod7"
     }
   ]
 }

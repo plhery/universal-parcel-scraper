@@ -65,6 +65,13 @@
   ],
   "detection": [
     {
+      "id": "sf-express-3",
+      "pattern": "^\\d{12}$",
+      "confidence": "low",
+      "checksum": "sf-express",
+      "preferred": true
+    },
+    {
       "id": "sf-express-1",
       "pattern": "^\\d{12}$",
       "confidence": "low"
@@ -72,7 +79,13 @@
     {
       "id": "sf-express-2",
       "pattern": "^SF\\d{13}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "sf-express"
+    },
+    {
+      "id": "sf-express-4",
+      "pattern": "^SF\\d{13}$",
+      "confidence": "low"
     }
   ]
 }

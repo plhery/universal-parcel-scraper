@@ -12,31 +12,58 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionRule } from '../catalog/types.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { isValidColissimoParcelNumber } from './colissimo.js';
 import { isValidCorreosSpainCheckLetter } from './correosSpain.js';
 import { isValidDpdParcelNumber } from './dpd.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
+import { isValidEvriParcelNumber } from './evri.js';
 import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
 import { isValidMondialRelayBarcode } from './mondialRelay.js';
 import { normalizeTrackingNumber } from './normalize.js';
-import { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './numericChecksums.js';
+import {
+  hasGs1CheckDigit,
+  hasLuhnCheckDigit,
+  hasMod7CheckDigit,
+  isValidDhlExpressWaybill,
+  isValidFedExTrackingNumber,
+  isValidPocztaPolskaBarcode,
+  isValidSscc,
+  isValidTntConsignmentNumber,
+  isValidUkrposhtaBarcode,
+} from './numericChecksums.js';
 import { isValidS10TrackingNumber } from './s10.js';
+import { isValidSfExpressWaybill } from './sfExpress.js';
+import { isValidOnTracTrackingNumber, isValidUpsTrackingNumber } from './ups.js';
 import { isValidUspsPackageBarcode } from './usps.js';
 import type { CarrierDetection } from './types.js';
 
+const CHECKSUMS: Record<NonNullable<DetectionRule['checksum']>, (trackingNumber: string) => boolean> = {
+  'mondial-relay': isValidMondialRelayBarcode,
+  s10: isValidS10TrackingNumber,
+  hermes: isValidHermesParcelNumber,
+  gls: isValidGlsParcelNumber,
+  'dhl-express': isValidDhlExpressWaybill,
+  tnt: isValidTntConsignmentNumber,
+  'poczta-polska': isValidPocztaPolskaBarcode,
+  'correos-spain': isValidCorreosSpainCheckLetter,
+  dpd: isValidDpdParcelNumber,
+  usps: isValidUspsPackageBarcode,
+  sscc: isValidSscc,
+  ups: isValidUpsTrackingNumber,
+  colissimo: isValidColissimoParcelNumber,
+  ukrposhta: isValidUkrposhtaBarcode,
+  evri: isValidEvriParcelNumber,
+  mod7: hasMod7CheckDigit,
+  gs1: hasGs1CheckDigit,
+  ontrac: isValidOnTracTrackingNumber,
+  luhn: hasLuhnCheckDigit,
+  fedex: isValidFedExTrackingNumber,
+  'sf-express': isValidSfExpressWaybill,
+};
+
 function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
-  if (rule.checksum === 'mondial-relay') return isValidMondialRelayBarcode(trackingNumber);
-  if (rule.checksum === 's10') return isValidS10TrackingNumber(trackingNumber);
-  if (rule.checksum === 'hermes') return isValidHermesParcelNumber(trackingNumber);
-  if (rule.checksum === 'gls') return isValidGlsParcelNumber(trackingNumber);
-  if (rule.checksum === 'dhl-express') return isValidDhlExpressWaybill(trackingNumber);
-  if (rule.checksum === 'tnt') return isValidTntConsignmentNumber(trackingNumber);
-  if (rule.checksum === 'poczta-polska') return isValidPocztaPolskaBarcode(trackingNumber);
-  if (rule.checksum === 'correos-spain') return isValidCorreosSpainCheckLetter(trackingNumber);
-  if (rule.checksum === 'dpd') return isValidDpdParcelNumber(trackingNumber);
-  if (rule.checksum === 'usps') return isValidUspsPackageBarcode(trackingNumber);
-  if (rule.checksum === 'sscc') return isValidSscc(trackingNumber);
-  return true;
+  return rule.checksum === undefined || CHECKSUMS[rule.checksum](trackingNumber);
 }
 
 /** Return only a high-confidence carrier; preserve ambiguous candidates for the UI. */

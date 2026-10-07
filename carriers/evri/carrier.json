@@ -62,8 +62,9 @@
   "detection": [
     {
       "id": "evri-1",
-      "pattern": "^H[A-Z0-9]{15}$",
-      "confidence": "low"
+      "pattern": "^[HT][0-9A-Z]{5}\\d{10}$",
+      "confidence": "low",
+      "checksum": "evri"
     }
   ]
 }

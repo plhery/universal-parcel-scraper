@@ -11,7 +11,9 @@ and checksum-valid UPU S10 numbers with any country suffix. Scanned IMpb barcode
 may include a five- or nine-digit routing ZIP after `420`; the adapter strips only
 a uniquely valid routing prefix before querying and checking response identity.
 [Publication 199](https://postalpro.usps.com/pub199) defines that structure and
-the PIC checksum. Matching IMpb rules prioritize USPS as a candidate; they do
+the PIC checksum and its channel identifiers: `92` to `94`, plus retail `95` and the
+legacy `91` on 22-digit PICs.
+Matching IMpb rules prioritize USPS as a candidate; they do
 not establish shipment existence. Opt-in browser recognition reuses the lookup
 and requires dated activity. Anything else is rejected before a request. Without a browser service it
 fails at once with `ChallengeError('USPS challenged direct tracking; configure

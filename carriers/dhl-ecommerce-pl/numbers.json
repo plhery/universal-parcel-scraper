@@ -15,8 +15,6 @@
           "gls-ch",
           "gls-fr",
           "gls-de",
-          "blue-dart",
-          "aramex",
           "dhl-ecommerce-pl"
         ]
       },
@@ -56,8 +54,6 @@
           "gls-ch",
           "gls-fr",
           "gls-de",
-          "blue-dart",
-          "aramex",
           "dhl-ecommerce-pl"
         ]
       },
@@ -74,16 +70,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "mondial-relay",
           "colis-prive",
           "mrw",
           "brt",
-          "purolator",
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]

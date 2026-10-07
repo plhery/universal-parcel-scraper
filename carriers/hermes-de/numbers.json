@@ -144,7 +144,7 @@
       "note": "Invented H-prefixed number matching the Hermes Germany shape."
     },
     {
-      "number": "H000000000000001",
+      "number": "H000000000000008",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "observed_request",

@@ -21,20 +21,20 @@
     },
     {
       "number": "H06R4A1011299623",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "merchant_published_example",
       "source": {
         "url": "https://wobaaa.com/aliexpress-uk-tracking-numbers/"
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
+        "confidence": "none",
+        "not": [
           "evri",
           "evri-uk"
         ]
       },
-      "note": "Published integration example, not a real shipment."
+      "note": "Published integration example, not a real shipment. Its last digit is not Evri's check digit."
     }
   ]
 }

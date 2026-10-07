@@ -50,7 +50,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "gls-ch",
           "dpd-fr",
           "mondial-relay",
@@ -63,7 +62,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]

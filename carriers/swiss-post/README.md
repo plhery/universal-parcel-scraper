@@ -26,6 +26,8 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
 
 ## Notes
 
+- 18-digit `98`/`99` parcel numbers carry no check digit (identifier, franking
+  licence and counter), so detection cannot reject a mistyped one.
 - One cookie jar per lookup — the user, CSRF token and hash are only valid
   together, and a shared jar could leak one search's hash into another.
 - Exactly one result must match the number, on `shipmentNumber` or the echoed

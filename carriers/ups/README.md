@@ -7,6 +7,9 @@ reported from the UPS record.
 ## How it works
 
 The adapter accepts only `1Z` numbers and rejects anything else before any request.
+Detection selects UPS only when the last digit matches the check digit over the 15
+characters after `1Z` (a letter counts as its ASCII code minus 63, mod 10; weights 1, 2
+from the left); a mismatch stays a suggestion.
 
 1. `trawl` (whenever a browser service is configured): loads
    `https://www.ups.com/track?loc=en_US&tracknum=…&requester=ST/trackdetails` with

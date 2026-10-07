@@ -71,7 +71,8 @@
     {
       "id": "canada-post-1",
       "pattern": "^\\d{16}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "gs1"
     },
     {
       "id": "canada-post-2",

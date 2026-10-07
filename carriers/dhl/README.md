@@ -29,6 +29,7 @@ once.
 - `JJD` licence plates are shared by DHL's European parcel networks and detected
   as DHL Paket. The adapter of another network, such as
   [Poland's](../dhl-ecommerce-pl/README.md), reads one when its carrier is named.
+- `0034043…` numbers are SSCCs. A failing GS1 check digit keeps one a suggestion.
 - Sessions are replaced at 100 minutes because DHL's edge stops answering a
   session about two hours old instead of rejecting it. Without the cap, the
   lookup that crosses that age waits out the 15-second timeout before renewing.

@@ -59,12 +59,14 @@
     {
       "id": "correos-express-1",
       "pattern": "^\\d{16}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "gs1"
     },
     {
       "id": "correos-express-2",
       "pattern": "^\\d{23}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "gs1"
     }
   ]
 }

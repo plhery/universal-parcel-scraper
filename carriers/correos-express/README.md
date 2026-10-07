@@ -2,7 +2,8 @@
 
 Tracks 16-digit shipment references through the anonymous public tracking form,
 and the 23-digit references some marketplace senders issue. Other reference
-formats use the universal providers.
+formats use the universal providers. Both lengths end in a GS1 check digit,
+which detection requires.
 
 ## How it works
 

@@ -65,7 +65,7 @@
   "detection": [
     {
       "id": "usps-3",
-      "pattern": "^9[234]\\d{20}(?:\\d{4})?$",
+      "pattern": "^9[1-5]\\d{20}(?:\\d{4})?$",
       "confidence": "low",
       "checksum": "usps",
       "preferred": true
@@ -82,7 +82,7 @@
     },
     {
       "id": "usps-4",
-      "pattern": "^420(?:\\d{5}9[234]\\d{20}(?:\\d{4})?|\\d{9}9[234]\\d{20})$",
+      "pattern": "^420(?:\\d{5}9[1-5]\\d{20}(?:\\d{4})?|\\d{9}9[1-5]\\d{20})$",
       "confidence": "low",
       "checksum": "usps",
       "preferred": true

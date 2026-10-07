@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 
 // A shared barcode shape establishes the brand, not its tracking service.
-const NUMBER = 'H000000000000001';
+const NUMBER = 'H000000000000008';
 
 describe('Evri service routing', () => {
   it('keeps a bare barcode ambiguous between domestic and international services', () => {

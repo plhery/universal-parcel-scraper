@@ -7,6 +7,8 @@ Poste's unified feed answers Chronopost numbers, so tracking runs through
 - Events arrive with an empty `group`, so the event `code` is the only status
   key.
 - Chronopost's dedicated postal prefixes select it directly; the La Poste rule excludes them.
+- A fourteen-digit number with a fifteenth character is offered only when that character is
+  DPD's MOD 37,36 key.
 - The app links to the Chronopost portal because that is the brand on the label.
 - Other postal-shaped numbers can be confirmed by the same feed before using a universal
   provider. [Chronopost's tracking instructions](https://www.chronopost.fr/fr/faq/destinataire/ou-trouver-mon-numero-de-colis)

@@ -14,16 +14,14 @@
         "confidence": "low",
         "candidates": [
           "fedex",
+          "sf-express",
           "dpd-fr",
           "mondial-relay",
           "colis-prive",
           "mrw",
           "brt",
-          "purolator",
-          "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -126,17 +124,20 @@
     },
     {
       "number": "SF8888888888888",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://open.sf-express.com/InternalWaybillGuide",
         "access": "indexed_excerpt"
       },
       "expect": {
-        "carrier": "sf-express",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express"
+        ]
       },
-      "note": "Official waybill layout shows the prefixed fifteen-character identifier."
+      "note": "Official waybill layout placeholder, not a real shipment. Its last digit is not SF Express's check digit, so SF Express is only suggested."
     }
   ]
 }

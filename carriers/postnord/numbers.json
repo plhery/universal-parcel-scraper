@@ -13,7 +13,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "poczta-polska",
           "swiss-post-cargo",
           "postnord",
           "usps",

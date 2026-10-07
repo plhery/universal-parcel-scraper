@@ -67,7 +67,8 @@
     {
       "id": "purolator-1",
       "pattern": "^[0-5]\\d{11}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "luhn"
     },
     {
       "id": "purolator-2",

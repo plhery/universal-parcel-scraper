@@ -23,7 +23,8 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
 - Labels print a check character after the fourteen digits. A number typed with
   it is looked up by its digits; a character that does not match is refused as
   a typo. The German and UK adapters do the same, and detection offers the DPD
-  networks for that form only when the character matches.
+  networks for that form only when the character matches. The fourteen digits
+  carry no check of their own.
 - A delivery postcode is optional and sent only to DPD. It unlocks verified
   scans, places and the delivery window. A rejected postcode is retried once
   without verification, with `dpd_postcode_verified: false`.

@@ -21,7 +21,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -39,7 +38,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "mondial-relay",
           "colis-prive",
           "mrw",
@@ -48,7 +46,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -66,7 +63,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "mondial-relay",
           "colis-prive",
           "mrw",
@@ -75,7 +71,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -160,7 +155,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "mondial-relay",
           "colis-prive",
           "mrw",
@@ -169,7 +163,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -191,7 +184,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "mondial-relay",
           "colis-prive",
           "mrw",
@@ -200,7 +192,6 @@
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]

@@ -31,6 +31,15 @@ describe('USPS whole package barcodes', () => {
     expect(detectCarrierMatch(PIC26)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
   });
 
+  it('reads the retail and legacy channels only as 22-digit PICs', () => {
+    for (const pic of ['9500000000000000000008', '9100000000000000000002']) {
+      expect(isValidUspsPackageBarcode(pic)).toBe(true);
+      expect(detectCarrierMatch(pic).preferred).toEqual(['usps']);
+    }
+    // A ZIP+4 add-on starting 91 would otherwise pass as the start of a 26-digit PIC.
+    expect(uspsPackageIdentifier(`420123459102${PIC}`)).toBe(PIC);
+  });
+
   it('refuses wrong checksums, malformed routing and ambiguous ZIP/PIC splits', () => {
     for (const raw of [`42000000${PIC.slice(0, -1)}1`, `420ABCDE${PIC}`, `4200000${PIC}`, `420000000${PIC}`, `420000000000${PIC26}`,
       `420000009201${PIC}`]) {

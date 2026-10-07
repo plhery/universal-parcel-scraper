@@ -108,7 +108,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "gls-ch",
           "mondial-relay",
           "gls-fr",
@@ -116,11 +115,9 @@
           "gls-de",
           "mrw",
           "brt",
-          "purolator",
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]

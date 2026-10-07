@@ -78,7 +78,9 @@ export interface DetectionRule {
   /** Additional condition on the input before separators are removed. */
   rawPattern?: string;
   confidence: Exclude<DetectionConfidence, 'none'>;
-  checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc';
+  checksum?:
+    | 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc'
+    | 'ups' | 'colissimo' | 'ukrposhta' | 'evri' | 'mod7' | 'gs1' | 'ontrac' | 'luhn' | 'fedex' | 'sf-express';
   /** Low confidence only: number evidence that lists this carrier first among suggestions. */
   preferred?: boolean;
 }

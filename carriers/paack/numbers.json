@@ -78,8 +78,6 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "correos-express",
-          "canada-post",
           "tnt",
           "evri-uk"
         ]
@@ -96,12 +94,9 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "confidence": "none"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack; detection selects OnTrac."
+      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack; it fails OnTrac's check digit and no other rule matches."
     }
   ]
 }

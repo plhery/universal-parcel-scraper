@@ -4,6 +4,8 @@ Tracks domestic Japanese shipments through the public Japanese tracking form.
 One HTTP form submission returns the shipment summary and scan list. The detail
 heading must identify the requested number; an input echo is insufficient.
 After return dispatch, subsequent scans belong to the return to the sender.
+Detection offers a 12-digit number only when the first eleven digits, divided by
+seven, leave the last digit.
 
 ## Limitations
 

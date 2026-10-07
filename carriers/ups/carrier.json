@@ -58,7 +58,13 @@
     {
       "id": "ups-1",
       "pattern": "^1Z[A-Z0-9]{16}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "ups"
+    },
+    {
+      "id": "ups-3",
+      "pattern": "^1Z[A-Z0-9]{16}$",
+      "confidence": "low"
     },
     {
       "id": "ups-2",

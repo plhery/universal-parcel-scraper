@@ -7,7 +7,9 @@ universal-provider fallback does a lot of the work.
 ## How it works
 
 The adapter accepts 12- or 15-digit numbers (spaces, dots and dashes stripped) and rejects
-anything else, including longer label barcodes, before any request. Without a browser
+anything else, including longer label barcodes, before any request. Detection prefers FedEx
+for a 12-digit number whose last digit matches (weights 3, 1, 7 from the left, sum mod 11,
+then mod 10) and drops it otherwise; the shape stays shared. Without a browser
 service it fails at once with `ChallengeError('FedEx challenged direct tracking; configure
 FLARESOLVERR_URL for browser fallback')`.
 

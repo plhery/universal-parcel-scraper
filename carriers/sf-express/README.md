@@ -6,7 +6,10 @@ driven by the TRAWL browser service.
 
 The `SF` family identifies the carrier, following the official
 [waybill layout](https://open.sf-express.com/InternalWaybillGuide).
-Unprefixed waybills remain ambiguous with other carriers.
+Unprefixed waybills remain ambiguous with other carriers. Both forms end in a check
+digit over the serial after the three-digit area code. A 12-digit waybill that passes
+moves to the front of the suggestions, behind FedEx when FedEx's own check also passes;
+an `SF` number that fails stays a suggestion.
 
 ## How it works
 

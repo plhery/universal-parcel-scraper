@@ -2,7 +2,7 @@
 
 Tracks parcel PINs and Canadian postal numbers through the public tracking application's anonymous JSON service. Delivery-notice and numeric reference lookups resolve one parcel PIN before retrieving its history.
 
-Checksum validation prevents malformed postal references from selecting this adapter.
+Checksum validation prevents malformed postal references from selecting this adapter. A 16-digit PIN ends in a GS1 check digit: one that fails is not suggested, and a valid one stays a suggestion because other carriers share the length.
 
 ## How retrieval works
 

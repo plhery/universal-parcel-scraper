@@ -57,7 +57,7 @@ describe('general delivery handoff candidates', () => {
     })).toEqual({ carrier: 'swiss-post', number: 'LX123456785NL', basis: 'partner' });
   });
   it.each([
-    ['RA123456785CH', 'swiss-post'], ['1Z1234567890123456', 'ups'], ['CW123456785FR', 'la-poste'],
+    ['RA123456785CH', 'swiss-post'], ['1Z1234567890123454', 'ups'], ['CW123456785FR', 'la-poste'],
   ])('preserves an independently reported reference and proposes its catalog carrier: %s', (reference, carrier) => {
     const result = normalizeCarrierResult({ status: 'in_transit', delivery_tracking_number: reference });
     expect(result.delivery_tracking_number).toBe(reference);

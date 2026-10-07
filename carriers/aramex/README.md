@@ -1,6 +1,8 @@
 # Aramex
 
 Reads domestic and international shipment histories from the official tracking portal.
+Detection offers an 11-digit number only when the first ten digits, divided by seven,
+leave the last digit. Blue Dart waybills pass the same check, so the shape stays shared.
 
 ## How it works
 

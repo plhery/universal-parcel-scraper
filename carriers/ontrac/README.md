@@ -10,7 +10,8 @@ unknown parcel from an unavailable endpoint, so it remains inconclusive. An empt
 mismatched package list is inconclusive or a schema failure.
 
 The `C` and `D` number families remain suggestions because their shape alone
-does not establish the operator. HTTP recognition requires matching shipment scans; an unavailable
+does not establish the operator. They are offered only when the last digit matches UPS's
+`1Z` check, with C counted as 4 and D as 5. HTTP recognition requires matching shipment scans; an unavailable
 tracking resource remains a failed probe.
 
 ## Notes

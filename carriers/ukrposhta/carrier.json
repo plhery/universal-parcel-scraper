@@ -63,7 +63,8 @@
     {
       "id": "ukrposhta-1",
       "pattern": "^\\d{13}$",
-      "confidence": "low"
+      "confidence": "low",
+      "checksum": "ukrposhta"
     }
   ]
 }

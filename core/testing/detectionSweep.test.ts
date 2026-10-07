@@ -16,7 +16,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { isValidUspsPackageBarcode } from '../detection/usps.js';
+import { isValidColissimoParcelNumber } from '../detection/colissimo.js';
+import { isValidEvriParcelNumber } from '../detection/evri.js';
 import {
   detectCarrierMatch,
   isValidCorreosSpainCheckLetter,
@@ -32,6 +33,16 @@ import {
   normalizeTrackingNumber,
 } from '../detection/index.js';
 import {
+  hasGs1CheckDigit,
+  hasLuhnCheckDigit,
+  hasMod7CheckDigit,
+  isValidFedExTrackingNumber,
+  isValidUkrposhtaBarcode,
+} from '../detection/numericChecksums.js';
+import { isValidSfExpressWaybill } from '../detection/sfExpress.js';
+import { isValidOnTracTrackingNumber, isValidUpsTrackingNumber } from '../detection/ups.js';
+import { isValidUspsPackageBarcode } from '../detection/usps.js';
+import {
   CARRIERS_DIRECTORY,
   carrierFolders,
   loadNumberCorpus,
@@ -46,7 +57,9 @@ interface DetectionRule {
   readonly pattern: string;
   readonly rawPattern?: string;
   readonly confidence: 'high' | 'low';
-  readonly checksum?: 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc';
+  readonly checksum?:
+    | 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc'
+    | 'ups' | 'colissimo' | 'ukrposhta' | 'evri' | 'mod7' | 'gs1' | 'ontrac' | 'luhn' | 'fedex' | 'sf-express';
   readonly preferred?: true;
 }
 
@@ -89,6 +102,16 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'dpd') return isValidDpdParcelNumber(value);
   if (rule.checksum === 'usps') return isValidUspsPackageBarcode(value);
   if (rule.checksum === 'sscc') return isValidSscc(value);
+  if (rule.checksum === 'ups') return isValidUpsTrackingNumber(value);
+  if (rule.checksum === 'colissimo') return isValidColissimoParcelNumber(value);
+  if (rule.checksum === 'ukrposhta') return isValidUkrposhtaBarcode(value);
+  if (rule.checksum === 'evri') return isValidEvriParcelNumber(value);
+  if (rule.checksum === 'mod7') return hasMod7CheckDigit(value);
+  if (rule.checksum === 'gs1') return hasGs1CheckDigit(value);
+  if (rule.checksum === 'ontrac') return isValidOnTracTrackingNumber(value);
+  if (rule.checksum === 'luhn') return hasLuhnCheckDigit(value);
+  if (rule.checksum === 'fedex') return isValidFedExTrackingNumber(value);
+  if (rule.checksum === 'sf-express') return isValidSfExpressWaybill(value);
   return true;
 }
 

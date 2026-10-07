@@ -36,7 +36,7 @@ describe('numeric checksum candidates', () => {
   });
 
   it('checks full Polish barcodes while preserving aliases without a check digit', () => {
-    for (const number of ['12345678901234567890', '00000000000000000017']) {
+    for (const number of ['00159007731234567899', '00059007730000000007']) {
       expect(isValidPocztaPolskaBarcode(number)).toBe(true);
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['poczta-polska'] });
       expect(recognitionAskedCarriers(number)[0]).toBe('poczta-polska');
@@ -45,6 +45,7 @@ describe('numeric checksum candidates', () => {
       expect(isValidPocztaPolskaBarcode(number)).toBe(false);
     }
     expect(detectCarrierMatch('12345678901234567891').candidates).not.toContain('poczta-polska');
+    expect(detectCarrierMatch('12345678901234567890').preferred).not.toContain('poczta-polska');
     expect(detectCarrierMatch('1234567890123456789').candidates).toContain('poczta-polska');
     expect(detectCarrierMatch('PX1234567890')).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
   });

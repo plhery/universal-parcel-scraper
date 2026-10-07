@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { detectCarrierMatch, parseTrackingInput, validTrackingNumber } from './index.js';
 
 describe('evidence-backed tracking formats', () => {
-  it.each(['87001234567890A', '88001234567890Y'])('keeps the tracked-mail key in %s', (number) => {
+  it.each(['87001234567890I', '88001234567890V'])('keeps the tracked-mail key in %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'la-poste', confidence: 'high' });
     expect(parseTrackingInput(`Suivi : ${number}`)).toMatchObject({
       trackingNumber: number, carrier: 'la-poste', confidence: 'high', source: 'text',
@@ -17,7 +17,7 @@ describe('evidence-backed tracking formats', () => {
     }
   });
 
-  it.each(['5N12345678901', '5Z12345678901'])('recognizes the documented Colissimo family: %s', (number) => {
+  it.each(['5N12345678905', '5Z12345678905'])('recognizes the documented Colissimo family: %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'la-poste', confidence: 'high' });
   });
 
@@ -100,7 +100,7 @@ describe('evidence-backed tracking formats', () => {
   });
 
   it('suggests Ukrposhta for a thirteen-digit domestic barcode among the carriers sharing that length', () => {
-    const match = detectCarrierMatch('0500000000001');
+    const match = detectCarrierMatch('0500000000003');
     expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(match.candidates).toEqual(expect.arrayContaining(['ukrposhta', 'la-poste']));
     expect(detectCarrierMatch('050000000001').candidates).not.toContain('ukrposhta');

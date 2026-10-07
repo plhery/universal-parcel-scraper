@@ -72,7 +72,7 @@
     },
     {
       "id": "poczta-polska-barcode",
-      "pattern": "^\\d{20}$",
+      "pattern": "^00\\d5900773\\d{10}$",
       "confidence": "low",
       "checksum": "poczta-polska",
       "preferred": true

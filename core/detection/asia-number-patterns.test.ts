@@ -4,10 +4,11 @@ import { detectCarrierMatch, parseTrackingInput } from './index.js';
 
 describe('prefixed Asian shipment references and shared numeric formats', () => {
   it('selects the documented SF waybill family without widening bare numeric attribution', () => {
-    expect(detectCarrierMatch('sf 000 000 000 0001')).toMatchObject({ carrier: 'sf-express', confidence: 'high' });
-    expect(parseTrackingInput('Tracking number: SF0000000000001')).toMatchObject({
-      trackingNumber: 'SF0000000000001', carrier: 'sf-express', confidence: 'high',
+    expect(detectCarrierMatch('sf 000 000 000 0000')).toMatchObject({ carrier: 'sf-express', confidence: 'high' });
+    expect(parseTrackingInput('Tracking number: SF0000000000000')).toMatchObject({
+      trackingNumber: 'SF0000000000000', carrier: 'sf-express', confidence: 'high',
     });
+    expect(detectCarrierMatch('SF0000000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['sf-express'] });
     expect(detectCarrierMatch('000000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     for (const number of ['SF000000000001', 'SF00000000000001', 'XSF0000000000001', 'SF0000000000001CN']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('sf-express');
@@ -41,10 +42,11 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
   });
 
   it('uses OnTrac HTTP confirmation for C and D numbers while preserving LaserShip detection', () => {
-    for (const number of ['C00000000000001', 'D00000000000001']) {
+    for (const number of ['C00000000000006', 'D00000000000005']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ontrac'] });
       expect(recognitionCandidates(number).map(candidate => candidate.carrier)).toContain('ontrac');
     }
+    expect(detectCarrierMatch('C00000000000001').candidates).not.toContain('ontrac');
     expect(detectCarrierMatch('1LS0000000000001')).toMatchObject({ carrier: 'ontrac', confidence: 'high' });
   });
 

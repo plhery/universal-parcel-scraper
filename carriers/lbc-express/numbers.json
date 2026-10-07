@@ -10,17 +10,14 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "dpd-fr",
           "mondial-relay",
           "colis-prive",
           "mrw",
           "brt",
-          "purolator",
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -38,7 +35,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "gls-ch",
           "dpd-fr",
           "mondial-relay",
@@ -47,11 +43,9 @@
           "gls-de",
           "mrw",
           "brt",
-          "purolator",
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]
@@ -69,17 +63,14 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "dpd-fr",
           "mondial-relay",
           "colis-prive",
           "mrw",
           "brt",
-          "purolator",
           "sf-express",
           "sto",
           "zto",
-          "yamato",
           "j-and-t",
           "lbc-express"
         ]

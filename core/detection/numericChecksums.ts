@@ -5,6 +5,15 @@ export function isValidDhlExpressWaybill(value: string): boolean {
   return value.length === 10 && /^\d{10}$/.test(value) && Number(value.slice(0, 9)) % 7 === Number(value[9]);
 }
 
+/**
+ * The number before the last digit, divided by seven, leaves the last digit:
+ * the Japanese "7DR" check on Yamato's 12-digit numbers, and the check Blue
+ * Dart and Aramex 11-digit waybills carry. It does not tell those two apart.
+ */
+export function hasMod7CheckDigit(value: string): boolean {
+  return /^\d{2,15}$/.test(value) && Number(value.slice(0, -1)) % 7 === Number(value.at(-1));
+}
+
 /** TNT ExpressConnect supports Mod 7 and Mod 11 for international consignments. */
 export function isValidTntConsignmentNumber(value: string): boolean {
   if (value.length !== 9 || !/^\d{9}$/.test(value)) return false;
@@ -16,11 +25,50 @@ export function isValidTntConsignmentNumber(value: string): boolean {
   return (digit === 11 ? 5 : digit === 10 ? 0 : digit) === check;
 }
 
+/** Mod 11 with weights 2 to 7 repeating from the right; a result of 10 or 11 becomes 0. */
+export function mod11CheckDigit(digits: string): number {
+  const sum = [...digits].reverse().reduce((total, digit, i) => total + Number(digit) * (2 + i % 6), 0);
+  const remainder = 11 - sum % 11;
+  return remainder >= 10 ? 0 : remainder;
+}
+
+/**
+ * Ukrposhta's 13-digit domestic barcode ends in the mod 11 check of its first
+ * twelve digits. The numbers in Ukrposhta's API documentation pass it, apart
+ * from a placeholder and one example that writes a check of 11 as 1.
+ */
+export function isValidUkrposhtaBarcode(value: string): boolean {
+  return /^\d{13}$/.test(value) && mod11CheckDigit(value.slice(0, 12)) === Number(value[12]);
+}
+
 /** GS1 mod 10: counted from the check digit, the digits before it weigh 3, 1, 3, … */
-function hasGs1CheckDigit(value: string): boolean {
+export function hasGs1CheckDigit(value: string): boolean {
+  if (!/^\d{2,}$/.test(value)) return false;
   const sum = [...value.slice(0, -1)].reverse()
     .reduce((total, digit, index) => total + Number(digit) * (index % 2 ? 1 : 3), 0);
   return (10 - sum % 10) % 10 === Number(value.at(-1));
+}
+
+/** Luhn over every digit, the last one being the check: Purolator's 12-digit PINs. */
+export function hasLuhnCheckDigit(value: string): boolean {
+  if (!/^\d{2,}$/.test(value)) return false;
+  const sum = [...value].reverse().reduce((total, digit, index) => {
+    const doubled = Number(digit) * (index % 2 ? 2 : 1);
+    return total + (doubled > 9 ? doubled - 9 : doubled);
+  }, 0);
+  return sum % 10 === 0;
+}
+
+/**
+ * FedEx 12-digit tracking numbers: the first eleven digits weigh 3, 1, 7, …
+ * from the left, and the sum mod 11 mod 10 is the last digit. The same number
+ * closes FedEx's longer Express and Ground barcodes.
+ */
+export function isValidFedExTrackingNumber(value: string): boolean {
+  if (!/^\d{12}$/.test(value)) return false;
+  const weights = [3, 1, 7];
+  const sum = [...value.slice(0, 11)].reduce((total, digit, index) => total + Number(digit) * weights[index % 3]!, 0);
+  return sum % 11 % 10 === Number(value[11]);
 }
 
 /** The eMonitoring widget appends this GS1 digit to its 19-digit numeric alias. */
