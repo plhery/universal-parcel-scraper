@@ -49,6 +49,158 @@
       "note": "A TIPSA tracking link archived by the Wayback Machine. TIPSA's tracker returns its history. CTT Express numbers can share the 000010 prefix, so it stays ambiguous and recognition asks TIPSA first."
     },
     {
+      "number": "0000100000104002721178",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260616162321/https://dinapaqweb.tipsa-dinapaq.com/dinaAvisos/envio.php?id=49AF15B2-8FEF-4D3B-820B-4B465A6B9A61&fecha=15/06/26&tipo=ER&recep=D&tipoServ=General&kmc=1&idInc=%7BIDINC%7D&recor=%7BRECOR%7D&idioma=ES",
+        "date": "2026-06-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "ctt-express",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A TIPSA delivery notice archived by the Wayback Machine. TIPSA's tracker returns its history. CTT Express numbers can share the 000010 prefix, so it stays ambiguous and recognition asks TIPSA first."
+    },
+    {
+      "number": "0000100000104002832159",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260716151539/https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=299E93C5-1D93-4657-A4A3-FE285FE8620B&fecha=15%2F07%2F26",
+        "date": "2026-07-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "ctt-express",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A TIPSA shipment page archived by the Wayback Machine. TIPSA's tracker returns its history. CTT Express numbers can share the 000010 prefix, so it stays ambiguous and recognition asks TIPSA first."
+    },
+    {
+      "number": "0280010280017023109268",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260402112303/https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=9378150E-91E7-4DCE-AADE-C902BE7BF5E9&fecha=26/03/2026",
+        "date": "2026-04-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A TIPSA shipment page archived by the Wayback Machine. TIPSA's tracker returns its history. Portuguese shipment."
+    },
+    {
+      "number": "0280010280017024597412",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260714182717/https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=1D7E76B2-B507-471F-87D5-049D81335CC9&fecha=14/07/2026",
+        "date": "2026-07-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A TIPSA shipment page archived by the Wayback Machine. TIPSA's tracker returns its history. Portuguese shipment."
+    },
+    {
+      "number": "0280010280017024880903",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260807163231/https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=7DDC71D8-31F7-4B43-A470-5109A46372C5&fecha=06/08/2026",
+        "date": "2026-08-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A TIPSA shipment page archived by the Wayback Machine. TIPSA's tracker returns its history. Portuguese shipment."
+    },
+    {
+      "number": "0280010280017024921126",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260810125109/https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=57515E7C-3D70-4716-8E63-2678C4BA2CF4&fecha=10/08/2026",
+        "date": "2026-08-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A TIPSA shipment page archived by the Wayback Machine. TIPSA's tracker returns its history. Portuguese shipment."
+    },
+    {
       "number": "0280010280017024953690",
       "role": "shipment",
       "evidence": "public_shipment_report",
