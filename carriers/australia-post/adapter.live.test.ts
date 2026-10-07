@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { AustraliaPostTracker } from './adapter.js';
+import { carrierErrorKind } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 
 const trawl = TrawlClient.fromEnvironment();
@@ -16,8 +17,12 @@ describe('Australia Post live direct compatibility', () => {
     expect(result.last_status_text).toEqual(expect.any(String));
   });
 
-  it('recognizes a synthetic unknown reference', async () => {
-    await expect(new AustraliaPostTracker({ trawl: null }).fetch(UNKNOWN)).rejects.toMatchObject({ kind: 'not_found' });
+  it('recognizes a synthetic unknown reference', async (context) => {
+    const error: unknown = await new AustraliaPostTracker({ trawl: null }).fetch(UNKNOWN).then(() => undefined, caught => caught);
+    // Australia Post challenges some networks, GitHub runners included, while
+    // others get the answer: a challenge proves neither breakage nor health.
+    if (carrierErrorKind(error) === 'challenge') return context.skip('Australia Post challenged this network: direct tier remains unverified');
+    expect(error).toMatchObject({ kind: 'not_found' });
   });
 });
 
