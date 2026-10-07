@@ -22,6 +22,24 @@ for this carrier because the protected key request rejects the default
 automated launch. The context is closed after each lookup and shares the
 caller's deadline and cancellation signal.
 
+## Mobile API
+
+The official [Android consumer app](https://play.google.com/store/apps/details?id=com.hermes.hercules)
+uses an anonymous native client for the same history service. Its startup
+creates a Firebase Installation session and fetches Firebase Remote Config.
+The `enterprise_tracking_api_base_url_string`,
+`enterprise_tracking_api_key_header_string` and
+`enterprise_tracking_api_key_android_string` parameters supply the host,
+header name and guest key. These values are received at runtime; installation
+tokens and API keys stay outside the repository.
+
+Guest retrieval calls
+`tracking.platform-apis.evri.com/v1/parcels/reference/{barcode}` and uses the
+returned URN in `GET /v1/parcels/?uniqueIds={urn}`. The native client sends the
+configured API key without an account bearer, postcode or WAF token. The history response uses the existing parser's
+identity and event schema. The native bootstrap is not wired into the adapter;
+the registered retrieval step still uses Chromium.
+
 ## Notes
 
 - Search must identify one Evri parcel with the requested barcode. International
