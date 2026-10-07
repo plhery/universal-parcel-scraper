@@ -860,21 +860,23 @@
     "reason": "DHL's Iberian alias for an inbound parcel fits OnTrac's letter-prefixed shape. Direct tracking must confirm the carrier."
   },
   {
-    "shape": "12-digit numeric identifier",
+    "shape": "Twelve digits that pass the FedEx and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
       "fedex",
       "j-and-t",
+      "japan-post",
       "lbc-express",
       "mondial-relay",
       "mrw",
+      "sagawa",
       "sf-express",
       "sto",
       "yamato",
       "zto"
     ],
-    "reason": "The complete identifier matches overlapping catalog formats. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
+    "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "30-digit numeric identifier",
@@ -911,7 +913,7 @@
     "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits that pass none of the FedEx, GLS, Purolator and Yamato checks",
+    "shape": "Twelve digits that pass none of the FedEx, GLS, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -926,20 +928,81 @@
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits that pass the Yamato check",
+    "shape": "Twelve digits that pass the mod 7 check",
     "carriers": [
       "brt",
       "colis-prive",
       "j-and-t",
+      "japan-post",
       "lbc-express",
       "mondial-relay",
       "mrw",
+      "sagawa",
       "sf-express",
       "sto",
       "yamato",
       "zto"
     ],
-    "reason": "A passing check digit adds Yamato to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+    "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the mod 7 check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the GLS and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "Passing check digits add GLS, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Purolator and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "Passing check digits add Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{13} that fails the Ukrposhta check",
@@ -1096,7 +1159,7 @@
     "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 20 that pass none of the FedEx, GLS, Purolator and Yamato checks",
+    "shape": "Twelve digits starting with 20 that pass none of the FedEx, GLS, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -1146,21 +1209,23 @@
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 20 that pass the Yamato check",
+    "shape": "Twelve digits starting with 20 that pass the mod 7 check",
     "carriers": [
       "brt",
       "colis-prive",
       "j-and-t",
       "j-and-t-cargo",
+      "japan-post",
       "lbc-express",
       "mondial-relay",
       "mrw",
+      "sagawa",
       "sf-express",
       "sto",
       "yamato",
       "zto"
     ],
-    "reason": "A passing check digit adds Yamato to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+    "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "Twelve digits that pass the GLS and Purolator checks",
@@ -1194,7 +1259,7 @@
     "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit Yunda rule matches too. La Poste's high-confidence rule decides."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and Yamato checks",
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",

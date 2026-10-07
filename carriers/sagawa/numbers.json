@@ -1,5 +1,269 @@
 {
   "carrier": "sagawa",
-  "gap": "no public sample found yet",
-  "records": []
+  "records": [
+    {
+      "number": "600078420325",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/nayutaya/packtrack/blob/468fc6077509770244cad27bd06aa893949f3231/tracker/sagawa/package/fixtures/list_count01.html",
+        "date": "2009-09-10"
+      },
+      "context": {
+        "reportedRole": "shipment_tracking",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Saved Sagawa tracking page in an open-source tracker's fixtures, showing the parcel delivered. The project found it by querying numbers built with the mod 7 check digit."
+    },
+    {
+      "number": "5017-7550-9605",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q10324550450",
+        "date": "2026-01-22",
+        "dateKind": "forum_post",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Recipient quotes a Sagawa notice that gives this waybill number; not independently verified."
+    },
+    {
+      "number": "462827533895",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q13301283073",
+        "date": "2024-07-18",
+        "dateKind": "forum_post",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Recipient gives the number of a Sagawa parcel and says the lookup shows it shipped; not independently verified."
+    },
+    {
+      "number": "517982200083",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q10180360445",
+        "date": "2017-10-05",
+        "dateKind": "forum_post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Hikyaku Takkyubin",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Buyer quotes a seller's message naming Sagawa's Hikyaku Takkyubin; not independently verified."
+    },
+    {
+      "number": "514220409452",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1460303519",
+        "date": "2011-04-17",
+        "dateKind": "forum_post",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "An answer pastes an Amazon shipping notice that names Sagawa; not independently verified."
+    },
+    {
+      "number": "470551104391",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/hina0118/paa/blob/420a3ead79c01f9a929c58a5defe7e2ef124fd8c/src-tauri/src/plugins/sagawa/parsers/delivery_complete.rs",
+        "date": "2026-03-06"
+      },
+      "context": {
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Mail-parser fixture of Sagawa's delivery-complete notice."
+    },
+    {
+      "number": "515596488142",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/hina0118/paa/blob/720d7738b854dbb736d6c8d8c5a122fbf79cc2ba/src-tauri/src/plugins/amiami/parsers/send.rs",
+        "date": "2026-03-09"
+      },
+      "context": {
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Mail-parser fixture: a retailer's shipping notice names Sagawa and links its tracking site."
+    },
+    {
+      "number": "471234567890",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ],
+        "not": [
+          "japan-post",
+          "sagawa",
+          "yamato"
+        ]
+      },
+      "note": "Invented twelve digits whose last digit is not the remainder of the first eleven divided by seven, so Japan Post, Sagawa and Yamato stay out of the suggestions."
+    }
+  ]
 }

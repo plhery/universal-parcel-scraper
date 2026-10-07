@@ -17,12 +17,14 @@
           "colis-prive",
           "mrw",
           "brt",
+          "japan-post",
           "sf-express",
           "sto",
           "zto",
           "yamato",
           "j-and-t",
-          "lbc-express"
+          "lbc-express",
+          "sagawa"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Yamato Transport, which stays one candidate among several."
@@ -44,12 +46,14 @@
           "colis-prive",
           "mrw",
           "brt",
+          "japan-post",
           "sf-express",
           "sto",
           "zto",
           "yamato",
           "j-and-t",
-          "lbc-express"
+          "lbc-express",
+          "sagawa"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Yamato Transport, which stays one candidate among several."

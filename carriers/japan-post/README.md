@@ -2,6 +2,8 @@
 
 Japan Post items, tracked through the anonymous [English tracking portal](https://trackings.post.japanpost.jp/services/srv/search?locale=en).
 Accepts checksum-valid S10 references and 11–13 digit domestic numbers.
+Detection offers a 12-digit domestic number among other carriers only when the first eleven
+digits, divided by seven, leave the last digit.
 
 ## How it works
 

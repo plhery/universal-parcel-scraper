@@ -8,7 +8,7 @@ There is no dedicated adapter. Sagawa has suspended its public shipment inquiry 
 
 ## Limitations
 
-Commercial universal providers are opt-in. Numeric waybills overlap other carriers, so their shape does not select Sagawa automatically. The Japan timezone is used only for local scan clocks attributed to this carrier.
+Commercial universal providers are opt-in. Numeric waybills overlap other carriers, so their shape does not select Sagawa automatically; detection only suggests it, among others, for 12 digits whose last digit is the remainder of the first eleven divided by seven. The Japan timezone is used only for local scan clocks attributed to this carrier.
 
 ## Testing
 

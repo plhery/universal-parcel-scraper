@@ -3291,6 +3291,11 @@ export const CARRIER_CATALOG = {
         "pattern": "^[A-Z]{2}\\d{9}JP$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^\\d{12}$",
+        "confidence": "low",
+        "checksum": "mod7"
       }
     ]
   },
@@ -4820,7 +4825,13 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{12}$",
+        "confidence": "low",
+        "checksum": "mod7"
+      }
+    ]
   },
   "speedpak": {
     "displayName": "SpeedPAK",
@@ -5174,7 +5185,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "delhivery": ["delhivery-1"],
   "nz-post": ["nz-post-1","nz-post-2"],
   "singapore-post": ["singapore-post-1"],
-  "japan-post": ["japan-post-1"],
+  "japan-post": ["japan-post-1","japan-post-domestic"],
   "sf-express": ["sf-express-3","sf-express-1","sf-express-2","sf-express-4"],
   "sto": ["sto-1"],
   "yunda": ["yunda-1"],
@@ -5215,7 +5226,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lbc-express": ["lbc-domestic"],
   "nova-poshta": ["nova-poshta-domestic"],
   "omgo": ["omgo-1"],
-  "sagawa": [],
+  "sagawa": ["sagawa-waybill"],
   "speedpak": ["speedpak-1"],
   "spx-ph": ["spx-ph-prefixed","spx-ph-domestic"],
   "xpressbees": ["xpressbees-awb"],

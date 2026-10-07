@@ -41,5 +41,12 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "sagawa-waybill",
+      "pattern": "^\\d{12}$",
+      "confidence": "low",
+      "checksum": "mod7"
+    }
+  ]
 }

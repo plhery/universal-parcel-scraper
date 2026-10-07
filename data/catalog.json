@@ -3289,6 +3289,11 @@
         "pattern": "^[A-Z]{2}\\d{9}JP$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^\\d{12}$",
+        "confidence": "low",
+        "checksum": "mod7"
       }
     ]
   },
@@ -4818,7 +4823,13 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{12}$",
+        "confidence": "low",
+        "checksum": "mod7"
+      }
+    ]
   },
   "speedpak": {
     "displayName": "SpeedPAK",

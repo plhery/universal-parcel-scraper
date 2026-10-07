@@ -163,6 +163,180 @@
         "confidence": "high"
       },
       "note": "Customer reports a parcel from Japan to China. The suffix names Japan Post as the issuing postal operator."
+    },
+    {
+      "number": "6271-4993-2452",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courts.go.jp/assets/hanrei/hanrei-pdf-90507.pdf",
+        "date": "2021-07-29",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Letter Pack Plus",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "An IP High Court judgment cites Japan Post's delivery record for this Letter Pack Plus. Twelve digits stay a suggestion shared with other carriers."
+    },
+    {
+      "number": "1261-2550-4536",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14149706284",
+        "date": "2015-08-30",
+        "dateKind": "forum_post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Letter Pack",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express",
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Recipient quotes the number given for a Letter Pack that tracking did not yet show; not independently verified."
+    },
+    {
+      "number": "263823775762",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/hina0118/paa/blob/d4882e599b7019673358fff5f4ff957d788605e1/src-tauri/src/plugins/yodobashi/parsers/send.rs",
+        "date": "2026-04-12"
+      },
+      "context": {
+        "service": "Yu-Pack",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Mail-parser fixture: a retailer's shipping notice names Japan Post Yu-Pack and links the number to Japan Post's tracking."
+    },
+    {
+      "number": "560045430206",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/hina0118/paa/blob/f5ea38d8b1da1240029f13a76d1012a93a9a1b60/src-tauri/src/plugins/hobbyjapan/parsers/send.rs",
+        "date": "2026-05-29"
+      },
+      "context": {
+        "service": "Yu-Pack",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Mail-parser fixture: a retailer's shipping notice names Japan Post Yu-Pack."
+    },
+    {
+      "number": "6286-8414-1971",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://torisedo.com/48345.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Click Post",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A guide lists it as a past Click Post number; not independently verified."
     }
   ]
 }

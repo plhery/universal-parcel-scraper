@@ -203,12 +203,14 @@
           "colis-prive",
           "mrw",
           "brt",
+          "japan-post",
           "sf-express",
           "sto",
           "zto",
           "yamato",
           "j-and-t",
-          "lbc-express"
+          "lbc-express",
+          "sagawa"
         ]
       },
       "note": "The customer explicitly lists this among Colis Privé parcels. Its numeric format remains ambiguous and does not establish carrier ownership."

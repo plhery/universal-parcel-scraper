@@ -385,13 +385,15 @@
           "colis-prive",
           "mrw",
           "brt",
+          "japan-post",
           "sf-express",
           "sto",
           "zto",
           "yamato",
           "j-and-t",
           "j-and-t-cargo",
-          "lbc-express"
+          "lbc-express",
+          "sagawa"
         ]
       },
       "note": "Customer explicitly names J&T Cargo and consignment."
