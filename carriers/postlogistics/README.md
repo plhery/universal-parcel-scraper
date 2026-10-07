@@ -1,7 +1,9 @@
 # PostLogistics
 
-Swiss Post's logistics arm, tracked through the keyless endpoint behind
-`tracking.postlogistics.ch`. It accepts barcodes and customer references. A
+Swiss Post's logistics arm, now trading as Swiss Post Cargo. Its tracker moved
+from `tracking.postlogistics.ch` to `apv.swisspost-cargo.com`, and it is tracked
+through the keyless endpoint behind it. The old hosts answer 404; their links
+still identify this carrier. It accepts barcodes and customer references. A
 printed eight-digit reference with a dashed three-digit suffix identifies this
 carrier. Compact 11-digit numbers are ambiguous; carrier recognition checks
 them when tracking has no confirmed carrier. Other identifier shapes need the
@@ -10,11 +12,11 @@ carrier to be picked. Ordinary Swiss Post parcels go to
 
 ## How it works
 
-`direct`: `POST https://eosapi.postlogistics.ch/api/trackandtrace/public?culture=fr-FR`
+`direct`: `POST https://eosapi.swisspost-cargo.com/api/trackandtrace/public?culture=fr-FR`
 with `{"Identifier": "…"}`. No session, cookie or token; 15 s total timeout.
 Stored numbers omit punctuation, so an unknown 11-digit lookup tries the dashed
 eight-plus-three spelling before returning 404. A successful undashed lookup
-is kept. Same protocol as [swiss-post-cargo](../swiss-post-cargo/README.md).
+is kept. Same endpoint and protocol as [swiss-post-cargo](../swiss-post-cargo/README.md).
 Recognition uses the same lookup and requires a scan before claiming a match.
 
 - `Data: null` is the explicit unknown-identifier answer and becomes a 404.

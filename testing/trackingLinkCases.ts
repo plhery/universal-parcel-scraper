@@ -177,7 +177,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/service\.post\.ch\/ekp-web\/ui\//,
     marker: /Meine Sendungen|My consignments|Mes envois|Sendungsnummer/ },
   { carrier: 'postlogistics', number: '000000000000000000',
-    route: /^https:\/\/tracking\.postlogistics\.ch\/public\/trackandtrace\//,
+    route: /^https:\/\/apv\.swisspost-cargo\.com\/public\/trackandtrace\//,
     marker: /Sendungsnummer\/Referenz|Keine Daten gefunden|TRACK&TRACE/i },
   { carrier: 'swiss-post-cargo', number: 'CODEXINVALID20260831',
     route: /^https:\/\/apv\.swisspost-cargo\.com\/public\/trackandtrace\//,
@@ -302,7 +302,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'correos-spain', number: 'PR000000000000000C',
     route: /^https:\/\/www\.correos\.es\/es\/es\/herramientas\/localizador\//,
     marker: /Localizador de envíos|No encontramos resultados/i },
-  { carrier: 'canada-post', number: '0000000000000000',
+  { carrier: 'canada-post', number: '0000000000000001',
     route: /^https:\/\/www\.canadapost-postescanada\.ca\/track-reperage\/en/,
     marker: /Track results|Track/ },
   { carrier: 'india-post', number: 'EE000000000IN',
@@ -357,10 +357,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpd-uk', number: '00000000000001',
     route: /^https:\/\/track\.dpd\.co\.uk\/(?:\?|$)/,
     marker: /Enter the reference number and delivery postcode|Tracking Number, Calling card number/i },
-  // The shared page links UK tracking and the international POST-only form.
+  // The international tracker is a POST-only form, so the link cannot carry the number.
   { carrier: 'evri', number: 'H000000000000001',
-    route: /^https:\/\/www\.evri\.com\/track-a-parcel\/?$/,
-    marker: /Parcel tracking is easy with Evri|Track a parcel/i, forwarding: 'none' },
+    route: /^https:\/\/globaleco\.app\/track\/?$/,
+    marker: /Search by tracking number/i, forwarding: 'none' },
 ];
 
 /**

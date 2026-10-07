@@ -28,8 +28,8 @@
     "eta"
   ],
   "portal": {
-    "url": "https://tracking.postlogistics.ch/public/trackandtrace/{trackingNumber}",
-    "canaryUrl": "https://tracking.postlogistics.ch/public/trackandtrace",
+    "url": "https://apv.swisspost-cargo.com/public/trackandtrace/{trackingNumber}",
+    "canaryUrl": "https://apv.swisspost-cargo.com/public/trackandtrace",
     "shows": [
       "status",
       "history",

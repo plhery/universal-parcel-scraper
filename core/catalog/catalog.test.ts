@@ -52,7 +52,7 @@ describe('the derived CARRIERS record', () => {
     expect(trackingNumberForLink('swiss-post', 'RA123456785CH')).toBe('RA123456785CH');
     expect(trackingNumberForLink('postlogistics', '12345678001')).toBe('12345678-001');
     expect(CARRIERS.postlogistics.trackingUrl?.('12345678001'))
-      .toBe('https://tracking.postlogistics.ch/public/trackandtrace/12345678-001');
+      .toBe('https://apv.swisspost-cargo.com/public/trackandtrace/12345678-001');
   });
 });
 

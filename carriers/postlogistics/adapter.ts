@@ -2,9 +2,11 @@
 /**
  * PostLogistics tracking.
  *
- * The public tracker at `tracking.postlogistics.ch` posts the identifier to
- * `eosapi.postlogistics.ch/api/trackandtrace/public`. The response says what
- * the identifier was:
+ * PostLogistics now trades as Swiss Post Cargo, and its tracker moved to
+ * `apv.swisspost-cargo.com`, which posts the identifier to
+ * `eosapi.swisspost-cargo.com/api/trackandtrace/public`. The former
+ * `postlogistics.ch` hosts answer 404. The response says what the identifier
+ * was:
  *
  * - `Type` 1: a barcode. The answer may contain several shipments, so only the
  *   one whose `Identifier` equals the requested barcode is read.
@@ -31,7 +33,7 @@ import { POSTLOGISTICS_IMAGE_CODE, postlogisticsStage, postlogisticsStatus } fro
 
 const PROVIDER = 'PostLogistics';
 const UPSTREAM = 'PostLogistics tracking';
-const TRACK_URL = 'https://eosapi.postlogistics.ch/api/trackandtrace/public?culture=fr-FR';
+const TRACK_URL = 'https://eosapi.swisspost-cargo.com/api/trackandtrace/public?culture=fr-FR';
 const DEFAULT_TIMEOUT_MS = 15_000;
 const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
@@ -160,8 +162,8 @@ export class PostlogisticsTracker {
             ...BASE_HEADERS,
             'User-Agent': this.userAgent,
             'Content-Type': 'application/json',
-            Origin: 'https://tracking.postlogistics.ch',
-            Referer: 'https://tracking.postlogistics.ch/',
+            Origin: 'https://apv.swisspost-cargo.com',
+            Referer: 'https://apv.swisspost-cargo.com/',
           },
           body: JSON.stringify({ Identifier: identifier }),
           signal: budget.signal,

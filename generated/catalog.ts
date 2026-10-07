@@ -356,8 +356,8 @@ export const CARRIER_CATALOG = {
       "adapter": "postlogistics",
       "recognitionRank": 26
     },
-    "canaryUrl": "https://tracking.postlogistics.ch/public/trackandtrace",
-    "trackingUrlTemplate": "https://tracking.postlogistics.ch/public/trackandtrace/{trackingNumber}",
+    "canaryUrl": "https://apv.swisspost-cargo.com/public/trackandtrace",
+    "trackingUrlTemplate": "https://apv.swisspost-cargo.com/public/trackandtrace/{trackingNumber}",
     "linkRules": [
       {
         "domains": [

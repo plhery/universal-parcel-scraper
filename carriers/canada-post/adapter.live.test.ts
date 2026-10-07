@@ -26,7 +26,7 @@ describe('Canada Post anonymous native history', () => {
     expect(result.events?.length).toBeGreaterThan(0);
   });
 
-  it.each(['0000000000000000', '000000000000000', '0000000000000'])('keeps no-history control %s inconclusive', async number => {
+  it.each(['0000000000000001', '000000000000000', '0000000000000'])('keeps no-history control %s inconclusive', async number => {
     try { await native().track({ number }, { budgetMs: 20_000 }); expect.fail('expected inconclusive history'); }
     catch (error) { expect(carrierErrorKind(error)).toBe('indeterminate'); }
   });
