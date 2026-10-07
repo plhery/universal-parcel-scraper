@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
-import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl } from './parser.js';
+import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl, tipsaLookupNotFound } from './parser.js';
 import { tipsaStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { InvalidInputError } from '../../core/errors/index.js';
@@ -12,12 +12,13 @@ import { InvalidInputError } from '../../core/errors/index.js';
 const NUMBER = '0990010990010000000017';
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
 const DETAIL = fixture('delivered.html');
-const LOOKUP = fixture('lookup.html');
 const UNKNOWN = fixture('unknown.html');
 const DETAIL_URL = 'https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=00000000-0000-4000-8000-000000000017&fecha=26/03/26';
-const LOOKUP_URL = `https://aplicaciones.tip-sa.com/cliente/datos_prestashop.php?id=${NUMBER}`;
+const LOOKUP_URL = `https://aplicaciones.tip-sa.com/cliente/datos_env.php?id=${NUMBER}`;
 const environment = (fetcher: typeof fetch) => ({ fetcher, env: {}, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER });
-const redirect = (target: string) => `<html><head><meta http-equiv='refresh' content='0;URL=${target}'></head></html>`;
+const redirect = (target: string) => new Response(null, { status: 302, headers: { Location: target } });
+const lookup = (input: RequestInfo | URL) => String(input) === LOOKUP_URL
+  ? redirect(DETAIL_URL) : new Response(Buffer.from(DETAIL, 'latin1'), { headers: { 'Content-Type': 'text/html' } });
 
 describe('TIPSA shipment page', () => {
   it('takes only the full 22-digit reference', () => {
@@ -28,17 +29,24 @@ describe('TIPSA shipment page', () => {
   });
 
   it('follows only the lookup redirect to its own shipment page', () => {
-    expect(tipsaDetailUrl(LOOKUP)).toBe(DETAIL_URL);
-    expect(tipsaDetailUrl(UNKNOWN)).toBeNull();
-    for (const html of [
-      '<html></html>',
-      redirect(DETAIL_URL.replace('dinapaqweb.tipsa-dinapaq.com', 'example.test')),
-      redirect(DETAIL_URL.replace('detalle_envio', 'otra')),
-      redirect(`${DETAIL_URL}&extra=1`),
-      redirect(DETAIL_URL.replace('000000000017', 'x')),
-      redirect(DETAIL_URL.replace('26/03/26', '2026-03-26')),
-      redirect(DETAIL_URL.replace('servicio=00000000-0000-4000-8000-000000000017', 'servicio=')),
-    ]) expect(() => tipsaDetailUrl(html)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(tipsaDetailUrl(DETAIL_URL)).toBe(DETAIL_URL);
+    for (const location of [
+      '',
+      DETAIL_URL.replace('dinapaqweb.tipsa-dinapaq.com', 'example.test'),
+      DETAIL_URL.replace('detalle_envio', 'otra'),
+      `${DETAIL_URL}&extra=1`,
+      DETAIL_URL.replace('000000000017', 'x'),
+      DETAIL_URL.replace('26/03/26', '2026-03-26'),
+      DETAIL_URL.replace('servicio=00000000-0000-4000-8000-000000000017', 'servicio='),
+      'https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php?servicio=&fecha=',
+    ]) expect(() => tipsaDetailUrl(location)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('reads only the not-located refresh as an unknown reference', () => {
+    expect(tipsaLookupNotFound(UNKNOWN)).toBe(true);
+    // The postcode-gated shop link and other pages are not answers about the shipment.
+    for (const html of ['<html></html>', "<h1 align='center'>No ha proporcionado el CP</h1>",
+      UNKNOWN.replace('error_env.html', 'https://example.test/error_env.html')]) expect(tipsaLookupNotFound(html)).toBe(false);
   });
 
   it('reads the history table once per cell, on Madrid time across the clock change', () => {
@@ -95,9 +103,7 @@ describe('TIPSA shipment page', () => {
 
 describe('TIPSA adapter', () => {
   it('looks the reference up, then reads the Latin-1 shipment page', async () => {
-    const fetcher = vi.fn<typeof fetch>(async (input) => String(input) === LOOKUP_URL
-      ? new Response(LOOKUP)
-      : new Response(Buffer.from(DETAIL, 'latin1'), { headers: { 'Content-Type': 'text/html' } }));
+    const fetcher = vi.fn<typeof fetch>(async (input) => lookup(input));
     const result = await adapter(environment(fetcher)).track({ number: NUMBER });
     expect(result.events).toHaveLength(9);
     expect(fetcher.mock.calls.map(([url, init]) => [String(url), init?.redirect])).toEqual([
@@ -116,17 +122,20 @@ describe('TIPSA adapter', () => {
   });
 
   it('recognizes a known reference with its newest scan', async () => {
-    const fetcher = vi.fn<typeof fetch>(async (input) => String(input) === LOOKUP_URL
-      ? new Response(LOOKUP) : new Response(Buffer.from(DETAIL, 'latin1')));
+    const fetcher = vi.fn<typeof fetch>(async (input) => lookup(input));
     await expect(adapter(environment(fetcher)).recognize?.(NUMBER))
       .resolves.toEqual({ known: true, lastActivityAt: '2026-03-30T16:40:00.000Z' });
   });
 
-  it('treats a moved lookup as a changed page and a blocked one as a challenge', async () => {
-    const moved = vi.fn<typeof fetch>(async () => new Response(null, { status: 302, headers: { Location: 'https://example.test/' } }));
+  it('treats a moved or unexpected lookup as a changed page and a blocked one as a challenge', async () => {
+    for (const answer of [() => redirect('https://example.test/'), () => new Response("<h1 align='center'>No ha proporcionado el CP</h1>")]) {
+      await expect(adapter(environment(vi.fn<typeof fetch>(async () => answer()))).track({ number: NUMBER }))
+        .rejects.toMatchObject({ kind: 'schema' });
+    }
+    const moved = vi.fn<typeof fetch>(async (input) => String(input) === LOOKUP_URL ? redirect(DETAIL_URL) : redirect('https://example.test/'));
     await expect(adapter(environment(moved)).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'schema' });
     const blocked = vi.fn<typeof fetch>(async (input) => String(input) === LOOKUP_URL
-      ? new Response(LOOKUP) : new Response('Forbidden', { status: 403 }));
+      ? redirect(DETAIL_URL) : new Response('Forbidden', { status: 403 }));
     await expect(adapter(environment(blocked)).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
   });
 });

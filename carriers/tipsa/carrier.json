@@ -29,7 +29,7 @@
     "location"
   ],
   "portal": {
-    "url": "https://www.tip-sa.com/cliente/datos_prestashop.php?id={trackingNumber}",
+    "url": "https://www.tip-sa.com/cliente/datos_env.php?id={trackingNumber}",
     "canaryUrl": "https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php",
     "shows": [
       "status",
@@ -70,7 +70,7 @@
       "domains": [
         "tip-sa.com"
       ],
-      "path": "^/cliente/datos(?:_prestashop)?\\.php$",
+      "path": "^/cliente/datos(?:_prestashop|_env)?\\.php$",
       "params": [
         "id"
       ]

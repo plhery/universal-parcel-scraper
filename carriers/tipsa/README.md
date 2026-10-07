@@ -1,16 +1,18 @@
 # TIPSA
 
-Tracks TIPSA's 22-digit references through the shipment page its shop link opens. The
-locator form on tip-sa.com also asks for the destination postcode; this page does not.
+Tracks TIPSA's 22-digit references through the shipment page its `datos_env.php` link
+opens. The locator form on tip-sa.com and the `datos_prestashop.php` shop link also ask for
+the destination postcode and answer a wrong one like an unknown reference; this link does
+not ask.
 
 ## How it works
 
-1. `direct`: `GET https://aplicaciones.tip-sa.com/cliente/datos_prestashop.php?id={number}`,
-   where the shop link (`www.tip-sa.com/cliente/datos_prestashop.php`) redirects. The reply
-   is a meta refresh to `dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php` with a
-   service id and a `dd/MM/yy` date. Empty parameters mean TIPSA knows no such reference:
-   not found, after one request. Any other target is a changed page and is not followed.
-   The shipment page is ISO-8859-1.
+1. `direct`: `GET https://aplicaciones.tip-sa.com/cliente/datos_env.php?id={number}`,
+   where the link on `www.tip-sa.com` redirects. A known reference answers a redirect to
+   `dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php` with a service id and a
+   `dd/MM/yy` date. An unknown one answers a page that refreshes to `error_env.html`
+   ("envío no localizado"): not found, after one request. Any other target or answer is a
+   changed page and is not followed. The shipment page is ISO-8859-1.
 
 ## Notes
 
@@ -37,7 +39,7 @@ locator form on tip-sa.com also asks for the destination postcode; this page doe
 - References of the `000010` account stay ambiguous with CTT Express, and recognition
   asks TIPSA first. Any other reference starting `00` matches CTT Express's
   high-confidence rule and is filed there until a universal provider names TIPSA.
-- An expired history and an unknown reference get the same empty redirect.
+- An expired history and an unknown reference get the same not-located page.
 
 ## Testing
 

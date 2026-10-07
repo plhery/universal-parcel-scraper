@@ -2441,13 +2441,13 @@ export const CARRIER_CATALOG = {
       "recognitionRank": 24
     },
     "canaryUrl": "https://dinapaqweb.tipsa-dinapaq.com/dinapaqweb/detalle_envio.php",
-    "trackingUrlTemplate": "https://www.tip-sa.com/cliente/datos_prestashop.php?id={trackingNumber}",
+    "trackingUrlTemplate": "https://www.tip-sa.com/cliente/datos_env.php?id={trackingNumber}",
     "linkRules": [
       {
         "domains": [
           "tip-sa.com"
         ],
-        "path": "^/cliente/datos(?:_prestashop)?\\.php$",
+        "path": "^/cliente/datos(?:_prestashop|_env)?\\.php$",
         "params": [
           "id"
         ]

@@ -21,28 +21,27 @@ export function normalizeTipsaNumber(raw: string): string {
 }
 
 /**
- * The shipment page the lookup's meta refresh names, or null when TIPSA knows
- * no shipment by that reference (it then names the page with empty
- * parameters). Only TIPSA's own detail page with a service id and a
- * `dd/MM/yy` date is followed.
+ * The shipment page a lookup redirects to. Only TIPSA's own detail page with
+ * a service id and a `dd/MM/yy` date is followed.
  */
-export function tipsaDetailUrl(html: string): string | null {
-  const target = /<meta\s+http-equiv=["']refresh["']\s+content=["']\s*0\s*;\s*URL=([^"'\s]{1,512})["']/i.exec(html)?.[1];
-  if (!target) throw new SchemaError(PROVIDER, 'TIPSA lookup did not name a shipment page');
+export function tipsaDetailUrl(location: string): string {
   let url: URL;
-  try { url = new URL(target.replaceAll('&amp;', '&')); } catch { throw new SchemaError(PROVIDER, 'TIPSA shipment page address is invalid'); }
+  try { url = new URL(location); } catch { throw new SchemaError(PROVIDER, 'TIPSA shipment page address is invalid'); }
   const keys = [...url.searchParams.keys()];
   if (url.origin !== DETAIL_ORIGIN || url.pathname.toLowerCase() !== DETAIL_PATH || url.username || url.password || url.hash
-    || keys.length !== 2 || !keys.includes('servicio') || !keys.includes('fecha')) {
-    throw new SchemaError(PROVIDER, 'TIPSA shipment page address changed');
-  }
-  const service = url.searchParams.get('servicio')!;
-  const date = url.searchParams.get('fecha')!;
-  if (!service && !date) return null;
-  if (!SERVICE.test(service) || !/^\d{2}\/\d{2}\/\d{2}$/.test(date)) {
+    || keys.length !== 2 || !keys.includes('servicio') || !keys.includes('fecha')
+    || !SERVICE.test(url.searchParams.get('servicio')!) || !/^\d{2}\/\d{2}\/\d{2}$/.test(url.searchParams.get('fecha')!)) {
     throw new SchemaError(PROVIDER, 'TIPSA shipment page address changed');
   }
   return url.toString();
+}
+
+/**
+ * Whether a lookup that did not redirect is TIPSA's answer for a reference it
+ * cannot locate: a page that refreshes to its "envío no localizado" page.
+ */
+export function tipsaLookupNotFound(html: string): boolean {
+  return /<meta\s+http-equiv=["']refresh["']\s+content=["']\s*\d+\s*;\s*URL=error_env\.html["']/i.test(html);
 }
 
 /**
