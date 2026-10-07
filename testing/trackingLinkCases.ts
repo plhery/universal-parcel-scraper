@@ -126,9 +126,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'correios-br', number: 'AA000000005BR',
     route: /^https:\/\/rastreamento\.correios\.com\.br\/app\/index\.php/,
     marker: /Rastreamento|Objeto|Código|Captcha/i },
+  // The page stays blank until its script bundles arrive from China: often 20 s, sometimes over 40 s.
   { carrier: 'yunda', number: '0000000000001',
     route: /^https:\/\/web\.yundaex\.com\/infoInquiry/,
-    marker: /快件查询|请输入运单号/i, renderTimeoutMs: 20_000 },
+    marker: /快件查询|请输入运单号/i, renderTimeoutMs: 60_000 },
   { carrier: 'postnord', number: 'RR000000005SE',
     route: /^https:\/\/tracking\.postnord\.com\/en\//,
     marker: /Track.*shipment|Tracking|shipment.*found/i, shadowHost: 'pn-widget' },

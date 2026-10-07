@@ -4,6 +4,9 @@ import { parcelTrackingLinks } from '../core/catalog/parcel.js';
 import { trackingLinkCases } from './trackingLinkCases.js';
 import { trackingPageVerdict } from './trackingLinkProbe.js';
 
+// Navigation and the HTTP fallback get 25 s on top of the longest render window.
+const TEST_TIMEOUT_MS = 25_000 + Math.max(...trackingLinkCases.map(testCase => testCase.renderTimeoutMs ?? 10_000));
+
 describe('UI tracking links (rendered public pages)', () => {
   let browser: Browser;
   let userAgent: string;
@@ -20,7 +23,7 @@ describe('UI tracking links (rendered public pages)', () => {
   });
   afterAll(async () => { await browser?.close(); });
 
-  it.for(trackingLinkCases.map((testCase) => ({ ...testCase, name: testCase.carrier + (testCase.provider ? '/' + testCase.provider : '') })))('$name opens a tracking page', { timeout: 45_000 }, async (testCase, context) => {
+  it.for(trackingLinkCases.map((testCase) => ({ ...testCase, name: testCase.carrier + (testCase.provider ? '/' + testCase.provider : '') })))('$name opens a tracking page', { timeout: TEST_TIMEOUT_MS }, async (testCase, context) => {
     const [link] = parcelTrackingLinks({
       carrier: testCase.carrier, trackingNumber: testCase.number,
       trackingProvider: testCase.provider,
