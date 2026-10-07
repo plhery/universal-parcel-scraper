@@ -14,6 +14,9 @@ try {
   assert(packed.files.every(file => !/fixtures|private\.numbers|\.env|\.test\.|\.git\//.test(file.path)));
   writeFileSync(path.join(scratch,'package.json'), JSON.stringify({ private: true, type: 'module' }));
   execFileSync('npm', ['install','--ignore-scripts','--omit=optional','--no-audit','--no-fund',tarball], { cwd: scratch, stdio: 'pipe' });
+  const dpdAppReplies = Object.fromEntries([
+    ['getSessionFullState', 'session'], ['getTrackingData', 'tracking'], ['getTrackingScanList', 'scans'],
+  ].map(([operation, fixture]) => [operation, readFileSync(path.join(root, 'carriers/dpd-de/fixtures', `app-${fixture}.xml`), 'utf8')]));
   writeFileSync(path.join(scratch,'smoke.mjs'), `
     import assert from 'node:assert/strict';
     import { readFileSync, existsSync } from 'node:fs';
@@ -43,6 +46,16 @@ try {
     } }).track({ number: chronopostNumber, carrier: 'chronopost' });
     assert.equal(chronopost.source, 'chronopost');
     assert.equal(chronopost.result.events[0].instant, '2026-01-03T15:01:15+01:00');
+    // Read DPD Germany's forecast through the installed adapter and result facade.
+    const dpdAppReplies = ${JSON.stringify(dpdAppReplies)};
+    const dpd = await createTracker({ providers: [], fetcher: async (url, init) => {
+      assert.equal(String(url), 'https://api.paketnavigator.de/services/v1/Navigator3Service.asmx');
+      const operation = new Headers(init.headers).get('SOAPAction').split('/').at(-1).replaceAll('"', '');
+      assert(dpdAppReplies[operation] && init.signal instanceof AbortSignal);
+      return new Response(dpdAppReplies[operation]);
+    } }).track({ number: '01000000000001', carrier: 'dpd-de' });
+    assert.equal(dpd.result.expected_delivery, '2026-01-03');
+    assert.equal(dpd.result.events.length, 5);
     assert.deepEqual(catalog, CARRIER_CATALOG);
     assert(stages.includes('delivered') && golden.length > 0 && checksumVectors.vectors.ups.length > 0 && schema.type === 'object');
     assert.equal(locatePlace('Paris, FR').country, 'FR');

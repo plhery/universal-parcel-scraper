@@ -1,8 +1,9 @@
 import { createHash, randomBytes } from 'node:crypto';
+import { DateTime } from 'luxon';
 import { CarrierError, ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
-import { zonedTime } from '../../core/time/index.js';
+import { calendarDay, isoTime, zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 
@@ -62,6 +63,65 @@ function scalar(node: XmlNode, name: string, max = 200): string {
   return clean(matches[0]?.text ?? '', max);
 }
 
+function optional(node: XmlNode, name: string): XmlNode | undefined {
+  const matches = children(node, name);
+  if (matches.length > 1) invalid();
+  return matches[0];
+}
+
+const affirmative = (value: string) => value === 'true' || value === '1';
+const placeholderDay = (day: string) => day === '2000-01-01' || day === '0001-01-01';
+
+/** Validate source digits without assigning a zone to an offset-less estimate. */
+function estimateClock(raw: string) {
+  if (!/^\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)?$/.test(raw)
+    || placeholderDay(raw.slice(0, 10))) return null;
+  return isoTime(raw, 'UTC');
+}
+
+function estimateDay(raw: string): string | null {
+  if (estimateClock(raw)) return raw.slice(0, 10);
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
+  const display = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(raw);
+  const day = iso ? calendarDay(Number(iso[1]), Number(iso[2]), Number(iso[3]))
+    : display ? calendarDay(Number(display[3]), Number(display[2]), Number(display[1])) : null;
+  return day && !placeholderDay(day) ? day : null;
+}
+
+function announcedDay(wording: string): string | null {
+  const date = /^Your parcel is estimated to be delivered on:\s*(?:[A-Za-z]+,\s*)?(\d{2}\.\d{2}\.\d{4})$/i.exec(wording)?.[1];
+  return date ? estimateDay(date) : null;
+}
+
+/** Specified dates are forecasts, never scans; delivered display dates are actuals. */
+function deliveryEstimate(tracking: XmlNode, announced: string | null): string | null {
+  const planned = optional(tracking, 'NewDeliveryInfo');
+  const day = planned && affirmative(scalar(planned, 'PlannedDeliveryDateSpecified', 8))
+    ? estimateDay(scalar(planned, 'PlannedDeliveryDate', 64)) : null;
+  // The app displays a changed delivery day ahead of its previous forecast.
+  if (day && planned && affirmative(scalar(planned, 'DateChanged', 8))) return day;
+  const live = optional(tracking, 'LiveTracking');
+  if (live && affirmative(scalar(live, 'EstimatedDeliveryDateTimeSpecified', 8))) {
+    const from = scalar(live, 'EstimatedDeliveryDateTimeFrom', 64);
+    const to = scalar(live, 'EstimatedDeliveryDateTimeTo', 64);
+    const start = estimateClock(from);
+    const end = estimateClock(to);
+    const hasOffset = (value: string) => /(?:Z|[+-]\d{2}:\d{2})$/.test(value);
+    if (start && end && hasOffset(from) === hasOffset(to) && end.timestamp >= start.timestamp) {
+      // An explicit instant can be shown on the German delivery clock. Unresolved
+      // wall clocks retain their digits, without receiving an invented offset.
+      const display = (raw: string, timestamp: number) => hasOffset(raw)
+        ? DateTime.fromMillis(timestamp, { zone: 'Europe/Berlin' }).toFormat('yyyy-MM-dd HH:mm')
+        : raw.slice(0, 16).replace('T', ' ');
+      const first = display(from, start.timestamp);
+      const last = display(to, end.timestamp);
+      return `${first}–${first.slice(0, 10) === last.slice(0, 10) ? last.slice(11) : last}`;
+    }
+  }
+  // DeliveryDateTime is display text and can omit the year: never invent it.
+  return day ?? announced ?? estimateDay(scalar(tracking, 'DeliveryDateTime', 64));
+}
+
 const escaped = (value: string) => value.replace(/[<>&"']/g, character => `&#${character.charCodeAt(0)};`);
 
 type Fields = { readonly [name: string]: string | Fields };
@@ -92,13 +152,18 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
   let placed = '';
+  let announced: string | null = null;
   for (const row of rows) {
     const wording = scalar(row, 'StatusText', 500);
+    if (!wording) invalid();
+    // These rows may carry no scan clock. The date is in the announcement itself.
+    if (/^Your parcel is estimated to be delivered\b/i.test(wording)) {
+      announced = announcedDay(wording);
+      continue;
+    }
     const day = scalar(row, 'ScanDate', 16);
     const time = scalar(row, 'ScanTime', 16);
-    if (!wording || !/^\d{2}\.\d{2}\.\d{4}$/.test(day) || !/^\d{2}:\d{2}$/.test(time)) invalid();
-    // An announced delivery day is not a scan.
-    if (/^Your parcel is estimated to be delivered\b/i.test(wording)) continue;
+    if (!/^\d{2}\.\d{2}\.\d{4}$/.test(day) || !/^\d{2}:\d{2}$/.test(time)) invalid();
     const place = /^(.{1,120}) \(([A-Z]{2})\)$/.exec(scalar(row, 'Location'));
     if (place) placed = place[2]!;
     // German facilities keep German civil time; a clock elsewhere has no established zone.
@@ -130,10 +195,13 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
   const current = events[0]!;
   const rail = DPD_DE_APP_RAIL[scalar(one(tracking, 'LastStatusInfo'), 'StatusID', 64)];
   const stage = current.stage ?? rail?.stage;
+  const status = rail?.status ?? statusOf(current.stage);
   const kilograms = Number(scalar(one(tracking, 'OrderInfo'), 'Weight', 16).replace(',', '.'));
   return {
-    status: rail?.status ?? statusOf(current.stage), ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+    status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description ?? null, last_update: current.time ?? null,
+    expected_delivery: affirmative(scalar(tracking, 'Delivered', 8)) || status === 'delivered' || status === 'exception'
+      || stage === 'delivered' || stage === 'ready_for_pickup' ? null : deliveryEstimate(tracking, announced),
     ...(current.time ? {} : { last_update_local: current.local_time }),
     ...(Number.isFinite(kilograms) && kilograms > 0 ? { weight_kg: kilograms } : {}),
     events: events.slice(0, 100),

@@ -50,7 +50,97 @@ describe('DPD Germany app service', () => {
       { local_time: '2026-01-02T17:39:00', provider_time_text: '02.01.2026 17:39', location: 'Musterville, FR', description: 'In transit.', stage: 'in_transit', stage_source: 'carrier_map' },
       { local_time: '2026-01-01T13:29:00', provider_time_text: '01.01.2026 13:29', description: 'Order information has been transmitted to DPD.', stage: 'registered', stage_source: 'carrier_map' },
     ]);
+    expect(result.expected_delivery).toBe('2026-01-03');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|SYNTHETIC|estimated/);
+  });
+
+  const noAnnouncement = () => fixture('scans').replace(/<TrackingScan>\s*<ScanDate>03\.01\.2026<\/ScanDate>\s*<ScanTime>06:00<\/ScanTime>[\s\S]*?<\/TrackingScan>/, '');
+  const withForecast = (fields: string) => fixture('tracking').replace('</TrackingData>', `${fields}</TrackingData>`);
+  const window = (from: string, to: string, specified = 'true') => `<LiveTracking><EstimatedDeliveryDateTimeSpecified>${specified}</EstimatedDeliveryDateTimeSpecified>`
+    + `<EstimatedDeliveryDateTimeFrom>${from}</EstimatedDeliveryDateTimeFrom><EstimatedDeliveryDateTimeTo>${to}</EstimatedDeliveryDateTimeTo></LiveTracking>`;
+  const planned = (day: string, specified = 'true', changed = 'false') => `<NewDeliveryInfo><DateChanged>${changed}</DateChanged>`
+    + `<PlannedDeliveryDateSpecified>${specified}</PlannedDeliveryDateSpecified><PlannedDeliveryDate>${day}</PlannedDeliveryDate></NewDeliveryInfo>`;
+
+  it('projects the flagged window without changing scan history or retaining driver data', async () => {
+    const from = '2026-01-04T10:15:00+01:00';
+    const to = '2026-01-04T12:45:00+01:00';
+    const fields = window(from, to).replace('</LiveTracking>', '<DriverName>PRIVATE DRIVER</DriverName><CarGeoData><Latitude>52</Latitude></CarGeoData></LiveTracking>');
+    const baseline = await service().track();
+    const result = await service({ getTrackingData: [() => xml(withForecast(fields))] }).track();
+    expect(result).toEqual({ ...baseline, expected_delivery: '2026-01-04 10:15–12:45' });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+  });
+
+  it.each([
+    ['naive clocks', '2026-01-04T10:15:00', '2026-01-04T12:45:00', '2026-01-04 10:15–12:45'],
+    ['a window crossing midnight', '2026-01-04T23:30:00+01:00', '2026-01-05T00:30:00+01:00', '2026-01-04 23:30–2026-01-05 00:30'],
+    ['source UTC clocks', '2026-01-04T09:15:00Z', '2026-01-04T11:45:00Z', '2026-01-04 10:15–12:45'],
+    ['offsets crossing a calendar boundary', '2026-01-05T00:30:00+05:00', '2026-01-05T01:30:00+05:00', '2026-01-04 20:30–21:30'],
+    ['the summer delivery clock', '2026-07-04T08:15:00Z', '2026-07-04T10:45:00Z', '2026-07-04 10:15–12:45'],
+  ])('renders %s on the German clock only when the source establishes an instant', async (_, from, to, expected) => {
+    const result = await service({ getTrackingData: [() => xml(withForecast(window(from, to)))] }).track();
+    expect(result.expected_delivery).toBe(expected);
+  });
+
+  it.each([
+    ['an unspecified window', '2026-01-04T10:00:00+01:00', '2026-01-04T12:00:00+01:00', 'false'],
+    ['placeholder clocks', '2000-01-01T00:00:00+01:00', '2000-01-01T00:00:00+01:00', 'true'],
+    ['a default minimum day', '0001-01-01T00:00:00', '0001-01-01T00:00:00', 'true'],
+    ['a missing end', '2026-01-04T10:00:00+01:00', '', 'true'],
+    ['a reversed window', '2026-01-04T12:00:00+01:00', '2026-01-04T10:00:00+01:00', 'true'],
+    ['mixed unresolved and offset clocks', '2026-01-04T10:00:00', '2026-01-04T12:00:00+01:00', 'true'],
+    ['an impossible day', '2026-02-30T10:00:00+01:00', '2026-02-30T12:00:00+01:00', 'true'],
+    ['an impossible hour', '2026-01-04T24:00:00+01:00', '2026-01-05T01:00:00+01:00', 'true'],
+    ['an impossible offset', '2026-01-04T10:00:00+25:00', '2026-01-04T12:00:00+25:00', 'true'],
+  ])('does not turn %s into an ETA and retains a valid date fallback', async (_, from, to, specified) => {
+    const { track } = service({ getTrackingData: [() => xml(withForecast(window(from, to, specified)))] });
+    expect((await track()).expected_delivery).toBe('2026-01-03');
+    // The same reply without a dated announcement has no estimate.
+    const empty = service({ getTrackingData: [() => xml(withForecast(window(from, to, specified)))], getTrackingScanList: [() => xml(noAnnouncement())] });
+    expect((await empty.track()).expected_delivery).toBeNull();
+  });
+
+  it('prefers a changed planned date over an old window, else uses the precise window', async () => {
+    const fields = window('2026-01-04T10:00:00+01:00', '2026-01-04T12:00:00+01:00') + planned('2026-01-05T00:00:00+01:00', '1', '1');
+    const changed = await service({ getTrackingData: [() => xml(withForecast(fields))] }).track();
+    expect(changed.expected_delivery).toBe('2026-01-05');
+    const unchanged = await service({ getTrackingData: [() => xml(withForecast(fields.replace('<DateChanged>1</DateChanged>', '<DateChanged>false</DateChanged>')))] }).track();
+    expect(unchanged.expected_delivery).toBe('2026-01-04 10:00–12:00');
+  });
+
+  it.each([
+    [planned('2026-01-05T00:00:00+01:00'), '2026-01-05'],
+    [planned('2026-01-05T00:00:00+01:00', 'false'), null],
+    [planned('2000-01-01T00:00:00+01:00'), null],
+    ['<DeliveryDateTime>05.01.2026</DeliveryDateTime>', '2026-01-05'],
+    ['<DeliveryDateTime>2026-01-05</DeliveryDateTime>', '2026-01-05'],
+    ['<DeliveryDateTime>05.01.</DeliveryDateTime>', null],
+    ['<DeliveryDateTime>tomorrow</DeliveryDateTime>', null],
+  ])('reads only a specified or complete delivery date (%s)', async (fields, expected) => {
+    const result = await service({ getTrackingData: [() => xml(withForecast(fields))], getTrackingScanList: [() => xml(noAnnouncement())] }).track();
+    expect(result.expected_delivery).toBe(expected);
+  });
+
+  it('uses the latest dated announcement without requiring or projecting its scan clock', async () => {
+    const notice = '<TrackingScan><StatusText>Your parcel is estimated to be delivered on: Monday, 05.01.2026</StatusText></TrackingScan>';
+    const result = await service({ getTrackingScanList: [() => xml(fixture('scans').replace('</TrackingScanList>', `${notice}</TrackingScanList>`))] }).track();
+    expect(result).toMatchObject({ expected_delivery: '2026-01-05', last_update: '2026-01-03T09:40:00+01:00', current_stage: 'failed_attempt' });
+    expect(result.events).toHaveLength(5);
+    const invalid = notice.replace('Monday, 05.01.2026', 'Monday');
+    const revised = await service({ getTrackingScanList: [() => xml(fixture('scans').replace('</TrackingScanList>', `${invalid}</TrackingScanList>`))] }).track();
+    expect(revised.expected_delivery).toBeNull();
+  });
+
+  it.each([
+    ['the delivered flag', (body: string) => body.replace('<Delivered>false</Delivered>', '<Delivered>true</Delivered>'), (body: string) => body],
+    ['the delivered rail', (body: string) => body.replace('<StatusID>AT_DELIVERY_DEPOT</StatusID>', '<StatusID>DELIVERED</StatusID>'), (body: string) => body],
+    ['a delivered scan', (body: string) => body, (body: string) => body.replaceAll('Unfortunately we have not been able to deliver your parcel.', 'Delivered.')],
+    ['delivery to a pickup point', (body: string) => body, (body: string) => body.replaceAll('Unfortunately we have not been able to deliver your parcel.', 'Delivered by driver to DPD Pickup parcelshop/ station.')],
+    ['an exception', (body: string) => body.replace('<StatusID>AT_DELIVERY_DEPOT</StatusID>', '<StatusID>FUTURE</StatusID>'), (body: string) => body.replaceAll('Unfortunately we have not been able to deliver your parcel.', "We're sorry but your parcel couldn't be delivered as arranged.")],
+  ])('clears forecasts after %s even when an old window remains', async (_, tracking, scans) => {
+    const fields = window('2026-01-04T10:00:00+01:00', '2026-01-04T12:00:00+01:00');
+    const result = await service({ getTrackingData: [() => xml(tracking(withForecast(fields)))], getTrackingScanList: [() => xml(scans(fixture('scans')))] }).track();
+    expect(result.expected_delivery).toBeNull();
   });
 
   it('signs each call for its operation and minute and sends the host identity', async () => {

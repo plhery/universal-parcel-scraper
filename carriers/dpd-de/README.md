@@ -75,7 +75,14 @@ the service does not require.
   three-letter placeholder.
 - Scans carry English wording without codes. Each known wording is mapped
   whole, because the shared classifier misreads several of them. An announced
-  delivery day is not a scan.
+  delivery day is read as an estimate, without becoming a scan or changing
+  tracking freshness.
+- Estimates use the flagged live delivery window, a specified planned date,
+  or a fully dated announcement. A changed planned date replaces the previous
+  window, as in the app. Placeholder dates, incomplete windows and display
+  dates without a year are ignored; completed delivery and pickup availability
+  clear the forecast. Offset-bearing windows use German civil time; unresolved
+  window clocks retain their supplied digits.
 - Scan clocks have minutes and no offset. A scan at a German facility is read
   in German civil time, which agrees with the guest API's offsets for the same
   scans. A clock elsewhere stays local.
@@ -89,7 +96,8 @@ the service does not require.
 
 Recipient details, addresses, delivery proofs and preference links are discarded.
 No UK service is inferred from a German result. The app service's reason codes,
-parcel shop names and delivery estimates are not projected.
+parcel shop names and driver details are not projected. An estimate requires a
+forecast in DPD's reply. A delivery postcode can unlock the guest API's window.
 
 ## Testing
 
