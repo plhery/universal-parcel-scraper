@@ -9,9 +9,13 @@ import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 export const DPD_DE_APP_API = 'https://api.paketnavigator.de/services/v1/Navigator3Service.asmx';
 /** Activity the service places outside Germany; the app tier would read the same parcel. */
 export const DPD_DE_OTHER_COUNTRY = 'other_country';
+/** The lookup stopped waiting for the session, which keeps opening for the next one. */
+export const DPD_DE_SESSION_OPENING = 'session_opening';
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
 const SERVICE = 'https://cloud.dpd.com/';
 const MAX_BYTES = 2_000_000;
+/** Opening a session has taken up to 42 seconds. */
+const SESSION_OPEN_MS = 75_000;
 // Shared partner credentials of the public app, distributed with the maintainer's approval.
 const PARTNER: DpdDePartner = { name: 'Android Paketnavigator3', token: 'A33363237662F5945576', password: '272 WetFd2mpXrgD' };
 
@@ -127,6 +131,7 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
 /**
  * The German app's SOAP service. Tracking needs an anonymous device session, which the
  * service takes tens of seconds to open and then accepts for hours: one is kept per client.
+ * The opening runs on its own clock, so a lookup that stops waiting leaves it to the next.
  */
 export class DpdDeAppClient {
   readonly #partner: DpdDePartner;
@@ -135,7 +140,7 @@ export class DpdDeAppClient {
   readonly #now: () => number;
   readonly #device = randomBytes(8).toString('hex');
   #session = '';
-  #opening: Promise<string> | null = null;
+  #opening: { token: Promise<string>; holders: Set<AbortSignal>; release: () => void } | null = null;
 
   constructor(options: { partner?: DpdDePartner; fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {
     this.#partner = options.partner ?? PARTNER;
@@ -144,13 +149,14 @@ export class DpdDeAppClient {
     this.#now = options.now ?? Date.now;
   }
 
-  async track(number: string, options: { signal: AbortSignal; timeoutMs: number }): Promise<CarrierResult> {
+  /** `sessionWaitMs` bounds the wait for a session still opening; the whole `timeoutMs` by default. */
+  async track(number: string, options: { signal: AbortSignal; timeoutMs: number; sessionWaitMs?: number }): Promise<CarrierResult> {
     if (!/^\d{14}$/.test(number)) throw new TypeError('DPD Germany app tracking takes 14 digits');
     const deadline = performance.now() + options.timeoutMs;
     const left = () => Math.max(1, Math.floor(deadline - performance.now()));
     try {
       for (let attempt = 0; ; attempt += 1) {
-        const session = await this.session(options.signal, left());
+        const session = await this.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity));
         try {
           const data = await this.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: '',
             UpdateNewDeliveryData: 'false', addParcelIfNoTrackingdataAvailable: 'false', ParcelFlowTypeID: 'receiving' }, options.signal, left());
@@ -172,27 +178,50 @@ export class DpdDeAppClient {
     }
   }
 
-  /** One session for every lookup; the lookup that opens it lends its signal, the others only wait. */
-  private async session(signal: AbortSignal, timeoutMs: number): Promise<string> {
+  /**
+   * One session for every lookup. The opening runs while a lookup that asked for it is still
+   * running, even one that stopped waiting; each lookup waits until its signal or `waitMs` ends.
+   */
+  private async session(signal: AbortSignal, waitMs: number): Promise<string> {
     if (this.#session) return this.#session;
-    if (!this.#opening) {
-      const opening = this.call('getSessionFullState', { SessionToken: '', DeviceData: {
-        HardwareID: this.#device, BootSystemID: 'Android_Phone', Version: '15', AppVersion: '4.2.0',
-      } }, signal, timeoutMs).then(result => {
-        const token = scalar(one(result, 'SessionFullState'), 'SessionToken', 600);
-        if (!/^[A-Za-z0-9+/=]{16,512}$/.test(token)) invalid();
-        return this.#session = token;
-      });
-      this.#opening = opening;
-      void opening.catch(() => undefined).finally(() => { if (this.#opening === opening) this.#opening = null; });
-    }
-    const shared = this.#opening;
     signal.throwIfAborted();
+    if (!this.#opening) {
+      const controller = new AbortController();
+      const holders = new Set<AbortSignal>();
+      const token = this.call('getSessionFullState', { SessionToken: '', DeviceData: {
+        HardwareID: this.#device, BootSystemID: 'Android_Phone', Version: '15', AppVersion: '4.2.0',
+      } }, controller.signal, SESSION_OPEN_MS).then(result => {
+        const value = scalar(one(result, 'SessionFullState'), 'SessionToken', 600);
+        if (!/^[A-Za-z0-9+/=]{16,512}$/.test(value)) invalid();
+        return this.#session = value;
+      });
+      const release = () => {
+        for (const holder of holders) if (holder.aborted) holders.delete(holder);
+        if (!holders.size) controller.abort(new Error('No lookup is waiting for the DPD Germany session'));
+      };
+      const opening = { token, holders, release };
+      this.#opening = opening;
+      void token.catch(() => undefined).finally(() => {
+        if (this.#opening === opening) this.#opening = null;
+        for (const holder of holders) holder.removeEventListener('abort', release);
+      });
+    }
+    const { token, holders, release } = this.#opening;
+    if (!holders.has(signal)) {
+      holders.add(signal);
+      signal.addEventListener('abort', release, { once: true });
+    }
     let leave!: () => void;
-    const left = new Promise<never>((_resolve, reject) => { leave = () => reject(signal.reason as Error); });
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const left = new Promise<never>((_resolve, reject) => {
+      leave = () => reject(signal.reason as Error);
+      timer = setTimeout(() => reject(new IndeterminateError('DPD Germany', 'DPD Germany app session is still opening', {
+        reason: DPD_DE_SESSION_OPENING,
+      })), Math.max(0, Math.min(waitMs, SESSION_OPEN_MS)));
+    });
     signal.addEventListener('abort', leave, { once: true });
-    try { return await Promise.race([shared, left]); }
-    finally { signal.removeEventListener('abort', leave); }
+    try { return await Promise.race([token, left]); }
+    finally { clearTimeout(timer); signal.removeEventListener('abort', leave); }
   }
 
   private async call(operation: string, fields: Fields, signal: AbortSignal, timeoutMs: number): Promise<XmlNode> {

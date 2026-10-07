@@ -1,10 +1,12 @@
 import type { AdapterFactory } from '../../core/adapter/index.js';
 import { CarrierError, carrierErrorKind } from '../../core/errors/index.js';
-import { recoverableByDefault } from '../../core/runner/index.js';
 import { DPDTracker } from '../dpd/adapter.js';
 import { DPD_DE_OTHER_COUNTRY, DpdDeAppClient } from './app.js';
 
-/** Germany uses the same guest protocol, with its own business-unit selector, then the German app's service. */
+/** Left to the guest API when the app's session is still opening ahead of it. */
+const GUEST_RESERVE_MS = 20_000;
+
+/** Germany reads the German app's service, then the guest protocol with its own business-unit selector. */
 export const adapter: AdapterFactory = (environment) => {
   const app = new DpdDeAppClient({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   const tracker = new DPDTracker({
@@ -14,14 +16,18 @@ export const adapter: AdapterFactory = (environment) => {
     recorder: environment.recorder,
     userAgent: environment.userAgent,
     app: {
-      run: (number, context) => app.track(number, context),
-      // The app reads the same parcel, so it cannot place another country's delivery in Germany.
-      recovers: error => (recoverableByDefault(error) || carrierErrorKind(error) === 'schema')
+      run: (number, { signal, timeoutMs, leads }) => app.track(number, {
+        signal, timeoutMs, sessionWaitMs: leads ? Math.max(0, timeoutMs - GUEST_RESERVE_MS) : timeoutMs,
+      }),
+      // Each service has its own host, limits and outages, so either answers when
+      // the other fails. Both read the same parcel: neither can place another
+      // country's delivery in Germany, nor find a parcel the guest API does not know.
+      recovers: error => carrierErrorKind(error) !== 'not_found'
         && !(error instanceof CarrierError && error.reason === DPD_DE_OTHER_COUNTRY),
     },
   });
   return {
-    id: 'dpd-de', recordsSteps: true, steps: ['direct', 'app'],
+    id: 'dpd-de', recordsSteps: true, steps: ['app', 'direct'],
     track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
   };
 };

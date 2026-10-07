@@ -18,8 +18,8 @@
     "mode": "automatic",
     "adapter": "dpd-de",
     "steps": [
-      "direct",
-      "app"
+      "app",
+      "direct"
     ],
     "requirements": [
       {

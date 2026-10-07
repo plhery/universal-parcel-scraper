@@ -5,16 +5,22 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
 
 ## How it works
 
-1. `direct`: the myDPD guest API, using `businessUnit=DPD-DE`. It shares the
-   installation, Remote Config and OAuth protocol with the Swiss adapter.
-   Tokens are cached per instance; all requests share the caller's deadline
-   and cancellation signal.
-2. `app`: the SOAP service of the German
+1. `app`: the SOAP service of the German
    [DPD app](https://play.google.com/store/apps/details?id=de.dpd.mobile) at
    `https://api.paketnavigator.de/services/v1/Navigator3Service.asmx`
    ([service schema](https://api.paketnavigator.de/services/v1/Navigator3Service.asmx?WSDL)),
-   over plain HTTP. It runs when the guest API fails, changes shape or has no
-   history yet.
+   over plain HTTP. Without a postcode it runs first, because its scans name
+   their facility and include order registration, where the unverified guest
+   reply has neither.
+2. `direct`: the myDPD guest API, using `businessUnit=DPD-DE`. It shares the
+   installation, Remote Config and OAuth protocol with the Swiss adapter.
+   Tokens are cached per instance; all requests share the caller's deadline
+   and cancellation signal. With a postcode it runs first, because DPD then
+   verifies the reply and adds places and the delivery window; the app service
+   follows it.
+
+Either service answers when the other fails, except for a parcel the guest API
+does not know or a delivery placed in another country.
 
 ## Notes
 
@@ -41,10 +47,15 @@ app, the same for every install and independent of any account, and are
 included in the adapter. The app also sends a Firebase App Check token, which
 the service does not require.
 
-- The service takes tens of seconds to open a session and then accepts it for
-  hours. One session is kept per adapter instance and replaced when the service
-  rejects it. A lookup that has to open the session needs a budget above that
-  delay.
+- The service takes tens of seconds to open a session, whatever the device
+  data, language or user agent, and then accepts it for hours. One session is
+  kept per adapter instance and replaced when the service rejects it.
+- Lookups share the opening, which lasts up to 75 seconds and runs while a
+  lookup that asked for it is still running. Ahead of the guest API, a lookup
+  waits for it while keeping 20 seconds for the guest API. The default budget
+  leaves time to wait, so the first lookup of an adapter instance lasts as long
+  as the opening. A lookup with less budget goes on to the guest API at once,
+  and the opening continues until that lookup's budget ends.
 - No postcode is sent, and `UpdateNewDeliveryData` and
   `addParcelIfNoTrackingdataAvailable` stay false, so a lookup changes nothing
   in the session.

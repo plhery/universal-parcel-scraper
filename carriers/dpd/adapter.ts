@@ -546,12 +546,14 @@ export interface DPDTrackerOptions {
   trawl?: TrawlClient | null;
   recorder?: StepRecorder;
   userAgent?: string;
-  /** A further German tier, and the failures of the guest tier it may answer after. */
+  /** A further German tier, ahead of the guest tier when no postcode is given. */
   app?: DPDAppTier;
 }
 
 export interface DPDAppTier {
-  run(number: string, context: { signal: AbortSignal; timeoutMs: number }): Promise<CarrierResult>;
+  /** `leads` when the guest tier is still to come and needs time left. */
+  run(number: string, context: { signal: AbortSignal; timeoutMs: number; leads: boolean }): Promise<CarrierResult>;
+  /** The failures of either tier the other may answer after. */
   recovers(error: unknown): boolean;
 }
 
@@ -616,11 +618,23 @@ export class DPDTracker {
       const kind = carrierErrorKind(error);
       return !context.signal?.aborted && kind !== null && PAGE_RECOVERS.has(kind);
     };
+    const app = this.app;
+    const appRecovers = (error: unknown): boolean => !context.signal?.aborted && app!.recovers(error);
+    // Without a postcode the app's scans are the richer history; with one, the
+    // guest tier's verified reply comes first.
+    const appLeads = app !== undefined && !resolvedPostcode;
+    const appStep = (leads: boolean) => ({
+      id: 'app',
+      ...(leads ? {} : { recovers: appRecovers }),
+      run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => app!.run(trackingNumber, { signal, timeoutMs: remainingMs, leads }),
+    });
     const result = await runSteps<CarrierResult>({
       carrier, budgetMs: lookup.budgetMs, signal: lookup.signal, recorder: this.recorder,
     }, [
+      ...(appLeads ? [appStep(true)] : []),
       {
         id: 'direct',
+        ...(appLeads ? { recovers: appRecovers } : {}),
         run: () => this.apiFetch(trackingNumber, resolvedPostcode, lookup).catch((error: unknown) => {
           // The signal ends the guest tier a moment before the runner counts
           // the budget as spent: the tier reports the budget itself, so the
@@ -635,11 +649,7 @@ export class DPDTracker {
         id: 'page',
         recovers: pageRecovers,
         run: ({ previousError }: { previousError?: unknown }) => this.pageFetch(trackingNumber, previousError !== undefined, lookup),
-      }] : this.app ? [{
-        id: 'app',
-        recovers: (error: unknown) => !context.signal?.aborted && this.app!.recovers(error),
-        run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => this.app!.run(trackingNumber, { signal, timeoutMs: remainingMs }),
-      }] : []),
+      }] : app && !appLeads ? [appStep(false)] : []),
     ]);
     result.tracking_url = this.country === 'DE'
       ? `https://tracking.dpd.de/status/en_US/parcel/${trackingNumber}`
