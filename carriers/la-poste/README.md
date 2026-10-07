@@ -1,8 +1,10 @@
 # La Poste / Colissimo
 
-La Poste's unified tracking feed. It serves Colissimo, tracked mail,
-[Chronopost](../chronopost/README.md) and [Delivengo](../delivengo/README.md),
-so those two folders point `tracking.adapter` here.
+La Poste's unified tracking feed. It serves Colissimo, tracked mail and
+[Delivengo](../delivengo/README.md), whose folder points `tracking.adapter` here.
+The feed also answers Chronopost identifiers, but can omit international partner
+scans and references without indicating incomplete history.
+[Chronopost](../chronopost/README.md) therefore uses its own direct adapter.
 
 Numeric tracked-mail identifiers reach the same feed without truncation or
 conversion to a parcel number. Their detection rules live in `carrier.json`;
@@ -64,9 +66,6 @@ universal provider.
 ## Rejected approaches
 
 - Scraping the public tracker page: it calls this keyless feed itself.
-- Chronopost's SOAP service: exposes more consignment metadata than tracking
-  needs and isn't meant for automated use. The unified feed answers the same
-  numbers.
 - Retrying a 403 with backoff: the hiccup is brief, so waiting only spends the
   user's deadline.
 - Treating every non-zero `returnCode` as not-found: that reports parcels

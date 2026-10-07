@@ -42,6 +42,62 @@
       "confirmedBy": "fixture",
       "firstSeen": "2026-09-12",
       "note": "Observed on a Chronopost shipment with an empty group and the label 'Livraison effectuée'."
+    },
+    {
+      "code": "DC",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis en cours de préparation chez l'expéditeur",
+      "language": "fr"
+    },
+    {
+      "code": "DB",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis déposé par l'expéditeur",
+      "language": "fr"
+    },
+    {
+      "code": "SC",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Tri effectué dans l'agence de départ",
+      "language": "fr"
+    },
+    {
+      "code": "TS",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis en cours d'acheminement",
+      "language": "fr"
+    },
+    {
+      "code": "O",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis en cours d'acheminement",
+      "language": "fr"
+    },
+    {
+      "code": "TP",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis en cours d'acheminement",
+      "language": "fr"
+    },
+    {
+      "code": "SM",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Notification after an in-transit scan; inherits the preceding shipment stage rather than establishing a milestone.",
+      "wording": "Destinataire informé par SMS ou mail",
+      "language": "fr"
     }
   ]
 }

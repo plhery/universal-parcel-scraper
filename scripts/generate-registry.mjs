@@ -11,7 +11,7 @@
  *   tracking.adapter is 'universal'        -> 'universal'
  *   the folder has adapter.ts              -> its own id
  *   tracking.adapter names another folder
- *   that has adapter.ts                    -> that id (chronopost -> la-poste)
+ *   that has adapter.ts                    -> that id (delivengo -> la-poste)
  *   anything else                          -> not registered yet (served by the
  *                                             host's legacy dispatch until moved)
  *

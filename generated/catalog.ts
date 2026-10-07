@@ -1110,8 +1110,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/Paris",
     "tracking": {
       "mode": "automatic",
-      "adapter": "la-poste",
-      "recognitionRank": 45
+      "adapter": "chronopost",
+      "recognitionRank": 45,
+      "localClocks": true
     },
     "canaryUrl": "https://www.chronopost.fr/tracking-no-cms/suivi-page",
     "trackingUrlTemplate": "https://www.chronopost.fr/tracking-no-cms/suivi-page?langue=fr&listeNumerosLT={trackingNumber}",

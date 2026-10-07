@@ -16,20 +16,20 @@
   "timezone": "Europe/Paris",
   "tracking": {
     "mode": "automatic",
-    "adapter": "la-poste",
+    "adapter": "chronopost",
     "steps": [
-      "direct",
-      "retry"
+      "direct"
     ],
     "recognition": {
       "rank": 45
-    }
+    },
+    "localClocks": true
   },
   "capabilities": [
     "history",
     "location",
-    "eta",
-    "provider_code"
+    "provider_code",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://www.chronopost.fr/tracking-no-cms/suivi-page?langue=fr&listeNumerosLT={trackingNumber}",
@@ -43,10 +43,11 @@
     "scraped": [
       "status",
       "history",
-      "location",
+      "location"
+    ],
+    "discarded": [
       "eta"
     ],
-    "discarded": [],
     "unavailable": []
   },
   "links": [

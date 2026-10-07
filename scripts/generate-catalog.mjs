@@ -38,7 +38,7 @@ async function readCarrierDocuments() {
 /**
  * Folders that ship their own `adapter.ts`. An automatic carrier either runs a
  * universal provider or names one of these folders — its own, or the folder
- * whose adapter serves it (chronopost -> la-poste, quickpac -> planzer). There
+ * whose adapter serves it (delivengo -> la-poste, quickpac -> planzer). There
  * is no free-text adapter name any more: a typo must fail the generator rather
  * than reach the registry.
  */

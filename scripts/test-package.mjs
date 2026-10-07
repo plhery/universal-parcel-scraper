@@ -30,6 +30,19 @@ try {
     const match = parseTrackingInput('1Z999AA10123456784');
     assert.equal(match.carrier, 'ups');
     assert.equal(createTracker({ providers: [] }).detect(match.trackingNumber).carrier, 'ups');
+    // Exercise Chronopost through the installed registry, without optional browsers.
+    const chronopostNumber = 'XU123456785FR';
+    const chronopostXml = '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>'
+      + '<t:trackSkybillV2Response xmlns:t="http://cxf.tracking.soap.chronopost.fr/"><return><errorCode>0</errorCode><listEventInfoComp>'
+      + "<events><code>TS</code><eventDate>2026-01-03T15:01:15+01:00</eventDate><eventLabel>Colis en cours d'acheminement</eventLabel></events>"
+      + '<skybillNumber>' + chronopostNumber + '</skybillNumber></listEventInfoComp></return></t:trackSkybillV2Response></s:Body></s:Envelope>';
+    const chronopost = await createTracker({ providers: [], fetcher: async (url, init) => {
+      assert.equal(String(url), 'https://ws.chronopost.fr/tracking-cxf/TrackingServiceWS');
+      assert(init.signal instanceof AbortSignal && init.body.includes(chronopostNumber));
+      return new Response(chronopostXml);
+    } }).track({ number: chronopostNumber, carrier: 'chronopost' });
+    assert.equal(chronopost.source, 'chronopost');
+    assert.equal(chronopost.result.events[0].instant, '2026-01-03T15:01:15+01:00');
     assert.deepEqual(catalog, CARRIER_CATALOG);
     assert(stages.includes('delivered') && golden.length > 0 && checksumVectors.vectors.ups.length > 0 && schema.type === 'object');
     assert.equal(locatePlace('Paris, FR').country, 'FR');

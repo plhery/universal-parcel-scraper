@@ -98,6 +98,11 @@ When a result names a delivery partner, the tracker also asks that partner's ada
 answer comes back separately, checked against the number on its own. Adopting it is the
 consumer's choice.
 
+Chronopost reads its own credential-free tracking operation, including scans after export
+and partner references. La Poste's unified feed can omit that history without a completeness
+marker, so its fast success does not replace Chronopost's direct result. A checked Geopost
+reference and explicit German destination propose a DPD Germany confirmation lookup.
+
 Consumers with their own router can call `trackCarrier` from `/node` with an
 `AdapterRegistry`, their configured `UniversalTracker` and a `StepRecorder`. It dispatches one
 carrier lookup and normalizes the result, and leaves scheduling and provider choice to the

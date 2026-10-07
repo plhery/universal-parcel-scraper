@@ -1,25 +1,49 @@
 # Chronopost
 
-La Poste's express arm, including Chrono Shop2Shop. No adapter of its own: La
-Poste's unified feed answers Chronopost numbers, so tracking runs through
-[`la-poste`](../la-poste/README.md).
+Chronopost France, including Chrono Shop2Shop and partner scans after export.
 
-- Events arrive with an empty `group`, so the event `code` is the only status
-  key.
-- Chronopost's dedicated postal prefixes select it directly; the La Poste rule excludes them.
-- A fourteen-digit number with a fifteenth character is offered only when that character is
-  DPD's MOD 37,36 key.
-- The app links to the Chronopost portal because that is the brand on the label.
-- Other postal-shaped numbers can be confirmed by the same feed before using a universal
-  provider. [Chronopost's tracking instructions](https://www.chronopost.fr/fr/faq/destinataire/ou-trouver-mon-numero-de-colis)
-  describe the broad shape, which is a candidate for a lookup rather than a unique carrier rule.
-- Not used: Chronopost's SOAP service (more consignment metadata than tracking
-  needs, not meant for automated use) or scraping `chronopost.fr` (a second
-  portal for no extra field).
+## Retrieval
 
-The unified feed's identity checks and limitations follow the shared adapter.
-Master and child parcels retain separate shipment identities. A partner
-reference copied from history does not become the child's adapter credential.
+One direct HTTP POST calls `trackSkybillV2` on the
+[official tracking service](https://ws.chronopost.fr/tracking-cxf/TrackingServiceWS?wsdl).
+The operation requires only the language and whole tracking number, with no
+account credentials or browser. The returned `skybillNumber` must match.
+An identity-bound, successful empty event list is not-found; service errors,
+SOAP faults, blocked pages and malformed replies stay failures.
 
-`npm run test:carriers:live -- testing/frenchDirectCarriers.live.test.ts` checks
-wrong-number handling without supplied credentials.
+The service includes international scans and the partner reference that
+[La Poste's unified feed](../la-poste/README.md) can omit. That feed has no
+reliable completeness flag, so it does not substitute for Chronopost history.
+The public page's `tracking-no-cms/suivi-colis` fragment and Shop2Shop's
+`tracking-ws-rest` endpoint can require a browser challenge.
+
+## Routing and interpretation
+
+Dedicated postal prefixes select Chronopost; other postal-shaped identifiers
+need direct confirmation. A fifteen-character numeric identifier must pass
+the shared DPD check-character validation. These shapes suggest a lookup,
+not carrier ownership.
+
+Scans retain their supplied offsets and seconds. Offset-less clocks stay
+local. Notifications retain activity without changing the last established
+shipment stage. Observed codes are used only when their wording agrees,
+because partner scans can reuse codes.
+
+A checked `GEO/` parcel reference with an explicit German delivery country
+proposes DPD Germany. The tracker asks that adapter with the partner's number
+and returns its independent confirmation for consumer routing. Other safe
+partner references remain available for catalog-based confirmation. Conflicting
+references or countries do not select a partner. Master and child identities
+remain separate.
+
+## Limitations
+
+The tracking operation supplies no delivery estimate. Recipient addresses,
+postcodes, delivery-point contact details and free-form supplementary comments
+are discarded; only the delivery country's code is read from the address field.
+
+## Testing
+
+`npm run test:carriers:live -- carriers/chronopost` checks unknown-number handling.
+Set `CHRONOPOST_TRACKING_NUMBER` outside Git to check positive retrieval and
+HTTP recognition.
