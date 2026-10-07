@@ -19,10 +19,11 @@ async function fixture(url = `https://t.17track.net/en#nums=${number}`, endpoint
   const handlers = {};
   let detached = false;
   const detachedEvents = [];
-  const page = { context: () => ({addCookies: async () => {}}), on: (event, fn) => { handlers[event] = fn; },
+  const page = { addInitScript: async () => {}, context: () => ({addCookies: async () => {}}), on: (event, fn) => { handlers[event] = fn; },
     off: event => { detached = true; detachedEvents.push(event); } };
   const capture = await attachTrackingCapture(page, url, { captureResponses: [endpoint, ...additional] });
-  const respond = (body, { url = endpoint, headers = {}, status = 200, method = 'GET', read, requestBody } = {}) => handlers.response({
+  const respond = (body, { url = endpoint, headers = {}, status = 200, method = endpoint === api ? 'POST' : 'GET', read,
+    requestBody = endpoint === api ? { data: [{ num: number }] } : undefined } = {}) => handlers.response({
     url: () => url, status: () => status, request: () => ({url: () => url, method: () => method, postDataJSON: () => requestBody}),
     headers: () => ({ 'content-type': 'application/json', 'content-length': String(body.length), 'content-encoding': 'gzip', ...headers }),
     body: read ?? (async () => Buffer.from(body)),
@@ -415,6 +416,57 @@ test('reads decoded compressed history and waits through polling for a final mat
   assert.equal(settled, false);
   await respond(reply(200)); await waiting;
   assert.deepEqual((await capture.drain()).capturedResponses.map(r => JSON.parse(r.body).shipments[0].code), [100, 200]);
+});
+
+test('17TRACK submits the postcode through the normal form after a matching prompt and retains both replies', async () => {
+  const postcode = 'AB1 2CD';
+  const { capture, respond, page } = await fixture(`https://t.17track.net/en#nums=${number}&trawl-postcode=${encodeURIComponent(postcode)}`);
+  let filled, submitted = 0;
+  page.getByText = (text, options) => {
+    assert.equal(options.exact, true);
+    if (text === number) return { first: () => ({ waitFor: async () => {} }) };
+    assert.equal(text, 'reference');
+    return { click: async () => {} };
+  };
+  page.getByRole = role => {
+    assert.equal(role, 'dialog');
+    return { locator: selector => {
+      if (selector === 'input[name="postal_code"]') return { fill: async value => { filled = value; } };
+      assert.equal(selector, 'button[type="submit"]');
+      return { click: async () => {
+        submitted++;
+        await respond(reply(100), { requestBody: { data: [{ num: number, params_v2: { postal_code: filled } }] } });
+        await respond(reply(200), { requestBody: { data: [{ num: number, params_v2: { postal_code: filled } }] } });
+      } };
+    } };
+  };
+  await respond(JSON.stringify({ meta: { code: 200 }, shipments: [{ number, code: 400, shipment: null, params_v2: [{ key: 'postal_code' }] }] }));
+  await capture.prepare(1000);
+  assert.equal(filled, postcode);
+  assert.equal(submitted, 1);
+  const rows = (await capture.drain()).capturedResponses;
+  assert.deepEqual(rows.map(r => r.postcodeSubmitted === true), [false, true, true]);
+});
+
+test('17TRACK binds requests to one number and does not mark another postcode as submitted', async () => {
+  const { capture, respond } = await fixture(`https://t.17track.net/en#nums=${number}&trawl-postcode=8000`);
+  await respond(reply(400), { requestBody: { data: [{ num: 'OTHER123', params_v2: { postal_code: '8000' } }] } });
+  await respond(reply(400), { requestBody: { data: [{ num: number }, { num: 'OTHER123' }] } });
+  assert.equal(capture.hasResponse(), false);
+  await respond(reply(400), { requestBody: { data: [{ num: number, params_v2: { postal_code: '9999' } }] } });
+  assert.equal((await capture.drain()).capturedResponses[0].postcodeSubmitted, undefined);
+});
+
+test('17TRACK leaves a completed lookup alone and does not expose form errors containing private input', async () => {
+  const { capture, respond } = await fixture(`https://t.17track.net/en#nums=${number}&trawl-postcode=8000`);
+  await respond(reply(200));
+  await capture.prepare(1000);
+  await capture.drain();
+  const gated = await fixture(`https://t.17track.net/en#nums=${number}&trawl-postcode=8000`);
+  gated.page.getByText = () => { throw new Error(`${number}: 8000`); };
+  await gated.respond(JSON.stringify({ meta: { code: 200 }, shipments: [{ number, code: 400, shipment: null, params_v2: [{ key: 'postal_code' }] }] }));
+  await assert.rejects(gated.capture.prepare(1000), { message: '17TRACK postcode form could not complete' });
+  await gated.capture.drain();
 });
 
 test('ignores unrelated endpoints and rejects oversized declared and decoded bodies', async () => {

@@ -44,7 +44,7 @@ and [COVERAGE.md](COVERAGE.md) holds what was measured.
   `fetchSource()` per provider, each under its own budget.
 - Numbers are uppercased with spaces, dots and dashes removed, and must match
   `^(?=.*\d)[A-Z0-9]{4,40}$`. Every result must be bound to the requested number.
-- A supplied postcode is passed to every provider, but only ParcelsApp uses it. The
+- A supplied postcode is passed to every provider; ParcelsApp and 17TRACK use it. The
   carrier's time zone is passed too. It is used only for scans with no trustworthy zone of
   their own.
 - UI notices (postcode or country prompts, sign-in requests, "no information") never

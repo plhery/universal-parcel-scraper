@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierErrorKind } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
-import { parse17TrackResponse, SeventeenTrackTracker } from './adapter.js';
+import { adapter, parse17TrackResponse, SeventeenTrackTracker } from './adapter.js';
 
 const number = 'ZZ12345678900';
 const API = 'https://t.17track.net/track/restapi';
@@ -189,6 +189,29 @@ describe('17TRACK result parsing', () => {
       .toMatchObject({ name: 'SeventeenTrackLookupError', kind: 'transport', reason: 'lookup_pending', providerCode: 100 });
   });
 
+  it.each([
+    { params_v2: [{ key: 'postal_code', input_type: 'Text' }] },
+    { param: { type: 'PostalCode' } },
+    { params: [{ type: 'PostalCode' }] },
+  ])('relays a matching postcode prompt without inferring that a supplied postcode worked: %j', fields => {
+    const payload = { meta: { code: 200 }, shipments: [{ number, code: 400, shipment: null, ...fields }] };
+    expect(thrown(() => parse17TrackResponse(payload, number))).toMatchObject({ kind: 'input_required', provider: '17TRACK', field: 'postcode' });
+    expect(thrown(() => parse17TrackResponse(payload, number, '8000'))).toMatchObject({ name: 'SeventeenTrackNoHistoryError' });
+    expect(thrown(() => parse17TrackResponse(payload, 'OTHER123'))).toMatchObject({ kind: 'schema' });
+    expect(thrown(() => parse17TrackResponse({ ...payload, shipments: [...payload.shipments, ...payload.shipments] }, number))).toMatchObject({ kind: 'schema' });
+  });
+
+  it('keeps history ahead of optional postcode metadata and ignores other requested inputs', () => {
+    const payload = history();
+    payload.shipments[0]!.params_v2 = [{ key: 'postal_code' }];
+    expect(parse17TrackResponse(payload, number).current_stage).toBe('delivered');
+    for (const fields of [{ params_v2: [{ key: 'phone_number_last_4' }] }, { param: { type: 'ShipDate' } },
+      { params_v2: [], param: { type: 'PostalCode' } }]) {
+      expect(thrown(() => parse17TrackResponse({ meta: { code: 200 }, shipments: [{ number, code: 400, shipment: null, ...fields }] }, number)))
+        .toMatchObject({ name: 'SeventeenTrackNoHistoryError' });
+    }
+  });
+
   it('does not infer no history from another identity, ambiguity, an unknown code or an unexpected payload', () => {
     for (const payload of [noHistory('OTHER123'), { ...noHistory(), shipments: [noHistory().shipments[0], noHistory().shipments[0]] }]) {
       expect(thrown(() => parse17TrackResponse(payload, number))).toMatchObject({ kind: 'schema' });
@@ -238,6 +261,34 @@ describe('17TRACK browser capture', () => {
       captureResponses: [API], settleTimeout: 15_000,
     });
     expect(Number.isInteger(JSON.parse(String(options!.body)).maxTimeout)).toBe(true);
+  });
+
+  it('forwards adapter input, accepts a bound postcode reply, and records a prompt through telemetry', async () => {
+    const prompt = { meta: { code: 200 }, shipments: [{ number, code: 400, shipment: null, params_v2: [{ key: 'postal_code' }] }] };
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(captured(prompt));
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const provider = adapter({ trawl: new TrawlClient('http://browser.test', fetcher), recorder, env: {}, browserExecutablePath: null });
+    await expect(provider.track({ number, postcode: null, timezone: null })).rejects.toMatchObject({ kind: 'input_required', field: 'postcode' });
+    expect(recorder.lookup).toHaveBeenCalledWith(expect.objectContaining({ outcome: 'input_required', errorType: 'InputRequiredError' }));
+    const url = `https://t.17track.net/en#nums=${number}&trawl-postcode=AB1%202CD`;
+    fetcher.mockResolvedValue(captured(null, { url, capturedResponses: [
+      { url: API, status: 200, body: JSON.stringify(prompt) },
+      { url: API, status: 200, body: JSON.stringify(delivered), postcodeSubmitted: true },
+    ] }));
+    await expect(provider.track({ number, postcode: ' ab1  2cd ', timezone: null })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(JSON.parse(String(fetcher.mock.calls.at(-1)![1]!.body)).url).toBe(url);
+    fetcher.mockResolvedValue(captured(null, { url, capturedResponses: [
+      { url: API, status: 200, body: JSON.stringify(prompt), postcodeSubmitted: true },
+    ] }));
+    await expect(provider.track({ number, postcode: 'AB1 2CD', timezone: null })).rejects.toMatchObject({ name: 'SeventeenTrackNoHistoryError' });
+  });
+
+  it('does not silently claim a postcode retry when the browser service ignored it', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(captured(noHistory(), { url: `https://t.17track.net/en#nums=${number}&trawl-postcode=8000` }));
+    await expect(tracker(fetcher).fetch(number, undefined, undefined, '8000')).rejects.toMatchObject({ kind: 'transport', reason: 'postcode_not_submitted' });
+    fetcher.mockClear();
+    await expect(tracker(fetcher).fetch(number, undefined, undefined, '<script>8000')).rejects.toMatchObject({ kind: 'invalid_input' });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 
   it('needs the browser service and never requests an arbitrary user URL', async () => {

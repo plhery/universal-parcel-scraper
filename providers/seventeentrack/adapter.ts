@@ -11,7 +11,7 @@
  */
 import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -85,7 +85,13 @@ function facilityWall(raw: Record<string, unknown>): string | null {
     && typeof clock.time === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(clock.time) ? `${clock.date}T${clock.time}` : null;
 }
 
-export function parse17TrackResponse(payload: unknown, trackingNumber: string): CarrierResult {
+function requestsPostcode(shipment: Record<string, unknown>): boolean {
+  if (Array.isArray(shipment.params_v2)) return shipment.params_v2.some(p => isRecord(p) && p.key === 'postal_code');
+  return (isRecord(shipment.param) && shipment.param.type === 'PostalCode')
+    || (Array.isArray(shipment.params) && shipment.params.some(p => isRecord(p) && p.type === 'PostalCode'));
+}
+
+export function parse17TrackResponse(payload: unknown, trackingNumber: string, postcode: string | null = null): CarrierResult {
   const number = numberOf(trackingNumber);
   if (!isRecord(payload) || !isRecord(payload.meta) || !Number.isInteger(payload.meta.code)) {
     throw new SchemaError(SOURCE, '17TRACK lookup unavailable');
@@ -103,7 +109,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string): 
     const code = Number(matches[0].code);
     // Observed repeatedly for valid references whose other providers have history.
     // Scope this to the matching shipment; envelope errors and unknown shapes remain failures.
-    if (code === 400 && matches[0].shipment === null) throw new SeventeenTrackNoHistoryError();
+    if (code === 400 && matches[0].shipment === null) {
+      if (!postcode && requestsPostcode(matches[0])) throw new InputRequiredError(SOURCE, 'postcode');
+      throw new SeventeenTrackNoHistoryError();
+    }
     throw new SeventeenTrackLookupError(code === 100 ? 'lookup_pending' : 'lookup_unavailable', code);
   }
   if (matches.length !== 1 || !isRecord(matches[0]) || matches[0].code !== 200 || !isRecord(matches[0].shipment)) {
@@ -161,10 +170,14 @@ export interface SeventeenTrackOptions {
 export class SeventeenTrackTracker {
   constructor(readonly options: SeventeenTrackOptions = {}) {}
 
-  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? 30_000, signal?: AbortSignal): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? 30_000, signal?: AbortSignal, postcode: string | null = null): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
+    postcode = postcode?.trim().replace(/\s+/g, ' ').toUpperCase() || null;
+    if (postcode && (postcode.length < 2 || postcode.length > 15 || !/^[A-Z0-9]+(?:[ -][A-Z0-9]+)*$/.test(postcode))) {
+      throw new InvalidInputError(SOURCE, '17TRACK delivery postcode has an invalid format');
+    }
     const spec = (remainingMs: number, signal: AbortSignal): CaptureSpec => ({
-      source: SOURCE, url: `https://t.17track.net/en#nums=${number}`, apiUrl: API_URL,
+      source: SOURCE, url: `https://t.17track.net/en#nums=${number}${postcode ? `&trawl-postcode=${encodeURIComponent(postcode)}` : ''}`, apiUrl: API_URL,
       budgetMs: remainingMs, fetcher: this.options.fetcher, signal,
     });
     return runSteps({ carrier: SOURCE, budgetMs, signal, recorder: this.options.recorder }, [{
@@ -175,11 +188,25 @@ export class SeventeenTrackTracker {
         let pending: Error | undefined;
         for (const body of capturedBodies(page, capture)) {
           try {
-            return parse17TrackResponse(JSON.parse(body), number);
+            const payload: unknown = JSON.parse(body);
+            // Old browser-service builds ignore the private input marker. Never
+            // report that a supplied postcode was tried without a bound request.
+            const submitted = page.capturedResponses.some(entry => entry.body === body && entry.postcodeSubmitted === true);
+            if (postcode && !submitted) {
+              try { return parse17TrackResponse(payload, number); }
+              catch (error) {
+                if (error instanceof InputRequiredError || error instanceof SeventeenTrackNoHistoryError) {
+                  throw new TransportError(SOURCE, '17TRACK browser service did not submit the delivery postcode', { reason: 'postcode_not_submitted' });
+                }
+                throw error;
+              }
+            }
+            return parse17TrackResponse(payload, number, postcode);
           } catch (error) {
             // Continue past polling replies and unrelated/demo numbers, but retain
             // the latest structured failure if no matching history follows.
-            if (isSeventeenTrackLookupError(error) || error instanceof NotFoundError || error instanceof SchemaError) pending ??= error;
+            if (isSeventeenTrackLookupError(error) || error instanceof NotFoundError || error instanceof SchemaError
+              || error instanceof InputRequiredError || error instanceof TransportError) pending ??= error;
           }
         }
         throw pending ?? captureFailure(page, capture);
@@ -195,6 +222,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: SOURCE,
     steps: ['trawl'],
-    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, context?.signal),
+    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, context?.signal, input.postcode),
   };
 };

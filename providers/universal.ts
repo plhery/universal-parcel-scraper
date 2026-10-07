@@ -93,7 +93,7 @@ export class UniversalTracker {
    * Look up one number through the whole chain. `postcode` is the parcel's
    * stored delivery postcode, if the user supplied one: it is forwarded into
    * every provider's track input. ParcelsApp submits it as extra[zipcode] on
-   * its direct API request; the other providers currently do not consume it.
+   * its direct API request; 17TRACK submits it through the browser's postcode form.
    * `countryHint` lets ParcelsApp retry an empty answer with that country.
    * The caller's budget covers the whole chain and its signal ends it.
    */

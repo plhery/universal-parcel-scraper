@@ -150,13 +150,61 @@ const SITES = [
   {
     // 17TRACK polls: keep reading until a completed reply names the number.
     api: 'https://t.17track.net/track/restapi',
+    provider: '17TRACK',
+    requestMethod: 'POST',
     number(page) {
       if (page.origin !== 'https://t.17track.net' || page.pathname !== '/en') return null;
       const number = new URLSearchParams(page.hash.slice(1)).get('nums');
       return number && /^[A-Z0-9]{5,40}$/.test(number) ? number : null;
     },
-    settled(data, number) {
+    requestMatches(request, number) {
+      try {
+        const body = request.postDataJSON();
+        return Array.isArray(body?.data) && body.data.length === 1 && body.data[0]?.num === number;
+      } catch { return false; }
+    },
+    postcodeSubmitted(request, target) {
+      const postcode = new URLSearchParams(target.hash.slice(1)).get('trawl-postcode');
+      try { return Boolean(postcode && request.postDataJSON().data[0]?.params_v2?.postal_code === postcode); }
+      catch { return false; }
+    },
+    prepareFor(target) {
+      const values = new URLSearchParams(target.hash.slice(1)).getAll('trawl-postcode');
+      return values.length === 1 && /^[A-Z0-9][A-Z0-9 -]{0,13}[A-Z0-9]$/.test(values[0]);
+    },
+    async setup(page) {
+      // The first-visit tour replaces the real result with a demo shipment.
+      // Skip that optional presentation before the application mounts.
+      await page.addInitScript(() => {
+        if (location.origin === 'https://t.17track.net') localStorage.setItem('tourDone', JSON.stringify('true'));
+      });
+    },
+    settled(data, number, state) {
+      const shipment = data.shipments?.find(s => s.number === number && s.code !== 100);
+      state.postcodeOffered = data.meta?.code === 200 && shipment?.code === 400 && shipment.shipment === null
+        && Array.isArray(shipment.params_v2) && shipment.params_v2.some(p => p?.key === 'postal_code');
       return data.meta?.code !== 200 || data.shipments?.some(s => s.number === number && s.code !== 100);
+    },
+    async prepare(page, number, budgetMs, { state, target, settle, restart }) {
+      const deadline = Date.now() + Math.max(0, budgetMs);
+      const timeout = () => {
+        const left = deadline - Date.now();
+        if (left <= 0) throw new Error('17TRACK postcode submission timed out');
+        return left;
+      };
+      await settle(timeout());
+      if (!state.postcodeOffered || state.postcodeAttempted) return;
+      state.postcodeAttempted = true;
+      try {
+        // Use the website's form handler so its fingerprint, request signing,
+        // detected carriers and subsequent polling all carry the same input.
+        await page.getByText(number, { exact: true }).first().waitFor({ state: 'visible', timeout: timeout() });
+        await page.getByText('reference', { exact: true }).click({ timeout: timeout() });
+        const dialog = page.getByRole('dialog');
+        await dialog.locator('input[name="postal_code"]').fill(new URLSearchParams(target.hash.slice(1)).get('trawl-postcode'), { timeout: timeout() });
+        restart();
+        await dialog.locator('button[type="submit"]').click({ timeout: timeout() });
+      } catch { throw new Error('17TRACK postcode form could not complete'); }
     },
   },
   {
@@ -236,6 +284,7 @@ export async function attachTrackingCapture(page, url, options) {
       ? requested.includes(candidate.api + candidate.number(target))
       : requested.includes(candidate.api)));
   if (!site) return undefined;
+  if (site.setup && site.prepareFor(target)) await site.setup(page);
   const number = site.number(target);
   const api = site.apiForNumber ? site.apiForNumber(number)
     : site.api + (site.queryNumber ? `?trackingIds=${number}` : site.perNumber ? number : '');
@@ -286,6 +335,7 @@ export async function attachTrackingCapture(page, url, options) {
     const entry = { url: response.url(), status: response.status(), body: null,
       headers: headers['retry-after'] ? { 'retry-after': headers['retry-after'].slice(0, 100) } : {},
       truncated: false, base64Encoded: false };
+    if (site.postcodeSubmitted?.(response.request(), target)) entry.postcodeSubmitted = true;
     entries.push(entry);
     if (entry.status !== 200 && !site.perNumber) { finish(); return; }
     const type = headers['content-type'] ?? '';
@@ -321,9 +371,10 @@ export async function attachTrackingCapture(page, url, options) {
   }
   return {
     // Called by both TRAWL browser tiers after navigation and before solving.
-    ...(site.prepare ? { async prepare(budgetMs) {
+    ...(site.prepare && (!site.prepareFor || site.prepareFor(target)) ? { async prepare(budgetMs) {
       const deadline = Date.now() + Math.max(0, budgetMs);
-      await site.prepare(page, number, Math.max(0, deadline - Date.now()));
+      await site.prepare(page, number, Math.max(0, deadline - Date.now()), { state, target, settle,
+        restart: () => { ready = restart(); } });
       await settle(deadline - Date.now());
       if (!state.resultUrl || deadline - Date.now() < 1000) return;
       // Reuse this browser context: the main form has a separate verification
@@ -397,7 +448,13 @@ export async function attachTrackingCapture(page, url, options) {
     // Royal Mail can use an existing API session or a fresh CAPTCHA token.
     // Once the lookup starts, let its own refresh callback handle E0015.
     hasTrackingRequest() { return Boolean((site.checkApi && state.handle) || (observesRequests && trackingRequested)); },
-    settle,
+    async settle(budgetMs) {
+      if (site.postcodeSubmitted && site.prepareFor(target) && !state.postcodeAttempted) {
+        const deadline = Date.now() + Math.max(0, budgetMs);
+        await site.prepare(page, number, budgetMs, { state, target, settle, restart: () => { ready = restart(); } });
+        await settle(Math.max(0, deadline - Date.now()));
+      } else await settle(budgetMs);
+    },
     async drain() {
       accepting = false;
       page.off('response', onResponse);

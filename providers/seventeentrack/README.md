@@ -14,10 +14,15 @@ One step, `trawl`, with a 30 s budget:
 
 1. TRAWL (`FLARESOLVERR_URL`) loads the tracking page (`skipHttp`, up to tier 3) and
    captures `https://t.17track.net/track/restapi` replies with a 15 s settle window.
-2. Bodies are parsed newest first. Shipment code 100 means 17TRACK is still polling, so
+2. A matching empty reply that asks for a postcode becomes `InputRequiredError`.
+   When supplied, TRAWL skips the optional demo tour and submits the site's postcode
+   form. Its normal handler signs the request and retains the detected carriers.
+   Captures mark whether that exact request included the postcode; an older browser
+   service that ignores it returns a transport error instead of claiming a retry.
+3. Bodies are parsed newest first. Shipment code 100 means 17TRACK is still polling, so
    the loop continues and remembers the last typed failure.
-3. A completed, identity-matched `NotFound` with no rows becomes `NotFoundError`.
-4. If nothing parses, the last typed lookup failure is thrown, so a verification wall
+4. A completed, identity-matched `NotFound` with no rows becomes `NotFoundError`.
+5. If nothing parses, the last typed lookup failure is thrown, so a verification wall
    is never reported as an empty capture. Without one, the error says what happened:
    `capture_missing` (nothing captured), `capture_unreadable` (unreadable body) or
    `history_missing` (replies without history). These are indeterminate and say nothing
@@ -37,12 +42,12 @@ captured bodies instead.
 Swiss Post's exact vehicle-loading label refines 17TRACK's generic transit bucket into
 out-for-delivery. The reported provider code is preserved.
 
-| Code | Meaning | Error |
-| --- | --- | --- |
-| -11, -13, -14 | interactive verification required | `SeventeenTrackVerificationError` (challenge) |
-| 100 (shipment) | still polling | `SeventeenTrackLookupError`, reason `lookup_pending` |
-| 400 with one matching shipment and `shipment: null` | no history for this reference | `SeventeenTrackNoHistoryError`, reason `no_history` (indeterminate) |
-| any other non-200, including envelope-level 400 | lookup unavailable | `SeventeenTrackLookupError`, reason `lookup_unavailable` |
+Codes -11, -13 and -14 mean interactive verification. Shipment code 100 means polling.
+A matching code-400/null-shipment reply means no history, unless its parameter metadata
+offers a postcode the caller has not supplied. Modern `params_v2` takes precedence over
+legacy `param` and `params`. Optional postcode metadata never suppresses usable history.
+A completed postcode submission that still has no history stays `no_history` rather
+than asking again. Other non-200 codes, including envelope-level 400, mean lookup unavailable.
 
 Routing needs these distinctions for its cooldowns. Sentry keeps `reason`,
 `providerCode` and `meta.message` (truncated to 120 characters), because code 400 is

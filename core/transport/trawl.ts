@@ -34,6 +34,8 @@ export interface TrawlCapturedResponse {
   truncated: boolean;
   base64Encoded: boolean;
   error: string | null;
+  /** 17TRACK's matching browser request included the supplied delivery postcode. */
+  postcodeSubmitted?: boolean;
 }
 
 export interface TrawlScrapeResponse {
@@ -118,6 +120,7 @@ function captured(value: unknown): TrawlCapturedResponse[] {
     truncated: entry.truncated === true,
     base64Encoded: entry.base64Encoded === true,
     error: typeof entry.error === 'string' ? entry.error : entry.error ? 'error' : null,
+    ...(entry.postcodeSubmitted === true ? { postcodeSubmitted: true } : {}),
   }));
 }
 
