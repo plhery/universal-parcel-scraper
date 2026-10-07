@@ -21,6 +21,9 @@
       "app",
       "direct"
     ],
+    "recognition": {
+      "rank": 65
+    },
     "requirements": [
       {
         "field": "postcode",

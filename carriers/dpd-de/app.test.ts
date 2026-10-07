@@ -106,11 +106,49 @@ describe('DPD Germany app service', () => {
 
   it.each([
     ['another parcel', (body: string) => body.replace(`<TrackingData>\n          <ParcelNo>${NUMBER}`, '<TrackingData>\n          <ParcelNo>01000000000002'), { kind: 'schema' }],
-    ['another country', (body: string) => body.replace('<Country>DE</Country></ShipAddress>', '<Country>GB</Country></ShipAddress>'), { kind: 'indeterminate', reason: 'other_country' }],
     ['no tracking data', () => failure('getTrackingData', 'ERROR_TRACKING_PARCELNO_NO_TRACKINGDATA'), { kind: 'indeterminate' }],
   ])('does not project %s', async (_, change, expected) => {
     const { track } = service({ getTrackingData: [() => xml(change(fixture('tracking')))] });
     await expect(track()).rejects.toMatchObject(expected);
+  });
+
+  it('places the parcel by its newest placed scan, else by the depot of its last status', async () => {
+    // The recipient address reads Germany for parcels delivered elsewhere in the group too.
+    const abroad = fixture('scans').replaceAll('Musterstadt (DE)', 'Musterville (CH)');
+    await expect(service({ getTrackingScanList: [() => xml(abroad)] }).track()).rejects.toMatchObject({ kind: 'indeterminate', reason: 'other_country' });
+    const unplaced = () => xml(fixture('scans').replace(/<Location>[^<]*<\/Location>/g, '<Location>DPD data centre</Location>'));
+    const depot = (country: string) => () => xml(fixture('tracking').replace('<City>Musterstadt</City>', `<City>Musterstadt</City><Country>${country}</Country>`));
+    await expect(service({ getTrackingData: [depot('AT')], getTrackingScanList: [unplaced] }).track()).rejects.toMatchObject({ reason: 'other_country' });
+    // An unknown depot carries a three-letter placeholder.
+    await expect(service({ getTrackingData: [depot('DEU')], getTrackingScanList: [unplaced] }).track()).resolves.toMatchObject({ status: 'in_transit' });
+  });
+
+  it('sends a postcode on both calls and reports whether DPD verified it', async () => {
+    const signal = new AbortController().signal;
+    const zip = (call: Call) => /<DeliveryZipCode>(\d*)<\/DeliveryZipCode>/.exec(call.body)?.[1];
+    const withPostcode = (client: DpdDeAppClient, postcode = '10115') => client.track(NUMBER, { signal, timeoutMs: 1_000, postcode });
+    const verifiedReply = () => xml(fixture('tracking').replace('<DataViewStatus>Anonym</DataViewStatus>', '<DataViewStatus>DeliveryZipCode_isValid</DataViewStatus>'));
+    const verified = service({ getTrackingData: [verifiedReply] });
+    await expect(withPostcode(verified.client)).resolves.toMatchObject({ status: 'in_transit', dpd_postcode_verified: true });
+    expect(verified.calls.slice(1).map(zip)).toEqual(['10115', '10115']);
+    expect(verified.calls[1]!.body).toContain('<UpdateNewDeliveryData>false</UpdateNewDeliveryData>');
+
+    // A rejected postcode gets one lookup without it.
+    const rejected = service({ getTrackingData: [() => xml(failure('getTrackingData', 'ERROR_TRACKING_DELIVERYZIPCODE_NOT_VALID'))] });
+    await expect(withPostcode(rejected.client)).resolves.toMatchObject({ status: 'in_transit', dpd_postcode_verified: false });
+    expect(rejected.calls.slice(1).map(call => [call.operation, zip(call)])).toEqual([
+      ['getTrackingData', '10115'], ['getTrackingData', ''], ['getTrackingScanList', ''],
+    ]);
+    // An accepted call that keeps the anonymous view has not verified it either.
+    const anonymous = service();
+    await expect(withPostcode(anonymous.client)).resolves.toMatchObject({ dpd_postcode_verified: false });
+    expect(zip(anonymous.calls.at(-1)!)).toBe('');
+    // An unknown parcel rejects any postcode, then has no tracking data.
+    const unknown = service({ getTrackingData: [() => xml(failure('getTrackingData', 'ERROR_TRACKING_DELIVERYZIPCODE_NOT_VALID')),
+      () => xml(failure('getTrackingData', 'ERROR_TRACKING_PARCELNO_NO_TRACKINGDATA'))] });
+    await expect(withPostcode(unknown.client)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(await service().track()).not.toHaveProperty('dpd_postcode_verified');
+    await expect(withPostcode(service().client, '1011')).rejects.toThrow(TypeError);
   });
 
   it.each([
@@ -235,7 +273,7 @@ describe('DPD Germany tiers', () => {
   it('does not ask the guest protocol about a delivery the app service places in another country', async () => {
     const replies = guest(Response.json(delivered));
     const { app, steps, tracking } = tiers(replies);
-    app.replies.getTrackingData = [() => xml(fixture('tracking').replace('<Country>DE</Country></ShipAddress>', '<Country>GB</Country></ShipAddress>'))];
+    app.replies.getTrackingScanList = [() => xml(fixture('scans').replaceAll('Musterstadt (DE)', 'Musterville (GB)'))];
     await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'indeterminate', reason: 'other_country' });
     expect(steps).toEqual([['app', 'indeterminate']]);
     expect(replies).toHaveLength(4);
@@ -246,9 +284,10 @@ describe('DPD Germany tiers', () => {
     ['has no history yet', () => guest(Response.json({ parcelNumber: NUMBER, status: { description: 'PARCEL_HANDED' }, parcelHistory: [] })), 'indeterminate'],
     ['changes shape', () => guest(Response.json({ parcelNumber: NUMBER })), 'schema'],
   ])('with a postcode, answers from the app service when the guest protocol %s', async (_, replies, outcome) => {
-    const { steps, tracking } = tiers(replies());
+    const { app, steps, tracking } = tiers(replies());
     const result = await tracking.track({ number: NUMBER, postcode: '10115' });
-    expect(result).toMatchObject({ status: 'in_transit', tracking_url: `https://tracking.dpd.de/status/en_US/parcel/${NUMBER}` });
+    expect(result).toMatchObject({ status: 'in_transit', tracking_url: `https://tracking.dpd.de/status/en_US/parcel/${NUMBER}`, dpd_postcode_verified: false });
+    expect(app.calls.find(call => call.operation === 'getTrackingData')!.body).toContain('<DeliveryZipCode>10115</DeliveryZipCode>');
     expect(result.events).toHaveLength(5);
     expect(steps).toEqual([['direct', outcome], ['app', 'ok']]);
   });

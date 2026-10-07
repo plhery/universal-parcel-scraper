@@ -17,7 +17,7 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
    Tokens are cached per instance; all requests share the caller's deadline
    and cancellation signal. With a postcode it runs first, because DPD then
    verifies the reply and adds places and the delivery window; the app service
-   follows it.
+   follows it, with the same postcode.
 
 Either service answers when the other fails, except for a parcel the guest API
 does not know or a delivery placed in another country.
@@ -26,12 +26,17 @@ does not know or a delivery placed in another country.
 
 - Both the requested number and returned parcel identity must match.
   Empty history is inconclusive; malformed or undated events are schema errors.
-- A delivery postcode is optional. A rejected postcode gets one unverified
-  lookup. Unverified replies omit places and the delivery window.
+- A delivery postcode is optional. Both services check it against the
+  recipient's. A rejected postcode gets one unverified lookup, and
+  `dpd_postcode_verified` says which. Unverified guest replies omit places and
+  the delivery window.
 - The group API knows parcels across countries. A matching number does not
-  prove a German destination, so this adapter is not a recognition candidate.
-  An explicit current country outside Germany is inconclusive for this service,
-  and the app service is not asked about that parcel.
+  prove a German parcel: a current country outside Germany is inconclusive for
+  this service, and the other service is not asked about that parcel.
+- Recognition asks the guest API without a postcode, as DPD Switzerland does,
+  and knows a number only when the parcel's current country is Germany. Another
+  country is unknown, and a reply without a country is inconclusive. The app
+  service is not asked: a cold session takes tens of seconds to open.
 - Scan offsets take precedence over local clocks. Germany and Switzerland
   share the same civil-clock rules for the supported tracking history.
 - The Swiss page fallback is not used for German lookups.
@@ -56,9 +61,18 @@ the service does not require.
   leaves time to wait, so the first lookup of an adapter instance lasts as long
   as the opening. A lookup with less budget goes on to the guest API at once,
   and the opening continues until that lookup's budget ends.
-- No postcode is sent, and `UpdateNewDeliveryData` and
-  `addParcelIfNoTrackingdataAvailable` stay false, so a lookup changes nothing
-  in the session.
+- `getTrackingData` and `getTrackingScanList` take the postcode as
+  `DeliveryZipCode`. A matching one returns `DataViewStatus`
+  `DeliveryZipCode_isValid`; a wrong one, or any postcode for an unknown parcel,
+  returns `ERROR_TRACKING_DELIVERYZIPCODE_NOT_VALID` with the anonymous view.
+  For a delivered parcel, the verified view adds only the recipient's name and
+  driver tip details, which are not read.
+- `UpdateNewDeliveryData` and `addParcelIfNoTrackingdataAvailable` stay false,
+  so a lookup changes nothing in the session.
+- The recipient address reads Germany for parcels delivered in other
+  countries, with or without the postcode. The current country is the newest
+  scan's, else the country of the last status's depot; an unknown depot has a
+  three-letter placeholder.
 - Scans carry English wording without codes. Each known wording is mapped
   whole, because the shared classifier misreads several of them. An announced
   delivery day is not a scan.
@@ -81,4 +95,5 @@ parcel shop names and delivery estimates are not projected.
 
 `npm run test:carriers:live -- carriers/dpd-de`. Set
 `DPD_DE_TRACKING_NUMBER` outside the repository for a positive lookup through
-each tier.
+each tier and its recognition, and `DPD_DE_POSTCODE` to check the app's
+postcode verification.

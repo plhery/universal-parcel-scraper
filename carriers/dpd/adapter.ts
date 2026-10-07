@@ -551,8 +551,8 @@ export interface DPDTrackerOptions {
 }
 
 export interface DPDAppTier {
-  /** `leads` when the guest tier is still to come and needs time left. */
-  run(number: string, context: { signal: AbortSignal; timeoutMs: number; leads: boolean }): Promise<CarrierResult>;
+  /** `leads` when the guest tier is still to come and needs time left. `postcode` is empty when none was given. */
+  run(number: string, context: { signal: AbortSignal; timeoutMs: number; leads: boolean; postcode: string }): Promise<CarrierResult>;
   /** The failures of either tier the other may answer after. */
   recovers(error: unknown): boolean;
 }
@@ -626,7 +626,9 @@ export class DPDTracker {
     const appStep = (leads: boolean) => ({
       id: 'app',
       ...(leads ? {} : { recovers: appRecovers }),
-      run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => app!.run(trackingNumber, { signal, timeoutMs: remainingMs, leads }),
+      run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => app!.run(trackingNumber, {
+        signal, timeoutMs: remainingMs, leads, postcode: resolvedPostcode,
+      }),
     });
     const result = await runSteps<CarrierResult>({
       carrier, budgetMs: lookup.budgetMs, signal: lookup.signal, recorder: this.recorder,
@@ -658,9 +660,10 @@ export class DPDTracker {
   }
 
   /**
-   * Whether the guest reply establishes Swiss activity for a 14-digit number.
-   * The group-wide identity match alone must not promote another country's
-   * parcel to the Swiss carrier id. Missing country evidence is inconclusive.
+   * Whether the guest reply establishes activity in this tracker's country for
+   * a 14-digit number. The group-wide identity match alone must not promote
+   * another country's parcel to this carrier id. Missing country evidence is
+   * inconclusive.
    * Guest API only, never the page tier. A positive not-found (404) and a
    * details lookup DPD refuses without the postcode (400, seen for old
    * parcels) are false; any other failure, a 400 from a token step included,
@@ -669,14 +672,18 @@ export class DPDTracker {
   async recognizes(raw: string, context: TrackingContext = {}): Promise<boolean> {
     const trackingNumber = dpdParcelNumber(raw);
     if (!trackingNumber) return false;
-    const lookup = lookupBudget(context, this.budgetMs, 'dpd');
+    const lookup = lookupBudget(context, this.budgetMs, this.country === 'DE' ? 'dpd-de' : 'dpd');
     try {
       const payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);
       if (clean(payload.parcelNumber ?? payload.shipmentId) !== trackingNumber) return false;
       const current = isRecord(payload.status) ? payload.status : {};
       const country = known(current.countryCode).toUpperCase();
-      if (/^[A-Z]{2}$/.test(country) && country !== 'CH') return false;
-      if (country !== 'CH') throw new IndeterminateError('DPD Switzerland', 'DPD returned no Swiss country evidence');
+      if (/^[A-Z]{2}$/.test(country) && country !== this.country) return false;
+      if (country !== this.country) {
+        throw this.country === 'DE'
+          ? new IndeterminateError('DPD Germany', 'DPD returned no German country evidence')
+          : new IndeterminateError('DPD Switzerland', 'DPD returned no Swiss country evidence');
+      }
       requireGuestActivity(payload, parseDPDTrackingApi(payload, trackingNumber));
       return true;
     } catch (error) {

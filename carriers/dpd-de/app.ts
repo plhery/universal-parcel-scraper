@@ -69,6 +69,13 @@ const elements = (fields: Fields): string => Object.entries(fields)
   .map(([name, value]) => `<${name}>${typeof value === 'string' ? escaped(value) : elements(value)}</${name}>`).join('');
 
 class SessionExpired extends Error {}
+class PostcodeRejected extends Error {}
+
+/** A two-letter country, where the service puts a placeholder three-letter one for an unknown depot. */
+function countryOf(node: XmlNode | undefined): string {
+  const country = node ? scalar(node, 'Country', 8) : '';
+  return /^[A-Z]{2}$/.test(country) ? country : '';
+}
 
 function statusOf(stage: string | undefined): CarrierStatus {
   if (stage === 'delivered' || stage === 'out_for_delivery' || stage === 'exception') return stage;
@@ -80,15 +87,11 @@ function statusOf(stage: string | undefined): CarrierStatus {
 export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): CarrierResult {
   const tracking = one(data, 'TrackingData');
   if (scalar(tracking, 'ParcelNo', 40) !== number) throw new SchemaError('DPD Germany', 'DPD Germany returned a different parcel');
-  // The service also answers for parcels delivered elsewhere in the group.
-  const destination = scalar(one(tracking, 'ShipAddress'), 'Country', 8);
-  if (/^[A-Z]{2}$/.test(destination) && destination !== 'DE') {
-    throw new IndeterminateError('DPD Germany', 'DPD returned activity in another country', { reason: DPD_DE_OTHER_COUNTRY });
-  }
   const rows = children(one(scans, 'TrackingScanList'), 'TrackingScan');
   if (rows.length > 500) invalid();
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
+  let placed = '';
   for (const row of rows) {
     const wording = scalar(row, 'StatusText', 500);
     const day = scalar(row, 'ScanDate', 16);
@@ -97,6 +100,7 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
     // An announced delivery day is not a scan.
     if (/^Your parcel is estimated to be delivered\b/i.test(wording)) continue;
     const place = /^(.{1,120}) \(([A-Z]{2})\)$/.exec(scalar(row, 'Location'));
+    if (place) placed = place[2]!;
     // German facilities keep German civil time; a clock elsewhere has no established zone.
     const clock = zonedTime(`${day} ${time}`, 'dd.MM.yyyy HH:mm', place?.[2] === 'DE' ? 'Europe/Berlin' : 'UTC');
     if (!clock) invalid();
@@ -114,6 +118,14 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
     events.push(event);
   }
   if (!events.length) throw new IndeterminateError('DPD Germany', 'DPD Germany returned no parcel scans');
+  // The service also answers for parcels elsewhere in the group, and its recipient address reads
+  // Germany for them too. Where the parcel is now, as the guest API's current country: the newest
+  // placed scan, else the depot of the last status.
+  const depot = children(tracking, 'LastStatusInfo').flatMap(info => children(info, 'DepotData')).flatMap(data => children(data, 'Address'))[0];
+  const country = placed || countryOf(depot);
+  if (country && country !== 'DE') {
+    throw new IndeterminateError('DPD Germany', 'DPD returned activity in another country', { reason: DPD_DE_OTHER_COUNTRY });
+  }
   events.reverse();
   const current = events[0]!;
   const rail = DPD_DE_APP_RAIL[scalar(one(tracking, 'LastStatusInfo'), 'StatusID', 64)];
@@ -149,19 +161,40 @@ export class DpdDeAppClient {
     this.#now = options.now ?? Date.now;
   }
 
-  /** `sessionWaitMs` bounds the wait for a session still opening; the whole `timeoutMs` by default. */
-  async track(number: string, options: { signal: AbortSignal; timeoutMs: number; sessionWaitMs?: number }): Promise<CarrierResult> {
+  /**
+   * `sessionWaitMs` bounds the wait for a session still opening; the whole `timeoutMs` by default.
+   * DPD checks a `postcode` against the recipient's: a rejected one gets one lookup without it, and
+   * the result says which, as on the guest API.
+   */
+  async track(number: string, options: { signal: AbortSignal; timeoutMs: number; sessionWaitMs?: number; postcode?: string }): Promise<CarrierResult> {
     if (!/^\d{14}$/.test(number)) throw new TypeError('DPD Germany app tracking takes 14 digits');
+    const postcode = options.postcode ?? '';
+    if (postcode && !/^\d{5}$/.test(postcode)) throw new TypeError('DPD Germany app tracking takes a 5-digit postcode');
     const deadline = performance.now() + options.timeoutMs;
     const left = () => Math.max(1, Math.floor(deadline - performance.now()));
     try {
       for (let attempt = 0; ; attempt += 1) {
         const session = await this.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity));
+        // Read-only: the parcel is neither added to the session nor redirected.
+        const tracking = (zip: string) => this.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: zip,
+          UpdateNewDeliveryData: 'false', addParcelIfNoTrackingdataAvailable: 'false', ParcelFlowTypeID: 'receiving' }, options.signal, left());
         try {
-          const data = await this.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: '',
-            UpdateNewDeliveryData: 'false', addParcelIfNoTrackingdataAvailable: 'false', ParcelFlowTypeID: 'receiving' }, options.signal, left());
-          const scans = await this.call('getTrackingScanList', { SessionToken: session, ParcelNo: number, DeliveryZipCode: '' }, options.signal, left());
-          return parseDpdDeApp(data, scans, number);
+          let data: XmlNode;
+          let verified: boolean | undefined;
+          try {
+            data = await tracking(postcode);
+            if (postcode) verified = ['DeliveryZipCode_isValid', 'Owner'].includes(scalar(one(data, 'TrackingData'), 'DataViewStatus', 40));
+          } catch (error) {
+            // Also the answer for an unknown parcel, which the lookup without it then reports.
+            if (!(error instanceof PostcodeRejected)) throw error;
+            data = await tracking('');
+            verified = false;
+          }
+          const scans = await this.call('getTrackingScanList', { SessionToken: session, ParcelNo: number,
+            DeliveryZipCode: verified ? postcode : '' }, options.signal, left());
+          const result = parseDpdDeApp(data, scans, number);
+          if (verified !== undefined) result.dpd_postcode_verified = verified;
+          return result;
         } catch (error) {
           if (!(error instanceof SessionExpired) || attempt) throw error;
           if (this.#session === session) this.#session = '';
@@ -245,6 +278,7 @@ export class DpdDeAppClient {
       throw new ChallengeError('DPD Germany', 'DPD Germany refused the app credential');
     }
     if (codes.includes('ERROR_SESSION_NOT_VALID')) throw new SessionExpired();
+    if (codes.includes('ERROR_TRACKING_DELIVERYZIPCODE_NOT_VALID')) throw new PostcodeRejected();
     // "No tracking data" also answers for parcels the scan list still knows: it proves no absence.
     if (scalar(result, 'Ack', 8) !== 'true') throw new IndeterminateError('DPD Germany', 'DPD Germany returned no confirmed parcel');
     return result;

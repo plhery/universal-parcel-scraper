@@ -4433,7 +4433,8 @@ export const CARRIER_CATALOG = {
           "help": "Optional. DPD uses it to unlock verified scans and the delivery window.",
           "validator": "germanyPostcode"
         }
-      ]
+      ],
+      "recognitionRank": 65
     },
     "canaryUrl": "https://tracking.dpd.de/status/en_US/parcel/",
     "trackingUrlTemplate": "https://tracking.dpd.de/status/en_US/parcel/{trackingNumber}",

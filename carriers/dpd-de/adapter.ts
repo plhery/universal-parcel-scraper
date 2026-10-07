@@ -16,8 +16,8 @@ export const adapter: AdapterFactory = (environment) => {
     recorder: environment.recorder,
     userAgent: environment.userAgent,
     app: {
-      run: (number, { signal, timeoutMs, leads }) => app.track(number, {
-        signal, timeoutMs, sessionWaitMs: leads ? Math.max(0, timeoutMs - GUEST_RESERVE_MS) : timeoutMs,
+      run: (number, { signal, timeoutMs, leads, postcode }) => app.track(number, {
+        signal, timeoutMs, postcode, sessionWaitMs: leads ? Math.max(0, timeoutMs - GUEST_RESERVE_MS) : timeoutMs,
       }),
       // Each service has its own host, limits and outages, so either answers when
       // the other fails. Both read the same parcel: neither can place another
@@ -29,5 +29,7 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'dpd-de', recordsSteps: true, steps: ['app', 'direct'],
     track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
+    // The guest API's current country, as for Switzerland: the app's session takes too long to open.
+    recognize: async (number, context) => ({ known: await tracker.recognizes(number, context) }),
   };
 };

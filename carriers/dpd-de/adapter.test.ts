@@ -1,7 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import type { TrackingContext } from '../../core/adapter/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { DPDTracker } from '../dpd/adapter.js';
+import { adapter } from './adapter.js';
+import { DPD_DE_APP_API } from './app.js';
 
 const NUMBER = '01000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8')) as Record<string, unknown>;
@@ -96,5 +99,34 @@ describe('DPD Germany guest tracking', () => {
     });
     await expect(tracking(fetcher).track({ number: NUMBER }, { budgetMs: 15 }))
       .rejects.toMatchObject({ kind: 'budget' });
+  });
+});
+
+describe('DPD Germany recognition', () => {
+  const recognize = (fetcher: typeof fetch) => adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER })
+    .recognize!(NUMBER);
+  const placed = (countryCode?: string) => {
+    const payload = structuredClone(fixture);
+    (payload.status as Record<string, unknown>).countryCode = countryCode;
+    return Response.json(payload);
+  };
+
+  it('knows a parcel the guest API places in Germany, without the app service', async () => {
+    const fetcher = guest(placed('DE'));
+    await expect(recognize(fetcher)).resolves.toEqual({ known: true });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+    expect(fetcher.mock.calls.some(([url]) => String(url) === DPD_DE_APP_API)).toBe(false);
+    const url = new URL(String(fetcher.mock.calls[3]![0]));
+    expect(url.searchParams.get('businessUnit')).toBe('DPD-DE');
+    expect(url.searchParams.get('continueWithoutVerification')).toBe('true');
+  });
+
+  it.each(['CH', 'FR'])('does not take %s activity for DPD Germany', async (countryCode) => {
+    await expect(recognize(guest(placed(countryCode)))).resolves.toEqual({ known: false });
+  });
+
+  it('leaves a reply without a country inconclusive and does not know a missing parcel', async () => {
+    await expect(recognize(guest(placed(undefined)))).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(recognize(guest(new Response('', { status: 404 })))).resolves.toEqual({ known: false });
   });
 });
