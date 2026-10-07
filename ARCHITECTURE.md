@@ -126,6 +126,21 @@ callback and discards late answers.
 Pass the earlier HTTP error as the browser method's third argument so the adapter retains
 its recovery policy, including rate limits and malformed responses.
 
+Callers can order eligible recognition candidates with a `countryHint` and aggregate
+`priorities`. A provider's carrier hint and preferred number evidence come first, followed
+by the country (home before other served countries), aggregate scores and catalog rank.
+These signals do not add candidates, confirm ownership or change how answers are settled.
+`recognitionNumberShape` retains only character classes and run lengths for private
+aggregate analysis. Keep direct-confirmed live inputs outside Git; repeated observations
+of one number do not establish independent evidence.
+
+After building, `node scripts/analyze-recognition.mjs --input <private.jsonl>
+--output <private-priorities.json>` reads rows containing `number`, `carrier` and
+`confirmation: "direct"`. It discards conflicting labels, reports independent holdout
+coverage and emits scores only for shapes with at least twenty distinct confirmations
+and carriers with at least five. Its output contains no numbers or prefixes. Consumers
+own this evidence and decide when to reload it; it does not alter detection rules.
+
 ## Status model
 
 Every scan ends up with one stage from [stages.json](data/stages.json), and `stage_source`

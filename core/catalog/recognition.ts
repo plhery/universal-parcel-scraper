@@ -8,6 +8,7 @@
  * (`src/server/carrierRecognition.ts`).
  */
 import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
+import type { CarrierId } from '../../generated/catalog.js';
 import { detectCarrierMatch } from '../detection/detect.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { AUTOMATIC_CARRIER_IDS, CARRIER_DEFINITIONS, carrierAdapter, requiredRequirements } from './definitions.js';
@@ -25,16 +26,35 @@ export interface RecognitionCandidate {
   preferred: boolean;
 }
 
+export interface RecognitionOptions {
+  hint?: string;
+  skip?: (carrier: string) => boolean;
+  phase?: 'http' | 'browser';
+  /** A caller's country is a query-order hint, never carrier confirmation. */
+  countryHint?: string | null;
+  /** Caller-owned aggregate scores; larger finite, nonnegative values run first. */
+  priorities?: Readonly<Record<string, number>>;
+}
+
+/** A coarse whole-number shape, with no identifier characters retained. */
+export function recognitionNumberShape(number: string): string | undefined {
+  const normalized = normalizeTrackingNumber(number);
+  if (!/^[A-Z0-9]{4,40}$/.test(normalized)) return undefined;
+  return normalized.match(/[A-Z]+|[0-9]+/g)!
+    .map((run) => `${/^[0-9]/.test(run) ? 'D' : 'A'}${run.length}`).join('');
+}
+
 /**
  * The low-confidence candidates worth asking, best first: the carrier a
  * universal provider named, then the ones number evidence backs, then the
- * catalog's popularity rank. HTTP is the default; `phase: 'browser'` selects
+ * country hint, caller-owned priorities and the catalog's popularity rank.
+ * These hints only order existing candidates. HTTP is the default; `phase: 'browser'` selects
  * the separate opt-in browser catalog. A high-confidence dedicated carrier needs no recognition; the
  * unknown postal carrier still needs a direct carrier to confirm it.
  */
 export function recognitionCandidates(
   number: string,
-  options: { hint?: string; skip?: (carrier: string) => boolean; phase?: 'http' | 'browser' } = {},
+  options: RecognitionOptions = {},
 ): RecognitionCandidate[] {
   const detected = detectCarrierMatch(number);
   const unknownPostalCarrier = detected.carrier === 'intl-post';
@@ -65,9 +85,21 @@ export function recognitionCandidates(
   const shadowed = new Set(preferred
     .filter((carrier) => ranks[carrier] === undefined)
     .map((carrier) => carrierBrand(carrier)).filter(Boolean));
+  const country = options.countryHint?.trim().toUpperCase();
+  const countryScore = (carrier: string) => {
+    if (!country || !/^[A-Z]{2}$/.test(country)) return 0;
+    const countries = CARRIER_DEFINITIONS[carrier as CarrierId]?.countries ?? [];
+    return countries[0] === country ? 2 : countries.includes(country) ? 1 : 0;
+  };
+  const priorityScore = (carrier: string) => {
+    const priority = options.priorities?.[carrier];
+    return typeof priority === 'number' && Number.isFinite(priority) && priority >= 0 ? priority : 0;
+  };
   const score = (carrier: string) => [
     carrier === options.hint ? 1 : 0,
     preferred.includes(carrier) ? 1 : 0,
+    countryScore(carrier),
+    priorityScore(carrier),
     ranks[carrier] ?? 0,
   ];
   return candidates
@@ -75,7 +107,13 @@ export function recognitionCandidates(
       && carrierAdapter(carrier) !== 'universal' && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier))
     .map((carrier) => ({ carrier, score: score(carrier) }))
     // Array#sort is stable: equal scores keep the catalog order.
-    .sort((left, right) => right.score[0]! - left.score[0]! || right.score[1]! - left.score[1]! || right.score[2]! - left.score[2]!)
+    .sort((left, right) => {
+      for (let index = 0; index < left.score.length; index++) {
+        const difference = right.score[index]! - left.score[index]!;
+        if (difference) return difference;
+      }
+      return 0;
+    })
     .map(({ carrier }) => ({
       carrier,
       needsInput: requiredRequirements(carrier, number)[0]?.field ?? null,
@@ -84,6 +122,6 @@ export function recognitionCandidates(
 }
 
 /** The carriers the detect route asks about a number, best first; empty when none can answer. */
-export function recognitionAskedCarriers(number: string): string[] {
-  return recognitionCandidates(number).slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
+export function recognitionAskedCarriers(number: string, options: RecognitionOptions = {}): string[] {
+  return recognitionCandidates(number, options).slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
 }

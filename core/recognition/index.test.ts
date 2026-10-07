@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { detectCarrierMatch } from '../detection/detect.js';
-import { recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from './index.js';
+import { recognitionCandidates, recognitionNumberShape, recognizeAll, settleRecognition, type RecognitionOutcome } from './index.js';
+import { recognitionAskedCarriers } from '../catalog/recognition.js';
 
 const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: Partial<RecognitionOutcome> = {}): RecognitionOutcome => ({
   carrier, status, needsInput: null, preferred: false, lastActivityAt: null, ...extra,
@@ -8,6 +9,45 @@ const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: P
 const now = new Date('2026-09-10T12:00:00Z');
 
 describe('recognition candidates', () => {
+  it('orders eligible candidates by region without claiming ownership or changing detection', () => {
+    const number = '12345678901231';
+    const detected = detectCarrierMatch(number);
+    const baseline = recognitionCandidates(number);
+    const local = recognitionCandidates(number, { countryHint: ' gb ' });
+    expect(local[0]?.carrier).toBe('dhl-ecommerce-uk');
+    expect(local.map(({ carrier }) => carrier).sort()).toEqual(baseline.map(({ carrier }) => carrier).sort());
+    expect(detectCarrierMatch(number)).toEqual(detected);
+    expect(recognitionAskedCarriers(number, { countryHint: 'GB' })).toContain('dhl-ecommerce-uk');
+    expect(recognitionCandidates(number, { countryHint: 'United Kingdom' })).toEqual(baseline);
+    expect(recognitionCandidates(number, { countryHint: 'XX' })).toEqual(baseline);
+    expect(recognitionCandidates('1Z999AA10123456784', { countryHint: 'GB', priorities: { dpd: 1e6 } })).toEqual([]);
+  });
+
+  it('keeps direct hints and number evidence ahead of weak ordering hints', () => {
+    expect(recognitionCandidates('06080000000002', { countryHint: 'GB', priorities: { 'dhl-ecommerce-uk': 1e6 } })[0]?.carrier).toBe('dpd');
+    expect(recognitionCandidates('06080000000002', { hint: 'seur', countryHint: 'GB' })[0]?.carrier).toBe('seur');
+    const shadowed = recognitionCandidates('10000000000001', { countryHint: 'CH', priorities: { dpd: 1e6 } });
+    expect(shadowed.map(({ carrier }) => carrier)).not.toContain('dpd');
+  });
+
+  it('uses finite aggregate priorities within the eligible catalog and preserves phase boundaries', () => {
+    const number = '12345678901231';
+    expect(recognitionCandidates(number, { priorities: { ciblex: 20, seur: 10, ups: 1e6 } }).map(({ carrier }) => carrier).slice(0, 2)).toEqual(['ciblex', 'seur']);
+    expect(recognitionCandidates(number, { priorities: { ciblex: NaN, seur: Infinity, brt: -10 } })).toEqual(recognitionCandidates(number));
+    expect(recognitionCandidates(number, { countryHint: 'GB', priorities: { ciblex: 1e6 } })[0]?.carrier).toBe('dhl-ecommerce-uk');
+    expect(recognitionCandidates('000000000001', { countryHint: 'US', priorities: { fedex: 1e6 } }).map(({ carrier }) => carrier)).not.toContain('fedex');
+    expect(recognitionCandidates('000000000001', { phase: 'browser', countryHint: 'US', priorities: { fedex: 1 } }).map(({ carrier }) => carrier)).toEqual(['fedex']);
+  });
+
+  it('retains only character classes and run lengths in aggregate shapes', () => {
+    expect(recognitionNumberShape('ab 123.456-789 xy')).toBe('A2D9A2');
+    expect(recognitionNumberShape('00000000000001')).toBe('D14');
+    expect(recognitionNumberShape('ABCDEF')).toBe('A6');
+    expect(recognitionNumberShape('ABC')).toBeUndefined();
+    expect(recognitionNumberShape('1234?')).toBeUndefined();
+    expect(recognitionNumberShape('1'.repeat(41))).toBeUndefined();
+  });
+
   it('keeps the carriers that can answer, hint first, then number evidence, then popularity', () => {
     expect(recognitionCandidates('12345678901231').map((candidate) => candidate.carrier)).toEqual(['dpd', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk']);
     expect(recognitionCandidates('06080000000002')).toEqual([

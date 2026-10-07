@@ -7,7 +7,9 @@ import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
 export {
   MAX_RECOGNITIONS,
   recognitionCandidates,
+  recognitionNumberShape,
   type RecognitionCandidate,
+  type RecognitionOptions,
 } from '../catalog/recognition.js';
 
 /**
