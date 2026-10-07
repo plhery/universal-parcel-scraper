@@ -1,12 +1,26 @@
 # Mondial Relay
 
 French parcel-shop network (last mile in FR, BE, ES, LU, PT). Tracked through
+the consumer app's backend when an InPost account is configured, else through
 the French recipient website in a real browser, because Cloudflare blocks
 direct requests to that flow.
 
 ## How it works
 
-1. `trawl` (the only step): two requests through the browser service, on one
+1. `app` (only with `MONDIAL_RELAY_REFRESH_TOKEN`): the app backend, signed in
+   as one InPost account. See [Mobile API](#mobile-api).
+   - Search `parcels-search` for the 8-digit shipment and the postcode. A label
+     barcode is searched by its brand and shipment (`shipmentUid`) alone: the
+     checksummed barcode is the credential, as on the website.
+   - The search must single out one shipment UID whose shipment (and brand, for
+     10- and 12-digit forms) matches the input. Otherwise the step is
+     inconclusive: the app filters on the recipient postcode only, while the
+     website also accepts the sender's.
+   - Read `parcels-detail` for that UID: the headline (`stepHint`), then the
+     dated events of each milestone, then the highest dated milestone.
+   - Any failure (refused sign-in, rate limit, unexpected reply) hands the
+     lookup to `trawl`.
+2. `trawl`: two requests through the browser service, on one
    solved identity.
    - Load `/suivi-de-colis/` and read the `token` attribute of `#tracking` from
      the captured response body (`trawlBody()`), not the rendered HTML: the Vue
@@ -14,7 +28,7 @@ direct requests to that flow.
    - Call `GET /api/tracking?shipment=…&postcode=…&brand=&codePays=fr` with the
      token as `RequestVerificationToken`, as the official bundle does. Check the
      answered URL still names the same shipment and postcode.
-2. Parse the JSON from the captured body or the `<pre>` a browser navigation
+3. Parse the JSON from the captured body or the `<pre>` a browser navigation
    wraps it in. `Expedition.Numero` must match the requested number or its
    embedded 8-digit shipment before anything else is read.
 
@@ -22,9 +36,9 @@ A customer-reported association between references does not override this
 identity check. Outbound and return legs keep separate tracking identities;
 references with an unresolved prefix remain corpus evidence.
 
-Without a browser service (`FLARESOLVERR_URL`) the lookup fails at once with a
-`ChallengeError`. Lookups are serialized per adapter instance (`singleFlight`)
-so the token and the API call stay on one browser identity. Errors: warning
+Without the app step or a browser service (`FLARESOLVERR_URL`) the lookup fails
+at once with a `ChallengeError`. Lookups are serialized per adapter instance
+(`singleFlight`) so the token and the API call stay on one browser identity. Errors: warning
 reply → `NotFoundError`; no token → `ChallengeError`; well-shaped number without
 a postcode → `InputRequiredError`; malformed number → `InvalidInputError`; a reply
 for another shipment → `SchemaError`.
@@ -46,19 +60,32 @@ for another shipment → `SchemaError`.
   highest reached milestone (its label, then its number). The deciding stage is
   set as `current_stage`, because the status vocabulary has no pickup value and
   the sync would otherwise fall back to "out for delivery".
-- Timestamps are offset-less Paris wall-clock. A bare calendar day stays a day.
-  The estimate is reduced to a day and dropped once delivered or in exception.
+- Website timestamps are offset-less Paris wall-clock. A bare calendar day stays
+  a day. The estimate is reduced to a day and dropped once delivered or in
+  exception. App timestamps are UTC instants, shown on Paris clocks.
+- The app gives no delivery estimate, so app answers have none.
 
 ## Mobile API
 
 The official [consumer Android app](https://play.google.com/store/apps/details?id=com.mondialrelay.mobile)
 uses `https://mobile-app-bff.mondialrelay.app/`. Requests carry a shared app
-signature with a nonce and Unix timestamp. `GET /api/parcels-search` accepts
-`shipmentUid` and `postcode`; `GET /api/parcels-detail` accepts `shipmentUids`
-and `parcelType`, and returns history as `detail.steps[].events[]`. Both also
-require an account JWT, issued to one user by an InPost authorization-code
-sign-in with PKCE. The app's add-parcel screen sends a postcode only with an
-eight-digit number.
+signature: `X-MR-Param1` is a UUID nonce, `X-MR-Param2` the Unix time in
+seconds, and `X-MR-API-KEY` is `sha256hex(sha256hex(secret + nonce + time))`.
+The secret is compiled into the app and is the same for every install.
+`GET /api/parcels-search` accepts `shipmentUid` and `postcode`;
+`GET /api/parcels-detail` accepts `shipmentUids` and `parcelType`, and returns
+history as `detail.steps[].events[]`. Both also require an account JWT, issued
+by an InPost authorization-code sign-in with PKCE (client
+`mondialrelay-mobile`). The parcel does not have to belong to that account.
+
+- The access token lasts two hours. The adapter renews it from the account's
+  refresh token at `https://account.inpost-group.com/oauth2/token`, once per
+  expiry and once more after a 401. The refresh token is not rotated.
+- A postcode search returns only the parcel whose recipient postcode matches,
+  and an empty list otherwise. A 10-digit UID (brand and shipment) is found
+  without a postcode; a 26-digit barcode is rejected with a 400.
+- Cloudflare refuses Node's built-in fetch with a 403 page and answers the same
+  request over HTTP/1.1 (`node:https`), so the app client uses that transport.
 
 `GET /api/parcel-detail-not-migrated?shipmentUid=…` accepts the app signature
 without an account JWT or postcode. The app uses it for non-exported sent
@@ -74,6 +101,10 @@ eight-digit shipment number; the brand remains part of the identity.
   burned time.
 - Deriving the postcode from the 26-digit barcode: those digits are routing
   data.
+- Recognizing numbers through `parcel-detail-not-migrated`: it answers for one
+  brand only, and most random 8-digit numbers exist there, about half of them
+  with recent activity. Existence there does not show that a number is a
+  Mondial Relay parcel.
 - Mapping milestone numbers first: they show progress-bar position, not what
   happened.
 - Keeping the Point Relais name: the reply doesn't separate it from the
@@ -93,3 +124,9 @@ eight-digit shipment number; the brand remains part of the identity.
 `npm run test:carriers:live -- testing/browserProtectedCarriers.live.test.ts`
 runs without a browser service, so it only checks the wrong-number or challenge
 error.
+
+`MONDIAL_RELAY_REFRESH_TOKEN=… MONDIAL_RELAY_TRACKING_NUMBER=… MONDIAL_RELAY_POSTCODE=…
+npm run test:carriers:live -- carriers/mondial-relay/adapter.live.test.ts`
+tracks a private parcel through the app alone. A refresh token comes from an
+InPost sign-in with PKCE at `https://account.inpost-group.com/oauth2/authorize`,
+redirecting to `https://account.inpost-group.com/callback`.

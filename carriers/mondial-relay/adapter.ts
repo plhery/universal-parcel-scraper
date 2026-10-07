@@ -11,6 +11,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, TrawlClient, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { MondialRelayAppClient } from './app.js';
 import { classifyStatus, milestoneNumberStatus } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
@@ -25,7 +26,8 @@ const TRACKING_API = 'https://www.mondialrelay.fr/api/tracking';
 const MAX_DIRECT_BYTES = 2_000_000;
 const MAX_TRAWL_BYTES = 10_000_000;
 const DEFAULT_TIMEOUT_MS = 90_000;
-const DEFAULT_DIRECT_TIMEOUT_MS = 20_000;
+/** The app answers in about a second; past this the website gets the rest of the budget. */
+const DEFAULT_DIRECT_TIMEOUT_MS = 10_000;
 const ZONE = 'Europe/Paris';
 const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires an 8-, 10-, or 12-digit shipment number followed by '
   + 'the 5-digit recipient postcode';
@@ -34,6 +36,8 @@ interface MondialRelayCredential {
   shipment: string;
   postcode: string;
   canonicalShipment?: string;
+  /** Read from a checksummed label barcode, which needs no postcode. */
+  barcode?: true;
 }
 
 interface ParsedEvent {
@@ -65,7 +69,7 @@ export function normalizeMondialRelayCredential(
       throw new InvalidInputError('Mondial Relay', 'Invalid Mondial Relay barcode or postcode');
     }
     // The public alias carries brand/shipment/parcel sequence, not a postcode.
-    return { shipment: shipment.slice(0, 12), postcode, canonicalShipment: shipment.slice(2, 10) };
+    return { shipment: shipment.slice(0, 12), postcode, canonicalShipment: shipment.slice(2, 10), barcode: true };
   }
   if (!postcode && /^(?:\d{13}|\d{15}|\d{17})$/.test(shipment)) {
     postcode = shipment.slice(-5);
@@ -287,12 +291,18 @@ function assertTrawlTarget(response: TrawlScrapeResponse, expectedUrl: string): 
 
 export interface MondialRelayTrackerOptions {
   timeoutMs?: number;
+  /** How long the app step may take before the website is tried. */
   directTimeoutMs?: number;
   /** Legacy configuration seam; `trawl` is preferred. */
   trawlUrl?: string;
   /** The browser service, or null when none is configured. */
   trawl?: TrawlClient | null;
+  /** An InPost account's refresh token for the app step; without one the website answers alone. */
+  appRefreshToken?: string;
+  /** Test seam for the app step; built from `appRefreshToken` when absent. */
+  app?: MondialRelayAppClient | null;
   fetcher?: typeof fetch;
+  userAgent?: string;
   recorder?: StepRecorder;
 }
 
@@ -301,6 +311,7 @@ export class MondialRelayTracker {
   readonly directTimeoutMs: number;
   readonly trawlUrl: string;
   readonly #trawl: TrawlClient | null | undefined;
+  readonly #app: MondialRelayAppClient | null;
   readonly #fetcher: typeof fetch | undefined;
   readonly #recorder: StepRecorder;
   readonly #serialize = singleFlight();
@@ -313,6 +324,9 @@ export class MondialRelayTracker {
     ));
     this.trawlUrl = (options.trawlUrl ?? '').trim();
     this.#trawl = options.trawl;
+    this.#app = options.app !== undefined ? options.app : options.appRefreshToken?.trim()
+      ? new MondialRelayAppClient({ refreshToken: options.appRefreshToken, fetcher: options.fetcher, userAgent: options.userAgent })
+      : null;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
@@ -328,18 +342,18 @@ export class MondialRelayTracker {
 
   async fetch(rawShipment: string, rawPostcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
     // One lookup at a time: the page token and the API call have to stay on the
-    // same solved browser identity.
+    // same solved browser identity, and the app's access token is renewed once.
     return takeTurn(this.#serialize, 'Mondial Relay', context,
       (left) => this.#lookup(normalizeMondialRelayCredential(rawShipment, rawPostcode), left));
   }
 
   async #lookup(credential: MondialRelayCredential, context: TrackingContext): Promise<CarrierResult> {
-    // Cloudflare blocks every non-browser client with an HTTP 403 WAF block
-    // (verified from multiple networks, 2026-09-10), so a direct attempt only
-    // burns time and reports a fallback on each sync. There is one step, and
-    // it is the browser.
+    // Cloudflare blocks every non-browser client of the website with an HTTP
+    // 403 WAF block (verified from multiple networks, 2026-09-10). The app's
+    // backend answers plain HTTP, but only for a signed-in account.
+    const app = this.#app;
     const trawl = this.#browserService();
-    if (!trawl) {
+    if (!app && !trawl) {
       throw new ChallengeError(
         'Mondial Relay',
         'Mondial Relay challenged direct tracking; configure FLARESOLVERR_URL for browser fallback',
@@ -352,8 +366,21 @@ export class MondialRelayTracker {
       recorder: this.#recorder,
     }, [
       {
+        id: 'app',
+        enabled: app !== null,
+        run: async ({ remainingMs, signal }) => {
+          // The app filters on the recipient postcode only; a label barcode is its own proof.
+          const query = { shipment: credential.shipment, postcode: credential.barcode ? '' : credential.postcode };
+          const result = await app!.track(query, { signal, timeoutMs: Math.min(remainingMs, this.directTimeoutMs) });
+          return this.#link(result, credential, 'mobile-app-response');
+        },
+      },
+      {
         id: 'trawl',
-        run: ({ remainingMs, signal }) => this.#trawlResult(trawl, credential, performance.now() + remainingMs, signal),
+        enabled: trawl !== null,
+        // The website is a separate service: no failure of the app settles the lookup.
+        recovers: () => true,
+        run: ({ remainingMs, signal }) => this.#trawlResult(trawl!, credential, performance.now() + remainingMs, signal),
       },
     ]);
   }
@@ -402,7 +429,10 @@ export class MondialRelayTracker {
     credential: MondialRelayCredential,
     trackingSource: string,
   ): CarrierResult {
-    const result = parseTrackingResponse(payload, credential);
+    return this.#link(parseTrackingResponse(payload, credential), credential, trackingSource);
+  }
+
+  #link(result: CarrierResult, credential: MondialRelayCredential, trackingSource: string): CarrierResult {
     const url = new URL(TRACKING_PAGE);
     url.searchParams.set('numeroExpedition', credential.shipment);
     result.tracking_url = url.toString();
@@ -414,13 +444,15 @@ export class MondialRelayTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new MondialRelayTracker({
     fetcher: environment.fetcher,
+    userAgent: environment.userAgent,
     trawl: environment.trawl,
+    appRefreshToken: environment.env.MONDIAL_RELAY_REFRESH_TOKEN,
     recorder: environment.recorder,
   });
   return {
     id: 'mondial-relay', recordsSteps: true,
-    // Cloudflare refuses every non-browser client, so there is no direct tier.
-    steps: ['trawl'],
+    // Cloudflare refuses every non-browser client of the website; the app step needs an account.
+    steps: ['app', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
   };
 };

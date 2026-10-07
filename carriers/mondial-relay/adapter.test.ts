@@ -565,7 +565,7 @@ describe('documented Mondial Relay 26-digit label barcode', () => {
     expect(result.events?.map((event) => event.stage)).toEqual(['accepted', 'registered']);
   });
   it('uses the public alias without deriving a postcode from routing digits', () => {
-    expect(normalizeMondialRelayCredential(barcode)).toEqual({ shipment: '121234567801', postcode: '', canonicalShipment: '12345678' });
+    expect(normalizeMondialRelayCredential(barcode)).toEqual({ shipment: '121234567801', postcode: '', canonicalShipment: '12345678', barcode: true });
     expect(mondialRelayTrackingUrl(barcode)).toBe(`${TRACKING_PAGE}?numeroExpedition=121234567801`);
     expect(() => normalizeMondialRelayCredential(barcode.slice(0, -1) + '5')).toThrow('Invalid Mondial Relay barcode');
     expect(() => normalizeMondialRelayCredential(barcode.slice(0, 14) + '1' + barcode.slice(15))).toThrow('Invalid Mondial Relay barcode');
