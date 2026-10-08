@@ -977,6 +977,26 @@
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the FedEx and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits that pass the GLS and mod 7 checks",
     "carriers": [
       "brt",

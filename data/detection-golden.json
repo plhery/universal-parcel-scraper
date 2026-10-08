@@ -2246,6 +2246,34 @@
     "candidates": []
   },
   {
+    "input": "152515917783",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "sagawa"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "15467388748",
     "carrier": "unknown",
     "confidence": "low",
@@ -3550,6 +3578,31 @@
     "asked": [
       "brt",
       "colis-prive"
+    ]
+  },
+  {
+    "input": "263881387405",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "purolator",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "sagawa"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "purolator"
     ]
   },
   {
@@ -7174,6 +7227,29 @@
     ]
   },
   {
+    "input": "860353703506",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "sagawa"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "866823388853191",
     "carrier": "unknown",
     "confidence": "low",
@@ -7809,6 +7885,29 @@
     ],
     "asked": [
       "austrian-post"
+    ]
+  },
+  {
+    "input": "954055535285",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "sagawa"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
     ]
   },
   {

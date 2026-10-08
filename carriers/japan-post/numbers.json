@@ -746,6 +746,145 @@
         ]
       },
       "note": "Japan Post's sample registered mail number with its check digit changed, so Japan Post is not suggested."
+    },
+    {
+      "number": "152515917783",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260902182854/https://trackings.post.japanpost.jp/services/srv/search/direct?&reqCodeNo1=152515917783&locale=jp",
+        "date": "2026-09-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Yu-Pack",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Japan Post tracking link archived by the Wayback Machine. Japan Post's tracker returns its Yu-Pack history."
+    },
+    {
+      "number": "860353703506",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260902055101/https://trackings.post.japanpost.jp/services/srv/search/direct?locale=en&reqCodeNo1=860353703506&searchKind=S002",
+        "date": "2026-09-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Yu-Pack",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Japan Post tracking link archived by the Wayback Machine. Japan Post's tracker returns its Yu-Pack history."
+    },
+    {
+      "number": "954055535285",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260825064926/https://trackings.post.japanpost.jp/services/srv/search/direct?reqCodeNo1=954055535285&searchKind=S002&locale=en",
+        "date": "2026-08-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Yu-Pack",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Japan Post tracking link archived by the Wayback Machine. Japan Post's tracker returns its Yu-Pack history with a designated delivery date."
+    },
+    {
+      "number": "263881387405",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260711012636/https://trackings.post.japanpost.jp/services/srv/search/direct?&reqCodeNo1=263881387405&locale=ja",
+        "date": "2026-07-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Yu-Pack",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Japan Post tracking link archived by the Wayback Machine. Japan Post's tracker returns its Yu-Pack history."
     }
   ]
 }
