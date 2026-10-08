@@ -156,25 +156,44 @@ const COUNTRY_ZONES: Record<string, string> = {
   TW: 'Asia/Taipei', VN: 'Asia/Ho_Chi_Minh',
 };
 const ENGLISH_REGIONS = new Intl.DisplayNames(['en'], { type: 'region' });
-// Every region Intl names, by English name. Retired codes ("FX", "UK") repeat
-// a current region's name and are left out.
-const REGION_BY_NAME = new Map(Array.from({ length: 26 * 26 }, (_, index) =>
+// Every region Intl names. Retired codes ("FX", "UK") repeat a current
+// region's name and are left out.
+const REGION_CODES = new Set(Array.from({ length: 26 * 26 }, (_, index) =>
   String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)))
-  .filter((code) => ENGLISH_REGIONS.of(code) !== code && new Intl.Locale(`und-${code}`).region === code)
-  .map((code) => [ENGLISH_REGIONS.of(code)!.toUpperCase(), code] as const));
-const REGION_CODES = new Set(REGION_BY_NAME.values());
+  .filter((code) => ENGLISH_REGIONS.of(code) !== code && new Intl.Locale(`und-${code}`).region === code));
+/** A name compared without case, accents or spacing differences. */
+const regionKey = (name: string) =>
+  name.normalize('NFD').replace(/\p{Mn}/gu, '').toUpperCase().replace(/[\u2019`]/g, "'").replace(/\s+/g, ' ').trim();
+// Names in other languages that are also towns of 15,000 or more people name
+// the town as often as the country, so only English reads them.
+const TOWN_NAMES = new Set(['ALAND', 'GRANADA', 'GUADALUPE', 'LIBANO', 'NORFOLK', 'SAINT-BARTHELEMY', 'SALVADOR',
+  'SAN BARTOLOME', 'SAN MARTIN', 'SANTA ELENA', 'SANTA LUCIA', 'SINGAPUR', 'TAILANDIA']);
+const REGION_BY_NAME = new Map<string, string>();
+for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl']) {
+  const names = language === 'en' ? ENGLISH_REGIONS : new Intl.DisplayNames([language], { type: 'region' });
+  for (const code of REGION_CODES) {
+    const name = names.of(code)!;
+    // German written without umlauts puts an e after the vowel: "Oesterreich".
+    const spellings = language === 'de' ? [name, name.replace(/[äöüÄÖÜ]/g, (vowel) => `${vowel.normalize('NFD')[0]}e`)] : [name];
+    for (const key of spellings.map(regionKey)) {
+      if (!REGION_BY_NAME.has(key) && (language === 'en' || !TOWN_NAMES.has(key))) REGION_BY_NAME.set(key, code);
+    }
+  }
+}
 
 /**
- * The ISO code of any country, whatever its clocks, from the code or its
- * English name ("South Africa" is ZA, "United States" US); null otherwise.
+ * The ISO code of any country, whatever its clocks, from the code or its name
+ * in English, German, French, Italian, Spanish or Dutch, without regard to
+ * case or accents ("South Africa", "Südafrika" and "Afrique du Sud" are ZA);
+ * null otherwise.
  */
 export function countryCode(country: unknown): string | null {
   if (typeof country !== 'string') return null;
   const value = country.trim().toUpperCase();
-  return REGION_CODES.has(value) ? value : REGION_BY_NAME.get(value) ?? null;
+  return REGION_CODES.has(value) ? value : REGION_BY_NAME.get(regionKey(value)) ?? null;
 }
 
-/** The zone of a single-zone country, from an ISO code or its English name; null otherwise. */
+/** The zone of a single-zone country, from an ISO code or a name `countryCode` reads; null otherwise. */
 export function countryTimeZone(country: unknown): string | null {
   const code = countryCode(country);
   return code && Object.hasOwn(COUNTRY_ZONES, code) ? COUNTRY_ZONES[code]! : null;

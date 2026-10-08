@@ -83,9 +83,10 @@ describe('time policies', () => {
     expect(settleGuessedClocks([{ guesses: [at('2026-09-10T13:00:01Z')] }], readAt)[0]).toBeNull();
   });
 
-  it('maps single-zone countries by code or English name only', () => {
+  it('maps single-zone countries by code or name', () => {
     expect(countryTimeZone('CH')).toBe('Europe/Zurich');
     expect(countryTimeZone(' switzerland ')).toBe('Europe/Zurich');
+    expect(countryTimeZone('Schweiz')).toBe('Europe/Zurich');
     expect(countryTimeZone('India')).toBe('Asia/Kolkata');
     expect(countryTimeZone('US')).toBeNull();
     expect(countryTimeZone('Canada')).toBeNull();
@@ -98,8 +99,24 @@ describe('time policies', () => {
     expect(countryCode('south africa')).toBe('ZA');
     expect(countryCode('us')).toBe('US');
     expect(countryCode('Switzerland')).toBe('CH');
+    expect(countryCode('Côte d’Ivoire')).toBe('CI');
+    expect(countryCode("COTE D'IVOIRE")).toBe('CI');
     // Retired codes, subdivisions and places are not countries.
     for (const value of ['UK', 'FX', 'ON', 'Example Hub', 'EXAMPLE CITY, CA', '', undefined]) expect(countryCode(value)).toBeNull();
+  });
+
+  it('names a country in German, French, Italian, Spanish or Dutch, with or without accents', () => {
+    for (const name of ['Schweiz', 'Suisse', 'Svizzera', 'Suiza', 'Zwitserland']) expect(countryCode(name), name).toBe('CH');
+    for (const name of ['Österreich', 'OESTERREICH', 'osterreich', 'Autriche']) expect(countryCode(name), name).toBe('AT');
+    for (const name of ['Vereinigtes Königreich', 'Royaume-Uni', 'Regno Unito', 'Reino Unido', 'Verenigd Koninkrijk']) {
+      expect(countryCode(name), name).toBe('GB');
+    }
+    for (const name of ['États-Unis', 'ETATS-UNIS', 'Stati Uniti', 'Estados  Unidos', 'Verenigde Staten']) expect(countryCode(name), name).toBe('US');
+    expect(countryCode('Südafrika')).toBe('ZA');
+    expect(countryCode('Afrique du Sud')).toBe('ZA');
+    expect(countryCode('Nederland')).toBe('NL');
+    // A name a large town shares names the town as often as the country.
+    for (const name of ['Granada', 'Salvador', 'Norfolk', 'Guadalupe', 'San Martín', 'Singapur']) expect(countryCode(name), name).toBeNull();
   });
 
   it('maps US states and territories to their majority zone', () => {

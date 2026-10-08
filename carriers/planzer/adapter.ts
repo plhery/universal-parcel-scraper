@@ -67,16 +67,11 @@ function dimensionsText(positions: readonly JsonObject[]): string | null {
   return `${centimetres.map((millimetres) => Math.round(millimetres!) / 10).join(' × ')} cm`;
 }
 
-/** Planzer names countries in German. */
-const GERMAN_COUNTRY_CODES: Readonly<Record<string, string>> = {
-  SCHWEIZ: 'CH', LIECHTENSTEIN: 'LI', DEUTSCHLAND: 'DE', ÖSTERREICH: 'AT', FRANKREICH: 'FR', ITALIEN: 'IT',
-};
-
-/** Only the delivery address's country is read; the rest belongs to the recipient. */
+/** Only the delivery address's country is read, in German; the rest belongs to the recipient. */
 function destination(address: unknown): Pick<CarrierResult, 'destination_country' | 'destination_country_name'> {
   const name = text(record(address).country).trim().slice(0, 60);
   if (!name) return {};
-  const code = countryCode(name) ?? GERMAN_COUNTRY_CODES[name.toLocaleUpperCase('de-CH')];
+  const code = countryCode(name);
   return code ? { destination_country: code } : { destination_country_name: name };
 }
 
