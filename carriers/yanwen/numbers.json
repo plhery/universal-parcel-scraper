@@ -35,11 +35,14 @@
         "url": "https://www.chinapostaltracking.com/qa/non-ho-ricevuto-nulla-157549/",
         "date": "2026-03-26"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "yanwen",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. Yanwen's tracker returns its history."
     },
     {
       "number": "UJ988405149YP",
@@ -93,7 +96,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "cross border handoff",
         "reportedRole": "reported_shipment"
       },
@@ -101,7 +104,7 @@
         "carrier": "yanwen",
         "confidence": "high"
       },
-      "note": "Customer names Yanwen; pasted reply includes Yanwen scans and a USPS handoff, without a second number."
+      "note": "Customer names Yanwen; pasted reply includes Yanwen scans and a USPS handoff, without a second number. Yanwen's tracker returns its history."
     },
     {
       "number": "VR704132916YP",
@@ -142,6 +145,291 @@
         "confidence": "none"
       },
       "note": "The author attributes this reference to Yanwen; no rule establishes the family."
+    },
+    {
+      "number": "UL494089685YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260918150425/https://track.yw56.com.cn/en/querydel?nums=UL494089685YP",
+        "date": "2026-09-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL288876841YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260705220337/https://track.yw56.com.cn/en/querydel?nums=UL288876841YP",
+        "date": "2026-07-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL292417762YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260702201338/https://track.yw56.com.cn/en/querydel?nums=UL292417762YP",
+        "date": "2026-07-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL266468165YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260623164521/https://track.yw56.com.cn/cn/querydel?nums=UL266468165YP",
+        "date": "2026-06-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL200566224YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260614234346/https://track.yw56.com.cn/cn/querydel?nums=UL200566224YP",
+        "date": "2026-06-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL220210817YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260607045250/https://track.yw56.com.cn/en/querydel?nums=UL220210817YP",
+        "date": "2026-06-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "PT004934480YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260605162115/https://track.yw56.com.cn/en/querydel?nums=PT004934480YP",
+        "date": "2026-06-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL102046966YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260428194041/https://track.yw56.com.cn/en/querydel?nums=UL102046966YP",
+        "date": "2026-04-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UL044811634YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260402143544/https://track.yw56.com.cn/en/querydel?nums=UL044811634YP",
+        "date": "2026-04-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UK930235211YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260223214333/https://track.yw56.com.cn/en/querydel?nums=UK930235211YP",
+        "date": "2026-02-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UK912244883YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260223024353/https://track.yw56.com.cn/en/querydel?nums=UK912244883YP",
+        "date": "2026-02-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UK892230446YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260216114805/https://track.yw56.com.cn/en/querydel?nums=UK892230446YP",
+        "date": "2026-02-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UK915089750YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260213225609/https://track.yw56.com.cn/en/querydel?nums=UK915089750YP",
+        "date": "2026-02-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UK887767152YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260205170939/https://track.yw56.com.cn/en/querydel?nums=UK887767152YP",
+        "date": "2026-02-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "UK829256653YP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260114202356/https://track.yw56.com.cn/en/querydel?nums=UK829256653YP",
+        "date": "2026-01-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yanwen",
+        "confidence": "high"
+      },
+      "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
     }
   ]
 }

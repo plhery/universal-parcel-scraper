@@ -16160,6 +16160,14 @@
     ]
   },
   {
+    "input": "PT004934480YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
     "input": "PX0000000013",
     "carrier": "poczta-polska",
     "confidence": "high",
@@ -17442,7 +17450,71 @@
     ]
   },
   {
+    "input": "UK829256653YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
     "input": "UK844354295YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UK887767152YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UK892230446YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UK912244883YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UK915089750YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UK930235211YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL044811634YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL102046966YP",
     "carrier": "yanwen",
     "confidence": "high",
     "candidates": [
@@ -17458,6 +17530,54 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "UL200566224YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL220210817YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL266468165YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL288876841YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL292417762YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL494089685YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
     ]
   },
   {
