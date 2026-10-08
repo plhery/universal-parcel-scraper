@@ -2,6 +2,7 @@
   "carrier": "dhl-ecommerce-pl",
   "entries": [
     {"code": "TT_DOR", "wording": "Parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"},
+    {"code": "TT_DOR_ZWN", "wording": "The parcel has returned to Sender", "language": "en", "stage": "returned", "confirmedBy": "live"},
     {"code": "TT_EDWP", "wording": "Shipment preparation", "language": "en", "stage": "registered", "confirmedBy": "bundle", "note": "The page prints this label where the posting date would be."},
     {"code": "TT_LIK", "wording": "Shipment disposed of", "language": "en", "stage": "exception", "confirmedBy": "bundle"},
     {"code": "TT_PRZEKIERUJ", "wording": "Parcel redirected", "language": "en", "stage": "in_transit", "confirmedBy": "bundle"},

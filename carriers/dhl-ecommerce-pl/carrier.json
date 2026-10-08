@@ -28,7 +28,8 @@
   },
   "capabilities": [
     "eta",
-    "delivered_at"
+    "delivered_at",
+    "sender_name"
   ],
   "portal": {
     "url": "https://mojdhl.pl/tracking?paczki={trackingNumber}",
@@ -43,10 +44,10 @@
     "scraped": [
       "status",
       "eta",
-      "delivered_at"
+      "delivered_at",
+      "sender_name"
     ],
     "discarded": [
-      "sender_name",
       "tracking_alias"
     ],
     "unavailable": [

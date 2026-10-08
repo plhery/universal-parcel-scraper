@@ -72,10 +72,12 @@ export function parseDhlEcommercePl(payload: unknown, rawNumber: string): Carrie
   if (!isRecord(shipment) || typeof shipment.status !== 'string' || !/^[A-Z][A-Z0-9_]{0,39}$/.test(shipment.status)) {
     throw new SchemaError(PROVIDER, 'DHL eCommerce Poland returned an invalid shipment status');
   }
-  // The sender's name, the waybill alias and the self-service links are not read.
+  // The sender is the name the portal shows; the waybill alias and the self-service links are not read.
+  const sender = clean(shipment.sender, 200);
   const { description, stage } = dhlEcommercePlStatus(shipment.status, shipment.timelineStep, clean(shipment.title, 200) || clean(shipment.step, 200));
-  // Only a receipt is timed. The posting date is a day, and no other status says when it was reached.
-  const received = stage === 'delivered' ? instant(shipment.receiptDateUtc)?.iso : undefined;
+  // Only a receipt is timed, by the recipient or by the sender a return reached. The posting
+  // date is a day, and no other status says when it was reached.
+  const received = stage && FINAL.includes(stage) ? instant(shipment.receiptDateUtc)?.iso : undefined;
   const planned = instant(shipment.planOfDeliveryFromUtc)?.day ?? instant(shipment.deliveryDateUtc)?.day;
   return {
     status: stage ? statusForStage(stage) : shipment.timelineStep === 'None' ? 'pending' : 'unknown',
@@ -83,7 +85,8 @@ export function parseDhlEcommercePl(payload: unknown, rawNumber: string): Carrie
     last_status_text: description,
     last_update: received ?? null,
     expected_delivery: stage && FINAL.includes(stage) ? null : planned ?? null,
-    ...(received ? { delivered_at: received } : {}),
+    ...(received && stage === 'delivered' ? { delivered_at: received } : {}),
+    ...(sender ? { sender_name: sender } : {}),
     summary_only: true,
     events: [],
   };

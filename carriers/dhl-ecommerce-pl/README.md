@@ -17,16 +17,16 @@ the guest lookup of its consumer portal. German DHL Paket is
 ## Notes
 
 - The portal gives the current status and no scan history, so the result is a
-  summary without events. It carries a time only for a delivery, the one
-  status the portal times.
+  summary without events. It carries a time only for a delivery, to the
+  recipient or back to the sender, the one status the portal times.
 - The national page with the full history, `sprawdz.dhl.com.pl`, sits behind a
   reCAPTCHA and is not used.
 - The challenge is a proof of work the page computes on its own for every
   visitor: a number below a stated limit whose SHA-256 with a salt matches. It
   is solved once per lookup, inside the lookup's budget. A proof the portal
   refuses is an inconclusive answer.
-- The answer names the sender. That name is discarded, with the waybill alias
-  and the self-service links.
+- The answer names the sender, usually the shop, and that name is kept. The
+  waybill alias and the self-service links are discarded.
 - A code in [statuses.json](statuses.json) has the meaning the page script or
   a live answer gives it. Any other code takes the stage of the timeline step
   sent with it.

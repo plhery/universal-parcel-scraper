@@ -27,7 +27,7 @@ const portal = (answer: () => Response, seen: { url: string; init?: RequestInit 
 };
 
 describe('DHL eCommerce Poland parser', () => {
-  it('reads a delivered parcel as its current status and leaves the sender out', () => {
+  it('reads a delivered parcel as its current status and names its sender', () => {
     const result = normalizeCarrierResult(parseDhlEcommercePl(clone(), NUMBER));
     expect(result.status).toBe('delivered');
     expect(result.current_stage).toBe('delivered');
@@ -37,7 +37,19 @@ describe('DHL eCommerce Poland parser', () => {
     expect(result.expected_delivery).toBeNull();
     expect(result.summary_only).toBe(true);
     expect(result.events).toEqual([]);
-    expect(JSON.stringify(result)).not.toMatch(/Example Sender|99999999990|dhl24/);
+    expect(result.sender_name).toBe('Example Sender');
+    expect(JSON.stringify(result)).not.toMatch(/99999999990|dhl24/);
+    const unnamed = clone(); shipment(unnamed).sender = ' ';
+    expect(parseDhlEcommercePl(unnamed, NUMBER)).not.toHaveProperty('sender_name');
+  });
+
+  it('times a return by its receipt at the sender without calling it a delivery', () => {
+    const payload = clone();
+    Object.assign(shipment(payload), { status: 'TT_DOR_ZWN', timelineStep: 'DeliveredToSender', step: 'The parcel has returned to Sender',
+      receiptDateUtc: '2026-03-09T10:00:00Z', deliveryDateUtc: '2026-03-09T10:00:00Z', planOfDeliveryFromUtc: '2026-03-03T23:00:00Z' });
+    const result = parseDhlEcommercePl(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_update: '2026-03-09T10:00:00Z', expected_delivery: null });
+    expect(result).not.toHaveProperty('delivered_at');
   });
 
   it('reads the same shipment asked for by its waybill, in any letter case', () => {
