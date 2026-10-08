@@ -93,6 +93,22 @@
       "firstSeen": "2026-09-26"
     },
     {
+      "wording": "Final delivery - Collected at counter",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Domestic item collected by the recipient at the post office counter."
+    },
+    {
+      "wording": "Retention",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Domestic item held at the delivery post office, after a missed delivery, for counter collection or until a designated day; the label does not say which. Its row can carry a date without a time."
+    },
+    {
       "wording": "Arrival",
       "language": "en",
       "stage": "in_transit",

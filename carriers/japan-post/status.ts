@@ -16,6 +16,10 @@ const STATUS = new Map<string, ClassifiedStatus>([
   ['Processing at delivery Post Office', { status: 'in_transit', stage: 'in_transit' }],
   ['Item out for physical delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Final delivery', { status: 'delivered', stage: 'delivered' }],
+  ['Final delivery - Collected at counter', { status: 'delivered', stage: 'delivered' }],
+  // Held at the delivery office: after a missed delivery, for counter
+  // collection or until a designated day. The label does not say which.
+  ['Retention', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrival', { status: 'in_transit', stage: 'in_transit' }],
   ['Dispatched from Exchange Office', { status: 'in_transit', stage: 'in_transit' }],
   ['Transported in bond', { status: 'in_transit', stage: 'customs' }],

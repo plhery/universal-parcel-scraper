@@ -5,17 +5,27 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { calendarDay } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { japanPostStatus } from './status.js';
 
 const PROVIDER = 'Japan Post';
 const ENDPOINT = 'https://trackings.post.japanpost.jp/services/srv/search/direct';
 const MAX_RESPONSE_BYTES = 1_000_000;
+// Every Japanese prefecture keeps Japan's civil time.
+const PREFECTURES = [
+  'HOKKAIDO', 'AOMORI', 'IWATE', 'MIYAGI', 'AKITA', 'YAMAGATA', 'FUKUSHIMA', 'IBARAKI', 'TOCHIGI', 'GUNMA',
+  'SAITAMA', 'CHIBA', 'TOKYO', 'KANAGAWA', 'NIIGATA', 'TOYAMA', 'ISHIKAWA', 'FUKUI', 'YAMANASHI', 'NAGANO',
+  'GIFU', 'SHIZUOKA', 'AICHI', 'MIE', 'SHIGA', 'KYOTO', 'OSAKA', 'HYOGO', 'NARA', 'WAKAYAMA', 'TOTTORI',
+  'SHIMANE', 'OKAYAMA', 'HIROSHIMA', 'YAMAGUCHI', 'TOKUSHIMA', 'KAGAWA', 'EHIME', 'KOCHI', 'FUKUOKA', 'SAGA',
+  'NAGASAKI', 'KUMAMOTO', 'OITA', 'MIYAZAKI', 'KAGOSHIMA', 'OKINAWA',
+];
 // The history header explicitly states that overseas scans use local time.
 // Resolve only these confirmed prefecture/country labels from the row itself;
 // never inherit another scan's zone or the parcel's destination.
 const EVENT_ZONES: Readonly<Record<string, string>> = {
-  OSAKA: 'Asia/Tokyo', KANAGAWA: 'Asia/Tokyo', JAPAN: 'Asia/Tokyo', MALTA: 'Europe/Malta',
+  ...Object.fromEntries(PREFECTURES.map((prefecture) => [prefecture, 'Asia/Tokyo'])),
+  JAPAN: 'Asia/Tokyo', MALTA: 'Europe/Malta',
 };
 
 export function normalizeJapanPostNumber(raw: string): string {
@@ -71,15 +81,34 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   }
   if (result.length) throw new SchemaError(PROVIDER, 'Japan Post returned ambiguous shipment tables');
 
-  const headings = details.find('th').map((_, cell) => clean($(cell).text())).get();
-  const detailRows = details.find('tr').filter((_, row) => $(row).children('td').length > 0);
-  const numberColumn = headings.indexOf('Item number');
-  if (numberColumn < 0 || headings.filter((text) => text === 'Item number').length !== 1 || detailRows.length !== 1
-    || normalizeTrackingNumber(clean(detailRows.children('td').eq(numberColumn).text())) !== number) {
+  // International items have one heading row and one value row. Domestic items
+  // add a second pair (expected delivery office, number of pieces).
+  const detailRows = details.find('tr');
+  const fields = new Map<string, string>();
+  let itemNumbers = 0;
+  if (!detailRows.length || detailRows.length % 2 !== 0 || detailRows.length > 8) {
+    throw new SchemaError(PROVIDER, 'Japan Post returned a different or ambiguous shipment');
+  }
+  for (let index = 0; index < detailRows.length; index += 2) {
+    const labels = detailRows.eq(index).children();
+    const values = detailRows.eq(index + 1).children();
+    if (!labels.length || labels.length !== values.length
+      || labels.filter('th').length !== labels.length || values.filter('td').length !== values.length) {
+      throw new SchemaError(PROVIDER, 'Japan Post returned a different or ambiguous shipment');
+    }
+    labels.each((column, cell) => {
+      const label = clean($(cell).text());
+      if (label === 'Item number') itemNumbers += 1;
+      if (label && !fields.has(label)) fields.set(label, clean(values.eq(column).text()));
+    });
+  }
+  if (itemNumbers !== 1 || normalizeTrackingNumber(fields.get('Item number') ?? '') !== number) {
     throw new SchemaError(PROVIDER, 'Japan Post returned a different or ambiguous shipment');
   }
   const headers = history.find('th').map((_, cell) => clean($(cell).text())).get();
-  if (!headers[0]?.startsWith('State occurrence date')
+  // International results label the date column with its overseas clock
+  // caveat; domestic results call it Date.
+  if (!(headers[0] === 'Date' || headers[0]?.startsWith('State occurrence date'))
     || headers[1] !== 'Shipping track record' || headers[2] !== 'Details' || headers[3] !== 'Office'
     || !['Prefecture / Country', 'Prefecture'].includes(headers[4]!)
     || headers[5] !== 'ZIP code（Postal code number）' || headers.length !== 6) {
@@ -122,9 +151,27 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   });
   const latest = latestFirst[0]!;
   const status = japanPostStatus(latest.description!);
+  const settled = status && (status.status === 'exception' || ['delivered', 'returned', 'ready_for_pickup'].includes(status.stage));
   return { status: status?.status ?? 'unknown', ...(status ? { current_stage: status.stage } : {}),
-    last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time, expected_delivery: null,
+    last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time,
+    expected_delivery: settled ? null : designatedDelivery(fields, String(latest.local_time)),
+    ...(status?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     events: latestFirst.slice(0, 100) };
+}
+
+/**
+ * The delivery day the sender designated, with its time slot when one was
+ * chosen, as long as no scan is dated after that day. It is a plan, not a scan.
+ */
+function designatedDelivery(fields: ReadonlyMap<string, string>, latestLocal: string): string | null {
+  const date = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(fields.get('Designated date for delivery') ?? '');
+  const day = date ? calendarDay(Number(date[3]), Number(date[1]), Number(date[2])) : null;
+  if (!day || latestLocal.slice(0, 10) > day) return null;
+  const slot = /^From (\d{1,2}):([0-5]\d) to (\d{1,2}):([0-5]\d)$/.exec(fields.get('Designated time slot') ?? '');
+  if (!slot) return day;
+  const from = `${slot[1]!.padStart(2, '0')}:${slot[2]}`;
+  const to = `${slot[3]!.padStart(2, '0')}:${slot[4]}`;
+  return Number(slot[3]) <= 24 && from < to ? `${day} ${from}–${to}` : day;
 }
 
 export class JapanPostTracker {

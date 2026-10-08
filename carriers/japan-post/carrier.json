@@ -22,7 +22,9 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "eta",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://trackings.post.japanpost.jp/services/srv/search/direct?reqCodeNo1={trackingNumber}&locale=en",
@@ -30,20 +32,27 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "eta",
+      "delivered_at"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "eta",
+      "delivered_at"
     ],
     "discarded": [
       "event_details",
       "office_postcode",
-      "office_contact_details"
+      "office_contact_details",
+      "service_name",
+      "size_class",
+      "delivery_office",
+      "parcel_count"
     ],
     "unavailable": [
-      "eta",
       "weight",
       "sender_name",
       "pickup_point"

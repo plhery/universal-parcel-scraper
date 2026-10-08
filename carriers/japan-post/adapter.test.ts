@@ -30,7 +30,65 @@ describe('Japan Post result projection', () => {
     ]);
     expect(result.timezone).toBeUndefined();
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|000-0000|CN000000005JP/);
-    expect(Object.keys(result).sort()).toEqual(['current_stage', 'events', 'expected_delivery', 'last_status_text', 'last_update', 'last_update_local', 'status']);
+    expect(result.delivered_at).toBe('2026-09-04T09:43:00Z');
+    expect(Object.keys(result).sort()).toEqual(['current_stage', 'delivered_at', 'events', 'expected_delivery', 'last_status_text', 'last_update', 'last_update_local', 'status']);
+  });
+
+  it('reads the domestic two-row details table, Japanese prefecture clocks and the designated delivery slot', () => {
+    const result = normalizeCarrierResult(parse(fixture('domestic'), '000000000005'));
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
+      last_status_text: 'Processing at delivery Post Office', last_update: '2026-09-02T21:11:00Z',
+      last_update_local: '2026-09-03T06:11:00', expected_delivery: '2026-09-03 14:00–16:00' });
+    expect(result.events?.map((event) => [event.time, event.location])).toEqual([
+      ['2026-09-02T21:11:00Z', 'EXAMPLE DELIVERY, HOKKAIDO'],
+      ['2026-09-02T03:27:00Z', 'EXAMPLE HUB, HOKKAIDO'],
+      ['2026-09-01T10:15:00Z', 'EXAMPLE ORIGIN, CHIBA'],
+    ]);
+    expect(result.delivered_at).toBeUndefined();
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|000-0000|Yu-Pack|60 size/);
+  });
+
+  it.each([
+    ['From 14:00 to 16:00', '09/03/2026', '2026-09-03 14:00–16:00'],
+    ['From 8:00 to 12:00', '09/03/2026', '2026-09-03 08:00–12:00'],
+    ['None', '09/03/2026', '2026-09-03'],
+    ['From 16:00 to 14:00', '09/03/2026', '2026-09-03'],
+    ['From 14:00 to 16:00', '09/02/2026', null],
+    ['From 14:00 to 16:00', 'None', null],
+    ['From 14:00 to 16:00', '02/30/2026', null],
+  ])('reads slot %s on designated day %s as the estimate %s', (slot, day, expected) => {
+    const $ = load(fixture('domestic'));
+    const values = $('table[summary="配達状況詳細"] tr').eq(1).children('td');
+    values.eq(4).text(day);
+    values.eq(5).text(slot);
+    expect(parse($.html(), '000000000005').expected_delivery).toBe(expected);
+  });
+
+  it.each([
+    ['Final delivery', 'delivered'],
+    ['Final delivery - Collected at counter', 'delivered'],
+    ['Retention', 'in_transit'],
+  ])('maps the domestic %s row and clears the estimate once delivered', (wording, stage) => {
+    const $ = load(fixture('domestic'));
+    const history = $('table[summary="履歴情報"]');
+    const pair = history.find('tr').slice(-2).clone();
+    pair.first().children('td').eq(0).text('09/03/2026 15:02');
+    pair.first().children('td').eq(1).text(wording);
+    history.append(pair);
+    const result = parse($.html(), '000000000005');
+    expect(result.current_stage).toBe(stage);
+    expect(result.expected_delivery).toBe(stage === 'delivered' ? null : '2026-09-03 14:00–16:00');
+    expect(result.delivered_at ?? null).toBe(stage === 'delivered' ? '2026-09-03T06:02:00Z' : null);
+  });
+
+  it.each(['missing-value-row', 'uneven-pair', 'second-item-number', 'value-in-heading-row'])('rejects a %s details table', (mode) => {
+    const $ = load(fixture('domestic'));
+    const rows = $('table[summary="配達状況詳細"] tr');
+    if (mode === 'missing-value-row') rows.last().remove();
+    if (mode === 'uneven-pair') rows.last().children('td').last().remove();
+    if (mode === 'second-item-number') rows.eq(2).children('th').eq(1).text('Item number');
+    if (mode === 'value-in-heading-row') rows.eq(2).children('th').first().replaceWith('<td>EXAMPLE</td>');
+    expect(() => parse($.html(), '000000000005')).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('preserves carrier order across foreign clock changes and date-only precision', () => {
@@ -159,7 +217,8 @@ describe('Japan Post result projection', () => {
 
   it('backs every declared capability with a synthetic fixture', () => {
     const result = parse(fixture(), NUMBER);
-    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)) };
+    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)),
+      eta: Boolean(parse(fixture('domestic'), '000000000005').expected_delivery), delivered_at: Boolean(result.delivered_at) };
     const capabilities = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities as string[];
     for (const capability of capabilities) expect(checks[capability], capability).toBe(true);
   });
