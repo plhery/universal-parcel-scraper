@@ -1,17 +1,50 @@
 
+import { DateTime } from 'luxon';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { explicitOffsetTime } from '../../core/time/index.js';
+import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { austrianPostEventStatus, austrianPostSummaryStatus } from './status.js';
+import { austrianPostEventStatus, austrianPostShowsEstimate, austrianPostSummaryStatus } from './status.js';
 
 const PROVIDER = 'Austrian Post';
 // Published in the official tracking form's data-sendungsapiurlpublic attribute;
 // the official client calls this read without the optional account token.
 const ENDPOINT = 'https://api.post.at/sendungen/sv/graphqlPublic';
+const ZONE = 'Europe/Vienna';
+
+type Estimate = Pick<CarrierResult, 'expected_delivery' | 'expected_delivery_from'> & { end: number };
+
+function viennaDay(timestamp: number): DateTime {
+  return DateTime.fromMillis(timestamp, { zone: ZONE }).startOf('day');
+}
+
+/**
+ * The delivery estimate, read as the tracking page reads it: `startDate` and
+ * `endDate` are days on Vienna time, and `startTime` and `endTime`, which carry
+ * offsets, make a window when they fall on those days. Otherwise the days stand.
+ */
+function estimateOf(range: unknown): Estimate | null {
+  if (!isRecord(range)) return null;
+  const first = isoTime(range.startDate, ZONE);
+  const last = range.endDate == null ? first : isoTime(range.endDate, ZONE);
+  if (!first || !last) return null;
+  const from = viennaDay(first.timestamp);
+  const to = viennaDay(last.timestamp);
+  if (+to < +from) return null;
+  const start = explicitOffsetTime(range.startTime);
+  const end = explicitOffsetTime(range.endTime);
+  if (start && end && start.timestamp <= end.timestamp
+    && +viennaDay(start.timestamp) === +from && +viennaDay(end.timestamp) === +to) {
+    return { expected_delivery: end.iso, ...(start.timestamp < end.timestamp ? { expected_delivery_from: start.iso } : {}), end: end.timestamp };
+  }
+  const fromDay = from.toISODate();
+  const toDay = to.toISODate();
+  if (!fromDay || !toDay) return null;
+  return { expected_delivery: toDay, ...(fromDay !== toDay ? { expected_delivery_from: fromDay } : {}), end: to.endOf('day').toMillis() };
+}
 
 export function normalizeAustrianPostNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -33,15 +66,19 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
   if (!Array.isArray(parcel.sendungsEvents) || parcel.sendungsEvents.length > 500) throw new SchemaError(PROVIDER, 'Austrian Post returned invalid tracking history');
   const parsed: Array<{ event: CarrierEvent; timestamp: number; index: number }> = [];
   const seen = new Set<string>();
+  // The tracking page takes the newest scan's reason from the feed's order, oldest first.
+  let newestReason = '';
   parcel.sendungsEvents.forEach((raw, index) => {
     if (!isRecord(raw)) throw new SchemaError(PROVIDER, 'Austrian Post returned an invalid scan');
+    const reason = clean(raw.reasontypecode, 32);
+    newestReason = reason;
     const time = explicitOffsetTime(raw.timestamp);
     const description = clean(raw.trackingDesc, 500);
     if (!time || !description) throw new SchemaError(PROVIDER, 'Austrian Post returned an incomplete scan');
     // A bare `PLZ 1234` is the delivery area; a facility keeps its name without the postcode.
     const location = clean(raw.eventPlaceName, 200).replace(/(?:^|,\s*)PLZ\s*\d{4,5}$/i, '').trim();
     const code = clean(raw.status, 32);
-    const mapped = austrianPostEventStatus(code, clean(raw.reasontypecode, 32), description);
+    const mapped = austrianPostEventStatus(code, reason, description);
     const key = JSON.stringify([time.iso, location, description]);
     if (seen.has(key)) return;
     seen.add(key);
@@ -52,8 +89,12 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
   });
   parsed.sort((a, b) => b.timestamp - a.timestamp || b.index - a.index);
   const events = parsed.slice(0, 100).map(({ event }) => event);
-  const mapped = austrianPostSummaryStatus(clean(parcel.status, 32));
+  const summary = clean(parcel.status, 32);
+  const mapped = austrianPostSummaryStatus(summary);
   if (!events.length) throw new IndeterminateError(PROVIDER, 'Austrian Post returned a shipment without tracking history');
+  const estimate = austrianPostShowsEstimate(summary, newestReason) ? estimateOf(parcel.estimatedDelivery) : null;
+  // A later scan than the estimate's end leaves it stale.
+  const expected = estimate && estimate.end >= parsed[0]!.timestamp ? estimate : null;
   const weight = typeof parcel.weight === 'number' && Number.isFinite(parcel.weight) && parcel.weight > 0 ? parcel.weight : null;
   // Whole centimetres; a missing side means the parcel was not measured.
   const sides = isRecord(parcel.dimensions) ? [parcel.dimensions.length, parcel.dimensions.width, parcel.dimensions.height] : [];
@@ -62,7 +103,8 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
   const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
   return {
     status, ...(mapped ? { current_stage: mapped.stage } : {}),
-    last_status_text: events[0]!.description!, last_update: events[0]!.time!, expected_delivery: null,
+    last_status_text: events[0]!.description!, last_update: events[0]!.time!, expected_delivery: expected?.expected_delivery ?? null,
+    ...(expected?.expected_delivery_from ? { expected_delivery_from: expected.expected_delivery_from } : {}),
     ...(weight === null ? {} : { weight_kg: weight }),
     ...(measured ? { dimensions_text: `${sides.join(' × ')} cm` } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
@@ -78,7 +120,7 @@ export class AustrianPostTracker {
     const budgetMs = context.budgetMs ?? this.options.timeoutMs ?? 15_000;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError('Austrian Post timeout must be positive');
     context.signal?.throwIfAborted();
-    const query = `query { einzelsendung(sendungsnummer: "${number}") { sendungsnummer status weight dimensions { length width height } sendungsEvents { timestamp status reasontypecode trackingDesc eventPlaceName } } }`;
+    const query = `query { einzelsendung(sendungsnummer: "${number}") { sendungsnummer status weight dimensions { length width height } estimatedDelivery { startDate endDate startTime endTime } sendungsEvents { timestamp status reasontypecode trackingDesc eventPlaceName } } }`;
     try {
       const { bytes } = await fetchBounded(ENDPOINT, {
         method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) }, body: JSON.stringify({ query }),

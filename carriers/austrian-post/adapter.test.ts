@@ -76,6 +76,72 @@ describe('Austrian Post public tracking', () => {
     expect(parseAustrianPostResponse(payload, NUMBER).events?.[4]).not.toHaveProperty('stage');
   });
 
+  describe('delivery estimate', () => {
+    // Out for delivery since 13:00 on 28 March, Vienna time (CET).
+    const outForDelivery = (estimatedDelivery: unknown, summary = 'IZ') => {
+      const payload = fixture();
+      payload.data.einzelsendung.status = summary;
+      payload.data.einzelsendung.sendungsEvents = payload.data.einzelsendung.sendungsEvents.slice(0, 3);
+      payload.data.einzelsendung.estimatedDelivery = estimatedDelivery;
+      return payload;
+    };
+    const day = { startDate: '2026-03-28T00:00:00', endDate: '2026-03-28T00:00:00', startTime: null, endTime: null };
+    const window = { ...day, startTime: '2026-03-28T13:00:00.000+01:00', endTime: '2026-03-28T17:00:00.000+01:00' };
+
+    it('reads the window between its start and end times', () => {
+      const result = parseAustrianPostResponse(outForDelivery(window), NUMBER);
+      expect(result).toMatchObject({ status: 'out_for_delivery', expected_delivery_from: '2026-03-28T13:00:00+01:00', expected_delivery: '2026-03-28T17:00:00+01:00' });
+    });
+
+    it('reads dates as Vienna days, and a range of them', () => {
+      expect(parseAustrianPostResponse(outForDelivery(day), NUMBER)).toMatchObject({ expected_delivery: '2026-03-28' });
+      expect(parseAustrianPostResponse(outForDelivery(day), NUMBER)).not.toHaveProperty('expected_delivery_from');
+      const midnight = { ...day, startDate: '2026-03-27T23:00:00.000Z', endDate: '2026-03-27T23:00:00.000+00:00' };
+      expect(parseAustrianPostResponse(outForDelivery(midnight), NUMBER).expected_delivery).toBe('2026-03-28');
+      const range = parseAustrianPostResponse(outForDelivery({ ...day, endDate: '2026-03-30', startTime: null }, 'IV'), NUMBER);
+      expect(range).toMatchObject({ status: 'in_transit', expected_delivery_from: '2026-03-28', expected_delivery: '2026-03-30' });
+    });
+
+    it('keeps only the days when the times fall on other days', () => {
+      const result = parseAustrianPostResponse(outForDelivery({ ...window, startTime: '0001-01-01T13:00:00+01:00' }), NUMBER);
+      expect(result.expected_delivery).toBe('2026-03-28');
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    });
+
+    it('drops an estimate that does not read', () => {
+      for (const estimate of [null, 'tomorrow', { ...day, startDate: 'Samstag' }, { ...day, endDate: '2026-03-27T00:00:00' }]) {
+        const result = parseAustrianPostResponse(outForDelivery(estimate), NUMBER);
+        expect(result.expected_delivery).toBeNull();
+        expect(result).not.toHaveProperty('expected_delivery_from');
+      }
+    });
+
+    it('shows the estimate only where the tracking page does', () => {
+      for (const summary of ['AV', 'EB', 'RE', 'ZU']) {
+        expect(parseAustrianPostResponse(outForDelivery(window, summary), NUMBER).expected_delivery).toBeNull();
+      }
+      const reason = (code: string, summary = 'IZ') => {
+        const payload = outForDelivery(window, summary);
+        payload.data.einzelsendung.sendungsEvents[2].reasontypecode = code;
+        return parseAustrianPostResponse(payload, NUMBER).expected_delivery;
+      };
+      // A missed delivery out for delivery, a delay and a problem to resolve hide it.
+      expect([reason('BN'), reason('FL'), reason('NZ')]).toEqual([null, null, null]);
+      expect(reason('BN', 'IV')).toBe('2026-03-28T17:00:00+01:00');
+    });
+
+    it('drops an estimate a later scan has passed', () => {
+      const payload = outForDelivery(window);
+      payload.data.einzelsendung.sendungsEvents[2].timestamp = '2026-03-28T16:30:00+00:00';
+      expect(parseAustrianPostResponse(payload, NUMBER).expected_delivery).toBeNull();
+      const days = outForDelivery({ ...day, endDate: '2026-03-29T00:00:00' });
+      days.data.einzelsendung.sendungsEvents[2].timestamp = '2026-03-29T16:30:00+00:00';
+      expect(parseAustrianPostResponse(days, NUMBER).expected_delivery).toBe('2026-03-29');
+      days.data.einzelsendung.sendungsEvents[2].timestamp = '2026-03-29T22:30:00+00:00';
+      expect(parseAustrianPostResponse(days, NUMBER).expected_delivery).toBeNull();
+    });
+  });
+
   it('separates summary and scan vocabularies for pickup, returns and delivery', () => {
     expect(austrianPostSummaryStatus('IZ')?.stage).toBe('out_for_delivery');
     expect(austrianPostEventStatus('IZ', 'ZA', '')?.stage).toBe('delivered');
@@ -93,6 +159,7 @@ describe('Austrian Post public tracking', () => {
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error' });
     const query = String(JSON.parse(String(init?.body)).query);
     expect(query).toContain(`sendungsnummer: "${NUMBER}"`);
+    expect(query).toContain('estimatedDelivery { startDate endDate startTime endTime }');
     // The public page shows the sender only after sign-in; nothing about the recipient either.
     expect(query).not.toContain('shipper');
     expect(query).not.toMatch(/street|postalCode|deliveryAddress/);

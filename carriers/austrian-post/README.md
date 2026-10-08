@@ -20,11 +20,19 @@ The query also asks for the measured size, in whole centimetres. It never
 asks for the shipper, which the public page shows only after sign-in, or
 anything about the recipient.
 
+The delivery estimate is read as the tracking page reads it. Its dates are
+days on Vienna time, and its start and end times, which carry offsets, make a
+window when they fall on those days. The page shows it only while the item
+is accepted, in distribution or out for delivery, and not once the newest
+scan gives a delay, a problem to resolve or a missed delivery. A later scan
+than the estimate's end also drops it.
+
 ## Limitations
 
 Account-only delivery options and recipient details are not retrieved. The
-endpoint's delivery estimate is not read. Empty history and GraphQL errors
-remain inconclusive so another source can help.
+estimate follows the page's code: no public item in transit was available to
+check a live value. Empty history and GraphQL errors remain inconclusive so
+another source can help.
 
 ## Testing
 

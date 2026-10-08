@@ -25,6 +25,7 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
     "weight",
     "dimensions",
     "delivered_at",
@@ -38,12 +39,15 @@
       "history",
       "location",
       "eta",
+      "eta_window",
       "weight",
       "dimensions"
     ],
     "scraped": [
       "status",
       "history",
+      "eta",
+      "eta_window",
       "weight",
       "location",
       "dimensions",
