@@ -4,7 +4,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
-import { normalizeLbcNumber } from './parser.js';
+import { classifyLbcWording, normalizeLbcNumber, withoutRepresentative } from './parser.js';
 
 export const LBC_MOBILE_API = 'https://lbcapigateway.lbcapps.com/lbctrackingapi2/v2';
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
@@ -38,12 +38,19 @@ function scalar(node: XmlNode, name: string, required = true, max = 1000): strin
 const CODES: Readonly<Record<string, ClassifiedStatus>> = {
   '1': { status: 'delivered', stage: 'delivered' },
   '4': { status: 'exception', stage: 'failed_attempt' },
+  // Released to an authorized representative.
+  '5': { status: 'delivered', stage: 'delivered' },
   '8000': { status: 'in_transit', stage: 'accepted' },
   '8002': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   '8810': { status: 'in_transit', stage: 'in_transit' },
   '8820': { status: 'in_transit', stage: 'in_transit' },
   '1004': { status: 'in_transit', stage: 'in_transit' },
 };
+
+// Code 0 carries several kinds of scan, which LBC's wording tells apart.
+function classify(code: string, description: string): ClassifiedStatus | undefined {
+  return CODES[code] ?? (code === '0' ? classifyLbcWording(description) : undefined);
+}
 
 function scanClock(day: string, time: string): string | null {
   if (!time) return null;
@@ -78,14 +85,19 @@ export function parseLbcMobile(xml: string, raw: string): CarrierResult {
   for (const row of rows) {
     const code = scalar(row, 'StatusId', true, 32);
     const wording = scalar(row, 'StatusandLocation');
-    const mapped = CODES[code];
-    const description = code === '1' ? 'Delivered' : /^Delivered to\b/i.test(wording) ? 'Delivery update' : wording;
+    const description = code === '1' ? 'Delivered' : /^Delivered to\b/i.test(wording) ? 'Delivery update' : withoutRepresentative(wording);
+    const mapped = classify(code, description);
     const day = scalar(row, 'DatePosted', true, 64);
     const time = scalar(row, 'DatePostedTime', false, 64);
     const local = scanClock(day, time);
-    const event: CarrierEvent = { description, provider_code: code, provider_time_text: `${day}${time ? ` ${time}` : ''}`,
+    // The town and province of the scanning branch. A forwarding scan carries its
+    // destination's instead, so it gets none.
+    const forwarding = code === '8820' || /^Shipment is en route to\b|\bon its way to\b/i.test(wording);
+    const location = forwarding ? '' : [scalar(row, 'CityName', false, 120), scalar(row, 'ProvinceName', false, 120)].filter(Boolean).join(', ');
+    const event: CarrierEvent = { description, ...(location ? { location } : {}), provider_code: code,
+      provider_time_text: `${day}${time ? ` ${time}` : ''}`,
       ...(local ? { local_time: local } : {}), ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
-    // Branch, remarks, coordinates and recipient/sender fields are not projected.
+    // Branch, remarks, coordinates, internal wording and recipient/sender fields are not projected.
     const identity = JSON.stringify(event);
     if (seen.has(identity)) continue;
     seen.add(identity);
@@ -97,7 +109,7 @@ export function parseLbcMobile(xml: string, raw: string): CarrierResult {
     events.sort((a, b) => String(b.local_time).localeCompare(String(a.local_time)));
   }
   const current = events[0]!;
-  const mapped = CODES[String(current.provider_code)];
+  const mapped = classify(String(current.provider_code), current.description!);
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description, last_update: null, ...(current.local_time ? { last_update_local: current.local_time } : {}),
     timezone: 'Asia/Manila', events: events.slice(0, 100) };

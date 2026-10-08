@@ -5,18 +5,28 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 
+// Domestic waybills have twelve digits; LBC's tracking also answers for ten-,
+// eleven- and fourteen-digit numbers.
 export function normalizeLbcNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^\d{12}$/.test(number)) throw new InvalidInputError('lbc-express', 'LBC requires a twelve-digit tracking number');
+  if (!/^(?:\d{10,12}|\d{14})$/.test(number)) throw new InvalidInputError('lbc-express', 'LBC requires a tracking number of 10 to 12 or 14 digits');
   return number;
 }
 
-function classify(description: string): ClassifiedStatus | undefined {
-  if (description === 'Delivered') return { status: 'delivered', stage: 'delivered' };
+const RELEASED = 'Released to authorized representative';
+
+/** A release names the representative who took the parcel: keep the milestone, never the name. */
+export function withoutRepresentative(text: string): string {
+  return /^Released to authorized representative\b/i.test(text) ? RELEASED : /^Released to\b/i.test(text) ? 'Release update' : text;
+}
+
+/** The stage LBC's own scan wording names. */
+export function classifyLbcWording(description: string): ClassifiedStatus | undefined {
+  if (description === 'Delivered' || description === RELEASED) return { status: 'delivered', stage: 'delivered' };
   if (description === 'Please expect delivery within the day.') return { status: 'out_for_delivery', stage: 'out_for_delivery' };
-  if (/^Shipment has been accepted at\s+.+\.$/.test(description)) return { status: 'in_transit', stage: 'accepted' };
-  if (/^Shipment has been received at\s+.+\.$/.test(description)
-    || /^Shipment is en route to\s+.+\./.test(description)) return { status: 'in_transit', stage: 'in_transit' };
+  if (/^Shipment has been accepted at\s+.+\.$/.test(description) || description === 'PICKED UP BY LBC') return { status: 'in_transit', stage: 'accepted' };
+  if (/^Shipment has been received at\s+.+\.$/.test(description) || /^Shipment is en route to\s+.+\./.test(description)
+    || /^Shipment has left the origin\b/.test(description)) return { status: 'in_transit', stage: 'in_transit' };
   return undefined;
 }
 
@@ -42,9 +52,9 @@ export function parseLbc(html: string, raw: string): CarrierResult {
     // Delivery descriptions contain the recipient. Retain the milestone,
     // never the name or the original text as a secondary provider field.
     const delivered = /^Delivered to .+ on \d{1,2}\/\d{1,2}\/\d{4}\.$/i.test(rawDescription);
-    const description = delivered ? 'Delivered' : /^Delivered to\b/i.test(rawDescription) ? 'Delivery update' : rawDescription;
+    const description = delivered ? 'Delivered' : /^Delivered to\b/i.test(rawDescription) ? 'Delivery update' : withoutRepresentative(rawDescription);
     const day = clean(dayNode.text(), 80);
-    const mapped = classify(description);
+    const mapped = classifyLbcWording(description);
     const event: CarrierEvent = { description, ...(day ? { provider_time_text: day } : {}),
       ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);
@@ -55,7 +65,7 @@ export function parseLbc(html: string, raw: string): CarrierResult {
   // The rendered history is current first. Calendar dates provide no time of
   // day, so preserve that order and never synthesize a midnight instant.
   const current = events[0]!;
-  const mapped = classify(current.description!);
+  const mapped = classifyLbcWording(current.description!);
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description, last_update: null, timezone: 'Asia/Manila', events: events.slice(0, 100) };
 }

@@ -103,6 +103,26 @@ describe('same-instant identity policies', () => {
     }
   });
 
+  it('lets an LBC scan gain its town and drop a representative\'s name with its provider code', () => {
+    expect(sameInstantIdentityPolicy('lbc-express')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('lbc-express', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['lbc-express'], requireProviderCode: true, matchEachScan: true });
+    const stored = { stage: 'accepted', description: 'Shipment has been received at  EXAMPLE HUB.', location: '', providerCode: '0' };
+    const incoming = { ...stored, stage: 'in_transit', description: 'Shipment has been received at EXAMPLE HUB.', location: 'EXAMPLE TOWN, EXAMPLE PROVINCE' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, incoming)).toBe(true);
+    for (const different of [
+      { ...stored, description: 'Shipment has been received at ANOTHER HUB.' },
+      { ...stored, location: 'ANOTHER TOWN, EXAMPLE PROVINCE' },
+      { ...stored, providerCode: '8810' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    const release = { stage: 'delivered', description: 'Released to authorized representative', location: 'EXAMPLE TOWN, EXAMPLE PROVINCE', providerCode: '5' };
+    const named = { ...release, description: 'Released to authorized representative EXAMPLE PERSON 10/02/2026.', location: '' };
+    expect(policy?.matches?.(release, named)).toBe(true);
+    expect(policy?.matches?.(named, release)).toBe(false);
+    expect(policy?.matches?.(release, { ...named, description: 'Released to EXAMPLE PERSON' })).toBe(false);
+  });
+
   it('keeps UPS disabled for apps that cannot check scan evidence', () => {
     expect(sameInstantIdentityPolicy('ups')).toBeUndefined();
     expect(sameInstantIdentityPolicy('ups', { supportsScanMatching: false })).toBeUndefined();

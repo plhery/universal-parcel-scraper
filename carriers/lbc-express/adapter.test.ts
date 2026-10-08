@@ -53,8 +53,20 @@ describe('LBC current public history parser', () => {
     expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Delivery update' });
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
+  it('keeps a release to a representative as a delivery without the name', () => {
+    const html = fixture().replace('Delivered to PRIVATE SYNTHETIC RECIPIENT on 10/02/2026.', 'Released to authorized representative PRIVATE SYNTHETIC PERSON 10/02/2026.');
+    const result = parseLbc(html, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Released to authorized representative' });
+    expect(parseLbc(html.replace('authorized representative', 'PRIVATE SYNTHETIC PERSON'), NUMBER))
+      .toMatchObject({ status: 'unknown', last_status_text: 'Release update' });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+  });
   it('validates input before retrieval and bounds provider HTML', () => {
     expect(normalizeLbcNumber(' 1000 0000 0001 ')).toBe(NUMBER);
+    for (const number of ['1000000001', '10000000001', '10000000000001']) expect(normalizeLbcNumber(number)).toBe(number);
+    for (const number of ['100000001', '1000000000001', '100000000000001']) {
+      expect(() => normalizeLbcNumber(number)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
+    }
     expect(() => normalizeLbcNumber('100000000001&x=1')).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     expect(() => parseLbc('x'.repeat(1_000_001), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

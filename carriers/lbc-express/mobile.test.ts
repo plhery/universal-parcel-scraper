@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 import { LBC_MOBILE_API, parseLbcMobile } from './mobile.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '100000000001';
 const xml = () => readFileSync(new URL('./fixtures/mobile.xml', import.meta.url), 'utf8');
@@ -52,6 +53,43 @@ describe('LBC mobile history', () => {
     expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Delivery update' });
     expect(result.current_stage).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
+  });
+  it('reads code 0 by its wording, places branch scans and keeps names out of releases', () => {
+    const scan = (code: string, day: string, time: string, wording: string, town = '', province = '') =>
+      `<TrackingHistory><StatusId>${code}</StatusId><DatePosted>${day}</DatePosted><DatePostedTime>${time}</DatePostedTime>`
+      + `<StatusandLocation>${wording}</StatusandLocation><CityName>${town}</CityName><ProvinceName>${province}</ProvinceName>`
+      + '<Lat>0</Lat><Long>0</Long><Branch><BranchDescr>PRIVATE SYNTHETIC BRANCH</BranchDescr></Branch></TrackingHistory>';
+    const history = [
+      scan('0', '10/1/2026', '7:00:00 AM', 'PICKED UP BY LBC'),
+      scan('0', '10/1/2026', '8:00:00 AM', 'Shipment has been received at  SYNTHETIC BRANCH.', 'EXAMPLE TOWN', 'EXAMPLE PROVINCE'),
+      scan('8000', '10/1/2026', '9:15:20 AM', 'Shipment has been accepted at SYNTHETIC BRANCH.', 'EXAMPLE TOWN', 'EXAMPLE PROVINCE'),
+      scan('0', '10/1/2026', '11:00:00 PM', 'Shipment is en route to SYNTHETIC TEAM. Next update for this shipment will come within 1 day/s.', 'OTHER TOWN', 'OTHER PROVINCE'),
+      scan('8820', '10/1/2026', '11:30:00 PM', 'Shipment is en route to SYNTHETIC TEAM. Next update for this shipment will come within 1 day/s.', 'OTHER TOWN', 'OTHER PROVINCE'),
+      scan('0', '10/2/2026', '5:00:00 AM', 'Shipment has been received at SYNTHETIC TEAM.', 'OTHER TOWN', 'OTHER PROVINCE'),
+      scan('0', '10/2/2026', '6:00:00 AM', 'Shipment has been received at COURIER EXCHANGE.', '', 'OTHER PROVINCE'),
+      scan('5', '10/2/2026', '3:40:01 PM', 'Released to authorized representative PRIVATE SYNTHETIC PERSON 10/02/2026.', 'OTHER TOWN', 'OTHER PROVINCE'),
+    ].join('');
+    const body = xml().replace(/<TrackingHistory>\s*<TrackingHistory>[\s\S]*<\/TrackingHistory>\s*<\/TrackingHistory>/, `<TrackingHistory>${history}</TrackingHistory>`);
+    const result = parseLbcMobile(body, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Released to authorized representative' });
+    expect(result.events?.map(event => [event.provider_code, event.stage, event.location])).toEqual([
+      ['5', 'delivered', 'OTHER TOWN, OTHER PROVINCE'],
+      ['0', 'in_transit', 'OTHER PROVINCE'],
+      ['0', 'in_transit', 'OTHER TOWN, OTHER PROVINCE'],
+      ['8820', 'in_transit', undefined],
+      ['0', 'in_transit', undefined],
+      ['8000', 'accepted', 'EXAMPLE TOWN, EXAMPLE PROVINCE'],
+      ['0', 'in_transit', 'EXAMPLE TOWN, EXAMPLE PROVINCE'],
+      ['0', 'accepted', undefined],
+    ]);
+    expect(parseLbcMobile(body.replace('<StatusId>5</StatusId>', '<StatusId>0</StatusId>'), NUMBER))
+      .toMatchObject({ status: 'delivered', last_status_text: 'Released to authorized representative' });
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|Lat|Long/);
+    for (const entry of statuses.entries.filter(entry => 'code' in entry)) {
+      const row = `<TrackingHistory><StatusId>${entry.code}</StatusId><DatePosted>10/1/2026</DatePosted><StatusandLocation>${entry.wording}</StatusandLocation></TrackingHistory>`;
+      const single = xml().replace(/<TrackingHistory>\s*<TrackingHistory>[\s\S]*<\/TrackingHistory>\s*<\/TrackingHistory>/, `<TrackingHistory>${row}</TrackingHistory>`);
+      expect(parseLbcMobile(single, NUMBER).events?.[0]?.stage, entry.wording).toBe(entry.stage);
+    }
   });
   it.each(['remittance', 'empty history', 'SOAP fault'])('keeps %s inconclusive', mode => {
     let body = xml();

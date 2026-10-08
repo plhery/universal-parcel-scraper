@@ -195,6 +195,12 @@
     "reason": "Domestic registered letters can carry thirteen digits that start with 1 to 5. Two confirmed samples do not establish a rule over a shape many carriers share."
   },
   {
+    "carrier": "lbc-express",
+    "pattern": "^\\d{10,11}$",
+    "kind": "by_design",
+    "reason": "Ten and eleven digits are shared by several carriers and nothing in the number points to LBC."
+  },
+  {
     "carrier": "ninja-van",
     "pattern": "^DX\\d{6}$",
     "kind": "by_design",

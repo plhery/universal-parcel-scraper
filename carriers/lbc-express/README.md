@@ -1,12 +1,12 @@
 # LBC Express
 
-Tracks twelve-digit Philippine LBC shipments through the Android app's guest SOAP API. The shared subscription key is included; `LBC_TRACKING_KEY` overrides it, and an empty override disables the API tier. No account or browser setup is needed for this tier.
+Tracks Philippine LBC shipments through the Android app's guest SOAP API. Domestic waybills have twelve digits, and only those suggest LBC; the tracker also answers for ten-, eleven- and fourteen-digit numbers, which many carriers share, so LBC tracks them when the caller names it. The shared subscription key is included; `LBC_TRACKING_KEY` overrides it, and an empty override disables the API tier. No account or browser setup is needed for this tier.
 
 A configured local Chromium browser recovers from a refused key, transport failure or inconclusive mobile response. It opens the public tracking form, submits the current anonymous search request, and follows the opaque handle returned by that request. Handles are never constructed or persisted. Rate limits and malformed or mismatched replies end the lookup.
 
 A fresh browser context keeps the lookup isolated. The browser completes the website's automatic JavaScript protection; interactive challenges remain failures. The returned form must identify the requested number before any history is projected. Empty history is inconclusive because the website does not explicitly declare shipment absence.
 
-The mobile history supplies local scan clocks without offsets; they stay in `local_time`. The website supplies only calendar dates, retained as provider text. Neither tier invents an update or delivery instant. History is current first, exact duplicate rows are removed, and delivered-to names are discarded. The current portal does not expose a verified raw-number permalink.
+The mobile history supplies local scan clocks without offsets; they stay in `local_time`. The website supplies only calendar dates, retained as provider text. Neither tier invents an update or delivery instant. History is current first, exact duplicate rows are removed, and the names in delivered-to and released-to rows are discarded. A mobile scan takes its branch's town and province as its location; a forwarding scan carries its destination's, so it gets none. Status code 0 covers several kinds of scan, so its stage comes from LBC's wording. Scans stored without a town, or with a representative's name, keep their identity when they gain the town or lose the name. The current portal does not expose a verified raw-number permalink.
 
 ## Mobile app
 
@@ -35,6 +35,6 @@ key can be replaced through `LBC_TRACKING_KEY`; browser retrieval remains availa
 
 ## Requirements
 
-`TRACKING_CHROMIUM_PATH` enables browser recovery. Automatic key refresh, browser-service retrieval, detailed locations, estimates, and pickup points are not implemented. Provide `LBC_TRACKING_NUMBER` outside Git for a positive live lookup.
+`TRACKING_CHROMIUM_PATH` enables browser recovery. Automatic key refresh, browser-service retrieval, website scan locations, estimates, and pickup points are not implemented. Provide `LBC_TRACKING_NUMBER` outside Git for a positive live lookup.
 
 `npm run test:carriers:live -- carriers/lbc-express`

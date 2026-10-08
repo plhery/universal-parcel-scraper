@@ -31,6 +31,9 @@
       "source": {
         "url": "https://www.trustpilot.com/review/www.lbcexpress.com"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -50,7 +53,7 @@
           "lbc-express"
         ]
       },
-      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+      "note": "Publicly reported shipment number. LBC's tracker returns its history."
     },
     {
       "number": "142062960271",
@@ -58,6 +61,9 @@
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://uk.trustpilot.com/review/www.lbcexpress.com"
+      },
+      "context": {
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -75,7 +81,118 @@
           "lbc-express"
         ]
       },
-      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+      "note": "Publicly reported shipment number. LBC's tracker returns its history."
+    },
+    {
+      "number": "174004181161",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230224023646/https://www.lbcexpress.com/track/?tracking+number=174004181161",
+        "date": "2023-02-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "An LBC tracking link archived by the Wayback Machine. LBC's tracker returns its history."
+    },
+    {
+      "number": "81111072343",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20180111203017/http://www.lbcexpress.com/track/?tracking_no=81111072343",
+        "date": "2018-01-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "An LBC tracking page archived by the Wayback Machine shows its domestic history."
+    },
+    {
+      "number": "1101572400",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20180107051626/http://www.lbcexpress.com/track/?tracking_no=1101572400",
+        "date": "2018-01-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "An LBC tracking page archived by the Wayback Machine shows its history: a box sent from Saudi Arabia."
+    },
+    {
+      "number": "1108920020",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20180104183612/http://www.lbcexpress.com/track/?tracking_no=1108920020",
+        "date": "2018-01-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "An LBC tracking page archived by the Wayback Machine shows its history: a box sent from the United States."
     }
   ]
 }

@@ -24,6 +24,50 @@
       "language": "en",
       "stage": "failed_attempt",
       "confirmedBy": "live"
+    },
+    {
+      "code": "0",
+      "wording": "PICKED UP BY LBC",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Code 0 covers several kinds of scan; the wording names the stage."
+    },
+    {
+      "code": "0",
+      "wording": "Shipment has been accepted at LBC HK WAREHOUSE .",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "0",
+      "wording": "Shipment has left the origin and is on its way to the Philippines.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "0",
+      "wording": "Shipment has been received at UPPER LAGUNA DELIVERY TEAM.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "0",
+      "wording": "Shipment is en route to UPPER LAGUNA DELIVERY TEAM. Next update for this shipment will come within 1 to 2 day/s.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "5",
+      "wording": "Released to authorized representative",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The row goes on with the representative's name, which the adapter drops."
     }
   ]
 }
