@@ -38,6 +38,14 @@ const contrasts: { expected: Stage; en: string; fr: string; de: string; it: stri
     de: 'Zollabfertigung abgeschlossen', it: 'Sdoganamento completato' },
   { expected: 'customs', en: 'Customs clearance has not been completed', fr: "Le dédouanement n'est pas terminé",
     de: 'Zollabfertigung nicht abgeschlossen', it: 'Sdoganamento non completato' },
+  { expected: 'in_transit', en: 'Released from import customs', fr: 'Colis dédouané', de: 'Sendung verzollt',
+    it: 'Spedizione sdoganata', es: 'Liberado por aduana', pt: 'Liberado pela alfândega' },
+  { expected: 'customs', en: 'Awaiting release from customs', fr: 'Colis en attente de dédouanement',
+    de: 'Die Sendung wird verzollt', it: 'In attesa di sdoganamento', es: 'Pendiente de liberación por aduana',
+    pt: 'Aguardando liberação aduaneira' },
+  { expected: 'in_transit', en: 'Parcel on hold at recipient’s request', fr: 'Article retenu à la demande du destinataire',
+    de: 'Sendung auf Wunsch des Empfängers zurückgehalten', it: 'Spedizione trattenuta su richiesta del destinatario',
+    es: 'Retenido a petición del destinatario', pt: 'Retido a pedido do destinatário' },
   { expected: 'registered', en: 'Label created; the carrier has not received the parcel yet',
     fr: "Étiquette créée ; le transporteur n'a pas encore reçu le colis",
     de: 'Versandetikett erstellt; der Zusteller hat das Paket noch nicht erhalten',
@@ -210,5 +218,32 @@ describe('intuitive language contrasts', () => {
     'Recibido por Estafeta', 'Objeto recebido pelos Correios do Brasil', 'Firma geschlossen', 'Código de envío [number]',
   ])('[generated privacy] keeps carrier handoffs and references: %s', (description) => {
     expect(event('2026-01-01T12:00:00Z', description)).not.toBeNull();
+  });
+});
+
+describe('universal provider rules and the shared reading', () => {
+  const TIME = '2026-01-01T12:00:00Z';
+
+  it('leave a release, a recipient hold and an announced attempt to the shared rules', () => {
+    for (const [description, stage] of [
+      ['Released from import customs', 'in_transit'],
+      ['Customs clearance finished', 'in_transit'],
+      ['Customs issue resolved', 'in_transit'],
+      ['Parcel on hold at recipient’s request', 'in_transit'],
+      ['Shipment held at post office at customer request', 'ready_for_pickup'],
+      ['New delivery attempt on the next delivery day', 'in_transit'],
+    ] as const) {
+      expect(inferStage(description, 'pending'), description).toBe(stage);
+      expect(event(TIME, description)?.stage, description).toBe(stage);
+    }
+  });
+
+  it('still outrank a provider stage for customs, problems and failed rounds', () => {
+    expect(event(TIME, 'Released from import customs', 'InTransit')?.stage).toBe('in_transit');
+    expect(event(TIME, 'Arrived at customs', 'InTransit')?.stage).toBe('customs');
+    expect(event(TIME, 'Customs issue', 'InTransit')?.stage).toBe('exception');
+    expect(event(TIME, 'Shipment on hold', 'InTransit')?.stage).toBe('exception');
+    expect(event(TIME, 'Delivery attempt, recipient absent', 'InTransit')?.stage).toBe('failed_attempt');
+    expect(event(TIME, 'No payment, new delivery attempt on the next delivery day', 'InTransit')?.stage).toBe('failed_attempt');
   });
 });

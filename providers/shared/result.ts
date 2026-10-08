@@ -69,9 +69,15 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (reported !== undefined) return reported ? sourceEventStage(reported, includeBroadMovement) : undefined;
   if (nonterminalEnglishReturn(description)) return 'exception';
   if (/returned to (?:the )?sender/i.test(description)) return 'returned';
-  if (/not delivered|could not.*deliver|unable to deliver|delivery (?:attempt|failed)/i.test(description)) return 'failed_attempt';
+  if (/not delivered|could not.*deliver|unable to deliver|delivery failed/i.test(description)) return 'failed_attempt';
+  // A new attempt announced for the next round is no failure; the shared rules tell them apart.
+  if (/delivery attempt/i.test(description) && [undefined, 'failed_attempt'].includes(trackingLanguageStage(description))) return 'failed_attempt';
   // Carrier-reported problems that are neither a missed attempt nor a return.
-  if (/damaged|broken in transit|lost in transit|(?:package|parcel|shipment) (?:is )?lost|refused(?: by)?|rejected by (?:the )?recipient|(?:incorrect|incomplete|insufficient|unknown|invalid) address|address (?:incorrect|incomplete|insufficient|unknown|invalid)|addressee (?:unknown|cannot be located)|delivery exception|shipment exception|carrier exception|held (?:by|in|at) customs|customs (?:issue|problem)|action required|awaiting instructions|(?:shipment|parcel) (?:held|on hold)/i.test(description)) return 'exception';
+  if (/damaged|broken in transit|lost in transit|(?:package|parcel|shipment) (?:is )?lost|refused(?: by)?|rejected by (?:the )?recipient|(?:incorrect|incomplete|insufficient|unknown|invalid) address|address (?:incorrect|incomplete|insufficient|unknown|invalid)|addressee (?:unknown|cannot be located)|delivery exception|shipment exception|carrier exception|action required|awaiting instructions/i.test(description)) return 'exception';
+  // The shared rules tell a hold the recipient asked for, and a customs problem
+  // already resolved, from a problem.
+  if (/held (?:by|in|at) customs|customs (?:issue|problem)|(?:shipment|parcel) (?:held|on hold)/i.test(description)
+    && [undefined, 'exception'].includes(trackingLanguageStage(description))) return 'exception';
   // A voided label was cancelled before shipping, even where a provider files
   // it as transit (17TRACK's generic code). Exact wording only, so a relabel
   // ("label voided, new label created") is not read as a cancellation.
@@ -89,8 +95,9 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // "The status will be updated once shipment is out for delivery" is not the round itself.
   if (/out for delivery/i.test(description)
     && !/(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery/i.test(description)) return 'out_for_delivery';
-  if (/clearance (?:processing )?completed|customs (?:cleared|released)|customs (?:has |have )released (?:the )?(?:goods|shipment|parcel|package|item)\b/i.test(description)) return 'in_transit';
-  if (/customs|clearance/i.test(description)) return 'customs';
+  // Customs wording outranks a provider's own stage. The shared rules tell a
+  // release or a completed clearance from customs still at work.
+  if (/customs|clearance/i.test(description)) return trackingLanguageStage(description) === 'in_transit' ? 'in_transit' : 'customs';
   if (/instruction data.*provided.*electronically|electronic information|information (?:received|submitted)|label (?:created|printed)|pre.?advice|shipment announced/i.test(description)) return 'registered';
   if (/will be transported to the destination country/i.test(description)) return 'in_transit';
   if (!includeBroadMovement) return undefined;
