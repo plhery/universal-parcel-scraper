@@ -7,8 +7,9 @@ export function isValidDhlExpressWaybill(value: string): boolean {
 
 /**
  * The number before the last digit, divided by seven, leaves the last digit:
- * the Japanese "7DR" check on Yamato's 12-digit numbers, and the check Blue
- * Dart and Aramex 11-digit waybills carry. It does not tell those two apart.
+ * the Japanese "7DR" check on Yamato's 12-digit numbers and Japan Post's
+ * 11-digit registered mail, and the check Blue Dart and Aramex 11-digit
+ * waybills carry. It does not tell those carriers apart.
  */
 export function hasMod7CheckDigit(value: string): boolean {
   return /^\d{2,15}$/.test(value) && Number(value.slice(0, -1)) % 7 === Number(value.at(-1));

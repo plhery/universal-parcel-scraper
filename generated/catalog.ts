@@ -3308,6 +3308,11 @@ export const CARRIER_CATALOG = {
         "pattern": "^\\d{12}$",
         "confidence": "low",
         "checksum": "mod7"
+      },
+      {
+        "pattern": "^\\d{11}$",
+        "confidence": "low",
+        "checksum": "mod7"
       }
     ]
   },
@@ -5197,7 +5202,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "delhivery": ["delhivery-1"],
   "nz-post": ["nz-post-1","nz-post-2"],
   "singapore-post": ["singapore-post-1"],
-  "japan-post": ["japan-post-1","japan-post-domestic"],
+  "japan-post": ["japan-post-1","japan-post-domestic","japan-post-registered"],
   "sf-express": ["sf-express-3","sf-express-1","sf-express-2","sf-express-4"],
   "sto": ["sto-1"],
   "yunda": ["yunda-1"],

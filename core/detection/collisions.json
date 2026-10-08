@@ -497,17 +497,18 @@
     "reason": "The three GLS countries share one 8-character format; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{11} or 9{8}-9{3}",
+    "shape": "Eleven digits that pass the mod 7 check",
     "carriers": [
       "aramex",
       "blue-dart",
       "gls-ch",
       "gls-de",
       "gls-fr",
+      "japan-post",
       "postlogistics",
       "dhl-ecommerce-pl"
     ],
-    "reason": "Compact 11-digit numbers are ambiguous; the printed eight-plus-three dash is high-confidence evidence for PostLogistics."
+    "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics."
   },
   {
     "shape": "9{10}",
@@ -523,18 +524,19 @@
     "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{11} with an Old Dominion prefix",
+    "shape": "9{11} with an Old Dominion prefix that passes the mod 7 check",
     "carriers": [
       "aramex",
       "blue-dart",
       "gls-ch",
       "gls-de",
       "gls-fr",
+      "japan-post",
       "old-dominion",
       "postlogistics",
       "dhl-ecommerce-pl"
     ],
-    "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape."
+    "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share."
   },
   {
     "shape": "9{13}",
@@ -1033,7 +1035,7 @@
       "gls-fr",
       "postlogistics"
     ],
-    "reason": "Without the mod 7 check digit Blue Dart and Aramex drop out; compact 11-digit numbers stay a low-confidence suggestion."
+    "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion."
   },
   {
     "shape": "9{20} in DHL's 0034043 range",

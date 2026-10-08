@@ -337,6 +337,415 @@
         ]
       },
       "note": "A guide lists it as a past Click Post number; not independently verified."
+    },
+    {
+      "number": "372-67-45246-0",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ktr.mlit.go.jp/ktr_content/content/000956590.pdf",
+        "date": "2026-08-28",
+        "dateKind": "mailing",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Simplified registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A regional bureau of Japan's land ministry lists the simplified registered mail numbers of the certificates it posted and refers recipients to Japan Post's tracking."
+    },
+    {
+      "number": "372-67-46206-1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ktr.mlit.go.jp/ktr_content/content/000956591.pdf",
+        "date": "2026-08-28",
+        "dateKind": "mailing",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Simplified registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A regional bureau of Japan's land ministry lists the simplified registered mail numbers of the certificates it posted and refers recipients to Japan Post's tracking."
+    },
+    {
+      "number": "372-67-41345-5",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ktr.mlit.go.jp/ktr_content/content/000956592.pdf",
+        "date": "2026-08-28",
+        "dateKind": "mailing",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Simplified registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A regional bureau of Japan's land ministry lists the simplified registered mail numbers of the certificates it posted and refers recipients to Japan Post's tracking."
+    },
+    {
+      "number": "372-67-53094-1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ktr.mlit.go.jp/ktr_content/content/000959754.pdf",
+        "date": "2026-10-02",
+        "dateKind": "mailing",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Simplified registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A regional bureau of Japan's land ministry lists the simplified registered mail numbers of the certificates it posted and refers recipients to Japan Post's tracking."
+    },
+    {
+      "number": "117-24-63493-5",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courts.go.jp/assets/hanrei/hanrei-pdf-85085.pdf",
+        "date": "2015-04-15",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A Tokyo District Court judgment cites this registered letter and Japan Post's delivery certificate for it."
+    },
+    {
+      "number": "106-40-21653-2",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courts.go.jp/assets/hanrei/hanrei-pdf-11918.pdf",
+        "date": "2002-04-11",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A Tokyo District Court decision quotes the acceptance number of a registered letter one party sent the other."
+    },
+    {
+      "number": "131-12-38385-2",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20070320033839/http://www.coins.tsukuba.ac.jp/~yagi/yusei_system_trouble/",
+        "date": "2004-04-14",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "An archived university page shows the sender's registered mail receipt and Japan Post's tracking result for this number."
+    },
+    {
+      "number": "474-60-00017-3",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.post.japanpost.jp/whats_new/2009/0225_01_c05.pdf",
+        "date": "2009-02-20",
+        "dateKind": "document date"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Sample receipt for Japan Post's simplified registered mail slip, not a real item. Its seven consecutive sample numbers all carry the check digit."
+    },
+    {
+      "number": "302-50-84809-5",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://torisedo.com/56724.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Simplified registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A guide lists it as a past simplified registered mail number; not independently verified."
+    },
+    {
+      "number": "540-19-15318-2",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://torisedo.com/56781.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Recorded mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A guide lists it as a past recorded mail number; not independently verified."
+    },
+    {
+      "number": "908-81-15623-6",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://torisedo.com/56838.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Simplified registered mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A guide lists it as a past simplified registered mail number; not independently verified."
+    },
+    {
+      "number": "501-46-75268-1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.hakosuke.com/mibarai/index.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Recorded mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A seller's blog pastes Japan Post's tracking history for this recorded letter."
+    },
+    {
+      "number": "675-60-24127-6",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://yubin.2-d.jp/y4/23.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Recorded mail",
+        "reportedRole": "reported_shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A postal guide transcribes a recorded mail receipt for ten consecutive postcards; this is the first number."
+    },
+    {
+      "number": "474-60-00017-0",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ],
+        "not": [
+          "japan-post"
+        ]
+      },
+      "note": "Japan Post's sample registered mail number with its check digit changed, so Japan Post is not suggested."
     }
   ]
 }
