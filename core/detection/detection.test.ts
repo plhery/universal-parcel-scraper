@@ -16,6 +16,7 @@ import {
   normalizeTrackingNumber,
   parseTrackingInput,
   supportsSwissPostHandoff,
+  validTrackingNumber,
 } from './index.js';
 
 /**
@@ -71,6 +72,22 @@ describe('normalization', () => {
   it('uppercases and strips the separators carriers print', () => {
     expect(normalizeTrackingNumber(' ra 123 456-789 ch ')).toBe('RA123456789CH');
     expect(formatTrackingNumber('993412345612345678')).toBe('99.34.123456.12345678');
+  });
+
+  it('reads an SSCC printed behind its bracketed GS1 identifier', () => {
+    expect(normalizeTrackingNumber('(00) 3 7012345 678901234 7')).toBe('00370123456789012347');
+    expect(validTrackingNumber('(00) 3 7012345 678901234 7')).toBe(true);
+    expect(detectCarrierMatch('(00) 3 7012345 678901234 7')).toEqual(detectCarrierMatch('00370123456789012347'));
+    expect(parseTrackingInput('(00) 370123456789012347')).toMatchObject({ source: 'number', candidates: detectCarrierMatch('00370123456789012347').candidates });
+  });
+
+  it('leaves other bracketed GS1 identifiers as typed', () => {
+    // (420) carries the destination ZIP, which is no parcel number.
+    for (const raw of ['(420) 12345', '(420) 12345 (92) 612 90 100 13043 50825 07', '(00) 37012345678901234', '(01) 09501101530003']) {
+      expect(normalizeTrackingNumber(raw)).toContain('(');
+      expect(validTrackingNumber(raw)).toBe(false);
+      expect(detectCarrierMatch(raw).confidence).toBe('none');
+    }
   });
 });
 

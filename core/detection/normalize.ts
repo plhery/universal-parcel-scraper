@@ -8,9 +8,15 @@ import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js'
  * What it is not: no carrier lookup, no checksum validation, no provider I/O.
  */
 
-/** Uppercase and strip spaces, dots and dashes (Swiss Post prints 99.34.…). */
+/**
+ * Uppercase and strip spaces, dots and dashes (Swiss Post prints 99.34.…).
+ * A label prints its SSCC behind the bracketed GS1 identifier, "(00) 3 7012345
+ * 678901234 7", and carriers track it as the twenty digits without brackets.
+ * Other bracketed identifiers stay as typed: (420), for one, carries a ZIP.
+ */
 export function normalizeTrackingNumber(raw: string): string {
-  return raw.toUpperCase().replace(/[\s.-]/g, '');
+  const value = raw.toUpperCase().replace(/[\s.-]/g, '');
+  return /^\(00\)\d{18}$/.test(value) ? `00${value.slice(4)}` : value;
 }
 
 /** Capability-link shipment numbers look like 999.90.########. */
