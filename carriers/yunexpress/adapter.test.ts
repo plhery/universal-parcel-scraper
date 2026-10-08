@@ -6,6 +6,8 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { adapter, parse, parseCaptured, YunExpressTracker } from './adapter.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const NUMBER = 'YT0000000000000001';
 const API = 'https://services.yuntrack.com/Track/Query';
@@ -96,6 +98,54 @@ describe('YunExpress captured response projection', () => {
     expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('skips an older row that has a place but no wording', () => {
+    const payload = fixture();
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: unknown[] }) => group.ProcessDetailList);
+    rows[3].ProcessContent = '----Example airport';
+    const result = parse(payload, NUMBER);
+    expect(result.events).toHaveLength(13);
+    expect(result.events?.some((event) => !event.description)).toBe(false);
+  });
+
+  it('names the last-mile carrier its notes link to only when that carrier offers the reference', () => {
+    const payload = fixture();
+    const info = payload.ResultList[0].TrackInfo;
+    info.TrackingNumber = 'GFUS01000000000001';
+    info.AdditionalNotes = '<p>Last Mile Website:</p><p><a href="https://www.gofo.com/" target="_blank">https://www.gofo.com</a></p>';
+    expect(parse(payload, NUMBER)).toMatchObject({ delivery_carrier: 'gofo', delivery_tracking_number: 'GFUS01000000000001' });
+    // The same brand's host also serves networks outside the carrier's scope.
+    info.TrackingNumber = 'GFFR00000000000001';
+    const regional = parse(payload, NUMBER);
+    expect(regional.delivery_carrier).toBeUndefined();
+    expect(regional.delivery_tracking_number).toBe('GFFR00000000000001');
+    info.TrackingNumber = 'GFUS01000000000001';
+    info.AdditionalNotes += '<p><a href="https://tracking.dpd.de/">https://tracking.dpd.de</a></p>';
+    expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
+    info.AdditionalNotes = '<p><a href="https://www.example.com/">https://www.example.com</a></p>';
+    expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
+  });
+
+  it('files every recorded wording under its recorded stage', () => {
+    for (const entry of statuses.entries) {
+      if (!entry.wording) expect(yunExpressCodeStatus(Number(entry.code)), entry.code).toBeDefined();
+      else expect(yunExpressStatus(entry.wording, entry.code === undefined ? undefined : Number(entry.code))?.stage, entry.wording).toBe(entry.stage);
+    }
+  });
+
+  it('takes the status from the latest code when the newest wording is new, without staging it', () => {
+    const payload = fixture();
+    const item = payload.ResultList[0];
+    item.TrackInfo.LastTrackEvent.ProcessContent = 'Synthetic partner wording';
+    item.TrackData.ProcessGroupList[0].ProcessDetailList[0].ProcessContent = 'Synthetic partner wording----Example facility';
+    item.TrackInfo.LastTrackEvent.TrackingStatus = 20;
+    const transit = parse(payload, NUMBER);
+    expect(transit.status).toBe('in_transit');
+    expect(transit.current_stage).toBeUndefined();
+    expect(transit.events?.[0]!.stage).toBeUndefined();
+    item.TrackInfo.LastTrackEvent.TrackingStatus = 60;
+    expect(parse(payload, NUMBER).status).toBe('unknown');
+  });
+
   it('rejects a projection that omits scans present in the raw history', () => {
     const payload = fixture();
     payload.ResultList[0].TrackData.ProcessGroupList.pop();
@@ -136,7 +186,14 @@ describe('YunExpress captured response projection', () => {
     page.capturedResponses[0]!.body = Buffer.from(page.capturedResponses[0]!.body!).toString('base64');
     page.capturedResponses[0]!.base64Encoded = true;
     const result = parseCaptured(page, NUMBER);
-    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)) };
+    const delivered = fixture();
+    const item = delivered.ResultList[0];
+    item.Status = item.TrackInfo.TrackingStatus = item.TrackInfo.LastTrackEvent.TrackingStatus = 50;
+    item.TrackInfo.TrackingNumber = 'GFUS01000000000001';
+    item.TrackInfo.AdditionalNotes = '<a href="https://www.gofo.com/">GOFO</a>';
+    const handed = parse(delivered, NUMBER);
+    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)),
+      delivered_at: Boolean(handed.delivered_at), delivery_partner: Boolean(handed.delivery_carrier && handed.delivery_tracking_number) };
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     for (const capability of metadata.capabilities) expect(checks[capability], capability).toBe(true);
   });

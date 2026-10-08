@@ -107,6 +107,250 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-28",
       "note": "The exact latest event declares delivered; variable partner delivery notes remain descriptive."
+    },
+    {
+      "wording": "In clearance processing - Import",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "Arrived at the warehouse of Customs Broker",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Logged just before import clearance starts."
+    },
+    {
+      "wording": "Arrived at sort facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "Shipment is ready for outbound",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "Departed from facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "Delivered to local carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The handover to the last-mile carrier, not a delivery to the recipient."
+    },
+    {
+      "wording": "Departure from the international sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "Shipment in transit to DHL",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "Sender goods issue",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DPD, placed at the delivering depot while the parcel was still in China: a data record, not a scan."
+    },
+    {
+      "wording": "POD available",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DPD seconds after its delivery scan."
+    },
+    {
+      "wording": "Shipment not yet received or processed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands, which files it as a pre-notification."
+    },
+    {
+      "wording": "We deliver your shipment at a DHL ServicePoint",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands; a changed delivery instruction."
+    },
+    {
+      "wording": "Request by the recipient for delivery at DHL ServicePoint",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands; a changed delivery instruction."
+    },
+    {
+      "wording": "Delivery instruction changed to delivery at DHL ServicePoint",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands."
+    },
+    {
+      "wording": "New delivery attempt on the next delivery day",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands after a changed delivery instruction; it reschedules rather than reports a failed attempt."
+    },
+    {
+      "wording": "Delivery planned at the CityHub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands."
+    },
+    {
+      "wording": "Delivery planned in the route of the courier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands."
+    },
+    {
+      "wording": "Entered into handheld device of the courier",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands, which files it as out for delivery."
+    },
+    {
+      "wording": "Handed over to the courier",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands: the delivery courier, not a collection from the sender."
+    },
+    {
+      "wording": "Your package is ready to be picked up.",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DHL Parcel Netherlands when the parcel waits at a ServicePoint."
+    },
+    {
+      "wording": "Preparing for delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from GOFO Italy at its depot before the courier leaves."
+    },
+    {
+      "wording": "Your shipment has been delivered to the postal operator of the country of destination and will be delivered in the coming days.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from bpost when it hands the item to the destination post; not a delivery."
+    },
+    {
+      "wording": "Parcel is handled",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from bpost."
+    },
+    {
+      "wording": "First parcel scan along Poste Italiane’s logistic network",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from Poste Italiane after the handover."
+    },
+    {
+      "wording": "TASK ASSIGNED",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from a Canadian last-mile carrier."
+    },
+    {
+      "wording": "OUTBOUND SCANNED",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from a Canadian last-mile carrier."
+    },
+    {
+      "wording": "ORDER EXCEPTION RELEASED",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from a Canadian last-mile carrier when an earlier exception clears."
+    },
+    {
+      "wording": "DELIVERING, WAIT FOR CONSIGNEE PICK UP",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from a Canadian last-mile carrier."
+    },
+    {
+      "wording": "REMINDER EMAIL SENT FAILED",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from a Canadian last-mile carrier after the parcel was left for collection: a failed pickup reminder, not a failed delivery attempt."
+    },
+    {
+      "code": "10",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Latest-event code the page labels Processing. It gives the parcel's status when the newest wording is not in the map, never a scan's stage."
+    },
+    {
+      "code": "20",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Latest-event code the page labels Transit. It gives the parcel's status when the newest wording is not in the map, never a scan's stage."
+    },
+    {
+      "code": "30",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Also labelled Transit by the page; used like 20."
     }
   ]
 }

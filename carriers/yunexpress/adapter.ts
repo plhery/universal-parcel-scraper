@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon';
 import type { Response as BrowserResponse } from 'playwright-core';
 import type { AdapterEnvironment, AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { carrierIdsFromPartnerLinks } from '../../core/catalog/hints.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -10,7 +12,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
-import { yunExpressStatus } from './status.js';
+import { yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
 const MAX_BYTES = 1_000_000;
@@ -36,6 +38,18 @@ function eventClock(raw: string, offset?: string): Pick<CarrierEvent, 'time'> & 
   if (!parsed.isValid) throw new SchemaError('YunExpress', 'YunExpress returned an invalid scan time');
   const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: Boolean(offset) });
   return offset ? { time: iso } : { local_time: iso };
+}
+
+/**
+ * The last-mile carrier whose official site the notes link to. The catalog
+ * knows the host, and that carrier's own detection must offer the declared
+ * reference: a brand's host can serve regional networks outside its scope.
+ */
+function linkedPartner(notes: unknown, reference: string): string | undefined {
+  if (typeof notes !== 'string' || notes.length > MAX_BYTES) return undefined;
+  const [partner, ...others] = carrierIdsFromPartnerLinks([notes], 'yunexpress');
+  if (!partner || others.length) return undefined;
+  return (detectCarrierMatch(reference).candidates as string[]).includes(partner) ? partner : undefined;
 }
 
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {
@@ -66,13 +80,16 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   for (const group of groups) {
     if (!isRecord(group) || !Array.isArray(group.ProcessDetailList) || !group.ProcessDetailList.length) throw new SchemaError('YunExpress');
     for (const raw of group.ProcessDetailList) {
-      if (!isRecord(raw) || ++scans > 500) throw new SchemaError('YunExpress');
+      if (!isRecord(raw) || typeof raw.ProcessContent !== 'string' || ++scans > 500) throw new SchemaError('YunExpress');
       const content = clean(raw.ProcessContent, MAX_BYTES);
       const divider = content.lastIndexOf('----');
       const fullDescription = clean(divider < 0 ? content : content.slice(0, divider), MAX_BYTES);
       const fullLocation = divider < 0 ? '' : clean(content.slice(divider + 4), MAX_BYTES);
       const description = clean(fullDescription, 500);
       const location = clean(fullLocation, 200);
+      // The portal can list an older row with a place but no wording. It names
+      // no status, so it is skipped; the newest row must still say something.
+      if (!description && events.length) continue;
       if (!description) throw new SchemaError('YunExpress', 'YunExpress returned an empty scan');
       const rawTime = clean(raw.ProcessDate, 64);
       // Only the separately described latest scan supplies a verified offset.
@@ -96,11 +113,14 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const latest = events[0]!;
   const classified = current;
   const deliveryNumber = clean(info.TrackingNumber, 64).toUpperCase();
+  const handoff = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
+  const partner = handoff ? linkedPartner(info.AdditionalNotes, handoff) : undefined;
   const country = clean(info.DestinationCountryCode, 8).toUpperCase();
-  return { status: classified?.status ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
+  // The first event is the exact latest event, so its code belongs to it.
+  return { status: classified?.status ?? yunExpressCodeStatus(last.TrackingStatus) ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(classified?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    ...(deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? { delivery_tracking_number: deliveryNumber } : {}),
+    ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) };
 }
 

@@ -23,7 +23,9 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "delivered_at",
+    "delivery_partner"
   ],
   "portal": {
     "url": "https://www.yuntrack.com/parcelTracking?id={trackingNumber}",
@@ -31,15 +33,24 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner",
+      "order_references"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner"
     ],
-    "discarded": [],
-    "unavailable": []
+    "discarded": [
+      "order_references",
+      "unlabelled_weight"
+    ],
+    "unavailable": [
+      "eta",
+      "pickup_point"
+    ]
   },
   "links": [
     {
