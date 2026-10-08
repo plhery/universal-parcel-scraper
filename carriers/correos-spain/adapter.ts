@@ -146,8 +146,11 @@ export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumb
   const grams = Number(envelope.peso);
   const weightKg = Number.isFinite(grams) && grams > 0 ? Math.round((grams / 1000) * 1000) / 1000 : null;
   const dims = [envelope.largo, envelope.ancho, envelope.alto].map((value) => Number(value));
+  // Sides are centimetres, except on some international items that give metres:
+  // no parcel is under a centimetre on every side.
+  const sides = dims.every((value) => value < 1) ? dims.map((value) => Math.round(value * 1000) / 10) : dims;
   const dimensionsText = dims.every((value) => Number.isFinite(value) && value > 0)
-    ? `${dims[0]} x ${dims[1]} x ${dims[2]} cm` : null;
+    ? `${sides[0]} x ${sides[1]} x ${sides[2]} cm` : null;
   // nombre_cliente names a person in the doorstep case, so it is never
   // projected; weight and dimensions are operational parcel data.
   const extras = {

@@ -40,6 +40,8 @@ Correos de Chile (`correos-chile`) are separate carriers.
 - The search endpoint is not used for history. Its events carry Spanish text and a phase but no
   `codEvento`, the only field the status map reads.
 - Only `codEvento` is mapped, never the Spanish `desTextoResumen` prose.
+- `A090000V` ("Prerregistrado") is the sender's pre-registration and stays `registered`;
+  `A010000V` ("Admitido.") is Correos taking the parcel in, `accepted`.
 - `L010000V`, `I010000V`, `X120000V` and `EOL.9001` come from a community integration and
   were never re-observed (`EOL.9001` does not even match the Correos code shape). They are
   kept because they cost nothing: any other unmapped code still reports `unknown` and the
@@ -53,7 +55,8 @@ Correos de Chile (`correos-chile`) are separate carriers.
   On a delivered parcel it is where the parcel *was* held and would read as a false pickup
   instruction.
 - Weight (`peso`, grams → kg) and dimensions (`largo`/`ancho`/`alto` → `L x W x H cm`) are
-  kept: operational data users check against a merchant listing.
+  kept: operational data users check against a merchant listing. Some international items give
+  the sides in metres; when all three are below 1 they are converted to centimetres.
 - `nombre_cliente` is not projected: for a private recipient it is a person's name. Address,
   phone and signature blocks are never read; a test asserts it.
 - At most 20 events are returned, newest first.

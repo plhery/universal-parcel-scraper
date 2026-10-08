@@ -77,13 +77,14 @@ describe('Correos Spain response parsing', () => {
       ['Entregado', 'delivered', '2026-04-29T13:12:42+02:00'],
       ['En reparto', 'out_for_delivery', '2026-04-29T08:46:00+02:00'],
       ['Clasificado', 'in_transit', '2026-04-28T15:52:17+02:00'],
-      ['Admitido', 'registered', '2026-04-27T23:03:58+02:00'],
+      ['Admitido', 'accepted', '2026-04-27T23:03:58+02:00'],
     ]);
   });
 
   it('maps documented event codes and reports unmapped ones as unknown', () => {
     const cases: Array<[string, string, string]> = [
-      ['A010000V', 'pending', 'registered'],
+      ['A090000V', 'pending', 'registered'],
+      ['A010000V', 'in_transit', 'accepted'],
       ['P101110V', 'in_transit', 'in_transit'],
       ['H01I350V', 'out_for_delivery', 'ready_for_pickup'],
       ['H010930R', 'exception', 'failed_attempt'],
@@ -188,6 +189,13 @@ describe('Correos Spain response parsing', () => {
     for (const secret of ['nombre_cliente', 'Example Customer', 'nom_codired', 'peso', 'largo', 'ancho', 'alto']) {
       expect(serialized).not.toContain(secret);
     }
+  });
+
+  it('reads sides given in metres as centimetres', () => {
+    const metres = parseCorreosSpainTrackingResponse([envelope({ largo: '0.3', ancho: '0.2', alto: '0.045' })], TRACKING_NUMBER);
+    expect(metres.dimensions_text).toBe('30 x 20 x 4.5 cm');
+    const thin = parseCorreosSpainTrackingResponse([envelope({ largo: '2', ancho: '30', alto: '0.5' })], TRACKING_NUMBER);
+    expect(thin.dimensions_text).toBe('2 x 30 x 0.5 cm');
   });
 
   it('never retains the customer address, phone or signature blocks', () => {
