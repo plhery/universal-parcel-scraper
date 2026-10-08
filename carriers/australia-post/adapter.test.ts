@@ -3,6 +3,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { adapter, AustraliaPostTracker, australiaPostApiUrl, australiaPostTrackingUrl, normalizeAustraliaPostNumber, parse } from './adapter.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { sameInstantIdentityPolicy } from '../../app.js';
+import { australiaPostStatus } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '7T0000000001000000001';
 const OTHER = '7T0000000001000000002';
@@ -14,7 +17,7 @@ const capabilities = (JSON.parse(readFileSync(new URL('./carrier.json', import.m
 describe('Australia Post parser', () => {
   it('projects all capabilities without retaining private details or modification times', () => {
     const result = parse(fixture(), NUMBER);
-    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'delivered_at']);
+    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'delivered_at', 'pickup_point']);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',
       last_update: '2026-06-08T14:10:00+10:00', delivered_at: '2026-06-08T14:10:00+10:00', expected_delivery: null });
     expect(result.events).toHaveLength(12);
@@ -108,7 +111,6 @@ describe('Australia Post parser', () => {
     for (const change of [
       (p: ReturnType<typeof fixture>) => { p[0].shipment.articles = []; },
       (p: ReturnType<typeof fixture>) => { p[0].shipment.articles[0].details.push(structuredClone(p[0].shipment.articles[0].details[0])); },
-      (p: ReturnType<typeof fixture>) => { p[0].shipment.articles[0].details[0].events = []; },
       (p: ReturnType<typeof fixture>) => { p[0].shipment.articles[0].details[0].events[0].dateTime += 1000; },
       (p: ReturnType<typeof fixture>) => { Object.assign(p[0].shipment.articles[0].details[0].events[0], { dateTime: 0, localeDateTime: '2026-02-31T10:00:00+10:00' }); },
       (p: ReturnType<typeof fixture>) => { Object.assign(p[0].shipment.articles[0].details[0].events[0], { dateTime: 1780000000, localeDateTime: null }); },
@@ -119,6 +121,85 @@ describe('Australia Post parser', () => {
       expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     }
     for (const payload of [{}, [], [null]]) expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('calls a known article without scans inconclusive', () => {
+    const payload = fixture();
+    const article = payload[0].shipment.articles[0];
+    article.trackStatusOfArticle = null;
+    article.status = { statusAttributeName: 'status', statusAttributeValue: 'Updating Status' };
+    article.details[0].events = [];
+    expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+});
+
+type RawEvent = { eventCode: string; description: string; location: string; milestone: string; localeDateTime: string };
+function journey(destination: string, events: RawEvent[], summary = 'Delivered') {
+  const payload = fixture();
+  const article = payload[0].shipment.articles[0];
+  article.trackStatusOfArticle = summary;
+  Object.assign(article.details[0].address, { country: destination });
+  Object.assign(article.details[0].fromAddress, { country: 'AU' });
+  article.details[0].events = events.map((event) => ({ ...event, dateTime: Date.parse(event.localeDateTime) }));
+  return parse(payload, NUMBER);
+}
+const scan = (eventCode: string, description: string, location: string, localeDateTime: string, milestone = "It's on its way") =>
+  ({ eventCode, description, location, milestone, localeDateTime });
+
+describe('Australia Post status codes and places', () => {
+  it('maps every recorded code and label to its recorded stage', () => {
+    for (const entry of statuses.entries) {
+      const classified = 'code' in entry ? australiaPostStatus('', entry.code) : australiaPostStatus(entry.wording);
+      expect(classified?.stage, 'code' in entry ? entry.code : entry.wording).toBe(entry.stage);
+    }
+  });
+
+  it('reads the post abroad on its own clock and files its scans by code', () => {
+    const events = [
+      scan('INT-0037', 'Delivered', 'EXAMPLE CITY CA', '2026-06-12T11:22:00Z', 'Delivered'),
+      scan('INT-0075', 'Awaiting collection at UNITED STATES OF AMERICA', 'EXAMPLE CITY CA', '2026-06-12T08:06:00Z', 'Delivered'),
+      scan('INT-0036', 'Unsuccessful delivery - Addressee not available', 'UNITED STATES OF AMERICA', '2026-06-11T11:39:00Z'),
+      scan('INT-0074', 'Onboard for delivery', 'UNITED STATES OF AMERICA', '2026-06-11T06:10:00Z'),
+      scan('INT-0031', 'Item received into Customs for clearance', 'EXAMPLE PORT (US), UNITED STATES OF AMERICA', '2026-06-09T11:14:00-07:00'),
+      scan('INT-0008', 'Cleared and awaiting international departure', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00'),
+    ];
+    const result = journey('US', events);
+    expect(result.events?.map((event) => [event.time ?? `local ${String(event.local_time)}`, event.stage])).toEqual([
+      // Labelled 11:22Z and 08:06Z: the wall clock of a Californian office.
+      ['2026-06-12T11:22:00-07:00', 'delivered'],
+      ['2026-06-12T08:06:00-07:00', 'ready_for_pickup'],
+      // Only the country, which keeps several clocks.
+      ['local 2026-06-11T11:39:00', 'failed_attempt'],
+      ['local 2026-06-11T06:10:00', 'out_for_delivery'],
+      ['2026-06-09T11:14:00-07:00', 'customs'],
+      ['2026-06-06T17:41:25+10:00', 'in_transit'],
+    ]);
+    expect(result).toMatchObject({ status: 'delivered', delivered_at: '2026-06-12T11:22:00-07:00',
+      last_update: '2026-06-12T11:22:00-07:00', destination_country: 'US' });
+    expect(result).not.toHaveProperty('pickup_point');
+
+    const unplaced = journey('US', [{ ...events[0]!, location: 'UNITED STATES OF AMERICA' }, ...events.slice(1)]);
+    expect(unplaced).toMatchObject({ last_update: null, last_update_local: '2026-06-12T11:22:00' });
+    expect(unplaced.delivered_at).toBeUndefined();
+    expect(journey('NL', [scan('INT-0037', 'Delivered', 'EXAMPLE CITY', '2026-06-12T11:22:00Z', 'Delivered')]).events?.[0]?.time)
+      .toBe('2026-06-12T11:22:00+02:00');
+    // A domestic reply has no post abroad, so a UTC label stands.
+    expect(journey('AU', [scan('DD-ER13', 'Delivered', 'EXAMPLE VIC', '2026-06-12T01:22:00Z', 'Delivered')]).last_update)
+      .toBe('2026-06-12T01:22:00Z');
+    // Scans stored under the UTC label give way to the same scan on its own clock.
+    expect(sameInstantIdentityPolicy('australia-post')).toEqual({
+      sourceCarrierId: 'australia-post', storedSources: ['australia-post'], requireProviderCode: true, relabelledFrom: 'UTC',
+    });
+  });
+
+  it('names the collection point and follows the newest scan when the summary is unknown', () => {
+    const waiting = journey('AU', [
+      scan('DD-ER4', 'Awaiting collection at Example Post Office', 'EXAMPLE VIC', '2026-06-12T12:02:24+10:00', 'Awaiting collection'),
+      scan('DD-ER5', 'Delivery location closed', 'EXAMPLE VIC', '2026-06-12T10:48:14+10:00', 'Attempted delivery'),
+    ], 'Awaiting collection');
+    expect(waiting).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Example Post Office', destination_country: 'AU' });
+    const abroad = journey('NL', [scan('INT-2180', 'Flight landed', '', '2026-06-07T17:39:00+11:00')], 'Future summary');
+    expect(abroad).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Future summary' });
   });
 });
 

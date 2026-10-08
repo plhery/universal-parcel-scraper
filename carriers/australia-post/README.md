@@ -52,12 +52,23 @@ cache headers of the `no-store` mode. The app also sends an
   exact article number selects its own history; sibling and shipment-wide states never classify it.
 - Not-found is only the HTTP 200 entry with `status: 400`, `errorCode: 21`, `Invalid Tracking ID`,
   `Failed`. An entry with `status: 500` is the gateway failing on a reference it cannot process: it
-  is inconclusive, and the browser is not asked the same question. Empty arrays, other identities
+  is inconclusive, and the browser is not asked the same question. So is a known article without
+  scans (`Updating Status`), whose history is gone or never began. Empty arrays, other identities
   and other errors are schema failures.
-- Each scan is classified by its own `eventCode`, then its milestone label. Awaiting collection,
-  attempted delivery and returns are not delivery.
+- Each scan is classified by its own `eventCode`, then its milestone label; `statuses.json` records
+  the codes. A milestone groups several scans, so codes win: an item awaiting collection abroad is
+  filed under `Delivered`, a failed attempt abroad under `It's on its way`. Awaiting collection,
+  attempted delivery and returns are not delivery. An article summary the map does not know takes
+  the newest scan's stage.
 - Event time comes from `localeDateTime` (explicit offset), else the epoch-ms `dateTime`. If both
   exist and disagree, the parse fails. Events are sorted by instant.
+- Scans relayed from the post abroad carry that office's wall clock labelled as UTC. When the reply
+  crosses one border, they are read in the zone of the country the location names, its US state or
+  Canadian province, else the foreign country's single zone; otherwise the wall clock stays in
+  `local_time` and sorts on the zone the reply's other scans abroad keep. The scan identity policy
+  in `app.ts` (`relabelledFrom: 'UTC'`) lets such a scan take over the row stored under the label.
+- A parcel awaiting collection at a post office or locker gets that place, as its newest scan names
+  it, in `pickup_point`. The address block gives only `destination_country`.
 - `statusModificationDateTime` and summary milestone timestamps are not scan times (they can be hours
   off the delivery scan). `last_update` and `delivered_at` come from events.
 - Delivered wording is replaced with `Delivered` so signature or safe-place text can't leak a name.
@@ -65,8 +76,8 @@ cache headers of the `no-store` mode. The app also sends an
 ## Limitations
 
 - No ETA.
-- Recipient and sender blocks, addresses, barcodes, access instructions, proof links, collection
-  credentials and facility IDs are never kept. At most 100 of 500 events are kept.
+- Recipient and sender blocks, addresses other than the destination country, barcodes, access
+  instructions, proof links, collection credentials and facility IDs are never kept. At most 100 of 500 events are kept.
 
 ## Testing
 

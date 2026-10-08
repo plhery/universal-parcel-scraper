@@ -2,9 +2,11 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
-import { explicitOffsetTime, epochMillisTime } from '../../core/time/index.js';
+import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTime, epochMillisTime, isoTime,
+  mislabeledLocalTime, mislabeledWallTime, usStateTimeZone } from '../../core/time/index.js';
 import { clean, fetchBounded, TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { australiaPostStatus } from './status.js';
@@ -37,6 +39,20 @@ export function australiaPostTrackingUrl(raw: string): string {
 
 export function australiaPostApiUrl(raw: string): string {
   return `${API}?${new URLSearchParams({ trackingIds: normalizeAustraliaPostNumber(raw) })}`;
+}
+
+function country(block: unknown): string | null {
+  return isRecord(block) ? countryCode(clean(block.country, 60)) : null;
+}
+
+/** The zone of a scan abroad: a country its location names, its US state or Canadian province, else a single-zone country. */
+function abroadZone(location: string, abroad: string): string | null {
+  const named = countryCode(location.split(',').pop()?.replace(/\(.*?\)/g, '').trim());
+  if (named && named !== abroad) return countryTimeZone(named);
+  const region = /\s([A-Z]{2})$/.exec(location)?.[1];
+  if (region && abroad === 'US') return usStateTimeZone(region);
+  if (region && abroad === 'CA') return canadaProvinceTimeZone(region);
+  return countryTimeZone(abroad);
 }
 
 /** The one lookup entry and article must independently match the submitted reference. */
@@ -79,10 +95,18 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   if (details.articleId !== selected.articleId || details.consignmentId !== shipment.consignmentId) {
     throw new SchemaError(PROVIDER, 'Australia Post returned mismatched article details');
   }
-  if (!Array.isArray(details.events) || !details.events.length || details.events.length > 500) {
+  // A known article without scans, shown as "Updating Status": its history is gone or never began.
+  if (Array.isArray(details.events) && !details.events.length) throw new IndeterminateError(PROVIDER, 'Australia Post shows no history for this article');
+  if (!Array.isArray(details.events) || details.events.length > 500) {
     throw new SchemaError(PROVIDER, 'Australia Post returned incomplete tracking history');
   }
-  const events: Array<{ event: CarrierEvent; timestamp: number }> = [];
+  // Australia Post's own scans carry their offset. Those it relays from the post
+  // abroad carry that office's wall clock labelled as UTC.
+  const destination = country(details.address);
+  const crossings = [...new Set([destination, country(details.fromAddress)].filter((code) => code && code !== 'AU'))];
+  const abroad = crossings.length === 1 ? crossings[0]! : null;
+  const events: Array<{ event: CarrierEvent; timestamp: number; classified?: ClassifiedStatus }> = [];
+  const zones = new Set<string>();
   const seen = new Set<string>();
   for (const raw of details.events) {
     if (!isRecord(raw)) throw new SchemaError(PROVIDER, 'Australia Post returned an invalid event');
@@ -90,14 +114,19 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const epoch = typeof raw.dateTime === 'number' && Number.isSafeInteger(raw.dateTime) && raw.dateTime > 100_000_000_000
       ? epochMillisTime(raw.dateTime) : null;
     if (offset && epoch && offset.timestamp !== epoch.timestamp) throw new SchemaError(PROVIDER, 'Australia Post returned conflicting event dates');
-    const at = offset ?? epoch;
-    if (!at) throw new SchemaError(PROVIDER, 'Australia Post returned an invalid event date');
+    if (!(offset ?? epoch)) throw new SchemaError(PROVIDER, 'Australia Post returned an invalid event date');
     const code = clean(raw.eventCode, 64);
     const description = clean(raw.description);
     const location = clean(raw.location, 200);
     if (!description) throw new SchemaError(PROVIDER, 'Australia Post returned an empty event');
+    const zone = abroad && offset?.iso.endsWith('Z') ? abroadZone(location, abroad) : undefined;
+    if (zone) zones.add(zone);
+    const at = zone ? mislabeledLocalTime(raw.localeDateTime, zone) : offset ?? epoch;
+    // Without a zone the wall clock stays local; its label still orders it as the reply does.
+    const wall = zone === null ? mislabeledWallTime(raw.localeDateTime)?.replace(/\.000$/, '') : undefined;
+    if (!at) throw new SchemaError(PROVIDER, 'Australia Post returned an invalid event date');
     const classified = australiaPostStatus(clean(raw.milestone), code);
-    const event: CarrierEvent = { time: at.iso,
+    const event: CarrierEvent = { ...(wall ? { local_time: wall } : { time: at.iso }),
       description: classified?.stage === 'delivered' ? 'Delivered' : description,
       ...(location ? { location } : {}), ...(classified ? { stage: classified.stage } : {}),
       ...(/^[A-Z0-9_-]{1,64}$/.test(code) ? { provider_code: code } : {}),
@@ -105,21 +134,34 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const key = JSON.stringify([at.timestamp, event.description, location, code]);
     if (seen.has(key)) continue;
     seen.add(key);
-    events.push({ event, timestamp: at.timestamp });
+    events.push({ event, timestamp: at.timestamp, ...(classified ? { classified } : {}) });
+  }
+  // A wall clock without a zone sorts on the clock the reply's other scans abroad keep, when they keep one.
+  const keeping = zones.size === 1 ? [...zones][0]! : null;
+  for (const entry of keeping ? events : []) {
+    if (typeof entry.event.local_time === 'string') entry.timestamp = isoTime(entry.event.local_time, keeping!)?.timestamp ?? entry.timestamp;
   }
   events.sort((a, b) => b.timestamp - a.timestamp);
   const summary = clean(selected.trackStatusOfArticle)
     || (isRecord(selected.status) ? clean(selected.status.statusAttributeValue) : '');
   if (!summary) throw new SchemaError(PROVIDER, 'Australia Post returned no article status');
-  const status = australiaPostStatus(summary);
+  // A summary the map does not know ("Despatched" abroad) takes the newest scan's stage.
+  const latest = events[0]!;
+  const status = australiaPostStatus(summary) ?? latest.classified;
   const deliveredAt = status?.status === 'delivered' ? events.find(({ event }) => event.stage === 'delivered')?.event.time : null;
+  // The post office or locker holding the parcel, as its newest scan names it.
+  const pickup = status?.stage === 'ready_for_pickup' && ['DD-ER4', 'NT-ER4'].includes(String(latest.event.provider_code))
+    ? /^Awaiting collection at (.+)$/i.exec(latest.event.description ?? '')?.[1]?.trim() : undefined;
   // Summary modification/milestone timestamps are not scan times. In the
   // observed reply they differed from the delivery event by about ten hours.
   return {
     status: status?.status ?? 'unknown', ...(status ? { current_stage: status.stage } : {}),
     last_status_text: status?.status === 'delivered' ? 'Delivered' : summary,
-    last_update: events[0]!.event.time, expected_delivery: null,
-    ...(deliveredAt ? { delivered_at: deliveredAt } : {}), events: events.slice(0, 100).map(({ event }) => event),
+    last_update: latest.event.time ?? null,
+    ...(typeof latest.event.local_time === 'string' ? { last_update_local: latest.event.local_time } : {}),
+    expected_delivery: null, ...(pickup ? { pickup_point: pickup } : {}),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(destination ? { destination_country: destination } : {}),
+    events: events.slice(0, 100).map(({ event }) => event),
   };
 }
 

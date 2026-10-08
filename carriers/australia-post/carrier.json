@@ -24,7 +24,8 @@
     "history",
     "location",
     "provider_code",
-    "delivered_at"
+    "delivered_at",
+    "pickup_point"
   ],
   "portal": {
     "url": "https://auspost.com.au/mypost/track/details/{trackingNumber}",
@@ -35,6 +36,8 @@
       "location",
       "provider_code",
       "delivered_at",
+      "destination_country",
+      "pickup_point",
       "recipient_name",
       "address",
       "delivery_proof"
@@ -44,7 +47,9 @@
       "history",
       "location",
       "provider_code",
-      "delivered_at"
+      "delivered_at",
+      "pickup_point",
+      "destination_country"
     ],
     "discarded": [
       "recipient_name",
