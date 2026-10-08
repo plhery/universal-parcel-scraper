@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
+import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from './fedex.js';
 import { detectCarrierMatch, isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './index.js';
 
 describe('numeric checksum candidates', () => {
@@ -40,8 +41,26 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('449 044 304 137 821').candidates[0]).toBe('fedex');
     expect(detectCarrierMatch('449044304137820').candidates).not.toContain('fedex');
     expect(detectCarrierMatch('449044304137820').candidates).toContain('yunda');
-    // The 22-digit label barcode checks only its last 15 digits, so no FedEx rule reads it.
-    expect(detectCarrierMatch('9611020987654312345672').candidates).not.toContain('fedex');
+  });
+
+  it('prefers FedEx for label barcodes whose embedded tracking number passes its check', () => {
+    // Ground spec example: the GS1 check covers only the last fifteen digits.
+    expect(isValidFedExGround96Barcode('9611020987654312345672')).toBe(true);
+    expect(detectCarrierMatch('9611020987654312345672')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fedex'] });
+    expect(detectCarrierMatch('9611020987654312345672').candidates).toEqual(expect.arrayContaining(['austrian-post', 'usps']));
+    // GSN chart example: a 12-digit Express number behind two zeros.
+    expect(isValidFedEx1DBarcode('9622001560001234567100794808390594')).toBe(true);
+    expect(detectCarrierMatch('9622 0015 6000 1234 5671 0079 4808 3905 94')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fedex'] });
+    for (const number of [
+      '9611020987654312345673', // wrong check digit
+      '9511020987654312345672', // not a 96 barcode
+      '9622001560001234567100794808390595', // wrong check digit
+      '9622001560001234567141794808390594', // 4 + 1 × 7 keeps a 13-digit sum but not the zeros
+      '96220015600012345671794808390594', // zeros dropped
+    ]) {
+      expect(isValidFedExGround96Barcode(number) || isValidFedEx1DBarcode(number)).toBe(false);
+      expect(detectCarrierMatch(number).candidates).not.toContain('fedex');
+    }
   });
 
   it('checks full Polish barcodes while preserving aliases without a check digit', () => {

@@ -12,6 +12,7 @@ import { isValidColissimoParcelNumber } from './colissimo.js';
 import { isValidCorreosSpainCheckLetter } from './correosSpain.js';
 import { isValidDpdParcelNumber } from './dpd.js';
 import { isValidEvriParcelNumber } from './evri.js';
+import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from './fedex.js';
 import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
 import { isValidMondialRelayBarcode } from './mondialRelay.js';
@@ -55,4 +56,6 @@ export const CHECKSUMS: Readonly<Record<ChecksumId, (trackingNumber: string) => 
   luhn: hasLuhnCheckDigit,
   fedex: isValidFedExTrackingNumber,
   'sf-express': isValidSfExpressWaybill,
+  'fedex-ground-96': isValidFedExGround96Barcode,
+  'fedex-1d': isValidFedEx1DBarcode,
 };

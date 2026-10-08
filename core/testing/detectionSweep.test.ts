@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { isValidColissimoParcelNumber } from '../detection/colissimo.js';
 import { isValidEvriParcelNumber } from '../detection/evri.js';
+import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from '../detection/fedex.js';
 import {
   detectCarrierMatch,
   isValidCorreosSpainCheckLetter,
@@ -60,7 +61,8 @@ interface DetectionRule {
   readonly confidence: 'high' | 'low';
   readonly checksum?:
     | 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc'
-    | 'ups' | 'colissimo' | 'ukrposhta' | 'evri' | 'mod7' | 'gs1' | 'ontrac' | 'luhn' | 'fedex' | 'sf-express';
+    | 'ups' | 'colissimo' | 'ukrposhta' | 'evri' | 'mod7' | 'gs1' | 'ontrac' | 'luhn' | 'fedex' | 'sf-express'
+    | 'fedex-ground-96' | 'fedex-1d';
   readonly preferred?: true;
 }
 
@@ -113,6 +115,8 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'luhn') return hasLuhnCheckDigit(value);
   if (rule.checksum === 'fedex') return isValidFedExTrackingNumber(value);
   if (rule.checksum === 'sf-express') return isValidSfExpressWaybill(value);
+  if (rule.checksum === 'fedex-ground-96') return isValidFedExGround96Barcode(value);
+  if (rule.checksum === 'fedex-1d') return isValidFedEx1DBarcode(value);
   return true;
 }
 

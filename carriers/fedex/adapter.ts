@@ -1,6 +1,7 @@
 
 import { load } from 'cheerio';
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { fedexBarcodeTrackingNumber } from '../../core/detection/fedex.js';
 import {
   ChallengeError,
   InputRequiredError,
@@ -47,8 +48,11 @@ const MAX_EVENTS_TO_RETURN = 100;
 
 export function normalizeFedExTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+  // A scanned label barcode is tracked by the tracking number it carries.
+  const embedded = fedexBarcodeTrackingNumber(value);
+  if (embedded) return embedded;
   if (!/^\d{12}$/.test(value) && !/^\d{15}$/.test(value)) {
-    throw new InvalidInputError('FedEx', 'FedEx tracking numbers must contain 12 or 15 digits');
+    throw new InvalidInputError('FedEx', 'FedEx tracking numbers must contain 12 or 15 digits, or be a checksum-valid 22- or 34-digit FedEx label barcode');
   }
   return value;
 }

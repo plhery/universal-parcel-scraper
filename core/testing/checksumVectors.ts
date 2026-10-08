@@ -230,6 +230,47 @@ const RECIPES: Record<ChecksumId, (recipe: Recipe) => void> = {
     r.add(`${ten}0`, `${ten}1`, r.complete('9'.repeat(11)));
   },
 
+  'fedex-1d'(r) {
+    // The product index and the other digits, two zeros, then a twelve-digit FedEx number.
+    const twelve = (head: string) => completeBy(CHECKSUMS.fedex, head);
+    const valid = [
+      ...Array.from({ length: 4 }, () => `${r.string(20)}00${twelve(r.string(11))}`),
+      `1${r.string(19)}00${twelve(r.string(11))}`,
+      `9622${r.string(16)}00${twelve(r.string(11))}`,
+      `9632${r.string(16)}00${twelve(r.string(11))}`,
+      `0${r.string(19)}00${twelve(r.string(11))}`,
+    ];
+    standard(r, valid);
+    // Only the last twelve digits are checked; the two before them must be zeros,
+    // even where the barcode's 13-digit check would still pass (4 + 7 × 1 = 11).
+    const first = valid[0]!;
+    r.add(`${r.string(20)}${first.slice(20)}`, `${first.slice(0, 20)}41${first.slice(22)}`, `${first.slice(0, 20)}01${first.slice(22)}`);
+    r.add(`${first.slice(0, 20)}${first.slice(22)}`, first.slice(22), `${first.slice(0, 20)}000${first.slice(22)}`);
+    // The sum mod 11, then mod 10: a remainder of 10 closes with 0.
+    const ten = r.find(() => r.string(11), (head) => weightedSum(head, [3, 1, 7]) % 11 === 10);
+    const head = r.string(20);
+    r.add(`${head}00${ten}0`, `${head}00${ten}1`, `${head}00${twelve('9'.repeat(11))}`);
+  },
+
+  'fedex-ground-96'(r) {
+    // 96, a two-digit SCNC and a three-digit service code, then the fifteen-digit Ground number.
+    const ground = (head: string) => completeBy(hasGs1CheckDigit, head);
+    const valid = [
+      ...Array.from({ length: 6 }, () => `961${r.pick('123')}${r.string(3)}${ground(r.string(14))}`),
+      `96${r.string(5)}${ground(r.string(14))}`,
+      `96${r.string(5)}${ground(r.string(14))}`,
+    ];
+    standard(r, valid);
+    // The check covers the last fifteen digits only: the five before them are free, and
+    // a GS1 check over all 22 digits proves nothing.
+    const first = valid[0]!;
+    r.add(`96${r.string(5)}${first.slice(7)}`, `95${first.slice(2)}`, `69${first.slice(2)}`, first.slice(7));
+    r.add(r.find(() => ground(`96${r.string(19)}`), (value) => !CHECKSUMS['fedex-ground-96'](value)));
+    // A check digit of 0.
+    r.add(r.find(() => `96${r.string(5)}${ground(r.string(14))}`, (value) => value.endsWith('0')));
+    r.add(`9600000${ground('0'.repeat(14))}`, `9699999${ground('9'.repeat(14))}`);
+  },
+
   gls(r) {
     const valid = Array.from({ length: 8 }, () => r.complete(r.string(11)));
     standard(r, valid);

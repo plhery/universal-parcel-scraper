@@ -757,6 +757,18 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "gs1",
         "preferred": true
+      },
+      {
+        "pattern": "^96\\d{20}$",
+        "confidence": "low",
+        "checksum": "fedex-ground-96",
+        "preferred": true
+      },
+      {
+        "pattern": "^\\d{20}00\\d{12}$",
+        "confidence": "low",
+        "checksum": "fedex-1d",
+        "preferred": true
       }
     ]
   },
@@ -5121,7 +5133,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ups": ["ups-1","ups-3","ups-2"],
   "amazon-logistics": ["amazon-logistics-1"],
   "amazon-shipping": [],
-  "fedex": ["fedex-1","fedex-2"],
+  "fedex": ["fedex-1","fedex-2","fedex-3","fedex-4"],
   "gls-ch": ["gls-ch-1","gls-ch-2","gls-ch-3","gls-ch-4"],
   "dpd": ["dpd-2","dpd-1","dpd-3"],
   "dpd-fr": ["dpd-fr-1","dpd-fr-3","dpd-fr-2"],

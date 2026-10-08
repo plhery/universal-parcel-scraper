@@ -147,9 +147,12 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to FedEx; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full 34-digit label barcode: its twelve-digit tracking number follows two zeros in positions 21–34 and passes its check, so detection prefers FedEx."
     },
     {
       "number": "32971514560102447849175802862014",
@@ -167,20 +170,21 @@
     {
       "number": "9611020987654312345672",
       "role": "full_barcode",
-      "evidence": "open_source_example",
+      "evidence": "official_documentation_example",
       "source": {
-        "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/fedex.json"
+        "url": "https://web.archive.org/web/20160803154112/http://www.fedex.com/us/solutions/ppe/FedEx_Ground_Label_Layout_Specification.pdf"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex",
           "austrian-post",
           "usps",
           "estafeta"
         ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to FedEx, which no rule claims."
+      "note": "The worked check-digit example of FedEx Ground's label specification, not a real shipment. Full 96 barcode: its last fifteen digits, the shipper ID, package number and check digit, pass GS1, so detection prefers FedEx."
     },
     {
       "number": "9622001900000000000000776632517510",
@@ -191,9 +195,12 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to FedEx; no rule matches this shape."
+      "note": "Open-source project example, not a real shipment. Full 34-digit FedEx Ground label barcode: its twelve-digit tracking number follows two zeros in positions 21–34 and passes its check, so detection prefers FedEx."
     },
     {
       "number": "271272514871",
@@ -302,9 +309,186 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "auxiliary",
-        "reportedRole": "FedEx Ground label barcode"
+        "assessment": "candidate",
+        "reportedRole": "FedEx tracking number"
       },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "A public report calls this 22-digit 96 barcode a FedEx tracking number, which the reporter's search engine recognized only as its last fifteen digits. Those digits pass their GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "9611019012345611887554",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20160803154112/http://www.fedex.com/us/solutions/ppe/FedEx_Ground_Label_Layout_Specification.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Sample 96 barcode from FedEx Ground's label specification, not a real shipment. Its last fifteen digits pass their GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "9611019012345612345671",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20160803154112/http://www.fedex.com/us/solutions/ppe/FedEx_Ground_Label_Layout_Specification.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Sample 96 barcode from FedEx Ground's label specification, not a real shipment. Its last fifteen digits pass their GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "9611804027471600040302",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20160803154112/http://www.fedex.com/us/solutions/ppe/FedEx_Ground_Label_Layout_Specification.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Sample 96 barcode from FedEx Ground's label specification, not a real shipment. Its last fifteen digits pass their GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "9612019012345612345688",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20160803154112/http://www.fedex.com/us/solutions/ppe/FedEx_Ground_Label_Layout_Specification.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Sample 96 barcode from FedEx Ground's label specification, not a real shipment. Its last fifteen digits pass their GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "9612804045318533301017",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20160803154112/http://www.fedex.com/us/solutions/ppe/FedEx_Ground_Label_Layout_Specification.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Sample 96 barcode from FedEx Ground's label specification, not a real shipment. Its last fifteen digits pass their GS1 check, so detection prefers FedEx."
+    },
+    {
+      "number": "9622001560001234567100794808390594",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20200215061536/http://www.fedex.com/us/gsn/barcode_guide.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
+      },
+      "note": "Sample 34-digit barcode from FedEx Ground's barcode modifications chart, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+    },
+    {
+      "number": "9632001560123456789900794808390594",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20200215061536/http://www.fedex.com/us/gsn/barcode_guide.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
+      },
+      "note": "Sample 34-digit barcode from FedEx Ground's barcode modifications chart, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+    },
+    {
+      "number": "9632001960123456789400152152152158",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20161020202345/http://www.fedex.com/us/gsn/sample_barcodes.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
+      },
+      "note": "Sample 34-digit barcode from FedEx Ground's sample labels, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+    },
+    {
+      "number": "9632080400123456789400152152152158",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://web.archive.org/web/20161020202345/http://www.fedex.com/us/gsn/sample_barcodes.pdf"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
+      },
+      "note": "Sample 34-digit barcode from FedEx Ground's sample labels, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+    },
+    {
+      "number": "9611020987654312345673",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -312,10 +496,27 @@
           "austrian-post",
           "usps",
           "estafeta"
+        ],
+        "not": [
+          "fedex"
         ]
       },
-      "quarantine": true,
-      "note": "The public report distinguishes this barcode from its fifteen-digit tracking identifier. The adapter accepts the tracking identifier only."
+      "note": "FedEx Ground's worked 96 barcode with its check digit changed, so FedEx is not suggested."
+    },
+    {
+      "number": "9622001560001234567100794808390595",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "fedex"
+        ]
+      },
+      "note": "A sample 34-digit FedEx barcode with its check digit changed, so FedEx is not suggested."
     },
     {
       "number": "449044304137821",

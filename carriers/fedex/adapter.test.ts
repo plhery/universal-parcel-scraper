@@ -332,6 +332,44 @@ describe('FedEx lookup steps', () => {
     await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
   });
+
+  // FedEx's published label examples: a 22-digit Ground `96` barcode and a
+  // 34-digit barcode, each carrying its tracking number at the end.
+  it.each([
+    ['9611020987654312345672', '987654312345672'],
+    ['9622 0015 6000 1234 5671 0079 4808 3905 94', '794808390594'],
+  ])('tracks label barcode %s by the number it carries', async (barcode, number) => {
+    const payload = deliveredFixture();
+    const delivered = (payload.output as { packages: Record<string, unknown>[] }).packages[0]!;
+    delivered.trackingNbr = number;
+    delivered.displayTrackingNbr = number;
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({
+      tier: 3, statusCode: 200, html: '<body>Tracking app</body>',
+      capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(payload) }],
+    }));
+
+    const result = await new FedExTracker({ trawlUrl: TRAWL_URL }).fetch(barcode);
+
+    expect(fedexTrackingUrl(barcode)).toBe(fedexTrackingUrl(number));
+    expect(new URL(fedexTrackingUrl(barcode)).searchParams.get('trknbr')).toBe(number);
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toMatchObject({ url: fedexTrackingUrl(number) });
+    expect(result).toMatchObject({ status: 'delivered', tracking_url: fedexTrackingUrl(number) });
+  });
+
+  it('rejects a label barcode whose embedded number fails its check before any request', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockRejectedValue(new Error('must not fetch'));
+    for (const barcode of [
+      '9611020987654312345673',
+      '9622001560001234567100794808390595',
+      // The 34-digit layout keeps two zeros before the 12-digit number.
+      '9622001560001234567141794808390594',
+    ]) {
+      await expect(new FedExTracker({ trawlUrl: TRAWL_URL }).fetch(barcode))
+        .rejects.toMatchObject({ kind: 'invalid_input' });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+  });
 });
 
 describe('FedEx rendered page', () => {

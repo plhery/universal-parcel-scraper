@@ -9,6 +9,7 @@ import { ADAPTER_CHECKED_RULES, brandCarrierForNumber, universalCarrierHints } f
 /** Synthetic numbers that fit each adapter-checked rule but fail its check digit. */
 const FAILING: Record<string, string> = {
   'dhl-express-waybill': '1234567890', 'gls-fr-4': '123456789010', 'mondial-relay-1': '12345678901234567890123450',
+  'fedex-3': '9611020987654312345673', 'fedex-4': '9622001560001234567100794808390595',
   'austrian-post-2': 'RR123456789AT', 'bpost-3': 'RR123456789BE', 'bring-posten-1': 'RR123456789NO',
   'canada-post-2': 'RR123456789CA', 'correios-br-1': 'RR123456789BR', 'correos-chile-2': 'RR123456789CL',
   'ctt-1': 'RR123456789PT', 'india-post-1': 'RR123456789IN', 'japan-post-1': 'RR123456789JP',

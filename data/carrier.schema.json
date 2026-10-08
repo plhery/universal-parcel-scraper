@@ -440,7 +440,9 @@
             "ontrac",
             "luhn",
             "fedex",
-            "sf-express"
+            "sf-express",
+            "fedex-ground-96",
+            "fedex-1d"
           ]
         },
         "preferred": {
