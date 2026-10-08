@@ -2,15 +2,59 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { EkartTracker } from './adapter.js';
 import { parseEkart } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { ekartScan } from './status.js';
 const NUMBER = 'FMPP0000000001';
-const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
+const RETURN = 'BSIC0000000001';
+const load = (name: string) => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
+const fixture = () => load('delivered');
 
 describe('Ekart parser', () => {
-  it('binds the map key and preserves dated history and ETA', () => {
+  it('binds the map key, preserves dated history and drops the estimate once delivered', () => {
     const result = parseEkart(fixture(), NUMBER);
-    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-03T16:00:00Z', delivered_at: '2026-01-03T16:00:00Z', expected_delivery: '2026-01-03T16:00:00Z' });
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-03T16:00:00Z', delivered_at: '2026-01-03T16:00:00Z' });
+    expect(result.expected_delivery).toBeUndefined();
     expect(result.events).toHaveLength(3);
     expect(result.events?.[2]).toMatchObject({ stage: 'registered', stage_source: 'carrier_map', description: 'Pickup Requested' });
+    const moving = fixture(); moving[NUMBER].shipmentTrackingDetails.pop();
+    expect(parseEkart(moving, NUMBER)).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-01-03T16:00:00Z' });
+  });
+  it('maps scan codes and follows the return leg back to the seller', () => {
+    const result = parseEkart(load('return'), RETURN);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'InscannedAtDH - OriginHub_AAA' });
+    expect(result.expected_delivery).toBeUndefined();
+    const history = [...result.events!].reverse();
+    expect(history.every(event => event.stage_source === 'carrier_map')).toBe(true);
+    expect(history.map(event => event.stage)).toEqual([
+      'registered', 'registered', 'registered', 'accepted', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
+      'out_for_delivery', 'failed_attempt', 'failed_attempt', 'exception', 'in_transit', 'in_transit', 'in_transit']);
+    expect(history.map(event => event.provider_leg ?? 'outward')).toEqual([...Array(14).fill('outward'), ...Array(4).fill('return')]);
+    expect(history[0]).toMatchObject({ provider_code: 'OutForPickupEvent', location: 'Example origin', time: '2026-01-01T00:00:00Z' });
+    expect(history[11]).not.toHaveProperty('provider_code');
+    expect(history[14]).toMatchObject({ provider_code: 'ShipmentRtoConfirmed', provider_leg: 'return' });
+  });
+  it('reads a delivery on the return leg as returned and a cancelled pickup as the end of the estimate', () => {
+    const value = load('return'); value[RETURN].shipmentTrackingDetails.push({ date: 1767290400000, city: 'Example origin', statusDetails: 'Delivered' });
+    const returned = parseEkart(value, RETURN);
+    expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map' });
+    expect(returned.events?.[0]).toMatchObject({ description: 'Delivered', stage: 'returned', provider_leg: 'return' });
+    expect(returned.delivered_at).toBeUndefined();
+    const cancelled = load('return'); cancelled[RETURN].shipmentTrackingDetails.splice(1);
+    cancelled[RETURN].shipmentTrackingDetails.push({ date: 1767229200000, city: 'Example origin', statusDetails: 'PickupCancel - OriginHub_AAA_PL' });
+    const result = parseEkart(cancelled, RETURN);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'exception', events: [{ provider_code: 'PickupCancel' }, { stage: 'registered' }] });
+    expect(result.expected_delivery).toBeUndefined();
+    expect(parseEkart(load('return'), RETURN).events?.at(-1)).not.toHaveProperty('provider_leg');
+  });
+  it('reads a hub named after "Received at" as transit, not acceptance', () => {
+    const value = fixture(); value[NUMBER].shipmentTrackingDetails.splice(1, 2, { date: 1767400000000, city: 'Example hub', statusDetails: 'Received at Example Hub' });
+    expect(parseEkart(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', expected_delivery: '2026-01-03T16:00:00Z' });
+  });
+  it('replays every recorded status through the map', () => {
+    for (const entry of statuses.entries) {
+      const description = 'code' in entry && entry.code ? `${entry.code} - ExampleHub_AAA` : entry.wording === 'Received at' ? 'Received at ExampleHub' : entry.wording!;
+      expect(ekartScan(description).stage, description).toBe(entry.stage);
+    }
   });
   it('rejects mixed identities and malformed rows', () => {
     const value = fixture(); value.OTHER0000000001 = value[NUMBER];

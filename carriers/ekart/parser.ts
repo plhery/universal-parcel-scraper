@@ -5,6 +5,7 @@ import { classifyWording } from '../../core/status/index.js';
 import { epochMillisTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { ekartScan } from './status.js';
 
 const PROVIDER = 'Ekart';
 export function normalizeEkartNumber(raw: string): string {
@@ -27,25 +28,34 @@ export function parseEkart(payload: unknown, raw: string): CarrierResult {
   // The official client uses the last source row as current: its history
   // is oldest first. Keep that evidence even when a scan clock is unresolved.
   const history: unknown[] = shipment.shipmentTrackingDetails;
-  const events: CarrierEvent[] = [...history].reverse().map(row => {
+  let returning = false;
+  const events: CarrierEvent[] = history.map(row => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Ekart returned an invalid scan');
     const description = clean(row.statusDetails, 1000);
     if (!description) throw new SchemaError(PROVIDER, 'Ekart returned a scan with no description');
     // The website passes these values to new Date() as epoch milliseconds.
     const time = typeof row.date === 'number' && Number.isSafeInteger(row.date) && row.date >= 1_000_000_000_000
       ? epochMillisTime(row.date)?.iso : undefined;
-    const classified = description === 'Pickup Requested' ? { stage: 'registered', source: 'carrier_map' }
-      : classifyWording(description, 'pending');
+    const scan = ekartScan(description);
+    // An RTO scan puts itself and every later scan on the way back to the seller.
+    returning ||= scan.returning;
+    const mapped = scan.stage ? { stage: scan.stage, source: 'carrier_map' } : classifyWording(description, 'pending');
+    // A delivery on the return leg reaches the seller, not the recipient.
+    const classified = returning && mapped.stage === 'delivered' ? { stage: 'returned', source: 'carrier_map' } : mapped;
     const location = clean(row.city, 200);
     return { description, ...(time ? { time } : cleanScalar(row.date, 64) ? { provider_time_text: cleanScalar(row.date, 64) } : {}),
-      ...(location ? { location } : {}), ...(classified.source !== 'none' ? { stage: classified.stage, stage_source: classified.source } : {}) };
-  });
+      ...(location ? { location } : {}), ...(classified.source !== 'none' ? { stage: classified.stage, stage_source: classified.source } : {}),
+      ...(scan.code ? { provider_code: scan.code } : {}), ...(returning ? { provider_leg: 'return' } : {}) };
+  }).reverse();
   const unique = events.filter((row, index) => events.findIndex(other => JSON.stringify(other) === JSON.stringify(row)) === index);
   const latest = unique[0]!;
   const status: CarrierStatus = latest.stage === 'delivered' ? 'delivered' : latest.stage === 'out_for_delivery' ? 'out_for_delivery'
     : ['returned', 'exception', 'failed_attempt'].includes(latest.stage ?? '') ? 'exception'
       : ['registered', 'pending'].includes(latest.stage ?? '') ? 'pending' : latest.stage ? 'in_transit' : 'unknown';
-  const eta = typeof shipment.expectedDeliveryDate === 'number' && shipment.expectedDeliveryDate >= 1_000_000_000_000
+  // The website shows the estimate until a delivery row exists. A return or
+  // a cancelled pickup ends the outward delivery it estimated.
+  const active = !returning && !['delivered', 'returned', 'exception'].includes(latest.stage ?? '');
+  const eta = active && typeof shipment.expectedDeliveryDate === 'number' && shipment.expectedDeliveryDate >= 1_000_000_000_000
     ? epochMillisTime(shipment.expectedDeliveryDate)?.iso : undefined;
   return { status, last_status_text: latest.description, last_update: latest.time ?? null, timezone: 'Asia/Kolkata',
     ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
