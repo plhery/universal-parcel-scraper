@@ -45,6 +45,19 @@ function scanClock(date: unknown, time: unknown): { local_time?: string } {
   return iso && clock && Number(clock[1]) < 24 && Number(clock[2]) < 60 ? { local_time: `${iso}T${clock[1]}:${clock[2]}:00` } : {};
 }
 
+/**
+ * The ServicePoint's name, then its street and "postcode town", as the page's
+ * ServicePoint card shows them. The name alone when the street or town is missing.
+ */
+function servicePoint(raw: unknown): string {
+  const point = isRecord(raw) ? raw : {};
+  const name = clean(point.Name, 120);
+  const street = clean(point.Address, 120);
+  const town = clean(point.Location, 80);
+  if (!name || !street || !town) return name;
+  return [name, street, [clean(point.ZipCode, 16), town].filter(Boolean).join(' ')].join('\n');
+}
+
 function code(value: unknown): string | undefined {
   if (value === undefined || value === null || value === '') return undefined;
   if (typeof value !== 'string' || !/^[A-Z0-9]{1,12}$/.test(value)) throw new SchemaError(PROVIDER, 'DHL eCommerce Iberia returned an invalid scan code');
@@ -83,8 +96,10 @@ export function parseDhlEcommerceEs(payload: unknown, rawNumber: string): Carrie
   const current = final >= 0 && !reopened ? events[final]! : latest;
   const stage = current.stage ?? dhlEcommerceEsSummaryStage(payload.Status);
   const weight = weightKg(payload.Weight);
-  // The ServicePoint is where the parcel waits only while it is ready there.
-  const point = stage === 'ready_for_pickup' && isRecord(payload.ServicePoint) ? clean(payload.ServicePoint.Name, 120) : '';
+  // The ServicePoint is where the parcel waits while it is ready there, and where it was
+  // collected when the shipment says it was delivered there and the recipient picked it up.
+  const collected = stage === 'delivered' && current.provider_code === 'RS' && payload.DeliveredInServicePoint === true;
+  const point = stage === 'ready_for_pickup' || collected ? servicePoint(payload.ServicePoint) : '';
   // CTT Express delivers DHL's consumer parcels in Spain under its own label code.
   const partner = typeof payload.ShippingCode === 'string' ? payload.ShippingCode.trim() : '';
   return {

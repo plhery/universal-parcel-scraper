@@ -12,6 +12,7 @@ import { dhlEcommerceEsStatus, dhlEcommerceEsSummaryStage } from './status.js';
 
 const NUMBER = '2800000007';
 const INBOUND = 'CC000000005DE';
+const POINT = 'EXAMPLE NEWSAGENT\nCALLE DE EJEMPLO 1\n00000 EXAMPLEVILLE';
 const REJECTED = '<html><head><title>Request Rejected</title></head><body>The requested URL was rejected. Please consult with your administrator.</body></html>';
 const clone = () => structuredClone(fixture);
 const environment = (fetcher: typeof fetch) => ({ trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {}, fetcher });
@@ -37,24 +38,53 @@ describe('DHL eCommerce Iberia parser', () => {
     expect(result.events?.every((event) => event.time === undefined)).toBe(true);
   });
 
-  it('keeps the weight and nothing of a past ServicePoint or the references', () => {
-    const output = JSON.stringify(parseDhlEcommerceEs(clone(), NUMBER));
-    for (const dropped of ['EXAMPLE NEWSAGENT', 'CALLE DE EJEMPLO', 'EXAMPLEVILLE', '00000"', 'REF-0000001', '1000001', 'JJD0000', '28 6000000007']) {
+  it('keeps the ServicePoint a parcel was collected from, the weight and none of the references', () => {
+    const result = parseDhlEcommerceEs(clone(), NUMBER);
+    expect(result.pickup_point).toBe(POINT);
+    const output = JSON.stringify(result);
+    for (const dropped of ['ES-0000000', 'Servicepoint"', '09:00 - 14:00', 'REF-0000001', '1000001', 'JJD0000', '28 6000000007']) {
       expect(output).not.toContain(dropped);
     }
-    expect(Object.keys(parseDhlEcommerceEs(clone(), NUMBER)).sort()).toEqual(['current_stage', 'current_stage_source', 'events',
-      'expected_delivery', 'last_status_text', 'last_update', 'last_update_local', 'status', 'weight_kg']);
-    expect(parseDhlEcommerceEs(clone(), NUMBER).weight_kg).toBe(2);
+    expect(Object.keys(result).sort()).toEqual(['current_stage', 'current_stage_source', 'events', 'expected_delivery',
+      'last_status_text', 'last_update', 'last_update_local', 'pickup_point', 'status', 'weight_kg']);
+    expect(result.weight_kg).toBe(2);
   });
 
-  it('names the ServicePoint only while the parcel waits there', () => {
+  it('gives the ServicePoint its address while the parcel waits there', () => {
     const waiting = clone();
     waiting.Tracking = waiting.Tracking.slice(1);
+    waiting.DeliveredInServicePoint = false;
     const result = normalizeCarrierResult(parseDhlEcommerceEs(waiting, NUMBER));
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: 'EXAMPLE NEWSAGENT' });
-    for (const dropped of ['CALLE DE EJEMPLO', 'EXAMPLEVILLE', '00000"', 'ES-0000000', 'Servicepoint"']) expect(JSON.stringify(result)).not.toContain(dropped);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: POINT });
+    // Without its street or town the ServicePoint is its name alone.
+    for (const field of ['Address', 'Location'] as const) {
+      const partial = structuredClone(waiting);
+      partial.ServicePoint[field] = ' ';
+      expect(parseDhlEcommerceEs(partial, NUMBER).pickup_point).toBe('EXAMPLE NEWSAGENT');
+    }
+    const unzipped = structuredClone(waiting);
+    unzipped.ServicePoint.ZipCode = '';
+    expect(parseDhlEcommerceEs(unzipped, NUMBER).pickup_point).toBe('EXAMPLE NEWSAGENT\nCALLE DE EJEMPLO 1\nEXAMPLEVILLE');
     waiting.ServicePoint.Name = '   ';
     expect(parseDhlEcommerceEs(waiting, NUMBER).pickup_point).toBeUndefined();
+  });
+
+  it('names no ServicePoint before the parcel reaches it or after a delivery elsewhere', () => {
+    const planned = clone();
+    planned.Tracking = planned.Tracking.slice(3);
+    expect(parseDhlEcommerceEs(planned, NUMBER).current_stage).toBe('in_transit');
+    expect(parseDhlEcommerceEs(planned, NUMBER).pickup_point).toBeUndefined();
+    // Collection needs the recipient's pickup scan and the shipment's word that it was delivered there.
+    const unflagged = clone();
+    unflagged.DeliveredInServicePoint = false;
+    expect(parseDhlEcommerceEs(unflagged, NUMBER).pickup_point).toBeUndefined();
+    expect(parseDhlEcommerceEs({ ...clone(), DeliveredInServicePoint: undefined }, NUMBER).pickup_point).toBeUndefined();
+    const door = clone();
+    door.Tracking[0] = { ...door.Tracking[0]!, Code: 'R', SolutionCode: 'REP', Description: 'Delivered' };
+    expect(parseDhlEcommerceEs(door, NUMBER)).toMatchObject({ current_stage: 'delivered' });
+    expect(parseDhlEcommerceEs(door, NUMBER).pickup_point).toBeUndefined();
+    const doorstep = { ...structuredClone(delivered), DeliveredInServicePoint: true, ServicePoint: clone().ServicePoint };
+    expect(parseDhlEcommerceEs(doorstep, INBOUND).pickup_point).toBeUndefined();
   });
 
   it('reads the weight in kilos and nothing else', () => {

@@ -34,8 +34,13 @@ the gateway behind its customer tracking page. German DHL Paket is
   from the shipment's own status number.
 - A delivery stays the current stage when a notice follows it, but not when a
   later delivery round or failed attempt shows it came early.
-- The weight is shown in kilos. The ServicePoint's name is the pickup point
-  only while the parcel waits there.
+- The weight is shown in kilos.
+- The `ServicePoint` block is the DHL ServicePoint shop, as the page's
+  ServicePoint card shows it; the anonymous answer has no recipient address.
+  While the parcel waits there, the pickup point is the shop's name, then its
+  street, then postcode and town (the name alone without a street or town). It
+  stays once the recipient collects the parcel there: a pickup scan (`RS`) on a
+  shipment marked `DeliveredInServicePoint`. A door delivery never gets one.
 - When CTT Express delivers the parcel, its label code is passed on as the
   delivery partner's number.
 - Ten-digit numbers overlap with DHL Express and other carriers, so detection
@@ -52,8 +57,8 @@ the gateway behind its customer tracking page. German DHL Paket is
   filed under head office and has no place.
 - An empty answer also covers purged shipments; how long history is kept is
   not known.
-- The ServicePoint's address, the sender's reference and the delivery day are
-  dropped.
+- The ServicePoint's code, coordinates and opening hours, the sender's
+  reference and the delivery day are dropped.
 
 ## Testing
 
