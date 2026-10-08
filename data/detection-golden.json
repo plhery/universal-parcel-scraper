@@ -1053,6 +1053,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "dpd-fr",
       "mondial-relay",
       "colis-prive",
@@ -2787,6 +2788,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "gls-ch",
       "dpd-fr",
       "mondial-relay",
@@ -4651,6 +4653,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -4779,6 +4782,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -5170,6 +5174,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -5394,6 +5399,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -7754,6 +7760,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -8767,6 +8774,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -9679,6 +9687,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "gls-ch",
       "mondial-relay",
       "gls-fr",
@@ -10377,6 +10386,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",
@@ -12354,6 +12364,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dhl",
       "mondial-relay",
       "colis-prive",
       "mrw",

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from './fedex.js';
+import { isValidDhlIdentcode } from './identcode.js';
 import { detectCarrierMatch, isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './index.js';
 
 describe('numeric checksum candidates', () => {
@@ -76,6 +77,20 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('12345678901234567890').preferred).not.toContain('poczta-polska');
     expect(detectCarrierMatch('1234567890123456789').candidates).toContain('poczta-polska');
     expect(detectCarrierMatch('PX1234567890')).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
+  });
+
+  it('suggests DHL for twelve digits that end in the Identcode check without assigning it', () => {
+    // Worked examples of the public check-digit descriptions: weights 4 and 9 from the left.
+    for (const number of ['218025809066', '201298452277', '000000000000']) expect(isValidDhlIdentcode(number)).toBe(true);
+    for (const number of ['218025809065', '218025809060', '21802580906', '2180258090666', '218025809066\n', '21802 5809066']) {
+      expect(isValidDhlIdentcode(number)).toBe(false);
+    }
+    expect(detectCarrierMatch('21.802 580.906 6')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('218025809066').candidates).toContain('dhl');
+    expect(detectCarrierMatch('218025809066').preferred).not.toContain('dhl');
+    expect(recognitionAskedCarriers('218025809066')).not.toContain('dhl');
+    expect(detectCarrierMatch('218025809065').candidates).not.toContain('dhl');
+    expect(detectCarrierMatch('218025809065').candidates.length).toBeGreaterThan(0);
   });
 
   it('asks Swiss Post Cargo about an SSCC behind its 00 identifier without assigning it', () => {

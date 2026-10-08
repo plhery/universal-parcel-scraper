@@ -491,6 +491,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^0034043[345]\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{12}$",
+        "confidence": "low",
+        "checksum": "identcode"
       }
     ]
   },
@@ -5274,7 +5279,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "spring-gds": ["spring-gds-1","spring-gds-2"],
   "postlogistics": ["postlogistics-dashed-reference","postlogistics-compact-reference"],
   "dachser": [],
-  "dhl": ["dhl-1","dhl-2","dhl-3","dhl-4","dhl-5","dhl-6"],
+  "dhl": ["dhl-1","dhl-2","dhl-3","dhl-4","dhl-5","dhl-6","dhl-7"],
   "dhl-ecommerce": ["dhl-ecommerce-1","dhl-ecommerce-2","dhl-ecommerce-4","dhl-ecommerce-5"],
   "ups": ["ups-1","ups-3","ups-2"],
   "amazon-logistics": ["amazon-logistics-1"],

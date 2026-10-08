@@ -1052,7 +1052,7 @@
     "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits that pass none of the FedEx, GLS, Purolator and mod 7 checks",
+    "shape": "Twelve digits that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -1299,10 +1299,11 @@
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the GLS and Purolator checks",
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the GLS, Identcode and Purolator checks",
     "carriers": [
       "brt",
       "colis-prive",
+      "dhl",
       "dpd-fr",
       "gls-ch",
       "gls-de",
@@ -1316,10 +1317,10 @@
       "sto",
       "zto"
     ],
-    "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+    "reason": "Passing check digits add GLS, DHL and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 20 that pass none of the FedEx, GLS, Purolator and mod 7 checks",
+    "shape": "Twelve digits starting with 20 that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -1434,7 +1435,7 @@
     "reason": "When La Poste's ISO 7064 check character is a digit and the fifteen digits also pass GS1, FedEx's fifteen-digit rule matches too, as do BRT's and Yunda's. La Poste's high-confidence rule decides."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and mod 7 checks",
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -1597,5 +1598,133 @@
       "swiss-post-cargo"
     ],
     "reason": "DHL eCommerce Spain accepts two letters and eight digits ending in 0, which covers Swiss Post Cargo's PL- references; both stay low-confidence suggestions and carrier recognition asks eos."
+  },
+  {
+    "shape": "Twelve digits that pass the Identcode check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the Identcode check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the Identcode check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "j-and-t-cargo",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Identcode and Purolator checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "Passing check digits add DHL and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Identcode and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the GLS, Identcode and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "Passing check digits add GLS and DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Identcode, Purolator and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "Passing check digits add DHL and Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   }
 ]

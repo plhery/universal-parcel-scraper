@@ -15,6 +15,7 @@ import { isValidEvriParcelNumber } from './evri.js';
 import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from './fedex.js';
 import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
+import { isValidDhlIdentcode } from './identcode.js';
 import { isValidMondialRelayBarcode } from './mondialRelay.js';
 import {
   hasGs1CheckDigit,
@@ -58,4 +59,5 @@ export const CHECKSUMS: Readonly<Record<ChecksumId, (trackingNumber: string) => 
   'sf-express': isValidSfExpressWaybill,
   'fedex-ground-96': isValidFedExGround96Barcode,
   'fedex-1d': isValidFedEx1DBarcode,
+  identcode: isValidDhlIdentcode,
 };

@@ -109,6 +109,12 @@
       "id": "dhl-6",
       "pattern": "^0034043[345]\\d{12}$",
       "confidence": "low"
+    },
+    {
+      "id": "dhl-7",
+      "pattern": "^\\d{12}$",
+      "confidence": "low",
+      "checksum": "identcode"
     }
   ]
 }

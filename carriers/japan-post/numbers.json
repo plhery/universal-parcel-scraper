@@ -319,6 +319,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl",
           "gls-ch",
           "mondial-relay",
           "gls-fr",
@@ -869,6 +870,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl",
           "mondial-relay",
           "colis-prive",
           "mrw",

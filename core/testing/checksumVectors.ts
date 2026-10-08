@@ -292,6 +292,18 @@ const RECIPES: Record<ChecksumId, (recipe: Recipe) => void> = {
     r.add(r.complete('0'.repeat(13)), r.complete('9'.repeat(13)));
   },
 
+  identcode(r) {
+    const valid = Array.from({ length: 8 }, () => r.complete(r.string(11)));
+    standard(r, valid);
+    // Weights 4 and 9 from the left: a sum that is a multiple of ten closes with 0, and
+    // starting with 9 instead gives another digit.
+    const zero = r.find(() => r.string(11), (head) => weightedSum(head, [4, 9]) % 10 === 0);
+    r.add(`${zero}0`, `${zero}1`);
+    const head = r.find(() => r.string(11), (digits) => weightedSum(digits, [4, 9]) % 10 !== weightedSum(digits, [9, 4]) % 10);
+    r.add(head + String((10 - weightedSum(head, [9, 4]) % 10) % 10));
+    r.add(r.complete('0'.repeat(11)), r.complete('9'.repeat(11)));
+  },
+
   luhn(r) {
     const valid = [
       ...Array.from({ length: 4 }, () => r.complete(`${r.pick('0123')}${r.string(10)}`)),

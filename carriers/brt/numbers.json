@@ -183,6 +183,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl",
           "dpd-fr",
           "mondial-relay",
           "colis-prive",

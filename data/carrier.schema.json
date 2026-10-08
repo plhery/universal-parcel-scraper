@@ -442,7 +442,8 @@
             "fedex",
             "sf-express",
             "fedex-ground-96",
-            "fedex-1d"
+            "fedex-1d",
+            "identcode"
           ]
         },
         "preferred": {

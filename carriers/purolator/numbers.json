@@ -155,6 +155,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl",
           "mondial-relay",
           "colis-prive",
           "mrw",

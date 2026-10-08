@@ -50,6 +50,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl",
           "gls-ch",
           "dpd-fr",
           "mondial-relay",

@@ -30,6 +30,10 @@ once.
   as DHL Paket. The adapter of another network, such as
   [Poland's](../dhl-ecommerce-pl/README.md), reads one when its carrier is named.
 - `0034043…` numbers are SSCCs. A failing GS1 check digit keeps one a suggestion.
+- Twelve-digit parcel numbers are Identcodes, closed by Deutsche Post's check
+  digit (weights 4 and 9 from the left, mod 10). FedEx, Japan Post, Sagawa and
+  others also use twelve digits, so a passing check only adds DHL to the
+  suggestions.
 - Sessions are replaced at 100 minutes because DHL's edge stops answering a
   session about two hours old instead of rejecting it. Without the cap, the
   lookup that crosses that age waits out the 15-second timeout before renewing.
