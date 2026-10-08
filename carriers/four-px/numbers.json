@@ -124,6 +124,120 @@
       },
       "note": "Customer attributes the parcel to 4PX, while the reply attributes it to WishPost. The carrier is disputed.",
       "quarantine": true
+    },
+    {
+      "number": "4PX3002555003946CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260313001028/https://track.4px.com/query/4PX3002555003946CN",
+        "access": "indexed_excerpt",
+        "date": "2026-03-13",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "four-px",
+        "confidence": "high"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed returns the parcel's history through to delivery by USPS."
+    },
+    {
+      "number": "4PX3002480232978CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260206191157/https://track.4px.com/query/4PX3002480232978CN",
+        "access": "indexed_excerpt",
+        "date": "2026-02-06",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "four-px",
+        "confidence": "high"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed returns the parcel's history through to delivery by SpeedX."
+    },
+    {
+      "number": "4PX3002143560523CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251102114654/https://track.4px.com/query/4PX3002143560523CN",
+        "access": "indexed_excerpt",
+        "date": "2025-11-02",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "four-px",
+        "confidence": "high"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed returns the parcel's history through to delivery by Royal Mail."
+    },
+    {
+      "number": "OLS3060178681743",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260121003821/https://track.4px.com/query/OLS3060178681743",
+        "access": "indexed_excerpt",
+        "date": "2026-01-21",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed returns the parcel's history through to delivery by PostNord; no rule covers the OLS family."
+    },
+    {
+      "number": "EM200006549049CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260102183550/https://track.4px.com/query/EM200006549049CA",
+        "access": "indexed_excerpt",
+        "date": "2026-01-02",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. The number is the Canadian last-mile courier Emile's, which 4PX's feed also answers; no rule covers it."
+    },
+    {
+      "number": "OJ791502074GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251211071612/https://track.4px.com/query/OJ791502074GB",
+        "access": "indexed_excerpt",
+        "date": "2025-12-11",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed answers the Royal Mail number it handed the parcel over with; Royal Mail delivered it, so detection names Royal Mail."
     }
   ]
 }

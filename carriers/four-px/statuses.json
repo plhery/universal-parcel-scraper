@@ -136,6 +136,102 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28"
+    },
+    {
+      "code": "FPX_D_FD",
+      "wording": "Delivery attempt unsuccessful",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_F_ST",
+      "wording": "Shipment in transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_D_AOPC",
+      "wording": "Arrive in transit center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_C_SPQS",
+      "wording": "4px received shipment.",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IR",
+      "wording": "Waybill generated",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IR",
+      "wording": "Shipping information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IR",
+      "wording": "Shipping label created",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IR",
+      "wording": "Advance notice - package information received.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IR",
+      "wording": "The shipment item has arrived at the country of destination.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IRI",
+      "wording": "Picked up by shipping partner, usps awaiting item",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IRI",
+      "wording": "Arrived shipping partner facility, usps awaiting item",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "FPX_O_IRI",
+      "wording": "Departed shipping partner facility, usps awaiting item",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
     }
   ]
 }

@@ -135,6 +135,18 @@
     "reason": "A public experience table attributes this reference to 4PX OM Pro; no official source establishes the family."
   },
   {
+    "carrier": "four-px",
+    "pattern": "^OLS\\d{13}$",
+    "kind": "open",
+    "reason": "One archived lookup shows 4PX's feed answering an OLS reference; one sample does not establish the family."
+  },
+  {
+    "carrier": "four-px",
+    "pattern": "^EM\\d{12}CA$",
+    "kind": "open",
+    "reason": "The Canadian courier Emile's number, which 4PX's feed answers for the parcels it hands over; Emile has no adapter and one sample does not establish a rule."
+  },
+  {
     "carrier": "hermes",
     "pattern": "^\\d{17}$",
     "kind": "by_design",

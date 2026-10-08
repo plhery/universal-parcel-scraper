@@ -1,7 +1,9 @@
 
-import { DateTime } from 'luxon';
+import { DateTime, IANAZone } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { accepted, recognizeFromLookup } from '../../core/adapter/index.js';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
+import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -20,15 +22,36 @@ export function normalizeFourPxNumber(raw: string): string {
 function eventTime(raw: Record<string, unknown>): Pick<CarrierEvent, 'time'> & { local_time?: string } {
   const local = clean(raw.tkDateStr, 64);
   if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(local)) throw new SchemaError('4PX', '4PX returned an invalid scan time');
-  const zone = clean(raw.tkTimezone, 32);
+  const zone = clean(raw.tkTimezone, 64);
   const offset = /^UTC([+-]\d{2}:\d{2})$/.exec(zone)?.[1];
-  if (zone && !offset && zone !== 'UTC') throw new SchemaError('4PX', '4PX returned an invalid scan offset');
+  // Some partners' scans name a zone instead ("UTCAmerica/Vancouver").
+  const named = /^UTC([A-Z][A-Za-z_]*(?:\/[A-Za-z0-9_+-]+)+)$/.exec(zone)?.[1];
+  if (zone && !offset && !named && zone !== 'UTC') throw new SchemaError('4PX', '4PX returned an invalid scan offset');
   // The displayed time and offset form one pair. tkDate encodes different
   // clock digits and must not replace the portal's per-scan local timestamp.
-  const parsed = DateTime.fromISO(`${local.replace(' ', 'T')}${offset ?? (zone === 'UTC' ? 'Z' : '')}`, { setZone: true, zone: 'UTC' });
+  const wall = local.replace(' ', 'T');
+  const parsed = named ? DateTime.fromISO(wall, { zone: IANAZone.isValidZone(named) ? named : 'UTC' })
+    : DateTime.fromISO(`${wall}${offset ?? (zone === 'UTC' ? 'Z' : '')}`, { setZone: true, zone: 'UTC' });
   if (!parsed.isValid) throw new SchemaError('4PX', '4PX returned an invalid scan time');
-  const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: Boolean(zone) });
-  return zone ? { time: iso } : { local_time: iso };
+  // A zone name the clock database does not know leaves the scan's clock local.
+  const placed = Boolean(zone) && (!named || IANAZone.isValidZone(named));
+  const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: placed });
+  return placed ? { time: iso } : { local_time: iso };
+}
+
+// A USPS routing barcode starts with the recipient's ZIP code. Only the package
+// number after it is kept; a barcode that cannot be split is dropped whole.
+function partnerNumber(server: string): string {
+  return /^420\d{27}(?:\d{4})?$/.test(server) ? uspsPackageIdentifier(server) ?? '' : server;
+}
+
+// The contact card opens with the last-mile provider's name, and also lists
+// its website. Only the catalog carrier both agree on is kept, never the
+// card's phone numbers or addresses.
+function partnerOf(card: unknown): string | undefined {
+  if (!isRecord(card) || typeof card.contact !== 'string') return undefined;
+  const name = clean(/^\s*【服务商】([^\n【]+)/.exec(card.contact.slice(0, 1000))?.[1], 80);
+  return name ? carrierIdFromPartner(name, clean(card.website, 200)) : undefined;
 }
 
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {
@@ -53,20 +76,23 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const key = JSON.stringify([time, description, location, code]);
     if (seen.has(key)) continue;
     seen.add(key);
-    const classified = fourPxStatus(code);
-    events.push({ ...time, description, location, ...(code ? { provider_code: code } : {}), ...(classified ? { stage: classified.stage } : {}) });
+    const classified = fourPxStatus(code, description);
+    events.push({ ...time, description, location, ...(code ? { provider_code: code } : {}),
+      ...(classified ? { stage: classified.stage, stage_source: classified.source } : {}) });
   }
   const latest = events[0]!;
-  const classified = fourPxStatus(latest.provider_code ?? '');
-  const deliveryNumber = clean(item.serverCode, 64).toUpperCase();
+  const classified = fourPxStatus(latest.provider_code ?? '', latest.description);
+  const deliveryNumber = partnerNumber(clean(item.serverCode, 64).toUpperCase());
   const country = clean(item.ctEndCode, 8).toUpperCase();
+  const partner = partnerOf(item.channelContact);
   return {
     status: classified?.status ?? 'unknown',
-    ...(classified ? { current_stage: classified.stage } : {}),
+    ...(classified ? { current_stage: classified.stage, current_stage_source: classified.source } : {}),
     last_status_text: latest.description,
     last_update: latest.time ?? null,
     ...(classified?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
+    ...(partner ? { delivery_carrier: partner } : {}),
     ...(deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? { delivery_tracking_number: deliveryNumber } : {}),
     events: events.slice(0, 100),
   };

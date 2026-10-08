@@ -4,7 +4,7 @@
   "data": [
     {
       "queryCode": "4PX0000000000001CN",
-      "serverCode": "4200000000000000000000000000000001",
+      "serverCode": "420000019400100000000000000006",
       "shipperCode": "4PX0000000000001CN",
       "channelTrackCode": null,
       "ctStartCode": "CN",
@@ -433,14 +433,14 @@
       ],
       "hawbCodeSet": [
         "4PX0000000000001CN",
-        "4200000000000000000000000000000001"
+        "420000019400100000000000000006"
       ],
       "mutiPackage": false,
       "masterOrderNum": null,
       "returnStatusFlag": null,
       "channelContact": {
         "website": "https://www.usps.com/",
-        "contact": "PRIVATE_CONTACT"
+        "contact": "\u3010\u670d\u52a1\u5546\u3011USPS\n\u3010\u8054\u7cfb\u65b9\u5f0f\u3011\nPRIVATE_CONTACT"
       },
       "consigneePostcode": "PRIVATE_POSTCODE"
     }

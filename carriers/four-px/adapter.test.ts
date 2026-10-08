@@ -32,7 +32,7 @@ describe('4PX result projection', () => {
   it('binds the parcel and uses the displayed clock with its per-scan offset', () => {
     const result = normalizeCarrierResult(parse(fixture(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-03-28T14:30:03-04:00',
-      delivered_at: '2026-03-28T14:30:03-04:00', destination_country: 'US', delivery_tracking_number: '4200000000000000000000000000000001' });
+      delivered_at: '2026-03-28T14:30:03-04:00', destination_country: 'US', delivery_carrier: 'usps', delivery_tracking_number: '9400100000000000000006' });
     expect(result.events).toHaveLength(26);
     expect(result.events?.[1]!.stage).toBe('out_for_delivery');
     expect(result.events?.at(-1)).toMatchObject({ stage: 'registered', time: '2026-03-03T14:30:03+08:00' });
@@ -48,6 +48,18 @@ describe('4PX result projection', () => {
     expect(result.events?.[0]).toMatchObject({ local_time: '2026-03-28T14:30:03' });
     expect(result.events?.[0]!.time).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
+  });
+
+  it('reads a scan whose zone is named rather than offset', () => {
+    const payload = fixture();
+    payload.data[0].tracks[0].tkTimezone = 'UTCAmerica/Vancouver';
+    expect(parse(payload, NUMBER)).toMatchObject({ last_update: '2026-03-28T14:30:03-07:00', delivered_at: '2026-03-28T14:30:03-07:00' });
+    payload.data[0].tracks[0].tkTimezone = 'UTCExample/Nowhere';
+    const result = parse(payload, NUMBER);
+    expect(result.events?.[0]).toMatchObject({ local_time: '2026-03-28T14:30:03' });
+    expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
+    payload.data[0].tracks[0].tkTimezone = 'UTC 08:00';
+    expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('requires an exact unique identity rather than trusting the first parcel', () => {
@@ -93,9 +105,56 @@ describe('4PX result projection', () => {
     expect(result.events).toHaveLength(26);
   });
 
+  it('keeps the package number of a routing barcode without the ZIP code before it', () => {
+    const payload = fixture();
+    expect(JSON.stringify(parse(payload, NUMBER))).not.toContain('42000001');
+    payload.data[0].serverCode = '4200000000000000000000000000000001';
+    expect(parse(payload, NUMBER).delivery_tracking_number).toBeUndefined();
+    payload.data[0].serverCode = 'ZZ000000005GB';
+    expect(parse(payload, NUMBER).delivery_tracking_number).toBe('ZZ000000005GB');
+  });
+
+  it('names a last-mile provider only when the catalog knows it and its website agrees', () => {
+    const payload = fixture(); const card = payload.data[0].channelContact;
+    card.contact = '【服务商】Royal Mail\n【联系方式】\nPRIVATE_CONTACT'; card.website = 'http://www.royalmail.com/';
+    expect(parse(payload, NUMBER).delivery_carrier).toBe('royal-mail');
+    card.website = 'www.royalmail.com';
+    expect(parse(payload, NUMBER).delivery_carrier).toBe('royal-mail');
+    for (const [contact, website] of [['【服务商】Royal Mail', 'https://www.usps.com/'], ['【服务商】Example Parcels', 'https://example.invalid/'],
+      ['PRIVATE_CONTACT', 'https://www.usps.com/']]) {
+      card.contact = contact; card.website = website;
+      expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
+    }
+    payload.data[0].channelContact = null;
+    expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
+  });
+
+  it.each([
+    ['FPX_D_FD', 'Delivery attempt unsuccessful', 'exception', 'failed_attempt', 'carrier_map'],
+    ['FPX_F_ST', 'Shipment in transit', 'in_transit', 'in_transit', 'carrier_map'],
+    ['FPX_D_AOPC', 'Arrive in transit center', 'in_transit', 'in_transit', 'carrier_map'],
+    ['FPX_C_SPQS', '4px received shipment.', 'in_transit', 'accepted', 'carrier_map'],
+    ['FPX_O_IR', 'Waybill generated', 'pending', 'registered', 'carrier_map'],
+    ['FPX_O_IR', 'The shipment item has arrived at the country of destination.', 'in_transit', 'in_transit', 'wording:language'],
+    ['FPX_O_IRI', 'Picked up by shipping partner, usps awaiting item', 'in_transit', 'accepted', 'wording:language'],
+  ])('reads %s "%s" as %s', (code, description, status, stage, source) => {
+    const payload = fixture(); Object.assign(payload.data[0].tracks[0], { tkCode: code, tkDesc: description });
+    const result = parse(payload, NUMBER);
+    expect(result).toMatchObject({ status, current_stage: stage, current_stage_source: source });
+    expect(result.events?.[0]).toMatchObject({ stage, stage_source: source });
+  });
+
+  it('leaves a relayed step unstaged when its wording says nothing', () => {
+    const payload = fixture(); Object.assign(payload.data[0].tracks[0], { tkCode: 'FPX_O_IR', tkDesc: 'Task assigned' });
+    const result = parse(payload, NUMBER);
+    expect(result.status).toBe('unknown'); expect(result.current_stage).toBeUndefined(); expect(result.events?.[0]?.stage).toBeUndefined();
+  });
+
   it('proves the declared capabilities using the synthetic response', () => {
     const result = parse(fixture(), NUMBER);
-    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)), delivered_at: Boolean(result.delivered_at) };
+    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)), delivered_at: Boolean(result.delivered_at),
+      provider_code: Boolean(result.events?.every((event) => event.provider_code)), delivery_partner: Boolean(result.delivery_carrier),
+      delivery_tracking_number: Boolean(result.delivery_tracking_number) };
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     for (const capability of metadata.capabilities) expect(checks[capability], capability).toBe(true);
   });

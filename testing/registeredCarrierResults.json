@@ -183,192 +183,220 @@
     "result": {
       "status": "delivered",
       "current_stage": "delivered",
+      "current_stage_source": "carrier_map",
       "last_status_text": "Delivered, in/at mailbox",
       "last_update": null,
       "destination_country": "US",
-      "delivery_tracking_number": "4200000000000000000000000000000001",
+      "delivery_carrier": "usps",
+      "delivery_tracking_number": "9400100000000000000006",
       "events": [
         {
           "local_time": "2026-03-28T14:30:03",
           "description": "Delivered, in/at mailbox",
           "location": "Example facility 0",
           "provider_code": "FPX_S_OK",
-          "stage": "delivered"
+          "stage": "delivered",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-27T14:30:03",
           "description": "Out for delivery",
           "location": "Example facility 1",
           "provider_code": "FPX_D_SD",
-          "stage": "out_for_delivery"
+          "stage": "out_for_delivery",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-26T14:30:03",
           "description": "Arrived at post office",
           "location": "Example facility 2",
           "provider_code": "FPX_D_HQ",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-25T14:30:03",
           "description": "Arrived at usps facility",
           "location": "Example facility 3",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-24T14:30:03",
           "description": "Arrived at usps regional facility",
           "location": "Example facility 4",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-23T14:30:03",
           "description": "In transit to next facility",
           "location": "Example facility 5",
           "provider_code": "FPX_M_IT",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-22T14:30:03",
           "description": "Departed usps regional facility",
           "location": "Example facility 6",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-21T14:30:03",
           "description": "Arrived at usps regional facility",
           "location": "Example facility 7",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-20T14:30:03",
           "description": "In transit to next facility",
           "location": "Example facility 8",
           "provider_code": "FPX_M_IT",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-19T14:30:03",
           "description": "In transit to next facility",
           "location": "Example facility 9",
           "provider_code": "FPX_M_IT",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-18T14:30:03",
           "description": "Departed usps regional facility",
           "location": "Example facility 10",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-17T14:30:03",
           "description": "Arrived at usps regional origin facility",
           "location": "Example facility 11",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-16T14:30:03",
           "description": "Accepted at usps origin facility",
           "location": "Example facility 12",
           "provider_code": "FPX_O_RR",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-15T14:30:03",
           "description": "In transit, it's progressing through post network",
           "location": "Example facility 13",
           "provider_code": "FPX_D_STPP",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-14T14:30:03",
           "description": "Customs clearance agent received the shipment in destnation country.",
           "location": "Example facility 14",
           "provider_code": "FPX_M_CRSD",
-          "stage": "customs"
+          "stage": "customs",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-13T14:30:03",
           "description": "Arrival to the destination airport",
           "location": "Example facility 15",
           "provider_code": "FPX_M_ATA",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-12T14:30:03",
           "description": "Released from customs: customs cleared.",
           "location": "Example facility 16",
           "provider_code": "FPX_I_RCUK",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-11T14:30:03",
           "description": "Departure from the original airport",
           "location": "Example facility 17",
           "provider_code": "FPX_M_DFOA",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-10T14:30:03",
           "description": "Hand over to airline.",
           "location": "Example facility 18",
           "provider_code": "FPX_M_HA",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-09T14:30:03",
           "description": "Depart from facility to service provider.",
           "location": "Example facility 19",
           "provider_code": "FPX_C_ADFF",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-08T14:30:03",
           "description": "Shipment arrived at facility and measured.",
           "location": "Example facility 20",
           "provider_code": "FPX_C_AAF",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-07T14:30:03",
           "description": "Shipment arrived at facility and measured.",
           "location": "Example facility 21",
           "provider_code": "FPX_C_AAF",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-06T14:30:03",
           "description": "Shipment picked up.",
           "location": "Example facility 22",
           "provider_code": "FPX_C_SPLS",
-          "stage": "accepted"
+          "stage": "accepted",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-05T14:30:03",
           "description": "Pickup scanned, in transit to warehouse",
           "location": "Example facility 23",
           "provider_code": "FPX_L_SC",
-          "stage": "accepted"
+          "stage": "accepted",
+          "stage_source": "carrier_map"
         },
         {
           "local_time": "2026-03-04T14:30:03",
           "description": "Shipping label created, usps awaiting item",
           "location": "Example facility 24",
           "provider_code": "FPX_O_IRI",
-          "stage": "registered"
+          "stage": "registered",
+          "stage_source": "wording:language"
         },
         {
           "local_time": "2026-03-03T14:30:03",
           "description": "Parcel information received",
           "location": "Example facility 25",
           "provider_code": "FPX_L_RPIF",
-          "stage": "registered"
+          "stage": "registered",
+          "stage_source": "carrier_map"
         }
       ]
     }
