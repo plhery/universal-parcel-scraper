@@ -12,7 +12,7 @@ A PIN lookup reads the detail response directly. An alias lookup first requires 
 
 Scan clocks use their supplied offsets. Missing offsets retain local clocks, while malformed clocks retain their original labels. Unresolved rows preserve source order and cannot lend an older timestamp to the current status.
 
-Return flags establish a return journey rather than completed sender delivery. Conditional collection notices keep their pickup meaning. A delivery notice card is a failed attempt, and a customs release moves the item on. Movement remains movement throughout a return journey, and outbound delivery estimates are suppressed.
+Return flags establish a return journey rather than completed sender delivery. Conditional collection notices keep their pickup meaning. A delivery notice card is a failed attempt. A hold the recipient asked for leaves the item in transit, or ready for pickup when the scan names a post office or pickup point. A customs release moves the item on, whether its code is known or only its wording. Movement remains movement throughout a return journey, and outbound delivery estimates are suppressed.
 
 The delivery estimate is kept while the latest scan is one the adapter knows, including notices that move nothing such as a revised delivery date. The sender is the business account the tracking page names.
 

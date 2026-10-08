@@ -1,5 +1,5 @@
 import type { CarrierStatus } from '../../core/result/index.js';
-import type { Stage } from '../../core/status/index.js';
+import { trackingLanguageStage, type Stage } from '../../core/status/index.js';
 
 /** The official client's package enum and English translations. */
 export const CANADA_POST_STATUS_STAGE: Readonly<Record<string, Stage>> = {
@@ -24,6 +24,8 @@ const SCAN_STAGE: Readonly<Record<string, Stage>> = {
   '0405': 'in_transit', '0410': 'in_transit',
   // A delivery notice card: the attempt ended with the item sent to a post office.
   '1479': 'failed_attempt', '1488': 'failed_attempt',
+  // A hold the recipient asked for: the item waits for its new delivery.
+  '1410': 'in_transit',
   '1434': 'delivered', '1441': 'delivered', '1442': 'delivered', '1462': 'delivered', '1496': 'delivered', '1498': 'delivered',
   '4700': 'in_transit',
   // International legs. A customs release moves the item on rather than holding it.
@@ -32,7 +34,9 @@ const SCAN_STAGE: Readonly<Record<string, Stage>> = {
   '4450': 'in_transit', '4600': 'in_transit',
 };
 
-export function canadaPostScanStage(code: string): Stage | null {
+export function canadaPostScanStage(code: string, description = ''): Stage | null {
+  // A hold that names a post office or pickup point waits there for collection.
+  if (code === '1410' && /post office|postal outlet|pick[ -]?up/i.test(description)) return 'ready_for_pickup';
   return Object.hasOwn(SCAN_STAGE, code) ? SCAN_STAGE[code]! : null;
 }
 
@@ -55,7 +59,8 @@ export function canadaPostStage(text: string): Stage | null {
   if (/\b(?:will|expected|scheduled)\b.*\bdelivered\b/.test(value)) return null;
   if (/\bdelivered\b/.test(value)) return 'delivered';
   if (/out for delivery/.test(value)) return 'out_for_delivery';
-  if (/customs|clearance/.test(value)) return 'customs';
+  // A completed release moves the item on; the shared rules tell it from a clearance still pending.
+  if (/customs|clearance/.test(value)) return trackingLanguageStage(text) === 'in_transit' ? 'in_transit' : 'customs';
   if (/exception|alert|delay|damaged|lost|seized|held|re-routed due to processing error/.test(value)) return 'exception';
   if (/manifest|label created|information (?:received|submitted)|order received|pre-shipment|waiting for item/.test(value)) return 'registered';
   if (/accepted|picked up|received by canada post|item arrived|arrived at/.test(value)) return 'accepted';

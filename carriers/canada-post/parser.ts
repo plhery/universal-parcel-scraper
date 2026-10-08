@@ -110,7 +110,7 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
     if (raw.locationAddr != null && !isRecord(raw.locationAddr)) throw new SchemaError('canada-post', 'Canada Post returned an invalid scan location');
     const location = isRecord(raw.locationAddr)
       ? [textField(raw.locationAddr, 'city', 160), textField(raw.locationAddr, 'regionCd', 40)].filter(Boolean).join(', ') : '';
-    const stage = type === 'Signature' || code === '20' ? null : canadaPostScanStage(code) ?? canadaPostStage(description);
+    const stage = type === 'Signature' || code === '20' ? null : canadaPostScanStage(code, description) ?? canadaPostStage(description);
     const event: CarrierEvent = { ...eventClock(raw.datetime), description: stage === 'delivered' ? 'Delivered' : description,
       provider_code: code, ...(stage ? { stage } : {}), ...(location ? { location } : {}) };
     return { event, type, sourceDate: isRecord(raw.datetime) ? calendarDate(raw.datetime.date) : null,

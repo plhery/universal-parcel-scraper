@@ -397,7 +397,7 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "Not in the code map: the shared wording rules read a hold the recipient asked for as a delivery choice, not a problem. The parcel waits for its new date and is delivered after it."
+      "note": "A hold the recipient asked for is a delivery choice, not a problem: the item waits for its new date and is delivered after it."
     },
     {
       "code": "0162",

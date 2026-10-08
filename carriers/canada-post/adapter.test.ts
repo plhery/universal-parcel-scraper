@@ -336,7 +336,7 @@ describe('Canada Post scan vocabulary', () => {
         continue;
       }
       const wording = entry.wording ?? '';
-      expect(canadaPostScanStage(entry.code) ?? canadaPostStage(wording) ?? wordingStage(wording), entry.code).toBe(entry.stage);
+      expect(canadaPostScanStage(entry.code, wording) ?? canadaPostStage(wording) ?? wordingStage(wording), entry.code).toBe(entry.stage);
     }
   });
 
@@ -364,6 +364,28 @@ describe('Canada Post scan vocabulary', () => {
     const p = moving(); p.status = 'HalfDelivered';
     p.events.unshift(scan('1479', 'Notice card left indicating where and when to pick up item', '2026-03-16', 'Attempted'));
     expect(parse(p, MOVING_NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+  });
+
+  it('reads a hold the recipient asked for as movement, or as ready for pickup where a post office is named', () => {
+    const p = moving(); p.expectedDlvryDateTime.revisedDate = '2026-03-17';
+    p.events.unshift(scan('1410', "Item on hold at recipient's request", '2026-03-17', 'Attempted'),
+      scan('0500', 'Out for delivery', '2026-03-16', 'Out'));
+    expect(parse(p, MOVING_NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
+      last_status_text: "Item on hold at recipient's request", expected_delivery: '2026-03-17' });
+    expect(canadaPostScanStage('1410')).toBe('in_transit');
+    expect(canadaPostScanStage('1410', "Item on hold at the post office at recipient's request")).toBe('ready_for_pickup');
+  });
+
+  it('reads a completed customs release as movement under any code', () => {
+    for (const text of ['Item was released by customs', 'Customs clearance completed', 'Item cleared customs']) {
+      expect(canadaPostStage(text), text).toBe('in_transit');
+    }
+    for (const text of ['Item presented to customs', 'Item has not been released by customs', 'Item is awaiting customs clearance', 'Item held by customs']) {
+      expect(canadaPostStage(text), text).toBe('customs');
+    }
+    const p = moving();
+    p.events.unshift(scan('0999', 'Item was released by customs', '2026-03-16'));
+    expect(parse(p, MOVING_NUMBER).events?.[0]).toMatchObject({ provider_code: '0999', stage: 'in_transit' });
   });
 
   it('keeps the estimate when the latest row is a notice that moves nothing', () => {
