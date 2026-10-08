@@ -22,7 +22,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttSVL?target_command=kpl.tts.tt.epost.cmd.RetrieveEmsTraceEngCmd&JspURI=%2Fxtts%2Ftt%2Fepost%2Fems%2FEmsSearchResultEng.jsp&POST_CODE={trackingNumber}",
@@ -30,14 +31,25 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivered_at",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "office_contact_details"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivered_at"
     ],
-    "discarded": [],
+    "discarded": [
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "office_contact_details"
+    ],
     "unavailable": []
   },
   "links": [

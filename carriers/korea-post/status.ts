@@ -15,6 +15,14 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Ready for customs clearance', { status: 'in_transit', stage: 'customs' }],
   ['Unsuccessful delivery', { status: 'exception', stage: 'failed_attempt' }],
   ['Delivery complete', { status: 'delivered', stage: 'delivered' }],
+  // Domestic wording.
+  ['운송장출력', { status: 'pending', stage: 'registered' }],
+  ['집하완료', { status: 'in_transit', stage: 'accepted' }],
+  ['접수', { status: 'in_transit', stage: 'accepted' }],
+  ['발송', { status: 'in_transit', stage: 'in_transit' }],
+  ['도착', { status: 'in_transit', stage: 'in_transit' }],
+  ['배달준비', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['배달완료', { status: 'delivered', stage: 'delivered' }],
 ]);
 
 export function koreaPostStatus(description: string): ClassifiedStatus | undefined {

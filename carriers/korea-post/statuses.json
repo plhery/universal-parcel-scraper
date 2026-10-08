@@ -98,6 +98,58 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28"
+    },
+    {
+      "wording": "운송장출력",
+      "language": "ko",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The sender printed the label."
+    },
+    {
+      "wording": "집하완료",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Picked up from the sender."
+    },
+    {
+      "wording": "접수",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "발송",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "도착",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "wording": "배달준비",
+      "language": "ko",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The courier has the item for delivery."
+    },
+    {
+      "wording": "배달완료",
+      "language": "ko",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
     }
   ]
 }

@@ -1,5 +1,5 @@
 
-import { load } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
@@ -10,9 +10,17 @@ import { koreaPostStatus } from './status.js';
 
 const ENDPOINT = 'https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttSVL';
 
+const DOMESTIC_ENDPOINT = 'https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm';
+const DOMESTIC = /^\d{13}$/;
+const DOMESTIC_BASIC = '등기번호|보내는 분/접수일자|받는 분|수령인/배달일자|취급구분|배달결과';
+const DOMESTIC_HISTORY = '날짜|시간|발생국|처리현황';
+const DOMESTIC_MISSING = '현재 고객님이 신청하신 접수번호에 대하여 배달정보를 찾지 못했습니다.';
+
 export function normalizeKoreaPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number)) throw new InvalidInputError('Korea Post', 'Korea Post direct tracking supports international postal identifiers');
+  if (!/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number) && !DOMESTIC.test(number)) {
+    throw new InvalidInputError('Korea Post', 'Korea Post direct tracking supports international postal identifiers and 13-digit domestic numbers');
+  }
   return number;
 }
 
@@ -26,6 +34,7 @@ function eventTime(raw: string): string {
 
 export function parse(html: string, trackingNumber: string): CarrierResult {
   const number = normalizeKoreaPostNumber(trackingNumber);
+  if (DOMESTIC.test(number)) return parseDomestic(html, number);
   const $ = load(html);
   $('script, style, noscript').remove();
   $('br').replaceWith(' ');
@@ -62,6 +71,58 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     last_status_text: latest.description, last_update: null, events: events.slice(0, 100) };
 }
 
+function domesticTable($: CheerioAPI, header: string) {
+  return $('table').filter((_, element) => $(element).children('thead').find('th').map((__, cell) => clean($(cell).text())).get().join('|') === header);
+}
+
+function parseDomestic(html: string, number: string): CarrierResult {
+  const $ = load(html);
+  $('script, style, noscript').remove();
+  const basic = domesticTable($, DOMESTIC_BASIC);
+  const basicRows = basic.children('tbody').children('tr');
+  const identity = basicRows.first().children('th[scope="row"]');
+  if (basic.length !== 1 || identity.length !== 1 || clean(identity.text()) !== number) throw new SchemaError('Korea Post', 'Korea Post returned a different or ambiguous shipment');
+  const history = domesticTable($, DOMESTIC_HISTORY);
+  if (history.length !== 1) throw new SchemaError('Korea Post', 'Korea Post returned an invalid tracking table');
+  const rows = history.children('tbody').children('tr');
+  const notice = basicRows.slice(1);
+  if (!rows.length && notice.length === 1 && notice.children('td').length === 1
+    && clean(notice.text()).startsWith(DOMESTIC_MISSING)) throw new NotFoundError('Korea Post');
+  if (basicRows.length !== 1) throw new SchemaError('Korea Post', 'Korea Post returned an invalid basic-information table');
+  if (!rows.length) throw new IndeterminateError('Korea Post', 'Korea Post returned no parcel scans');
+  if (rows.length > 500) throw new SchemaError('Korea Post');
+  const events: CarrierEvent[] = [];
+  const seen = new Set<string>();
+  for (const row of rows.toArray().reverse()) {
+    const cells = $(row).children('td');
+    if (cells.length !== 4 || cells.filter('[colspan], [rowspan]').length) throw new SchemaError('Korea Post');
+    const clock = `${clean(cells.eq(0).text(), 32)} ${clean(cells.eq(1).text(), 32)}`;
+    // Every domestic scan happens at a Korean office, and Korea keeps one
+    // offset all year.
+    const local = DateTime.fromFormat(clock, 'yyyy.MM.dd HH:mm', { zone: 'Asia/Seoul' });
+    if (!local.isValid || local.toFormat('yyyy.MM.dd HH:mm') !== clock) throw new SchemaError('Korea Post', 'Korea Post returned an invalid scan time');
+    // The status cell goes on with the courier's name and phone or the
+    // recipient, and the office cell with its phone. Read only the labels.
+    const status = cells.eq(3).children('span.evtnm');
+    const description = status.length === 1 ? clean(status.text(), 100) : '';
+    if (!description) throw new SchemaError('Korea Post', 'Korea Post returned an empty scan');
+    const office = cells.eq(2).children('a');
+    const location = office.length === 1 ? clean(office.text(), 200) : '';
+    const time = local.toUTC().toISO({ suppressMilliseconds: true });
+    const key = JSON.stringify([time, description, location]);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const classified = koreaPostStatus(description);
+    events.push({ time, local_time: local.toFormat("yyyy-MM-dd'T'HH:mm:ss"), description,
+      ...(location ? { location } : {}), ...(classified ? { stage: classified.stage } : {}) });
+  }
+  const latest = events[0]!;
+  const classified = koreaPostStatus(latest.description!);
+  return { status: classified?.status ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
+    last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time,
+    ...(classified?.stage === 'delivered' ? { delivered_at: latest.time } : {}), events: events.slice(0, 100) };
+}
+
 export class KoreaPostTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; userAgent?: string } = {}) {}
 
@@ -71,11 +132,14 @@ export class KoreaPostTracker {
     if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError('Korea Post timeout must be positive');
     context.signal?.throwIfAborted();
     try {
-      const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'text/html,*/*;q=0.8', 'User-Agent': userAgentOf(this.options.userAgent) },
-        body: new URLSearchParams({ target_command: 'kpl.tts.tt.epost.cmd.RetrieveEmsTraceEngCmd',
-          JspURI: '/xtts/tt/epost/ems/EmsSearchResultEng.jsp', POST_CODE: number }).toString(),
-      }, { provider: 'Korea Post', timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
+      const accept = { Accept: 'text/html,*/*;q=0.8', 'User-Agent': userAgentOf(this.options.userAgent) };
+      const domestic = DOMESTIC.test(number);
+      const { bytes } = await fetchBounded(domestic ? `${DOMESTIC_ENDPOINT}?${new URLSearchParams({ sid1: number, displayHeader: 'N' })}` : ENDPOINT, domestic
+        ? { method: 'GET', headers: accept }
+        : { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', ...accept },
+          body: new URLSearchParams({ target_command: 'kpl.tts.tt.epost.cmd.RetrieveEmsTraceEngCmd',
+            JspURI: '/xtts/tt/epost/ems/EmsSearchResultEng.jsp', POST_CODE: number }).toString() },
+      { provider: 'Korea Post', timeoutMs: Math.max(1, Math.floor(budgetMs)), maxBytes: 1_000_000,
         fetcher: (input, init) => (this.options.fetcher ?? fetch)(input, { ...init,
           signal: AbortSignal.any([...(context.signal ? [context.signal] : []), ...(init?.signal ? [init.signal] : [])]) }),
       });

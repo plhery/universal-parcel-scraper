@@ -63,6 +63,135 @@
         "confidence": "high"
       },
       "note": "Customer gives this number in a follow-up to a shipment report explicitly naming Korea Post; not independently verified."
+    },
+    {
+      "number": "6892014190693",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260929154932/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=6892014190693&displayHeader=N",
+        "date": "2026-09-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its parcel history."
+    },
+    {
+      "number": "6026547346434",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251115045314/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=6026547346434&displayHeader=N",
+        "date": "2025-11-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its parcel history from label printing to delivery."
+    },
+    {
+      "number": "6110622001250",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251203030426/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=6110622001250&displayHeader=",
+        "date": "2025-12-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. The capture is Korea Post's own tracker showing the parcel accepted."
+    },
+    {
+      "number": "3147258001162",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260115080752/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=3147258001162&displayHeader=",
+        "date": "2026-01-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its express registered-mail history. Its first digit is not the 6 of the parcel rule, so detection does not offer Korea Post."
+    },
+    {
+      "number": "1112503377517",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250704071145/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=1112503377517&displayHeader=",
+        "date": "2025-07-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. The capture is Korea Post's own tracker showing the express registered item accepted. Its first digit is not the 6 of the parcel rule, so detection does not offer Korea Post."
     }
   ]
 }
