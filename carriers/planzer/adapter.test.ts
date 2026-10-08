@@ -249,6 +249,13 @@ describe('Planzer milestone labels', () => {
 
 describe('Planzer declared capabilities and privacy', () => {
   const delivered = parsePlanzerTrackingResponse(fixture('delivered.json'), QUICKPAC_NUMBER);
+  // The same parcel the evening before, still out for delivery.
+  const moving = fixture('delivered.json') as {
+    overallStatus: { text: { english: string } }; transportPositions: Array<{ positionEvents: unknown[] }>;
+  };
+  moving.overallStatus.text.english = 'Shipment out for delivery';
+  moving.transportPositions[0]!.positionEvents.pop();
+  const outForDelivery = parsePlanzerTrackingResponse(moving, QUICKPAC_NUMBER);
   const checks: Record<string, (result: CarrierResult) => boolean> = {
     history: (result) => (result.events?.length ?? 0) > 0,
     location: (result) => (result.events ?? []).some((event) => Boolean(event.location)),
@@ -267,7 +274,9 @@ describe('Planzer declared capabilities and privacy', () => {
       status: 'delivered',
       last_status_text: 'Shipment delivered',
       last_update: '2026-09-01T14:07:10.258',
-      expected_delivery: '2026-09-01',
+      // The delivery day is history once delivered.
+      expected_delivery: null,
+      delivered_at: '2026-09-01T14:07:10.258',
     });
     // The fixture's "Shipped" is Planzer's English for "Zugestellt".
     expect(delivered.events?.map((event) => [event.description, event.stage])).toEqual([
@@ -278,17 +287,48 @@ describe('Planzer declared capabilities and privacy', () => {
     ]);
   });
 
+  it('reads the parcel\'s weight, measurements and destination country, and the estimate while it moves', () => {
+    expect(delivered).toMatchObject({ weight_kg: 3.6, dimensions_text: '61 × 41 × 18 cm', destination_country: 'CH' });
+    expect(outForDelivery).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-09-01', weight_kg: 3.6 });
+    expect(outForDelivery.delivered_at).toBeUndefined();
+  });
+
+  it('adds up the weights of a shipment\'s parcels and gives no single size', () => {
+    const shipment = fixture('delivered.json') as { shipmentNumber?: string; transportPositions: Array<Record<string, unknown>> };
+    shipment.shipmentNumber = '61000001';
+    shipment.transportPositions[1]!.positionNumber = '440000000000000002';
+    shipment.transportPositions[1]!.weightGs = 1250;
+    shipment.transportPositions[1]!.positionEvents = shipment.transportPositions[0]!.positionEvents;
+    const result = parsePlanzerTrackingResponse(shipment, '61000001');
+    expect(result).toMatchObject({ weight_kg: 4.85 });
+    expect(result.dimensions_text).toBeUndefined();
+    delete shipment.transportPositions[1]!.weightGs;
+    expect(parsePlanzerTrackingResponse(shipment, '61000001').weight_kg).toBeUndefined();
+  });
+
+  it('keeps a country Planzer names without a known code as its name', () => {
+    const abroad = fixture('delivered.json') as { deliveryAddress: { country: string } };
+    abroad.deliveryAddress.country = 'Atlantis';
+    expect(parsePlanzerTrackingResponse(abroad, QUICKPAC_NUMBER)).toMatchObject({ destination_country_name: 'Atlantis' });
+  });
+
   it.each(carrier.capabilities)('declares %s and a fixture proves it', (capability) => {
     const check = checks[capability];
     expect(check, `unknown capability ${capability}`).toBeTypeOf('function');
-    expect(check!(delivered)).toBe(true);
+    expect(check!(delivered) || check!(outForDelivery)).toBe(true);
   });
 
   it('drops the recipient, the signature and another shipment\'s history', () => {
     const projected = JSON.stringify(delivered);
     for (const value of [
       'Made Up Recipient',
-      'Example Street 1',
+      'Example Street',
+      'Example City',
+      'Example Town',
+      '9999',
+      '9998',
+      'Made Up Floor',
+      'Made Up Dock',
       'proof-of-delivery',
       'Private event from a different shipment',
     ]) {

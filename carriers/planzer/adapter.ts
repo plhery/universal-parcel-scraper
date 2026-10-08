@@ -19,6 +19,7 @@
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { PlanzerSharedTracker } from './shared.js';
@@ -45,6 +46,38 @@ function recordArray(value: unknown): JsonObject[] {
 
 function text(value: unknown): string {
   return typeof value === 'string' ? value : '';
+}
+
+function measurement(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
+}
+
+/** The parcels' total weight, when each states it: Planzer sends grams. */
+function weightKg(positions: readonly JsonObject[]): number | null {
+  const grams = positions.map((position) => measurement(position.weightGs));
+  if (grams.length === 0 || grams.some((value) => value === null)) return null;
+  return Math.round(grams.reduce<number>((sum, value) => sum + value!, 0)) / 1000;
+}
+
+/** One parcel's length, width and height: Planzer sends millimetres. */
+function dimensionsText(positions: readonly JsonObject[]): string | null {
+  if (positions.length !== 1) return null;
+  const centimetres = ['lengthMm', 'widthMm', 'heightMm'].map((key) => measurement(positions[0]![key]));
+  if (centimetres.some((value) => value === null)) return null;
+  return `${centimetres.map((millimetres) => Math.round(millimetres!) / 10).join(' × ')} cm`;
+}
+
+/** Planzer names countries in German. */
+const GERMAN_COUNTRY_CODES: Readonly<Record<string, string>> = {
+  SCHWEIZ: 'CH', LIECHTENSTEIN: 'LI', DEUTSCHLAND: 'DE', ÖSTERREICH: 'AT', FRANKREICH: 'FR', ITALIEN: 'IT',
+};
+
+/** Only the delivery address's country is read; the rest belongs to the recipient. */
+function destination(address: unknown): Pick<CarrierResult, 'destination_country' | 'destination_country_name'> {
+  const name = text(record(address).country).trim().slice(0, 60);
+  if (!name) return {};
+  const code = countryCode(name) ?? GERMAN_COUNTRY_CODES[name.toLocaleUpperCase('de-CH')];
+  return code ? { destination_country: code } : { destination_country_name: name };
 }
 
 function comparableIdentifier(value: unknown): string {
@@ -131,11 +164,20 @@ export function parsePlanzerTrackingResponse(value: unknown, shipmentNumber: str
   }
   if (matchingPositions.length > 1) events = mergeParcelMilestones(events);
   events.sort((left, right) => text(right.time).localeCompare(text(left.time)));
+  const status = PLANZER_STATUS.get(statusText) ?? (statusText ? 'in_transit' : 'unknown');
+  const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
+  const weight = weightKg(matchingPositions);
+  const dimensions = dimensionsText(matchingPositions);
   return {
-    status: PLANZER_STATUS.get(statusText) ?? (statusText ? 'in_transit' : 'unknown'),
+    status,
     last_status_text: planzerDescription(statusText),
     last_update: events[0]?.time || null,
-    expected_delivery: text(record(payload.deliveryDay).date) || null,
+    // Once delivered, the delivery day is history, not an estimate.
+    expected_delivery: status === 'delivered' ? null : text(record(payload.deliveryDay).date) || null,
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(weight !== null ? { weight_kg: weight } : {}),
+    ...(dimensions ? { dimensions_text: dimensions } : {}),
+    ...destination(payload.deliveryAddress),
     events,
   };
 }

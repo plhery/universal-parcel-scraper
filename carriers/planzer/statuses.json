@@ -61,9 +61,9 @@
       "wording": "Shipment delivered",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "Overall shipment status."
     },
     {
       "wording": "Not delivered",

@@ -35,7 +35,10 @@
   },
   "capabilities": [
     "history",
-    "eta"
+    "eta",
+    "weight",
+    "dimensions",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://tracking.app.planzer.ch/delivery/info?deliveryNumber={trackingNumber}",
@@ -43,14 +46,24 @@
     "shows": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "weight",
+      "dimensions",
+      "destination_country",
+      "recipient_address"
     ],
     "scraped": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "weight",
+      "dimensions",
+      "delivered_at",
+      "destination_country"
     ],
-    "discarded": [],
+    "discarded": [
+      "recipient_address"
+    ],
     "unavailable": []
   },
   "links": [

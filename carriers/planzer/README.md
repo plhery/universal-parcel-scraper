@@ -60,6 +60,12 @@ decides the route; it is not a fallback tier.
   This keeps history stable whatever language the page was fetched in.
 - Neither route publishes scan locations. Timestamps have no offset; the host
   applies `Europe/Zurich`. Consignee and signature blocks are never read.
+- The API gives each parcel's weight in grams and its length, width and height
+  in millimetres. The result carries the total weight when every parcel read
+  states one, and the measurements when a single parcel is read. Of the
+  delivery address only the country is read; Planzer names it in German.
+- Once delivered, the delivery day is history: the estimate is cleared and the
+  delivery scan's time becomes the delivery time.
 
 ## Rejected approaches
 
