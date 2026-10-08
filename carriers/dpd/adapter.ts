@@ -9,7 +9,7 @@ import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateErr
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
-import { isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
+import { calendarDay, isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { TrawlClient, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
@@ -289,6 +289,32 @@ function expectedDelivery(payload: JsonObject): string | null {
   return from || to ? `${date} ${from || to}` : date;
 }
 
+/** Scans in which DPD states a delivery day: an estimate, a changed date or the email notice. */
+const DELIVERY_NOTICE = /\b(?:estimated to be|will be) delivered on\b/i;
+const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september',
+  'october', 'november', 'december'];
+
+/** A notice clock as 24-hour `HH:mm`; it stays the recipient's wall clock. */
+function noticeClock(text: string | undefined): string | null {
+  const match = /^(\d{1,2}):([0-5]\d)(?:\s*([AP])M)?$/i.exec(text ?? '');
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const half = match[3]?.toUpperCase();
+  if (half ? hour < 1 || hour > 12 : hour > 23) return null;
+  return `${String(half ? (hour % 12) + (half === 'P' ? 12 : 0) : hour).padStart(2, '0')}:${match[2]}`;
+}
+
+/** "…delivered on: Thursday, July 16, 2026", optionally followed by "between 9:00 AM and 12:00 PM". */
+function noticeEstimate(text: string): string | null {
+  const match = /\bdelivered on:?\s+(?:[a-z]+,\s*)?([a-z]+)\s+(\d{1,2}),\s*(\d{4})(?:\s+between\s+(\d{1,2}:\d{2}(?:\s*[AP]M)?)\s+and\s+(\d{1,2}:\d{2}(?:\s*[AP]M)?))?/i.exec(text);
+  const month = match ? MONTHS.indexOf(match[1]!.toLowerCase()) + 1 : 0;
+  const day = match && month ? calendarDay(Number(match[3]), month, Number(match[2])) : null;
+  if (!match || !day) return null;
+  const from = noticeClock(match[4]);
+  const to = noticeClock(match[5]);
+  return from && to && from <= to ? `${day} ${from}–${to}` : day;
+}
+
 /**
  * Newest scan first. The guest API has listed a parcel's scans oldest first,
  * and the summary and freshness watermark read the first event. Equal or
@@ -397,6 +423,16 @@ export function parseDPDTrackingApi(
   const deliveredAt = status === 'delivered'
     ? events.find((event) => event.stage === 'delivered')?.time
     : undefined;
+  // Only the newest notice counts, so an undated or unreadable one leaves no
+  // older day behind. A day that a later scan has passed, or a parcel waiting
+  // at a pickup point, ends the notice. The payload's own estimate wins; a
+  // notice for that same day can only add the email's window.
+  const notice = events.find((event) => DELIVERY_NOTICE.test(event.description ?? ''));
+  const announced = notice ? noticeEstimate(notice.description ?? '') : null;
+  const newestDay = /^\d{4}-\d{2}-\d{2}/.exec(events[0]?.time ?? '')?.[0];
+  const forecast = announced && stage !== 'ready_for_pickup' && !(newestDay && announced.slice(0, 10) < newestDay)
+    ? announced : null;
+  const listed = expectedDelivery(payload);
   // Never projected: `receiver` (name, contact, address, geoPosition), the
   // sender's id and address, `customerReference1/2`, `gttsZipCode`, `podUrl`
   // and `product`, which holds the recipient's delivery preference.
@@ -409,7 +445,8 @@ export function parseDPDTrackingApi(
       '',
       current.eventDateAndTimeZoneId,
     ) || null,
-    expected_delivery: status === 'delivered' || status === 'exception' ? null : expectedDelivery(payload),
+    expected_delivery: status === 'delivered' || status === 'exception' ? null
+      : listed && listed !== forecast?.slice(0, 10) ? listed : forecast ?? listed,
     events,
     source: 'mydpd_guest_api',
     delivery_date: optionalText(payload.deliveryDate),

@@ -46,6 +46,11 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
 - A proof-of-delivery bookkeeping entry is omitted when the actual delivery
   scan exists, so it cannot shift the delivery time. Delivery estimates are
   omitted after completion or an exception.
+- Verified scans include notices that state the delivery day, and DPD's email
+  notice adds a window. The newest notice supplies a missing estimate or the
+  window for the reply's own day; a different day in the reply wins. An
+  unreadable newest notice leaves no estimate, and a notice lapses at a pickup
+  point or once a later scan passes its day. Notices remain events.
 - Public, app-restricted Firebase identifiers are part of the anonymous app
   protocol. `DPD_FIREBASE_API_KEY` can override the key in the adapter
   environment.

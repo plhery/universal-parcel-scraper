@@ -320,6 +320,72 @@ describe('DPD verified guest payload', () => {
   });
 });
 
+describe('DPD delivery notices', () => {
+  type Scan = [date: string, time: string, code: string, translation: string];
+  const ESTIMATED: Scan = ['2026-07-14', '19:20:00', 'SPE', 'Your parcel is estimated to be delivered on: Friday, July 17, 2026'];
+  const CHANGED: Scan = ['2026-07-15', '12:30:00', 'SPE', 'Your parcel delivery date has changed, it will be delivered on: Thursday, July 16, 2026'];
+  const EMAILED: Scan = ['2026-07-16', '06:00:00', 'MSDLO', 'We informed you via email that your parcel will be delivered on Thursday, July 16, 2026 between 12:32 PM and 1:32 PM'];
+  const SAFE_PLACE: Scan = ['2026-07-15', '22:50:00', 'MIDLI', 'Your parcel will be delivered to a safe place according to your instructions'];
+  const OUT: Scan = ['2026-07-16', '06:00:00', 'DLO', 'Your parcel is out for delivery'];
+  const DEPOT: Scan = ['2026-07-14', '19:05:00', 'ORI', 'Your parcel arrived at our depot'];
+  /** A verified in-transit reply shaped like the guest API's, oldest scan first. */
+  const notices = (scans: Scan[], fields: Record<string, unknown> = {}, description = 'IN_TRANSIT') => parseDPDTrackingApi({
+    parcelNumber: TRACKING_NUMBER,
+    status: { description, eventDateAndTime: '2026-07-14T19:05:00', eventDateAndTimeZoneId: 'Europe/Zurich' },
+    isPredictiveDate: false,
+    ...fields,
+    parcelEvents: scans.map(([date, time, eventType, translation]) => ({
+      date, time, eventType, translation, eventTypeText: 'Status parcel - Information', city: null, country: 'CH',
+    })),
+  }, TRACKING_NUMBER, true);
+
+  it('reads the newest notice without changing the scans', () => {
+    const result = notices([DEPOT, ESTIMATED, CHANGED, SAFE_PLACE]);
+
+    expect(result.expected_delivery).toBe('2026-07-16');
+    expect(result.events?.map((event) => event.description)).toEqual([SAFE_PLACE, CHANGED, ESTIMATED, DEPOT].map((scan) => scan[3]));
+    expect(result.events?.[1]).not.toHaveProperty('stage');
+    expect(notices([DEPOT, ESTIMATED]).expected_delivery).toBe('2026-07-17');
+  });
+
+  it('reads the email window as a 24-hour wall clock', () => {
+    expect(notices([DEPOT, CHANGED, OUT, EMAILED]).expected_delivery).toBe('2026-07-16 12:32–13:32');
+    const window = (text: string) => notices([DEPOT, [...EMAILED.slice(0, 3), text] as Scan]).expected_delivery;
+    expect(window('We informed you via SMS that your parcel will be delivered on Thursday, July 16, 2026 between 9:00 AM and 12:00 PM'))
+      .toBe('2026-07-16 09:00–12:00');
+    expect(window('We informed you via email that your parcel will be delivered on Thursday, July 16, 2026 between 12:15 AM and 08:45'))
+      .toBe('2026-07-16 00:15–08:45');
+    // An impossible or reversed window keeps the day.
+    for (const clocks of ['13:00 PM and 2:00 PM', '11:00 AM and 10:00 AM', '25:00 and 26:00']) {
+      expect(window(`We informed you via email that your parcel will be delivered on Thursday, July 16, 2026 between ${clocks}`)).toBe('2026-07-16');
+    }
+  });
+
+  it('lets the newest notice end an older day when it cannot be read', () => {
+    const undated: Scan = ['2026-07-15', '12:30:00', 'SPE', 'Your parcel will be delivered on the next working day'];
+    expect(notices([DEPOT, ESTIMATED, undated]).expected_delivery).toBeNull();
+    for (const day of ['Thursday, Julember 16, 2026', 'Thursday, February 30, 2026', 'Thursday, 16.07.2026']) {
+      expect(notices([DEPOT, ESTIMATED, ['2026-07-15', '12:30:00', 'SPE', `Your parcel is estimated to be delivered on: ${day}`]]).expected_delivery).toBeNull();
+    }
+  });
+
+  it('keeps the payload estimate, adding a window only for its own day', () => {
+    expect(notices([DEPOT, CHANGED, OUT, EMAILED], { deliveryDate: '2026-07-16' }).expected_delivery).toBe('2026-07-16 12:32–13:32');
+    expect(notices([DEPOT, CHANGED, OUT, EMAILED], { deliveryDate: '2026-07-16', deliveryTimeFrom: '12:00:00', deliveryTimeTo: '14:00:00' }).expected_delivery)
+      .toBe('2026-07-16 12:00–14:00');
+    expect(notices([DEPOT, ESTIMATED], { deliveryDate: '2026-07-18' }).expected_delivery).toBe('2026-07-18');
+  });
+
+  it('drops a notice once delivered, returned, at a pickup point or overtaken by a later day', () => {
+    const delivered: Scan = ['2026-07-16', '10:55:00', 'DEY', 'Your parcel has been delivered successfully'];
+    expect(notices([DEPOT, CHANGED, OUT, EMAILED, delivered], {}, 'DELIVERED').expected_delivery).toBeNull();
+    expect(notices([DEPOT, CHANGED], {}, 'RETURN_TO_SENDER').expected_delivery).toBeNull();
+    expect(notices([DEPOT, CHANGED], {}, 'AVAILABLE_FOR_COLLECTION').expected_delivery).toBeNull();
+    expect(notices([DEPOT, CHANGED, ['2026-07-17', '04:00:00', 'DLI', 'Your parcel arrived at our delivery depot']]).expected_delivery).toBeNull();
+    expect(notices([DEPOT, CHANGED, OUT]).expected_delivery).toBe('2026-07-16');
+  });
+});
+
 describe('DPD unverified guest payload', () => {
   it('reads each scan with its own offset, code and enumeration stage', () => {
     const result = parseDPDTrackingApi(DELIVERED_UNVERIFIED, TRACKING_NUMBER, false);
