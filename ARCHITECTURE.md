@@ -97,6 +97,10 @@ When a result names a delivery partner, the tracker also asks that partner's ada
 answer comes back separately, checked against the number on its own. Adopting it is the
 consumer's choice.
 
+A result's `service_name` is the carrier's own name for the shipping service the parcel
+travels under, as its page shows it. It names the product only, never a status, the merchant
+or the kind of parcel. The carriers whose `capabilities` list `service_name` fill it.
+
 Chronopost reads its own credential-free tracking operation, including scans after export
 and partner references. La Poste's unified feed can omit that history without a completeness
 marker, so its fast success does not replace Chronopost's direct result: La Poste names

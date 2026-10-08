@@ -28,7 +28,8 @@ const pointer = (path: string, method: string, tail: string) =>
 
 const number = '1Z999AA10123456784';
 const environment: AdapterEnvironment = { trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} };
-const delivered: CarrierResult = { status: 'delivered', events: [{ time: '2026-01-02T12:00:00Z', description: 'Delivered', stage: 'delivered' }] };
+const delivered: CarrierResult = { status: 'delivered', service_name: 'Example Ground',
+  events: [{ time: '2026-01-02T12:00:00Z', description: 'Delivered', stage: 'delivered' }] };
 
 /** The real tracker over one synthetic UPS adapter, so success bodies are the facade's own. */
 function tracker(track: CarrierAdapter['track'] = async () => delivered): Tracker {
@@ -90,7 +91,7 @@ describe('HTTP contract', () => {
     expect((await call(base, 'detect', { body: posts.detect })).body).toMatchObject({ carrier: 'ups', confidence: 'high' });
     expect((await call(base, 'recognize', { body: posts.recognize })).body).toMatchObject({ asked: expect.any(Array) });
     expect((await call(base, 'track', { body: posts.track })).body).toMatchObject({
-      carrier: 'ups', source: 'ups', attempts: [{ source: 'ups', kind: 'ok' }], result: { current_stage: 'delivered' },
+      carrier: 'ups', source: 'ups', attempts: [{ source: 'ups', kind: 'ok' }], result: { current_stage: 'delivered', service_name: 'Example Ground' },
     });
   });
 

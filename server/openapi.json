@@ -695,6 +695,10 @@
           "current_stage_source": {
             "type": "string"
           },
+          "service_name": {
+            "type": "string",
+            "description": "The carrier's own name for the shipping service the parcel travels under, when its page shows one."
+          },
           "last_status_text": {
             "type": [
               "string",

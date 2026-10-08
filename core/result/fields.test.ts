@@ -33,3 +33,15 @@ describe('reported tracking numbers', () => {
     }
   });
 });
+
+describe('the shipping service', () => {
+  it('keeps the name a carrier gives its service', () => {
+    expect(normalizeCarrierResult({ service_name: 'Example Express Saver' }).service_name).toBe('Example Express Saver');
+  });
+
+  it('drops a service name that is empty, too long or not text', () => {
+    for (const service_name of ['', '   ', 'x'.repeat(81), 7, null, { name: 'Example Ground' }]) {
+      expect(normalizeCarrierResult({ service_name })).not.toHaveProperty('service_name');
+    }
+  });
+});

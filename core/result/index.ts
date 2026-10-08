@@ -56,6 +56,8 @@ export interface CarrierResult extends JsonObject {
   delivered_at?: string | null;
   weight_kg?: number | null;
   dimensions_text?: string | null;
+  /** The carrier's own name for the shipping service the parcel travels under, as its page shows it. */
+  service_name?: string;
   /** A declared delivery partner, still subject to direct identity/progress confirmation. */
   delivery_carrier?: string;
   destination_country?: string;
@@ -134,6 +136,9 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
   const weight = normalized.weight_kg;
   if (weight != null && (typeof weight !== 'number' || !Number.isFinite(weight) || weight < 0)) {
     throw new TypeError('The carrier adapter returned an invalid parcel weight');
+  }
+  if (typeof normalized.service_name !== 'string' || !normalized.service_name.trim() || normalized.service_name.length > 80) {
+    delete normalized.service_name;
   }
 
   // A USPS routing barcode opens with the recipient's ZIP code. A reported
