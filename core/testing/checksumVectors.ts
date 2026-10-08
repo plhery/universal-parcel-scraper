@@ -143,6 +143,8 @@ function standard(recipe: Recipe, valid: readonly string[], check = -1): void {
   if (/[A-Z]/.test(first)) recipe.add(first.toLowerCase());
   recipe.add(`${first.slice(0, 4)} ${first.slice(4)}`);
   recipe.add(first.replace(/\d/, (digit) => String.fromCharCode(0x0660 + Number(digit))));
+  // JavaScript's `$` is the end of the input, and its `\s` holds U+FEFF but not U+0085.
+  recipe.add(`${first}\n`, `﻿${first}`, `${first.slice(0, 4)}\u0085${first.slice(4)}`);
 }
 
 const RECIPES: Record<ChecksumId, (recipe: Recipe) => void> = {
