@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../app.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import {
   DPDFranceChallengeError,
@@ -129,7 +130,8 @@ describe('DPD France rendered tracking', () => {
       },
       {
         time: '2026-01-23T12:45:00+01:00',
-        location: 'Livré au destinataire',
+        // The cell repeats the delivery, which is no place.
+        location: '',
         description: 'Votre colis est livré',
         stage: 'delivered',
       },
@@ -254,11 +256,28 @@ describe('DPD France rendered tracking', () => {
 
     expect(points).toEqual([
       ['Agence DPD de La Crau (283)', { latitude: 43.1512, longitude: 6.0712 }],
-      ['Livré au destinataire', null],
+      ['', null],
       ['Agence DPD de La Crau (283)', { latitude: 43.1512, longitude: 6.0712 }],
       // Another depot: the page only places the delivering one.
       ['Centre de tri DPD de Le Coudray (175)', null],
     ]);
+  });
+
+  it('lets the delivered scan stored with its status as the location keep its row', () => {
+    const scans = (parseDPDFranceTrackingHtml(trackingFixture(), TEST_TRACKING_NUMBER).events ?? []).map((event) => ({
+      time: event.time, stage: event.stage ?? '', description: event.description ?? '', location: event.location ?? '', providerCode: '',
+    }));
+    // What an earlier release stored: the same rows, the delivered one placed at its status.
+    const stored = scans.map((scan) => (scan.stage === 'delivered' ? { ...scan, location: 'Livré au destinataire' } : scan));
+    const policy = sameInstantIdentityPolicy('dpd-fr', { supportsScanMatching: true })!;
+    // As the app matches: one row at the scan's instant, and that row matching no other scan of the batch.
+    const takenOver = scans.map((scan) => {
+      const rows = stored.filter((row) => row.time === scan.time && policy.matches!(scan, row));
+      const others = scans.filter((other) => other.time === scan.time && rows[0] && policy.matches!(other, rows[0]));
+      return rows.length === 1 && others.length === 1 ? rows[0]!.location : null;
+    });
+    // Rows whose location did not change keep their identity and are never asked.
+    expect(takenOver).toEqual([null, 'Livré au destinataire', null, null]);
   });
 
   it('rejects browser challenges, unknown shipments, and mismatched responses', () => {

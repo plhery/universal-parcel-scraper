@@ -8,6 +8,7 @@ import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { TrawlClient, clean, decodeText, fetchBounded } from '../../core/transport/index.js';
+import { isDeliveryStatusCell } from './identity.js';
 import { classifyStatus, comparableText, includesAny } from './status.js';
 
 // Protocol provenance:
@@ -169,7 +170,9 @@ export function parseDPDFranceTrackingHtml(html: string, rawTrackingNumber: stri
     const date = clean(cells.eq(0).text(), 32);
     const clock = clean(cells.eq(1).text(), 32);
     const description = clean(cells.eq(2).text());
-    const location = clean(cells.eq(3).text());
+    const cell = clean(cells.eq(3).text());
+    // The delivered row's cell repeats the delivery, which is no place.
+    const location = isDeliveryStatusCell(cell) ? '' : cell;
     const time = parsedEventTime(date, clock);
     if (!time || !description) return;
     const identity = JSON.stringify([time.iso, location, description]);

@@ -48,6 +48,10 @@ non-2xx statuses are indeterminate.
 - Unrecognized wording keeps the row with no `stage`; the result status comes
   from the newest recognized row. `statusMap` in [status.ts](status.ts) answers the app's
   review queue by the same wording.
+- The fourth cell is the depot or sorting centre. The delivered row puts "Livré au
+  destinataire" there, which is no place, so that row has no location. The app's
+  scan-identity policy lets the row stored with it keep its identity, provided its
+  instant, wording and known stage agree.
 - The depot tab names the delivering depot ("Etablissement 067") and carries its map marker.
   Rows naming the same depot number ("Agence DPD de Strasbourg (67)") get that marker as
   their `point`: the depot is in Bischheim, 6 km from Strasbourg's centre. Other depots

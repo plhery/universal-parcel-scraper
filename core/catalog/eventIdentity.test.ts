@@ -14,8 +14,37 @@ describe('same-instant identity policies', () => {
     });
   });
 
-  it.each(['dpd-fr', 'dhl', '', 'toString'])('does not opt in %s', (source) => {
+  it.each(['dhl', 'la-poste', '', 'toString'])('does not opt in %s', (source) => {
     expect(sameInstantIdentityPolicy(source)).toBeUndefined();
+    expect(sameInstantIdentityPolicy(source, { supportsScanMatching: true })).toBeUndefined();
+  });
+
+  it.each([
+    ['chronopost', 'registered', "Colis en cours de préparation chez l'expéditeur", 'Web Services', 'CORBAS CHRONOPOST'],
+    ['chronopost', 'in_transit', 'Destinataire informé par SMS ou mail', 'Service d’avisage', 'Example Town - DE (depot 0001)'],
+    ['chronopost', 'in_transit', "Colis en cours d'acheminement", 'CHRONOPOST NETWORKS', 'Example Town - DE (depot 0001)'],
+    ['dpd-fr', 'delivered', 'Votre colis est livré', 'Livré au destinataire', 'Agence DPD de Example Town (1)'],
+  ])('lets a %s scan that lost "%s" take over its stored row', (source, stage, description, dropped, place) => {
+    expect(sameInstantIdentityPolicy(source)).toBeUndefined();
+    const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: [source], requireProviderCode: false, matchEachScan: true });
+    const stored = { stage, description, location: dropped, providerCode: 'X' };
+    const incoming = { ...stored, description: ` ${description.toUpperCase()} `, location: '', providerCode: '' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, { ...stored, location: `  ${dropped.toLowerCase()}` })).toBe(true);
+    // A scan that keeps a place, or a stored place, is no dropped label.
+    expect(policy?.matches?.({ ...incoming, location: place }, stored)).toBe(false);
+    expect(policy?.matches?.(stored, incoming)).toBe(false);
+    for (const different of [
+      { ...stored, location: place },
+      { ...stored, location: '' },
+      { ...stored, description: 'Another scan' },
+      { ...stored, stage: 'exception' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    for (const unknownStage of ['', 'unknown']) {
+      expect(policy?.matches?.({ ...incoming, stage: unknownStage }, { ...stored, stage: unknownStage })).toBe(false);
+    }
+    expect(policy?.matches?.({ ...incoming, description: '' }, { ...stored, description: '' })).toBe(false);
   });
 
   it.each(['unknown', 'swiss-post', 'mondial-relay'])('matches %s location enrichment only with unchanged scan evidence', (source) => {

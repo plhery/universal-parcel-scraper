@@ -6,6 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, countryCode, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
+import { isChronopostService } from './identity.js';
 import { chronopostStage, isChronopostNotification, isPickupDropOff } from './status.js';
 
 export const CHRONOPOST_MAX_BYTES = 2_000_000;
@@ -88,12 +89,15 @@ const clockDay = (event: CarrierEvent) => {
 /** Stages on the way to a planned delivery. */
 const ONGOING = new Set<Stage>(['pending', 'registered', 'accepted', 'in_transit', 'customs', 'out_for_delivery']);
 
-/** Keep operational places, never the delivery-point address or shop contact block. */
+/**
+ * Keep operational places, never the delivery-point address or shop contact block,
+ * nor an office label that names a service ("Web Services", "Service d'avisage").
+ */
 function location(office: string, place: string): string {
   if (/^[\p{L}\p{M} .,'’()-]{1,100} - [A-Z]{2}(?: \(depot \d{1,6}\))?$/u.test(place)) return place;
   const shop = /^([\p{L}\p{M} .,'’-]{1,100}) - ([A-Z]{2}) - /u.exec(office);
   if (shop) return `${shop[1]}, ${shop[2]}`;
-  return /^[\p{L}\p{M} .,'’()/-]{1,160}$/u.test(office) ? office : '';
+  return /^[\p{L}\p{M} .,'’()/-]{1,160}$/u.test(office) && !isChronopostService(office) ? office : '';
 }
 
 export function parseChronopostTrackingXml(xml: string, rawNumber: string): CarrierResult {

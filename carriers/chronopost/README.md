@@ -30,6 +30,13 @@ other postal-shaped identifiers do. A fifteen-character numeric identifier
 must pass the shared DPD check-character validation. These shapes suggest a
 lookup, not carrier ownership.
 
+A scan's location is its office, or the depot Chronopost names for a partner's
+scan abroad. Office labels that name a service rather than a place give none:
+"Web Services" on the shipper's preparation, "Service d'avisage" on
+notifications and "CHRONOPOST NETWORKS" abroad. The app's scan-identity policy
+lets a scan stored with one of them keep its row once it loses it, provided its
+instant, wording and known stage agree.
+
 Scans retain their supplied offsets and seconds. Offset-less clocks stay
 local. Notifications retain activity without changing the last established
 shipment stage, and neither does a courier's drop-off scan that follows the

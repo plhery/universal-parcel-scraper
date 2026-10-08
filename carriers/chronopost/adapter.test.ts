@@ -7,6 +7,7 @@ import { NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { sameInstantIdentityPolicy } from '../../app.js';
 import { adapter, ChronopostTracker } from './adapter.js';
 import { normalizeChronopostNumber, parseChronopostTrackingXml } from './parser.js';
 import { chronopostStage } from './status.js';
@@ -36,7 +37,36 @@ describe('Chronopost direct tracking', () => {
     expect(result.events?.map(event => event.provider_code)).toEqual(['SM', 'TP', 'O', 'TS', 'SC', 'DB', 'DC']);
     expect(result.events?.[1]).toMatchObject({ location: 'EXAMPLE DEPOT - DE (depot 0001)', time: '2026-01-04T18:09:18+01:00' });
     expect(result.events?.[5]).toMatchObject({ location: 'EXAMPLE TOWN, FR', stage: 'accepted' });
+    expect(result.events?.[6]).toMatchObject({ location: '', stage: 'registered' });
     expect(JSON.stringify(result)).not.toMatch(/SYNTHETIC SHOP|EXAMPLE STREET|00000|Point de livraison|Média utilisé|Rang/);
+  });
+
+  it('drops office labels that name a service, and the stored scan that had one keeps its row', () => {
+    const office = (code: string, at: string, label: string, officeLabel: string) => `<events><code>${code}</code>`
+      + `<eventDate>${at}</eventDate><eventLabel>${label}</eventLabel><officeLabel>${officeLabel}</officeLabel></events>`;
+    const notice = 'Destinataire informé par SMS ou mail';
+    const result = parseChronopostTrackingXml(history(
+      office('DC', '2026-01-01T11:51:21+01:00', "Colis en cours de préparation chez l'expéditeur", 'Web Services'),
+      office('TS', '2026-01-03T15:01:15+01:00', "Colis en cours d'acheminement", 'EXAMPLE HUB CHRONOPOST'),
+      office('TP', '2026-01-04T18:09:18+01:00', "Colis en cours d'acheminement", 'CHRONOPOST NETWORKS'),
+      office('SM', '2026-01-04T18:09:18+01:00', notice, "Service d'avisage"),
+    ), number);
+    const scans = (result.events ?? []).map(event => ({ time: event.time, stage: event.stage ?? '',
+      description: event.description ?? '', location: event.location ?? '', providerCode: event.provider_code ?? '' }));
+    expect(scans.map(event => [event.providerCode, event.location])).toEqual([
+      ['SM', ''], ['TP', ''], ['TS', 'EXAMPLE HUB CHRONOPOST'], ['DC', ''],
+    ]);
+    // The rows an earlier release stored with the label; the hub's scan keeps its identity and is not asked.
+    const labels: Record<string, string> = { SM: "Service d'avisage", TP: 'CHRONOPOST NETWORKS', DC: 'Web Services' };
+    const stored = scans.filter(scan => labels[scan.providerCode]).map(scan => ({ ...scan, location: labels[scan.providerCode]! }));
+    const policy = sameInstantIdentityPolicy('chronopost', { supportsScanMatching: true })!;
+    // As the app matches: one row at the scan's instant, and that row matching no other scan of the batch.
+    const takenOver = scans.filter(scan => labels[scan.providerCode]).map((scan) => {
+      const rows = stored.filter(row => row.time === scan.time && policy.matches!(scan, row));
+      const others = scans.filter(other => other.time === scan.time && rows[0] && policy.matches!(other, rows[0]));
+      return rows.length === 1 && others.length === 1 ? rows[0]!.location : null;
+    });
+    expect(takenOver).toEqual(["Service d'avisage", 'CHRONOPOST NETWORKS', 'Web Services']);
   });
 
   it('keeps delivery when a later notification records activity', () => {
