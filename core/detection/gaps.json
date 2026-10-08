@@ -69,6 +69,12 @@
     "reason": "A public DHL parcel report uses JJS; an inconclusive tracking challenge does not establish the family."
   },
   {
+    "carrier": "dhl",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "A public DHL parcel number has twelve digits ending in the Identcode check, which no checksum implements yet."
+  },
+  {
     "carrier": "dhl-ecommerce",
     "pattern": "^7\\d{13}$",
     "kind": "open",
