@@ -181,7 +181,7 @@
     {"code": "NOTHING_PICKED_UP_ORDER_CANCELLED", "wording": "Nothing was picked up, order was cancelled", "language": "en", "stage": "exception", "confirmedBy": "bundle"},
     {"code": "NOTHING_PICKED_UP_OTHER_REASON", "wording": "No shipment(s) picked up", "language": "en", "stage": "exception", "confirmedBy": "bundle"},
     {"code": "NOTIFICATION_FOR_PARCELSHOP_COLLECTION_HAS_BEEN_SENT", "wording": "Parcel delivered at DHL ServicePoint and is ready for collection", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "bundle"},
-    {"code": "NOTIFICATION_FOR_PARCELSHOP_COLLECTION_HAS_FAILED", "wording": "Failed to send notification for collection at DHL ServicePoint by the recipient", "language": "en", "stage": "exception", "confirmedBy": "bundle"},
+    {"code": "NOTIFICATION_FOR_PARCELSHOP_COLLECTION_HAS_FAILED", "wording": "Failed to send notification for collection at DHL ServicePoint by the recipient", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "bundle"},
     {"code": "NOTIFICATION_FOR_PARCELSTATION_COLLECTION_HAS_BEEN_SENT", "wording": "Parcel delivered in DHL Locker and is ready for collection", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live"},
     {"code": "NOTIFICATION_NOT_HOME_TO_PARCELSHOP", "wording": "We missed you. We deliver your shipment at a DHL ServicePoint.", "language": "en", "stage": "failed_attempt", "confirmedBy": "bundle"},
     {"code": "NOTIFICATION_OF_DELIVERY_TIME_HAS_BEEN_SENT", "wording": "Notification of delivery time frame sent to the recipient", "language": "en", "stage": "in_transit", "confirmedBy": "bundle"},

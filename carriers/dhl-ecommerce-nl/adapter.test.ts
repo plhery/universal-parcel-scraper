@@ -96,6 +96,16 @@ describe('DHL eCommerce Netherlands parser', () => {
     expect(result.last_update).toBe('2026-04-03T11:00:00Z');
   });
 
+  it('keeps a parcel waiting at a ServicePoint when its notice fails, and the courier hand-over out for delivery', () => {
+    const payload = clone();
+    payload[0]!.events = payload[0]!.events.slice(0, 10);
+    payload[0]!.events[9]!.status = 'NOTIFICATION_FOR_PARCELSHOP_COLLECTION_HAS_FAILED';
+    expect(parseDhlEcommerceNl(payload, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup' });
+    payload[0]!.events = payload[0]!.events.slice(0, 6);
+    payload[0]!.events[5]!.status = 'PARCEL_HANDED_OVER_TO_COURIER';
+    expect(parseDhlEcommerceNl(payload, NUMBER)).toMatchObject({ status: 'out_for_delivery', last_status_text: 'Handed over to the courier' });
+  });
+
   it('drops a scan the feed repeats and files an unknown code under its category', () => {
     const payload = clone();
     payload[0]!.events.splice(4, 0, structuredClone(payload[0]!.events[3]!));

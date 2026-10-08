@@ -26,6 +26,10 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
   and next-day plans, so those two categories only mean movement.
 - A delivery or a return to the sender stays the current stage when a notice
   follows it.
+- A ServicePoint notice that failed to reach the recipient still means the
+  parcel waits there, as the notice that was sent does. "Handed over to the
+  courier" is the depot's hand-over for the delivery round, just before it
+  goes out, so it reads as out for delivery.
 - A scan can carry a planned window or a single expected moment, both with
   offsets. The newest one is the estimate; a scan with both counts as its
   window, as on the tracking page. A delivery, a parcel waiting at a
