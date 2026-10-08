@@ -90,6 +90,24 @@
       "note": "Collected from the sender."
     },
     {
+      "code": "501",
+      "wording": "Picked up at the client",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Collected from the sender; Swiss Post words it as it does 500."
+    },
+    {
+      "code": "502",
+      "wording": "Picked up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Collected from the sender, between the posting and the first sort; Swiss Post words it as a pickup at the client for letters."
+    },
+    {
       "code": "600",
       "wording": "Your shipment will shortly be handed over to the Swiss Post",
       "language": "en",
@@ -483,6 +501,22 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "An enquiry note, not a movement: left without a stage so the shipment summary decides."
+    },
+    {
+      "code": "1800",
+      "wording": "Delay",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A delay notice, not a movement: left without a stage so the shipment summary decides."
+    },
+    {
+      "code": "9224",
+      "wording": "Order triggered by recipient: Forward",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The recipient's order to forward the shipment, not a movement: left without a stage so the shipment summary decides."
     },
     {
       "code": "sub-event CAN1 or CANPDS",

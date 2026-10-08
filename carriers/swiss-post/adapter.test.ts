@@ -43,6 +43,8 @@ describe('Swiss Post historical event codes', () => {
   it.each([
     ['100', 'Time at which your consignment was mailed', 'accepted'],
     ['500', 'Picked up at the sender', 'accepted'],
+    ['501', 'Picked up at the client', 'accepted'],
+    ['502', 'Picked up', 'accepted'],
     ['620', 'Consignment recorded by the foreign sender (data delivered)', 'registered'],
     ['803', 'Customs clearance process underway', 'customs'],
     ['804', 'Completion of customs clearance process', 'in_transit'],
@@ -74,10 +76,12 @@ describe('Swiss Post historical event codes', () => {
     }
   });
 
-  it('leaves unknown codes and enquiry notes to the wording', () => {
+  it('leaves unknown codes, enquiry and delay notes and recipient orders to the wording', () => {
     expect(swissPostEventStage('PARCEL.*.1.1003')).toBe(EVENT_STAGE_BY_CODE['1003']);
     expect(swissPostEventStage('PARCEL.*.1.9999')).toBeUndefined();
     expect(swissPostEventStage('LETTER.*.93.9112')).toBeUndefined();
+    expect(swissPostEventStage('LETTER.*.90.1800')).toBeUndefined();
+    expect(swissPostEventStage('PARCEL.*.1.9224')).toBeUndefined();
   });
 
   it('never takes a stage from a revoked scan', () => {

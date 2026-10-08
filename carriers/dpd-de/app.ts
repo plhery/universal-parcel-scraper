@@ -2,10 +2,11 @@ import { createHash, randomBytes } from 'node:crypto';
 import { DateTime } from 'luxon';
 import { CarrierError, ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 import { calendarDay, isoTime, zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
+import { DPD_DE_APP_SCANS, dpdDeScanKey } from './status.js';
 
 export const DPD_DE_APP_API = 'https://api.paketnavigator.de/services/v1/Navigator3Service.asmx';
 /** Activity the service places outside Germany; the app tier would read the same parcel. */
@@ -32,35 +33,6 @@ export const DPD_DE_APP_RAIL: Readonly<Record<string, ClassifiedStatus>> = {
   // Set while the return travels and after it reaches the sender: its own scans tell them apart.
   RETURN_TO_SENDER: { status: 'exception', stage: 'exception' },
 };
-
-/**
- * Scans carry wording only. The shared classifier misreads several of these, so each is mapped
- * whole; a variable date is recorded as an ellipsis.
- */
-export const DPD_DE_APP_SCANS: Readonly<Record<string, Stage>> = {
-  'Order information has been transmitted to DPD.': 'registered',
-  // The sender booked a collection, which has not happened yet.
-  'Pickup ordered for: …': 'registered',
-  'Pickup not possible No goods acceptance / goods pickup.': 'registered',
-  'Parcel handed to DPD': 'accepted',
-  'Parcel handed to Pickup parcelshop by consignor.': 'accepted',
-  'In transit.': 'in_transit',
-  'At parcel delivery centre.': 'in_transit',
-  'Transfer to DPD Pickup station by DPD driver.': 'in_transit',
-  'Out for delivery.': 'out_for_delivery',
-  'Unfortunately we have not been able to deliver your parcel.': 'failed_attempt',
-  'Back at parcel delivery centre after an unsuccessful delivery attempt.': 'failed_attempt',
-  "We're sorry but your parcel couldn't be delivered as arranged.": 'exception',
-  'Delivered by driver to DPD Pickup parcelshop/ station.': 'ready_for_pickup',
-  'Picked up from DPD Pickup station by consignee.': 'delivered',
-  'Parcel has been left in: mail box': 'delivered',
-  'Delivered.': 'delivered',
-  // The return's own scans: under way it stays nonterminal, then it reaches the sender.
-  'At parcel delivery centre. (Return to sender)': 'exception',
-  'Delivered. (Return to sender)': 'returned',
-};
-
-const scanKey = (wording: string) => wording.replace(/^(Pickup ordered for:) \d{2}\.\d{2}\.\d{4}$/, '$1 …');
 
 function invalid(): never { throw new SchemaError('DPD Germany', 'DPD Germany returned invalid tracking XML'); }
 
@@ -219,7 +191,7 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
     // German facilities keep German civil time; a clock elsewhere has no established zone.
     const clock = zonedTime(`${day} ${time}`, 'dd.MM.yyyy HH:mm', place?.[2] === 'DE' ? 'Europe/Berlin' : 'UTC');
     if (!clock) invalid();
-    const key = scanKey(wording);
+    const key = dpdDeScanKey(wording);
     const stage = Object.hasOwn(DPD_DE_APP_SCANS, key) ? DPD_DE_APP_SCANS[key] : undefined;
     if (stage === 'ready_for_pickup') shop = shopOf(row);
     const event: CarrierEvent = {

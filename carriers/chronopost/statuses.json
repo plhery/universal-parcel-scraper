@@ -140,6 +140,15 @@
       "language": "fr"
     },
     {
+      "code": "TA",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Seen with the delivering partner's own out-for-delivery scan, and staged like La Poste's MD1.",
+      "wording": "Colis en cours de livraison",
+      "language": "fr"
+    },
+    {
       "code": "P",
       "stage": "failed_attempt",
       "confirmedBy": "live",
@@ -159,8 +168,17 @@
       "code": "RB",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "Read from wording. When it follows the pickup point's arrival scan (AB), it keeps ready_for_pickup.",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The courier on the way to the pickup point, ahead of its arrival scan (AB); when it follows that scan, it keeps ready_for_pickup.",
       "wording": "Colis en cours de livraison au point de retrait",
+      "language": "fr"
+    },
+    {
+      "code": "AB",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Seen with the delivering partner's own pickup-point arrival scan, and staged like La Poste's AG1.",
+      "wording": "Colis mis à disposition au point de retrait",
       "language": "fr"
     }
   ]

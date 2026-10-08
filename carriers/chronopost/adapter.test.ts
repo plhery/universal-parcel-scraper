@@ -99,6 +99,9 @@ describe('Chronopost direct tracking', () => {
     ['EI', 'Colis entré dans le pays de destination', 'in_transit'],
     ['A2', "Colis retardé à l'agence de distribution", 'in_transit'],
     ['IS', 'Livraison prévue lundi prochain', 'in_transit'],
+    ['TA', 'Colis en cours de livraison', 'out_for_delivery'],
+    ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
+    ['AB', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
     ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
     ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
   ])('maps the observed %s scan when its wording agrees', (code, label, stage) => {
@@ -160,6 +163,19 @@ describe('Chronopost direct tracking', () => {
       expect(result).toMatchObject({ current_stage: 'ready_for_pickup' });
       expect(result.pickup_point).toBeUndefined();
     }
+  });
+
+  it('stages the round, the courier on the way to a pickup point and its arrival there from the map', () => {
+    const round = scan('TA', '2026-06-27T07:05:43+02:00', 'Colis en cours de livraison');
+    const onTheWay = scan('RB', '2026-06-27T11:06:45+02:00', 'Colis en cours de livraison au point de retrait');
+    const arrived = scan('AB', '2026-06-27T11:07:04+02:00', 'Colis mis à disposition au point de retrait', relay);
+    const result = parseChronopostTrackingXml(history(prepared, round, onTheWay, arrived), number);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', current_stage_source: 'carrier_map',
+      pickup_point: 'EXAMPLE RELAY\n1 EXAMPLE STREET\n00000 EXAMPLE CITY' });
+    expect(result.events?.slice(0, 3)).toMatchObject([
+      { provider_code: 'AB', stage: 'ready_for_pickup', stage_source: 'carrier_map' },
+      { provider_code: 'RB', stage: 'in_transit', stage_source: 'carrier_map' },
+      { provider_code: 'TA', stage: 'out_for_delivery', stage_source: 'carrier_map' }]);
   });
 
   it('preserves local and invalid clocks without inventing instants', () => {

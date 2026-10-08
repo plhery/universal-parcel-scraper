@@ -39,8 +39,10 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
   spaces, dots or dashes, so the portal's dotted form matches.
 - The newest event code overrides `globalStatus`, which lags: a MyPost24 locker
   deposit (`2102`) reads `DELIVERED` at shipment level while the parcel still
-  waits for pickup. When the newest scan has no stage (an enquiry note, an
-  unmapped code, no scans yet), `globalStatus` gives it.
+  waits for pickup. When the newest scan has no stage (an enquiry or delay
+  note, a recipient's order, an unmapped code, no scans yet), `globalStatus`
+  gives it. `statusMap` in [status.ts](status.ts) lists the notes and orders
+  left without a stage on purpose.
 - Codes are classified, not wording. One table serves letters and parcels:
   Swiss Post's own wording table gives each mapped code the same meaning for
   both. Several English wordings mislead: "Completion of customs clearance" and

@@ -115,6 +115,14 @@
       "note": "Seen in the German app's scan list, which carries wording only. Mapped whole because the shared classifier reads it as an acceptance."
     },
     {
+      "wording": "Picked up from Pickup parcelshop by consignee.",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen in the German app's scan list, which carries wording only. The collection from a shop, after the driver's drop-off there; delivered, like the collection from a Pickup station. Mapped whole because the shared classifier reads it as an acceptance."
+    },
+    {
       "wording": "Delivered.",
       "language": "en",
       "stage": "delivered",

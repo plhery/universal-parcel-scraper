@@ -44,6 +44,9 @@ export const EVENT_STAGE_BY_CODE: Record<string, Stage> = {
   '100': 'accepted',
   '200': 'accepted',
   '500': 'accepted',
+  // Pickups at the client, like 500, in Swiss Post's own wording table.
+  '501': 'accepted',
+  '502': 'accepted',
   '600': 'registered',
   '620': 'registered',
   '803': 'customs',
@@ -137,5 +140,9 @@ export const GLOBAL_STATUS_STAGE: Record<string, Stage> = {
 export const statusMap: CarrierStatusMap = {
   codeKey: (code) => code.split('.').at(-1) ?? code,
   stage: (code, wording) => (code && !wording.includes('— revocation') ? swissPostEventStage(code) : undefined),
-  gaps: [{ code: '9112', note: 'An enquiry note, not a movement: the shipment summary decides the stage.' }],
+  gaps: [
+    { code: '9112', note: 'An enquiry note, not a movement: the shipment summary decides the stage.' },
+    { code: '1800', note: 'A delay notice, not a movement: the shipment summary decides the stage.' },
+    { code: '9224', note: "The recipient's order to forward the shipment, not a movement: the shipment summary decides the stage." },
+  ],
 };

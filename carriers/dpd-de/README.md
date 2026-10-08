@@ -75,8 +75,11 @@ the service does not require.
   scan's, else the country of the last status's depot; an unknown depot has a
   three-letter placeholder.
 - Scans carry English wording without codes. Each known wording is mapped
-  whole, because the shared classifier misreads several of them. A collection
-  the sender booked is still registration. A return names itself in its scans:
+  whole in [status.ts](status.ts), because the shared classifier misreads
+  several of them. A collection the sender booked is still registration; the
+  recipient's collection from a Pickup station or shop is the delivery. Its
+  `statusMap` answers for both services: the app's scans by wording, the guest
+  API's by DPD's codes. A return names itself in its scans:
   it stays an exception under way and becomes returned at the sender, and the
   progress rail's return state keeps the result in the exception status. An
   announced delivery day is read as an estimate, without becoming a scan or

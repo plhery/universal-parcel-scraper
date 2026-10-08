@@ -42,6 +42,18 @@ describe('status map answers', () => {
     expect(answer('dpd', null, 'Parcel out for delivery')).toEqual(unknown);
   });
 
+  it("answers DPD Germany's app scans by their wording, and its guest API by DPD's codes", () => {
+    expect(answer('dpd-de', null, 'Picked up from Pickup parcelshop by consignee.')).toEqual(mapped('delivered'));
+    expect(answer('dpd-de', null, 'delivered by driver to dpd pickup parcelshop/ station.')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('dpd-de', null, 'Pickup ordered for: 05.01.2026')).toEqual(mapped('registered'));
+    expect(answer('dpd-de', null, 'Parcel handed to DPD')).toEqual(mapped('accepted'));
+    expect(answer('dpd-de', 'DLO', 'Your parcel is out for delivery')).toEqual(mapped('out_for_delivery'));
+    expect(answer('dpd-de', 'PARCEL_HANDED', 'Parcel handed to DPD')).toEqual(gap);
+    // The Swiss page's labels are not read for German lookups.
+    expect(answer('dpd-de', null, 'Your parcel is on its way')).toEqual(unknown);
+    expect(answer('dpd-de', null, 'Picked up')).toEqual(unknown);
+  });
+
   it('answers the other declared maps by their own keys', () => {
     expect(answer('tnt', 'RES', 'Shipment delivered in good condition')).toEqual(mapped('delivered'));
     expect(answer('tnt', null, 'Livré')).toEqual(mapped('delivered'));
@@ -69,6 +81,10 @@ describe('status map answers', () => {
   it('keeps Chronopost codes to the wording seen with them, and its notice is a gap', () => {
     expect(answer('chronopost', 'DC', "Colis en cours de préparation chez l'expéditeur")).toEqual(mapped('registered'));
     expect(answer('chronopost', 'DC', 'Colis livré')).toEqual(unknown);
+    expect(answer('chronopost', 'TA', 'Colis en cours de livraison')).toEqual(mapped('out_for_delivery'));
+    expect(answer('chronopost', 'RB', 'Colis en cours de livraison au point de retrait')).toEqual(mapped('in_transit'));
+    expect(answer('chronopost', 'AB', 'Colis mis à disposition au point de retrait')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('chronopost', 'TA', 'Colis en cours de livraison par le livreur')).toEqual(unknown);
     expect(answer('chronopost', 'SM', 'Destinataire informé par SMS ou mail')).toEqual(gap);
     expect(answer('chronopost', 'SM', 'Autre message')).toEqual(unknown);
   });
@@ -77,7 +93,11 @@ describe('status map answers', () => {
     expect(answer('swiss-post', 'LETTER.*.106.859', 'Your shipment will shortly be handed over to the Swiss Post')).toEqual(mapped('registered'));
     expect(answer('swiss-post', 'LETTER.*.93.9112', 'Enquiry initiated')).toEqual(gap);
     expect(answer('swiss-post', 'PARCEL.*.1.4000', 'Delivered — Revocation')).toEqual(unknown);
-    expect(answer('swiss-post', 'PARCEL.*.1.9224', 'Order triggered by recipient: forward')).toEqual(unknown);
+    expect(answer('swiss-post', 'PARCEL.*.1.9224', 'Order triggered by recipient: forward')).toEqual(gap);
+    expect(answer('swiss-post', 'LETTER.*.90.1800', 'Delay')).toEqual(gap);
+    expect(answer('swiss-post', 'PARCEL.*.0.501', 'Picked up at the client')).toEqual(mapped('accepted'));
+    expect(answer('swiss-post', 'PARCEL.*.1.502', 'Picked up')).toEqual(mapped('accepted'));
+    expect(answer('swiss-post', 'PARCEL.*.1.9999', 'Synthetic scan')).toEqual(unknown);
   });
 
   it.each(['unknown', 'app', '', 'china-post', 'dpd-fr', '__proto__', 'toString'])('does not know %s', (carrier) => {

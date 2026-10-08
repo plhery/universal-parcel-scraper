@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
-import { DPD_DE_APP_API, DPD_DE_APP_RAIL, DPD_DE_APP_SCANS, DpdDeAppClient } from './app.js';
+import { DPD_DE_APP_API, DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
+import { DPD_DE_APP_SCANS } from './status.js';
 
 // All identifiers, credentials, sessions, clocks and private-field markers here are invented.
 const NUMBER = '01000000000001';
@@ -368,11 +369,15 @@ describe('DPD Germany app projection', () => {
     const shop = waiting.calls.find(call => call.operation === 'getParcelShopByID')!;
     expect(shop.body).toContain('<ParcelShopID>0</ParcelShopID><PudoID>DE00001</PudoID><ParcelShopOnly>false</ParcelShopOnly>');
     expect(JSON.stringify(await waiting.result)).not.toMatch(/SHOP|07:00|8\.1/);
-    const collected = lookup('HANDOVER_TO_PARCELSHOP', [...atShop,
-      ['06.01.2026', '09:57', 'Picked up from DPD Pickup station by consignee.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']]]);
-    expect(await collected.result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-06T09:57:00+01:00' });
-    expect((await collected.result).pickup_point).toBeUndefined();
-    expect(collected.calls.map(call => call.operation)).not.toContain('getParcelShopByID');
+    // The recipient's collection, from a station or a shop, is the delivery.
+    for (const wording of ['Picked up from DPD Pickup station by consignee.', 'Picked up from Pickup parcelshop by consignee.']) {
+      const collected = lookup('HANDOVER_TO_PARCELSHOP', [...atShop,
+        ['06.01.2026', '09:57', wording, 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']]]);
+      expect(await collected.result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-06T09:57:00+01:00' });
+      expect((await collected.result).events?.[0]).toMatchObject({ description: wording, stage: 'delivered', stage_source: 'carrier_map' });
+      expect((await collected.result).pickup_point).toBeUndefined();
+      expect(collected.calls.map(call => call.operation)).not.toContain('getParcelShopByID');
+    }
   });
 
   it.each([
