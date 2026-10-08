@@ -28,10 +28,10 @@ function day(text: string): string | undefined {
   return match ? zonedTime(`${match[1]!.padStart(2, '0')} ${match[2]} ${match[3]}`, 'dd MMMM yyyy', ZONE, { locale: 'en' })?.iso.slice(0, 10) : undefined;
 }
 
-/** Every number a sentence names must be the one asked for; the sentence is kept without it. */
+/** A sentence names the number asked for or no number at all; it is kept without it. */
 function sentence(text: string, number: string): string | undefined {
   const named = text.match(/\d{7,}/g) ?? [];
-  if (named.length !== 1 || named[0] !== number) return undefined;
+  if (named.length > 1 || (named.length === 1 && named[0] !== number)) return undefined;
   return clean(text.replace(number, ' ').replace(/\s+/g, ' '), 200) || undefined;
 }
 
@@ -75,7 +75,9 @@ export function parseDhlEcommerceUk(html: string, rawNumber: string): CarrierRes
   // Rows are newest first. A depot scan can follow a delivery scan, and the
   // page then shows the parcel at the depot again, so the newest row decides.
   const latest = events[0]!;
-  const stage = latest.stage;
+  // A refused shipment goes back through the depot, and only the headline says
+  // it is returning to the sender.
+  const stage = /\bhas now been returned to the sender\b/i.test(headline) ? 'returned' : latest.stage;
   const due = /^Your shipment is due to be delivered on (.+)$/.exec(clean($(`${PANEL}LO_02_pnlSecondaryDesc`).text(), 200))?.[1];
   const planned = due ? day(due) : undefined;
   return {
@@ -83,8 +85,8 @@ export function parseDhlEcommerceUk(html: string, rawNumber: string): CarrierRes
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: latest.description ?? null,
     last_update: latest.time ?? null,
-    // The page keeps a planned day after it has passed.
-    expected_delivery: planned && stage !== 'delivered' && (!latest.time || planned >= latest.time.slice(0, 10)) ? planned : null,
+    // The page keeps a planned day after it has passed, and for a returning shipment.
+    expected_delivery: planned && stage !== 'delivered' && stage !== 'returned' && (!latest.time || planned >= latest.time.slice(0, 10)) ? planned : null,
     ...(stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     events: events.slice(0, MAX_EVENTS),
   };

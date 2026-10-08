@@ -19,13 +19,16 @@ and UK Mail, through its tracking page. German DHL Paket is
 - Only the notice that names an unmatched shipment number is read as a missing
   parcel. The page also comes back empty when it did not look the number up,
   and that is an inconclusive answer.
-- The headline and every row name the shipment. The parser requires each of
-  them to name the number asked for and keeps the sentences without it.
+- The headline and most rows name the shipment. The parser requires the
+  headline to name the number asked for, rejects a row that names another
+  one, and keeps the sentences without it.
 - The page has no status codes. [statuses.json](statuses.json) lists the
   sentences seen with the stage each one means; a sentence missing from it
   keeps its wording and gets no stage.
 - A depot scan can follow a delivery scan. The page then shows the shipment at
-  the depot again, so the newest row sets the current stage.
+  the depot again, so the newest row sets the current stage. A refused
+  shipment also returns to the depot, and only the headline says it is going
+  back to the sender, so that headline makes it returned.
 - The network runs in one time zone, so the clocks are read as British time.
 - The signatory's name and the sender's reference are shown without a postcode
   and are dropped.

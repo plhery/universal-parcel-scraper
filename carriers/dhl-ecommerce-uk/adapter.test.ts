@@ -7,6 +7,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { DhlEcommerceUkTracker, adapter } from './adapter.js';
 import { normalizeDhlEcommerceUkNumber, parseDhlEcommerceUk } from './parser.js';
+import { dhlEcommerceUkStage } from './status.js';
 
 const NUMBER = '99990000000000';
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');
@@ -45,6 +46,24 @@ describe('DHL eCommerce UK parser', () => {
     const result = parseDhlEcommerceUk(page, NUMBER);
     expect(result.current_stage).toBe('in_transit');
     expect(result.delivered_at).toBeUndefined();
+  });
+
+  it('reads rows that name no shipment', () => {
+    const page = fixture('delivered').replace(`Your shipment ${NUMBER} is delivered</td>`, 'Collected</td>')
+      .replace(`Your shipment ${NUMBER} is out for delivery</td>`, 'Delivery Attempted</td>');
+    const result = parseDhlEcommerceUk(page, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-04-03T18:19:00+01:00', last_status_text: 'Collected' });
+    expect(result.events?.slice(0, 2)).toMatchObject([{ stage: 'delivered' }, { description: 'Delivery Attempted', stage: 'failed_attempt' }]);
+  });
+
+  it('reads a return the headline announces after a refusal', () => {
+    const row = (clock: string, text: string) => `<tr><td>03rd April 2026</td><td>${clock}</td><td>${text}</td></tr>`;
+    const page = fixture('in-transit')
+      .replace(/<h3>[^<]*<\/h3>/, `<h3>Your shipment ${NUMBER} (1 parcel expected) has now been returned to the sender. Please contact your sender for further information</h3>`)
+      .replace('<tr><td nowrap="nowrap">03rd April 2026', `${row('14:09', `Your shipment ${NUMBER} is at the delivery depot`)}${row('10:39', `We’re sorry but your shipment ${NUMBER} was refused on delivery. Please contact your sender for further information`)}<tr><td nowrap="nowrap">03rd April 2026`);
+    const result = parseDhlEcommerceUk(page, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', expected_delivery: null });
+    expect(result.events?.slice(0, 2).map((event) => event.stage)).toEqual(['in_transit', 'exception']);
   });
 
   it('reads a winter clock in British time', () => {
@@ -97,7 +116,10 @@ describe('DHL eCommerce UK parser', () => {
   });
 
   it('maps every listed sentence to a known stage', () => {
-    for (const entry of statuses.entries) expect(STAGES).toContain(entry.stage);
+    for (const entry of statuses.entries) {
+      expect(STAGES).toContain(entry.stage);
+      expect(dhlEcommerceUkStage(entry.wording.replace("'", '’'))).toBe(entry.stage);
+    }
   });
 });
 
