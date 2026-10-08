@@ -14,6 +14,7 @@
         "candidates": [
           "fedex",
           "dpd-fr",
+          "brt",
           "yunda"
         ]
       },
@@ -530,6 +531,7 @@
         "confidence": "low",
         "candidates": [
           "fedex",
+          "brt",
           "yunda"
         ]
       },
@@ -548,6 +550,7 @@
         "candidates": [
           "fedex",
           "dpd-fr",
+          "brt",
           "yunda"
         ]
       },
@@ -565,6 +568,7 @@
         "confidence": "low",
         "candidates": [
           "fedex",
+          "brt",
           "yunda"
         ]
       },
@@ -591,6 +595,7 @@
         "candidates": [
           "fedex",
           "dpd-fr",
+          "brt",
           "yunda"
         ]
       },
@@ -616,6 +621,7 @@
         "confidence": "low",
         "candidates": [
           "fedex",
+          "brt",
           "yunda"
         ]
       },
@@ -641,6 +647,7 @@
         "confidence": "low",
         "candidates": [
           "fedex",
+          "brt",
           "yunda"
         ]
       },
@@ -666,6 +673,7 @@
         "candidates": [
           "fedex",
           "dpd-fr",
+          "brt",
           "yunda"
         ]
       },
@@ -681,6 +689,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "brt",
           "yunda"
         ],
         "not": [

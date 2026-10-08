@@ -395,27 +395,38 @@
   {
     "shape": "Fifteen digits starting with 0 or 1 that pass the GS1 check",
     "carriers": [
+      "brt",
       "dpd-fr",
       "fedex",
       "yunda"
     ],
-    "reason": "A passing GS1 check digit adds FedEx to DPD France and Yunda, which accept these numbers without one; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+    "reason": "A passing GS1 check digit adds FedEx to BRT, DPD France and Yunda, which accept these numbers without one; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "Fifteen digits outside DPD France's 0/1 prefixes that pass the GS1 check",
     "carriers": [
+      "brt",
       "fedex",
       "yunda"
     ],
-    "reason": "A passing GS1 check digit adds FedEx to Yunda, which accepts any fifteen digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+    "reason": "A passing GS1 check digit adds FedEx to BRT and Yunda, which accept any fifteen digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Fifteen digits outside DPD France's 0/1 prefixes that fail the GS1 check",
+    "carriers": [
+      "brt",
+      "yunda"
+    ],
+    "reason": "BRT parcel IDs and Yunda's fifteen-digit rule both accept any fifteen digits and neither carries a check digit, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "Fifteen digits starting with 0 or 1 that fail the GS1 check",
     "carriers": [
+      "brt",
       "dpd-fr",
       "yunda"
     ],
-    "reason": "Without a GS1 check digit FedEx drops out; DPD France and Yunda still share the shape, so the number stays a low-confidence suggestion."
+    "reason": "Without a GS1 check digit FedEx drops out; BRT, DPD France and Yunda still share the shape, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "A9{10}",
@@ -614,10 +625,11 @@
   {
     "shape": "870 or 880 followed by twelve digits that fail both DPD's check character and the GS1 check",
     "carriers": [
+      "brt",
       "la-poste",
       "yunda"
     ],
-    "reason": "Without DPD's check character La Poste matches only its low-confidence fallback, which the fifteen-digit Yunda rule shares; the number stays a low-confidence suggestion."
+    "reason": "Without DPD's check character La Poste matches only its low-confidence fallback, which BRT's parcel IDs and the fifteen-digit Yunda rule share; the number stays a low-confidence suggestion."
   },
   {
     "shape": "16-character alphanumeric reference",
@@ -837,6 +849,7 @@
   {
     "shape": "Fifteen digits starting with 0 or 1 that end in their DPD check digit and fail the GS1 check",
     "carriers": [
+      "brt",
       "chronopost",
       "dpd",
       "dpd-de",
@@ -844,7 +857,7 @@
       "dpd-uk",
       "yunda"
     ],
-    "reason": "When DPD's check character is a digit, DPD France's and Yunda's fifteen-digit rules match too, and Chronopost delivers DPD parcels entering France under the same number. Direct tracking must confirm the carrier."
+    "reason": "When DPD's check character is a digit, the fifteen-digit rules of BRT, DPD France and Yunda match too, and Chronopost delivers DPD parcels entering France under the same number. Direct tracking must confirm the carrier."
   },
   {
     "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check letter",
@@ -860,6 +873,7 @@
   {
     "shape": "Fourteen digits and a digit check character that passes both DPD's and FedEx's checks",
     "carriers": [
+      "brt",
       "chronopost",
       "dpd",
       "dpd-de",
@@ -868,7 +882,7 @@
       "fedex",
       "yunda"
     ],
-    "reason": "The fifteen digits also carry a valid FedEx check digit, so FedEx's rule lists FedEx first. DPD UK's own tracking page published such a number."
+    "reason": "The fifteen digits also carry a valid FedEx check digit, so FedEx's rule lists FedEx first, ahead of the BRT, DPD France and Yunda fifteen-digit rules. DPD UK's own tracking page published such a number."
   },
   {
     "shape": "Six letters",
@@ -1306,6 +1320,7 @@
   {
     "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check digit, that fail the GS1 check",
     "carriers": [
+      "brt",
       "chronopost",
       "dpd",
       "dpd-de",
@@ -1313,11 +1328,12 @@
       "la-poste",
       "yunda"
     ],
-    "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit Yunda rule matches too. La Poste's high-confidence rule decides."
+    "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit BRT and Yunda rules match too. La Poste's high-confidence rule decides."
   },
   {
     "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check digit, that pass the GS1 check",
     "carriers": [
+      "brt",
       "chronopost",
       "dpd",
       "dpd-de",
@@ -1326,7 +1342,7 @@
       "la-poste",
       "yunda"
     ],
-    "reason": "When La Poste's ISO 7064 check character is a digit and the fifteen digits also pass GS1, FedEx's fifteen-digit rule matches too. La Poste's high-confidence rule decides."
+    "reason": "When La Poste's ISO 7064 check character is a digit and the fifteen digits also pass GS1, FedEx's fifteen-digit rule matches too, as do BRT's and Yunda's. La Poste's high-confidence rule decides."
   },
   {
     "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and mod 7 checks",

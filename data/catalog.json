@@ -2429,6 +2429,10 @@
       {
         "pattern": "^\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{15}$",
+        "confidence": "low"
       }
     ]
   },

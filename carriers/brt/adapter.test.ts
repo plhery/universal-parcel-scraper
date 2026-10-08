@@ -12,6 +12,10 @@ const NUMBER = '99000000000002';
 const OTHER = '99000000000003';
 const SHIPMENT = '990000000001';
 const html = readFileSync(new URL('./fixtures/history.html', import.meta.url), 'utf8');
+const PARCEL_ID = '990991000000015';
+const parcelPage = readFileSync(new URL('./fixtures/parcel-id.html', import.meta.url), 'utf8');
+const parcelList = readFileSync(new URL('./fixtures/parcel-list.html', import.meta.url), 'utf8');
+const notFoundPage = '<div id="box_tool_content"><h3 class="separatore">Errori riscontrati</h3><div id="box_contenuti">Shipment not found or still being processed in our systems.</div></div>';
 const negative = (number = NUMBER) => `<div id="box_tool_content"><div id="toolbar_sx"><h3>Rintraccia</h3></div><h3 class="separatore">Errori riscontrati</h3><div id="box_contenuti">TIS0868 Parcel Label number ${number} not found</div></div>`;
 const edit = (fn: (document: ReturnType<typeof load>) => void) => { const $ = load(html); fn($); return $.html(); };
 const response = (body = html) => new Response(body, { headers: { 'Content-Type': 'text/html; charset=UTF-8' } });
@@ -38,7 +42,8 @@ describe('BRT direct tracking', () => {
 
   it('binds the returned BRTcode, rejects ambiguous details and accepts only the supported format', () => {
     expect(normalizeBrtNumber('9900 0000 0000 02')).toBe(NUMBER);
-    for (const n of ['', '123', NUMBER + '0', NUMBER.slice(1), NUMBER + '?', 'ABC00000000000']) expect(() => normalizeBrtNumber(n)).toThrow(InvalidInputError);
+    expect(normalizeBrtNumber(PARCEL_ID)).toBe(PARCEL_ID);
+    for (const n of ['', '123', NUMBER + '00', NUMBER.slice(1), NUMBER + '?', 'ABC00000000000']) expect(() => normalizeBrtNumber(n)).toThrow(InvalidInputError);
     for (const body of [edit($ => $('.table_dati_spedizione tr').eq(1).children('td').last().text(OTHER)),
       edit($ => $('.table_dati_spedizione tr').eq(1).remove()),
       edit($ => $('.table_dati_spedizione tr').eq(1).clone().appendTo('.table_dati_spedizione')),
@@ -69,6 +74,61 @@ describe('BRT direct tracking', () => {
     expect(() => parseBrt(shipmentHtml + shipmentHtml, SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseBrt(negative(SHIPMENT), SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => normalizeBrtNumber(SHIPMENT + '0')).toThrow(InvalidInputError);
+  });
+
+  it('follows a parcel ID through the parcel list that names it', async () => {
+    const fetcher = vi.fn<typeof fetch>(async (url, init) => {
+      if (fetcher.mock.calls.length === 1) {
+        expect(String(url)).toBe('https://vas.brt.it/vas/sped_det_show.hsm?lang=en');
+        expect(init?.method).toBe('POST');
+        expect(Object.fromEntries(new URLSearchParams(String(init?.body)))).toEqual({ referer: 'sped_numspe_par.htm', ChiSono: PARCEL_ID,
+          ClienteMittente: '', DataInizio: '', DataFine: '', RicercaChiSono: 'Ricerca', lang: 'en' });
+        return response(parcelPage);
+      }
+      expect(String(url)).toBe('https://vas.brt.it/vas/sped_colli_lista.htm?nspediz=990000000001&KSU=&SpeChkCde=123456789&AnnoSpedizione=2026&lang=en');
+      expect(init?.method).toBeUndefined();
+      return response(parcelList);
+    });
+    const result = normalizeCarrierResult(await new BrtTracker({ fetcher }).fetch(PARCEL_ID));
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered', weight_kg: 1 });
+    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'failed_attempt', 'out_for_delivery',
+      'in_transit', 'in_transit', 'accepted', 'registered']);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE_SYNTHETIC|SpeChkCde|123456789|990000000001/);
+  });
+
+  it('refuses a parcel ID its parcel list does not name, and never follows another shipment\'s list', async () => {
+    const twice = (detail: string, list = parcelList) => vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(response(detail)).mockResolvedValueOnce(response(list));
+    for (const [detail, list] of [
+      [parcelPage, parcelList.replaceAll(PARCEL_ID, '990991000000016')],
+      [parcelPage, parcelList.replace('ID collo cliente', 'Something else')],
+      [parcelPage.replace('sped_colli_lista.htm?nspediz=990000000001', 'sped_colli_lista.htm?nspediz=990000000002'), parcelList],
+      [parcelPage.replace('sped_colli_lista.htm', 'https://example.invalid/sped_colli_lista.htm'), parcelList],
+      [parcelPage.replace('id="aColli"', 'id="aOther"'), parcelList],
+    ]) {
+      await expect(new BrtTracker({ fetcher: twice(detail!, list) }).fetch(PARCEL_ID)).rejects.toMatchObject({ kind: 'schema' });
+    }
+    expect(() => parseBrt(parcelPage, PARCEL_ID)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    const absent = vi.fn<typeof fetch>().mockResolvedValue(response(notFoundPage));
+    await expect(new BrtTracker({ fetcher: absent }).fetch(PARCEL_ID)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(absent).toHaveBeenCalledTimes(1);
+  });
+
+  it('reads the shipment past a held-parcel record and a DPD link box', () => {
+    const result = parseBrt(parcelPage, '990000000001');
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', weight_kg: 1 });
+    expect(result.events).toHaveLength(8);
+    expect(() => parseBrt(parcelPage.replace('N. Giacenza', 'N. spedizione'), '990000000001'))
+      .toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('reads a shipment delivered back to its sender as returned', () => {
+    const body = edit($ => {
+      $('.table_stato_dati tr').eq(1).children('td').last().text('DELIVERED');
+      $('.table_stato_dati tr').eq(2).children('td').last().text('RETURNED TO SENDER');
+    });
+    expect(parseBrt(body, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Delivered' });
   });
 
   it('reports only the scoped matching TIS0868 parcel-label negative', () => {

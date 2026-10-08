@@ -80,6 +80,11 @@
       "id": "brt-shipment-number",
       "pattern": "^\\d{12}$",
       "confidence": "low"
+    },
+    {
+      "id": "brt-parcel-id",
+      "pattern": "^\\d{15}$",
+      "confidence": "low"
     }
   ]
 }

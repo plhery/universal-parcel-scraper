@@ -8,6 +8,10 @@ const labels: Record<string, ClassifiedStatus> = {
   'FOR DELIVERY': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'ARRIVED AT BRT LOCKER': { status: 'in_transit', stage: 'ready_for_pickup' },
   'COLLECTED AT BRT LOCKER': { status: 'delivered', stage: 'delivered' },
+  'ARRIVED AT BRT-FERMOPOINT': { status: 'in_transit', stage: 'ready_for_pickup' },
+  'COLLECTED AT BRT-FERMOPOINT': { status: 'delivered', stage: 'delivered' },
+  'UNKNOWN/INCOMPLETE CONSIGNEE': { status: 'exception', stage: 'failed_attempt' },
+  'RETURNED TO SENDER': { status: 'exception', stage: 'returned' },
   DELIVERED: { status: 'delivered', stage: 'delivered' },
 };
 

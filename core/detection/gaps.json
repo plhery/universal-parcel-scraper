@@ -41,12 +41,6 @@
     "reason": "A public Austrian parcel report uses fourteen digits; the national request builder does not establish this family."
   },
   {
-    "carrier": "brt",
-    "pattern": "^\\d{15}$",
-    "kind": "open",
-    "reason": "BRT's tracking takes fourteen digits; what the fifteenth is has not been worked out."
-  },
-  {
     "carrier": "c-chez-vous",
     "kind": "by_design",
     "reason": "The printed composite carries the postcode after its dashes and is entered with the carrier chosen."

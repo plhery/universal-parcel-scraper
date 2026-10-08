@@ -141,6 +141,7 @@
         "confidence": "low",
         "candidates": [
           "la-poste",
+          "brt",
           "yunda"
         ]
       },

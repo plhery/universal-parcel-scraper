@@ -48,6 +48,31 @@
       "language": "en",
       "stage": "delivered",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "ARRIVED AT BRT-fermopoint",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "COLLECTED AT BRT-fermopoint",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "UNKNOWN/INCOMPLETE CONSIGNEE",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "RETURNED TO SENDER",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "note": "A later DELIVERED is the delivery back to the sender, so the shipment reads as returned."
     }
   ]
 }
