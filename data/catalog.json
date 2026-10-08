@@ -4677,6 +4677,10 @@
       {
         "pattern": "^\\d{16}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^C00HHA\\d{10}$",
+        "confidence": "low"
       }
     ]
   },

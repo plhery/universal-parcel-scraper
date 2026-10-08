@@ -4679,6 +4679,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{16}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^C00HHA\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
@@ -5277,7 +5281,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-de": ["dpd-de-1","dpd-de-2"],
   "dpd-uk": ["dpd-uk-1","dpd-uk-2"],
   "ekart": ["ekart-ecommerce"],
-  "evri-uk": ["evri-uk-1","evri-uk-2"],
+  "evri-uk": ["evri-uk-1","evri-uk-2","evri-uk-3"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
   "j-and-t-cargo": ["j-and-t-cargo-1"],
   "lbc-express": ["lbc-domestic"],

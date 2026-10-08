@@ -82,6 +82,11 @@
       "id": "evri-uk-2",
       "pattern": "^\\d{16}$",
       "confidence": "low"
+    },
+    {
+      "id": "evri-uk-3",
+      "pattern": "^C00HHA\\d{10}$",
+      "confidence": "low"
     }
   ]
 }

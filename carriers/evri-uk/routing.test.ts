@@ -11,6 +11,11 @@ describe('Evri service routing', () => {
     });
   });
 
+  it('offers the domestic service alone for its C00HHA barcodes', () => {
+    expect(detectCarrierMatch('C00HHA0000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['evri-uk'] });
+    expect(detectCarrierMatch('COOHHA0000000001').candidates).not.toContain('evri-uk');
+  });
+
   it.each([16, 17, 18, 19])('preserves Hermes recognition outside the Evri overlap: H plus %i digits', digits => {
     expect(detectCarrierMatch(`H${'0'.repeat(digits)}`)).toMatchObject({ carrier: 'hermes-de', confidence: 'high' });
   });

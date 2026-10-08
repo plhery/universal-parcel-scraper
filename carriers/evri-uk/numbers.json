@@ -313,6 +313,94 @@
         ]
       },
       "note": "An Evri UK tracking page archived by the Wayback Machine. Evri UK's tracker returns its history."
+    },
+    {
+      "number": "C00HHA0294471274",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230116115611/https://www.evri.com/track/parcel/C00HHA0294471274/details",
+        "date": "2023-01-16",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri-uk"
+        ]
+      },
+      "note": "An Evri UK tracking page archived by the Wayback Machine. Evri UK no longer holds its history; numbers with this prefix pass the Evri check digit."
+    },
+    {
+      "number": "C00HHA0470955301",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240329195818/https://www.evri.com/track/parcel/C00HHA0470955301/details",
+        "date": "2024-03-29",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri-uk"
+        ]
+      },
+      "note": "An Evri UK tracking page archived by the Wayback Machine. Evri UK no longer holds its history; numbers with this prefix pass the Evri check digit."
+    },
+    {
+      "number": "C00HHA0596762050",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251028053926/https://www.evri.com/track/parcel/C00HHA0596762050/details",
+        "date": "2025-10-28",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri-uk"
+        ]
+      },
+      "note": "An Evri UK tracking page archived by the Wayback Machine. Evri UK no longer holds its history; numbers with this prefix pass the Evri check digit."
+    },
+    {
+      "number": "C00HHA0621994825",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260331104539/https://www.evri.com/track/parcel/C00HHA0621994825/details",
+        "date": "2026-03-31",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri-uk"
+        ]
+      },
+      "note": "An Evri UK tracking page archived by the Wayback Machine. Evri UK no longer holds its history; numbers with this prefix pass the Evri check digit."
     }
   ]
 }
