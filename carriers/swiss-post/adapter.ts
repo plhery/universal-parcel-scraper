@@ -19,8 +19,8 @@ const API_BASE = 'https://service.post.ch/ekp-web/api';
 const TRANSLATIONS_URL = 'https://service.post.ch/ekp-web/core/rest/translations/en/shipment-text-messages';
 const PROVIDER = 'Swiss Post';
 const REQUEST_TIMEOUT_MS = 10_000;
-/** The user, search, result, event and translation calls, each at its own bound. */
-const DEFAULT_BUDGET_MS = 5 * REQUEST_TIMEOUT_MS;
+/** The user, search, result, event, translation and pickup office calls, each at its own bound. */
+const DEFAULT_BUDGET_MS = 6 * REQUEST_TIMEOUT_MS;
 /** A request's own timer can fire a few milliseconds before the budget's clock runs out. */
 const BUDGET_SLACK_MS = 5;
 const HEADERS = {
@@ -164,6 +164,32 @@ function eventLocation(event: JsonObject): string {
   const country = countryCode(event.country);
   if (!city) return country && country !== 'ZZ' ? country : postcode;
   return [city, postcode].filter(Boolean).join(' ').slice(0, 160);
+}
+
+/**
+ * The site number of the office or My Post 24 terminal holding the parcel, from its pickup
+ * notice, else empty. The tracker reads the arrival office first, as its own page does.
+ */
+export function swissPostPickupOffice(item: JsonObject): string {
+  const avis = isRecord(item.avis) ? item.avis : {};
+  const office = text(avis.arrivalPostOfficeZip, 20) || text(avis.deliveryPostOfficeZip, 20);
+  return /^\d{6}$/.test(office) ? office : '';
+}
+
+/**
+ * The site record's name, then its street and its town on their own lines, as the pickup
+ * notice shows them, if it is the requested site. A street that repeats the name, as a
+ * terminal's can, is left out; without a town the name stands alone.
+ */
+export function swissPostPickupPoint(office: unknown, site: string): string {
+  if (!isRecord(office) || text(office.zip, 20) !== site) return '';
+  const name = text(office.description, 120);
+  if (!name) return '';
+  const postcode = text(office.zip4, 10);
+  const town = text(office.city, 80);
+  if (!/^\d{4}$/.test(postcode) || !town) return name;
+  const street = [text(office.street, 120), text(office.streetNumber, 20)].filter(Boolean).join(' ');
+  return [name, street !== name && street, `${postcode} ${town}`].filter(Boolean).join('\n');
 }
 
 /**
@@ -364,7 +390,35 @@ export class SwissPostTracker {
       }
     }
     const translations = events.length > 0 ? await this.loadTranslations(fetcher, budget) : {};
-    return parseSwissPostShipment(item, events, translations);
+    const result = parseSwissPostShipment(item, events, translations);
+    // The pickup notice names the site holding the parcel; that site's record gives its name and address.
+    const office = result.current_stage === 'ready_for_pickup' ? swissPostPickupOffice(item) : '';
+    if (office) {
+      const point = await this.pickupPoint(fetcher, headers, office, budget, context.signal);
+      if (point) result.pickup_point = point;
+    }
+    return result;
+  }
+
+  /** The pickup point, or nothing: the parcel is found without it. Only the caller's cancellation ends the lookup. */
+  private async pickupPoint(
+    fetcher: typeof fetch,
+    headers: Record<string, string>,
+    office: string,
+    budget: LookupBudget,
+    signal: AbortSignal | undefined,
+  ): Promise<string> {
+    try {
+      return swissPostPickupPoint(await this.readJson(
+        fetcher,
+        `${API_BASE}/autocomplete/postoffice/id/${encodeURIComponent(office)}`,
+        { headers },
+        budget,
+      ), office);
+    } catch {
+      signal?.throwIfAborted();
+      return '';
+    }
   }
 }
 

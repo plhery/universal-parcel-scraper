@@ -9,7 +9,7 @@ track-and-trace to [postlogistics](../postlogistics/README.md).
 
 ## How it works
 
-`direct`: four calls on one cookie jar under `https://service.post.ch/ekp-web/api`,
+`direct`: four or five calls on one cookie jar under `https://service.post.ch/ekp-web/api`,
 each bounded at 10 s.
 
 1. `GET /user` creates a throwaway anonymous user and returns an `x-csrf-token` header.
@@ -18,6 +18,9 @@ each bounded at 10 s.
    An empty array is the clean not-found.
 4. `GET /shipment/id/{identity}/events` returns the scans. Optional: if it fails,
    the shipment summary is still returned.
+5. `GET /autocomplete/postoffice/id/{site}` returns the record of the office or
+   My Post 24 terminal holding the parcel, only while it waits there. Optional:
+   if it fails, the parcel has no pickup point.
 
 Event wording comes from `core/rest/translations/en/shipment-text-messages`,
 fetched once per process and only when there are events. Keys are dotted
@@ -48,6 +51,14 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
   `globalStatus` `RETURNED` or the `returned` flag turns that into returned. A
   sub-event starting `CAN` ("Revocation") withdraws its scan, which then takes
   no stage.
+- While the parcel waits for pickup, the pickup notice in the shipment summary
+  (`avis`) gives the site number of the office or terminal holding it, the
+  arrival office first, as the tracker's own page reads it. That site's record
+  becomes the pickup point: its name, then its street and its town on their own
+  lines, as the pickup notice shows them. The record must name the same site.
+  A terminal's record can repeat its name in place of a street, which is then
+  left out; without a town the name stands alone. The notice's deadlines are
+  not read.
 - Weight (sent in grams), measurements (millimetres; most letters have two),
   destination country and delivery time come from the shipment summary. The
   delivery estimate is dropped once the shipment is delivered or returned.

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { LookupBudget } from '../../core/adapter/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
 import type { JsonObject } from '../../core/types.js';
-import { parseSwissPostShipment, SwissPostTracker } from './adapter.js';
+import { parseSwissPostShipment, swissPostPickupPoint, SwissPostTracker } from './adapter.js';
 import { EVENT_STAGE_BY_CODE, swissPostEventStage } from './status.js';
 
 const WRONG_SWISS_POST_NUMBER = '989999999999999999';
@@ -203,7 +203,7 @@ describe('Swiss Post projection', () => {
   });
 
   it('covers every capability declared in carrier.json', () => {
-    expect(capabilities).toEqual(['history', 'location', 'eta', 'provider_code', 'weight', 'dimensions', 'delivered_at']);
+    expect(capabilities).toEqual(['history', 'location', 'eta', 'pickup_point', 'provider_code', 'weight', 'dimensions', 'delivered_at']);
     const { shipment, events, translations } = outForDelivery();
     const result = parseSwissPostShipment(shipment, events, translations);
     expect(result).toMatchObject({ weight_kg: 0.72, dimensions_text: '23 × 16 × 11.5 cm', destination_country: 'CH' });
@@ -239,6 +239,108 @@ describe('Swiss Post projection', () => {
       'private@example.test',
       'private-summary-id',
     ]) expect(serialized).not.toContain(privateValue);
+  });
+});
+
+describe('Swiss Post pickup point', () => {
+  const OFFICE = {
+    zip: '999973', zip4: '9999', postOffice: false, postAgency: false, street: 'MP Example', streetNumber: null,
+    addressCity: 'Example Town', addressZip: '999900', description: 'My Post 24 9999 Example Town Station',
+    descriptionName: null, city: 'Example Town',
+  };
+  const waiting = {
+    identity: 'private-summary-id', shipmentNumber: WRONG_SWISS_POST_NUMBER, globalStatus: 'MISSED_DELIVERY',
+    addresseeType: 'MY_POST_24', deliveryPostOfficeZip: '999973',
+    addressee: { name1: 'PRIVATE RECIPIENT', street: 'PRIVATE STREET', number: '7', zip: '9998', city: 'PRIVATE TOWN' },
+    avis: { deliveryPostOfficeZip: '999973', arrivalPostOfficeZip: null, deadline: '2026-09-11T00:00:00+02:00', isMyPost24: true },
+  };
+  const deposited = { eventCode: 'PARCEL.*.1.2102', timestamp: '2026-08-31T14:03:17+02:00', zip: '999973',
+    city: 'Example Town Station My Post 24', country: 'CH' };
+  const collected = { eventCode: 'PARCEL.*.1.4000', timestamp: '2026-09-01T15:05:01+02:00', zip: null, city: null, country: 'CH' };
+
+  function lookup(item: JsonObject, events: JsonObject[], office: (init?: RequestInit) => Response | Promise<Response> = () =>
+    new Response(JSON.stringify(OFFICE))) {
+    const urls: string[] = [];
+    const fetcher: typeof fetch = async (input, init) => {
+      const url = String(input);
+      urls.push(url);
+      if (url.endsWith('/user')) {
+        return new Response(JSON.stringify({ userIdentifier: 'unit-test-user' }), { headers: { 'x-csrf-token': 'unit-test-csrf' } });
+      }
+      if (url.includes('/history?')) return new Response(JSON.stringify({ hash: 'unit-test-hash' }));
+      if (url.includes('/history/not-included/')) return new Response(JSON.stringify([item]));
+      if (url.endsWith('/events')) return new Response(JSON.stringify(events));
+      if (url.includes('/autocomplete/postoffice/id/')) return office(init);
+      return new Response(JSON.stringify({ 'shipment-text--': { 'PARCEL.*.1.2102.INLAND': 'Deposited in the MyPost24 machine' } }));
+    };
+    return { urls, tracker: new SwissPostTracker({ fetcher }) };
+  }
+
+  it('names the office or terminal holding the parcel and its address only while it waits there', async () => {
+    const app = lookup(waiting, [deposited]);
+    const result = await app.tracker.fetch(WRONG_SWISS_POST_NUMBER);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup',
+      pickup_point: 'My Post 24 9999 Example Town Station\nMP Example\n9999 Example Town' });
+    expect(app.urls.filter((url) => url.includes('/autocomplete/'))).toEqual([
+      'https://service.post.ch/ekp-web/api/autocomplete/postoffice/id/999973']);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|9998|2026-09-11/);
+    const done = lookup(waiting, [deposited, collected]);
+    const delivered = await done.tracker.fetch(WRONG_SWISS_POST_NUMBER);
+    expect(delivered).toMatchObject({ current_stage: 'delivered' });
+    expect(delivered.pickup_point).toBeUndefined();
+    expect(done.urls.some((url) => url.includes('/autocomplete/'))).toBe(false);
+  });
+
+  it('asks for the arrival office first, as the tracker page does, and only for a site number', async () => {
+    const forwarded = lookup({ ...waiting, avis: { ...waiting.avis, arrivalPostOfficeZip: '999950' } }, [deposited],
+      () => new Response(JSON.stringify({ ...OFFICE, zip: '999950' })));
+    await forwarded.tracker.fetch(WRONG_SWISS_POST_NUMBER);
+    expect(forwarded.urls.filter((url) => url.includes('/autocomplete/'))).toEqual([
+      'https://service.post.ch/ekp-web/api/autocomplete/postoffice/id/999950']);
+    for (const avis of [undefined, { deliveryPostOfficeZip: '9999' }, { deliveryPostOfficeZip: ['999973'] }]) {
+      const app = lookup({ ...waiting, avis }, [deposited]);
+      expect((await app.tracker.fetch(WRONG_SWISS_POST_NUMBER)).pickup_point).toBeUndefined();
+      expect(app.urls.some((url) => url.includes('/autocomplete/'))).toBe(false);
+    }
+  });
+
+  it('reads a branch, a partner shop and a terminal as their records give them', () => {
+    const branch = { zip: '999901', zip4: '9998', postOffice: true, street: 'Example Street', streetNumber: '9B',
+      city: 'Example Town', addressZip: '999800', description: 'Filiale 9999 Example Town 1', descriptionName: 'Die Post Example Town 1' };
+    expect(swissPostPickupPoint(branch, '999901')).toBe('Filiale 9999 Example Town 1\nExample Street 9B\n9998 Example Town');
+    expect(swissPostPickupPoint({ ...branch, description: 'My Post Service 9999 Example Town Kiosk', descriptionName: 'My Post Service' },
+      '999901')).toBe('My Post Service 9999 Example Town Kiosk\nExample Street 9B\n9998 Example Town');
+    // A terminal's record can name it again in place of a street.
+    expect(swissPostPickupPoint({ ...OFFICE, street: OFFICE.description }, '999973'))
+      .toBe('My Post 24 9999 Example Town Station\n9999 Example Town');
+    expect(swissPostPickupPoint({ ...OFFICE, street: null }, '999973')).toBe('My Post 24 9999 Example Town Station\n9999 Example Town');
+  });
+
+  it('keeps the name alone without a town, and nothing without a name', () => {
+    expect(swissPostPickupPoint({ ...OFFICE, zip4: '999900' }, '999973')).toBe('My Post 24 9999 Example Town Station');
+    expect(swissPostPickupPoint({ ...OFFICE, city: null }, '999973')).toBe('My Post 24 9999 Example Town Station');
+    expect(swissPostPickupPoint({ ...OFFICE, description: ['Example'] }, '999973')).toBe('');
+    expect(swissPostPickupPoint([OFFICE], '999973')).toBe('');
+  });
+
+  it.each([
+    ['another site', () => new Response(JSON.stringify({ ...OFFICE, zip: '999974' }))],
+    ['an empty record', () => new Response('{}')],
+    ['a blocked reply', () => new Response('<html>sorry</html>', { headers: { 'Content-Type': 'text/html' } })],
+    ['an outage', () => new Response('', { status: 503 })],
+  ])('keeps the parcel without a pickup point after %s', async (_, reply) => {
+    const result = await lookup(waiting, [deposited], reply).tracker.fetch(WRONG_SWISS_POST_NUMBER);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', events: [{ provider_code: 'PARCEL.*.1.2102' }] });
+    expect(result.pickup_point).toBeUndefined();
+  });
+
+  it('ends a lookup cancelled during the office request', async () => {
+    const controller = new AbortController();
+    const app = lookup(waiting, [deposited], () => {
+      controller.abort(new Error('Cancelled'));
+      return new Response('', { status: 503 });
+    });
+    await expect(app.tracker.fetch(WRONG_SWISS_POST_NUMBER, { signal: controller.signal })).rejects.toThrow('Cancelled');
   });
 });
 
