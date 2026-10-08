@@ -1846,7 +1846,7 @@ export const CARRIER_CATALOG = {
         "checksum": "s10"
       },
       {
-        "pattern": "^32\\d{11}[A-F0-9]{8}$",
+        "pattern": "^(?:32\\d{11}[A-F0-9]{8}|(?=[A-F0-9]*[A-F])[A-F0-9]{2}\\d{7}[A-F0-9]{12})$",
         "confidence": "low"
       },
       {

@@ -180,6 +180,72 @@
         "confidence": "high"
       },
       "note": "An archived Royal Mail tracking page. Royal Mail's tracker returns its history as a Tracked 48 item."
+    },
+    {
+      "number": "4C040882100006BE6D560",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250725140457/https://www.royalmail.com/track-your-item?trackNumber=4C040882100006BE6D560",
+        "date": "2025-07-25",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "royal-mail"
+        ]
+      },
+      "note": "An archived Royal Mail tracking page for a 21-character domestic 2D reference: two hexadecimal characters, seven digits and twelve hexadecimal characters. Royal Mail's tracker no longer holds it."
+    },
+    {
+      "number": "21025698300000015CF6B",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250610091340/https://www.royalmail.com/track-your-item?trackNumber=21025698300000015CF6B",
+        "date": "2025-06-10",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "royal-mail"
+        ]
+      },
+      "note": "An archived Royal Mail tracking page for a 21-character domestic 2D reference: two hexadecimal characters, seven digits and twelve hexadecimal characters. Royal Mail's tracker no longer holds it."
+    },
+    {
+      "number": "4E045983800002FA8AF12",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240829173934/https://www.royalmail.com/track-your-item?trackNumber=4E045983800002FA8AF12",
+        "date": "2024-08-29",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "royal-mail"
+        ]
+      },
+      "note": "An archived Royal Mail tracking page for a 21-character domestic 2D reference: two hexadecimal characters, seven digits and twelve hexadecimal characters. Royal Mail's tracker no longer holds it."
     }
   ]
 }

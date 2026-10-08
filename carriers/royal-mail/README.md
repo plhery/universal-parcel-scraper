@@ -69,7 +69,8 @@ tokens stay outside Git.
 
 Akamai or an interactive CAPTCHA can block anonymous retrieval. Browser build
 and network affect access; enabled universal providers can handle a failed
-direct lookup. Domestic hexadecimal references remain low-confidence candidates because their
+direct lookup. Domestic 2D references have 21 characters (two hexadecimal, seven digits,
+twelve hexadecimal) or 16 hexadecimal ones. They remain low-confidence candidates because their
 shape can overlap unrelated identifiers. Printed spaces and hyphens are stripped
 before submission. Other barcode formats and postcode-gated delivery options are
 outside this adapter's scope.

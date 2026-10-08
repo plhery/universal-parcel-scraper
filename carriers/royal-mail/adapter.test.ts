@@ -465,6 +465,14 @@ describe('Royal Mail lookup steps', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
+  it('accepts both 2D reference families but not 21 digits outside the 32 prefix', () => {
+    expect(royalMailTrackingUrl('4c-000 000 0000-0AB CDE F12')).toBe('https://www.royalmail.com/track-your-item#/tracking-results/4C00000000000ABCDEF12');
+    expect(royalMailTrackingUrl('320000000000000000000')).toContain('/320000000000000000000');
+    expect(royalMailTrackingUrl('0000ABCDEF000000')).toContain('/0000ABCDEF000000');
+    expect(() => royalMailTrackingUrl('120000000000000000000')).toThrow('domestic 2D reference');
+    expect(() => royalMailTrackingUrl('4C000A0000000ABCDEF12')).toThrow('domestic 2D reference');
+  });
+
   it('accepts a Parcelforce parcel number, which the same tracker answers, but not its consignment number', () => {
     expect(royalMailTrackingUrl('pbzz 0000000 001')).toBe('https://www.royalmail.com/track-your-item#/tracking-results/PBZZ0000000001');
     expect(() => royalMailTrackingUrl('ZZ0000000')).toThrow('Parcelforce parcel number');
