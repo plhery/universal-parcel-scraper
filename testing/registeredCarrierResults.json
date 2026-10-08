@@ -7,34 +7,40 @@
       "last_update": "2026-03-29T13:00:00.747Z",
       "expected_delivery": null,
       "weight_kg": 0.45,
+      "delivered_at": "2026-03-29T13:00:00.747Z",
       "events": [
         {
           "time": "2026-03-29T13:00:00.747Z",
           "description": "Sendung wurde zugestellt",
           "location": "Synthetic destination",
-          "stage": "delivered"
+          "stage": "delivered",
+          "provider_code": "IZ"
         },
         {
           "time": "2026-03-28T13:00:00Z",
           "description": "Empfänger nicht angetroffen - brieflich benachrichtigt",
-          "stage": "failed_attempt"
+          "stage": "failed_attempt",
+          "provider_code": "RU"
         },
         {
           "time": "2026-03-28T12:00:00Z",
           "description": "Sendung in Zustellung",
           "location": "Synthetic delivery base",
-          "stage": "out_for_delivery"
+          "stage": "out_for_delivery",
+          "provider_code": "AZT"
         },
         {
           "time": "2026-03-28T11:00:00Z",
           "description": "Sendung im Logistikzentrum in Bearbeitung",
           "location": "Synthetic logistics centre",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "provider_code": "BEI"
         },
         {
           "time": "2026-03-27T12:00:00Z",
           "description": "Versender*in bereitet die Sendung für den Versand vor",
-          "stage": "registered"
+          "stage": "registered",
+          "provider_code": "AV"
         }
       ]
     }

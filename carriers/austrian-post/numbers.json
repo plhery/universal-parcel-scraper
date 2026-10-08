@@ -27,6 +27,9 @@
         "url": "https://www.trustpilot.com/reviews/6a75ae37aa311760875cbad5",
         "date": "2026-08-07"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -36,7 +39,7 @@
           "estafeta"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Austrian Post, which stays one candidate among several."
+      "note": "Public Austrian Post report. Austrian Post's tracking returns its history."
     },
     {
       "number": "CA643257963AT",
@@ -150,6 +153,44 @@
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "CA254582517AT",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=CA254582517AT",
+        "date": "2026-02-10",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "austrian-post",
+        "confidence": "high"
+      },
+      "note": "Public report of a parcel Austrian Post sent abroad, from the German consumer forum. Austrian Post's tracking no longer knows it."
+    },
+    {
+      "number": "CP865614593AT",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=CP865614593AT",
+        "date": "2026-04-09",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "Posted under Austrian Post on the German consumer forum, but its S10 check digit does not validate, so it is not an item number as printed."
     }
   ]
 }

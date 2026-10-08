@@ -16,6 +16,20 @@ describe('Austrian Post public tracking', () => {
     expect(result.events?.[0]).toMatchObject({ location: 'Synthetic destination' });
   });
 
+  it('reads the measured size, the delivery time and scan codes, and never a shipper', () => {
+    const payload = fixture();
+    payload.data.einzelsendung.dimensions = { length: 35, width: 31, height: 7 };
+    payload.data.einzelsendung.shipper = { name: 'PRIVATE NAME', street: 'PRIVATE STREET', postalCode: 'PRIVATE CODE', city: 'PRIVATE CITY' };
+    const result = parseAustrianPostResponse(payload, NUMBER);
+    expect(result).toMatchObject({ dimensions_text: '35 × 31 × 7 cm', delivered_at: '2026-03-29T13:00:00.747Z' });
+    expect(result.sender_name).toBeUndefined();
+    expect(result.events?.map((event) => event.provider_code)).toEqual(['IZ', 'RU', 'AZT', 'BEI', 'AV']);
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    payload.data.einzelsendung.dimensions = { length: 35, width: 0, height: 7 };
+    const unmeasured = parseAustrianPostResponse(payload, NUMBER);
+    expect(unmeasured.dimensions_text).toBeUndefined();
+  });
+
   it('rejects a different returned item', () => {
     const payload = fixture();
     payload.data.einzelsendung.sendungsnummer = '1000000000000000000002';
@@ -66,7 +80,11 @@ describe('Austrian Post public tracking', () => {
     const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe('https://api.post.at/sendungen/sv/graphqlPublic');
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error' });
-    expect(JSON.parse(String(init?.body)).query).toContain(`sendungsnummer: "${NUMBER}"`);
+    const query = String(JSON.parse(String(init?.body)).query);
+    expect(query).toContain(`sendungsnummer: "${NUMBER}"`);
+    // The public page shows the sender only after sign-in; nothing about the recipient either.
+    expect(query).not.toContain('shipper');
+    expect(query).not.toMatch(/street|postalCode|deliveryAddress/);
     expect(init?.headers).not.toHaveProperty('Authorization');
     const cancelled = AbortSignal.abort();
     await expect(new AustrianPostTracker({ fetcher }).fetch(NUMBER, { signal: cancelled })).rejects.toThrow();

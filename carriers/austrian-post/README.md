@@ -14,10 +14,15 @@ Summary codes and scan codes use different vocabularies. A scan marked `IZ` can
 describe completed delivery; its reason and wording determine the event stage.
 Timestamps carry explicit offsets, which are preserved.
 
+The query also asks for the measured size, in whole centimetres. It never
+asks for the shipper, which the public page shows only after sign-in, or
+anything about the recipient.
+
 ## Limitations
 
-Account-only delivery options and recipient details are not retrieved. Empty
-history and GraphQL errors remain inconclusive so another source can help.
+Account-only delivery options and recipient details are not retrieved. The
+endpoint's delivery estimate is not read. Empty history and GraphQL errors
+remain inconclusive so another source can help.
 
 ## Testing
 

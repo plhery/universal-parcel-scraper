@@ -39,21 +39,33 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
     const description = clean(raw.trackingDesc, 500);
     if (!time || !description) throw new SchemaError(PROVIDER, 'Austrian Post returned an incomplete scan');
     const location = clean(raw.eventPlaceName, 200);
-    const mapped = austrianPostEventStatus(clean(raw.status, 32), clean(raw.reasontypecode, 32), description);
+    const code = clean(raw.status, 32);
+    const mapped = austrianPostEventStatus(code, clean(raw.reasontypecode, 32), description);
     const key = JSON.stringify([time.iso, location, description]);
     if (seen.has(key)) return;
     seen.add(key);
-    parsed.push({ event: { time: time.iso, description, ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) }, timestamp: time.timestamp, index });
+    parsed.push({ event: {
+      time: time.iso, description, ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}),
+      ...(/^[A-Z0-9]{1,8}$/.test(code) ? { provider_code: code } : {}),
+    }, timestamp: time.timestamp, index });
   });
   parsed.sort((a, b) => b.timestamp - a.timestamp || b.index - a.index);
   const events = parsed.slice(0, 100).map(({ event }) => event);
   const mapped = austrianPostSummaryStatus(clean(parcel.status, 32));
   if (!events.length) throw new IndeterminateError(PROVIDER, 'Austrian Post returned a shipment without tracking history');
   const weight = typeof parcel.weight === 'number' && Number.isFinite(parcel.weight) && parcel.weight > 0 ? parcel.weight : null;
+  // Whole centimetres; a missing side means the parcel was not measured.
+  const sides = isRecord(parcel.dimensions) ? [parcel.dimensions.length, parcel.dimensions.width, parcel.dimensions.height] : [];
+  const measured = sides.length === 3 && sides.every((side) => Number.isInteger(side) && (side as number) > 0 && (side as number) < 10_000);
+  const status = mapped?.status ?? 'unknown';
+  const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
   return {
-    status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
+    status, ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: events[0]!.description!, last_update: events[0]!.time!, expected_delivery: null,
-    ...(weight === null ? {} : { weight_kg: weight }), events,
+    ...(weight === null ? {} : { weight_kg: weight }),
+    ...(measured ? { dimensions_text: `${sides.join(' × ')} cm` } : {}),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    events,
   };
 }
 
@@ -65,7 +77,7 @@ export class AustrianPostTracker {
     const budgetMs = context.budgetMs ?? this.options.timeoutMs ?? 15_000;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError('Austrian Post timeout must be positive');
     context.signal?.throwIfAborted();
-    const query = `query { einzelsendung(sendungsnummer: "${number}") { sendungsnummer status weight sendungsEvents { timestamp status reasontypecode trackingDesc eventPlaceName } } }`;
+    const query = `query { einzelsendung(sendungsnummer: "${number}") { sendungsnummer status weight dimensions { length width height } sendungsEvents { timestamp status reasontypecode trackingDesc eventPlaceName } } }`;
     try {
       const { bytes } = await fetchBounded(ENDPOINT, {
         method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) }, body: JSON.stringify({ query }),

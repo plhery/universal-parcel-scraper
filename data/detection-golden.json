@@ -9228,6 +9228,14 @@
     ]
   },
   {
+    "input": "CA254582517AT",
+    "carrier": "austrian-post",
+    "confidence": "high",
+    "candidates": [
+      "austrian-post"
+    ]
+  },
+  {
     "input": "CA315000362UA",
     "carrier": "intl-post",
     "confidence": "high",
@@ -9643,6 +9651,17 @@
     "confidence": "high",
     "candidates": [
       "an-post"
+    ]
+  },
+  {
+    "input": "CP865614593AT",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
