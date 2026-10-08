@@ -130,6 +130,13 @@ describe('classifyWording', () => {
   it('reads French missed attempts, same-day delivery notices and mailbox deliveries', () => {
     expect(wordingStage('Nous sommes passés mais nous n\'avons pu vous remettre votre colis. Il va être acheminé vers votre point de retrait.')).toBe('failed_attempt');
     expect(wordingStage('Votre envoi n\'a pas pu être distribué ce jour.')).toBe('failed_attempt');
+    // A day's delivery called off, worded as the next round to come.
+    expect(wordingStage('Votre colis ne peut être livré ce jour. Il sera mis en livraison au plus tôt.')).toBe('failed_attempt');
+    expect(wordingStage('Il sera mis en livraison au plus tôt.')).toBe('in_transit');
+    expect(wordingStage("Echec de livraison suite à l'absence du destinataire.")).toBe('failed_attempt');
+    expect(wordingStage("Avis de passage suite à l'absence du destinataire")).toBe('failed_attempt');
+    expect(wordingStage("En cas d'absence du destinataire, le colis sera déposé en point relais")).not.toBe('failed_attempt');
+    expect(wordingStage('Livraison reportée de 24h')).toBe('in_transit');
     expect(wordingStage('Le destinataire est informé par SMS de la livraison de son colis ce jour')).toBe('out_for_delivery');
     expect(wordingStage('Le destinataire est informé par e-mail de la livraison de son colis ce jour')).toBe('out_for_delivery');
     expect(wordingStage('Votre envoi a été distribué dans la boîte à lettres.')).toBe('delivered');
