@@ -27,7 +27,8 @@
     "history",
     "location",
     "eta",
-    "delivered_at"
+    "delivered_at",
+    "sender_name"
   ],
   "portal": {
     "url": "https://www.canadapost-postescanada.ca/track-reperage/en/search?searchFor={trackingNumber}",
@@ -37,14 +38,16 @@
       "history",
       "eta",
       "location",
-      "delivered_at"
+      "delivered_at",
+      "sender_name"
     ],
     "scraped": [
       "status",
       "history",
       "eta",
       "location",
-      "delivered_at"
+      "delivered_at",
+      "sender_name"
     ],
     "discarded": [
       "service type",

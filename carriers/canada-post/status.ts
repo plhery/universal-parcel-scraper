@@ -18,11 +18,30 @@ const SCAN_STAGE: Readonly<Record<string, Stage>> = {
   '2600': 'in_transit', '1481': 'exception', '0156': 'ready_for_pickup', '0172': 'exception',
   '1701': 'ready_for_pickup', '1703': 'in_transit', '0174': 'out_for_delivery', '0170': 'in_transit',
   '1301': 'accepted', '1466': 'delivered', '0500': 'out_for_delivery', '2407': 'ready_for_pickup',
-  '0405': 'accepted', '0175': 'in_transit', '0100': 'in_transit', '1302': 'accepted',
+  '0175': 'in_transit', '0100': 'in_transit', '1302': 'accepted',
+  '3000': 'registered', '2300': 'accepted', '0104': 'in_transit', '0105': 'in_transit', '0107': 'in_transit',
+  // Arrivals and departures between facilities, after acceptance.
+  '0405': 'in_transit', '0410': 'in_transit',
+  // A delivery notice card: the attempt ended with the item sent to a post office.
+  '1479': 'failed_attempt', '1488': 'failed_attempt',
+  '1434': 'delivered', '1441': 'delivered', '1442': 'delivered', '1462': 'delivered', '1496': 'delivered', '1498': 'delivered',
+  '4700': 'in_transit',
+  // International legs. A customs release moves the item on rather than holding it.
+  '4000': 'accepted', '4100': 'in_transit', '4202': 'in_transit', '0700': 'customs', '0910': 'in_transit',
+  '8901': 'in_transit', '4310': 'in_transit', '4311': 'in_transit', '4330': 'customs', '4400': 'customs',
+  '4450': 'in_transit', '4600': 'in_transit',
 };
 
 export function canadaPostScanStage(code: string): Stage | null {
   return Object.hasOwn(SCAN_STAGE, code) ? SCAN_STAGE[code]! : null;
+}
+
+/** Notices that move nothing: a revised delivery date, the recipient's delivery preference or a delivery photo. */
+const NOTICES = new Set(['1200', '1220', '1225', '2001']);
+
+/** A code whose meaning is known, whether or not it carries a stage. */
+export function isKnownCanadaPostScan(code: string): boolean {
+  return canadaPostScanStage(code) !== null || NOTICES.has(code);
 }
 
 export function canadaPostStage(text: string): Stage | null {

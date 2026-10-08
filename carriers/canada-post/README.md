@@ -1,6 +1,6 @@
 # Canada Post
 
-Tracks parcel PINs and Canadian postal numbers through the public tracking application's anonymous JSON service. Delivery-notice and numeric reference lookups resolve one parcel PIN before retrieving its history.
+Tracks parcel PINs and Canadian postal numbers through the public tracking application's anonymous JSON service. Mail arriving from abroad is tracked under the sending post's postal number. Delivery-notice and numeric reference lookups resolve one parcel PIN before retrieving its history.
 
 Checksum validation prevents malformed postal references from selecting this adapter. A 16-digit PIN ends in a GS1 check digit: one that fails is not suggested, and a valid one stays a suggestion because other carriers share the length.
 
@@ -12,7 +12,9 @@ A PIN lookup reads the detail response directly. An alias lookup first requires 
 
 Scan clocks use their supplied offsets. Missing offsets retain local clocks, while malformed clocks retain their original labels. Unresolved rows preserve source order and cannot lend an older timestamp to the current status.
 
-Return flags establish a return journey rather than completed sender delivery. Conditional collection notices keep their pickup meaning. Movement remains movement throughout a return journey, and outbound delivery estimates are suppressed.
+Return flags establish a return journey rather than completed sender delivery. Conditional collection notices keep their pickup meaning. A delivery notice card is a failed attempt, and a customs release moves the item on. Movement remains movement throughout a return journey, and outbound delivery estimates are suppressed.
+
+The delivery estimate is kept while the latest scan is one the adapter knows, including notices that move nothing such as a revised delivery date. The sender is the business account the tracking page names.
 
 Delivery time comes from the matching delivery scan. Attempt dates and signature availability cannot substitute for it. A delivered summary without a matching current delivery scan is retained as an undated snapshot.
 

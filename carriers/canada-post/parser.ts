@@ -6,18 +6,19 @@ import type { Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, statusForStage } from './status.js';
+import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, isKnownCanadaPostScan, statusForStage } from './status.js';
 
 export function normalizeCanadaPostNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^\d{11,24}$/.test(value) && !(value.endsWith('CA') && isValidS10TrackingNumber(value))) {
-    throw new InvalidInputError('canada-post', 'Canada Post requires a parcel PIN, numeric reference or valid Canadian postal tracking number');
+  // Mail arriving from abroad keeps the sending post's S10 number on Canada Post's tracker.
+  if (!/^\d{11,24}$/.test(value) && !isValidS10TrackingNumber(value)) {
+    throw new InvalidInputError('canada-post', 'Canada Post requires a parcel PIN, numeric reference or valid postal tracking number');
   }
   return value;
 }
 
 export function canadaPostLookupKind(number: string): 'pin' | 'dnc' | 'reference' {
-  if (/^(?:\d{11,12}|\d{16}|[A-Z]{2}\d{9}CA)$/.test(number)) return 'pin';
+  if (/^(?:\d{11,12}|\d{16}|[A-Z]{2}\d{9}[A-Z]{2})$/.test(number)) return 'pin';
   return /^\d{15}$/.test(number) ? 'dnc' : 'reference';
 }
 
@@ -163,12 +164,15 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
   const deliveredAt = current === 'delivered' && matchingDelivery && (!actualDay || actualDay === actualEventDay) ? matchingDelivery.event.time : null;
   const candidate = isRecord(estimate) && clean(estimate.revisedDate, 64) ? revised : standard;
   const expected = !currentReturn && current !== 'delivered' && current !== 'returned' && current !== 'exception' && current !== 'failed_attempt'
-    && summary !== 'FullProgressAlert' && summary !== 'InTransitAlert' && canadaPostScanStage(latest.event.provider_code!)
+    && summary !== 'FullProgressAlert' && summary !== 'InTransitAlert' && isKnownCanadaPostScan(latest.event.provider_code!)
     && candidate && latest.sourceDate && candidate >= latest.sourceDate ? candidate : null;
+  // The tracking page labels this "Sender": the business account that shipped the parcel.
+  const sender = typeof payload.custNm === 'string' && !payload.custNm.includes('*') ? clean(payload.custNm, 160) : '';
   return { status: current ? statusForStage(current) : 'unknown', ...(current ? { current_stage: current } : {}),
     last_status_text: snapshot === 'return' ? 'Return to sender' : current === 'delivered' ? 'Delivered'
       : current === 'returned' ? 'Returned to sender' : latest.event.description,
     last_update: snapshot ? null : latest.event.time ?? null,
     ...(!snapshot && latest.event.local_time ? { last_update_local: latest.event.local_time } : {}),
-    expected_delivery: expected, ...(deliveredAt ? { delivered_at: deliveredAt } : {}), events: events.slice(0, 100) };
+    expected_delivery: expected, ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(sender ? { sender_name: sender } : {}),
+    events: events.slice(0, 100) };
 }

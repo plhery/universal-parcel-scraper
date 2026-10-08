@@ -2,7 +2,9 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { adapter, CanadaPostTracker, canadaPostTrackingUrl, parseCanadaPostTrackingResponse } from './adapter.js';
 import { canadaPostLookupKind, normalizeCanadaPostNumber, resolveCanadaPostPin } from './parser.js';
-import { canadaPostPackageStage, canadaPostStage, canadaPostStatus } from './status.js';
+import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, canadaPostStatus, isKnownCanadaPostScan } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { wordingStage } from '../../core/status/index.js';
 import { BudgetExceededError, carrierErrorKind, IndeterminateError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -38,7 +40,7 @@ describe('Canada Post native history', () => {
 
   it('projects every declared capability without sensitive blocks', () => {
     const meta = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(meta.capabilities).toEqual(['history', 'location', 'eta', 'delivered_at']);
+    expect(meta.capabilities).toEqual(['history', 'location', 'eta', 'delivered_at', 'sender_name']);
     const result = parse(delivered());
     expect(result.events?.some(event => event.location)).toBe(true);
     expect(result.delivered_at).toBeTruthy();
@@ -317,5 +319,65 @@ describe('Canada Post bounded native lookup', () => {
   it('uses a pathname tracking link rather than a legacy hash route', () => {
     const url = new URL(canadaPostTrackingUrl(NUMBER)); expect(url.pathname).toBe('/track-reperage/en/search');
     expect(url.searchParams.get('searchFor')).toBe(NUMBER); expect(url.hash).toBe('');
+  });
+});
+
+describe('Canada Post scan vocabulary', () => {
+  const scan = (cd: string, descEn: string, date: string, type = 'Info') =>
+    ({ cd, descEn, type, datetime: { date, time: '12:00:00', zoneOffset: '-04:00' } });
+
+  it('maps every recorded code to the stage it records', () => {
+    for (const entry of statuses.entries) {
+      if (!entry.code) continue;
+      if (!/^\d+$/.test(entry.code)) { expect(canadaPostPackageStage(entry.code)).toBe(entry.stage); continue; }
+      if (!('stage' in entry)) {
+        expect(isKnownCanadaPostScan(entry.code)).toBe(true);
+        expect(canadaPostScanStage(entry.code)).toBeNull();
+        continue;
+      }
+      const wording = entry.wording ?? '';
+      expect(canadaPostScanStage(entry.code) ?? canadaPostStage(wording) ?? wordingStage(wording), entry.code).toBe(entry.stage);
+    }
+  });
+
+  it('tracks mail from abroad under the sending post\'s number', async () => {
+    const number = 'LX000000005JP';
+    expect(normalizeCanadaPostNumber('lx 000000005 jp')).toBe(number);
+    expect(canadaPostLookupKind(number)).toBe('pin');
+    const payload = { pin: number, status: 'InTransit', expectedDlvryDateTime: { dlvryDate: '2026-03-20' }, events: [
+      scan('0405', 'Item arrived', '2026-03-14', 'VehicleInfo'),
+      scan('0410', 'Item departed', '2026-03-13', 'VehicleInfo'),
+      scan('0910', 'Item was released by Customs and is now with Canada Post for processing', '2026-03-12', 'FromCust'),
+      scan('0700', 'Item has arrived in Canada and will be presented for review', '2026-03-11', 'ArrivalInCanada'),
+      scan('4202', 'International item has left originating country and is en route to Canada', '2026-03-10', 'InfoTId'),
+      scan('4000', 'International item mailed in originating country', '2026-03-09'),
+    ] };
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(payload));
+    const result = await new CanadaPostTracker({ fetcher }).fetch(number);
+    expect(String(fetcher.mock.calls[0]![0])).toContain(`/${number}/detail`);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', expected_delivery: '2026-03-20' });
+    expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'customs', 'in_transit', 'accepted']);
+    await expect(new CanadaPostTracker({ fetcher }).fetch('LX000000006JP')).rejects.toBeInstanceOf(InvalidInputError);
+  });
+
+  it('reads a delivery notice card as a failed attempt', () => {
+    const p = moving(); p.status = 'HalfDelivered';
+    p.events.unshift(scan('1479', 'Notice card left indicating where and when to pick up item', '2026-03-16', 'Attempted'));
+    expect(parse(p, MOVING_NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+  });
+
+  it('keeps the estimate when the latest row is a notice that moves nothing', () => {
+    const p = moving(); p.expectedDlvryDateTime.revisedDate = '2026-03-21';
+    p.events.unshift(scan('1200', 'Expected delivery date updated', '2026-03-16'));
+    const result = parse(p, MOVING_NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', expected_delivery: '2026-03-21' });
+    expect(result.events?.[0]).not.toHaveProperty('stage');
+  });
+
+  it('names the sender the tracking page shows, and nothing masked', () => {
+    const p = delivered(); p.custNm = '  Example Shop Ltd ';
+    expect(parse(p).sender_name).toBe('Example Shop Ltd');
+    p.custNm = 'EXA*** SHOP'; expect(parse(p)).not.toHaveProperty('sender_name');
+    p.custNm = 42; expect(parse(p)).not.toHaveProperty('sender_name');
   });
 });
