@@ -80,6 +80,13 @@
       "id": "posti-2",
       "pattern": "^JJFI\\d{17}$",
       "confidence": "high"
+    },
+    {
+      "id": "posti-3",
+      "pattern": "^00\\d64\\d{15}$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "sscc"
     }
   ]
 }

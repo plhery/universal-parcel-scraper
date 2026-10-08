@@ -2147,6 +2147,12 @@
       {
         "pattern": "^JJFI\\d{17}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^00\\d64\\d{15}$",
+        "confidence": "low",
+        "checksum": "sscc",
+        "preferred": true
       }
     ]
   },

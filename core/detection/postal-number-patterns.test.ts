@@ -70,4 +70,13 @@ describe('Nordic SSCCs behind the 00 identifier', () => {
     expect(candidates[0]).toBe('bring-posten');
     expect(candidates).toContain('postnord');
   });
+
+  it('lists and asks Posti first for a Finnish GS1 prefix', () => {
+    expect(detectCarrierMatch('00264123456789012349')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('00264123456789012349').candidates[0]).toBe('posti');
+    expect(recognitionAskedCarriers('00264123456789012349')[0]).toBe('posti');
+    for (const number of ['00264123456789012340', '00265123456789012346']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('posti');
+    }
+  });
 });

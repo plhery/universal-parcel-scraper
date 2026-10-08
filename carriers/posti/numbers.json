@@ -38,13 +38,14 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "posti",
           "swiss-post-cargo",
           "postnord",
           "usps",
           "nz-post"
         ]
       },
-      "note": "Example Posti tracking link quoted in an open-source plugin's issue, not a confirmed shipment. The source attributes it to Posti, which no rule claims."
+      "note": "Example Posti tracking link quoted in an open-source plugin's issue, not a confirmed shipment. Its Finnish GS1 prefix lists Posti first among the twenty-digit candidates."
     },
     {
       "number": "LR288565359NL",

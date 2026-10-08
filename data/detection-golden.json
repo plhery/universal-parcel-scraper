@@ -202,12 +202,17 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "posti",
       "swiss-post-cargo",
       "postnord",
       "usps",
       "nz-post"
     ],
+    "preferred": [
+      "posti"
+    ],
     "asked": [
+      "posti",
       "nz-post",
       "swiss-post-cargo"
     ]

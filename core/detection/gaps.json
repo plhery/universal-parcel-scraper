@@ -241,12 +241,6 @@
     "reason": "A Planzer lookup needs the access key of its shared link."
   },
   {
-    "carrier": "posti",
-    "pattern": "^\\d{20}$",
-    "kind": "open",
-    "reason": "No rule offers Posti for its twenty-digit SSCC numbers."
-  },
-  {
     "carrier": "postnord",
     "pattern": "^\\d{14}$",
     "kind": "by_design",

@@ -1467,6 +1467,17 @@
     "reason": "Nordic SSCCs fit PostNord's rule, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. A Danish or Swedish prefix lists PostNord first, and the number stays a low-confidence suggestion."
   },
   {
+    "shape": "9{20} SSCC with Finland's GS1 prefix 64",
+    "carriers": [
+      "nz-post",
+      "posti",
+      "postnord",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "A Finnish SSCC suggests Posti, which tracks them, and also fits PostNord's Nordic SSCC rule, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. The passing check lists Posti first; anonymous recognition must establish the carrier."
+  },
+  {
     "shape": "Twelve digits that pass the FedEx and Purolator checks",
     "carriers": [
       "brt",
