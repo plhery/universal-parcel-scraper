@@ -25,6 +25,10 @@ short scan text is kept as the description; they carry local clocks only. The
 parcel's country, the United States or Canada, is the destination.
 Detection claims the `UUS`, `UUSC`, `4C…US` and `U9999` formats and suggests
 UniUni for other `U` and fifteen-digit references, which Canadian parcels carry.
+Cross-border shippers' references of two letters, two digits, `CAA0`, a letter
+and nine digits only suggest UniUni: Intelcom's tracker accepts them too.
+Recognition only looks up UniUni's own formats, so tracking these needs UniUni
+chosen.
 
 ## Live test
 

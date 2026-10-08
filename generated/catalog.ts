@@ -2889,6 +2889,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^U(?!9999)\\d{15}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{2}CAA0[A-Z]\\d{9}$",
+        "confidence": "low"
       }
     ]
   },
@@ -5350,7 +5354,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "canpar": ["canpar-1"],
   "ontrac": ["ontrac-1","ontrac-2","ontrac-3","ontrac-4"],
   "speedx": ["speedx-1","speedx-2"],
-  "uniuni": ["uniuni-1","uniuni-2","uniuni-3","uniuni-4","uniuni-5"],
+  "uniuni": ["uniuni-1","uniuni-2","uniuni-3","uniuni-4","uniuni-5","uniuni-6"],
   "landmark-global": ["landmark-global-1"],
   "old-dominion": ["old-dominion-1","old-dominion-2"],
   "spee-dee": ["spee-dee-1","spee-dee-2"],

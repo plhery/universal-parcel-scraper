@@ -276,7 +276,7 @@
   },
   {
     "carrier": "uniuni",
-    "pattern": "^(?:BAUNI\\d{15}|JY\\d{2}[A-Z0-9]{14}|UD\\d{14}|UR\\d{17})$",
+    "pattern": "^(?:BAUNI\\d{15}|UD\\d{14}|UR\\d{17})$",
     "kind": "open",
     "reason": "UniUni's tracker serves these Canadian parcels, one sample per shape; no family is established."
   },

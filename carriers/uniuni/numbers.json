@@ -216,7 +216,120 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "GV26CAA0U027724478",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260429161737/https://www.uniuni.com/tracking/?no=GV26CAA0U027724478",
+        "date": "2026-04-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "JY25CAA0D002430567",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260429154022/https://www.uniuni.com/tracking/?no=JY25CAA0D002430567",
+        "date": "2026-04-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "JY25CAA0T043167214",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251210162718/https://www.uniuni.com/tracking/?no=JY25CAA0T043167214",
+        "date": "2025-12-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "GV25CAA0U033926004",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251006122118/https://www.uniuni.com/tracking/?no=GV25CAA0U033926004",
+        "date": "2025-10-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "JY25CAA0U024161162",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250828050144/https://www.uniuni.com/tracking/?no=JY25CAA0U024161162",
+        "date": "2025-08-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
       },
       "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
     },

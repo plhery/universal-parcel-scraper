@@ -2887,6 +2887,10 @@
       {
         "pattern": "^U(?!9999)\\d{15}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{2}CAA0[A-Z]\\d{9}$",
+        "confidence": "low"
       }
     ]
   },

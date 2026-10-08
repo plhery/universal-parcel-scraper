@@ -219,9 +219,12 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
       },
-      "note": "A cross-border shipper reference that Intelcom's tracker accepts and returns history for. Nothing in it names Intelcom."
+      "note": "A cross-border shipper reference that Intelcom's tracker accepts and returns history for. Nothing in it names Intelcom; UniUni's tracker knows it too, so detection suggests UniUni."
     },
     {
       "number": "GRS01856MLZL2U4MC06",
