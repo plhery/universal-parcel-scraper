@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { SpxPhTracker } from './adapter.js';
-import { parseSpxPh } from './parser.js';
+import { normalizeSpxPhNumber, parseSpxPh } from './parser.js';
+import { spxPhStage } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 const NUMBER = 'PH000000000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 function legacy() {
@@ -69,6 +71,56 @@ describe('SPX Philippines parser', () => {
     expect(result.events?.map(event => event.description)).toEqual(['Operation 0', 'Operation 1', 'Operation 2', 'Operation 3', 'Operation 4']);
     expect(result.events?.[2]).toMatchObject({ provider_time_text: 'unresolved' });
     expect(result.last_status_text).toBe('Operation 0');
+  });
+});
+describe('SPX Philippines status codes', () => {
+  it('maps every recorded code to its recorded stage', () => {
+    for (const entry of statuses.entries) {
+      const legacy = entry.note?.startsWith('Legacy feed status.') ?? false;
+      expect(spxPhStage(entry.code, legacy), entry.code).toBe(entry.stage);
+    }
+  });
+  it('files modern scans by tracking code and keeps facility places but never seller pickups', () => {
+    const value = fixture();
+    value.data.sls_tracking_info.records = [
+      { tracking_code: 'F980', description: 'Parcel has been delivered', actual_time: 1767456000, display_flag: 1 },
+      { tracking_code: 'F650', description: 'Delivery attempt was unsuccessful', actual_time: 1767452400, display_flag: 1 },
+      { tracking_code: 'F599', description: 'Parcel has arrived at the delivery hub : Example Hub', actual_time: 1767448800, display_flag: 1,
+        current_location: { location_name: 'Example Hub', lat: '14.55551', lng: '121.04449', full_address: 'SYNTHETIC-ADDRESS' } },
+      { tracking_code: 'F339', description: '[China] Parcel has cleared export customs', actual_time: 1767445200, display_flag: 1,
+        current_location: { location_name: 'Example Airport', lat: '', lng: '' } },
+      { tracking_code: 'F100', description: 'Parcel has been picked up by our logistics partner', actual_time: 1767441600, display_flag: 1,
+        current_location: { location_name: 'PRIVATE-SELLER', lat: '14.6', lng: '121.1' } },
+      { tracking_code: 'F001', description: 'Pickup attempt was unsuccessful', actual_time: 1767438000, display_flag: 1 },
+    ];
+    const result = parseSpxPh(value, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
+    expect(result.events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['F980', 'delivered', 'carrier_map'], ['F650', 'failed_attempt', 'carrier_map'], ['F599', 'in_transit', 'carrier_map'],
+      ['F339', 'in_transit', 'carrier_map'], ['F100', 'accepted', 'carrier_map'], ['F001', 'registered', 'carrier_map'],
+    ]);
+    expect(result.events?.[2]).toMatchObject({ location: 'Example Hub', point: { latitude: 14.5555, longitude: 121.0445 } });
+    expect(result.events?.[3]).toMatchObject({ location: 'Example Airport' });
+    expect(result.events?.[3]).not.toHaveProperty('point');
+    expect(result.events?.[4]).not.toHaveProperty('location');
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE-SELLER|SYNTHETIC-ADDRESS|"14\.6"/);
+  });
+  it('files legacy rows by their status name and leaves unknown codes to the wording', () => {
+    const value = { retcode: 0, data: { sls_tracking_number: NUMBER, tracking_list: [
+      { status: 'OnHold', message: '[Example Hub] Your parcel is on-hold. Reason: [Example Reason]', timestamp: 1767456000 },
+      { status: 'Delivering', message: '[Example Hub] Your parcel is being delivered by courier', timestamp: 1767452400 },
+      { status: 'New_Status', message: 'Parcel is out for delivery', timestamp: 1767448800 },
+    ] } };
+    const result = parseSpxPh(value, NUMBER, true);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(result.events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['OnHold', 'exception', 'carrier_map'], ['Delivering', 'out_for_delivery', 'carrier_map'],
+      ['New_Status', 'out_for_delivery', expect.stringMatching(/^wording:/)],
+    ]);
+  });
+  it('accepts the earlier Shopee Express prefix and still refuses other countries', () => {
+    expect(normalizeSpxPhNumber('speph00000000000a')).toBe('SPEPH00000000000A');
+    expect(() => normalizeSpxPhNumber('SPEMY000000000001')).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   });
 });
 describe('SPX Philippines retrieval', () => {

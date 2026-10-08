@@ -229,6 +229,126 @@
         ]
       },
       "note": "An SPX Philippines tracking link archived by the Wayback Machine. SPX's tracker returns its history."
+    },
+    {
+      "number": "SPEPH026469986443",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220325140647/https://spx.ph/detail/SPEPH026469986443",
+        "date": "2022-03-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic marketplace parcel"
+      },
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "A Shopee Express Philippines tracking page archived by the Wayback Machine, together with the carrier's reply showing its history. The tracker no longer returns it."
+    },
+    {
+      "number": "SPEPH026751961563",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220325091813/https://spx.ph/detail/SPEPH026751961563",
+        "date": "2022-03-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic marketplace parcel"
+      },
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "A Shopee Express Philippines tracking page archived by the Wayback Machine, together with the carrier's reply showing its history. The tracker no longer returns it."
+    },
+    {
+      "number": "SPEPH030798633537",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230711094231/https://spx.ph/detail/SPEPH030798633537",
+        "date": "2023-07-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic marketplace parcel"
+      },
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "A Shopee Express Philippines tracking page archived by the Wayback Machine, together with the carrier's reply showing its history. The tracker no longer returns it."
+    },
+    {
+      "number": "SPEPH03142933364B",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231110013947/https://spx.ph/detail/SPEPH03142933364B",
+        "date": "2023-11-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic marketplace parcel"
+      },
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "A Shopee Express Philippines tracking page archived by the Wayback Machine, together with the carrier's reply showing its history. The tracker no longer returns it."
+    },
+    {
+      "number": "SPEPH034069377792",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230208044141/https://spx.ph/detail/SPEPH034069377792",
+        "date": "2023-02-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "domestic marketplace parcel"
+      },
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "A Shopee Express Philippines tracking page archived by the Wayback Machine. The carrier's archived reply holds no history, and the tracker no longer returns it."
+    },
+    {
+      "number": "SPEPH037811203715",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230510015604/https://spx.ph/detail/SPEPH037811203715",
+        "date": "2023-05-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic marketplace parcel"
+      },
+      "expect": {
+        "carrier": "spx-ph",
+        "confidence": "high"
+      },
+      "note": "A Shopee Express Philippines tracking page archived by the Wayback Machine, together with the carrier's reply showing its history. The tracker no longer returns it."
     }
   ]
 }

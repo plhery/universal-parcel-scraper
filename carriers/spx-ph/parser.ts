@@ -1,15 +1,16 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
-import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus } from '../../core/result/index.js';
 import { classifyWording } from '../../core/status/index.js';
 import { epochSecondsTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { isSpxPhFacilityCode, spxPhStage } from './status.js';
 
 const PROVIDER = 'SPX Express Philippines';
 export function normalizeSpxPhNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^(?:SPX)?PH\d{10,16}[A-Z]?$/.test(number)) throw new InvalidInputError(PROVIDER, 'SPX Philippines requires a Philippine tracking number');
+  if (!/^(?:SPX|SPE)?PH\d{10,16}[A-Z]?$/.test(number)) throw new InvalidInputError(PROVIDER, 'SPX Philippines requires a Philippine tracking number');
   return number;
 }
 export function parseSpxPh(payload: unknown, raw: string, legacy = false): CarrierResult {
@@ -45,10 +46,17 @@ export function parseSpxPh(payload: unknown, raw: string, legacy = false): Carri
     if (!description) throw new SchemaError(PROVIDER, 'SPX Philippines returned an empty scan');
     const clock = legacy ? row.timestamp : row.actual_time;
     const time = typeof clock === 'number' && Number.isSafeInteger(clock) && clock >= 1_000_000_000 && clock < 10_000_000_000 ? epochSecondsTime(clock)?.iso : undefined;
-    const mapped = classifyWording(description, 'pending');
-    const location = clean(row.location, 200);
+    // Modern rows carry a tracking code, legacy rows a status name.
+    const rawCode = clean(legacy ? row.status : row.tracking_code, 64);
+    const code = /^[A-Za-z0-9_]{1,64}$/.test(rawCode) ? rawCode : '';
+    const own = code ? spxPhStage(code, legacy) : undefined;
+    const mapped = own ? { stage: own, source: 'carrier_map' } : classifyWording(description, 'pending');
+    const place = !legacy && isSpxPhFacilityCode(code) && isRecord(row.current_location) ? row.current_location : null;
+    const location = clean(row.location, 200) || (place ? clean(place.location_name, 200) : '');
+    const point = place ? eventPoint(place.lat, place.lng) : null;
     return [{ description, ...(time ? { time } : cleanScalar(clock, 64) ? { provider_time_text: cleanScalar(clock, 64) } : {}),
-      ...(location ? { location } : {}), ...(mapped.source !== 'none' ? { stage: mapped.stage, stage_source: mapped.source } : {}) }];
+      ...(location ? { location } : {}), ...(point ? { point } : {}), ...(code ? { provider_code: code } : {}),
+      ...(mapped.source !== 'none' ? { stage: mapped.stage, stage_source: mapped.source } : {}) }];
   });
   if (!events.length) throw new IndeterminateError(PROVIDER, 'SPX Philippines returned no visible tracking history');
   // A partial-clock comparator is not transitive and can move unresolved rows

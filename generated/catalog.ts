@@ -4986,7 +4986,7 @@ export const CARRIER_CATALOG = {
           "spx.ph"
         ],
         "pathPattern": "^/track/?$",
-        "query": "^((?:SPX)?PH\\d{10,16}[A-Z]?)$"
+        "query": "^((?:SPX|SPE)?PH\\d{10,16}[A-Z]?)$"
       },
       {
         "domains": [
@@ -5003,19 +5003,23 @@ export const CARRIER_CATALOG = {
           "spx.ph",
           "shopeexpress.ph"
         ],
-        "path": "^/detail/((?:SPX)?PH\\d{10,16}[A-Z]?)(?:/|$)"
+        "path": "^/detail/((?:SPX|SPE)?PH\\d{10,16}[A-Z]?)(?:/|$)"
       },
       {
         "domains": [
           "spx.ph",
           "shopeexpress.ph"
         ],
-        "fragment": "^/detail/((?:SPX)?PH\\d{10,16}[A-Z]?)(?:$|[?&])"
+        "fragment": "^/detail/((?:SPX|SPE)?PH\\d{10,16}[A-Z]?)(?:$|[?&])"
       }
     ],
     "detectionRules": [
       {
         "pattern": "^SPXPH\\d{10,16}[A-Z]?$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^SPEPH\\d{11}[0-9A-Z]$",
         "confidence": "high"
       },
       {
@@ -5319,7 +5323,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "omgo": ["omgo-1"],
   "sagawa": ["sagawa-waybill"],
   "speedpak": ["speedpak-1"],
-  "spx-ph": ["spx-ph-prefixed","spx-ph-domestic"],
+  "spx-ph": ["spx-ph-prefixed","spx-ph-shopee-express","spx-ph-domestic"],
   "xpressbees": ["xpressbees-awb"],
 };
 

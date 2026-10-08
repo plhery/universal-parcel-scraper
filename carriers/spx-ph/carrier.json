@@ -25,22 +25,27 @@
     ]
   },
   "capabilities": [
-    "history"
+    "history",
+    "location",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://spx.ph/track?{trackingNumber}",
     "canaryUrl": "https://spx.ph/en",
     "shows": [
       "status",
-      "history"
+      "history",
+      "location"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "location"
     ],
     "discarded": [
       "recipient_details",
       "contact_details",
+      "seller_location",
       "future_milestones"
     ],
     "unavailable": [
@@ -52,7 +57,7 @@
     {
       "domains": ["spx.ph"],
       "pathPattern": "^/track/?$",
-      "query": "^((?:SPX)?PH\\d{10,16}[A-Z]?)$"
+      "query": "^((?:SPX|SPE)?PH\\d{10,16}[A-Z]?)$"
     },
     {
       "domains": [
@@ -69,20 +74,25 @@
         "spx.ph",
         "shopeexpress.ph"
       ],
-      "path": "^/detail/((?:SPX)?PH\\d{10,16}[A-Z]?)(?:/|$)"
+      "path": "^/detail/((?:SPX|SPE)?PH\\d{10,16}[A-Z]?)(?:/|$)"
     },
     {
       "domains": [
         "spx.ph",
         "shopeexpress.ph"
       ],
-      "fragment": "^/detail/((?:SPX)?PH\\d{10,16}[A-Z]?)(?:$|[?&])"
+      "fragment": "^/detail/((?:SPX|SPE)?PH\\d{10,16}[A-Z]?)(?:$|[?&])"
     }
   ],
   "detection": [
     {
       "id": "spx-ph-prefixed",
       "pattern": "^SPXPH\\d{10,16}[A-Z]?$",
+      "confidence": "high"
+    },
+    {
+      "id": "spx-ph-shopee-express",
+      "pattern": "^SPEPH\\d{11}[0-9A-Z]$",
       "confidence": "high"
     },
     {

@@ -37,6 +37,14 @@
     "reason": "Colis Privé accepts generic seventeen-character composites; the specific OMGO prefix is the only high-confidence rule."
   },
   {
+    "shape": "SPEPH followed by twelve digits ending in a French postcode range",
+    "carriers": [
+      "colis-prive",
+      "spx-ph"
+    ],
+    "reason": "Colis Privé accepts generic seventeen-character composites; the Shopee Express Philippines prefix is the only high-confidence rule."
+  },
+  {
     "shape": "AA9{10}",
     "carriers": [
       "amazon-logistics",
