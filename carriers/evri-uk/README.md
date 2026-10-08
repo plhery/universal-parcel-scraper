@@ -55,6 +55,8 @@ caller's deadline and cancellation signal.
   later scan replaces or withdraws it. A delivery's time is `delivered_at`.
 - `sender_name` is the account Evri names as the sender, only when Evri
   marks the parcel as neither consumer-to-consumer nor a customer return.
+- `service_name` is the delivery service Evri gives the parcel
+  (`service.serviceType`), such as next-day or two-day delivery.
 - Unresolved clocks stay in `provider_time_text`; sorting requires every
   event clock to resolve.
 - Recipient, address, photos, GPS, ownership credentials and delivery prose

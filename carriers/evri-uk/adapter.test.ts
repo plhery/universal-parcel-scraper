@@ -130,6 +130,15 @@ describe('Evri UK anonymous history', () => {
     expect(result.events?.[0]?.stage).toBe(stage);
   });
 
+  it('names the delivery service Evri gives the parcel', () => {
+    const payload = history();
+    expect(parseEvriUk(payload, NUMBER, URN)).not.toHaveProperty('service_name');
+    payload.results[0].service = { serviceType: ' Next Day  Delivery ' };
+    expect(parseEvriUk(payload, NUMBER, URN).service_name).toBe('Next Day Delivery');
+    payload.results[0].service = { serviceType: 2 };
+    expect(parseEvriUk(payload, NUMBER, URN)).not.toHaveProperty('service_name');
+  });
+
   it("names a business sender, but not a consumer's or the retailer a return goes back to", () => {
     const payload = history();
     Object.assign(payload.results[0], { c2cClient: false, returnParcel: false, sender: { displayName: '  Example  Retail ', name: 'PRIVATE SENDER' } });

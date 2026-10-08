@@ -29,7 +29,8 @@
     "eta",
     "sender_name",
     "delivered_at",
-    "provider_code"
+    "provider_code",
+    "service_name"
   ],
   "portal": {
     "url": "https://www.evri.com/track/parcel/{trackingNumber}/details",
@@ -49,7 +50,8 @@
       "eta_window",
       "sender_name",
       "delivered_at",
-      "provider_code"
+      "provider_code",
+      "service_name"
     ],
     "discarded": [
       "recipient_details",

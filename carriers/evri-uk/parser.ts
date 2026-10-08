@@ -3,7 +3,7 @@ import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/e
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { cleanScalar } from '../../core/transport/text.js';
+import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 
 // Evri's rail codes. A parcel's `trackingListV2` lists the rail it is on;
@@ -122,6 +122,7 @@ export function parseEvriUk(payload: unknown, raw: string, expectedUrn?: string)
   const newest = events[0]!;
   const stage = newest.stage as Stage | undefined;
   const sender = senderName(parcel);
+  const service = isRecord(parcel.service) ? clean(parcel.service.serviceType, 80) : '';
   return {
     status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage } : {}),
     last_status_text: newest.description ?? null, last_update: newest.time ?? null,
@@ -129,6 +130,7 @@ export function parseEvriUk(payload: unknown, raw: string, expectedUrn?: string)
     expected_delivery: windows.get(newest) ?? null,
     ...(stage === 'delivered' && newest.time ? { delivered_at: newest.time } : {}),
     ...(sender ? { sender_name: sender } : {}),
+    ...(service ? { service_name: service } : {}),
     events: events.slice(0, 100),
     tracking_url: evriUkTrackingUrl(number), tracking_source: 'structured-web-response',
   };
