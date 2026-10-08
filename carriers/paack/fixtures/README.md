@@ -6,6 +6,6 @@
   `variables` field is a `PRIVATE …` placeholder so the test can assert none leaks.
 - `label-barcode-order.json`: the same loader for an order looked up by its label barcode,
   with the structure of a live reply. `external_id` is the retailer's own reference, not the
-  barcode, and the timeline lists the steps still to come without a timestamp. Times and the
-  delivery postcode are synthetic; retailer and order references are `PRIVATE …`
-  placeholders.
+  barcode. The event headers show `expected_delivery_ts` as the delivery day and time slot,
+  and the timeline lists the steps still to come without a timestamp. Times and the delivery
+  postcode are synthetic; retailer and order references are `PRIVATE …` placeholders.

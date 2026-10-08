@@ -47,11 +47,16 @@ postcode.
 - Event times are parsed locally, not with `core/time`: the loader mixes epoch seconds,
   epoch milliseconds and ISO strings with offsets in one field, and the result keeps
   millisecond precision.
-- `expected_delivery` is the end of the delivery window, dropped once delivered or in
-  exception. The window start is not kept.
+- `expected_delivery` is the delivery window, `expected_delivery_ts`, as
+  `YYYY-MM-DD HH:MM–HH:MM`. Its ends are instants, and the page shows them on the delivery
+  country's clock (the Canary Islands' for Spanish postcodes 35 and 38), so the result does
+  too and takes that clock as its `timezone`. A window across midnight, or without an
+  offset, keeps only its last day. It is dropped once delivered or in exception, and when it
+  ended before the newest scan.
 - Retailer, recipient name, e-mail, phone, address and per-event `variables` (which
   interpolate them) are never read; a test asserts it. The delivery postcode is only
-  compared with the requested one.
+  compared with the requested one. The delivery country, and in Spain the postcode's
+  province, only pick the clock.
 
 ## Limitations
 

@@ -19,13 +19,15 @@
  * e-mail, phone and address, and per-event `variables` that repeat them.
  * `parse()` copies nothing from those objects: each event is rebuilt from its
  * timestamp, our own description and the mapped stage, and the only order-level
- * fields read are the delivery postcode, compared and never copied, and the
- * delivery window.
+ * fields read are the delivery postcode, compared and never copied, the
+ * delivery country, which picks the window's clock, and the delivery window.
  */
 import { load } from 'cheerio';
+import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { countryCode, countryTimeZone, explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
 import { decodeText, fetchBounded, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyPaackEvent } from './status.js';
@@ -35,6 +37,7 @@ const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 2_000_000;
 const MAX_EVENTS = 100;
 const MAX_REDIRECTS = 1;
+const DEFAULT_ZONE = 'Europe/Paris';
 const PAACK_HOST = /(?:^|\.)paack\.(?:app|co)$/;
 const NOT_FOUND_PATTERN = /order not found|incorrect order number|commande introuvable|pedido no encontrado/i;
 const NOT_FOUND_PAGE_PATTERN = /order not found|incorrect order number or postal code|commande introuvable|pedido no encontrado/i;
@@ -67,6 +70,34 @@ function normalizedDate(value: unknown): string | null {
     if (match && !Number.isNaN(Date.parse(candidate))) return match[1]!;
   }
   return normalizedTimestamp(value)?.iso.slice(0, 10) ?? null;
+}
+
+/**
+ * The clock the page shows the delivery window on: the delivery country's, and
+ * the Canary Islands' for Spanish postcodes 35 and 38.
+ */
+function deliveryZone(country: unknown, postcode: string): string {
+  return countryCode(country) === 'ES' && /^3[58]\d{3}$/.test(postcode)
+    ? 'Atlantic/Canary'
+    : countryTimeZone(country) ?? DEFAULT_ZONE;
+}
+
+/**
+ * `expected_delivery_ts` as the page shows it: `YYYY-MM-DD HH:MM–HH:MM` on the
+ * delivery clock when both ends are instants within one day, else the day
+ * alone. A window that ended before the newest scan is dropped.
+ */
+function expectedDelivery(window: JsonObject, zone: string, newest: number): string | null {
+  const start = explicitOffsetTime(window.start);
+  const end = explicitOffsetTime(window.end) ?? start;
+  if (!end) return normalizedDate(window.end ?? window.start);
+  if (end.timestamp < newest) return null;
+  const clock = (time: ParsedTime) => DateTime.fromMillis(time.timestamp, { zone }).toFormat('yyyy-MM-dd HH:mm');
+  const last = clock(end);
+  const first = start ? clock(start) : last;
+  return first.slice(0, 10) === last.slice(0, 10) && first < last
+    ? `${first}–${last.slice(11)}`
+    : last.slice(0, 10);
 }
 
 function routeData(payload: unknown): JsonObject {
@@ -236,16 +267,18 @@ export function parsePaackTrackingResponse(
     ? normalizedTimestamp(activeEvent.timestamp ?? activeEvent.time)
     : null;
 
-  const expected = isRecord(order.expected_delivery_ts)
-    ? normalizedDate(order.expected_delivery_ts.end ?? order.expected_delivery_ts.start)
+  const zone = deliveryZone(address?.country, postcode);
+  const newest = Math.max(activeTime?.timestamp ?? -Infinity, parsedEvents[0]?.timestamp ?? -Infinity);
+  const expected = isRecord(order.expected_delivery_ts) && !['delivered', 'exception'].includes(current.status)
+    ? expectedDelivery(order.expected_delivery_ts, zone, newest)
     : null;
   return {
     status: current.status,
     current_stage: current.stage,
     last_status_text: current.description,
     last_update: activeTime?.iso ?? events[0]?.time ?? null,
-    expected_delivery: ['delivered', 'exception'].includes(current.status) ? null : expected,
-    timezone: 'Europe/Paris',
+    expected_delivery: expected,
+    timezone: zone,
     events,
   };
 }

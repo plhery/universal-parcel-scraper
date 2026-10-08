@@ -209,7 +209,7 @@ describe('Paack response normalization', () => {
       .toMatchObject({ status: 'delivered', last_status_text: 'Delivered' });
   });
 
-  it('retains an expected date only for a non-terminal shipment', () => {
+  it('retains the delivery window only for a non-terminal shipment', () => {
     const result = parsePaackTrackingResponse(successRoute({
       eventList: [{
         id: 'driver-assigned',
@@ -225,7 +225,8 @@ describe('Paack response normalization', () => {
     }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(result).toMatchObject({
       status: 'out_for_delivery',
-      expected_delivery: '2024-07-28',
+      expected_delivery: '2024-07-28 08:00–20:00',
+      timezone: 'Europe/Paris',
     });
   });
 
@@ -409,7 +410,8 @@ describe('Paack label barcode lookup', () => {
       current_stage: 'accepted',
       last_status_text: 'Shipment accepted',
       last_update: '2024-07-27T16:38:19.000Z',
-      expected_delivery: '2024-07-28',
+      // The page shows the day's window, 07:00 to 20:00 UTC, on the Paris clock.
+      expected_delivery: '2024-07-28 09:00–22:00',
       timezone: 'Europe/Paris',
       // The steps still to come carry no timestamp and are not history.
       events: [
@@ -437,6 +439,38 @@ describe('Paack label barcode lookup', () => {
       kind: 'schema',
       message: 'Paack returned a different shipment',
     }));
+  });
+});
+
+describe('Paack delivery window', () => {
+  const slot = { start: '2024-07-28T12:00:00.000Z', end: '2024-07-28T13:00:00.000Z' };
+
+  it.each([
+    ['FR', '75001', 'Europe/Paris', '2024-07-28 14:00–15:00'],
+    ['ES', '28001', 'Europe/Madrid', '2024-07-28 14:00–15:00'],
+    ['ES', '35001', 'Atlantic/Canary', '2024-07-28 13:00–14:00'],
+    ['PT', '4445-027', 'Europe/Lisbon', '2024-07-28 13:00–14:00'],
+    ['GB', 'SW1A 1AA', 'Europe/London', '2024-07-28 13:00–14:00'],
+  ])('shows a slot in %s (%s) on the %s clock', (country, postcode, timezone, window) => {
+    expect(parsePaackTrackingResponse(labelRoute({
+      delivery_address: { country, post_code: postcode },
+      expected_delivery_ts: slot,
+    }), postcode)).toMatchObject({ expected_delivery: window, timezone });
+  });
+
+  it('keeps the day alone across midnight or without an offset', () => {
+    expect(parsePaackTrackingResponse(labelRoute({
+      expected_delivery_ts: { start: '2024-07-28T20:00:00.000Z', end: '2024-07-28T22:30:00.000Z' },
+    }), LABEL_POSTCODE).expected_delivery).toBe('2024-07-29');
+    expect(parsePaackTrackingResponse(labelRoute({
+      expected_delivery_ts: { start: '2024-07-28T09:00:00', end: '2024-07-28T22:00:00' },
+    }), LABEL_POSTCODE).expected_delivery).toBe('2024-07-28');
+  });
+
+  it('drops a window that ended before the newest scan', () => {
+    expect(parsePaackTrackingResponse(labelRoute({
+      expected_delivery_ts: { start: '2024-07-27T12:00:00.000Z', end: '2024-07-27T13:00:00.000Z' },
+    }), LABEL_POSTCODE)).toMatchObject({ current_stage: 'accepted', expected_delivery: null });
   });
 });
 
