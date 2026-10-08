@@ -397,6 +397,20 @@
     ]
   },
   {
+    "input": "00776401518297964800",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post",
+      "swiss-post-cargo"
+    ]
+  },
+  {
     "input": "0079350082809726059741",
     "carrier": "ctt-express",
     "confidence": "high",
@@ -458,6 +472,20 @@
     "confidence": "high",
     "candidates": [
       "ctt-express"
+    ]
+  },
+  {
+    "input": "00876401518210952508",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post",
+      "swiss-post-cargo"
     ]
   },
   {
@@ -6806,6 +6834,22 @@
     ]
   },
   {
+    "input": "47803744-001",
+    "carrier": "postlogistics",
+    "confidence": "high",
+    "candidates": [
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "47803744-002",
+    "carrier": "postlogistics",
+    "confidence": "high",
+    "candidates": [
+      "postlogistics"
+    ]
+  },
+  {
     "input": "49-55636302",
     "carrier": "unknown",
     "confidence": "low",
@@ -10227,6 +10271,22 @@
     ]
   },
   {
+    "input": "980104961901240282",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
+    "input": "980617276801573353",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "98281706456",
     "carrier": "unknown",
     "confidence": "low",
@@ -10246,6 +10306,14 @@
       "gls-de",
       "postlogistics",
       "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "984046791203947142",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
     ]
   },
   {
@@ -10310,6 +10378,14 @@
     ]
   },
   {
+    "input": "990063700003500836",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "99112233445500000",
     "carrier": "unknown",
     "confidence": "low",
@@ -10344,6 +10420,14 @@
     ]
   },
   {
+    "input": "993711592340684130",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "9937575115",
     "carrier": "unknown",
     "confidence": "low",
@@ -10364,6 +10448,14 @@
       "relais-colis",
       "tipsa",
       "dhl-ecommerce-es"
+    ]
+  },
+  {
+    "input": "993810141010161698",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
     ]
   },
   {
@@ -10397,6 +10489,22 @@
     ]
   },
   {
+    "input": "994013638900807166",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
+    "input": "994210076619568186",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "99451046",
     "carrier": "unknown",
     "confidence": "low",
@@ -10404,6 +10512,14 @@
       "mondial-relay",
       "colisweb",
       "heppner"
+    ]
+  },
+  {
+    "input": "996013273002019507",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
     ]
   },
   {
@@ -10946,6 +11062,22 @@
     "confidence": "high",
     "candidates": [
       "bpost"
+    ]
+  },
+  {
+    "input": "CE731282274CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
+    "input": "CF129292339CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
     ]
   },
   {
@@ -12630,6 +12762,14 @@
     ]
   },
   {
+    "input": "LA055640697CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "LA059565532US",
     "carrier": "intl-post",
     "confidence": "high",
@@ -12987,6 +13127,14 @@
     ]
   },
   {
+    "input": "LR999773056CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "LS232735825CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -12996,6 +13144,22 @@
   },
   {
     "input": "LS244428589CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
+    "input": "LS444768217CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
+    "input": "LT063514435CH",
     "carrier": "swiss-post",
     "confidence": "high",
     "candidates": [
@@ -13146,6 +13310,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "LW232463107CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
   },
   {
     "input": "LX072774186NZ",
@@ -13634,6 +13806,19 @@
       "swiss-post-cargo"
     ],
     "asked": [
+      "swiss-post-cargo"
+    ]
+  },
+  {
+    "input": "PL-36688410",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "dhl-ecommerce-es"
+    ],
+    "asked": [
+      "dhl-ecommerce-es",
       "swiss-post-cargo"
     ]
   },

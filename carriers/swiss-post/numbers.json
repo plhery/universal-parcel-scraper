@@ -79,6 +79,310 @@
         "confidence": "high"
       },
       "note": "Sender reports a parcel from Switzerland to China. The suffix names Swiss Post as the issuing postal operator."
+    },
+    {
+      "number": "996013273002019507",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260903165320/https://service.post.ch/ekp-web/ui/entry/search/996013273002019507?lang=fr",
+        "date": "2026-09-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "990063700003500836",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260915221003/https://service.post.ch/ekp-web/ui/entry/search/990063700003500836",
+        "date": "2026-09-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "993810141010161698",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260921143300/https://service.post.ch/ekp-web/ui/entry/search/993810141010161698",
+        "date": "2026-09-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "994210076619568186",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260825133641/https://service.post.ch/ekp-web/ui/entry/search/994210076619568186?lang=de",
+        "date": "2026-08-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "994013638900807166",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260722180041/https://service.post.ch/ekp-web/ui/entry/search/994013638900807166",
+        "date": "2026-07-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "993711592340684130",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260715194841/https://service.post.ch/ekp-web/ui/entry/search/993711592340684130?lang=de",
+        "date": "2026-07-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "980104961901240282",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260727160721/https://service.post.ch/ekp-web/ui/entry/search/980104961901240282",
+        "date": "2026-07-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "980617276801573353",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260611192700/https://service.post.ch/ekp-web/ui/entry/search/980617276801573353?lang=en",
+        "date": "2026-06-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "984046791203947142",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260224113120/https://service.post.ch/ekp-web/ui/entry/search/984046791203947142?lang=en",
+        "date": "2026-02-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic parcel."
+    },
+    {
+      "number": "LT063514435CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260929162717/https://service.post.ch/ekp-web/ui/entry/search/LT063514435CH?lang=de",
+        "date": "2026-09-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Registered letter sent abroad."
+    },
+    {
+      "number": "CE731282274CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260827095044/https://service.post.ch/ekp-web/ui/entry/search/CE731282274CH?lang=de",
+        "date": "2026-08-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Parcel sent abroad."
+    },
+    {
+      "number": "LW232463107CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260717234300/https://service.post.ch/ekp-web/ui/entry/search/LW232463107CH?lang=de",
+        "date": "2026-07-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Domestic registered letter."
+    },
+    {
+      "number": "LR999773056CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260604033927/https://service.post.ch/ekp-web/ui/entry/search/LR999773056CH?lang=en",
+        "date": "2026-06-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Letter sent abroad."
+    },
+    {
+      "number": "CF129292339CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260302112144/https://service.post.ch/ekp-web/ui/entry/search/CF129292339CH?lang=en",
+        "date": "2026-03-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Parcel sent to Germany, where delivery failed."
+    },
+    {
+      "number": "LA055640697CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260507175439/https://service.post.ch/ekp-web/ui/entry/search/LA055640697CH?lang=it",
+        "date": "2026-05-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Letter sent abroad and returned."
+    },
+    {
+      "number": "LS444768217CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251224164327/https://service.post.ch/ekp-web/ui/entry/search/LS444768217CH?lang=en",
+        "date": "2025-12-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Swiss Post files it as an inbound letter."
     }
   ]
 }

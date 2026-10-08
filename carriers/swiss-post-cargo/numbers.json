@@ -51,6 +51,78 @@
         ]
       },
       "note": "Invented customer reference in the printed PL- and eight-digit form eos answers as a reference; not a known shipment."
+    },
+    {
+      "number": "00876401518210952508",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260205153245/https://tt.swisspost-cargo.com/public/trackandtrace/00876401518210952508",
+        "date": "2026-02-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "A tracking link archived by the Wayback Machine. eos returns its history. An SSCC behind the 00 identifier."
+    },
+    {
+      "number": "00776401518297964800",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250507182846/https://tracking.postlogistics.ch/public/trackandtrace/00776401518297964800",
+        "date": "2025-05-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "A tracking link archived by the Wayback Machine on the old PostLogistics tracker. eos returns its history. An SSCC behind the 00 identifier."
+    },
+    {
+      "number": "PL-36688410",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260623124016/https://tt.swisspost-cargo.com/public/trackandtrace/PL-36688410",
+        "date": "2026-06-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "customer_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A customer reference archived by the Wayback Machine. eos answers it with the histories of the two barcodes of its consignment. The adapter reads a reference only while that consignment has recent scans."
     }
   ]
 }

@@ -1473,5 +1473,13 @@
       "usps"
     ],
     "reason": "A Bring parcel SSCC typed with its 00 identifier also fits PostNord's Nordic SSCC rule and the broad Swiss Post Cargo, NZ Post and USPS candidates; Bring's rule lists it first and the number stays a suggestion."
+  },
+  {
+    "shape": "PL followed by eight digits ending in 0",
+    "carriers": [
+      "dhl-ecommerce-es",
+      "swiss-post-cargo"
+    ],
+    "reason": "DHL eCommerce Spain accepts two letters and eight digits ending in 0, which covers Swiss Post Cargo's PL- references; both stay low-confidence suggestions and carrier recognition asks eos."
   }
 ]
