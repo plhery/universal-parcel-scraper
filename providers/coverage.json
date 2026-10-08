@@ -1813,10 +1813,11 @@
     },
     {
       "carrier": "speedx",
-      "direct": "No adapter",
-      "sample": "Not tested",
+      "direct": "Yes",
+      "sample": "\u2713 2",
       "references": [
         {
+          "note": "Comparison reference, which returned two identity-bound scans directly: https://www.trustpilot.com/reviews/6aac80890d392f062ac1088b",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",

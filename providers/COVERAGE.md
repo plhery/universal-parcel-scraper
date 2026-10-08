@@ -128,7 +128,7 @@ asked after the other aggregators whatever its count.
 | [Colisweb](../carriers/colisweb/README.md) | Yes | ✓ 2 | Wrong carrier | No history | No history | Refused | N/A |
 | [Delivengo](../carriers/delivengo/README.md) | Yes (via La Poste) | No history | No history | No history | No history | No history | No history |
 | [UniUni](../carriers/uniuni/README.md) | Yes | ✓ 6 | ✓ 6 | ✓ 19 | ✓ 6 | ✓ 21 | N/A |
-| [SpeedX](../carriers/speedx/carrier.json) | No adapter | Not tested | No history | No history | ✓ 2 | No history | N/A |
+| [SpeedX](../carriers/speedx/README.md) | Yes | ✓ 2 | No history | No history | ✓ 2 | No history | N/A |
 | [GOFO Express](../carriers/gofo/README.md) | Yes | ✓ 14 | ✓ 14 | ✓ 14 | ✓ 14 | ✓ 14 | N/A |
 | [Ecoscooting](../carriers/ecoscooting/README.md) | Yes | ✓ 6 | ✓ 6, partial | ✓ 6, partial | No history | ✓ 22 | N/A |
 | [TIPSA](../carriers/tipsa/README.md) | Yes | ✓ 13 | No history | ✓ 13 | No history | No history | N/A |

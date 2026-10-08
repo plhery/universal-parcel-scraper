@@ -1,11 +1,11 @@
 {
   "catalog": 124,
-  "activeAdapters": 105,
+  "activeAdapters": 106,
   "countries": 58,
   "referenceCarriers": 113,
   "comparison": {
     "combined": 84,
-    "direct": 73,
+    "direct": 74,
     "providers": {
       "ParcelsApp": 53,
       "Postal Ninja": 43,

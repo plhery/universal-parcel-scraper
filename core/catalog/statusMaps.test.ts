@@ -75,6 +75,11 @@ describe('status map answers', () => {
     expect(answer('yunexpress', null, 'REMINDER EMAIL SENT FAILED')).toEqual(gap);
     expect(answer('dhl-express', 'PL', 'Processed at EXAMPLE CITY - FRANCE')).toEqual(mapped('in_transit'));
     expect(answer('dhl-express', null, 'Synthetic checkpoint')).toEqual(unknown);
+    expect(answer('speedx', '57104', 'Out for Delivery')).toEqual(mapped('out_for_delivery'));
+    expect(answer('speedx', '50001', 'Shipping Label Created')).toEqual(mapped('registered'));
+    // A code SpeedX's map does not list is staged by its event's category, which the code alone lacks.
+    expect(answer('speedx', '57999', 'Synthetic scan')).toEqual(unknown);
+    expect(answer('speedx', null, 'Delivered')).toEqual(unknown);
   });
 
   it("answers La Poste by the group and code it reads, for every carrier its adapter serves", () => {

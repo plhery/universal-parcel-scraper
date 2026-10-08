@@ -2824,9 +2824,9 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "speedx"
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://tracking.speedx.io/",
     "trackingUrlTemplate": "https://tracking.speedx.io/{trackingNumber}",
     "linkRules": [
       {

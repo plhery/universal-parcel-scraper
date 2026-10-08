@@ -9,11 +9,14 @@
         "url": "https://www.trustpilot.com/reviews/6aac80890d392f062ac1088b",
         "date": "2026-09-18"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "speedx",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Public report attributed to SpeedX, whose tracking page returns its history."
     },
     {
       "number": "SPXLAX000002601010000001",
@@ -35,11 +38,14 @@
         "url": "https://www.trustpilot.com/reviews/6aa98f8a65d38563d593e09f",
         "date": "2026-09-15"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "speedx",
         "confidence": "high"
       },
-      "note": "Publicly reported 24-character shipment number; the attribution was not independently verified."
+      "note": "Public report of a 24-character number attributed to SpeedX, whose tracking page returns its history."
     },
     {
       "number": "SPXMIA056745759994",
@@ -113,11 +119,14 @@
         "url": "https://es.trustpilot.com/review/speedx.io",
         "date": "2026-04-17"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "speedx",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; carrier attribution was not independently verified."
+      "note": "Public report attributed to SpeedX, whose tracking page returns its history."
     },
     {
       "number": "SPXMFE056775461351",
@@ -127,11 +136,14 @@
         "url": "https://es.trustpilot.com/review/speedx.io",
         "date": "2025-12-09"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "speedx",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; carrier attribution was not independently verified."
+      "note": "Public report attributed to SpeedX, whose tracking page returns its history."
     },
     {
       "number": "SPXMIA056749010616",
