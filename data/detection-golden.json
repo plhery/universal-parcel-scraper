@@ -12313,6 +12313,12 @@
     ]
   },
   {
+    "input": "BAUNI002410025541669",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "BE0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -14720,6 +14726,12 @@
     "candidates": [
       "j-and-t"
     ]
+  },
+  {
+    "input": "JY26CAA0D001077787",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "JY26CAA0T066574883",
@@ -17186,6 +17198,28 @@
     ]
   },
   {
+    "input": "U000115753261180",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "uniuni"
+    ],
+    "asked": [
+      "uniuni"
+    ]
+  },
+  {
+    "input": "U000302706915066",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "uniuni"
+    ],
+    "asked": [
+      "uniuni"
+    ]
+  },
+  {
     "input": "U999900000000001",
     "carrier": "uniuni",
     "confidence": "high",
@@ -17252,6 +17286,12 @@
     "asked": [
       "chronopost"
     ]
+  },
+  {
+    "input": "UD00000002827950",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "UE597256100NL",
@@ -17397,6 +17437,12 @@
     ]
   },
   {
+    "input": "UR07270000003615622",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "UT973056433NL",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -17422,6 +17468,30 @@
   },
   {
     "input": "UUS61T1260957452967",
+    "carrier": "uniuni",
+    "confidence": "high",
+    "candidates": [
+      "uniuni"
+    ]
+  },
+  {
+    "input": "UUS6972231192807457",
+    "carrier": "uniuni",
+    "confidence": "high",
+    "candidates": [
+      "uniuni"
+    ]
+  },
+  {
+    "input": "UUS69P8620998875588",
+    "carrier": "uniuni",
+    "confidence": "high",
+    "candidates": [
+      "uniuni"
+    ]
+  },
+  {
+    "input": "UUSC000019441251",
     "carrier": "uniuni",
     "confidence": "high",
     "candidates": [

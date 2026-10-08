@@ -19,6 +19,13 @@ current page uses a separate service with an explicit enabled flag. That
 optional estimate service is not queried. Detailed delivery prose, addresses,
 coordinates, operators and proof images are excluded.
 
+After a handover, a partner courier's scans arrive without UniUni's English
+summary, as does a Uni Store drop-off, which also has no status code. Their own
+short scan text is kept as the description; they carry local clocks only. The
+parcel's country, the United States or Canada, is the destination.
+Detection claims the `UUS`, `UUSC`, `4C…US` and `U9999` formats and suggests
+UniUni for other `U` and fifteen-digit references, which Canadian parcels carry.
+
 ## Live test
 
 Set `UNIUNI_TRACKING_NUMBER` outside the repository and run

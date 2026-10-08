@@ -2,10 +2,11 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 import { epochSecondsTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { uniuniStatus } from './status.js';
+import { uniuniDropOffStage, uniuniStatus } from './status.js';
 
 const PROVIDER = 'UniUni';
 
@@ -18,7 +19,7 @@ export function normalizeUniuniNumber(raw: string): string {
 /** Discovery only probes formats confirmed for individual parcels. */
 export function normalizeUniuniRecognitionNumber(raw: string): string {
   const number = normalizeUniuniNumber(raw);
-  if (!/^(?:UUS[A-Z0-9]{16}|UUSC\d{12}|U9999\d{11}|4C\d{9}US)$/.test(number)) throw new InvalidInputError(PROVIDER, 'UniUni recognition requires a supported parcel format');
+  if (!/^(?:UUS[A-Z0-9]{16}|UUSC\d{12}|U\d{15}|4C\d{9}US)$/.test(number)) throw new InvalidInputError(PROVIDER, 'UniUni recognition requires a supported parcel format');
   return number;
 }
 
@@ -75,30 +76,38 @@ export function parseUniuni(payload: unknown, rawNumber: string): CarrierResult 
   }
   if (!Array.isArray(item.spath_list) || item.spath_list.length > 500) throw new SchemaError(PROVIDER);
   const events: CarrierEvent[] = [];
+  const statuses: (ClassifiedStatus | undefined)[] = [];
   const seen = new Set<string>();
   const scans: unknown[] = item.spath_list;
   // The public client displays this oldest-first list in reverse. Keep that
   // sequence when the newest clock is incomplete, including equal-time scans.
   for (const scan of [...scans].reverse()) {
     if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'UniUni returned an incomplete scan');
-    const description = clean(scan.description_en, 500);
-    if (!description || typeof scan.state !== 'number' || !Number.isSafeInteger(scan.state) || scan.state < 0) {
+    // A partner courier's scans after a handover, and a Uni Store drop-off,
+    // come without UniUni's English summary: their only wording is that
+    // party's own scan text. A drop-off row has no status code either.
+    const partner = scan.description_en === undefined && scan.code === undefined && typeof scan.pathInfo === 'string';
+    const description = clean(partner ? scan.pathInfo : scan.description_en, partner ? 200 : 500);
+    const state = typeof scan.state === 'number' && Number.isSafeInteger(scan.state) && scan.state >= 0 ? scan.state : undefined;
+    if (!description || (state === undefined && !(partner && scan.state === undefined))) {
       throw new SchemaError(PROVIDER, 'UniUni returned a scan without status or public wording');
     }
-    const mapped = uniuniStatus(scan.state);
+    const mapped = state === undefined ? uniuniDropOffStage(description) : uniuniStatus(state);
     const location = [clean(scan.city, 100), clean(scan.province, 20)].filter(Boolean).join(', ');
-    // Detailed pathInfo, addresses, coordinates, operators and POD data can
-    // contain recipient or courier information; retain the English summary.
-    const event: CarrierEvent = { description, provider_code: String(scan.state), ...clock(scan.dateTime),
+    // UniUni's own detailed pathInfo, addresses, coordinates, operators and POD
+    // data can contain recipient or courier information; retain its English summary.
+    const event: CarrierEvent = { description, ...(state === undefined ? {} : { provider_code: String(state) }), ...clock(scan.dateTime),
       ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) };
     const key = JSON.stringify(event);
-    if (!seen.has(key)) { seen.add(key); events.push(event); }
+    if (!seen.has(key)) { seen.add(key); events.push(event); statuses.push(mapped); }
   }
   if (!events.length) throw new IndeterminateError(PROVIDER, 'UniUni returned no parcel history');
   const latest = events[0]!;
-  const mapped = uniuniStatus(Number(latest.provider_code));
+  const mapped = statuses[0];
+  // UniUni delivers within the United States and Canada; the parcel names which.
+  const country = item.country === 'US' || item.country === 'CA' ? item.country : undefined;
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: null, ...(mapped?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    events: events.slice(0, 100) };
+    ...(country ? { destination_country: country } : {}), events: events.slice(0, 100) };
 }

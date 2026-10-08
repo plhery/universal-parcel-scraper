@@ -80,6 +80,183 @@
         "confidence": "high"
       },
       "note": "Publicly reported UniUni last-mile number paired with a SpeedPAK shipment. Source attribution is not a permanent live-status oracle."
+    },
+    {
+      "number": "UUS69P8620998875588",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261002135332/https://www.uniuni.com/tracking/?no=UUS69P8620998875588",
+        "date": "2026-10-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "uniuni",
+        "confidence": "high"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "UUS6972231192807457",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260908191236/https://www.uniuni.com/tracking/?no=UUS6972231192807457",
+        "date": "2026-09-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "uniuni",
+        "confidence": "high"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "UUSC000019441251",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260820100251/https://www.uniuni.com/tracking/?no=UUSC000019441251",
+        "date": "2026-08-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "uniuni",
+        "confidence": "high"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "U000302706915066",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261001073755/https://www.uniuni.com/tracking/?no=U000302706915066",
+        "date": "2026-10-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "U000115753261180",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260418191054/https://www.uniuni.com/tracking/?no=U000115753261180",
+        "date": "2026-04-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "uniuni"
+        ]
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "BAUNI002410025541669",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260930052649/https://www.uniuni.com/tracking/?no=BAUNI002410025541669",
+        "date": "2026-09-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "JY26CAA0D001077787",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901191512/https://www.uniuni.com/tracking/?no=JY26CAA0D001077787",
+        "date": "2026-09-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "UD00000002827950",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260804142727/https://www.uniuni.com/tracking/?no=UD00000002827950",
+        "date": "2026-08-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "UR07270000003615622",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260728223743/https://www.uniuni.com/tracking/?no=UR07270000003615622",
+        "date": "2026-07-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
     }
   ]
 }

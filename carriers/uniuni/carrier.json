@@ -85,6 +85,11 @@
       "id": "uniuni-4",
       "pattern": "^U9999\\d{11}$",
       "confidence": "high"
+    },
+    {
+      "id": "uniuni-5",
+      "pattern": "^U(?!9999)\\d{15}$",
+      "confidence": "low"
     }
   ]
 }

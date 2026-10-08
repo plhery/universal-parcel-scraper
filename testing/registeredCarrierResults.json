@@ -1190,7 +1190,8 @@
           "time": "2026-01-01T14:30:00Z",
           "stage": "registered"
         }
-      ]
+      ],
+      "destination_country": "US"
     }
   },
   "ctt-express/pickup.json/": {
@@ -2444,7 +2445,8 @@
           "time": "2026-01-01T14:30:00Z",
           "stage": "registered"
         }
-      ]
+      ],
+      "destination_country": "US"
     }
   },
   "estafeta/full-guide-lookup.html/": {

@@ -2838,6 +2838,10 @@
       {
         "pattern": "^U9999\\d{11}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^U(?!9999)\\d{15}$",
+        "confidence": "low"
       }
     ]
   },

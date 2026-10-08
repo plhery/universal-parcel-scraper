@@ -31,13 +31,20 @@ describe('UniUni confirmed parcel formats', () => {
     expect(normalizeUniuniRecognitionNumber('4C000000001US')).toBe('4C000000001US');
   });
 
-  it('detects the U9999 numeric reference without claiming neighboring U shapes', () => {
+  it('claims the U9999 numeric reference and only suggests other U and fifteen-digit references', () => {
     const rule = metadata.detection.find((candidate: { id: string }) => candidate.id === 'uniuni-4');
+    const suggestion = metadata.detection.find((candidate: { id: string }) => candidate.id === 'uniuni-5');
     expect(rule.confidence).toBe('high');
+    expect(suggestion.confidence).toBe('low');
     expect(new RegExp(rule.pattern).test(U9999_NUMBER)).toBe(true);
+    expect(new RegExp(suggestion.pattern).test(U9999_NUMBER)).toBe(false);
     expect(normalizeUniuniRecognitionNumber('u9999-00000 000001')).toBe(U9999_NUMBER);
-    for (const number of ['U99990000000001', 'U9999000000000001', 'U999800000000001', 'U99990000000000A', `X${U9999_NUMBER}`]) {
+    expect(new RegExp(rule.pattern).test('U999800000000001')).toBe(false);
+    expect(new RegExp(suggestion.pattern).test('U999800000000001')).toBe(true);
+    expect(normalizeUniuniRecognitionNumber('U000100000000001')).toBe('U000100000000001');
+    for (const number of ['U99990000000001', 'U9999000000000001', 'U99990000000000A', `X${U9999_NUMBER}`]) {
       expect(new RegExp(rule.pattern).test(number), number).toBe(false);
+      expect(new RegExp(suggestion.pattern).test(number), number).toBe(false);
       expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(InvalidInputError);
     }
   });
@@ -65,6 +72,35 @@ describe('UniUni parcel history', () => {
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some(scan => scan.location)),
       delivered_at: Boolean(result.delivered_at) };
     for (const capability of metadata.capabilities) expect(evidence[capability], capability).toBe(true);
+  });
+
+  it('keeps a partner courier\'s scans after a handover and a Uni Store drop-off', () => {
+    const value = fixture(); const item = value.data.valid_tno[0]; const scans = item.spath_list;
+    item.country = 'CA';
+    scans.splice(1, 0, { pathInfo: 'Parcel dropped off at Uni Store', pathAddress: 'PRIVATE_SYNTHETIC_STORE',
+      dateTime: { localTime: '2026-01-01 09:00:00', timestamp: '', timezone: 'America/Toronto' } });
+    scans.push({ pathInfo: 'Delivered to your community mailbox, parcel locker or apt./condo mailbox', pathAddress: 'PRIVATE_SYNTHETIC_ADDRESS',
+      state: 203, city: 'Example City', province: 'EX', dateTime: { timezone: 'America/Vancouver', localTime: '2026-01-06 11:48:30' } });
+    const result = normalizeCarrierResult(parseUniuni(value, NUMBER));
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null,
+      last_update_local: '2026-01-06T11:48:30', destination_country: 'CA' });
+    expect(result).not.toHaveProperty('delivered_at');
+    expect(result.events?.[0]).toMatchObject({ description: 'Delivered to your community mailbox, parcel locker or apt./condo mailbox',
+      provider_code: '203', stage: 'delivered', location: 'Example City, EX', local_time: '2026-01-06T11:48:30' });
+    const dropOff = result.events?.find(scan => scan.description === 'Parcel dropped off at Uni Store');
+    expect(dropOff).toMatchObject({ local_time: '2026-01-01T09:00:00', stage: 'accepted' });
+    expect(dropOff).not.toHaveProperty('provider_code');
+    const dropped = fixture(); dropped.data.valid_tno[0].spath_list.splice(1);
+    dropped.data.valid_tno[0].spath_list.push(scans[1]);
+    expect(parseUniuni(dropped, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'Parcel dropped off at Uni Store' });
+    expect(uniuniStatus(204)).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    for (const change of [{ state: '203' }, { state: -1 }, { pathInfo: '' }, { code: 'Delivered' }, { description_en: '' }]) {
+      const broken = fixture(); broken.data.valid_tno[0].spath_list.push({ ...scans.at(-1), ...change });
+      expect(() => parseUniuni(broken, NUMBER), JSON.stringify(change)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    }
+    item.country = 'MX';
+    expect(parseUniuni(value, NUMBER)).not.toHaveProperty('destination_country');
   });
 
   it('never falls back to a mismatching first parcel or merges ambiguous identities', () => {
