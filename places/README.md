@@ -64,8 +64,11 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   something else.
 - `hubs.json` lists hubs named after a place that is not their town ("ROISSY" is the
   Charles de Gaulle airport, not Roissy-en-Brie), with the town and airport they stand for,
-  and hubs in villages too small for the gazetteer ("SEKOCIN STARY", by Warsaw), with their
-  point and its source.
+  and hubs the gazetteer cannot place by name, with their point and its source: in a village
+  too small for it ("SEKOCIN STARY", by Warsaw), in a town GeoNames gives no population
+  (Cainiao's "Fenggang Town" is in Dongguan, not the Fenggang of Jiangxi), or under a short
+  name ("TERRASSON", Mondial Relay's agency in Terrasson-Lavilledieu). A longer place name
+  that contains a hub's ("Beauregard-de-Terrasson", "Roissy-en-Brie") is that place.
 - A carrier's own coordinates, supplied through the `points` option, move a scan
   to the facility when they are within 30 km of the town its text names. Scans with the same
   text share a point, so a carrier that places some scans of an office keeps them together.

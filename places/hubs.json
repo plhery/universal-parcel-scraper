@@ -2,5 +2,7 @@
   { "country": "FR", "names": ["Roissy"], "town": "Roissy-en-France", "airport": "CDG" },
   { "country": "GB", "names": ["Heathrow"], "town": "London", "airport": "LHR" },
   { "country": "GB", "names": ["East Midlands"], "town": "Castle Donington", "airport": "EMA" },
-  { "country": "PL", "names": ["Sękocin Stary"], "town": "Sękocin Stary", "latitude": 52.108, "longitude": 20.88, "source": "https://download.geonames.org/export/zip/PL.zip" }
+  { "country": "PL", "names": ["Sękocin Stary"], "town": "Sękocin Stary", "latitude": 52.108, "longitude": 20.88, "source": "https://download.geonames.org/export/zip/PL.zip" },
+  { "country": "CN", "names": ["Fenggang Town"], "town": "Fenggang", "latitude": 22.757, "longitude": 114.149, "source": "https://www.geonames.org/1916217" },
+  { "country": "FR", "names": ["Terrasson"], "town": "Terrasson-Lavilledieu", "latitude": 45.129, "longitude": 1.32, "source": "https://www.openstreetmap.org/relation/19894168" }
 ]

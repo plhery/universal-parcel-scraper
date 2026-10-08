@@ -98,8 +98,7 @@ const UNCONFIRMED_MIN_THOUSANDS = 15;
 const POINT_MAX_KM = 30;
 // An airport a scan names has to be this close to the town it names.
 const AIRPORT_MAX_KM = 60;
-// A hub nickname ranks like a town of this many thousand people, so a longer
-// name that contains it ("Roissy-en-Brie") still wins.
+// A hub's name ranks like a town of this many thousand people.
 const HUB_THOUSANDS = 50;
 /** The city a region is named after ("Santo Domingo Province") has at least this many thousand people. */
 const NAMESAKE_THOUSANDS = 100;
@@ -107,7 +106,7 @@ const NAMESAKE_THOUSANDS = 100;
 // Swiss Post scans end in the site's six-digit number: "Zürich Briefzentrum 801050".
 const FACILITIES = new Map(facilityList.map((facility) => [`${facility.country}:${facility.code}`, facility]));
 // Names carriers give a hub instead of its town ("ROISSY" is Paris-Charles de Gaulle, not
-// Roissy-en-Brie), and hubs in villages the gazetteer is too coarse for ("SEKOCIN STARY").
+// Roissy-en-Brie), and hubs the gazetteer cannot place by name ("SEKOCIN STARY", "Fenggang Town", "TERRASSON").
 const HUBS = new Map(hubList.flatMap((hub) => hub.names.map((name) => [nameKey(name), hub])));
 
 let loaded: Gazetteer | null = null;
@@ -393,7 +392,11 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
       // ("Santa Catarina" on a Brazilian parcel).
       const named = phrase.whole ? own.filter((region) => (!country || region.country === country)
         && (fieldIndex > 0 || region.country === country || hinted.includes(region.country))) : [];
-      const towns = candidates(data, phrase.key);
+      // A hub's name inside a longer place name is part of that name: "Beauregard-de-Terrasson"
+      // is a village, not the agency at Terrasson, and "Roissy-en-Brie" is no airport.
+      const partOfName = list.some((other) => other.start <= phrase.start && other.end >= phrase.end
+        && other.key.length > phrase.key.length && data.keys.has(other.key));
+      const towns = candidates(data, phrase.key).filter((place) => !place.hub || !partOfName);
       namesTown ||= towns.length > 0;
       for (const place of towns) {
         // A town may still be named like the region it lies in: Moscow in "…, Moscow",

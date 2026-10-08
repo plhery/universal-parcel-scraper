@@ -75,6 +75,18 @@ describe('locatePlace', () => {
     for (const location of ['SEKOCIN STARY PL', 'SEKOCIN STARY, PL', 'Sekocin Stary, Poland']) {
       expect(place(location), location).toEqual({ precision: 'city', country: 'PL', name: location.startsWith('SEKOCIN') ? 'Sękocin Stary' : 'Sekocin Stary', latitude: 52.108, longitude: 20.88 });
     }
+    // Cainiao's sorting centre in Fenggang, Dongguan, which GeoNames gives no population; not Fenggang in Jiangxi.
+    expect(place('Fenggang Town')).toEqual({ precision: 'city', country: 'CN', name: 'Fenggang Town', latitude: 22.757, longitude: 114.149 });
+    expect(place('FENGGANG TOWN', ['FR'])).toMatchObject({ country: 'CN', name: 'Fenggang', latitude: 22.757 });
+    // Mondial Relay's agency in Terrasson-Lavilledieu, under the town's short name.
+    expect(place('TERRASSON', ['FR'])).toEqual({ precision: 'city', country: 'FR', name: 'Terrasson-Lavilledieu', latitude: 45.129, longitude: 1.32 });
+    expect(place('Agence de Terrasson')).toMatchObject({ country: 'FR', latitude: 45.129, longitude: 1.32 });
+    // A longer name that contains a hub's is that place.
+    expect(place('Terrasson-Lavilledieu', ['FR'])).toMatchObject({ country: 'FR', name: 'Terrasson-Lavilledieu' });
+    expect(place('Terrasson-Lavilledieu', ['FR'])!.longitude).toBeCloseTo(1.3, 2);
+    expect(place('BEAUREGARD DE TERRASSON', ['FR'])).toMatchObject({ country: 'FR', name: 'Beauregard-de-Terrasson' });
+    expect(place('Beauregard-de-Terrasson')).toBeNull();
+    expect(place('Roissy-en-Brie')).toMatchObject({ country: 'FR', name: 'Roissy-en-Brie' });
     // A country or a region in the text names no airport.
     for (const location of ['Cuernavaca, Mexico', 'HSINCHU - TAIWAN', 'Soyapango, San Salvador']) expect(place(location)?.site, location).toBeUndefined();
   });
@@ -178,6 +190,25 @@ describe('placesForEvents', () => {
     // A point far from the town its scan names is not used.
     expect(placesForEvents(['Patna GPO 800001'], { carrierCountries: ['IN'], points: [{ latitude: 28.6448, longitude: 77.2167 }] })[0])
       .toMatchObject({ latitude: 25.594, longitude: 85.136 });
+  });
+
+  it('places the logistics sites Mondial Relay names, as the app asks for a French carrier', () => {
+    const sites = ['METZ', 'HUB de Troyes', 'REIMS', 'BORDEAUX', 'TERRASSON', 'BRIVE', 'NIORT', 'REAU'];
+    const places = placesForEvents(sites, { carrierCountries: ['FR'] });
+    expect(places.map((found) => found && `${found.name}, ${found.country}`)).toEqual([
+      'Metz, FR', 'Troyes, FR', 'Reims, FR', 'Bordeaux, FR', 'Terrasson-Lavilledieu, FR', 'Brive-la-Gaillarde, FR', 'Niort, FR', 'Réau, FR',
+    ]);
+    // Réau in Seine-et-Marne, by Melun.
+    expect(places[7]!.latitude).toBeCloseTo(48.61, 1);
+    expect(places[7]!.longitude).toBeCloseTo(2.62, 1);
+  });
+
+  it('places the towns Cainiao writes in brackets', () => {
+    const places = placesForEvents(['Fenggang Town', 'Xiaoshan District', 'Compans', 'Bordeaux', 'Camblanes-et-meynac']);
+    expect(places.map((found) => found && `${found.name}, ${found.country}`)).toEqual([
+      'Fenggang Town, CN', 'Xiaoshan, CN', 'Compans, FR', 'Bordeaux, FR', 'Camblanes, FR',
+    ]);
+    expect(places[0]).toMatchObject({ latitude: 22.757, longitude: 114.149 });
   });
 
   it('uses the destination and the carrier before guessing', () => {
