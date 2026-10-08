@@ -59,12 +59,15 @@ describe('GOFO US history', () => {
   });
   it('binds both identities and uses per-scan offsets without projecting private delivery text or unlabelled weight', () => {
     const result = normalizeCarrierResult(parseGofo(fixture(), NUMBER));
-    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-04T12:00:00-08:00', delivered_at: '2026-01-04T12:00:00-08:00', expected_delivery: null, destination_country: 'US' });
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-04T12:00:00-08:00', delivered_at: '2026-01-04T12:00:00-08:00', expected_delivery: null, destination_country: 'US',
+      service_name: 'GOFO EXPRESS' });
+    expect(parseGofo(counterFixture(), NUMBER)).not.toHaveProperty('service_name');
     expect(result.events).toHaveLength(4);
     expect(result.events?.[0]).toMatchObject({ time: result.last_update, description: 'Delivered', location: 'Example City, EX' });
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|weight|processDept|proof/);
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    const evidence: Record<string, boolean> = { history: !!result.events?.length, location: !!result.events?.some(event => event.location), delivered_at: !!result.delivered_at };
+    const evidence: Record<string, boolean> = { history: !!result.events?.length, location: !!result.events?.some(event => event.location), delivered_at: !!result.delivered_at,
+      service_name: !!result.service_name };
     for (const capability of metadata.capabilities) expect(evidence[capability], capability).toBe(true);
   });
 

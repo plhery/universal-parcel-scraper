@@ -1434,6 +1434,7 @@
       "last_update_local": "2026-01-04T12:00:00",
       "expected_delivery": null,
       "destination_country": "US",
+      "service_name": "GOFO EXPRESS",
       "events": [
         {
           "local_time": "2026-01-04T12:00:00",

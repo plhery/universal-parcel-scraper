@@ -113,9 +113,11 @@ export function parseGofo(payload: unknown, rawNumber: string): CarrierResult {
   }
   const latest = events[0]!;
   const current = gofoStatus(String(latest.provider_code));
+  const service = clean(item.serviceName, 80);
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: null,
     ...(current?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    ...(item.toCountry === 'USA' ? { destination_country: 'US' } : {}), events: events.slice(0, 100) };
+    ...(item.toCountry === 'USA' ? { destination_country: 'US' } : {}), ...(service ? { service_name: service } : {}),
+    events: events.slice(0, 100) };
 }

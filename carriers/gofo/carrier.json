@@ -23,7 +23,8 @@
   "capabilities": [
     "history",
     "location",
-    "delivered_at"
+    "delivered_at",
+    "service_name"
   ],
   "portal": {
     "url": "https://www.gofo.com/us/track?searchID={trackingNumber}",
@@ -39,7 +40,8 @@
       "status",
       "history",
       "location",
-      "delivered_at"
+      "delivered_at",
+      "service_name"
     ],
     "discarded": [
       "delivery_detail",

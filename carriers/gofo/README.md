@@ -29,6 +29,7 @@ without advancing freshness. Current status comes from the latest scan, and
 delivery requires confirming wording.
 As on the public page, scan wording drops the support contact line GOFO appends
 to some scans.
+`service_name` is the `serviceName` GOFO gives, as written.
 Detailed delivery prose and proof images are excluded. The weight has no
 verified unit, and estimates have no verified active-parcel provenance, so both
 are omitted. Proof lookup requires a postcode and is not queried.

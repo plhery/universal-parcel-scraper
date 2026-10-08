@@ -9,6 +9,7 @@
         "status": "Delivered",
         "trackEventCount": 4,
         "toCountry": "USA",
+        "serviceName": "GOFO EXPRESS",
         "weight": 0.5,
         "estimatedArrivalTime": null,
         "lastTrackEvent": {
