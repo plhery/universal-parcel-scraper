@@ -6801,6 +6801,38 @@
     "candidates": []
   },
   {
+    "input": "440010011954679368",
+    "carrier": "quickpac",
+    "confidence": "high",
+    "candidates": [
+      "quickpac"
+    ]
+  },
+  {
+    "input": "440010400100017831",
+    "carrier": "quickpac",
+    "confidence": "high",
+    "candidates": [
+      "quickpac"
+    ]
+  },
+  {
+    "input": "440010400100601488",
+    "carrier": "quickpac",
+    "confidence": "high",
+    "candidates": [
+      "quickpac"
+    ]
+  },
+  {
+    "input": "440010970000878093",
+    "carrier": "quickpac",
+    "confidence": "high",
+    "candidates": [
+      "quickpac"
+    ]
+  },
+  {
     "input": "440010970004135028",
     "carrier": "quickpac",
     "confidence": "high",
