@@ -34,6 +34,19 @@ function deliveredFixture(): Fixture {
   )) as Fixture;
 }
 
+/** The same parcel the morning of its delivery, still out with the driver. */
+function outForDeliveryFixture(): Fixture {
+  const fixture = deliveredFixture();
+  fixture.colis.statutColis = 'TRV';
+  fixture.evenements = [fixture.evenements[0]!, {
+    datereference: '2026-08-29 07:20:00.0',
+    statutEvenement: 'TRV',
+    typeEvenement: 'TRV',
+    codelieuEvenement: 'FR0012',
+  }];
+  return fixture;
+}
+
 afterEach(() => vi.restoreAllMocks());
 
 describe('GLS France tracking input', () => {
@@ -177,7 +190,8 @@ describe('GLS France response normalization', () => {
       status: 'delivered',
       last_status_text: 'Delivered',
       last_update: '2026-08-29T11:42:00+02:00',
-      expected_delivery: '2026-08-29',
+      expected_delivery: null,
+      sender_name: 'Example Shop',
       timezone: 'Europe/Paris',
     });
     expect(result.events).toEqual([{
@@ -206,12 +220,27 @@ describe('GLS France response normalization', () => {
     }
   });
 
+  it('keeps the planned day only while the parcel is still on its way', () => {
+    expect(parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER)).toMatchObject({
+      status: 'out_for_delivery',
+      expected_delivery: '2026-08-29',
+      sender_name: 'Example Shop',
+    });
+    const failed = outForDeliveryFixture();
+    failed.colis.statutColis = 'NLI';
+    expect(parseGLSFranceTrackingResponse(failed, TRACKING_NUMBER).expected_delivery).toBeNull();
+    const unnamed = outForDeliveryFixture();
+    unnamed.colis.libelleExpediteur = '   ';
+    expect(parseGLSFranceTrackingResponse(unnamed, TRACKING_NUMBER)).not.toHaveProperty('sender_name');
+  });
+
   it('returns every capability declared in carrier.json', () => {
-    const result = parseGLSFranceTrackingResponse(deliveredFixture(), TRACKING_NUMBER);
+    const result = parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER);
     const checks: Record<string, () => boolean> = {
       history: () => (result.events?.length ?? 0) > 0,
       location: () => (result.events ?? []).some((event) => Boolean(event.location)),
       eta: () => result.expected_delivery != null,
+      sender_name: () => result.sender_name != null,
       provider_code: () => (result.events ?? []).some((event) => Boolean(event.provider_code)),
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
@@ -238,6 +267,7 @@ describe('GLS France response normalization', () => {
     expect(parseGLSFranceTrackingResponse(fixture, NUMERIC_TRACKING_NUMBER)).toMatchObject({
       status: 'out_for_delivery',
       last_status_text: 'Ready for pickup at GLS Locker',
+      expected_delivery: null,
       events: [{ stage: 'ready_for_pickup', provider_code: 'LIK' }],
     });
   });

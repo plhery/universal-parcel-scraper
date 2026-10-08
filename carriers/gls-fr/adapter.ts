@@ -3,7 +3,7 @@
  *
  * One bounded GET per lookup ('direct' step). The response carries the parcel
  * record, its event list, and blocks describing the people involved; `parse()`
- * builds its result from an explicit allowlist of status, timing and
+ * builds its result from an explicit allowlist of status, timing, sender and
  * operational-location fields, so recipient names, street addresses, contacts,
  * signatures and delivery instructions never leave this module.
  */
@@ -14,7 +14,7 @@ import { isValidGlsParcelNumber } from '../../core/detection/index.js';
 import { InvalidInputError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
-import { cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   FAILED_DELAYED_DELIVERY,
@@ -191,13 +191,21 @@ export function parseGLSFranceTrackingResponse(
   const latestEvent = events[0];
   const latestEventStatus = latestParsedEvent?.metadata ?? glsFranceStatusMetadata(latestEvent?.provider_code);
   const fallbackUpdate = parsedTime(parcel.dateActionColis);
+  const status = current?.status ?? latestEventStatus?.status ?? 'unknown';
+  const stage = current?.stage ?? latestEventStatus?.stage;
+  // Delivered, waiting at a shop or in trouble, the portal shows the scan's
+  // own day instead of the theoretical one, which is then stale.
+  const settled = status === 'delivered' || status === 'exception' || stage === 'ready_for_pickup';
+  // The portal shows this label as the sender.
+  const sender = clean(parcel.libelleExpediteur, 200);
   return {
-    status: current?.status ?? latestEventStatus?.status ?? 'unknown',
+    status,
     last_status_text: current?.description
       ?? latestEvent?.description
       ?? 'Tracking information received',
     last_update: latestEvent?.time ?? fallbackUpdate?.iso ?? null,
-    expected_delivery: expectedDelivery(parcel.dateTheoriqueLivraison),
+    expected_delivery: settled ? null : expectedDelivery(parcel.dateTheoriqueLivraison),
+    ...(sender ? { sender_name: sender } : {}),
     timezone: TIMEZONE,
     events,
   };

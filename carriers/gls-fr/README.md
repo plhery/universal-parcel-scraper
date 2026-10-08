@@ -38,7 +38,11 @@ this confirmation before they can identify the French network.
   everything else is read in `Europe/Paris`. Empty values arrive as year `0001`
   and are dropped. No single `core/time` policy covers this, so parsing is local.
 - Locations are GLS facility codes (`FR0012`), not resolved to cities.
-- The estimate is the day part of `dateTheoriqueLivraison`.
+- The estimate is the day part of `dateTheoriqueLivraison`. It is dropped once the
+  parcel is delivered, waiting at a shop or locker, or in exception: the portal then
+  shows the scan's own day. When `deliveryDateReliability` is `0` the portal presents
+  the same day as a latest date.
+- The sender is `libelleExpediteur`, the label the portal shows as the sender.
 - Not used: scraping `moncolis.gls-france.com` — the endpoint returns the same
   data as JSON.
 - The parser reads an allowlist of fields. Address, signature, contact and
@@ -51,8 +55,10 @@ this confirmation before they can identify the French network.
   valid GLS check digit. A GLS parcel number is 11 digits, so a 12-digit number is
   looked up by its first 11 and, only if that is not found, once more as printed;
   either way the parcel is identified by its 11 digits.
-- No sender, pickup-point name, weight or dimensions in the response, so those
-  capabilities are not declared.
+- No pickup-point name (the portal reads it from a second endpoint), weight or
+  dimensions in the response, so those capabilities are not declared.
+- The endpoint only keeps recent parcels: older numbers answer the "no command
+  found" 404.
 
 ## Testing
 

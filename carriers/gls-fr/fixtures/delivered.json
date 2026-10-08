@@ -5,6 +5,7 @@
     "numeroGp": 0,
     "statutColis": "LIV",
     "dateTheoriqueLivraison": "2026-08-29 00:00:00.0",
+    "libelleExpediteur": "Example Shop",
     "nomSignataireColis": "Private Recipient",
     "commentairesLivraison": "Private delivery instruction"
   },

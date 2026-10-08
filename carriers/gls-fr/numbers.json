@@ -165,6 +165,142 @@
         ]
       },
       "note": "The customer names this GLS parcel at the Artigues delivery agency and contact with GLS France. The report is evidence of the French service without independently confirming shipment history."
+    },
+    {
+      "number": "ZX678O9N",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6ac419b6850d07587d737214",
+        "date": "2026-10-05",
+        "access": "full_page",
+        "dateKind": "review date as displayed"
+      },
+      "context": {
+        "service": "GLS France",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de"
+        ]
+      },
+      "note": "GLS France quotes this number in its public reply to a review; its tracker returns the history. Eight letters and digits not starting 00 are shared by GLS networks, so GLS France stays one suggestion."
+    },
+    {
+      "number": "00LB1K6P",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6ac0984c43ad480b55582ae4",
+        "date": "2026-09-30",
+        "access": "full_page",
+        "dateKind": "review date as displayed"
+      },
+      "context": {
+        "service": "GLS France",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gls-fr",
+        "confidence": "high"
+      },
+      "note": "One of three parcels a GLS France review lists; GLS France's tracker returns the history."
+    },
+    {
+      "number": "00LB1K5I",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6ac0984c43ad480b55582ae4",
+        "date": "2026-09-30",
+        "access": "full_page",
+        "dateKind": "review date as displayed"
+      },
+      "context": {
+        "service": "GLS France",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gls-fr",
+        "confidence": "high"
+      },
+      "note": "One of three parcels a GLS France review lists; GLS France's tracker returns the history."
+    },
+    {
+      "number": "00LB1LXH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6ac0984c43ad480b55582ae4",
+        "date": "2026-09-30",
+        "access": "full_page",
+        "dateKind": "review date as displayed"
+      },
+      "context": {
+        "service": "GLS France",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gls-fr",
+        "confidence": "high"
+      },
+      "note": "One of three parcels a GLS France review lists; GLS France's tracker returns the history."
+    },
+    {
+      "number": "Z6SZ1VA4",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6abcf700f4406467bb2a349a",
+        "date": "2026-09-29",
+        "access": "full_page",
+        "dateKind": "review date as displayed"
+      },
+      "context": {
+        "service": "GLS France",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de"
+        ]
+      },
+      "note": "A GLS France review names this ParcelShop parcel; GLS France's tracker returns the history. The shape is shared by GLS networks, so GLS France stays one suggestion."
+    },
+    {
+      "number": "00LBJB4H",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/reviews/6abf6eb8b4ae84b01b59933d",
+        "date": "2026-10-02",
+        "access": "full_page",
+        "dateKind": "review date as displayed"
+      },
+      "context": {
+        "service": "GLS France",
+        "reportedRole": "reported_shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gls-fr",
+        "confidence": "high"
+      },
+      "note": "A GLS France review names this parcel after a postponed delivery; GLS France's tracker returns the history."
     }
   ]
 }

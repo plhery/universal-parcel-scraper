@@ -734,6 +734,38 @@
     ]
   },
   {
+    "input": "00LB1K5I",
+    "carrier": "gls-fr",
+    "confidence": "high",
+    "candidates": [
+      "gls-fr"
+    ]
+  },
+  {
+    "input": "00LB1K6P",
+    "carrier": "gls-fr",
+    "confidence": "high",
+    "candidates": [
+      "gls-fr"
+    ]
+  },
+  {
+    "input": "00LB1LXH",
+    "carrier": "gls-fr",
+    "confidence": "high",
+    "candidates": [
+      "gls-fr"
+    ]
+  },
+  {
+    "input": "00LBJB4H",
+    "carrier": "gls-fr",
+    "confidence": "high",
+    "candidates": [
+      "gls-fr"
+    ]
+  },
+  {
     "input": "010050000023791274",
     "carrier": "unknown",
     "confidence": "low",
@@ -16302,6 +16334,21 @@
     ]
   },
   {
+    "input": "Z6SZ1VA4",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de"
+    ]
+  },
+  {
     "input": "Z8328162946",
     "carrier": "packeta",
     "confidence": "high",
@@ -16357,6 +16404,21 @@
     "confidence": "high",
     "candidates": [
       "royal-mail"
+    ]
+  },
+  {
+    "input": "ZX678O9N",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de"
     ]
   },
   {
