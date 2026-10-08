@@ -5,7 +5,7 @@ import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } fro
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
+import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyCorreosSpainStatus } from './status.js';
 
@@ -24,6 +24,15 @@ const TRACKING_ENDPOINT = 'https://localizador.correos.es/canonico/eventos_envio
 // The localizador only knows parcel codes. The public tracker's own search
 // names the parcels of an expedition code, and answers 204 for an unknown one.
 const EXPEDITION_ENDPOINT = 'https://api1.correos.es/digital-services/searchengines/api/v1/envios';
+// The office locator's search on correos.es, keyless like the tracker's. It
+// places free text and lists the offices around that place.
+const OFFICE_SEARCH_ENDPOINT = 'https://api1.correos.es/digital-services/searchloc/api/v1/offices';
+/** The locator answers within a second. */
+const OFFICE_TIMEOUT_MS = 3_000;
+/** Offices whose address a tracker remembers: a waiting parcel is looked up again and again. */
+const MAX_REMEMBERED_OFFICES = 500;
+/** Metres around the place an office's name points to: ten kilometres reach a city's branches from its centre. */
+const OFFICE_SEARCH_RADIUS_M = 10_000;
 const DEFAULT_TIMEOUT_MS = 15_000;
 /** `fetchBounded` repeats a request that failed in transit once, after this pause. */
 const TRANSIENT_RETRY_DELAY_MS = 1_000;
@@ -84,8 +93,30 @@ export function parseCorreosSpainExpeditionResponse(payload: unknown, expedition
   return parcel;
 }
 
+/**
+ * The street and town of the office the locator's reply lists under `codired`, a line
+ * each. Its phone, email, opening hours and coordinates are not read.
+ */
+function officeAddress(payload: unknown, codired: string): string {
+  const others = isRecord(payload) ? payload.others : undefined;
+  const offices: unknown = isRecord(others) ? others.offices : undefined;
+  if (!Array.isArray(offices)) return '';
+  // The locator's officeId is the unit code: correos.es books an office's appointments with it as codired.
+  const office: unknown = offices.find((candidate) => isRecord(candidate) && cleanScalar(candidate.officeId, 16) === codired);
+  if (!isRecord(office)) return '';
+  const street = clean(office.address, 120);
+  const town = clean(office.cityName, 80);
+  if (!street || !town) return '';
+  return `${street}\n${[clean(office.postalCode, 10), town].filter(Boolean).join(' ')}`;
+}
+
 /** `expeditionCode` binds a parcel found through its expedition to that expedition. */
 export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumber: string, expeditionCode?: string): CarrierResult {
+  return parseTracking(payload, trackingNumber, expeditionCode).result;
+}
+
+/** `office` is the unit code of the office the result names as its pickup point, else empty. */
+function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?: string): { result: CarrierResult; office: string } {
   const requested = normalizeCorreosSpainTrackingNumber(trackingNumber);
   // The endpoint answers a single-element array; bare objects are accepted too
   // since some error bodies come back unwrapped.
@@ -145,6 +176,7 @@ export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumb
   // the envelope. The office is only a pickup signal when the parcel is
   // actually awaiting collection; weight/dims are operational parcel data.
   const office = clean(envelope.nom_codired, 300) || null;
+  const officeCode = cleanScalar(envelope.codired, 16);
   const grams = Number(envelope.peso);
   const weightKg = Number.isFinite(grams) && grams > 0 ? Math.round((grams / 1000) * 1000) / 1000 : null;
   const dims = [envelope.largo, envelope.ancho, envelope.alto].map((value) => Number(value));
@@ -159,41 +191,51 @@ export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumb
     ...(weightKg != null ? { weight_kg: weightKg } : {}),
     ...(dimensionsText ? { dimensions_text: dimensionsText } : {}),
   };
-  const pickupExtras = (stage?: string): Record<string, string> => (
-    stage === 'ready_for_pickup' && office ? { pickup_point: office } : {}
-  );
+  // codired is the unit holding the parcel, whose address the office locator gives.
+  const waiting = latest?.event.stage === 'ready_for_pickup' && office;
+  const pickupExtras = waiting ? { pickup_point: office } : {};
+  const pickupOffice = waiting && /^\d{1,16}$/.test(officeCode) ? officeCode : '';
   if (!latest) {
     return {
-      status: 'unknown',
-      last_status_text: clean(envelope.resumen_ultimo, 500) || 'Tracking information received',
-      last_update: null,
-      expected_delivery: null,
-      ...extras,
-      events,
+      result: {
+        status: 'unknown',
+        last_status_text: clean(envelope.resumen_ultimo, 500) || 'Tracking information received',
+        last_update: null,
+        expected_delivery: null,
+        ...extras,
+        events,
+      },
+      office: '',
     };
   }
   if (!latest.classified) {
     return {
-      status: 'unknown',
-      last_status_text: latest.event.description,
-      last_update: latest.event.time ?? null,
-      expected_delivery: null,
-      ...extras,
-      ...pickupExtras(latest.event.stage),
-      events,
+      result: {
+        status: 'unknown',
+        last_status_text: latest.event.description,
+        last_update: latest.event.time ?? null,
+        expected_delivery: null,
+        ...extras,
+        ...pickupExtras,
+        events,
+      },
+      office: pickupOffice,
     };
   }
   const deliveredAt = latest.classified.status === 'delivered' ? latest.event.time ?? null : null;
   return {
-    status: latest.classified.status,
-    current_stage: latest.classified.stage,
-    last_status_text: latest.event.description,
-    last_update: latest.event.time ?? null,
-    expected_delivery: null,
-    ...extras,
-    ...pickupExtras(latest.classified.stage),
-    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
-    events,
+    result: {
+      status: latest.classified.status,
+      current_stage: latest.classified.stage,
+      last_status_text: latest.event.description,
+      last_update: latest.event.time ?? null,
+      expected_delivery: null,
+      ...extras,
+      ...pickupExtras,
+      ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+      events,
+    },
+    office: pickupOffice,
   };
 }
 
@@ -201,6 +243,8 @@ export class CorreosSpainTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
   private readonly userAgent: string;
+  /** An office's address does not change. */
+  private readonly offices = new Map<string, string>();
 
   constructor(options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -214,8 +258,8 @@ export class CorreosSpainTracker {
   async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizeCorreosSpainTrackingNumber(rawTrackingNumber);
     const expedition = isCorreosSpainExpeditionCode(trackingNumber);
-    // The default budget covers each request, its pause and its one transient retry.
-    const budget = lookupBudget(context, (expedition ? 2 : 1) * (2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS));
+    // The default budget covers each request, its pause and its one transient retry, and the office's address.
+    const budget = lookupBudget(context, (expedition ? 2 : 1) * (2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS) + OFFICE_TIMEOUT_MS);
     const request = async (url: string) => {
       const { response, bytes } = await fetchBounded(url, {
         signal: budget.signal,
@@ -244,8 +288,48 @@ export class CorreosSpainTracker {
     const { bytes } = await request(`${TRACKING_ENDPOINT}/${encodeURIComponent(parcel)}`
       + '?codAplicacion=60&codCanal=3&codIdioma=ES&indUltEvento=N');
     // A code the search returns as its own parcel is tracked as any parcel code.
-    return parseCorreosSpainTrackingResponse(parseJsonBytes(bytes, 'Correos tracking'), parcel,
+    const { result, office } = parseTracking(parseJsonBytes(bytes, 'Correos tracking'), parcel,
       parcel === trackingNumber ? undefined : trackingNumber);
+    // The localizador names the office holding the parcel without its address, which the office locator adds.
+    if (office && result.pickup_point) {
+      const address = await this.officeAddress(office, result.pickup_point, budget.signal, budget.remainingMs());
+      if (address) result.pickup_point = `${result.pickup_point}\n${address}`;
+    }
+    return result;
+  }
+
+  /**
+   * The office locator places its search text and lists the offices around it, so the
+   * office's own name finds it. The reply is read only for the office of that unit code.
+   */
+  private async officeAddress(codired: string, name: string, signal: AbortSignal, remainingMs: number): Promise<string> {
+    const known = this.offices.get(codired);
+    if (known) return known;
+    const timeoutMs = Math.floor(Math.min(OFFICE_TIMEOUT_MS, remainingMs / 2));
+    if (timeoutMs < 1) return '';
+    try {
+      // The parameters correos.es's map sends to list offices only, over a wider radius.
+      const query = new URLSearchParams({ text: name, searchType: 'otros', specialSearch: 'true', sendDelivery: 'OFI',
+        distance: String(OFFICE_SEARCH_RADIUS_M) });
+      const { bytes } = await fetchBounded(`${OFFICE_SEARCH_ENDPOINT}?${query}`, {
+        signal,
+        headers: { Accept: 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'User-Agent': this.userAgent },
+      }, {
+        provider: 'Correos office locator',
+        timeoutMs,
+        maxBytes: MAX_RESPONSE_BYTES,
+        fetcher: this.fetcher,
+      });
+      const address = officeAddress(parseJsonBytes(bytes, 'Correos office locator'), codired);
+      if (address) {
+        if (this.offices.size >= MAX_REMEMBERED_OFFICES) this.offices.delete(this.offices.keys().next().value!);
+        this.offices.set(codired, address);
+      }
+      return address;
+    } catch {
+      signal.throwIfAborted();
+      return '';
+    }
   }
 }
 

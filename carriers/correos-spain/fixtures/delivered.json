@@ -8,6 +8,7 @@
   "largo": "30",
   "ancho": "20",
   "alto": "10",
+  "codired": "2800001",
   "nom_codired": "OFICINA EXAMPLE CENTRAL",
   "resumen_ultimo": "Entregado",
   "error": { "codError": "0", "desError": "OK" },

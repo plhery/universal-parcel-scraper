@@ -41,6 +41,15 @@ describe('Correos Spain live anonymous tracking', () => {
     },
   );
 
+  it.skipIf(!process.env.CORREOS_SPAIN_PICKUP_TRACKING_NUMBER)(
+    'gives the office holding a real parcel its address',
+    async () => {
+      const result = await new CorreosSpainTracker({ timeoutMs: 15_000 }).fetch(process.env.CORREOS_SPAIN_PICKUP_TRACKING_NUMBER!);
+      expect(result.current_stage).toBe('ready_for_pickup');
+      expect(result.pickup_point?.split('\n')).toHaveLength(3);
+    },
+  );
+
   it('pins the not-found error contract used by routing cooldowns', () => {
     expect(new NotFoundError('Correos').status).toBe(404);
   });

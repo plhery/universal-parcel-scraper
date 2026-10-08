@@ -22,6 +22,12 @@ Correos de Chile (`correos-chile`) are separate carriers.
    204 for a code it does not know. The parcel is then tracked as above, and its envelope must
    name the expedition in `codExpedicion`.
 
+   While the parcel awaits collection, the envelope names the office (`nom_codired`) and gives
+   its unit code (`codired`), but not its address. The office locator on correos.es adds it with
+   one keyless `GET https://api1.correos.es/digital-services/searchloc/api/v1/offices?text={nom_codired}&searchType=otros&specialSearch=true&sendDelivery=OFI&distance=10000`.
+   It gets at most three seconds and half of the time left; any failure leaves the name alone. A
+   tracker remembers the addresses it has read.
+
 ## Notes
 
 - Detection covers checksum-valid `…ES` S10 numbers, `PR` + 15 digits + `C`, and the
@@ -56,6 +62,13 @@ Correos de Chile (`correos-chile`) are separate carriers.
 - The office (`nom_codired`) becomes `pickup_point` only while the parcel awaits collection.
   On a delivered parcel it is where the parcel *was* held and would read as a false pickup
   instruction.
+- The locator places its search text and lists the offices around that place; it finds nothing
+  for a unit code, so the office is searched by name. Its `officeId` is the unit code (correos.es
+  books an office's appointments with it as `codired`), and only the office whose `officeId`
+  equals the envelope's `codired` is read: its `address`, then `postalCode` and `cityName`, on
+  the lines after the name. A branch named only by its town and number is placed at the town's
+  centre, so the search covers 10 km instead of the website's 5. Phone, email, hours and
+  coordinates are not read.
 - Weight (`peso`, grams → kg) and dimensions (`largo`/`ancho`/`alto` → `L x W x H cm`) are
   kept: operational data users check against a merchant listing. Some international items give
   the sides in metres; when all three are below 1 they are converted to centimetres.
@@ -67,11 +80,12 @@ Correos de Chile (`correos-chile`) are separate carriers.
 
 ## Limitations
 
-- No delivery estimate and no event locations.
-- The pickup point is the office's name alone. The keyless search gives each scan's unit code
-  (`codired`), and `GET https://api1.correos.es/admissions/admmae/api/v1/deliveryUnit/{codired}`
-  gives that unit's street, postcode and town, but it answers 401 without the client keys
-  correos.es sends, and no agreement covers those.
+- No delivery estimate and no event locations. The keyless search gives each scan's unit code
+  (`codired`) but no name or town, and the locator finds offices by place, not by code.
+  `GET https://api1.correos.es/admissions/admmae/api/v1/deliveryUnit/{codired}` gives any unit's
+  street, postcode and town, but answers 401 without the client keys correos.es sends, and no
+  agreement covers those.
+- An office the locator does not place within 10 km of its name keeps its name alone.
 - Canary Islands scans are read as Madrid time and can be one hour off: events carry no
   locality to key `Atlantic/Canary` on.
 
@@ -79,4 +93,5 @@ Correos de Chile (`correos-chile`) are separate carriers.
 
 `npm run test:carriers:live -- carriers/correos-spain`. The unknown-number
 checks need no env vars; set `CORREOS_SPAIN_DELIVERED_TRACKING_NUMBER` to also check a real
-delivered parcel and `CORREOS_SPAIN_EXPEDITION_CODE` a real single-parcel expedition.
+delivered parcel, `CORREOS_SPAIN_EXPEDITION_CODE` a real single-parcel expedition and
+`CORREOS_SPAIN_PICKUP_TRACKING_NUMBER` a real parcel awaiting collection at an office.

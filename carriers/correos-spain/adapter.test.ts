@@ -239,6 +239,83 @@ describe('Correos Spain response parsing', () => {
   });
 });
 
+describe('Correos Spain pickup office address', () => {
+  const OFFICES = readFileSync(new URL('./fixtures/offices.json', import.meta.url), 'utf8');
+  const LOCATOR = 'https://api1.correos.es/digital-services/searchloc/api/v1/offices?';
+  const waiting = (overrides: Record<string, unknown> = {}) => [envelope({
+    eventos: [event('G01L020V', '29/04/2026', '13:12:42', 'A disposición del destinatario')],
+    ...overrides,
+  })];
+  const lookup = (data: unknown, offices?: () => Response | Promise<Response>, signal?: AbortSignal) => {
+    const fetcher = vi.fn<typeof fetch>(async (url) => (String(url).startsWith(LOCATOR)
+      ? (offices ?? (() => new Response(OFFICES)))()
+      : response(data)));
+    const tracker = new CorreosSpainTracker({ timeoutMs: 1_000, fetcher });
+    return { fetcher, tracker, result: tracker.fetch(TRACKING_NUMBER, { signal }) };
+  };
+  const locatorCalls = (fetcher: ReturnType<typeof lookup>['fetcher']) => fetcher.mock.calls
+    .filter(([url]) => String(url).startsWith(LOCATOR));
+
+  it('follows the office name with its street and town while the parcel waits there', async () => {
+    const held = lookup(waiting());
+    const result = await held.result;
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup',
+      pickup_point: 'OFICINA EXAMPLE CENTRAL\nPlaza Ejemplo, 2\n00001 Villaejemplo' });
+    expect(JSON.stringify(result)).not.toMatch(/000000004|example\.invalid|08:30|40\.42|VECINA|Avenida/);
+    const url = new URL(String(locatorCalls(held.fetcher)[0]![0]));
+    expect(Object.fromEntries(url.searchParams)).toEqual({ text: 'OFICINA EXAMPLE CENTRAL', searchType: 'otros',
+      specialSearch: 'true', sendDelivery: 'OFI', distance: '10000' });
+    const delivered = lookup([envelope()]);
+    expect((await delivered.result).pickup_point).toBeUndefined();
+    expect(delivered.fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('remembers the address of an office, and asks again after a failure', async () => {
+    const failing = lookup(waiting(), () => new Response('', { status: 503 }));
+    expect((await failing.result).pickup_point).toBe('OFICINA EXAMPLE CENTRAL');
+    failing.fetcher.mockImplementation(async (url) => (String(url).startsWith(LOCATOR)
+      ? new Response(OFFICES) : response(waiting())));
+    for (let lookups = 0; lookups < 2; lookups += 1) {
+      expect((await failing.tracker.fetch(TRACKING_NUMBER)).pickup_point)
+        .toBe('OFICINA EXAMPLE CENTRAL\nPlaza Ejemplo, 2\n00001 Villaejemplo');
+    }
+    expect(locatorCalls(failing.fetcher)).toHaveLength(2);
+  });
+
+  it.each([
+    ['another office alone', () => new Response(OFFICES.replace('"officeId": "2800001"', '"officeId": "2800003"'))],
+    ['an office without a street', () => new Response(OFFICES.replace('"address": "Plaza Ejemplo, 2"', '"address": null'))],
+    ['an office without a town', () => new Response(OFFICES.replace('"cityName": "Villaejemplo",\n        "officeId": "2800001"',
+      '"cityName": "",\n        "officeId": "2800001"'))],
+    // The locator answers a search that finds nothing with HTTP 200 and this body.
+    ['no office found', () => response({ code: '404', message: 'Not Found', moreInformation: { description: 'Not results found.' } })],
+    ['a malformed reply', () => new Response('<html>PRIVATE</html>')],
+    ['an HTTP error', () => new Response('', { status: 401 })],
+    ['an outage', () => { throw new TypeError('fetch failed'); }],
+  ])('keeps the office name alone after %s', async (_, offices) => {
+    await expect(lookup(waiting(), offices).result).resolves.toMatchObject({ pickup_point: 'OFICINA EXAMPLE CENTRAL' });
+  });
+
+  it('asks nothing without a unit code to bind the reply to', async () => {
+    for (const codired of [undefined, '', '28 00001', 'ABC']) {
+      const unbound = lookup(waiting({ codired }));
+      expect((await unbound.result).pickup_point).toBe('OFICINA EXAMPLE CENTRAL');
+      expect(unbound.fetcher).toHaveBeenCalledOnce();
+    }
+    // A numeric code binds as its digits.
+    expect((await lookup(waiting({ codired: 2800001 })).result).pickup_point).toContain('Plaza Ejemplo, 2');
+  });
+
+  it('ends a lookup cancelled during the office request', async () => {
+    const controller = new AbortController();
+    const held = lookup(waiting(), () => {
+      controller.abort();
+      throw new DOMException('aborted', 'AbortError');
+    }, controller.signal);
+    await expect(held.result).rejects.toThrow();
+  });
+});
+
 describe('CorreosSpainTracker fetch', () => {
   it('calls the localizador endpoint with web-channel params', async () => {
     const seen: string[] = [];
