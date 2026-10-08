@@ -87,6 +87,7 @@ describe('Correos Spain response parsing', () => {
       ['A010000V', 'in_transit', 'accepted'],
       ['P101110V', 'in_transit', 'in_transit'],
       ['H01I350V', 'out_for_delivery', 'ready_for_pickup'],
+      ['G01L020V', 'out_for_delivery', 'ready_for_pickup'],
       ['H010930R', 'exception', 'failed_attempt'],
       ['O140000V', 'exception', 'returned'],
       ['X120000V', 'delivered', 'delivered'],
@@ -214,6 +215,11 @@ describe('Correos Spain response parsing', () => {
       eventos: [event('H01I350V', '29/04/2026', '13:12:42', 'En oficina')],
     })], TRACKING_NUMBER);
     expect(pickup).toMatchObject({ pickup_point: 'MADRID SUC 37. LA ELIPA' });
+    const held = parseCorreosSpainTrackingResponse([envelope({
+      nom_codired: 'MADRID SUC 37. LA ELIPA',
+      eventos: [event('G01L020V', '29/04/2026', '13:12:42', 'A disposición del destinatario')],
+    })], TRACKING_NUMBER);
+    expect(held).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'MADRID SUC 37. LA ELIPA' });
     const delivered = parseCorreosSpainTrackingResponse([envelope()], TRACKING_NUMBER);
     expect(delivered.pickup_point).toBeUndefined();
   });

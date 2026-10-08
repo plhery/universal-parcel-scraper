@@ -66,6 +66,10 @@ Correos de Chile (`correos-chile`) are separate carriers.
 ## Limitations
 
 - No delivery estimate and no event locations.
+- The pickup point is the office's name alone. The keyless search gives each scan's unit code
+  (`codired`), and `GET https://api1.correos.es/admissions/admmae/api/v1/deliveryUnit/{codired}`
+  gives that unit's street, postcode and town, but it answers 401 without the client keys
+  correos.es sends, and no agreement covers those.
 - Canary Islands scans are read as Madrid time and can be one hour off: events carry no
   locality to key `Atlantic/Canary` on.
 
