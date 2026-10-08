@@ -185,7 +185,6 @@ describe('PostNL declared capabilities and privacy', () => {
     location: (result) => (result.events ?? []).some((event) => Boolean(event.location)),
     eta: (result) => Boolean(result.expected_delivery),
     eta_window: (result) => Boolean(result.expected_delivery_from),
-    sender_name: (result) => Boolean(result.sender_name),
     pickup_point: (result) => Boolean(result.pickup_point),
     weight: (result) => result.weight_kg != null,
     dimensions: (result) => Boolean(result.dimensions_text),
@@ -212,7 +211,7 @@ describe('PostNL declared capabilities and privacy', () => {
     expect(result.destination_country).toBeUndefined();
   });
 
-  it('keeps the journey, the country of each scan and the webshop name', () => {
+  it('keeps the journey and the country of each scan', () => {
     expect(delivered).toMatchObject({
       status: 'delivered',
       current_stage: 'delivered',
@@ -220,7 +219,6 @@ describe('PostNL declared capabilities and privacy', () => {
       last_update: '2026-09-03T10:12:00+02:00',
       // PostNL's international tracker publishes no estimate.
       expected_delivery: null,
-      sender_name: 'Example Webshop',
       delivered_at: '2026-09-03T10:12:00+02:00',
     });
     expect(delivered.events?.map((event) => [event.stage, event.location, event.provider_code])).toEqual([

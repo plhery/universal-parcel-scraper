@@ -4,8 +4,6 @@
     "items": [
       {
         "item": "LX123456785NL",
-        "title": "Example Webshop",
-        "senderName": "Example Webshop",
         "recipientName": "Made Up Recipient",
         "recipientAddress": "Example Street 1, 1011 Example City",
         "signatureUrl": "https://example.invalid/proof-of-delivery/1.png",

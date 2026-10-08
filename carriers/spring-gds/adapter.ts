@@ -155,8 +155,6 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
   const latest = rawEvents[0] ?? {};
   const category = text(latest.category);
   const classified = postNLStatus(category, latest.status_description);
-  // Webshop or business name only; PostNL does not expose the recipient here.
-  const senderName = text(item.senderName ?? item.sender ?? item.title).replace(/\s+/g, ' ').trim().slice(0, 200) || null;
   const deliveredAt = classified?.status === 'delivered' ? events[0]?.time : null;
   const destination = text(item.destination_code).trim().toUpperCase();
   return {
@@ -166,7 +164,6 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
     last_update: events[0]?.time || null,
     ...(events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),
     expected_delivery: null,
-    ...(senderName ? { sender_name: senderName } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
     ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
     events,

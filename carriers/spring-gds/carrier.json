@@ -29,7 +29,6 @@
   "capabilities": [
     "history",
     "location",
-    "sender_name",
     "delivered_at",
     "provider_code"
   ],
@@ -39,16 +38,21 @@
     "shows": [
       "status",
       "history",
-      "sender_name"
+      "location"
     ],
     "scraped": [
       "status",
       "history",
-      "sender_name",
-      "provider_code"
+      "location",
+      "delivered_at",
+      "provider_code",
+      "destination_country"
     ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "sender_name"
+    ]
   },
   "links": [
     {

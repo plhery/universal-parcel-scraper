@@ -15369,6 +15369,22 @@
     ]
   },
   {
+    "input": "LR290372649NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
+    "input": "LR291479085NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "LR616917539NL",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -15597,6 +15613,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "LX038154718NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
     ]
   },
   {

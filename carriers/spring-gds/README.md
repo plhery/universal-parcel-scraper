@@ -51,9 +51,9 @@ native catalog all carry it; everything user-facing says PostNL.
 - The item's `destination_code` becomes `destination_country`. The host uses it as a hint to
   propose one national-post confirmation for S10 numbers (see
   [routing](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)).
-- Sender name is kept only as a webshop or business name, whitespace-collapsed and capped at
-  200 characters. Recipient name, address and signature link are dropped; the fixture carries
-  them so the test can assert it.
+- The reply names no sender, recipient or address. Only the fields above are read; the
+  fixture carries a recipient, an address and a signature link so the test can assert that
+  they stay out.
 - `mailingtechnology.com/tracking?tn=` (Spring GDS) and retired `postnl.post/details/{n}`
   links are recognized when pasted. New links use `/track?barcodes=`.
 - Not used: the Spring GDS portal. It shows extra internal legs for the same barcode, but it

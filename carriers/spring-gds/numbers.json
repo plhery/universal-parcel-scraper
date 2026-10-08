@@ -540,6 +540,63 @@
         "confidence": "high"
       },
       "note": "A PostNL tracking link archived by the Wayback Machine. A fifteen-character 3S barcode; PostNL's tracker no longer returns it."
+    },
+    {
+      "number": "LX038154718NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260805154833/https://postnl.post/track?barcodes=LX038154718NL",
+        "date": "2026-08-05",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, an item delivered abroad."
+    },
+    {
+      "number": "LR291479085NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260727152141/https://postnl.post/track?barcodes=LR291479085NL",
+        "date": "2026-07-27",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, an item delivered abroad."
+    },
+    {
+      "number": "LR290372649NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720164059/https://postnl.post/track?barcodes=LR290372649NL",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, an item delivered abroad."
     }
   ]
 }
