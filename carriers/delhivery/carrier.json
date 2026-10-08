@@ -24,18 +24,21 @@
     }
   },
   "capabilities": [
-    "history"
+    "history",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://www.delhivery.com/tracking",
     "canaryUrl": "https://www.delhivery.com/tracking",
     "shows": [
       "status",
-      "history"
+      "history",
+      "delivered_at"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "delivered_at"
     ],
     "discarded": [
       "recipient"

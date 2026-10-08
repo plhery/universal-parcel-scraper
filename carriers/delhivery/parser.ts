@@ -1,6 +1,6 @@
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { isoTime } from '../../core/time/index.js';
+import { isoTime, type ParsedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyDelhiveryStatus } from './status.js';
@@ -11,6 +11,29 @@ function scanTime(value: unknown) {
   // before applying the feed's India timezone to an offset-less timestamp.
   return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?$/.test(raw)
     ? isoTime(raw, 'Asia/Kolkata') : null;
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const pad = (value: number) => String(value).padStart(2, '0');
+
+// Freight milestones read "Sat, 29 Aug, 7:42 PM", India time without a year.
+// The year is the one, no more than a year before the shipment's dated status,
+// in which that day falls on that weekday; otherwise the text stays as written.
+function milestoneTime(value: string, status: ParsedTime | null): ParsedTime | null {
+  const match = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat), (\d{1,2}) ([A-Z][a-z]{2}), (\d{1,2}):(\d{2}) ([AP]M)$/.exec(value);
+  const month = match ? MONTHS.indexOf(match[3]!) : -1;
+  if (!match || !status || month < 0 || Number(match[4]) < 1 || Number(match[4]) > 12) return null;
+  const day = Number(match[2]);
+  const hour = Number(match[4]) % 12 + (match[6] === 'PM' ? 12 : 0);
+  const statusYear = Number(status.iso.slice(0, 4));
+  for (const year of [statusYear, statusYear - 1]) {
+    const date = new Date(Date.UTC(year, month, day));
+    if (date.getUTCMonth() !== month || WEEKDAYS[date.getUTCDay()] !== match[1]) continue;
+    const time = isoTime(`${year}-${pad(month + 1)}-${pad(day)}T${pad(hour)}:${match[5]}`, 'Asia/Kolkata');
+    if (time && time.timestamp <= status.timestamp) return time;
+  }
+  return null;
 }
 
 export function normalizeDelhiveryNumber(raw: string): string {
@@ -43,13 +66,31 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   const currentTimeText = clean(item.status.statusDateTime, 64);
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
-  // Only completed scans become events. State labels without scans are the
-  // website's future progress rail and must never claim movement.
-  for (const state of item.trackingStates.slice(0, 100)) {
+  const reached = typeof item.currentTrackIndex === 'number' && Number.isSafeInteger(item.currentTrackIndex) ? item.currentTrackIndex : -1;
+  let deliveredAt: ParsedTime | null = null;
+  // Only completed scans and reached milestones become events. States past the
+  // current index are the website's future progress rail and never claim movement.
+  for (const [index, state] of item.trackingStates.slice(0, 100).entries()) {
     if (!isRecord(state)) throw new SchemaError('Delhivery', 'Delhivery returned an incomplete tracking state');
-    if (state.scans === undefined) continue;
-    if (!Array.isArray(state.scans)) throw new SchemaError('Delhivery', 'Delhivery returned invalid scan history');
-    for (const scan of state.scans.slice(0, 100)) {
+    if (state.scans !== undefined && state.scans !== null && !Array.isArray(state.scans)) {
+      throw new SchemaError('Delhivery', 'Delhivery returned invalid scan history');
+    }
+    const scans: unknown[] = Array.isArray(state.scans) ? state.scans : [];
+    // Freight replies date a reached milestone rather than its scans (a pickup
+    // milestone can have none), so the milestone becomes an event of its own.
+    const milestone = clean(state.label, 200);
+    const milestoneText = clean(state.date, 64);
+    if (index <= reached && milestone && milestoneText
+      && !scans.some(scan => isRecord(scan) && clean(scan.scanDateTime, 64))) {
+      const time = milestoneTime(milestoneText, updated);
+      const status = classifyDelhiveryStatus(milestone);
+      const classified = item.currentFlow === 'Reverse' && status?.stage === 'delivered' ? classifyDelhiveryStatus('RTO DELIVERED') : status;
+      if (classified?.stage === 'delivered' && time && (!deliveredAt || time.timestamp > deliveredAt.timestamp)) deliveredAt = time;
+      events.push({ description: milestone, ...(time ? { time: time.iso } : { provider_time_text: milestoneText }),
+        ...(classified ? { stage: classified.stage } : {}), ...(item.currentFlow === 'Reverse' ? { provider_leg: 'return' } : {}) });
+    }
+    if (state.scans === undefined || state.scans === null) continue;
+    for (const scan of scans.slice(0, 100)) {
       if (!isRecord(scan)) throw new SchemaError('Delhivery', 'Delhivery returned an incomplete scan row');
       if (events.length >= 500) continue;
       const label = clean(scan.scan, 200);
@@ -78,8 +119,10 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   }
   const dated = events.filter(event => event.time).sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const undated = events.filter(event => !event.time);
+  // A freight status can date a later proof-of-delivery audit: its delivered milestone dates the delivery.
+  const deliveryTime = deliveredAt ?? updated;
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: description, last_update: updated?.iso ?? null, expected_delivery: null,
-    ...(mapped?.status === 'delivered' && updated ? { delivered_at: updated.iso } : {}),
+    ...(mapped?.status === 'delivered' && deliveryTime ? { delivered_at: deliveryTime.iso } : {}),
     timezone: 'Asia/Kolkata', events: [...dated, ...undated].slice(0, 100) };
 }

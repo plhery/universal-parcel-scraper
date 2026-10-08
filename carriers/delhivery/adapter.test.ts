@@ -2,12 +2,17 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { adapter, DelhiveryTracker } from './adapter.js';
 import { parseDelhivery } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { classifyDelhiveryStatus } from './status.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
 const NUMBER = '0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 const payload = () => structuredClone(fixture);
+const FREIGHT = '00000000000001';
+const freightFixture = JSON.parse(readFileSync(new URL('./fixtures/freight.json', import.meta.url), 'utf8'));
+const freight = () => structuredClone(freightFixture);
 describe('Delhivery direct tracking', () => {
   it('recognizes shared numeric formats through matching HTTP shipment activity', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
@@ -33,7 +38,7 @@ describe('Delhivery direct tracking', () => {
     expect(result.events?.[2]?.stage).toBe('in_transit');
     expect(result.events?.[0]).toMatchObject({ summary_snapshot: true });
     expect(JSON.stringify(result)).not.toMatch(/Private|private-reference|Example Address|Out For Delivery/);
-    expect(JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities).toEqual(['history']);
+    expect(JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities).toEqual(['history', 'delivered_at']);
   });
   it('requires one matching identity and the specific negative outcome', () => {
     for (const value of [null, {}, { statusCode: 200, data: [] }, { ...payload(), data: [payload().data[0], payload().data[0]] }]) {
@@ -168,6 +173,62 @@ describe('Delhivery direct tracking', () => {
     const result = parseDelhivery(value, NUMBER);
     expect(result.events).toHaveLength(1);
     expect(result.events?.[0]).toMatchObject({ description: 'DELIVERED', summary_snapshot: true });
+  });
+  it('dates reached freight milestones whose scans carry no time', () => {
+    const result = parseDelhivery(freight(), FREIGHT);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-03-04T10:00:00+05:30',
+      delivered_at: '2026-03-02T19:45:00+05:30', expected_delivery: null });
+    expect(result.events?.filter(event => event.time).map(event => [event.description, event.time, event.stage])).toEqual([
+      ['DELIVERED', '2026-03-04T10:00:00+05:30', 'delivered'],
+      ['Delivered', '2026-03-02T19:45:00+05:30', 'delivered'],
+      ['Out for Delivery', '2026-03-02T10:30:00+05:30', 'out_for_delivery'],
+      ['On the Way', '2026-02-27T06:00:00+05:30', 'in_transit'],
+      ['Picked Up', '2026-02-24T09:15:00+05:30', 'accepted'],
+    ]);
+    expect(result.events?.filter(event => !event.time).map(event => [event.description, event.location, event.stage])).toEqual([
+      ['In Transit', 'Example Gateway', 'in_transit'], ['In Transit', 'Example Hub', 'in_transit'],
+      ['Dispatched', 'Example City', 'out_for_delivery'], ['Delivered', 'Example City', 'delivered'],
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/Private|private-|Example Address/);
+  });
+  it('reads a milestone year from its weekday before the status date, or keeps the text', () => {
+    const value = freight();
+    value.data[0].status.statusDateTime = '2027-01-05T10:00:00';
+    value.data[0].trackingStates[0].date = 'Wed, 30 Dec, 6:00 PM';
+    value.data[0].trackingStates[1].date = 'Thu, 30 Dec, 6:00 PM';
+    value.data[0].trackingStates[2].date = 'Mon, 2 Mar, 10:30';
+    value.data[0].currentTrackIndex = 2;
+    const events = parseDelhivery(value, FREIGHT).events ?? [];
+    expect(events.find(event => event.description === 'Picked Up')).toMatchObject({ time: '2026-12-30T18:00:00+05:30' });
+    for (const description of ['On the Way', 'Out for Delivery']) {
+      expect(events.find(event => event.description === description)).not.toHaveProperty('time');
+    }
+    expect(events.find(event => event.description === 'On the Way')).toMatchObject({ provider_time_text: 'Thu, 30 Dec, 6:00 PM' });
+    // The delivered milestone lies past the current index: the future rail.
+    expect(events.filter(event => event.description === 'Delivered')).toEqual([expect.objectContaining({ location: 'Example City' })]);
+    value.data[0].status.statusDateTime = '';
+    expect(parseDelhivery(value, FREIGHT).events?.filter(event => event.time)).toEqual([]);
+    const dated = freight();
+    dated.data[0].trackingStates[3].scans[0].scanDateTime = '2026-03-02T19:40:00';
+    const result = parseDelhivery(dated, FREIGHT);
+    expect(result.events?.filter(event => event.description === 'Delivered').map(event => event.time)).toEqual(['2026-03-02T19:40:00+05:30']);
+    expect(result.delivered_at).toBe('2026-03-04T10:00:00+05:30');
+  });
+  it('files lost, cancelled and returned-to-seller statuses', () => {
+    for (const [status, scan, flow, stage] of [
+      ['LOST', 'LOST', 'Closed', 'exception'], ['CANCELLED', 'Canceled', 'Reverse', 'exception'],
+      ['DELIVERED_SELLER', 'RTO', 'Returned', 'returned'], ['DELIVERED_SELLER', 'DTO', 'Reverse', 'returned'],
+    ] as const) {
+      const value = payload();
+      value.data[0].currentFlow = flow;
+      value.data[0].status = { status, statusType: 'DL', statusDateTime: '2026-01-03T14:00:00' };
+      value.data[0].trackingStates = [{ label: 'Example', scans: [{ scan, scanType: 'DL', scanDateTime: '', cityLocation: 'Example City' }] }];
+      const result = parseDelhivery(value, NUMBER);
+      expect(result).toMatchObject({ status: 'exception', current_stage: stage });
+      expect(result.events?.find(event => event.location === 'Example City')?.stage).toBe(stage);
+      expect(result.delivered_at).toBeUndefined();
+    }
+    for (const entry of statuses.entries) expect(classifyDelhiveryStatus(entry.wording)?.stage, entry.wording).toBe(entry.stage);
   });
   it('passes the website headers and bounded cancellation into the public read', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
