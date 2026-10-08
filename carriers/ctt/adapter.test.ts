@@ -117,14 +117,14 @@ describe('CTT response parsing', () => {
     });
     expect(result.events?.map((event) => [event.description, event.stage, event.time])).toEqual([
       ['Delivered parcel', 'delivered', '2026-01-04T14:46:00Z'],
-      ['Shipment accepted', 'in_transit', '2026-01-01T08:00:00Z'],
+      ['Shipment accepted', 'accepted', '2026-01-01T08:00:00Z'],
     ]);
   });
 
   it('maps every documented StateId and reports unmapped ones as unknown', () => {
     const cases: Array<[number, string, string]> = [
       [1, 'pending', 'registered'],
-      [2, 'in_transit', 'in_transit'],
+      [2, 'in_transit', 'accepted'],
       [5, 'exception', 'returned'],
       [7, 'out_for_delivery', 'out_for_delivery'],
       [8, 'in_transit', 'in_transit'],

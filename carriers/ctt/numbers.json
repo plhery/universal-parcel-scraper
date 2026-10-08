@@ -9,11 +9,14 @@
         "url": "https://portaldaqueixa.com/brands/ctt/complaints/ctt-atraso-na-entrega-377-163329926",
         "date": "2026-09-28"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ctt",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. CTT's tracker returns its history."
     },
     {
       "number": "RL402552798PT",
@@ -23,11 +26,14 @@
         "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/ritardo-consegna-raccomandata/f9bc9dea8c8224161d",
         "date": "2025-11-03"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ctt",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. CTT's tracker returns its history."
     },
     {
       "number": "CO 0766 4891 2 PT",
@@ -187,7 +193,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "registered letter acknowledgement",
         "reportedRole": "reported_shipment"
       },
@@ -195,7 +201,7 @@
         "carrier": "ctt",
         "confidence": "high"
       },
-      "note": "Sender explicitly reports registered mail with acknowledgement of receipt; spaced printed identifier retained."
+      "note": "Sender reports registered mail with acknowledgement of receipt; spaced printed identifier retained. CTT's tracker returns its history."
     },
     {
       "number": "RL 2235 1591 0 PT",
@@ -229,7 +235,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "registered letter returned",
         "reportedRole": "reported_shipment"
       },
@@ -237,7 +243,7 @@
         "carrier": "ctt",
         "confidence": "high"
       },
-      "note": "Sender reports a registered letter with acknowledgement of receipt subsequently returned."
+      "note": "Sender reports a registered letter with acknowledgement of receipt subsequently returned. CTT's tracker returns its history."
     }
   ]
 }

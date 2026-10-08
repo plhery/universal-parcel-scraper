@@ -15,7 +15,7 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 
 const EVENT_STATUS: Record<number, ClassifiedStatus> = {
   1: { status: 'pending', stage: 'registered' },
-  2: { status: 'in_transit', stage: 'in_transit' },
+  2: { status: 'in_transit', stage: 'accepted' },
   5: { status: 'exception', stage: 'returned' },
   7: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   8: { status: 'in_transit', stage: 'in_transit' },
