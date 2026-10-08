@@ -31,7 +31,10 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "weight",
+    "pickup_point",
+    "delivery_partner"
   ],
   "portal": {
     "url": "https://clientesparcel.dhl.es/LiveTracking/ModificarEnvio/{trackingNumber}",
@@ -49,13 +52,14 @@
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "weight",
+      "pickup_point",
+      "delivery_partner"
     ],
     "discarded": [
       "delivered_at",
-      "weight",
       "merchant_reference",
-      "pickup_point",
       "parcel_count"
     ],
     "unavailable": [

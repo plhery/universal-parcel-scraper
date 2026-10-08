@@ -12,7 +12,8 @@ import statuses from './statuses.json' with { type: 'json' };
 
 const CODES = new Map<string, Stage>(statuses.entries.map((entry) => [entry.code, entry.stage as Stage]));
 /** Depot scans end in a preposition and are completed by the scan's town. */
-const MOVEMENTS = new Set(statuses.entries.filter((entry) => entry.code === 'ZZZ').map((entry) => entry.wording.toLowerCase()));
+const MOVEMENTS = new Map<string, Stage>(statuses.entries.filter((entry) => entry.code === 'ZZZ')
+  .map((entry) => [entry.wording.toLowerCase(), entry.stage as Stage]));
 
 // The shipment status enum of the tracking page: 0 is unset, 3 is the
 // destination depot, 4 a courier assignment and 6 a planned new attempt.
@@ -31,8 +32,10 @@ export interface DhlEcommerceEsStatus { movement: boolean; stage?: Stage }
 
 /** A depot scan is sometimes sent without its code; its wording is then the only sign. */
 export function dhlEcommerceEsStatus(code: string | undefined, wording: string): DhlEcommerceEsStatus {
-  const movement = code === 'ZZZ' || (code === undefined && MOVEMENTS.has(wording.toLowerCase()));
-  const stage = movement ? 'in_transit' : code === undefined ? undefined : CODES.get(code);
+  const known = MOVEMENTS.get(wording.toLowerCase());
+  const movement = code === 'ZZZ' || (code === undefined && known !== undefined);
+  // A pickup is the first movement; any other depot scan is transit.
+  const stage = movement ? known ?? 'in_transit' : code === undefined ? undefined : CODES.get(code);
   return { movement, ...(stage ? { stage } : {}) };
 }
 

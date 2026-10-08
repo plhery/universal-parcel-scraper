@@ -1,3 +1,4 @@
+import { isCttExpressTrackingNumber } from '../../core/detection/cttExpress.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
@@ -11,6 +12,8 @@ const MAX_SCANS = 1_000;
 const MAX_EVENTS = 100;
 /** Stages that end a parcel's journey; a later notice does not undo them. */
 const FINAL: readonly Stage[] = ['delivered', 'returned'];
+/** A later delivery round or failed attempt shows the journey had not ended. */
+const ROUND: readonly Stage[] = ['out_for_delivery', 'failed_attempt'];
 /** The registration scan is filed under head office, which is not a place. */
 const HEAD_OFFICE = new Set(['central', 'center', 'centro']);
 
@@ -25,6 +28,13 @@ export function normalizeDhlEcommerceEsNumber(raw: string): string {
     throw new InvalidInputError(PROVIDER, 'DHL eCommerce Iberia tracking requires a shipment number or a DHL parcel barcode');
   }
   return number;
+}
+
+/** The portal shows the weight in kilos, as a string. */
+function weightKg(value: unknown): number | undefined {
+  const text = typeof value === 'number' ? String(value) : typeof value === 'string' ? value.trim() : '';
+  const weight = /^\d{1,6}(?:[.,]\d{1,3})?$/.test(text) ? Number(text.replace(',', '.')) : NaN;
+  return weight > 0 && weight <= 100_000 ? weight : undefined;
 }
 
 /** Scans carry the depot's wall clock and no offset. */
@@ -68,8 +78,15 @@ export function parseDhlEcommerceEs(payload: unknown, rawNumber: string): Carrie
   }
   if (!events.length) throw new IndeterminateError(PROVIDER, 'DHL eCommerce Iberia returned no parcel history');
   const latest = events[0]!;
-  const current = events.find((event) => event.stage && FINAL.includes(event.stage)) ?? latest;
+  const final = events.findIndex((event) => event.stage && FINAL.includes(event.stage));
+  const reopened = events.slice(0, Math.max(final, 0)).some((event) => event.stage && ROUND.includes(event.stage));
+  const current = final >= 0 && !reopened ? events[final]! : latest;
   const stage = current.stage ?? dhlEcommerceEsSummaryStage(payload.Status);
+  const weight = weightKg(payload.Weight);
+  // The ServicePoint is where the parcel waits only while it is ready there.
+  const point = stage === 'ready_for_pickup' && isRecord(payload.ServicePoint) ? clean(payload.ServicePoint.Name, 120) : '';
+  // CTT Express delivers DHL's consumer parcels in Spain under its own label code.
+  const partner = typeof payload.ShippingCode === 'string' ? payload.ShippingCode.trim() : '';
   return {
     status: stage ? statusForStage(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
@@ -77,6 +94,10 @@ export function parseDhlEcommerceEs(payload: unknown, rawNumber: string): Carrie
     last_update: null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
     expected_delivery: null,
+    ...(weight !== undefined ? { weight_kg: weight } : {}),
+    ...(point ? { pickup_point: point } : {}),
+    ...(isCttExpressTrackingNumber(partner) && partner !== number
+      ? { delivery_carrier: 'ctt-express', delivery_tracking_number: partner } : {}),
     events: events.slice(0, MAX_EVENTS),
   };
 }

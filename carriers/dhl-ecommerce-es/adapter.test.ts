@@ -37,13 +37,33 @@ describe('DHL eCommerce Iberia parser', () => {
     expect(result.events?.every((event) => event.time === undefined)).toBe(true);
   });
 
-  it('keeps nothing of the ServicePoint, the references or the weight', () => {
+  it('keeps the weight and nothing of a past ServicePoint or the references', () => {
     const output = JSON.stringify(parseDhlEcommerceEs(clone(), NUMBER));
     for (const dropped of ['EXAMPLE NEWSAGENT', 'CALLE DE EJEMPLO', 'EXAMPLEVILLE', '00000"', 'REF-0000001', '1000001', 'JJD0000', '28 6000000007']) {
       expect(output).not.toContain(dropped);
     }
     expect(Object.keys(parseDhlEcommerceEs(clone(), NUMBER)).sort()).toEqual(['current_stage', 'current_stage_source', 'events',
-      'expected_delivery', 'last_status_text', 'last_update', 'last_update_local', 'status']);
+      'expected_delivery', 'last_status_text', 'last_update', 'last_update_local', 'status', 'weight_kg']);
+    expect(parseDhlEcommerceEs(clone(), NUMBER).weight_kg).toBe(2);
+  });
+
+  it('names the ServicePoint only while the parcel waits there', () => {
+    const waiting = clone();
+    waiting.Tracking = waiting.Tracking.slice(1);
+    const result = normalizeCarrierResult(parseDhlEcommerceEs(waiting, NUMBER));
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: 'EXAMPLE NEWSAGENT' });
+    for (const dropped of ['CALLE DE EJEMPLO', 'EXAMPLEVILLE', '00000"', 'ES-0000000', 'Servicepoint"']) expect(JSON.stringify(result)).not.toContain(dropped);
+    waiting.ServicePoint.Name = '   ';
+    expect(parseDhlEcommerceEs(waiting, NUMBER).pickup_point).toBeUndefined();
+  });
+
+  it('reads the weight in kilos and nothing else', () => {
+    const payload = clone();
+    for (const [weight, expected] of [['2,5', 2.5], [' 12 ', 12], [3, 3], ['0', undefined], ['', undefined], ['2 kg', undefined],
+      ['-1', undefined], ['150000', undefined], [null, undefined]] as const) {
+      (payload as { Weight: unknown }).Weight = weight;
+      expect(parseDhlEcommerceEs(payload, NUMBER).weight_kg).toBe(expected);
+    }
   });
 
   it('reads a door delivery with a depot scan that lost its code', () => {
@@ -55,6 +75,33 @@ describe('DHL eCommerce Iberia parser', () => {
     expect(result.events?.[2]).toEqual({ description: 'Tránsito en Valencia', location: 'Valencia', local_time: '2026-03-17T07:35:00',
       stage: 'in_transit', stage_source: 'carrier_map' });
     expect(result.events?.at(-1)?.location).toBeUndefined();
+    // CTT Express delivers it in Spain under its own label code.
+    expect(result).toMatchObject({ weight_kg: 2, delivery_carrier: 'ctt-express', delivery_tracking_number: '0099990099990000000001' });
+    for (const code of ['00999900999900000000', 'REF-0000002', 42]) {
+      expect(parseDhlEcommerceEs({ ...structuredClone(delivered), ShippingCode: code }, INBOUND).delivery_carrier).toBeUndefined();
+    }
+    const asked = { ...structuredClone(delivered), ExpeditionNumber: '0099990099990000000001' };
+    expect(parseDhlEcommerceEs(asked, '0099990099990000000001').delivery_tracking_number).toBeUndefined();
+  });
+
+  it('files arrangements, incidents and returns, and reopens a delivery a later round contradicts', () => {
+    const scan = (Code: string, Description: string, Time: string, SolutionCode?: string) =>
+      ({ Date: '20/03/2026', Time, Description, Code, ...(SolutionCode ? { SolutionCode } : {}), Town: 'Valencia' });
+    const payload = clone();
+    payload.Status = 0;
+    payload.Tracking = [scan('EC', 'Delivery agreed with recipient 23/03/2026', '18:00'), scan('CR', 'Receiver closed: delivery not possible', '12:00', 'CLI'),
+      scan('PC', 'Delivered, POD pending', '11:00', 'DHL'), scan('CH', 'Not delivered today: delivery expected for the next working day', '10:00', 'RET')];
+    const reopened = parseDhlEcommerceEs(payload, NUMBER);
+    expect(reopened).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Delivery agreed with recipient 23/03/2026' });
+    expect(reopened.events?.map((event) => event.stage)).toEqual(['in_transit', 'failed_attempt', 'delivered', 'exception']);
+    payload.Tracking = payload.Tracking.slice(2);
+    expect(parseDhlEcommerceEs(payload, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    payload.Tracking = [scan('RT', 'Shipment being returned to sender', '09:00', 'DEV'), scan('FA', 'Shipment with incidence', '08:00', 'DHL')];
+    expect(parseDhlEcommerceEs(payload, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Shipment being returned to sender' });
+    payload.Tracking = [scan('ZZZ', 'Picked up', '08:00'), scan('BS', 'Parcel dropped off at DHL ServicePoint', '07:00')];
+    const accepted = parseDhlEcommerceEs(payload, NUMBER);
+    expect(accepted).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'Picked up Valencia' });
+    expect(accepted.events?.map((event) => event.stage)).toEqual(['accepted', 'accepted']);
   });
 
   it('takes the stage of an unknown code from the shipment status', () => {

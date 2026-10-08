@@ -32,7 +32,12 @@ the gateway behind its customer tracking page. German DHL Paket is
   the page does. One sent without its code is recognized by that wording.
 - A code missing from the list has no stage. The current stage then comes
   from the shipment's own status number.
-- A delivery stays the current stage when a notice follows it.
+- A delivery stays the current stage when a notice follows it, but not when a
+  later delivery round or failed attempt shows it came early.
+- The weight is shown in kilos. The ServicePoint's name is the pickup point
+  only while the parcel waits there.
+- When CTT Express delivers the parcel, its label code is passed on as the
+  delivery partner's number.
 - Ten-digit numbers overlap with DHL Express and other carriers, so detection
   only suggests this carrier and the portal's answer attributes the parcel.
   Twelve and twenty-two digits, `JJD` plates and S10 numbers are accepted when
@@ -47,8 +52,8 @@ the gateway behind its customer tracking page. German DHL Paket is
   filed under head office and has no place.
 - An empty answer also covers purged shipments; how long history is kept is
   not known.
-- The ServicePoint, the sender's reference, the weight and the delivery day
-  are dropped.
+- The ServicePoint's address, the sender's reference and the delivery day are
+  dropped.
 
 ## Testing
 
