@@ -166,6 +166,81 @@ describe('La Poste tracking input', () => {
   });
 });
 
+describe('La Poste pickup point address', () => {
+  const LOCATOR_PAGE = readFileSync(new URL('./fixtures/locator.html', import.meta.url), 'utf8');
+  const feed = (waiting = true) => {
+    const data = deliveredFixture();
+    Object.assign(data[0]!.shipment, { isFinal: !waiting, contextData: {
+      removalPoint: { idPoint: '000001', type: 'LP', isPickUp: false, name: 'EXEMPLEVILLE BP' },
+    } });
+    if (waiting) {
+      data[0]!.shipment.event[1] = { ...data[0]!.shipment.event[1]!, group: 'DISINS', code: 'AG1',
+        label: 'Votre colis est disponible dans votre point de retrait.' };
+    }
+    return data;
+  };
+  const lookup = (data: LaPosteResponse[], page?: () => Response | Promise<Response>, signal?: AbortSignal) => {
+    const fetcher = vi.fn<typeof fetch>(async (url) => (String(url).startsWith('https://localiser.laposte.fr/')
+      ? (page ?? (() => new Response(LOCATOR_PAGE)))()
+      : Response.json(data)));
+    const tracker = new LaPosteTracker({ fetcher });
+    return { fetcher, tracker, result: tracker.fetch(TRACKING_NUMBER, { signal }) };
+  };
+
+  it('follows the point name with its street and town while the parcel waits there', async () => {
+    const waiting = lookup(feed());
+    const result = await waiting.result;
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup',
+      pickup_point: 'EXEMPLEVILLE BP\n1 RUE EXEMPLE\n00000 EXEMPLEVILLE' });
+    expect(JSON.stringify(result)).not.toMatch(/PHONE|CENTRE|17:30|48\.1/);
+    const [url, init] = waiting.fetcher.mock.calls[1]!;
+    expect(url).toBe('https://localiser.laposte.fr/000001');
+    expect(init).toMatchObject({ redirect: 'follow' });
+    const collected = lookup(feed(false));
+    expect((await collected.result).pickup_point).toBeUndefined();
+    expect(collected.fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('remembers the address of a point, and asks again after a failure', async () => {
+    const failing = lookup(feed(), () => new Response('', { status: 503 }));
+    expect((await failing.result).pickup_point).toBe('EXEMPLEVILLE BP');
+    failing.fetcher.mockImplementation(async (url) => (String(url).startsWith('https://localiser.laposte.fr/')
+      ? new Response(LOCATOR_PAGE) : Response.json(feed())));
+    for (let lookups = 0; lookups < 2; lookups += 1) {
+      expect((await failing.tracker.fetch(TRACKING_NUMBER)).pickup_point).toBe('EXEMPLEVILLE BP\n1 RUE EXEMPLE\n00000 EXEMPLEVILLE');
+    }
+    expect(failing.fetcher.mock.calls.filter(([url]) => String(url).startsWith('https://localiser.laposte.fr/'))).toHaveLength(2);
+  });
+
+  it.each([
+    ['another point', () => new Response(LOCATOR_PAGE.replace('"id":"000001"', '"id":"000002"'))],
+    ['a point without a street', () => new Response(LOCATOR_PAGE.replace('"line1":"1 RUE EXEMPLE"', '"line1":null'))],
+    ['a page without a record', () => new Response('<html>PRIVATE</html>')],
+    ['a malformed record', () => new Response(LOCATOR_PAGE.replace('"meta":{', '"meta":{{'))],
+    ['an unknown point', () => new Response('Not found', { status: 404 })],
+    ['an outage', () => { throw new TypeError('fetch failed'); }],
+  ])('keeps the point name alone after %s', async (_, page) => {
+    await expect(lookup(feed(), page).result).resolves.toMatchObject({ pickup_point: 'EXEMPLEVILLE BP' });
+  });
+
+  it('asks nothing for a point id it cannot put in a path', async () => {
+    const data = feed();
+    Object.assign(data[0]!.shipment, { contextData: { removalPoint: { idPoint: '../000001', type: 'LP', name: 'EXEMPLEVILLE BP' } } });
+    const odd = lookup(data);
+    expect((await odd.result).pickup_point).toBe('EXEMPLEVILLE BP');
+    expect(odd.fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('ends a lookup cancelled during the address request', async () => {
+    const controller = new AbortController();
+    const cancelled = lookup(feed(), () => {
+      controller.abort(new Error('Cancelled'));
+      return new Response('', { status: 503 });
+    }, controller.signal);
+    await expect(cancelled.result).rejects.toThrow('Cancelled');
+  });
+});
+
 describe('La Poste transient 403 recovery', () => {
   const rejection = () => new Response('<title>Temporary access refusal</title>', {
     status: 403, headers: { 'Content-Type': 'text/html' },

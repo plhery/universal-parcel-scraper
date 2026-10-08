@@ -7,7 +7,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { isoTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { eventStage, eventStatus } from './status.js';
 
@@ -24,10 +24,19 @@ import { eventStage, eventStatus } from './status.js';
 // - Production HTTP 403s carried La Poste's "Site indisponible - Incident en
 //   cours" page and immediately following checks succeeded, so a 403 is
 //   retried up to three times inside the original deadline (see README.md).
+// - The tracking page links the point holding a parcel to La Poste's locator,
+//   `localiser.laposte.fr/{idPoint}`, which redirects to the point's page. That
+//   page carries the point's record, address included, as JSON in
+//   `Yext["profile"]`; `meta.id` repeats the point's id.
 const TRACKING_API = 'https://www.laposte.fr/ssu/sun/back/suivi-unifie';
 const TRACKING_PAGE = 'https://www.laposte.fr/outils/suivre-vos-envois';
+const LOCATOR = 'https://localiser.laposte.fr';
 const TIMEZONE = 'Europe/Paris';
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** The locator answers from a cache within a fraction of a second. */
+const ADDRESS_TIMEOUT_MS = 3_000;
+/** Points whose address a tracker remembers: a waiting parcel is looked up again and again. */
+const MAX_REMEMBERED_POINTS = 500;
 const MAX_RESPONSE_BYTES = 2_000_000;
 const MAX_EVENTS_TO_RETURN = 100;
 /** The provider's "unknown shipment" return code. */
@@ -133,10 +142,37 @@ export function laPosteTrackingApiUrl(trackingNumber: string): string {
   return url.toString();
 }
 
+/**
+ * The street and town of the point a locator page describes, a line each, if it is the
+ * requested one. Its phone, opening hours, services and coordinates are not read.
+ */
+function pointAddress(html: string, id: string): string {
+  const marker = 'Yext["profile"] = ';
+  const start = html.indexOf(marker);
+  const end = start < 0 ? -1 : html.indexOf('; return Yext;', start);
+  if (end < 0) return '';
+  let profile: unknown;
+  try {
+    profile = JSON.parse(html.slice(start + marker.length, end));
+  } catch {
+    return '';
+  }
+  if (!isRecord(profile) || !isRecord(profile.meta) || clean(profile.meta.id, 40) !== id || !isRecord(profile.address)) return '';
+  const street = clean(profile.address.line1, 120);
+  const city = clean(profile.address.city, 80);
+  if (!street || !city) return '';
+  return `${street}\n${[clean(profile.address.postalCode, 16), city].filter(Boolean).join(' ')}`;
+}
+
 export function parseLaPosteTrackingResponse(
   payload: unknown,
   trackingNumber: string,
 ): CarrierResult {
+  return parseShipment(payload, trackingNumber).result;
+}
+
+/** `point` is the locator id of the pickup point the result names, else empty. */
+function parseShipment(payload: unknown, trackingNumber: string): { result: CarrierResult; point: string } {
   const requested = normalizeLaPosteTrackingNumber(trackingNumber);
   if (!Array.isArray(payload) || payload.length === 0) {
     throw new SchemaError('La Poste', 'La Poste returned an invalid tracking response');
@@ -201,13 +237,15 @@ export function parseLaPosteTrackingResponse(
   const shipped = clean(shipment.idShip, 64).toLocaleUpperCase('en-US');
   // The merchant La Poste shows on the tracking page. Recipient blocks stay unread.
   const sender = clean(context.merchantName, 200);
-  // The post office, locker or shop holding the parcel; only its name is read.
+  // The post office, locker or shop holding the parcel: its name, and its id
+  // on La Poste's locator, which gives its address.
   const removal = isRecord(context.removalPoint) ? context.removalPoint : {};
   const pickupPoint = latest?.stage === 'ready_for_pickup' && clean(removal.type, 20) ? clean(removal.name, 200) : '';
+  const point = clean(removal.idPoint, 40);
   const partner = isRecord(context.partner) ? context.partner : {};
   const deliveryCarrier = carrierIdFromPartner(clean(partner.name, 80), clean(partner.url, 2048));
   const deliveryNumber = clean(partner.reference, 64).toUpperCase();
-  return {
+  const result: CarrierResult = {
     status: eventStatus(latestGroup, latestCode, latestLabel, events.length > 0),
     // The status vocabulary has no pickup or customs value; without the stage
     // the sync would re-read the sentence and fall back to "out for delivery".
@@ -228,6 +266,7 @@ export function parseLaPosteTrackingResponse(
     } : {}),
     events,
   };
+  return { result, point: pickupPoint && /^[A-Za-z0-9]{1,20}$/.test(point) ? point : '' };
 }
 
 export interface LaPosteTrackerOptions {
@@ -242,6 +281,8 @@ export class LaPosteTracker {
   private readonly fetcher?: typeof fetch;
   private readonly recorder?: StepRecorder;
   private readonly userAgent: string;
+  /** The locator's page for a point is large and its address does not change. */
+  private readonly addresses = new Map<string, string>();
 
   constructor(options: LaPosteTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -272,7 +313,13 @@ export class LaPosteTracker {
         maxBytes: MAX_RESPONSE_BYTES,
         fetcher: this.fetcher,
       });
-      return parseLaPosteTrackingResponse(parseJsonBytes(bytes, 'La Poste'), normalized);
+      const { result, point } = parseShipment(parseJsonBytes(bytes, 'La Poste'), normalized);
+      // The feed names the point holding the parcel without its address, which the locator adds.
+      if (point) {
+        const address = await this.pointAddress(point, signal, deadline - performance.now());
+        if (address) result.pickup_point = `${result.pickup_point}\n${address}`;
+      }
+      return result;
     };
     // La Poste's edge answers single lookups with an HTTP 403 "Site indisponible
     // - Incident en cours" page while another parcel, or the same one a moment
@@ -298,6 +345,40 @@ export class LaPosteTracker {
       { ...retry },
       { ...retry },
     ]);
+  }
+
+  /**
+   * The point's street and town, or nothing: the parcel is found, and its pickup point keeps its
+   * name without them. The request gets at most half of what is left, so the result still has
+   * time to return.
+   */
+  private async pointAddress(id: string, signal: AbortSignal, remainingMs: number): Promise<string> {
+    const known = this.addresses.get(id);
+    if (known) return known;
+    const timeoutMs = Math.floor(Math.min(ADDRESS_TIMEOUT_MS, remainingMs / 2));
+    if (timeoutMs < 1) return '';
+    try {
+      const { bytes } = await fetchBounded(`${LOCATOR}/${encodeURIComponent(id)}`, {
+        signal,
+        headers: { Accept: 'text/html', 'Accept-Language': 'fr-FR,fr;q=0.9', 'User-Agent': this.userAgent },
+      }, {
+        provider: 'La Poste locator',
+        timeoutMs,
+        maxBytes: MAX_RESPONSE_BYTES,
+        // The point's id redirects to its page, named after its town.
+        redirect: 'follow',
+        fetcher: this.fetcher,
+      });
+      const address = pointAddress(decodeText(bytes), id);
+      if (address) {
+        if (this.addresses.size >= MAX_REMEMBERED_POINTS) this.addresses.delete(this.addresses.keys().next().value!);
+        this.addresses.set(id, address);
+      }
+      return address;
+    } catch {
+      signal.throwIfAborted();
+      return '';
+    }
   }
 }
 

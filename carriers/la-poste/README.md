@@ -30,6 +30,13 @@ describes their use; a suffix alone does not identify the carrier.
    while the original 15-second deadline has time left. Each attempt gets the
    remaining time, so retries never extend the lookup.
 
+While the parcel waits at a post office, relay or locker, the step that read the
+feed then asks La Poste's locator for that point,
+`https://localiser.laposte.fr/{idPoint}`, the page the tracker links to. It gets
+at most three seconds and half of the time left; any failure leaves the point's
+name alone. The page is large and a point's address does not change, so a
+tracker remembers the addresses it has read and asks once per point.
+
 The feed answers with an array; only the entry whose `shipment.idShip` equals
 the requested number is read. `returnCode` 104 is the only positive not-found;
 any other non-zero code is inconclusive, so the router can fall back to a
@@ -70,7 +77,12 @@ universal provider.
   `delivery_carrier` and `delivery_tracking_number`.
 - `contextData.merchantName` is the sender the tracking page shows. While the
   parcel waits for collection, `removalPoint.name` names the post office, locker
-  or shop holding it.
+  or shop holding it and becomes the pickup point. The feed has no address for
+  it, but `removalPoint.idPoint` is the point's id on the locator, whose page
+  carries the point's record as JSON in `Yext["profile"]`. When its `meta.id` is
+  that id, the record's street (`address.line1`) and its postcode and town
+  follow the name on their own lines. The point's phone, opening hours and
+  coordinates are not read.
 - `arrivalCountry` repeats `originCountry` on some international items, inbound
   ones included. Such a pair stands only while every scan stays in that
   country; otherwise a delivery scan's country is the destination.
@@ -85,7 +97,8 @@ universal provider.
 
 ## Limitations
 
-- `location` is the event's country; the feed has no city.
+- `location` is the event's country; the feed has no city, and its Chronopost
+  items carry no country either.
 - The delivery estimate is dropped once the shipment is final or delivered: a
   delivered item can stay non-final with its delivery time as the estimate.
 - Recipient blocks and addresses on the shipment and its events are never read;
