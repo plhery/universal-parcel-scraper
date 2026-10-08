@@ -33,6 +33,11 @@ The reply carries a weight without a unit and with placeholder values for some
 services, and estimate fields the page never shows, so neither is read. The
 customer's order number is never read.
 
+Scan stages come from [status.ts](status.ts), which compares Yuntrack's wording
+without case or repeated spaces. "Delivered to local carrier" is the hand-over
+to the destination's last-mile carrier, so it stays in transit; only the latest
+event's delivered code marks a delivery.
+
 Run `npm run test:carriers:live -- carriers/yunexpress` with a
 configured browser. Set `YUNEXPRESS_TRACKING_NUMBER` outside the repository to
 check a real parcel.

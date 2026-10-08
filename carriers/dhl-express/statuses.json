@@ -42,6 +42,45 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Shipment information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05"
+    },
+    {
+      "wording": "Processed at",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Followed by the facility, as in \"Processed at <city> - <country>\"; matched on its start."
+    },
+    {
+      "wording": "Arrived at DHL Sort Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Followed by the facility; matched on its start."
+    },
+    {
+      "wording": "Arrived at DHL Delivery Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Followed by the facility; matched on its start."
+    },
+    {
+      "wording": "Shipment has departed from a DHL facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Followed by the facility; matched on its start."
     }
   ]
 }

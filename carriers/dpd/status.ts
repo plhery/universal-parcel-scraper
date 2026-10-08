@@ -13,8 +13,9 @@
  * `PARCEL_HANDED`, `IN_TRANSIT` and `AT_DELIVERY_CENTER` deliberately yield no
  * stage: they move the result status to `in_transit` but leave the event
  * unmapped so the sync's classifier records the wording for review instead of
- * this map inventing a milestone. Scan codes are mapped only where a live
- * lookup paired them with an enumeration value (see `scanStage`).
+ * this map inventing a milestone. Scan codes are mapped where a live lookup
+ * paired them with an enumeration value, or where DPD's own label names one
+ * movement inside its network (see `scanStage`).
  *
  * Provenance: the enumeration, the scan codes and their English labels are
  * what the myDPD guest API returns for Swiss consignee lookups; the wording
@@ -88,6 +89,8 @@ export function apiStage(description: unknown): Stage | null {
  * `parcelEvents[].eventType` scan codes. On 2026-09-26 a verified lookup
  * listed ORI, DLI, DLO and DEY at the same wall clock as the `parcelHistory`
  * enumeration named beside them. CCO has no twin; it ends customs clearance.
+ * HUI, HUS, DLS and DLQ are the hub and delivery-depot scans a verified
+ * domestic history lists between ORI and DLO, each labelled with one movement.
  * ORI ("Origin depot - In") stays unmapped like its twin PARCEL_HANDED: the
  * result stage then comes from the same wording as the scan's, and an import
  * that cleared customs does not step back to accepted. Other codes stay
@@ -95,7 +98,11 @@ export function apiStage(description: unknown): Stage | null {
  */
 const SCAN_STAGES: Readonly<Record<string, Stage>> = {
   CCO: 'in_transit', // "Customs - Out"
+  HUI: 'in_transit', // "Your parcel arrived at our hub"
+  HUS: 'in_transit', // "Your parcel is ready to be transported to our next premises"
   DLI: 'in_transit', // "Destination depot - Inbound", twin AT_DELIVERY_CENTER
+  DLS: 'in_transit', // "Your parcel has been sorted and is ready for delivery"
+  DLQ: 'in_transit', // "Your parcel is at our delivery depot, it will soon be on its way"
   DLO: 'out_for_delivery', // "Destination depot - Out for delivery", twin PARCEL_OUT_FOR_DELIVERY
   DEY: 'delivered', // "Delivery - Delivered", twin DELIVERED
 };

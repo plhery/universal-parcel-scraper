@@ -57,6 +57,10 @@ requirement or CAPTCHA stays a challenge and can recover through the browser.
 The mobile API can report its CAPTCHA code inside HTTP 503; that explicit code
 is verification evidence rather than a maintenance or missing-shipment answer.
 
+Checkpoint stages come from [status.ts](status.ts). DHL's fixed sentences match
+whole, and those that end with the facility ("Processed at CITY - COUNTRY")
+match on their start. Other wording goes to the shared classifier.
+
 ## Limits
 
 The returned identity must match the whole waybill and the browser response must

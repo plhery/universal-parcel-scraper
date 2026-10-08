@@ -100,6 +100,35 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "wording": "Arrived at sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-04"
+    },
+    {
+      "wording": "The package left sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-04"
+    },
+    {
+      "wording": "Arrived at GOFO Regional Destination Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-04",
+      "note": "GOFO is the last-mile carrier named in the scan."
+    },
+    {
+      "wording": "The driver is out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-04"
+    },
+    {
       "code": "50",
       "wording": "Delivered by Mailbox",
       "stage": "delivered",

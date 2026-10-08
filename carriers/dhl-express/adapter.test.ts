@@ -3,6 +3,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { adapter, DhlExpressTracker, normalizeNumber, parse, parseMobile, parseUnified } from './adapter.js';
+import { dhlExpressStage } from './status.js';
 
 const number = '1234567891';
 const payload = () => ({ results: [{ id: number, duplicate: false, hasDuplicateShipment: false,
@@ -48,6 +49,21 @@ describe('DHL Express projection', () => {
     // A consumer reads an offset-less `time` in the catalog zone, which is UTC here.
     expect(result.events?.some((event) => 'time' in event)).toBe(false);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private|signature|signatory/);
+  });
+  it('maps DHL checkpoints that end with their facility, and leaves other wording to the classifier', () => {
+    expect([
+      'Shipment information received',
+      'Processed at EXAMPLE CITY - FRANCE',
+      'Arrived at DHL Sort Facility EXAMPLE CITY - FRANCE',
+      'Arrived at DHL Delivery Facility EXAMPLE CITY - FRANCE',
+      'Shipment has departed from a DHL facility EXAMPLE CITY - FRANCE',
+      'Clearance processing complete at EXAMPLE CITY - FRANCE',
+    ].map(dhlExpressStage)).toEqual([
+      { stage: 'registered', source: 'carrier_map' }, { stage: 'in_transit', source: 'carrier_map' },
+      { stage: 'in_transit', source: 'carrier_map' }, { stage: 'in_transit', source: 'carrier_map' },
+      { stage: 'in_transit', source: 'carrier_map' }, { stage: 'customs', source: 'carrier_map' },
+    ]);
+    expect(dhlExpressStage('Processed for clearance at EXAMPLE CITY - FRANCE').source).not.toBe('carrier_map');
   });
   it('dates a scan where its location settles the facility zone', () => {
     const clock = (location: string, date = 'Monday, October 05, 2026') => {

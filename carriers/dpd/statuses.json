@@ -105,6 +105,32 @@
       "note": "Scan code (Origin depot - In), at the same instant as PARCEL_HANDED. Unmapped like its twin, so the event and the result stage both come from this wording; a stage here would disagree with the result stage and put accepted after customs on imports."
     },
     {
+      "code": "SPL",
+      "wording": "Your parcel is on its way",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "Scan code worded like IN_TRANSIT, seen both before and after ORI. Unmapped like IN_TRANSIT: it names no milestone of its own."
+    },
+    {
+      "code": "HUI",
+      "wording": "Your parcel arrived at our hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Scan code: arrival at a hub."
+    },
+    {
+      "code": "HUS",
+      "wording": "Your parcel is ready to be transported to our next premises",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Scan code: the hub sends the parcel on."
+    },
+    {
       "code": "DLI",
       "wording": "Your parcel arrived at our delivery depot",
       "language": "en",
@@ -112,6 +138,24 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-26",
       "note": "Scan code (Destination depot - Inbound), at the same instant as AT_DELIVERY_CENTER."
+    },
+    {
+      "code": "DLS",
+      "wording": "Your parcel has been sorted and is ready for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Scan code: sorted at the delivery depot, before DLO."
+    },
+    {
+      "code": "DLQ",
+      "wording": "Your parcel is at our delivery depot, it will soon be on its way",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Scan code: waiting at the delivery depot, before DLO."
     },
     {
       "code": "DLO",
@@ -139,6 +183,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-26",
       "note": "Scan code (Delivery - Proof of delivery), minutes after DEY with no place. Dropped when a delivery scan is listed or the enumeration is not DELIVERED; staged delivered only when it is the sole delivery evidence of a delivered parcel. Its podUrl is never kept."
+    },
+    {
+      "code": "SPE",
+      "wording": "Your parcel is estimated to be delivered on: <date>",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "A delivery estimate or a changed delivery day, not a scan; the date follows the colon."
+    },
+    {
+      "code": "MSDLO",
+      "wording": "We informed you via email that your parcel will be delivered on <date>",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-06",
+      "note": "The notice DPD emailed for the delivery round, not a scan."
+    },
+    {
+      "code": "MIDLI",
+      "wording": "Your parcel will be delivered to a safe place according to your instructions",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-05",
+      "note": "The recipient's delivery instruction, not a scan."
     }
   ]
 }

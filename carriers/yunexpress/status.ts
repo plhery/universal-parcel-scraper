@@ -1,7 +1,10 @@
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 
-const WORDING = new Map<string, ClassifiedStatus>([
+/** Yuntrack's scan wording, compared without case or repeated spaces. */
+const wordingKey = (description: string) => description.toLocaleLowerCase('en-US').trim().split(/\s+/).join(' ');
+
+const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Shipment information received', { status: 'pending', stage: 'registered' }],
   ['Shipment picked up', { status: 'in_transit', stage: 'accepted' }],
   ['Arrived at origin facility', { status: 'in_transit', stage: 'in_transit' }],
@@ -21,7 +24,12 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Arrived at sort facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment is ready for outbound', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed from facility', { status: 'in_transit', stage: 'in_transit' }],
+  // The hand-over to the destination's last-mile carrier, not to the recipient.
   ['Delivered to local carrier', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at sorting center', { status: 'in_transit', stage: 'in_transit' }],
+  ['The package left sorting center', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at GOFO Regional Destination Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['The driver is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Departure from the international sorting center', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment in transit to DHL', { status: 'in_transit', stage: 'in_transit' }],
   ['Preparing for delivery', { status: 'in_transit', stage: 'in_transit' }],
@@ -50,7 +58,9 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // The reminder concerns a parcel already left for collection; it is not a
   // delivery attempt, which the word "failed" would otherwise suggest.
   ['REMINDER EMAIL SENT FAILED', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
-]);
+];
+
+const WORDING = new Map(ENTRIES.map(([text, status]) => [wordingKey(text), status]));
 
 // The page labels these latest-event codes Processing and Transit. They give
 // the parcel's status when its newest wording is new, never a scan's stage.
@@ -60,7 +70,7 @@ export function yunExpressStatus(description: string, code?: unknown): Classifie
   // The latest event's explicit delivered code also covers partner wording
   // containing variable delivery notes. It is never inherited by older scans.
   if (code === 50) return { status: 'delivered', stage: 'delivered' };
-  return WORDING.get(description);
+  return WORDING.get(wordingKey(description));
 }
 
 /** The status the latest event's own code states, for wording the map does not know. */

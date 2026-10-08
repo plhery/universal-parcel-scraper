@@ -539,11 +539,13 @@ describe('DPD status vocabulary', () => {
     }
   });
 
-  it('maps only the scan codes a live lookup paired with an enumeration value', () => {
-    expect(['CCO', 'DLI', 'DLO', 'DEY'].map(scanStage))
-      .toEqual(['in_transit', 'in_transit', 'out_for_delivery', 'delivered']);
-    // ORI is left to its wording, like its PARCEL_HANDED twin.
-    for (const code of ['ORI', 'DEYY', 'XYZ', '', 'CONSTRUCTOR', '__proto__']) {
+  it('maps only the scan codes a live lookup paired or labelled with one movement', () => {
+    expect(['CCO', 'HUI', 'HUS', 'DLI', 'DLS', 'DLQ', 'DLO', 'DEY'].map(scanStage)).toEqual([
+      'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'out_for_delivery', 'delivered',
+    ]);
+    // ORI and SPL are left to their wording, like their PARCEL_HANDED and
+    // IN_TRANSIT twins; notices and estimates are no scan.
+    for (const code of ['ORI', 'SPL', 'SPE', 'MSDLO', 'MIDLI', 'ENA', 'DEYY', 'XYZ', '', 'CONSTRUCTOR', '__proto__']) {
       expect(scanStage(code)).toBeNull();
     }
   });

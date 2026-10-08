@@ -5,12 +5,12 @@ import { isValidDhlExpressWaybill } from '../../core/detection/numericChecksums.
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { classifyWording, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
 import { clean, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { facilityZone } from './clock.js';
 import { mobileTracking } from './mobile.js';
+import { dhlExpressStage } from './status.js';
 
 const PROVIDER = 'DHL Express';
 const BROWSER_API = 'https://www.dhl.com/utapi';
@@ -47,17 +47,6 @@ function clock(date: unknown, time: unknown, location: string): Pick<CarrierEven
   return instant ? { time: instant.iso } : { local_time: local.toFormat("yyyy-MM-dd'T'HH:mm:ss") };
 }
 
-function stage(description: string): { stage: Stage; source: string } {
-  const text = description.toLowerCase();
-  if (text === 'delivered') return { stage: 'delivered', source: 'carrier_map' };
-  if (text === 'shipment is out with courier for delivery') return { stage: 'out_for_delivery', source: 'carrier_map' };
-  if (text.startsWith('delivery attempted')) return { stage: 'failed_attempt', source: 'carrier_map' };
-  if (text === 'shipment is on hold') return { stage: 'exception', source: 'carrier_map' };
-  if (text === 'shipment picked up') return { stage: 'accepted', source: 'carrier_map' };
-  if (text.startsWith('clearance processing') || text.startsWith('customs clearance')) return { stage: 'customs', source: 'carrier_map' };
-  return classifyWording(description, 'pending');
-}
-
 /** Public DHL web tracking: bind both the waybill and the Express division. */
 export function parseUnified(payload: unknown, raw: string): CarrierResult {
   const number = normalizeNumber(raw);
@@ -73,7 +62,7 @@ export function parseUnified(payload: unknown, raw: string): CarrierResult {
   const event = (row: unknown): CarrierEvent => {
     if (!isRecord(row) || typeof row.description !== 'string' || !row.description.trim()) throw new SchemaError(PROVIDER, 'DHL returned an invalid event');
     const description = row.statusCode === 'delivered' ? 'Delivered' : clean(row.description).slice(0, 1000);
-    const mapped = stage(description);
+    const mapped = dhlExpressStage(description);
     const time = typeof row.timestamp === 'string' && /(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/i.test(row.timestamp)
       ? explicitOffsetTime(row.timestamp)?.iso : undefined;
     const address = isRecord(row.location) && isRecord(row.location.address) ? row.location.address : {};
@@ -111,7 +100,7 @@ export function parse(payload: unknown, raw: string): CarrierResult {
   const events: CarrierEvent[] = shipment.checkpoints.map((row) => {
     if (!isRecord(row) || typeof row.description !== 'string' || !row.description.trim()) throw new SchemaError(PROVIDER, 'DHL Express returned an invalid checkpoint');
     const description = clean(row.description).slice(0, 1000);
-    const mapped = stage(description);
+    const mapped = dhlExpressStage(description);
     const location = typeof row.location === 'string' ? clean(row.location).slice(0, 300) : '';
     return { description, ...clock(row.date, row.time, location), ...(typeof row.location === 'string' ? { location } : {}),
       stage: mapped.stage, stage_source: mapped.source };

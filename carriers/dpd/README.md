@@ -43,6 +43,11 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
   from an unrelated scan.
 - Scan codes take precedence over history enumerations. Unknown wording stays
   visible without an invented milestone. Scans are sorted newest first.
+- A scan code is mapped where a live lookup paired it with a history
+  enumeration, or where DPD's label names one movement: `HUI`, `HUS`, `DLS` and
+  `DLQ` are hub and delivery-depot scans. `ORI` and `SPL` read like
+  `IN_TRANSIT` and appear on both sides of the origin depot, so they stay
+  unmapped.
 - A proof-of-delivery bookkeeping entry is omitted when the actual delivery
   scan exists, so it cannot shift the delivery time. Delivery estimates are
   omitted after completion or an exception.

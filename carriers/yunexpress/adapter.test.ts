@@ -51,6 +51,15 @@ describe('YunExpress captured response projection', () => {
     expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('stages the destination leg, and a hand-over to the local carrier is no delivery', () => {
+    expect(yunExpressStatus('Delivered to local carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
+    expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');
+    // Yuntrack's capitals and spacing vary; the wording does not.
+    expect(yunExpressStatus('arrived at  SORT facility ')?.stage).toBe('in_transit');
+    expect(yunExpressStatus('Delivered')).toBeUndefined();
+  });
+
   it('requires a unique returned number and matching waybill identity', () => {
     const payload = fixture();
     payload.ResultList[0].TrackInfo.WaybillNumber = 'YT0000000000000002';
