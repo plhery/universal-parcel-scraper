@@ -20,6 +20,8 @@ whole; its first sixteen digits are not a shipment number.
 
 Scans retain the carrier's newest-first order. Their clocks have no stated zone,
 so valid digits remain local time and unresolved labels remain provider text.
+The catalog zone is `Europe/Madrid`, so aggregators relaying the same clocks read them
+as Spanish time.
 Calendar estimates retain date-only precision while the delivery is active;
 estimates older than the latest scan are omitted. A rescheduled round does not establish dispatch.
 Only recognized status labels and the locality column are retained. A failed

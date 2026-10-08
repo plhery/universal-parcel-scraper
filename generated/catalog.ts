@@ -2139,7 +2139,7 @@ export const CARRIER_CATALOG = {
       "PT"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Madrid",
     "tracking": {
       "mode": "automatic",
       "adapter": "correos-express",
@@ -2214,7 +2214,7 @@ export const CARRIER_CATALOG = {
       "PT"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Madrid",
     "tracking": {
       "mode": "automatic",
       "adapter": "mrw",

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { resultTimezone } from '../../core/time/result.js';
 import { CorreosExpressTracker, adapter } from './adapter.js';
 import { normalizeCorreosExpressNumber, parseCorreosExpress } from './parser.js';
 import { classifyCorreosExpressStatus } from './status.js';
@@ -28,6 +29,8 @@ describe('Correos Express direct tracking', () => {
       last_update: null, last_update_local: '2026-01-05T18:27:00', expected_delivery: '2026-01-06' });
     expect(result.events).toHaveLength(7);
     expect(result.events?.[0]).toMatchObject({ local_time: '2026-01-05T18:27:00', location: 'BARCELONA2', provider_status: 'NUEVO REPARTO', stage: 'in_transit' });
+    // The host and aggregators relaying these wall clocks read them in Spanish time.
+    expect(resultTimezone('correos-express', result)).toBe('Europe/Madrid');
     expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'exception', 'out_for_delivery', 'in_transit', 'in_transit', 'accepted', 'registered']);
     expect(result.events?.every(event => !event.time && !event.provider_code)).toBe(true);
     expect(result.delivered_at).toBeUndefined();

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { resultTimezone } from '../../core/time/result.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { MrwTracker, adapter } from './adapter.js';
 import { normalizeMrwNumber, parseMrwBootstrap, parseMrwHistory, parseMrwSummary } from './parser.js';
@@ -30,6 +31,8 @@ describe('MRW anonymous tracking', () => {
     expect(parsed.events).toHaveLength(5);
     expect(parsed.events?.map(event => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'failed_attempt', 'in_transit', 'registered']);
     expect(parsed.events?.[0]).toMatchObject({ local_time: '2026-09-10T19:29:00', location: '28000 Madrid' });
+    // The host and aggregators relaying these wall clocks read them in Spanish time.
+    expect(resultTimezone('mrw', parsed)).toBe('Europe/Madrid');
     expect(parsed.delivered_at).toBeUndefined();
     expect(JSON.stringify(parsed)).not.toContain('PRIVATE_SYNTHETIC_ADDRESS');
     for (const entry of statuses.entries) expect(classifyMrwStatus(entry.wording)?.stage).toBe(entry.stage);

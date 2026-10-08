@@ -30,6 +30,9 @@
         "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/error-al-visualizar-pin-probl/e22821af1ce1efd269",
         "date": "2026-09-24"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -41,7 +44,7 @@
           "evri-uk"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Correos Express, which stays one candidate among several."
+      "note": "Publicly reported shipment number. Correos Express' own tracker returns its history."
     },
     {
       "number": "7983000739053141",

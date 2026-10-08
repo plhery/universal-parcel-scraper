@@ -15,7 +15,9 @@ The portal sometimes returns a bound current summary with no history. That
 result is marked `summary_only` and contains no invented scans. A page that
 echoes an unknown number without a shipment table is inconclusive.
 
-Scan clocks are shown without offsets, so they remain local wall times. Only
+Scan clocks are shown without offsets, so they remain local wall times. The catalog
+zone is `Europe/Madrid`, so aggregators relaying the same clocks read them as Spanish
+time. Only
 visible office labels are retained from history rows; PointCorner map addresses
 and coordinates are excluded.
 
