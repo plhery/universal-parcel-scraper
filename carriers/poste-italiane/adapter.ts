@@ -94,7 +94,9 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
   if (!Array.isArray(rawMovements)) {
     throw new SchemaError('Poste Italiane', 'Poste Italiane returned invalid tracking history');
   }
-  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number }> = [];
+  const parsed: Array<{
+    event: CarrierEvent; classified: ClassifiedStatus | undefined; returnTrip: boolean | undefined; timestamp: number; index: number;
+  }> = [];
   const seen = new Set<string>();
   rawMovements.filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
     const wording = clean(rawEvent.statoLavorazione, 500);
@@ -117,6 +119,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
         ...(classified ? { stage: classified.stage } : {}),
       },
       classified: classified ?? undefined,
+      returnTrip: typeof rawEvent.flagRitorno === 'boolean' ? rawEvent.flagRitorno : undefined,
       timestamp: time.timestamp,
       index,
     });
@@ -129,9 +132,15 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
   // Envelope stato "5" forces delivered; otherwise the newest mapped event wins
   // and unmapped wording stays unknown with its raw text preserved.
   if (payload.stato === '5' || payload.stato === 5) {
+    // A parcel sent back ends with its delivery to the sender. That delivery
+    // carries the return flag; without per-movement flags, the envelope flag
+    // and an earlier return scan say the same.
+    const newest = parsed[0];
+    const backToSender = newest?.returnTrip
+      ?? (payload.flagRitorno === true && parsed.slice(1).some((item) => item.classified?.stage === 'returned'));
     return {
-      status: 'delivered',
-      current_stage: 'delivered',
+      status: backToSender ? 'exception' : 'delivered',
+      current_stage: backToSender ? 'returned' : 'delivered',
       last_status_text: events[0]?.description ?? 'Delivered',
       last_update: events[0]?.time ?? null,
       expected_delivery: null,

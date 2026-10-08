@@ -119,6 +119,30 @@ describe('Poste Italiane response parsing', () => {
     ]);
   });
 
+  it('reads a delivery on the return trip as returned to the sender', () => {
+    const trip = (flag: boolean | undefined) => ({ ...movement('la spedizione è stata consegnata', 1767657600000),
+      ...(flag === undefined ? {} : { flagRitorno: flag }) });
+    const history = (last: Record<string, unknown>) => [
+      { ...movement('la spedizione è in transito', 1767312000000), flagRitorno: false },
+      { ...movement('consegna non andata a buon fine perché l\'indirizzo del destinatario risulta errato o incompleto. Contatta Assistenza', 1767398400000), flagRitorno: false },
+      { ...movement('in restituzione al mittente', 1767484800000), flagRitorno: true },
+      { ...movement('la spedizione è in transito', 1767571200000), flagRitorno: true },
+      last,
+    ];
+    const returned = parsePosteItalianeTrackingResponse(parcel({ flagRitorno: true, listaMovimenti: history(trip(true)) }), TRACKING_NUMBER);
+    expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned',
+      last_status_text: 'la spedizione è stata consegnata', expected_delivery: null });
+    expect(returned.events?.map((event) => event.stage)).toEqual(['delivered', 'in_transit', 'returned', 'failed_attempt', 'in_transit']);
+    // Without per-movement flags, the envelope flag and the return scan decide.
+    expect(parsePosteItalianeTrackingResponse(parcel({ flagRitorno: true, listaMovimenti: history(trip(undefined)) }), TRACKING_NUMBER))
+      .toMatchObject({ status: 'exception', current_stage: 'returned' });
+    // A delivery outside the return trip stays a delivery.
+    expect(parsePosteItalianeTrackingResponse(parcel({ flagRitorno: true, listaMovimenti: history(trip(false)) }), TRACKING_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(parsePosteItalianeTrackingResponse(parcel({ flagRitorno: false, listaMovimenti: history(trip(undefined)) }), TRACKING_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+  });
+
   it('maps documented wordings and reports unmapped ones as unknown', () => {
     const cases: Array<[string, string, string]> = [
       ['a seguito di acquisto da poste.it', 'pending', 'registered'],

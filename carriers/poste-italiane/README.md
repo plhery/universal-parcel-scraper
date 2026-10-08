@@ -26,7 +26,10 @@ matching native Poste status or progress confirms them. Other postal shapes use 
   submits the complete code. Detection and adapter eligibility share the catalog rules;
   neither a matching shape nor an expired reply confirms issuance.
 - Envelope `stato` `5` forces `delivered` whatever the movement wording says: a delivered
-  parcel sometimes carries a truncated last line.
+  parcel sometimes carries a truncated last line. A parcel sent back ends with its delivery
+  to the sender; that delivery carries the return flag (`flagRitorno`) and reads as
+  `returned`. Without per-movement flags, the envelope flag and an earlier return scan
+  decide.
 - Stages come from Italian `statoLavorazione` wording. Both the typographic and the ASCII
   apostrophe are accepted (`e' stata consegnata` appears live). Unmapped wording gets no
   stage rather than a regex catch-all guess; the sync records it for review.
