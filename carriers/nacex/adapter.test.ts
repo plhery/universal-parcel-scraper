@@ -31,15 +31,19 @@ describe('NACEX direct tracking', () => {
     expect(result.events?.[1]).toMatchObject({ stage: 'out_for_delivery', location: 'TEST LOCALITY' });
     expect(result.events?.[2]!.stage).toBe('ready_for_pickup');
     expect(result.events?.[1]).toEqual(result.events?.[3]);
-    expect(result.events?.[4]).toMatchObject({ description: 'Cambio de dirección', provider_time_text: '15 January 2026' });
-    expect(result.events?.[5]!.description).toBe('Solución de entrega concertada');
+    expect(result.events?.[4]).toMatchObject({ description: 'Cambio de dirección', provider_time_text: '15 January 2026', stage: 'in_transit' });
+    expect(result.events?.[5]).toMatchObject({ description: 'Solución de entrega concertada', stage: 'in_transit' });
+    expect(result.events?.[5]!.location).toBeUndefined();
     expect(result.events?.[6]!.stage).toBe('failed_attempt');
+    expect(result.events?.[11]).toMatchObject({ description: 'Notificado', stage: 'accepted', stage_source: 'none' });
+    expect(result.events?.[13]).toMatchObject({ description: 'Notificado', stage: 'registered' });
+    expect(result.events?.[13]!.stage_source).toBeUndefined();
     expect(result.events?.every(event => !event.time && !event.local_time && !event.provider_code)).toBe(true);
     expect(result.last_update_local).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
-    for (const entry of statuses.entries) expect(classifyNacexStatus(entry.wording)?.stage).toBe(entry.stage);
-    for (const word of ['constructor', 'toString', 'Cambio de dirección', 'Solución de entrega concertada', 'Notificado', 'Será entregado']) expect(classifyNacexStatus(word)).toBeUndefined();
+    for (const entry of statuses.entries.filter(entry => entry.wording !== 'Sin estado')) expect(classifyNacexStatus(entry.wording)?.stage).toBe(entry.stage);
+    for (const word of ['constructor', 'toString', 'Sin estado', 'Será entregado']) expect(classifyNacexStatus(word)).toBeUndefined();
   });
 
   it('validates composite input and both summary and expanded detail identity', () => {
@@ -80,6 +84,28 @@ describe('NACEX direct tracking', () => {
     }
   });
 
+  it('stages incident handling, keeps a notice on the stage before it and drops pickup point codes from labels', () => {
+    const history = (summary: string, rows: string[]) => edit($ => {
+      $('#tabla_estado tr').eq(1).children('td').last().text(summary);
+      $('#table_historico').html('<tr><td class="sg_hist_fecha" colspan="2">15 January 2026</td></tr>'
+        + rows.map(row => `<tr><td class="sg_hist_desc">${row}</td></tr>`).join(''));
+    });
+    const notice = parseNacex(history('Sin estado', ['<b>Sin estado</b>: TEST NOTE', '<b>Ausente</b>', '<b>En reparto</b><br>9901 - TEST LOCALITY',
+      '<b>Notificado</b><br>TEST ORIGIN', '<b>Aceptada</b><br>9900 - TEST ORIGIN', '<b>Notificado</b><br>TEST ORIGIN']), NUMBER);
+    expect(notice).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Sin estado' });
+    expect(notice.events?.map(event => [event.stage, event.stage_source])).toEqual([['failed_attempt', 'none'], ['failed_attempt', undefined],
+      ['out_for_delivery', undefined], ['accepted', 'none'], ['accepted', undefined], ['registered', undefined]]);
+    expect(parseNacex(history('Notificado', ['<b>Notificado</b><br>TEST ORIGIN']), NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    const incident = parseNacex(history('Solucionado sin OK', ['<b>Solucionado sin OK</b><br>9901 - TEST NOTE',
+      '<b>Solución de entrega en punto (9901-123)</b>', '<b>Solución de entrega concertada</b><br>9901 - TEST NOTE',
+      '<b>Contacta con agencia (9901)</b>', '<b>En reparto</b><br>9901 - TEST LOCALITY']), NUMBER);
+    expect(incident).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Solucionado sin OK' });
+    expect(incident.events?.map(event => [event.provider_status, event.stage, event.location])).toEqual([
+      ['Solucionado sin OK', 'exception', undefined], ['Solución de entrega en punto', 'in_transit', undefined],
+      ['Solución de entrega concertada', 'in_transit', undefined], ['Contacta con agencia', 'exception', undefined],
+      ['En reparto', 'out_for_delivery', 'TEST LOCALITY']]);
+  });
+
   it('rejects a delivered header contradicted by the newest mapped scan, allowing newer administrative rows', () => {
     const contradiction = edit($ => {
       $('.sg_hist_desc').first().children('font').text('En reparto');
@@ -101,7 +127,7 @@ describe('NACEX direct tracking', () => {
       expect(() => parseNacex(body, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     }
     expect(() => parseNacex(edit($ => $('#table_historico').empty()), NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
-    expect(() => parseNacex(edit($ => $('#table_historico').html('<tr><td class="sg_hist_desc"><b>Notificado</b></td></tr>')), NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseNacex(edit($ => $('#table_historico').html('<tr><td class="sg_hist_desc"><b>Sin estado</b>: TEST NOTE</td></tr>')), NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     expect(parseNacex(edit($ => $('#table_historico').append('<tr><td class="sg_hist_desc"><b>En reparto</b></td></tr>'.repeat(120))), NUMBER).events).toHaveLength(100);
   });
 

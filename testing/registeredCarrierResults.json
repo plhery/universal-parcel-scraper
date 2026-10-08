@@ -1882,12 +1882,14 @@
         {
           "description": "Cambio de dirección",
           "provider_status": "Cambio de dirección",
-          "provider_time_text": "15 January 2026"
+          "provider_time_text": "15 January 2026",
+          "stage": "in_transit"
         },
         {
           "description": "Solución de entrega concertada",
           "provider_status": "Solución de entrega concertada",
-          "provider_time_text": "15 January 2026"
+          "provider_time_text": "15 January 2026",
+          "stage": "in_transit"
         },
         {
           "description": "Ausente",
@@ -1926,7 +1928,9 @@
         {
           "description": "Notificado",
           "provider_status": "Notificado",
-          "provider_time_text": "14 January 2026"
+          "provider_time_text": "14 January 2026",
+          "stage": "accepted",
+          "stage_source": "none"
         },
         {
           "description": "Aceptada",
@@ -1938,7 +1942,8 @@
         {
           "description": "Notificado",
           "provider_status": "Notificado",
-          "provider_time_text": "14 January 2026"
+          "provider_time_text": "14 January 2026",
+          "stage": "registered"
         }
       ]
     }

@@ -2,7 +2,8 @@ import { load } from 'cheerio';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
-import { classifyNacexStatus } from './status.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
+import { classifyNacexStatus, isNacexMovement, isNacexNotice } from './status.js';
 
 const NO_HISTORY = 'No existe ningún albarán introducido en el sistema cumpliendo los criterios especificados. Consulte con su agencia NACEX más cercana.';
 
@@ -68,7 +69,7 @@ export function parseNacex(html: string, raw: string): CarrierResult {
   const rows = history.find('tr');
   if (!rows.length) throw new IndeterminateError('NACEX', 'NACEX returned empty shipment history');
   if (rows.length > 500) throw new SchemaError('NACEX', 'NACEX returned too many scans');
-  const events: CarrierEvent[] = [];
+  const scans: { event: CarrierEvent; mapped?: ClassifiedStatus; notice: boolean }[] = [];
   let dayText = '';
   for (const row of rows.toArray()) {
     const cells = $(row).children('td');
@@ -82,30 +83,44 @@ export function parseNacex(html: string, raw: string): CarrierResult {
     if (!cell.hasClass('sg_hist_desc')) throw new SchemaError('NACEX', 'NACEX history scan layout changed');
     const labels = cell.children('b, font.fuente_titulo_green');
     // Comments, signatures and contact instructions follow this label as
-    // separate text nodes. A parenthetical agency is routing detail, not code.
-    const label = clean(labels.text(), 160).replace(/\s*\(\d{4}\)$/, '');
+    // separate text nodes. A parenthetical agency or pickup point is routing
+    // detail, not code.
+    const label = clean(labels.text(), 160).replace(/\s*\(\d{4}(?:-\d{1,3})?\)$/, '');
     if (labels.length !== 1 || !/^[\p{L}][\p{L}\s.-]{1,119}$/u.test(label)) {
       throw new SchemaError('NACEX', 'NACEX returned an invalid scan label');
     }
     const mapped = classifyNacexStatus(label);
-    const movement = mapped && ['accepted', 'in_transit', 'out_for_delivery', 'ready_for_pickup'].includes(mapped.stage);
     const trailing = clean(cell.contents().filter((_, node) => node.nodeType === 3).map((_, node) => $(node).text()).get().join(' '), 300);
     // The same trailing column holds a recipient after delivery. Only the
-    // observed depot/locality shape of a mapped movement scan is a location.
-    const locality = movement && /^\d{4}(?:-\d{1,3})?\s*-\s*([\p{L}][\p{L}\s.()-]{1,99})$/u.exec(trailing)?.[1];
-    events.push({ description: mapped?.status === 'delivered' ? 'Delivered' : label, provider_status: label,
-      ...(dayText ? { provider_time_text: dayText } : {}), ...(locality ? { location: locality } : {}),
-      ...(mapped ? { stage: mapped.stage } : {}) });
+    // observed depot/locality shape of a movement scan is a location.
+    const locality = isNacexMovement(label) && /^\d{4}(?:-\d{1,3})?\s*-\s*([\p{L}][\p{L}\s.()-]{1,99})$/u.exec(trailing)?.[1];
+    scans.push({ mapped, notice: isNacexNotice(label), event: { description: mapped?.status === 'delivered' ? 'Delivered' : label,
+      provider_status: label, ...(dayText ? { provider_time_text: dayText } : {}), ...(locality ? { location: locality } : {}) } });
   }
+  // Rows run newest first. A notice keeps the stage of the scan before it.
+  let previous: ClassifiedStatus | undefined;
+  const applied = new Map<CarrierEvent, ClassifiedStatus>();
+  for (const scan of [...scans].reverse()) {
+    if (scan.notice && previous) {
+      applied.set(scan.event, previous);
+      Object.assign(scan.event, { stage: previous.stage, stage_source: 'none' });
+    } else if (scan.mapped) {
+      previous = scan.mapped;
+      applied.set(scan.event, scan.mapped);
+      scan.event.stage = scan.mapped.stage;
+    }
+  }
+  const events = scans.map(scan => scan.event);
   if (!events.length || !events.some(event => event.stage)) throw new IndeterminateError('NACEX', 'NACEX returned no actual tracking scans');
   // Calendar headings have no scan clock or zone. Preserve provider order,
   // including same-day repeated scans, without inventing midnight instants.
   const mapped = classifyNacexStatus(summaryLabel);
-  const latestPhysical = events.find(event => event.stage);
-  if (mapped?.stage === 'delivered' && latestPhysical?.stage !== 'delivered') {
+  const current = isNacexNotice(summaryLabel) ? applied.get(events[0]!) ?? mapped : mapped;
+  const latestPhysical = scans.find(scan => scan.mapped && !scan.notice);
+  if (mapped?.stage === 'delivered' && latestPhysical?.mapped?.stage !== 'delivered') {
     throw new SchemaError('NACEX', 'NACEX current status contradicts its latest shipment scan');
   }
-  return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
+  return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: mapped?.status === 'delivered' ? 'Delivered' : summaryLabel,
     last_update: null, events: events.slice(0, 100) };
 }
