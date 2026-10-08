@@ -46,6 +46,47 @@ export function deliveryForecastRemainder(description: string): string | undefin
   return rest === text ? undefined : comparable(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, ''));
 }
 
+/** The side of customs a scan may name: "import", "export", "import/export". */
+const CUSTOMS_SIDE = String.raw`(?:(?:import|export)(?:\/(?:import|export))? |local |destination |origin )?`;
+/**
+ * Clearance that has not happened yet: negated, pending, announced or bound
+ * to a condition ("once released from customs"). Each phrase names customs or
+ * clearance itself, so a notice about something else passes on.
+ */
+const CUSTOMS_PENDING = new RegExp([
+  String.raw`attend d'etre libere|attente de liberation|wartet auf.*freigabe|attesa di svincolo`,
+  String.raw`(?:customs|clearance).*\bnot\b.*(?:clear|complet|releas)|customs (?:not cleared|clearance not completed)|not.*released by customs`,
+  String.raw`(?:\bnot|n't|\bnever|\byet to)\b(?: (?:yet|been|be|being|have|has|had|fully|still))* (?:released|cleared|left|exited|out of|passed)\b${SENTENCE}*?\bcustoms\b`,
+  String.raw`\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless|as soon as|needs? to|has to|have to|yet to|waiting to|expected to|about to)\b(?: \w+){0,3}? (?:be |been |get |gets |is |are |has been |have been )?(?:released|cleared)\b${SENTENCE}*?\bcustoms\b`,
+  String.raw`\b(?:customs|clearance)\b${SENTENCE}*?\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless|as soon as|needs? to|has to|have to|yet to|waiting to|expected to|about to|to)\b(?: \w+){0,2}? (?:be |been |get |gets |is |are |has been |have been )?(?:released|cleared|completed?|finished|done)\b`,
+  String.raw`\b(?:be|being) (?:released|cleared) (?:from |by |through |out of )?(?:the )?${CUSTOMS_SIDE}customs\b|\bclearance (?:is )?(?:in progress|ongoing|under way|underway)\b|\b(?:be|being) customs cleared\b`,
+  String.raw`dedouanement.*(?:non termine|pas termine)|\b(?:pas|non|jamais)\b(?: (?:encore|ete|etre|completement|totalement))* (?:dedouane|(?:sorti|libere)e?s? (?:de |par )?(?:la )?douane)|\b(?:sera|seront|serait|va etre|vont etre|doit etre|doivent etre|devra etre|devrait etre|pourra etre|en attente d'etre)(?: \w+){0,2}? (?:dedouane|libere)`,
+  String.raw`zollabfertigung.*nicht abgeschlossen|nicht.*zoll.*freigegeben|\bnicht (?:\w+ )?verzollt\b|\b(?:wird|werden|muss|mussen|soll|sollen|kann|konnen)\b${SENTENCE}*?\bverzollt\b|\b(?:verzollung|zollabfertigung|zollfreigabe|zollkontrolle)\b${SENTENCE}*?\b(?:nicht|steht aus|ausstehend)\b`,
+  String.raw`sdoganamento.*non completato|\bnon\b(?: \w+){0,3}? (?:sdoganat|uscit[oaie] dalla dogana|svincolat)|\b(?:sara|saranno|verra|verranno|deve essere|devono essere|dovra essere|in attesa di essere|attende di essere)(?: \w+){0,2}? sdoganat`,
+  String.raw`\b(?:no|sin)\b(?: \w+){0,3}? (?:(?:liberad|despachad)[oa]s?|salido|salio|sale|salir) (?:por|de|en|desde) (?:la )?aduana|\b(?:sera|seran|va a ser|van a ser|debe ser|deben ser|pendiente de|en espera de|a la espera de|esperando)\b(?: \w+){0,2}? (?:(?:liberad|despachad)[oa]s?|liberacion|despacho|salida)\b${SENTENCE}*?\baduan`,
+  String.raw`\bnao\b(?: \w+){0,3}? (?:desalfandegad[oa]s?|desembaracad[oa]s?|(?:liberad[oa]s?|saiu) (?:pela|na|da|de) (?:alfandega|aduana|fiscalizacao))\b|\b(?:aguardando|a aguardar|aguarda|em espera de|pendente de|sera|serao|vai ser|deve ser)\b(?: \w+){0,2}? (?:desalfandeg|(?:liberad|liberacao|desembarac)\w*${SENTENCE}*?\b(?:alfandeg|aduan|fiscalizacao))`,
+  String.raw`\b(?:nie|oczekuje na|czeka na|w trakcie|przed)\b(?: \w+){0,2}? (?:odpraw|zwolnion)\w*${SENTENCE}*?\b(?:celn|urzad)`,
+].join('|'));
+/** Clearance completed or the parcel released, in each language. */
+const CUSTOMS_RELEASED = new RegExp([
+  String.raw`\bclearance\b${SENTENCE}*?\b(?:complete|completed|finished|done|success|successful|successfully|concluded|granted|approved|obtained)\b`,
+  String.raw`(?:leaving|departed from|left|exited|exiting|out of|passed(?: through)?) (?:the )?${CUSTOMS_SIDE}customs\b(?! (?:to|for) (?:the )?(?:sender|shipper)\b)`,
+  String.raw`completion of customs|released by (?:customs|a government agency)|\breleased (?:from|out of|at) (?:the )?${CUSTOMS_SIDE}customs\b|\breturned from (?:the )?${CUSTOMS_SIDE}customs\b(?! to\b)`,
+  String.raw`customs (?:cleared|(?:has |have )?released)|\bcustoms (?:release|inspection|examination|check|control) (?:has been |was |is )?(?:granted|completed?|finished|done|passed)\b|\bcleared (?:through |by |the )?${CUSTOMS_SIDE}customs\b`,
+  String.raw`formalites.*(?:terminee|achevee)|dedouanement.*(?:termine|acheve)|fin du dedouanement|\bdedouanement (?:(?:du colis|de (?:votre |l'|ce )?(?:colis|envoi)) )?(?:(?:a ete|est) )?(?:effectue|realise|reussi|valide|finalise)e?s?\b|\bdedouane(?:e|s|es)?\b|libere.*(?:douane|autorite)|douane.*libere|\bsorti(?:e|s|es)? de (?:la )?douane\b`,
+  String.raw`zollabfertigung.*abgeschlossen|(?:zoll|behorde).*freigegeben|\bverzollt\b|\b(?:verzollung|zollabfertigung|zollkontrolle|zollprufung|zollformalitaten)\b${SENTENCE}*?\b(?:abgeschlossen|erledigt|beendet)\b|\b(?:verzollung|zollfreigabe) (?:ist |wurde )?(?:erfolgt|erteilt)\b(?! durch)|\b(?:den zoll|das zolllager|die zollstelle|das zollamt) verlassen\b`,
+  String.raw`sdoganamento.*completato|completamento.*sdoganamento|svincolat.*(?:dogana|autorita)|\bsdoganat[oaie]\b|\bsdoganamento\b${SENTENCE}*?\b(?:effettuato|concluso|avvenuto|terminato|ultimato)\b|\bsvincolo (?:doganale )?(?:e )?(?:avvenuto|effettuato|concesso|completato|ottenuto)\b|\busci(?:to|ta|ti|te) dalla dogana\b|\bcontrollo doganale (?:e )?(?:superato|completato|concluso|terminato)\b`,
+  String.raw`\b(?:liberad|despachad)[oa]s? (?:por|de|en|desde) (?:la |las )?aduanas?\b|\b(?:salida|salio|ha salido|sale) (?:de|desde) (?:la )?aduana\b|\b(?:tramites|despacho|gestion(?:es)?|proceso)(?: (?:de|del|en))?(?: (?:la |las |los )?aduanas?| aduaner[oa]s?)+ (?:(?:ha sido|han sido|fue|fueron) )?(?:finalizad|completad|terminad|concluid|realizad)[oa]s?\b`,
+  String.raw`\b(?:liberad|desembaracad)[oa]s? (?:pela|na|da) (?:alfandega|aduana|fiscalizacao(?: aduaneira)?|receita federal)\b|\bdesalfandegad[oa]s?\b|\b(?:desalfandegamento|desembaraco(?: aduaneiro)?|fiscalizacao aduaneira|tramites aduaneiros|processo aduaneiro) (?:(?:foi|esta|foram) )?(?:concluid|finalizad|terminad|realizad|efetuad|efectuad)[oa]s?\b|\b(?:saiu|saida) (?:da|de) (?:alfandega|aduana)\b`,
+  String.raw`\bodprawa celna (?:\w+ )?(?:zakonczona|zakonczyla sie|ukonczona)\b|\bodprawion[aey] celnie\b|\bzwolnion[aey] (?:przez urzad celny|z urzedu celnego)\b|\bopuscil[aoy]? urzad celny\b`,
+].join('|'));
+/** A customs problem or hold that has ended: the parcel moves on. */
+const CUSTOMS_PROBLEM_ENDED = new RegExp([
+  String.raw`\b(?:released|freed|cleared) (?:from|of) (?:the )?customs (?:hold|detention|inspection|examination)\b`,
+  String.raw`\bcustoms (?:issue|problem|hold|detention)s? (?:(?:has|have) been |was |were |is |are )?(?:now )?(?:resolved|solved|lifted|released|cleared|removed|fixed)\b`,
+  String.raw`\bprobleme (?:douanier|de douane) (?:a ete |est )?(?:resolu|regle|leve)e?\b|\bzollproblem (?:wurde |ist )?(?:behoben|gelost|geklart)\b|\bproblema doganale (?:e stato )?risolto\b|\bproblema (?:de|en la) aduana (?:ha sido |fue )?(?:resuelto|solucionado)\b|\bproblema (?:alfandegario|na alfandega) (?:foi )?resolvido\b`,
+].join('|'));
+
 /**
  * INFERRED language rules, not captured carrier codes. EN/FR/DE/IT/ES/PT/PL equivalents
  * are intuitive and overridable: an adapter must resolve verified codes and
@@ -82,6 +123,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/\blost (?:in transit|package|parcel|shipment)?\b|colis perdu|envoi perdu|egare|verloren|verlust der sendung|smarrit|(?:paquete|envio) perdid|extraviad|zagubion|zaginion/.test(text)) return 'exception';
   if (/refused by (?:the )?(?:recipient|consignee)|\brefused\b|rejected by (?:the )?recipient|refus(?:e|ee)? par le destinataire|refus du destinataire|(?:colis|envoi|pli) refuse|annahme verweigert|verweigert|rifiutat|rechazad|recusad|odmowa przyjecia|odmowiono przyjecia/.test(text)) return 'exception';
   if (/address (?:incomplete|incorrect|invalid|insufficient|unknown)|(?:incorrect|incomplete|insufficient|wrong|invalid) address|(?:updated|correct(?:ed)?|complete) (?:delivery )?address (?:is )?(?:required|needed)|address(?:ee)? (?:unknown|cannot be located)|recipient unknown|adresse (?:incorrecte|incomplete|erronee|invalide|inconnue)|destinataire inconnu|(?:adresse|anschrift) (?:unvollstandig|falsch|unbekannt)|empfanger unbekannt|indirizzo (?:errato|incompleto|insufficiente|sconosciuto)|destinatario sconosciuto|direccion (?:incorrecta|incompleta|erronea|desconocida)|destinatario desconocido|endereco (?:incorreto|incompleto|errado|desconhecido)|destinatario desconhecido|adres (?:niepelny|nieprawidlowy|bledny)|nieznany adresat/.test(text)) return 'exception';
+  if (CUSTOMS_PROBLEM_ENDED.test(text)) return 'in_transit';
   if (/customs (?:issue|problem|hold)|held (?:by|in|at) customs|detained by customs|probleme de douane|retenu en douane|zollproblem|vom zoll zuruckgehalten|problema doganale|fermo in dogana|problema de aduana|retenido en aduana|problema (?:alfandegario|na alfandega)|retido na alfandega|problem celny|zatrzyman[ay] przez (?:urzad celny|cel)/.test(text)) return 'exception';
   if (/(?:shipment|parcel|package) (?:is )?(?:held|blocked|on hold)|held pending|awaiting (?:your )?instructions|action required|(?:colis|envoi|pli) (?:bloque|retenu)|en attente d'instructions|action requise|sendung (?:blockiert|zuruckgehalten|angehalten)|wartet auf anweisungen|handlung erforderlich|spedizione (?:bloccata|trattenuta)|in attesa di istruzioni|envio (?:bloqueado|retenido)|en espera de instrucciones|accion requerida|encomenda (?:bloqueada|retida)|aguarda instrucoes|acao necessaria|przesylka (?:zatrzymana|wstrzymana)|oczekuje na instrukcje/.test(text)) return 'exception';
   if (/\bincident\b|\banomal(?:y|ie|ia)\b|delivery exception|shipment exception|irregularit|unregelmassigkeit|storung|vorfall|inconveniente|incidencia|nieprawidlowosc/.test(text)) return 'exception';
@@ -113,10 +155,11 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/preparation chez.*expediteur|preparation.*expediteur|preparazione.*mittente|being prepared.*sender|(?:shipper|sender)(?: that)? (?:they are|is|are) preparing|beim absender.*vorbereitet|warehouse of the sender|shippers warehouse|entrepot de l'expediteur|lager des absenders|magazzino del mittente|demande d'envoi.*prise en compte|collection request.*(?:received|recorded)|abholauftrag.*erfasst|richiesta.*ritiro.*registrata/.test(text)) return 'registered';
   if (/^(?:reported|recorded|announced|item created|enregistre|annonce|erfasst|angekundigt|registrato|annunciato)$/.test(text)) return 'registered';
 
-  // Completion/release is distinct from pending or explicitly negated clearance.
-  if (/attend d'etre libere|attente de liberation|wartet auf.*freigabe|attesa di svincolo|(?:customs|clearance).*\bnot\b.*(?:clear|complet|releas)|dedouanement.*pas termine|customs (?:not cleared|clearance not completed)|not.*released by customs|(?:\bnot|n't|\bnever)(?: yet)?(?: been)? released (?:by |from )?(?:(?:import|export)(?:\/export)? )?customs|\b(?:be|being) released from (?:(?:import|export)(?:\/export)? )?customs|dedouanement.*(?:non termine|pas termine)|(?:\bnot|n't|\bnever)(?: yet)?(?: been)? cleared (?:through |by )?customs|\bbe(?:ing)? cleared (?:through |by )?customs|non dedouane|zollabfertigung.*nicht abgeschlossen|nicht.*zoll.*freigegeben|sdoganamento.*non completato|non sdoganat/.test(text)) return 'customs';
-  if (/clearance.*(?:has been completed|completed)|clearance (?:complete|success)|(?:leaving|departed from|left) customs|completion of customs|formalites.*(?:terminee|achevee)|released from (?:(?:import|export)(?:\/export)? )?customs|released by (?:customs|a government agency)|customs (?:cleared|(?:has |have )?released)|\bcleared (?:through |by )?customs|dedouanement.*(?:termine|acheve)|fin du dedouanement|libere.*(?:douane|autorite)|douane.*libere|zollabfertigung.*abgeschlossen|(?:zoll|behorde).*freigegeben|sdoganamento.*completato|completamento.*sdoganamento|svincolat.*(?:dogana|autorita)/.test(text)) return 'in_transit';
-  if (/customs|clearance|douan|formalites (?:d')?(?:import|export)|zoll|dogan|government agency|autorite gouvernementale|staatliche behorde|autorita governativa/.test(text)) return 'customs';
+  // A completed clearance or release moves the parcel on; holds, inspections,
+  // submissions and clearance still pending or negated stay with customs.
+  if (CUSTOMS_PENDING.test(text)) return 'customs';
+  if (CUSTOMS_RELEASED.test(text)) return 'in_transit';
+  if (/customs|clearance|douan|formalites (?:d')?(?:import|export)|zoll|dogan|aduan|alfandeg|\bceln|government agency|autorite gouvernementale|staatliche behorde|autorita governativa/.test(text)) return 'customs';
 
   if (/out for (?:physical )?delivery|being delivered|in delivery|(?:loading|loaded).*delivery vehicle|on (?:\w+ )?vehicle for delivery|(?:courier|driver|delivery champion) has (?:the|your) (?:shipment|parcel|package|item)|en cours de livraison|en livraison|de la livraison de (?:son|votre) colis ce jour|charg(?:e|ement).*vehicule de livraison|in zustellung|zustellfahrzeug.*(?:geladen|verladen)|(?:beladen|verladung).*zustellfahrzeug|in consegna|caric(?:at|amento).*veicolo.*consegna/.test(text)) return 'out_for_delivery';
   // "Reparto" alone is the round, but not the "unidad de reparto" it leaves from;

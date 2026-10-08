@@ -182,6 +182,31 @@ describe('classifyWording', () => {
     }
   });
 
+  it('reads a completed release or clearance as transit in each language', () => {
+    for (const wording of [
+      'Released From Import Customs', 'Shipment released from customs', 'Cleared by the broker and released at customs',
+      'Customs clearance finished', 'Customs clearance processing complete', 'Parcel has cleared export customs',
+      'Left the customs terminal', 'Item returned from import customs', 'Released from customs hold',
+      'Problème douanier résolu, colis en cours d’acheminement', 'Colis dédouané', 'Dédouanement effectué', 'Sorti de la douane',
+      'Verzollung abgeschlossen', 'Sendung verzollt', 'Zollfreigabe erfolgt', 'Die Sendung hat den Zoll verlassen',
+      'Spedizione sdoganata', 'Sdoganamento effettuato', 'Svincolo avvenuto', 'Uscito dalla dogana',
+      'Liberado por aduana', 'Salida de aduana', 'Trámites de aduana finalizados',
+      'Liberado pela alfândega', 'Desalfandegado', 'Fiscalização aduaneira finalizada',
+      'Odprawa celna zakończona', 'Przesyłka odprawiona celnie',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'in_transit', source: 'wording:language' });
+    // Holds, inspections, submissions and a release still to come stay with customs.
+    for (const wording of [
+      'Not yet released by import customs', 'Your parcel will be released from customs after payment',
+      'Once released from customs, your parcel will be forwarded', 'Customs clearance will be completed soon',
+      'Customs clearance in progress, documents completed', 'The shipment item is being customs cleared by us.',
+      'Awaiting release from customs', 'Released to customs broker', 'Held for export customs inspection', 'Submitted to customs',
+      "Le colis n'a pas encore été dédouané", "Colis en attente d'être dédouané", 'Die Sendung wird verzollt', 'Noch nicht verzollt',
+      'Non ancora sdoganato', 'In attesa di essere sdoganato', 'Pendiente de liberación por aduana', 'No ha sido liberado por aduana',
+      'Envío en aduana', 'Não foi liberado pela alfândega', 'Encaminhado para fiscalização aduaneira',
+      'Przesyłka oczekuje na odprawę celną', 'Nie została odprawiona celnie',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'customs', source: 'wording:language' });
+  });
+
   it('maps sender drop-off and carrier pickup scans to accepted', () => {
     for (const wording of [
       'Drop-Off', 'Pickup Scan', 'Pick-up scan',
@@ -309,6 +334,8 @@ describe('classifyWording', () => {
     ['Label created; your parcel will be delivered by the carrier', 'registered'],
     ['Shipment information received, it will be delivered next week', 'registered'],
     ["Les formalités d'importation de votre envoi sont terminées et il sera livré contre paiement des droits et taxes", 'in_transit'],
+    ['Les formalités d’importation de votre envoi sont terminées et il sera livré contre paiement de droits et taxes de douane.', 'in_transit'],
+    ['Votre colis est dédouané. Il sera livré contre paiement des droits et taxes de douane', 'in_transit'],
     ['Votre colis est en cours de livraison, il sera livré avant 13 h', 'out_for_delivery'],
     ['Die Sendung ist im Paketzentrum angekommen und wird voraussichtlich am 06.10.2026 zugestellt', 'in_transit'],
     ['Die Sendung wird heute nicht zugestellt', 'failed_attempt'],
