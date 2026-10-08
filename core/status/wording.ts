@@ -38,6 +38,10 @@ export function classifyWording(text: string, fallback: Stage = 'in_transit'): C
   if (['return to sender', 'returned', 'retour'].some((term) => value.includes(term))) {
     return matched('returned', 'returned');
   }
+  // A notice the carrier failed to send says nothing about the parcel.
+  if (/\b(?:reminder|notification|notice|e ?mail|sms|text message|message)s?\b(?: \w+){0,4}? (?:failed|not sent|could not be sent|undeliverable|bounced)\b|\bfailed to (?:send|notify)\b/.test(value)) {
+    return { stage: fallback, source: 'none' };
+  }
   if (['not delivered', 'could not be delivered', 'unable to deliver', 'delivery attempt',
     'failed', 'unsuccessful', 'missed delivery', 'nicht zugestellt',
     'zustellung nicht möglich', 'non livré', 'livraison impossible',

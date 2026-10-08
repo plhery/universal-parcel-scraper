@@ -370,6 +370,32 @@ describe('classifyWording', () => {
     expect(classifyWording('Parcel handed over', 'pending')).toEqual({ stage: 'accepted', source: 'wording:accepted' });
   });
 
+  it('reads the last-mile wording that consolidators relay', () => {
+    for (const [wording, stage] of [
+      ['Your package is ready to be picked up.', 'ready_for_pickup'],
+      ['Handed over to the courier', 'in_transit'],
+      ['Parcel has been handed over to a third-party courier', 'in_transit'],
+      ['New delivery attempt on the next delivery day', 'in_transit'],
+      ['We missed each other', 'failed_attempt'],
+      ['We missed you. We deliver your shipment at a pickup point.', 'failed_attempt'],
+      ['No payment, new delivery attempt on the next delivery day', 'failed_attempt'],
+      ['Shipment not yet received or processed', 'registered'],
+      ['Registered parcel data, parcel not dispatched yet', 'registered'],
+    ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    // A notice the carrier failed to send is no scan; a failed delivery still is.
+    for (const wording of ['REMINDER EMAIL SENT FAILED', 'SMS notification failed', 'Failed to send notification for collection']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
+    }
+    expect(wordingStage('Failed delivery notification sent')).toBe('failed_attempt');
+    // A parcel the carrier still has to collect, a pickup order passed on, a failed
+    // new attempt, a missed round with the parcel waiting, a parcel already abroad.
+    expect(wordingStage('Parcel ready to be picked up by the courier')).not.toBe('ready_for_pickup');
+    expect(wordingStage('Pickup order handed over to the courier')).not.toBe('in_transit');
+    expect(wordingStage('New delivery attempt failed')).toBe('failed_attempt');
+    expect(wordingStage('We missed each other, ready for collection at the sorting centre')).toBe('ready_for_pickup');
+    expect(wordingStage('Item not yet received at the destination office')).not.toBe('registered');
+  });
+
   it('falls back without a rule id when nothing matches', () => {
     expect(classifyWording('Estado interno 99', 'pending')).toEqual({ stage: 'pending', source: 'none' });
     expect(wordingStage('Estado interno 99')).toBe('in_transit');
