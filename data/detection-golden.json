@@ -671,6 +671,31 @@
     ]
   },
   {
+    "input": "02027150020212",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "dpd-fr",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "hermes-de"
+    ]
+  },
+  {
     "input": "021115C902CF0C99",
     "carrier": "unknown",
     "confidence": "low",
@@ -3584,6 +3609,30 @@
     ],
     "asked": [
       "tnt"
+    ]
+  },
+  {
+    "input": "22268132900533",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "hermes-de"
     ]
   },
   {
@@ -7571,6 +7620,30 @@
     ]
   },
   {
+    "input": "81161149667426",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "hermes-de"
+    ]
+  },
+  {
     "input": "82547066970101107373021207",
     "carrier": "mondial-relay",
     "confidence": "high",
@@ -10218,6 +10291,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "H1028030626845901017",
+    "carrier": "hermes-de",
+    "confidence": "high",
+    "candidates": [
+      "hermes-de"
+    ]
   },
   {
     "input": "H1234567890123456789",

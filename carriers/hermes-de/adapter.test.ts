@@ -88,6 +88,16 @@ describe('Hermes Germany', () => {
       expect.objectContaining({ cache: 'no-store', redirect: 'error', headers: expect.objectContaining({ 'X-Language': 'de' }) }));
   });
 
+  it('reads a delivery at the address as a delivery', () => {
+    const payload = delivered();
+    payload[0]!.parcelProgress = (payload[0]!.parcelProgress as Array<Record<string, unknown>>).map((entry) => entry.parcelStatus === 'DELIVERED_NEIGHBOUR'
+      ? { ...entry, parcelStatus: 'DELIVERED_INHOUSE', historyText: 'Die Sendung wurde an der Empfangsadresse zugestellt.' } : entry);
+    payload[0]!.parcelAttributes = { ...(payload[0]!.parcelAttributes as object), delivered: false };
+    const result = parseHermesGermanyResponse(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(result.events?.[0]).toMatchObject({ stage: 'delivered', provider_code: 'DELIVERED_INHOUSE' });
+  });
+
   it('does not give an unknown historical update the delivered shipment stage', () => {
     const payload = delivered();
     (payload[0]!.parcelProgress as unknown[]).push({ parcelStatus: 'FUTURE_STATUS', timestamp: '2026-09-02T09:00:00Z' });

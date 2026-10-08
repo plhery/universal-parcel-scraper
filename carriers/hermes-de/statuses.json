@@ -3,8 +3,10 @@
   "entries": [
     {
       "code": "ANNOUNCED",
+      "wording": "Die Sendung wurde Hermes elektronisch angekündigt. Weitere Informationen folgen, sobald Hermes die Sendung erhalten hat.",
+      "language": "de",
       "stage": "registered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-08",
       "note": "Shipment announced to Hermes"
     },
@@ -52,8 +54,10 @@
     },
     {
       "code": "TAKEN_OVER_BY_HERMES",
+      "wording": "Die Sendung wurde von Hermes in … übernommen und wird für den weiteren Versand vorbereitet.",
+      "language": "de",
       "stage": "accepted",
-      "confirmedBy": "official-doc",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-08",
       "note": "Shipment collected by Hermes"
     },
@@ -115,8 +119,10 @@
     },
     {
       "code": "DELIVERY_TOUR_STARTED",
+      "wording": "Die Sendung wurde ins Zustellfahrzeug geladen und wird voraussichtlich heute zugestellt.",
+      "language": "de",
       "stage": "out_for_delivery",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-08",
       "note": "Out for delivery"
     },
@@ -272,6 +278,15 @@
       "confirmedBy": "official-doc",
       "firstSeen": "2026-09-08",
       "note": "Pre-announcement preference booking; deliberately not mapped and dropped from the history so it cannot move the parcel backwards."
+    },
+    {
+      "code": "DELIVERED_INHOUSE",
+      "wording": "Die Sendung wurde an der Empfangsadresse zugestellt.",
+      "language": "de",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Delivered at the recipient's address; the parcel's delivered flag agrees."
     }
   ]
 }

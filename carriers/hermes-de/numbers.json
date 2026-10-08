@@ -260,6 +260,119 @@
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "H1028030626845901017",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=H1028030626845901017",
+        "date": "2026-10-05",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "hermes-de",
+        "confidence": "high"
+      },
+      "note": "Public Hermes shipment report on the German consumer forum. Hermes Germany's tracking returns its history."
+    },
+    {
+      "number": "02027150020212",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=02027150020212",
+        "date": "2026-01-31",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public Hermes shipment report on the German consumer forum. Hermes Germany's tracking no longer knows it."
+    },
+    {
+      "number": "81161149667426",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=81161149667426",
+        "date": "2023-06-22",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public Hermes shipment report on the German consumer forum."
+    },
+    {
+      "number": "22268132900533",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=22268132900533",
+        "date": "2021-11-16",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Public Hermes shipment report on the German consumer forum."
     }
   ]
 }
