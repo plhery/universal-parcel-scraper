@@ -91,7 +91,7 @@
       "estafeta",
       "usps"
     ],
-    "reason": "22-digit numbers are shared by Austrian Post, Estafeta full guides and USPS; the number stays a low-confidence suggestion."
+    "reason": "22-digit numbers are shared by Austrian Post, Estafeta full guides and USPS. A PIC with a USPS channel, a conforming Mailer ID and a passing check digit selects USPS; any other number stays a low-confidence suggestion."
   },
   {
     "shape": "A 22-digit 96 barcode whose last fifteen digits pass the GS1 check",
@@ -920,7 +920,7 @@
       "estafeta",
       "usps"
     ],
-    "reason": "DHL eCommerce hands these US parcels to USPS under a USPS number and tracks them itself too. Direct tracking must confirm the carrier."
+    "reason": "DHL eCommerce hands these US parcels to USPS under a USPS number and tracks them itself too, so USPS's PIC rule leaves these families out. Direct tracking must confirm the carrier."
   },
   {
     "shape": "Two letters, seven digits and a final zero",

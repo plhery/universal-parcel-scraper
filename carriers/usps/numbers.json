@@ -114,15 +114,10 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to USPS, which stays one candidate among several."
+      "note": "Open-source project example, not a real shipment. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
       "number": "9400111206206406260787",
@@ -132,15 +127,10 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to USPS, which stays one candidate among several."
+      "note": "Open-source project example, not a real shipment. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
       "number": "9405803699300124287899",
@@ -150,15 +140,10 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to USPS, which stays one candidate among several."
+      "note": "Open-source project example, not a real shipment. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
       "number": "9434611206206406227577",
@@ -168,15 +153,10 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to USPS, which stays one candidate among several."
+      "note": "Open-source project example, not a real shipment. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
       "number": "9500113562366007585132",
@@ -186,15 +166,10 @@
         "url": "https://www.govinfo.gov/content/pkg/USCOURTS-ilsd-3_25-cv-02196/pdf/USCOURTS-ilsd-3_25-cv-02196-0.pdf"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
-      "note": "Tracking number quoted in a public court record. The source attributes it to USPS, which stays one candidate among several."
+      "note": "Tracking number quoted in a public court record. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
       "number": "9589071052702449080343",
@@ -204,15 +179,10 @@
         "url": "https://www.govinfo.gov/content/pkg/USCOURTS-ilsd-3_25-cv-02196/pdf/USCOURTS-ilsd-3_25-cv-02196-0.pdf"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
-      "note": "Tracking number quoted in a public court record. The source attributes it to USPS, which stays one candidate among several."
+      "note": "Tracking number quoted in a public court record. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
       "number": "4201002334249200190132607600833457",
@@ -414,13 +384,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "austrian-post",
-          "estafeta"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
       "note": "Public sandbox example; not evidence of a consumer shipment."
     },
@@ -525,6 +490,54 @@
         "assessment": "candidate"
       },
       "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "A public court exhibit contains a USPS tracking printout for this identifier."
+    },
+    {
+      "number": "9205590000000012345672",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Made-up commercial PIC: channel 92, a service type code, a nine-digit Mailer ID starting with 9, a seven-digit serial and the check digit."
+    },
+    {
+      "number": "9300100000012345678902",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Made-up commercial PIC: channel 93, a service type code, a six-digit Mailer ID starting with 0 to 8, a ten-digit serial and the check digit."
+    },
+    {
+      "number": "9101900000000123456788",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Made-up legacy PIC: channel 91, a two-digit service type code, a nine-digit Mailer ID starting with 9, an eight-digit serial and the check digit."
+    },
+    {
+      "number": "9205510000000012345670",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
@@ -533,7 +546,24 @@
           "estafeta"
         ]
       },
-      "note": "A public court exhibit contains a USPS tracking printout for this identifier."
+      "note": "Made-up channel 92 PIC whose nine-digit Mailer ID does not start with 9. The check digit passes, so USPS is listed first but not selected."
+    },
+    {
+      "number": "9205590000000012345673",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Made-up channel 92 PIC with a wrong check digit, so USPS is one suggestion among several."
     }
   ]
 }

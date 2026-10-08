@@ -13,8 +13,13 @@ a uniquely valid routing prefix before querying and checking response identity.
 [Publication 199](https://postalpro.usps.com/pub199) defines that structure and
 the PIC checksum and its channel identifiers: `92` to `94`, plus retail `95` and the
 legacy `91` on 22-digit PICs.
-Matching IMpb rules prioritize USPS as a candidate; they do
-not establish shipment existence. Opt-in browser recognition reuses the lookup
+A 22-digit PIC selects USPS when its check digit passes and its Mailer ID fits the
+channel: nine digits starting with 9 for `92` and the legacy `91`, six digits
+starting with 0 to 8 for `93`. Austrian Post and Estafeta also issue 22-digit
+numbers, but none known starts with a USPS channel. DHL eCommerce tracks the `9261`
+and `9361` families as well, so those stay suggestions. Other matching IMpb rules
+prioritize USPS as a candidate. None of them establish shipment existence.
+Opt-in browser recognition reuses the lookup
 and requires dated activity. Anything else is rejected before a request. Without a browser service it
 fails at once with `ChallengeError('USPS challenged direct tracking; configure
 FLARESOLVERR_URL for browser fallback')`.

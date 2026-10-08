@@ -111,8 +111,9 @@ Shipping's expired history, from transport failures.
 
 USPS barcode validation shares the carrier adapter's whole-identifier checks. A scanned
 routing prefix is removed only when it yields one valid package identifier; ambiguous splits
-are rejected. Checksum-valid USPS formats prioritize a candidate and still require carrier
-confirmation.
+are rejected. A 22-digit PIC whose channel, Mailer ID and check digit agree selects USPS,
+apart from the families DHL eCommerce also tracks. Other checksum-valid USPS formats
+prioritize a candidate and still require carrier confirmation.
 
 Recognition uses HTTP by default. Consumers can request `recognitionCandidates` with
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's

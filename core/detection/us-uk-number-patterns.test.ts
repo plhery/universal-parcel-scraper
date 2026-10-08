@@ -34,10 +34,30 @@ describe('USPS whole package barcodes', () => {
   it('reads the retail and legacy channels only as 22-digit PICs', () => {
     for (const pic of ['9500000000000000000008', '9100000000000000000002']) {
       expect(isValidUspsPackageBarcode(pic)).toBe(true);
-      expect(detectCarrierMatch(pic).preferred).toEqual(['usps']);
+      expect(detectCarrierMatch(pic).candidates[0]).toBe('usps');
     }
     // A ZIP+4 add-on starting 91 would otherwise pass as the start of a 26-digit PIC.
     expect(uspsPackageIdentifier(`420123459102${PIC}`)).toBe(PIC);
+  });
+
+  it('selects USPS for a 22-digit PIC with a channel, a conforming Mailer ID and a passing check digit', () => {
+    // Made-up PICs for channels 92 (nine-digit MID), 93 (six-digit MID), 94 (online), 95 (retail) and legacy 91.
+    for (const pic of [PIC, '9300100000012345678902', '9400100000000123456780', '9505500000000123456782', '9101900000000123456788']) {
+      expect(detectCarrierMatch(pic)).toMatchObject({ carrier: 'usps', confidence: 'high', candidates: ['usps'] });
+      expect(recognitionCandidates(pic)).toEqual([]);
+    }
+    // A nine-digit MID starts with 9 and a six-digit one never does.
+    for (const pic of ['9205510000000012345670', '9300190000012345678903', '9100000000000000000002']) {
+      expect(isValidUspsPackageBarcode(pic)).toBe(true);
+      expect(detectCarrierMatch(pic)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
+    }
+    expect(detectCarrierMatch(`${PIC.slice(0, -1)}1`)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: [] });
+    // DHL eCommerce tracks its 9261 and 9361 families too, so they stay suggestions.
+    for (const pic of ['9261290000000012345677', '9361200000012345678900']) {
+      expect(isValidUspsPackageBarcode(pic)).toBe(true);
+      expect(detectCarrierMatch(pic)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
+      expect(detectCarrierMatch(pic).candidates).toContain('dhl-ecommerce');
+    }
   });
 
   it('refuses wrong checksums, malformed routing and ambiguous ZIP/PIC splits', () => {
