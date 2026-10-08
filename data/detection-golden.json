@@ -15206,6 +15206,62 @@
     ]
   },
   {
+    "input": "PH2656125975416",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
+    "input": "PH266229488989L",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
+    "input": "PH266553896458N",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
+    "input": "PH2670556631233",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
+    "input": "PH2682472407616",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
+    "input": "PH268829956084S",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
+    "input": "PH2697771925055",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
+    ]
+  },
+  {
     "input": "PHAS9C0419962810128017D",
     "carrier": "correos-spain",
     "confidence": "high",
@@ -17043,6 +17099,14 @@
     "confidence": "high",
     "candidates": [
       "jd-logistics"
+    ]
+  },
+  {
+    "input": "ph240848008838n",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spx-ph"
     ]
   },
   {
