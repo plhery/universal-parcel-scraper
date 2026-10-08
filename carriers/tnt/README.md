@@ -24,8 +24,8 @@ postcode or account is required.
   Only consignments whose own number matches are read, and the one with the most recent
   scan is the parcel. References, signatories and addresses are not kept.
 - tnt.com scan times carry offsets. Scan codes (`legacyCode`) set the stage, because the
-  wording is prose: "partially delivered" is not a delivery. The estimate is kept as a
-  calendar day until delivery.
+  wording is prose: "partially delivered" is not a delivery, and a residential delivery
+  (`RES`) reads like `OK`. The estimate is kept as a calendar day until delivery.
   Customs release returns to transit even when the wording still mentions customs.
 - On tnt.fr, the returned detail header and item identity must match. History comes only
   from the shipment's event rows; the progress rail includes future delivery labels.

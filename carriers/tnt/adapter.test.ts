@@ -118,6 +118,11 @@ describe('TNT international public tracking', () => {
     current.events.unshift({ date: '2026-04-01T11:00:00+02:00', legacyCode: 'OK', statusDescription: 'Shipment delivered in good condition', location: null });
     current.analytics.destinationDateSources.usedDate = 'delivered';
     expect(parseTntExpressResponse(payload, EXPRESS_NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered', expected_delivery: null });
+    // A residential delivery has its own code and the same wording.
+    current.events[0] = { ...current.events[0], legacyCode: 'RES' };
+    const residential = parseTntExpressResponse(payload, EXPRESS_NUMBER);
+    expect(residential).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(residential.events?.[0]).toMatchObject({ stage: 'delivered', provider_code: 'RES' });
     current.events[0] = { ...current.events[0], legacyCode: 'LP', statusDescription: 'Shipment partially delivered. Recovery actions underway' };
     expect(parseTntExpressResponse(payload, EXPRESS_NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
     current.events[0] = { ...current.events[0], legacyCode: 'ZZ', statusDescription: 'New milestone' };

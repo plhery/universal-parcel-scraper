@@ -90,6 +90,15 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "code": "RES",
+      "wording": "Shipment delivered in good condition",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-02",
+      "note": "A delivery to a residential address, worded like OK. It ends the history, with no OK after it."
+    },
+    {
       "code": "LP",
       "wording": "Shipment partially delivered. Recovery actions underway",
       "language": "en",

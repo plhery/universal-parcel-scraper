@@ -30,6 +30,7 @@ const EXPRESS_CODES: Record<string, ClassifiedStatus> = {
   RC: { status: 'in_transit', stage: 'in_transit' },
   OD: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   OK: { status: 'delivered', stage: 'delivered' },
+  RES: { status: 'delivered', stage: 'delivered' },
   LP: { status: 'exception', stage: 'exception' },
   MR: { status: 'exception', stage: 'exception' },
   WL: { status: 'exception', stage: 'exception' },
