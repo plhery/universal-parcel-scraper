@@ -499,6 +499,18 @@
     "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
   },
   {
+    "shape": "Sixteen digits starting 250 whose last digit is the GS1 check",
+    "carriers": [
+      "canada-post",
+      "correos-express",
+      "dhl-ecommerce",
+      "dpd-fr",
+      "evri-uk",
+      "tnt"
+    ],
+    "reason": "A DPD France label barcode is its fifteen-digit 250 parcel number plus a GS1 check digit, which these carriers' sixteen-digit shapes also accept. The check puts DPD France first without selecting it."
+  },
+  {
     "shape": "eight characters mixing letters and digits",
     "carriers": [
       "gls-ch",

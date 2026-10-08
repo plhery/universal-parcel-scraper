@@ -12,18 +12,23 @@
  * a delivery verb nor an incident noun on its own.
  *
  * Provenance: wording observed on https://trace.dpd.fr/fr/trace/<number> for
- * outbound and return legs.
+ * outbound and return legs, and the shorter "Colis …" rows of earlier trace
+ * pages kept by the Internet Archive.
  */
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 
-/** Lowercase, accent-free, punctuation-free form used for every wording comparison. */
+/**
+ * Lowercase, accent-free, punctuation-free form used for every wording
+ * comparison. A spacing accent typed for an apostrophe ("l´expéditeur")
+ * separates words like the apostrophe would.
+ */
 export function comparableText(value: string): string {
   return clean(value)
     .toLocaleLowerCase('fr-FR')
     .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
+    .replace(/[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Number}\p{Mark}]+/gu, ' ')
+    .replace(/\p{Mark}/gu, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -39,6 +44,7 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'retour a l expediteur',
     'retourne a l expediteur',
     'sera retourne a l expediteur',
+    'colis en retour',
   ])) return { status: 'exception', stage: 'returned' };
 
   if (includesAny(value, [
@@ -49,6 +55,7 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'endommage',
     'refuse',
     'perdu',
+    'en attente de vos instructions',
   ])) return { status: 'exception', stage: 'exception' };
 
   if (includesAny(value, [
@@ -57,6 +64,7 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'n a pas pu etre livre',
     'tentative de livraison',
     'retard',
+    'prise de rendez vous necessaire',
   ])) return { status: 'exception', stage: 'failed_attempt' };
 
   if (includesAny(value, [
@@ -64,6 +72,7 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'votre colis a ete livre',
     'remis au destinataire',
     'livraison effectuee',
+    'colis livre',
   ])) return { status: 'delivered', stage: 'delivered' };
 
   if (includesAny(value, [
@@ -72,6 +81,8 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'disponible en agence',
     'disponible en consigne',
     'attend en relais',
+    'disponible au point relais',
+    'a disposition',
   ])) return { status: 'out_for_delivery', stage: 'ready_for_pickup' };
 
   // The same-day notices ("le destinataire est informé par SMS de la livraison
@@ -82,6 +93,7 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'en tournee de livraison',
     'chauffeur a pris en charge',
     'de la livraison de son colis ce jour',
+    'colis en livraison',
   ])) return { status: 'out_for_delivery', stage: 'out_for_delivery' };
 
   if (includesAny(value, [
@@ -104,6 +116,10 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'arrive dans notre agence',
     'prochaine agence',
     'centre de tri',
+    'en cours d acheminement',
+    'colis en agence',
+    // The recipient booked a later day: the parcel waits in the network.
+    'suite a une prise de rendez vous',
   ])) return { status: 'in_transit', stage: 'in_transit' };
 
   // Wording this map does not recognize keeps the row visible without claiming

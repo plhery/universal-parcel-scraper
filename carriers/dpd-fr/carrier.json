@@ -25,7 +25,8 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://trace.dpd.fr/fr/trace/{trackingNumber}",
@@ -35,6 +36,8 @@
       "history",
       "location",
       "eta",
+      "weight",
+      "delivered_at",
       "recipient_name",
       "recipient_address",
       "signature",
@@ -44,7 +47,9 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "weight",
+      "delivered_at"
     ],
     "discarded": [
       "recipient_name",
@@ -67,6 +72,13 @@
       "id": "dpd-fr-1",
       "pattern": "^250\\d{12}$",
       "confidence": "high"
+    },
+    {
+      "id": "dpd-fr-4",
+      "pattern": "^250\\d{13}$",
+      "confidence": "low",
+      "checksum": "gs1",
+      "preferred": true
     },
     {
       "id": "dpd-fr-3",

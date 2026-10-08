@@ -936,6 +936,12 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
+        "pattern": "^250\\d{13}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      },
+      {
         "pattern": "^10\\d{12}$",
         "confidence": "low",
         "preferred": true
@@ -5209,7 +5215,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fedex": ["fedex-1","fedex-2","fedex-3","fedex-4"],
   "gls-ch": ["gls-ch-1","gls-ch-2","gls-ch-3","gls-ch-4"],
   "dpd": ["dpd-2","dpd-1","dpd-3"],
-  "dpd-fr": ["dpd-fr-1","dpd-fr-3","dpd-fr-2"],
+  "dpd-fr": ["dpd-fr-1","dpd-fr-4","dpd-fr-3","dpd-fr-2"],
   "mondial-relay": ["mondial-relay-1","mondial-relay-2"],
   "relais-colis": ["relais-colis-1","relais-colis-2","relais-colis-3"],
   "la-poste": ["la-poste-1","la-poste-4","la-poste-5","la-poste-6","la-poste-7","la-poste-2","la-poste-3"],

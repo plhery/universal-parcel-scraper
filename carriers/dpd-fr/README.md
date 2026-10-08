@@ -24,6 +24,10 @@ non-2xx statuses are indeterminate.
   0 or 1 (12–15 digits) are suggestions; 14-digit numbers from the ex-Exapaq
   depots 10xx list DPD France first (DPD's published depot table and the
   published integration example), without selecting it.
+- Labels print the `250` number with a GS1 check digit as a sixteenth digit, and
+  links often carry that form. When the check digit matches, detection lists DPD
+  France first and the adapter looks the parcel up by its fifteen digits, the
+  number the trace page shows. Other sixteen-digit numbers are refused.
 - `direct` is kept although Cloudflare usually challenges it: when it passes it
   saves a browser session. (Mondial Relay dropped its direct tier because it
   never passed.)
@@ -32,7 +36,10 @@ non-2xx statuses are indeterminate.
   the leg; the other leg's rows are never read. A page without the requested
   number is a `SchemaError`.
 - No status codes, only French prose, compared lowercase without accents or
-  punctuation (DPD varies them between rows).
+  punctuation (DPD varies them between rows; a spacing accent such as
+  "l´expéditeur" counts as an apostrophe). Earlier trace pages used shorter rows
+  ("Colis livré", "Colis en livraison", "Colis en agence DPD France"); both
+  styles are mapped.
 - Rule order matters: returns, then incidents, then delivery. "votre colis sera
   retourné à l'expéditeur" would otherwise match a delivery rule, and "nous
   avons reçu une réclamation" would look like movement.
@@ -46,7 +53,8 @@ non-2xx statuses are indeterminate.
   have no point, and the depot's street address is never read.
 - Rows print naive `dd/MM/yyyy` + `HH:mm` in two cells, read in Europe/Paris.
   The planned delivery date is a calendar day, dropped once delivered or in
-  exception.
+  exception. `delivered_at` is the newest delivery row of a delivered parcel.
+- "Poids du colis" in the details block, when the page lists it, is the weight.
 
 ## Rejected approaches
 

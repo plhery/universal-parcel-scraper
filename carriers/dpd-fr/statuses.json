@@ -320,6 +320,86 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-17",
       "note": "Acceptance notice sent to the recipient by SMS and by e-mail; the result status becomes in_transit."
+    },
+    {
+      "wording": "colis en retour",
+      "language": "fr",
+      "stage": "returned",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: \"Colis en retour vers l'adresse d'expédition\". The result status becomes exception."
+    },
+    {
+      "wording": "en attente de vos instructions",
+      "language": "fr",
+      "stage": "exception",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: a parcel held until the sender says what to do, alone or after a refusal."
+    },
+    {
+      "wording": "prise de rendez vous necessaire",
+      "language": "fr",
+      "stage": "failed_attempt",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: \"Livraison reportée, prise de rendez-vous nécessaire\"."
+    },
+    {
+      "wording": "colis livre",
+      "language": "fr",
+      "stage": "delivered",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: \"Colis livré\", at the door or when collected from a Pickup relay."
+    },
+    {
+      "wording": "disponible au point relais",
+      "language": "fr",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: the notice that the parcel waits at a Pickup relay."
+    },
+    {
+      "wording": "a disposition",
+      "language": "fr",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: \"Colis à disposition\" at a DPD depot or a Pickup relay."
+    },
+    {
+      "wording": "colis en livraison",
+      "language": "fr",
+      "stage": "out_for_delivery",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages."
+    },
+    {
+      "wording": "en cours d acheminement",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages, written with an apostrophe or a spacing accent."
+    },
+    {
+      "wording": "colis en agence",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: \"Colis en agence DPD France\", repeated while the parcel waits at a depot."
+    },
+    {
+      "wording": "suite a une prise de rendez vous",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Earlier trace pages: delivery moved to the day the recipient booked."
     }
   ]
 }

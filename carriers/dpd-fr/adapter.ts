@@ -1,6 +1,7 @@
 
 import { load } from 'cheerio';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -61,14 +62,27 @@ function parsedEventTime(date: string, clock: string): { iso: string; timestamp:
   return zonedTime(`${date} ${clock}`, 'dd/MM/yyyy HH:mm', TIMEZONE);
 }
 
+/** "1.2 Kg" in the details block; absent, zero and implausible values are dropped. */
+function weightKg(value: string): number | null {
+  const match = /^(\d+(?:[.,]\d+)?)\s*kg$/i.exec(clean(value, 32));
+  const weight = match ? Number(match[1]!.replace(',', '.')) : Number.NaN;
+  return Number.isFinite(weight) && weight > 0 && weight < 10_000 ? weight : null;
+}
+
 /** The details block prints a plain calendar day; only the day is retained. */
 function expectedDeliveryDate(value: string): string | null {
   const parsed = zonedTime(value, 'dd/MM/yyyy', TIMEZONE, { maxLength: 32 });
   return parsed ? parsed.iso.slice(0, 10) : null;
 }
 
+/**
+ * Labels print a `250` parcel number with a GS1 check digit as a sixteenth
+ * digit. The trace page takes that form and shows the fifteen-digit number, so
+ * it is looked up by those fifteen digits; a wrong check digit is a typo.
+ */
 export function normalizeDPDFranceTrackingNumber(raw: string): string {
   const value = raw.replace(/[\s.-]/g, '');
+  if (/^250\d{13}$/.test(value) && hasGs1CheckDigit(value)) return value.slice(0, 15);
   if (!/^(?:[01]\d{11,14}|250\d{9,12})$/.test(value)) {
     throw new InvalidInputError('DPD France', 'DPD France tracking numbers must start with 0, 1, or 250 and contain 12 to 15 digits');
   }
@@ -188,21 +202,29 @@ export function parseDPDFranceTrackingHtml(html: string, rawTrackingNumber: stri
   const status = latest?.status ?? 'unknown';
   const lastStatusText = events[0]?.description ?? 'Tracking information received';
 
-  let expectedDelivery: string | null = null;
-  $(`${detailsSelector} .tableInfosAR`).each((_, element) => {
-    if (expectedDelivery) return;
+  const details = $(`${detailsSelector} .tableInfosAR`).toArray().map((element) => {
     const row = $(element);
-    const label = comparableText(row.find('strong').text());
-    if (includesAny(label, ['livraison prevue', 'date de livraison prevue'])) {
-      expectedDelivery = expectedDeliveryDate(row.find('.tdInfos').text());
-    }
+    return { label: comparableText(row.find('strong').text()), value: row.find('.tdInfos').text() };
   });
+  const expectedDelivery = details
+    .filter(({ label }) => includesAny(label, ['livraison prevue', 'date de livraison prevue']))
+    .map(({ value }) => expectedDeliveryDate(value))
+    .find(Boolean) ?? null;
+  const weight = details
+    .filter(({ label }) => label.startsWith('poids'))
+    .map(({ value }) => weightKg(value))
+    .find((value) => value !== null) ?? null;
+  const deliveredAt = status === 'delivered'
+    ? events.find((event) => event.stage === 'delivered')?.time
+    : undefined;
 
   return {
     status,
     last_status_text: lastStatusText,
     last_update: events[0]?.time ?? null,
     expected_delivery: ['delivered', 'exception'].includes(status) ? null : expectedDelivery,
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(weight !== null ? { weight_kg: weight } : {}),
     timezone: TIMEZONE,
     events,
   };

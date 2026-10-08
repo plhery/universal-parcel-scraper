@@ -934,6 +934,12 @@
         "confidence": "high"
       },
       {
+        "pattern": "^250\\d{13}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      },
+      {
         "pattern": "^10\\d{12}$",
         "confidence": "low",
         "preferred": true

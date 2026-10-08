@@ -4940,6 +4940,60 @@
     ]
   },
   {
+    "input": "250034801048002",
+    "carrier": "dpd-fr",
+    "confidence": "high",
+    "candidates": [
+      "dpd-fr"
+    ]
+  },
+  {
+    "input": "250059803026514",
+    "carrier": "dpd-fr",
+    "confidence": "high",
+    "candidates": [
+      "dpd-fr"
+    ]
+  },
+  {
+    "input": "2500655251129094",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "dhl-ecommerce",
+      "correos-express",
+      "canada-post",
+      "tnt",
+      "evri-uk"
+    ],
+    "preferred": [
+      "dpd-fr"
+    ],
+    "asked": [
+      "tnt",
+      "correos-express",
+      "dhl-ecommerce",
+      "canada-post"
+    ]
+  },
+  {
+    "input": "250067589253957",
+    "carrier": "dpd-fr",
+    "confidence": "high",
+    "candidates": [
+      "dpd-fr"
+    ]
+  },
+  {
+    "input": "250092101422255",
+    "carrier": "dpd-fr",
+    "confidence": "high",
+    "candidates": [
+      "dpd-fr"
+    ]
+  },
+  {
     "input": "250123456789012",
     "carrier": "dpd-fr",
     "confidence": "high",

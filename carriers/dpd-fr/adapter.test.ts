@@ -88,6 +88,13 @@ describe('DPD France tracking input', () => {
       .toBe(`https://trace.dpd.fr/fr/trace/${TEST_TRACKING_NUMBER}`);
   });
 
+  it('looks a label barcode up by its parcel number when the GS1 check digit matches', () => {
+    expect(normalizeDPDFranceTrackingNumber('2501 2345 6789 0127')).toBe(TEST_TRACKING_NUMBER);
+    expect(dpdFranceTrackingUrl('2501234567890127'))
+      .toBe(`https://trace.dpd.fr/fr/trace/${TEST_TRACKING_NUMBER}`);
+    expect(() => normalizeDPDFranceTrackingNumber('2501234567890128')).toThrow('12 to 15 digits');
+  });
+
   it('rejects unsafe or non-France identifiers', () => {
     for (const value of [
       '25012345678',
@@ -157,10 +164,56 @@ describe('DPD France rendered tracking', () => {
       outboundRows: FIXTURE.outboundRows.slice(2),
     }), TEST_TRACKING_NUMBER);
 
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta']);
+    const delivered = parseDPDFranceTrackingHtml(trackingFixture({
+      outboundRows: FIXTURE.outboundRows.slice(1),
+    }), TEST_TRACKING_NUMBER);
+
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at']);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.expected_delivery).toBe('2026-01-24');
+    expect(delivered).toMatchObject({ status: 'delivered', delivered_at: '2026-01-23T12:45:00+01:00' });
+    expect(result).not.toHaveProperty('delivered_at');
+  });
+
+  it('reads the shorter rows and the weight of earlier trace pages', () => {
+    const result = parseDPDFranceTrackingHtml(trackingFixture({
+      outboundDetails: [['N° colis', TEST_TRACKING_NUMBER], ['Poids du colis', '1.2 Kg'], ['Livré le', '09/01/2026']],
+      outboundRows: [
+        ['09/01/2026', '12:37', 'Colis livré', 'Relais Pickup'],
+        ['08/01/2026', '16:54', 'Le destinataire est informé que son colis est disponible au point relais Pickup', 'Relais Pickup'],
+        ['08/01/2026', '16:53', 'Colis à disposition du destinataire au point relais Pickup', 'Relais Pickup'],
+        ['07/01/2026', '10:57', 'Livraison reportée, prise de rendez-vous nécessaire', 'Agence DPD de La Crau (283)'],
+        ['06/01/2026', '08:56', 'En attente de vos instructions', ''],
+        ['05/01/2026', '17:10', 'Colis refusé, en attente de vos instructions', 'Agence DPD de La Crau (283)'],
+        ['05/01/2026', '08:38', 'Colis en livraison', 'Agence DPD de La Crau (283)'],
+        ['04/01/2026', '09:32', 'Colis en agence DPD France', 'Agence DPD de La Crau (283)'],
+        ['31/12/2025', '10:48', 'Livraison reportée suite à une prise de rendez-vous', 'Agence DPD de La Crau (283)'],
+        ['30/12/2025', '04:18', 'Colis en cours d´acheminement', 'Centre de tri DPD de Le Coudray (175)'],
+        ['29/12/2025', '15:36', 'Colis en retour vers l\'adresse d\'expédition, en attente de livraison chez l’expéditeur', 'Agence DPD de La Crau (283)'],
+        ['28/12/2025', '09:00', 'Colis en préparation chez l´expéditeur', ''],
+      ],
+    }), '2501234567890127');
+
+    expect(result).toMatchObject({
+      status: 'delivered',
+      delivered_at: '2026-01-09T12:37:00+01:00',
+      weight_kg: 1.2,
+    });
+    expect(result.events?.map((event) => event.stage)).toEqual([
+      'delivered',
+      'ready_for_pickup',
+      'ready_for_pickup',
+      'failed_attempt',
+      'exception',
+      'exception',
+      'out_for_delivery',
+      'in_transit',
+      'in_transit',
+      'in_transit',
+      'returned',
+      'registered',
+    ]);
   });
 
   it('leaves unrecognized wording without a stage and falls back to the newest mapped row', () => {
