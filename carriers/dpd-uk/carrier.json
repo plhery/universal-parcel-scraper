@@ -24,7 +24,7 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "sender_name"
   ],
   "portal": {
     "url": "https://track.dpd.co.uk/?reference={trackingNumber}",
@@ -32,13 +32,13 @@
     "shows": [
       "status",
       "history",
-      "location",
-      "eta"
+      "eta",
+      "sender_name"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "sender_name"
     ],
     "discarded": [
       "parcel_handle",
@@ -47,7 +47,9 @@
       "recipient_details",
       "proof_of_delivery_images"
     ],
-    "unavailable": []
+    "unavailable": [
+      "location"
+    ]
   },
   "links": [
     {

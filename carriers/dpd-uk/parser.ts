@@ -17,10 +17,11 @@ export function normalizeDpdUkNumber(raw: string): string {
   return number;
 }
 
-// The public client displays spaced digits followed by a printed check letter.
+// The public client displays spaced digits followed by the printed check
+// character, which is a digit for about one parcel in four.
 function parcelNumber(value: unknown): string | null {
   if (typeof value !== 'string' || value.length > 64) return null;
-  const match = /^(\d{14})[A-Z]?$/.exec(value.replace(/\s/g, '').toUpperCase());
+  const match = /^(\d{14})[0-9A-Z]?$/.exec(value.replace(/\s/g, '').toUpperCase());
   return match?.[1] ?? null;
 }
 
@@ -48,21 +49,35 @@ export function validateDpdUkParcel(payload: unknown, number: string, code: stri
   return payload.data;
 }
 
+// DPD UK's own wording, and its partners' on parcels they deliver abroad.
+// Delivery notices and safe-place instructions stay without a stage.
 const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   'your parcel has been delivered': 'delivered',
   'the parcel has been delivered': 'delivered',
+  'your parcel is waiting for you at home (left in safe place)': 'delivered',
   'your parcel will be with you today': 'out_for_delivery',
   'the parcel is on the vehicle for delivery': 'out_for_delivery',
   'your parcel is at our depot': 'in_transit',
+  'your parcel has arrived at our depot': 'in_transit',
+  "your parcel has left our sortation facility and is on it's onwards journey": 'in_transit',
+  'the parcel has arrived at the delivery depot': 'in_transit',
+  'the parcel is in transit to its final destination': 'in_transit',
+  'the parcel is undergoing customs clearance': 'customs',
+  'duties and taxes paid': 'customs',
+  'the parcel has now cleared customs': 'in_transit',
   "we have your parcel and it's on its way to our depot": 'in_transit',
   "we have your parcel and it's on its way to you": 'in_transit',
   'we have x-rayed your parcel as part of our normal security procedures': 'in_transit',
   "we've received your order details, but have not yet received your parcel": 'registered',
 };
 
-function classify(description: string) {
-  const wording = description.toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim().replace(/[.!]+$/, '');
-  const stage = VERIFIED_WORDING[wording];
+/** A scan's or the current summary's stage. The summary appends the time of its scan. */
+export function classifyDpdUkWording(description: string) {
+  const wording = description.toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim()
+    .replace(/ at (?:[01]?\d|2[0-3]):[0-5]\d on [a-z]{3} \d{1,2} [a-z]+ \d{4}$/, '').replace(/[.!]+$/, '');
+  // A sender's cancellation goes on to name the sender to contact.
+  const stage = Object.hasOwn(VERIFIED_WORDING, wording) ? VERIFIED_WORDING[wording]
+    : /^your delivery has been cancelled\b/.test(wording) ? 'exception' : undefined;
   return stage ? { stage, source: 'carrier_map' } : classifyWording(description);
 }
 
@@ -101,9 +116,9 @@ export function parseDpdUkHistory(detailPayload: unknown, historyPayload: unknow
     const description = publicDescription(row.eventText);
     const clock = clean(row.eventDate, 64);
     if (!description || !clock || typeof row.eventDate !== 'string' || row.eventDate.length > 64) throw new SchemaError(PROVIDER, 'DPD UK returned an incomplete scan');
-    const classification = classify(description);
-    const location = clean(row.eventLocation, 200);
-    return { description, ...clockFields(clock), ...(location ? { location } : {}),
+    const classification = classifyDpdUkWording(description);
+    // `eventLocation` names the network or the sender that recorded the scan, not a place.
+    return { description, ...clockFields(clock),
       ...(classification.source !== 'none' ? { stage: classification.stage, stage_source: classification.source } : {}) };
   });
   const seen = new Set<string>();
@@ -114,11 +129,14 @@ export function parseDpdUkHistory(detailPayload: unknown, historyPayload: unknow
   }).slice(0, 100);
   const latest = retained[0]!;
   const summary = publicDescription(detail.trackingStatusCurrent);
-  const summaryClassification = classify(summary);
-  const current = summary ? summaryClassification : classify(latest.description!);
+  const summaryClassification = classifyDpdUkWording(summary);
+  const current = summary ? summaryClassification : classifyDpdUkWording(latest.description!);
+  // The account that booked the parcel: the shop whose name the page shows.
+  const sender = isRecord(detail.shipperDetails) ? clean(detail.shipperDetails.customerDisplayName, 120) : '';
   return { status: current.source !== 'none' ? languageStageStatus(current.stage) : 'unknown',
     ...(current.source !== 'none' ? { current_stage: current.stage, current_stage_source: current.source } : {}),
     last_status_text: summary || latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
+    ...(sender ? { sender_name: sender } : {}),
     ...(current.stage === 'delivered' && latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}), events: retained };
 }

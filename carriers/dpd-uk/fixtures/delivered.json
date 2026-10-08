@@ -10,6 +10,7 @@
       "parcelStatusHtml": "PRIVATE-SYNTHETIC markup",
       "consumer": { "name": "PRIVATE-SYNTHETIC", "address": "PRIVATE-SYNTHETIC", "postcode": "PRIVATE-SYNTHETIC" },
       "partnerRef": [{ "carrierRef": "PRIVATE-SYNTHETIC", "carrierURL": "https://example.invalid/PRIVATE-SYNTHETIC" }],
+      "shipperDetails": { "accountNumber": "PRIVATE-SYNTHETIC", "customerDisplayName": "Example Merchant", "customerDisplayShortName": "ExampleMerchant", "organisation": "Example Merchant Ltd" },
       "shipmentDate": "2026-01-05"
     }
   },

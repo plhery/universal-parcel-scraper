@@ -13,8 +13,14 @@ before reading history under the returned handle.
 
 ## Notes
 
-- A number typed with the label's check letter is looked up by its fourteen
-  digits, as in [dpd](../dpd/README.md).
+- A number typed with the label's check character is looked up by its
+  fourteen digits, as in [dpd](../dpd/README.md). The replies print that
+  character too, a digit or a letter.
+- Each scan row names the DPD network, a partner network abroad or the
+  sender that recorded it, never a place, so events carry no location.
+- The sender is the account that booked the parcel, under the name the page
+  shows.
+- A cancellation by the sender is an exception.
 - Scan times have no stated timezone, including delivery-partner scans. They
   remain local clocks; the adapter does not assign a London offset.
 - History stays in the page's newest-first order. Exact repeated scans are
@@ -24,7 +30,8 @@ before reading history under the returned handle.
 ## Limitations
 
 Order and collection references that require a postcode are outside this
-adapter's scope. Delivery options and proof of delivery behind the postcode
+adapter's scope. DPD gives a parcel number to a new parcel within months, and
+the lookup then reads the newer parcel. Delivery options and proof of delivery behind the postcode
 form are not queried. A generic HTTP 404 does not establish parcel absence;
 only the reference service's explicit unknown-reference response does.
 

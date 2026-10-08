@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, DpdUkTracker } from './adapter.js';
-import { normalizeDpdUkNumber, parseDpdUkHistory, parseDpdUkReference } from './parser.js';
+import { classifyDpdUkWording, normalizeDpdUkNumber, parseDpdUkHistory, parseDpdUkReference } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '15500000000001';
 const CODE = `${NUMBER}*10000`;
@@ -19,7 +20,54 @@ describe('DPD UK public history projection', () => {
     expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'registered']);
     expect(result.events?.every(event => event.time === undefined)).toBe(true);
     expect(result.delivered_at).toBeUndefined();
+    expect(result.sender_name).toBe('Example Merchant');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE-SYNTHETIC|10000|15500000000001/);
+  });
+
+  it('reads a check character that is a digit', () => {
+    const payload = fixture();
+    payload.reference.data[0].parcelNumber = '1550 0000 000 001 7';
+    payload.detail.data.parcelNumber = '1550 0000 000 001 7';
+    expect(parseDpdUkReference(payload.reference, NUMBER)).toBe(CODE);
+    expect(project(payload).status).toBe('delivered');
+  });
+
+  it('names the network or sender of a scan nowhere as its place', () => {
+    const payload = fixture();
+    payload.history.data[1].eventLocation = 'Example Partner B.v.';
+    const result = project(payload);
+    expect(result.events?.some(event => event.location !== undefined)).toBe(false);
+    expect(JSON.stringify(result.events)).not.toMatch(/Example|DPD/);
+  });
+
+  it('takes no sender from a missing or blank account name', () => {
+    const payload = fixture();
+    payload.detail.data.shipperDetails.customerDisplayName = '  ';
+    expect(project(payload).sender_name).toBeUndefined();
+    delete payload.detail.data.shipperDetails;
+    expect(project(payload).sender_name).toBeUndefined();
+  });
+
+  it('files every recorded wording under its stage', () => {
+    for (const entry of statuses.entries) {
+      expect(classifyDpdUkWording(entry.wording)).toEqual({ stage: entry.stage, source: 'carrier_map' });
+    }
+    expect(classifyDpdUkWording('constructor').source).not.toBe('carrier_map');
+  });
+
+  it.each([
+    ['Your parcel is waiting for you at home (left in safe place) at 15:48 on Tue 16 Jun 2026', 'delivered'],
+    ['The parcel has been delivered at 10:52 on Wed 05 Aug 2026', 'delivered'],
+    ['Your parcel will be with you today ', 'out_for_delivery'],
+    ['Your delivery has been cancelled, please contact Example Merchant for further details', 'exception'],
+  ])('reads the current summary %s', (summary, stage) => {
+    const payload = fixture(); payload.detail.data.trackingStatusCurrent = summary;
+    expect(project(payload)).toMatchObject({ current_stage: stage, current_stage_source: 'carrier_map' });
+  });
+
+  it.each(['A notification has been sent to advise you when the delivery will take place',
+    'As requested, your parcel will now be left in your selected safe place'])('gives the notice %s no mapped stage', text => {
+    expect(classifyDpdUkWording(text).source).not.toBe('carrier_map');
   });
 
   it.each(['different', 'missing', 'malformed', 'ambiguous', 'unsafe-handle'])('rejects a %s reference lookup', mode => {
