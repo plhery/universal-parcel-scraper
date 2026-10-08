@@ -18,6 +18,15 @@ describe('French carrier number candidates', () => {
     }
   });
 
+  it('suggests Colis Privé for its credential with a French, Belgian or Luxembourg postcode', () => {
+    for (const number of ['AB123456789075001', 'AB1234567890B1000', 'AB1234567890L9999']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['colis-prive'] });
+    }
+    for (const nearMiss of ['AB1234567890B0999', 'AB1234567890D1000', 'AB1234567890B100']) {
+      expect(detectCarrierMatch(nearMiss).candidates).not.toContain('colis-prive');
+    }
+  });
+
   it('offers GLS France to HTTP recognition for shared numeric and alpha references', () => {
     for (const number of ['36631000001', '366310000017', 'A1B2C3D4']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });

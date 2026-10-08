@@ -34,6 +34,7 @@
     { "wording": "arrivé dans notre agence", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "expédié vers", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "va être prochainement déposé", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
-    { "wording": "a été collecté", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" }
+    { "wording": "a été collecté", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
+    { "wording": "rendez-vous est confirmé", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "The row ends with the appointment day, read as the delivery estimate." }
   ]
 }

@@ -61,10 +61,12 @@ function trackingPage(options: {
 afterEach(() => vi.restoreAllMocks());
 
 describe('Colis Privé combined tracking credential', () => {
-  it('accepts only 12 alphanumeric shipment characters followed by a 5-digit postcode', () => {
+  it('accepts only 12 alphanumeric shipment characters followed by a French, Belgian or Luxembourg postcode', () => {
     expect(normalizeColisPriveCredential(`  ${PUBLIC_SYNTHETIC_CREDENTIAL}  `))
       .toBe(PUBLIC_SYNTHETIC_CREDENTIAL);
     expect(normalizeColisPriveCredential('ab123456789075001')).toBe('AB123456789075001');
+    expect(normalizeColisPriveCredential('ab1234567890b1000')).toBe('AB1234567890B1000');
+    expect(normalizeColisPriveCredential('AB1234567890L9999')).toBe('AB1234567890L9999');
 
     for (const value of [
       '991122334455',
@@ -77,6 +79,10 @@ describe('Colis Privé combined tracking credential', () => {
       '99112233445500000',
       '99112233445596000',
       '99112233445599000',
+      '991122334455B0999',
+      '991122334455B100',
+      '991122334455BE1000',
+      '991122334455D1000',
     ]) {
       expect(() => normalizeColisPriveCredential(value)).toThrow('12-character shipment number');
     }
@@ -154,10 +160,28 @@ describe('Colis Privé HTML normalization', () => {
     }
   });
 
+  it('reads the newest announced appointment or relay drop-off day until the parcel settles or passes it', () => {
+    const appointment: [string, string] = ['29/08/2026', 'Votre rendez-vous est confirmé. le 31/08/2026'];
+    const relay: [string, string] = ['29/08/2026', 'Votre colis va être prochainement déposé en Point Relais. le 30/08/2026'];
+    const estimate = (status: string, rows: Array<[string, string]>) => parseColisPriveTrackingHtml(
+      trackingPage({ status, rows }), PUBLIC_SYNTHETIC_CREDENTIAL).expected_delivery;
+    expect(classifyStatus(appointment[1])).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(estimate(appointment[1], [appointment, ...FIXTURE.rows])).toBe('2026-08-31');
+    expect(estimate(relay[1], [relay, ...FIXTURE.rows])).toBe('2026-08-30');
+    expect(estimate(appointment[1], [['01/09/2026', "Votre colis est arrivé sur notre agence régionale de distribution."],
+      appointment, ...FIXTURE.rows])).toBeNull();
+    expect(estimate('Votre Colis a été livré avec signature', [['31/08/2026', 'Votre Colis a été livré avec signature'],
+      appointment, ...FIXTURE.rows])).toBeNull();
+    expect(estimate(FIXTURE.status, [['30/08/2026', FIXTURE.status], appointment])).toBeNull();
+    expect(estimate(appointment[1], [['29/08/2026', 'Votre rendez-vous est confirmé. le 31/02/2026']])).toBeNull();
+  });
+
   it('returns every capability declared in carrier.json', () => {
-    const result = parseColisPriveTrackingHtml(trackingPage(), PUBLIC_SYNTHETIC_CREDENTIAL);
+    const result = parseColisPriveTrackingHtml(trackingPage({ status: 'Votre rendez-vous est confirmé. le 31/08/2026',
+      rows: [['29/08/2026', 'Votre rendez-vous est confirmé. le 31/08/2026'], ...FIXTURE.rows] }), PUBLIC_SYNTHETIC_CREDENTIAL);
     const checks: Record<string, () => boolean> = {
       history: () => (result.events?.length ?? 0) > 0,
+      eta: () => Boolean(result.expected_delivery),
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
     for (const capability of CAPABILITIES) {

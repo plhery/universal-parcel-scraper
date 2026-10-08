@@ -7,7 +7,8 @@
  * before any text is read, so nothing identifying a person can reach the result.
  *
  * The lookup credential is the 12-character shipment number followed by the
- * recipient's 5-digit postcode. The postcode is what makes the page reachable,
+ * recipient's postcode: five digits in France, or B (Belgium) or L (Luxembourg)
+ * and four digits. The postcode is what makes the page reachable,
  * so it is part of the tracking credential: it is never logged, put in an issue
  * or written into a fixture.
  */
@@ -17,7 +18,8 @@ import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type 
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { UpstreamHttpError, clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { classifyStatus } from './status.js';
+import { calendarDay } from '../../core/time/index.js';
+import { classifyStatus, comparableText } from './status.js';
 
 export { classifyStatus } from './status.js';
 
@@ -69,11 +71,20 @@ export class ColisPriveTrackingError extends NotFoundError {
 
 export function normalizeColisPriveCredential(raw: string): string {
   const credential = raw.trim().toLocaleUpperCase('en-US');
-  if (!/^[A-Z0-9]{12}(?:0[1-9]|[1-8]\d|9[0-5]|97|98)\d{3}$/.test(credential)) {
-    throw new InvalidInputError(PROVIDER, 'Colis Privé tracking requires the 12-character shipment number followed by the 5-digit recipient postcode');
+  if (!/^[A-Z0-9]{12}(?:(?:0[1-9]|[1-8]\d|9[0-5]|97|98)\d{3}|[BL][1-9]\d{3})$/.test(credential)) {
+    throw new InvalidInputError(PROVIDER, 'Colis Privé tracking requires the 12-character shipment number followed by the recipient postcode (5 digits, or B or L and 4 digits)');
   }
   return credential;
 }
+
+/** The day a row announces for a confirmed appointment or a relay drop-off: "… le DD/MM/YYYY". */
+function plannedDay(description: string): string | null {
+  if (!/\b(?:rendez vous est confirme|va etre prochainement depose)\b/.test(comparableText(description))) return null;
+  const match = /\ble (\d{2})\/(\d{2})\/(\d{4})\.?$/.exec(description);
+  return match ? calendarDay(Number(match[3]), Number(match[2]), Number(match[1])) : null;
+}
+
+const SETTLED: ReadonlySet<string> = new Set(['delivered', 'returned', 'exception', 'failed_attempt', 'ready_for_pickup']);
 
 export function colisPriveTrackingUrl(rawCredential: string): string {
   const credential = normalizeColisPriveCredential(rawCredential);
@@ -148,11 +159,17 @@ export function parseColisPriveTrackingHtml(
   const status = current.status !== 'unknown'
     ? current.status
     : parsedEvents.find((event) => event.status !== 'unknown')?.status ?? 'unknown';
+  // The newest announced day, unless the parcel has settled or the latest row is already past it.
+  const stage = current.stage ?? parsedEvents.find(({ event }) => event.stage)?.event.stage;
+  const planned = parsedEvents.map(({ event }) => plannedDay(event.description ?? '')).find(Boolean) ?? null;
+  const latestDay = parsedEvents[0]?.timestamp;
+  const expected = planned && !(stage && SETTLED.has(stage)) && latestDay !== undefined
+    && Date.parse(`${planned}T00:00:00Z`) >= latestDay ? planned : null;
   return {
     status,
     last_status_text: statusText,
     last_update: events[0]?.time ?? null,
-    expected_delivery: null,
+    expected_delivery: expected,
     timezone: TIMEZONE,
     events,
   };

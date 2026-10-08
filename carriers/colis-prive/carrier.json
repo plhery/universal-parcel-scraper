@@ -6,7 +6,9 @@
   ],
   "region": {
     "countries": [
-      "FR"
+      "FR",
+      "BE",
+      "LU"
     ]
   },
   "brand": {
@@ -25,7 +27,8 @@
     }
   },
   "capabilities": [
-    "history"
+    "history",
+    "eta"
   ],
   "portal": {
     "url": "https://colisprive.com/moncolis/pages/DetailColis.aspx?numColis={trackingNumber}&lang=fr",
@@ -33,12 +36,14 @@
     "shows": [
       "status",
       "history",
+      "eta",
       "recipient_name",
       "recipient_address"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "eta"
     ],
     "discarded": [
       "recipient_name",
@@ -60,7 +65,7 @@
   "detection": [
     {
       "id": "colis-prive-1",
-      "pattern": "^[A-Z0-9]{12}(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}$",
+      "pattern": "^[A-Z0-9]{12}(?:(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}|[BL][1-9]\\d{3})$",
       "confidence": "low"
     },
     {

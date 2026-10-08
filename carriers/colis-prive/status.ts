@@ -91,6 +91,7 @@ export const IN_TRANSIT_PHRASES = [
   'expedie vers',
   'va etre prochainement depose',
   'a ete collecte',
+  'rendez vous est confirme',
 ] as const;
 
 export function classifyStatus(description: string): ClassifiedStatus {

@@ -1234,7 +1234,9 @@ export const CARRIER_CATALOG = {
       "Colis Prive"
     ],
     "countries": [
-      "FR"
+      "FR",
+      "BE",
+      "LU"
     ],
     "selectable": true,
     "timezone": "Europe/Paris",
@@ -1258,7 +1260,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^[A-Z0-9]{12}(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}$",
+        "pattern": "^[A-Z0-9]{12}(?:(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}|[BL][1-9]\\d{3})$",
         "confidence": "low"
       },
       {

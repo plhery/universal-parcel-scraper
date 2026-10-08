@@ -1,6 +1,7 @@
 # Colis Privé
 
-French private parcel network (door, relay point, locker). Tracked by parsing
+French private parcel network (door, relay point, locker), also delivering in
+Belgium and Luxembourg. Tracked by parsing
 the public "Mon Colis" detail page, which needs the shipment number plus the
 recipient's postcode.
 
@@ -19,9 +20,11 @@ recipient's postcode.
 
 ## Notes
 
-- The credential is 12 alphanumerics followed by the 5-digit French postcode,
-  stored as one value. The postcode is what opens the page, so treat the whole
-  value as a secret: never log it, quote it in an issue or put it in a fixture.
+- The credential is 12 alphanumerics followed by the recipient's postcode,
+  stored as one value: five digits in France, or `B` (Belgium) or `L`
+  (Luxembourg) and four digits. The postcode is what opens the page, so treat
+  the whole value as a secret: never log it, quote it in an issue or put it in
+  a fixture.
 - `.divDesti` is removed before any text is read, not filtered afterwards — a
   later selector can forget a filter, not a removal.
 - A page for another shipment is a schema error, never a result.
@@ -31,6 +34,9 @@ recipient's postcode.
 - Wording only, no status codes. Exception and return phrases are checked before
   delivery ones, because "nous avons tenté de livrer" contains "livrer".
 - "subi un retard" maps to `failed_attempt`.
+- Rows announcing a confirmed appointment or a relay drop-off end with the
+  planned day, which becomes the delivery estimate. It is dropped once the
+  parcel is delivered, waiting, held or returned, or a later row passes it.
 - Unmatched wording gets no stage; the sync classifies it and records it for
   review.
 - `ColisPriveTrackingError` stays a named `NotFoundError` subclass: host sync
@@ -46,7 +52,7 @@ recipient's postcode.
 
 ## Limitations
 
-- History only: the page has no scan location, delivery estimate or weight.
+- The page has no scan location or weight.
 - Undocumented HTML; markup changes fail loudly as schema errors.
 - Recipient name and address are never read; the offline test asserts it.
 
