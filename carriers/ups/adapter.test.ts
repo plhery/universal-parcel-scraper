@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError, InvalidInputError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { UPSTracker, parseUPSTrackingHtml, parseUPSTrackingResponse, upsTrackingUrl } from './adapter.js';
@@ -24,6 +24,14 @@ const CAPABILITIES = (JSON.parse(
 // The day the fixture's scans happen on, so the year-less scheduled delivery
 // date resolves without rolling into the next year.
 const TODAY = new Date('2026-08-04T06:00:00Z');
+/** UPS's successful reply for a number it has no record of: expired, or not active yet. */
+const UNKNOWN_NUMBER = JSON.stringify({
+  statusCode: '200', statusText: 'Successful',
+  trackDetails: [{
+    errorCode: '504', errorText: 'Tracking number not found in database',
+    requestedTrackingNumber: TRACKING_NUMBER, trackingNumber: TRACKING_NUMBER,
+  }],
+});
 const RENDERED_PAGE = `
   <html><head><meta name="stapp-tracknum" content="${TRACKING_NUMBER}"></head>
   <body>
@@ -259,6 +267,18 @@ describe('UPS structured response', () => {
     expect(() => parseUPSTrackingResponse(refused, TRACKING_NUMBER)).toThrow(IndeterminateError);
   });
 
+  it('reports a number UPS has no record of as not found, and only that error', () => {
+    const unknown = JSON.parse(UNKNOWN_NUMBER) as { trackDetails: Record<string, unknown>[] };
+    expect(() => parseUPSTrackingResponse(unknown, TRACKING_NUMBER)).toThrow(NotFoundError);
+    // An error that does not name the number, or another code, keeps the old reading.
+    const unnamed = structuredClone(unknown);
+    unnamed.trackDetails = [{ errorCode: '504', errorText: 'Tracking number not found in database' }];
+    expect(parseUPSTrackingResponse(unnamed, TRACKING_NUMBER)).toMatchObject({ status: 'unknown', events: [] });
+    const other = structuredClone(unknown);
+    Object.assign(other.trackDetails[0]!, { errorCode: '299', errorText: 'System unavailable' });
+    expect(parseUPSTrackingResponse(other, TRACKING_NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'System unavailable' });
+  });
+
   it('keeps the recipient block out of the result', () => {
     const serialized = JSON.stringify(parseUPSTrackingResponse(fixture(), TRACKING_NUMBER, TODAY));
     for (const value of [
@@ -404,6 +424,26 @@ describe('UPS lookup steps', () => {
     await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(BAD_CHECK_DIGIT))
       .rejects.toMatchObject({ name: 'InvalidInputError', kind: 'invalid_input' });
     expect(records).toEqual(['direct:invalid_input', 'lookup:direct:invalid_input']);
+  });
+
+  it('reports a number UPS has no record of from either tier, without reading the page', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({
+      tier: 2, statusCode: 200, url: upsTrackingUrl(TRACKING_NUMBER), html: RENDERED_PAGE, cookies: [],
+      capturedResponses: [{ url: STATUS_API, status: 200, headers: {}, body: UNKNOWN_NUMBER, truncated: false, base64Encoded: false, error: null }],
+    }));
+    await expect(new UPSTracker({ timeoutMs: 2_000, trawlUrl: TRAWL_URL }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ name: 'NotFoundError', kind: 'not_found' });
+
+    const fetcher = vi.fn<typeof fetch>(async (url) => {
+      if (String(url) === STATUS_API) return new Response(UNKNOWN_NUMBER, { headers: { 'Content-Type': 'application/json' } });
+      const page = new Response(RENDERED_PAGE, { headers: { 'Set-Cookie': 'X-XSRF-TOKEN-ST=token; Domain=ups.com; Path=/' } });
+      Object.defineProperty(page, 'url', { value: String(url) });
+      return page;
+    });
+    const { recorder, records } = stepRecorder();
+    await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ name: 'NotFoundError', kind: 'not_found' });
+    expect(records).toEqual(['direct:not_found', 'lookup:direct:not_found']);
   });
 
   it('rejects a number that is not a UPS number before any request', async () => {

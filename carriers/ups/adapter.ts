@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { isValidUpsTrackingNumber } from '../../core/detection/ups.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
@@ -303,6 +303,10 @@ export function parseUPSTrackingResponse(
     throw new SchemaError('UPS', 'UPS did not return the requested parcel');
   }
   const errorText = text(detail.errorText);
+  // Error 504 in a successful reply that names the number: UPS has no record of
+  // it, expired or not active yet, as its own page reads the code. An outage
+  // answers with another status code instead.
+  if (returned && cleanScalar(detail.errorCode) === '504') throw new NotFoundError('UPS');
   if (detail.errorCode || errorText) {
     return { ...notLocated(), last_status_text: errorText || 'UPS could not locate the shipment' };
   }
@@ -464,8 +468,8 @@ export class UPSTracker {
             // A caller that cancelled gets its own reason back: no answer from
             // the page already fetched, no challenge report.
             context.signal?.throwIfAborted();
-            // UPS refused the number itself; no page or browser can answer it.
-            if (error instanceof InvalidInputError) throw error;
+            // UPS refused or does not know the number; no page or browser can answer it.
+            if (error instanceof InvalidInputError || error instanceof NotFoundError) throw error;
             if (page.html !== null) {
               try {
                 return this.#renderedResult(page.html, number);
@@ -544,7 +548,7 @@ export class UPSTracker {
       try {
         return this.#structuredResult(number, JSON.parse(entry.body));
       } catch (error) {
-        if (error instanceof InvalidInputError) throw error;
+        if (error instanceof InvalidInputError || error instanceof NotFoundError) throw error;
         // An unreadable or unrelated reply; the rendered page may still answer.
         captureError = error instanceof Error ? error : new SchemaError('UPS', 'UPS returned invalid tracking data', { cause: error });
       }
