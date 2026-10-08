@@ -10183,6 +10183,22 @@
     ]
   },
   {
+    "input": "JD0103381871309",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
+    "input": "JD0125821846283",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
     "input": "JD014600011678034918",
     "carrier": "dhl",
     "confidence": "high",
@@ -10224,6 +10240,46 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "JDJ002238017252",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
+    "input": "JDV007860491512",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
+    "input": "JDVA34246758676",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
+    "input": "JDVB27293213920",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
+    "input": "JDX035829559533",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
     ]
   },
   {
@@ -12812,6 +12868,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "jdvc17568698311",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
   },
   {
     "input": "ui025626538cn",

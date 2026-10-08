@@ -58,6 +58,11 @@
       "id": "jd-logistics-1",
       "pattern": "^VG\\d{11}$",
       "confidence": "high"
+    },
+    {
+      "id": "jd-logistics-2",
+      "pattern": "^JD(?:\\d{13}|[A-Z]\\d{12}|[A-Z]{2}\\d{11})$",
+      "confidence": "high"
     }
   ]
 }

@@ -3511,6 +3511,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^VG\\d{11}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^JD(?:\\d{13}|[A-Z]\\d{12}|[A-Z]{2}\\d{11})$",
+        "confidence": "high"
       }
     ]
   },
@@ -5208,7 +5212,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yunda": ["yunda-1"],
   "yto": ["yto-1","yto-2"],
   "zto": ["zto-1"],
-  "jd-logistics": ["jd-logistics-1"],
+  "jd-logistics": ["jd-logistics-1","jd-logistics-2"],
   "yamato": ["yamato-1"],
   "korea-post": ["korea-post-1","korea-post-2"],
   "thailand-post": ["thailand-post-1"],

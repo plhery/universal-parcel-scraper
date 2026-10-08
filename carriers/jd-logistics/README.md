@@ -2,6 +2,8 @@
 
 Tracks international waybills through the official international website's anonymous feed.
 Chinese domestic waybills use a separate service and can fall back to enabled universal providers.
+Detection still selects JD Logistics for them: JD followed by thirteen characters, of which at
+most the first two are letters, as in the JDV and JDX series.
 
 ## How it works
 

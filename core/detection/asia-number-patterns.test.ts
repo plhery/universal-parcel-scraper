@@ -15,6 +15,15 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
+  it('selects JD Logistics for its prefixed domestic waybills at their own length only', () => {
+    for (const number of ['JD0000000000000', 'JDV000000000000', 'JDVA00000000000', 'jdx 000000000000']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'jd-logistics', confidence: 'high' });
+    }
+    for (const number of ['JD000000000000', 'JD00000000000000', 'JDVAB0000000000', 'XJD0000000000000']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('jd-logistics');
+    }
+  });
+
   it.each([
     ['LP00000000000001', 'aliexpress'],
     ['LP0000000000001CN', 'four-px'],
