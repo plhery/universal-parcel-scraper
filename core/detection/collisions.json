@@ -597,7 +597,7 @@
     "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share."
   },
   {
-    "shape": "9{13}",
+    "shape": "9{13} starting with 7, 8 or 9",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -608,7 +608,7 @@
     "reason": "13-digit numbers are shared by five carriers; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{13}",
+    "shape": "09{12}",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -617,7 +617,32 @@
       "ukrposhta",
       "yunda"
     ],
-    "reason": "13-digit numbers starting with 0, 1 or 250 add DPD France to the five carriers already sharing that length; the number stays a suggestion."
+    "reason": "13-digit numbers starting with 0 add DPD France to the five carriers already sharing that length; the number stays a suggestion."
+  },
+  {
+    "shape": "9{13} starting with 1 or 250",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "dpd-fr",
+      "korea-post",
+      "la-poste",
+      "ukrposhta",
+      "yunda"
+    ],
+    "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the five carriers already sharing that length; the number stays a suggestion."
+  },
+  {
+    "shape": "9{13} starting with 2 to 6, outside 250",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "korea-post",
+      "la-poste",
+      "ukrposhta",
+      "yunda"
+    ],
+    "reason": "13-digit numbers starting with 2 to 6, Korea Post's domestic parcels and registered letters among them, are shared by six carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{20} SSCC under Poczta Polska's GS1 prefix 5900773",
@@ -1123,7 +1148,7 @@
     "reason": "Passing check digits add Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{13} that fails the Ukrposhta check",
+    "shape": "9{13} starting with 7, 8 or 9 that fails the Ukrposhta check",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -1163,15 +1188,16 @@
     "reason": "Without a GS1 check digit Canada Post and Correos Express drop out; the remaining 16-digit candidates stay a low-confidence suggestion."
   },
   {
-    "shape": "9{13} starting with 0, 1 or 250 that fails the Ukrposhta check",
+    "shape": "9{13} starting with 1 or 250 that fails the Ukrposhta check",
     "carriers": [
       "correos-chile",
       "delhivery",
       "dpd-fr",
+      "korea-post",
       "la-poste",
       "yunda"
     ],
-    "reason": "13-digit numbers starting with 0, 1 or 250 add DPD France to the four carriers sharing that length; the number stays a suggestion."
+    "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the four carriers sharing that length; the number stays a suggestion."
   },
   {
     "shape": "Twelve digits that pass the FedEx check",
@@ -1209,7 +1235,7 @@
     "reason": "A passing check digit adds FedEx and GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "69{12} that fails the Ukrposhta check",
+    "shape": "9{13} starting with 2 to 6, outside 250, that fails the Ukrposhta check",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -1217,7 +1243,7 @@
       "la-poste",
       "yunda"
     ],
-    "reason": "13-digit numbers starting with 6, Korea Post domestic parcels among them, are shared by five carriers; the number stays a low-confidence suggestion."
+    "reason": "13-digit numbers starting with 2 to 6, Korea Post's domestic parcels and registered letters among them, are shared by five carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "Twelve digits that pass the GLS check",

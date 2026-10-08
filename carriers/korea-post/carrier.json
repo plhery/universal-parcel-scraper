@@ -81,6 +81,11 @@
       "id": "korea-post-2",
       "pattern": "^6\\d{12}$",
       "confidence": "low"
+    },
+    {
+      "id": "korea-post-3",
+      "pattern": "^[1-5]\\d{12}$",
+      "confidence": "low"
     }
   ]
 }

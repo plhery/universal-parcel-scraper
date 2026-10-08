@@ -168,10 +168,11 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
-      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its express registered-mail history. Its first digit is not the 6 of the parcel rule, so detection does not offer Korea Post."
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its express registered-mail history. Thirteen digits stay a suggestion shared with other carriers."
     },
     {
       "number": "1112503377517",
@@ -194,10 +195,91 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
-      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. The capture is Korea Post's own tracker showing the express registered item accepted. Its first digit is not the 6 of the parcel rule, so detection does not offer Korea Post."
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. The capture is Korea Post's own tracker showing the express registered item accepted. Thirteen digits stay a suggestion shared with other carriers."
+    },
+    {
+      "number": "3140705000286",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260102053353/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=3140705000286&displayHeader=",
+        "date": "2026-01-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its express registered-mail history up to delivery."
+    },
+    {
+      "number": "1138809408298",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260907021502/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?ems_gubun=E&sid1=1138809408298&POST_CODE=&mgbn=trace&traceselect=1&target_command=&JspURI=&postNum=1138809408298",
+        "date": "2026-09-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its registered-mail history, held after failed delivery attempts."
+    },
+    {
+      "number": "5119102006866",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240206200804/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=5119102006866&displayHeader=",
+        "date": "2024-02-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "ukrposhta",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its registered-mail history between sorting centres."
     }
   ]
 }

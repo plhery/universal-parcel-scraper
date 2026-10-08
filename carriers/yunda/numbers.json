@@ -17,7 +17,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Yunda Express, which stays one candidate among several."

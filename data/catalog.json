@@ -3644,6 +3644,10 @@
       {
         "pattern": "^6\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[1-5]\\d{12}$",
+        "confidence": "low"
       }
     ]
   },

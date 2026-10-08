@@ -38,3 +38,15 @@ describe('S10-shaped numbers', () => {
     expect(recognitionCandidates('AS123456785US', { phase: 'browser' })).toEqual([]);
   });
 });
+
+describe('Korea Post domestic numbers', () => {
+  it('suggests Korea Post for thirteen digits that start with 1 to 6', () => {
+    for (const number of ['1000000000001', '3000000000001', '5000000000001', '6000000000001']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates).toContain('korea-post');
+    }
+    for (const number of ['0000000000001', '7000000000001', '100000000001', '10000000000001']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('korea-post');
+    }
+  });
+});

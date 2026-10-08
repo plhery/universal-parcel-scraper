@@ -69,7 +69,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Published integration example, not a real shipment. The source attributes it to DPD France, which stays one candidate among several."

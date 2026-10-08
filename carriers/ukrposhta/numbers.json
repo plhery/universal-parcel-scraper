@@ -238,7 +238,8 @@
           "ukrposhta",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."

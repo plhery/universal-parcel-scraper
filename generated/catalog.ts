@@ -3646,6 +3646,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^6\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[1-5]\\d{12}$",
+        "confidence": "low"
       }
     ]
   },
@@ -5325,7 +5329,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zto": ["zto-1"],
   "jd-logistics": ["jd-logistics-1","jd-logistics-2"],
   "yamato": ["yamato-1"],
-  "korea-post": ["korea-post-1","korea-post-2"],
+  "korea-post": ["korea-post-1","korea-post-2","korea-post-3"],
   "thailand-post": ["thailand-post-1"],
   "dtdc": ["dtdc-1","dtdc-2","dtdc-3","dtdc-4"],
   "australia-post": [],

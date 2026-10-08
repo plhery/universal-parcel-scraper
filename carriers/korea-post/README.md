@@ -25,5 +25,7 @@ parcel.
 
 ## Limitations
 
-Detection suggests Korea Post only for thirteen digits that start with 6.
-Registered letters numbered from other first digits need an explicit carrier.
+Detection suggests Korea Post for thirteen digits that start with 1 to 6:
+domestic parcels start with 6 and registered letters with 1 to 5. Other carriers
+share that length, so the number stays a suggestion, and Korea Post has no
+recognition step to confirm it. Callers select Korea Post explicitly.

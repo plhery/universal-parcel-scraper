@@ -2214,7 +2214,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -2570,7 +2571,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -2604,6 +2606,23 @@
     ]
   },
   {
+    "input": "1138809408298",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "la-poste",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "1158418300904",
     "carrier": "unknown",
     "confidence": "low",
@@ -2612,7 +2631,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -3683,7 +3703,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -3778,7 +3799,8 @@
       "ukrposhta",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5536,7 +5558,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5551,7 +5574,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5566,7 +5590,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5581,7 +5606,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5596,7 +5622,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5765,7 +5792,8 @@
       "ukrposhta",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -5998,7 +6026,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -6034,6 +6063,22 @@
     ]
   },
   {
+    "input": "3140705000286",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "3147258001162",
     "carrier": "unknown",
     "confidence": "low",
@@ -6041,7 +6086,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",
@@ -8496,6 +8542,23 @@
     ]
   },
   {
+    "input": "5119102006866",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "5126149092",
     "carrier": "unknown",
     "confidence": "low",
@@ -8981,7 +9044,8 @@
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda"
+      "yunda",
+      "korea-post"
     ],
     "asked": [
       "la-poste",

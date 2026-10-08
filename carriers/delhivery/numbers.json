@@ -17,7 +17,8 @@
           "ukrposhta",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Delhivery, which stays one candidate among several."
@@ -40,7 +41,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker returns its history."
@@ -175,7 +177,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Customer reports an AWB for a shipment of several boxes. Shared numeric formats require carrier recognition."
@@ -260,7 +263,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker no longer finds it."
@@ -315,7 +319,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker no longer finds it."
@@ -450,7 +455,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "A Delhivery tracking link archived by the Wayback Machine. Delhivery's tracker returns its history."
@@ -475,7 +481,8 @@
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda"
+          "yunda",
+          "korea-post"
         ]
       },
       "note": "A Delhivery tracking link archived by the Wayback Machine. Delhivery's tracker returns its history."
