@@ -22,6 +22,10 @@ function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
   return rule.checksum === undefined || CHECKSUMS[rule.checksum](trackingNumber);
 }
 
+function fits(rule: DetectionRule, trackingNumber: string, printed: string): boolean {
+  return new RegExp(rule.pattern).test(trackingNumber) && (!rule.rawPattern || new RegExp(rule.rawPattern).test(printed));
+}
+
 interface RejectedRule { carrier: CarrierId; id: string; rule: DetectionRule }
 
 /**
@@ -31,7 +35,7 @@ interface RejectedRule { carrier: CarrierId; id: string; rule: DetectionRule }
  */
 function decisiveRule(carrier: CarrierId, trackingNumber: string, printed: string, rejected: RejectedRule[]): DetectionRule | undefined {
   for (const [index, rule] of CARRIER_DEFINITIONS[carrier].detectionRules.entries()) {
-    if (!new RegExp(rule.pattern).test(trackingNumber) || (rule.rawPattern && !new RegExp(rule.rawPattern).test(printed))) continue;
+    if (!fits(rule, trackingNumber, printed)) continue;
     if (checksumPasses(rule, trackingNumber)) return rule;
     rejected.push({ carrier, id: DETECTION_RULE_IDS[carrier][index]!, rule });
   }
@@ -85,6 +89,23 @@ export function detectCarrierMatch(raw: string): CarrierDetection {
  */
 export function checksumRejections(raw: string): ChecksumRejection[] {
   return detect(raw).rejections;
+}
+
+/**
+ * Every rule whose pattern, and rawPattern on the printed input, fit the
+ * number but whose checksum failed, whatever else matches the number. Unlike
+ * `checksumRejections`, it keeps a low-confidence rule that another carrier's
+ * high-confidence match hides: a carrier whose adapter applies the same check
+ * refuses the number either way.
+ */
+export function checksumFailures(raw: string): ChecksumRejection[] {
+  const printed = raw.trim().toUpperCase();
+  const trackingNumber = normalizeTrackingNumber(raw);
+  if (!trackingNumber) return [];
+  return (Object.keys(CARRIER_DEFINITIONS) as CarrierId[]).flatMap((carrier) =>
+    CARRIER_DEFINITIONS[carrier].detectionRules.flatMap((rule, index) =>
+      fits(rule, trackingNumber, printed) && !checksumPasses(rule, trackingNumber)
+        ? [{ carrier, rule: DETECTION_RULE_IDS[carrier][index]!, checksum: rule.checksum! }] : []));
 }
 
 /** Guess only when the tracking-number shape identifies one carrier confidently. */

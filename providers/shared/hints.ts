@@ -8,7 +8,8 @@
  */
 import type { CarrierId } from '../../generated/catalog.js';
 import { brandCarrierIds, carrierIdFromName } from '../../core/catalog/hints.js';
-import { checksumRejections, detectCarrierMatch } from '../../core/detection/index.js';
+import { checksumFailures } from '../../core/detection/detect.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 
 export { isKnownCarrierName } from '../../core/catalog/hints.js';
 
@@ -31,8 +32,8 @@ export function brandCarrierForNumber(name: string, trackingNumber: string): str
 /**
  * Detection rules whose check digit the carrier's own adapter verifies before
  * any request: it refuses a number that fits the rule but fails the check as
- * invalid input. Other rules are left out, because their carrier may still
- * know such a number.
+ * invalid input, whatever other carriers' rules make of the number. Other
+ * rules are left out, because their carrier may still know such a number.
  */
 export const ADAPTER_CHECKED_RULES: ReadonlySet<string> = new Set([
   'dhl-express-waybill', 'gls-fr-4', 'mondial-relay-1',
@@ -51,7 +52,7 @@ export const ADAPTER_CHECKED_RULES: ReadonlySet<string> = new Set([
 export function universalCarrierHints(raw: unknown[], trackingNumber?: string): { reported_carriers: string[]; discovered_carrier?: string } {
   const names = [...new Set(raw.filter((value): value is string => typeof value === 'string'
     && value.length <= 80 && /^[\p{L}\p{N} .&'()-]+$/u.test(value)).map((value) => value.trim()))].filter(Boolean).slice(0, 10);
-  const refused = new Set(trackingNumber ? checksumRejections(trackingNumber)
+  const refused = new Set(trackingNumber ? checksumFailures(trackingNumber)
     .filter(({ rule }) => ADAPTER_CHECKED_RULES.has(rule)).map(({ carrier }) => carrier as string) : []);
   const detected = new Set<string>();
   for (const name of names) {

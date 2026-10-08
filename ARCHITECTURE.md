@@ -149,7 +149,8 @@ that kept their carrier out of the suggestions. A consumer that later confirms o
 carriers for the number can count the carrier and rule, without the number, to find a
 check that real numbers fail. Where the carrier's adapter applies the same check before any
 request, that confirmation cannot happen, so a provider naming that carrier for the number
-does not propose it.
+does not propose it, even when another carrier's high-confidence match kept a low-confidence
+rule out of `checksumRejections`.
 
 After building, `node scripts/analyze-recognition.mjs --input <private.jsonl>
 --output <private-priorities.json>` reads rows containing `number`, `carrier` and

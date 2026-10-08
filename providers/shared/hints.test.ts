@@ -68,6 +68,35 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['DHL Express']).discovered_carrier).toBe('dhl-express');
   });
 
+  it('proposes no such carrier when another carrier claims the number with high confidence', async () => {
+    // No catalog rule claims ten or twelve digits with high confidence yet. A
+    // synthetic one hides the failed waybill and GLS France checks from the
+    // suggestions and the rejections, both low-confidence, but their adapters
+    // still refuse the number.
+    vi.resetModules();
+    vi.doMock('../../core/catalog/definitions.js', async (importOriginal) => {
+      const actual = await importOriginal<typeof import('../../core/catalog/definitions.js')>();
+      const packeta = actual.CARRIER_DEFINITIONS.packeta;
+      return { ...actual, CARRIER_DEFINITIONS: { ...actual.CARRIER_DEFINITIONS, packeta: {
+        ...packeta, detectionRules: [...packeta.detectionRules, { pattern: '^(?:\\d{10}|\\d{12})$', confidence: 'high' }],
+      } } };
+    });
+    try {
+      const detection = await import('../../core/detection/index.js');
+      const { universalCarrierHints: hints } = await import('./hints.js');
+      for (const [name, rule] of [['DHL Express', 'dhl-express-waybill'], ['GLS France', 'gls-fr-4']] as const) {
+        const number = FAILING[rule]!;
+        expect(detection.detectCarrierMatch(number)).toMatchObject({ carrier: 'packeta', confidence: 'high' });
+        expect(detection.checksumRejections(number)).toEqual([]);
+        expect(hints([name], number)).toEqual({ reported_carriers: [name] });
+      }
+      expect(hints(['DHL Express'], '1234567891').discovered_carrier).toBe('dhl-express');
+    } finally {
+      vi.doUnmock('../../core/catalog/definitions.js');
+      vi.resetModules();
+    }
+  });
+
   it('holds a failing number for every adapter-checked rule', () => {
     expect(Object.keys(FAILING).sort()).toEqual([...ADAPTER_CHECKED_RULES].sort());
   });

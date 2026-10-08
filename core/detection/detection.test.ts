@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { DETECTION_RULE_IDS } from '../../generated/catalog.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { recognitionAskedCarriers } from '../catalog/recognition.js';
+import { checksumFailures } from './detect.js';
 import {
   checksumRejections,
   detectCarrier,
@@ -251,6 +252,17 @@ describe('checksum rejections', () => {
     expect(isValidDpdParcelNumber('250123456789010')).toBe(false);
     expect(detectCarrierMatch('250123456789010')).toMatchObject({ carrier: 'dpd-fr', confidence: 'high' });
     expect(checksumRejections('250123456789010')).toEqual([]);
+  });
+
+  it('lists every failed check, including those another carrier\'s match hides', () => {
+    // For the callers whose carrier's adapter applies the check itself.
+    expect(checksumFailures('250123456789010')).toContainEqual({ carrier: 'dpd', rule: 'dpd-3', checksum: 'dpd' });
+    expect(checksumFailures('1 234 567-890')).toEqual(checksumRejections('1234567890'));
+    expect(checksumFailures('1234567891')).toEqual([]);
+    expect(checksumFailures('')).toEqual([]);
+    for (const number of ['1234567890', '123456789012', '123456789013', '123456789012345', '250123456789010', 'RA123456789CH']) {
+      expect(checksumFailures(number)).toEqual(expect.arrayContaining(checksumRejections(number)));
+    }
   });
 
   it('has one id for each catalog rule', () => {
