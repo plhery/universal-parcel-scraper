@@ -58,7 +58,9 @@ rendered status, after that wait.
   exact instant, wording and known stage agree. Conflicting locations and distinct
   messages at one instant remain separate.
 - The rendered-page parser reads only the active progress-bar milestone. Reading the whole
-  bar classified label-created parcels as out for delivery.
+  bar classified label-created parcels as out for delivery. The banner's one event has no
+  code; "Label Created", "On the Way", "Out for Delivery" and "Delivered" get their stage from
+  the map, other banners none. Scan wording is never read without its code.
 - Scan times are built from the UTC pair UPS sends, or the local pair plus its explicit
   offset. A local pair without an offset stays `local_time` and other text
   `provider_time_text`; no zone is guessed. Some label scans come with no clock and get none.

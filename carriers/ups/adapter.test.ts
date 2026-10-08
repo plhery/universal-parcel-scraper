@@ -519,6 +519,20 @@ describe('UPS rendered page', () => {
     expect(result.events?.[0]?.location).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
+
+  it('stages the banner by the milestone it names, the one scan without an activity code', () => {
+    const banner = (name: string) => parseUPSTrackingHtml(`
+      <html><head><meta name="stapp-tracknum" content="${TRACKING_NUMBER}"></head>
+      <body><span id="stApp_nameKey">${name}</span></body></html>`, TRACKING_NUMBER).events?.[0];
+    expect(parseUPSTrackingHtml(RENDERED_PAGE, TRACKING_NUMBER).events?.[0]).toMatchObject({ description: 'Delivered', stage: 'delivered' });
+    expect(banner('Label Created')).toMatchObject({ stage: 'registered' });
+    expect(banner('On the Way')).toMatchObject({ stage: 'in_transit' });
+    expect(banner('Out for Delivery')).toMatchObject({ stage: 'out_for_delivery' });
+    // Other wording keeps no stage, and the banner never carries a code.
+    expect(banner('Delivery Attempted')).toMatchObject({ description: 'Delivery Attempted' });
+    expect(banner('Delivery Attempted')?.stage).toBeUndefined();
+    expect(banner('Delivered')).not.toHaveProperty('provider_code');
+  });
 });
 
 it('never opens a plain HTTP session while a browser service is configured', async () => {

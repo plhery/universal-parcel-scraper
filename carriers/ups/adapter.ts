@@ -12,7 +12,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { calendarDay } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { UPS_PROGRESS_STATUS, upsActivityStage, upsStatus } from './status.js';
+import { UPS_PROGRESS_STATUS, upsActivityStage, upsBannerStage, upsStatus } from './status.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
@@ -204,9 +204,10 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
   // town, not where the parcel is, so it never becomes the banner's place.
   const location = clean($('#stApp_deliveredToAddress').last().text());
   // The banner has no clock, so its event carries none.
+  const bannerStage = upsBannerStage(statusText);
   const events: CarrierEvent[] = currentStatus === 'unknown'
     ? []
-    : [{ ...(location ? { location } : {}), description: statusText }];
+    : [{ ...(location ? { location } : {}), description: statusText, ...(bannerStage ? { stage: bannerStage } : {}) }];
   return {
     status: currentStatus,
     last_status_text: statusText,

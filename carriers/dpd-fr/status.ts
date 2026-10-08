@@ -16,7 +16,8 @@
  * pages kept by the Internet Archive.
  */
 import type { ClassifiedStatus } from '../../core/status/index.js';
-import { clean } from '../../core/transport/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { clean } from '../../core/transport/text.js';
 
 /**
  * Lowercase, accent-free, punctuation-free form used for every wording
@@ -128,3 +129,16 @@ export function classifyStatus(description: string): ClassifiedStatus {
   // package's "omit the stage when it is not mapped" rule; the adapter drops it.
   return { status: 'unknown', stage: 'in_transit' };
 }
+
+/**
+ * What the map says about one scan. The trace page has no codes, so the
+ * wording is the whole key, and wording the map does not recognize gets no
+ * stage, as in the adapter.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => {
+    const classified = code ? null : classifyStatus(wording);
+    return classified && classified.status !== 'unknown' ? classified.stage : undefined;
+  },
+  gaps: [],
+};

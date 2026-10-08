@@ -13,7 +13,7 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const EXCEPTION_TERMS = [
   'return to sender', 'returned', 'delivery attempted', 'we missed you',
@@ -93,8 +93,25 @@ export function upsActivityStage(code: string): Stage | undefined {
   return ACTIVITY_STAGES.get(code.trim().toUpperCase());
 }
 
-/** What the map says about one scan, by its activity code. */
+/**
+ * The milestone the rendered page's banner names, the only wording the
+ * adapter reads without an activity code. Scan wording without its code is
+ * not read: "Arrived at Facility" is both the origin scan and an arrival.
+ */
+const BANNER_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
+  ['label created', 'registered'],
+  ['on the way', 'in_transit'],
+  ['out for delivery', 'out_for_delivery'],
+  ['delivered', 'delivered'],
+]);
+
+/** The stage of the rendered page's banner, or undefined for a milestone it does not name. */
+export function upsBannerStage(text: string): Stage | undefined {
+  return BANNER_STAGES.get(normalizeStatusWording(text));
+}
+
+/** What the map says about one scan: by its activity code, or as the banner without one. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code) => (code ? upsActivityStage(code) : undefined),
+  stage: (code, wording) => (code ? upsActivityStage(code) : upsBannerStage(wording)),
   gaps: [],
 };

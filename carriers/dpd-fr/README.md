@@ -46,7 +46,8 @@ non-2xx statuses are indeterminate.
 - "retard" maps to `failed_attempt`; "réclamation" and "enquête est ouverte" to
   `exception`.
 - Unrecognized wording keeps the row with no `stage`; the result status comes
-  from the newest recognized row.
+  from the newest recognized row. `statusMap` in [status.ts](status.ts) answers the app's
+  review queue by the same wording.
 - The depot tab names the delivering depot ("Etablissement 067") and carries its map marker.
   Rows naming the same depot number ("Agence DPD de Strasbourg (67)") get that marker as
   their `point`: the depot is in Bischheim, 6 km from Strasbourg's centre. Other depots

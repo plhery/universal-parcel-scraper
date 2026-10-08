@@ -184,6 +184,8 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       time: scanTime(event),
       location,
       description,
+      // The code keys the app's review of a scan the map does not stage.
+      ...(/^[A-Z0-9_]{1,64}$/.test(code) ? { provider_code: code } : {}),
       ...(mapped ? { stage: actionStage[mapped] ?? 'in_transit' } : {}),
     };
   });

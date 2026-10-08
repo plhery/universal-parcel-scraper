@@ -8,10 +8,13 @@
  * `statusMap` next to its map in `status.ts`; carriers without one answer
  * `unknown`.
  */
+import { statusMap as aliexpress } from '../../carriers/aliexpress/status.js';
 import { statusMap as chronopost } from '../../carriers/chronopost/status.js';
+import { statusMap as correosSpain } from '../../carriers/correos-spain/status.js';
 import { statusMap as dhlExpress } from '../../carriers/dhl-express/status.js';
 import { statusMap as dpd } from '../../carriers/dpd/status.js';
 import { statusMap as dpdDe } from '../../carriers/dpd-de/status.js';
+import { statusMap as dpdFr } from '../../carriers/dpd-fr/status.js';
 import { statusMap as laPoste } from '../../carriers/la-poste/status.js';
 import { statusMap as postlogistics } from '../../carriers/postlogistics/status.js';
 import { statusMap as swissPost } from '../../carriers/swiss-post/status.js';
@@ -24,8 +27,8 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
-  chronopost, 'dhl-express': dhlExpress, dpd, 'dpd-de': dpdDe, 'la-poste': laPoste, postlogistics, 'swiss-post': swissPost, tnt, ups,
-  yunexpress,
+  aliexpress, chronopost, 'correos-spain': correosSpain, 'dhl-express': dhlExpress, dpd, 'dpd-de': dpdDe, 'dpd-fr': dpdFr,
+  'la-poste': laPoste, postlogistics, 'swiss-post': swissPost, tnt, ups, yunexpress,
 };
 
 /** One scan as the app observed it. */

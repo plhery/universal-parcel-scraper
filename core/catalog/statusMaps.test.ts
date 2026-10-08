@@ -29,14 +29,14 @@ describe('status map answers', () => {
       kind: 'intentional_gap',
       note: "DPD's map leaves it unmapped on purpose: it moves the parcel in transit without a milestone of its own.",
     });
-    for (const code of ['IN_TRANSIT', 'AT_DELIVERY_CENTER', 'ORI', 'SPL', 'OTHER', 'SPE', 'MSDLO', 'MIDLI']) {
+    for (const code of ['IN_TRANSIT', 'AT_DELIVERY_CENTER', 'ORI', 'SPL', 'OTHER', 'SPE', 'MSDLO', 'MIDLI', 'ENA']) {
       expect(answer('dpd', code, 'Any wording at all'), code).toEqual(gap);
     }
     // A label gap covers that wording without a code, and only then.
     expect(answer('dpd', null, '  Your parcel is ON its way')).toEqual({
       kind: 'intentional_gap', note: "The label of IN_TRANSIT, which DPD's map leaves unmapped on purpose.",
     });
-    expect(answer('dpd', 'ENA', 'Your parcel is on its way')).toEqual(unknown);
+    expect(answer('dpd', 'ZZZ', 'Your parcel is on its way')).toEqual(unknown);
     // A code gap covers no wording that came without the code.
     expect(answer('dpd', null, 'Your parcel arrived at our depot')).toEqual(unknown);
     expect(answer('dpd', null, 'Parcel out for delivery')).toEqual(unknown);
@@ -62,6 +62,10 @@ describe('status map answers', () => {
     expect(answer('postlogistics', 'IMG', 'IMAGE')).toEqual(gap);
     expect(answer('postlogistics', null, 'Image')).toEqual(unknown);
     expect(answer('ups', 'OF', 'Out For Delivery Today')).toEqual(mapped('out_for_delivery'));
+    // Without a code, UPS's map reads only the rendered page's banner.
+    expect(answer('ups', null, 'Delivered')).toEqual(mapped('delivered'));
+    expect(answer('ups', null, 'Arrived at Facility')).toEqual(unknown);
+    expect(answer('ups', 'ZZ', 'Delivered')).toEqual(unknown);
     expect(answer('yunexpress', null, 'Arrived at GOFO Regional Destination Facility')).toEqual(mapped('in_transit'));
     expect(answer('dhl-express', 'PL', 'Processed at EXAMPLE CITY - FRANCE')).toEqual(mapped('in_transit'));
     expect(answer('dhl-express', null, 'Synthetic checkpoint')).toEqual(unknown);
@@ -100,7 +104,39 @@ describe('status map answers', () => {
     expect(answer('swiss-post', 'PARCEL.*.1.9999', 'Synthetic scan')).toEqual(unknown);
   });
 
-  it.each(['unknown', 'app', '', 'china-post', 'dpd-fr', '__proto__', 'toString'])('does not know %s', (carrier) => {
+  it("answers Cainiao's action codes, and the wording the queue holds without one", () => {
+    expect(answer('aliexpress', 'TD_TRANS_ARRIVE_DCP', 'Awaiting for transit to final delivery office')).toEqual(mapped('in_transit'));
+    expect(answer('aliexpress', 'GTMS_SIGNED', 'Delivered')).toEqual(mapped('delivered'));
+    expect(answer('aliexpress', 'GWMS_ACCEPT', 'Shipment accepted by the warehouse')).toEqual(mapped('registered'));
+    for (const wording of ['Handed over from linehaul office', 'Leaving transit country/region',
+      'Awaiting for transit to final delivery office', '[Exampleville] Departed from destination country/region sorting center']) {
+      expect(answer('aliexpress', null, wording), wording).toEqual(mapped('in_transit'));
+    }
+    // The van or a pickup point depends on the newest code of the whole reply.
+    expect(answer('aliexpress', 'GTMS_DO_DEPART', 'Out for delivery')).toEqual(unknown);
+    expect(answer('aliexpress', 'NEW_UNSEEN_CODE', 'Synthetic scan')).toEqual(unknown);
+    expect(answer('aliexpress', null, 'Arrived at linehaul office')).toEqual(unknown);
+  });
+
+  it("answers DPD France's wording, the only key its trace page has", () => {
+    expect(answer('dpd-fr', null, 'Votre colis a été pris en charge dans notre réseau')).toEqual(mapped('accepted'));
+    expect(answer('dpd-fr', null, 'Le destinataire est informé par SMS de la prise en charge de son colis dans notre réseau'))
+      .toEqual(mapped('accepted'));
+    expect(answer('dpd-fr', null, 'Le destinataire est informé par e-mail de la livraison de son colis ce jour'))
+      .toEqual(mapped('out_for_delivery'));
+    expect(answer('dpd-fr', null, 'Synthetic wording')).toEqual(unknown);
+    expect(answer('dpd-fr', 'DLO', 'Votre colis est livré')).toEqual(unknown);
+  });
+
+  it("answers Correos by its event code, and its office hold without one", () => {
+    expect(answer('correos-spain', 'G01L020V', 'A disposición del destinatario')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('correos-spain', null, 'A disposición del destinatario')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('correos-spain', 'A010000V', 'Admitido.')).toEqual(mapped('accepted'));
+    expect(answer('correos-spain', 'Z999999Z', 'A disposición del destinatario')).toEqual(unknown);
+    expect(answer('correos-spain', null, 'Admitido.')).toEqual(unknown);
+  });
+
+  it.each(['unknown', 'app', '', 'china-post', '__proto__', 'toString'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });
 

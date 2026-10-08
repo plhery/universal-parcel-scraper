@@ -13,6 +13,7 @@
  * out for delivery → failed attempt → office hold → collected).
  */
 import type { ClassifiedStatus } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   // Prerregistrado: the sender registered the parcel. Admitido: Correos took it in.
@@ -80,3 +81,21 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
 export function classifyCorreosSpainStatus(code: string): ClassifiedStatus | undefined {
   return EVENT_STATUS[code];
 }
+
+/**
+ * The scans the review queue holds without their code, from before events
+ * kept it, by `normalizeStatusWording` wording. Each is the summary Correos
+ * gives that code.
+ */
+const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
+  ['a disposición del destinatario', 'G01L020V'],
+]);
+
+/** What the map says about one scan, by its `codEvento`. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => {
+    const key = code ? code.toLocaleUpperCase('en-US') : UNCODED_SCANS.get(wording);
+    return key ? classifyCorreosSpainStatus(key)?.stage : undefined;
+  },
+  gaps: [],
+};

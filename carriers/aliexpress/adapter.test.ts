@@ -228,6 +228,30 @@ describe('Cainiao projection', () => {
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
     expect(result.events?.[0]?.stage).toBe('ready_for_pickup');
   });
+
+  it('stages the legs between the linehaul and the local partner, and keeps every action code', () => {
+    const scans = [
+      ['GTMS_SC_DEPART', '[Exampleville] Departed from destination country/region sorting center'],
+      ['TD_TRANS_ARRIVE_DCP', 'Awaiting for transit to final delivery office'],
+      ['TD_TRANSWH_OUTBOUND', 'Leaving transit country/region'],
+      ['LH_HO_OUT_SUCCESS', 'Handed over from linehaul office'],
+      ['NEW_UNSEEN_CODE', 'Synthetic scan'],
+    ];
+    const reply = (detailList: Array<{ actionCode: string; standerdDesc: string }>) => parseCainiaoTrackingResponse({
+      module: [{ mailNo: 'LP00000000000004', latestTrace: detailList[0], detailList }],
+    }, 'LP00000000000004');
+    const result = reply(scans.map(([actionCode, standerdDesc]) => ({ actionCode: actionCode!, standerdDesc: standerdDesc! })));
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(result.events?.map((event) => [event.provider_code, event.description, event.stage])).toEqual([
+      ['GTMS_SC_DEPART', 'Departed from destination country/region sorting center', 'in_transit'],
+      ['TD_TRANS_ARRIVE_DCP', 'Awaiting for transit to final delivery office', 'in_transit'],
+      ['TD_TRANSWH_OUTBOUND', 'Leaving transit country/region', 'in_transit'],
+      ['LH_HO_OUT_SUCCESS', 'Handed over from linehaul office', 'in_transit'],
+      // An unknown code stays without a stage, and its code goes to review with the wording.
+      ['NEW_UNSEEN_CODE', 'Synthetic scan', undefined],
+    ]);
+    expect(reply([{ actionCode: '', standerdDesc: 'Synthetic scan' }]).events?.[0]).not.toHaveProperty('provider_code');
+  });
 });
 
 describe('Cainiao declared capabilities and privacy', () => {

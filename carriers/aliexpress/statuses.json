@@ -184,6 +184,15 @@
       "note": ""
     },
     {
+      "code": "LH_HO_OUT_SUCCESS",
+      "wording": "Handed over from linehaul office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen live after the linehaul office arrival, before the transit country scans."
+    },
+    {
       "code": "LH_POST_COLLECTION",
       "stage": "in_transit",
       "confirmedBy": "prior-art",
@@ -224,6 +233,24 @@
       "confirmedBy": "prior-art",
       "firstSeen": "2026-09-12",
       "note": ""
+    },
+    {
+      "code": "TD_TRANSWH_OUTBOUND",
+      "wording": "Leaving transit country/region",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen live between the arrival in and the departure from the transit country."
+    },
+    {
+      "code": "TD_TRANS_ARRIVE_DCP",
+      "wording": "Awaiting for transit to final delivery office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen live after customs or the transit country, before the local partner received the parcel."
     },
     {
       "code": "CC_HO_IN_SUCCESS",
@@ -273,6 +300,15 @@
       "confirmedBy": "prior-art",
       "firstSeen": "2026-09-12",
       "note": ""
+    },
+    {
+      "code": "GTMS_SC_DEPART",
+      "wording": "Departed from destination country/region sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen live between the local partner receiving the parcel and its round."
     },
     {
       "code": "SC_ARRIVE",

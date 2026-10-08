@@ -47,8 +47,10 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   keeps milliseconds that `timeStr` cannot hold, so the epoch is the recorded instant and `timeStr`
   its Beijing rendering: such a scan is read at `+08:00`. Any other scan without `timeZone` keeps its
   raw text, because a whole-second epoch may only be a reading of that text.
-- Unknown action codes leave the event without a stage; the sync classifies the wording and records
-  it for review.
+- Each event keeps its action code as `provider_code`. Unknown action codes leave the event without
+  a stage; the sync classifies the wording and records it, with the code, for review. `statusMap`
+  answers the review by code, and by wording for the four codes the queue held before events kept
+  theirs.
 - Cainiao has no place field. It writes a scan's town in brackets before the standard wording,
   `[Town] Out for delivery`, in every language. That town becomes the location and the wording keeps
   the rest. A bracket holding digits, capitals only, fewer than three letters or a carrier the module

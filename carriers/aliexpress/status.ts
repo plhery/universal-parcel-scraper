@@ -16,6 +16,7 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /** Parcel-level order tokens, used only when the newest trace has no action code. */
 export const CAINIAO_STATUS = new Map<string, CarrierStatus>([
@@ -32,6 +33,9 @@ export const CAINIAO_STATUS = new Map<string, CarrierStatus>([
 // leg). The parcel-level `status` token vocabulary is unestablished (real
 // parcels carry DELIVERED/CLEAR_CUSTOMS/transport/pickup/delivered), so the
 // newest latestTrace.actionCode wins and the token is only a fallback.
+// LH_HO_OUT_SUCCESS, TD_TRANSWH_OUTBOUND, TD_TRANS_ARRIVE_DCP and
+// GTMS_SC_DEPART were seen live on 2026-10-08, between the linehaul's arrival
+// and the local partner's round, each worded as one more leg of the journey.
 export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GWMS_ACCEPT', 'pending'],
   ['GWMS_PACKAGE', 'pending'],
@@ -52,12 +56,15 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['LH_HO_AIRLINE', 'in_transit'],
   ['LH_DEPART', 'in_transit'],
   ['LH_ARRIVE', 'in_transit'],
+  ['LH_HO_OUT_SUCCESS', 'in_transit'],
   ['LH_POST_COLLECTION', 'in_transit'],
   ['COMMON_INTRANSIT', 'in_transit'],
   ['TD_TRANS_DEPART', 'in_transit'],
   ['TD_TRANS_ARRIVE', 'in_transit'],
   ['TD_TRANS_DEPART_C', 'in_transit'],
   ['TD_TRANS_ARRIVE_C', 'in_transit'],
+  ['TD_TRANSWH_OUTBOUND', 'in_transit'],
+  ['TD_TRANS_ARRIVE_DCP', 'in_transit'],
   ['CC_HO_IN_SUCCESS', 'in_transit'],
   ['CC_IM_START', 'in_transit'],
   ['CC_IM_SUCCESS', 'in_transit'],
@@ -65,6 +72,7 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['CC_IM_FAILURE', 'exception'],
   ['CC_IM_EXCEPTION', 'exception'],
   ['GTMS_ACCEPT', 'in_transit'],
+  ['GTMS_SC_DEPART', 'in_transit'],
   ['SC_ARRIVE', 'in_transit'],
   ['SC_DEPART', 'in_transit'],
   ['OE_DEPART', 'in_transit'],
@@ -100,3 +108,30 @@ export function cainiaoStageByStatus(latestActionCode: string): Partial<Record<C
     exception: 'exception',
   };
 }
+
+/**
+ * The scans the review queue holds without their action code, from before
+ * events kept it, by `normalizeStatusWording` wording without the town
+ * bracket. Each is the standard wording Cainiao gives that code.
+ */
+const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
+  ['handed over from linehaul office', 'LH_HO_OUT_SUCCESS'],
+  ['leaving transit country/region', 'TD_TRANSWH_OUTBOUND'],
+  ['awaiting for transit to final delivery office', 'TD_TRANS_ARRIVE_DCP'],
+  ['departed from destination country/region sorting center', 'GTMS_SC_DEPART'],
+]);
+
+/**
+ * What the map says about one scan, by its action code. An out-for-delivery
+ * code reads as the van or a pickup point by the newest code of the whole
+ * reply, so the code alone does not answer it.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => {
+    const action = code ? cainiaoActionCode(code) : UNCODED_SCANS.get(wording.replace(/^\[[^\]]*\]\s*/, ''));
+    const status = action ? CAINIAO_ACTION_STATUS.get(action) : undefined;
+    if (!status || status === 'out_for_delivery') return undefined;
+    return cainiaoStageByStatus('')[status] ?? 'in_transit';
+  },
+  gaps: [],
+};

@@ -117,7 +117,7 @@ describe('Correos Spain response parsing', () => {
     expect(unknown).toMatchObject({ status: 'unknown', last_status_text: 'Algo nuevo' });
     // No explicit mapping means no stage at all: the sync classifies the raw
     // wording and records where the final stage came from.
-    expect(unknown.events?.[0]).toMatchObject({ description: 'Algo nuevo' });
+    expect(unknown.events?.[0]).toMatchObject({ description: 'Algo nuevo', provider_code: 'Z999999Z' });
     expect(unknown.events?.[0]?.stage).toBeUndefined();
   });
 

@@ -207,6 +207,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-05",
       "note": "The recipient's delivery instruction, not a scan."
+    },
+    {
+      "code": "ENA",
+      "wording": "We are exchanging data internally",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-02",
+      "note": "A data exchange inside DPD's systems, not a scan; seen twice before the parcel reached the origin depot."
     }
   ]
 }

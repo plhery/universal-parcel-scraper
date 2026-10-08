@@ -128,6 +128,8 @@ export function parseCorreosSpainTrackingResponse(payload: unknown, trackingNumb
         time: time.iso,
         location: '',
         description,
+        // The code keys the app's review of a scan the map does not stage.
+        ...(/^[A-Z0-9.]{1,32}$/.test(code) ? { provider_code: code } : {}),
         ...(classified ? { stage: classified.stage } : {}),
       },
       classified,

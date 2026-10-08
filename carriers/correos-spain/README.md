@@ -39,7 +39,9 @@ Correos de Chile (`correos-chile`) are separate carriers.
   others. Each parcel can still be tracked by its own code.
 - The search endpoint is not used for history. Its events carry Spanish text and a phase but no
   `codEvento`, the only field the status map reads.
-- Only `codEvento` is mapped, never the Spanish `desTextoResumen` prose.
+- Only `codEvento` is mapped, never the Spanish `desTextoResumen` prose. Each event keeps it as
+  `provider_code`, so the app reviews an unmapped scan by its code. `statusMap` answers by code,
+  and by wording only for `G01L020V`, which the queue held before events kept their code.
 - `A090000V` ("Prerregistrado") is the sender's pre-registration and stays `registered`;
   `A010000V` ("Admitido.") is Correos taking the parcel in, `accepted`.
 - `L010000V`, `I010000V`, `X120000V` and `EOL.9001` come from a community integration and
