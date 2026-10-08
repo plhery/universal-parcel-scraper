@@ -30,6 +30,17 @@ describe('Austrian Post public tracking', () => {
     expect(unmeasured.dimensions_text).toBeUndefined();
   });
 
+  it('never keeps a postcode as a scan place', () => {
+    const payload = fixture();
+    const scans: Array<{ status: string; eventPlaceName: string }> = payload.data.einzelsendung.sendungsEvents;
+    scans.find((scan) => scan.status === 'IZ')!.eventPlaceName = 'PLZ 9873';
+    scans.find((scan) => scan.status === 'AZT')!.eventPlaceName = 'Zustellbasis Beispielort, PLZ 8762';
+    const result = parseAustrianPostResponse(payload, NUMBER);
+    expect(result.events?.[0]).not.toHaveProperty('location');
+    expect(result.events?.map((event) => event.location)).toContain('Zustellbasis Beispielort');
+    expect(JSON.stringify(result)).not.toMatch(/PLZ|9873|8762/);
+  });
+
   it('rejects a different returned item', () => {
     const payload = fixture();
     payload.data.einzelsendung.sendungsnummer = '1000000000000000000002';

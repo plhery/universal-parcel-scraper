@@ -12,7 +12,9 @@ to match. The optional Post account flow is unnecessary for public history.
 
 Summary codes and scan codes use different vocabularies. A scan marked `IZ` can
 describe completed delivery; its reason and wording determine the event stage.
-Timestamps carry explicit offsets, which are preserved.
+Timestamps carry explicit offsets, which are preserved. A scan place given
+only as `PLZ` and a postcode is the delivery area and is dropped; a facility
+keeps its name without the postcode.
 
 The query also asks for the measured size, in whole centimetres. It never
 asks for the shipper, which the public page shows only after sign-in, or

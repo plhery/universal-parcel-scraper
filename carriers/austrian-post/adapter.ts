@@ -38,7 +38,8 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
     const time = explicitOffsetTime(raw.timestamp);
     const description = clean(raw.trackingDesc, 500);
     if (!time || !description) throw new SchemaError(PROVIDER, 'Austrian Post returned an incomplete scan');
-    const location = clean(raw.eventPlaceName, 200);
+    // A bare `PLZ 1234` is the delivery area; a facility keeps its name without the postcode.
+    const location = clean(raw.eventPlaceName, 200).replace(/(?:^|,\s*)PLZ\s*\d{4,5}$/i, '').trim();
     const code = clean(raw.status, 32);
     const mapped = austrianPostEventStatus(code, clean(raw.reasontypecode, 32), description);
     const key = JSON.stringify([time.iso, location, description]);
