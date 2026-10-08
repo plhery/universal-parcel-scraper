@@ -143,6 +143,19 @@ describe('status map answers', () => {
     expect(answer('correos-spain', null, 'Admitido.')).toEqual(unknown);
   });
 
+  it("answers Thailand Post's scan codes, and leaves its call and COD payment out on purpose", () => {
+    expect(answer('thailand-post', '3', 'Posting/Collection [ EXAMPLE Posting Center ]')).toEqual(mapped('accepted'));
+    expect(answer('thailand-post', '31', 'Out for delivery [ EXAMPLE Post Office ]')).toEqual(mapped('out_for_delivery'));
+    expect(answer('thailand-post', '28', 'Return to the origin post office')).toEqual(mapped('exception'));
+    expect(answer('thailand-post', '57', 'Contact recipient')).toEqual(gap);
+    expect(answer('thailand-post', '36', 'Successfully transfer money to seller')).toEqual(gap);
+    // A final delivery reads its delivery result, and a utility row its status group.
+    expect(answer('thailand-post', '35', 'Successful delivery [ EXAMPLE Post Office ]')).toEqual(unknown);
+    expect(answer('thailand-post', '34', 'Item held,addressee notified due to Payment of charges')).toEqual(unknown);
+    expect(answer('thailand-post', null, 'Contact recipient')).toEqual(unknown);
+    expect(answer('thailand-post', 'toString', 'Synthetic scan')).toEqual(unknown);
+  });
+
   it.each(['app', '', 'china-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });

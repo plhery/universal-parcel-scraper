@@ -92,6 +92,7 @@ import { adapter as spxPh } from '../carriers/spx-ph/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
+import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as tipsa } from '../carriers/tipsa/adapter.js';
 import { adapter as tnt } from '../carriers/tnt/adapter.js';
@@ -199,6 +200,7 @@ export const REGISTRY: RegistryDefinition = {
     "sunyou": sunyou,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
+    "thailand-post": thailandPost,
     "the-courier-guy": theCourierGuy,
     "tipsa": tipsa,
     "tnt": tnt,
@@ -322,7 +324,7 @@ export const REGISTRY: RegistryDefinition = {
     "sunyou": "sunyou",
     "swiss-post": "swiss-post",
     "swiss-post-cargo": "swiss-post-cargo",
-    "thailand-post": "universal",
+    "thailand-post": "thailand-post",
     "the-courier-guy": "the-courier-guy",
     "tipsa": "tipsa",
     "tnt": "tnt",

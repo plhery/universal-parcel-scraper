@@ -14,7 +14,7 @@ const FAILING: Record<string, string> = {
   'canada-post-2': 'RR123456789CA', 'correios-br-1': 'RR123456789BR', 'correos-chile-2': 'RR123456789CL',
   'ctt-1': 'RR123456789PT', 'india-post-1': 'RR123456789IN', 'japan-post-1': 'RR123456789JP',
   'nz-post-1': 'RR123456789NZ', 'poczta-polska-s10': 'RR123456789PL', 'postnord-2': 'RR123456789SE',
-  'usps-s10': 'RR123456789US',
+  'thailand-post-1': 'RR123456789TH', 'usps-s10': 'RR123456789US',
 };
 
 afterEach(() => { vi.unstubAllGlobals(); });

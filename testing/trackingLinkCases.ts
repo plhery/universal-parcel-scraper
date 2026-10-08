@@ -377,5 +377,6 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'j-and-t-cargo': 'headless Chrome receives the page frame without the tracking form, which a regular browser shows with the waybill filled in',
   'evri-uk': 'the protected key request rejects the default automated browser and leaves the domestic result panel empty, so number forwarding cannot be verified',
   'poste-italiane': 'the results page exposes no readable text to headless Chrome',
+  'thailand-post': 'some of the tracker\'s servers stall on its script bundles, so the page often stays empty past the render window',
   usps: 'tools.usps.com answers automated Chrome with an anti-bot script instead of the page',
 };

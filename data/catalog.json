@@ -3698,14 +3698,24 @@
       "TH"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Asia/Bangkok",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "thailand-post",
+      "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
-    "trackingUrlTemplate": "https://international.thailandpost.com/track-status?lang=en",
-    "linkRules": [],
+    "canaryUrl": "https://track.thailandpost.co.th/",
+    "trackingUrlTemplate": "https://track.thailandpost.co.th/?trackNumber={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "track.thailandpost.co.th"
+        ],
+        "params": [
+          "trackNumber"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^[A-Z]{2}\\d{9}TH$",

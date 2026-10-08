@@ -111,7 +111,7 @@ asked after the other aggregators whatever its count.
 | [Landmark Global](../carriers/landmark-global/README.md) | Yes | ✓ 14 | ✓ 14 | ✓ 21 | No history | ✓ 21 | N/A |
 | [NZ Post](../carriers/nz-post/README.md) | Yes | ✓ 16 | ✓ 20 | ✓ 20 | ✓ 16 | ✓ 20 | ✓ 4 |
 | [Pos Malaysia](../carriers/pos-malaysia/README.md) | Yes | ✓ 2 | Error | ✓ 2 | ✓ 2 | No history | No history |
-| [Thailand Post](../carriers/thailand-post/carrier.json) | No adapter | Not tested | ✓ 8 | ✓ 8 | No history | ✓ 8 | No history |
+| [Thailand Post](../carriers/thailand-post/README.md) | Yes | ✓ 8 | ✓ 8 | ✓ 8 | No history | ✓ 8 | No history |
 | [Ukrposhta](../carriers/ukrposhta/README.md) | Yes | ✓ 22; alternate ✓ 14 | ✓ 30 | ✓ 33 | ✓ 45 | ✓ 33 | Error |
 | [Estafeta](../carriers/estafeta/README.md) | Yes | ✓ 4 | No history | No history | No history | No history | N/A |
 | [Correos de Chile](../carriers/correos-chile/README.md) | Yes | No history; alternate ✓ 1 | No history | No history | ✓ 13 | No history | No history |

@@ -1530,8 +1530,8 @@
     },
     {
       "carrier": "thailand-post",
-      "direct": "No adapter",
-      "sample": "Not tested",
+      "direct": "Yes",
+      "sample": "\u2713 8",
       "references": [
         {
           "results": {
