@@ -30,22 +30,28 @@
     }
   },
   "capabilities": [
-    "history"
+    "history",
+    "location",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://inpost.pl/sledzenie-przesylek",
     "canaryUrl": "https://inposteasy.com/",
     "shows": [
       "status",
-      "history"
+      "history",
+      "location",
+      "destination_country"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "location",
+      "delivered_at",
+      "destination_country"
     ],
     "discarded": [
-      "origin_country",
-      "destination_country"
+      "origin_country"
     ],
     "unavailable": []
   },

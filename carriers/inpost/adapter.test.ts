@@ -69,13 +69,40 @@ describe('InPost response parsing', () => {
       ['Moving', 'in_transit', '2026-05-02T12:00:00+02:00'],
       ['Registered', 'registered', '2026-05-01T08:00:00+02:00'],
     ]);
+    expect(result.events?.map((event) => event.location)).toEqual(['Exampletown (DE)', 'Exampletown (DE)', 'EXAMPLE HUB (PL)', '']);
+    expect(result).toMatchObject({ delivered_at: '2026-05-04T10:00:00+02:00', destination_country: 'DE' });
+  });
+
+  it('keeps no delivery time for a returned parcel and leaves out a place without a town', () => {
+    const result = parseInpostTrackingResponse(parcel({
+      status: 'RTS.1002',
+      statusTitle: 'Returned to sender',
+      destination: { countryCode: 'unknown' },
+      trackingDetails: [
+        { status: 'FMD.1001', statusTitle: 'Posted at a locker', datetime: '2026-05-01T08:00:00+02:00', place: 'Exampleville (PL)' },
+        { status: 'LMD.1001', statusTitle: 'Out for delivery', datetime: '2026-05-02T08:00:00+02:00', place: 'Exampleville (PL)' },
+        { status: 'LMD.9006', statusTitle: 'Refused', datetime: '2026-05-02T12:00:00+02:00', place: 'Exampleville (PL)' },
+        { status: 'RTS.1002', statusTitle: 'Returned to sender', datetime: '2026-05-06T10:00:00+02:00', place: 'null (PL)' },
+      ],
+    }), TRACKING_NUMBER);
+    expect(result.events?.map((event) => [event.stage, event.location])).toEqual([
+      ['returned', ''],
+      ['failed_attempt', 'Exampleville (PL)'],
+      ['out_for_delivery', 'Exampleville (PL)'],
+      ['accepted', 'Exampleville (PL)'],
+    ]);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(result).not.toHaveProperty('delivered_at');
+    expect(result).not.toHaveProperty('destination_country');
   });
 
   it('maps every documented public-hub status code', () => {
     const cases: Array<[string, string, string]> = [
       ['CRE.1001', 'pending', 'registered'],
-      ['FMD.1001', 'pending', 'registered'],
-      ['FMD.1002', 'in_transit', 'in_transit'],
+      ['FMD.1001', 'in_transit', 'accepted'],
+      ['FMD.1002', 'in_transit', 'accepted'],
+      ['LMD.1001', 'out_for_delivery', 'out_for_delivery'],
+      ['LMD.9006', 'exception', 'failed_attempt'],
       ['MMD.1003', 'in_transit', 'in_transit'],
       ['LMD.1002', 'in_transit', 'in_transit'],
       ['LMD.1005', 'out_for_delivery', 'ready_for_pickup'],
@@ -141,8 +168,10 @@ describe('InPost response parsing', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    expect(CAPABILITIES).toEqual(['history']);
-    expect(parseInpostTrackingResponse(parcel(), TRACKING_NUMBER).events?.length).toBeGreaterThan(0);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'delivered_at']);
+    const result = parseInpostTrackingResponse(parcel(), TRACKING_NUMBER);
+    expect(result.events?.some((event) => event.location)).toBe(true);
+    expect(result.delivered_at).toBeTruthy();
   });
 });
 

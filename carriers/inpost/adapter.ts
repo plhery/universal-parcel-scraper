@@ -71,10 +71,11 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
     // Observed event datetimes carry explicit offsets; require them rather than
     // assigning a zone to a multi-country lane (PL/IT/PT/GB hubs share this API).
     const time = explicitOffsetTime(rawEvent.datetime);
-    // statusTitle is the backend's fixed English wording for the requested hub.
-    // Origin/destination country codes travel alongside the parcel but feed no
-    // retained field: only normalized status and timeline fields are projected.
+    // statusTitle is the backend's fixed wording for the requested hub.
     const description = clean(rawEvent.statusTitle, 500) || eventCode;
+    // A place is a town or hub with its country, such as "Exampletown (PL)";
+    // one with no town comes as "null (PL)".
+    const place = clean(rawEvent.place, 200);
     if (!time || !description) return;
     const identity = `${time.iso}\u0000${description}\u0000${eventCode}`;
     if (seen.has(identity)) return;
@@ -84,7 +85,7 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
       // records where the stage came from instead of assuming movement here.
       event: {
         time: time.iso,
-        location: '',
+        location: /^null\b/i.test(place) ? '' : place,
         description,
         ...(eventClassified ? { stage: eventClassified.stage } : {}),
       },
@@ -94,21 +95,28 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
   });
   parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
+  // Of the destination only the country code is sent; the origin country feeds no field.
+  const country = isRecord(payload.destination) ? payload.destination.countryCode : undefined;
+  const destination = typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? { destination_country: country } : {};
   if (!classified) {
     return {
       status: 'unknown',
       last_status_text: clean(payload.statusTitle, 500) || clean(payload.statusDescription, 500) || code || 'Tracking information received',
       last_update: events[0]?.time ?? null,
       expected_delivery: null,
+      ...destination,
       events,
     };
   }
+  const delivery = classified.status === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
   return {
     status: classified.status,
     current_stage: classified.stage,
     last_status_text: clean(payload.statusTitle, 500) || clean(payload.statusDescription, 500) || code,
     last_update: events[0]?.time ?? null,
     expected_delivery: null,
+    ...(delivery ? { delivered_at: delivery.time } : {}),
+    ...destination,
     events,
   };
 }

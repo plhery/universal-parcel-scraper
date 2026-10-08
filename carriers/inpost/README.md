@@ -18,6 +18,8 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 
 - The parcel-level `status` code sets the overall stage and each event's own code sets that
   event's stage; the two are independent in the payload.
+- A drop-off at a locker or a courier collection reads as accepted, a parcel handed to the
+  courier for delivery as out for delivery, and a refusal as a failed attempt.
 - An unmapped code gets no stage: the phase prefix does not decide it. The result is
   `unknown` with the raw wording kept, and the sync records it for review.
 - Timestamps are kept exactly as sent with their offset. An offset-less value is dropped,
@@ -27,15 +29,16 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 - At most 20 events are returned, newest first.
 - `JJD`/`JD` + 16 digits and bare 24-digit numbers are low confidence: `JJD` collides with
   DHL and needs a domain hint or an explicit pick.
-- Origin and destination country codes are dropped: they feed no product field.
+- Each event keeps its place, a town or hub with its country. A delivered parcel keeps
+  its delivery time, and the destination country is kept; the origin country is not.
 - Recipient name, address, phone and signature fields are never read; a test asserts it.
 - Not used: ShipX (`api-shipx-pl.easypack24.net`). It is keyless but its success shape was
   never confirmed. It might carry locker names and an estimate, so it stays the next lead.
 
 ## Limitations
 
-- No event locations and no delivery estimate: the hub response has neither, so the locker
-  name the portal shows never reaches the result.
+- No delivery estimate and no pickup point: the hub response has no estimate, and a place
+  names only the town, so the locker name the portal shows never reaches the result.
 
 ## Testing
 
