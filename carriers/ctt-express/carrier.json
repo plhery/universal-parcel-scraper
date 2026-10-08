@@ -39,7 +39,8 @@
     "scraped": [
       "status",
       "history",
-      "estimated_delivery"
+      "estimated_delivery",
+      "weight"
     ],
     "discarded": [],
     "unavailable": []

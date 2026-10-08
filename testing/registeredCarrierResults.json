@@ -1210,7 +1210,8 @@
           "time": "2026-01-01T10:00:00Z",
           "stage": "registered"
         }
-      ]
+      ],
+      "weight_kg": 0.5
     }
   },
   "pos-malaysia/international.json/": {

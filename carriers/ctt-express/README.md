@@ -23,11 +23,16 @@ delivery. An explicit return start establishes the sender-bound leg across later
 movement scans; completed delivery on that leg means returned. The outbound
 estimate stays suppressed throughout the return. The portal's presentation rail
 can fill in future milestones, so only actual scan rows are retained. Empty
-histories, token errors and unbound error
-replies remain inconclusive. Calendar estimates retain their date-only precision
+histories, histories holding only customer service cases, token errors and
+unbound error replies remain inconclusive. Calendar estimates retain their date-only precision
 for active deliveries when they are no older than the latest dated scan. Pickup,
-delivery, incidents and document holds suppress estimates. Unlabelled
-measurements, contact information and free-form delivery comments are excluded.
+delivery, incidents and document holds suppress estimates. A rescheduled
+delivery day replaces the committed one. The weight is the one measured in the
+network, else the one the sender declared. A parcel that entered from another
+postal network keeps that network's S10 number as its international number.
+Customer service cases are skipped: they are not scans and carry the
+recipient's contact details. Other measurements, contact information and
+free-form delivery comments are excluded.
 
 ## Testing
 

@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { isCttExpressTrackingNumber } from '../../core/detection/cttExpress.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
@@ -50,6 +51,9 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   // Newest provider positions win equal-clock ties. Preserve duplicates until
   // their chronological leg is known so an earlier return start is not lost.
   for (const row of [...rows].reverse()) {
+    // Customer service cases (a new date or address) are not scans and carry
+    // the recipient's contact details.
+    if (isRecord(row) && row.type === 'MANAGEMENTS' && clean(row.source, 64) === 'CASE_V1') continue;
     if (!isRecord(row) || row.type !== 'STATUS' || !['ITEM_STATUS_V2', 'ITEM_STATUS_CHANGE_V1'].includes(clean(row.source, 64))) {
       throw new SchemaError('CTT Express', 'CTT Express returned an unsupported scan source');
     }
@@ -60,6 +64,7 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
     const mapped = classifyCttExpressStatus(code);
     events.push({ provider_code: code, description, ...clock, ...(mapped ? { stage: mapped.stage } : {}) });
   }
+  if (!events.length) throw new IndeterminateError('CTT Express', 'CTT Express returned no tracking scans');
   // An unresolved newest scan must not yield to an older instant.
   if (events.every((event) => event.time)) events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   // 2500 explicitly starts delivery back to the sender. Apply that evidence
@@ -82,7 +87,9 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   const latest = unique[0]!;
   const mapped = classifyCttExpressStatus(latest.provider_code ?? '');
   const returned = latest.stage === 'returned';
-  const eta = clean(data.committed_delivery_datetime, 32);
+  // A rescheduled delivery day replaces the committed one.
+  const rescheduled = clean(data.new_delivery_date, 32);
+  const eta = rescheduled || clean(data.committed_delivery_datetime, 32);
   const date = /^(\d{4})-(\d{2})-(\d{2})$/.exec(eta);
   const validEta = date && calendarDay(Number(date[1]), Number(date[2]), Number(date[3]));
   const latestDay = latest.time ? DateTime.fromISO(latest.time, { setZone: true }).toISODate()
@@ -92,8 +99,15 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   // The widget uses the committed date as a calendar estimate. Old estimates
   // persist after incidents/returns; do not present those as a current promise.
   const expected = active && latest.provider_leg !== 'return' && !heldForDocuments && validEta && latestDay && validEta >= latestDay ? validEta : null;
+  // The weight measured in the network, else the one the sender declared.
+  const weight = [data.final_weight, data.declared_weight]
+    .find((value): value is number => typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= 100_000);
+  // A parcel that entered from another postal network keeps its first number.
+  const prime = clean(data.prime_shipping_code, 32);
   return { status: returned ? 'exception' : mapped?.status ?? 'unknown', ...(latest.stage ? { current_stage: latest.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: expected, ...(mapped?.status === 'delivered' && !returned && latest.time ? { delivered_at: latest.time } : {}),
+    ...(weight !== undefined ? { weight_kg: weight } : {}),
+    ...(isValidS10TrackingNumber(prime) ? { international_tracking_number: prime } : {}),
     events: unique.slice(0, 100) };
 }

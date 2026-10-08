@@ -23,7 +23,8 @@ describe('CTT Express direct tracking', () => {
     expect(result.events?.[1]!.time).toBe('2026-01-03T12:00:01.017Z');
     expect(result.events?.[2]!.time).toBe('2026-01-03T12:00:00.970Z');
     expect(result.delivered_at).toBeUndefined();
-    expect(result.weight_kg).toBeUndefined();
+    expect(result.weight_kg).toBe(0.5);
+    expect(result.international_tracking_number).toBeUndefined();
     expect(result.events?.every((event) => !event.location)).toBe(true);
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
     for (const row of statuses.entries) expect(classifyCttExpressStatus(row.code)?.stage).toBe(row.stage);
@@ -197,6 +198,35 @@ describe('CTT Express direct tracking', () => {
     const result = parseCttExpress(payload, NUMBER);
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
     expect(result.events?.map((event) => event.provider_code)).toEqual(['1500', '1600']);
+  });
+
+  it('skips customer service cases, stages depot holds and returns, and reads the rescheduled day, weight and first number', () => {
+    const payload = clone();
+    const [first] = payload.data.shipping_history.events;
+    const scan = (code: string, description: string, event_date: string) => ({ ...first!, code, description, event_date, detail: {} });
+    const caseRow = { type: 'MANAGEMENTS', source: 'CASE_V1', code: '71_INAT', description: 'Cambio nueva fecha de entrega', event_date: '2026-01-03T09:00:00Z',
+      detail: { incident_type_code: '50_INCT', delivery_date: '2026-01-06', recipient_name: 'PRIVATE_SYNTHETIC_NAME', recipient_phones: ['PRIVATE_SYNTHETIC_PHONE'] } };
+    payload.data.shipping_history.events = [scan('0000', 'Pendiente de recepción en CTT Express', '2026-01-01T10:00:00Z'),
+      scan('0500', 'Recogido', '2026-01-01T12:00:00Z'), scan('3900', 'En tránsito internacional. Pendiente de recepción en CTT Express', '2026-01-02T08:00:00Z'),
+      scan('1500', 'En reparto', '2026-01-03T08:00:00Z'), scan('1600', 'Incidencia en el reparto', '2026-01-03T12:00:00Z'), caseRow,
+      scan('1700', 'Almacenado temporalmente', '2026-01-03T20:00:00Z')] as typeof payload.data.shipping_history.events;
+    Object.assign(payload.data, { new_delivery_date: '2026-01-06', final_weight: 0, declared_weight: 1.25, prime_shipping_code: 'RR123456785PT' });
+    const held = normalizeCarrierResult(parseCttExpress(payload, NUMBER));
+    expect(held).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Almacenado temporalmente', weight_kg: 1.25,
+      international_tracking_number: 'RR123456785PT', expected_delivery: null });
+    expect(held.events?.map((event) => [event.provider_code, event.stage])).toEqual([['1700', 'exception'], ['1600', 'exception'],
+      ['1500', 'out_for_delivery'], ['3900', 'in_transit'], ['0500', 'accepted'], ['0000', 'registered']]);
+    expect(JSON.stringify(held)).not.toContain('PRIVATE_SYNTHETIC');
+    payload.data.shipping_history.events.push(scan('2400', 'Nuevo reparto', '2026-01-05T08:00:00Z') as never);
+    expect(parseCttExpress(payload, NUMBER)).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-01-06' });
+    for (const prime of ['RR123456784PT', '0000000000000000000003', 'PRIVATE_SYNTHETIC_REFERENCE']) {
+      Object.assign(payload.data, { prime_shipping_code: prime });
+      expect(parseCttExpress(payload, NUMBER).international_tracking_number).toBeUndefined();
+    }
+    payload.data.shipping_history.events.push(scan('2700', 'Devuelto a remitente', '2026-01-08T08:00:00Z') as never);
+    expect(parseCttExpress(payload, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned', expected_delivery: null });
+    payload.data.shipping_history.events = [caseRow] as never;
+    expect(() => parseCttExpress(payload, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
   it('retains valid current calendar estimates without inventing an instant or retaining stale promises', () => {
