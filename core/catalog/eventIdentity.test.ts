@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../app.js';
 
 describe('same-instant identity policies', () => {
-  it('requires India Post scans to retain their provider code', () => {
+  it('requires India Post scans to retain their provider code, and lets a scan abroad take its own offset', () => {
     expect(sameInstantIdentityPolicy('india-post')).toEqual({
-      sourceCarrierId: 'india-post', storedSources: ['india-post'], requireProviderCode: true,
+      sourceCarrierId: 'india-post', storedSources: ['india-post'], requireProviderCode: true, relabelledFrom: 'Asia/Kolkata',
     });
   });
 

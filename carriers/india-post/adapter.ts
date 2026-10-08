@@ -1,13 +1,16 @@
 
-import { load } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
+import { DateTime } from 'luxon';
 import { CookieJar } from 'tough-cookie';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type EventPoint } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/index.js';
-import { isoTime, mislabeledLocalTime } from '../../core/time/index.js';
+import {
+  countryCode, countryTimeZone, isoTime, mislabeledLocalTime, timeZoneCountry, type ParsedTime,
+} from '../../core/time/index.js';
 import {
   cleanScalar,
   decodeText,
@@ -31,6 +34,8 @@ const DEFAULT_MAX_POLL_ATTEMPTS = 10;
 // kept an 11-day-old "Item Booked" while it reached export customs.
 const REFRESH_AFTER_MS = 30 * 60_000;
 const USER_TIMEZONE = 'Europe/Zurich';
+// The zone of every Indian office, and the one MySpeedPost labels all clocks in.
+const INDIA_ZONE = 'Asia/Kolkata';
 const MAX_RESPONSE_BYTES = 2_000_000;
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
@@ -163,11 +168,20 @@ function officeAirport(office: string): string | undefined {
   return /^Office - ([A-Z]{3})\b/.exec(office)?.[1];
 }
 
-/** Flight remarks have a narrow format; unrelated remarks can contain recipient details. */
+/**
+ * A flight's number and route, from a remark naming the office's airport as
+ * the origin. Flight remarks have a narrow format; unrelated remarks can
+ * contain recipient details.
+ */
+function flightRoute(remarks: unknown, office: string): RegExpExecArray | null {
+  const match = /^Flight No:\s*([A-Z0-9]{2}\d{1,4}[A-Z]?)\s*\(From ([A-Z]{3}) To ([A-Z]{3})\)$/.exec(clean(remarks, 500));
+  return match && match[2] === officeAirport(office) ? match : null;
+}
+
 function flightDetails(providerCode: string, remarks: unknown, office: string): { description: string; airport: string } | null {
   if (providerCode !== TAKE_OFF_CODE && providerCode !== 'MailArrived') return null;
-  const match = /^Flight No:\s*([A-Z0-9]{2}\d{1,4}[A-Z]?)\s*\(From ([A-Z]{3}) To ([A-Z]{3})\)$/.exec(clean(remarks, 500));
-  if (!match || match[2] !== officeAirport(office)) return null;
+  const match = flightRoute(remarks, office);
+  if (!match) return null;
   const airport = (code: string) => AIRPORT_PLACES[code] ? `${AIRPORT_PLACES[code].name} (${code})` : code;
   const departed = providerCode === TAKE_OFF_CODE;
   // MailArrived retains the sending office. Its flight route names the arrival airport.
@@ -207,6 +221,96 @@ function officePoint(rawEvent: JsonObject, office: string): EventPoint | null {
   return point;
 }
 
+interface Destination {
+  code: string | null;
+  name: string;
+}
+
+/**
+ * The country on MySpeedPost's Destination card: a heading, then label and
+ * value pairs, of which only "Country" is read. The card is absent when
+ * MySpeedPost has no booking details.
+ */
+function destinationOf($: CheerioAPI): Destination | null {
+  const heading = $('h3').filter((_, element) => clean($(element).text(), 40) === 'Destination').first();
+  for (const label of heading.closest('[x-data]').find('p').toArray()) {
+    if (clean($(label).text(), 40).toLowerCase() !== 'country') continue;
+    // A longer value is not a country name, and a cut one would be wrong.
+    const name = clean($(label).next('p').text(), 81);
+    return name.length <= 80 && /^\p{L}[\p{L} .,'()&-]*$/u.test(name) ? { code: countryCode(name), name } : null;
+  }
+  return null;
+}
+
+// UPU's marks for a scan by the destination's post ("Item received at office
+// of exchange (Inb)") and by the origin's ("Transfer to OOE (Otb)"). Another
+// reply for the same item can carry bare codes ("ITEM_RECEIVE") instead.
+const INBOUND = /\(Inb\)/i;
+const OUTBOUND = /\(Otb\)/i;
+// India Post's code for a transfer to the office of exchange, in either reply.
+const TRANSFER_CODE = 'ItemTransfered';
+// The codes of a bag's arrival, with the flight's route in the remark.
+const ARRIVAL_CODES = new Set(['MailArrived', 'BagUnloaded']);
+
+/** The airport a flight relayed on an arrival row lands at. */
+function arrivalAirport(row: JsonObject): string | null {
+  return ARRIVAL_CODES.has(clean(row.event_type, 100)) ? flightRoute(row.remarks, clean(row.office, 120))?.[3] ?? null : null;
+}
+
+function airportCountry(airport: string): string | null {
+  const place = AIRPORT_PLACES[airport];
+  return place ? countryCode(place.country) : timeZoneCountry(AIRPORT_ZONES[airport] ?? '');
+}
+
+/**
+ * Rows the destination's post scanned abroad, which India Post relays with
+ * the office's wall clock labelled as India's. They start with an inbound
+ * mark or with a flight's arrival in the destination country, whichever is
+ * labelled first, so a reply in bare codes picks the same rows as one in
+ * prose. Flight rows keep their own reading. An outbound mark, a transfer to
+ * the office of exchange or an arrival in another country after that starts
+ * a way back, which may be in India again, so it and what follows keep
+ * India's clock. Take-offs are not compared: their labels are airport clocks.
+ */
+function scannedAbroad(events: readonly JsonObject[], destination: Destination | null): Set<number> {
+  const abroad = new Set<number>();
+  if (!destination || destination.code === 'IN') return abroad;
+  const marked = (row: JsonObject, mark: RegExp) => mark.test(clean(row.event)) || mark.test(clean(row.remarks));
+  const code = (row: JsonObject) => clean(row.event_type, 100);
+  const labelled = events.map((row) => isoTime(row.tracked_at, INDIA_ZONE, 100)?.timestamp ?? Number.NaN);
+  // The country each arrival row lands in: '' where the airport's is unknown.
+  const landed = events.map((row) => {
+    const airport = arrivalAirport(row);
+    return airport === null ? null : airportCountry(airport) ?? '';
+  });
+  const entered = Math.min(...events.flatMap((row, index) => (
+    marked(row, INBOUND) || (destination.code !== null && landed[index] === destination.code) ? [labelled[index]!] : [])));
+  const wayBack = Math.min(...events.flatMap((row, index) => (labelled[index]! > entered && (
+    marked(row, OUTBOUND) || code(row) === TRANSFER_CODE || (landed[index] && landed[index] !== destination.code))
+    ? [labelled[index]!] : [])));
+  events.forEach((row, index) => {
+    if (labelled[index]! >= entered && labelled[index]! < wayBack && landed[index] === null
+      && code(row) !== TAKE_OFF_CODE) abroad.add(index);
+  });
+  return abroad;
+}
+
+/**
+ * A clock relayed from abroad, read in the destination's zone when the
+ * country keeps one. Elsewhere it stays an offset-less wall time: India's
+ * label would place it hours off, and the office's zone is unknown.
+ */
+function foreignClock(trackedAt: unknown, zone: string | null): { time: ParsedTime } | { local: string; timestamp: number } | null {
+  const labelled = isoTime(trackedAt, INDIA_ZONE, 100);
+  if (!labelled) return null;
+  const wall = DateTime.fromMillis(labelled.timestamp, { zone: INDIA_ZONE })
+    .toISO({ includeOffset: false, suppressMilliseconds: true });
+  if (!wall) return null;
+  const time = zone ? isoTime(wall, zone) : null;
+  // The local wall time still orders the row among India's labels.
+  return time ? { time } : zone ? null : { local: wall, timestamp: labelled.timestamp };
+}
+
 export function parseIndiaPostTrackingHtml(
   html: string,
   trackingNumber: string,
@@ -233,26 +337,33 @@ export function parseIndiaPostTrackingHtml(
 
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
-  events.slice(0, 500).forEach((rawEvent, index) => {
+  const destination = destinationOf($);
+  const rows = events.slice(0, 500);
+  const abroad = scannedAbroad(rows, destination);
+  const destinationZone = destination ? countryTimeZone(destination.code) : null;
+  rows.forEach((rawEvent, index) => {
     const office = clean(rawEvent.office, 120);
     const providerCode = clean(rawEvent.event_type, 100);
     // tracked_at is ISO; offset-less values are read as Asia/Kolkata, the zone
-    // every India Post office stamps. A take-off is read on its airport's clock.
+    // every India Post office stamps. A take-off is read on its airport's clock,
+    // and a scan abroad on the destination's.
     const zone = takeOffZone(providerCode, office, clean(rawEvent.tracked_at, 100));
-    const time = zone
+    const foreign = abroad.has(index) ? foreignClock(rawEvent.tracked_at, destinationZone) : null;
+    const time = foreign ? ('time' in foreign ? foreign.time : null) : zone
       ? mislabeledLocalTime(rawEvent.tracked_at, zone, 100)
-      : isoTime(rawEvent.tracked_at, 'Asia/Kolkata', 100);
+      : isoTime(rawEvent.tracked_at, INDIA_ZONE, 100);
+    const local = foreign && 'local' in foreign ? foreign : null;
     const takeOff = providerCode === TAKE_OFF_CODE;
     const flight = flightDetails(providerCode, rawEvent.remarks, office);
     const description = flight?.description ?? (takeOff ? 'Aircraft Departure' : eventText(clean(rawEvent.event)));
-    if (!time || !description) return;
+    if (!(time || local) || !description) return;
     const pincode = /^\d{6}$/.test(clean(rawEvent.pincode, 6))
       ? clean(rawEvent.pincode, 6)
       : '';
     const airportCode = flight?.airport ?? (takeOff ? officeAirport(office) : undefined);
     const point = airportCode ? null : officePoint(rawEvent, office);
     const airport = airportCode ? AIRPORT_PLACES[airportCode] : undefined;
-    const identity = JSON.stringify([time.iso, description, office, pincode, providerCode]);
+    const identity = JSON.stringify([time?.iso ?? local?.local, description, office, pincode, providerCode]);
     if (seen.has(identity)) return;
     seen.add(identity);
     const classified = classifyIndiaPostEvent(
@@ -265,7 +376,7 @@ export function parseIndiaPostTrackingHtml(
       // contact numbers and address blocks travel on the row and are
       // deliberately never retained.
       event: {
-        time: time.iso,
+        ...(time ? { time: time.iso } : { local_time: local!.local }),
         location: airport ? `${airport.name} (${airportCode}), ${airport.country}`
           : flight && !takeOff ? `${flight.airport} Airport` : [office, pincode].filter(Boolean).join(' '),
         description,
@@ -274,7 +385,7 @@ export function parseIndiaPostTrackingHtml(
         ...(point ? { point } : {}),
       },
       classified,
-      timestamp: time.timestamp,
+      timestamp: time?.timestamp ?? local!.timestamp,
       index,
     });
   });
@@ -290,16 +401,36 @@ export function parseIndiaPostTrackingHtml(
     current_stage: classified.stage,
     last_status_text: latest.event.description,
     last_update: latest.event.time ?? null,
+    ...(typeof latest.event.local_time === 'string' ? { last_update_local: latest.event.local_time } : {}),
     expected_delivery: null,
-    timezone: 'Asia/Kolkata',
+    timezone: INDIA_ZONE,
     // When MySpeedPost last asked India Post; an old value means stale history.
     ...(syncedAt ? { source_synced_at: syncedAt.iso } : {}),
+    // Only the country: a S10 item goes on to that country's post, which the
+    // host may confirm with its own lookup.
+    ...(destination?.code ? { destination_country: destination.code }
+      : destination ? { destination_country_name: destination.name } : {}),
     events: parsed.slice(0, 100).map((item) => item.event),
   };
 }
 
 function enumValue(value: unknown): string {
   return Array.isArray(value) && typeof value[0] === 'string' ? value[0] : '';
+}
+
+/**
+ * A component state other than New, Processing or Completed. One lookup met
+ * one in October 2026 without its name being recorded. It says nothing about
+ * the shipment, so a completed history the HTML still carries is used, and
+ * otherwise the lookup is inconclusive.
+ */
+function otherState(status: string, html: string, trackingNumber: string): CarrierResult {
+  try {
+    return parseIndiaPostTrackingHtml(html, trackingNumber);
+  } catch {
+    const state = /^[A-Za-z_]{1,40}$/.test(status) ? status : 'unrecognised';
+    throw new IndeterminateError('India Post', `India Post tracking is in the ${state} state`);
+  }
 }
 
 function parseTrackSnapshot(snapshot: string, trackingNumber: string): TrackComponent {
@@ -518,9 +649,7 @@ export class IndiaPostTracker {
         return cached;
       }
     }
-    if (!['New', 'Processing'].includes(initial.status)) {
-      throw new SchemaError('India Post', 'India Post returned an unsupported tracking state');
-    }
+    if (!['New', 'Processing'].includes(initial.status)) return otherState(initial.status, page.html, normalized);
 
     const token = csrfToken(page.html);
     return initial.status === 'Processing'
@@ -555,14 +684,12 @@ export class IndiaPostTracker {
     for (let attempt = 0; attempt <= this.maxPollAttempts; attempt += 1) {
       const names = dispatchNames(update.effects);
       if (names.has('consignment_not_found')) throw new NotFoundError('India Post');
+      const html = typeof update.effects.html === 'string' ? update.effects.html : '';
       if (update.component.status === 'Completed') {
-        const html = typeof update.effects.html === 'string' ? update.effects.html : '';
         if (!html) throw new SchemaError('India Post', 'India Post returned an empty completed response');
         return parseIndiaPostTrackingHtml(html, normalized);
       }
-      if (update.component.status !== 'Processing') {
-        throw new SchemaError('India Post', 'India Post returned an unsupported tracking state');
-      }
+      if (update.component.status !== 'Processing') return otherState(update.component.status, html, normalized);
       if (attempt === this.maxPollAttempts) break;
       await pause(this.pollIntervalMs, budget.signal);
       update = await this.update(

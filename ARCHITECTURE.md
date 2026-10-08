@@ -197,7 +197,9 @@ The app's scan-identity policies let Swiss Post and universal scans gain a locat
 place only when a scan retains its instant, wording and known stage and matches uniquely
 in both directions. Distinct wording can distinguish scans sharing an instant. Swiss Post
 also requires its provider code. Conflicting locations stay separate, and older apps that
-cannot compare scan evidence do not use these policies.
+cannot compare scan evidence do not use these policies. A policy's `relabelledFrom` names
+the zone a source once put on every wall clock: a scan whose wall clock now carries another
+offset takes over the row stored under the old label, by provider code and location.
 
 ## Fallback providers
 

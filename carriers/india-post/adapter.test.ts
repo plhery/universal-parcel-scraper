@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { carrierErrorKind, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import {
   IndiaPostChallengeError,
   IndiaPostTracker,
@@ -25,6 +26,12 @@ const EXPORT_CUSTOMS = JSON.parse(
 ) as { synced_at: string; tracking_events: Array<Record<string, unknown>> };
 const FLIGHT_LEGS = JSON.parse(
   readFileSync(new URL('./fixtures/flight-legs.json', import.meta.url), 'utf8'),
+) as { synced_at: string; tracking_events: Array<Record<string, unknown>> };
+const INBOUND = JSON.parse(
+  readFileSync(new URL('./fixtures/inbound.json', import.meta.url), 'utf8'),
+) as { synced_at: string; tracking_events: Array<Record<string, unknown>> };
+const INBOUND_CODES = JSON.parse(
+  readFileSync(new URL('./fixtures/inbound-codes.json', import.meta.url), 'utf8'),
 ) as { synced_at: string; tracking_events: Array<Record<string, unknown>> };
 const CAPABILITIES = (JSON.parse(
   readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
@@ -66,6 +73,33 @@ function trackingHistoryHtml(
       <div tracking-request="${escapeAttribute(request)}"></div>
     </div>
   `;
+}
+
+// MySpeedPost's collapsible booking cards: a heading, then label and value pairs.
+function bookingCard(title: string, fields: Record<string, string>): string {
+  const pairs = Object.entries(fields).map(([label, value]) => `
+    <div class="pr-3">
+      <p class="mb-0.5 font-semibold uppercase">
+        ${label}
+      </p>
+      <p class="font-semibold">
+        ${value}
+      </p>
+    </div>`).join('');
+  return `
+    <div x-data="{ open: false }" class="rounded-2xl">
+      <button type="button" @click="open = !open">
+        <h3 class="flex"><span class="block h-4 w-1.5"></span><span>${title}</span></h3>
+      </button>
+      <div x-show="open" x-transition.origin.top><div class="grid grid-cols-2">${pairs}</div></div>
+    </div>`;
+}
+
+function bookingCards(destination: string): string {
+  return bookingCard('Origin', {
+    'Booking Office': 'Example GPO', 'Origin Pincode': '110001', 'City / District': 'Example City',
+    State: 'Example State', Country: 'INDIA',
+  }) + bookingCard('Destination', { Country: destination });
 }
 
 function takeOff(trackedAt: string, office: string, eventType = 'AircraftTakeOff'): Record<string, unknown> {
@@ -365,6 +399,99 @@ describe('India Post response normalization', () => {
   });
 });
 
+describe('India Post scans abroad', () => {
+  const parse = (destination?: string, events = INBOUND.tracking_events) => parseIndiaPostTrackingHtml(
+    trackingHistoryHtml(SAMPLE_NUMBER, events, INBOUND.synced_at) + (destination ? bookingCards(destination) : ''),
+    SAMPLE_NUMBER,
+  );
+  const clocks = (destination?: string, events = INBOUND.tracking_events) =>
+    parse(destination, events).events?.map((event) => event.time ?? `local ${String(event.local_time)}`);
+
+  it('reads the destination post\'s scans on its clock and names the country', () => {
+    const result = parse('France');
+    expect(result.events?.map((event) => [event.time, event.description, event.location])).toEqual([
+      // Labelled 09:10Z, 02:20Z and 12:05Z: India's 14:40, 07:50 and 17:35, the clocks of France.
+      ['2026-07-14T14:40:00+02:00', 'Send item to domestic location (Inb)', 'EXAMPLE EXCHANGE OFFICE 999001'],
+      ['2026-07-14T07:50:00+02:00', 'Item received at office of exchange (Inb)', 'EXAMPLE EXCHANGE OFFICE 999001'],
+      ['2026-07-13T17:35:00+02:00', 'Send item to domestic location (Inb)', 'Office - 999001'],
+      // India's own rows, and the bag's, keep their labels.
+      ['2026-07-12T18:40:00Z', 'Bag unloaded at destination Airport', 'Office - FRA 999001'],
+      ['2026-07-10T08:15:00Z', 'Transfer to OOE (Otb)', 'EXAMPLE FOREIGN POST OFFICE 999001'],
+      ['2026-07-08T05:40:00Z', 'Item Booked', 'Example GPO 110001'],
+    ]);
+    expect(result).toMatchObject({
+      destination_country: 'FR', last_update: '2026-07-14T14:40:00+02:00', timezone: 'Asia/Kolkata',
+    });
+    expect(result).not.toHaveProperty('last_update_local');
+  });
+
+  it('proposes the destination\'s post for the same S10 number', () => {
+    expect(deliveryHandoff('india-post', SAMPLE_NUMBER, parse('France')))
+      .toEqual({ carrier: 'la-poste', number: SAMPLE_NUMBER, basis: 'destination' });
+    expect(deliveryHandoff('india-post', SAMPLE_NUMBER, parse())).toBeNull();
+  });
+
+  it('keeps India\'s labels without a foreign destination', () => {
+    const labelled = ['2026-07-14T09:10:00Z', '2026-07-14T02:20:00Z', '2026-07-13T12:05:00Z',
+      '2026-07-12T18:40:00Z', '2026-07-10T08:15:00Z', '2026-07-08T05:40:00Z'];
+    expect(clocks()).toEqual(labelled);
+    expect(clocks('INDIA')).toEqual(labelled);
+    expect(parse('INDIA')).toMatchObject({ destination_country: 'IN' });
+    // Not a country name: no destination at all.
+    for (const garbage of ['12345', 'France <b>75001</b>', 'x'.repeat(81)]) {
+      expect(clocks(garbage)).toEqual(labelled);
+      expect(parse(garbage)).not.toHaveProperty('destination_country');
+      expect(parse(garbage)).not.toHaveProperty('destination_country_name');
+    }
+  });
+
+  it('keeps a wall clock without an offset where the destination has no single zone', () => {
+    for (const [destination, field] of [['United States', { destination_country: 'US' }], ['Atlantis', { destination_country_name: 'Atlantis' }]] as const) {
+      expect(clocks(destination)?.slice(0, 4)).toEqual([
+        'local 2026-07-14T14:40:00', 'local 2026-07-14T07:50:00', 'local 2026-07-13T17:35:00', '2026-07-12T18:40:00Z',
+      ]);
+      expect(parse(destination)).toMatchObject({ ...field, last_update: null, last_update_local: '2026-07-14T14:40:00' });
+    }
+  });
+
+  it('picks the same rows in a reply worded in bare codes', () => {
+    const result = parse('France', INBOUND_CODES.tracking_events);
+    expect(result.events?.map((event) => [event.time, event.provider_code, event.location])).toEqual([
+      ['2026-07-14T14:40:00+02:00', 'ItemDispatched', 'EXAMPLE EXCHANGE OFFICE 999001'],
+      ['2026-07-14T07:50:00+02:00', 'ItemReceived', 'EXAMPLE EXCHANGE OFFICE 999001'],
+      ['2026-07-13T17:35:00+02:00', 'ItemDispatched', 'Office - 999001'],
+      // The arrival in France places the rows after it; it keeps its label.
+      ['2026-07-12T18:40:00Z', 'MailArrived', 'Paris Charles de Gaulle Airport (CDG), France'],
+      ['2026-07-10T08:15:00Z', 'ItemTransfered', 'EXAMPLE FOREIGN POST OFFICE 999001'],
+      ['2026-07-08T05:40:00Z', 'ItemBooked', 'Example GPO 110001'],
+    ]);
+    // An arrival in another country does not; with neither, the labels stay.
+    const elsewhere = INBOUND_CODES.tracking_events.map((row) => (
+      row.event_type === 'MailArrived' ? { ...row, remarks: 'Flight No: ZZ0102 (From FRA To LHR)' } : row));
+    expect(clocks('France', elsewhere)?.slice(0, 3))
+      .toEqual(['2026-07-14T09:10:00Z', '2026-07-14T02:20:00Z', '2026-07-13T12:05:00Z']);
+  });
+
+  it('keeps India\'s clock on a way back', () => {
+    const transfer = { tracked_at: '2026-07-20T06:00:00.000000Z', event_type: 'ItemTransfered', office: 'EXAMPLE EXCHANGE OFFICE', pincode: '' };
+    const received = { tracked_at: '2026-07-25T04:30:00.000000Z', event_type: 'ItemReceived', office: 'EXAMPLE FOREIGN POST OFFICE', pincode: '' };
+    const returned = (events: Array<Record<string, unknown>>, ...after: Array<Record<string, unknown>>) =>
+      clocks('France', [...events, ...after])?.slice(0, after.length + 1);
+    expect(returned(INBOUND.tracking_events,
+      { ...transfer, event: 'Transfer to OOE (Otb)', remarks: 'Transfer to OOE (Otb)' },
+      { ...received, event: 'Item received at office of exchange (Inb)', remarks: 'Item received at office of exchange (Inb)' },
+    )).toEqual(['2026-07-25T04:30:00Z', '2026-07-20T06:00:00Z', '2026-07-14T14:40:00+02:00']);
+    expect(returned(INBOUND_CODES.tracking_events,
+      { ...transfer, event: 'TRANSFER_OOE', remarks: '' }, { ...received, event: 'ITEM_RECEIVE', remarks: '' },
+    )).toEqual(['2026-07-25T04:30:00Z', '2026-07-20T06:00:00Z', '2026-07-14T14:40:00+02:00']);
+    // Landing in India again.
+    expect(returned(INBOUND_CODES.tracking_events,
+      { tracked_at: '2026-07-22T10:00:00.000000Z', event: 'MAIL_ARRIVED', event_type: 'MailArrived', office: 'Office - CDG', pincode: '', remarks: 'Flight No: ZZ0201 (From CDG To DEL)' },
+      { ...received, event: 'ITEM_RECEIVE', remarks: '' },
+    )).toEqual(['2026-07-25T04:30:00Z', '2026-07-22T10:00:00Z', '2026-07-14T14:40:00+02:00']);
+  });
+});
+
 describe('India Post Livewire session', () => {
   it('uses a recently synced cached response without unnecessary polling', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(
@@ -470,6 +597,38 @@ describe('India Post Livewire session', () => {
       method: 'fetchStatus',
       params: [],
     }]);
+  });
+
+  it('reads the history a page in another state still carries, and is inconclusive without one', async () => {
+    const withHistory = vi.fn<typeof fetch>().mockResolvedValue(new Response(
+      pageHtml(SAMPLE_NUMBER, 'Failed', trackingHistoryHtml(SAMPLE_NUMBER, undefined, '2026-09-01T12:00:00Z')),
+    ));
+    await expect(new IndiaPostTracker({ fetcher: withHistory }).fetch(SAMPLE_NUMBER))
+      .resolves.toMatchObject({ status: 'delivered', source_synced_at: '2026-09-01T12:00:00Z' });
+    expect(withHistory).toHaveBeenCalledTimes(1);
+
+    const bare = vi.fn<typeof fetch>().mockResolvedValue(new Response(pageHtml(SAMPLE_NUMBER, 'Failed')));
+    const error: unknown = await new IndiaPostTracker({ fetcher: bare }).fetch(SAMPLE_NUMBER).catch((caught: unknown) => caught);
+    expect(carrierErrorKind(error)).toBe('indeterminate');
+    expect(String(error)).toContain('in the Failed state');
+  });
+
+  it('stops polling at another state without naming what it cannot read', async () => {
+    const poll = (effects: Record<string, unknown>) => vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'New')))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'Processing'))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'Queued <b>', effects));
+
+    const bare = poll({});
+    const error: unknown = await new IndiaPostTracker({ fetcher: bare, pollIntervalMs: 0 }).fetch(SAMPLE_NUMBER)
+      .catch((caught: unknown) => caught);
+    expect(carrierErrorKind(error)).toBe('indeterminate');
+    expect(String(error)).toContain('in the unrecognised state');
+    expect(bare).toHaveBeenCalledTimes(3);
+
+    const withHistory = poll({ html: trackingHistoryHtml() });
+    await expect(new IndiaPostTracker({ fetcher: withHistory, pollIntervalMs: 0 }).fetch(SAMPLE_NUMBER))
+      .resolves.toMatchObject({ status: 'delivered' });
   });
 
   it('keeps Cloudflare and malformed pages retryable instead of reporting not found', async () => {

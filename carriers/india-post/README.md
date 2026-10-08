@@ -27,6 +27,9 @@ Outcomes:
   `cf-chl-`, `_cf_chl_opt` in the body): `IndiaPostChallengeError`, retryable, never not-found.
 - Still `Processing` after the poll budget: `IndeterminateError`. The backend answered but proved
   nothing, so no not-found cooldown.
+- Any other component state: the completed history the HTML still carries, else
+  `IndeterminateError` naming the state. One lookup met such a state in October 2026 without its
+  name being recorded.
 
 ## Notes
 
@@ -46,6 +49,16 @@ Outcomes:
   the item back: in transit, not returned to sender.
 - `tracked_at` without an offset is read as `Asia/Kolkata`. `synced_at` is returned as
   `source_synced_at`.
+- The page's Destination card names the destination country. It becomes `destination_country`
+  (or `destination_country_name` when the name has no ISO code), so the host can confirm the S10
+  number with that country's post.
+- Rows the destination's post scans carry its office's wall clock, labelled as India's: La Poste's
+  scans read 3.5 h early in summer. They run from the first row marked `(Inb)`, or the first flight
+  arrival whose route lands in the destination country, to an outbound mark, a transfer to the
+  office of exchange or an arrival elsewhere. Replies for the same item alternate between prose with
+  `(Inb)` marks and bare codes without them, so both signals are needed. These rows are read in the
+  destination's zone; for a country with several zones or none known they keep the wall time in
+  `local_time` with no offset. Flight rows keep their own reading.
 - A take-off row (`event_type` `AircraftTakeOff`, whose office starts with the airport's code as in
   `Office - DEL 00000000`) carries the departure airport's wall clock labelled `Z`: a take-off was
   seen recorded hours before its labelled time. Its digits are read in the airport's zone, from a
@@ -61,7 +74,9 @@ Outcomes:
   sorting arrivals without a matching flight remark keep their office. Arrival timestamps retain
   their supplied offset; the take-off clock correction does not apply to them.
 - The app identity policy requires the same instant and provider code before updating a
-  reworded stored scan. The consumer owns the stored rows and notification receipts.
+  reworded stored scan. Its `relabelledFrom: 'Asia/Kolkata'` lets a scan abroad take over the row
+  stored under India's label, by wall clock, provider code and location. The consumer owns the
+  stored rows and notification receipts.
 - IDs and pincodes arrive as numbers or strings, hence `cleanScalar`. A pincode is kept only when it
   is exactly six digits.
 - A row's `pincode_info` is MySpeedPost's directory entry for the pincode, not for the office:

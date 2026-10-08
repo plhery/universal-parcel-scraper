@@ -20,6 +20,14 @@ export interface SameInstantIdentityPolicy {
   /** Match distinct scans sharing an instant by their evidence, with unique matches in both directions. */
   readonly matchEachScan?: boolean;
   readonly matches?: (incoming: SameInstantScan, stored: SameInstantScan) => boolean;
+  /**
+   * The zone this source once read every wall clock in. A scan showing a wall
+   * clock under another offset takes over the stored row whose instant shows
+   * that wall clock in this zone, and the reverse, when the provider code
+   * (required) and location agree, no event of the batch carries that row,
+   * and the match is unique both ways. Wording may differ.
+   */
+  readonly relabelledFrom?: string;
 }
 
 const policies: ReadonlyMap<string, SameInstantIdentityPolicy> = new Map(
