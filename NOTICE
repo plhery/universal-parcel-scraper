@@ -14,3 +14,9 @@ Facility coordinates include OpenStreetMap data (https://www.openstreetmap.org/c
 licensed under the Open Database License. Natural Earth country label points
 (https://www.naturalearthdata.com) and OurAirports airports
 (https://ourairports.com/data/) are public domain.
+
+Indian PIN code towns (places/pincodes.json) are derived from: Department of
+Posts, Ministry of Communications, 2025, All India Pincode Directory till last
+month, Open Government Data Platform India, 26/06,
+https://www.data.gov.in/resource/all-india-pincode-directory-till-last-month.
+Published under Government Open Data License - India: https://www.data.gov.in/Godl.

@@ -56,6 +56,7 @@ interface Gazetteer {
 }
 
 const DATA = new URL('./places.tsv.br', import.meta.url);
+const PINCODES = new URL('./pincodes.json', import.meta.url);
 // Words for facilities and services rather than places ("Agence DPD de La Crau", "PAKETZENTRUM", "ISC NEW YORK NY(USPS)").
 const FACILITY_WORDS = new Set(`
   agence agency air airport area branch bureau cedex cidex center centre centro centrum clasificacion colis
@@ -110,6 +111,10 @@ const FACILITIES = new Map(facilityList.map((facility) => [`${facility.country}:
 const HUBS = new Map(hubList.flatMap((hub) => hub.names.map((name) => [nameKey(name), hub])));
 
 let loaded: Gazetteer | null = null;
+
+/** Indian PIN codes by town: runs of PINs `[first, last, town]`, in order, and the towns. */
+interface Pincodes { towns: [string, number, number][]; ranges: [number, number, number][] }
+let pincodes: Pincodes | null = null;
 
 function gazetteer(): Gazetteer {
   if (loaded) return loaded;
@@ -372,6 +377,8 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
     && other.start < region.end && other.end > region.start && other.end - other.start > region.end - region.start));
 
   let best: { place: Candidate; score: number; text: string; field: number } | null = null;
+  // Whether the text names a town at all, even one nothing confirms.
+  let namesTown = false;
   for (const [fieldIndex, list] of fieldPhrases.entries()) {
     for (const phrase of list) {
       const own = data.regions.get(phrase.key) ?? [];
@@ -386,7 +393,9 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
       // ("Santa Catarina" on a Brazilian parcel).
       const named = phrase.whole ? own.filter((region) => (!country || region.country === country)
         && (fieldIndex > 0 || region.country === country || hinted.includes(region.country))) : [];
-      for (const place of candidates(data, phrase.key)) {
+      const towns = candidates(data, phrase.key);
+      namesTown ||= towns.length > 0;
+      for (const place of towns) {
         // A town may still be named like the region it lies in: Moscow in "…, Moscow",
         // Sofia in its own "Sofia-Capital" rather than the province of Sofia around it.
         const namesRegion = ` ${(data.regionNames.get(`${place.country}.${place.admin1}`) ?? []).join(' , ')} `.includes(` ${phrase.key} `);
@@ -433,6 +442,12 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
       ...(place.site ? { site: place.site } : airport ? { site: airport.name } : {}),
     };
   }
+  // India Post ends an office's name with its PIN code, and abbreviates some names
+  // past reading ("KOL AP TMO 700052"): the PIN's town places a scan that names no
+  // town, when the scan or the parcel is in India. A town nothing confirmed is no
+  // abbreviation, and its six digits may be a Swiss Post site ("Daillens … 131070").
+  const pin = !namesTown && (country === 'IN' || (!country && hinted.includes('IN'))) ? pinPlace(data, rest) : null;
+  if (pin) return pin;
   // A region alone places its country: "Guangdong Province", or "Santa Catarina"
   // on a Brazilian parcel, though Cape Verde has one too.
   if (!country) {
@@ -475,6 +490,37 @@ function airportFor(data: Gazetteer, text: string, field: string, town: Candidat
 }
 
 const round = (value: number) => Math.round(value * 1000) / 1000;
+
+/**
+ * The town of the Indian PIN code a scan ends with. A foreign airport's code, alone or
+ * after its country's, names an office of exchange abroad ("Office - FRA 400051",
+ * "Office - DEFRA …"): the PIN is then the Indian office's, not where the scan happened.
+ */
+function pinPlace(data: Gazetteer, text: string): EventPlace | null {
+  const pin = /(?:^|\s)([1-8]\d{5})$/.exec(text)?.[1];
+  // Russian, Chinese and other six-digit postcodes come with their own script.
+  if (!pin || /[^\x20-\x7e]/.test(text)) return null;
+  for (const [, prefix, code] of text.matchAll(/\b([A-Z]{2})?([A-Z]{3})\b/g)) {
+    const airport = FACILITY_WORDS.has(code!.toLowerCase()) ? undefined : data.airports.get(code!);
+    if (airport && airport.country !== 'IN' && (!prefix || prefix === airport.country)) return null;
+  }
+  pincodes ??= JSON.parse(readFileSync(PINCODES, 'utf8')) as Pincodes;
+  const { ranges, towns } = pincodes;
+  const value = Number(pin);
+  let low = 0;
+  let high = ranges.length - 1;
+  while (low <= high) {
+    const middle = (low + high) >> 1;
+    const [first, last, town] = ranges[middle]!;
+    if (value < first) high = middle - 1;
+    else if (value > last) low = middle + 1;
+    else {
+      const [name, latitude, longitude] = towns[town]!;
+      return { latitude, longitude, precision: 'city', country: 'IN', name };
+    }
+  }
+  return null;
+}
 
 /** A sorting centre the table knows, by its number and the town its name starts with. */
 function facilityPlace(text: string): EventPlace | null {

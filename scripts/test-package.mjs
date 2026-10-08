@@ -59,10 +59,11 @@ try {
     assert.deepEqual(catalog, CARRIER_CATALOG);
     assert(stages.includes('delivered') && golden.length > 0 && checksumVectors.vectors.ups.length > 0 && schema.type === 'object');
     assert.equal(locatePlace('Paris, FR').country, 'FR');
+    assert.equal(locatePlace('Example TMO 800001', { countries: ['IN'] })?.name, 'Patna');
     assert.equal(typeof carrierTrackingHintKey('ups'), 'string');
     assert(!('carrierTrackingHintKey' in tracking));
     const base = new URL('.', import.meta.resolve('universal-parcel-scraper/node'));
-    for (const file of ['carriers/correios-br/ocr-worker.mjs','carriers/correios-br/model/captcha.onnx','carriers/correios-br/model/LICENSE','places/places.tsv.br','browser/scraper.js']) assert(existsSync(new URL(file, base)), file);
+    for (const file of ['carriers/correios-br/ocr-worker.mjs','carriers/correios-br/model/captcha.onnx','carriers/correios-br/model/LICENSE','places/places.tsv.br','places/pincodes.json','browser/scraper.js']) assert(existsSync(new URL(file, base)), file);
     assert(!readFileSync(new URL('browser/scraper.js', base), 'utf8').includes('node:'));
   `);
   execFileSync(process.execPath, ['smoke.mjs'], { cwd: scratch, stdio: 'inherit' });

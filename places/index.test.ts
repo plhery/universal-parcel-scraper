@@ -116,6 +116,18 @@ describe('locatePlace', () => {
     expect(place('Basel 801050', ['CH'])).toMatchObject({ name: 'Basel' });
   });
 
+  it('places India Post offices by their PIN code when their name is no town', () => {
+    expectPlace('Example TMO 800001', { country: 'IN', name: 'Patna', latitude: 25.59, longitude: 85.14 }, ['IN']);
+    // India among the parcel's countries is enough.
+    expectPlace('Office - 12345678 700001', { country: 'IN', name: 'Kolkata', latitude: 22.56, longitude: 88.36 }, ['FR', 'IN']);
+    expect(place('Example TMO 800001')).toBeNull();
+    expect(place('Example TMO 800001', ['CH'])).toBeNull();
+    // A foreign airport's code is an office of exchange abroad; 9 starts the Army Postal Service's PINs.
+    for (const location of ['Office - FRA 400001', 'Office - DEFRA 400001', 'Example TMO 900056']) expect(place(location, ['IN']), location).toBeNull();
+    // A town nothing confirms keeps its six digits: here a Swiss Post site.
+    expect(place('Daillens Distribution 131070', ['FR', 'IN'])).toBeNull();
+  });
+
   it('finds small Swiss towns and postcodes when the parcel is in Switzerland', () => {
     expectPlace('Härkingen 4622', { country: 'CH', name: 'Härkingen', latitude: 47.3, longitude: 7.82 }, ['CH', 'LI']);
     expectPlace('Dintikon', { country: 'CH', name: 'Dintikon', latitude: 47.36, longitude: 8.22 }, ['CH']);

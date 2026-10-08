@@ -31,6 +31,11 @@ placesForEvents(['Härkingen', 'Zürich'], { carrierCountries: ['CH'] });
   abroad.
 - A town nothing confirms needs 15,000 people. Otherwise the scan gets no place: a wrong
   dot is worse than none. Postcodes only confirm a name, never stand in for one.
+- India Post ends an office's name with its PIN code, and abbreviates some names past
+  reading ("KOL AP TMO 700052"). Text that names no town, not even one nothing confirms, is
+  placed in the PIN's town from `pincodes.json` when the scan or the parcel is in India. A
+  foreign airport code ("Office - FRA …") names an office of exchange abroad: its PIN is the
+  Indian office's, and places nothing.
 - Text that names only a country gets that country, marked `country`, so the map shades
   the country instead of pinning a town. A DHL operation followed only by a country name
   also places that country; the carrier's name alone supplies no country.
@@ -74,6 +79,11 @@ Post still addresses Scarborough and North York, now part of Toronto), Swiss and
 Liechtenstein postcodes, OurAirports airports with
 scheduled service, and the Natural Earth country label points in `countries.json`.
 Decisions about what to include are commented in the script.
+`node scripts/generate-pincodes.mjs <directory.csv>` builds `pincodes.json` from the
+[All India Pincode Directory](https://www.data.gov.in/resource/all-india-pincode-directory-till-last-month)
+CSV: each PIN goes to the GeoNames town of 50,000 people or more nearest its head office or
+delivery offices, within 25 km, a tenfold population counting for 5 km. PINs with no such
+town are left out.
 Then run `node scripts/generate-region-towns.mjs`: the carrier catalog keeps
 the towns of a few US states and Canadian provinces from it. `npm run test:generated`
 checks this projection.
@@ -81,5 +91,7 @@ checks this projection.
 GeoNames data is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 ([geonames.org](https://www.geonames.org)) and facility points come from
 [OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL). Natural Earth and
-[OurAirports](https://ourairports.com/data/) are public domain. Credits are included in
-[NOTICE](../NOTICE).
+[OurAirports](https://ourairports.com/data/) are public domain. The pincode directory is
+published by the Department of Posts under the
+[Government Open Data License - India](https://www.data.gov.in/Godl). Credits are included
+in [NOTICE](../NOTICE).
