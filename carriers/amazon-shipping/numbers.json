@@ -62,6 +62,82 @@
         "confidence": "high"
       },
       "note": "Example from Amazon Shipping's own API tutorial. Filed under Amazon Shipping; detection selects Amazon Logistics."
+    },
+    {
+      "number": "TBA335091478685",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261005182927/https://track.amazon.com/tracking/TBA335091478685",
+        "date": "2026-10-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker returns its Amazon Shipping history. Filed under Amazon Shipping; detection selects Amazon Logistics."
+    },
+    {
+      "number": "TBA335109404284",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261003211852/https://track.amazon.com/tracking/TBA335109404284",
+        "date": "2026-10-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker returns its Amazon Shipping history. Filed under Amazon Shipping; detection selects Amazon Logistics."
+    },
+    {
+      "number": "UK4889319345",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261005184419/https://track.amazon.co.uk/tracking/UK4889319345",
+        "date": "2026-10-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker returns its Amazon Shipping history. Filed under Amazon Shipping; detection selects Amazon Logistics."
+    },
+    {
+      "number": "UK4800308321",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260908201812/https://track.amazon.co.uk/tracking/UK4800308321",
+        "date": "2026-09-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker returns its Amazon Shipping history. Filed under Amazon Shipping; detection selects Amazon Logistics."
     }
   ]
 }

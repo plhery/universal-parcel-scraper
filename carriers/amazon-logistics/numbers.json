@@ -353,6 +353,44 @@
       },
       "quarantine": true,
       "note": "Third-party tracking-site illustration; no Amazon source establishes this alphabetic TBA suffix family."
+    },
+    {
+      "number": "TBA334610324555",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260922192236/https://track.amazon.com/tracking/TBA334610324555",
+        "date": "2026-09-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it, so it is not an Amazon Shipping parcel today."
+    },
+    {
+      "number": "FR2926265395",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251204113915/https://track.amazon.fr/tracking/FR2926265395",
+        "date": "2025-12-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it, so it is not an Amazon Shipping parcel today."
     }
   ]
 }

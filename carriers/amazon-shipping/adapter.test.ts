@@ -79,6 +79,7 @@ describe('Amazon Shipping France response normalization', () => {
       last_status_text: 'Delivered',
       last_update: '2026-08-11T16:31:56+02:00',
       expected_delivery: '2026-08-11',
+      delivered_at: '2026-08-11T16:31:56+02:00',
       timezone: 'Europe/Paris',
       events: [{
         time: '2026-08-11T16:31:56+02:00',
@@ -110,12 +111,13 @@ describe('Amazon Shipping France response normalization', () => {
   });
 
   it('covers every capability declared in carrier.json', () => {
-    expect(capabilities).toEqual(['history', 'location', 'eta', 'provider_code']);
+    expect(capabilities).toEqual(['history', 'location', 'eta', 'provider_code', 'delivered_at']);
     const result = parseAmazonShippingTrackingResponse(deliveredFixture());
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);
     expect(result.expected_delivery).toBe('2026-08-11');
+    expect(result.delivered_at).toBe(result.events?.[0]?.time);
   });
 
   it('uses event history when the summary status is absent', () => {
@@ -238,5 +240,18 @@ describe('Amazon Shipping discovery boundaries', () => {
     expect(us.events?.every((event) => event.time === undefined)).toBe(true);
     expect(us.last_update).toBeNull();
     expect(us.timezone).toBeUndefined();
+    expect(us).not.toHaveProperty('delivered_at');
+    // The page's wall clocks stay, unplaced and in the tracker's order.
+    expect(us.events?.map((event) => event.local_time)).toEqual(['2026-08-11T16:31:56', '2026-08-10T22:10:16', '2026-08-07T23:51:15']);
+    expect(us.last_update_local).toBe('2026-08-11T16:31:56');
+    const unreadable = deliveredFixture();
+    type Row = Record<string, unknown>;
+    const history = JSON.parse(String(unreadable.eventHistory)) as { eventHistory: [Row, Row, ...Row[]] };
+    history.eventHistory[0].eventTime = 'Aug 7, 2026, 23:51:15 +0200';
+    history.eventHistory[1].eventTime = 'sometime in August';
+    unreadable.eventHistory = JSON.stringify(history);
+    const mixed = parseAmazonShippingTrackingResponse(unreadable, null);
+    expect(mixed.events?.find((event) => event.provider_code === 'Departed')).toMatchObject({ provider_time_text: 'sometime in August' });
+    expect(mixed.events?.find((event) => event.provider_code === 'CreationConfirmed')).not.toHaveProperty('local_time');
   });
 });

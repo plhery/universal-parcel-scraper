@@ -13785,6 +13785,14 @@
     ]
   },
   {
+    "input": "FR2926265395",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "FVGL9999999999",
     "carrier": "unknown",
     "confidence": "none",
@@ -17152,6 +17160,30 @@
     ]
   },
   {
+    "input": "TBA334610324555",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "TBA335091478685",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "TBA335109404284",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "TBAONT500361196",
     "carrier": "unknown",
     "confidence": "none",
@@ -17379,6 +17411,22 @@
   },
   {
     "input": "UK4696062386",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "UK4800308321",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "UK4889319345",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [

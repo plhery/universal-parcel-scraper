@@ -37,12 +37,14 @@ Checks, before any history is read:
   host's `isUnannouncedTrackingError()` treats any 404 as "not announced yet", the opposite
   of what expiry means.
 - Timezone comes from the prefix (default `Europe/Paris`). `TBA`, `TBC` and `TBM` numbers
-  identify no time zone, so offset-free event times are dropped and the result has no
-  `timezone`: stamping UTC would shift every event by hours.
+  identify no time zone, so offset-free event times stay wall-clock `local_time` readings in
+  the tracker's order and the result has no `timezone`: stamping UTC would shift every event
+  by hours. A clock that cannot be read keeps its text.
+- `delivered_at` is the newest delivery scan's time, when that time has a zone.
 - Dates mix ISO-8601, RFC 2822 and US long form ("Aug 11, 2026, 4:31:56 PM"), so the adapter
   uses its own parser instead of a `core/time` helper.
 - `DELAYED` / `LATE` map to `in_transit`: a delay is not an exception.
-- Events are deduplicated on (time, location, code, description), sorted newest first and
+- Events are deduplicated on (clock, location, code, description), sorted newest first and
   capped at 100. Shipment status comes from the summary, else from the newest event that
   classifies.
 - No universal-provider fallback: Amazon is the only source for these numbers.

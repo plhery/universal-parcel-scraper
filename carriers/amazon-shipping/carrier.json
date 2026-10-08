@@ -59,7 +59,8 @@
     "history",
     "location",
     "eta",
-    "provider_code"
+    "provider_code",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://track.amazon.fr/tracking/{trackingNumber}",
@@ -80,7 +81,8 @@
       "history",
       "location",
       "eta",
-      "provider_code"
+      "provider_code",
+      "delivered_at"
     ],
     "discarded": [
       "sender_name",
