@@ -27,12 +27,16 @@ generic, so the user picks the carrier by hand.
   the newest sets the status.
 - Timestamps are kept as sent (`YYYY-MM-DD HH:mm`, no offset); the declared zone is
   `Europe/Berlin`.
-- The estimate is `lieferdatum`, else `hesBasicLieferterminZeit`.
+- The estimate is `lieferdatum`, with the `lieferzeitfensterVon`–`lieferzeitfensterBis` window
+  when both are clock times, else `hesBasicLieferterminZeit`. Once delivered, `lieferdatum` is
+  the delivery day, so no estimate is returned and `delivered_at` is the delivery row's time.
+- The sender is the name the page shows: the specialist dealer's (`fachhaendler.name`), else
+  `shopname`, else `name`. Nothing else in `versenderdaten` is read.
 - The number alone unlocks the order, so treat it as a credential: never log it or put it in
   an issue.
 - Not used: the appointment/address endpoints on myhes.de — they return the recipient address
-  and drop-off permission, which we don't keep. `versenderdaten`, the recipient block and
-  `abstellgenehmigung` in the order response are never read.
+  and drop-off permission, which we don't keep. The recipient block and `abstellgenehmigung`
+  in the order response are never read.
 
 ## Limitations
 

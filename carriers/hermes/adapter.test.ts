@@ -17,6 +17,30 @@ const carrier = JSON.parse(
 ) as { capabilities: string[]; timezone: string };
 const capabilities = carrier.capabilities;
 
+type Order = Record<string, unknown>;
+const bodyOf = (payload: Record<string, unknown>) => payload.body as Record<string, unknown>;
+/** The delivered fixture with a sender block, as the live reply carries one. */
+function withSender(payload: Record<string, unknown>, versenderdaten: Record<string, unknown>) {
+  bodyOf(payload).versenderdaten = versenderdaten;
+  return payload;
+}
+/** The delivered fixture cut back to its tour scan, with order fields replaced. */
+function onTour(order: Order) {
+  const payload = delivered();
+  const current = bodyOf(payload).auftragsdaten as Order;
+  bodyOf(payload).auftragsdaten = {
+    ...current,
+    lieferdatum: null,
+    ...order,
+    statusjourneyDto: { auftragstatusdaten: [{
+      sendungsstatusId: 430,
+      sendungsstatus: 'Deine Sendung befindet sich auf Tour.',
+      sendungsstatusBuchungszeitpunkt: '2026-10-12 07:10',
+    }] },
+  };
+  return payload;
+}
+
 afterEach(() => vi.restoreAllMocks());
 
 describe('Hermes no-data response', () => {
@@ -112,10 +136,47 @@ describe('Hermes no-data response', () => {
   });
 
   it('covers every capability declared in carrier.json', () => {
-    const result = parseHermesTrackingResponse(delivered(), DELIVERED_NUMBER);
-    expect(capabilities).toEqual(['history', 'eta']);
+    const result = parseHermesTrackingResponse(withSender(delivered(), { shopname: 'MUSTER' }), DELIVERED_NUMBER);
+    const planned = parseHermesTrackingResponse(onTour({ lieferdatum: '2026-10-12' }), DELIVERED_NUMBER);
+    expect(capabilities).toEqual(['history', 'eta', 'sender_name', 'delivered_at']);
     expect(result.events?.length).toBeGreaterThan(0);
-    expect(result.expected_delivery).toBe('2026-08-05');
+    expect(planned.expected_delivery).toBe('2026-10-12');
+    expect(result.sender_name).toBe('MUSTER');
+    expect(result.delivered_at).toBe('2026-08-05 12:50');
+  });
+
+  it('names the sender the page shows: the dealer, else the shop, else the client', () => {
+    const sender = (versenderdaten: Record<string, unknown>) =>
+      parseHermesTrackingResponse(withSender(delivered(), versenderdaten), DELIVERED_NUMBER).sender_name;
+    const client = { auftraggeber: 4711, fachhaendler: null, name: 'Muster Möbel (GmbH) ', shopname: 'MUSTER' };
+    expect(sender(client)).toBe('MUSTER');
+    expect(sender({ ...client, shopname: '' })).toBe('Muster Möbel (GmbH)');
+    expect(sender({ ...client, fachhaendler: { name: 'Küchenstudio Beispiel', strasse: 'Beispielweg 1' } }))
+      .toBe('Küchenstudio Beispiel');
+    expect(sender({ auftraggeber: 4711, fachhaendler: null, name: null, shopname: null })).toBeUndefined();
+    const serialized = JSON.stringify(parseHermesTrackingResponse(
+      withSender(delivered(), { ...client, fachhaendler: { name: 'Küchenstudio Beispiel', strasse: 'Beispielweg 1' } }),
+      DELIVERED_NUMBER,
+    ));
+    expect(serialized).not.toContain('Beispielweg');
+    expect(serialized).not.toContain('4711');
+  });
+
+  it('reads the planned day with its time window and drops it once delivered', () => {
+    const estimate = (order: Record<string, unknown>) =>
+      parseHermesTrackingResponse(onTour(order), DELIVERED_NUMBER).expected_delivery;
+    expect(estimate({ lieferdatum: '2026-10-12', lieferzeitfensterVon: '8:00', lieferzeitfensterBis: '12:00:00' }))
+      .toBe('2026-10-12 08:00–12:00');
+    expect(estimate({ lieferdatum: '2026-10-12', lieferzeitfensterVon: '08:00', lieferzeitfensterBis: null }))
+      .toBe('2026-10-12');
+    expect(estimate({ lieferdatum: '2026-10-12', lieferzeitfensterVon: 'morgens', lieferzeitfensterBis: '12:00' }))
+      .toBe('2026-10-12');
+    const result = parseHermesTrackingResponse(delivered(), DELIVERED_NUMBER);
+    expect(result.status).toBe('delivered');
+    expect(result.expected_delivery).toBeNull();
+    expect(result.delivered_at).toBe('2026-08-05 12:50');
+    expect(parseHermesTrackingResponse(onTour({ lieferdatum: '2026-10-12' }), DELIVERED_NUMBER).delivered_at)
+      .toBeUndefined();
   });
 
   it('never projects the internal operational stream or an order reference', () => {

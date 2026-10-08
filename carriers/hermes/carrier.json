@@ -24,7 +24,9 @@
   },
   "capabilities": [
     "history",
-    "eta"
+    "eta",
+    "sender_name",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://myhes.de/",
@@ -33,6 +35,7 @@
       "status",
       "history",
       "eta",
+      "eta_window",
       "sender_name",
       "recipient_name",
       "recipient_address",
@@ -41,10 +44,12 @@
     "scraped": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "eta_window",
+      "sender_name",
+      "delivered_at"
     ],
     "discarded": [
-      "sender_name",
       "recipient_name",
       "recipient_address",
       "delivery_instructions"

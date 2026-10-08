@@ -1,7 +1,7 @@
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { clean, cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { hermesEventStage, hermesStatus } from './status.js';
 
@@ -23,6 +23,31 @@ export interface HermesOptions {
 
 function normalizeHermesTrackingNumber(raw: unknown): string {
   return cleanScalar(raw, 64).replace(/[\s.-]/g, '').toUpperCase();
+}
+
+/** The sender myhes.de names: the specialist dealer, else the shop, else the client. */
+function senderOf(body: JsonObject): string {
+  const sender = isRecord(body.versenderdaten) ? body.versenderdaten : {};
+  const dealer = isRecord(sender.fachhaendler) ? sender.fachhaendler : {};
+  return [dealer.name, sender.shopname, sender.name].map((value) => clean(value, 120)).find(Boolean) ?? '';
+}
+
+function clock(value: unknown): string {
+  const match = /^(\d{1,2}):(\d{2})(?::\d{2})?$/.exec(clean(value, 16));
+  if (!match || Number(match[1]) > 23 || Number(match[2]) > 59) return '';
+  return `${match[1]!.padStart(2, '0')}:${match[2]}`;
+}
+
+/** The planned day, with the page's time window when both ends are given. */
+function estimateOf(order: JsonObject): string | null {
+  if (typeof order.lieferdatum === 'string') {
+    const from = clock(order.lieferzeitfensterVon);
+    const to = clock(order.lieferzeitfensterBis);
+    return from && to && /^\d{4}-\d{2}-\d{2}$/.test(order.lieferdatum)
+      ? `${order.lieferdatum} ${from}–${to}`
+      : order.lieferdatum;
+  }
+  return typeof order.hesBasicLieferterminZeit === 'string' ? order.hesBasicLieferterminZeit : null;
 }
 
 export function parseHermesTrackingResponse(
@@ -74,17 +99,19 @@ export function parseHermesTrackingResponse(
     description: event.description,
     stage: hermesEventStage(event.statusId, event.description),
   }));
+  const status = meaningfulEvents[0]
+    ? hermesStatus(meaningfulEvents[0].statusId, meaningfulEvents[0].description)
+    : 'pending';
+  const sender = senderOf(body);
+  // Once delivered, `lieferdatum` is the delivery day, not an estimate.
+  const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
   return {
-    status: meaningfulEvents[0]
-      ? hermesStatus(meaningfulEvents[0].statusId, meaningfulEvents[0].description)
-      : 'pending',
+    status,
     last_status_text: events[0]?.description ?? '',
     last_update: events[0]?.time || null,
-    expected_delivery: typeof order.lieferdatum === 'string'
-      ? order.lieferdatum
-      : typeof order.hesBasicLieferterminZeit === 'string'
-        ? order.hesBasicLieferterminZeit
-        : null,
+    expected_delivery: status === 'delivered' ? null : estimateOf(order),
+    ...(sender ? { sender_name: sender } : {}),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
     timezone: 'Europe/Berlin',
     events,
   };
