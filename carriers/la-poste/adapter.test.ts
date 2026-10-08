@@ -384,18 +384,23 @@ describe('La Poste response normalization', () => {
     const fixture = deliveredFixture();
     Object.assign(fixture[0]!.shipment, { isFinal: false, contextData: {
       merchantName: 'Example Shop', removalPoint: { type: 'LP', isPickUp: false, name: 'BUREAU EXEMPLE' },
+      partner: { name: 'Posti', reference: 'LOCAL12345' },
     } });
     fixture[0]!.shipment.event[1] = { ...fixture[0]!.shipment.event[1]!, group: 'DISINS', code: 'AG1', label: 'Votre colis est disponible dans votre point de retrait.' };
     const result = parseLaPosteTrackingResponse(fixture, TRACKING_NUMBER);
     const delivered = parseLaPosteTrackingResponse(deliveredFixture(), TRACKING_NUMBER);
 
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'sender_name', 'pickup_point', 'delivered_at', 'provider_code']);
+    expect(CAPABILITIES).toEqual([
+      'history', 'location', 'eta', 'sender_name', 'pickup_point', 'delivered_at', 'provider_code',
+      'delivery_partner', 'delivery_tracking_number',
+    ]);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);
     expect(result.expected_delivery).toBe('2026-01-09');
     expect(result.sender_name).toBe('Example Shop');
     expect(result.pickup_point).toBe('BUREAU EXEMPLE');
+    expect(result).toMatchObject({ delivery_carrier: 'posti', delivery_tracking_number: 'LOCAL12345' });
     expect(delivered.delivered_at).toBe('2026-01-08T11:14:50+01:00');
   });
 
