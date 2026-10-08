@@ -492,6 +492,23 @@
     ]
   },
   {
+    "input": "0104213545523",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "01191131834417",
     "carrier": "unknown",
     "confidence": "low",
@@ -4195,6 +4212,22 @@
     ],
     "asked": [
       "bpost"
+    ]
+  },
+  {
+    "input": "2900506323930",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
     ]
   },
   {
@@ -8037,6 +8070,22 @@
     ]
   },
   {
+    "input": "7905800045469",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "79505665",
     "carrier": "unknown",
     "confidence": "low",
@@ -8180,6 +8229,22 @@
       "seur",
       "brt",
       "hermes-de"
+    ]
+  },
+  {
+    "input": "8204200864763",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
     ]
   },
   {
