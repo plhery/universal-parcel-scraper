@@ -31,9 +31,16 @@ Tracked through the public recipient search.
 - `package_return_failed` maps to `returned`, not `failed_attempt`: the failure is about the
   return leg.
 - An unlisted step gives no `current_stage` and a stage-less event, so the sync classifies it.
-- Timestamps carry their own offset and are kept verbatim.
-- The estimate is the day of `startsAt`, dropped once delivered or in exception. `endsAt`,
-  the retailer name and the recipient block are never retained; a test asserts it.
+- Milestone timestamps carry their own offset and are kept verbatim.
+- The estimate is the booked slot the page shows, `startsAt` to `endsAt`, as
+  `YYYY-MM-DD HH:mm–HH:mm`. The endpoint sends UTC instants and the page prints them on
+  French clocks, so the slot is restated on Paris time. A slot whose end is missing, not after
+  its start or on another day keeps only the day it starts, and one without an offset the day
+  it is written with. It is given only while the delivery is booked, picked up or out for
+  delivery, and not while a reschedule is under way, when the page shows a message instead. A
+  slot that ended before the newest milestone is dropped.
+- The sender is the retailer (`clientName`), which the page names in its messages. The
+  recipient block is never retained; a test asserts it.
 
 ## Limitations
 

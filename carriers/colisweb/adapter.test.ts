@@ -18,7 +18,7 @@ const OFFICIAL_SYNTHETIC_NUMBER = '10000000';
 const CAPABILITIES: readonly string[] = JSON.parse(
   readFileSync(path.join(here, 'carrier.json'), 'utf8'),
 ).capabilities;
-const PRIVATE_PLACEHOLDERS = ['PRIVATE RETAILER', 'PRIVATE RECIPIENT', 'PRIVATE STREET'];
+const PRIVATE_PLACEHOLDERS = ['PRIVATE RECIPIENT', 'PRIVATE STREET'];
 
 function successPayload(overrides: Record<string, unknown> = {}): unknown {
   const payload = JSON.parse(
@@ -72,6 +72,7 @@ describe('Colisweb response normalization', () => {
       last_status_text: 'Livraison effectuée',
       last_update: '2026-08-29T14:15:00+02:00',
       expected_delivery: null,
+      sender_name: 'EXAMPLE RETAILER',
       timezone: 'Europe/Paris',
     });
     expect(result.events).toEqual([
@@ -95,8 +96,6 @@ describe('Colisweb response normalization', () => {
     for (const privateValue of PRIVATE_PLACEHOLDERS) {
       expect(serialized).not.toContain(privateValue);
     }
-    // The booked slot's end is deliberately not retained.
-    expect(serialized).not.toContain('15:00:00');
   });
 
   it('returns every capability declared in carrier.json', () => {
@@ -107,6 +106,7 @@ describe('Colisweb response normalization', () => {
     const checks: Record<string, () => boolean> = {
       history: () => (pending.events?.length ?? 0) > 0,
       eta: () => pending.expected_delivery != null,
+      sender_name: () => Boolean(pending.sender_name),
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
     for (const capability of CAPABILITIES) {
@@ -135,8 +135,40 @@ describe('Colisweb response normalization', () => {
       deliveredDate: null,
     }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({
       status: 'pending',
-      expected_delivery: '2026-08-29',
+      expected_delivery: '2026-08-29 13:00–15:00',
     });
+  });
+
+  it('shows the booked slot on Paris clocks while the delivery is planned', () => {
+    const slot = (overrides: Record<string, unknown>) => parseColiswebTrackingResponse(successPayload({
+      step: 'confirmed',
+      deliveryConfirmationDate: '2026-01-02T09:00:00.000Z',
+      deliveredDate: null,
+      pickedUpDate: null,
+      ...overrides,
+    }), OFFICIAL_SYNTHETIC_NUMBER).expected_delivery;
+    expect(slot({ startsAt: '2026-04-08T10:00:00Z', endsAt: '2026-04-08T12:00:00Z' }))
+      .toBe('2026-04-08 12:00–14:00');
+    expect(slot({ step: 'package_withdrawn', startsAt: '2026-01-15T08:00:00Z', endsAt: '2026-01-15T10:00:00Z' }))
+      .toBe('2026-01-15 09:00–11:00');
+    expect(slot({ startsAt: '2026-08-28T22:30:00Z', endsAt: '2026-08-29T00:30:00Z' }))
+      .toBe('2026-08-29 00:30–02:30');
+    for (const endsAt of [null, '2026-04-08T10:00:00Z', '2026-04-08T23:00:00Z', 'soon']) {
+      expect(slot({ startsAt: '2026-04-08T10:00:00Z', endsAt })).toBe('2026-04-08');
+    }
+    expect(slot({ startsAt: '2026-04-08T10:00:00', endsAt: '2026-04-08T12:00:00' })).toBe('2026-04-08');
+    expect(slot({ startsAt: 'soon', endsAt: '2026-04-08T12:00:00Z' })).toBeNull();
+    // A slot that ended before the newest milestone has passed.
+    expect(slot({
+      step: 'package_withdrawn',
+      pickedUpDate: '2026-04-09T07:00:00.000Z',
+      startsAt: '2026-04-08T10:00:00Z',
+      endsAt: '2026-04-08T12:00:00Z',
+    })).toBeNull();
+    expect(slot({ haveReschedule: true })).toBeNull();
+    expect(slot({ inRescheduleProcess: true })).toBeNull();
+    expect(slot({ step: 'brand_new_step' })).toBeNull();
+    expect(slot({ step: 'package_withdrawal_failed' })).toBeNull();
   });
 
   it('reports an unknown step without a stage', () => {

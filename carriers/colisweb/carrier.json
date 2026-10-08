@@ -21,7 +21,8 @@
   },
   "capabilities": [
     "history",
-    "eta"
+    "eta",
+    "sender_name"
   ],
   "portal": {
     "url": "https://www.colisweb.com/suivi-livraison?value={trackingNumber}",
@@ -38,11 +39,11 @@
     "scraped": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "eta_window",
+      "sender_name"
     ],
     "discarded": [
-      "eta_window",
-      "sender_name",
       "recipient_name",
       "recipient_address"
     ],

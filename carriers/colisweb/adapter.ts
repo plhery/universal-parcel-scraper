@@ -5,15 +5,18 @@
  * deliveries for retailers, so its response is about a delivery slot rather than
  * a parcel journey: it carries the retailer's name, the recipient block and the
  * booked time window next to three milestone timestamps. `parse()` keeps the
- * milestones, the step and the slot's starting day; everything describing a
- * person or a shop is dropped.
+ * milestones, the step, the booked slot and the retailer's name; anything
+ * describing the recipient is dropped.
  */
 
+import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { calendarDay, explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
 import { UpstreamHttpError, clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import type { Stage } from '../../generated/catalog.js';
 import { classifyStatus, type ClassifiedStatus } from './status.js';
 
 export { classifyStatus } from './status.js';
@@ -24,6 +27,8 @@ const TIMEZONE = 'Europe/Paris';
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 500_000;
 const NOT_FOUND_PATTERN = /not[ -]?found|introuvable|inconnu/i;
+/** The stages during which the tracking page shows the booked slot. */
+const PLANNED_STAGES: ReadonlySet<Stage> = new Set(['registered', 'in_transit', 'out_for_delivery']);
 
 /**
  * The endpoint sends ISO 8601 timestamps with their own offset, so they are kept
@@ -35,11 +40,30 @@ function normalizedTimestamp(value: unknown): string | null {
   return candidate && !Number.isNaN(Date.parse(candidate)) ? candidate : null;
 }
 
-function normalizedDate(value: unknown): string | null {
-  const timestamp = normalizedTimestamp(value);
-  if (!timestamp) return null;
-  const match = /^(\d{4}-\d{2}-\d{2})/.exec(timestamp);
-  return match?.[1] ?? new Date(timestamp).toISOString().slice(0, 10);
+function writtenDay(value: unknown): string | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2})(?:T|$)/.exec(clean(value, 64));
+  return match ? calendarDay(Number(match[1]), Number(match[2]), Number(match[3])) : null;
+}
+
+/**
+ * The booked slot as the tracking page shows it: the day it starts, then
+ * `HH:mm–HH:mm`. The endpoint sends UTC instants and the page prints them on
+ * French clocks, so they are restated on Paris time. A slot whose end is
+ * missing, not after its start or on another day keeps only its day, and one
+ * without an offset the day it is written with. A slot that ended before the
+ * newest milestone is dropped.
+ */
+function bookedSlot(startsAt: unknown, endsAt: unknown, newest: number): string | null {
+  const start = explicitOffsetTime(startsAt);
+  if (!start) return writtenDay(startsAt);
+  const end = explicitOffsetTime(endsAt);
+  if ((end ?? start).timestamp < newest) return null;
+  const clock = (time: ParsedTime) => DateTime.fromMillis(time.timestamp, { zone: TIMEZONE }).toFormat('yyyy-MM-dd HH:mm');
+  const first = clock(start);
+  const last = end ? clock(end) : '';
+  return last.slice(0, 10) === first.slice(0, 10) && first < last
+    ? `${first}–${last.slice(11)}`
+    : first.slice(0, 10);
 }
 
 function saysNotFound(value: unknown): boolean {
@@ -111,15 +135,19 @@ export function parseColiswebTrackingResponse(
     });
   }
   const lastUpdate = events.find((event) => event.time)?.time ?? null;
+  const newest = Math.max(-Infinity, ...events.map((event) => explicitOffsetTime(event.time)?.timestamp ?? -Infinity));
+  // The page replaces the slot with a message once the delivery is being rescheduled.
+  const planned = current.stage !== undefined && PLANNED_STAGES.has(current.stage)
+    && payload.haveReschedule !== true && payload.inRescheduleProcess !== true;
+  const sender = clean(payload.clientName, 120);
 
   return {
     status: current.status,
     ...(current.stage ? { current_stage: current.stage } : {}),
     last_status_text: current.description,
     last_update: lastUpdate,
-    expected_delivery: ['delivered', 'exception'].includes(current.status)
-      ? null
-      : normalizedDate(payload.startsAt),
+    expected_delivery: planned ? bookedSlot(payload.startsAt, payload.endsAt, newest) : null,
+    ...(sender ? { sender_name: sender } : {}),
     timezone: TIMEZONE,
     events,
   };
