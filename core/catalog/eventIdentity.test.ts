@@ -64,6 +64,29 @@ describe('same-instant identity policies', () => {
     expect(sameInstantIdentityPolicy('ups', { supportsScanMatching: false })).toBeUndefined();
   });
 
+  it.each([
+    ['CC_IM_START', 'in_transit', 'customs'],
+    ['CC_EX_START', 'in_transit', 'customs'],
+    ['CC_HO_IN_SUCCESS', 'in_transit', 'customs'],
+    ['PU_PICKUP_SUCCESS', 'in_transit', 'accepted'],
+    ['GTMS_STA_SIGNED', 'out_for_delivery', 'ready_for_pickup'],
+    ['GTMS_DO_DEPART', 'ready_for_pickup', 'out_for_delivery'],
+  ])('reconciles Cainiao %s stage corrections only with matching scan evidence', (providerCode, oldStage, stage) => {
+    const policy = sameInstantIdentityPolicy('aliexpress', { supportsScanMatching: true });
+    const stored = { stage: oldStage, description: 'Synthetic scan', location: '', providerCode: providerCode };
+    const incoming = { ...stored, stage: stage };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.({ ...incoming, location: 'Example City' }, {
+      ...stored, description: '[Example City] Synthetic scan',
+    })).toBe(true);
+    for (const different of [
+      { ...stored, providerCode: '' }, { ...stored, providerCode: 'NEW_CODE' },
+      { ...stored, location: 'Another City' }, { ...stored, description: 'Different scan' },
+      { ...stored, stage: 'delivered' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    expect(policy?.matches?.(stored, incoming)).toBe(false);
+  });
+
   it('matches UPS location enrichment only with unchanged wording and a known stage', () => {
     const policy = sameInstantIdentityPolicy('ups', { supportsScanMatching: true });
     expect(policy?.storedSources).toEqual(['ups']);

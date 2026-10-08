@@ -5,6 +5,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult, type CarrierResult } from '../../core/result/index.js';
 import { adapter, CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse } from './adapter.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { statusMap } from './status.js';
+import { locatePlace } from '../../places/index.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(
@@ -243,6 +245,54 @@ describe('Cainiao projection', () => {
 
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
     expect(result.events?.[0]?.stage).toBe('ready_for_pickup');
+  });
+
+  it('keeps each milestone stable as the parcel moves from customs to collection', () => {
+    const journey = [
+      ['PU_PICKUP_SUCCESS', 'Received by logistics company', 'accepted'],
+      ['CC_EX_START', 'Export customs clearance started', 'customs'],
+      ['CC_EX_SUCCESS', 'Export customs clearance complete', 'in_transit'],
+      ['CC_HO_IN_SUCCESS', 'Arrived at customs', 'customs'],
+      ['CC_IM_START', 'Import customs clearance started', 'customs'],
+      ['CC_IM_SUCCESS', 'Import customs clearance complete', 'in_transit'],
+      ['GTMS_DO_ARRIVE', 'Arrived at local delivery center', 'in_transit'],
+      ['GTMS_STATION_OUT', 'Delivery in process. Now left facility.', 'in_transit'],
+      ['GTMS_DO_DEPART', 'Out for delivery', 'out_for_delivery'],
+      ['GTMS_STA_SIGNED', 'Arrived at pick-up point. Package available for collection.', 'ready_for_pickup'],
+      ['GTMS_SIGNED', 'Package delivered', 'delivered'],
+    ] as const;
+    for (let index = 0; index < journey.length; index++) {
+      const history = journey.slice(0, index + 1).reverse();
+      const scans = history.map(([actionCode, standerdDesc]) => ({ actionCode, standerdDesc }));
+      const result = normalizeCarrierResult(parseCainiaoTrackingResponse({ module: [{
+        mailNo: 'LP00000000000001', latestTrace: scans[0], detailList: scans,
+      }] }, 'LP00000000000001'));
+      expect(result.current_stage).toBe(journey[index]![2]);
+      expect(result.events?.map((event) => event.stage)).toEqual(history.map((row) => row[2]));
+      for (const [code, wording, stage] of history) {
+        expect(statusMap.stage(code, wording.toLowerCase())).toBe(stage);
+      }
+    }
+  });
+
+  it('places a numbered arrondissement while leaving facility codes and named carriers alone', () => {
+    const project = (place: string, cpName = 'Example Post') => normalizeCarrierResult(parseCainiaoTrackingResponse({ module: [{
+      mailNo: 'LP00000000000001', destCpInfo: { cpName }, latestTrace: { actionCode: 'GTMS_SIGNED' },
+      detailList: [{ actionCode: 'GTMS_SIGNED', standerdDesc: `[${place}] Package delivered` }],
+    }] }, 'LP00000000000001'));
+    const event = project('PARIS 12E ARRONDISSEMENT').events?.[0];
+    expect(event).toMatchObject({ location: 'PARIS 12E ARRONDISSEMENT', description: 'Package delivered' });
+    expect(locatePlace(event!.location, { countries: ['FR'] })).toMatchObject({ country: 'FR', precision: 'city' });
+    for (const place of ['HUB 12', 'PARIS 75012', 'GOFO', 'PARIS 99E ARRONDISSEMENT']) {
+      expect(project(place).events?.[0]?.location).toBe('');
+    }
+    expect(project('PARIS 12E ARRONDISSEMENT', 'PARIS 12E ARRONDISSEMENT').events?.[0]?.location).toBe('');
+  });
+
+  it.each(['LP00000000000001', 'lp 00000000000001'])('does not advertise the queried number as a handoff: %s', (copyRealMailNo) => {
+    expect(parseCainiaoTrackingResponse({ module: [{
+      mailNo: 'LP00000000000001', copyRealMailNo, detailList: [],
+    }] }, 'LP00000000000001')).not.toHaveProperty('delivery_tracking_number');
   });
 
   it('stages the legs between the linehaul and the local partner, and keeps every action code', () => {

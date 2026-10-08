@@ -72,6 +72,8 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['CC_IM_FAILURE', 'exception'],
   ['CC_IM_EXCEPTION', 'exception'],
   ['GTMS_ACCEPT', 'in_transit'],
+  ['GTMS_DO_ARRIVE', 'in_transit'],
+  ['GTMS_STATION_OUT', 'in_transit'],
   ['GTMS_SC_DEPART', 'in_transit'],
   ['SC_ARRIVE', 'in_transit'],
   ['SC_DEPART', 'in_transit'],
@@ -95,18 +97,24 @@ export function cainiaoActionCode(value: unknown): string {
   return (typeof value === 'string' ? value : '').trim().toLocaleUpperCase('en-US').replace(/\s+/g, '_');
 }
 
-/**
- * Status → stage for one lookup. The pickup distinction depends on the newest
- * action code, so the whole table is derived from it once and then applied to
- * the shipment and to every historical event, exactly as before the move.
- */
-export function cainiaoStageByStatus(latestActionCode: string): Partial<Record<CarrierStatus, Stage>> {
+/** Coarse status fallback when Cainiao supplies no action code. */
+export function cainiaoStageByStatus(): Partial<Record<CarrierStatus, Stage>> {
   return {
     pending: 'registered',
-    out_for_delivery: CAINIAO_PICKUP_ACTIONS.has(latestActionCode) ? 'ready_for_pickup' : 'out_for_delivery',
+    in_transit: 'in_transit',
+    out_for_delivery: 'out_for_delivery',
     delivered: 'delivered',
     exception: 'exception',
   };
+}
+
+/** Each scan keeps its own milestone even after the parcel progresses. */
+export function cainiaoActionStage(code: string): Stage | undefined {
+  if (CAINIAO_PICKUP_ACTIONS.has(code)) return 'ready_for_pickup';
+  if (['CC_EX_START', 'CC_IM_START', 'CC_HO_IN_SUCCESS'].includes(code)) return 'customs';
+  if (code === 'PU_PICKUP_SUCCESS') return 'accepted';
+  const status = CAINIAO_ACTION_STATUS.get(code);
+  return status ? cainiaoStageByStatus()[status] : undefined;
 }
 
 /**
@@ -121,17 +129,11 @@ const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
   ['departed from destination country/region sorting center', 'GTMS_SC_DEPART'],
 ]);
 
-/**
- * What the map says about one scan, by its action code. An out-for-delivery
- * code reads as the van or a pickup point by the newest code of the whole
- * reply, so the code alone does not answer it.
- */
+/** The review queue uses the same per-scan mapping as the adapter. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     const action = code ? cainiaoActionCode(code) : UNCODED_SCANS.get(wording.replace(/^\[[^\]]*\]\s*/, ''));
-    const status = action ? CAINIAO_ACTION_STATUS.get(action) : undefined;
-    if (!status || status === 'out_for_delivery') return undefined;
-    return cainiaoStageByStatus('')[status] ?? 'in_transit';
+    return action ? cainiaoActionStage(action) : undefined;
   },
   gaps: [],
 };

@@ -101,10 +101,12 @@
     },
     {
       "code": "PU_PICKUP_SUCCESS",
-      "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "stage": "accepted",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "wording": "Received by logistics company",
+      "language": "en"
     },
     {
       "code": "GWMS_OUTBOUND",
@@ -143,10 +145,12 @@
     },
     {
       "code": "CC_EX_START",
-      "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "stage": "customs",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "wording": "Export customs clearance started",
+      "language": "en"
     },
     {
       "code": "CC_EX_SUCCESS",
@@ -254,17 +258,21 @@
     },
     {
       "code": "CC_HO_IN_SUCCESS",
-      "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "stage": "customs",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "wording": "Arrived at customs",
+      "language": "en"
     },
     {
       "code": "CC_IM_START",
-      "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "stage": "customs",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "wording": "Import customs clearance started",
+      "language": "en"
     },
     {
       "code": "CC_IM_SUCCESS",
@@ -386,6 +394,24 @@
       "confirmedBy": "prior-art",
       "firstSeen": "2026-09-12",
       "note": "Reclassified to exception 2026-09-12."
+    },
+    {
+      "code": "GTMS_DO_ARRIVE",
+      "wording": "Arrived at local delivery center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "GTMS_STATION_OUT",
+      "wording": "Delivery in process. Now left facility.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
     }
   ]
 }

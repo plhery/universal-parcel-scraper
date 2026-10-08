@@ -112,8 +112,7 @@ describe('status map answers', () => {
       'Awaiting for transit to final delivery office', '[Exampleville] Departed from destination country/region sorting center']) {
       expect(answer('aliexpress', null, wording), wording).toEqual(mapped('in_transit'));
     }
-    // The van or a pickup point depends on the newest code of the whole reply.
-    expect(answer('aliexpress', 'GTMS_DO_DEPART', 'Out for delivery')).toEqual(unknown);
+    expect(answer('aliexpress', 'GTMS_DO_DEPART', 'Out for delivery')).toEqual(mapped('out_for_delivery'));
     expect(answer('aliexpress', 'NEW_UNSEEN_CODE', 'Synthetic scan')).toEqual(unknown);
     expect(answer('aliexpress', null, 'Arrived at linehaul office')).toEqual(unknown);
   });

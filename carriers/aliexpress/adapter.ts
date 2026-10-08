@@ -25,6 +25,7 @@ import {
   CAINIAO_ACTION_STATUS,
   CAINIAO_STATUS,
   cainiaoActionCode,
+  cainiaoActionStage,
   cainiaoStageByStatus,
 } from './status.js';
 
@@ -100,14 +101,17 @@ function carrierNames(trackingModule: JsonObject, scans: readonly JsonObject[]):
  * Cainiao has no place field: it writes a scan's town in front of its standard
  * wording, "[Bordeaux] Out for delivery", in every language. A bracket that
  * reads as a place name becomes the location and the wording keeps the rest.
- * Codes, capitals-only names and the module's own carrier names stay in the text.
+ * Codes, ambiguous capitals-only names and the module's carrier names stay in the text.
  */
 function placedWording(wording: string, carriers: ReadonlySet<string>): { description: string; location: string } {
   const match = /^\s*\[([^[\]]{1,80})\]\s*(\S[\s\S]*)$/.exec(wording);
   const place = match?.[1]!.trim() ?? '';
+  // An explicit numbered city district is a place even in uppercase. Keep
+  // arbitrary numbers and facility codes excluded from the general rule.
+  const arrondissement = /^(?:Paris (?:[1-9]|1\d|20)|Lyon [1-9]|Marseille (?:[1-9]|1[0-6]))(?:er|e|eme|ème) arrondissement$/i.test(place);
   const letters = place.match(/\p{L}/gu)?.length ?? 0;
-  if (!match || letters < 3 || !/^\p{L}[\p{L}\p{M} .'’-]*$/u.test(place)
-    || (/\p{Lu}/u.test(place) && !/\p{Ll}/u.test(place)) || carriers.has(place.toLocaleLowerCase('en-US'))) {
+  if (!match || letters < 3 || (!arrondissement && (!/^\p{L}[\p{L}\p{M} .'’-]*$/u.test(place)
+    || (/\p{Lu}/u.test(place) && !/\p{Ll}/u.test(place)))) || carriers.has(place.toLocaleLowerCase('en-US'))) {
     return { description: wording, location: '' };
   }
   return { description: match[2]!.trim(), location: place };
@@ -174,11 +178,11 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
     : (CAINIAO_STATUS.get(rawStatus)
       ?? (rawStatus ? 'in_transit' : details.length === 0 ? 'pending' : 'unknown'));
   const latestAction = cainiaoActionCode(latest.actionCode);
-  const actionStage = cainiaoStageByStatus(latestAction);
+  const currentStage = cainiaoActionStage(latestAction) ?? cainiaoStageByStatus()[status];
   const carriers = carrierNames(trackingModule, details);
   const events = details.slice(0, MAX_EVENTS_TO_RETURN).map((event): CarrierEvent => {
     const code = cainiaoActionCode(event.actionCode);
-    const mapped = code ? CAINIAO_ACTION_STATUS.get(code) : undefined;
+    const stage = cainiaoActionStage(code);
     const { description, location } = placedWording(text(event.standerdDesc) || text(event.desc), carriers);
     return {
       time: scanTime(event),
@@ -186,7 +190,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       description,
       // The code keys the app's review of a scan the map does not stage.
       ...(/^[A-Z0-9_]{1,64}$/.test(code) ? { provider_code: code } : {}),
-      ...(mapped ? { stage: actionStage[mapped] ?? 'in_transit' } : {}),
+      ...(stage ? { stage } : {}),
     };
   });
   const eta = record(trackingModule.globalEtaInfo);
@@ -205,7 +209,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   const deliveredAt = status === 'delivered' ? scanTime(latest) || null : null;
   return {
     status,
-    ...(actionStage[status] || status === 'in_transit' ? { current_stage: actionStage[status] ?? 'in_transit' } : {}),
+    ...(currentStage ? { current_stage: currentStage } : {}),
     last_status_text: placedWording(text(latest.standerdDesc) || text(latest.desc), carriers).description || rawStatus,
     last_update: scanTime(latest) || null,
     expected_delivery: status === 'delivered' ? null : expected,
@@ -213,7 +217,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       ? {}
       : { expected_delivery_from: expectedFrom }),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
-    ...(handoff ? { delivery_tracking_number: handoff } : {}),
+    ...(handoff && comparableIdentifier(handoff) !== requested ? { delivery_tracking_number: handoff } : {}),
     ...(destination ? { destination_country_name: destination } : {}),
     events,
   };

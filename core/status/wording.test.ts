@@ -172,6 +172,16 @@ describe('classifyWording', () => {
     }
   });
 
+  it('distinguishes release from import or export customs from pending release', () => {
+    for (const customs of ['customs', 'import customs', 'export customs', 'import/export customs']) {
+      expect(wordingStage(`Released from ${customs}`)).toBe('in_transit');
+      expect(wordingStage(`Item has been released from ${customs}`)).toBe('in_transit');
+      for (const prefix of ['Item has not been', 'Item has not yet been', "Item hasn't been", 'Item will be', 'Item is being']) {
+        expect(wordingStage(`${prefix} released from ${customs}`)).toBe('customs');
+      }
+    }
+  });
+
   it('maps sender drop-off and carrier pickup scans to accepted', () => {
     for (const wording of [
       'Drop-Off', 'Pickup Scan', 'Pick-up scan',
