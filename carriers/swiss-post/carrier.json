@@ -29,7 +29,10 @@
     "history",
     "location",
     "eta",
-    "provider_code"
+    "provider_code",
+    "weight",
+    "dimensions",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://service.post.ch/ekp-web/ui/entry/search/{trackingNumber}",
@@ -40,6 +43,10 @@
       "location",
       "eta",
       "eta_window",
+      "weight",
+      "dimensions",
+      "delivered_at",
+      "destination_country",
       "recipient_name",
       "recipient_address",
       "signature",
@@ -50,7 +57,11 @@
       "history",
       "location",
       "eta",
-      "provider_code"
+      "provider_code",
+      "weight",
+      "dimensions",
+      "delivered_at",
+      "destination_country"
     ],
     "discarded": [
       "recipient_name",

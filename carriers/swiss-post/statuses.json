@@ -1,33 +1,485 @@
 {
   "carrier": "swiss-post",
   "entries": [
-    { "code": "REPORTED", "stage": "registered", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; reported as status 'pending'." },
-    { "code": "REGISTERED", "stage": "registered", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; reported as status 'pending'." },
-    { "code": "TO_BE_DELIVERED", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus." },
-    { "code": "IN_DELIVERY", "stage": "out_for_delivery", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus." },
-    { "code": "DELIVERED", "stage": "delivered", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; overridden by the newest event code, so a MyPost24 deposit stays ready_for_pickup." },
-    { "code": "MISSED_DELIVERY", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; reported as status 'exception'." },
-    { "code": "NOT_DELIVERED", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; reported as status 'exception'." },
-    { "code": "RETURNED", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; reported as status 'exception'." },
-    { "code": "CUSTOMS", "stage": "customs", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Shipment-level globalStatus; reported as status 'in_transit'." },
-    { "code": "600", "wording": "Your shipment will shortly be handed over to Swiss Post", "language": "en", "stage": "registered", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Parcel event code; also carries a hard-coded fallback wording." },
-    { "code": "820", "wording": "Shipment is being forwarded", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Parcel event code." },
-    { "code": "1003", "wording": "Loading into delivery vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Parcel event code; also carries a hard-coded fallback wording." },
-    { "code": "1201", "wording": "Sorted for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Parcel event code; also carries a hard-coded fallback wording." },
-    { "code": "1202", "wording": "Shipment was sorted", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Parcel event code; also carries a hard-coded fallback wording." },
-    { "code": "2102", "wording": "Deposited in the MyPost24 machine", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Parcel event code. Arrival in a locker, not a delivery, even when the shipment summary says DELIVERED." },
-    { "code": "3600", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Parcel event code." },
-    { "code": "4600", "stage": "delivered", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Parcel event code." },
-    { "code": "LETTER.*.90.620", "wording": "Consignment recorded by the foreign sender (data delivered)", "language": "en", "stage": "registered", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan; the wording would otherwise read as a delivery." },
-    { "code": "LETTER.*.90.803", "wording": "Customs clearance process underway", "language": "en", "stage": "customs", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan." },
-    { "code": "LETTER.*.90.804", "wording": "Completion of customs clearance process", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "Completion, not active clearance." },
-    { "code": "LETTER.*.90.805", "wording": "Completion of customs clearance process", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "Completion, not active clearance." },
-    { "code": "LETTER.*.90.818", "wording": "Arrival in destination country", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan." },
-    { "code": "LETTER.*.90.912", "wording": "Time at which your consignment was mailed", "language": "en", "stage": "accepted", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan." },
-    { "code": "LETTER.*.90.915", "wording": "The consignment has left the border point", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan." },
-    { "code": "LETTER.*.90.1001", "wording": "Arrival at the collection/delivery point", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "Arrival at the office, not a handover to the recipient." },
-    { "code": "LETTER.*.90.1213", "wording": "Sorted for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan." },
-    { "code": "LETTER.*.90.1218", "wording": "Sorted for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-10", "note": "International letter/packet import scan." },
-    { "code": "any other event code", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Left without a stage: the event keeps its translated wording and its raw code, and the sync classifies and records it for review." }
+    {
+      "code": "REPORTED",
+      "stage": "registered",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; reported as status 'pending'."
+    },
+    {
+      "code": "REGISTERED",
+      "stage": "registered",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; reported as status 'pending'."
+    },
+    {
+      "code": "TO_BE_DELIVERED",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus."
+    },
+    {
+      "code": "IN_DELIVERY",
+      "stage": "out_for_delivery",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus."
+    },
+    {
+      "code": "DELIVERED",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; the newest event code wins over it, so a MyPost24 deposit stays ready_for_pickup."
+    },
+    {
+      "code": "MISSED_DELIVERY",
+      "stage": "failed_attempt",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; reported as status 'exception'."
+    },
+    {
+      "code": "NOT_DELIVERED",
+      "stage": "failed_attempt",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; reported as status 'exception'."
+    },
+    {
+      "code": "RETURNED",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; reported as status 'exception'. A shipment sent back reads Delivered once it reaches its sender again, so this summary turns that scan into returned."
+    },
+    {
+      "code": "CUSTOMS",
+      "stage": "customs",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12",
+      "note": "Shipment-level globalStatus; reported as status 'in_transit'."
+    },
+    {
+      "code": "100",
+      "wording": "Time at which your consignment was mailed",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "200",
+      "wording": "Time at which your consignment was mailed",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "500",
+      "wording": "picked up at the client",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Collected from the sender."
+    },
+    {
+      "code": "600",
+      "wording": "Your shipment will shortly be handed over to the Swiss Post",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Also carries a hard-coded fallback wording."
+    },
+    {
+      "code": "620",
+      "wording": "Consignment recorded by the foreign sender (data delivered)",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10",
+      "note": "The wording would otherwise read as a delivery."
+    },
+    {
+      "code": "803",
+      "wording": "Customs clearance process underway",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10"
+    },
+    {
+      "code": "804",
+      "wording": "Completion of customs clearance process",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10",
+      "note": "Completion, not active clearance."
+    },
+    {
+      "code": "805",
+      "wording": "Completion of customs clearance process",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-09-10",
+      "note": "Completion, not active clearance."
+    },
+    {
+      "code": "813",
+      "wording": "Arrival at the processing/collection point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "815",
+      "wording": "The consignment has left the border point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "818",
+      "wording": "Arrival in destination country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10"
+    },
+    {
+      "code": "819",
+      "wording": "Customs clearance process underway",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "820",
+      "wording": "Sorting - forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12"
+    },
+    {
+      "code": "842",
+      "wording": "Customs clearance process underway",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "847",
+      "wording": "Completion of customs clearance process",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Completion, not active clearance."
+    },
+    {
+      "code": "859",
+      "wording": "Your shipment will shortly be handed over to the Swiss Post",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "902",
+      "wording": "Customs clearance process underway",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "904",
+      "wording": "Completion of customs clearance process",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Completion, not active clearance."
+    },
+    {
+      "code": "906",
+      "wording": "Sorting - forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "908",
+      "wording": "Arrival at the processing/collection point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "909",
+      "wording": "Sorting - forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "910",
+      "wording": "Registered for collection",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A pickup notice: the item waits at a post office for collection. The German wording, Zur Abholung gemeldet (Abholungseinladung), says so; the English one reads like a registration."
+    },
+    {
+      "code": "912",
+      "wording": "Time at which your consignment was mailed",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10"
+    },
+    {
+      "code": "913",
+      "wording": "Arrival at the processing/collection point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "915",
+      "wording": "The consignment has left the border point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10"
+    },
+    {
+      "code": "918",
+      "wording": "Arrival in destination country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "919",
+      "wording": "Customs clearance process underway",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "920",
+      "wording": "Sorting - forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "921",
+      "wording": "Arrival at the processing/collection point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "923",
+      "wording": "Delivery failed: Recipient unknown",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "924",
+      "wording": "Delivery failed: Recipient absent",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "926",
+      "wording": "Retention period was extended by recipient",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The recipient extended the hold; the item still waits for collection."
+    },
+    {
+      "code": "934",
+      "wording": "Delivery failed: Shipment undeliverable",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "938",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "1001",
+      "wording": "Arrival at the collection/delivery point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10",
+      "note": "Arrival at the office, not a handover to the recipient."
+    },
+    {
+      "code": "1002",
+      "wording": "Arrival at the delivery point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "1003",
+      "wording": "Loading into delivery vehicle",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Also carries a hard-coded fallback wording."
+    },
+    {
+      "code": "1201",
+      "wording": "Sorted for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Also carries a hard-coded fallback wording."
+    },
+    {
+      "code": "1202",
+      "wording": "Shipment was sorted",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-12",
+      "note": "Also carries a hard-coded fallback wording."
+    },
+    {
+      "code": "1213",
+      "wording": "Sorted for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10"
+    },
+    {
+      "code": "1218",
+      "wording": "Sorted for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10"
+    },
+    {
+      "code": "2102",
+      "wording": "Deposited in the MyPost24 machine",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "fixture",
+      "firstSeen": "2026-09-12",
+      "note": "Arrival in a locker, not a delivery, even when the shipment summary says DELIVERED."
+    },
+    {
+      "code": "3600",
+      "stage": "returned",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12"
+    },
+    {
+      "code": "3800",
+      "wording": "Delivered to the mailbox/letter box",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "4000",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Also the scan a returned shipment gets when it reaches its sender again; the shipment summary tells the two apart."
+    },
+    {
+      "code": "4001",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "4020",
+      "wording": "Forwarding abroad",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "4600",
+      "stage": "delivered",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12"
+    },
+    {
+      "code": "9112",
+      "wording": "Enquiry initiated",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "An enquiry note, not a movement: left without a stage so the shipment summary decides."
+    },
+    {
+      "code": "sub-event CAN1 or CANPDS",
+      "wording": "Revocation",
+      "language": "en",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Swiss Post's wording table names these sub-events Revocation (Widerruf): the scan they qualify was withdrawn, so it takes no stage."
+    },
+    {
+      "code": "any other event code",
+      "confirmedBy": "prior-art",
+      "firstSeen": "2026-09-12",
+      "note": "Left without a stage: the event keeps its translated wording and its raw code, and the sync classifies and records it for review."
+    }
   ]
 }

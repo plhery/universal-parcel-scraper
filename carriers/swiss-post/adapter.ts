@@ -4,10 +4,13 @@ import { CookieJar } from 'tough-cookie';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../generated/catalog.js';
 import { countryCode } from '../../core/time/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { FALLBACK_EVENT_LABELS, STAGE_STATUS, STATUS_MAP, swissPostEventStage } from './status.js';
+import {
+  FALLBACK_EVENT_LABELS, GLOBAL_STATUS_STAGE, STAGE_STATUS, STATUS_MAP, swissPostEventStage,
+} from './status.js';
 
 // The public tracker signs an anonymous visitor in before it will search: it
 // creates a throwaway user, echoes a CSRF token, and keys the search result on
@@ -85,6 +88,28 @@ export function swissPostExpectedDelivery(item: JsonObject): string | null {
   if (clocks.length === 0) return date;
   if (clocks.length === 1 || clocks[0] === clocks[1]) return `${date} ${clocks[0]}`;
   return `${date} ${clocks[0]}–${clocks[1]}`;
+}
+
+/** A positive whole measurement, or null. Swiss Post sends 0 for an unmeasured item. */
+function measurement(value: unknown): number | null {
+  const number = typeof value === 'number' ? value : Number(text(value, 20));
+  return Number.isFinite(number) && number > 0 ? number : null;
+}
+
+/** The item's weight: Swiss Post sends grams. */
+function weightKg(item: JsonObject): number | null {
+  const grams = measurement(isRecord(item.physicalProperties) ? item.physicalProperties.weight : undefined);
+  return grams === null ? null : Math.round(grams) / 1000;
+}
+
+/** Length, width and height when measured: Swiss Post sends millimetres; letters often have two. */
+function dimensionsText(item: JsonObject): string | null {
+  const properties = isRecord(item.physicalProperties) ? item.physicalProperties : {};
+  const centimetres = ['dimension1', 'dimension2', 'dimension3']
+    .map((key) => measurement(properties[key]))
+    .filter((millimetres): millimetres is number => millimetres !== null)
+    .map((millimetres) => Math.round(millimetres) / 10);
+  return centimetres.length >= 2 ? `${centimetres.join(' × ')} cm` : null;
 }
 
 /**
@@ -177,27 +202,46 @@ export function parseSwissPostShipment(
       description: eventDescription(rawEvent, translations, internationalType),
       provider_code: eventCode,
     };
-    const stage = swissPostEventStage(eventCode);
+    const stage = swissPostEventStage(eventCode, text(rawEvent.subEventId, 50));
     if (stage) event.stage = stage;
     events.push(event);
   }
   events.sort((left, right) => timestamp(right.time ?? '') - timestamp(left.time ?? ''));
+  // The newest scan's own stage leads; the shipment summary fills in when that
+  // scan has none (an enquiry note, an unmapped code, or no scans at all).
+  let stage: Stage | undefined = (events[0]?.stage as Stage | undefined) ?? GLOBAL_STATUS_STAGE[globalStatus];
+  // A shipment sent back reads "Delivered" once it reaches its sender again;
+  // the summary is what says it came back.
+  if ((globalStatus === 'RETURNED' || item.returned === true) && (!events[0]?.stage || stage === 'delivered')) {
+    stage = 'returned';
+  }
+  if (stage && STAGE_STATUS[stage]) status = STAGE_STATUS[stage]!;
   let lastStatusText: string;
   let lastUpdate: string | null;
   if (events[0]) {
     lastStatusText = events[0].description ?? 'Tracking update';
-    if (events[0].stage && STAGE_STATUS[events[0].stage]) status = STAGE_STATUS[events[0].stage]!;
     lastUpdate = events[0].time ?? null;
   } else {
     lastStatusText = globalStatus;
     lastUpdate = text(item.lastEventDateTime, 100) || null;
   }
+  const finished = stage === 'delivered' || stage === 'returned';
+  const deliveredAt = status === 'delivered'
+    ? (/T\d{2}:\d{2}/.test(text(item.deliveryDate, 100)) ? text(item.deliveryDate, 100) : events[0]?.time ?? null)
+    : null;
+  const weight = weightKg(item);
+  const dimensions = dimensionsText(item);
+  const destination = text(item.recipientCountry, 10).toUpperCase();
   return {
     status,
-    ...(events[0]?.stage ? { current_stage: events[0].stage } : {}),
+    ...(stage ? { current_stage: stage } : {}),
     last_status_text: lastStatusText,
     last_update: lastUpdate,
-    expected_delivery: swissPostExpectedDelivery(item),
+    expected_delivery: finished ? null : swissPostExpectedDelivery(item),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(weight !== null ? { weight_kg: weight } : {}),
+    ...(dimensions ? { dimensions_text: dimensions } : {}),
+    ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
     timezone: 'Europe/Zurich',
     global_status: globalStatus,
     canonical_tracking_number: comparableShipmentNumber(item.shipmentNumber) || undefined,

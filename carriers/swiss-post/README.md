@@ -36,13 +36,21 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
   spaces, dots or dashes, so the portal's dotted form matches.
 - The newest event code overrides `globalStatus`, which lags: a MyPost24 locker
   deposit (`2102`) reads `DELIVERED` at shipment level while the parcel still
-  waits for pickup.
-- `LETTER.*.90.*` import scans have their own code table. The same numbers mean
-  different things for parcels, and their wording ("Completion of customs
-  clearance", "Arrival at the collection/delivery point") reads like active
-  customs or a delivery when it is neither.
-- Codes are classified, not wording: wording depends on the translation table.
-  Unmapped codes get no stage and are left to the sync.
+  waits for pickup. When the newest scan has no stage (an enquiry note, an
+  unmapped code, no scans yet), `globalStatus` gives it.
+- Codes are classified, not wording. One table serves letters and parcels:
+  Swiss Post's own wording table gives each mapped code the same meaning for
+  both. Several English wordings mislead: "Completion of customs clearance" and
+  "Arrival at the collection/delivery point" are neither active customs nor a
+  delivery, and `910` "Registered for collection" is a pickup notice. Unmapped
+  codes get no stage and are left to the sync.
+- A shipment sent back reads "Delivered" once it reaches its sender again;
+  `globalStatus` `RETURNED` or the `returned` flag turns that into returned. A
+  sub-event starting `CAN` ("Revocation") withdraws its scan, which then takes
+  no stage.
+- Weight (sent in grams), measurements (millimetres; most letters have two),
+  destination country and delivery time come from the shipment summary. The
+  delivery estimate is dropped once the shipment is delivered or returned.
 - Timestamps are kept exactly as sent and parsed only to sort (offset-less
   values read as UTC for that comparison). `core/time` is not used for this reason.
 - Wording is only trimmed, not whitespace-collapsed, so `core/transport`'s
