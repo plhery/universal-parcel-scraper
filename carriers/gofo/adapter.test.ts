@@ -147,6 +147,16 @@ describe('GOFO US history', () => {
     expect(parseGofo(value, NUMBER)).toMatchObject({ status: 'out_for_delivery', expected_delivery: null });
   });
 
+  it('maps every code in the status catalogue, including the hub departure and line-haul codes', () => {
+    const catalogue = JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')) as { entries: { code: string; stage: string }[] };
+    for (const entry of catalogue.entries) expect(gofoStatus(entry.code)?.stage).toBe(entry.stage);
+    const value = fixture();
+    item(value).trackEventList.unshift({ ...item(value).trackEventList.at(-1), processCode: '412', processContent: 'In Transit to Next Facility' });
+    item(value).trackEventList.splice(1, item(value).trackEventList.length - 2);
+    bind(value);
+    expect(parseGofo(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In Transit to Next Facility' });
+  });
+
   it('requires affirmative delivered wording and preserves unknown scans, equal clocks and provider order', () => {
     const negative = fixture(); item(negative).trackEventList[0].processContent = 'Not delivered'; bind(negative);
     expect(() => parseGofo(negative, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));

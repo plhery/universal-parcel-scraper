@@ -13745,6 +13745,14 @@
     ]
   },
   {
+    "input": "GFUS01046784648320",
+    "carrier": "gofo",
+    "confidence": "high",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
     "input": "GFUS01066030373313",
     "carrier": "gofo",
     "confidence": "high",
@@ -13754,6 +13762,38 @@
   },
   {
     "input": "GFUS01068091652674",
+    "carrier": "gofo",
+    "confidence": "high",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
+    "input": "GFUS01073689613826",
+    "carrier": "gofo",
+    "confidence": "high",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
+    "input": "GFUS01073692806401",
+    "carrier": "gofo",
+    "confidence": "high",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
+    "input": "GFUS01074503026309",
+    "carrier": "gofo",
+    "confidence": "high",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
+    "input": "GFUS01075228958339",
     "carrier": "gofo",
     "confidence": "high",
     "candidates": [

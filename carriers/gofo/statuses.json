@@ -17,7 +17,7 @@
     },
     {
       "code": "200",
-      "wording": "Departed GOFO Regional Hub",
+      "wording": "Loaded on Vehicle",
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live"
@@ -35,6 +35,22 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live"
+    },
+    {
+      "code": "411",
+      "wording": "Departed GOFO Regional Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "412",
+      "wording": "In Transit to Next Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
     },
     {
       "code": "208",
