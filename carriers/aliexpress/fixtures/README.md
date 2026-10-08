@@ -1,6 +1,6 @@
 # Fixtures
 
-- `delivered.json`: a delivered `detail.json` module (four scans up to `GTMS_SIGNED`, an ETA window, a partner handoff number, and a recipient block the adapter must ignore).
+- `delivered.json`: a delivered `detail.json` module (four scans up to `GTMS_SIGNED`, a bracketed town on the delivery and out-for-delivery scans, an ETA window, a partner handoff number, and a recipient block the adapter must ignore).
 - `in-transit.json`: the same module mid-journey, line-haul scans only, with an open ETA window.
 - `delivered-dofr.json`: a synthetic Cainiao-issued module for automatic detection and direct retrieval.
 

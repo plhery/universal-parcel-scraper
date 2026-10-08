@@ -49,11 +49,20 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   raw text, because a whole-second epoch may only be a reading of that text.
 - Unknown action codes leave the event without a stage; the sync classifies the wording and records
   it for review.
+- Cainiao has no place field. It writes a scan's town in brackets before the standard wording,
+  `[Town] Out for delivery`, in every language. That town becomes the location and the wording keeps
+  the rest. A bracket holding digits, capitals only, fewer than three letters or a carrier the module
+  names stays in the text. No scan states its country, so the location is the town alone.
+- The app scan-identity policy updates a scan stored with its town still in the wording, provided
+  its instant and known stage agree.
 
 ## Limitations
 
 - Undocumented, keyless endpoint. Failures surface as sync errors; nothing retries them.
-- No scan locations: the endpoint has none, and parsing them out of descriptions was rejected.
+- Scans without a bracketed town have no location. Customs, line-haul and pickup-point scans carry
+  none.
+- No pickup point: the scans do not name it, and the consumer page leaves self-pickup details to a
+  signed-in AliExpress account.
 - At most 20 scans are kept. The recipient block and proof-of-delivery links are never read.
 
 ## Testing

@@ -132,6 +132,29 @@ describe('Cainiao projection', () => {
     ]);
   });
 
+  it('reads the town Cainiao writes before a scan\'s wording as its location', () => {
+    expect(delivered.events?.map((event) => [event.location, event.description])).toEqual([
+      ['Exampleville', 'Delivered'],
+      ['Example City', 'Out for delivery'],
+      ['', 'Import customs clearance success'],
+      ['', 'Shipment accepted by the warehouse'],
+    ]);
+    const scan = (standerdDesc: string, carrier = 'Example Post') => parseCainiaoTrackingResponse({ module: [{
+      mailNo: 'LP00000000000001', destCpInfo: { cpName: carrier },
+      latestTrace: { actionCode: 'GTMS_ACCEPT', standerdDesc }, detailList: [{ actionCode: 'GTMS_ACCEPT', standerdDesc }],
+    }] }, 'LP00000000000001');
+    expect(scan("[Saint-Étienne-d'Exemple] Received by local delivery company")).toMatchObject({
+      last_status_text: 'Received by local delivery company',
+      events: [{ location: "Saint-Étienne-d'Exemple", description: 'Received by local delivery company' }],
+    });
+    // Codes, abbreviations, carrier names and a bracket alone are no place.
+    for (const wording of ['[FR] Arrived', '[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
+      '[Hub 12] Arrived', '[Exampleville]', 'Arrived [Exampleville]']) {
+      expect(scan(wording).events?.[0]).toMatchObject({ location: '', description: wording });
+      expect(scan(wording).last_status_text).toBe(wording);
+    }
+  });
+
   it('reads each scan at its own GMT offset and ignores the Beijing-based epoch', () => {
     // The fixture's epoch `time` values read timeStr as GMT+8, as the live API does.
     expect(delivered.events?.map((event) => event.time)).toEqual([

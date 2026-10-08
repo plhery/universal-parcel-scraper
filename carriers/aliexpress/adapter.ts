@@ -89,6 +89,30 @@ function scanTime(scan: JsonObject): string {
   return explicitOffsetTime(`${wall.replace(' ', 'T')}${offset}`)?.iso ?? wall;
 }
 
+/** The carriers a module names, which a bracket can name too without being a place. */
+function carrierNames(trackingModule: JsonObject, scans: readonly JsonObject[]): Set<string> {
+  const named = [trackingModule.destCpInfo, ...[trackingModule.latestTrace, trackingModule.globalCombinedLogisticsTraceDTO, ...scans]
+    .map((scan) => record(scan).currentStatusCpInfo)];
+  return new Set(named.map((info) => text(record(info).cpName).trim().toLocaleLowerCase('en-US')).filter(Boolean));
+}
+
+/**
+ * Cainiao has no place field: it writes a scan's town in front of its standard
+ * wording, "[Bordeaux] Out for delivery", in every language. A bracket that
+ * reads as a place name becomes the location and the wording keeps the rest.
+ * Codes, capitals-only names and the module's own carrier names stay in the text.
+ */
+function placedWording(wording: string, carriers: ReadonlySet<string>): { description: string; location: string } {
+  const match = /^\s*\[([^[\]]{1,80})\]\s*(\S[\s\S]*)$/.exec(wording);
+  const place = match?.[1]!.trim() ?? '';
+  const letters = place.match(/\p{L}/gu)?.length ?? 0;
+  if (!match || letters < 3 || !/^\p{L}[\p{L}\p{M} .'’-]*$/u.test(place)
+    || (/\p{Lu}/u.test(place) && !/\p{Ll}/u.test(place)) || carriers.has(place.toLocaleLowerCase('en-US'))) {
+    return { description: wording, location: '' };
+  }
+  return { description: match[2]!.trim(), location: place };
+}
+
 const BEIJING_OFFSET_MS = 8 * 3_600_000;
 
 /**
@@ -151,13 +175,15 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       ?? (rawStatus ? 'in_transit' : details.length === 0 ? 'pending' : 'unknown'));
   const latestAction = cainiaoActionCode(latest.actionCode);
   const actionStage = cainiaoStageByStatus(latestAction);
+  const carriers = carrierNames(trackingModule, details);
   const events = details.slice(0, MAX_EVENTS_TO_RETURN).map((event): CarrierEvent => {
     const code = cainiaoActionCode(event.actionCode);
     const mapped = code ? CAINIAO_ACTION_STATUS.get(code) : undefined;
+    const { description, location } = placedWording(text(event.standerdDesc) || text(event.desc), carriers);
     return {
       time: scanTime(event),
-      location: '',
-      description: text(event.standerdDesc) || text(event.desc),
+      location,
+      description,
       ...(mapped ? { stage: actionStage[mapped] ?? 'in_transit' } : {}),
     };
   });
@@ -178,7 +204,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   return {
     status,
     ...(actionStage[status] || status === 'in_transit' ? { current_stage: actionStage[status] ?? 'in_transit' } : {}),
-    last_status_text: text(latest.standerdDesc) || text(latest.desc) || rawStatus,
+    last_status_text: placedWording(text(latest.standerdDesc) || text(latest.desc), carriers).description || rawStatus,
     last_update: scanTime(latest) || null,
     expected_delivery: status === 'delivered' ? null : expected,
     ...(status === 'delivered' || expectedFrom == null || expectedFrom === expected

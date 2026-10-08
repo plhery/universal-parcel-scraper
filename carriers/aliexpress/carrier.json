@@ -28,6 +28,7 @@
   },
   "capabilities": [
     "history",
+    "location",
     "eta",
     "eta_window",
     "delivered_at"
@@ -38,11 +39,13 @@
     "shows": [
       "status",
       "history",
+      "location",
       "eta"
     ],
     "scraped": [
       "status",
       "history",
+      "location",
       "eta"
     ],
     "discarded": [],
