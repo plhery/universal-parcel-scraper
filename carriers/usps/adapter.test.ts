@@ -215,6 +215,20 @@ describe('USPS lookup steps', () => {
       .rejects.toThrow('USPS did not return the requested parcel');
   });
 
+  it('reports the package identifier of a typed routing barcode as the canonical number', async () => {
+    // An invented package identifier behind the routing prefix and a made-up ZIP code.
+    const pic = '9210090000000012345679';
+    const html = DELIVERED_PAGE.replaceAll(DELIVERED_NUMBER, pic);
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => trawlReply(html, pic));
+    const tracker = new USPSTracker({ trawlUrl: TRAWL_URL });
+    const result = await tracker.fetch(`420 00000 ${pic}`);
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body)).url).toBe(uspsTrackingUrl(pic));
+    expect(result).toMatchObject({ status: 'delivered', canonical_tracking_number: pic, tracking_url: uspsTrackingUrl(pic) });
+    expect(JSON.stringify(result)).not.toContain('42000000');
+    // The package identifier typed on its own, spaced as printed, is already the canonical number.
+    expect(await tracker.fetch('9210 0900 0000 0012 3456 79')).not.toHaveProperty('canonical_tracking_number');
+  });
+
   it('rejects a number that is not a USPS number before any request', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('must not fetch'));

@@ -34,8 +34,13 @@ const MAX_BYTES = 10_000_000;
 const DEFAULT_TIMEOUT_MS = 90_000;
 const MAX_EVENTS_TO_RETURN = 100;
 
+/** The number as typed, upper case and without the spaces, dots and dashes of a printed label. */
+function cleanUSPSNumber(raw: string): string {
+  return raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+}
+
 export function normalizeUSPSNumber(raw: string): string {
-  const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+  const value = cleanUSPSNumber(raw);
   const pic = uspsPackageIdentifier(value);
   if (pic) return pic;
   // The S10 suffix identifies the issuing country, not the destination.
@@ -255,7 +260,7 @@ export class USPSTracker {
         'USPS challenged direct tracking; configure FLARESOLVERR_URL for browser fallback',
       );
     }
-    return runSteps<CarrierResult>({
+    const result = await runSteps<CarrierResult>({
       // Without a caller's budget the lookup leaves the service its own time and
       // the request the allowance to bring the answer back.
       carrier: 'usps', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
@@ -263,6 +268,9 @@ export class USPSTracker {
     }, [
       { id: 'trawl', run: ({ remainingMs, signal }) => this.#trawlResult(trawl, number, Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal) },
     ]);
+    // A typed routing barcode opens with the recipient's ZIP code. The package
+    // identifier after it is the number USPS tracks, so consumers can keep that.
+    return cleanUSPSNumber(trackingNumber) !== number ? { ...result, canonical_tracking_number: number } : result;
   }
 
   /** Read the browser's rendered page without replaying its session. An
