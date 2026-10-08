@@ -13546,10 +13546,10 @@
   },
   {
     "input": "FZ246006535JB",
-    "carrier": "intl-post",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "intl-post"
+      "chronopost"
     ],
     "asked": [
       "chronopost"
@@ -17092,10 +17092,10 @@
   },
   {
     "input": "XN136114912JB",
-    "carrier": "intl-post",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "intl-post"
+      "chronopost"
     ],
     "asked": [
       "chronopost"

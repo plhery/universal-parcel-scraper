@@ -295,10 +295,13 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "intl-post",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
       },
-      "note": "Chronopost's tracker returns its history. Detection selects the international post, which claims the JB suffix."
+      "note": "Chronopost's tracker returns its history. The JB suffix names no country, so detection suggests Chronopost rather than international mail."
     },
     {
       "number": "XR657749906TS",
@@ -355,10 +358,13 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "intl-post",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
       },
-      "note": "Chronopost's tracker returns its history, dropped off at a relay by the sender. Detection selects the international post, which claims the JB suffix."
+      "note": "Chronopost's tracker returns its history, dropped off at a relay by the sender. The JB suffix names no country, so detection suggests Chronopost rather than international mail."
     },
     {
       "number": "XS431625991FR",
