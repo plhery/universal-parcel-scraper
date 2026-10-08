@@ -16,6 +16,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carrierCountries: ['CH'] });
 - The text is split into fields and phrases, and facility words ("hub", "Paketzentrum",
   "sort centre") are dropped. What is left is matched against town names, and translations
   for larger towns ("Genf", "Cologne").
+- A country after the last dash is taken off, as DHL Express prints it ("BENIN CITY -
+  NIGERIA", "AMSTERDAM - NETHERLANDS, THE"). Georgia stays: it is also a US state.
 - Bigger towns win, and context breaks ties: a country written in the text, a US state or
   Swiss canton code, a Swiss postcode, then the countries of neighbouring scans, the
   parcel's destination and the carrier's home country.

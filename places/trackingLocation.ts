@@ -8,6 +8,12 @@ const carrierSpellings = new Map([
   ['hong kong', 'HK'], ['macau', 'MO'], ['macao', 'MO'], ['turkey', 'TR'], ['russian federation', 'RU'],
   ['korea', 'KR'], ['republic of korea', 'KR'],
 ]);
+// DHL Express's own country names, after the article and any bracket are dropped.
+const dhlSpellings = new Map([
+  ['hong kong sar, china', 'HK'], ['macau sar, china', 'MO'], ['macao sar, china', 'MO'], ['china mainland', 'CN'],
+  ['china, peoples republic', 'CN'], ["people's republic of china", 'CN'], ['korea, republic of', 'KR'],
+  ['ireland, republic of', 'IE'],
+]);
 // Apple's ICU (Safari, iOS) calls CN "China mainland" in every language; carriers write "China".
 const chinaNames = new Map([['en', 'China'], ['de', 'China'], ['fr', 'Chine'], ['it', 'Cina'], ['es', 'China'], ['pt', 'China'], ['pl', 'Chiny']]);
 // "Mexico City" is a city, not Mexico followed by one.
@@ -51,12 +57,24 @@ export interface TrackingPlace {
   place: string;
 }
 
+/** The country DHL Express ends its locations with: "UK", "NETHERLANDS, THE", "HONG KONG SAR, CHINA". */
+function dashCountry(part: string): string | null {
+  const name = normalized(part).replace(/\s*\(.*\)$/, '').replace(/^the |, the$/g, '');
+  // Also a US state: "ATLANTA - GEORGIA" is not in the Caucasus.
+  if (name === 'georgia') return null;
+  return dhlSpellings.get(name) ?? namedCountry(name, true);
+}
+
 /**
  * For display, take an explicit country off a location: the final field ("Zürich, CH",
- * repeated in "Hebron, KY, US, US") or a leading name ("Switzerland Haerkingen").
+ * repeated in "Hebron, KY, US, US"), the name after the last dash ("SCARBOROUGH - ON -
+ * CANADA") or a leading name ("Switzerland Haerkingen").
  */
 export function trackingPlace(location: string): TrackingPlace {
   const text = location.trim();
+  const dashed = /^(.*\S)\s+-\s+(.+)$/.exec(text);
+  const dashedCountry = dashed ? dashCountry(dashed[2]!) : null;
+  if (dashedCountry) return { country: dashedCountry, place: dashed![1]! };
   const fields = [...text.matchAll(/[^,;|()]+/g)].filter((match) => match[0].trim());
   let country: string | null = null;
   let kept = fields.length;
@@ -76,7 +94,9 @@ export function trackingPlace(location: string): TrackingPlace {
     for (let count = Math.min(words.length - 1, 4); count > 0; count -= 1) {
       const code = namedCountry(words.slice(0, count).join(' '), true);
       const place = words.slice(count).join(' ');
-      if (code && /^\p{Lu}/u.test(place) && !settlementWords.has(normalized(place))) return { country: code, place };
+      // "Mexico City" and "Panama City FL" are towns; "JAMAICA NY" is in Queens.
+      const next = words[count]!;
+      if (code && /^\p{Lu}/u.test(place) && !settlementWords.has(normalized(next)) && !/^[A-Z]{2}$/.test(next)) return { country: code, place };
     }
   }
   return { country: null, place: text };

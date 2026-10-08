@@ -8,6 +8,9 @@ describe('tracking places', () => {
     ['Zürich (Mülligen), CH', 'CH', 'Zürich (Mülligen)'], ['Hebron, KY, US, US', 'US', 'Hebron, KY'],
     ['Switzerland Haerkingen', 'CH', 'Haerkingen'], ['United Kingdom Coventry', 'GB', 'Coventry'],
     ['Shenzhen-Futian, China', 'CN', 'Shenzhen-Futian'],
+    ['BENIN CITY - NIGERIA', 'NG', 'BENIN CITY'], ['AMSTERDAM - NETHERLANDS, THE', 'NL', 'AMSTERDAM'],
+    ['HONG KONG - HONG KONG SAR, CHINA', 'HK', 'HONG KONG'], ['STERLING - Virginia - USA', 'US', 'STERLING - Virginia'],
+    ['ATLANTA - GEORGIA - USA', 'US', 'ATLANTA - GEORGIA'],
   ])('takes the country off %s', (location, country, place) => {
     expect(trackingPlace(location)).toEqual({ country, place });
   });
@@ -22,7 +25,8 @@ describe('tracking places', () => {
   it.each([
     '', 'Warehouse', 'Paris', 'Buchs AG', 'Basel, BS', 'Wilmington, DE', 'France distribution center',
     'Zürich Briefzentrum', 'Mexico City', 'Andorra la Vella',
-    'DHL Paris', 'DHL Netherlands distribution centre',
+    'DHL Paris', 'DHL Netherlands distribution centre', 'JAMAICA NY INTERNATIONAL DISTRIBUTION CENTER', 'Panama City FL',
+    'TBILISI - GEORGIA', 'CURITIBA - PR',
   ])('keeps %s whole without guessing a country', (location) => {
     expect(trackingPlace(location)).toEqual({ country: null, place: location });
   });
