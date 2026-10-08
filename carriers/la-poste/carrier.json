@@ -69,7 +69,7 @@
   "detection": [
     {
       "id": "la-poste-1",
-      "pattern": "^(?:[68][A-Z]|5[N-Z])\\d{11}$",
+      "pattern": "^(?:[1-36-9][A-Z]|5[N-Z])\\d{11}$",
       "confidence": "high",
       "checksum": "colissimo"
     },
@@ -80,13 +80,18 @@
     },
     {
       "id": "la-poste-5",
-      "pattern": "^(?:870|880)\\d{11}[0-9A-Z]$",
+      "pattern": "^(?:86[56]|87[05]|88[05])\\d{11}[0-9A-Z]$",
       "confidence": "high",
       "checksum": "dpd"
     },
     {
       "id": "la-poste-6",
       "pattern": "^(?:870|880)\\d{11}[0-9A-Z]$",
+      "confidence": "low"
+    },
+    {
+      "id": "la-poste-7",
+      "pattern": "^(?:86[56]|87[05]|88[05])\\d{11}$",
       "confidence": "low"
     },
     {

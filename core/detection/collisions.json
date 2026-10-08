@@ -835,7 +835,7 @@
     "reason": "DPD prints a check character after the parcel number, and Chronopost delivers DPD parcels under the same label. Direct tracking must confirm the carrier."
   },
   {
-    "shape": "870 or 880, eleven digits and their check letter",
+    "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check letter",
     "carriers": [
       "chronopost",
       "dpd",
@@ -1279,7 +1279,7 @@
     "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "870 or 880, eleven digits and their check digit, that fail the GS1 check",
+    "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check digit, that fail the GS1 check",
     "carriers": [
       "chronopost",
       "dpd",
@@ -1289,6 +1289,19 @@
       "yunda"
     ],
     "reason": "La Poste's tracked-letter numbers end in the ISO 7064 check character DPD prints; when it is a digit, the fifteen-digit Yunda rule matches too. La Poste's high-confidence rule decides."
+  },
+  {
+    "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check digit, that pass the GS1 check",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "fedex",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "When La Poste's ISO 7064 check character is a digit and the fifteen digits also pass GS1, FedEx's fifteen-digit rule matches too. La Poste's high-confidence rule decides."
   },
   {
     "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Purolator and mod 7 checks",

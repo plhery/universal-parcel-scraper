@@ -2756,6 +2756,14 @@
     ]
   },
   {
+    "input": "1A10752176946",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "1G123GEODIS0",
     "carrier": "geodis",
     "confidence": "high",
@@ -3137,6 +3145,14 @@
     "confidence": "high",
     "candidates": [
       "ups"
+    ]
+  },
+  {
+    "input": "1k01961354508",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {
@@ -4072,11 +4088,35 @@
     ]
   },
   {
+    "input": "2C17210286889",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "2IMA0051035900",
     "carrier": "poste-italiane",
     "confidence": "high",
     "candidates": [
       "poste-italiane"
+    ]
+  },
+  {
+    "input": "2L01615507571",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
+    "input": "2Z00039945150",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {
@@ -7112,6 +7152,22 @@
     ]
   },
   {
+    "input": "6H14479158377",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
+    "input": "6M21015773581",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "70041160000026196575",
     "carrier": "unknown",
     "confidence": "low",
@@ -7583,6 +7639,14 @@
     ]
   },
   {
+    "input": "7J00826492034",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "7T2514965601000935102",
     "carrier": "unknown",
     "confidence": "none",
@@ -7825,6 +7889,30 @@
     ]
   },
   {
+    "input": "86503855524902W",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
+    "input": "86601648953587H",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
+    "input": "866509472154917",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "866823388853191",
     "carrier": "unknown",
     "confidence": "low",
@@ -7869,6 +7957,30 @@
     ]
   },
   {
+    "input": "87500146423878",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "la-poste",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "la-poste",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
     "input": "87654321",
     "carrier": "unknown",
     "confidence": "low",
@@ -7906,6 +8018,38 @@
   },
   {
     "input": "88000019255788Y",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
+    "input": "88000156336984",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "la-poste",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "la-poste",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
+    "input": "885000705510898",
     "carrier": "la-poste",
     "confidence": "high",
     "candidates": [
@@ -9060,6 +9204,22 @@
     ]
   },
   {
+    "input": "9L35756144302",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
+    "input": "9V35144247813",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "AALZJR",
     "carrier": "unknown",
     "confidence": "low",
@@ -9728,6 +9888,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "CW548324684FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {
@@ -10969,6 +11137,14 @@
     ]
   },
   {
+    "input": "LE173452790FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "LF079877211FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -12035,6 +12211,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "RK887474423FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {

@@ -8,9 +8,10 @@ scans and references without indicating incomplete history.
 
 Numeric tracked-mail identifiers reach the same feed without truncation or
 conversion to a parcel number. Their detection rules live in `carrier.json`;
-generic numeric lengths alone do not identify La Poste. A Colissimo number ends
-in a GS1 key over the ten digits after its product code, and a tracked-mail
-number's optional 15th character is DPD's ISO 7064 MOD 37,36 key. La Poste is
+generic numeric lengths alone do not identify La Poste. A thirteen-character
+Colissimo, tracked or registered letter number ends in a GS1 key over the ten
+digits after its two-character product code, and a Smart Data number's optional
+15th character is DPD's ISO 7064 MOD 37,36 key. La Poste is
 selected only when that key matches; otherwise it stays a suggestion.
 
 Printed control suffixes are preserved in requests and checked against the
