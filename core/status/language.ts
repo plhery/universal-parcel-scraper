@@ -87,6 +87,13 @@ const CUSTOMS_PROBLEM_ENDED = new RegExp([
   String.raw`\bprobleme (?:douanier|de douane) (?:a ete |est )?(?:resolu|regle|leve)e?\b|\bzollproblem (?:wurde |ist )?(?:behoben|gelost|geklart)\b|\bproblema doganale (?:e stato )?risolto\b|\bproblema (?:de|en la) aduana (?:ha sido |fue )?(?:resuelto|solucionado)\b|\bproblema (?:alfandegario|na alfandega) (?:foi )?resolvido\b`,
 ].join('|'));
 
+/** A hold the recipient asked for, worded "at the recipient's request" in each language. */
+const RECIPIENT_REQUEST = String.raw`(?:(?:at|per|by|upon|on|following|as per) (?:the )?(?:recipient|addressee|consignee|customer|receiver)(?:'s|s')? request|(?:at|per|by|upon|on|following) (?:the )?request of (?:the )?(?:recipient|addressee|consignee|customer|receiver)|requested by (?:the )?(?:recipient|addressee|consignee|customer|receiver)|(?:recipient|addressee|consignee|customer|receiver)(?: has)? requested\b|a la demande (?:du|de la) (?:destinataire|cliente?)|(?:auf|nach) (?:wunsch|anweisung|verlangen) (?:des|der) (?:empfangers|empfangerin|kunden|kundin)|auf (?:empfanger|kunden)wunsch|su richiesta del (?:destinatario|cliente)|(?:a|por) (?:peticion|solicitud|pedido) del (?:destinatario|cliente)|a pedido do (?:destinatario|cliente)|na (?:prosbe|zyczenie) (?:odbiorcy|adresata|klienta))`;
+const HOLD = String.raw`\b(?:on hold|held|hold|holding|retenu(?:e|s|es)?|en attente|mise? en instance|zuruckgehalten|zuruckbehalten|angehalten|gelagert|trattenut[oaie]|fermo|in sosta|retenid[oa]s?|en espera|retid[oa]s?|zatrzyman[aey]|wstrzyman[aey])\b`;
+const RECIPIENT_HOLD = new RegExp(`${HOLD}${SENTENCE}*?${RECIPIENT_REQUEST}|${RECIPIENT_REQUEST}${SENTENCE}*?${HOLD}`);
+/** Where a held parcel waits for the recipient to collect it. */
+const COUNTER = /post office|postal outlet|pick ?up|collection|counter|retail (?:location|outlet)|bureau de poste|point (?:de )?retrait|point relais|filiale|abholung|ufficio postale|ritiro|oficina|recogida|levantamento|agencia/;
+
 /**
  * INFERRED language rules, not captured carrier codes. EN/FR/DE/IT/ES/PT/PL equivalents
  * are intuitive and overridable: an adapter must resolve verified codes and
@@ -118,6 +125,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
     && !/\b(?:si|caso)\b[^.;:]*\b(?:ausen|nadie|ninguem|cerrad|fechad|no (?:esta|se encuentra)|nao (?:esta|se encontra))|\bse (?:o |a )?(?:destinatari[oa] |cliente )?(?:estiver|for|nao estiver)\b/.test(text)
     && /\bausen(?:te|tes|cia)\b|\b(?:destinatari[oa]|cliente|consignatari[oa]) (?:no (?:esta|estaba|se encuentra|se encontraba|disponible|presente)|nao (?:esta|estava|se encontra|se encontrava|disponivel|presente))\b|\bnadie en (?:casa|el domicilio)\b|\bninguem em casa\b|\b(?:establecimiento|negocio|empresa|comercio|tienda) (?:esta |estaba |se encontraba )?cerrad[oa]\b|\b(?:estabelecimento|empresa|loja|comercio|negocio) (?:esta |estava |se encontrava )?fechad[oa]\b/.test(text)) return 'failed_attempt';
 
+  // A hold the recipient asked for is a delivery choice, not a problem: the parcel
+  // waits for its new date, or at the counter when the scan names one.
+  if (RECIPIENT_HOLD.test(text)) return COUNTER.test(text) ? 'ready_for_pickup' : 'in_transit';
   // Carrier-reported problems that are neither a missed attempt nor a return.
   if (/\b(?:damaged|broken in transit)\b|endommag|avarie|deterior|beschadigt|danneggiat|danad[oa]|danificad|uszkodzon/.test(text)) return 'exception';
   if (/\blost (?:in transit|package|parcel|shipment)?\b|colis perdu|envoi perdu|egare|verloren|verlust der sendung|smarrit|(?:paquete|envio) perdid|extraviad|zagubion|zaginion/.test(text)) return 'exception';

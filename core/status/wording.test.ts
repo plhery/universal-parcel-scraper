@@ -109,6 +109,24 @@ describe('classifyWording', () => {
     expect(wordingStage('The parcel was handed over to GLS.')).toBe('accepted');
   });
 
+  it('reads a hold the recipient asked for as a delivery choice, not a problem', () => {
+    for (const wording of [
+      "Item on hold at recipient's request", 'Held at customer request', 'On hold per recipient’s request',
+      'Shipment held at the request of the consignee', 'Customer requested hold',
+      'Article retenu à la demande du destinataire', 'Sendung auf Wunsch des Empfängers zurückgehalten',
+      'Spedizione trattenuta su richiesta del destinatario', 'Retenido a petición del destinatario',
+      'Retido a pedido do destinatário', 'Przesyłka zatrzymana na prośbę odbiorcy',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'in_transit', source: 'wording:language' });
+    // Held at a counter for the recipient to collect.
+    expect(wordingStage('Held at Post Office, At Customer Request')).toBe('ready_for_pickup');
+    expect(wordingStage('Fermo in ufficio postale su richiesta del destinatario')).toBe('ready_for_pickup');
+    // A hold nobody asked for, or a missed attempt, keeps its own stage.
+    for (const wording of ['Shipment on hold', 'Shipment held, awaiting instructions', 'Colis retenu', 'Sendung zurückgehalten']) {
+      expect(wordingStage(wording), wording).toBe('exception');
+    }
+    expect(wordingStage("Delivery attempt failed; parcel on hold at recipient's request")).toBe('failed_attempt');
+  });
+
   it('keeps postal storage wording (a parcel waiting for collection) out of exception', () => {
     expect(wordingStage('In giacenza presso l\'ufficio postale')).not.toBe('exception');
     expect(wordingStage('Colis en souffrance au bureau de poste')).not.toBe('exception');

@@ -395,9 +395,9 @@
       "code": "1410",
       "wording": "Item on hold at recipient's request",
       "language": "en",
-      "stage": "exception",
+      "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "Not in the code map: the shared wording rules read a hold as an exception."
+      "note": "Not in the code map: the shared wording rules read a hold the recipient asked for as a delivery choice, not a problem. The parcel waits for its new date and is delivered after it."
     },
     {
       "code": "0162",
