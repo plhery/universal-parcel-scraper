@@ -16,10 +16,10 @@
 import { lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { validTrackingNumber } from '../../core/detection/valid.js';
-import { NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
-import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   CAINIAO_ACTION_STATUS,
@@ -205,7 +205,8 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   const expected = toDate(deliveryMaxTime);
   const expectedFrom = toDate(deliveryMinTime);
   const handoff = cainiaoHandoffNumber(trackingModule);
-  const destination = text(trackingModule.destCountry).trim().slice(0, 80);
+  // Cainiao can follow the country with the recipient's town, "France,Town": only the country is read.
+  const destination = text(trackingModule.destCountry).split(',')[0]!.trim().slice(0, 80);
   const deliveredAt = status === 'delivered' ? scanTime(latest) || null : null;
   return {
     status,
@@ -221,6 +222,14 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
     ...(destination ? { destination_country_name: destination } : {}),
     events,
   };
+}
+
+/**
+ * Alibaba's slider page, which Cainiao serves with a 200 in place of the JSON
+ * once it suspects a robot.
+ */
+function sliderPage(body: string): boolean {
+  return /^\s*</.test(body) && /rgv587_flag|<punish-component\b|\/_____tmd_____\//.test(body);
 }
 
 export class CainiaoTracker {
@@ -244,6 +253,7 @@ export class CainiaoTracker {
       },
       { provider: UPSTREAM, timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()), fetcher: this.fetcher },
     );
+    if (sliderPage(decodeText(bytes))) throw new ChallengeError(PROVIDER);
     return parseCainiaoTrackingResponse(parseJsonBytes(bytes, UPSTREAM), trackingNumber);
   }
 }

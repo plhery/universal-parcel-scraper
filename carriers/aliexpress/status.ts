@@ -36,6 +36,7 @@ export const CAINIAO_STATUS = new Map<string, CarrierStatus>([
 // LH_HO_OUT_SUCCESS, TD_TRANSWH_OUTBOUND, TD_TRANS_ARRIVE_DCP and
 // GTMS_SC_DEPART were seen live on 2026-10-08, between the linehaul's arrival
 // and the local partner's round, each worded as one more leg of the journey.
+// statuses.json records every code Cainiao's own replies have shown.
 export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GWMS_ACCEPT', 'pending'],
   ['GWMS_PACKAGE', 'pending'],
@@ -50,6 +51,14 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['SC_OUTBOUND_SUCCESS', 'in_transit'],
   ['SC_TRANS_INBOUND_SUCCESS', 'in_transit'],
   ['SC_TRANS_OUTBOUND_SUCCESS', 'in_transit'],
+  ['SC_HO_OUT_SUCCESS', 'in_transit'],
+  ['SC_INBOUND', 'in_transit'],
+  ['SC_SORTING', 'in_transit'],
+  ['SC_OUTBOUND', 'in_transit'],
+  // "Processing delay at sorting center": a delay before the parcel leaves, not a fault.
+  ['SC_OUTBOUND_FAILURE', 'in_transit'],
+  ['TRANSFER_DEPART', 'in_transit'],
+  ['TRANSFER_ARRIVE', 'in_transit'],
   ['CC_EX_START', 'in_transit'],
   ['CC_EX_SUCCESS', 'in_transit'],
   ['LH_HO_IN_SUCCESS', 'in_transit'],
@@ -58,6 +67,8 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['LH_ARRIVE', 'in_transit'],
   ['LH_HO_OUT_SUCCESS', 'in_transit'],
   ['LH_POST_COLLECTION', 'in_transit'],
+  ['LH_TRANS_ARRIVE', 'in_transit'],
+  ['LH_TRANS_DEPART', 'in_transit'],
   ['COMMON_INTRANSIT', 'in_transit'],
   ['TD_TRANS_DEPART', 'in_transit'],
   ['TD_TRANS_ARRIVE', 'in_transit'],
@@ -72,6 +83,9 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['CC_IM_FAILURE', 'exception'],
   ['CC_IM_EXCEPTION', 'exception'],
   ['GTMS_ACCEPT', 'in_transit'],
+  // A partner accepting the parcel after the hand-off: Cainiao accepted it long before.
+  ['SL_ACCEPT', 'in_transit'],
+  ['GTMS_SC_ARRIVE', 'in_transit'],
   ['GTMS_DO_ARRIVE', 'in_transit'],
   ['GTMS_STATION_OUT', 'in_transit'],
   ['GTMS_SC_DEPART', 'in_transit'],
@@ -80,19 +94,28 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['OE_DEPART', 'in_transit'],
   ['LAST_MILE_ASN_NOTIFY', 'in_transit'],
   ['GTMS_DO_DEPART', 'out_for_delivery'],
+  ['LM_DELIVERY_DEPART', 'out_for_delivery'],
+  ['GSTA_INBOUND', 'out_for_delivery'],
   ['GSTA_INFORM_BUYER', 'out_for_delivery'],
   ['GTMS_WAIT_SELF_PICK', 'out_for_delivery'],
   // Station signed, not the recipient — must never read as delivered.
   ['GTMS_STA_SIGNED', 'out_for_delivery'],
   ['GTMS_SIGNED', 'delivered'],
+  ['LM_SIGN_SUCCESS', 'delivered'],
+  // The recipient collected the parcel from the pickup point.
+  ['GSTA_SIGN', 'delivered'],
   // The courier could not deliver and tries again: a failed attempt, below.
   ['GTMS_DEL_FAILURE', 'exception'],
+  // The delivery closed as failed after its attempts.
+  ['GTMS_SIGN_FAILURE', 'exception'],
   ['GTMS_STA_SIGN_FAILURE', 'exception'],
+  // Back at the local warehouse after the failed delivery, on its way back.
+  ['RT_INBOUND', 'exception'],
   ['EXCEPTION', 'exception'],
 ]);
 
 /** Out-for-delivery actions that mean "waiting at a pickup point", not "on the van". */
-export const CAINIAO_PICKUP_ACTIONS = new Set(['GSTA_INFORM_BUYER', 'GTMS_WAIT_SELF_PICK', 'GTMS_STA_SIGNED']);
+export const CAINIAO_PICKUP_ACTIONS = new Set(['GSTA_INBOUND', 'GSTA_INFORM_BUYER', 'GTMS_WAIT_SELF_PICK', 'GTMS_STA_SIGNED']);
 
 /** Normalize an action code: Cainiao has been seen spelling them with spaces and in lower case. */
 export function cainiaoActionCode(value: unknown): string {
@@ -118,6 +141,7 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).
   if (code === 'GTMS_DEL_FAILURE') return 'failed_attempt';
+  if (code === 'RT_INBOUND') return 'returned';
   const status = CAINIAO_ACTION_STATUS.get(code);
   return status ? cainiaoStageByStatus()[status] : undefined;
 }

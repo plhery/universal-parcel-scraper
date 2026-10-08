@@ -52,15 +52,19 @@
     },
     {
       "code": "GWMS_ACCEPT",
+      "wording": "Shipment information received by warehouse electronically",
+      "language": "en",
       "stage": "registered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "GWMS_PACKAGE",
+      "wording": "Package ready for shipping from warehouse",
+      "language": "en",
       "stage": "registered",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -87,8 +91,10 @@
     },
     {
       "code": "CW_OUTBOUND",
+      "wording": "Departed from warehouse",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -110,36 +116,46 @@
     },
     {
       "code": "GWMS_OUTBOUND",
+      "wording": "Package shipped out from warehouse",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "SC_INBOUND_SUCCESS",
+      "wording": "Processing at sorting center",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "SC_OUTBOUND_SUCCESS",
+      "wording": "Departed from sorting center",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "SC_TRANS_INBOUND_SUCCESS",
+      "wording": "Carrier update",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "SC_TRANS_OUTBOUND_SUCCESS",
+      "wording": "Carrier update",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -154,36 +170,46 @@
     },
     {
       "code": "CC_EX_SUCCESS",
+      "wording": "Export customs clearance complete",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "LH_HO_IN_SUCCESS",
+      "wording": "Arrived at departure transport hub",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "LH_HO_AIRLINE",
+      "wording": "Leaving from departure country/region",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "LH_DEPART",
+      "wording": "Departed from departure country/region",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "LH_ARRIVE",
+      "wording": "Arrived at linehaul office",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -198,43 +224,55 @@
     },
     {
       "code": "LH_POST_COLLECTION",
+      "wording": "Accepted for transportation by postal service",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "A postal partner accepting the parcel after the hand-off, not the parcel's acceptance."
     },
     {
       "code": "COMMON_INTRANSIT",
+      "wording": "Shipment on the way",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "TD_TRANS_DEPART",
+      "wording": "Departed from transit country/region",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "TD_TRANS_ARRIVE",
+      "wording": "Arrived in transit country/region",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "TD_TRANS_DEPART_C",
+      "wording": "Departed from transit country/region",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "TD_TRANS_ARRIVE_C",
+      "wording": "Arrived in transit country/region",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -276,15 +314,19 @@
     },
     {
       "code": "CC_IM_SUCCESS",
+      "wording": "Import customs clearance complete",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "CC_HO_OUT_SUCCESS",
+      "wording": "Departed from customs",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -304,10 +346,12 @@
     },
     {
       "code": "GTMS_ACCEPT",
+      "wording": "Received by local delivery company",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "The local delivery company accepting the parcel after the hand-off, not the parcel's acceptance."
     },
     {
       "code": "GTMS_SC_DEPART",
@@ -341,15 +385,19 @@
     },
     {
       "code": "LAST_MILE_ASN_NOTIFY",
+      "wording": "Carrier update",
+      "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
     {
       "code": "GTMS_DO_DEPART",
+      "wording": "Out for delivery",
+      "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": ""
     },
@@ -369,15 +417,19 @@
     },
     {
       "code": "GTMS_STA_SIGNED",
+      "wording": "Arrived at pick-up point. Package available for collection.",
+      "language": "en",
       "stage": "ready_for_pickup",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Signed for by the pickup station, not by the recipient: never read as delivered."
     },
     {
       "code": "GTMS_SIGNED",
+      "wording": "Package delivered",
+      "language": "en",
       "stage": "delivered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "The only code that means the recipient has the parcel."
     },
@@ -386,7 +438,7 @@
       "stage": "failed_attempt",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Seen live through Ecoscooting, a client of the same Cainiao last-mile gateway, as \"Delivery Attempt Failure\" with a reason such as the recipient not at home. No AliExpress reply has carried it yet."
+      "note": "Seen live through Ecoscooting, a client of the same Cainiao last-mile gateway, as \"Delivery Attempt Failure\" with a reason such as the recipient not at home."
     },
     {
       "code": "GTMS_STA_SIGN_FAILURE",
@@ -414,6 +466,168 @@
     {
       "code": "GTMS_STATION_OUT",
       "wording": "Delivery in process. Now left facility.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "GSTA_INBOUND",
+      "wording": "Arrived at pick-up point. Package available for collection.",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The parcel waits at a pickup point."
+    },
+    {
+      "code": "GSTA_SIGN",
+      "wording": "Package delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Described as delivered at a self pickup point: the recipient collected the parcel."
+    },
+    {
+      "code": "GTMS_DEL_FAILURE",
+      "wording": "Delivery attempt unsuccessful.Unable to deliver to mailbox",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "One failed delivery attempt; the reasons vary after the first sentence."
+    },
+    {
+      "code": "GTMS_SC_ARRIVE",
+      "wording": "Arrived at destination country/region sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "GTMS_SIGN_FAILURE",
+      "wording": "Delivery failed",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Closes the delivery as failed after its attempts; Cainiao then reads the parcel as an exception."
+    },
+    {
+      "code": "LH_TRANS_ARRIVE",
+      "wording": "Arrived in transit country/region",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "LH_TRANS_DEPART",
+      "wording": "Departed from transit country/region",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "LM_DELIVERY_DEPART",
+      "wording": "Out for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "LM_SIGN_SUCCESS",
+      "wording": "Delivery Successful",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "RT_INBOUND",
+      "wording": "Package returned to local warehouse. Inbound success.",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Back at the local warehouse after a failed delivery, while Cainiao reads the parcel as returning."
+    },
+    {
+      "code": "SC_HO_OUT_SUCCESS",
+      "wording": "Departed from departure country/region sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "SC_INBOUND",
+      "wording": "Sorting Center Inbound",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "SC_OUTBOUND",
+      "wording": "Sorting Center Outbound",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "SC_OUTBOUND_FAILURE",
+      "wording": "Processing delay at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A processing delay before the parcel left the sorting center; a delay is not an exception."
+    },
+    {
+      "code": "SC_SORTING",
+      "wording": "Sorting Center Sorting",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "SL_ACCEPT",
+      "wording": "Delivery Carrier Accepted",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The delivery carrier accepting the parcel after the hand-off, not the parcel's acceptance."
+    },
+    {
+      "code": "TRANSFER_ARRIVE",
+      "wording": "Transfer Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": ""
+    },
+    {
+      "code": "TRANSFER_DEPART",
+      "wording": "Transfer Departure",
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live",

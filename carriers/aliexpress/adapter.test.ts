@@ -3,9 +3,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult, type CarrierResult } from '../../core/result/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { adapter, CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse } from './adapter.js';
+import { CAINIAO_ACTION_STATUS, CAINIAO_STATUS, cainiaoActionStage, cainiaoStageByStatus, statusMap } from './status.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { statusMap } from './status.js';
 import { locatePlace } from '../../places/index.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
@@ -96,6 +97,22 @@ describe('Cainiao wrong-number handling', () => {
     }));
 
     await expect(fetchCainiao(CAINIAO_WRONG_NUMBER)).rejects.toThrow('different shipment');
+  });
+
+  it('reports the slider page Cainiao serves in place of the JSON as a challenge', async () => {
+    const page = '<!DOCTYPE html>\n<html><head><script src="//example.invalid/punish/qrcode.js"></script></head>'
+      + '<body><punish-component />\n<script>window._config_ = { "action": "captcha", "PATH": "/global/detail.json" };</script>'
+      + '\n<!--rgv587_flag:sm-->\n</body></html>';
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(page, { headers: { 'Content-Type': 'text/html' } }));
+    await expect(new CainiaoTracker({ fetcher }).fetch(CAINIAO_WRONG_NUMBER)).rejects.toMatchObject({
+      name: 'ChallengeError', kind: 'challenge', provider: 'Cainiao',
+    });
+    // Any other page is still no tracking response, and JSON is read even when its wording names the flag.
+    fetcher.mockResolvedValueOnce(new Response('<!DOCTYPE html><html><body>Maintenance</body></html>'));
+    await expect(new CainiaoTracker({ fetcher }).fetch(CAINIAO_WRONG_NUMBER)).rejects.not.toMatchObject({ kind: 'challenge' });
+    fetcher.mockResolvedValueOnce(jsonResponse({ module: [{ mailNo: CAINIAO_WRONG_NUMBER, mailNoSource: 'INTERNAL',
+      detailList: [], statusDesc: '<!--rgv587_flag:sm-->' }] }));
+    await expect(new CainiaoTracker({ fetcher }).fetch(CAINIAO_WRONG_NUMBER)).resolves.toMatchObject({ status: 'pending' });
   });
 
   it('uses the environment fetcher the factory hands the tracker', async () => {
@@ -334,6 +351,57 @@ describe('Cainiao projection', () => {
     const retried = reply([{ actionCode: 'GTMS_SIGNED', standerdDesc: 'Delivered' }, failed, outForDelivery]);
     expect(retried).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
     expect(retried.events?.[1]).toMatchObject({ provider_code: 'GTMS_DEL_FAILURE', stage: 'failed_attempt' });
+  });
+
+  const journey = (codes: string[]) => parseCainiaoTrackingResponse({ module: [{
+    mailNo: 'LP00000000000005',
+    latestTrace: { actionCode: codes[0], standerdDesc: 'Newest scan' },
+    detailList: codes.map((actionCode, index) => ({ actionCode, standerdDesc: `Scan ${codes.length - index}` })),
+  }] }, 'LP00000000000005');
+
+  it('reads the delivery and return codes of local partners and pickup points', () => {
+    // A partner accepting the parcel after the hand-off moves it along, and a sorting delay is no fault.
+    expect(journey(['LM_SIGN_SUCCESS', 'LM_DELIVERY_DEPART', 'TRANSFER_ARRIVE', 'SC_OUTBOUND', 'TRANSFER_DEPART',
+      'SC_SORTING', 'SC_OUTBOUND_FAILURE', 'SL_ACCEPT', 'SC_INBOUND']).events?.map((event) => event.stage)).toEqual([
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
+    ]);
+    expect(journey(['GTMS_DEL_FAILURE', 'GTMS_DO_DEPART'])).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    // A pickup point's own delivery scan is the recipient collecting the parcel.
+    const collected = journey(['GTMS_SIGNED', 'GSTA_SIGN', 'GSTA_INBOUND', 'SC_HO_OUT_SUCCESS', 'GTMS_SC_ARRIVE']);
+    expect(collected).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(collected.events?.map((event) => event.stage)).toEqual([
+      'delivered', 'delivered', 'ready_for_pickup', 'in_transit', 'in_transit',
+    ]);
+    const returned = journey(['RT_INBOUND', 'GTMS_SIGN_FAILURE', 'GTMS_DEL_FAILURE', 'GTMS_DO_DEPART', 'TD_TRANS_ARRIVE_DCP',
+      'GTMS_STATION_OUT', 'GTMS_DO_ARRIVE']);
+    expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(returned.events?.map((event) => event.stage)).toEqual([
+      'returned', 'exception', 'failed_attempt', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit',
+    ]);
+  });
+
+  it('files every recorded code under the stage statuses.json gives it', () => {
+    const recorded = JSON.parse(readFileSync(path.join(folder, 'statuses.json'), 'utf8')) as {
+      entries: Array<{ code: string; wording?: string; stage: string }>;
+    };
+    for (const entry of recorded.entries) {
+      const token = CAINIAO_STATUS.get(entry.code);
+      // Parcel-level tokens stage a reply without action codes; the map answers action codes.
+      const stage = token ? cainiaoStageByStatus()[token] : statusMap.stage(entry.code, normalizeStatusWording(entry.wording ?? 'Synthetic scan'));
+      expect(stage, entry.code).toBe(entry.stage);
+    }
+    for (const code of CAINIAO_ACTION_STATUS.keys()) {
+      expect(recorded.entries.find((entry) => entry.code === code)?.stage, code).toBe(cainiaoActionStage(code));
+    }
+  });
+
+  it('reads the destination country without the town Cainiao can add after it', () => {
+    const destination = (destCountry: string) => parseCainiaoTrackingResponse({ module: [{
+      mailNo: 'LP00000000000001', destCountry, latestTrace: { actionCode: 'LH_ARRIVE' }, detailList: [],
+    }] }, 'LP00000000000001').destination_country_name;
+    expect(destination('France,Sampletown')).toBe('France');
+    expect(destination(' Germany ')).toBe('Germany');
+    expect(destination(',Sampletown')).toBeUndefined();
   });
 });
 
