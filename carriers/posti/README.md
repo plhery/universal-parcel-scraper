@@ -31,8 +31,9 @@ Bootstrap, lookup and refresh share one cancellable 15-second budget.
   link built from its own `streetAddress`, `postcode` and `city`; the recipient's address is
   the separate `delivery.destination`. The tracker shows the point at any status, a planned
   one during transit included. Here `pickup_point` is given only while the parcel is ready
-  for pickup: the point's name, then its street, then postcode and town, as the tracker lays
-  them out. A private locker (`LOCKER_PRIVATE`) stands in the recipient's building, so it,
+  for pickup, and after it is collected there (its last movement before the delivery made it
+  ready for pickup): the point's name, then its street, then postcode and town, as the
+  tracker lays them out. A private locker (`LOCKER_PRIVATE`) stands in the recipient's building, so it,
   and a point of unknown type, keeps only its town after the name.
 - `displayId` must match exactly. Duplicate matches and multi-parcel overviews are rejected.
 - Only an error-free `totalHits: 0` with empty `hits` is not-found; partial or malformed

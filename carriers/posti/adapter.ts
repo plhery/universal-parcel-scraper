@@ -77,6 +77,17 @@ function pickupPoint(raw: unknown): string | null {
   return [name, city].filter(Boolean).join('\n');
 }
 
+/**
+ * Whether the parcel waits at its pickup point, or was collected there: its
+ * last movement before the delivery made it ready for pickup. Notices prove
+ * no movement.
+ */
+function atPickupPoint(stage: string | undefined, events: readonly CarrierEvent[]): boolean {
+  if (stage === 'ready_for_pickup') return true;
+  if (stage !== 'delivered') return false;
+  return events.find((event) => !['pending', 'delivered'].includes(event.stage ?? ''))?.stage === 'ready_for_pickup';
+}
+
 function measurement(raw: unknown, units: Record<string, number>): number | null {
   if (!isRecord(raw) || typeof raw.unit !== 'string' || !Object.hasOwn(units, raw.unit.toLowerCase())) return null;
   if (typeof raw.value !== 'number' && (typeof raw.value !== 'string' || !raw.value.trim())) return null;
@@ -129,7 +140,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     weight_kg: measurement(measurements.weight, { kg: 1, g: 0.001 }),
     dimensions_text: dimensions.every((value) => value !== null) ? `${dimensions.join(' × ')} cm` : null,
     // Posti's tracker shows the point at any status, a planned one in transit included.
-    pickup_point: current?.stage === 'ready_for_pickup' ? pickupPoint(hit.pickupPoint) : null,
+    pickup_point: atPickupPoint(current?.stage, events) ? pickupPoint(hit.pickupPoint) : null,
     timezone: 'Europe/Helsinki',
     events,
   };

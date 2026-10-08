@@ -17,7 +17,8 @@ describe('Posti projection', () => {
     hit(data).events.reverse();
     const result = parse(data, NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', weight_kg: 0.5,
-      dimensions_text: '25 × 15 × 10 cm', pickup_point: null, timezone: 'Europe/Helsinki' });
+      dimensions_text: '25 × 15 × 10 cm', pickup_point: 'Example pickup point\nExample street 1\n00000 Example city',
+      timezone: 'Europe/Helsinki' });
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'pending', 'ready_for_pickup', 'in_transit', 'in_transit']);
     expect(result.last_update).toBe('2026-01-12T13:00:00Z');
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
@@ -35,11 +36,25 @@ describe('Posti projection', () => {
     hit(data).pickupPoint.type = 'POSTI_SERVICE_POINT';
     delete hit(data).pickupPoint.address.postcode;
     expect(parse(data, NUMBER).pickup_point).toBe('Example parcel locker\nExample street 1\nEXAMPLE CITY');
-    // A planned point in transit and the point a delivered parcel left are not waiting points.
-    for (const main of ['IN_TRANSPORT', 'DELIVERED', 'RETURN_READY_FOR_PICKUP']) {
+    // A planned point in transit and a point on the way back to the sender are not waiting points.
+    for (const main of ['IN_TRANSPORT', 'RETURN_READY_FOR_PICKUP']) {
       expect(parse({ ...data, data: { consumerSearchShipments: { totalHits: 1, hits: [{ ...hit(data), status: { main, subStatus: [] } }] } } }, NUMBER)
         .pickup_point).toBeNull();
     }
+  });
+
+  it('keeps the pickup point a delivered parcel was collected from, and no other', () => {
+    const data = fixture('ready-for-pickup');
+    const delivered = (events: object[]) => parse({ data: { consumerSearchShipments: { totalHits: 1, hits: [{
+      ...hit(data), status: { main: 'DELIVERED', subStatus: [] }, events: [...events, ...hit(data).events],
+    }] } } }, NUMBER).pickup_point;
+    const collected = { eventDescription: 'The item has been delivered', city: 'EXAMPLE CITY', timestamp: '2026-01-13T09:00:00Z' };
+    const notice = { eventDescription: 'We sent the recipient an email about the item.', city: '', timestamp: '2026-01-12T10:00:00Z' };
+    expect(delivered([collected, notice])).toBe('Example parcel locker\nExample street 1\n00000 EXAMPLE CITY');
+    // Taken back out for delivery after waiting: delivered to the door, not collected.
+    expect(delivered([collected, { eventDescription: 'Item is out for delivery', city: 'EXAMPLE CITY', timestamp: '2026-01-13T07:00:00Z' }]))
+      .toBeNull();
+    expect(parse(fixture('delivered-abroad'), 'CE123456785FI').pickup_point).toBeNull();
   });
 
   it.each([
