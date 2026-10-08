@@ -4323,9 +4323,11 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "j-and-t",
+      "recognitionRank": 9,
+      "localClocks": true
     },
-    "canaryUrl": "https://www.jtexpress.ph/",
+    "canaryUrl": "https://customerapp.jntexpress.id/jandt-app-ifd-web/router.do",
     "trackingUrlTemplate": "https://www.jtexpress.ph/track-and-trace?flag=1&waybillNo={trackingNumber}",
     "linkRules": [
       {

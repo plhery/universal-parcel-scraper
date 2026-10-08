@@ -19,17 +19,50 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "j-and-t",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 9
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.jtexpress.ph/track-and-trace?flag=1&waybillNo={trackingNumber}",
-    "canaryUrl": "https://www.jtexpress.ph/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://customerapp.jntexpress.id/jandt-app-ifd-web/router.do",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "recipient_name",
+      "driver_name",
+      "contact_details",
+      "proof_of_delivery",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient_name",
+      "driver_name",
+      "contact_details",
+      "proof_of_delivery",
+      "coordinates"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

@@ -744,10 +744,11 @@
     },
     {
       "carrier": "j-and-t",
-      "direct": "No adapter",
-      "sample": "Blocked (Philippines)",
+      "direct": "Yes (Indonesia)",
+      "sample": "Out of scope (Philippines); alternate ✓ 11",
       "references": [
         {
+          "note": "The comparison reference is a Philippine waybill, outside the Indonesian app router's scope. An alternate public Indonesian reference returned eleven identity-bound scans on local clocks: https://mediakonsumen.com/2026/07/13/surat-pembaca/paket-berisi-batu-bata-jt-akui-hilang-tapi-tidak-mau-ubah-status-resi-refund-tiktok-shop-tertahan-sebulan-lebih",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",

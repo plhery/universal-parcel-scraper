@@ -80,6 +80,11 @@ describe('status map answers', () => {
     // A code SpeedX's map does not list is staged by its event's category, which the code alone lacks.
     expect(answer('speedx', '57999', 'Synthetic scan')).toEqual(unknown);
     expect(answer('speedx', null, 'Delivered')).toEqual(unknown);
+    expect(answer('j-and-t', '94', 'Package will be delivered')).toEqual(mapped('out_for_delivery'));
+    expect(answer('j-and-t', '210', 'Pick-Up')).toEqual(mapped('accepted'));
+    // Every router scan carries its code, which alone gives the stage.
+    expect(answer('j-and-t', null, 'Delivered')).toEqual(unknown);
+    expect(answer('j-and-t', '999', 'Delivered')).toEqual(unknown);
   });
 
   it("answers La Poste by the group and code it reads, for every carrier its adapter serves", () => {

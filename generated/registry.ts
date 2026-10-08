@@ -58,6 +58,7 @@ import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
 import { adapter as indiaPost } from '../carriers/india-post/adapter.js';
 import { adapter as inpost } from '../carriers/inpost/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
+import { adapter as jAndT } from '../carriers/j-and-t/adapter.js';
 import { adapter as japanPost } from '../carriers/japan-post/adapter.js';
 import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
 import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
@@ -168,6 +169,7 @@ export const REGISTRY: RegistryDefinition = {
     "india-post": indiaPost,
     "inpost": inpost,
     "intelcom": intelcom,
+    "j-and-t": jAndT,
     "japan-post": japanPost,
     "jd-logistics": jdLogistics,
     "korea-post": koreaPost,
@@ -283,7 +285,7 @@ export const REGISTRY: RegistryDefinition = {
     "inpost": "inpost",
     "intelcom": "intelcom",
     "intl-post": "universal",
-    "j-and-t": "universal",
+    "j-and-t": "j-and-t",
     "j-and-t-cargo": null,
     "japan-post": "japan-post",
     "jd-logistics": "jd-logistics",

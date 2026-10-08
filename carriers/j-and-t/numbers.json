@@ -34,6 +34,9 @@
         "url": "https://mediakonsumen.com/2026/09/14/surat-pembaca/dugaan-pencurian-dalam-pengiriman-jt-express-paket-disayat-isi-diambil-ditutup-lakban-ulang-dan-lepas-tangan",
         "date": "2026-09-14"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -42,7 +45,7 @@
           "j-and-t"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to J&T Express, which stays one candidate among several. Indonesian parcel."
+      "note": "Publicly reported shipment number the source attributes to J&T Express. Indonesian parcel; J&T Indonesia's tracking returns its history."
     },
     {
       "number": "JT0022543312549",
@@ -66,11 +69,14 @@
         "url": "https://mediakonsumen.com/2026/09/13/surat-pembaca/paket-jt-mandek-40-hari-tanpa-status-dana-di-tiktok-shop-ikut-tertahan-karena-resi-tidak-diperbarui",
         "date": "2026-09-13"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "j-and-t",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Indonesian parcel."
+      "note": "Publicly reported shipment number. Indonesian parcel; J&T Indonesia's tracking returns its history."
     },
     {
       "number": "JY1592273075",
@@ -80,11 +86,14 @@
         "url": "https://mediakonsumen.com/2026/09/22/surat-pembaca/paket-tiktok-shop-dengan-jt-express-tertahan-sejak-agustus-tanpa-kejelasan",
         "date": "2026-09-22"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "j-and-t",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Indonesian parcel."
+      "note": "Publicly reported shipment number. Indonesian parcel; J&T Indonesia's tracking returns its history."
     },
     {
       "number": "JD0538017790",
@@ -168,7 +177,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "insured return",
         "reportedRole": "reported_shipment"
       },
@@ -176,7 +185,7 @@
         "carrier": "j-and-t",
         "confidence": "high"
       },
-      "note": "Seller shipment number; insured parcel subsequently returned."
+      "note": "Seller shipment number; insured parcel subsequently returned. J&T Indonesia's tracking returns its history."
     },
     {
       "number": "JX5506861247",
@@ -378,7 +387,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "indonesia domestic",
         "reportedRole": "reported_shipment"
       },
@@ -386,7 +395,7 @@
         "carrier": "j-and-t",
         "confidence": "high"
       },
-      "note": "Customer explicitly publishes tracking number in a shipment-status dispute."
+      "note": "Customer explicitly publishes tracking number in a shipment-status dispute. J&T Indonesia's tracking returns its history."
     },
     {
       "number": "JT0374574274",
@@ -423,7 +432,7 @@
         "dateKind": "publication"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "reportedRole": "reported_shipment"
       },
       "expect": {
@@ -434,7 +443,7 @@
           "j-and-t"
         ]
       },
-      "note": "Customer reports a shipment in the JNT Express category; the reply supplies tracking activity."
+      "note": "Customer reports a shipment in the JNT Express category; the reply supplies tracking activity. J&T Indonesia's tracking returns its history."
     }
   ]
 }
