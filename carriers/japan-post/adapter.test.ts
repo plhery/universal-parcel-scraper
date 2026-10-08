@@ -183,6 +183,7 @@ describe('Japan Post result projection', () => {
 
   it.each([
     ['Item returned from import Customs', 'in_transit', 'in_transit'],
+    ['Item out of sorting centre', 'in_transit', 'in_transit'],
     ['Returned to sender', 'exception', 'returned'],
     ['Item out for physical delivery', 'out_for_delivery', 'out_for_delivery'],
     ['Final delivery', 'delivered', 'delivered'],

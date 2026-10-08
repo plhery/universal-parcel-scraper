@@ -885,6 +885,25 @@
         ]
       },
       "note": "A Japan Post tracking link archived by the Wayback Machine. Japan Post's tracker returns its Yu-Pack history."
+    },
+    {
+      "number": "CL105844885JP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260524050557/https://trackings.post.japanpost.jp/services/srv/search/direct?locale=en&reqCodeNo1=CL105844885JP",
+        "date": "2026-05-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "A Japan Post tracking link archived by the Wayback Machine. Japan Post's tracker returns its international history."
     }
   ]
 }

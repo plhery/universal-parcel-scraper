@@ -72,6 +72,14 @@
       "firstSeen": "2026-09-26"
     },
     {
+      "wording": "Item out of sorting centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Destination-country sorting scan on an international item."
+    },
+    {
       "wording": "Processing at delivery Post Office",
       "language": "en",
       "stage": "in_transit",

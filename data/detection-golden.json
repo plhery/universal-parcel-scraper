@@ -9333,6 +9333,14 @@
     ]
   },
   {
+    "input": "CL105844885JP",
+    "carrier": "japan-post",
+    "confidence": "high",
+    "candidates": [
+      "japan-post"
+    ]
+  },
+  {
     "input": "CN 022 808 704 JP",
     "carrier": "japan-post",
     "confidence": "high",

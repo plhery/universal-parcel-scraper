@@ -13,6 +13,7 @@ const STATUS = new Map<string, ClassifiedStatus>([
   ['Item held at inward Office of Exchange', { status: 'in_transit', stage: 'in_transit' }],
   ['Item returned from import Customs', { status: 'in_transit', stage: 'in_transit' }],
   ['Departure from inward office of exchange', { status: 'in_transit', stage: 'in_transit' }],
+  ['Item out of sorting centre', { status: 'in_transit', stage: 'in_transit' }],
   ['Processing at delivery Post Office', { status: 'in_transit', stage: 'in_transit' }],
   ['Item out for physical delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Final delivery', { status: 'delivered', stage: 'delivered' }],
