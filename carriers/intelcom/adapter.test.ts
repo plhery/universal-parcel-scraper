@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { IntelcomTracker } from './adapter.js';
 import { normalizeIntelcomNumber, parseIntelcom } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'INTLCM0000000000';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -103,6 +104,84 @@ describe('Canadian Intelcom / Dragonfly response', () => {
     payload.data.result.last_status.shortLabel = { en: 'Delivered' };
     payload.data.result.last_status.step = '4';
     expect(parseIntelcom(payload, NUMBER)).toMatchObject({ status: 'delivered', last_status_text: 'Delivered' });
+  });
+});
+
+describe('Intelcom estimates, returns and senders', () => {
+  const history = () => JSON.parse(readFileSync(new URL('./fixtures/website-history.json', import.meta.url), 'utf8'));
+  // The same parcel while a driver had it.
+  const outForDelivery = () => {
+    const payload = history(); const result = payload.data.result;
+    result.status_list.shift();
+    result.last_status = { ...result.status_list[0], task_type: 'last_mile_delivery', showEta: true, etaType: 'time' };
+    result.public_eta = { from: '2026-01-03T18:00:00.000Z', to: '2026-01-03T19:00:00.000Z', min: 7, max: 22 };
+    result.eta = '2026-01-03T13:00:00.000000-05:00';
+    return payload;
+  };
+
+  it('reads the hour window the tracking page shows once a driver has the parcel', () => {
+    expect(parseIntelcom(outForDelivery(), NUMBER)).toMatchObject({ status: 'out_for_delivery',
+      expected_delivery_from: '2026-01-03T18:00:00Z', expected_delivery: '2026-01-03T19:00:00Z' });
+  });
+
+  it('reads a day estimate on the clock of the service\'s own estimate', () => {
+    const payload = outForDelivery(); const result = payload.data.result;
+    result.status_list.shift();
+    result.last_status = { ...result.status_list[0], task_type: 'last_mile_delivery', showEta: true, etaType: 'period' };
+    result.public_eta = { from: '2026-01-05T05:00:00.000Z', to: '2026-01-07T05:00:00.000Z', min: 7, max: 22 };
+    result.eta = '2026-01-05T00:00:00.000000-05:00';
+    expect(parseIntelcom(payload, NUMBER)).toMatchObject({ status: 'in_transit', expected_delivery_from: '2026-01-05', expected_delivery: '2026-01-07' });
+    result.public_eta = { from: '2026-01-05T15:00:00.000Z', to: '2026-01-05T18:00:00.000Z' };
+    const sameDay = parseIntelcom(payload, NUMBER);
+    expect(sameDay.expected_delivery).toBe('2026-01-05'); expect(sameDay).not.toHaveProperty('expected_delivery_from');
+    delete result.eta;
+    expect(parseIntelcom(payload, NUMBER)).not.toHaveProperty('expected_delivery');
+  });
+
+  const hidden: [string, (row: Record<string, unknown>) => void][] = [
+    ['the service hides it', row => { row.showEta = false; }],
+    ['its type is none', row => { row.etaType = 'none'; }],
+    ['the parcel is delivered', row => { row.isDelivered = true; }],
+    ['the task is a pickup', row => { row.task_type = 'last_mile_pickup'; }],
+    ['the step is a problem', row => { row.step = -2; }],
+    ['the window ended before the latest scan', row => { row.timestamp = Date.parse('2026-01-03T20:00:00Z'); }],
+  ];
+  it.each(hidden)('shows no estimate when %s', (_, change) => {
+    const payload = outForDelivery(); change(payload.data.result.last_status);
+    const result = parseIntelcom(payload, NUMBER);
+    expect(result).not.toHaveProperty('expected_delivery'); expect(result).not.toHaveProperty('expected_delivery_from');
+  });
+
+  it('follows a return collected from the customer without calling it delivered', () => {
+    const row = (code: number, step: number, label: string, timestamp: number, isDelivered = false) => ({ status: code, statusCode: code,
+      step, timestamp, isDelivered, task_type: 'last_mile_pickup', showEta: false, etaType: 'none', labels: { shortLabel: { en: label } } });
+    const rows = [row(850, 4, 'Mission accomplished!', 1767459600000), row(602, 3, 'We got it!', 1767456000000, true),
+      row(200, 2, 'We\'re on our way!', 1767448800000), row(0, 1, 'Pickup requested by merchant.', 1767362400000)];
+    const payload = { success: true, data: { code: 'found', result: { tracking_id: NUMBER, client_code: 'AMAZON', last_status: rows[0]!, status_list: rows } } };
+    const result = parseIntelcom(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', sender_name: 'AMAZON' });
+    expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'accepted', 'registered', 'registered']);
+    expect(result).not.toHaveProperty('delivered_at');
+    payload.data.result.last_status = rows[1]!;
+    expect(parseIntelcom(payload, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+  });
+
+  it('names only the clients the tracking page names', () => {
+    const payload = history(); payload.data.result.client_code = 'CANTIRE';
+    expect(parseIntelcom(payload, NUMBER).sender_name).toBe('Canadian Tire');
+    payload.data.result.client_code = 'UNLISTED';
+    expect(parseIntelcom(payload, NUMBER)).not.toHaveProperty('sender_name');
+  });
+
+  it('maps every recorded status to the stage it records', () => {
+    for (const entry of statuses.entries) {
+      const pickup = ['200', '602', '850'].includes(entry.code) || entry.wording.startsWith('Pickup');
+      const row = { status: Number(entry.code), statusCode: Number(entry.code), step: 2, timestamp: 1767459600000,
+        isDelivered: ['601', '602'].includes(entry.code), task_type: pickup ? 'last_mile_pickup' : 'last_mile_delivery',
+        labels: { shortLabel: { en: entry.wording } } };
+      const payload = { success: true, data: { code: 'found', result: { tracking_id: NUMBER, last_status: row, status_list: [row] } } };
+      expect(parseIntelcom(payload, NUMBER).current_stage, entry.code).toBe(entry.stage);
+    }
   });
 });
 

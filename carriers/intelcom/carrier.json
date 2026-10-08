@@ -24,7 +24,9 @@
     ]
   },
   "capabilities": [
-    "history"
+    "history",
+    "eta",
+    "sender_name"
   ],
   "portal": {
     "url": "https://dragonflyshipping.ca/en/track-your-package/?tracking-id={trackingNumber}",
@@ -33,15 +35,17 @@
       "status",
       "history",
       "eta",
+      "sender_name",
       "driver_name",
       "recipient_details"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "eta",
+      "sender_name"
     ],
     "discarded": [
-      "eta",
       "driver_name",
       "recipient_details",
       "proof_of_delivery"

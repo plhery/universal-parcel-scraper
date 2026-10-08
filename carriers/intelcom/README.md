@@ -8,10 +8,14 @@ Tracks Canadian Intelcom and Dragonfly shipments through the Canadian Dragonfly 
 
 Observed Canadian status codes establish milestones even when the English label is a marketing phrase. Other wording uses shared classification, with that provenance retained. Offset-bearing scan times and epoch milliseconds keep their instants. A dated current status without history is returned as a summary.
 
+A return collected from the customer has its own codes. The service flags a collected return as delivered, which the adapter does not take as a delivery.
+
+The delivery estimate is the one the tracking page shows: a time window once a driver has the parcel, otherwise a day, taken in the timezone of the service's own estimate. There is none for pickups, problems, deliveries or a window that has passed. The sender is the client the tracking page names, and it names only some clients.
+
 ## Limitations
 
 Merchant references can identify Intelcom shipments without an Intelcom prefix. `INTLCM` numbers, including the lettered series such as `INTLCMD` and `INTLCMJ`, are
-Intelcom identifiers; the adapter sends the complete value. Detection suggests Intelcom for the `CRIN` family; shipper and merchant references need an explicit carrier or an Intelcom tracking link. Recipient addresses, driver names, proof images and delivery estimates are discarded. Local scan clocks stay unresolved because Canada spans several timezones.
+Intelcom identifiers; the adapter sends the complete value. Detection suggests Intelcom for the `CRIN` family; shipper and merchant references need an explicit carrier or an Intelcom tracking link. Recipient addresses, driver names and proof images are discarded. Local scan clocks stay unresolved because Canada spans several timezones.
 
 ## Testing
 
