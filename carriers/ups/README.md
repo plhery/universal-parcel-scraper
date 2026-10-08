@@ -51,6 +51,8 @@ rendered status, after that wait.
   tracking page shows them. The attention name is never read: it can name a person.
 - `delivered_at` is the delivering scan's time; `destination_country` the ship-to or delivery
   country code.
+- `service_name` is the service `additionalInformation.serviceInformation` names, without
+  the trademark signs UPS adds to it.
 - Prose arrives HTML-escaped (`We&#39;re`, `&#174;`) and is decoded.
 - A 402 "Invalid Request" for a number whose check digit fails is `InvalidInputError`, from
   either step. Other refusals stay indeterminate.

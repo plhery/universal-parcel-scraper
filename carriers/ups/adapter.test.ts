@@ -289,9 +289,24 @@ describe('UPS structured response', () => {
     }
   });
 
+  it('names the shipping service without its trademark signs', () => {
+    const payload = fixture();
+    const [detail] = payload.trackDetails as Record<string, unknown>[];
+    expect(parseUPSTrackingResponse(payload, TRACKING_NUMBER, TODAY)).not.toHaveProperty('service_name');
+    for (const [serviceName, name] of [['UPS Standard&#174;', 'UPS Standard'], ['UPS Express™ 12:00', 'UPS Express 12:00'],
+      ['UPS Ground', 'UPS Ground']]) {
+      detail!.additionalInformation = { serviceInformation: { serviceName, serviceLink: null, serviceAttribute: null } };
+      expect(parseUPSTrackingResponse(payload, TRACKING_NUMBER, TODAY).service_name).toBe(name);
+    }
+    for (const serviceInformation of [null, { serviceName: '&#174;' }, { serviceName: 7 }]) {
+      detail!.additionalInformation = { serviceInformation };
+      expect(parseUPSTrackingResponse(payload, TRACKING_NUMBER, TODAY)).not.toHaveProperty('service_name');
+    }
+  });
+
   it('produces every capability carrier.json declares', () => {
     const result = parseUPSTrackingResponse(fixture(), TRACKING_NUMBER, TODAY);
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'pickup_point', 'provider_code']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'pickup_point', 'provider_code', 'service_name']);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.every((event) => event.provider_code)).toBe(true);
@@ -300,6 +315,9 @@ describe('UPS structured response', () => {
       .delivered_at).toBe('2026-08-04T10:28:15+00:00');
     expect(parseUPSTrackingResponse(withScans([scan('2Q', 'Delivered to UPS Access Point™ ', '20260804 10:28:15')],
       { upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY).pickup_point).toBe(KIOSK);
+    const served = fixture();
+    Object.assign((served.trackDetails as Record<string, unknown>[])[0]!, { additionalInformation: { serviceInformation: { serviceName: 'UPS Ground' } } });
+    expect(parseUPSTrackingResponse(served, TRACKING_NUMBER, TODAY).service_name).toBe('UPS Ground');
   });
 
   it('fails closed on another parcel and reports an unavailable API as inconclusive', () => {

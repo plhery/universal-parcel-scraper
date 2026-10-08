@@ -354,6 +354,9 @@ export function parseUPSTrackingResponse(
     .map((address) => (isRecord(address) ? cleanScalar(address.country, 8).toUpperCase() : ''))
     .find((code) => /^[A-Z]{2}$/.test(code));
   const pickupPoint = stage === 'ready_for_pickup' ? accessPoint(detail) : '';
+  // UPS writes its service names with trademark signs ("UPS Standard&#174;"), which are not part of the name.
+  const information = isRecord(detail.additionalInformation) ? detail.additionalInformation.serviceInformation : null;
+  const service = isRecord(information) ? clean(text(information.serviceName, 200).replace(/[®™℠]/g, ' '), 80) : '';
   // Never projected: the ship-to and delivery addresses beyond their country,
   // `receivedBy`, `leftAt`, the proof-of-delivery link, the access point's
   // attention name, hours and coordinates, and `senderShipperNumber`, an
@@ -367,6 +370,7 @@ export function parseUPSTrackingResponse(
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
     ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     ...(country ? { destination_country: country } : {}),
+    ...(service ? { service_name: service } : {}),
     events,
   };
 }
