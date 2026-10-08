@@ -200,14 +200,13 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
   const progress = withoutIcons(clean($('#stApp_shpmtProgress .progress-step.active').text()));
   const currentStatus = upsStatus(`${statusText} ${progress}`);
   if (!statusText) statusText = progress || 'Tracking information received';
-  let location = clean($('#stApp_deliveredToAddress').last().text());
-  if (!location) {
-    location = clean(`${$('#stApp_txtAddress').last().text()} ${$('#stApp_txtCountry').last().text()}`);
-  }
+  // Where a delivered parcel was left. The ship-to block names the recipient's
+  // town, not where the parcel is, so it never becomes the banner's place.
+  const location = clean($('#stApp_deliveredToAddress').last().text());
   // The banner has no clock, so its event carries none.
   const events: CarrierEvent[] = currentStatus === 'unknown'
     ? []
-    : [{ location, description: statusText }];
+    : [{ ...(location ? { location } : {}), description: statusText }];
   return {
     status: currentStatus,
     last_status_text: statusText,
@@ -364,10 +363,11 @@ export function parseUPSTrackingResponse(
   const country = [detail.shipToAddress, detail.deliveryAddress]
     .map((address) => (isRecord(address) ? cleanScalar(address.country, 8).toUpperCase() : ''))
     .find((code) => /^[A-Z]{2}$/.test(code));
-  const pickupPoint = stage === 'ready_for_pickup' ? accessPointName(detail) : '';
+  const pickupPoint = stage === 'ready_for_pickup' ? accessPoint(detail) : '';
   // Never projected: the ship-to and delivery addresses beyond their country,
   // `receivedBy`, `leftAt`, the proof-of-delivery link, the access point's
-  // address and coordinates, and `senderShipperNumber`, an account number.
+  // attention name, hours and coordinates, and `senderShipperNumber`, an
+  // account number.
   return {
     status,
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
@@ -382,13 +382,24 @@ export function parseUPSTrackingResponse(
 }
 
 /**
- * The access point's business name; only read while the parcel waits there.
- * The attention name is never a fallback: it can name a person.
+ * The access point, read only while the parcel waits there: its business name,
+ * then its street and its town on their own lines when UPS gives both. The
+ * attention name is never a fallback: it can name a person.
  */
-function accessPointName(detail: JsonObject): string {
+function accessPoint(detail: JsonObject): string {
   const point = isRecord(detail.upsAccessPoint) ? detail.upsAccessPoint : null;
   const location = point && isRecord(point.location) ? point.location : null;
-  return location ? text(location.companyName, 200) : '';
+  const name = location ? text(location.companyName, 200) : '';
+  if (!location || !name) return name;
+  const street = text(location.streetAddress1, 120);
+  const more = [location.streetAddress2, location.streetAddress3].map((line) => text(line, 120)).filter(Boolean).join(', ');
+  const city = text(location.city, 80);
+  if (!street || !city) return name;
+  const postcode = text(location.zipCode, 16);
+  // A US state or Canadian province comes before the postcode, after the town.
+  const region = text(location.state, 40) || text(location.province, 40);
+  const town = region ? `${city}, ${[region, postcode].filter(Boolean).join(' ')}` : [postcode, city].filter(Boolean).join(' ');
+  return [name, street, more, town].filter(Boolean).join('\n');
 }
 
 export interface UPSTrackerOptions {

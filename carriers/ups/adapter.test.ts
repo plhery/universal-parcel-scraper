@@ -57,14 +57,20 @@ const ACCESS_POINT = {
   location: {
     companyName: 'EXAMPLE KIOSK',
     attentionName: 'PRIVATE ATTENTION NAME',
-    streetAddress1: 'PRIVATE ACCESS POINT STREET',
+    streetAddress1: 'EXAMPLESTR. 1',
+    streetAddress2: '',
+    streetAddress3: '',
     city: 'EXAMPLE CITY',
-    zipCode: 'PRIVATE POSTCODE',
+    state: '',
+    province: '',
+    zipCode: '00000',
     country: 'DE',
   },
+  dailyHoursOfOperations: { Monday: 'PRIVATE HOURS' },
   geoLatitude: '1.2345',
   geoLongitude: '2.3456',
 };
+const KIOSK = 'EXAMPLE KIOSK\nEXAMPLESTR. 1\n00000 EXAMPLE CITY';
 
 function stepRecorder(): { recorder: StepRecorder; records: string[] } {
   const records: string[] = [];
@@ -172,7 +178,7 @@ describe('UPS structured response', () => {
     });
   });
 
-  it('names the access point only while the parcel waits there', () => {
+  it('names the access point and its address only while the parcel waits there', () => {
     const waiting = parseUPSTrackingResponse(withScans([
       scan('ZP', 'UPS Access Point&#8482; possession ', '20260811 09:22:52'),
       scan('2Q', 'Delivered to UPS Access Point&#8482; ', '20260811 09:22:39'),
@@ -181,7 +187,7 @@ describe('UPS structured response', () => {
     expect(waiting).toMatchObject({
       status: 'out_for_delivery',
       current_stage: 'ready_for_pickup',
-      pickup_point: 'EXAMPLE KIOSK',
+      pickup_point: KIOSK,
       last_status_text: 'UPS Access Point™ possession',
     });
     expect(waiting.delivered_at).toBeUndefined();
@@ -209,6 +215,19 @@ describe('UPS structured response', () => {
       const serialized = JSON.stringify(result);
       for (const value of ['PRIVATE', '1.2345', '2.3456']) expect(serialized).not.toContain(value);
     }
+  });
+
+  it('lays out the access point address as UPS gives it, and keeps the name alone without a street or town', () => {
+    const point = (location: Record<string, string>) => parseUPSTrackingResponse(withScans(
+      [scan('ZP', 'UPS Access Point™ possession ', '20260811 09:22:52')],
+      { upsAccessPoint: { ...ACCESS_POINT, location: { ...ACCESS_POINT.location, ...location } } }), TRACKING_NUMBER, TODAY).pickup_point;
+    expect(point({ streetAddress2: 'EXAMPLE MALL', streetAddress3: 'UNIT 2' }))
+      .toBe('EXAMPLE KIOSK\nEXAMPLESTR. 1\nEXAMPLE MALL, UNIT 2\n00000 EXAMPLE CITY');
+    expect(point({ streetAddress1: '1 EXAMPLE ST', city: 'EXAMPLETOWN', state: 'GA', zipCode: '00000', country: 'US' }))
+      .toBe('EXAMPLE KIOSK\n1 EXAMPLE ST\nEXAMPLETOWN, GA 00000');
+    expect(point({ streetAddress1: '&#49; EXAMPLE ST', zipCode: '' })).toBe('EXAMPLE KIOSK\n1 EXAMPLE ST\nEXAMPLE CITY');
+    expect(point({ streetAddress1: '' })).toBe('EXAMPLE KIOSK');
+    expect(point({ city: '' })).toBe('EXAMPLE KIOSK');
   });
 
   it('keeps scans without a UTC pair on the clock UPS gives, and none when it gives none', () => {
@@ -260,7 +279,7 @@ describe('UPS structured response', () => {
     expect(parseUPSTrackingResponse(withScans([scan('KB', 'DELIVERED ', '20260804 10:28:15')]), TRACKING_NUMBER, TODAY)
       .delivered_at).toBe('2026-08-04T10:28:15+00:00');
     expect(parseUPSTrackingResponse(withScans([scan('2Q', 'Delivered to UPS Access Point™ ', '20260804 10:28:15')],
-      { upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY).pickup_point).toBe('EXAMPLE KIOSK');
+      { upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY).pickup_point).toBe(KIOSK);
   });
 
   it('fails closed on another parcel and reports an unavailable API as inconclusive', () => {
@@ -487,6 +506,18 @@ describe('UPS rendered page', () => {
     });
     expect(() => parseUPSTrackingHtml('<body>another parcel</body>', TRACKING_NUMBER))
       .toThrow('UPS did not return the requested parcel');
+  });
+
+  it('never places the banner in the ship-to town', () => {
+    const result = parseUPSTrackingHtml(`
+      <html><head><meta name="stapp-tracknum" content="${TRACKING_NUMBER}"></head>
+      <body>
+        <span id="stApp_nameKey">On the Way</span>
+        <p id="stApp_txtAddress">PRIVATE CITY</p><p id="stApp_txtCountry">DE</p>
+      </body></html>`, TRACKING_NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', events: [{ description: 'On the Way' }] });
+    expect(result.events?.[0]?.location).toBeUndefined();
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 });
 

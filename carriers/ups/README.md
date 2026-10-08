@@ -15,7 +15,8 @@ from the left); a mismatch stays a suggestion.
    `https://www.ups.com/track?loc=en_US&tracknum=…&requester=ST/trackdetails` with
    `captureResponses` on `POST https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US`
    and parses the reply the page itself received. If nothing readable was captured, it parses
-   the rendered page instead: current status and delivery location, no history.
+   the rendered page instead: current status and, once delivered, where, with no history.
+   Its ship-to town is the recipient's, never the banner's place.
 2. `direct` (only without a browser service): plain HTTP with an in-memory cookie jar.
    - Fetch the tracking page, check it set the `X-XSRF-TOKEN-ST` cookie, then POST
      `GetStatus` with that value as the `X-XSRF-TOKEN` header. Cache the session.
@@ -45,8 +46,9 @@ rendered status, after that wait.
 - The newest scan's code sets the current stage and status. `progressBarType`, then the
   prose, decide only when that code is unmapped. The token reads `Exception` for a mere delay.
 - `pickup_point` names the access point only while the newest scan is `2Q` or `ZP`. Replies
-  can carry an access point the parcel never reached. Only the business name is read; the
-  attention name can name a person.
+  can carry an access point the parcel never reached. It is the business name, then the
+  street and the town on their own lines when `upsAccessPoint.location` gives both, as the
+  tracking page shows them. The attention name is never read: it can name a person.
 - `delivered_at` is the delivering scan's time; `destination_country` the ship-to or delivery
   country code.
 - Prose arrives HTML-escaped (`We&#39;re`, `&#174;`) and is decoded.
@@ -95,7 +97,8 @@ it can replace browser retrieval. Application configuration and tokens stay outs
 - The service name (`UPS Ground Saver®`) is in the reply, but the result has no field for it.
 - Without a browser service there is no history.
 - The ship-to address beyond its country, the signatory, the proof-of-delivery link and the
-  access point's address are in the reply but never kept; a test asserts it.
+  access point's attention name, hours and coordinates are in the reply but never kept; a
+  test asserts it.
 
 ## Testing
 
