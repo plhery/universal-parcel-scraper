@@ -4667,7 +4667,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:FMP[CP]|MYS[PR])\\d{10}$",
+        "pattern": "^(?!PB)[A-Z]{3}[CPR]\\d{10}$",
         "confidence": "high"
       }
     ]

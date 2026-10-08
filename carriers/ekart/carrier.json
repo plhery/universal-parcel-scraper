@@ -24,7 +24,9 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "delivered_at",
+    "provider_code"
   ],
   "portal": {
     "url": "https://ekartlogistics.com/ekartlogistics-web/shipmenttrack/{trackingNumber}",
@@ -57,7 +59,7 @@
   "detection": [
     {
       "id": "ekart-ecommerce",
-      "pattern": "^(?:FMP[CP]|MYS[PR])\\d{10}$",
+      "pattern": "^(?!PB)[A-Z]{3}[CPR]\\d{10}$",
       "confidence": "high"
     }
   ]

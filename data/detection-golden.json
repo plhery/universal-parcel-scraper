@@ -11845,6 +11845,14 @@
     ]
   },
   {
+    "input": "AMIP8734132853",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "AS010007869US",
     "carrier": "asendia",
     "confidence": "high",
@@ -11913,11 +11921,35 @@
     "candidates": []
   },
   {
+    "input": "BALP1000006675",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "BE0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [
       "amazon-logistics"
+    ]
+  },
+  {
+    "input": "BGSP1004431163",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
+    "input": "BSIC1064576117",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
     ]
   },
   {
@@ -12819,6 +12851,14 @@
     ]
   },
   {
+    "input": "DELC0000555611",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "DELIVERY",
     "carrier": "unknown",
     "confidence": "none",
@@ -13203,7 +13243,23 @@
     ]
   },
   {
+    "input": "FLOP8885131523",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "FMPP0000000001",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
+    "input": "FMPR0818134036",
     "carrier": "ekart",
     "confidence": "high",
     "candidates": [
@@ -13303,6 +13359,14 @@
     "confidence": "high",
     "candidates": [
       "parcelforce"
+    ]
+  },
+  {
+    "input": "GLAC0008785864",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
     ]
   },
   {
@@ -14731,6 +14795,14 @@
     ]
   },
   {
+    "input": "LUAC0000794395",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "LV297667943US",
     "carrier": "intl-post",
     "confidence": "high",
@@ -14934,6 +15006,22 @@
     "candidates": []
   },
   {
+    "input": "MYEP1020155469",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
+    "input": "MYNR0024905250",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "MYPM00000000015",
     "carrier": "pos-malaysia",
     "confidence": "high",
@@ -14947,6 +15035,14 @@
     "confidence": "high",
     "candidates": [
       "pos-malaysia"
+    ]
+  },
+  {
+    "input": "MYSC1081528862",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
     ]
   },
   {
@@ -15114,6 +15210,12 @@
     "asked": [
       "ninja-van"
     ]
+  },
+  {
+    "input": "OD3289740150013",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "OMGO0000000000001",
@@ -15934,6 +16036,14 @@
     ]
   },
   {
+    "input": "SDLC1052631577",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "SDMC21827093546145",
     "carrier": "unknown",
     "confidence": "none",
@@ -16106,6 +16216,14 @@
     ]
   },
   {
+    "input": "SPOC1000056343",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "SPX000000000000000000001",
     "carrier": "unknown",
     "confidence": "none",
@@ -16242,6 +16360,22 @@
     ]
   },
   {
+    "input": "SRTC8158145050",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
+    "input": "SRTP6024599943",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "SX446838689IE",
     "carrier": "an-post",
     "confidence": "high",
@@ -16271,6 +16405,14 @@
     "confidence": "high",
     "candidates": [
       "sunyou"
+    ]
+  },
+  {
+    "input": "Shoc0000340153",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
     ]
   },
   {
@@ -16353,6 +16495,14 @@
     "confidence": "high",
     "candidates": [
       "amazon-logistics"
+    ]
+  },
+  {
+    "input": "TELP1000004829",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
     ]
   },
   {
@@ -17136,6 +17286,14 @@
     ]
   },
   {
+    "input": "fmpp3100284908",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
+    ]
+  },
+  {
     "input": "hello",
     "carrier": "unknown",
     "confidence": "none",
@@ -17147,6 +17305,14 @@
     "confidence": "high",
     "candidates": [
       "jd-logistics"
+    ]
+  },
+  {
+    "input": "mysp1232078071",
+    "carrier": "ekart",
+    "confidence": "high",
+    "candidates": [
+      "ekart"
     ]
   },
   {
