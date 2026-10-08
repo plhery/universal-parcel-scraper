@@ -9,6 +9,9 @@
         "url": "https://kin.naver.com/qna/detail.naver?dirId=81302&docId=495290455",
         "date": "2026-09-24"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -20,7 +23,7 @@
           "korea-post"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Korea Post, which stays one candidate among several. Domestic parcel."
+      "note": "Publicly reported domestic parcel. Korea Post's tracker returns its history. Thirteen digits stay a suggestion shared with other carriers."
     },
     {
       "number": "EM385783825KR",
@@ -44,11 +47,14 @@
         "url": "https://kin.naver.com/qna/detail.naver?dirId=81302&docId=495261561",
         "date": "2026-09-22"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "korea-post",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. EMS item to Japan."
+      "note": "Publicly reported EMS item to Japan. Korea Post's tracker returns its history."
     },
     {
       "number": "EE299377630KR",

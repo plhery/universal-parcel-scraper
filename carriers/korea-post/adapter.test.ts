@@ -122,6 +122,12 @@ describe('Korea Post domestic history', () => {
     expect(() => parse($.html(), DOMESTIC)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it.each([['인수완료', 'accepted'], ['집하완료', 'accepted'], ['운송장출력', 'registered'], ['배달준비', 'out_for_delivery']])('maps the domestic label %s', (wording, stage) => {
+    const result = parse(fixture('domestic').replace('<span class="evtnm">배달완료</span>', `<span class="evtnm">${wording}</span>`), DOMESTIC);
+    expect(result).toMatchObject({ current_stage: stage, last_status_text: wording });
+    expect(result.delivered_at).toBeUndefined();
+  });
+
   it('leaves new wording unmapped', () => {
     const result = parse(fixture('domestic').replace('<span class="evtnm">배달완료</span>', '<span class="evtnm">새 처리현황</span>'), DOMESTIC);
     expect(result).toMatchObject({ status: 'unknown', last_status_text: '새 처리현황' });

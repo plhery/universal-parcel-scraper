@@ -116,6 +116,14 @@
       "note": "Picked up from the sender."
     },
     {
+      "wording": "인수완료",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Taken over from the sender."
+    },
+    {
       "wording": "접수",
       "language": "ko",
       "stage": "accepted",

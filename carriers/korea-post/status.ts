@@ -18,6 +18,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // Domestic wording.
   ['운송장출력', { status: 'pending', stage: 'registered' }],
   ['집하완료', { status: 'in_transit', stage: 'accepted' }],
+  ['인수완료', { status: 'in_transit', stage: 'accepted' }],
   ['접수', { status: 'in_transit', stage: 'accepted' }],
   ['발송', { status: 'in_transit', stage: 'in_transit' }],
   ['도착', { status: 'in_transit', stage: 'in_transit' }],
