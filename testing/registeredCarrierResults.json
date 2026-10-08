@@ -507,6 +507,7 @@
       "current_stage": "delivered",
       "last_status_text": "配達完了",
       "last_update": null,
+      "service_name": "宅急便",
       "timezone": "Asia/Tokyo",
       "events": [
         {

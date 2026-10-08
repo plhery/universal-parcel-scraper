@@ -22,7 +22,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "service_name"
   ],
   "portal": {
     "url": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
@@ -31,17 +32,18 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "service_name"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "service_name"
     ],
     "discarded": [
       "yearless_eta",
       "requested_delivery_window",
-      "service_name",
       "office_contact_details"
     ],
     "unavailable": [

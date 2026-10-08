@@ -11,7 +11,7 @@ const fixture = () => readFileSync(new URL('./fixtures/delivered.html', import.m
 describe('Yamato parser', () => {
   it('retains current state and yearless history without making up timestamps', () => {
     const result = normalizeCarrierResult(parse(fixture(), NUMBER));
-    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null, timezone: 'Asia/Tokyo' });
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null, timezone: 'Asia/Tokyo', service_name: '宅急便' });
     expect(result.delivered_at).toBeUndefined();
     expect(result.events).toHaveLength(4);
     expect(result.events?.[0]).toEqual({ description: '配達完了', stage: 'delivered', location: 'Example delivery office', provider_time_text: '01月01日 18:48' });
@@ -153,8 +153,17 @@ describe('Yamato parser', () => {
   it('backs declared capabilities with synthetic data', () => {
     const capabilities = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities as string[];
     const result = parse(fixture(), NUMBER);
-    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)) };
+    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)),
+      service_name: Boolean(result.service_name) };
     for (const capability of capabilities) expect(checks[capability], capability).toBe(true);
+  });
+
+  it('names the service in half-width letters, and none when the summary does not say', () => {
+    const html = (data: string) => fixture().replace('<div class="data">宅急便</div>', `<div class="data">${data}</div>`);
+    expect(parse(html(' ＥＡＺＹ '), NUMBER).service_name).toBe('EAZY');
+    expect(parse(html('ネコポス'), NUMBER).service_name).toBe('ネコポス');
+    expect(parse(html(''), NUMBER)).not.toHaveProperty('service_name');
+    expect(parse(fixture().replace('商品名：', '品名：'), NUMBER)).not.toHaveProperty('service_name');
   });
 });
 

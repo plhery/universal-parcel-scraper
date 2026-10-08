@@ -152,11 +152,13 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   const latest = latestFirst[0]!;
   const status = japanPostStatus(latest.description!);
   const settled = status && (status.status === 'exception' || ['delivered', 'returned', 'ready_for_pickup'].includes(status.stage));
+  // The class of goods is the Japan Post service the item travels under: Yu-Pack, or EMS or Parcel abroad.
+  const service = clean(fields.get('Class of goods'), 80);
   return { status: status?.status ?? 'unknown', ...(status ? { current_stage: status.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time,
     expected_delivery: settled ? null : designatedDelivery(fields, String(latest.local_time)),
     ...(status?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    events: latestFirst.slice(0, 100) };
+    ...(service ? { service_name: service } : {}), events: latestFirst.slice(0, 100) };
 }
 
 /**

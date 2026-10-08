@@ -84,12 +84,16 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   // Sorting yearless dates could incorrectly reorder a New Year crossing.
   events.reverse();
   const mappedCurrent = yamatoStatus(wording);
+  // The summary's product name is the Yamato service the parcel travels under (宅急便, ネコポス).
+  const products = block.find('.tracking-invoice-block-summary li')
+    .filter((_, row) => /^商品名[：:]?$/.test(clean($(row).children('.item').text())));
+  const service = products.length === 1 ? clean(products.children('.data').text().normalize('NFKC'), 80) : '';
   const current = returning && mappedCurrent && ['accepted', 'in_transit', 'out_for_delivery', 'ready_for_pickup', 'delivered'].includes(mappedCurrent.stage)
     ? { status: 'exception' as const, stage: 'returned' } : mappedCurrent;
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: wording, last_update: events[0]?.time ?? null,
     ...(current?.stage === 'delivered' && events[0]?.stage === 'delivered' && events[0].time ? { delivered_at: events[0].time } : {}),
-    timezone: ZONE, events: events.slice(0, 100) };
+    ...(service ? { service_name: service } : {}), timezone: ZONE, events: events.slice(0, 100) };
 }
 
 export class YamatoTracker {

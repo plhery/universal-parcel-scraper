@@ -12,7 +12,8 @@ seven, leave the last digit.
 The portal usually omits the year from scan dates and delivery estimates. Those
 scan dates remain in `provider_time_text`, with no invented timestamp or freshness
 watermark. Dates that include a year use Japan's timezone. The summary still
-reports the carrier's current state. International TA-Q-BIN uses a separate portal.
+reports the carrier's current state, and its product name (宅急便, ネコポス) becomes
+`service_name`. International TA-Q-BIN uses a separate portal.
 
 ## Live test
 

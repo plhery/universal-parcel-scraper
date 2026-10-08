@@ -21,8 +21,9 @@ carriers only when the digits before the last, divided by seven, leave the last 
   heading rows with value rows: one pair for international items, two for domestic ones.
 - A domestic item's designated delivery day becomes `expected_delivery`, with its time slot when the
   sender chose one (`2026-09-03 14:00–16:00`). It is the sender's plan, not a scan: a scan dated after
-  that day, delivery, return or an exception clears it. Service class, size class, the expected
-  delivery office and the piece count are discarded.
+  that day, delivery, return or an exception clears it. The class of goods (Yu-Pack, EMS, Parcel)
+  becomes `service_name`. Size class, the expected delivery office and the piece count are
+  discarded.
 - Not-found is the result table (`照会結果`) holding the number and `** Your item was not found…`.
   HTTP 404/410 means the endpoint is gone (transport error), not the parcel.
 - History rows come in pairs: the event row, then a postal-code row that is not an event. Postal

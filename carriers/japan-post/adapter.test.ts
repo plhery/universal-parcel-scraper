@@ -17,7 +17,8 @@ describe('Japan Post result projection', () => {
   it('projects local wall times and derives each confirmed event zone separately', () => {
     const result = normalizeCarrierResult(parse(fixture(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered',
-      last_status_text: 'Final delivery', last_update: '2026-09-04T09:43:00Z', last_update_local: '2026-09-04T11:43:00', expected_delivery: null });
+      last_status_text: 'Final delivery', last_update: '2026-09-04T09:43:00Z', last_update_local: '2026-09-04T11:43:00', expected_delivery: null,
+      service_name: 'Parcel' });
     expect(result.events).toHaveLength(5);
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'out_for_delivery', 'customs', 'in_transit', 'accepted']);
     expect(result.events?.[0]!.location).toBe('MALTA');
@@ -31,21 +32,22 @@ describe('Japan Post result projection', () => {
     expect(result.timezone).toBeUndefined();
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|000-0000|CN000000005JP/);
     expect(result.delivered_at).toBe('2026-09-04T09:43:00Z');
-    expect(Object.keys(result).sort()).toEqual(['current_stage', 'delivered_at', 'events', 'expected_delivery', 'last_status_text', 'last_update', 'last_update_local', 'status']);
+    expect(Object.keys(result).sort()).toEqual(['current_stage', 'delivered_at', 'events', 'expected_delivery', 'last_status_text', 'last_update', 'last_update_local',
+      'service_name', 'status']);
   });
 
   it('reads the domestic two-row details table, Japanese prefecture clocks and the designated delivery slot', () => {
     const result = normalizeCarrierResult(parse(fixture('domestic'), '000000000005'));
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
       last_status_text: 'Processing at delivery Post Office', last_update: '2026-09-02T21:11:00Z',
-      last_update_local: '2026-09-03T06:11:00', expected_delivery: '2026-09-03 14:00–16:00' });
+      last_update_local: '2026-09-03T06:11:00', expected_delivery: '2026-09-03 14:00–16:00', service_name: 'Yu-Pack' });
     expect(result.events?.map((event) => [event.time, event.location])).toEqual([
       ['2026-09-02T21:11:00Z', 'EXAMPLE DELIVERY, HOKKAIDO'],
       ['2026-09-02T03:27:00Z', 'EXAMPLE HUB, HOKKAIDO'],
       ['2026-09-01T10:15:00Z', 'EXAMPLE ORIGIN, CHIBA'],
     ]);
     expect(result.delivered_at).toBeUndefined();
-    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|000-0000|Yu-Pack|60 size/);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|000-0000|60 size/);
   });
 
   it.each([
@@ -219,7 +221,8 @@ describe('Japan Post result projection', () => {
   it('backs every declared capability with a synthetic fixture', () => {
     const result = parse(fixture(), NUMBER);
     const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)),
-      eta: Boolean(parse(fixture('domestic'), '000000000005').expected_delivery), delivered_at: Boolean(result.delivered_at) };
+      eta: Boolean(parse(fixture('domestic'), '000000000005').expected_delivery), delivered_at: Boolean(result.delivered_at),
+      service_name: Boolean(result.service_name) };
     const capabilities = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities as string[];
     for (const capability of capabilities) expect(checks[capability], capability).toBe(true);
   });
