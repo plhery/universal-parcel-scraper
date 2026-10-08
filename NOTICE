@@ -12,4 +12,5 @@ The places gazetteer includes GeoNames data (https://www.geonames.org),
 licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 Facility coordinates include OpenStreetMap data (https://www.openstreetmap.org/copyright),
 licensed under the Open Database License. Natural Earth country label points
-(https://www.naturalearthdata.com) are public domain.
+(https://www.naturalearthdata.com) and OurAirports airports
+(https://ourairports.com/data/) are public domain.

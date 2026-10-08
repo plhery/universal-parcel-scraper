@@ -18,9 +18,17 @@ placesForEvents(['Härkingen', 'Zürich'], { carrierCountries: ['CH'] });
   for larger towns ("Genf", "Cologne").
 - A country after the last dash is taken off, as DHL Express prints it ("BENIN CITY -
   NIGERIA", "AMSTERDAM - NETHERLANDS, THE"). Georgia stays: it is also a US state.
-- Bigger towns win, and context breaks ties: a country written in the text, a US state or
-  Swiss canton code, a Swiss postcode, then the countries of neighbouring scans, the
-  parcel's destination and the carrier's home country.
+- Chinese, Japanese and Korean names match in their own script. "广东省深圳市" is read as
+  a province followed by a city.
+- Bigger towns win, and context breaks ties: a country written in the text, a state,
+  province or canton, by code or by name ("STERLING - Virginia - USA", "CURITIBA - PR"), a
+  Swiss postcode, then the countries of neighbouring scans, the parcel's destination and
+  the carrier's home country.
+- A field that only names a region is that region: it places a town of that name only if
+  the town lies in it, and otherwise places the region's country ("Guangdong Province").
+  The words of a region's name are not towns elsewhere: "Cabo Delgado" is in Mozambique,
+  not "Delgado" in El Salvador. A region the parcel's countries have wins over a namesake
+  abroad.
 - A town nothing confirms needs 15,000 people. Otherwise the scan gets no place: a wrong
   dot is worse than none. Postcodes only confirm a name, never stand in for one.
 - Text that names only a country gets that country, marked `country`, so the map shades
@@ -43,6 +51,14 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   OpenStreetMap element its point comes from. The first four digits are often not a
   postcode (8920 and 8520, the Urdorf and Frauenfeld parcel centres, are none), so unknown
   sites stay on their town.
+- A scan that names an airport is placed at it, when the airport is within 60 km of the
+  town: by its code in brackets ("Frankfurt Airport (FRA)"), by a word of its name that is
+  neither the town nor the country ("LONDON-HEATHROW"), or as the town's one airport when
+  the text says airport ("LIEGE AIRPORT"). The place keeps the town as its name and returns
+  the airport as `site`. A bare code ("CDG") places nothing: three letters are too often
+  something else.
+- `hubs.json` lists hubs named after a place that is not their town ("ROISSY" is the
+  Charles de Gaulle airport, not Roissy-en-Brie), with the town and airport they stand for.
 - A carrier's own coordinates, supplied through the `points` option, move a scan
   to the facility when they are within 30 km of the town its text names. Scans with the same
   text share a point, so a carrier that places some scans of an office keeps them together.
@@ -50,14 +66,16 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
 ## Data
 
 `node scripts/generate-places.mjs` builds `places.tsv.br`: GeoNames towns of 1,000 people
-or more, the postal localities of Switzerland, Liechtenstein and their neighbours, Swiss
-and Liechtenstein postcodes, and Natural Earth country label points. Decisions about
-what to include are commented in the script.
+or more and first-level regions, the postal localities of Switzerland, Liechtenstein, their
+neighbours and the Benelux, Swiss and Liechtenstein postcodes, OurAirports airports with
+scheduled service, and the Natural Earth country label points in `countries.json`.
+Decisions about what to include are commented in the script.
 Then run `node scripts/generate-region-towns.mjs`: the carrier catalog keeps
 the towns of a few US states and Canadian provinces from it. `npm run test:generated`
 checks this projection.
 
 GeoNames data is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 ([geonames.org](https://www.geonames.org)) and facility points come from
-[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL). Natural Earth is public
-domain. Credits are included in [NOTICE](../NOTICE).
+[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL). Natural Earth and
+[OurAirports](https://ourairports.com/data/) are public domain. Credits are included in
+[NOTICE](../NOTICE).

@@ -40,6 +40,50 @@ describe('locatePlace', () => {
     expectPlace('Buchs AG', { country: 'CH', name: 'Buchs', latitude: 47.39, longitude: 8.08 }, ['CH']);
   });
 
+  it('reads DHL Express lines that end in a state or a country after a dash', () => {
+    expectPlace('STERLING - Virginia - USA', { country: 'US', name: 'Sterling', latitude: 39.01, longitude: -77.43 });
+    expectPlace('BENIN CITY - NIGERIA', { country: 'NG', name: 'Benin City', latitude: 6.34, longitude: 5.63 });
+    expectPlace('LONDON - CANADA', { country: 'CA', name: 'London', latitude: 42.98, longitude: -81.23 });
+    expectPlace('AMSTERDAM - NETHERLANDS, THE', { country: 'NL', name: 'Amsterdam', latitude: 52.37, longitude: 4.89 });
+    expectPlace('HONG KONG - HONG KONG SAR, CHINA', { country: 'HK', name: 'Hong Kong', latitude: 22.28, longitude: 114.18 });
+    // A Brazilian state, not Puerto Rico.
+    expectPlace('CURITIBA - PR', { country: 'BR', name: 'Curitiba', latitude: -25.43, longitude: -49.27 });
+    expectPlace('PANAMA CITY PA', { country: 'PA', name: 'Panama City', latitude: 8.99, longitude: -79.52 });
+    // Queens, not the island.
+    expectPlace('JAMAICA NY INTERNATIONAL DISTRIBUTION CENTER', { country: 'US', name: 'Jamaica', latitude: 40.69, longitude: -73.81 });
+  });
+
+  it('puts a scan at the airport or hub it names', () => {
+    expect(place('Frankfurt Airport (FRA), Germany')).toMatchObject({ country: 'DE', name: 'Frankfurt', site: 'Frankfurt Main Airport', latitude: 50.027, longitude: 8.558 });
+    expect(place('LONDON-HEATHROW - UK')).toMatchObject({ country: 'GB', name: 'London', site: 'London Heathrow Airport', latitude: 51.471, longitude: -0.46 });
+    expect(place('HELSINKI-VANTAAN LENTOASEMA')).toMatchObject({ country: 'FI', name: 'Helsinki', site: 'Helsinki Vantaa Airport' });
+    expect(place('LIEGE AIRPORT')).toMatchObject({ country: 'BE', name: 'Liège', site: 'Liège Airport' });
+    // Roissy is the airport, not Roissy-en-Brie on the other side of Paris.
+    expect(place('ROISSY COURRIER INTERNATIONAL')).toMatchObject({ country: 'FR', name: 'Roissy-en-France', site: 'Charles de Gaulle International Airport' });
+    expect(place('EAST MIDLANDS - UK')).toMatchObject({ country: 'GB', site: 'East Midlands Airport' });
+    // A country or a region in the text names no airport.
+    for (const location of ['Cuernavaca, Mexico', 'HSINCHU - TAIWAN', 'Soyapango, San Salvador']) expect(place(location)?.site, location).toBeUndefined();
+  });
+
+  it('reads Chinese, Japanese and Korean names', () => {
+    const shenzhen = { country: 'CN', name: 'Shenzhen', latitude: 22.55, longitude: 114.07 };
+    expectPlace('深圳市', shenzhen);
+    expectPlace('广东省深圳市', shenzhen);
+    expectPlace('Zhejiang Province Jinhua City', { country: 'CN', name: 'Jinhua', latitude: 29.11, longitude: 119.64 });
+    expectPlace('東京都', { country: 'JP', name: 'Tokyo', latitude: 35.69, longitude: 139.69 });
+    expectPlace('서울', { country: 'KR', name: 'Seoul', latitude: 37.57, longitude: 126.98 });
+  });
+
+  it('takes a region for its country, not for a town that shares a word of its name', () => {
+    expect(place('Guangdong Province')).toMatchObject({ precision: 'country', country: 'CN' });
+    expect(place('Cabo Delgado Province')).toMatchObject({ precision: 'country', country: 'MZ' });
+    expect(place('Morona-Santiago Province')).toMatchObject({ precision: 'country', country: 'EC' });
+    expect(place('Santa Catarina', ['BR'])).toMatchObject({ precision: 'country', country: 'BR' });
+    // A town named like the region it lies in is still that town.
+    expect(place('Example, Moscow')).toMatchObject({ precision: 'city', country: 'RU', name: 'Moscow' });
+    expectPlace('Frankfurt (Oder)', { country: 'DE', name: 'Frankfurt (Oder)', latitude: 52.35, longitude: 14.55 });
+  });
+
   it('looks past facility words to the town', () => {
     expectPlace('Agence DPD de La Crau (283)', { country: 'FR', name: 'La Crau', latitude: 43.15, longitude: 6.07 });
     expectPlace('AGENCE PARIS', { country: 'FR', name: 'Paris', latitude: 48.85, longitude: 2.35 });
@@ -78,12 +122,13 @@ describe('locatePlace', () => {
     expect(place('Germany')).toMatchObject({ precision: 'country', country: 'DE', name: 'Germany' });
     expect(place('CH')).toMatchObject({ precision: 'country', country: 'CH' });
     expect(place('Example Hub, China')).toMatchObject({ precision: 'country', country: 'CN' });
+    expect(place('Australia')).toMatchObject({ precision: 'country', country: 'AU', name: 'Australia', latitude: -24.13 });
   });
 
   it('declines text that names no place it can trust', () => {
     for (const location of [
       '', '   ', 'CENTRE DE TRI', 'Return location', 'Livré au destinataire', 'Example City', 'Home', 'Post branch',
-      'Your neighbourhood', '示例市', 'FR0012', 'Maker SO 841215', 'EXAMPLE AIR HUB',
+      'Your neighbourhood', '示例市', 'FR0012', 'Maker SO 841215', 'EXAMPLE AIR HUB', 'Hub', 'CDG',
     ]) expect(place(location), location).toBeNull();
     expect(place('Warehouse 2024', ['CH'])).toBeNull();
     expect(locatePlace(undefined)).toBeNull();

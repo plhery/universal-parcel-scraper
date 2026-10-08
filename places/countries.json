@@ -1786,18 +1786,10 @@
     },
     {
       "code": "AU",
-      "name": "Ashmore and Cartier Is.",
+      "name": "Australia",
       "label": [
-        123.59,
-        -12.43
-      ]
-    },
-    {
-      "code": "AU",
-      "name": "Indian Ocean Ter.",
-      "label": [
-        105.67,
-        -10.49
+        134.05,
+        -24.13
       ]
     },
     {
@@ -1814,14 +1806,6 @@
       "label": [
         167.95,
         -29.03
-      ]
-    },
-    {
-      "code": "AU",
-      "name": "Ashmore and Cartier Is.",
-      "label": [
-        123.59,
-        -12.43
       ]
     },
     {

@@ -1,0 +1,5 @@
+[
+  { "country": "FR", "names": ["Roissy"], "town": "Roissy-en-France", "airport": "CDG" },
+  { "country": "GB", "names": ["Heathrow"], "town": "London", "airport": "LHR" },
+  { "country": "GB", "names": ["East Midlands"], "town": "Castle Donington", "airport": "EMA" }
+]
