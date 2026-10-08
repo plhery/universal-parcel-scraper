@@ -3,7 +3,6 @@ import { DateTime, IANAZone } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { accepted, recognizeFromLookup } from '../../core/adapter/index.js';
 import { carrierIdFromPartner } from '../../core/catalog/hints.js';
-import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -37,12 +36,6 @@ function eventTime(raw: Record<string, unknown>): Pick<CarrierEvent, 'time'> & {
   const placed = Boolean(zone) && (!named || IANAZone.isValidZone(named));
   const iso = parsed.toISO({ suppressMilliseconds: true, includeOffset: placed });
   return placed ? { time: iso } : { local_time: iso };
-}
-
-// A USPS routing barcode starts with the recipient's ZIP code. Only the package
-// number after it is kept; a barcode that cannot be split is dropped whole.
-function partnerNumber(server: string): string {
-  return /^420\d{27}(?:\d{4})?$/.test(server) ? uspsPackageIdentifier(server) ?? '' : server;
 }
 
 // The contact card opens with the last-mile provider's name, and also lists
@@ -82,7 +75,8 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const latest = events[0]!;
   const classified = fourPxStatus(latest.provider_code ?? '', latest.description);
-  const deliveryNumber = partnerNumber(clean(item.serverCode, 64).toUpperCase());
+  // Result normalization keeps only the package number of a USPS routing barcode.
+  const deliveryNumber = clean(item.serverCode, 64).toUpperCase();
   const country = clean(item.ctEndCode, 8).toUpperCase();
   const partner = partnerOf(item.channelContact);
   return {

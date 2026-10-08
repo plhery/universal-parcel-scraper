@@ -107,11 +107,13 @@ describe('4PX result projection', () => {
 
   it('keeps the package number of a routing barcode without the ZIP code before it', () => {
     const payload = fixture();
-    expect(JSON.stringify(parse(payload, NUMBER))).not.toContain('42000001');
+    const result = (value: unknown) => normalizeCarrierResult(parse(value, NUMBER));
+    expect(JSON.stringify(result(payload))).not.toContain('42000001');
     payload.data[0].serverCode = '4200000000000000000000000000000001';
-    expect(parse(payload, NUMBER).delivery_tracking_number).toBeUndefined();
+    expect(result(payload)).toMatchObject({ delivery_carrier: 'usps' });
+    expect(result(payload).delivery_tracking_number).toBeUndefined();
     payload.data[0].serverCode = 'ZZ000000005GB';
-    expect(parse(payload, NUMBER).delivery_tracking_number).toBe('ZZ000000005GB');
+    expect(result(payload).delivery_tracking_number).toBe('ZZ000000005GB');
   });
 
   it('names a last-mile provider only when the catalog knows it and its website agrees', () => {

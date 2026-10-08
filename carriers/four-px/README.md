@@ -18,8 +18,9 @@ Event codes map to stages. `FPX_O_IR` and `FPX_O_IRI` relay whatever step a
 partner reported, from a label to an arrival abroad, so their wording decides.
 Other unknown codes stay unstaged.
 
-The server reference can identify a delivery partner's tracking number. A USPS
-routing barcode keeps only its package number, never the ZIP code before it.
+The server reference can identify a delivery partner's tracking number. Shared
+result normalization keeps only a USPS routing barcode's package number, never
+the ZIP code before it.
 The contact card names the last-mile provider and its website; the adapter
 reports the catalog carrier both agree on, never the card's phone numbers, and
 provider discovery confirms the operator separately. The feed also answers

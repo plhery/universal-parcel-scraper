@@ -116,6 +116,7 @@
       "universalSourceBudget",
       "universalSources",
       "usStateTimeZone",
+      "uspsPackageIdentifier",
       "validTrackingNumber",
       "validateDachserTrackingUrl",
       "validatePlanzerSharedUrl",

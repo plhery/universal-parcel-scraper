@@ -10,6 +10,8 @@
  */
 import { isRecord, type JsonObject } from '../types.js';
 import { CARRIER_CATALOG, STAGES } from '../../generated/catalog.js';
+import { normalizeTrackingNumber } from '../detection/normalize.js';
+import { uspsPackageIdentifier } from '../detection/usps.js';
 
 export type CarrierStatus =
   | 'pending'
@@ -93,6 +95,10 @@ const OPTIONAL_TEXT_FIELDS = [
   'timezone',
 ] as const;
 const EVENT_TEXT_FIELDS = ['time', 'location', 'description', 'stage', 'stage_source'] as const;
+const NUMBER_FIELDS = ['delivery_tracking_number', 'canonical_tracking_number', 'international_tracking_number'] as const;
+// USPS Publication 199: the ship-to AI 420 and a five- or nine-digit ZIP code
+// before a 22- or 26-digit package identifier.
+const USPS_ROUTING_BARCODE = /^420(?:\d{5}|\d{9})(?:\d{22}|\d{26})$/;
 
 /** A carrier's coordinates for a scan, or null when they are not a usable point. */
 export function eventPoint(latitude: unknown, longitude: unknown): EventPoint | null {
@@ -128,6 +134,17 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
   const weight = normalized.weight_kg;
   if (weight != null && (typeof weight !== 'number' || !Number.isFinite(weight) || weight < 0)) {
     throw new TypeError('The carrier adapter returned an invalid parcel weight');
+  }
+
+  // A USPS routing barcode opens with the recipient's ZIP code. A reported
+  // number keeps only the package identifier after it, and is dropped when
+  // that identifier cannot be split off cleanly.
+  for (const field of NUMBER_FIELDS) {
+    const number = normalized[field];
+    if (typeof number !== 'string' || !USPS_ROUTING_BARCODE.test(normalizeTrackingNumber(number))) continue;
+    const pic = uspsPackageIdentifier(number);
+    if (pic) normalized[field] = pic;
+    else delete normalized[field];
   }
 
   // Optional routing evidence must not discard otherwise valid tracking history.
