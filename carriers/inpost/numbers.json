@@ -112,10 +112,14 @@
         "url": "https://github.com/jkeen/tracking_number_data/issues/91"
       },
       "expect": {
-        "carrier": "dhl",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "inpost"
+        ]
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to Yodel, InPost's UK network; DHL's rule for the JJD prefix selects DHL."
+      "note": "Open-source project example, not a real shipment. The source attributes it to Yodel, InPost's UK network; DHL's networks share the JJD prefix, so DHL stays a candidate."
     },
     {
       "number": "JJD0002233564270287",
@@ -125,10 +129,14 @@
         "url": "https://wobaaa.com/aliexpress-uk-tracking-numbers/"
       },
       "expect": {
-        "carrier": "dhl",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "inpost"
+        ]
       },
-      "note": "Published integration example, not a real shipment. The source calls it a direct Yodel number, InPost's UK network; DHL's rule for the JJD prefix selects DHL."
+      "note": "Published integration example, not a real shipment. The source calls it a direct Yodel number, InPost's UK network; DHL's networks share the JJD prefix, so DHL stays a candidate."
     },
     {
       "number": "600000728632002019026599",

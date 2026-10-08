@@ -29,6 +29,8 @@ once.
 - `JJD` licence plates are shared by DHL's European parcel networks and detected
   as DHL Paket. The adapter of another network, such as
   [Poland's](../dhl-ecommerce-pl/README.md), reads one when its carrier is named.
+  A plate of `JJD` and sixteen digits is the length Yodel, now InPost's UK
+  network, prints, so it only suggests DHL beside [InPost](../inpost/README.md).
 - `0034043…` numbers are SSCCs. A failing GS1 check digit keeps one a suggestion.
 - Twelve-digit parcel numbers are Identcodes, closed by Deutsche Post's check
   digit (weights 4 and 9 from the left, mod 10). FedEx, Japan Post, Sagawa and

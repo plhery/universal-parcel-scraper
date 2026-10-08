@@ -178,12 +178,6 @@
   },
   {
     "carrier": "inpost",
-    "pattern": "^JJD\\d{16}$",
-    "kind": "collision",
-    "reason": "DHL's high-confidence JJD rule claims Yodel's JJD numbers, so the carrier comes from a link or a pick."
-  },
-  {
-    "carrier": "inpost",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
     "reason": "A legacy Yodel reference the adapter does not take."

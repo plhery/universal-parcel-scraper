@@ -441,7 +441,7 @@
       "dhl",
       "inpost"
     ],
-    "reason": "InPost tracks DHL JJD air waybills, so both claim the JJD family; the DHL rule is the high-confidence one."
+    "reason": "Yodel, InPost's UK network, prints JJD licence plates of this length, and DHL's networks use the same prefix. Neither has a check, so both stay suggestions."
   },
   {
     "shape": "Fifteen digits starting with 0 or 1 that pass the GS1 check",

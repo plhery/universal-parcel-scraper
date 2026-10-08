@@ -470,8 +470,12 @@
         "checksum": "s10"
       },
       {
-        "pattern": "^JJD[A-Z0-9]{8,}$",
+        "pattern": "^JJD(?!\\d{16}$)[A-Z0-9]{8,}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^JJD\\d{16}$",
+        "confidence": "low"
       },
       {
         "pattern": "^\\d{10}$",

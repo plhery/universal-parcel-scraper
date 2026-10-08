@@ -98,6 +98,20 @@ describe('Royal Mail domestic references', () => {
   });
 });
 
+describe('JJD licence plates', () => {
+  it('suggests InPost beside DHL for the plate length Yodel prints', () => {
+    const yodel = 'JJD0002000000000001';
+    expect(detectCarrierMatch(yodel)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhl', 'inpost'] });
+    expect(recognitionCandidates(yodel).map(candidate => candidate.carrier)).toEqual(['inpost']);
+  });
+
+  it('keeps every other JJD plate with DHL', () => {
+    for (const plate of ['JJD0099999999', 'JJD000200000000000', 'JJD00020000000000000', 'JJD000200000000000A', 'JJD000000000000000000000000']) {
+      expect(detectCarrierMatch(plate)).toMatchObject({ carrier: 'dhl', confidence: 'high' });
+    }
+  });
+});
+
 describe('UK fourteen-digit parcel numbers', () => {
   // Synthetic numbers in the ranges the carriers' own tracking pages show.
   it.each([['15500000000001', 'dpd-uk'], ['15500000000001M', 'dpd-uk'], ['60120000000000', 'dhl-ecommerce-uk']])(
