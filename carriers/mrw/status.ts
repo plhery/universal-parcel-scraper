@@ -6,6 +6,8 @@ const LABELS: Record<string, ClassifiedStatus> = {
   'EN TRANSITO': { status: 'in_transit', stage: 'in_transit' },
   'ENVIO EN REPARTO': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'DESTINATARIO AUSENTE O CERRADO': { status: 'exception', stage: 'failed_attempt' },
+  // A delivery agreed with the recipient puts the parcel back on its way.
+  'ENTREGA CONCERTADA': { status: 'in_transit', stage: 'in_transit' },
   'DEPOSITADO EN PUNTO MRW': { status: 'in_transit', stage: 'ready_for_pickup' },
   'DEPOSITADO EN POINTCORNER DESTINO': { status: 'in_transit', stage: 'ready_for_pickup' },
   'ENVIO ENTREGADO': { status: 'delivered', stage: 'delivered' },

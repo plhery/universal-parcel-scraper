@@ -78,6 +78,14 @@ describe('MRW anonymous tracking', () => {
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC_RECIPIENT');
   });
 
+  it('keeps an agreed delivery in transit', () => {
+    const arranged = fixture('history').replace('10/09/2026</td><td>19:29</td><td>Envío entregado',
+      '10/09/2026</td><td>19:29</td><td>Entrega concertada');
+    const result = parseMrwHistory(arranged, NUMBER, { ...summary(), status: 'Entrega concertada' });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Entrega concertada' });
+    expect(result.events?.[0]).toMatchObject({ description: 'Entrega concertada', stage: 'in_transit' });
+  });
+
   it('rejects summary/history disagreement instead of promoting a stale terminal result', () => {
     for (const changed of [{ status: 'En tránsito' }, { date: '11/09/2026' }, { hour: '19:30' }]) {
       expect(() => parseMrwHistory(fixture('history'), NUMBER, { ...summary(), ...changed }))
