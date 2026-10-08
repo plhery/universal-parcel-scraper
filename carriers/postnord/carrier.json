@@ -24,8 +24,12 @@
   },
   "capabilities": [
     "history",
+    "location",
+    "delivered_at",
     "weight",
-    "dimensions"
+    "dimensions",
+    "sender_name",
+    "pickup_point"
   ],
   "portal": {
     "url": "https://tracking.postnord.com/en/?id={trackingNumber}",
@@ -33,20 +37,27 @@
     "shows": [
       "status",
       "history",
+      "location",
       "weight",
       "dimensions",
       "recipient",
-      "sender"
+      "sender_name",
+      "pickup_point",
+      "destination_country"
     ],
     "scraped": [
       "status",
       "history",
+      "location",
+      "delivered_at",
       "weight",
-      "dimensions"
+      "dimensions",
+      "sender_name",
+      "pickup_point",
+      "destination_country"
     ],
     "discarded": [
-      "recipient",
-      "sender"
+      "recipient"
     ],
     "unavailable": []
   },

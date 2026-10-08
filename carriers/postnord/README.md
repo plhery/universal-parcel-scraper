@@ -15,10 +15,15 @@ Shipment group references and aliases need an exact item reference. Offset times
 are ordered by instant; incomplete scans fail rather than allowing older progress to appear current.
 Each event uses its own code and, where the code covers several milestones, exact portal wording.
 Pickup availability remains distinct from parcel delivery. Confirmed notification and
-recipient-choice notices are omitted from shipment history, so a delivered message cannot
-become a parcel-delivery milestone. A notice-only response is inconclusive.
-Summary status comes from the selected item's current status. Recipient addresses, sender
-references, delivery instructions and proof data are excluded.
+recipient-choice notices, a chosen pickup point among them, are omitted from shipment
+history, so a delivered message cannot become a parcel-delivery milestone. A notice-only
+response is inconclusive.
+Summary status comes from the selected item's current status. A drop-off by the sender, even
+after the day's last collection, reads as accepted. Customs clearance and a hold for a
+booked delivery are not exceptions. The sender the portal names, usually the shop, and the
+destination country are kept, and the service point holding a parcel becomes its pickup
+point. Recipient names and addresses, sender references, delivery instructions and proof
+data are excluded.
 
 ## Testing
 

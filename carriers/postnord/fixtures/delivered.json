@@ -5,8 +5,8 @@
   "serviceName": "Parcel",
   "serviceCode": "19",
   "references": [{ "name": "Order", "value": "Private order reference" }],
-  "receiver": { "address": { "name": "Private Recipient", "street": "Example Private Address", "postCode": "99999" } },
-  "sender": { "name": "Private Sender", "address": { "street": "Private Sender Address" } },
+  "receiver": { "address": { "name": "Private Recipient", "street": "Example Private Address", "postCode": "99999", "countryCode": "SE" } },
+  "sender": { "name": "Example Shop AB", "address": { "street": "Private Sender Address" } },
   "items": [{
     "itemId": "00573000000000000001",
     "deliveryInformation": { "deliveryTo": "Private delivery instructions", "deliveryToInfo": "Private destination" },

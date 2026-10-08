@@ -63,9 +63,16 @@ export function parsePostnord(payload: unknown, number: string): CarrierResult {
   const weight = measured('weight', ['kg', 'g']);
   const dimensions = ['length', 'width', 'height'].map((name) => measured(name, ['cm']));
   const delivery = mapped?.status === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
+  // The portal names the sender, usually the shop; of the receiver's address only the country is read.
+  const sender = isRecord(payload.sender) ? clean(payload.sender.name, 200) : '';
+  const country = isRecord(payload.receiver) && isRecord(payload.receiver.address) ? payload.receiver.address.countryCode : undefined;
+  // The service point holding the parcel, as the scan that made it available names it.
+  const pickup = mapped?.stage === 'ready_for_pickup' ? events.find((event) => event.stage === 'ready_for_pickup')?.location : undefined;
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: header || events[0]!.description, last_update: events[0]!.time,
     expected_delivery: null, ...(delivery?.time ? { delivered_at: delivery.time } : {}),
+    ...(sender ? { sender_name: sender } : {}), ...(pickup ? { pickup_point: pickup } : {}),
+    ...(typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
     ...(weight ? { weight_kg: (weight.value as number) / (weight.unit === 'g' ? 1000 : 1) } : {}),
     ...(dimensions.every(Boolean) ? { dimensions_text: `${dimensions.map((dimension) => dimension!.value).join(' × ')} cm` } : {}),
     events: events.slice(0, 100) };

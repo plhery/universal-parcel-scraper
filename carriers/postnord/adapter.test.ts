@@ -16,11 +16,25 @@ describe('PostNord direct tracking', () => {
   it('uses item summary status and excludes confirmed administrative notices from shipment history', () => {
     const result = parsePostnord(payload(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-04T12:00:00Z',
-      delivered_at: '2026-01-04T12:00:00Z', expected_delivery: null, weight_kg: 1.5, dimensions_text: '40 × 30 × 20 cm' });
+      delivered_at: '2026-01-04T12:00:00Z', expected_delivery: null, weight_kg: 1.5, dimensions_text: '40 × 30 × 20 cm',
+      sender_name: 'Example Shop AB', destination_country: 'SE' });
+    expect(result).not.toHaveProperty('pickup_point');
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'registered']);
     expect(JSON.stringify(result.events)).not.toContain('text message');
+    const waiting = payload(); waiting.items[0].events.splice(4, 1);
+    waiting.items[0].status = { code: 'AVAILABLE_FOR_DELIVERY', header: 'The shipment item has been delivered to a service point' };
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(declared.capabilities).toEqual(['history', 'weight', 'dimensions']);
+    expect(declared.capabilities).toEqual(['history', 'location', 'delivered_at', 'weight', 'dimensions', 'sender_name', 'pickup_point']);
+    expect(parsePostnord(waiting, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: 'Example Service Point' });
+    expect(parsePostnord(waiting, NUMBER)).not.toHaveProperty('delivered_at');
+  });
+
+  it('reads a late drop-off as accepted and leaves out a sender or country the portal does not give', () => {
+    expect(classifyPostnordStatus('EN_ROUTE', 'The shipment item has been dropped off after latest drop-off time.'))
+      .toEqual({ status: 'in_transit', stage: 'accepted' });
+    const value = payload(); value.sender = { name: ' ' }; value.receiver.address.countryCode = 'Sweden';
+    expect(parsePostnord(value, NUMBER)).not.toHaveProperty('sender_name');
+    expect(parsePostnord(value, NUMBER)).not.toHaveProperty('destination_country');
   });
 
   it('rejects missing, mismatched, ambiguous and group identities', () => {
@@ -55,7 +69,10 @@ describe('PostNord direct tracking', () => {
       'Suggested delivery time.',
       'Information to the driver added by the recipient.',
       'A text message notification has been delivered to the recipient.',
+      'A text message notification has been sent to the recipient.',
+      'E-mail notification has been sent to the recipient.',
       'Notification sent via APP.',
+      'Pick-up at servicepoint, selected by the receiver.',
     ].map((eventDescription) => ({ ...payload().items[0].events[5], eventDescription }));
     expect(() => parsePostnord(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     value.items[0].events[0].eventTime = 'invalid';
@@ -87,6 +104,14 @@ describe('PostNord direct tracking', () => {
     ['CUSTOMS_STOPPED_VAT', 'Stopped', 'exception', 'customs'],
     ['EN_ROUTE', 'The delivery of the shipment item is in progress.', 'out_for_delivery', 'out_for_delivery'],
     ['OTHER', 'The shipment item has been loaded.', 'in_transit', 'in_transit'],
+    ['EN_ROUTE', 'The shipment item has been dropped off by sender.', 'in_transit', 'accepted'],
+    ['EN_ROUTE', 'The shipment item has been picked-up for transportation.', 'in_transit', 'accepted'],
+    ['EN_ROUTE', 'Customs VAT has been paid.', 'in_transit', 'customs'],
+    ['OTHER', 'Import Charge sent to recipient.', 'in_transit', 'customs'],
+    ['STOPPED', 'The shipment item is being customs cleared by us.', 'in_transit', 'customs'],
+    ['STOPPED', 'The shipment item is being held at a distribution terminal awaiting the booked delivery date or, awaiting an agreement of delivery with the recipient.', 'in_transit', 'in_transit'],
+    ['STOPPED', 'The shipment item has been stored.', 'exception', 'exception'],
+    ['EXPECTED_DELAY', 'The address is incomplete.', 'exception', 'exception'],
   ])('maps %s independently from final-delivery wording', (code, description, status, stage) => {
     expect(classifyPostnordStatus(code, description)).toEqual({ status, stage });
     const value = payload(); value.items[0].status = { code, header: description };
@@ -115,7 +140,7 @@ describe('PostNord direct tracking', () => {
 
   it('excludes private fields, bounds history and keeps only unambiguous supported measurements', () => {
     const value = payload(); value.items[0].events[0].eventDescription = 'x'.repeat(600);
-    expect(JSON.stringify(parsePostnord(value, NUMBER))).not.toMatch(/Private|Address|99999|references|receiver|sender|deliveryInformation/);
+    expect(JSON.stringify(parsePostnord(value, NUMBER))).not.toMatch(/Private|Address|99999|references|receiver|senderReference|deliveryInformation/);
     expect(parsePostnord(value, NUMBER).events?.at(-1)?.description).toHaveLength(500);
     value.items[0].measurements[3] = { name: 'weight', unit: 'kg', value: 2.5 };
     expect(parsePostnord(value, NUMBER).weight_kg).toBe(2.5);
