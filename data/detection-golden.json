@@ -13300,6 +13300,14 @@
     "candidates": []
   },
   {
+    "input": "EG009234467HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
+    ]
+  },
+  {
     "input": "EG100124135PA",
     "carrier": "intl-post",
     "confidence": "high",
@@ -14524,6 +14532,14 @@
     "confidence": "high",
     "candidates": [
       "canpar"
+    ]
+  },
+  {
+    "input": "LA007519563HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
     ]
   },
   {
@@ -16036,6 +16052,14 @@
     ]
   },
   {
+    "input": "RA676684712HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
+    ]
+  },
+  {
     "input": "RC045003744LT",
     "carrier": "intl-post",
     "confidence": "high",
@@ -16361,6 +16385,14 @@
     ]
   },
   {
+    "input": "RS018800015HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
+    ]
+  },
+  {
     "input": "RS908247336CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -16374,6 +16406,14 @@
     "confidence": "high",
     "candidates": [
       "canada-post"
+    ]
+  },
+  {
+    "input": "RU483017223HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
     ]
   },
   {
@@ -16920,6 +16960,14 @@
     ]
   },
   {
+    "input": "UA926925855HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
+    ]
+  },
+  {
     "input": "UB024113792HU",
     "carrier": "intl-post",
     "confidence": "high",
@@ -17069,6 +17117,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "UM172597475HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
     ]
   },
   {
@@ -17641,6 +17697,14 @@
     ]
   },
   {
+    "input": "ZA025167426HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
+    ]
+  },
+  {
     "input": "ZA587200125LV",
     "carrier": "intl-post",
     "confidence": "high",
@@ -17675,6 +17739,22 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "ZF500363233HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
+    ]
+  },
+  {
+    "input": "ZH755966962HK",
+    "carrier": "hongkong-post",
+    "confidence": "high",
+    "candidates": [
+      "hongkong-post"
     ]
   },
   {
