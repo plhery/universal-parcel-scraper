@@ -19,8 +19,10 @@ not ask.
 - A 22-digit reference is the charge agency, the origin agency (six digits each) and the
   waybill (ten). The page must repeat the reference in its read-only field and in the
   three hidden agency and waybill fields.
-- Only the history table is read. The recipient, sender, shop reference, postcode,
-  destination agency address and proof of delivery on the same page are never read.
+- The history table, the sender (`Remitente`) and the weight (`Kilos`) are read. A
+  value masked with asterisks, as the page masks private names, is skipped. The recipient,
+  shop reference, postcode, piece count, volume, destination agency and proof of delivery
+  on the same page are never read.
 - Each history cell repeats its text in a tooltip span; only the visible span is read.
   ParcelsApp reads both, which is why it relays `ENTREGADOENTREGADO`.
 - Times: the history keeps Madrid time for every agency, Portuguese ones included, and

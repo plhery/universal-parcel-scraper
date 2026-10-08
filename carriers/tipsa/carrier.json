@@ -26,7 +26,9 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "sender_name",
+    "weight"
   ],
   "portal": {
     "url": "https://www.tip-sa.com/cliente/datos_env.php?id={trackingNumber}",
@@ -48,16 +50,16 @@
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "sender_name",
+      "weight"
     ],
     "discarded": [
-      "sender_name",
       "recipient_name",
       "recipient_address",
       "postcodes",
       "customer_reference",
       "parcel_count",
-      "weight",
       "volume",
       "proof_of_delivery"
     ],

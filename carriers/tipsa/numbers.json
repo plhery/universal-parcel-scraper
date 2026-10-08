@@ -208,6 +208,9 @@
         "url": "https://www.deco.proteste.pt/reclamar/todas-as-reclamacoes/encomenda-n-C3-A3o-recebida/0e56c354319eb7d720",
         "date": "2026-08-25"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -218,7 +221,7 @@
           "estafeta"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Portuguese shipment."
+      "note": "Publicly reported Portuguese shipment. TIPSA's tracker returns its history."
     },
     {
       "number": "0280400280406520139001",

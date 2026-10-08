@@ -45,9 +45,10 @@ export function tipsaLookupNotFound(html: string): boolean {
 }
 
 /**
- * The history table of TIPSA's shipment page. Its clock is Madrid's for every
- * agency, Portuguese ones included. Recipient, sender, reference and proof of
- * delivery blocks are never read.
+ * The history table of TIPSA's shipment page, with the sender and weight of
+ * its general data. Its clock is Madrid's for every agency, Portuguese ones
+ * included. Recipient, reference, agency and proof of delivery blocks are
+ * never read.
  */
 export function parseTipsaDetail(html: string, raw: string): CarrierResult {
   const number = normalizeTipsaNumber(raw);
@@ -88,6 +89,16 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
     events.push({ time: time.iso, description, ...(location ? { location } : {}), ...(stage ? { stage } : {}) });
   });
   if (!events.length) throw new IndeterminateError(PROVIDER, 'TIPSA shipment history is empty');
+  // General data cells come in label and value pairs. A masked value (with
+  // asterisks, as the page shows private names) is not kept.
+  const general = (label: string) => {
+    const cells = $('div.color-accent').filter((_, cell) => clean($(cell).text(), 40) === label);
+    const text = cells.length === 1 ? clean(cells.first().next('div:not(.color-accent)').text(), 120) : '';
+    return text.includes('*') ? '' : text;
+  };
+  const sender = general('Remitente');
+  const kilos = general('Kilos');
+  const weight = /^\d{1,6}(?:[.,]\d{1,3})?$/.test(kilos) ? Number(kilos.replace(',', '.')) : 0;
   // Newest first, as the page lists them; rows of one minute keep the page's order.
   events.sort((left, right) => Date.parse(right.time) - Date.parse(left.time));
   const newest = events[0]!;
@@ -99,6 +110,8 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
     last_update: newest.time,
     expected_delivery: null,
     timezone: TIPSA_ZONE,
+    ...(sender ? { sender_name: sender } : {}),
+    ...(weight > 0 && weight <= 100_000 ? { weight_kg: weight } : {}),
     events,
   };
 }

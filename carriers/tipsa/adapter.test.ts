@@ -52,7 +52,7 @@ describe('TIPSA shipment page', () => {
   it('reads the history table once per cell, on Madrid time across the clock change', () => {
     const result = normalizeCarrierResult(parseTipsaDetail(DETAIL, NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'ENTREGADO',
-      last_update: '2026-03-30T18:40:00+02:00', timezone: 'Europe/Madrid' });
+      last_update: '2026-03-30T18:40:00+02:00', timezone: 'Europe/Madrid', sender_name: 'EJEMPLO ENVIOS S.L.', weight_kg: 3 });
     expect(result.events?.map(({ time, description, location, stage }) => [time, description, location, stage])).toEqual([
       ['2026-03-30T18:40:00+02:00', 'ENTREGADO', undefined, 'delivered'],
       ['2026-03-30T09:05:00+02:00', 'REPARTO', undefined, 'out_for_delivery'],
@@ -64,9 +64,20 @@ describe('TIPSA shipment page', () => {
       ['2026-03-26T22:24:00+01:00', 'TRANSITO', undefined, 'in_transit'],
       ['2026-03-26T17:50:00+01:00', 'PENDIENTE DE ENTREGAR A TIPSA', undefined, 'registered'],
     ]);
-    // Recipient, sender, reference, postcode, agency address and proof of delivery stay out.
-    expect(JSON.stringify(result)).not.toMatch(/PRIVATE_SYNTHETIC|99999|Receptor|Observaciones/);
+    // Recipient, reference, postcode, agency and proof of delivery stay out.
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE_SYNTHETIC|99999|Receptor|Observaciones|0\.01/);
     for (const entry of statuses.entries) expect(tipsaStatus(entry.wording)?.stage).toBe(entry.stage);
+  });
+
+  it('reads the weight with either decimal mark and skips a masked or missing sender', () => {
+    const page = (kilos: string, sender: string) => DETAIL.replace('>3 </div>', `>${kilos} </div>`)
+      .replace('EJEMPLO ENVIOS S.L.', sender);
+    expect(parseTipsaDetail(page('2,5', 'EJEMPLO ENVIOS S.L.'), NUMBER)).toMatchObject({ weight_kg: 2.5, sender_name: 'EJEMPLO ENVIOS S.L.' });
+    for (const [kilos, sender] of [['0', 'NOMBRE E*****'], ['', ''], ['1 kg', ' ']]) {
+      const result = parseTipsaDetail(page(kilos!, sender!), NUMBER);
+      expect(result.weight_kg).toBeUndefined();
+      expect(result.sender_name).toBeUndefined();
+    }
   });
 
   it('leaves unknown labels to the shared wording rules', () => {
