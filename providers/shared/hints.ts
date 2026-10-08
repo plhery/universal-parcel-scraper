@@ -8,7 +8,7 @@
  */
 import type { CarrierId } from '../../generated/catalog.js';
 import { brandCarrierIds, carrierIdFromName } from '../../core/catalog/hints.js';
-import { detectCarrierMatch } from '../../core/detection/index.js';
+import { checksumRejections, detectCarrierMatch } from '../../core/detection/index.js';
 
 export { isKnownCarrierName } from '../../core/catalog/hints.js';
 
@@ -29,16 +29,32 @@ export function brandCarrierForNumber(name: string, trackingNumber: string): str
 }
 
 /**
+ * Detection rules whose check digit the carrier's own adapter verifies before
+ * any request: it refuses a number that fits the rule but fails the check as
+ * invalid input. Other rules are left out, because their carrier may still
+ * know such a number.
+ */
+export const ADAPTER_CHECKED_RULES: ReadonlySet<string> = new Set([
+  'dhl-express-waybill', 'gls-fr-4', 'mondial-relay-1',
+  // S10 postal items.
+  'austrian-post-2', 'bpost-3', 'bring-posten-1', 'canada-post-2', 'correios-br-1', 'correos-chile-2', 'ctt-1',
+  'india-post-1', 'japan-post-1', 'nz-post-1', 'postnord-2',
+]);
+
+/**
  * Names are hints only. A direct adapter must confirm the shipment before
- * adoption. The looked-up number resolves a bare brand name.
+ * adoption. The looked-up number resolves a bare brand name, and rules out a
+ * carrier whose adapter would refuse it for a failed check digit.
  */
 export function universalCarrierHints(raw: unknown[], trackingNumber?: string): { reported_carriers: string[]; discovered_carrier?: string } {
   const names = [...new Set(raw.filter((value): value is string => typeof value === 'string'
     && value.length <= 80 && /^[\p{L}\p{N} .&'()-]+$/u.test(value)).map((value) => value.trim()))].filter(Boolean).slice(0, 10);
+  const refused = new Set(trackingNumber ? checksumRejections(trackingNumber)
+    .filter(({ rule }) => ADAPTER_CHECKED_RULES.has(rule)).map(({ carrier }) => carrier as string) : []);
   const detected = new Set<string>();
   for (const name of names) {
     const carrier = carrierIdFromName(name) ?? (trackingNumber ? brandCarrierForNumber(name, trackingNumber) : undefined);
-    if (carrier) detected.add(carrier);
+    if (carrier && !refused.has(carrier)) detected.add(carrier);
   }
   return { reported_carriers: names,
     ...(names.length === 1 && detected.size === 1 ? { discovered_carrier: [...detected][0] } : {}),

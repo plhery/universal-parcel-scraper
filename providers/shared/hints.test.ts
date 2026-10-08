@@ -1,5 +1,21 @@
-import { describe, expect, it } from 'vitest';
-import { brandCarrierForNumber, universalCarrierHints } from './hints.js';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { AdapterRegistry } from '../../core/adapter/index.js';
+import { checksumRejections } from '../../core/detection/index.js';
+import { carrierErrorKind } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { REGISTRY } from '../../generated/registry.js';
+import { ADAPTER_CHECKED_RULES, brandCarrierForNumber, universalCarrierHints } from './hints.js';
+
+/** Synthetic numbers that fit each adapter-checked rule but fail its check digit. */
+const FAILING: Record<string, string> = {
+  'dhl-express-waybill': '1234567890', 'gls-fr-4': '123456789010', 'mondial-relay-1': '12345678901234567890123450',
+  'austrian-post-2': 'RR123456789AT', 'bpost-3': 'RR123456789BE', 'bring-posten-1': 'RR123456789NO',
+  'canada-post-2': 'RR123456789CA', 'correios-br-1': 'RR123456789BR', 'correos-chile-2': 'RR123456789CL',
+  'ctt-1': 'RR123456789PT', 'india-post-1': 'RR123456789IN', 'japan-post-1': 'RR123456789JP',
+  'nz-post-1': 'RR123456789NZ', 'postnord-2': 'RR123456789SE',
+};
+
+afterEach(() => { vi.unstubAllGlobals(); });
 
 describe('carrier names reported by universal providers', () => {
   it('resolves a bare brand only when the number leaves one of its networks', () => {
@@ -37,5 +53,34 @@ describe('carrier names reported by universal providers', () => {
     // The feed is no carrier, but it still counts as a name: two names propose nothing.
     expect(universalCarrierHints(['UPU', 'Finland Post'], finnish)).toEqual({ reported_carriers: ['UPU', 'Finland Post'] });
     expect(universalCarrierHints(['Universal Postal Union'], finnish)).toEqual({ reported_carriers: ['Universal Postal Union'] });
+  });
+
+  it('proposes no carrier whose adapter would refuse the number for its check digit', () => {
+    expect(universalCarrierHints(['DHL Express'], '1234567890')).toEqual({ reported_carriers: ['DHL Express'] });
+    expect(universalCarrierHints(['DHL Express'], '1234567891')).toEqual({ reported_carriers: ['DHL Express'], discovered_carrier: 'dhl-express' });
+    expect(universalCarrierHints(['bpost'], 'RR123456789BE')).toEqual({ reported_carriers: ['bpost'] });
+    expect(universalCarrierHints(['bpost'], 'RR123456785BE').discovered_carrier).toBe('bpost');
+    // Yamato's adapter does not apply its detection rule's check, so Yamato may still know the number.
+    expect(checksumRejections('123456789012').map(({ rule }) => rule)).toContain('yamato-1');
+    expect(universalCarrierHints(['Yamato Transport'], '123456789012').discovered_carrier).toBe('yamato');
+    // Without the number nothing is ruled out.
+    expect(universalCarrierHints(['DHL Express']).discovered_carrier).toBe('dhl-express');
+  });
+
+  it('holds a failing number for every adapter-checked rule', () => {
+    expect(Object.keys(FAILING).sort()).toEqual([...ADAPTER_CHECKED_RULES].sort());
+  });
+
+  it.each(Object.entries(FAILING))('has %s refused by its carrier\'s adapter before any request', async (rule, number) => {
+    const rejection = checksumRejections(number).find((item) => item.rule === rule);
+    expect(rejection).toBeDefined();
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('offline'));
+    vi.stubGlobal('fetch', fetcher);
+    const registry = new AdapterRegistry(REGISTRY, { fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    const adapter = registry.for(rejection!.carrier)!;
+    // Some adapters refuse synchronously, before returning a promise.
+    const error = await (async () => adapter.track({ number, postcode: null }, { budgetMs: 2_000 }))().catch((caught: unknown) => caught);
+    expect(carrierErrorKind(error)).toBe('invalid_input');
+    expect(fetcher).not.toHaveBeenCalled();
   });
 });

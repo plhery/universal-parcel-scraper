@@ -47,6 +47,14 @@ describe('Ship24 result parsing', () => {
     expect(result).toMatchObject({ reported_carriers: ['Correos de España'], discovered_carrier: 'correos-spain' });
   });
 
+  it('keeps "DHL Express" a reported name for a waybill whose check digit DHL Express refuses', () => {
+    const named = (waybill: string) => parseShip24Response({ data: { tracking_number: waybill,
+      couriers: [{ translation: { name: 'DHL Express' } }], events: history.data.events } }, waybill);
+    expect(named('1234567890')).toMatchObject({ reported_carriers: ['DHL Express'] });
+    expect(named('1234567890').discovered_carrier).toBeUndefined();
+    expect(named('1234567891').discovered_carrier).toBe('dhl-express');
+  });
+
   it('rejects history that belongs to another shipment', () => {
     expect(() => parseShip24Response({ data: { tracking_number: 'OTHER123', events: [] } }, number))
       .toThrow('no matching shipment history');
