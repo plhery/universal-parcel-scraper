@@ -264,6 +264,173 @@
         ]
       },
       "note": "Invented twelve digits whose last digit is not the remainder of the first eleven divided by seven, so Japan Post, Sagawa and Yamato stay out of the suggestions."
+    },
+    {
+      "number": "365729365455",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260915010707/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=365729365455",
+        "date": "2026-09-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel in transit to the delivery office."
+    },
+    {
+      "number": "440891443742",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260106233839/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=440891443742",
+        "date": "2026-01-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel in transit to the delivery office, with a delivery date and time slot."
+    },
+    {
+      "number": "450526163485",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928144402/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=450526163485",
+        "date": "2026-09-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel in transit to the delivery office."
+    },
+    {
+      "number": "492207594082",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260912034213/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=492207594082",
+        "date": "2026-09-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel in transit to the delivery office, with a delivery date."
+    },
+    {
+      "number": "501917852354",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260527040006/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=501917852354",
+        "date": "2026-05-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel out for delivery."
     }
   ]
 }
