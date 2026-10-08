@@ -1013,7 +1013,7 @@
     },
     {
       "carrier": "parcelforce",
-      "direct": "No adapter",
+      "direct": "Yes (via Royal Mail; local Chromium)",
       "sample": "Not tested",
       "references": [
         {

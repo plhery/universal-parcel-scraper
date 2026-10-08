@@ -85,7 +85,7 @@ asked after the other aggregators whatever its count.
 | [Planzer](../carriers/planzer/README.md) | Yes | ✓ 4 | No history | No history | No history | No history | N/A |
 | [Quickpac](../carriers/quickpac/README.md) | Yes (via Planzer) | No history | No history | No history | No history | No history | N/A |
 | [DPD France](../carriers/dpd-fr/README.md) | Yes | ✓ 10 | ✓ 10, partial | ✓ 5, partial | No history | No history | N/A |
-| [Parcelforce Worldwide](../carriers/parcelforce/README.md) | No adapter | Not tested | No history | No history | No history | ✓ 3 | No history |
+| [Parcelforce Worldwide](../carriers/parcelforce/README.md) | Yes (via Royal Mail; local Chromium) | Not tested | No history | No history | No history | ✓ 3 | No history |
 | [Purolator](../carriers/purolator/README.md) | Yes | ✓ 12, intermittent | No history | ✓ 12 | ✓ 12 | Refused | N/A |
 | [OnTrac](../carriers/ontrac/README.md) | Yes | ✓ 14 | No history | ✓ 14 | No history | ✓ 14 | N/A |
 | [Delhivery](../carriers/delhivery/README.md) | Yes | ✓ 2, partial (one undated scan and a status snapshot) | No history | No history | No history | No history | N/A |
