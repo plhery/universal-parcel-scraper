@@ -221,16 +221,16 @@ not establish in `local_time`: a consumer reads an offset-less `time` in the res
 else in the carrier's catalog zone. More rows alone do not prove a fresher or more
 complete history.
 
-The app's scan-identity policies let Swiss Post and universal scans gain a location in
-place only when a scan retains its instant, wording and known stage and matches uniquely
-in both directions. Distinct wording can distinguish scans sharing an instant. Swiss Post
-also requires its provider code. Conflicting locations stay separate. Chronopost, DPD France
-and Posti scans lose, on the same terms, a stored location their adapter now drops as no place
-(a service's name, a status, Posti's "abroad"), and so do universal copies of Posti's scans.
-Older apps that cannot compare scan evidence do not use these policies. A policy's
-`relabelledFrom` names the zone a source once put on every wall clock: a scan whose wall
-clock now carries another offset takes over the row stored under the old label, by provider
-code and location.
+The app's scan-identity policies, one per source in `core/catalog/eventIdentity.ts`, say
+what identifies a stored scan that its source now reports at the same instant with a
+location, without one it no longer reads as a place (a service's name, a status, Posti's
+"abroad"), with a corrected stage or with new wording: an unchanged instant, wording and
+known stage, the provider code, or a comparison specific to the carrier. Matches must be
+unique in both directions, and distinct wording can distinguish scans sharing an instant.
+Conflicting locations stay separate, and older apps that cannot compare scan evidence only
+use the policies that need no comparison. A policy's `relabelledFrom` names the zone a
+source once put on every wall clock: a scan whose wall clock now carries another offset
+takes over the row stored under the old label, by provider code and location.
 
 ## Fallback providers
 
