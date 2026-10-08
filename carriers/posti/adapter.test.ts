@@ -17,13 +17,43 @@ describe('Posti projection', () => {
     hit(data).events.reverse();
     const result = parse(data, NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', weight_kg: 0.5,
-      dimensions_text: '25 × 15 × 10 cm', pickup_point: 'Example pickup point, Example city', timezone: 'Europe/Helsinki' });
+      dimensions_text: '25 × 15 × 10 cm', pickup_point: null, timezone: 'Europe/Helsinki' });
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'pending', 'ready_for_pickup', 'in_transit', 'in_transit']);
     expect(result.last_update).toBe('2026-01-12T13:00:00Z');
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
     const capabilities = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities;
     expect(capabilities).toEqual(['history', 'location', 'weight', 'dimensions', 'pickup_point']);
     expect(result.events?.every((event) => event.description && event.time)).toBe(true);
+  });
+
+  it('names a public pickup point with its address only while the parcel waits there', () => {
+    const data = fixture('ready-for-pickup');
+    const result = parse(data, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup',
+      pickup_point: 'Example parcel locker\nExample street 1\n00000 EXAMPLE CITY' });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    hit(data).pickupPoint.type = 'POSTI_SERVICE_POINT';
+    delete hit(data).pickupPoint.address.postcode;
+    expect(parse(data, NUMBER).pickup_point).toBe('Example parcel locker\nExample street 1\nEXAMPLE CITY');
+    // A planned point in transit and the point a delivered parcel left are not waiting points.
+    for (const main of ['IN_TRANSPORT', 'DELIVERED', 'RETURN_READY_FOR_PICKUP']) {
+      expect(parse({ ...data, data: { consumerSearchShipments: { totalHits: 1, hits: [{ ...hit(data), status: { main, subStatus: [] } }] } } }, NUMBER)
+        .pickup_point).toBeNull();
+    }
+  });
+
+  it.each([
+    ['a private locker', { type: 'LOCKER_PRIVATE' }, 'Example parcel locker\nEXAMPLE CITY'],
+    ['an unknown type', { type: 'UNKNOWN' }, 'Example parcel locker\nEXAMPLE CITY'],
+    ['no type', { type: null }, 'Example parcel locker\nEXAMPLE CITY'],
+    ['no street', { address: { publicName: 'Example parcel locker', postcode: '00000', city: 'EXAMPLE CITY' } }, 'Example parcel locker\nEXAMPLE CITY'],
+    ['no town', { address: { publicName: 'Example parcel locker', streetAddress: 'Example street 1' } }, 'Example parcel locker'],
+    ['no name', { address: { streetAddress: 'Example street 1', postcode: '00000', city: 'EXAMPLE CITY' } }, null],
+    ['no point', null, null],
+  ])('keeps the street out of a pickup point with %s', (_case, change, expected) => {
+    const data = fixture('ready-for-pickup');
+    hit(data).pickupPoint = change && { ...hit(data).pickupPoint, ...change };
+    expect(parse(data, NUMBER).pickup_point).toBe(expected);
   });
 
   it('gives scans abroad no location rather than Posti\'s "abroad" label', () => {
@@ -117,6 +147,7 @@ describe('Posti anonymous transport', () => {
     const body = JSON.parse(String(request.body));
     expect(body.variables).toEqual({ searchTerms: [NUMBER], locale: 'en' });
     expect(body.query).toContain('type: PUBLIC_SHIPMENTS');
+    expect(body.query).toContain('pickupPoint { type address { publicName streetAddress postcode city } }');
     expect(body.query).not.toMatch(/destination|pinCode|payments|userRole/);
     expect(request.cache).toBe('no-store');
     expect(request.redirect).toBe('error');

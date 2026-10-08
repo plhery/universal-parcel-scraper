@@ -12,10 +12,12 @@
           "height": {"unit": "cm", "value": "10"}
         },
         "pickupPoint": {
-          "address": {"publicName": "Example pickup point", "city": "Example city", "streetAddress": "PRIVATE_ADDRESS"},
+          "type": "POSTI_SERVICE_POINT",
+          "status": "SHELVED",
+          "address": {"publicName": "Example pickup point", "streetAddress": "Example street 1", "postcode": "00000", "city": "Example city"},
           "pickupDetails": {"pinCode": "PRIVATE_CODE"}
         },
-        "delivery": {"destination": {"name": "PRIVATE_NAME"}},
+        "delivery": {"destination": {"name": "PRIVATE_NAME", "street": ["PRIVATE_ADDRESS"], "postcode": "PRIVATE_POSTCODE", "city": "PRIVATE_CITY"}},
         "packages": [],
         "events": [
           {"eventDescription": "The item has been delivered", "reasonDescription": null, "city": "Example city", "timestamp": "2026-01-12T13:00:00.000Z"},

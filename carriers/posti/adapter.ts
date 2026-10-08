@@ -15,7 +15,8 @@ const GRAPHQL_URL = 'https://graphql.posti.fi/graphql';
 const DEFAULT_TIMEOUT_MS = 15_000;
 
 // The public tracking page uses this operation with PUBLIC_SHIPMENTS. Select
-// only tracking fields; no account, recipient, address, payment or pickup code.
+// only tracking fields and the pickup point's own address; no account,
+// recipient address, payment or pickup code.
 const QUERY = `query SearchShipments($searchTerms: [String!]!, $locale: String) {
   consumerSearchShipments(page: 1, pageSize: 20, type: PUBLIC_SHIPMENTS, searchTerms: $searchTerms, locale: $locale) {
     totalHits
@@ -23,7 +24,7 @@ const QUERY = `query SearchShipments($searchTerms: [String!]!, $locale: String) 
       displayId
       status { main subStatus }
       measurements { weight { unit value } height { unit value } width { unit value } length { unit value } }
-      pickupPoint { address { publicName city } }
+      pickupPoint { type address { publicName streetAddress postcode city } }
       events { city eventDescription reasonDescription timestamp }
       packages { trackingNumber }
     }
@@ -52,6 +53,28 @@ function assertGraphql(payload: unknown): asserts payload is Record<string, unkn
     throw new IndeterminateError('Posti', 'Posti could not complete the tracking query');
   }
   if (payload.errors != null && !Array.isArray(payload.errors)) throw new SchemaError('Posti');
+}
+
+// Pickup point types whose address is a public business's: Posti's lockers and
+// service points. A private locker stands in the recipient's building.
+const PUBLIC_POINTS = new Set(['LOCKER', 'LOCKER_OUTDOOR', 'POSTI_SERVICE_POINT']);
+
+/**
+ * The pickup point's name, then its street and "postcode city", as Posti's
+ * tracker lays them out. A private locker, or a point of unknown type, keeps
+ * only its town after the name: its street could be the recipient's.
+ */
+function pickupPoint(raw: unknown): string | null {
+  const point = isRecord(raw) ? raw : {};
+  const address = isRecord(point.address) ? point.address : {};
+  const name = clean(address.publicName, 160);
+  if (!name) return null;
+  const street = clean(address.streetAddress, 120);
+  const city = clean(address.city, 80);
+  if (street && city && typeof point.type === 'string' && PUBLIC_POINTS.has(point.type)) {
+    return [name, street, [clean(address.postcode, 16), city].filter(Boolean).join(' ')].join('\n');
+  }
+  return [name, city].filter(Boolean).join('\n');
 }
 
 function measurement(raw: unknown, units: Record<string, number>): number | null {
@@ -97,7 +120,6 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const current = postiStatus(hit.status.main, hit.status.subStatus);
   const measurements = isRecord(hit.measurements) ? hit.measurements : {};
   const dimensions = ['length', 'width', 'height'].map((field) => measurement(measurements[field], { cm: 1, mm: 0.1, m: 100 }));
-  const pickup = isRecord(hit.pickupPoint) && isRecord(hit.pickupPoint.address) ? hit.pickupPoint.address : {};
   return {
     status: current?.status ?? 'unknown',
     ...(current ? { current_stage: current.stage } : {}),
@@ -106,7 +128,8 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     provider_status: hit.status.main,
     weight_kg: measurement(measurements.weight, { kg: 1, g: 0.001 }),
     dimensions_text: dimensions.every((value) => value !== null) ? `${dimensions.join(' × ')} cm` : null,
-    pickup_point: [clean(pickup.publicName, 160), clean(pickup.city, 80)].filter(Boolean).join(', ') || null,
+    // Posti's tracker shows the point at any status, a planned one in transit included.
+    pickup_point: current?.stage === 'ready_for_pickup' ? pickupPoint(hit.pickupPoint) : null,
     timezone: 'Europe/Helsinki',
     events,
   };
