@@ -13004,11 +13004,39 @@
     ]
   },
   {
+    "input": "CNBR00121186607",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "CNESP00000123400000000001",
     "carrier": "ecoscooting",
     "confidence": "high",
     "candidates": [
       "ecoscooting"
+    ]
+  },
+  {
+    "input": "CNFR000000000001HD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "CNFR9010496456407HD",
+    "carrier": "aliexpress",
+    "confidence": "high",
+    "candidates": [
+      "aliexpress"
+    ]
+  },
+  {
+    "input": "CNFR9010497138847HD",
+    "carrier": "aliexpress",
+    "confidence": "high",
+    "candidates": [
+      "aliexpress"
     ]
   },
   {
@@ -13025,6 +13053,12 @@
     ]
   },
   {
+    "input": "CNMEX1040292876",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "CNPRT00000001234000000001",
     "carrier": "ecoscooting",
     "confidence": "high",
@@ -13038,6 +13072,17 @@
     "confidence": "high",
     "candidates": [
       "ecoscooting"
+    ]
+  },
+  {
+    "input": "CNUSUP00037458234",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {

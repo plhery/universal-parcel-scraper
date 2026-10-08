@@ -2,10 +2,10 @@
 
 Cainiao is Alibaba's logistics network and carries the international leg of most AliExpress
 orders. It rarely does the last mile: it hands the parcel to a local post or courier and
-publishes that partner's number when it has one. The catalog recognizes a specific Cainiao
-shipment-number family and suggests AliExpress for `CNG` and numeric `LP` references; other ambiguous formats
-need the user to pick AliExpress or paste a `global.cainiao.com` link. Detection does not
-select the last-mile carrier.
+publishes that partner's number when it has one. The catalog recognizes Cainiao's `DOFR…HD` and
+`CNFR…HD` shipment numbers and suggests AliExpress for `CNG` and numeric `LP` references; other
+ambiguous formats, such as `AP`, `CNUSUP`, `CNBR` and `CNMEX` references, need the user to pick
+AliExpress or paste a `global.cainiao.com` link. Detection does not select the last-mile carrier.
 
 ## How it works
 

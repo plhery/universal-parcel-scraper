@@ -212,6 +212,10 @@
         "confidence": "high"
       },
       {
+        "pattern": "^CNFR\\d{13}HD$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^CNG\\d{14}$",
         "confidence": "low"
       },

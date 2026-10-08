@@ -68,6 +68,11 @@
       "confidence": "high"
     },
     {
+      "id": "aliexpress-cnfr",
+      "pattern": "^CNFR\\d{13}HD$",
+      "confidence": "high"
+    },
+    {
       "id": "aliexpress-2",
       "pattern": "^CNG\\d{14}$",
       "confidence": "low"

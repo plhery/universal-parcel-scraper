@@ -6,6 +6,24 @@
     "reason": "AP references have matching Cainiao activity, but no official identifier specification establishes their scope."
   },
   {
+    "carrier": "aliexpress",
+    "pattern": "^CNBR\\d{11}$",
+    "kind": "open",
+    "reason": "CNBR references to Brazil have matching Cainiao activity, but no official identifier specification establishes their scope."
+  },
+  {
+    "carrier": "aliexpress",
+    "pattern": "^CNMEX\\d{10}$",
+    "kind": "open",
+    "reason": "CNMEX references to Mexico have matching Cainiao activity, but no official identifier specification establishes their scope."
+  },
+  {
+    "carrier": "aliexpress",
+    "pattern": "^CNUSUP\\d{11}$",
+    "kind": "open",
+    "reason": "CNUSUP references to the United States have matching Cainiao activity, but no official identifier specification establishes their scope."
+  },
+  {
     "carrier": "amazon-logistics",
     "pattern": "^ZZ\\d{10}$",
     "kind": "by_design",

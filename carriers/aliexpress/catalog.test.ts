@@ -41,7 +41,12 @@ describe('Cainiao DOFR detection', () => {
     expect(parseTrackingInput(`Parcel reference: X${number}`).carrier).not.toBe('aliexpress');
   });
 
-  it.each(['DOFR000000000001HD', 'DOFR00000000000001HD', 'DOFR0000000000001HU', 'DOGB0000000000001HD'])(
+  it('routes the CNFR numbers of the same series to Cainiao', () => {
+    expect(parseTrackingInput('cnfr 0000000000001 hd')).toMatchObject({ carrier: 'aliexpress', confidence: 'high' });
+  });
+
+  it.each(['DOFR000000000001HD', 'DOFR00000000000001HD', 'DOFR0000000000001HU', 'DOGB0000000000001HD',
+    'CNFR000000000001HD', 'CNFR0000000000001HU'])(
     'leaves unsupported format %s unresolved', (value) => {
       expect(detectCarrierMatch(value).candidates).not.toContain('aliexpress');
     },

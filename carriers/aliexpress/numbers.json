@@ -236,6 +236,122 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
+    },
+    {
+      "number": "CNFR9010497138847HD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260331092127/https://global.cainiao.com/newDetail.htm?mailNoList=CNFR9010497138847HD&otherMailNoList=",
+        "date": "2026-03-31",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "aliexpress",
+        "confidence": "high"
+      },
+      "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracker returns its history."
+    },
+    {
+      "number": "CNFR9010496456407HD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260330181521/https://global.cainiao.com/newDetail.htm?mailNoList=CNFR9010496456407HD",
+        "date": "2026-03-30",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "aliexpress",
+        "confidence": "high"
+      },
+      "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracking reply archived with it holds its history."
+    },
+    {
+      "number": "CNFR000000000001HD",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "aliexpress"
+        ]
+      }
+    },
+    {
+      "number": "CNUSUP00037458234",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260512052701/https://global.cainiao.com/detail.htm?mailNoList=CNUSUP00037458234",
+        "date": "2026-05-12",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracker returns its history; only Colis Privé's generic rule matches the shape."
+    },
+    {
+      "number": "CNBR00121186607",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251130005223/https://global.cainiao.com/newDetail.htm?mailNoList=CNBR00121186607&otherMailNoList=",
+        "date": "2025-11-30",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracker returns its history."
+    },
+    {
+      "number": "CNMEX1040292876",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260305093616/https://global.cainiao.com/newDetail.htm?mailNoList=CNMEX1040292876",
+        "date": "2026-03-05",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracker returns its history."
     }
   ]
 }
