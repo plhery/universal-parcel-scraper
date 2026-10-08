@@ -35,11 +35,13 @@
     "shows": [
       "status",
       "history",
+      "location",
       "recipient_address"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "location"
     ],
     "discarded": [
       "recipient_address"

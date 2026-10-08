@@ -19,9 +19,17 @@ ties. If a clock is unresolved, native position remains authoritative and its
 text is preserved. Unknown current wording cannot inherit older delivery.
 
 The place column can contain recipient addresses. Only the established depot
-label with a repeated department code is retained, and exception places are
-excluded. Customer and order blocks are ignored. Distinct native places remain
-separate scans even when privacy rules suppress both.
+labels with a repeated department code are retained: `TOWN 68 (68)` as written,
+and the town alone of `TOWN 44 (44 49X)`, whose codes are dropped. Exception
+places are excluded. Customer and order blocks are ignored. Distinct native
+places remain separate scans even when privacy rules suppress both. A scan
+stored before its depot's town was read gains it in place.
+
+"Acheminement contractuel du colis en 48h00" states the parcel's contractual
+transit time beside a depot scan. It has no stage and never decides the
+parcel's status. "COLIS NON REMIS" has no stage either: seen only before the
+first scan, it can say the shipper did not hand the parcel over, while the same
+words also say a parcel was not delivered.
 
 Empty tables and form errors do not prove parcel absence. They remain
 inconclusive, as do blank responses, redirects and generic HTTP errors.

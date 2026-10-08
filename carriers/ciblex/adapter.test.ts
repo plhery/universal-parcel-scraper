@@ -11,7 +11,7 @@ import {
   normalizeCiblexTrackingNumber,
   parseCiblexTrackingHtml,
 } from './adapter.js';
-import { classifyCiblexStatus, comparableText } from './status.js';
+import { classifyCiblexStatus, comparableText, isCiblexNotice } from './status.js';
 
 // Fully synthetic identifier paired with a deterministic provider-shaped HTML
 // fixture. Ciblex does not publish a reusable demo shipment number.
@@ -97,6 +97,18 @@ describe('Ciblex status vocabulary', () => {
       expect(classifyCiblexStatus(wording).status).toBe('unknown');
     }
   });
+
+  it('leaves the service notice and the ambiguous non-handover without a stage', () => {
+    // Seen only before the first scan, where it can mean the shipper did not hand the parcel
+    // over; the same words also say a parcel was not delivered.
+    expect(classifyCiblexStatus('COLIS NON REMIS')).toMatchObject({ status: 'unknown', description: 'Ciblex tracking update' });
+    expect(classifyCiblexStatus('Acheminement contractuel du colis en 48h00')).toMatchObject({ status: 'unknown' });
+    expect(isCiblexNotice('Acheminement contractuel du colis en 48h00')).toBe(true);
+    expect(isCiblexNotice('ACHEMINEMENT CONTRACTUEL DU COLIS EN 24H')).toBe(true);
+    for (const wording of ['COLIS NON REMIS', 'Colis Contrôle', 'Acheminement contractuel du colis en retard']) {
+      expect(isCiblexNotice(wording)).toBe(false);
+    }
+  });
 });
 
 describe('Ciblex response normalization', () => {
@@ -140,6 +152,38 @@ describe('Ciblex response normalization', () => {
     }
     const knownTime: Row[] = [['23/01/2026', '09:00', 'Statut provider nouveau', ''], ['22/01/2026', '09:00', 'Colis Livré', '']];
     expect(parseCiblexTrackingHtml(trackingPage({ rows: knownTime }), TEST_TRACKING_NUMBER).status).toBe('unknown');
+  });
+
+  it('reads the depot town without its department and depot codes', () => {
+    const rows: Row[] = [
+      ['22/07/2026', '05:55:02', 'Mis en livraison', 'EXAMPLEVILLE 99 (99 99X)'],
+      ['10/07/2026', '06:02', 'Colis Contrôle', 'SAINT-EXEMPLE SUR MER 98 (98 7)'],
+      ['10/07/2026', '06:01', 'Colis Contrôle', 'Exampletown 99 (99)'],
+      ['09/07/2026', '15:39', 'Colis Contrôle', 'EXAMPLEVILLE 99 (98 99X)'],
+      ['09/07/2026', '15:38', 'Colis Contrôle', 'EXAMPLEVILLE 99'],
+      ['09/07/2026', '15:37', 'Colis Contrôle', '10 PRIVATE STREET 99 (99 99X)'],
+      ['09/07/2026', '15:36', 'COMPLEMENT ADRESSE', 'PRIVATE PLACE 99 (99 99X)'],
+    ];
+    const result = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
+    expect(result.events?.map(event => event.location)).toEqual(['EXAMPLEVILLE', 'SAINT-EXEMPLE SUR MER', 'Exampletown 99 (99)', '', '', '', '']);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|99X/);
+  });
+
+  it('keeps the newest scan deciding over a later service notice', () => {
+    const rows: Row[] = [
+      ['10/07/2026', '06:03', 'Acheminement contractuel du colis en 48h00', ''],
+      ['10/07/2026', '06:02', 'Colis Contrôle', 'EXAMPLEVILLE 99 (99 99X)'],
+      ['09/07/2026', '08:17', 'COLIS NON REMIS', ''],
+    ];
+    const result = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
+      last_status_text: 'Ciblex tracking update', last_update: '2026-07-10T06:03:00+02:00' });
+    expect(result.events?.map(event => event.stage)).toEqual([undefined, 'in_transit', undefined]);
+    // Before its first scan, the parcel's state stays unknown.
+    const waiting = parseCiblexTrackingHtml(trackingPage({ rows: rows.slice(2) }), TEST_TRACKING_NUMBER);
+    expect(waiting.status).toBe('unknown');
+    expect(waiting.current_stage).toBeUndefined();
+    expect(parseCiblexTrackingHtml(trackingPage({ rows: rows.slice(0, 1) }), TEST_TRACKING_NUMBER).status).toBe('unknown');
   });
 
   it('keeps equal-clock native positions and distinct redacted sites while collapsing only identical scans', () => {

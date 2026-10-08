@@ -33,6 +33,15 @@ export function comparableText(value: string): string {
     .trim();
 }
 
+/**
+ * The parcel's contractual transit time, "Acheminement contractuel du colis en 48h00", printed
+ * beside a depot scan. It describes the service, not a step, so it has no stage and does not
+ * decide the parcel's status.
+ */
+export function isCiblexNotice(rawDescription: string): boolean {
+  return /^acheminement contractuel du colis en \d{1,3}h\d{0,2}$/.test(comparableText(rawDescription));
+}
+
 function includesAny(value: string, phrases: string[]): boolean {
   return phrases.some((phrase) => value.includes(phrase));
 }

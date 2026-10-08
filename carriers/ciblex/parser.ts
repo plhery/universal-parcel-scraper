@@ -4,7 +4,7 @@ import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/e
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
 import { calendarDay, zonedTime } from '../../core/time/index.js';
-import { classifyCiblexStatus, comparableText } from './status.js';
+import { classifyCiblexStatus, comparableText, isCiblexNotice } from './status.js';
 
 export function normalizeCiblexTrackingNumber(raw: string): string {
   const number = raw.replace(/\s/g, '');
@@ -35,8 +35,11 @@ function scanTime(date: string, clock: string): { time?: string; local_time?: st
 function safeLocation(raw: string): string {
   const value = clean(raw, 100);
   // Free-form places can contain the recipient address. Retain only the
-  // established operational-depot label with a repeated department code.
-  return /^([\p{Letter}\p{Mark} .'/-]{1,70}) (\d{2,3}) \(\2\)$/u.test(value) ? value : '';
+  // established operational-depot labels with a repeated department code:
+  // "TOWN 68 (68)" as written, and the town alone of "TOWN 44 (44 49X)".
+  if (/^([\p{Letter}\p{Mark} .'/-]{1,70}) (\d{2,3}) \(\2\)$/u.test(value)) return value;
+  const depot = /^([\p{Letter}\p{Mark} .'/-]{1,70}) (\d{2,3}) \(\2 [A-Z0-9]{1,4}\)$/u.exec(value);
+  return depot ? depot[1]!.trim() : '';
 }
 
 export function parseCiblexTrackingHtml(html: string, raw: string): CarrierResult {
@@ -84,7 +87,9 @@ export function parseCiblexTrackingHtml(html: string, raw: string): CarrierResul
   if (scanned.every(event => event.time)) scanned.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const events = scanned;
   const latest = events[0]!;
-  const mapped = classifyCiblexStatus(String(latest.provider_status));
+  // A notice about the parcel's service is no scan: the newest scan keeps deciding.
+  const current = events.find(event => !isCiblexNotice(String(event.provider_status))) ?? latest;
+  const mapped = classifyCiblexStatus(String(current.provider_status));
   return { status: mapped.status, ...(mapped.status !== 'unknown' ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, expected_delivery: null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
