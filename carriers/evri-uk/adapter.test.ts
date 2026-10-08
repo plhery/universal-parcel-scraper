@@ -87,6 +87,60 @@ describe('Evri UK anonymous history', () => {
     expect(result.events?.[2]).not.toHaveProperty('time');
   });
 
+  const scan = (stageCode: string, code: string, dateTime: string, extra: Record<string, unknown> = {}) => ({
+    trackingPoint: { trackingPointCode: code, description: 'Synthetic scan' }, trackingStage: { trackingStageCode: stageCode }, dateTime, ...extra,
+  });
+
+  it('reads the newest delivery window on the British clock until a later scan replaces it', () => {
+    const payload = history();
+    const window = { eta: { start: '2026-07-03T18:00:00Z', end: '2026-07-03T20:00:00Z' } };
+    payload.results[0].trackingEvents = [scan('4_COURIER', 'DELIVERY_1900_2100', '2026-07-03T11:00:00Z', window), scan('3', 'LOCAL_DEPOT', '2026-07-03T05:00:00Z')];
+    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-07-03 19:00–21:00' });
+    payload.results[0].trackingEvents.unshift(scan('4_COURIER', 'NOT_DELIVERED_BUSINESS_CLOSED', '2026-07-03T19:30:00Z'));
+    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', expected_delivery: null });
+    payload.results[0].trackingEvents.unshift(scan('5_COURIER', 'DELIVERED', '2026-07-04T12:00:00Z'));
+    const delivered = parseEvriUk(payload, NUMBER, URN);
+    expect(delivered).toMatchObject({ status: 'delivered', expected_delivery: null, delivered_at: '2026-07-04T12:00:00Z' });
+  });
+
+  it.each([{ start: '2026-07-03T20:00:00Z', end: '2026-07-03T18:00:00Z' }, { start: '2026-07-03T18:00:00', end: '2026-07-03T20:00:00' }, 'PRIVATE'])('ignores an unusable window: %j', eta => {
+    const payload = history();
+    payload.results[0].trackingEvents = [scan('4_COURIER', 'DELIVERY_1900_2100', '2026-07-03T11:00:00Z', { eta })];
+    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ status: 'out_for_delivery', expected_delivery: null });
+  });
+
+  it.each([
+    ['0', 'RETURN_REQUEST_RECEIVED', 'registered', 'pending'],
+    ['2', 'ARRIVED_PARCELSHOP', 'accepted', 'in_transit'],
+    ['2', 'COLLECTED_BY_EVRI', 'accepted', 'in_transit'],
+    ['2', 'QUADIENT_LOCKER_DROPOFF', 'accepted', 'in_transit'],
+    ['2', 'PROCESSING_HUB', 'in_transit', 'in_transit'],
+    ['2', 'PROCESSING_RETURN', 'returned', 'exception'],
+    ['4', 'PARCEL_WAY_BACK_TO_RETAILER', 'returned', 'exception'],
+    ['4_COURIER', 'COURIER_REATTEMPT_CUSTOMER_NOT_AVAILABLE', 'failed_attempt', 'exception'],
+    ['4_COURIER', 'REDELIVER_WORKDAY_COURIER', 'failed_attempt', 'exception'],
+    ['4_COURIER', 'NOT_DELIVERED_BUSINESS_CLOSED', 'failed_attempt', 'exception'],
+    ['4_COURIER', 'REDELIVERY_1300_1500', 'out_for_delivery', 'out_for_delivery'],
+    ['4_SHOP', 'ARRIVED_PARCELSHOP', undefined, 'unknown'],
+  ])('files rail %s point %s as %s', (stageCode, code, stage, status) => {
+    const payload = history();
+    payload.results[0].trackingEvents = [scan(stageCode, code, '2026-07-03T11:00:00Z')];
+    const result = parseEvriUk(payload, NUMBER, URN);
+    expect(result.status).toBe(status);
+    expect(result.events?.[0]?.stage).toBe(stage);
+  });
+
+  it("names a business sender, but not a consumer's or the retailer a return goes back to", () => {
+    const payload = history();
+    Object.assign(payload.results[0], { c2cClient: false, returnParcel: false, sender: { displayName: '  Example  Retail ', name: 'PRIVATE SENDER' } });
+    expect(parseEvriUk(payload, NUMBER, URN).sender_name).toBe('Example Retail');
+    for (const flags of [{ c2cClient: true }, { returnParcel: true }, { c2cClient: undefined }]) {
+      const other = history();
+      Object.assign(other.results[0], { c2cClient: false, returnParcel: false, sender: { displayName: 'PRIVATE PERSON' } }, flags);
+      expect(parseEvriUk(other, NUMBER, URN)).not.toHaveProperty('sender_name');
+    }
+  });
+
   it.each(['2026-01-03T10:00:00', '2026-02-30T10:00:00Z', '2026-01-03T10:00:00+14:01'])('rejects activity consisting entirely of unresolved clocks: %s', clock => {
     const payload = history(); payload.results[0].trackingEvents.forEach((event: { dateTime: string }) => { event.dateTime = clock; });
     expect(() => parseEvriUk(payload, NUMBER, URN)).toThrow('no dated parcel activity');
@@ -227,6 +281,21 @@ describe('Evri UK page protocol', () => {
       `https://tracking.platform-apis.evri.com/v1/parcels?uniqueIds=${encodeURIComponent(URN)}`]);
     expect(calls.every(call => call.init.signal instanceof AbortSignal)).toBe(true);
     expect(JSON.stringify(result)).not.toMatch(/SYNTHETIC_.*KEY|SYNTHETIC_WAF_TOKEN|PRIVATE/);
+  });
+
+  it('carries the delivery window and a business sender across the browser boundary', async () => {
+    const payload = history();
+    Object.assign(payload.results[0], { c2cClient: false, returnParcel: false, sender: { displayName: 'Example Retail', client: { clientId: 'PRIVATE_CLIENT' } } });
+    payload.results[0].trackingEvents.shift();
+    payload.results[0].trackingEvents[0].eta = { start: '2026-01-03T19:00:00Z', end: '2026-01-03T21:00:00Z', private: 'PRIVATE_MARKER' };
+    const { result } = await inPage([keys(), Response.json(search()), Response.json(payload)]);
+    if (result.kind !== 'ok') throw new Error('Expected history');
+    expect(parseEvriUk(result.payload, NUMBER, result.urn)).toMatchObject({ expected_delivery: '2026-01-03 19:00–21:00', sender_name: 'Example Retail' });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    Object.assign(payload.results[0], { c2cClient: true, sender: { displayName: 'PRIVATE PERSON' } });
+    const consumer = await inPage([keys(), Response.json(search()), Response.json(payload)]);
+    expect(consumer.result.kind).toBe('ok');
+    expect(JSON.stringify(consumer.result)).not.toContain('PRIVATE');
   });
 
   it.each([401, 403, 405, 429, 503])('returns the key rejection without sending search/history: HTTP %s', async status => {

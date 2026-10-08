@@ -44,7 +44,15 @@ caller's deadline and cancellation signal.
   drops old parcels, so an empty answer does not establish that none existed.
 - Both the history barcode and URN must match. Progress rails and estimates
   do not become scans; only dated tracking events establish activity.
-- Known stage codes establish progress. Unknown codes remain unstaged.
+- The event's rail code sets its stage. A few tracking points refine it: a
+  drop-off or collection is the acceptance, a failed courier visit is a
+  failed attempt, and a customer return's processing and journey back are
+  returned. Unknown rail codes remain unstaged.
+- On the delivery day a courier scan carries the window it announces. The
+  newest scan's window becomes `expected_delivery` on the British clock; a
+  later scan replaces or withdraws it. A delivery's time is `delivered_at`.
+- `sender_name` is the account Evri names as the sender, only when Evri
+  marks the parcel as neither consumer-to-consumer nor a customer return.
 - Unresolved clocks stay in `provider_time_text`; sorting requires every
   event clock to resolve.
 - Recipient, address, photos, GPS, ownership credentials and delivery prose
@@ -52,8 +60,9 @@ caller's deadline and cancellation signal.
 
 ## Limitations
 
-Calling-card numbers, postcode-gated ownership details, locations and estimates
-are not projected. No TRAWL path is registered. A refused key, WAF rejection or
+Calling-card numbers, postcode-gated ownership details, locations and the
+ParcelShop holding a parcel are not projected. Evri announces no estimate
+before the delivery day. No TRAWL path is registered. A refused key, WAF rejection or
 empty history does not establish parcel absence. The adapter does not fetch a
 rotated key from Remote Config. The deployed browser's network and build still
 affect the page step.

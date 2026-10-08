@@ -94,14 +94,21 @@ export async function requestEvriUkInPage({ number, budgetMs }: { number: string
       const description = event.trackingPoint.description;
       const safeDescription = stageCode === '5_COURIER' ? 'Delivered'
         : /\b(?:delivered (?:to|by)|signed (?:for )?by)\b/i.test(description) ? 'Delivery update' : description;
+      const eta = record(event.eta) && scalar(event.eta.start, 64) && scalar(event.eta.end, 64)
+        ? { start: event.eta.start, end: event.eta.end } : undefined;
       events.push({ dateTime: event.dateTime,
         trackingPoint: { trackingPointCode: event.trackingPoint.trackingPointCode, description: safeDescription },
-        trackingStage: { trackingStageCode: stageCode } });
+        trackingStage: { trackingStageCode: stageCode }, ...(eta ? { eta } : {}) });
     }
+    // A consumer's parcel or a customer return can name a private person or the retailer.
+    const business = result.c2cClient === false && result.returnParcel === false;
+    const sender = business && record(result.sender) && scalar(result.sender.displayName, 200)
+      ? { displayName: result.sender.displayName } : undefined;
     // Copy only validated identity and scan scalars. Ownership, contacts,
     // photos, map links, GPS, instructions and issued credentials stay here.
     return { kind: 'ok' as const, urn, payload: { failures: [], results: [{
       uniqueId: urn, parcelIdentifiers: returnedBarcodes.map(() => ({ type: 'BARCODE', value: number })),
+      ...(sender ? { c2cClient: false, returnParcel: false, sender } : {}),
       trackingEvents: events,
     }] } };
   } catch (error) {

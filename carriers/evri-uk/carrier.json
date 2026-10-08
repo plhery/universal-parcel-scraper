@@ -25,7 +25,11 @@
     ]
   },
   "capabilities": [
-    "history"
+    "history",
+    "eta",
+    "sender_name",
+    "delivered_at",
+    "provider_code"
   ],
   "portal": {
     "url": "https://www.evri.com/track/parcel/{trackingNumber}/details",
@@ -34,23 +38,28 @@
       "status",
       "history",
       "eta",
+      "eta_window",
+      "sender_name",
       "proof_of_delivery"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "eta",
+      "eta_window",
+      "sender_name",
+      "delivered_at",
+      "provider_code"
     ],
     "discarded": [
       "recipient_details",
       "address",
       "proof_of_delivery",
       "gps",
-      "sender_details",
       "issued_credentials"
     ],
     "unavailable": [
-      "location",
-      "eta"
+      "location"
     ]
   },
   "links": [
