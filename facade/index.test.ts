@@ -87,17 +87,13 @@ describe('standalone tracker', () => {
     expect(fetcher).toHaveBeenCalled();
   });
 
-  it('forwards a country hint through the public tracker into empty-history recovery', async () => {
+  it('accepts a country hint without retrying an empty universal answer', async () => {
     const lookup = vi.fn().mockRejectedValue(new NotFoundError('UPS'));
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(Response.json({ error: 'NO_DATA' }))
-      .mockResolvedValueOnce(Response.json({ states: [{ date: '2026-01-02T12:00:00Z', status: 'Delivered' }] }));
-    const answer = await createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp'] })
-      .track({ number, countryHint: 'FR' });
-    expect(answer.source).toBe('ParcelsApp');
-    expect(answer.result.current_stage).toBe('delivered');
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    expect(new URLSearchParams(String(fetcher.mock.calls[1]![1]!.body)).get('extra[manualCountry]')).toBe('France');
-    expect(answer.result.destination_country).toBeUndefined();
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ error: 'NO_DATA' }));
+    await expect(createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp'] }).track({ number, countryHint: 'FR' }))
+      .rejects.toMatchObject({ attempts: [{ source: 'ups', kind: 'not_found' }, { source: 'ParcelsApp', kind: 'indeterminate' }] });
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(String(fetcher.mock.calls[0]![1]!.body)).not.toContain('manualCountry');
   });
 
   it('enforces a single deadline even when an adapter ignores cancellation', async () => {

@@ -18,8 +18,7 @@ deadline still wins.
 2. `retry`: after a network failure, timeout or cut-off body, one more direct attempt
    after 2 s, with the same input. The public frontend retries the same way. The deadline
    is the smaller of 30 s and the remaining budget. The retry is skipped if the backoff
-   does not fit. Two network failures end the lookup without a browser. An empty answer instead
-   retries once with a valid `countryHint`, using the same budget and no backoff.
+   does not fit. Two network failures end the lookup without a browser.
 3. `trawl`: on a challenge (`RELOAD`) or schema drift, TRAWL (`FLARESOLVERR_URL`) loads
    the tracking page (`skipHttp`, up to tier 3) and captures `/api/v2/parcels` replies
    with a 15 s settle window. Bodies are parsed newest first, skipping polling replies
@@ -31,7 +30,7 @@ Other outcomes:
 - HTTP errors on the direct step. A 429 or 5xx keeps its status and `Retry-After` and gets
   no browser attempt.
 - `NO_DATA`, `NO_TRACKER` and empty histories are inconclusive, not proof that the
-  shipment does not exist. Without a country hint they end the lookup.
+  shipment does not exist. They end the lookup.
 - A reply that only asks for a postcode raises `input_required`. Browser recovery cannot
   submit a postcode and never retries a known input gate.
 
@@ -49,11 +48,7 @@ Built from the site's tracking bundle (`packs/js/application-….js`; the
   followed by the telemetry length, the number's length, and the unsigned MurmurHash2
   (seed 978) of `encodeURIComponent(number) + telemetry`. The adapter sends one fixed
   telemetry profile. Without the trailing checksum tuple the API returns `RELOAD`.
-- A stored postcode uses `extra[zipcode]`. A country retry uses
-  `extra[manualCountry]`, the English country name used by the website's country selector.
-  Changing the top-level `country` alone does not select that country's carriers.
-  Country codes and English names are accepted; unknown hints are ignored.
-  The hint never sets shipment metadata or scan clocks.
+- A stored postcode uses `extra[zipcode]`.
 
 `se` is a public checksum, not an issued credential, so Node alone is enough. The browser
 step exists for future protocol changes.
@@ -178,8 +173,7 @@ step exists for future protocol changes.
 - Postcode unlock is unverified. For an invalid postcode, SEUR and bpost repeat
   `require_fields` instead of returning an explicit error, both in the real form and via
   HTTP. Verifying the unlock needs a known valid number and postcode pair.
-- Email, phone, house-number and sign-in forms are not supported. Country hints apply
-  only to direct API recovery; browser recovery does not submit the country selector.
+- Email, phone, house-number, sign-in and country-selector forms are not supported.
 - `Estimated delivery` forecast rows are projected as events and can set `last_update`.
 
 ## Rejected approaches
@@ -187,12 +181,14 @@ step exists for future protocol changes.
 - Plain GET of the tracking page: returns the application shell only.
 - The API-key client (`locky42/parcels-app-provider`): needs a provisioned key.
 - Browser-only lookups (as in `thefuga/parcelsapp-crawler`): slower, and unnecessary.
+- Retrying an empty answer in the caller's country through the website's country selector
+  (`extra[manualCountry]`; the top-level `country` alone selects nothing): it recovered no
+  history in a host's lookups, and spent a request each time.
 
 ## Testing
 
 `npm run test:carriers:live -- providers/parcelsapp` with
 `PARCELSAPP_LIVE_NUMBER` set, and optionally `PARCELSAPP_LIVE_POSTCODE`,
-`PARCELSAPP_LIVE_COUNTRY`,
 `PARCELSAPP_LIVE_EXPECTED_STATES` and `PARCELSAPP_LIVE_EXPECTED_EVENTS`. Keep live
 values out of the repository. Unit tests use synthetic
 [fixtures](fixtures/README.md) and never contact ParcelsApp.

@@ -11,7 +11,7 @@ const help = `Universal Parcel Scraper
 
   parcel-scraper detect <number, link or text>
   parcel-scraper recognize <number>
-  parcel-scraper track <number> [--carrier <id>] [--postcode <value>] [--tracking-url <url>] [--country-hint <code>]
+  parcel-scraper track <number> [--carrier <id>] [--postcode <value>] [--tracking-url <url>]
   parcel-scraper carriers
   parcel-scraper serve [--host <address>] [--port <port>]
 

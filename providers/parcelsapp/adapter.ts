@@ -29,7 +29,7 @@ import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilit
 import { universalCarrierHints } from '../shared/hints.js';
 import { event, isNotice, localEvent, numberOf, result, type UniversalSource } from '../shared/result.js';
 import { carrierScan, markReturnLeg, type CarrierScan } from '../shared/scans.js';
-import { PARCELSAPP_API, parcelsAppCountry, ParcelsAppHttpClient } from './http.js';
+import { PARCELSAPP_API, ParcelsAppHttpClient } from './http.js';
 
 const SOURCE: UniversalSource = 'ParcelsApp';
 const MAX_EVENTS = 1000;
@@ -351,13 +351,12 @@ export class ParcelsAppTracker {
     this.http = options.httpClient === undefined ? new ParcelsAppHttpClient(options.fetcher, options.userAgent) : options.httpClient;
   }
 
-  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? PARCELSAPP_BUDGET_MS, postcode?: string | null, timezone: string | null = null, signal?: AbortSignal, countryHint?: string | null): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, budgetMs = this.options.timeoutMs ?? PARCELSAPP_BUDGET_MS, postcode?: string | null, timezone: string | null = null, signal?: AbortSignal): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
     if (!Number.isFinite(budgetMs) || budgetMs < 1) throw new TypeError('ParcelsApp timeout must be positive');
     const deadline = performance.now() + budgetMs;
-    const country = parcelsAppCountry(countryHint);
-    const request = async (remainingMs: number, signal: AbortSignal, manualCountry?: string | null): Promise<CarrierResult> => {
-      const payload = await this.http!.fetch(number, Math.max(1, Math.min(DIRECT_BUDGET_MS, Math.floor(remainingMs))), postcode, signal, manualCountry);
+    const request = async (remainingMs: number, signal: AbortSignal): Promise<CarrierResult> => {
+      const payload = await this.http!.fetch(number, Math.max(1, Math.min(DIRECT_BUDGET_MS, Math.floor(remainingMs))), postcode, signal);
       // This endpoint returns one shipment per POST, synchronously, with no
       // shared session or polling handle. Each retry keeps its own request
       // binding. Numberless browser captures never get this exemption.
@@ -374,16 +373,13 @@ export class ParcelsAppTracker {
       id: 'retry',
       enabled: this.http !== null,
       // Uncached carrier aggregation can outlive a timed-out HTTP request.
-      // Retry a replayable network failure with the same input. An empty
-      // answer can instead try the caller's country once, as the website's
-      // selector does. Both share this step and the original lookup budget.
-      recovers: (error) => (error instanceof UpstreamNetworkError && deadline - performance.now() > RETRY_DELAY_MS + 1)
-        || (country !== null && error instanceof NoHistoryError && deadline - performance.now() > 1),
-      run: async ({ signal, previousError }) => {
-        const empty = previousError instanceof NoHistoryError;
-        if (!empty) await timers.setTimeout(RETRY_DELAY_MS, undefined, { signal });
+      // Retry a replayable network failure with the same input, within the
+      // original lookup budget.
+      recovers: (error) => error instanceof UpstreamNetworkError && deadline - performance.now() > RETRY_DELAY_MS + 1,
+      run: async ({ signal }) => {
+        await timers.setTimeout(RETRY_DELAY_MS, undefined, { signal });
         signal.throwIfAborted();
-        return request(deadline - performance.now(), signal, empty ? country : null);
+        return request(deadline - performance.now(), signal);
       },
     }, {
       id: 'trawl',
@@ -416,6 +412,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: SOURCE,
     steps: ['direct', 'retry', 'trawl'],
-    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, input.postcode, input.timezone ?? null, context?.signal, input.countryHint),
+    track: (input, context) => tracker.fetch(input.number, context?.budgetMs, input.postcode, input.timezone ?? null, context?.signal),
   };
 };

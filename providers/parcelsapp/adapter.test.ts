@@ -704,47 +704,6 @@ describe('ParcelsApp direct lookup', () => {
     expect(JSON.stringify(result)).not.toContain('01234');
   });
 
-  it.each([{ error: 'NO_DATA' }, { error: 'NO_TRACKER' }, { states: [] }])('retries only empty history with the country selector: %j', async (payload) => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(payload)).mockResolvedValueOnce(reply(announced));
-    const result = await new ParcelsAppTracker({ fetcher }).fetch(number, 10_000, '01234', null, undefined, 'FR');
-    expect(result.current_stage).toBe('registered');
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    const forms = fetcher.mock.calls.map(([, init]) => new URLSearchParams(String(init!.body)));
-    expect(forms[0]!.has('extra[manualCountry]')).toBe(false);
-    expect(forms[1]!.get('extra[manualCountry]')).toBe('France');
-    expect(forms[1]!.get('trackingId')).toBe(forms[0]!.get('trackingId'));
-    expect(forms[1]!.get('extra[zipcode]')).toBe('01234');
-    expect(result.destination_country).toBeUndefined();
-  });
-
-  it('finishes a successful default lookup without applying a guessed country', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(announced));
-    await new ParcelsAppTracker({ fetcher }).fetch(number, 10_000, null, null, undefined, 'FR');
-    expect(fetcher).toHaveBeenCalledOnce();
-    expect(new URLSearchParams(String(fetcher.mock.calls[0]![1]!.body)).has('extra[manualCountry]')).toBe(false);
-  });
-
-  it('stops after one country retry and does not try the browser for an empty result', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply({ error: 'NO_DATA' }));
-    const tracker = new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) });
-    await expect(tracker.fetch(number, 10_000, null, null, undefined, 'FR')).rejects.toBeInstanceOf(NoHistoryError);
-    expect(fetcher).toHaveBeenCalledTimes(2);
-  });
-
-  it('keeps the identity guard on a country retry', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply({ error: 'NO_DATA' }))
-      .mockResolvedValueOnce(reply({ ...announced, correctId: 'OTHER123' }));
-    await expect(new ParcelsAppTracker({ fetcher }).fetch(number, 10_000, null, null, undefined, 'FR'))
-      .rejects.toThrow('unverified tracking alias');
-    expect(fetcher).toHaveBeenCalledTimes(2);
-  });
-
-  it.each(['XX', '', null])('ignores an unknown country hint: %j', async (country) => {
-    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply({ error: 'NO_DATA' }));
-    await expect(new ParcelsAppTracker({ fetcher }).fetch(number, 10_000, null, null, undefined, country)).rejects.toBeInstanceOf(NoHistoryError);
-    expect(fetcher).toHaveBeenCalledOnce();
-  });
-
   it('keeps interleaved numberless responses bound to their own requests', async () => {
     let finishFirst!: (response: Response) => void;
     const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(() => new Promise((resolve) => { finishFirst = resolve; }))

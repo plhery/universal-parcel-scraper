@@ -545,7 +545,8 @@
               "string",
               "null"
             ],
-            "description": "Country code or English name used only to retry an empty universal lookup."
+            "deprecated": true,
+            "description": "Accepted for compatibility; it no longer affects a lookup."
           }
         },
         "required": [

@@ -94,7 +94,7 @@ export class UniversalTracker {
    * stored delivery postcode, if the user supplied one: it is forwarded into
    * every provider's track input. ParcelsApp submits it as extra[zipcode] on
    * its direct API request; 17TRACK submits it through the browser's postcode form.
-   * `countryHint` lets ParcelsApp retry an empty answer with that country.
+   * `countryHint` is accepted for compatibility and no longer read.
    * The caller's budget covers the whole chain and its signal ends it.
    */
   async fetch(trackingNumber: string, postcode?: string | null, context: TrackingContext = {}, countryHint?: string | null): Promise<CarrierResult> {

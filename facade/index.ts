@@ -37,7 +37,7 @@ export interface ParcelInput {
   number: string;
   carrier?: string;
   postcode?: string | null;
-  /** A destination or visitor country hint for an empty universal lookup; never shipment evidence. */
+  /** @deprecated Accepted for compatibility; it no longer affects a lookup. */
   countryHint?: string | null;
   trackingUrl?: string | null;
 }

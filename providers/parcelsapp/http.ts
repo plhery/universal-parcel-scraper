@@ -1,15 +1,6 @@
 
 import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { numberOf } from '../shared/result.js';
-import { countryCode } from '../../core/time/index.js';
-
-const COUNTRY_NAMES = new Intl.DisplayNames(['en'], { type: 'region' });
-
-/** The country selector uses English names, not ISO codes. */
-export function parcelsAppCountry(value: unknown): string | null {
-  const code = countryCode(value);
-  return code && code !== 'ZZ' ? COUNTRY_NAMES.of(code) ?? null : null;
-}
 
 export const PARCELSAPP_API = 'https://parcelsapp.com/api/v2/parcels';
 
@@ -40,7 +31,7 @@ export function parcelsAppChecksum(text: string): number {
   return (hash ^ hash >>> 15) >>> 0;
 }
 
-export function parcelsAppRequest(trackingNumber: string, postcode?: string | null, countryHint?: string | null): URLSearchParams {
+export function parcelsAppRequest(trackingNumber: string, postcode?: string | null): URLSearchParams {
   const number = numberOf(trackingNumber);
   // The bundle shifts ASCII by 2 * sum([1,2,8,4,5,6,7,5]) modulo 126,
   // URI-encodes it, then lets jQuery form-encode it a second time.
@@ -52,8 +43,6 @@ export function parcelsAppRequest(trackingNumber: string, postcode?: string | nu
   });
   const zipcode = postcode?.trim();
   if (zipcode) params.set('extra[zipcode]', zipcode);
-  const country = parcelsAppCountry(countryHint);
-  if (country) params.set('extra[manualCountry]', country);
   return params;
 }
 
@@ -64,7 +53,7 @@ export class ParcelsAppHttpClient {
     this.#userAgent = userAgentOf(userAgent);
   }
 
-  async fetch(trackingNumber: string, timeoutMs: number, postcode?: string | null, signal?: AbortSignal, countryHint?: string | null): Promise<unknown> {
+  async fetch(trackingNumber: string, timeoutMs: number, postcode?: string | null, signal?: AbortSignal): Promise<unknown> {
     const number = numberOf(trackingNumber);
     if (!Number.isFinite(timeoutMs) || timeoutMs < 1) throw new TypeError('ParcelsApp HTTP timeout must be positive');
     const { bytes } = await fetchBounded(PARCELSAPP_API, {
@@ -74,7 +63,7 @@ export class ParcelsAppHttpClient {
         Origin: 'https://parcelsapp.com', Referer: `https://parcelsapp.com/en/tracking/${number}`,
         'User-Agent': this.#userAgent, 'X-Requested-With': 'XMLHttpRequest',
       },
-      body: parcelsAppRequest(number, postcode, countryHint),
+      body: parcelsAppRequest(number, postcode),
     }, { provider: 'ParcelsApp', fetcher: this.fetcher, timeoutMs: Math.floor(timeoutMs), maxBytes: 2_000_000 });
     return parseJsonBytes(bytes, 'ParcelsApp');
   }
