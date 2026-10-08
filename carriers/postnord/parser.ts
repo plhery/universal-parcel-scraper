@@ -14,6 +14,35 @@ export function normalizePostnordNumber(raw: string): string {
   return number;
 }
 
+/**
+ * The scan that made the parcel available at its service point, while it waits
+ * there or once it is collected there: the delivery, scanned at that same point,
+ * came right after it. A parcel taken back out for delivery has a movement between.
+ */
+function atPickupPoint(stage: string | undefined, events: readonly CarrierEvent[]): CarrierEvent | undefined {
+  if (stage === 'ready_for_pickup') return events.find((event) => event.stage === 'ready_for_pickup');
+  if (stage !== 'delivered') return undefined;
+  const index = events.findIndex((event) => event.stage !== 'delivered');
+  const ready = events[index];
+  return index > 0 && ready?.stage === 'ready_for_pickup' && ready.location
+    && events.slice(0, index).every((event) => event.location === ready.location) ? ready : undefined;
+}
+
+/**
+ * The service point's name, then its street and "postcode town", from the point
+ * record the tracking widget shows under a parcel ready for pickup. Without that
+ * record the scan's name stands alone. The receiver's address is a separate record.
+ */
+function pickupPoint(raw: unknown, scanned: string): string {
+  const point = isRecord(raw) ? raw : {};
+  const address = isRecord(point.address) ? point.address : {};
+  const name = clean(point.name, 160);
+  if (!name) return scanned;
+  const street = clean(address.street, 120);
+  const town = clean(address.city, 80);
+  return street && town ? [name, street, [clean(address.postalCode, 16), town].filter(Boolean).join(' ')].join('\n') : name;
+}
+
 export function parsePostnord(payload: unknown, number: string): CarrierResult {
   const requested = normalizePostnordNumber(number);
   if (!isRecord(payload) || payload.shipmentId !== requested || payload.actualReturnedId !== requested
@@ -66,8 +95,8 @@ export function parsePostnord(payload: unknown, number: string): CarrierResult {
   // The portal names the sender, usually the shop; of the receiver's address only the country is read.
   const sender = isRecord(payload.sender) ? clean(payload.sender.name, 200) : '';
   const country = isRecord(payload.receiver) && isRecord(payload.receiver.address) ? payload.receiver.address.countryCode : undefined;
-  // The service point holding the parcel, as the scan that made it available names it.
-  const pickup = mapped?.stage === 'ready_for_pickup' ? events.find((event) => event.stage === 'ready_for_pickup')?.location : undefined;
+  const pickupScan = atPickupPoint(mapped?.stage, events);
+  const pickup = pickupScan ? pickupPoint(payload.servicePoint, pickupScan.location ?? '') : '';
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: header || events[0]!.description, last_update: events[0]!.time,
     expected_delivery: null, ...(delivery?.time ? { delivered_at: delivery.time } : {}),

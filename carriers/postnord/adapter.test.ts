@@ -17,8 +17,7 @@ describe('PostNord direct tracking', () => {
     const result = parsePostnord(payload(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-04T12:00:00Z',
       delivered_at: '2026-01-04T12:00:00Z', expected_delivery: null, weight_kg: 1.5, dimensions_text: '40 × 30 × 20 cm',
-      sender_name: 'Example Shop AB', destination_country: 'SE' });
-    expect(result).not.toHaveProperty('pickup_point');
+      sender_name: 'Example Shop AB', destination_country: 'SE', pickup_point: 'Example Service Point' });
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'registered']);
     expect(JSON.stringify(result.events)).not.toContain('text message');
     const waiting = payload(); waiting.items[0].events.splice(4, 1);
@@ -27,6 +26,47 @@ describe('PostNord direct tracking', () => {
     expect(declared.capabilities).toEqual(['history', 'location', 'delivered_at', 'weight', 'dimensions', 'sender_name', 'pickup_point']);
     expect(parsePostnord(waiting, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: 'Example Service Point' });
     expect(parsePostnord(waiting, NUMBER)).not.toHaveProperty('delivered_at');
+  });
+
+  it('gives the waiting parcel its service point record and keeps the point once collected there', () => {
+    const ready = () => JSON.parse(readFileSync(new URL('./fixtures/ready-for-pickup.json', import.meta.url), 'utf8'));
+    const waiting = parsePostnord(ready(), NUMBER);
+    expect(waiting).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup',
+      pickup_point: 'Example Service Point\nExample Square 1\n111 11 Example Town' });
+    expect(waiting.pickup_point).not.toMatch(/Private|99999/);
+    // The scans themselves are unchanged by the record.
+    expect(waiting.events?.[0]).toMatchObject({ location: 'Example Service Point', description: 'The shipment item has been delivered to a service point.' });
+    const partial = ready(); delete partial.servicePoint.address.street;
+    expect(parsePostnord(partial, NUMBER).pickup_point).toBe('Example Service Point');
+    const noTown = ready(); noTown.servicePoint.address.city = ' ';
+    expect(parsePostnord(noTown, NUMBER).pickup_point).toBe('Example Service Point');
+    const noPostcode = ready(); delete noPostcode.servicePoint.address.postalCode;
+    expect(parsePostnord(noPostcode, NUMBER).pickup_point).toBe('Example Service Point\nExample Square 1\nExample Town');
+    for (const record of [undefined, null, 'Example Service Point', { address: ready().servicePoint.address }]) {
+      const value = ready(); value.servicePoint = record;
+      expect(parsePostnord(value, NUMBER).pickup_point).toBe('Example Service Point');
+    }
+    // A parcel in transit shows no point, whatever the record says.
+    const moving = ready(); moving.items[0].status = { code: 'EN_ROUTE', header: 'The shipment item is under transportation.' };
+    expect(parsePostnord(moving, NUMBER)).not.toHaveProperty('pickup_point');
+
+    const delivered = (scan: Record<string, unknown>) => {
+      const value = ready(); value.items[0].status = { code: 'DELIVERED', header: 'The shipment item has been delivered to the recipient' };
+      value.items[0].events.push({ eventDescription: 'The shipment item has been delivered.', eventTime: '2026-01-05T12:00:00.000Z',
+        status: 'DELIVERED', location: { countryCode: 'SE', locationType: 'SERVICE_POINT', name: 'Example Service Point' }, ...scan });
+      return value;
+    };
+    expect(parsePostnord(delivered({}), NUMBER)).toMatchObject({ status: 'delivered', pickup_point: 'Example Service Point\nExample Square 1\n111 11 Example Town' });
+    const dropped = delivered({}); delete dropped.servicePoint;
+    expect(parsePostnord(dropped, NUMBER).pickup_point).toBe('Example Service Point');
+    // Delivered somewhere else, or taken back out for delivery first: no pickup point.
+    for (const value of [
+      delivered({ location: { countryCode: 'SE', locationType: 'DEPOT', name: 'Example Terminal' } }),
+      delivered({ location: { countryCode: 'SE' } }),
+    ]) expect(parsePostnord(value, NUMBER)).not.toHaveProperty('pickup_point');
+    const redelivered = delivered({});
+    redelivered.items[0].events.splice(4, 0, { ...redelivered.items[0].events[1], eventTime: '2026-01-05T08:00:00.000Z' });
+    expect(parsePostnord(redelivered, NUMBER)).not.toHaveProperty('pickup_point');
   });
 
   it('reads a late drop-off as accepted and leaves out a sender or country the portal does not give', () => {

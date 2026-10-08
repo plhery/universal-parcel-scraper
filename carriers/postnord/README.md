@@ -21,9 +21,16 @@ response is inconclusive.
 Summary status comes from the selected item's current status. A drop-off by the sender, even
 after the day's last collection, reads as accepted. Customs clearance and a hold for a
 booked delivery are not exceptions. The sender the portal names, usually the shop, and the
-destination country are kept, and the service point holding a parcel becomes its pickup
-point. Recipient names and addresses, sender references, delivery instructions and proof
-data are excluded.
+destination country are kept. Recipient names and addresses, sender references, delivery
+instructions and proof data are excluded.
+
+A parcel waiting at a service point gets that point as its pickup point: the shipment's
+`servicePoint` record, which the widget shows under a parcel ready for pickup, gives its
+name, street, then postcode and town. Without it, the name the scan gives stands alone.
+A parcel collected there keeps the point when the delivery, scanned at the same point,
+directly follows its arrival there. The reply no longer carries the record once the
+parcel is collected, and scans name the point without an id to look it up by, so a
+collected parcel keeps only the name.
 
 ## Testing
 

@@ -724,6 +724,7 @@
       "expected_delivery": null,
       "delivered_at": "2026-01-04T12:00:00Z",
       "sender_name": "Example Shop AB",
+      "pickup_point": "Example Service Point",
       "destination_country": "SE",
       "weight_kg": 1.5,
       "dimensions_text": "40 × 30 × 20 cm",
