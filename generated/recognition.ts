@@ -40,6 +40,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "purolator": 12,
   "relais-colis": 25,
   "seur": 43,
+  "sto": 10,
   "swiss-post-cargo": 11,
   "the-courier-guy": 29,
   "tipsa": 24,

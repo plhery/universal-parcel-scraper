@@ -454,7 +454,7 @@
     "reason": "A passing GS1 check digit adds FedEx to BRT, DPD France and Yunda, which accept these numbers without one; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Fifteen digits outside DPD France's 0/1 prefixes that pass the GS1 check",
+    "shape": "Fifteen digits outside DPD France's 0/1 prefixes and STO's 77 range that pass the GS1 check",
     "carriers": [
       "brt",
       "fedex",
@@ -463,7 +463,7 @@
     "reason": "A passing GS1 check digit adds FedEx to BRT and Yunda, which accept any fifteen digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Fifteen digits outside DPD France's 0/1 prefixes that fail the GS1 check",
+    "shape": "Fifteen digits outside DPD France's 0/1 prefixes and STO's 77 range that fail the GS1 check",
     "carriers": [
       "brt",
       "yunda"
@@ -478,6 +478,25 @@
       "yunda"
     ],
     "reason": "Without a GS1 check digit FedEx drops out; BRT, DPD France and Yunda still share the shape, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Fifteen digits starting with 77 that pass the GS1 check",
+    "carriers": [
+      "brt",
+      "fedex",
+      "sto",
+      "yunda"
+    ],
+    "reason": "STO Express's current waybills are fifteen digits in the 77 range, which BRT's parcel IDs and Yunda's fifteen-digit rule also accept, and Yunda's own client sends to its international site. A passing GS1 check digit adds FedEx and lists it first, ahead of STO; neither the range nor a check digit establishes ownership, so the number stays a low-confidence suggestion that STO's trace must confirm."
+  },
+  {
+    "shape": "Fifteen digits starting with 77 that fail the GS1 check",
+    "carriers": [
+      "brt",
+      "sto",
+      "yunda"
+    ],
+    "reason": "STO Express's current waybills are fifteen digits in the 77 range, which BRT's parcel IDs and Yunda's fifteen-digit rule also accept, and Yunda's own client sends to its international site. STO's rule lists it first; the number stays a low-confidence suggestion that STO's trace must confirm."
   },
   {
     "shape": "A9{10}",

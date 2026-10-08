@@ -161,6 +161,18 @@ describe('status map answers', () => {
     expect(answer('thailand-post', 'toString', 'Synthetic scan')).toEqual(unknown);
   });
 
+  it("answers STO's scan types by the wording stored for them, on the way out and back", () => {
+    expect(answer('sto', '派件', 'Out for delivery')).toEqual(mapped('out_for_delivery'));
+    expect(answer('sto', '发件', 'Departed for Example hub')).toEqual(mapped('in_transit'));
+    expect(answer('sto', '签收', 'Delivered')).toEqual(mapped('delivered'));
+    expect(answer('sto', '签收', 'Returned to the sender')).toEqual(mapped('returned'));
+    expect(answer('sto', '派件', 'Out for delivery back to the sender')).toEqual(mapped('out_for_delivery'));
+    expect(answer('sto', '退回件', 'Return to the sender started')).toEqual(mapped('exception'));
+    expect(answer('sto', '派件', 'Delivered')).toEqual(unknown);
+    expect(answer('sto', '问题件', '问题件')).toEqual(unknown);
+    expect(answer('sto', null, 'Delivered')).toEqual(unknown);
+  });
+
   it.each(['app', '', 'china-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });

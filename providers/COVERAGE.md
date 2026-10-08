@@ -76,7 +76,7 @@ asked after the other aggregators whatever its count.
 | [ZTO Express](../carriers/zto/README.md) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
 | [YTO Express](../carriers/yto/README.md) | Yes (China domestic) | ✓ 30 | Error | ✓ 30 | ✓ 20 | No history | N/A |
 | [Yunda Express](../carriers/yunda/README.md) | Yes (China domestic) | Unverified; alternate ✓ 2 | Unverified | Unverified | Unverified | Unverified | N/A |
-| [STO Express](../carriers/sto/README.md) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
+| [STO Express](../carriers/sto/README.md) | Yes (China domestic) | Unverified; alternate ✓ 11 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Yamato Transport](../carriers/yamato/README.md) | Yes | ✓ 7 (yearless dates) | Error | Wrong carrier | No history | No history | N/A |
 | [Correios Brazil](../carriers/correios-br/README.md) | Yes (local OCR) | ✓ 8 | ✓ 8 | No history | ✓ 8 | Error | No history |
 | [Singapore Post](../carriers/singapore-post/README.md) | Yes | ✓ 9 | ✓ 4, partial | ✓ 12 | ✓ 18 | ✓ 11 | ✓ 4 |

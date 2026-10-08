@@ -258,12 +258,6 @@
     "reason": "PostNL's barcode documentation shows a three-letter customer code at this length, the shape most DHL Parcel barcodes have, and a few archived PostNL barcodes carry one. DHL's rule takes it: nearly all PostNL barcodes carry four letters."
   },
   {
-    "carrier": "sto",
-    "pattern": "^77\\d{13}$",
-    "kind": "open",
-    "reason": "STO's own tracking page was archived with fifteen-digit numbers starting 77. Two samples, and no adapter to confirm them, do not establish the family."
-  },
-  {
     "carrier": "sunyou",
     "pattern": "^LP\\d{14}$",
     "kind": "collision",

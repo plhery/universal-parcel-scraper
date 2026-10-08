@@ -3470,15 +3470,22 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sto",
+      "recognitionRank": 10,
+      "localClocks": true
     },
-    "canaryUrl": "https://www.sto.cn/pc/service-page/iframe_2_21",
+    "canaryUrl": "https://page.sto.cn/ued-projects/sto-customer-onlinekf",
     "trackingUrlTemplate": "https://www.sto.cn/",
     "linkRules": [],
     "detectionRules": [
       {
         "pattern": "^\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^77\\d{13}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },
@@ -5390,7 +5397,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "singapore-post": ["singapore-post-1"],
   "japan-post": ["japan-post-1","japan-post-domestic","japan-post-registered"],
   "sf-express": ["sf-express-3","sf-express-1","sf-express-2","sf-express-4"],
-  "sto": ["sto-1"],
+  "sto": ["sto-1","sto-2"],
   "yunda": ["yunda-1"],
   "yto": ["yto-1","yto-2"],
   "zto": ["zto-1"],

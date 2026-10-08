@@ -824,10 +824,11 @@
     },
     {
       "carrier": "sto",
-      "direct": "No adapter",
-      "sample": "Not tested",
+      "direct": "Yes (China domestic)",
+      "sample": "Unverified; alternate ✓ 11",
       "references": [
         {
+          "note": "No comparison reference is available. An alternate public reference returned eleven identity-bound scans, and five more from the same page ten to fifteen each: http://www.kuaidi.com/all/shentong.html",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",

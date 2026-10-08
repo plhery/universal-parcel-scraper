@@ -14,17 +14,54 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "sto",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 10
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "delivered_at",
+    "provider_code",
+    "weight"
+  ],
   "portal": {
     "url": "https://www.sto.cn/",
-    "canaryUrl": "https://www.sto.cn/pc/service-page/iframe_2_21",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://page.sto.cn/ued-projects/sto-customer-onlinekf",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "pickup_point",
+      "pickup_code",
+      "contact_details",
+      "signature",
+      "collection_addresses"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "provider_code",
+      "weight"
+    ],
+    "discarded": [
+      "contact_details",
+      "signature",
+      "collection_addresses",
+      "pickup_point",
+      "pickup_code"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [],
   "detection": [
@@ -32,6 +69,12 @@
       "id": "sto-1",
       "pattern": "^\\d{12}$",
       "confidence": "low"
+    },
+    {
+      "id": "sto-2",
+      "pattern": "^77\\d{13}$",
+      "confidence": "low",
+      "preferred": true
     }
   ]
 }

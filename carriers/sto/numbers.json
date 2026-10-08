@@ -46,11 +46,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "sto",
           "brt",
           "yunda"
         ]
       },
-      "note": "An STO tracking link archived by the Wayback Machine. STO has no adapter here, so it stays unconfirmed; fifteen digits starting 77 do not yet suggest STO."
+      "note": "An STO tracking link archived by the Wayback Machine. STO's trace no longer returns it, so it stays unconfirmed. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
     },
     {
       "number": "775510496178076",
@@ -69,11 +70,146 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "sto",
           "brt",
           "yunda"
         ]
       },
-      "note": "An STO tracking link archived by the Wayback Machine. STO has no adapter here, so it stays unconfirmed; fifteen digits starting 77 do not yet suggest STO."
+      "note": "An STO tracking link archived by the Wayback Machine. STO's trace no longer returns it, so it stays unconfirmed. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
+    },
+    {
+      "number": "772081358264432",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.kuaidi.com/all/shentong.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sto",
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "Listed as an STO Express waybill on kuaidi.com's public STO page; STO's own trace returns its history. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
+    },
+    {
+      "number": "777449178728821",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.kuaidi.com/all/shentong.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "sto",
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "Listed as an STO Express waybill on kuaidi.com's public STO page; STO's own trace returns its history. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
+    },
+    {
+      "number": "773444377847714",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.kuaidi.com/all/shentong.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sto",
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "Listed as an STO Express waybill on kuaidi.com's public STO page; STO's own trace returns its history. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
+    },
+    {
+      "number": "777448479139664",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.kuaidi.com/all/shentong.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "sto",
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "Listed as an STO Express waybill on kuaidi.com's public STO page; STO's own trace returns its history. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
+    },
+    {
+      "number": "777448937327863",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.kuaidi.com/all/shentong.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sto",
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "Listed as an STO Express waybill on kuaidi.com's public STO page; STO's own trace returns its history. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
+    },
+    {
+      "number": "773444195745332",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.kuaidi.com/all/shentong.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sto",
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "Listed as an STO Express waybill on kuaidi.com's public STO page; STO's own trace returns its history. Other carriers' fifteen-digit rules match too, so detection only suggests STO."
     }
   ]
 }

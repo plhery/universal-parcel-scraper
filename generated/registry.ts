@@ -90,6 +90,7 @@ import { adapter as speedpak } from '../carriers/speedpak/adapter.js';
 import { adapter as speedx } from '../carriers/speedx/adapter.js';
 import { adapter as springGds } from '../carriers/spring-gds/adapter.js';
 import { adapter as spxPh } from '../carriers/spx-ph/adapter.js';
+import { adapter as sto } from '../carriers/sto/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
@@ -199,6 +200,7 @@ export const REGISTRY: RegistryDefinition = {
     "speedx": speedx,
     "spring-gds": springGds,
     "spx-ph": spxPh,
+    "sto": sto,
     "sunyou": sunyou,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
@@ -322,7 +324,7 @@ export const REGISTRY: RegistryDefinition = {
     "speedx": "speedx",
     "spring-gds": "spring-gds",
     "spx-ph": "spx-ph",
-    "sto": "universal",
+    "sto": "sto",
     "sunyou": "sunyou",
     "swiss-post": "swiss-post",
     "swiss-post-cargo": "swiss-post-cargo",
