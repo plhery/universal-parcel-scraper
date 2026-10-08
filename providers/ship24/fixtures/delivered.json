@@ -8,12 +8,14 @@
         "datetime": "2026-08-17T11:17:00Z",
         "timestamp": "2026-08-17T11:17:00+02:00",
         "status": "Delivered by Mailbox, PIN: 4821, signed by PRIVATE",
+        "location": "PRIVATE door number 4",
         "dispatch_code_id": 7
       },
       {
         "datetime": "2026-08-17T05:31:00Z",
         "timestamp": "2026-08-17T07:31:00+02:00",
-        "status": "Out for delivery"
+        "status": "Out for delivery",
+        "location": "Example Town, CH"
       },
       {
         "datetime": "2026-08-12T20:05:00Z",

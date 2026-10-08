@@ -80,8 +80,9 @@ carrier.
   instead. A scan the rule cannot place is counted in `undated_event_count`, and when it
   is the reply's latest scan the reply is inconclusive.
 - Original scan text is kept. The English interface does not translate descriptions.
+- Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details.
 - At most 20 carrier legs and 1000 events. `shipping_info` and per-event `address` are
-  never read.
+  never read: the address can be the recipient's street.
 
 ## Rejected approaches
 

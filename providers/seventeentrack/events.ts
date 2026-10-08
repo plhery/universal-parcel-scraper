@@ -3,7 +3,7 @@ import type { CarrierEvent } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import type { Stage } from '../../generated/catalog.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { event, text } from '../shared/result.js';
+import { event, place, text } from '../shared/result.js';
 
 // Official v2 status vocabulary, plus TransportArrived/Departed observed in
 // public China Post histories. Expired describes tracking age, not a scan.
@@ -62,8 +62,11 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
     && text(raw.description).toLowerCase() === 'loading into delivery vehicle') parsed.stage = 'out_for_delivery';
   if (parsed.stage === 'delivered') parsed.description = 'Delivered';
   const timeRaw = isRecord(raw.time_raw) ? raw.time_raw : null;
+  // `address` is never read: it can be the recipient's street.
+  const location = place(raw.location);
   return {
     ...parsed,
+    ...(location ? { location } : {}),
     ...(code && /^[A-Za-z_]{1,80}$/.test(code) ? { provider_code: code } : {}),
     ...operator,
     ...(typeof raw.time_iso === 'string' ? { provider_time_iso: raw.time_iso } : {}),

@@ -43,6 +43,12 @@ export function hasPrivateDeliveryDetails(description: string): boolean {
   return /\bpin\s*:|(?:access|security|pickup|collection) code|(?:door|house) (?:no\b|number)|signed (?:for )?by|signature|numero civico|firmato da|signe par|signé par|code (?:de retrait|d['’]acc[eè]s)|num[eé]ro de (?:rue|maison)|abholcode|zugangscode|hausnummer|unterschrieben von|codice (?:di ritiro|di accesso)|c[oó]digo (?:pin|secreto|de (?:recogida|retirada|retiro|acceso|acesso|entrega|seguridad|seguran[cç]a|levantamento|recolha|desbloqueo|desbloqueio|apertura|abertura))|firmad[oa] por|firma del destinatari|assinad[oa] por|assinatura|n[uú]mero (?:de (?:portal|puerta|casa|piso|vivienda|pol[ií]cia)|da (?:porta|casa))|(?:porta|puerta) n\.?\s?[º°]|n\.?\s?[º°] (?:de |da )?porta/i.test(description);
 }
 
+/** The place a provider reports for a scan, unless it holds private delivery details. */
+export function place(value: unknown): string {
+  const location = text(value).slice(0, 200);
+  return location && !hasPrivateDeliveryDetails(location) ? location : '';
+}
+
 function sourceEventStage(description: string, includeBroadMovement = true): Stage | undefined {
   // Public aggregators retain the carrier's French wording even in English.
   const french = description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');

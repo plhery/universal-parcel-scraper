@@ -24,7 +24,7 @@ import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/tr
 import { countryTimeZone, sharedClockZone } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
-import { localEvent, numberOf, result, type UniversalSource } from '../shared/result.js';
+import { localEvent, numberOf, place, result, type UniversalSource } from '../shared/result.js';
 import { Ship24HttpClient } from './http.js';
 
 const SOURCE: UniversalSource = 'Ship24';
@@ -75,6 +75,8 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     // except for some carrier legs (Chronopost) that omit it entirely.
     const parsed = localEvent(raw.timestamp, raw.status, raw.dispatch_code_id === 7 ? 'Delivered' : undefined);
     if (!parsed) continue;
+    const location = place(raw.location);
+    if (location) parsed.location = location;
     const wall = typeof parsed.local_time === 'string' ? parsed.local_time : null;
     const zone = wall ? wallZone(names.reported_carriers, raw.location, number, wall, timezone) : null;
     const instant = wall && zone ? DateTime.fromISO(wall, { zone }) : null;

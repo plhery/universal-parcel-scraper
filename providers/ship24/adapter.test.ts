@@ -27,11 +27,14 @@ function fixture(executablePath: string | null = '/test/chromium') {
 afterEach(() => { vi.restoreAllMocks(); vi.clearAllMocks(); });
 
 describe('Ship24 result parsing', () => {
-  it('retains the aggregated history and courier names without recipient or courier contact details', () => {
+  it('retains the aggregated history, scan places and courier names without recipient or courier contact details', () => {
     const parsed = parseShip24Response(delivered, number);
     expect(parsed).toMatchObject({ status: 'delivered', current_stage: 'delivered', tracking_provider: 'Ship24' });
     expect(parsed.events?.length).toBeGreaterThan(0);
     expect(parsed.events?.[0]).toMatchObject({ stage: 'delivered', description: 'Delivered' });
+    // A place holding private delivery details is dropped.
+    expect(parsed.events?.[0]?.location).toBeUndefined();
+    expect(parsed.events?.[1]).toMatchObject({ description: 'Out for delivery', location: 'Example Town, CH' });
     expect(parsed.reported_carriers).toEqual(['Swiss Post', 'UPS']);
     // A single unambiguous name may be adopted; several names stay hints only.
     expect(parsed.discovered_carrier).toBeUndefined();

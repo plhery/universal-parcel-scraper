@@ -52,6 +52,8 @@ credentials. No account, cookie, fingerprint or issued token is used.
   country, else the zone routing passes for the parcel's carrier. With none of them the
   scan stays a `local_time`, which the timeline cannot place, rather than a guessed
   UTC instant. A reply made only of such scans is inconclusive.
+- Each scan keeps its `location`, a town, region and country or a hub's code, unless it
+  holds private delivery details.
 - `dispatch_code_id: 7` is treated as delivered.
 - `couriers[].translation.name` becomes `reported_carriers`, and becomes
   `discovered_carrier` only when exactly one name maps to a catalog id. A bare brand

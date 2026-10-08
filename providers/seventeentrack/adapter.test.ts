@@ -243,12 +243,15 @@ describe('17TRACK result parsing', () => {
     }
   });
 
-  it('uses matching history, keeps the reported carrier and strips recipient data', () => {
+  it('uses matching history, keeps the reported carrier and scan places, and strips recipient data', () => {
     const result = parse17TrackResponse(delivered, number);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', tracking_provider: '17TRACK',
       last_update: '2026-08-31T18:50:50.000Z' });
     expect(result.events?.[0]).toMatchObject({ stage: 'delivered', description: 'Delivered' });
-    expect(result.events?.[1]).toMatchObject({ stage: 'out_for_delivery', time: '2026-08-31T17:12:44.000Z' });
+    expect(result.events?.[1]).toMatchObject({ stage: 'out_for_delivery', time: '2026-08-31T17:12:44.000Z',
+      location: 'EXAMPLE TOWN, CH' });
+    // A place holding private delivery details is dropped, and the street-level address never read.
+    expect(result.events?.[0]?.location).toBeUndefined();
     expect(result).toMatchObject({ reported_carriers: ['Swiss Post'], discovered_carrier: 'swiss-post' });
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });

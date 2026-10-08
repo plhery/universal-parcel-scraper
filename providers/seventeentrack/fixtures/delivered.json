@@ -18,12 +18,14 @@
                   "time_iso": "2026-08-31T20:50:50+02:00",
                   "description": "Delivered, signed by PRIVATE",
                   "stage": "Delivered",
+                  "location": "PRIVATE door number 4",
                   "address": "PRIVATE street 4"
                 },
                 {
                   "time_iso": "2026-08-31T11:12:44-06:00",
                   "description": "Item out for delivery",
-                  "stage": "OutForDelivery"
+                  "stage": "OutForDelivery",
+                  "location": "EXAMPLE TOWN, CH"
                 },
                 {
                   "time_utc": "2026-08-28T09:03:00Z",
