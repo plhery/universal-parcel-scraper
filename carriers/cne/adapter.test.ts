@@ -6,6 +6,8 @@ import { normalizeCneNumber, parseCne } from './parser.js';
 
 const NUMBER = '3A5V000000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/returned.json', import.meta.url), 'utf8'));
+const HANDOFF_NUMBER = '3A5V000000002';
+const handoffFixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered-handoff.json', import.meta.url), 'utf8'));
 afterEach(() => vi.restoreAllMocks());
 
 describe('CNE response projection', () => {
@@ -66,6 +68,55 @@ describe('CNE response projection', () => {
     const result = parseCne(payload, NUMBER);
     expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
     expect(result.events?.at(-1)?.time).toBe('2026-01-01T00:00:00Z');
+  });
+
+  it('follows a named last-mile supplier and its transfer number through to delivery', () => {
+    const result = parseCne(handoffFixture(), HANDOFF_NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', destination_country: 'GB',
+      delivery_carrier: 'royal-mail', delivery_tracking_number: 'ZZ000000005GB', last_status_text: 'Signature Obtained；Signature Obtained.' });
+    expect(result.events?.map(event => [event.stage, event.stage_source])).toEqual([
+      ['delivered', 'carrier_map'], ['in_transit', 'carrier_map'], ['in_transit', 'wording:language'], ['in_transit', 'carrier_map'],
+      ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'],
+      ['accepted', 'carrier_map'], ['registered', 'carrier_map'],
+    ]);
+    expect(result.delivered_at).toBeUndefined();
+  });
+
+  it('names no carrier for a supplier outside the catalog and follows no unnamed transfer', () => {
+    const payload = handoffFixture(); payload.lastMileSupplier = { enName: 'Example Courier', code: 'XX Example' };
+    expect(parseCne(payload, HANDOFF_NUMBER)).toMatchObject({ delivery_tracking_number: 'ZZ000000005GB' });
+    expect(parseCne(payload, HANDOFF_NUMBER).delivery_carrier).toBeUndefined();
+    delete payload.lastMileSupplier;
+    const result = parseCne(payload, HANDOFF_NUMBER);
+    expect(result.delivery_tracking_number).toBeUndefined(); expect(result.delivery_carrier).toBeUndefined();
+  });
+
+  it('takes a delivered summary over a history that stops at the hand-off, without dating the delivery', () => {
+    const payload = handoffFixture(); payload.trackingEventList.splice(6);
+    payload.trackingEventList.at(-1).date = '2026-02-06T07:00:00+08:00';
+    const result = parseCne(payload, HANDOFF_NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Arrived At The Delivery Company', last_update: '2026-02-06T07:00:00+08:00' });
+    expect(result.delivered_at).toBeUndefined();
+    payload.Response_Info.status = '2';
+    expect(parseCne(payload, HANDOFF_NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
+  it.each([['5', 'customs'], ['7', 'exception'], ['8', 'returned']])('reads summary code %s as %s', (code, stage) => {
+    const payload = handoffFixture(); payload.Response_Info.status = code;
+    expect(parseCne(payload, HANDOFF_NUMBER)).toMatchObject({ current_stage: stage, current_stage_source: 'carrier_map' });
+  });
+
+  it('reads an unknown partner wording by its code and keeps a partner acceptance in transit', () => {
+    const payload = handoffFixture(); const latest = payload.trackingEventList.at(-1);
+    latest.details = 'Partner wording no rule knows'; latest.state = 2;
+    expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map', provider_code: '2' });
+    delete latest.state;
+    expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]?.stage).toBeUndefined();
+    latest.details = 'Accepted, Hub Facility';
+    expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'accepted' });
+    latest.state = 2;
+    expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
   });
 
   it('does not infer a terminal stage from an unknown summary code', () => {

@@ -13,6 +13,25 @@ const WORDING: Readonly<Record<string, Stage>> = {
   'Arrived at CNE Facility': 'in_transit', 'Inbound scan': 'in_transit',
   'Shipment Processed': 'in_transit', 'Sorting failed []': 'exception',
   "It was returned to customer's address by CNE": 'returned',
+  'Departure Scan': 'in_transit', 'Depart From Local Facility': 'in_transit',
+  'Arrived Export Airport': 'in_transit', 'Released From Export Customs': 'in_transit',
+  'Shipment Departed From Original Country': 'in_transit', 'Arrived At Transit Airport': 'in_transit',
+  'Shipment Depart From Transit Airport': 'in_transit', 'Arrived at Import Airport': 'in_transit',
+  'The shipment is picked up by customs broker': 'customs', 'Released From Import Customs': 'in_transit',
+  'Pickup from airport': 'in_transit', 'Arrived At The Delivery Company': 'in_transit',
+  // Last-mile labels the shared rules miss; the courier's van takes the parcel on board.
+  'On Board with Courier': 'out_for_delivery', 'Parcel Unloaded From Container': 'in_transit',
+};
+// Status codes as CNE's tracking page labels them: 1 and 2 Shipping, 3 Delivered,
+// 5 Customs inspection, 6 Invalid address, 7 Lost, 8 Returned, 9 Exception and
+// 10 Destroyed. 0 (not sent), 4 (time out) and 99 (unknown) establish nothing.
+const CODES: Readonly<Record<string, Stage>> = {
+  1: 'in_transit', 2: 'in_transit', 3: 'delivered', 5: 'customs', 6: 'exception',
+  7: 'exception', 8: 'returned', 9: 'exception', 10: 'exception',
+};
+// Last-mile suppliers, by CNE's code, that the catalog tracks directly.
+const PARTNERS: Readonly<Record<string, string>> = {
+  'DE DHL': 'dhl', 'Royal Mail': 'royal-mail', 'US SPX': 'speedx', USPS: 'usps',
 };
 
 export function normalizeCneNumber(raw: string): string {
@@ -28,16 +47,33 @@ function scanTime(value: string) {
   return explicitOffsetTime(value);
 }
 
+function stageOf(description: string, code: string): { stage: Stage; source: string } | undefined {
+  // Last-mile partners write "label；explanation". The explanation can announce
+  // a later step ("It will be out for delivery"), so only the label is read.
+  const label = description.split('；')[0]!.trim() || description;
+  const exact = WORDING[description] ?? WORDING[label];
+  if (exact) return { stage: exact, source: 'carrier_map' };
+  const worded = classifyWording(label, 'pending');
+  // CNE codes a partner's acceptance or pre-advice after the hand-off as
+  // shipping: the parcel is in the middle of its journey, not starting it.
+  if ((worded.stage === 'accepted' || worded.stage === 'registered') && CODES[code] === 'in_transit') {
+    return { stage: 'in_transit', source: 'carrier_map' };
+  }
+  if (worded.source !== 'none') return worded;
+  // A partner's own wording that no rule knows still carries CNE's code.
+  return CODES[code] ? { stage: CODES[code], source: 'carrier_map' } : undefined;
+}
+
 function scan(raw: unknown): CarrierEvent {
   if (!isRecord(raw) || !clean(raw.details, 1000)) throw new SchemaError(PROVIDER, 'CNE returned an invalid movement');
   const description = clean(raw.details, 1000), clock = clean(raw.date, 64);
-  const location = clean(raw.place, 200), stage = WORDING[description];
-  const mapped = stage ? { stage, source: 'carrier_map' } : classifyWording(description, 'pending');
+  const location = clean(raw.place, 200), code = cleanScalar(raw.state);
+  const mapped = stageOf(description, code);
   const time = scanTime(clock);
   return { description, ...(location ? { location } : {}),
     ...(time ? { time: time.iso } : clock ? { provider_time_text: clock } : {}),
-    ...(mapped.source !== 'none' ? { stage: mapped.stage, stage_source: mapped.source } : {}),
-    ...(cleanScalar(raw.state) ? { provider_code: cleanScalar(raw.state) } : {}) };
+    ...(mapped ? { stage: mapped.stage, stage_source: mapped.source } : {}),
+    ...(code ? { provider_code: code } : {}) };
 }
 
 export function parseCne(payload: unknown, raw: string): CarrierResult {
@@ -50,22 +86,34 @@ export function parseCne(payload: unknown, raw: string): CarrierResult {
   }
   const identity = payload.Response_Info;
   if (!isRecord(identity) || clean(identity.trackingNbr) !== number) throw new SchemaError(PROVIDER, 'CNE returned a different shipment');
-  // These are echoed source identifiers, unlike referNbr and transNbr, which
-  // may be merchant and downstream references. Do not follow those aliases.
-  if (identity.Number_t !== undefined && clean(identity.Number_t) !== number) throw new SchemaError(PROVIDER, 'CNE returned conflicting shipment identifiers');
+  // Number_t echoes the source number or, once a last-mile supplier is named,
+  // the transfer number that supplier tracks. Anything else is another shipment.
+  const transfer = clean(identity.transNbr, 64);
+  const echoed = identity.Number_t === undefined ? number : clean(identity.Number_t, 64);
+  if (echoed !== number && (!transfer || echoed !== transfer)) throw new SchemaError(PROVIDER, 'CNE returned conflicting shipment identifiers');
   if (!Array.isArray(payload.trackingEventList) || payload.trackingEventList.length > 1000) throw new SchemaError(PROVIDER, 'CNE returned an invalid history');
   if (!payload.trackingEventList.length) throw new IndeterminateError(PROVIDER, 'CNE returned no shipment movements');
   // The official client reverses the oldest-first array. Preserve that order
   // even when its unqualified cross-border clocks cannot resolve to instants.
   const events = payload.trackingEventList.map(scan).reverse();
   const latest = events[0]!;
-  const summaryStage = cleanScalar(identity.status) === '8' ? 'returned' : undefined;
+  // A terminal or blocking summary outranks the latest row, which can stop at
+  // the hand-off to the last-mile partner. Shipping defers to the rows.
+  const summaryCode = cleanScalar(identity.status);
+  const summaryStage = summaryCode !== '1' && summaryCode !== '2' ? CODES[summaryCode] : undefined;
   const stage = summaryStage ?? latest.stage;
   const source = summaryStage ? 'carrier_map' : latest.stage_source;
   const country = clean(identity.Destination, 64).toUpperCase();
+  // A named supplier declares the hand-off. Without one, transNbr can be a
+  // merchant's reference, and referNbr always is: neither is followed.
+  const supplier = isRecord(payload.lastMileSupplier) ? clean(payload.lastMileSupplier.code, 64) : '';
+  const partner = supplier ? PARTNERS[supplier] : undefined;
+  const handoff = supplier && echoed === transfer && transfer !== number && /^[A-Z0-9]{4,40}$/.test(transfer) ? transfer : '';
   return { status: stage ? languageStageStatus(stage as Stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
-    ...(stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) };
+    ...(stage === 'delivered' && latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
+    ...(partner ? { delivery_carrier: partner } : {}), ...(handoff ? { delivery_tracking_number: handoff } : {}),
+    events: events.slice(0, 100) };
 }

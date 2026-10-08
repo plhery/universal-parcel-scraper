@@ -7052,7 +7052,47 @@
     ]
   },
   {
+    "input": "3A5V617635800",
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
+  },
+  {
+    "input": "3A5V640465958",
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
+  },
+  {
     "input": "3A5V721250488",
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
+  },
+  {
+    "input": "3A5V728889628",
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
+  },
+  {
+    "input": "3A5V910172999",
+    "carrier": "cne",
+    "confidence": "high",
+    "candidates": [
+      "cne"
+    ]
+  },
+  {
+    "input": "3A5V913107080",
     "carrier": "cne",
     "confidence": "high",
     "candidates": [

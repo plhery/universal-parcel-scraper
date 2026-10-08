@@ -24,7 +24,10 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://www.cne.com/en/track?no={trackingNumber}",
@@ -38,11 +41,12 @@
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner"
     ],
     "discarded": [
-      "transfer_reference",
-      "merchant_reference"
+      "merchant_reference",
+      "delivered_at"
     ],
     "unavailable": [
       "eta",

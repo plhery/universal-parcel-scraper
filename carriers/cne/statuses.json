@@ -61,6 +61,154 @@
       "language": "zh",
       "stage": "returned",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "Departure Scan",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Depart From Local Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived Export Airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Released From Export Customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment Departed From Original Country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived At Transit Airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment Depart From Transit Airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived at Import Airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The shipment is picked up by customs broker",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Released From Import Customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Pickup from airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived At The Delivery Company",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "On Board with Courier",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "A last-mile partner's label; its explanation says the courier loaded the parcel onto the van."
+    },
+    {
+      "wording": "Parcel Unloaded From Container",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A last-mile partner's label."
+    },
+    {
+      "code": "1",
+      "wording": "Shipping",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "documentation",
+      "note": "Labelled on CNE's tracking page; not yet seen live."
+    },
+    {
+      "code": "2",
+      "wording": "Shipping",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "3",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "5",
+      "wording": "Customs inspection",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "documentation",
+      "note": "Labelled on CNE's tracking page; not yet seen live."
+    },
+    {
+      "code": "6",
+      "wording": "Invalid address",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "Labelled on CNE's tracking page; not yet seen live."
+    },
+    {
+      "code": "7",
+      "wording": "Lost",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "Labelled on CNE's tracking page; not yet seen live."
+    },
+    {
+      "code": "9",
+      "wording": "Exception",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "Labelled on CNE's tracking page; not yet seen live."
+    },
+    {
+      "code": "10",
+      "wording": "Destroyed",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "Labelled on CNE's tracking page; not yet seen live."
     }
   ]
 }
