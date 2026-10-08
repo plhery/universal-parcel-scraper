@@ -130,20 +130,27 @@ describe('Chronopost direct tracking', () => {
     }
   });
 
-  it('names the pickup point only while the parcel waits there, and dates the delivery', () => {
+  it('names the pickup point and its address only while the parcel waits there, and dates the delivery', () => {
     const arrived = scan('AB', '2026-06-27T11:07:04+02:00', 'Colis mis à disposition au point de retrait', relay);
     const dropOff = scan('RB', '2026-06-27T11:08:00+02:00', 'Colis en cours de livraison au point de retrait',
       { 'Point de retrait': relay['Point de livraison'] });
     const waiting = parseChronopostTrackingXml(history(prepared, outForDelivery, arrived, dropOff), number);
     expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
-      pickup_point: 'EXAMPLE RELAY', expected_delivery: null });
+      pickup_point: 'EXAMPLE RELAY\n1 EXAMPLE STREET\n00000 EXAMPLE CITY', expected_delivery: null });
     expect(waiting.events?.[0]).toMatchObject({ provider_code: 'RB', stage: 'ready_for_pickup', stage_source: 'none' });
-    expect(JSON.stringify(waiting)).not.toMatch(/EXAMPLE STREET|00000|EXAMPLE CITY/);
+    expect(waiting.events?.map(event => event.location)).not.toContain(expect.stringMatching(/EXAMPLE STREET|00000/));
     const collected = scan('D', '2026-06-27T16:04:28+02:00', 'Livraison effectuée', relay);
     const notified = scan('SM', '2026-06-27T16:05:00+02:00', 'Destinataire informé par SMS ou mail');
     const delivered = parseChronopostTrackingXml(history(prepared, arrived, collected, notified), number);
     expect(delivered).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-06-27T16:04:28+02:00', expected_delivery: null });
     expect(delivered.pickup_point).toBeUndefined();
+    // The pickup point can be named as such, without a collection type. An
+    // address in another layout leaves the name alone.
+    const named = (point: string) => parseChronopostTrackingXml(history(prepared, scan('AB', '2026-06-27T11:07:04+02:00',
+      'Colis mis à disposition au point de retrait', { 'Point de retrait': point })), number).pickup_point;
+    expect(named('EXAMPLE KIOSK - EXAMPLESTR. 1  - 00000 - EXAMPLE CITY - DE')).toBe('EXAMPLE KIOSK\nEXAMPLESTR. 1\n00000 EXAMPLE CITY');
+    expect(named('EXAMPLE RELAY - EXAMPLE STREET - EXAMPLE CITY - FR')).toBe('EXAMPLE RELAY');
+    expect(named('EXAMPLE RELAY - 1 EXAMPLE STREET - 00000 - FR')).toBe('EXAMPLE RELAY');
     // A home address or an unexpected layout never becomes a pickup point.
     const unnamed: Record<string, string>[] = [{ 'Point de livraison': relay['Point de livraison'] },
       { ...relay, 'Point de livraison': 'EXAMPLE RELAY - FR' }];

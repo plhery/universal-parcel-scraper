@@ -65,11 +65,18 @@ function appointmentWindow(start: string, end: string): string | null {
   return days[0] && days[0] === days[1] && clocks[0]! < clocks[1]! ? `${days[0]} ${clocks[0]}–${clocks[1]}` : null;
 }
 
-/** The relay or locker name is the first part of its address; the rest is never read. */
-function pickupName(point: string): string {
-  const parts = point.split(' - ');
-  const name = clean(parts[0], 200);
-  return parts.length >= 3 && /\p{L}/u.test(name) && /^[\p{L}\p{M}\p{N} .,'’&()/-]+$/u.test(name) ? name : '';
+/**
+ * A relay or locker, given as `name - street - postcode - city - country`: its name, then its
+ * street and town on their own lines when the address has that layout.
+ */
+function relayPoint(point: string): string {
+  const parts = point.split(' - ').map(part => clean(part, 200));
+  const name = parts[0]!;
+  if (parts.length < 3 || !/\p{L}/u.test(name) || !/^[\p{L}\p{M}\p{N} .,'’&()/-]+$/u.test(name)) return '';
+  const street = parts.slice(1, -3).join(' - ');
+  const [postcode, city] = parts.slice(-3, -1);
+  return /\p{L}/u.test(street) && /^(?=.*\d)[A-Z\d][A-Z\d -]{1,9}$/.test(postcode!) && /\p{L}/u.test(city!)
+    ? `${name}\n${street}\n${postcode} ${city}` : name;
 }
 
 /** The calendar day of a scan's own clock, or '' without one. */
@@ -128,6 +135,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     let end: string | undefined;
     let collection = '';
     let point = '';
+    let relay = '';
     for (const extra of extras) {
       const name = scalar(extra, 'name');
       const value = scalar(extra, 'value');
@@ -136,6 +144,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
       if (name === 'Début créneau RDV') start = value;
       if (name === 'Fin créneau RDV') end = value;
       if (name === 'Type de retrait') collection = value;
+      if (name === 'Point de retrait') relay = value;
       if (name === 'Numéro partenaire') {
         const match = /^(?:GEO\/)?([A-Z0-9]{4,40})$/.exec(value.toUpperCase());
         if (match) {
@@ -144,7 +153,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
         }
       }
       if (name === 'Point de livraison') {
-        // Only the terminal country and a pickup point's name are projected.
+        // Only the terminal country and a pickup point are projected.
         point = value;
         const country = countryCode(/ - ([A-Z]{2})$/.exec(value)?.[1]);
         if (country) destinations.add(country);
@@ -159,7 +168,9 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     const mapped = chronopostStage(code, description);
     return { event, mapped, notification: isChronopostNotification(description), index, redelivery,
       appointment: start === undefined && end === undefined ? undefined : appointmentWindow(start ?? '', end ?? ''),
-      dropOff: isPickupDropOff(code, description), pickup: collection && point ? pickupName(point) : '' };
+      dropOff: isPickupDropOff(code, description),
+      // A delivery point is a relay only when the scan names how it is collected.
+      pickup: relay ? relayPoint(relay) : collection && point ? relayPoint(point) : '' };
   });
   // The operation returns oldest first. Reorder only when all scan clocks
   // establish instants, so mixed local clocks cannot create a guessed order.

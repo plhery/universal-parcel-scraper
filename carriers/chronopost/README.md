@@ -38,8 +38,11 @@ becomes the expected delivery, a redelivery day replacing a window on the same
 scan; an unreadable value gives none. It lapses once a later scan is not
 progress towards that delivery or falls on a later day.
 
-The pickup point's name, the first part of its address, is kept only while the
-parcel waits there.
+While the parcel waits at a relay or locker, that becomes the pickup point: its
+name, then its street and town on their own lines when its address has the
+usual name, street, postcode, city and country layout. A scan names it as the
+pickup point, or as the delivery point together with how the parcel is
+collected; a delivery point alone can be the recipient's home.
 
 A checked `GEO/` parcel reference with an explicit German delivery country
 proposes DPD Germany. The tracker asks that adapter with the partner's number
@@ -51,10 +54,10 @@ remain separate.
 ## Limitations
 
 The tracking operation supplies no delivery estimate beyond appointment
-windows and chosen redelivery days. Recipient addresses, postcodes,
-delivery-point contact details and free-form supplementary comments are
-discarded; only the delivery country's code and a pickup point's name are read
-from the address field.
+windows and chosen redelivery days. Recipient addresses, delivery-point contact
+details and free-form supplementary comments are discarded; only the delivery
+country's code and a pickup point's name and address are read from the address
+fields.
 
 ## Testing
 
