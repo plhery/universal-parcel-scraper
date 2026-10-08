@@ -24,6 +24,9 @@ function scanTime(value: unknown): { time?: string; local_time?: string; provide
     && Number(match[4]) < 24 && Number(match[5]) < 60 && Number(match[6]) < 60
     && (!match[8] || (Number(match[8]) < 24 && Number(match[9]) < 60))) {
     if (!match[7]) return { local_time: raw };
+    // SEUR marks Spanish wall clocks with Z: DPD reports the same scans with
+    // the local offset. Only a numeric offset makes an instant.
+    if (match[7].toUpperCase() === 'Z') return { local_time: raw.slice(0, -1) };
     const parsed = explicitOffsetTime(raw);
     if (parsed) return { time: parsed.iso };
   }

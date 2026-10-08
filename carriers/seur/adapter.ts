@@ -1,8 +1,8 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, IndeterminateError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeSeurNumber, parseSeur } from './parser.js';
 
 export class SeurTracker {
@@ -23,6 +23,9 @@ export class SeurTracker {
       if (performance.now() >= deadline) throw new BudgetExceededError('SEUR', context.budgetMs ?? 15_000);
       signal.throwIfAborted();
       if (response.status !== 200) throw new IndeterminateError('SEUR', 'SEUR tracking endpoint is unavailable');
+      // The firewall answers a request it holds with a script page under HTTP 200.
+      const head = decodeText(bytes.subarray(0, 4_000));
+      if (/^\s*</.test(head) && /_Incapsula_Resource/i.test(head)) throw new ChallengeError('SEUR', 'SEUR answered with a browser challenge');
       return parseSeur(parseJsonBytes(bytes, 'SEUR'), number);
     } }]);
   }

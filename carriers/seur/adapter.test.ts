@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { SeurTracker, adapter } from './adapter.js';
 import { normalizeSeurNumber, parseSeur } from './parser.js';
-import { classifySeurStatus } from './status.js';
+import { classifySeurStatus, seurStatusGroup } from './status.js';
 import fixture from './fixtures/history.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 import { InvalidInputError } from '../../core/errors/index.js';
@@ -14,19 +14,33 @@ const environment = (fetcher: typeof fetch) => ({ fetcher, env: {}, trawl: null,
 const noHistory = { codigo_error: 'ERR_CNSPLI_002', identificador_busqueda: null, clave_envio: null, situaciones: null };
 
 describe('SEUR simplified anonymous tracking', () => {
-  it('projects observed scan semantics, supplied instants and explicitly labelled kilogram weight', () => {
+  it('projects observed scan semantics, Spanish wall clocks and explicitly labelled kilogram weight', () => {
     const result = normalizeCarrierResult(parseSeur(fixture, NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',
-      last_update: '2026-01-23T13:13:05Z', delivered_at: '2026-01-23T13:13:05Z', weight_kg: 1.2 });
+      last_update: null, last_update_local: '2026-01-23T13:13:05', weight_kg: 1.2 });
+    expect(result.delivered_at).toBeUndefined();
     expect(result.events).toHaveLength(6);
     expect(result.events?.map(e => e.stage)).toEqual(['delivered', 'out_for_delivery', 'exception', 'in_transit', 'accepted', 'registered']);
-    expect(result.events?.[0]).toMatchObject({ provider_code: 'LL020', provider_status: 'EL ENVÍO HA SIDO ENTREGADO A UN VECINO.', time: '2026-01-23T13:13:05Z' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'LL020', provider_status: 'EL ENVÍO HA SIDO ENTREGADO A UN VECINO.', local_time: '2026-01-23T13:13:05' });
+    expect(result.events?.every(e => e.time === undefined)).toBe(true);
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
     expect(result.events?.every(e => !e.location)).toBe(true);
     for (const entry of statuses.entries) {
-      const scan = fixture.situaciones.find(row => row.cod_situacion === entry.code)!;
-      expect(classifySeurStatus(entry.code, scan.grupo_situacion, entry.wording)?.stage).toBe(entry.stage);
+      expect(classifySeurStatus(entry.code, seurStatusGroup(entry.code)!, entry.wording)?.stage).toBe(entry.stage);
     }
+  });
+
+  it('stages pickup points, failed attempts, agreed days and customs', () => {
+    const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
+      descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
+    const body = copy();
+    body.situaciones = [scan('LI530', '2026-01-24T10:00:00Z'), scan('LJ105', '2026-01-23T18:00:00Z'), scan('LI523', '2026-01-23T12:00:00Z'),
+      scan('LJ100', '2026-01-22T18:00:00Z'), scan('LD223', '2026-01-22T09:00:00Z'), scan('LD221', '2026-01-21T09:00:00Z')] as typeof body.situaciones;
+    const result = parseSeur(body, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', last_update_local: '2026-01-24T10:00:00' });
+    expect(result.events?.map(e => e.stage)).toEqual(['ready_for_pickup', 'in_transit', 'failed_attempt', 'in_transit', 'in_transit', 'customs']);
+    body.situaciones.unshift(scan('LL010', '2026-01-25T11:00:00Z') as never);
+    expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered' });
   });
 
   it('requires exact identity, nonempty single-piece history and the supported numeric shapes', () => {
@@ -63,17 +77,19 @@ describe('SEUR simplified anonymous tracking', () => {
 
   it('retains the newest unresolved clock and never borrows older delivery or freshness', () => {
     for (const date of ['', '2026-01-23', '2026-02-30T13:00:00Z', '2026-01-23T25:00:00Z', '2026-01-23T13:00:00+24:00', '2026-01-23T13:00:00+01:60', 'future morning']) {
-      const body = copy(); body.situaciones[0]!.fecha = date; body.situaciones[1] = { ...body.situaciones[0]!, fecha: '2026-01-22T13:00:00Z' };
+      const body = copy(); body.situaciones[0]!.fecha = date; body.situaciones[1] = { ...body.situaciones[0]!, fecha: '2026-01-22T13:00:00+01:00' };
       const result = parseSeur(body, NUMBER);
       expect(result.status).toBe('delivered'); expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
       expect(result.events?.[0]!.time).toBeUndefined(); expect(result.events?.[0]!.provider_time_text).toBe(date || undefined);
-      expect(result.events?.[1]!.time).toBe('2026-01-22T13:00:00Z');
+      expect(result.events?.[1]!.time).toBe('2026-01-22T13:00:00+01:00');
     }
+    const marked = copy(); marked.situaciones[0]!.fecha = '2026-07-23T13:13:05.120Z';
+    expect(parseSeur(marked, NUMBER)).toMatchObject({ last_update: null, last_update_local: '2026-07-23T13:13:05.120' });
     const naive = copy(); naive.situaciones[0]!.fecha = '2026-01-23T13:13:05';
     expect(parseSeur(naive, NUMBER)).toMatchObject({ last_update: null, last_update_local: '2026-01-23T13:13:05' });
     expect(parseSeur(naive, NUMBER).delivered_at).toBeUndefined();
     const offset = copy(); offset.situaciones[0]!.fecha = '2026-01-23T13:13:05+01:00';
-    expect(parseSeur(offset, NUMBER).last_update).toBe('2026-01-23T13:13:05+01:00');
+    expect(parseSeur(offset, NUMBER)).toMatchObject({ last_update: '2026-01-23T13:13:05+01:00', delivered_at: '2026-01-23T13:13:05+01:00' });
   });
 
   it('preserves source position for repeated scans and validates the whole bounded feed', () => {
@@ -110,7 +126,10 @@ describe('SEUR simplified anonymous tracking', () => {
   it('recognizes matching activity, skips unsupported formats and propagates no-history failures', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response()); const instance = adapter(environment(fetcher));
     expect(await instance.recognize!('unsupported')).toEqual({ known: false }); expect(fetcher).not.toHaveBeenCalled();
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-23T13:13:05.000Z' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null });
+    const body0 = copy(); body0.situaciones[0]!.fecha = '2026-01-23T13:13:05+01:00';
+    const offset = vi.fn<typeof fetch>().mockResolvedValue(response(body0));
+    expect(await adapter(environment(offset)).recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-23T12:13:05.000Z' });
     const unresolved = vi.fn<typeof fetch>().mockResolvedValue(response(noHistory));
     await expect(adapter(environment(unresolved)).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
     const body = copy(); body.situaciones.forEach(scan => { scan.fecha = ''; }); const undated = vi.fn<typeof fetch>().mockResolvedValue(response(body));
@@ -126,6 +145,9 @@ describe('SEUR simplified anonymous tracking', () => {
     await expect(new SeurTracker({ fetcher: oversized }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');
     const invalid = vi.fn<typeof fetch>().mockResolvedValue(new Response('<html>Challenge</html>'));
     await expect(new SeurTracker({ fetcher: invalid }).fetch(NUMBER)).rejects.toThrow('invalid tracking response');
+    const firewall = '<html>\r\n<head>\r\n<META NAME="robots" CONTENT="noindex,nofollow">\r\n<script src="/_Incapsula_Resource?SYNTHETIC=1"></script>\r\n</head></html>';
+    const held = vi.fn<typeof fetch>().mockResolvedValue(new Response(firewall, { headers: { 'content-type': 'text/html' } }));
+    await expect(new SeurTracker({ fetcher: held }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
   });
 
   it('preserves caller cancellation and rejects delayed positive responses beyond a fractional deadline', async () => {

@@ -2010,7 +2010,7 @@
           "provider_group": "EN REPARTO",
           "provider_code": "LC003",
           "stage": "out_for_delivery",
-          "time": "2026-01-23T08:15:00Z"
+          "local_time": "2026-01-23T08:15:00"
         },
         {
           "description": "EL ENVÍO HA SUFRIDO UN RETRASO Y ES POSIBLE QUE SE DEMORE LA ENTREGA. DISCULPA LAS MOLESTIAS.",
@@ -2018,7 +2018,7 @@
           "provider_group": "EN DEMORA",
           "provider_code": "LI300",
           "stage": "exception",
-          "time": "2026-01-23T07:45:29Z"
+          "local_time": "2026-01-23T07:45:29"
         },
         {
           "description": "EL ENVÍO ESTÁ EN TRÁNSITO. PRÓXIMAMENTE LLEGARÁ A LAS INSTALACIONES DE DESTINO.",
@@ -2026,7 +2026,7 @@
           "provider_group": "EN TRÁNSITO",
           "provider_code": "LI567",
           "stage": "in_transit",
-          "time": "2026-01-22T20:16:54Z"
+          "local_time": "2026-01-22T20:16:54"
         },
         {
           "description": "EL ENVÍO HA SIDO RECEPCIONADO EN LAS INSTALACIONES DE ORIGEN DE SEUR. COMIENZA EL TRÁNSITO A DESTINO",
@@ -2034,7 +2034,7 @@
           "provider_group": "EN TRÁNSITO",
           "provider_code": "SX001",
           "stage": "accepted",
-          "time": "2026-01-22T19:43:00Z"
+          "local_time": "2026-01-22T19:43:00"
         },
         {
           "description": "EL ENVÍO HA SIDO REGISTRADO.",
@@ -2042,7 +2042,7 @@
           "provider_group": "NOTIFICADO",
           "provider_code": "SX010",
           "stage": "registered",
-          "time": "2026-01-21T19:06:31Z"
+          "local_time": "2026-01-21T19:06:31"
         }
       ]
     }
