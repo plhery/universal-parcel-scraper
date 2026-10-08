@@ -9,11 +9,15 @@
         "url": "https://www.trustpilot.com/reviews/6a91747b611979ef4d93e78a",
         "date": "2026-08-28"
       },
+      "context": {
+        "service": "UPS Ground Saver",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Publicly reported UPS shipment. On 2026-09-30 ParcelsApp listed its US scans (\"City, ST, US\") on local clocks: read in each state's zone they matched Ship24's offsets."
+      "note": "Publicly reported UPS shipment; UPS's tracker returns its history."
     },
     {
       "number": "1Z54V8630394427740",
@@ -23,11 +27,15 @@
         "url": "https://www.trustpilot.com/reviews/6aad469800b96d1f86d26113",
         "date": "2026-09-18"
       },
+      "context": {
+        "service": "UPS Ground",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Publicly reported UPS shipment. On 2026-09-30 ParcelsApp listed its US scans (\"City, ST\") on local clocks: read in each state's zone they matched the UPS adapter's instants."
+      "note": "Publicly reported UPS shipment; UPS's tracker returns its history."
     },
     {
       "number": "1Z5R89390357567127",
@@ -62,11 +70,15 @@
         "url": "https://www.trustpilot.com/reviews/6a99a15c2c01a602f74c07d6",
         "date": "2026-09-03"
       },
+      "context": {
+        "service": "UPS Standard",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Publicly reported UPS shipment within Europe. On 2026-09-30 ParcelsApp listed its German scans as \"City, DE\" on local clocks, which the UPS adapter's instants confirm."
+      "note": "Publicly reported UPS shipment within Europe; UPS's tracker returns its history."
     },
     {
       "number": "1ZXX3150YW44070023",
@@ -138,11 +150,15 @@
         "url": "https://www.paketda.de/fragen-antworten.php?suche=1ZH32106DK48771633",
         "date": "2026-08-14"
       },
+      "context": {
+        "service": "UPS Standard",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+      "note": "Public UPS shipment report; UPS's tracker returns its history, including an access point collection."
     },
     {
       "number": "1Z97W1636811640653",
@@ -152,11 +168,15 @@
         "url": "https://www.paketda.de/fragen-antworten.php?suche=1Z97W1636811640653",
         "date": "2026-08-01"
       },
+      "context": {
+        "service": "UPS Standard",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+      "note": "Public UPS shipment report; UPS's tracker returns its history."
     },
     {
       "number": "1Z804W906858079845",
@@ -166,11 +186,15 @@
         "url": "https://www.paketda.de/fragen-antworten.php?suche=1Z804W906858079845",
         "date": "2026-07-31"
       },
+      "context": {
+        "service": "UPS Standard",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+      "note": "Public UPS shipment report; UPS's tracker returns its history."
     },
     {
       "number": "1Z000Y770414233027",
@@ -180,11 +204,15 @@
         "url": "https://www.paketda.de/fragen-antworten.php?suche=1Z000Y770414233027",
         "date": "2026-07-31"
       },
+      "context": {
+        "service": "UPS Express Saver",
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "ups",
         "confidence": "high"
       },
-      "note": "Public UPS shipment report; no live tracking lookup was used to validate the shipment."
+      "note": "Public UPS shipment report; UPS's tracker returns its history, including an access point detour."
     },
     {
       "number": "1Z0F2R789591320579",
