@@ -56,6 +56,19 @@ describe('Yamato parser', () => {
     expect(parse($.html(), NUMBER)).toMatchObject({ status, current_stage: stage });
   });
 
+  it.each([
+    ['配達完了（宅配ボックス）', 'delivered', 'delivered'],
+    ['持戻（ご不在）', 'exception', 'failed_attempt'],
+    ['持戻（置き配不能）サイズオーバー', 'exception', 'failed_attempt'],
+  ])('maps the live current label %s', (wording, status, stage) => {
+    const $ = load(fixture());
+    $('.tracking-invoice-block-state-title').text(wording);
+    $('.tracking-invoice-block-detail li').last().find('.item').text(wording);
+    const result = parse($.html(), NUMBER);
+    expect(result).toMatchObject({ status, current_stage: stage, last_status_text: wording });
+    expect(result.events?.[0]!.stage).toBe(stage);
+  });
+
   it('keeps a delivery after return dispatch on the return leg', () => {
     const $ = load(fixture());
     $('.tracking-invoice-block-detail li').eq(2).find('.item').text('返品');

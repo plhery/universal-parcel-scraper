@@ -44,6 +44,30 @@
       "note": "Exact label returned by the public Yamato domestic tracking form."
     },
     {
+      "wording": "配達完了（宅配ボックス）",
+      "language": "ja",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Delivered into a parcel box."
+    },
+    {
+      "wording": "持戻（ご不在）",
+      "language": "ja",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Brought back because nobody was home."
+    },
+    {
+      "wording": "持戻（置き配不能）サイズオーバー",
+      "language": "ja",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Brought back because the parcel was too large to leave at the door."
+    },
+    {
       "wording": "輸送中",
       "language": "ja",
       "stage": "in_transit",
