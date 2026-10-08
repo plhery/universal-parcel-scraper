@@ -29,8 +29,8 @@ function detail(uid = UID, hint?: string) {
       { number: 4, status: 'Colis disponible au point de retrait', date: null, events: [] },
       { number: 3, status: "Colis sur l'agence de livraison", date: '2026-01-02T15:00:00Z', events: [
         { label: 'Colis en cours de livraison', date: '2026-01-03T06:00:00Z' },
-        { label: 'Colis en cours de traitement sur le site TEST_DEPOT', date: '2026-01-02T15:00:00Z' },
-        { label: 'Colis en cours de traitement sur le site TEST_DEPOT', date: '2026-01-02T15:00:00Z' },
+        { label: 'Colis en cours de traitement sur le site EXAMPLE TOWN', date: '2026-01-02T15:00:00Z' },
+        { label: 'Colis en cours de traitement sur le site EXAMPLE TOWN', date: '2026-01-02T15:00:00Z' },
       ] },
       { number: 1, status: 'Colis en préparation', date: '2026-01-01T08:00:00Z', events: [
         { label: "Colis en cours de préparation par l'expéditeur", date: '2026-01-01T08:00:00Z' },
@@ -86,7 +86,7 @@ describe('Mondial Relay app service', () => {
       last_update: '2026-01-03T07:00:00+01:00', expected_delivery: null, timezone: 'Europe/Paris', source: 'mondial_relay_app',
       events: [
         { time: '2026-01-03T07:00:00+01:00', location: '', description: 'Colis en cours de livraison', stage: 'out_for_delivery' },
-        { time: '2026-01-02T16:00:00+01:00', location: '', description: 'Colis en cours de traitement sur le site TEST_DEPOT', stage: 'in_transit' },
+        { time: '2026-01-02T16:00:00+01:00', location: 'EXAMPLE TOWN', description: 'Colis en cours de traitement sur le site EXAMPLE TOWN', stage: 'in_transit' },
         { time: '2026-01-01T09:00:00+01:00', location: '', description: "Colis en cours de préparation par l'expéditeur", stage: 'registered' },
       ],
     });

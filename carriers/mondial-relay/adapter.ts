@@ -13,7 +13,7 @@ import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, TrawlClient, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { MondialRelayAppClient } from './app.js';
-import { classifyStatus, milestoneNumberStatus } from './status.js';
+import { classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://www.mondialrelay.fr/versioned-assets/2nMAiuVI9Rv9J3kZacblPYCfCABwzS-qZ3m7eFBQn4A/Scripts/vue/tracking/js/app.js
@@ -171,7 +171,7 @@ function parseEvents(expedition: JsonObject): ParsedEvent[] {
     parsed.push({
       event: {
         time: time.iso,
-        location: '',
+        location: scanSite(description),
         description,
         stage: classified.stage,
       },

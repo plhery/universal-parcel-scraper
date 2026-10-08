@@ -108,6 +108,19 @@ export function classifyStatus(description: string): ClassifiedStatus {
 }
 
 /**
+ * The logistics site a scan names, the only place a scan states: "Prise en
+ * charge de votre colis sur notre site logistique de METZ.", "Colis en cours
+ * de traitement sur le site METZ", "Colis expédié depuis le site METZ". A site
+ * the parcel is sent towards is not where the scan happened, and "le site
+ * logistique" without "de" names none.
+ */
+export function scanSite(description: string): string {
+  const site = /\b(?:sur notre|sur le|depuis le) site (?:logistique de )?(\p{L}[\p{L}\p{M} '’-]{1,58}?)\s*\.?$/iu
+    .exec(description)?.[1]?.trim() ?? '';
+  return /^logistique\b/i.test(site) ? '' : site;
+}
+
+/**
  * `SuiviParEtapes` milestone numbers, used only when no wording on the
  * shipment classified. The numbers are positions on the page's own progress
  * bar, so they are read as "at least this far".

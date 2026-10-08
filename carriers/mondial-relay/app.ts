@@ -8,7 +8,7 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import { cleanScalar, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { classifyStatus, milestoneNumberStatus } from './status.js';
+import { classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
 
 export const MONDIAL_RELAY_APP_API = 'https://mobile-app-bff.mondialrelay.app/api/';
 const TOKEN_URL = 'https://account.inpost-group.com/oauth2/token';
@@ -109,7 +109,7 @@ export function parseMondialRelayApp(payload: unknown, uid: string): CarrierResu
       if (seen.has(identity)) continue;
       seen.add(identity);
       const classified = classifyStatus(description);
-      parsed.push({ event: { time: time.iso, location: '', description, stage: classified.stage }, classified, timestamp: time.timestamp });
+      parsed.push({ event: { time: time.iso, location: scanSite(description), description, stage: classified.stage }, classified, timestamp: time.timestamp });
     }
   }
   parsed.sort((left, right) => right.timestamp - left.timestamp);

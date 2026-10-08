@@ -18,7 +18,7 @@ describe('same-instant identity policies', () => {
     expect(sameInstantIdentityPolicy(source)).toBeUndefined();
   });
 
-  it.each(['unknown', 'swiss-post'])('matches %s location enrichment only with unchanged scan evidence', (source) => {
+  it.each(['unknown', 'swiss-post', 'mondial-relay'])('matches %s location enrichment only with unchanged scan evidence', (source) => {
     expect(sameInstantIdentityPolicy(source)).toBeUndefined();
     const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
     expect(policy?.storedSources).toEqual([source]);

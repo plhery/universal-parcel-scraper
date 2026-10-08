@@ -332,13 +332,34 @@ describe('Mondial Relay response normalization', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    const result = parseMondialRelayTrackingResponse(syntheticSuccessFixture(), PUBLIC_CREDENTIAL);
-    expect(CAPABILITIES).toEqual(['history', 'eta']);
+    const fixture = syntheticSuccessFixture();
+    ((fixture.Expedition as Record<string, unknown>).Evenements as unknown[])
+      .push({ Date: '2026-08-29T09:00:00', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' });
+    const result = parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta']);
     expect(result.events?.length).toBeGreaterThan(0);
+    expect(result.events?.at(-1)?.location).toBe('EXAMPLE TOWN');
     expect(result.expected_delivery).toBe('2026-08-31');
-    // No location capability: the endpoint's only place fields are the relay's
-    // own address block, which is never retained.
-    expect(result.events?.every((event) => event.location === '')).toBe(true);
+  });
+
+  it('places a scan at the logistics site its wording names, and nowhere else', () => {
+    const located = (Libelle: string) => {
+      const fixture = syntheticSuccessFixture();
+      (fixture.Expedition as Record<string, unknown>).Evenements = [{ Date: '2026-08-29T09:00:00', Libelle }];
+      return parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL).events?.[0];
+    };
+    expect(located('Prise en charge de votre colis sur notre site logistique de EXAMPLE TOWN.'))
+      .toEqual({ time: '2026-08-29T09:00:00+02:00', location: 'EXAMPLE TOWN',
+        description: 'Prise en charge de votre colis sur notre site logistique de EXAMPLE TOWN.', stage: 'in_transit' });
+    expect(located('Colis en cours de traitement sur le site HUB de Example-Ville')?.location).toBe('HUB de Example-Ville');
+    expect(located('Colis expédié depuis le site EXAMPLE TOWN')?.location).toBe('EXAMPLE TOWN');
+    // A site the parcel heads for, the generic site, codes and other wording name no place.
+    for (const wording of ['Colis expédié depuis le site logistique', 'Colis en cours de traitement sur le site logistique',
+      'Colis expédié vers le site EXAMPLE TOWN', 'Colis en cours de traitement sur le site TEST_DEPOT',
+      'Prise en charge de votre colis sur notre site logistique EXAMPLE TOWN',
+      'Colis en route vers le point de livraison', 'Colis pris en charge en Locker']) {
+      expect(located(wording)?.location).toBe('');
+    }
   });
 
   it('maps the wording it claims and leaves everything else to the sync', () => {

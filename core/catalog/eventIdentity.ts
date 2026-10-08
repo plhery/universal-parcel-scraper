@@ -2,6 +2,7 @@ import { sameInstantIdentityPolicy as aliexpress } from '../../carriers/aliexpre
 import { sameInstantIdentityPolicy as australiaPost } from '../../carriers/australia-post/app.js';
 import { sameInstantIdentityPolicy as dpd } from '../../carriers/dpd/app.js';
 import { sameInstantIdentityPolicy as indiaPost } from '../../carriers/india-post/app.js';
+import { sameInstantIdentityPolicy as mondialRelay } from '../../carriers/mondial-relay/identity.js';
 import { sameInstantIdentityPolicy as ups } from '../../carriers/ups/app.js';
 import { sameInstantIdentityPolicy as swissPost } from '../../carriers/swiss-post/app.js';
 import { sameInstantIdentityPolicy as universal } from '../../providers/shared/app.js';
@@ -33,7 +34,7 @@ export interface SameInstantIdentityPolicy {
 }
 
 const policies: ReadonlyMap<string, SameInstantIdentityPolicy> = new Map(
-  [aliexpress, australiaPost, dpd, indiaPost, ups, swissPost, universal].map((policy) => [policy.sourceCarrierId, policy]),
+  [aliexpress, australiaPost, dpd, indiaPost, mondialRelay, ups, swissPost, universal].map((policy) => [policy.sourceCarrierId, policy]),
 );
 
 /** Unlisted sources cannot identify a reworded scan by its instant alone. */

@@ -71,6 +71,11 @@ for another shipment → `SchemaError`.
   a day. The estimate is reduced to a day and dropped once delivered or in
   exception. App timestamps are UTC instants, shown on Paris clocks.
 - The app gives no delivery estimate, so app answers have none.
+- Neither source has a place field for a scan. A scan at a logistics site names
+  it in its wording ("sur notre site logistique de METZ", "sur le site METZ",
+  "depuis le site METZ"), and that name becomes the scan's location, without a
+  country. Both sources word scans alike, so a scan keeps one identity whichever
+  answers; a scan stored without its site gains it in place.
 
 ## Mobile API
 
@@ -122,7 +127,9 @@ eight-digit shipment number; the brand remains part of the identity.
 ## Limitations
 
 - French recipient postcodes only; other destination countries are untested.
-- No event location: the reply's only place fields belong to the relay.
+- Scans at a relay or locker have no location: the website names the relay on
+  drop-off and collection scans, but the app does not, and one scan would then
+  differ by source.
 - Relay address, contacts and coordinates, recipient name and postcode are never
   read; the offline test asserts none reach the result.
 
