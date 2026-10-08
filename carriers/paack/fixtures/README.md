@@ -9,3 +9,9 @@
   barcode. The event headers show `expected_delivery_ts` as the delivery day and time slot,
   and the timeline lists the steps still to come without a timestamp. Times and the delivery
   postcode are synthetic; retailer and order references are `PRIVATE …` placeholders.
+- `pudo-ready-order.json`: the same loader for an order waiting at a PaackGo Point
+  (`droppedInPudo`), built from the tracking page's code and translations rather than a live
+  reply: the step labels, `pudo_name`, the one-string `pudo_address` and the fields the page
+  prints next to them. The PaackGo Point steps' ids (`PUDO1`…) and their `variables` are
+  placeholders. The point's name and address are invented; the pickup code, QR link and every
+  recipient field are `PRIVATE …` placeholders so the test can assert none leaks.

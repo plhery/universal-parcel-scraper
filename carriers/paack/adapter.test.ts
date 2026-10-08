@@ -42,6 +42,18 @@ function labelRoute(orderOverrides: Record<string, unknown> = {}): Record<string
   return { ...route, orderTrackData: { ...route.orderTrackData as object, ...orderOverrides } };
 }
 
+// An order waiting at a PaackGo Point, built from the tracking page's code:
+// synthetic point, placeholder pickup code, QR link and recipient fields.
+const PUDO_POSTCODE = '75001';
+
+function pudoRoute(
+  orderOverrides: Record<string, unknown> = {},
+  routeOverrides: Record<string, unknown> = {},
+): Record<string, unknown> {
+  const route = json('./fixtures/pudo-ready-order.json') as Record<string, unknown>;
+  return { ...route, ...routeOverrides, orderTrackData: { ...route.orderTrackData as object, ...orderOverrides } };
+}
+
 function trackingPage(route: unknown = successRoute()): string {
   const context = {
     state: {
@@ -150,6 +162,22 @@ describe('Paack status vocabulary', () => {
     expect(classifyPaackEvent({ id, label })).toEqual({ status, stage, description });
   });
 
+  it.each([
+    ['pudoAssigned', 'in_transit', 'in_transit'],
+    ['droppedInPudo', 'out_for_delivery', 'ready_for_pickup'],
+    ['collectedByCustomer', 'delivered', 'delivered'],
+    ['pudoClosed', 'exception', 'failed_attempt'],
+    ['pudoFull', 'exception', 'failed_attempt'],
+    ['rejectedByPudo', 'exception', 'failed_attempt'],
+    ['inPudoToReturnExpired', 'exception', 'returned'],
+    ['inPudoToReturnRejected', 'exception', 'returned'],
+    ['inPudoToReturnCODNotAccepted', 'exception', 'returned'],
+    ['inPudoToReturnDamaged', 'exception', 'exception'],
+    ['lostByPudo', 'exception', 'exception'],
+  ] as const)('maps the PaackGo Point step %s from the page vocabulary', (label, status, stage) => {
+    expect(classifyPaackEvent({ id: 'PUDO1', label })).toMatchObject({ status, stage });
+  });
+
   it('gives the labels an aggregator relays the stage and wording of the direct lookup', () => {
     // Paack's English page labels for manifested, scannedAtOrigin, inDelivery and delivered.
     expect(carrierScan('paack', 'Order details received'))
@@ -232,6 +260,7 @@ describe('Paack response normalization', () => {
 
   it('produces every capability carrier.json declares', () => {
     const delivered = parsePaackTrackingResponse(successRoute(), OFFICIAL_EXAMPLE_POSTCODE);
+    const atPickupPoint = parsePaackTrackingResponse(pudoRoute(), PUDO_POSTCODE);
     const inFlight = parsePaackTrackingResponse(successRoute({
       eventList: [{
         id: 'driver-assigned',
@@ -241,7 +270,7 @@ describe('Paack response normalization', () => {
       }],
       activeEvent: { id: 'driver-assigned', label: 'inProgress' },
     }), OFFICIAL_EXAMPLE_POSTCODE);
-    const produced = producedCapabilities(delivered, inFlight);
+    const produced = producedCapabilities(delivered, inFlight, atPickupPoint);
     expect(carrier.capabilities.length).toBeGreaterThan(0);
     for (const capability of carrier.capabilities) expect([...produced]).toContain(capability);
   });
@@ -471,6 +500,56 @@ describe('Paack delivery window', () => {
     expect(parsePaackTrackingResponse(labelRoute({
       expected_delivery_ts: { start: '2024-07-27T12:00:00.000Z', end: '2024-07-27T13:00:00.000Z' },
     }), LABEL_POSTCODE)).toMatchObject({ current_stage: 'accepted', expected_delivery: null });
+  });
+});
+
+describe('Paack PaackGo Point', () => {
+  it('names the point and its address while the parcel waits there', () => {
+    const result = parsePaackTrackingResponse(pudoRoute(), PUDO_POSTCODE);
+    expect(result).toMatchObject({
+      status: 'out_for_delivery',
+      current_stage: 'ready_for_pickup',
+      last_status_text: 'Ready for pickup',
+      last_update: '2024-07-29T09:12:00.000Z',
+      pickup_point: 'Relais Exemple\n1 Rue Exemple, 75002, Paris, France',
+    });
+    // The collection still to come carries no timestamp and is not history.
+    expect(result.events?.map((event) => event.stage))
+      .toEqual(['ready_for_pickup', 'accepted', 'in_transit', 'registered']);
+  });
+
+  it('never copies the pickup code, QR link or recipient fields beside it', () => {
+    const numericCode = '738201';
+    for (const route of [pudoRoute(), pudoRoute({ pudo_passcode: numericCode, pudo_pickup_link: null })]) {
+      const serialized = JSON.stringify(parsePaackTrackingResponse(route, PUDO_POSTCODE));
+      for (const privateValue of ['PRIVATE', 'private@', numericCode, 'example.test', PUDO_POSTCODE]) {
+        expect(serialized).not.toContain(privateValue);
+      }
+      expect(serialized).not.toMatch(/passcode|pickup_link|expiration/);
+    }
+  });
+
+  it('keeps the name alone without an address and the lines the address holds', () => {
+    const pickup = (order: Record<string, unknown>) => parsePaackTrackingResponse(pudoRoute(order), PUDO_POSTCODE).pickup_point;
+    expect(pickup({ pudo_address: '' })).toBe('Relais Exemple');
+    expect(pickup({ pudo_address: null })).toBe('Relais Exemple');
+    expect(pickup({ pudo_address: ' 1 Rue Exemple \n\n 75002  Paris ' })).toBe('Relais Exemple\n1 Rue Exemple\n75002 Paris');
+    // An address without a name is not a pickup point.
+    expect(pickup({ pudo_name: null })).toBeUndefined();
+    expect(pickup({ pudo_name: '  ' })).toBeUndefined();
+  });
+
+  it('names no point before the parcel arrives there or once it is collected', () => {
+    const at = (label: string) => parsePaackTrackingResponse(
+      pudoRoute({}, { activeEvent: { id: 'PUDO9', label, timestamp: '2024-07-30T10:00:00.000Z' } }),
+      PUDO_POSTCODE,
+    );
+    expect(at('pudoAssigned')).toMatchObject({ current_stage: 'in_transit' });
+    expect(at('pudoAssigned').pickup_point).toBeUndefined();
+    expect(at('collectedByCustomer')).toMatchObject({ status: 'delivered', current_stage: 'delivered', expected_delivery: null });
+    expect(at('collectedByCustomer').pickup_point).toBeUndefined();
+    expect(at('inPudoToReturnExpired')).toMatchObject({ current_stage: 'returned', last_status_text: 'Returning to sender' });
+    expect(at('inPudoToReturnExpired').pickup_point).toBeUndefined();
   });
 });
 

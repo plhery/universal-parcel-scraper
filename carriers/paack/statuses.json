@@ -26,6 +26,54 @@
       "note": "Identifier substring inherited from the pre-package adapter; source not recorded."
     },
     {
+      "code": "inpudotoreturnexpired",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label inPudoToReturnExpired, \"Expired at PaackGo Point\": not collected in time, returned to the retailer."
+    },
+    {
+      "code": "inpudotoreturnrejected",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label inPudoToReturnRejected: refused at the PaackGo Point, returned to the retailer. Tested before the rejected exception rule."
+    },
+    {
+      "code": "inpudotoreturncodnotaccepted",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label inPudoToReturnCODNotAccepted: cash on delivery not paid at the PaackGo Point, returned to the retailer."
+    },
+    {
+      "code": "pudoclosed",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label pudoClosed, \"Has been rescheduled\": the PaackGo Point was closed; Paack tries again."
+    },
+    {
+      "code": "pudofull",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label pudoFull, \"Has been rescheduled\": the PaackGo Point was full; Paack tries again."
+    },
+    {
+      "code": "rejectedbypudo",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label rejectedByPudo, \"Has been rescheduled\": the PaackGo Point refused the parcel; Paack tries again. Tested before the rejected exception rule."
+    },
+    {
       "code": "returntosenderscheduled",
       "language": "en",
       "stage": "failed_attempt",
@@ -146,6 +194,22 @@
       "note": "Identifier substring inherited from the pre-package adapter; source not recorded. Reclassified to exception 2026-09-12."
     },
     {
+      "code": "inpudotoreturndamaged",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label inPudoToReturnDamaged, \"Logistic issue\": no longer available at the PaackGo Point. Reached through damaged."
+    },
+    {
+      "code": "lostbypudo",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label lostByPudo, \"Logistic issue\". Reached through lost."
+    },
+    {
       "code": "integrationerror",
       "language": "en",
       "stage": "exception",
@@ -186,20 +250,20 @@
       "note": "Identifier substring inherited from the pre-package adapter; source not recorded."
     },
     {
-      "code": "readyforpickup",
+      "code": "collectedbycustomer",
       "language": "en",
-      "stage": "ready_for_pickup",
-      "confirmedBy": "prior-art",
-      "firstSeen": "2026-09-12",
-      "note": "Identifier substring inherited from the pre-package adapter; source not recorded."
+      "stage": "delivered",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label collectedByCustomer, \"Collected from PaackGo Point\". Tested before the collected transit rule."
     },
     {
-      "code": "atpickuppoint",
+      "code": "droppedinpudo",
       "language": "en",
       "stage": "ready_for_pickup",
-      "confirmedBy": "prior-art",
-      "firstSeen": "2026-09-12",
-      "note": "Identifier substring inherited from the pre-package adapter; source not recorded."
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "Page label droppedInPudo, \"At PaackGo Point\": the parcel waits at the point named by pudo_name and pudo_address."
     },
     {
       "code": "outfordelivery",

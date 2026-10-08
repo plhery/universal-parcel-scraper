@@ -16,11 +16,13 @@
  * does echo the delivery postcode, which must agree with the requested one.
  *
  * Privacy: the loader payload carries the retailer, the recipient's name,
- * e-mail, phone and address, and per-event `variables` that repeat them.
- * `parse()` copies nothing from those objects: each event is rebuilt from its
- * timestamp, our own description and the mapped stage, and the only order-level
- * fields read are the delivery postcode, compared and never copied, the
- * delivery country, which picks the window's clock, and the delivery window.
+ * e-mail, phone and address, the PaackGo Point pickup code and QR link, and
+ * per-event `variables` that repeat them. `parse()` copies nothing from those:
+ * each event is rebuilt from its timestamp, our own description and the mapped
+ * stage, and the only order-level fields read are the delivery postcode,
+ * compared and never copied, the delivery country, which picks the window's
+ * clock, the delivery window, and the PaackGo Point's name and address while
+ * the parcel waits there.
  */
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
@@ -28,7 +30,7 @@ import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../c
 import { IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { countryCode, countryTimeZone, explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
-import { decodeText, fetchBounded, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyPaackEvent } from './status.js';
 
@@ -202,6 +204,22 @@ function redirectTarget(
   return { url: trackingOrderUrl(`${target.origin}${target.pathname}`, trackingNumber, postcode) };
 }
 
+/**
+ * The PaackGo Point the page names: `pudo_name`, then `pudo_address` on the
+ * following lines. The address is one string Paack formats itself; the page
+ * prints it as it comes and breaks it only where it holds a line break. The
+ * pickup code (`pudo_passcode`), QR link and collection deadline beside them
+ * are never read.
+ */
+function pickupPoint(order: JsonObject): string {
+  const name = clean(order.pudo_name, 120);
+  if (!name) return '';
+  const address = typeof order.pudo_address === 'string'
+    ? order.pudo_address.split('\n').map((line) => clean(line, 200)).filter(Boolean)
+    : [];
+  return [name, ...address].join('\n');
+}
+
 /** Letters and digits only, so "SW1A 1AA" and "4445-027" compare by content. */
 function postcodeKey(value: string): string {
   return value.toLocaleUpperCase('en-US').replace(/[^A-Z0-9]/g, '');
@@ -272,12 +290,14 @@ export function parsePaackTrackingResponse(
   const expected = isRecord(order.expected_delivery_ts) && !['delivered', 'exception'].includes(current.status)
     ? expectedDelivery(order.expected_delivery_ts, zone, newest)
     : null;
+  const pickup = current.stage === 'ready_for_pickup' ? pickupPoint(order) : '';
   return {
     status: current.status,
     current_stage: current.stage,
     last_status_text: current.description,
     last_update: activeTime?.iso ?? events[0]?.time ?? null,
     expected_delivery: expected,
+    ...(pickup ? { pickup_point: pickup } : {}),
     timezone: zone,
     events,
   };

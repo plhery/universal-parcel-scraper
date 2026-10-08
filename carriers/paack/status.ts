@@ -10,6 +10,10 @@
  *
  * Order matters: return and failure identifiers are tested before the broader
  * delivery ones, so "notDelivered" can never match the "delivered" substring.
+ * PaackGo Point identifiers come from the page's own vocabulary and are tested
+ * before the generic words they contain: "rejectedByPudo" is a retried
+ * delivery, not a rejection, and "collectedByCustomer" is the recipient
+ * collecting the parcel, not a transit collection.
  * The provider's own wording is never returned; each mapped entry supplies the
  * English description we display.
  *
@@ -47,6 +51,7 @@ const OUT_FOR_DELIVERY: ClassifiedPaackStatus = {
   description: 'Out for delivery',
 };
 const DELIVERED: ClassifiedPaackStatus = { status: 'delivered', stage: 'delivered', description: 'Delivered' };
+const DELIVERY_ISSUE: ClassifiedPaackStatus = { status: 'exception', stage: 'failed_attempt', description: 'Delivery issue' };
 
 /** Paack's English timeline labels, keyed like `statusKey`, with the identifier each one renders. */
 const RELAYED = new Map<string, ClassifiedPaackStatus>([
@@ -71,6 +76,18 @@ export function classifyPaackEvent(value: JsonObject): ClassifiedPaackStatus {
   ])) {
     return { status: 'exception', stage: 'returned', description: 'Shipment returned' };
   }
+  // Expired, refused or unpaid at the PaackGo Point: on its way back to the retailer.
+  if (includesAny(key, [
+    'inpudotoreturnexpired',
+    'inpudotoreturnrejected',
+    'inpudotoreturncodnotaccepted',
+  ])) {
+    return { status: 'exception', stage: 'returned', description: 'Returning to sender' };
+  }
+  // The point was closed, full or refused the parcel; Paack tries again.
+  if (includesAny(key, ['pudoclosed', 'pudofull', 'rejectedbypudo'])) {
+    return { ...DELIVERY_ISSUE };
+  }
   if (includesAny(key, [
     'incorrectaddress',
     'notaccepted',
@@ -92,9 +109,9 @@ export function classifyPaackEvent(value: JsonObject): ClassifiedPaackStatus {
     'failedattempt',
     'notdelivered',
     'undelivered',
-  ])) return { status: 'exception', stage: 'failed_attempt', description: 'Delivery issue' };
-  if (includesAny(key, ['delivered', 'deliverycompleted'])) return { ...DELIVERED };
-  if (includesAny(key, ['readyforpickup', 'atpickuppoint'])) {
+  ])) return { ...DELIVERY_ISSUE };
+  if (includesAny(key, ['delivered', 'deliverycompleted', 'collectedbycustomer'])) return { ...DELIVERED };
+  if (includesAny(key, ['droppedinpudo'])) {
     return { status: 'out_for_delivery', stage: 'ready_for_pickup', description: 'Ready for pickup' };
   }
   if (includesAny(key, ['outfordelivery', 'indelivery', 'driverassigned', 'inprogress'])) return { ...OUT_FOR_DELIVERY };

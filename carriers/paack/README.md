@@ -37,6 +37,15 @@ postcode.
 - Failure rules run before delivery rules: `notDelivered` contains `delivered`.
 - Scheduled returns (`returnToSenderScheduled`, `returnAbsent`, `returnOther`) are
   `failed_attempt`, not `returned`, so a parcel that can still be delivered stays active.
+- PaackGo Point (pickup point) steps come from the tracking page's own labels and are matched
+  before the generic words they contain. `droppedInPudo` is `ready_for_pickup` and
+  `collectedByCustomer` is delivered, not a transit `collected`. A point that is closed, full
+  or refuses the parcel (`rejectedByPudo`) is a `failed_attempt` Paack retries. A parcel that
+  expires, is refused or goes unpaid at the point (`inPudoToReturn…`) is `returned`.
+- While the parcel waits at a PaackGo Point, `pickup_point` is `pudo_name`, then
+  `pudo_address` on the following lines, or the name alone. The address is one string Paack
+  formats itself; like the page, it is kept as it comes and only broken where it holds a line
+  break.
 - `activeEvent` decides the overall status when it maps: the banner can be ahead of the
   timeline. The timeline keeps its own per-event stages.
 - The timeline also lists the steps still to come, without a timestamp. Those and entries
@@ -54,13 +63,16 @@ postcode.
   offset, keeps only its last day. It is dropped once delivered or in exception, and when it
   ended before the newest scan.
 - Retailer, recipient name, e-mail, phone, address and per-event `variables` (which
-  interpolate them) are never read; a test asserts it. The delivery postcode is only
-  compared with the requested one. The delivery country, and in Spain the postcode's
-  province, only pick the clock.
+  interpolate them) are never read; a test asserts it. The PaackGo Point's pickup code
+  (`pudo_passcode`), QR link and collection deadline are not read either. The delivery
+  postcode is only compared with the requested one. The delivery country, and in Spain the
+  postcode's province, only pick the clock.
 
 ## Limitations
 
-- No event locations: events name a country at most.
+- No event locations: events carry only the order's country, not where the scan happened.
+- No live PaackGo Point reply has been seen; the pickup-point labels and fields come from the
+  tracking page's code and translations.
 
 ## Testing
 

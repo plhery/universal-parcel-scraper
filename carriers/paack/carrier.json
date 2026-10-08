@@ -40,7 +40,8 @@
   },
   "capabilities": [
     "history",
-    "eta"
+    "eta",
+    "pickup_point"
   ],
   "portal": {
     "url": "https://mydeliveries.paack.app/tracking?tracking_number={trackingNumber}",
@@ -50,6 +51,8 @@
       "history",
       "eta",
       "eta_window",
+      "pickup_point",
+      "pickup_code",
       "sender_name",
       "recipient_name",
       "recipient_address"
@@ -58,9 +61,11 @@
       "status",
       "history",
       "eta",
-      "eta_window"
+      "eta_window",
+      "pickup_point"
     ],
     "discarded": [
+      "pickup_code",
       "sender_name",
       "recipient_name",
       "recipient_address"
