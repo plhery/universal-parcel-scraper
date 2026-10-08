@@ -233,6 +233,22 @@ function eventLocation(raw: JsonObject): string {
     .slice(0, 200);
 }
 
+/**
+ * The ParcelShop the tracking page prints for the parcel: its name, then its street and town on
+ * their own lines when both are given. Its id and opening hours are not read.
+ */
+function parcelShop(parcel: JsonObject): string | null {
+  const address = isRecord(parcel.parcelShop) && isRecord(parcel.parcelShop.address) ? parcel.parcelShop.address : null;
+  const name = plainText(address?.name1, 120);
+  if (!address || !name) return null;
+  const area = isRecord(address.postalArea) ? address.postalArea : {};
+  const street = plainText(address.street1, 120);
+  const city = plainText(area.city, 80);
+  if (!street || !city) return name;
+  return `${name}\n${[street, plainText(address.blockNo1, 20)].filter(Boolean).join(' ')}\n${
+    [plainText(area.postalCodeDisplay, 16), city].filter(Boolean).join(' ')}`;
+}
+
 function parcelShopName(parcel: JsonObject): string | null {
   for (const event of records(parcel.history)) {
     const name = eventLocation(event);
@@ -331,7 +347,7 @@ export function parseGLSSwitzerlandTrackingResponse(
   const stage = isReturnParcel(parcel)
     ? 'returned'
     : currentMetadata?.stage ?? latestKnownEvent?.event.stage ?? 'in_transit';
-  const shop = parcelShopName(parcel);
+  const shop = parcelShop(parcel) ?? parcelShopName(parcel);
   const weight = parcelWeight(parcel);
   const pickup = stage === 'ready_for_pickup' && shop ? { pickup_point: shop } : {};
   return {

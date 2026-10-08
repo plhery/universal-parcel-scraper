@@ -23,6 +23,16 @@
       "value": { "name1": "Private Recipient", "street1": "Private Street" }
     }
   ],
+  "parcelShop": {
+    "psID": "2760000000",
+    "address": {
+      "name1": "Kiosk Altstetten",
+      "street1": "Badenerstrasse",
+      "blockNo1": "100",
+      "postalArea": { "countryCode": "CH", "postalCodeDisplay": "8048", "city": "Zurich" }
+    },
+    "openingHours": [{ "days": "Mon-Fri", "hours": "07:00-19:00" }]
+  },
   "history": [
     {
       "date": "20-Jun-2026",

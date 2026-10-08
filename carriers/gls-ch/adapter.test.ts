@@ -169,11 +169,25 @@ describe('GLS Switzerland response normalization', () => {
     expect(waiting).toMatchObject({
       status: 'out_for_delivery',
       current_stage: 'ready_for_pickup',
-      pickup_point: 'GLS ParcelShop Zurich Altstetten Switzerland Zurich',
+      pickup_point: 'Kiosk Altstetten\nBadenerstrasse 100\n8048 Zurich',
       weight_kg: 2.4,
       expected_delivery: '2026-06-20',
     });
     expect(JSON.stringify(waiting)).not.toContain('Private Street');
+    expect(JSON.stringify(waiting)).not.toMatch(/2760000000|07:00/);
+  });
+
+  it('names the ParcelShop alone without its street and town, and from the history without the shop', () => {
+    const shop = parcelShopFixture();
+    const address = (shop.parcelShop as { address: JsonObject }).address;
+    const pickup = (payload: JsonObject) => parseGLSSwitzerlandTrackingResponse(payload, OFFICIAL_TEST_PARCEL_NUMBER).pickup_point;
+    expect(pickup({ ...shop, parcelShop: { address: { ...address, street1: '' } } })).toBe('Kiosk Altstetten');
+    expect(pickup({ ...shop, parcelShop: { address: { ...address, postalArea: null } } })).toBe('Kiosk Altstetten');
+    expect(pickup({ ...shop, parcelShop: { address: { ...address, name1: '' } } }))
+      .toBe('GLS ParcelShop Zurich Altstetten Switzerland Zurich');
+    expect(pickup({ ...shop, parcelShop: undefined })).toBe('GLS ParcelShop Zurich Altstetten Switzerland Zurich');
+    // Collected or not yet there: no pickup point.
+    expect(pickup({ ...shop, progressBar: { statusInfo: 'DELIVERED' }, history: [] })).toBeUndefined();
   });
 
   it('rejects malformed, empty, and mismatched responses', () => {
