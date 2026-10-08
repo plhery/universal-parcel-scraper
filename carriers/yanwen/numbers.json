@@ -563,6 +563,46 @@
         "confidence": "high"
       },
       "note": "A Yanwen tracking link archived by the Wayback Machine. Yanwen's tracker returns its history."
+    },
+    {
+      "number": "YWLAS010024580083",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260722191018/https://track.yw56.com.cn/en/querydel?nums=UL335650526YP&cyp=c618b5da85e6feb1f5763549fac93f39",
+        "date": "2026-07-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "last_mile_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The last-mile number on an archived Yanwen tracking page for a parcel delivered in the United States. Yanwen's tracker answers it with that parcel's history, under the parcel's own number."
+    },
+    {
+      "number": "YWSTL010022557186",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260528223224/https://track.yw56.com.cn/en/querydel?nums=UL191943101YP&cyp=c3014895257d5a282a257e41c468af56",
+        "date": "2026-05-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "last_mile_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The last-mile number on an archived Yanwen tracking page for a parcel delivered in the United States. Yanwen's tracker answers it with that parcel's history, under the parcel's own number."
     }
   ]
 }

@@ -25,6 +25,8 @@ recipient's postcode.
   (Luxembourg) and four digits. The postcode is what opens the page, so treat
   the whole value as a secret: never log it, quote it in an issue or put it in
   a fixture.
+- Yanwen's US last-mile numbers, `YW` with a hub code and twelve digits, also
+  end in five digits; detection does not read those as a postcode.
 - `.divDesti` is removed before any text is read, not filtered afterwards — a
   later selector can forget a filter, not a removal.
 - A page for another shipment is a schema error, never a result.

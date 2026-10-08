@@ -27,6 +27,13 @@ describe('French carrier number candidates', () => {
     }
   });
 
+  it('does not read a postcode into Yanwen\'s US last-mile numbers', () => {
+    // YW, a US hub code and twelve digits: the last five look like a French postcode.
+    expect(detectCarrierMatch('YWLAX000000075001')).toMatchObject({ carrier: 'unknown', confidence: 'none', candidates: [] });
+    expect(detectCarrierMatch('YWLA0000000075001').candidates).toEqual(['colis-prive']);
+    expect(detectCarrierMatch('XWLAX000000075001').candidates).toEqual(['colis-prive']);
+  });
+
   it('offers GLS France to HTTP recognition for shared numeric and alpha references', () => {
     for (const number of ['36631000001', '366310000017', 'A1B2C3D4']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
