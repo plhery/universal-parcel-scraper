@@ -12,6 +12,11 @@
  * delivery ones, so "notDelivered" can never match the "delivered" substring.
  * The provider's own wording is never returned; each mapped entry supplies the
  * English description we display.
+ *
+ * Aggregators relay the English text of Paack's timeline instead of its
+ * identifiers. `paackScan` maps those labels exactly, never by substring, and
+ * stores the same description as the direct lookup so both copies of a scan
+ * read alike.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../generated/catalog.js';
@@ -32,6 +37,29 @@ export function statusKey(value: unknown): string {
 
 function includesAny(value: string, candidates: string[]): boolean {
   return candidates.some((candidate) => value.includes(candidate));
+}
+
+const REGISTERED: ClassifiedPaackStatus = { status: 'pending', stage: 'registered', description: 'Shipment registered' };
+const ACCEPTED: ClassifiedPaackStatus = { status: 'in_transit', stage: 'accepted', description: 'Shipment accepted' };
+const OUT_FOR_DELIVERY: ClassifiedPaackStatus = {
+  status: 'out_for_delivery',
+  stage: 'out_for_delivery',
+  description: 'Out for delivery',
+};
+const DELIVERED: ClassifiedPaackStatus = { status: 'delivered', stage: 'delivered', description: 'Delivered' };
+
+/** Paack's English timeline labels, keyed like `statusKey`, with the identifier each one renders. */
+const RELAYED = new Map<string, ClassifiedPaackStatus>([
+  ['orderdetailsreceived', REGISTERED], // manifested
+  ['inpaacksdistributioncentre', ACCEPTED], // scannedAtOrigin
+  ['outfordelivery', OUT_FOR_DELIVERY], // inDelivery
+  ['delivered', DELIVERED], // delivered
+]);
+
+/** The stage and stored wording of a Paack timeline label an aggregator relays. */
+export function paackScan(label: string): { stage: Stage; wording: string } | undefined {
+  const entry = RELAYED.get(statusKey(label));
+  return entry && { stage: entry.stage, wording: entry.description };
 }
 
 export function classifyPaackEvent(value: JsonObject): ClassifiedPaackStatus {
@@ -65,19 +93,11 @@ export function classifyPaackEvent(value: JsonObject): ClassifiedPaackStatus {
     'notdelivered',
     'undelivered',
   ])) return { status: 'exception', stage: 'failed_attempt', description: 'Delivery issue' };
-  if (includesAny(key, ['delivered', 'deliverycompleted'])) {
-    return { status: 'delivered', stage: 'delivered', description: 'Delivered' };
-  }
+  if (includesAny(key, ['delivered', 'deliverycompleted'])) return { ...DELIVERED };
   if (includesAny(key, ['readyforpickup', 'atpickuppoint'])) {
     return { status: 'out_for_delivery', stage: 'ready_for_pickup', description: 'Ready for pickup' };
   }
-  if (includesAny(key, ['outfordelivery', 'driverassigned', 'inprogress'])) {
-    return {
-      status: 'out_for_delivery',
-      stage: 'out_for_delivery',
-      description: 'Out for delivery',
-    };
-  }
+  if (includesAny(key, ['outfordelivery', 'indelivery', 'driverassigned', 'inprogress'])) return { ...OUT_FOR_DELIVERY };
   if (includesAny(key, [
     'manifested',
     'created',
@@ -87,10 +107,8 @@ export function classifyPaackEvent(value: JsonObject): ClassifiedPaackStatus {
     'appointmentbroughtforward',
     'appointmentrescheduled',
     'appointmentscheduled',
-  ])) return { status: 'pending', stage: 'registered', description: 'Shipment registered' };
-  if (includesAny(key, ['scannedatorigin'])) {
-    return { status: 'in_transit', stage: 'accepted', description: 'Shipment accepted' };
-  }
+  ])) return { ...REGISTERED };
+  if (includesAny(key, ['scannedatorigin'])) return { ...ACCEPTED };
   if (includesAny(key, [
     'received',
     'collected',

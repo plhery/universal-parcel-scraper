@@ -1,7 +1,8 @@
 # Paack
 
 Last-mile carrier for online retailers in Spain, Portugal, France and the UK. Tracked through
-the public recipient page, which needs the order number and the delivery postcode.
+the public recipient page, which needs the order number or label barcode and the delivery
+postcode.
 
 ## How it works
 
@@ -9,19 +10,25 @@ the public recipient page, which needs the order number and the delivery postcod
    with `redirect: 'manual'`. The page is a Remix app, so the `routes/tracking.order` loader
    response is already embedded in `window.__remixContext`; reading it avoids a second
    undocumented API call and gives exactly what the page renders.
-   - A 3xx back to the form or an HTTP 404 is not-found. Following the redirect would only
-     return a generic page.
+   - Paack checks the number and postcode as a pair. A wrong pair is redirected back to the
+     form with `err=true`; that redirect or an HTTP 404 is not-found.
+   - The page is moving to `paack.co/shipments`, and the old host forwards some lookups there
+     before checking the postcode. A redirect to the same lookup on a Paack host is followed
+     once; any other redirect is `IndeterminateError`, never not-found.
    - "Order not found" / "Incorrect order number or postal code" (and French and Spanish
      variants) in the HTML or loader payload is also not-found.
-   - `orderTrackData.external_id` must equal the requested number.
+   - A tracking page is the order for the pair. It does not echo a label barcode:
+     `external_id` is then the retailer's own reference, so it is not compared. It does echo
+     `delivery_address.post_code`; one that differs from the requested postcode in its letters
+     and digits is a `SchemaError`.
    - An empty HTTP 200 is `IndeterminateError`.
    - No postcode on the parcel raises `InputRequiredError`.
 
 ## Notes
 
-- Numbers are retailer order numbers with no stable shape, so there is no detection rule:
-  a rule would cost precision for every other carrier. Paack is picked manually or through a
-  `mydeliveries.paack.app` link.
+- Numbers are retailer order numbers or label barcodes with no stable shape, so there is no
+  detection rule: a rule would cost precision for every other carrier. Paack is picked
+  manually or through a `mydeliveries.paack.app` link.
 - The postcode is half of the lookup key, so it is a credential: never log it, commit it or
   put it in an issue.
 - Stages come from each entry's stable `id` and `label` (a translation key), never from the
@@ -32,22 +39,26 @@ the public recipient page, which needs the order number and the delivery postcod
   `failed_attempt`, not `returned`, so a parcel that can still be delivered stays active.
 - `activeEvent` decides the overall status when it maps: the banner can be ahead of the
   timeline. The timeline keeps its own per-event stages.
-- Entries flagged `timeline: false` are skipped; the rest are de-duplicated, sorted newest
-  first and capped at 100.
+- The timeline also lists the steps still to come, without a timestamp. Those and entries
+  flagged `timeline: false` are skipped; the rest are sorted newest first and capped at 100.
 - Event descriptions are our own English wording. Unknown identifiers read "Shipment update".
+- Aggregators relay the page's English labels instead of identifiers. `paackScan` maps those
+  exact labels for them and stores the same wording as the direct lookup.
 - Event times are parsed locally, not with `core/time`: the loader mixes epoch seconds,
   epoch milliseconds and ISO strings with offsets in one field, and the result keeps
   millisecond precision.
 - `expected_delivery` is the end of the delivery window, dropped once delivered or in
   exception. The window start is not kept.
 - Retailer, recipient name, e-mail, phone, address and per-event `variables` (which
-  interpolate them) are never read; a test asserts it.
+  interpolate them) are never read; a test asserts it. The delivery postcode is only
+  compared with the requested one.
 
 ## Limitations
 
-- No event locations: the loader exposes none.
+- No event locations: events name a country at most.
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/paack` (no env vars). It checks
-that Paack's own retired API examples return not-found.
+`npm run test:carriers:live -- carriers/paack` checks that Paack's own retired API examples
+return not-found. Set `PAACK_TRACKING_NUMBER` and `PAACK_POSTCODE` to also track a private
+parcel with every step mapped and check that another postcode is not-found.

@@ -8,6 +8,7 @@
  */
 import type { CarrierEvent } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
+import { paackScan } from '../../carriers/paack/status.js';
 import { ytoScan } from '../../carriers/yto/status.js';
 
 export interface CarrierScan {
@@ -17,6 +18,7 @@ export interface CarrierScan {
 }
 
 const VOCABULARIES: Readonly<Record<string, (label: string) => CarrierScan | undefined>> = {
+  paack: paackScan,
   yto: ytoScan,
 };
 

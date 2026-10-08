@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { carrierScan } from '../../providers/shared/scans.js';
 import {
   PaackTracker,
   normalizePaackPostcode,
@@ -11,7 +12,8 @@ import {
   parsePaackTrackingHtml,
   parsePaackTrackingResponse,
 } from './adapter.js';
-import { classifyPaackEvent, statusKey } from './status.js';
+import { classifyPaackEvent, paackScan, statusKey } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 // Paack publishes this synthetic exchange order in its official Postman
 // examples: https://www.postman.com/paacklogistics/paack-apis/folder/1uuw6iw/orders-api
@@ -27,6 +29,17 @@ const carrier = json('./carrier.json') as { capabilities: readonly string[] };
 
 function successRoute(overrides: Record<string, unknown> = {}): unknown {
   return { ...json('./fixtures/delivered-order.json') as Record<string, unknown>, ...overrides };
+}
+
+// Paack finds an order by its label barcode too, and then echoes the
+// retailer's own reference in external_id instead of the number typed.
+// Synthetic barcode; the fixture's delivery postcode is LABEL_POSTCODE.
+const LABEL_BARCODE = '100000000000000001';
+const LABEL_POSTCODE = '75001';
+
+function labelRoute(orderOverrides: Record<string, unknown> = {}): Record<string, unknown> {
+  const route = json('./fixtures/label-barcode-order.json') as Record<string, unknown>;
+  return { ...route, orderTrackData: { ...route.orderTrackData as object, ...orderOverrides } };
 }
 
 function trackingPage(route: unknown = successRoute()): string {
@@ -120,11 +133,41 @@ describe('Paack status vocabulary', () => {
       description: 'Shipment update',
     });
   });
+
+  it('files every recorded status under its stage', () => {
+    for (const entry of statuses.entries) {
+      if (entry.wording !== undefined) expect(paackScan(entry.wording)?.stage, entry.wording).toBe(entry.stage);
+      else expect(classifyPaackEvent({ label: entry.code ?? '' }).stage, entry.code).toBe(entry.stage);
+    }
+  });
+
+  it.each([
+    ['SM001', 'manifested', 'pending', 'registered', 'Shipment registered'],
+    ['SM002', 'scannedAtOrigin', 'in_transit', 'accepted', 'Shipment accepted'],
+    ['SP002', 'inDelivery', 'out_for_delivery', 'out_for_delivery', 'Out for delivery'],
+    ['SP003', 'delivered', 'delivered', 'delivered', 'Delivered'],
+  ] as const)('maps the live timeline step %s (%s)', (id, label, status, stage, description) => {
+    expect(classifyPaackEvent({ id, label })).toEqual({ status, stage, description });
+  });
+
+  it('gives the labels an aggregator relays the stage and wording of the direct lookup', () => {
+    // Paack's English page labels for manifested, scannedAtOrigin, inDelivery and delivered.
+    expect(carrierScan('paack', 'Order details received'))
+      .toEqual({ stage: 'registered', wording: 'Shipment registered' });
+    expect(carrierScan('paack', 'In Paack’s distribution centre'))
+      .toEqual({ stage: 'accepted', wording: 'Shipment accepted' });
+    expect(paackScan("In Paack's distribution centre")).toEqual(paackScan('In Paack’s distribution centre'));
+    expect(paackScan('Out for delivery')).toEqual({ stage: 'out_for_delivery', wording: 'Out for delivery' });
+    expect(paackScan('Delivered')).toEqual({ stage: 'delivered', wording: 'Delivered' });
+    // Exact labels only: free text is left to the shared wording rules.
+    expect(paackScan('Order details received by the depot')).toBeUndefined();
+    expect(paackScan('Not delivered')).toBeUndefined();
+  });
 });
 
 describe('Paack response normalization', () => {
   it('parses a provider-shaped fixture while excluding order and event variables', () => {
-    const result = parsePaackTrackingResponse(successRoute(), OFFICIAL_EXAMPLE_NUMBER);
+    const result = parsePaackTrackingResponse(successRoute(), OFFICIAL_EXAMPLE_POSTCODE);
 
     expect(result).toMatchObject({
       status: 'delivered',
@@ -162,7 +205,7 @@ describe('Paack response normalization', () => {
   });
 
   it('extracts the Remix loader response from provider HTML', () => {
-    expect(parsePaackTrackingHtml(trackingPage(), OFFICIAL_EXAMPLE_NUMBER))
+    expect(parsePaackTrackingHtml(trackingPage(), OFFICIAL_EXAMPLE_POSTCODE))
       .toMatchObject({ status: 'delivered', last_status_text: 'Delivered' });
   });
 
@@ -179,7 +222,7 @@ describe('Paack response normalization', () => {
         label: 'inProgress',
         time: '2024-07-28T12:05:00+02:00',
       },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(result).toMatchObject({
       status: 'out_for_delivery',
       expected_delivery: '2024-07-28',
@@ -187,7 +230,7 @@ describe('Paack response normalization', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    const delivered = parsePaackTrackingResponse(successRoute(), OFFICIAL_EXAMPLE_NUMBER);
+    const delivered = parsePaackTrackingResponse(successRoute(), OFFICIAL_EXAMPLE_POSTCODE);
     const inFlight = parsePaackTrackingResponse(successRoute({
       eventList: [{
         id: 'driver-assigned',
@@ -196,7 +239,7 @@ describe('Paack response normalization', () => {
         timeline: true,
       }],
       activeEvent: { id: 'driver-assigned', label: 'inProgress' },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     const produced = producedCapabilities(delivered, inFlight);
     expect(carrier.capabilities.length).toBeGreaterThan(0);
     for (const capability of carrier.capabilities) expect([...produced]).toContain(capability);
@@ -214,7 +257,7 @@ describe('Paack response normalization', () => {
         id: 'not-delivered',
         label: 'notDelivered',
       },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(result).toMatchObject({
       status: 'exception',
       events: [{ stage: 'failed_attempt' }],
@@ -233,7 +276,7 @@ describe('Paack response normalization', () => {
         id: 'returnedToSender',
         label: 'returnedToSender',
       },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(returned).toMatchObject({
       status: 'exception',
       events: [{ stage: 'returned' }],
@@ -250,7 +293,7 @@ describe('Paack response normalization', () => {
         id: 'absent',
         label: 'absent',
       },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(absent).toMatchObject({
       status: 'exception',
       events: [{ stage: 'failed_attempt' }],
@@ -268,7 +311,7 @@ describe('Paack response normalization', () => {
           timeline: true,
         }],
         activeEvent: { id: identifier, label: identifier },
-      }), OFFICIAL_EXAMPLE_NUMBER);
+      }), OFFICIAL_EXAMPLE_POSTCODE);
       expect(result).toMatchObject({
         status: 'exception',
         events: [{ stage: 'failed_attempt' }],
@@ -288,7 +331,7 @@ describe('Paack response normalization', () => {
         id: 'returnedToSender',
         label: 'returnedToSender',
       },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(result).toMatchObject({
       status: 'exception',
       last_status_text: 'Shipment returned',
@@ -312,7 +355,7 @@ describe('Paack response normalization', () => {
         timeline: true,
       }],
       activeEvent: { id: label, label },
-    }), OFFICIAL_EXAMPLE_NUMBER);
+    }), OFFICIAL_EXAMPLE_POSTCODE);
     expect(result).toMatchObject({
       status,
       events: [{ stage }],
@@ -320,29 +363,80 @@ describe('Paack response normalization', () => {
     expect(result.last_status_text).toBeTruthy();
   });
 
-  it('rejects mismatched or malformed success data and maps explicit not-found', () => {
-    expect(() => parsePaackTrackingResponse(successRoute({
-      orderTrackData: { external_id: 'EXCHANGE000001R' },
-    }), OFFICIAL_EXAMPLE_NUMBER)).toThrow(SchemaError);
-    expect(() => parsePaackTrackingResponse(successRoute({
-      orderTrackData: { external_id: 'EXCHANGE000001R' },
-    }), OFFICIAL_EXAMPLE_NUMBER)).toThrow('different shipment');
-    // An echoed id Paack's own number form rejects is the provider's fault, never the caller's.
-    for (const echoed of ['', 'ORD-2024-0001', 'ABCDEF', '1'.repeat(41), 12345]) {
-      expect(() => parsePaackTrackingResponse(successRoute({
-        orderTrackData: { external_id: echoed },
-      }), OFFICIAL_EXAMPLE_NUMBER)).toThrow(expect.objectContaining({
-        kind: 'schema',
-        message: 'Paack returned an invalid shipment number',
-      }));
-    }
+  it('rejects an order for another postcode and malformed data, and maps explicit not-found', () => {
+    const otherPostcode = successRoute({
+      orderTrackData: { external_id: OFFICIAL_EXAMPLE_NUMBER, delivery_address: { post_code: '08021' } },
+    });
+    expect(() => parsePaackTrackingResponse(otherPostcode, OFFICIAL_EXAMPLE_POSTCODE))
+      .toThrow(SchemaError);
+    expect(() => parsePaackTrackingResponse(otherPostcode, OFFICIAL_EXAMPLE_POSTCODE))
+      .toThrow('different shipment');
     expect(() => parsePaackTrackingResponse({ orderTrackData: {
       external_id: OFFICIAL_EXAMPLE_NUMBER,
-    } }, OFFICIAL_EXAMPLE_NUMBER)).toThrow('incomplete tracking details');
+    } }, OFFICIAL_EXAMPLE_POSTCODE)).toThrow('incomplete tracking details');
     expect(() => parsePaackTrackingHtml(
       '<main>Order not found. Incorrect order number or postal code.</main>',
-      OFFICIAL_EXAMPLE_NUMBER,
+      OFFICIAL_EXAMPLE_POSTCODE,
     )).toThrow(NotFoundError);
+  });
+
+  it('reports its own parse failures without an HTTP status', () => {
+    for (const payload of [
+      successRoute({ orderTrackData: { delivery_address: { post_code: '08021' } } }),
+      { orderTrackData: {} },
+      { state: {} },
+    ]) {
+      let failure: unknown;
+      try {
+        parsePaackTrackingResponse(payload, OFFICIAL_EXAMPLE_POSTCODE);
+      } catch (error) {
+        failure = error;
+      }
+      expect(failure).toMatchObject({ kind: 'schema' });
+      // Consumers read the deepest status in the cause chain as the upstream answer.
+      for (let current = failure; current instanceof Error; current = current.cause) {
+        expect((current as Error & { status?: unknown }).status).toBeUndefined();
+      }
+    }
+  });
+});
+
+describe('Paack label barcode lookup', () => {
+  it('accepts the order the number and postcode pair resolved to', () => {
+    const result = parsePaackTrackingResponse(labelRoute(), LABEL_POSTCODE);
+    expect(result).toEqual({
+      status: 'in_transit',
+      current_stage: 'accepted',
+      last_status_text: 'Shipment accepted',
+      last_update: '2024-07-27T16:38:19.000Z',
+      expected_delivery: '2024-07-28',
+      timezone: 'Europe/Paris',
+      // The steps still to come carry no timestamp and are not history.
+      events: [
+        { time: '2024-07-27T16:38:19.000Z', description: 'Shipment accepted', stage: 'accepted' },
+        { time: '2024-07-27T10:50:30.000Z', description: 'Shipment registered', stage: 'registered' },
+      ],
+    });
+    const serialized = JSON.stringify(result);
+    for (const privateValue of ['PRIVATE', LABEL_POSTCODE]) expect(serialized).not.toContain(privateValue);
+  });
+
+  it('compares the echoed delivery postcode by its letters and digits', () => {
+    expect(parsePaackTrackingResponse(labelRoute({
+      delivery_address: { country: 'GB', post_code: 'SW1A 1AA' },
+    }), 'sw1a1aa')).toMatchObject({ current_stage: 'accepted' });
+    expect(parsePaackTrackingResponse(labelRoute({
+      delivery_address: { country: 'PT', post_code: '4445027' },
+    }), '4445-027')).toMatchObject({ current_stage: 'accepted' });
+    // Without an echoed postcode the lookup pair alone identifies the order.
+    expect(parsePaackTrackingResponse(labelRoute({ delivery_address: null }), LABEL_POSTCODE))
+      .toMatchObject({ current_stage: 'accepted' });
+    expect(() => parsePaackTrackingResponse(labelRoute({
+      delivery_address: { country: 'FR', post_code: '75002' },
+    }), LABEL_POSTCODE)).toThrow(expect.objectContaining({
+      kind: 'schema',
+      message: 'Paack returned a different shipment',
+    }));
   });
 });
 
@@ -381,5 +475,54 @@ describe('Paack tracker', () => {
     fetcher.mockResolvedValueOnce(new Response('Not found', { status: 404 }));
     await expect(new PaackTracker().fetch('00000000', '75001'))
       .rejects.toMatchObject({ status: 404 });
+  });
+
+  const redirect = (location: string | null) => new Response(null, {
+    status: 302,
+    headers: location === null ? {} : { Location: location },
+  });
+  const movedLookup = `https://paack.co/shipments/tracking/order?tracking_number=${LABEL_BARCODE}&postal_code=${LABEL_POSTCODE}`;
+
+  it('follows the same lookup once to the host the page is moving to', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(redirect(movedLookup))
+      .mockResolvedValueOnce(new Response(trackingPage(labelRoute())));
+
+    await expect(new PaackTracker().fetch(LABEL_BARCODE, LABEL_POSTCODE))
+      .resolves.toMatchObject({ current_stage: 'accepted', events: [{ stage: 'accepted' }, { stage: 'registered' }] });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher.mock.calls[1]?.[0]).toBe(movedLookup);
+    expect(fetcher.mock.calls[1]?.[1]).toMatchObject({ redirect: 'manual' });
+  });
+
+  it('maps the wrong-pair redirect of the new host to not-found', async () => {
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(redirect(movedLookup))
+      .mockResolvedValueOnce(redirect(`/tracking?postal_code=${LABEL_POSTCODE}&tracking_number=${LABEL_BARCODE}&err=true`));
+    await expect(new PaackTracker().fetch(LABEL_BARCODE, LABEL_POSTCODE))
+      .rejects.toMatchObject({ name: 'NotFoundError', kind: 'not_found' });
+  });
+
+  it.each([
+    ['no location', null],
+    ['the form without err', `https://mydeliveries.paack.app/tracking?tracking_number=${LABEL_BARCODE}&postal_code=${LABEL_POSTCODE}`],
+    ['another host', `https://example.test/tracking/order?tracking_number=${LABEL_BARCODE}&postal_code=${LABEL_POSTCODE}&err=true`],
+    ['plain HTTP', movedLookup.replace('https:', 'http:')],
+    ['another number', movedLookup.replace(LABEL_BARCODE, '100000000000000002')],
+    ['another postcode', movedLookup.replace(`postal_code=${LABEL_POSTCODE}`, 'postal_code=75002')],
+  ])('does not read a redirect to %s as a missing parcel', async (_, location) => {
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(redirect(location));
+    await expect(new PaackTracker().fetch(LABEL_BARCODE, LABEL_POSTCODE))
+      .rejects.toMatchObject({ name: 'IndeterminateError', kind: 'indeterminate' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('stops after one redirect', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(redirect(movedLookup))
+      .mockResolvedValueOnce(redirect(movedLookup));
+    await expect(new PaackTracker().fetch(LABEL_BARCODE, LABEL_POSTCODE))
+      .rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });

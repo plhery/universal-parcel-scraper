@@ -6,17 +6,21 @@
  * number and the delivery postcode returns server-rendered HTML whose
  * `window.__remixContext` already holds the loader response for the tracking
  * route. Reading that embedded payload avoids a second, undocumented API call
- * and gives the same data the page itself renders. The order number the
- * response echoes is verified before anything else is read.
+ * and gives the same data the page itself renders.
  *
- * A wrong number or postcode is answered with a redirect back to the form, or
- * with an explicit "order not found" message; both become a clean not-found.
+ * Paack answers the number and postcode as a pair: a wrong pair is redirected
+ * back to the form with `err=true`, or answered with an explicit "order not
+ * found" message, and both become a clean not-found. A tracking page is
+ * therefore the order for that pair. It does not echo the number when that is
+ * a label barcode (`external_id` is then the retailer's own reference), but it
+ * does echo the delivery postcode, which must agree with the requested one.
  *
  * Privacy: the loader payload carries the retailer, the recipient's name,
  * e-mail, phone and address, and per-event `variables` that repeat them.
  * `parse()` copies nothing from those objects: each event is rebuilt from its
  * timestamp, our own description and the mapped stage, and the only order-level
- * fields read are the echoed identifier and the delivery window.
+ * fields read are the delivery postcode, compared and never copied, and the
+ * delivery window.
  */
 import { load } from 'cheerio';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
@@ -30,6 +34,8 @@ const TRACKING_ENDPOINT = 'https://mydeliveries.paack.app/tracking/order';
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 2_000_000;
 const MAX_EVENTS = 100;
+const MAX_REDIRECTS = 1;
+const PAACK_HOST = /(?:^|\.)paack\.(?:app|co)$/;
 const NOT_FOUND_PATTERN = /order not found|incorrect order number|commande introuvable|pedido no encontrado/i;
 const NOT_FOUND_PAGE_PATTERN = /order not found|incorrect order number or postal code|commande introuvable|pedido no encontrado/i;
 
@@ -119,35 +125,72 @@ export function normalizePaackPostcode(raw: string): string {
   return value.replace(/\s+/g, '');
 }
 
-export function paackTrackingUrl(rawTrackingNumber: string, rawPostcode: string): string {
-  const trackingNumber = normalizePaackTrackingNumber(rawTrackingNumber);
-  const postcode = normalizePaackPostcode(rawPostcode);
-  const url = new URL(TRACKING_ENDPOINT);
+function trackingOrderUrl(base: string, trackingNumber: string, postcode: string): string {
+  const url = new URL(base);
   url.searchParams.set('tracking_number', trackingNumber);
   url.searchParams.set('postal_code', postcode);
   return url.toString();
 }
 
+export function paackTrackingUrl(rawTrackingNumber: string, rawPostcode: string): string {
+  return trackingOrderUrl(
+    TRACKING_ENDPOINT,
+    normalizePaackTrackingNumber(rawTrackingNumber),
+    normalizePaackPostcode(rawPostcode),
+  );
+}
+
+/**
+ * Where a redirect from the lookup leads. `err=true` is Paack's answer to a
+ * wrong pair. The same lookup on another Paack host is followed: the page is
+ * moving from mydeliveries.paack.app to paack.co, and the old host forwards
+ * some lookups there before checking the postcode. Anything else proves
+ * nothing about the parcel.
+ */
+function redirectTarget(
+  location: string | null,
+  from: string,
+  trackingNumber: string,
+  postcode: string,
+): { notFound: true } | { url: string } | null {
+  if (!location) return null;
+  let target: URL;
+  try {
+    target = new URL(location, from);
+  } catch {
+    return null;
+  }
+  if (target.protocol !== 'https:' || !PAACK_HOST.test(target.hostname)) return null;
+  if (target.searchParams.get('err') === 'true') return { notFound: true };
+  const echoes = (name: string, value: string) => (
+    (target.searchParams.get(name) ?? '').toLocaleUpperCase('en-US').replace(/\s/g, '') === value
+  );
+  if (!target.pathname.endsWith('/tracking/order')
+    || !echoes('tracking_number', trackingNumber)
+    || !echoes('postal_code', postcode)) return null;
+  return { url: trackingOrderUrl(`${target.origin}${target.pathname}`, trackingNumber, postcode) };
+}
+
+/** Letters and digits only, so "SW1A 1AA" and "4445-027" compare by content. */
+function postcodeKey(value: string): string {
+  return value.toLocaleUpperCase('en-US').replace(/[^A-Z0-9]/g, '');
+}
+
 export function parsePaackTrackingResponse(
   payload: unknown,
-  rawTrackingNumber: string,
+  rawPostcode: string,
 ): CarrierResult {
-  const trackingNumber = normalizePaackTrackingNumber(rawTrackingNumber);
+  const postcode = normalizePaackPostcode(rawPostcode);
   if (NOT_FOUND_PATTERN.test(errorText(payload))) throw new NotFoundError('Paack');
   const route = routeData(payload);
   if (NOT_FOUND_PATTERN.test(errorText(route))) throw new NotFoundError('Paack');
 
   const order = route.orderTrackData;
   if (!isRecord(order)) throw new SchemaError('Paack', 'Paack returned incomplete tracking details');
-  if (typeof order.external_id !== 'string') throw new SchemaError('Paack', 'Paack returned an invalid shipment number');
-  let responseNumber: string;
-  try {
-    responseNumber = normalizePaackTrackingNumber(order.external_id);
-  } catch (cause) {
-    // The echoed id is the provider's value, not the caller's input.
-    throw new SchemaError('Paack', 'Paack returned an invalid shipment number', { cause });
-  }
-  if (responseNumber !== trackingNumber) {
+  // The number is not echoed when it is a label barcode; the postcode is.
+  const address = isRecord(order.delivery_address) ? order.delivery_address : null;
+  const echoedPostcode = typeof address?.post_code === 'string' ? postcodeKey(address.post_code) : '';
+  if (echoedPostcode && echoedPostcode !== postcodeKey(postcode)) {
     throw new SchemaError('Paack', 'Paack returned a different shipment');
   }
 
@@ -207,11 +250,11 @@ export function parsePaackTrackingResponse(
   };
 }
 
-export function parsePaackTrackingHtml(html: string, rawTrackingNumber: string): CarrierResult {
+export function parsePaackTrackingHtml(html: string, rawPostcode: string): CarrierResult {
   // An empty body proves nothing about the shipment, so it stays indeterminate.
   if (!html.trim()) throw new IndeterminateError('Paack', 'Paack returned an empty tracking response');
   if (NOT_FOUND_PAGE_PATTERN.test(html)) throw new NotFoundError('Paack');
-  return parsePaackTrackingResponse(remixContext(html), rawTrackingNumber);
+  return parsePaackTrackingResponse(remixContext(html), rawPostcode);
 }
 
 export interface PaackTrackerOptions {
@@ -239,27 +282,37 @@ export class PaackTracker {
     const trackingNumber = normalizePaackTrackingNumber(rawTrackingNumber);
     const postcode = normalizePaackPostcode(rawPostcode);
     const budget = lookupBudget(context, this.timeoutMs);
-    const { response, bytes } = await fetchBounded(paackTrackingUrl(trackingNumber, postcode), {
-      signal: budget.signal,
-      headers: {
-        Accept: 'text/html,application/xhtml+xml',
-        'Accept-Language': 'fr-FR,fr;q=0.9,en;q=0.8',
-        'User-Agent': this.userAgent,
-      },
-    }, {
-      provider: 'Paack tracking',
-      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
-      maxBytes: MAX_RESPONSE_BYTES,
-      redirect: 'manual',
-      fetcher: this.fetcher,
-      allowHttpError: true,
-    });
+    let url = paackTrackingUrl(trackingNumber, postcode);
+    for (let redirects = 0; ; redirects += 1) {
+      const { response, bytes } = await fetchBounded(url, {
+        signal: budget.signal,
+        headers: {
+          Accept: 'text/html,application/xhtml+xml',
+          'Accept-Language': 'fr-FR,fr;q=0.9,en;q=0.8',
+          'User-Agent': this.userAgent,
+        },
+      }, {
+        provider: 'Paack tracking',
+        timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
+        maxBytes: MAX_RESPONSE_BYTES,
+        redirect: 'manual',
+        fetcher: this.fetcher,
+        allowHttpError: true,
+      });
 
-    if (response.status === 404 || (response.status >= 300 && response.status < 400)) {
-      throw new NotFoundError('Paack');
+      if (response.status >= 300 && response.status < 400) {
+        const target = redirectTarget(response.headers.get('location'), url, trackingNumber, postcode);
+        if (target && 'notFound' in target) throw new NotFoundError('Paack');
+        if (!target || redirects >= MAX_REDIRECTS) {
+          throw new IndeterminateError('Paack', 'Paack redirected the lookup without an answer');
+        }
+        url = target.url;
+        continue;
+      }
+      if (response.status === 404) throw new NotFoundError('Paack');
+      if (!response.ok) throw new UpstreamHttpError('Paack tracking', response.status);
+      return parsePaackTrackingHtml(decodeText(bytes), postcode);
     }
-    if (!response.ok) throw new UpstreamHttpError('Paack tracking', response.status);
-    return parsePaackTrackingHtml(decodeText(bytes), trackingNumber);
   }
 }
 

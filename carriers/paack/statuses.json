@@ -210,6 +210,14 @@
       "note": "Identifier substring inherited from the pre-package adapter; source not recorded."
     },
     {
+      "code": "indelivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Timeline step SP002, rendered as \"Out for delivery\"; listed without a timestamp before it happens."
+    },
+    {
       "code": "driverassigned",
       "language": "en",
       "stage": "out_for_delivery",
@@ -229,9 +237,9 @@
       "code": "manifested",
       "language": "en",
       "stage": "registered",
-      "confirmedBy": "prior-art",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "Identifier substring inherited from the pre-package adapter; source not recorded."
+      "note": "Timeline step SM001: the retailer sent the order details."
     },
     {
       "code": "created",
@@ -293,9 +301,9 @@
       "code": "scannedatorigin",
       "language": "en",
       "stage": "accepted",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "Exercised by the offline active-label table via scannedAtOriginHeader."
+      "note": "Timeline step SM002, Paack's first scan; also reached as scannedAtOriginHeader."
     },
     {
       "code": "received",
@@ -352,6 +360,38 @@
       "confirmedBy": "fixture",
       "firstSeen": "2026-09-12",
       "note": "Exercised by the offline active-label table via pudoAssignedHeader."
+    },
+    {
+      "wording": "Order details received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Paack's page label for manifested, relayed by ParcelsApp; stored as \"Shipment registered\"."
+    },
+    {
+      "wording": "In Paack's distribution centre",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Paack's page label for scannedAtOrigin, relayed by ParcelsApp; stored as \"Shipment accepted\"."
+    },
+    {
+      "wording": "Out for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Paack's page label for inDelivery."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-07",
+      "note": "Paack's page label for delivered."
     }
   ]
 }
