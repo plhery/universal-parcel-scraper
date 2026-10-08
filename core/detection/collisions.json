@@ -1431,5 +1431,34 @@
       "hermes-de"
     ],
     "reason": "These catalog entries share the reference shape. A unique high-confidence rule can select its service; otherwise the number stays ambiguous and national scope requires recognition or an explicit carrier link."
+  },
+  {
+    "shape": "9{18} starting with 370 or 373 that passes the GS1 check",
+    "carriers": [
+      "bpost",
+      "bring-posten",
+      "ecoscooting"
+    ],
+    "reason": "Bring parcel SSCCs written without their 00 identifier fall in the 18-digit space bpost and Ecoscooting match broadly; Bring's rule lists it first and the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "9{17} starting with 70 that passes the GS1 check",
+    "carriers": [
+      "bring-posten",
+      "colis-prive",
+      "dhl-ecommerce"
+    ],
+    "reason": "Bring consignment numbers carry a Norwegian GS1 prefix and check digit within the 17-digit space DHL eCommerce and Colis Privé match broadly; Bring's rule lists it first and the number stays a suggestion."
+  },
+  {
+    "shape": "9{20} starting with 00370 or 00373 that passes the SSCC check",
+    "carriers": [
+      "bring-posten",
+      "nz-post",
+      "postnord",
+      "swiss-post-cargo",
+      "usps"
+    ],
+    "reason": "A Bring parcel SSCC typed with its 00 identifier also fits PostNord's Nordic SSCC rule and the broad Swiss Post Cargo, NZ Post and USPS candidates; Bring's rule lists it first and the number stays a suggestion."
   }
 ]

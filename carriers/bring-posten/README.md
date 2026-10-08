@@ -4,6 +4,12 @@ Tracks consignments, their pieces and Norwegian S10 postal parcels through the
 current anonymous consumer service. A consignment number with several pieces is
 inconclusive; each piece's own number still tracks that piece.
 
+Norwegian S10 numbers select Bring. Parcel SSCCs starting 370 or 373, with or
+without their 00 identifier, and 17-digit consignment numbers starting 70 are
+suggested with Bring first when their GS1 check digit passes; other carriers
+share these lengths. Links from the Posten and Bring tracking sites resolve to
+Bring, and a link naming one piece of a consignment tracks that piece.
+
 ## How it works
 
 One bounded GET reads the JSON route published by the

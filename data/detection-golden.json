@@ -275,6 +275,25 @@
     ]
   },
   {
+    "input": "00370722152587569988",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "swiss-post-cargo",
+      "postnord",
+      "usps",
+      "nz-post"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "nz-post",
+      "swiss-post-cargo"
+    ]
+  },
+  {
     "input": "00500442303337",
     "carrier": "unknown",
     "confidence": "low",
@@ -5096,6 +5115,134 @@
     ]
   },
   {
+    "input": "370438109757988982",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370438109758114878",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370722152587569988",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370722152621578495",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370727790063193606",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370727790064164520",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370730259853369118",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "370733748819753155",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
     "input": "3710615",
     "carrier": "unknown",
     "confidence": "low",
@@ -5192,6 +5339,70 @@
       "gls-de",
       "postlogistics",
       "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "373165001923888066",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "373325386371062092",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "373810303010229626",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "373810303010241598",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "bpost",
+      "ecoscooting"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bpost"
     ]
   },
   {
@@ -7386,6 +7597,74 @@
       "correos-express",
       "dhl-ecommerce",
       "canada-post"
+    ]
+  },
+  {
+    "input": "70722152016507894",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "dhl-ecommerce",
+      "colis-prive"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "colis-prive",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "70733748507542961",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "dhl-ecommerce",
+      "colis-prive"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "colis-prive",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "70733748769774711",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "dhl-ecommerce",
+      "colis-prive"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "colis-prive",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "70733748819753147",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "dhl-ecommerce",
+      "colis-prive"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "colis-prive",
+      "dhl-ecommerce"
     ]
   },
   {
@@ -11476,6 +11755,14 @@
   },
   {
     "input": "LL107781905NO",
+    "carrier": "bring-posten",
+    "confidence": "high",
+    "candidates": [
+      "bring-posten"
+    ]
+  },
+  {
+    "input": "LL125445961NO",
     "carrier": "bring-posten",
     "confidence": "high",
     "candidates": [

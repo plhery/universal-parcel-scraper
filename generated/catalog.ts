@@ -3952,7 +3952,7 @@ export const CARRIER_CATALOG = {
           "sporing.bring.no",
           "sporing.posten.no"
         ],
-        "path": "^/sporing/([A-Z0-9]{13,18})/?$"
+        "path": "^/sporing/([A-Z0-9]{13,20})/?$"
       },
       {
         "domains": [
@@ -3962,6 +3962,18 @@ export const CARRIER_CATALOG = {
         "params": [
           "q"
         ]
+      },
+      {
+        "domains": [
+          "tracking.bring.com",
+          "tracking.bring.se",
+          "tracking.bring.dk"
+        ],
+        "params": [
+          "packageNumber",
+          "q"
+        ],
+        "path": "^/tracking/([A-Z0-9]{13,20})/?$"
       }
     ],
     "detectionRules": [
@@ -3969,6 +3981,24 @@ export const CARRIER_CATALOG = {
         "pattern": "^[A-Z]{2}\\d{9}NO$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^37[03]\\d{15}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      },
+      {
+        "pattern": "^0037[03]\\d{15}$",
+        "confidence": "low",
+        "checksum": "sscc",
+        "preferred": true
+      },
+      {
+        "pattern": "^70\\d{15}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
       }
     ]
   },
@@ -5230,7 +5260,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "china-post": ["china-post-1"],
   "packeta": ["packeta-1"],
   "poczta-polska": ["poczta-polska-1","poczta-polska-barcode","poczta-polska-2"],
-  "bring-posten": ["bring-posten-1"],
+  "bring-posten": ["bring-posten-1","bring-posten-2","bring-posten-3","bring-posten-4"],
   "aramex": ["aramex-1"],
   "tnt": ["tnt-1","tnt-2"],
   "correos-spain": ["correos-spain-1","correos-spain-2","correos-spain-3","correos-spain-4"],

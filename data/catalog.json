@@ -3950,7 +3950,7 @@
           "sporing.bring.no",
           "sporing.posten.no"
         ],
-        "path": "^/sporing/([A-Z0-9]{13,18})/?$"
+        "path": "^/sporing/([A-Z0-9]{13,20})/?$"
       },
       {
         "domains": [
@@ -3960,6 +3960,18 @@
         "params": [
           "q"
         ]
+      },
+      {
+        "domains": [
+          "tracking.bring.com",
+          "tracking.bring.se",
+          "tracking.bring.dk"
+        ],
+        "params": [
+          "packageNumber",
+          "q"
+        ],
+        "path": "^/tracking/([A-Z0-9]{13,20})/?$"
       }
     ],
     "detectionRules": [
@@ -3967,6 +3979,24 @@
         "pattern": "^[A-Z]{2}\\d{9}NO$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^37[03]\\d{15}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      },
+      {
+        "pattern": "^0037[03]\\d{15}$",
+        "confidence": "low",
+        "checksum": "sscc",
+        "preferred": true
+      },
+      {
+        "pattern": "^70\\d{15}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
       }
     ]
   },
