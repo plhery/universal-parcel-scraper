@@ -67,7 +67,9 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
 
 `node scripts/generate-places.mjs` builds `places.tsv.br`: GeoNames towns of 1,000 people
 or more and first-level regions, the postal localities of Switzerland, Liechtenstein, their
-neighbours and the Benelux, Swiss and Liechtenstein postcodes, OurAirports airports with
+neighbours and the Benelux, the Canadian municipalities postal areas are named after (Canada
+Post still addresses Scarborough and North York, now part of Toronto), Swiss and
+Liechtenstein postcodes, OurAirports airports with
 scheduled service, and the Natural Earth country label points in `countries.json`.
 Decisions about what to include are commented in the script.
 Then run `node scripts/generate-region-towns.mjs`: the carrier catalog keeps

@@ -53,6 +53,16 @@ describe('locatePlace', () => {
     expectPlace('JAMAICA NY INTERNATIONAL DISTRIBUTION CENTER', { country: 'US', name: 'Jamaica', latitude: 40.69, longitude: -73.81 });
   });
 
+  it('places the cities Toronto absorbed, which Canada Post still addresses', () => {
+    const scarborough = { country: 'CA', name: 'Scarborough', latitude: 43.77, longitude: -79.25 };
+    expectPlace('SCARBOROUGH - ONTARIO - CANADA', scarborough);
+    expectPlace('SCARBOROUGH - ON - CANADA', scarborough);
+    expectPlace('Scarborough, ON', scarborough);
+    expectPlace('NORTH YORK - ONTARIO - CANADA', { country: 'CA', name: 'North York', latitude: 43.75, longitude: -79.44 });
+    // Unconfirmed, the town in England is still the one meant.
+    expectPlace('Scarborough', { country: 'GB', name: 'Scarborough', latitude: 54.28, longitude: -0.4 });
+  });
+
   it('puts a scan at the airport or hub it names', () => {
     expect(place('Frankfurt Airport (FRA), Germany')).toMatchObject({ country: 'DE', name: 'Frankfurt', site: 'Frankfurt Main Airport', latitude: 50.027, longitude: 8.558 });
     expect(place('LONDON-HEATHROW - UK')).toMatchObject({ country: 'GB', name: 'London', site: 'London Heathrow Airport', latitude: 51.471, longitude: -0.46 });

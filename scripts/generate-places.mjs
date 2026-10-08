@@ -152,10 +152,33 @@ for (const country of LOCALITY_COUNTRIES) {
   }
 }
 
+const admin1Codes = lines(await readFile(await download('admin1CodesASCII.txt', 'https://download.geonames.org/export/dump/admin1CodesASCII.txt'), 'utf8'));
+
+// Canada Post still addresses mail to the cities Toronto absorbed ("SCARBOROUGH -
+// ON - CANADA"); GeoNames lists them as divisions, not towns. The Canadian postal
+// file has one row per urban postal area, named after its municipality first
+// ("Scarborough (Agincourt)"); a rural area, with a 0 second, names a region
+// ("Eastern Alberta (St. Paul)"). A municipality is placed at the mean of its areas.
+const provinces = new Map(admin1Codes.filter(([id]) => id.startsWith('CA.')).map(([id, name]) => [nameKey(name), id.slice(3)]));
+const municipalities = new Map();
+for (const [, code, area, province, , municipality, , , , lat, lon] of lines(unzip(await download('CA.zip', 'https://download.geonames.org/export/zip/CA.zip'), 'CA.txt'))) {
+  const name = area.replace(/\s*\(.*$/u, '').trim();
+  if (code[1] === '0' || name !== municipality.trim() || !latin(name) || !provinces.has(nameKey(province))) continue;
+  const key = `${provinces.get(nameKey(province))}:${name}`;
+  municipalities.set(key, [...municipalities.get(key) ?? [], [Number(lat), Number(lon)]]);
+}
+for (const [key, points] of municipalities) {
+  const [admin1, name] = key.split(/:(.*)/u);
+  const point = [round(points.reduce((sum, [lat]) => sum + lat, 0) / points.length), round(points.reduce((sum, [, lon]) => sum + lon, 0) / points.length)];
+  const keys = nameKeys(name);
+  if (keys.some((other) => (byKey.get(`CA:${other}`) ?? []).some((place) => distanceKm(point, [place.lat, place.lon]) < 15))) continue;
+  remember({ name, ascii: name, country: 'CA', admin1, admin2: '', lat: point[0], lon: point[1], population: 0, primary: keys, alternate: [] });
+}
+
 // First-level regions by name ("Ontario", "Virginia", "Guangdong"): scans name
 // them after the town, and they tell towns of one name apart.
 const regions = [];
-for (const [id, name, ascii] of lines(await readFile(await download('admin1CodesASCII.txt', 'https://download.geonames.org/export/dump/admin1CodesASCII.txt'), 'utf8'))) {
+for (const [id, name, ascii] of admin1Codes) {
   const [country, admin1] = id.split('.');
   const keys = new Set([...nameKeys(name), ...nameKeys(ascii)]);
   for (const key of [...keys]) if (!GENERIC_REGIONS.has(key.replace(REGION_WORDS, ''))) keys.add(key.replace(REGION_WORDS, ''));
