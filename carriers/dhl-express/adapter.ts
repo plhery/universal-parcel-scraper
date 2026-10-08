@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon';
-import { randomUUID } from 'node:crypto';
 import { accepted, lookupBudget, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type AdapterEnvironment, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidDhlExpressWaybill } from '../../core/detection/numericChecksums.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
@@ -9,7 +8,7 @@ import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
 import { clean, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { facilityZone } from './clock.js';
-import { mobileTracking } from './mobile.js';
+import { DhlMobileApi } from './mobile.js';
 import { dhlExpressStage } from './status.js';
 
 const PROVIDER = 'DHL Express';
@@ -135,13 +134,15 @@ export function parseMobile(payload: unknown, raw: string): CarrierResult {
 }
 
 export class DhlExpressTracker {
-  private readonly mobileDevice = randomUUID();
-  constructor(private readonly environment: AdapterEnvironment) {}
+  private readonly mobile: DhlMobileApi;
+  constructor(private readonly environment: AdapterEnvironment) {
+    this.mobile = new DhlMobileApi(environment);
+  }
 
   async direct(number: string, context?: TrackingContext): Promise<CarrierResult> {
     const normalized = normalizeNumber(number);
     const budget = lookupBudget(context, 10_000, PROVIDER);
-    return parseMobile(await mobileTracking(normalized, budget, this.environment, this.mobileDevice), normalized);
+    return parseMobile(await this.mobile.tracking(normalized, budget), normalized);
   }
 
   async browser(number: string, context?: TrackingContext): Promise<CarrierResult> {

@@ -10,9 +10,13 @@ not confirm the carrier or the existence of a shipment.
 ## Retrieval
 
 `direct` asks the mobile guest API for one waybill. It checks the application's
-current waybill-encryption setting before tracking, so a configuration or
-authentication failure cannot look like a missing shipment. The shared
-application bearer is included; consumers need no DHL account or key setup.
+waybill-encryption setting before tracking, so a configuration or
+authentication failure cannot look like a missing shipment. The adapter
+instance keeps a confirmed setting for 15 minutes, so a lookup, recognition
+included, usually needs only the tracking request. A tracking reply other than a
+shipment list discards the setting; a request that got no reply keeps it. The
+shared application bearer is included; consumers need no DHL account or key
+setup.
 After an HTTP challenge or transport failure, `trawl` loads DHL's global tracking
 page in a fresh context and captures its matching `utapi` response. The browser
 lets the page complete its verification and repeat tracking after an HTTP 428;
@@ -56,6 +60,8 @@ counter and uses `date_en` for English facility-local clocks. An encryption
 requirement or CAPTCHA stays a challenge and can recover through the browser.
 The mobile API can report its CAPTCHA code inside HTTP 503; that explicit code
 is verification evidence rather than a maintenance or missing-shipment answer.
+A few tracking requests in quick succession from one address draw that code for
+every waybill and device for a while; the settings read keeps answering.
 
 Checkpoint stages come from [status.ts](status.ts). DHL's fixed sentences match
 whole, and those that end with the facility ("Processed at CITY - COUNTRY")

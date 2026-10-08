@@ -1,8 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { adapter, DhlExpressTracker, normalizeNumber, parse, parseMobile, parseUnified } from './adapter.js';
+import { SETTINGS_TTL_MS } from './mobile.js';
 import { dhlExpressStage } from './status.js';
 
 const number = '1234567891';
@@ -232,6 +233,60 @@ describe('DHL mobile API', () => {
     await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toMatchObject({ kind: 'challenge', status: 503 });
     fetcher.mockResolvedValue(new Response('{}', { status: 503 }));
     await expect(new DhlExpressTracker(environment(fetcher)).direct(number)).rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+  });
+  const services = (fetcher: ReturnType<typeof mobileFetcher>) => fetcher.mock.calls.map(([url]) => new URL(String(url)).searchParams.get('service'));
+  it('reads the encryption setting once and reuses it until it expires', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      const fetcher = mobileFetcher(); const carrier = adapter(environment(fetcher));
+      expect(await carrier.recognize!(number)).toMatchObject({ known: true });
+      await expect(carrier.track({ number })).resolves.toMatchObject({ status: 'delivered' });
+      vi.setSystemTime(Date.now() + SETTINGS_TTL_MS - 1);
+      expect(await carrier.recognize!(number)).toMatchObject({ known: true });
+      expect(services(fetcher)).toEqual(['common-countrySettingsBySettingName', 'shipments-tracking', 'shipments-tracking', 'shipments-tracking']);
+      vi.setSystemTime(Date.now() + 1);
+      fetcher.mockClear();
+      expect(await carrier.recognize!(number)).toMatchObject({ known: true });
+      expect(services(fetcher)).toEqual(['common-countrySettingsBySettingName', 'shipments-tracking']);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+  it('trusts an empty list under the reused setting and reads it again after a rejected or unexpected reply', async () => {
+    const fetcher = mobileFetcher([]); const carrier = adapter(environment(fetcher));
+    expect(await carrier.recognize!(number)).toEqual({ known: false });
+    expect(await carrier.recognize!(number)).toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(3);
+    for (const [reply, kind] of [['DRG10012', ChallengeError], [{ statusCode: 401 }, ChallengeError], ['temporary_blocked', RateLimitedError],
+      [{ statusCode: 404, error: 'Not Found' }, SchemaError]] as const) {
+      fetcher.mockClear().mockImplementation(async (_url, init) => new Response(JSON.stringify(JSON.parse(String(init?.body)).method === 'tracking' ? reply : settings)));
+      await expect(carrier.recognize!(number)).rejects.toThrow(kind);
+      await expect(carrier.recognize!(number)).rejects.toThrow(kind);
+      expect(services(fetcher)).toEqual(['shipments-tracking', 'common-countrySettingsBySettingName', 'shipments-tracking']);
+      fetcher.mockImplementation(async (_url, init) => new Response(JSON.stringify(JSON.parse(String(init?.body)).method === 'tracking' ? [] : settings)));
+      expect(await carrier.recognize!(number)).toEqual({ known: false });
+    }
+  });
+  it('does not keep a refused setting or a failed settings read', async () => {
+    const fetcher = mobileFetcher([], [{ name: 'api_awb_encryption', value: 'Y' }]); const tracker = new DhlExpressTracker(environment(fetcher));
+    await expect(tracker.direct(number)).rejects.toThrow(ChallengeError);
+    fetcher.mockResolvedValueOnce(new Response('{}', { status: 503 }));
+    await expect(tracker.direct(number)).rejects.toMatchObject({ kind: 'maintenance' });
+    await expect(tracker.direct(number)).rejects.toThrow(ChallengeError);
+    expect(services(fetcher)).toEqual(Array(3).fill('common-countrySettingsBySettingName'));
+  });
+  it('keeps the setting when a tracking request gets no reply, the lookup is cancelled or its time runs out', async () => {
+    const fetcher = mobileFetcher(); const tracker = new DhlExpressTracker(environment(fetcher));
+    await tracker.direct(number);
+    fetcher.mockRejectedValueOnce(new TypeError('fetch failed'));
+    await expect(tracker.direct(number)).rejects.toThrow(UpstreamNetworkError);
+    const controller = new AbortController();
+    fetcher.mockImplementationOnce(async () => { controller.abort(); throw controller.signal.reason; });
+    await expect(tracker.direct(number, { signal: controller.signal })).rejects.toThrow();
+    fetcher.mockImplementationOnce((_url, init) => new Promise((_resolve, reject) => init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason))));
+    await expect(tracker.direct(number, { budgetMs: 20 })).rejects.toThrow();
+    await expect(tracker.direct(number)).resolves.toMatchObject({ status: 'delivered' });
+    expect(services(fetcher)).toEqual(['common-countrySettingsBySettingName', ...Array(5).fill('shipments-tracking')]);
   });
   it('does not send a second request when the caller cancels during configuration', async () => {
     const controller = new AbortController();
