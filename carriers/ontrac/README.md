@@ -20,8 +20,10 @@ The endpoint's newest-first order is preserved, including scans without offsets.
 offset-less clocks remain local wall times; invalid dates retain their text on an undated event. Incomplete
 scan rows fail the lookup so older progress cannot appear current. Each
 scan uses its own regional status code; unfamiliar codes keep their wording for review.
-The parser reads short scan descriptions and city/state, excluding recipient details,
-references, signatures and proof-of-delivery images.
+The parser reads short scan descriptions and city/state, the weight and the parcel's
+sides in OnTrac's unit, excluding recipient details, references, signatures and
+proof-of-delivery images. The hold code asking the recipient for address details or
+instructions is an exception.
 
 ## Testing
 

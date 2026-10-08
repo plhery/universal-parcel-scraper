@@ -14,7 +14,7 @@ add(['OFDL', 'OD'], 'out_for_delivery', 'out_for_delivery');
 add(['BCLD', 'UTLV', 'NH', 'ACSS', 'RFDM'], 'exception', 'failed_attempt');
 add(['DN', 'DLVD', 'CL', 'DM', 'DW', 'OK', 'DD'], 'delivered', 'delivered');
 add(['RETD', 'RETN', 'RS'], 'exception', 'returned');
-add(['LOST', 'MSPK', 'UD'], 'exception', 'exception');
+add(['LOST', 'MSPK', 'UD', 'ONHD'], 'exception', 'exception');
 
 export function classifyOntracStatus(code: string): ClassifiedStatus | undefined {
   return stages[code];

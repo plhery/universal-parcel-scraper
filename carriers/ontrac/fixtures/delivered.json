@@ -1,6 +1,6 @@
 {
   "Packages": [{
-    "Tracking": "1LS0000000000001", "Weight": 2, "WeightUnits": "lbs",
+    "Tracking": "1LS0000000000001", "Weight": 2, "WeightUnits": "lbs", "Length": 12, "Width": 8, "Height": 5, "DimensionUnits": "in",
     "UtcExpectedDeliveryDateTime": "2026-01-03T20:00:00-08:00",
     "Consignee": { "Name": "Private Recipient", "Address": "Example Address" },
     "PodText": "Private signature", "VpodImageUrl": "https://example.invalid/secret-image", "Reference1": "reference-secret",

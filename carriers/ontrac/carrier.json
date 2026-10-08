@@ -26,7 +26,8 @@
   "capabilities": [
     "history",
     "estimated_delivery",
-    "weight"
+    "weight",
+    "dimensions"
   ],
   "portal": {
     "url": "https://www.ontrac.com/tracking/?number={trackingNumber}",
@@ -41,7 +42,8 @@
       "status",
       "history",
       "estimated_delivery",
-      "weight"
+      "weight",
+      "dimensions"
     ],
     "discarded": [
       "recipient",

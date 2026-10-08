@@ -59,11 +59,18 @@ export function parseOntrac(payload: unknown, number: string): CarrierResult {
   const weight = typeof item.Weight === 'number' && Number.isFinite(item.Weight) && item.Weight > 0 ? item.Weight : null;
   const units = clean(item.WeightUnits, 16).toLowerCase();
   const weightKg = weight !== null ? (units === 'lbs' || units === 'lb' ? weight * 0.45359237 : units === 'kg' ? weight : null) : null;
+  // Length, width and height in the unit OnTrac names; a missing or zero side drops all three.
+  const sides = [item.Length, item.Width, item.Height];
+  const sideUnits = clean(item.DimensionUnits, 16).toLowerCase();
+  const dimensions = ['in', 'cm'].includes(sideUnits)
+    && sides.every(side => typeof side === 'number' && Number.isFinite(side) && side > 0 && side < 10_000)
+    ? `${sides.join(' × ')} ${sideUnits}` : null;
   return {
     status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: mapped?.status === 'delivered' ? null : estimate?.iso ?? null,
     ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    ...(weightKg !== null ? { weight_kg: weightKg } : {}), events: events.slice(0, 100),
+    ...(weightKg !== null ? { weight_kg: weightKg } : {}), ...(dimensions ? { dimensions_text: dimensions } : {}),
+    events: events.slice(0, 100),
   };
 }

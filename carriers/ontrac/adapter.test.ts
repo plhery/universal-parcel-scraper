@@ -35,8 +35,13 @@ describe('OnTrac direct tracking', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-03T14:00:00-08:00', expected_delivery: null });
     expect(result.events?.map(e => e.stage)).toEqual(['delivered', 'out_for_delivery', 'registered']);
     expect(result.weight_kg).toBeCloseTo(0.90718474);
+    expect(result.dimensions_text).toBe('12 × 8 × 5 in');
+    for (const change of [{ Height: 0 }, { Width: null }, { Length: '12' }, { DimensionUnits: 'ft' }]) {
+      const value = payload(); Object.assign(value.Packages[0], change);
+      expect(parseOntrac(value, NUMBER)).not.toHaveProperty('dimensions_text');
+    }
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(declared.capabilities).toEqual(['history', 'estimated_delivery', 'weight']);
+    expect(declared.capabilities).toEqual(['history', 'estimated_delivery', 'weight', 'dimensions']);
     const inTransit = payload(); inTransit.Packages[0].Events.shift();
     expect(parseOntrac(inTransit, NUMBER).expected_delivery).toBe('2026-01-03T20:00:00-08:00');
   });
@@ -93,6 +98,7 @@ describe('OnTrac direct tracking', () => {
     ['ALPK', 'Already picked up', 'in_transit', 'accepted'],
     ['RS', 'The package was returned to the sender', 'exception', 'returned'],
     ['UD', 'The contents of the package are damaged', 'exception', 'exception'],
+    ['ONHD', 'Details needed. Please contact us', 'exception', 'exception'],
     ['NFRP', 'Order has been transferred to another carrier', 'in_transit', 'in_transit'],
   ])('interprets %s from its actual milestone rather than the portal presentation type', (code, description, status, stage) => {
     const value = payload();

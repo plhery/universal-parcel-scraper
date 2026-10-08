@@ -56,6 +56,15 @@
       "stage": "registered",
       "confirmedBy": "live",
       "code": "EXRL"
+    },
+    {
+      "code": "ONHD",
+      "wording": "Details needed. Please contact us",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "OnTrac holds the parcel until the recipient supplies address details or delivery instructions; its code list files this as an exception."
     }
   ]
 }

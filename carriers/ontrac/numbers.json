@@ -221,6 +221,167 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
+    },
+    {
+      "number": "C12042142509047",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261003194516/https://www.ontrac.com/tracking/?number=C12042142509047",
+        "date": "2026-10-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "D10017744663378",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260930172042/https://www.ontrac.com/tracking/?number=D10017744663378",
+        "date": "2026-09-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "1LSCYNV001D4HGY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260929224532/https://www.ontrac.com/tracking/?number=1LSCYNV001D4HGY",
+        "date": "2026-09-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "1LSCXXH03948347",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260920180135/https://www.ontrac.com/tracking/?number=1LSCXXH03948347",
+        "date": "2026-09-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "D10017707101224",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260915201555/https://www.ontrac.com/tracking/?number=D10017707101224",
+        "date": "2026-09-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac"
+        ]
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "1LSCYM0001A8D0B",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260913053059/https://www.ontrac.com/tracking/?number=1LSCYM0001A8D0B",
+        "date": "2026-09-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "1LSCXLNA060523159",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901014626/https://www.ontrac.com/tracking/?number=1LSCXLNA060523159",
+        "date": "2026-09-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "1LS729108273411",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260706225525/https://www.ontrac.com/tracking/?number=1LS729108273411",
+        "date": "2026-07-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
     }
   ]
 }
