@@ -37,6 +37,9 @@
         "url": "https://github.com/07-hajime-tokyo/invoice-site_byCodex/pull/11",
         "date": "2026-08-23"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -56,7 +59,7 @@
           "sagawa"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Yamato Transport, which stays one candidate among several."
+      "note": "Publicly reported shipment number. Yamato's tracker returns its history. Twelve digits stay a suggestion shared with other carriers."
     },
     {
       "number": "303142820352",

@@ -23,11 +23,14 @@
         "url": "https://www.ptt.cc/bbs/e-shopping/M.1781927397.A.39F.html",
         "date": "2026-06-20"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "yto",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. YTO's tracker returns its history, ending with the return to the sender."
     }
   ]
 }
