@@ -39,6 +39,9 @@ function mockGuestApi(details: Response, fetcher = vi.spyOn(globalThis, 'fetch')
     .mockResolvedValueOnce(details);
 }
 
+/** A parcel-details refusal, typed as the guest API types it. */
+const refusal = (exceptionType: string) => Response.json({ error: 'ParcelException', exceptionType }, { status: 400 });
+
 /** A request DPD never answers: it ends when its signal aborts. */
 const unanswered: typeof fetch = (_url, init) => new Promise<Response>((_resolve, reject) => {
   init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason as Error), { once: true });
@@ -674,7 +677,7 @@ describe('DPDTracker steps', () => {
   });
 
   it('retries without verification when DPD rejects the postcode, and says so', async () => {
-    const fetcher = mockGuestApi(new Response('', { status: 400 }))
+    const fetcher = mockGuestApi(refusal('PROVIDE_ZIP_CODE'))
       .mockResolvedValueOnce(Response.json(READY_FOR_COLLECTION));
 
     const result = await new DPDTracker({ timeoutMs: 1_000, trawl: null })
@@ -716,15 +719,20 @@ describe('DPDTracker steps', () => {
     // Warm token: one details request per question.
     known.mockResolvedValueOnce(new Response('', { status: 404 }));
     await expect(tracker.recognizes(TRACKING_NUMBER)).resolves.toBe(false);
-    known.mockResolvedValueOnce(new Response('', { status: 400 }));
+    known.mockResolvedValueOnce(refusal('PARCEL_NOT_FOUND'));
     await expect(tracker.recognizes(TRACKING_NUMBER)).resolves.toBe(false);
     known.mockResolvedValueOnce(Response.json({ ...READY_FOR_COLLECTION, parcelNumber: '06080000000009' }));
     await expect(tracker.recognizes(TRACKING_NUMBER)).resolves.toBe(false);
     known.mockResolvedValueOnce(new Response('<html>maintenance</html>', { status: 500 }));
     await expect(tracker.recognizes(TRACKING_NUMBER)).rejects.toThrow();
-    expect(known).toHaveBeenCalledTimes(8);
+    // A refusal that does not name the parcel unknown says nothing about it.
+    known.mockResolvedValueOnce(refusal('PROVIDE_ZIP_CODE'));
+    await expect(tracker.recognizes(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    known.mockResolvedValueOnce(new Response('', { status: 400 }));
+    await expect(tracker.recognizes(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(known).toHaveBeenCalledTimes(10);
     await expect(tracker.recognizes('1234')).resolves.toBe(false);
-    expect(known).toHaveBeenCalledTimes(8);
+    expect(known).toHaveBeenCalledTimes(10);
   });
 
   it('keeps a broken guest login a failure rather than an unknown parcel', async () => {
@@ -823,8 +831,11 @@ describe('DPDTracker steps', () => {
     expect(steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'budget']]);
   });
 
-  it('keeps a positive unknown parcel out of the page fallback', async () => {
-    const fetcher = mockGuestApi(new Response('', { status: 404 }));
+  it.each([
+    ['a 404', () => new Response('', { status: 404 })],
+    ['a 400 typed PARCEL_NOT_FOUND', () => refusal('PARCEL_NOT_FOUND')],
+  ])('keeps a positive unknown parcel, %s, out of the page fallback', async (_, reply) => {
+    const fetcher = mockGuestApi(reply());
     const { recorder, steps } = recordingRecorder();
 
     await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null, recorder }).fetch(TRACKING_NUMBER))
@@ -832,6 +843,17 @@ describe('DPDTracker steps', () => {
 
     expect(fetcher).toHaveBeenCalledTimes(4);
     expect(steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'not_found']]);
+  });
+
+  it('reads PARCEL_NOT_FOUND only from the lookup without a postcode', async () => {
+    const fetcher = mockGuestApi(refusal('PARCEL_NOT_FOUND')).mockResolvedValueOnce(refusal('PARCEL_NOT_FOUND'));
+
+    await expect(new DPDTracker({ timeoutMs: 1_000, trawl: null }).fetch(TRACKING_NUMBER, '8000'))
+      .rejects.toBeInstanceOf(DPDTrackingError);
+
+    expect(fetcher).toHaveBeenCalledTimes(5);
+    expect(String(fetcher.mock.calls[3]?.[0])).toContain('dataForVerification=8000');
+    expect(String(fetcher.mock.calls[4]?.[0])).toContain('continueWithoutVerification=true');
   });
 
   it('asks for a browser solver when the page itself is challenged', async () => {

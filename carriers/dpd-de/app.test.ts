@@ -422,6 +422,8 @@ describe('DPD Germany tiers', () => {
     Response.json({ access_token: 'synthetic-access', expires_in: 3600 }),
     reply,
   ];
+  /** The guest protocol's typed refusal for a number it has no parcel for. */
+  const unknownParcel = () => Response.json({ error: 'ParcelException', exceptionType: 'PARCEL_NOT_FOUND' }, { status: 400 });
   function tiers(replies: Response[]) {
     const app = service();
     const steps: Array<[string, string]> = [];
@@ -484,6 +486,13 @@ describe('DPD Germany tiers', () => {
     expect(steps.at(-1)).toEqual(['app', 'ok']);
   });
 
+  it('ends on a parcel the guest protocol names unknown once the app service has no tracking data', async () => {
+    const { app, steps, tracking } = tiers(guest(unknownParcel()));
+    app.replies.getTrackingData = [() => xml(failure('getTrackingData', 'ERROR_TRACKING_PARCELNO_NO_TRACKINGDATA'))];
+    await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'not_found']]);
+  });
+
   it('does not ask the guest protocol about a delivery the app service places in another country', async () => {
     const replies = guest(Response.json(delivered));
     const { app, steps, tracking } = tiers(replies);
@@ -508,6 +517,7 @@ describe('DPD Germany tiers', () => {
 
   it.each([
     ['a missing parcel', () => guest(new Response('', { status: 404 })), 'not_found'],
+    ['a parcel it names unknown without the postcode', () => [...guest(unknownParcel()), unknownParcel()], 'not_found'],
     ['another country', () => guest(Response.json({ parcelNumber: NUMBER, status: { description: 'DELIVERED', countryCode: 'CH' },
       parcelHistory: [{ description: 'DELIVERED', eventDateAndTime: '2026-01-03T10:00:00+01:00' }] })), 'indeterminate'],
   ])('with a postcode, does not ask the app service about %s', async (_, replies, kind) => {

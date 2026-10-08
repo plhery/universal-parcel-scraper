@@ -28,7 +28,10 @@ import {
 //   `continueWithoutVerification=true`. A rejected postcode (HTTP 400) is
 //   retried once without verification and reported as unverified rather than
 //   failing the lookup. DPD answers a postcode of another country's shape the
-//   same way as a wrong one.
+//   same way as a wrong one, and types the refusal `PROVIDE_ZIP_CODE`.
+// - DPD answers a number it has no parcel for with a details 404, or a 400
+//   typed `PARCEL_NOT_FOUND`. The 400 settles it only without a postcode: a
+//   real parcel looked up that way returns its history.
 // - The consignee web page is the fallback when the guest API is inconclusive,
 //   except HTTP 503: the service is down, irrespective of the parcel number.
 //   It sits behind Cloudflare, so it is fetched through the browser service's
@@ -89,19 +92,26 @@ export class DPDTrackingError extends NotFoundError {
 class DPDAPIHttpError extends DPDAPIError {
   /** Always present for HTTP errors; narrowed from the optional base field. */
   declare readonly status: number;
+  /** The `exceptionType` the guest API names in a refusal's JSON body, or ''. */
+  readonly exceptionType: string;
 
-  constructor(status: number) {
+  constructor(status: number, exceptionType = '') {
     super(`DPD guest API returned HTTP ${status}`, { status });
     this.name = 'DPDAPIHttpError';
+    this.exceptionType = exceptionType;
   }
 }
 
-/** The parcel-details call itself refused the lookup (HTTP 400), not a token step. */
-class DPDDetailsRefusedError extends DPDAPIHttpError {
-  constructor() {
-    super(400);
-    this.name = 'DPDDetailsRefusedError';
+/** The refusal's `exceptionType` (`PARCEL_NOT_FOUND`, `PROVIDE_ZIP_CODE`…), or '' for any other body. */
+function exceptionType(bytes: Uint8Array): string {
+  let body: unknown;
+  try {
+    body = parseJsonBytes(bytes, 'DPD guest API');
+  } catch {
+    return '';
   }
+  const type = isRecord(body) ? body.exceptionType : undefined;
+  return typeof type === 'string' && /^[A-Z][A-Z_]{0,63}$/.test(type) ? type : '';
 }
 
 /**
@@ -731,10 +741,9 @@ export class DPDTracker {
    * a 14-digit number. The group-wide identity match alone must not promote
    * another country's parcel to this carrier id. Missing country evidence is
    * inconclusive.
-   * Guest API only, never the page tier. A positive not-found (404) and a
-   * details lookup DPD refuses without the postcode (400, seen for old
-   * parcels) are false; any other failure, a 400 from a token step included,
-   * stays a failure.
+   * Guest API only, never the page tier. A positive not-found (a details 404,
+   * or a 400 typed `PARCEL_NOT_FOUND`) is false; any other failure, another
+   * 400 included, stays a failure.
    */
   async recognizes(raw: string, context: TrackingContext = {}): Promise<boolean> {
     const trackingNumber = dpdParcelNumber(raw);
@@ -755,7 +764,6 @@ export class DPDTracker {
       return true;
     } catch (error) {
       if (error instanceof DPDTrackingError) return false;
-      if (error instanceof DPDDetailsRefusedError) return false;
       throw error;
     }
   }
@@ -832,10 +840,11 @@ export class DPDTracker {
         'User-Agent': `myDPD/${CLIENT_VERSION} (Android)`,
       }, lookup, true);
     } catch (error) {
-      if (error instanceof DPDAPIHttpError && error.status === 404) {
+      // With a postcode, a 400 can be the postcode's refusal: `apiFetch` asks again without it.
+      if (error instanceof DPDAPIHttpError && (error.status === 404
+        || (error.status === 400 && !postcode && error.exceptionType === 'PARCEL_NOT_FOUND'))) {
         throw new DPDTrackingError();
       }
-      if (error instanceof DPDAPIHttpError && error.status === 400) throw new DPDDetailsRefusedError();
       throw error;
     }
   }
@@ -1010,7 +1019,7 @@ export class DPDTracker {
     // A 503 describes DPD's availability, so the page must not turn it into
     // an answer about the parcel or hold up the caller's other lookups.
     if (result.response.status === 503) throw new UpstreamHttpError('DPD guest API', 503);
-    if (!result.response.ok) throw new DPDAPIHttpError(result.response.status);
+    if (!result.response.ok) throw new DPDAPIHttpError(result.response.status, exceptionType(result.bytes));
     let payload: unknown;
     try {
       payload = parseJsonBytes(result.bytes, 'DPD guest API');

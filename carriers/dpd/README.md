@@ -14,9 +14,13 @@ United Kingdom is [dpd-uk](../dpd-uk/README.md).
    replies, transport failures or mismatched identities. Cloudflare challenges
    require the browser service configured by `FLARESOLVERR_URL`.
 
-A parcel-details 404 establishes absence. A 404 in the login chain does not.
-Persistent service-unavailable replies end the lookup; other guest failures
-can enter the page tier. Both tiers share the caller's deadline and signal.
+A parcel-details 404 establishes absence, as does a 400 typed
+`PARCEL_NOT_FOUND` to a lookup without a postcode. A lookup with one is first
+retried without it, because DPD also answers a wrong postcode with a 400
+(`PROVIDE_ZIP_CODE`). Other 400s and a 404 in the login chain do not establish
+absence. Persistent service-unavailable replies end the lookup; other guest
+failures can enter the page tier. Both tiers share the caller's deadline and
+signal.
 
 ## Notes
 

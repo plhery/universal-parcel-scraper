@@ -20,7 +20,8 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
    follows it, with the same postcode.
 
 Either service answers when the other fails, except for a parcel the guest API
-does not know or a delivery placed in another country.
+does not know (a 404, or a 400 typed `PARCEL_NOT_FOUND` without a postcode, as
+for [Switzerland](../dpd/README.md)) or a delivery placed in another country.
 
 ## Notes
 
