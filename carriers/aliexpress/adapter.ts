@@ -32,7 +32,7 @@ const PROVIDER = 'Cainiao';
 const UPSTREAM = 'Cainiao tracking';
 const DETAIL_URL = 'https://global.cainiao.com/global/detail.json';
 const DEFAULT_TIMEOUT_MS = 10_000;
-const MAX_EVENTS_TO_RETURN = 20;
+const MAX_EVENTS_TO_RETURN = 100;
 const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
   'Accept-Language': 'en-US,en;q=0.9',

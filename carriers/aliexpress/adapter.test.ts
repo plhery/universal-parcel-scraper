@@ -132,6 +132,22 @@ describe('Cainiao projection', () => {
     ]);
   });
 
+  it('keeps the origin scans of a journey longer than twenty events through normalization', () => {
+    const intermediate = Array.from({ length: 23 }, (_, index) => ({
+      actionCode: 'LH_ARRIVE', standerdDesc: `Transit scan ${index + 1}`,
+    }));
+    const latest = { actionCode: 'GTMS_SIGNED', standerdDesc: 'Delivered' };
+    const origin = { actionCode: 'GWMS_ACCEPT', standerdDesc: 'Shipment accepted by the warehouse' };
+    const result = normalizeCarrierResult(parseCainiaoTrackingResponse({ module: [{
+      mailNo: 'LP00000000000001', latestTrace: latest, detailList: [latest, ...intermediate, origin],
+    }] }, 'LP00000000000001'));
+    expect(result.events).toHaveLength(25);
+    expect(result.events?.at(-1)).toMatchObject({
+      provider_code: 'GWMS_ACCEPT', description: 'Shipment accepted by the warehouse', stage: 'registered',
+    });
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+  });
+
   it('reads the town Cainiao writes before a scan\'s wording as its location', () => {
     expect(delivered.events?.map((event) => [event.location, event.description])).toEqual([
       ['Exampleville', 'Delivered'],

@@ -13,8 +13,10 @@ four ordered Chinese-character clicks before each lookup. Its current
 Public request headers and a challenge identifier do not prove acceptance.
 
 A normal browser can reach the form, while plain HTTP can receive a block page.
-The anonymous preview is partial; full history requires login. No automatic,
-identity-bound retrieval through this challenge is supported.
+Completing the character challenge permits an anonymous preview of two scans from
+`/ems-web/mailTrack/queryTrack`; full history requires login. The preview can show a
+later processing scan above a delivered scan, so its first row alone does not
+establish the parcel's stage. No automatic retrieval through this challenge is supported.
 
 ## Limitations
 

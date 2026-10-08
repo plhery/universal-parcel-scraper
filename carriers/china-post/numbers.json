@@ -13,7 +13,10 @@
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. China to Brazil."
+      "note": "Publicly reported shipment number. China Post's official tracker returns matching activity after character verification. China to Brazil.",
+      "context": {
+        "assessment": "confirmed"
+      }
     },
     {
       "number": "LZ448865302CN",
@@ -245,6 +248,26 @@
         "confidence": "high"
       },
       "note": "Customer gives this as the tracking id of a parcel leaving China. The suffix names China Post as the issuing postal operator."
+    },
+    {
+      "number": "LZ449705219CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reddit.com/r/shipping/comments/1v5y3ma/is_my_china_post_package_stuck_or_is_this_normal/",
+        "date": "2026-07-25",
+        "access": "full_page",
+        "dateKind": "post publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "EUB/ePacket reported in the post"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number. China Post's official tracker returns matching activity after character verification. China to Colombia."
     }
   ]
 }

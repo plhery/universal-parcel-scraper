@@ -1,5 +1,11 @@
 [
   {
+    "carrier": "aliexpress",
+    "pattern": "^AP\\d{14}$",
+    "kind": "open",
+    "reason": "AP references have matching Cainiao activity, but no official identifier specification establishes their scope."
+  },
+  {
     "carrier": "amazon-logistics",
     "pattern": "^ZZ\\d{10}$",
     "kind": "by_design",

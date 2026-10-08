@@ -116,6 +116,126 @@
         ]
       },
       "note": "Customer reports an AliExpress tracking reference and linehaul history; the format does not select a delivery carrier."
+    },
+    {
+      "number": "AP00821064969338",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a7db425e965b756af79b6c0",
+        "date": "2026-08-27",
+        "access": "full_page",
+        "dateKind": "review publication or update"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
+    },
+    {
+      "number": "AP00822511080252",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a7db425e965b756af79b6c0",
+        "date": "2026-08-27",
+        "access": "full_page",
+        "dateKind": "review publication or update"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
+    },
+    {
+      "number": "RC052807407EE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a771b3d2fb5332a74e36284",
+        "date": "2026-08-08",
+        "access": "full_page",
+        "dateKind": "review publication or update"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
+    },
+    {
+      "number": "RC052807282EE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a771b3d2fb5332a74e36284",
+        "date": "2026-08-08",
+        "access": "full_page",
+        "dateKind": "review publication or update"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
+    },
+    {
+      "number": "DOFR9010192105464HD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a89a617cc28b272d0cbbd33",
+        "date": "2026-08-23",
+        "access": "full_page",
+        "dateKind": "review publication or update"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "aliexpress",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
+    },
+    {
+      "number": "DOFR9010202101005HD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a86b6473384417b5ab51a3a",
+        "date": "2026-08-20",
+        "access": "full_page",
+        "dateKind": "review publication or update"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "aliexpress",
+        "confidence": "high"
+      },
+      "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
     }
   ]
 }

@@ -65,7 +65,8 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   none.
 - No pickup point: the scans do not name it, and the consumer page leaves self-pickup details to a
   signed-in AliExpress account.
-- At most 20 scans are kept. The recipient block and proof-of-delivery links are never read.
+- At most 100 scans are kept so longer journeys retain their origin events. The recipient block and
+  proof-of-delivery links are never read.
 
 ## Testing
 
