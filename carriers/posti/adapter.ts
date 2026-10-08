@@ -7,6 +7,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { isPostiAbroadLabel } from './identity.js';
 import { postiEventStage, postiStatus } from './status.js';
 
 const TOKEN_URL = 'https://auth-service.posti.fi/api/v1/anonymous_token';
@@ -85,10 +86,11 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const events: CarrierEvent[] = hit.events.map((event): CarrierEvent => {
     if (!isRecord(event) || typeof event.eventDescription !== 'string') throw new SchemaError('Posti');
     const description = clean(event.eventDescription);
+    const city = clean(event.city, 160);
     return {
       description: [description, clean(event.reasonDescription)].filter(Boolean).join(' '),
       time: explicitOffsetTime(event.timestamp)?.iso ?? '',
-      location: clean(event.city, 160),
+      location: isPostiAbroadLabel(city) ? '' : city,
       stage: postiEventStage(description),
     };
   }).sort((left, right) => (Date.parse(right.time || '') || 0) - (Date.parse(left.time || '') || 0)).slice(0, 100);

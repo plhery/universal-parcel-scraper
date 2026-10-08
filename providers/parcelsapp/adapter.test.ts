@@ -21,13 +21,13 @@ const row = (date: string, time: string, description: string) =>
 const carrierRow = (date: string, time: string, description: string, carrier: string) =>
   `<li class="event"><div class="event-time"><strong>${date}</strong><span>${time}</span></div><div class="event-content"><strong>${description}</strong><div class="carrier"><div class="courier-icon"></div> ${carrier} </div></div></li>`;
 
-it('keeps scan locations from the API while excluding a delivery-service label', () => {
+it('keeps scan locations from the API while excluding a delivery-service label and Posti\'s "abroad"', () => {
   const parse = (location: unknown) => parseParcelsAppResponse({
     carriers: ['Chronopost'], states: [{ date: '2026-07-12T10:15:00Z', status: 'In transit', carrier: 0, location }],
   }, number, identity()).events?.[0];
   expect(parse('  Example   Sorting Centre, France  ')?.location).toBe('Example Sorting Centre, France');
   expect(parse('France')?.location).toBe('France');
-  for (const location of [undefined, '', 'Type de livraison : Livraison Standard', ['France'], { city: 'Example City' }]) {
+  for (const location of [undefined, '', 'Type de livraison : Livraison Standard', 'ULKOMAILLA', ['France'], { city: 'Example City' }]) {
     expect(parse(location)).not.toHaveProperty('location');
   }
 });

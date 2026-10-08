@@ -50,6 +50,14 @@ describe('Ship24 result parsing', () => {
     expect(result).toMatchObject({ reported_carriers: ['Correos de España'], discovered_carrier: 'correos-spain' });
   });
 
+  it('gives a Posti scan abroad no location rather than Posti\'s "abroad" label', () => {
+    const result = parseShip24Response({ data: { tracking_number: number, couriers: [{ translation: { name: 'Posti' } }],
+      events: [{ timestamp: '2026-01-13T18:00:00+02:00', status: 'Item has arrived to destination country', location: 'ULKOMAILLA' },
+        { timestamp: '2026-01-11T22:00:00+02:00', status: 'The item is on its way to the destination country.', location: 'EXAMPLE AIRPORT' }] } }, number);
+    expect(result.events?.[0]?.location).toBeUndefined();
+    expect(result.events?.[1]?.location).toBe('EXAMPLE AIRPORT');
+  });
+
   it('keeps "DHL Express" a reported name for a waybill whose check digit DHL Express refuses', () => {
     const named = (waybill: string) => parseShip24Response({ data: { tracking_number: waybill,
       couriers: [{ translation: { name: 'DHL Express' } }], events: history.data.events } }, waybill);

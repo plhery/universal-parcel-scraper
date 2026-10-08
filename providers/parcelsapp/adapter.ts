@@ -12,6 +12,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import timers from 'node:timers/promises';
 import type { AdapterFactory } from '../../core/adapter/index.js';
+import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
 import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
@@ -237,8 +238,9 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     }
     if (parsed) {
       const location = typeof raw.location === 'string' ? raw.location.replace(/\s+/g, ' ').trim().slice(0, 200) : '';
-      // Some Chronopost rows put the service label in the location field.
-      if (location && !/^Type de livraison\s*:/i.test(location)) parsed.location = location;
+      // Some Chronopost rows put the service label in the location field, and
+      // Posti names scans outside Finland "ULKOMAILLA" (abroad).
+      if (location && !/^Type de livraison\s*:/i.test(location) && !isPostiAbroadLabel(location)) parsed.location = location;
       events.push(parsed);
       scanCarriers.add(name);
     }

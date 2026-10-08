@@ -5,7 +5,7 @@ import { PostiTracker, adapter, normalizePostiTrackingNumber, parse } from './ad
 import { postiEventStage, postiStatus } from './status.js';
 
 const NUMBER = 'CW123456785FR';
-const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
+const fixture = (name = 'delivered') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
 const hit = (value: ReturnType<typeof fixture>) => value.data.consumerSearchShipments.hits[0];
 const jwt = (expiry = Date.now() / 1000 + 3600) => `fixture.${Buffer.from(JSON.stringify({ exp: expiry })).toString('base64url')}.unsigned`;
 const tokens = () => Response.json({ id_token: jwt(), role_tokens: [{ type: 'anonymous', token: jwt() }] });
@@ -24,6 +24,18 @@ describe('Posti projection', () => {
     const capabilities = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities;
     expect(capabilities).toEqual(['history', 'location', 'weight', 'dimensions', 'pickup_point']);
     expect(result.events?.every((event) => event.description && event.time)).toBe(true);
+  });
+
+  it('gives scans abroad no location rather than Posti\'s "abroad" label', () => {
+    const result = parse(fixture('delivered-abroad'), 'CE123456785FI');
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', pickup_point: null });
+    expect(result.events?.map((event) => [event.location, event.stage])).toEqual([
+      ['', 'delivered'], ['', 'in_transit'], ['', 'in_transit'], ['', 'in_transit'],
+      ['EXAMPLE AIRPORT', 'in_transit'], ['Example post office', 'accepted'],
+    ]);
+    const data = fixture('delivered-abroad');
+    hit(data).events = [{ eventDescription: 'Item has been registered', city: ' ulkomailla ', timestamp: '2026-01-13T16:00:00Z' }];
+    expect(parse(data, 'CE123456785FI').events?.[0]?.location).toBe('');
   });
 
   it('rejects wrong, duplicate and multi-parcel identities', () => {

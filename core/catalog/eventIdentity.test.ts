@@ -24,6 +24,8 @@ describe('same-instant identity policies', () => {
     ['chronopost', 'in_transit', 'Destinataire informé par SMS ou mail', 'Service d’avisage', 'Example Town - DE (depot 0001)'],
     ['chronopost', 'in_transit', "Colis en cours d'acheminement", 'CHRONOPOST NETWORKS', 'Example Town - DE (depot 0001)'],
     ['dpd-fr', 'delivered', 'Votre colis est livré', 'Livré au destinataire', 'Agence DPD de Example Town (1)'],
+    ['posti', 'in_transit', 'Item has been registered The item can be registered several times during delivery.', 'ULKOMAILLA', 'EXAMPLE CITY'],
+    ['posti', 'delivered', 'Item delivered to the recipient.', 'ULKOMAILLA', 'EXAMPLE CITY'],
   ])('lets a %s scan that lost "%s" take over its stored row', (source, stage, description, dropped, place) => {
     expect(sameInstantIdentityPolicy(source)).toBeUndefined();
     const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
@@ -67,6 +69,19 @@ describe('same-instant identity policies', () => {
     for (const stage of ['', 'unknown']) {
       expect(policy?.matches?.({ ...incoming, stage }, { ...stored, stage })).toBe(false);
     }
+  });
+
+  it('lets a universal copy that lost Posti\'s "abroad" label take over its stored row', () => {
+    const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
+    const stored = { stage: 'in_transit', description: 'Item is in transport in destination country.', location: 'ULKOMAILLA', providerCode: '' };
+    const incoming = { ...stored, location: '' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, { ...stored, location: ' ulkomailla' })).toBe(true);
+    for (const different of [
+      { ...stored, location: 'Example City, France' },
+      { ...stored, description: 'Item has been registered' },
+      { ...stored, stage: 'delivered' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
   });
 
   it('matches a Cainiao scan whose town has left its wording for its location', () => {

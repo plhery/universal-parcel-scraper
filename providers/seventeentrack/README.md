@@ -85,7 +85,8 @@ carrier.
   `undated_event_count` instead of dated. The scans before one still describe the parcel,
   so the reply stays conclusive. India Post's own adapter places take-offs.
 - Original scan text is kept. The English interface does not translate descriptions.
-- Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details.
+- Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details or
+  is Posti's "ULKOMAILLA" ("abroad"), which names no place.
 - At most 20 carrier legs and 1000 events. `shipping_info` and per-event `address` are
   never read: the address can be the recipient's street.
 

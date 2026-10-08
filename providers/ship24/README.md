@@ -53,8 +53,9 @@ credentials. No account, cookie, fingerprint or issued token is used.
   scan stays a `local_time`, which the timeline cannot place, rather than a guessed
   UTC instant. A reply made only of such scans is inconclusive.
 - Each scan keeps its `location`, a town, region and country or a hub's code, unless it
-  holds private delivery details. A hub's code such as "GOFO-PR" stays: the places module
-  pins nothing for it, and its suffix is the hub's province for a reader who knows the codes.
+  holds private delivery details or is Posti's "ULKOMAILLA" ("abroad"), which names no
+  place. A hub's code such as "GOFO-PR" stays: the places module pins nothing for it, and
+  its suffix is the hub's province for a reader who knows the codes.
 - `dispatch_code_id: 7` is treated as delivered.
 - `couriers[].translation.name` becomes `reported_carriers`, and becomes
   `discovered_carrier` only when exactly one name maps to a catalog id. A bare brand
