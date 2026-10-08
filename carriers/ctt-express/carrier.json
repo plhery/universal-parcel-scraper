@@ -26,7 +26,8 @@
   },
   "capabilities": [
     "history",
-    "eta"
+    "eta",
+    "weight"
   ],
   "portal": {
     "url": "https://shipping-tracking.production.cloud2.cttexpress.com/?sc={trackingNumber}",
