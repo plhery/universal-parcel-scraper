@@ -80,6 +80,14 @@ function relayPoint(point: string): string {
     ? `${name}\n${street}\n${postcode} ${city}` : name;
 }
 
+/**
+ * Geopost's form of the skybill itself: its letters and nine digits, a service code and a
+ * check character. It names no other network's parcel, unlike the reference of a partner abroad.
+ */
+function ownReference(reference: string, skybill: string): boolean {
+  return reference === skybill || (/^[A-Z]{2}\d{9}/.test(skybill) && reference.startsWith(skybill.slice(0, 11)));
+}
+
 /** The calendar day of a scan's own clock, or '' without one. */
 const clockDay = (event: CarrierEvent) => {
   const clock = event.time ?? event.local_time;
@@ -151,7 +159,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
       if (name === 'Point de retrait') relay = value;
       if (name === 'Numéro partenaire') {
         const match = /^(?:GEO\/)?([A-Z0-9]{4,40})$/.exec(value.toUpperCase());
-        if (match) {
+        if (match && !ownReference(match[1]!, requested)) {
           references.add(match[1]!);
           if (value.toUpperCase().startsWith('GEO/') && isValidDpdParcelNumber(match[1]!)) geoReferences.add(match[1]!);
         }

@@ -58,9 +58,11 @@ collected; a delivery point alone can be the recipient's home.
 A checked `GEO/` parcel reference with an explicit German delivery country
 proposes DPD Germany. The tracker asks that adapter with the partner's number
 and returns its independent confirmation for consumer routing. Other safe
-partner references remain available for catalog-based confirmation. Conflicting
-references or countries do not select a partner. Master and child identities
-remain separate.
+partner references remain available for catalog-based confirmation. A reference
+that repeats the skybill's own letters and digits, followed by a service code
+and a check character, is Geopost's form of the same parcel and is dropped.
+Conflicting references or countries do not select a partner. Master and child
+identities remain separate.
 
 ## Limitations
 

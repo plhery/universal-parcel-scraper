@@ -233,6 +233,17 @@ describe('Chronopost direct tracking', () => {
     expect(result.delivery_tracking_number).toBe(reference.replace('GEO/', ''));
   });
 
+  it('drops the reference that repeats the skybill, and keeps a partner reference beside it', () => {
+    const own = '<infoCompList><name>Numéro partenaire</name><value>GEO/XT123456785248R</value></infoCompList>';
+    for (const reference of ['GEO/XT123456785248R', `GEO/${number}`]) {
+      const result = parseChronopostTrackingXml(fixture.replace('GEO/12345678901234E', reference), number);
+      expect(result.delivery_tracking_number).toBeUndefined();
+      expect(result.delivery_carrier).toBeUndefined();
+    }
+    expect(parseChronopostTrackingXml(fixture.replace('<infoCompList><name>Rang</name>', `${own}<infoCompList><name>Rang</name>`), number))
+      .toMatchObject({ delivery_carrier: 'dpd-de', delivery_tracking_number: '12345678901234E' });
+  });
+
   it('refuses conflicting partner references and destination countries', () => {
     const xml = fixture.replace('<infoCompList><name>Rang</name>',
       '<infoCompList><name>Numéro partenaire</name><value>GEO/OTHER12345</value></infoCompList>'
