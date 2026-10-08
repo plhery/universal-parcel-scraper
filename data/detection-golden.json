@@ -15409,6 +15409,14 @@
     ]
   },
   {
+    "input": "LS242332049CH",
+    "carrier": "swiss-post",
+    "confidence": "high",
+    "candidates": [
+      "swiss-post"
+    ]
+  },
+  {
     "input": "LS244428589CH",
     "carrier": "swiss-post",
     "confidence": "high",

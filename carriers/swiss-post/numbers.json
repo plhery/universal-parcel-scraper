@@ -480,6 +480,25 @@
       "note": "A Swiss Post tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Registered letter to Germany."
     },
     {
+      "number": "LS242332049CH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260731140005/https://tracking.postnord.com/?id=LS242332049CH",
+        "date": "2026-07-31",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "swiss-post",
+        "confidence": "high"
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. Swiss Post's tracker returns its history. Letter sent to Sweden and delivered by PostNord."
+    },
+    {
       "number": "RD094411515CH",
       "role": "shipment",
       "evidence": "public_shipment_report",
