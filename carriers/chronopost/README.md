@@ -41,7 +41,8 @@ Scans retain their supplied offsets and seconds. Offset-less clocks stay
 local. Notifications retain activity without changing the last established
 shipment stage, and neither does a courier's drop-off scan that follows the
 pickup point's arrival scan. Observed codes are used only when their wording
-agrees, because partner scans can reuse codes.
+agrees, because partner scans can reuse codes; a code can carry several
+wordings, each read on its own.
 
 A delivery instruction can carry the redelivery day the recipient chose, and
 scans can carry the booked appointment window. The newest scan with either

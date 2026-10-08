@@ -5,12 +5,13 @@ import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { adapter, ChronopostTracker } from './adapter.js';
 import { normalizeChronopostNumber, parseChronopostTrackingXml } from './parser.js';
-import { chronopostStage } from './status.js';
+import { chronopostStage, statusMap } from './status.js';
 
 const number = 'XT123456785TS';
 const fixture = readFileSync(new URL('./fixtures/international.xml', import.meta.url), 'utf8');
@@ -124,11 +125,14 @@ describe('Chronopost direct tracking', () => {
   });
 
   it.each([
+    ['EA', "Colis faisant partie d'une expédition groupée", 'registered'],
     ['T', "Entrée dans l'agence", 'in_transit'],
     ['TT', 'Colis remis par le relais Pickup au chauffeur', 'in_transit'],
     ['EI', 'Colis entré dans le pays de destination', 'in_transit'],
     ['A2', "Colis retardé à l'agence de distribution", 'in_transit'],
     ['IS', 'Livraison prévue lundi prochain', 'in_transit'],
+    ['SD', 'Livraison reportée de 24h', 'in_transit'],
+    ['IA', 'Livraison reportée de 24h', 'in_transit'],
     ['TA', 'Colis en cours de livraison', 'out_for_delivery'],
     ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
     ['AB', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
@@ -137,6 +141,15 @@ describe('Chronopost direct tracking', () => {
   ])('maps the observed %s scan when its wording agrees', (code, label, stage) => {
     expect(chronopostStage(code, label)).toEqual({ stage, source: 'carrier_map' });
     expect(chronopostStage(code, 'Unmapped carrier message')).toEqual({ stage: 'pending', source: 'none' });
+    expect(statusMap.stage(code, normalizeStatusWording(label))).toBe(stage);
+  });
+
+  it('maps each wording a code carries on its own, and no other code\'s', () => {
+    expect(statusMap.stage('SD', normalizeStatusWording('Livraison reportée de 24h'))).toBe('in_transit');
+    expect(statusMap.stage('SD', normalizeStatusWording("Tri effectué dans l'agence de distribution"))).toBeUndefined();
+    expect(statusMap.stage('IA', normalizeStatusWording("Colis retardé à l'agence de distribution"))).toBeUndefined();
+    expect(statusMap.stage('EA', normalizeStatusWording('Livraison reportée de 24h'))).toBeUndefined();
+    expect(statusMap.stage(null, normalizeStatusWording('Livraison reportée de 24h'))).toBeUndefined();
   });
 
   it('reads the newest appointment window or redelivery day until it passes or the parcel stops moving', () => {

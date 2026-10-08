@@ -52,6 +52,15 @@
       "language": "fr"
     },
     {
+      "code": "EA",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Written with the label, before the parcel is handed over: the parcel is one of several in a shipment.",
+      "wording": "Colis faisant partie d'une expédition groupée",
+      "language": "fr"
+    },
+    {
       "code": "DB",
       "stage": "accepted",
       "confirmedBy": "live",
@@ -137,6 +146,24 @@
       "confirmedBy": "live",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
       "wording": "Livraison prévue lundi prochain",
+      "language": "fr"
+    },
+    {
+      "code": "SD",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The depot holds the parcel a day without trying to deliver it (a missort, an address being checked, a recipient closed that day); delivery resumes on its own.",
+      "wording": "Livraison reportée de 24h",
+      "language": "fr"
+    },
+    {
+      "code": "IA",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The depot holds the parcel a day without trying to deliver it (a missort, an address being checked, a recipient closed that day); delivery resumes on its own.",
+      "wording": "Livraison reportée de 24h",
       "language": "fr"
     },
     {
