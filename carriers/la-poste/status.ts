@@ -40,7 +40,9 @@ export const GROUP_STATUSES = new Map<string, CarrierStatus>([
  * être livré ce jour ... sera mis en livraison au plus tôt", which reads as a
  * future delivery round, so the code decides. `DO2` is the customs release,
  * whose "il sera livré contre paiement" otherwise reads as an announcement, and
- * `RE1` the decision to send the item back.
+ * `RE1` the decision to send the item back. `MD1` under `DISTOU` is the morning
+ * sort into the delivery round: "nous le préparons pour le mettre en
+ * livraison" is followed the same day by the delivery or a failed attempt.
  */
 export const CODE_STATUSES = new Map<string, CarrierStatus>([
   ['DR1', 'pending'],
@@ -108,10 +110,6 @@ export function eventStatus(
 ): CarrierStatus {
   const described = labelStatus(label, false);
   if (described === 'exception') return described;
-  if (code.toUpperCase() === 'MD1'
-    && comparable(label) === 'votre envoi est sur son site de distribution. nous le preparons pour le mettre en livraison.') {
-    return 'in_transit';
-  }
   return CODE_STATUSES.get(code.toLocaleUpperCase('en-US'))
     ?? GROUP_STATUSES.get(group.toLocaleUpperCase('en-US'))
     ?? (described !== 'unknown' ? described : labelStatus(label, hasEvents));

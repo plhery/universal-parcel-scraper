@@ -534,13 +534,15 @@ describe('La Poste response normalization', () => {
     expect(eventStatus('AARIDOU', 'DO1', 'Les formalités import/export sont en cours sur votre colis.', true)).toBe('in_transit');
   });
 
-  it('keeps preparation at the distribution site separate from the delivery round', () => {
-    const label = 'Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.';
-    const data = deliveredFixture();
-    data[0]!.shipment.event = [{ group: 'DISTOU', code: 'MD1', label, date: '2026-01-01T12:00:00Z', country: 'FR', order: 1 }];
-    expect(parseLaPosteTrackingResponse(data, TRACKING_NUMBER)).toMatchObject({
-      status: 'in_transit', current_stage: 'in_transit', events: [{ stage: 'in_transit' }],
-    });
+  it('stages the sort into the delivery round as out for delivery, for parcels and letters', () => {
+    for (const item of ['colis', 'envoi']) {
+      const label = `Votre ${item} est sur son site de distribution. Nous le préparons pour le mettre en livraison.`;
+      const data = deliveredFixture();
+      data[0]!.shipment.event = [{ group: 'DISTOU', code: 'MD1', label, date: '2026-01-01T12:00:00Z', country: 'FR', order: 1 }];
+      expect(parseLaPosteTrackingResponse(data, TRACKING_NUMBER)).toMatchObject({
+        status: 'out_for_delivery', current_stage: 'out_for_delivery', events: [{ stage: 'out_for_delivery' }],
+      });
+    }
     expect(eventStage('DISTOU', 'MD1', 'Votre colis est en cours de livraison')).toBe('out_for_delivery');
   });
 

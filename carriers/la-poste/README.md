@@ -63,8 +63,10 @@ universal provider.
   wording. La Poste keeps a failed delivery inside its original group
   ("Incident : livraison impossible" arrives with code `DR1`, meaning
   registered).
-- `DISTOU`/`MD1` also includes preparation at the distribution site. That precise label
-  stays in transit until the parcel is on its delivery round.
+- `DISTOU`/`MD1` ("sur son site de distribution. Nous le préparons pour le mettre en
+  livraison") is out for delivery, for parcels and letters alike. It is the sort into the
+  morning's round: the delivery or a failed attempt follows the same day, and La Poste
+  sends no other round scan.
 - `PB1` is a delivery that could not happen that day. Parcels word it as a
   coming delivery round, so the code makes it a failed attempt.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs

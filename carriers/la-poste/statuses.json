@@ -160,13 +160,22 @@
       "note": "Resolved by the shared classifier; \"sont terminees\" is the release and stays in_transit."
     },
     {
+      "wording": "Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.",
+      "language": "fr",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10",
+      "code": "MD1",
+      "note": "DISTOU/MD1, the sort into the morning's round: every live history shows the delivery or a failed attempt the same day, with no scan between."
+    },
+    {
       "wording": "Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.",
       "language": "fr",
-      "stage": "in_transit",
-      "confirmedBy": "fixture",
-      "firstSeen": "2026-10-04",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-09-10",
       "code": "MD1",
-      "note": "DISTOU/MD1 also covers preparation before the delivery round."
+      "note": "The tracked-letter wording of the same DISTOU/MD1 scan."
     },
     {
       "code": "PB1",
