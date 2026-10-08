@@ -115,23 +115,29 @@ export function parsePostlogisticsTrackingResponse(value: unknown, trackingNumbe
       timestamp: Number.isFinite(parsedTimestamp) ? parsedTimestamp : Number.NEGATIVE_INFINITY,
     };
   }).sort((left, right) => right.timestamp - left.timestamp || right.index - left.index);
-  const events = orderedHistory.map(({ event }): CarrierEvent => ({
-    time: text(event.TimeStamp),
-    location: text(event.City),
-    description: text(event.Description),
-    stage: postlogisticsStage(text(event.Status)),
-  }));
+  const events = orderedHistory.map(({ event }): CarrierEvent => {
+    const code = text(event.Status);
+    return {
+      time: text(event.TimeStamp),
+      location: text(event.City),
+      description: text(event.Description),
+      stage: postlogisticsStage(code),
+      ...(code ? { provider_code: code } : {}),
+    };
+  });
   const latest = orderedHistory[0]?.event ?? {};
   const latestStatus = text(latest.Status);
   const eta = shipments.map((shipment) => record(shipment.DriveAndArrive))
     .map((drive) => text(drive.PlannedDeliveryDate) || text(drive.EstimatedArrival))
     .find(Boolean) ?? '';
+  const status = postlogisticsStatus(latestStatus);
   return {
-    status: postlogisticsStatus(latestStatus),
+    status,
     current_stage: postlogisticsStage(latestStatus),
     last_status_text: text(latest.Description) || latestStatus,
     last_update: text(latest.TimeStamp) || null,
     expected_delivery: eta ? eta.slice(0, 10) : null,
+    ...(status === 'delivered' && text(latest.TimeStamp) ? { delivered_at: text(latest.TimeStamp) } : {}),
     events,
   };
 }

@@ -39,6 +39,7 @@ describe('Swiss Post Cargo tracking', () => {
       last_status_text: 'Delivered',
       last_update: '2026-08-30T12:30:00.777+02:00',
       expected_delivery: null,
+      delivered_at: '2026-08-30T12:30:00.777+02:00',
       timezone: 'Europe/Zurich',
       events: [
         {
@@ -97,6 +98,7 @@ describe('Swiss Post Cargo tracking', () => {
       '2026-08-30T08:00:00Z',
       '2026-01-15T09:30:00.100+01:00',
     ]);
+    expect(result).not.toHaveProperty('delivered_at');
   });
 
   it('never retains the consignee or the internal full description', () => {
@@ -111,7 +113,8 @@ describe('Swiss Post Cargo tracking', () => {
     const capabilities: string[] = (JSON.parse(
       readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
     ) as { capabilities: string[] }).capabilities;
-    expect(capabilities).toEqual(['history', 'location', 'provider_code']);
+    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'delivered_at']);
+    expect(result.delivered_at).toBe('2026-08-30T12:30:00.777+02:00');
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);

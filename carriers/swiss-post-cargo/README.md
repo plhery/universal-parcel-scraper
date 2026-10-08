@@ -52,8 +52,11 @@ its published source map).
 - Negative wording (return, incident, failure) is checked before delivery words
   and codes — "Not delivered" contains "delivered", and a false delivery ends
   tracking.
-- Only `DLV` is confirmed from a capture; `POD`, `P40`, `IMG` and `SIG` are
-  carried over from the original map as delivery codes.
+- `DLV` is confirmed from a capture and `POD`, `SIG` and `IMG` from live
+  histories, where the delivery picture (`IMG`) comes just before the delivery
+  scan and the signature (`SIG`) at its instant. `P40` is carried over from the
+  original map as a delivery code.
+- The newest delivery scan's time is the delivery time; eos sends no estimate.
 - Times arrive as Swiss wall-clock without an offset. They are read in
   `Europe/Zurich` (`isoTime`), never in the server's zone, and so are the
   `dd.MM.yyyy HH:mm[:ss]` and `dd/MM/yyyy HH:mm:ss` fallbacks. An explicit offset

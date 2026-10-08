@@ -249,6 +249,33 @@ describe('PostLogistics response types and event ordering', () => {
     expect(result.events?.map((event) => event.stage)).toEqual([
       'delivered', 'out_for_delivery', 'accepted', 'registered',
     ]);
+    expect(result.events?.map((event) => event.provider_code)).toEqual(['POD', 'SCA', 'RFS', 'NTF']);
+    expect(result.delivered_at).toBe('2026-09-02T14:35:51.77');
+  });
+
+  it('dates the delivery from the scan, with the signature that shares its instant and a picture taken just before', () => {
+    const result = parsePostlogisticsTrackingResponse({
+      Type: 1,
+      Data: [{
+        Identifier: '12345678-001',
+        History: [
+          { TimeStamp: '2026-09-02T09:14:07.833', Status: 'SCA', Description: 'Chargement pour livraison', City: '' },
+          { TimeStamp: '2026-09-02T14:35:12.5', Status: 'IMG', Description: 'IMAGE', City: '' },
+          { TimeStamp: '2026-09-02T14:35:51.77', Status: 'POD', Description: 'LIVRE SCANNE', City: 'Zurich' },
+          { TimeStamp: '2026-09-02T14:35:51.77', Status: 'SIG', Description: 'SIGNATURE', City: 'Zurich' },
+        ],
+      }],
+    }, '12345678001');
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-09-02T14:35:51.77' });
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['SIG', 'delivered'], ['POD', 'delivered'], ['IMG', undefined], ['SCA', 'out_for_delivery'],
+    ]);
+    const moving = parsePostlogisticsTrackingResponse({
+      Type: 1, Data: [{ Identifier: '12345678-001', History: [
+        { TimeStamp: '2026-09-02T09:14:07.833', Status: 'SCA', Description: 'Chargement pour livraison' },
+      ] }],
+    }, '12345678001');
+    expect(moving).not.toHaveProperty('delivered_at');
   });
 
   it('puts the later of two entries that share an instant on top, and keeps a picture entry that stands alone', () => {

@@ -44,13 +44,16 @@ Recognition uses the same lookup and requires a scan before claiming a match.
   the later one goes on top.
 - An `IMG` entry records the picture taken with a scan and shares that scan's
   instant. It is dropped: left in, it would sit on top of the delivery scan and
-  the shipment would never read as delivered. One that stands alone is kept.
+  the shipment would never read as delivered. One that stands alone is kept
+  without a stage; live histories show the delivery picture up to a minute
+  before the delivery scan.
 - Confirmed codes set each scan's stage and the newest scan's summary. This keeps
   a data announcement registered when its wording has no classification rule,
   and distinguishes acceptance and delivery-round scans. Unknown codes leave
   the stage to wording; an older scan never inherits the shipment's final stage.
 - The estimate is `DriveAndArrive.PlannedDeliveryDate`, falling back to
-  `EstimatedArrival`.
+  `EstimatedArrival`. The newest delivery scan's time is the delivery time.
+- Each scan keeps its three-letter code as `provider_code`.
 - Timestamps are kept as sent; the host applies `Europe/Zurich` when there is no offset.
 - Recipient and signature blocks are never read; the fixture exercises this.
 

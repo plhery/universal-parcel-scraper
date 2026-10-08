@@ -27,7 +27,8 @@
   "capabilities": [
     "history",
     "location",
-    "provider_code"
+    "provider_code",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://apv.swisspost-cargo.com/public/trackandtrace/{trackingNumber}",
@@ -36,6 +37,7 @@
       "status",
       "history",
       "location",
+      "delivered_at",
       "recipient_name",
       "recipient_address"
     ],
@@ -43,7 +45,8 @@
       "status",
       "history",
       "location",
-      "provider_code"
+      "provider_code",
+      "delivered_at"
     ],
     "discarded": [
       "recipient_name",

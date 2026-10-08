@@ -165,6 +165,7 @@ export function parseSwissPostCargoResponse(
     last_status_text: latest.event.description,
     last_update: latest.event.time,
     expected_delivery: null,
+    ...(latest.status === 'delivered' && latest.event.time ? { delivered_at: latest.event.time } : {}),
     timezone: ZONE,
     events: events.map(({ event }) => event),
     tracking_url: swissPostCargoTrackingUrl(trackingNumber),

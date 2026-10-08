@@ -17,38 +17,56 @@
     },
     {
       "code": "POD",
+      "wording": "LIVRE SCANNE",
+      "language": "fr",
       "stage": "delivered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Proof of delivery recorded; the proof itself is never retained."
     },
     {
       "code": "SIG",
+      "wording": "SIGNATURE",
+      "language": "fr",
       "stage": "delivered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Signed for; the signature itself is never retained."
     },
     {
       "code": "NTF",
+      "wording": "réception données Poste",
+      "language": "fr",
       "stage": "registered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Shipment announced; the summary remains pending and the scan is registered."
     },
     {
       "code": "RFS",
+      "wording": "Réception des marchandises Poste",
+      "language": "fr",
       "stage": "accepted",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-10-04",
       "note": "Goods received by the carrier."
     },
     {
       "code": "SCA",
+      "wording": "Chargement pour livraison",
+      "language": "fr",
       "stage": "out_for_delivery",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-10-04",
       "note": "Loaded for delivery."
+    },
+    {
+      "code": "IMG",
+      "wording": "IMAGE",
+      "language": "fr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A picture entry, not a movement: dropped when it shares a scan's instant, otherwise kept without a stage. Live histories show it a few seconds to a minute before the delivery scan."
     }
   ]
 }

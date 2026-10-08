@@ -25,7 +25,9 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "provider_code",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://apv.swisspost-cargo.com/public/trackandtrace/{trackingNumber}",
@@ -33,12 +35,17 @@
     "shows": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "location",
+      "delivered_at"
     ],
     "scraped": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "location",
+      "provider_code",
+      "delivered_at"
     ],
     "discarded": [],
     "unavailable": []
