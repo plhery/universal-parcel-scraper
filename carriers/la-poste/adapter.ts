@@ -1,6 +1,7 @@
 
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { carrierIdFromPartner } from '../../core/catalog/hints.js';
+import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { CarrierError, InvalidInputError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
@@ -16,7 +17,8 @@ import { eventStage, eventStatus } from './status.js';
 //   and its `event` list. It covers Colissimo, tracked mail, Chronopost and
 //   Delivengo, which is why those carriers share this adapter.
 // - The response is matched on `shipment.idShip`: a feed entry for another
-//   number is refused rather than projected.
+//   number is refused rather than projected. A Smart Data number typed without
+//   its optional check character comes back under the full fifteen characters.
 // - `returnCode` 104 is the positive "unknown shipment"; any other non-zero
 //   code is an inconclusive provider failure.
 // - Production HTTP 403s carried La Poste's "Site indisponible - Incident en
@@ -92,6 +94,32 @@ export function normalizeLaPosteTrackingNumber(raw: string): string {
   return value;
 }
 
+/** The feed's identity for the requested number, which may add a Smart Data check character. */
+function sameShipment(idShip: string, requested: string): boolean {
+  if (idShip === requested) return true;
+  return /^\d{14}$/.test(requested) && idShip.length === 15 && dpdParcelNumber(idShip) === requested;
+}
+
+/** A two-letter country, or nothing. */
+function countryCode(value: unknown): string {
+  const code = clean(value, 80).toUpperCase();
+  return /^[A-Z]{2}$/.test(code) ? code : '';
+}
+
+/**
+ * `arrivalCountry` repeats `originCountry` on some international items, whatever
+ * the route: inbound ones name their origin and some outbound ones name France.
+ * Such a pair stands only while every scan stays in that country; otherwise the
+ * country of a delivery scan is the destination.
+ */
+function destinationCountry(context: JsonObject, events: CarrierEvent[]): string {
+  const arrival = countryCode(context.arrivalCountry);
+  if (!arrival || arrival !== countryCode(context.originCountry)) return arrival;
+  if (events.every((event) => !event.location || countryCode(event.location) === arrival)) return arrival;
+  const latest = events[0];
+  return latest?.stage === 'delivered' ? countryCode(latest.location) : '';
+}
+
 export function laPosteTrackingUrl(trackingNumber: string): string {
   const url = new URL(TRACKING_PAGE);
   url.searchParams.set('code', normalizeLaPosteTrackingNumber(trackingNumber));
@@ -120,7 +148,7 @@ export function parseLaPosteTrackingResponse(
   }
   const response = responses.find((candidate) => {
     const shipment = isRecord(candidate.shipment) ? candidate.shipment : {};
-    return clean(shipment.idShip, 64).toLocaleUpperCase('en-US') === requested;
+    return sameShipment(clean(shipment.idShip, 64).toLocaleUpperCase('en-US'), requested);
   });
   if (!response) {
     const providerError = responses.find((candidate) => ![0, 200].includes(number(candidate.returnCode) ?? -1));
@@ -169,7 +197,13 @@ export function parseLaPosteTrackingResponse(
   const latestGroup = clean(latestRaw.group, 40);
   const latestCode = clean(latestRaw.code, 40);
   const context = isRecord(shipment.contextData) ? shipment.contextData : {};
-  const destination = clean(context.arrivalCountry, 80).toUpperCase();
+  const destination = destinationCountry(context, events);
+  const shipped = clean(shipment.idShip, 64).toLocaleUpperCase('en-US');
+  // The merchant La Poste shows on the tracking page. Recipient blocks stay unread.
+  const sender = clean(context.merchantName, 200);
+  // The post office, locker or shop holding the parcel; only its name is read.
+  const removal = isRecord(context.removalPoint) ? context.removalPoint : {};
+  const pickupPoint = latest?.stage === 'ready_for_pickup' && clean(removal.type, 20) ? clean(removal.name, 200) : '';
   const partner = isRecord(context.partner) ? context.partner : {};
   const deliveryCarrier = carrierIdFromPartner(clean(partner.name, 80), clean(partner.url, 2048));
   const deliveryNumber = clean(partner.reference, 64).toUpperCase();
@@ -180,9 +214,14 @@ export function parseLaPosteTrackingResponse(
     ...(latest?.stage ? { current_stage: latest.stage } : {}),
     last_status_text: latestLabel || 'Tracking information received',
     last_update: latest?.time || safeDate(timeline[0]?.date) || null,
-    expected_delivery: shipment.isFinal === true ? null : expectedDate(shipment.estimDate),
+    // A delivered item can stay non-final with its delivery time as the estimate.
+    expected_delivery: shipment.isFinal === true || latest?.stage === 'delivered' ? null : expectedDate(shipment.estimDate),
+    ...(latest?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(sender ? { sender_name: sender } : {}),
+    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
+    ...(shipped !== requested ? { canonical_tracking_number: shipped } : {}),
     timezone: TIMEZONE,
-    ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
+    ...(destination ? { destination_country: destination } : {}),
     ...(deliveryCarrier ? {
       delivery_carrier: deliveryCarrier,
       ...(/^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? { delivery_tracking_number: deliveryNumber } : {}),

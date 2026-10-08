@@ -65,7 +65,7 @@
       "note": "Progress-bar group: returning to the sender; the stage is set from the group directly."
     },
     {
-      "wording": "incident / anomalie / avarie / endommagé / refusé / adresse incorrecte",
+      "wording": "incident / anomalie / avarie / endommagé / refusé / adresse incorrecte / adresse de livraison est incomplète",
       "language": "fr",
       "stage": "exception",
       "confirmedBy": "fixture",
@@ -167,6 +167,104 @@
       "firstSeen": "2026-10-04",
       "code": "MD1",
       "note": "DISTOU/MD1 also covers preparation before the delivery round."
+    },
+    {
+      "code": "PB1",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: the item could not be delivered that day and goes back out as soon as possible. Parcels word it as a future delivery round, so the code decides; the result status becomes exception. Seen under the groups DISIRST and DISAADR; the incomplete-address sentence of DISAADR is an exception."
+    },
+    {
+      "code": "DO2",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: customs release (groups AARENDDOU, AARNOTAXDOU and AARTAXDOU). The AARTAXDOU sentence announces delivery against duties and is not a new announcement."
+    },
+    {
+      "code": "DO4",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: duties paid. Under the group AARPAY they are paid online before delivery."
+    },
+    {
+      "code": "DESPAY",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Group: duties paid at the door, scanned with code DO4 right after the delivery scan, so it does not reopen customs."
+    },
+    {
+      "code": "RE1",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: the item is being sent back to its sender (incorrect address, pickup deadline passed or non-compliant import documents); the result status becomes exception."
+    },
+    {
+      "code": "DI2",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: delivered back to the sender after a return (groups DESLREXP and DESMDREXP)."
+    },
+    {
+      "code": "PC2",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: deposited with La Poste's partner in the origin country (group EDRINT)."
+    },
+    {
+      "code": "ET2",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: ready to leave the origin territory (group ACHORI)."
+    },
+    {
+      "code": "ET3",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: arrived in or moving through the destination territory (groups DISINTAS and ACHFR)."
+    },
+    {
+      "code": "MD2",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: the recipient chose delivery to a postal point (group DISILIEU)."
+    },
+    {
+      "code": "MD3",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: delivery attempted and a notice left (groups DISIECHEC, DISIPPREZ and DISIECIN)."
+    },
+    {
+      "code": "MD4",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: the pickup point could not receive the parcel that day (group DISIKO)."
+    },
+    {
+      "code": "ID0",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: import formalities suspended for a missing invoice (group AARIDISJ)."
+    },
+    {
+      "code": "ID1",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Event code: proof of posting or content issued to the sender (groups EDRPOC and COUREC); it does not move the parcel."
     }
   ]
 }

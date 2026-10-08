@@ -29,6 +29,9 @@
     "history",
     "location",
     "eta",
+    "sender_name",
+    "pickup_point",
+    "delivered_at",
     "provider_code"
   ],
   "portal": {
@@ -39,6 +42,8 @@
       "history",
       "location",
       "eta",
+      "sender_name",
+      "pickup_point",
       "recipient_name",
       "recipient_address"
     ],
@@ -46,7 +51,10 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "sender_name",
+      "pickup_point",
+      "delivered_at"
     ],
     "discarded": [
       "recipient_name",

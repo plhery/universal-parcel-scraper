@@ -30,16 +30,27 @@ export const GROUP_STATUSES = new Map<string, CarrierStatus>([
   ['DESBAL', 'delivered'],
   ['DESTIN', 'delivered'],
   ['DESLIVD', 'delivered'],
+  ['DESPAY', 'delivered'],
   ['RETOUR', 'exception'],
 ]);
 
-/** Event codes that are unambiguous on their own; they outrank the group. */
+/**
+ * Event codes that are unambiguous on their own; they outrank the group. `PB1`
+ * is a delivery that could not happen that day: parcels word it as "ne peut
+ * être livré ce jour ... sera mis en livraison au plus tôt", which reads as a
+ * future delivery round, so the code decides. `DO2` is the customs release,
+ * whose "il sera livré contre paiement" otherwise reads as an announcement, and
+ * `RE1` the decision to send the item back.
+ */
 export const CODE_STATUSES = new Map<string, CarrierStatus>([
   ['DR1', 'pending'],
   ['PC1', 'in_transit'],
   ['ET1', 'in_transit'],
   ['EP1', 'in_transit'],
   ['MD1', 'out_for_delivery'],
+  ['PB1', 'exception'],
+  ['DO2', 'in_transit'],
+  ['RE1', 'exception'],
   ['DI1', 'delivered'],
 ]);
 
@@ -50,6 +61,11 @@ export const CODE_STATUSES = new Map<string, CarrierStatus>([
  */
 const PICKUP_CODE = 'AG1';
 const CUSTOMS_ENTRY_CODE = 'DO1';
+const RETURN_CODE = 'RE1';
+/** Duties paid at the door: the scan follows the delivery under its own group. */
+const PAID_AT_DELIVERY_GROUP = 'DESPAY';
+/** Acceptance at the origin, by La Poste (`PC1`) or its partner abroad (`PC2`). */
+const ACCEPTANCE_CODES = new Set(['PC1', 'PC2']);
 
 /** Lowercase, accent-free form used for every wording comparison. */
 export function comparable(value: unknown): string {
@@ -106,7 +122,7 @@ export function eventStage(group: string, code: string, label: string): Stage {
   const normalizedGroup = group.toLocaleUpperCase('en-US');
   const normalizedCode = code.toLocaleUpperCase('en-US');
   const value = comparable(label);
-  if (normalizedGroup === 'RETOUR' || value.includes('retour')) {
+  if (normalizedGroup === 'RETOUR' || normalizedCode === RETURN_CODE || value.includes('retour')) {
     return 'returned';
   }
   const worded = trackingLanguageStage(label);
@@ -119,14 +135,15 @@ export function eventStage(group: string, code: string, label: string): Stage {
       .some((term) => value.includes(term))
   )) return 'ready_for_pickup';
   // A carrier-reported problem that is neither a missed attempt nor a return.
-  if (['incident', 'anomalie', 'avarie', 'endommage', 'refuse', 'adresse incorrecte']
+  if (['incident', 'anomalie', 'avarie', 'endommage', 'refuse', 'adresse incorrecte', 'adresse de livraison est incomplete']
     .some((term) => value.includes(term))) return 'exception';
+  if (normalizedGroup === PAID_AT_DELIVERY_GROUP) return 'delivered';
   if (normalizedCode === CUSTOMS_ENTRY_CODE || worded === 'customs') return 'customs';
   const status = eventStatus(normalizedGroup, normalizedCode, label, true);
   if (status === 'pending') return 'registered';
   if (status === 'out_for_delivery') return 'out_for_delivery';
   if (status === 'delivered') return 'delivered';
   if (status === 'exception') return 'failed_attempt';
-  if (normalizedCode === 'PC1') return 'accepted';
+  if (ACCEPTANCE_CODES.has(normalizedCode)) return 'accepted';
   return 'in_transit';
 }

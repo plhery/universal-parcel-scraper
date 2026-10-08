@@ -68,6 +68,45 @@ describe('La Poste tracking input', () => {
     expect(result.delivery_carrier).toBeUndefined();
     expect(result.destination_country).toBeUndefined();
   });
+  it('reads the merchant, the pickup point while the parcel waits there and the delivery time', () => {
+    const waiting = deliveredFixture();
+    Object.assign(waiting[0]!.shipment, { isFinal: false, contextData: {
+      merchantName: 'Example Shop', removalPoint: { type: 'A2P', isPickUp: true, name: 'CONSIGNE PICKUP EXEMPLE' },
+      recipient: 'PRIVATE_RECIPIENT',
+    } });
+    waiting[0]!.shipment.event[1] = {
+      ...waiting[0]!.shipment.event[1]!, group: 'DISMAD', code: 'AG1',
+      label: 'Votre Colissimo vous attend dans votre point de retrait.',
+    };
+    expect(parseLaPosteTrackingResponse(waiting, TRACKING_NUMBER)).toMatchObject({
+      current_stage: 'ready_for_pickup', sender_name: 'Example Shop', pickup_point: 'CONSIGNE PICKUP EXEMPLE',
+      expected_delivery: '2026-01-09',
+    });
+    expect(parseLaPosteTrackingResponse(waiting, TRACKING_NUMBER).delivered_at).toBeUndefined();
+
+    const delivered = deliveredFixture();
+    Object.assign(delivered[0]!.shipment, { isFinal: false, contextData: {
+      merchantName: '', removalPoint: { type: 'LP', isPickUp: false, name: 'BUREAU EXEMPLE' },
+    } });
+    const result = parseLaPosteTrackingResponse(delivered, TRACKING_NUMBER);
+    expect(result).toMatchObject({ current_stage: 'delivered', expected_delivery: null, delivered_at: '2026-01-08T11:14:50+01:00' });
+    expect(result.sender_name).toBeUndefined();
+    expect(result.pickup_point).toBeUndefined();
+    expect(JSON.stringify(parseLaPosteTrackingResponse(waiting, TRACKING_NUMBER))).not.toContain('PRIVATE_RECIPIENT');
+  });
+  it('ignores an arrival country that only repeats the origin while scans happen elsewhere', () => {
+    const data = deliveredFixture();
+    Object.assign(data[0]!.shipment, { contextData: { arrivalCountry: 'US', originCountry: 'US' } });
+    expect(parseLaPosteTrackingResponse(data, TRACKING_NUMBER).destination_country).toBe('FR');
+    data[0]!.shipment.event.pop();
+    expect(parseLaPosteTrackingResponse(data, TRACKING_NUMBER).destination_country).toBeUndefined();
+    const domestic = deliveredFixture();
+    Object.assign(domestic[0]!.shipment, { contextData: { arrivalCountry: 'FR', originCountry: 'FR' } });
+    expect(parseLaPosteTrackingResponse(domestic, TRACKING_NUMBER).destination_country).toBe('FR');
+    const outbound = deliveredFixture();
+    Object.assign(outbound[0]!.shipment, { contextData: { arrivalCountry: 'DE', originCountry: 'FR' } });
+    expect(parseLaPosteTrackingResponse(outbound, TRACKING_NUMBER).destination_country).toBe('DE');
+  });
   it('normalizes domestic and UPU identifiers and builds official URLs', () => {
     expect(normalizeLaPosteTrackingNumber('ab 123.456-78901')).toBe(TRACKING_NUMBER);
     expect(normalizeLaPosteTrackingNumber('RA123456785FR')).toBe('RA123456785FR');
@@ -265,16 +304,23 @@ describe('La Poste response normalization', () => {
     expect(JSON.stringify(result)).not.toContain('must never survive');
   });
 
-  it('returns every declared capability from one fixture', () => {
+  it('returns every declared capability from a waiting and a delivered fixture', () => {
     const fixture = deliveredFixture();
-    fixture[0]!.shipment.isFinal = false;
+    Object.assign(fixture[0]!.shipment, { isFinal: false, contextData: {
+      merchantName: 'Example Shop', removalPoint: { type: 'LP', isPickUp: false, name: 'BUREAU EXEMPLE' },
+    } });
+    fixture[0]!.shipment.event[1] = { ...fixture[0]!.shipment.event[1]!, group: 'DISINS', code: 'AG1', label: 'Votre colis est disponible dans votre point de retrait.' };
     const result = parseLaPosteTrackingResponse(fixture, TRACKING_NUMBER);
+    const delivered = parseLaPosteTrackingResponse(deliveredFixture(), TRACKING_NUMBER);
 
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'provider_code']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'sender_name', 'pickup_point', 'delivered_at', 'provider_code']);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);
     expect(result.expected_delivery).toBe('2026-01-09');
+    expect(result.sender_name).toBe('Example Shop');
+    expect(result.pickup_point).toBe('BUREAU EXEMPLE');
+    expect(delivered.delivered_at).toBe('2026-01-08T11:14:50+01:00');
   });
 
   it('uses timeline data when an announced parcel has no event history', () => {
@@ -493,6 +539,21 @@ describe('La Poste status vocabulary', () => {
     expect(eventStatus('EXPANN', 'MD1', 'Votre colis est en cours de livraison', true)).toBe('out_for_delivery');
     expect(eventStatus('DESBAL', 'DI1', 'Incident : livraison impossible', true)).toBe('exception');
     expect(eventStage('ACHNAT', 'PC1', 'Votre colis a été pris en charge')).toBe('accepted');
+    const postponed = 'Votre colis ne peut être livré ce jour. Il sera mis en livraison au plus tôt.';
+    expect(eventStatus('DISIRST', 'PB1', postponed, true)).toBe('exception');
+    expect(eventStage('DISIRST', 'PB1', postponed)).toBe('failed_attempt');
+    expect(eventStage('DISAADR', 'PB1', "L'adresse de livraison est incomplète et nous ne pouvons pas vous livrer votre colis.")).toBe('exception');
+    const released = "Les formalités d'importation de votre envoi sont terminées et il sera livré contre paiement de droits et taxes de douane.";
+    expect(eventStatus('AARTAXDOU', 'DO2', released, true)).toBe('in_transit');
+    expect(eventStage('AARTAXDOU', 'DO2', released)).toBe('in_transit');
+    const expired = "Votre colis vous a attendu dans votre point de retrait jusqu'à la date limite. Nous sommes contraints de le renvoyer à l'expéditeur.";
+    expect(eventStage('AARIREXP', 'RE1', expired)).toBe('returned');
+    expect(eventStatus('AARIREXP', 'RE1', expired, true)).toBe('exception');
+    const paidAtDoor = 'Vous avez payé vos droits et taxes de douane lors de la distribution.';
+    expect(eventStage('DESPAY', 'DO4', paidAtDoor)).toBe('delivered');
+    expect(eventStatus('DESPAY', 'DO4', paidAtDoor, true)).toBe('delivered');
+    expect(eventStage('AARPAY', 'DO4', 'Les droits et taxes de douane de cet envoi ont été payés en ligne.')).toBe('customs');
+    expect(eventStage('EDRINT', 'PC2', "Votre colis a été déposé par l'expéditeur chez notre partenaire postal dans son pays d'origine.")).toBe('accepted');
   });
 });
 
@@ -512,6 +573,19 @@ describe('La Poste adapter factory', () => {
     wrong[0]!.shipment.idShip = `${number.slice(0, -1)}2`;
     expect(() => parseLaPosteTrackingResponse(wrong, number)).toThrow('different shipment');
     expect(() => parseLaPosteTrackingResponse([{ returnCode: 104 }], number)).toThrow('could not locate');
+  });
+
+  it('accepts the feed answering a Smart Data number under its check character', () => {
+    const fixture = deliveredFixture();
+    fixture[0]!.shipment.idShip = '87001234567890I';
+    expect(parseLaPosteTrackingResponse(fixture, '87001234567890')).toMatchObject({
+      status: 'delivered', canonical_tracking_number: '87001234567890I',
+    });
+    expect(parseLaPosteTrackingResponse(fixture, '87001234567890I').canonical_tracking_number).toBeUndefined();
+    fixture[0]!.shipment.idShip = '87001234567890J';
+    expect(() => parseLaPosteTrackingResponse(fixture, '87001234567890')).toThrow('different shipment');
+    fixture[0]!.shipment.idShip = '86601234567890N';
+    expect(() => parseLaPosteTrackingResponse(fixture, '87001234567890')).toThrow('different shipment');
   });
 
   it('declares the direct and retry tiers and fetches the bounded official endpoint', async () => {

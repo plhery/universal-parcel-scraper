@@ -15,7 +15,9 @@ digits after its two-character product code, and a Smart Data number's optional
 selected only when that key matches; otherwise it stays a suggestion.
 
 Printed control suffixes are preserved in requests and checked against the
-returned shipment identity. La Poste's
+returned shipment identity. A Smart Data number typed without its optional
+check character comes back under the full fifteen characters; that identity is
+accepted only when the character matches, and becomes `canonical_tracking_number`. La Poste's
 [Smart Data guide](https://www.espacetechniqueetqualite.laposte.fr/system/files/public/FICHE%20PRATIQUE_Utilisation%20des%20num%C3%A9ros%20de%20suivi%20SD_Lettre%20suivie.pdf)
 describes their use; a suffix alone does not identify the carrier.
 
@@ -56,13 +58,22 @@ universal provider.
   registered).
 - `DISTOU`/`MD1` also includes preparation at the distribution site. That precise label
   stays in transit until the parcel is on its delivery round.
+- `PB1` is a delivery that could not happen that day. Parcels word it as a
+  coming delivery round, so the code makes it a failed attempt.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs
-  entry. Pickup and customs are set as `current_stage` because the status
+  entry, `DO2` the release and `RE1` the decision to return the item. Duties paid
+  at the door (`DESPAY`) follow the delivery scan and keep it delivered. Pickup and customs are set as `current_stage` because the status
   vocabulary has no value for them.
 - Timestamps already carry their Paris offset and are passed through verbatim.
   `isoTime` only validates them; impossible dates are dropped.
 - `contextData.partner` names the foreign carrier after export; it becomes
   `delivery_carrier` and `delivery_tracking_number`.
+- `contextData.merchantName` is the sender the tracking page shows. While the
+  parcel waits for collection, `removalPoint.name` names the post office, locker
+  or shop holding it.
+- `arrivalCountry` repeats `originCountry` on some international items, inbound
+  ones included. Such a pair stands only while every scan stays in that
+  country; otherwise a delivery scan's country is the destination.
 
 ## Rejected approaches
 
@@ -75,7 +86,8 @@ universal provider.
 ## Limitations
 
 - `location` is the event's country; the feed has no city.
-- The delivery estimate is dropped once the shipment is final.
+- The delivery estimate is dropped once the shipment is final or delivered: a
+  delivered item can stay non-final with its delivery time as the estimate.
 - Recipient blocks and addresses on the shipment and its events are never read;
   events are built from an allowlist of wording, time, country and codes.
 
