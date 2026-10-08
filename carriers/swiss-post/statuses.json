@@ -191,6 +191,14 @@
       "note": "Completion, not active clearance."
     },
     {
+      "code": "854",
+      "wording": "Your shipment will shortly be handed over to the Swiss Post",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
       "code": "859",
       "wording": "Your shipment will shortly be handed over to the Swiss Post",
       "language": "en",
@@ -370,6 +378,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Also carries a hard-coded fallback wording."
+    },
+    {
+      "code": "1100",
+      "wording": "Arrival at the delivery point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Arrival at the delivery office, not a handover to the recipient."
     },
     {
       "code": "1201",
