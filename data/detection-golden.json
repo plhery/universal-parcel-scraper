@@ -138,6 +138,30 @@
     ]
   },
   {
+    "input": "0008180008189706230861",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0008180082808932846108",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0010000040003150955203",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
     "input": "00100909086360120251130131718",
     "carrier": "unknown",
     "confidence": "none",
@@ -223,6 +247,30 @@
     "asked": [
       "nz-post",
       "swiss-post-cargo"
+    ]
+  },
+  {
+    "input": "0029030029039700965786",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0030100030109700521285",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0030180030183005437999",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
     ]
   },
   {
@@ -325,6 +373,30 @@
     "asked": [
       "nz-post",
       "swiss-post-cargo"
+    ]
+  },
+  {
+    "input": "0039110039119700246058",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0046380046389701025700",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0048150048159700257317",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
     ]
   },
   {
@@ -453,7 +525,47 @@
     ]
   },
   {
+    "input": "0078710082809700603248",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0079320030290007376609",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0079330079330002062837",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0079330079330101648566",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
     "input": "0079350082809726059741",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0079350082809762750023",
     "carrier": "ctt-express",
     "confidence": "high",
     "candidates": [
@@ -470,6 +582,46 @@
   },
   {
     "input": "0082800011298638008391",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082800011298899916408",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082800045229701221437",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082800082808877409634",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082800082808877471638001",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082800082809765184432001",
     "carrier": "ctt-express",
     "confidence": "high",
     "candidates": [
@@ -502,6 +654,22 @@
   },
   {
     "input": "0082800082909720036383",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082800082909723542468",
+    "carrier": "ctt-express",
+    "confidence": "high",
+    "candidates": [
+      "ctt-express"
+    ]
+  },
+  {
+    "input": "0082900082909751578129",
     "carrier": "ctt-express",
     "confidence": "high",
     "candidates": [
