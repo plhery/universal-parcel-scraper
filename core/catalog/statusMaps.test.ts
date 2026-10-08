@@ -108,6 +108,8 @@ describe('status map answers', () => {
     expect(answer('aliexpress', 'TD_TRANS_ARRIVE_DCP', 'Awaiting for transit to final delivery office')).toEqual(mapped('in_transit'));
     expect(answer('aliexpress', 'GTMS_SIGNED', 'Delivered')).toEqual(mapped('delivered'));
     expect(answer('aliexpress', 'GWMS_ACCEPT', 'Shipment accepted by the warehouse')).toEqual(mapped('registered'));
+    expect(answer('aliexpress', 'GTMS_DEL_FAILURE', 'Delivery attempt failed')).toEqual(mapped('failed_attempt'));
+    expect(answer('aliexpress', 'GTMS_STA_SIGN_FAILURE', 'Synthetic failure')).toEqual(mapped('exception'));
     for (const wording of ['Handed over from linehaul office', 'Leaving transit country/region',
       'Awaiting for transit to final delivery office', '[Exampleville] Departed from destination country/region sorting center']) {
       expect(answer('aliexpress', null, wording), wording).toEqual(mapped('in_transit'));

@@ -36,6 +36,10 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   [ha-cainiao](https://github.com/ha-parcel-integrations/ha-cainiao).
 - `GTMS_STA_SIGNED` means a pickup station signed, not the recipient: it maps to
   `ready_for_pickup`, never `delivered`.
+- `GTMS_DEL_FAILURE` is a missed delivery: the parcel is an `exception` at the `failed_attempt`
+  stage. The code comes from Cainiao's last-mile gateway, seen live through
+  [Ecoscooting](../ecoscooting/README.md) as "Delivery Attempt Failure"; no AliExpress reply has
+  carried it yet.
 - Each scan is staged by its own action code, so pickup availability stays distinct from the
   delivery round after collection. Customs entry and clearance start remain customs until release;
   collection by the origin carrier is acceptance.

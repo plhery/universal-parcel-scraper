@@ -318,6 +318,23 @@ describe('Cainiao projection', () => {
     ]);
     expect(reply([{ actionCode: '', standerdDesc: 'Synthetic scan' }]).events?.[0]).not.toHaveProperty('provider_code');
   });
+
+  it('reads a failed delivery attempt as one, newest or not', () => {
+    const reply = (detailList: Array<{ actionCode: string; standerdDesc: string }>) => parseCainiaoTrackingResponse({
+      module: [{ mailNo: 'LP00000000000005', latestTrace: detailList[0], detailList }],
+    }, 'LP00000000000005');
+    const failed = { actionCode: 'GTMS_DEL_FAILURE', standerdDesc: 'Delivery attempt failed' };
+    const outForDelivery = { actionCode: 'GTMS_DO_DEPART', standerdDesc: 'Out for delivery' };
+    const latest = reply([failed, outForDelivery]);
+    expect(latest).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    expect(latest.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['GTMS_DEL_FAILURE', 'failed_attempt'],
+      ['GTMS_DO_DEPART', 'out_for_delivery'],
+    ]);
+    const retried = reply([{ actionCode: 'GTMS_SIGNED', standerdDesc: 'Delivered' }, failed, outForDelivery]);
+    expect(retried).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(retried.events?.[1]).toMatchObject({ provider_code: 'GTMS_DEL_FAILURE', stage: 'failed_attempt' });
+  });
 });
 
 describe('Cainiao declared capabilities and privacy', () => {

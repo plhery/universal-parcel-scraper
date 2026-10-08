@@ -85,6 +85,8 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   // Station signed, not the recipient — must never read as delivered.
   ['GTMS_STA_SIGNED', 'out_for_delivery'],
   ['GTMS_SIGNED', 'delivered'],
+  // The courier could not deliver and tries again: a failed attempt, below.
+  ['GTMS_DEL_FAILURE', 'exception'],
   ['GTMS_STA_SIGN_FAILURE', 'exception'],
   ['EXCEPTION', 'exception'],
 ]);
@@ -113,6 +115,9 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   if (CAINIAO_PICKUP_ACTIONS.has(code)) return 'ready_for_pickup';
   if (['CC_EX_START', 'CC_IM_START', 'CC_HO_IN_SUCCESS'].includes(code)) return 'customs';
   if (code === 'PU_PICKUP_SUCCESS') return 'accepted';
+  // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
+  // `delivery_failed` group (seen live through Ecoscooting, another client).
+  if (code === 'GTMS_DEL_FAILURE') return 'failed_attempt';
   const status = CAINIAO_ACTION_STATUS.get(code);
   return status ? cainiaoStageByStatus()[status] : undefined;
 }

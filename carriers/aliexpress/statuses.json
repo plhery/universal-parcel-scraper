@@ -382,6 +382,13 @@
       "note": "The only code that means the recipient has the parcel."
     },
     {
+      "code": "GTMS_DEL_FAILURE",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen live through Ecoscooting, a client of the same Cainiao last-mile gateway, as \"Delivery Attempt Failure\" with a reason such as the recipient not at home. No AliExpress reply has carried it yet."
+    },
+    {
       "code": "GTMS_STA_SIGN_FAILURE",
       "stage": "exception",
       "confirmedBy": "prior-art",
