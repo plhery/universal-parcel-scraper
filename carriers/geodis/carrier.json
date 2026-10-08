@@ -22,7 +22,9 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "sender_name",
+    "weight"
   ],
   "portal": {
     "url": "https://espace-client.geodis.com/services/destinataires/#/fr/suivi/{trackingNumber}",
@@ -33,6 +35,8 @@
       "location",
       "eta",
       "sender_name",
+      "weight",
+      "parcel_count",
       "recipient_name",
       "recipient_address",
       "delivery_instructions",
@@ -42,10 +46,12 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "sender_name",
+      "weight"
     ],
     "discarded": [
-      "sender_name",
+      "parcel_count",
       "recipient_name",
       "recipient_address",
       "delivery_instructions",

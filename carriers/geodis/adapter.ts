@@ -4,8 +4,8 @@
  * One bounded signed POST per lookup ('direct' step). The response describes the
  * whole consignment: sender and recipient blocks, addresses, per-scan
  * "complementary information" and links to delivery documents. `parse()` builds
- * its result from an allowlist of status, timeline and operational-location
- * fields, so none of that reaches the result or the logs.
+ * its result from an allowlist of status, timeline, operational-location, sender
+ * name and weight fields, so nothing else reaches the result or the logs.
  */
 
 import { createHash } from 'node:crypto';
@@ -14,6 +14,7 @@ import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } fro
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import type { Stage } from '../../generated/catalog.js';
 import { classifyStatus, comparableText, includesAny } from './status.js';
 
 export { classifyStatus } from './status.js';
@@ -32,10 +33,12 @@ const TIMEZONE = 'Europe/Paris';
 const MAX_RESPONSE_BYTES = 1_000_000;
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_EVENTS_TO_RETURN = 100;
+const MAX_WEIGHT_KG = 100_000;
 
 interface ParsedEvent {
   event: CarrierEvent;
   status: CarrierStatus;
+  stage: Stage | undefined;
   timestamp: number;
   index: number;
 }
@@ -125,6 +128,7 @@ function parseEvents(content: JsonObject): ParsedEvent[] {
           ...(classified.stage ? { stage: classified.stage } : {}),
         },
         status: classified.status,
+        stage: classified.stage,
         timestamp: time.timestamp,
         index: currentIndex,
       });
@@ -140,6 +144,20 @@ function activeTimelineLabel(content: JsonObject): string {
     if (isRecord(rawStep) && rawStep.actif === true) return clean(rawStep.libelle);
   }
   return '';
+}
+
+/**
+ * The name the page prints after "Envoyé par". The page falls back to the
+ * sender's contact person when the name is empty; that is a person, so it is
+ * not read.
+ */
+function senderName(content: JsonObject): string {
+  return isRecord(content.expediteur) ? clean(content.expediteur.nom, 120) : '';
+}
+
+/** The consignment weight, which the page prints in kilograms. */
+function weightKg(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= MAX_WEIGHT_KG ? value : null;
 }
 
 /**
@@ -228,22 +246,33 @@ export function parseGeodisTrackingResponse(
   const latestDescription = events[0]?.description ?? '';
   const currentDescription = timelineLabel || latestDescription || 'Tracking information received';
   const current = classifyStatus(currentDescription);
-  const latestKnown = parsedEvents.find((event) => event.status !== 'unknown')?.status ?? 'unknown';
-  let status = current.status !== 'unknown' ? current.status : latestKnown;
-  if (content.etatLivre === true || content.etatRetire === true) status = 'delivered';
-  else if (content.finDeVie === true && status !== 'delivered') status = 'exception';
+  const latestKnown = parsedEvents.find((event) => event.status !== 'unknown');
+  let status = current.status !== 'unknown' ? current.status : latestKnown?.status ?? 'unknown';
+  let stage = current.stage ?? latestKnown?.stage;
+  if (content.etatLivre === true || content.etatRetire === true) {
+    status = 'delivered';
+    stage = 'delivered';
+  } else if (content.finDeVie === true && status !== 'delivered') {
+    status = 'exception';
+    stage = stage === 'returned' ? 'returned' : 'exception';
+  }
   const isFinal = content.etatLivre === true
     || content.etatRetire === true
     || content.finDeVie === true;
+  const sender = senderName(content);
+  const weight = weightKg(content.poids);
 
   return {
     status,
+    ...(stage ? { current_stage: stage } : {}),
     last_status_text: currentDescription,
     last_update: events[0]?.time ?? null,
     expected_delivery: isFinal
       ? null
       : expectedDelivery(content.dateLivraisonPrevue)
         ?? expectedDelivery(content.dateLivraisonSouhaitee),
+    ...(sender ? { sender_name: sender } : {}),
+    ...(weight !== null ? { weight_kg: weight } : {}),
     timezone: TIMEZONE,
     events,
   };

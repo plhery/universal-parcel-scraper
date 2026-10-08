@@ -27,16 +27,19 @@ scope.
   livré" contain the participle, so out-for-delivery and future-delivery rules run first, and
   delivered rules are anchored (sentence start, "a été livré", or a parcel noun before it).
 - Unmapped wording keeps its text and gets no stage, so the sync classifies it.
-- The active timeline step's label is the current status text, falling back to the newest
-  scan. Terminal booleans override the wording: `etatLivre` / `etatRetire` force `delivered`,
-  `finDeVie` forces `exception`. `finDeVie` is not `returned` — it also covers write-offs and
-  closures. The estimate is dropped once any of them is set.
+- The active timeline step's label is the current status text and sets the current stage,
+  falling back to the newest scan whose wording is mapped. Terminal booleans override the
+  wording: `etatLivre` / `etatRetire` force `delivered`, `finDeVie` forces `exception`, or
+  `returned` when the wording says so. `finDeVie` alone is not `returned`: it also covers
+  write-offs and closures. The estimate is dropped once any of them is set.
 - Times are display strings (`DD/MM/YYYY HH:mm:ss`) kept verbatim: the endpoint sends no
   offset, so no instant is invented. A UTC-based number is used only as a sort key.
-- Only status, timeline, `libelleCentre` (location) and the planned date are read. Sender and
-  recipient blocks, `listInformationsComplementaires` (free-text access instructions) and
-  delivery documents are never retained; a test asserts it. `expediteur.nom` is dropped because
-  it does not distinguish businesses from private senders.
+- Read: status, timeline, `libelleCentre` (location), the planned date, the sender's name
+  (`expediteur.nom`, which the page prints after "Envoyé par") and the weight (`poids`, which
+  the page prints in kilograms). When the name is empty the page shows the sender's contact
+  person instead; that is a person, so it is not read. The rest of the sender block, the
+  recipient block, `listInformationsComplementaires` (free-text access instructions) and
+  delivery documents are never retained; a test asserts it.
 
 ## Testing
 

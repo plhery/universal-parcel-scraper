@@ -22,7 +22,9 @@ const CAPABILITIES: readonly string[] = JSON.parse(
 const PRIVATE_PLACEHOLDERS = [
   'PRIVATE DELIVERY INSTRUCTION',
   'PRIVATE STREET',
-  'PRIVATE SENDER',
+  'PRIVATE CONTACT',
+  'PRIVATE PHONE',
+  'PRIVATE ORIGIN',
   'PRIVATE RECIPIENT',
   'PRIVATE DESTINATION',
   'private.example',
@@ -85,6 +87,15 @@ describe('GEODIS wording classifier', () => {
   it('leaves wording it does not know unmapped', () => {
     expect(classifyStatus('Nouveau libellé GEODIS')).toEqual({ status: 'unknown' });
   });
+
+  it.each([
+    ["En préparation chez l'expéditeur", 'pending', 'registered'],
+    ['En cours d’acheminement', 'in_transit', 'in_transit'],
+    ['Mise en livraison', 'out_for_delivery', 'out_for_delivery'],
+    ['Expédition livrée', 'delivered', 'delivered'],
+  ])('reads the timeline step "%s"', (label, status, stage) => {
+    expect(classifyStatus(label)).toEqual({ status, stage });
+  });
 });
 
 describe('GEODIS response normalization', () => {
@@ -93,9 +104,12 @@ describe('GEODIS response normalization', () => {
 
     expect(result).toMatchObject({
       status: 'out_for_delivery',
+      current_stage: 'out_for_delivery',
       last_status_text: 'En cours de livraison',
       last_update: '29/08/2026 09:30:00',
       expected_delivery: '2026-08-30',
+      sender_name: 'EXAMPLE SENDER',
+      weight_kg: 12.5,
       timezone: 'Europe/Paris',
     });
     expect(result.events).toEqual([
@@ -124,12 +138,44 @@ describe('GEODIS response normalization', () => {
       history: () => (result.events?.length ?? 0) > 0,
       location: () => (result.events ?? []).some((event) => Boolean(event.location)),
       eta: () => result.expected_delivery != null,
+      sender_name: () => Boolean(result.sender_name),
+      weight: () => result.weight_kg != null,
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
     for (const capability of CAPABILITIES) {
       expect(checks[capability], `no check for capability ${capability}`).toBeDefined();
       expect(checks[capability]!(), `capability ${capability} is declared but never returned`).toBe(true);
     }
+  });
+
+  it('never falls back to the contact person and drops a weight it cannot read', () => {
+    const result = parseGeodisTrackingResponse(successPayload({
+      expediteur: { nom: ' ', nomContact: 'PRIVATE CONTACT' },
+      poids: 0,
+    }), OFFICIAL_SYNTHETIC_NUMBER);
+    expect(result).not.toHaveProperty('sender_name');
+    expect(result).not.toHaveProperty('weight_kg');
+    expect(JSON.stringify(result)).not.toContain('PRIVATE CONTACT');
+    for (const poids of [-1, '12.5', Number.NaN, 1e9, null]) {
+      expect(parseGeodisTrackingResponse(successPayload({ poids }), OFFICIAL_SYNTHETIC_NUMBER))
+        .not.toHaveProperty('weight_kg');
+    }
+  });
+
+  it('takes the current stage from the active timeline step, then the newest mapped scan', () => {
+    const timeline = (libelle: string) => ({ listTimesteps: [{ actif: true, libelle }] });
+    expect(parseGeodisTrackingResponse(successPayload({
+      timeline: timeline("En préparation chez l'expéditeur"),
+      listJoursSuivis: null,
+      dateLivraisonPrevue: null,
+    }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    expect(parseGeodisTrackingResponse(successPayload({
+      timeline: timeline('Expédition livrée'),
+      listJoursSuivis: null,
+    }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(parseGeodisTrackingResponse(successPayload({
+      timeline: timeline('Nouveau libellé GEODIS'),
+    }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
   });
 
   it('emits an unmapped scan without a stage', () => {
@@ -141,6 +187,7 @@ describe('GEODIS response normalization', () => {
       }],
     }), OFFICIAL_SYNTHETIC_NUMBER);
     expect(result.status).toBe('unknown');
+    expect(result).not.toHaveProperty('current_stage');
     expect(result.events).toEqual([{
       time: '29/08/2026 09:30:00',
       location: '',
@@ -149,24 +196,28 @@ describe('GEODIS response normalization', () => {
   });
 
   it('maps explicit delivered, collected, pickup-ready, and terminal failure states defensively', () => {
-    expect(parseGeodisTrackingResponse(successPayload({ etatLivre: true }), OFFICIAL_SYNTHETIC_NUMBER).status)
-      .toBe('delivered');
-    expect(parseGeodisTrackingResponse(successPayload({ etatLivre: true }), OFFICIAL_SYNTHETIC_NUMBER)
-      .expected_delivery).toBeNull();
-    expect(parseGeodisTrackingResponse(successPayload({ etatRetire: true }), OFFICIAL_SYNTHETIC_NUMBER).status)
-      .toBe('delivered');
+    expect(parseGeodisTrackingResponse(successPayload({ etatLivre: true }), OFFICIAL_SYNTHETIC_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered', expected_delivery: null });
+    expect(parseGeodisTrackingResponse(successPayload({ etatRetire: true }), OFFICIAL_SYNTHETIC_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
     expect(parseGeodisTrackingResponse(successPayload({
       timeline: { listTimesteps: [{ actif: true, libelle: 'Disponible pour retrait en agence' }] },
       listJoursSuivis: [],
     }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({
       status: 'out_for_delivery',
+      current_stage: 'ready_for_pickup',
       last_status_text: 'Disponible pour retrait en agence',
     });
     expect(parseGeodisTrackingResponse(successPayload({
       finDeVie: true,
       timeline: { listTimesteps: [{ actif: true, libelle: 'Traitement terminé' }] },
       listJoursSuivis: [],
-    }), OFFICIAL_SYNTHETIC_NUMBER).status).toBe('exception');
+    }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(parseGeodisTrackingResponse(successPayload({
+      finDeVie: true,
+      timeline: { listTimesteps: [{ actif: true, libelle: "Retourné à l'expéditeur" }] },
+      listJoursSuivis: [],
+    }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned' });
   });
 
   it('does not treat delivery-driver or future-delivery wording as delivered', () => {

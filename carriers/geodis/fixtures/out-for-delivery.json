@@ -34,8 +34,15 @@
       ]
     }
   ],
-  "expediteur": { "nom": "PRIVATE SENDER", "adresse1": "PRIVATE ORIGIN" },
+  "expediteur": {
+    "nom": "EXAMPLE SENDER",
+    "nomContact": "PRIVATE CONTACT",
+    "telephoneContact": "PRIVATE PHONE",
+    "adresse1": "PRIVATE ORIGIN"
+  },
   "destinataire": { "nom": "PRIVATE RECIPIENT", "adresse1": "PRIVATE DESTINATION" },
   "listImagesBordereauxLivr": [{ "url": "https://private.example/document" }],
-  "dateLivraisonPrevue": "30/08/2026"
+  "dateLivraisonPrevue": "30/08/2026",
+  "nbColis": 2,
+  "poids": 12.5
 }

@@ -71,6 +71,7 @@ export const READY_FOR_PICKUP_PHRASES = [
 
 export const OUT_FOR_DELIVERY_PHRASES = [
   'en cours de livraison',
+  'mise en livraison',
   'livraison en cours',
   'en distribution',
   'tournee de livraison',
@@ -94,10 +95,11 @@ export const DELIVERED_PHRASES = [
 const DELIVERED_PATTERNS = [
   /^(?:livre|livree|livres|livrees)\b/,
   /\b(?:a ete|est) (?:livre|livree|livres|livrees)\b/,
-  /\b(?:colis|courrier|envoi|pli) (?:livre|livree|livres|livrees)\b/,
+  /\b(?:colis|courrier|envoi|expedition|pli) (?:livre|livree|livres|livrees)\b/,
 ] as const;
 
 export const REGISTERED_PHRASES = [
+  'en preparation chez l expediteur',
   'en attente de recuperation',
   'en attente de prise en charge',
   'information transmise',
