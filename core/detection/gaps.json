@@ -123,12 +123,6 @@
     "reason": "The JJD licence plate is shared by DHL's European parcel networks and detected as DHL. The Iberian portal reads it when the carrier is named."
   },
   {
-    "carrier": "dhl-ecommerce-nl",
-    "pattern": "^3S[A-Z]{3}\\d{9}$",
-    "kind": "open",
-    "reason": "One documentation placeholder; no real number of this length has been seen."
-  },
-  {
     "carrier": "dhl-ecommerce-pl",
     "pattern": "^JJD",
     "kind": "by_design",
@@ -250,6 +244,12 @@
     "carrier": "shipup",
     "kind": "by_design",
     "reason": "An invented shape check; ShipUp has no number shape of its own."
+  },
+  {
+    "carrier": "spring-gds",
+    "pattern": "^3S[A-Z]{3}\\d{8}$",
+    "kind": "collision",
+    "reason": "PostNL's barcode documentation shows a three-letter customer code at this length, the shape DHL Parcel prints. DHL's rule takes it; PostNL's own barcodes carry four letters."
   },
   {
     "carrier": "sto",

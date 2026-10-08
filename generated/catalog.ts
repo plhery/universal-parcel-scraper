@@ -342,8 +342,12 @@ export const CARRIER_CATALOG = {
         "checksum": "s10"
       },
       {
-        "pattern": "^(?=.{13}$|.{15}$)3S[A-Z]{1,4}\\d+$",
+        "pattern": "^3S[A-Z]{4}(?:\\d{7}|\\d{9})$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^(?=.{13}$|.{15}$)3S[A-Z]{1,3}\\d+$",
+        "confidence": "low"
       }
     ]
   },
@@ -4471,6 +4475,14 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^JVGL[A-Z0-9]{8,}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^3S[A-Z]{3}\\d{8,10}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^3S[A-Z]{2,3}\\d{7,12}$",
+        "confidence": "low"
       }
     ]
   },
@@ -5280,7 +5292,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-lp-reference"],
   "sunyou": ["sunyou-1","sunyou-2"],
   "hermes": [],
-  "spring-gds": ["spring-gds-1","spring-gds-2"],
+  "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3"],
   "postlogistics": ["postlogistics-dashed-reference","postlogistics-compact-reference"],
   "dachser": [],
   "dhl": ["dhl-1","dhl-2","dhl-8","dhl-3","dhl-4","dhl-5","dhl-6","dhl-7"],
@@ -5380,7 +5392,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ems": [],
   "cne": ["cne-1"],
   "dhl-ecommerce-es": ["dhl-ecommerce-es-1","dhl-ecommerce-es-2"],
-  "dhl-ecommerce-nl": ["dhl-ecommerce-nl-1"],
+  "dhl-ecommerce-nl": ["dhl-ecommerce-nl-1","dhl-ecommerce-nl-2","dhl-ecommerce-nl-3"],
   "dhl-ecommerce-pl": ["dhl-ecommerce-pl-1"],
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill"],

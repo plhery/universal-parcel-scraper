@@ -1726,5 +1726,13 @@
       "zto"
     ],
     "reason": "Passing check digits add DHL and Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "3S barcodes of 13 or 15 characters with a customer code of two or three letters",
+    "carriers": [
+      "dhl-ecommerce-nl",
+      "spring-gds"
+    ],
+    "reason": "PostNL and DHL Parcel both print 3S barcodes. PostNL's carry a four-letter customer code and DHL Parcel's mostly three, so DHL's three-letter shapes select DHL Parcel, while the shorter codes PostNL documents stay suggestions for both."
   }
 ]

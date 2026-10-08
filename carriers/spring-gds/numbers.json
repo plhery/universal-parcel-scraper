@@ -9,8 +9,11 @@
         "url": "https://developer.postnl.nl/integration-with-postnl/api-overview/send-and-track/barcode-webservice/"
       },
       "expect": {
-        "carrier": "spring-gds",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "spring-gds"
+        ]
       },
       "note": "Official documentation example, not a real shipment."
     },
@@ -22,8 +25,12 @@
         "url": "https://developer.postnl.nl/integration-with-postnl/api-overview/send-and-track/barcode-webservice/"
       },
       "expect": {
-        "carrier": "spring-gds",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "spring-gds",
+          "dhl-ecommerce-nl"
+        ]
       },
       "note": "Official documentation example, not a real shipment."
     },
@@ -35,7 +42,7 @@
         "url": "https://developer.postnl.nl/integration-with-postnl/api-overview/send-and-track/barcode-webservice/"
       },
       "expect": {
-        "carrier": "spring-gds",
+        "carrier": "dhl-ecommerce-nl",
         "confidence": "high"
       },
       "note": "Official documentation example, not a real shipment."

@@ -1,7 +1,7 @@
 # PostNL
 
-Dutch S10 numbers ending in `NL` and PostNL's international `3S…` barcodes, tracked through
-the keyless API behind `postnl.post`. The folder id stays `spring-gds` (PostNL's international
+Dutch S10 numbers ending in `NL` and PostNL's `3S…` barcodes, tracked through the keyless
+API behind `postnl.post`. The folder id stays `spring-gds` (PostNL's international
 subsidiary) because stored parcels, the detection corpus, the published contract and the
 native catalog all carry it; everything user-facing says PostNL.
 
@@ -54,6 +54,10 @@ native catalog all carry it; everything user-facing says PostNL.
 - The reply names no sender, recipient or address. Only the fields above are read; the
   fixture carries a recipient, an address and a signature link so the test can assert that
   they stay out.
+- PostNL's `3S` barcodes carry a four-letter customer code. DHL Parcel prints `3S` barcodes
+  as well, mostly with three letters, so those go to
+  [DHL eCommerce Netherlands](../dhl-ecommerce-nl/README.md). The shorter codes PostNL's
+  barcode documentation shows stay suggestions.
 - `mailingtechnology.com/tracking?tn=` (Spring GDS) and retired `postnl.post/details/{n}`
   links are recognized when pasted. New links use `/track?barcodes=`.
 - Not used: the Spring GDS portal. It shows extra internal legs for the same barcode, but it
@@ -63,7 +67,8 @@ native catalog all carry it; everything user-facing says PostNL.
 
 - No delivery estimate: the endpoint publishes none, so `expected_delivery` is always null.
 - The endpoint answers "The shipment barcode was incorrect." for 13-character `3S` barcodes,
-  which are PostNL's. The lookup then stays inconclusive.
+  which are PostNL's, and for 15-character ones without a four-letter customer code. The
+  lookup then stays inconclusive.
 - The endpoints are undocumented and can change without notice.
 
 ## Testing

@@ -7349,26 +7349,30 @@
   },
   {
     "input": "3SA5210528875",
-    "carrier": "spring-gds",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
       "spring-gds"
     ]
   },
   {
     "input": "3SAB83691658823",
-    "carrier": "spring-gds",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "spring-gds"
+      "spring-gds",
+      "dhl-ecommerce-nl"
+    ],
+    "asked": [
+      "dhl-ecommerce-nl"
     ]
   },
   {
     "input": "3SABC19149187",
-    "carrier": "spring-gds",
+    "carrier": "dhl-ecommerce-nl",
     "confidence": "high",
     "candidates": [
-      "spring-gds"
+      "dhl-ecommerce-nl"
     ]
   },
   {
@@ -7405,9 +7409,19 @@
   },
   {
     "input": "3SBCC000123456",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
+    "input": "3SBCC002474377",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
   },
   {
     "input": "3SIJVT016274357",
@@ -7431,6 +7445,22 @@
     "confidence": "high",
     "candidates": [
       "spring-gds"
+    ]
+  },
+  {
+    "input": "3SLDL0011670399",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
+    "input": "3SMOP10072829",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
     ]
   },
   {

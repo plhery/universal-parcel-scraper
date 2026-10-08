@@ -75,6 +75,16 @@
       "id": "dhl-ecommerce-nl-1",
       "pattern": "^JVGL[A-Z0-9]{8,}$",
       "confidence": "high"
+    },
+    {
+      "id": "dhl-ecommerce-nl-2",
+      "pattern": "^3S[A-Z]{3}\\d{8,10}$",
+      "confidence": "high"
+    },
+    {
+      "id": "dhl-ecommerce-nl-3",
+      "pattern": "^3S[A-Z]{2,3}\\d{7,12}$",
+      "confidence": "low"
     }
   ]
 }

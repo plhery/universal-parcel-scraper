@@ -69,10 +69,67 @@
         "url": "https://www.mydhli.com/tr-en/home/tracking.html"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
       },
-      "note": "Official documentation example, not a real shipment. No rule matches fourteen characters after 3S."
+      "note": "Official documentation example, not a real shipment."
+    },
+    {
+      "number": "3SMOP10072829",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260327101353/https://api-gw.dhlparcel.nl/track-trace?key=3SMOP10072829&withView=true",
+        "date": "2026-03-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "A DHL Parcel tracking request archived by the Wayback Machine. A thirteen-character 3S barcode with a three-letter customer code; DHL Parcel's tracker returns its history."
+    },
+    {
+      "number": "3SBCC002474377",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20211228085111/https://www.dhlparcel.nl/nl/consument/volg-je-pakket?tc=3SBCC002474377&lc=nl-NL",
+        "date": "2021-12-28",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "A DHL Parcel tracking link archived by the Wayback Machine. A fourteen-character 3S barcode; DHL Parcel's tracker no longer returns it."
+    },
+    {
+      "number": "3SLDL0011670399",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221125205511/https://track-and-trace.dhlparcel.nl/?tc=3SLDL0011670399&lc=nl-NL",
+        "date": "2022-11-25",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "A DHL Parcel tracking link archived by the Wayback Machine. A fifteen-character 3S barcode with a three-letter customer code; DHL Parcel's tracker no longer returns it."
     }
   ]
 }

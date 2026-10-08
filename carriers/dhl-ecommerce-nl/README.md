@@ -38,12 +38,15 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
 - The gateway also follows parcels of DHL's European road network that enter
   the Benelux, including German `JJD` numbers. Detection leaves those with DHL
   Paket; the adapter accepts them when the carrier is named.
+- PostNL prints `3S` barcodes too, with a four-letter customer code. DHL's
+  usually carry three letters: three letters and eight to ten digits select
+  DHL, and other two- and three-letter codes only suggest it.
 
 ## Limitations
 
 - Scans have no location.
-- `3S` numbers are accepted by the adapter and claimed by no detection rule:
-  no public sample was found to tell them from PostNL's.
+- A DHL `3S` barcode with a four-letter customer code is detected as PostNL;
+  the adapter reads it when the carrier is named.
 
 ## Testing
 
