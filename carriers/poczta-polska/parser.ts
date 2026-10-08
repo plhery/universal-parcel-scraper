@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { classifyPocztaPolskaStatus } from './status.js';
+import { classifyPocztaPolskaStatus, startsPocztaPolskaReturn } from './status.js';
 
 export function normalizePocztaPolskaNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/\s/g, '');
@@ -51,6 +51,9 @@ export function parsePocztaPolska(payload: unknown, number: string): CarrierResu
   if (item.typeOfMailCode === 'PPL' || (Array.isArray(item.components) && item.components.length > 0)) {
     throw new IndeterminateError('poczta-polska', 'Poczta Polska grouped consignments require parcel-level history');
   }
+  // Source rows run oldest first. A return scan turns the rest of the trip
+  // around: movement stays movement, and a final delivery is the sender's.
+  let returning = false;
   const projected = item.events.map((raw): CarrierEvent => {
     if (!isRecord(raw)) throw new SchemaError('poczta-polska');
     if (raw.canceled === true) throw new IndeterminateError('poczta-polska', 'Poczta Polska returned an invalidated scan');
@@ -59,8 +62,10 @@ export function parsePocztaPolska(payload: unknown, number: string): CarrierResu
     if (!description || !code) throw new SchemaError('poczta-polska', 'Poczta Polska returned an incomplete scan');
     const location = isRecord(raw.postOffice) ? clean(raw.postOffice.name, 160) : '';
     const mapped = classifyPocztaPolskaStatus(code);
+    if (startsPocztaPolskaReturn(code, isRecord(raw.state) ? clean(raw.state.code, 16) : '')) returning = true;
+    const stage = returning && mapped?.stage === 'delivered' ? 'returned' : mapped?.stage;
     return { ...eventClock(raw.time), description, provider_code: code,
-      ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) };
+      ...(location ? { location } : {}), ...(stage ? { stage } : {}), ...(returning ? { provider_leg: 'return' } : {}) };
   });
   if (!projected.length) throw new IndeterminateError('poczta-polska', 'Poczta Polska returned no parcel history');
   // The widget's last source row is current. Do not compare offsetless wall
@@ -74,12 +79,17 @@ export function parsePocztaPolska(payload: unknown, number: string): CarrierResu
     seen.add(key); return true;
   });
   const latest = events[0]!;
-  const current = classifyPocztaPolskaStatus(latest.provider_code!);
+  const current = latest.stage === 'returned' ? { status: 'exception' as const, stage: 'returned' }
+    : classifyPocztaPolskaStatus(latest.provider_code!);
   const weight = item.weight;
+  const country = item.recipientCountryCode;
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}), expected_delivery: null,
+    // The office holding the item names where it waits; its address stays out.
+    ...(current?.stage === 'ready_for_pickup' && latest.location ? { pickup_point: latest.location } : {}),
     ...(typeof weight === 'number' && Number.isFinite(weight) && weight > 0 ? { weight_kg: weight } : {}),
+    ...(typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
     ...(number.toUpperCase().replace(/\s/g, '') !== requested ? { canonical_tracking_number: requested } : {}),
     events: events.slice(0, 100) };
 }

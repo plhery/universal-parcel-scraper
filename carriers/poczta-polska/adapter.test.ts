@@ -81,6 +81,64 @@ describe('Poczta Polska identity-bound scans', () => {
     expect(classifyPocztaPolskaStatus('constructor')).toBeUndefined();
   });
 
+  const scan = (code: string, name: string, state: string, time: string, office = 'Example Post Office') =>
+    ({ code, name, time, postOffice: { name: office }, finished: false, canceled: false, state: { code: state, name: 'SYNTHETIC' } });
+  const unclaimed = () => [
+    scan('P_NAD', 'Posting/collection', 'NA', '2026-01-04T12:00:00', 'Sending Office'),
+    scan('P_WD', 'In delivery', 'DOR', '2026-01-05T08:00:00'),
+    scan('P_A', 'Unsuccessful (physical) delivery', 'AW', '2026-01-05T15:00:00'),
+    scan('P_KWD', 'Ready for pick-up at the Post Office', 'ODB', '2026-01-05T16:00:00'),
+  ];
+
+  it('waits at the office after a missed delivery and names the office that holds the item', () => {
+    const value = payload(); value.mailInfo.events = unclaimed();
+    const result = normalizeCarrierResult(parsePocztaPolska(value, NUMBER));
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
+      pickup_point: 'Example Post Office', destination_country: 'PL' });
+    expect(result.events?.map(event => event.stage)).toEqual(['ready_for_pickup', 'failed_attempt', 'out_for_delivery', 'accepted']);
+    value.mailInfo.events.push(scan('P_D', 'Final delivery', 'DO', '2026-01-06T10:00:00'));
+    expect(parsePocztaPolska(value, NUMBER)).not.toHaveProperty('pickup_point');
+  });
+
+  it('turns the trip around at a return scan, so a final delivery back at the sender reads as returned', () => {
+    const value = payload();
+    value.mailInfo.events = [...unclaimed(),
+      scan('P_NDZ', 'Returned', 'ZW', '2026-01-13T09:00:00'),
+      scan('P_PZL', 'In transport', 'TR', '2026-01-14T04:00:00', 'Transshipment'),
+      scan('P_WD', 'In delivery', 'DOR', '2026-01-14T08:00:00', 'Sending Office')];
+    const travelling = normalizeCarrierResult(parsePocztaPolska(value, NUMBER));
+    expect(travelling).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(travelling.events?.[0]).toMatchObject({ provider_leg: 'return' });
+    value.mailInfo.events.push(scan('P_D', 'Final delivery', 'DO', '2026-01-14T14:00:00', 'Sending Office'));
+    const result = normalizeCarrierResult(parsePocztaPolska(value, NUMBER));
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Final delivery' });
+    expect(result).not.toHaveProperty('delivered_at');
+    expect(result.events?.map(event => event.stage)).toEqual(['returned', 'out_for_delivery', 'in_transit', 'returned',
+      'ready_for_pickup', 'failed_attempt', 'out_for_delivery', 'accepted']);
+    expect(result.events?.map(event => event.provider_leg ?? null)).toEqual(['return', 'return', 'return', 'return',
+      null, null, null, null]);
+    // The returned state turns the trip around even under a code the map does not know.
+    const unnamed = payload();
+    unnamed.mailInfo.events = [...unclaimed(), scan('P_SYNTH', 'Sent back', 'ZW', '2026-01-13T09:00:00'),
+      scan('P_D', 'Final delivery', 'DO', '2026-01-14T14:00:00', 'Sending Office')];
+    const back = parsePocztaPolska(unnamed, NUMBER);
+    expect(back).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(back.events?.[1]).not.toHaveProperty('stage');
+  });
+
+  it('marks customs handling and keeps only a two-letter destination country', () => {
+    const value = payload();
+    value.mailInfo.recipientCountryCode = 'NZ';
+    value.mailInfo.events = [scan('P_NAD', 'Posting/collection', 'NA', '2026-01-04T12:00:00'),
+      scan('P_WYPL', 'Departure from Poland', 'WYPL', '2026-01-05T10:00:00'),
+      scan('P_ZWC', 'Customs service', 'OCP', '2026-01-12T14:00:00', 'International Postal System')];
+    expect(parsePocztaPolska(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'customs', destination_country: 'NZ' });
+    for (const country of ['New Zealand', 'nz', null]) {
+      value.mailInfo.recipientCountryCode = country;
+      expect(parsePocztaPolska(value, NUMBER)).not.toHaveProperty('destination_country');
+    }
+  });
+
   it('uses the widget check-digit alias while requiring the full returned barcode', () => {
     const prefix = '0000000000000000001';
     const canonical = normalizePocztaPolskaNumber(prefix);

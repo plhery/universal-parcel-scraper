@@ -20,9 +20,13 @@ aliases have no check digit to validate and remain shape-based suggestions.
 ## Notes
 
 Specific scan codes determine progress. An unsuccessful delivery can carry the
-broader “in delivery” state, so that state does not override the scan. Weight is
-provided in kilograms. Office names provide locations; office addresses,
-opening hours and payment documents are excluded.
+broader “in delivery” state, so that state does not override the scan. The one
+state read on its own is “returned”: from that scan on, the item travels back,
+and a final delivery means the sender has it again. Weight is provided in
+kilograms. Office names provide locations, and the office holding an item for
+collection is its pickup point. The destination country is the two-letter code
+the service gives; office addresses, opening hours and payment documents are
+excluded.
 
 ## Limitations
 

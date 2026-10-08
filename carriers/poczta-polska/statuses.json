@@ -42,6 +42,50 @@
       "language": "en",
       "stage": "exception",
       "confirmedBy": "live"
+    },
+    {
+      "code": "P_WYPL",
+      "wording": "Departure from Poland",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_WEOC",
+      "wording": "Arrival at inward office of exchange",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_ZWC",
+      "wording": "Customs service",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_A",
+      "wording": "Unsuccessful (physical) delivery",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "Carries the notification-left state: a notice was left and the item goes to the office."
+    },
+    {
+      "code": "P_KWD",
+      "wording": "Ready for pick-up at the Post Office",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_NDZ",
+      "wording": "Returned",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "note": "Starts the trip back to the sender; a later final delivery is the sender's."
     }
   ]
 }

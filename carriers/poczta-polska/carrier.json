@@ -35,13 +35,17 @@
       "status",
       "history",
       "location",
-      "weight"
+      "weight",
+      "pickup_point",
+      "destination_country"
     ],
     "scraped": [
       "status",
       "history",
       "location",
-      "weight"
+      "weight",
+      "pickup_point",
+      "destination_country"
     ],
     "discarded": [
       "office_addresses",
