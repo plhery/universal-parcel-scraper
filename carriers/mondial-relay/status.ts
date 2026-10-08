@@ -77,6 +77,12 @@ export const MONDIAL_RELAY_WORDING: readonly { phrases: readonly string[]; class
     classified: { status: 'pending', stage: 'registered' },
   },
   {
+    // Each logistics site the parcel passes logs its own "prise en charge":
+    // movement between hubs, after the hand-in at a relay or locker.
+    phrases: ['prise en charge de votre colis sur notre site'],
+    classified: { status: 'in_transit', stage: 'in_transit' },
+  },
+  {
     // Physical acceptance by the carrier, which is not the same event as the
     // shipper announcing the parcel electronically.
     phrases: ['pris en charge', 'prise en charge'],

@@ -344,8 +344,10 @@ describe('Mondial Relay response normalization', () => {
   it('maps the wording it claims and leaves everything else to the sync', () => {
     expect(classifyStatus("Votre colis est retourné à l'expéditeur"))
       .toEqual({ status: 'exception', stage: 'returned' });
-    expect(classifyStatus('Prise en charge de votre colis sur notre site logistique'))
+    expect(classifyStatus('Colis pris en charge en Point Relais'))
       .toEqual({ status: 'in_transit', stage: 'accepted' });
+    expect(classifyStatus('Prise en charge de votre colis sur notre site logistique'))
+      .toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(classifyStatus('Mise à jour de votre suivi'))
       .toEqual({ status: 'unknown', stage: 'in_transit' });
   });
@@ -572,17 +574,18 @@ describe('Mondial Relay web session', () => {
 
 describe('documented Mondial Relay 26-digit label barcode', () => {
   const barcode = '12123456780101006623123454';
-  it('keeps carrier acceptance distinct from electronic registration', () => {
+  it('keeps carrier acceptance distinct from electronic registration and hub scans', () => {
     const result = parseMondialRelayTrackingResponse({ Expedition: {
       Numero: '12345678',
       SuiviContextuel: 'Prise en charge de votre colis sur notre site logistique TEST_DEPOT',
       Evenements: [
-        { Date: '2026-01-02T10:00:00', Libelle: 'Prise en charge de votre colis sur notre site logistique TEST_DEPOT' },
+        { Date: '2026-01-03T10:00:00', Libelle: 'Prise en charge de votre colis sur notre site logistique TEST_DEPOT' },
+        { Date: '2026-01-02T10:00:00', Libelle: 'Colis pris en charge en Locker' },
         { Date: '2026-01-01T10:00:00', Libelle: "Colis en cours de préparation par l'expéditeur" },
       ],
     } }, barcode);
     expect(result.status).toBe('in_transit');
-    expect(result.events?.map((event) => event.stage)).toEqual(['accepted', 'registered']);
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
   });
   it('uses the public alias without deriving a postcode from routing digits', () => {
     expect(normalizeMondialRelayCredential(barcode)).toEqual({ shipment: '121234567801', postcode: '', canonicalShipment: '12345678', barcode: true });

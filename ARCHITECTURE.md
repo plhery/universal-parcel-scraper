@@ -180,6 +180,10 @@ stage each one means. [CORPUS.md](CORPUS.md) describes those records.
 
 Some carrier categories cover several milestones. Exact carrier labels refine those cases;
 explanatory reasons and future delivery instructions do not establish a new milestone.
+A delivery still to come (a forecast, a notice, an instruction or a duty-payment condition:
+"will be delivered", "sera livré", "wird morgen zugestellt", "sarà consegnato", "será entregado")
+is no scan. The classifier reads only the rest of the sentence, so a notice alone takes the
+caller's fallback with `none` and never steps a parcel back to registered.
 Universal providers preserve Posti's handling labels, where registration can record repeated
 physical handling rather than electronic pre-advice.
 

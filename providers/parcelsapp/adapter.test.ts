@@ -124,7 +124,7 @@ describe('ParcelsApp result parsing', () => {
     expect(() => parseParcelsAppResponse({ states: [{ date: '2026-08-18T00:00:00Z', status: 'Enter the recipient postal code', require_fields: [{}] }] }, number, identity())).toThrow();
   });
 
-  it.each(['json', 'html'])('classifies French preparation and carrier acceptance separately (%s)', (transport) => {
+  it.each(['json', 'html'])('classifies French preparation and a Mondial Relay hub scan separately (%s)', (transport) => {
     // Synthetic identifier, dates and depot; preserve only the wording that caused the bug.
     const states = [
       { date: '2026-01-05T08:30:00Z', status: 'Prise en charge de votre colis sur notre site logistique de VILLE-EXEMPLE.' },
@@ -132,9 +132,10 @@ describe('ParcelsApp result parsing', () => {
     ];
     const parsed = transport === 'json' ? parseParcelsAppResponse({ states }, number, identity())
       : parseParcelsAppHtml(rendered(row('05 Jan 2026', '08:30', states[0]!.status) + row('04 Jan 2026', '09:15', states[1]!.status)), number);
-    expect(parsed).toMatchObject({ status: 'in_transit', current_stage: 'accepted',
+    // Every logistics site logs its own "prise en charge": movement, not acceptance.
+    expect(parsed).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
       last_update: '2026-01-05T08:30:00.000Z', tracking_provider: 'ParcelsApp' });
-    expect(parsed.events?.map(({ stage }) => stage)).toEqual(['accepted', 'registered']);
+    expect(parsed.events?.map(({ stage }) => stage)).toEqual(['in_transit', 'registered']);
     const preparationOnly = parseParcelsAppResponse({ states: [states[1]] }, number, identity());
     expect(preparationOnly).toMatchObject({ status: 'pending', current_stage: 'registered' });
   });

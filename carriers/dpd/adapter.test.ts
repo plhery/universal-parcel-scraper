@@ -571,6 +571,10 @@ describe('DPD status vocabulary', () => {
     expect(wordingStatus('En cours de livraison', false)).toBe('out_for_delivery');
     expect(wordingStatus('Data received', false)).toBe('pending');
     expect(wordingStatus('Something we do not know', false)).toBe('unknown');
+    // A delivery notice is not a delivery.
+    expect(wordingStatus('Your parcel will be delivered on Tuesday between 10:00 and 11:00', true)).toBe('in_transit');
+    expect(wordingStatus('Votre colis sera livré mardi', false)).toBe('unknown');
+    expect(apiStatus('OTHER', 'Ihr Paket wird am Dienstag zugestellt', true)).toBe('in_transit');
   });
 });
 

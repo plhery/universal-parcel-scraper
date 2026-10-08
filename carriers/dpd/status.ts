@@ -22,6 +22,7 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
+import { deliveryForecastRemainder } from '../../core/status/language.js';
 
 /** English labels for the guest API enumeration, used when the API sends no translation. */
 export const API_LABELS: Record<string, string> = {
@@ -39,7 +40,8 @@ export const API_LABELS: Record<string, string> = {
 
 /** Wording classifier for the rendered page, which carries no status codes. */
 export function wordingStatus(text: string, hasEvents: boolean): CarrierStatus {
-  const value = text.toLocaleLowerCase('en-US');
+  // A delivery notice ("will be delivered on Tuesday") is not a delivery.
+  const value = (deliveryForecastRemainder(text) ?? text).toLocaleLowerCase('en-US');
   if (['failed', 'not delivered', 'unable', 'problem', 'retour', 'returned']
     .some((term) => value.includes(term))) return 'exception';
   if (['delivered', 'zugestellt', 'livré', 'consegnato']

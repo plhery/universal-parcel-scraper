@@ -8,7 +8,7 @@
  * `tracking_status_observations`, so renaming one is a data change.
  */
 import type { Stage } from '../../generated/catalog.js';
-import { trackingLanguageStage } from './language.js';
+import { deliveryForecastRemainder, trackingLanguageStage } from './language.js';
 
 export interface ClassifiedWording {
   stage: Stage;
@@ -29,7 +29,8 @@ export function classifyWording(text: string, fallback: Stage = 'in_transit'): C
   );
   const translated = trackingLanguageStage(text);
   if (translated) return matched(translated, 'language');
-  const value = text.toLocaleLowerCase('en-US').replaceAll('_', ' ').trim().split(/\s+/).join(' ');
+  // A delivery still to come is no movement; only the rest of the text counts.
+  const value = (deliveryForecastRemainder(text) ?? text).toLocaleLowerCase('en-US').replaceAll('_', ' ').trim().split(/\s+/).join(' ');
   if (value.includes('to be delivered')) return matched('in_transit', 'to_be_delivered');
   if (value === 'reported') return matched('registered', 'reported');
   if (['will shortly be handed over', 'shipment information received', 'electronic shipment information']

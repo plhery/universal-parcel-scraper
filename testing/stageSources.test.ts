@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeCarrierResult, resolveResult, stageSource } from '../index.js';
+import { classifyStage, inferStage, normalizeCarrierResult, resolveResult, resultHasUpdate, resultStage, stageSource, type CarrierResult } from '../index.js';
 import { event, localEvent, result } from '../providers/shared/result.js';
 
 const TIME = '2026-01-01T12:00:00Z';
@@ -39,5 +39,35 @@ describe('classification provenance', () => {
     for (const invalid of ['', 42, 'other', 'wording:', `wording:${'x'.repeat(100)}`]) {
       expect(stageSource('accepted', 'Vague description', invalid)).toBe('carrier_map');
     }
+  });
+});
+
+// GENERATED notices: a delivery still to come is no scan, so the newest one
+// does not step a parcel back to registered.
+describe('a delivery notice as the newest scan', () => {
+  const NOTICE = 'We emailed you that your parcel will be delivered on Tuesday between 10:00 a.m. and 11:00 a.m.';
+  const history = (status: CarrierResult['status']): CarrierResult => ({ status, last_status_text: NOTICE, events: [
+    { time: '2026-01-02T08:00:00Z', description: NOTICE },
+    { time: '2026-01-01T18:00:00Z', description: status === 'out_for_delivery' ? 'Out for delivery' : 'Arrived at the delivery depot' },
+  ] });
+
+  it.each(['in_transit', 'out_for_delivery'] as const)('keeps the %s stage the scans before it reached', (stage) => {
+    expect(resultStage(history(stage))).toBe(stage);
+    const resolved = resolveResult(history(stage));
+    expect(resolved.current_stage).toBe(stage);
+    expect(resolved.events[0]).toMatchObject({ stage: 'in_transit', stage_source: 'none' });
+    expect(resolved.events[1]).toMatchObject({ stage, stage_source: 'wording:language' });
+  });
+
+  it('gives the notice itself no stage and no update', () => {
+    expect(classifyStage(NOTICE, 'pending')).toEqual({ stage: 'pending', source: 'none' });
+    expect(inferStage(NOTICE)).toBe('in_transit');
+    expect(resultStage({ status: 'pending', last_status_text: NOTICE, events: [{ time: TIME, description: NOTICE, stage: 'customs' }] }))
+      .toBe('customs');
+    expect(resultHasUpdate({ status: 'pending', last_status_text: NOTICE, events: [{ time: TIME, description: NOTICE }] })).toBe(false);
+    const notice = event('2026-01-02T08:00:00Z', NOTICE)!;
+    expect(notice).toMatchObject({ stage: 'pending', stage_source: 'none' });
+    expect(result([notice, event(TIME, 'Arrived at the delivery depot')!], 'Postal Ninja'))
+      .toMatchObject({ current_stage: 'in_transit', current_stage_source: 'wording:language' });
   });
 });

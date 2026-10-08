@@ -551,7 +551,7 @@
   {
     "provider": "ParcelsApp",
     "description": "Prise en charge de votre colis sur notre site logistique de [location].",
-    "expected": "accepted"
+    "expected": "in_transit"
   },
   {
     "provider": "ups",

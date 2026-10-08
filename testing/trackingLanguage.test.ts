@@ -28,8 +28,9 @@ const contrasts: { expected: Stage; en: string; fr: string; de: string; it: stri
   { expected: 'in_transit', en: 'Will be available for pickup tomorrow', fr: 'Sera disponible au point de retrait demain',
     de: 'Wird morgen zur Abholung verfügbar sein', it: 'Sarà disponibile per il ritiro domani',
     es: 'Estará disponible para recoger mañana', pt: 'Estará disponível para levantamento amanhã' },
-  { expected: 'registered', en: 'Will be delivered tomorrow', fr: 'Sera livré demain',
-    de: 'Wird morgen zugestellt', it: 'Sarà consegnato domani', es: 'Será entregado mañana', pt: 'Será entregue amanhã' },
+  { expected: 'in_transit', en: 'Arrived at the depot, will be delivered tomorrow', fr: 'Arrivé au dépôt, sera livré demain',
+    de: 'Im Paketzentrum angekommen, wird morgen zugestellt', it: 'Arrivato al centro di distribuzione, sarà consegnato domani',
+    es: 'Llegado al centro de distribución, será entregado mañana', pt: 'Chegou ao centro de distribuição, será entregue amanhã' },
   { expected: 'out_for_delivery', en: 'Loaded into the delivery vehicle', fr: 'Chargé dans le véhicule de livraison',
     de: 'In das Zustellfahrzeug geladen', it: 'Caricato nel veicolo di consegna',
     es: 'Cargado en el vehículo de reparto', pt: 'Carregado no veículo de entrega' },
@@ -57,6 +58,9 @@ describe('intuitive language contrasts', () => {
 
   it.each(['Un livre dans notre boutique', 'Carrier-specific wording', 'Texte non reconnu',
     'Unbekannter Wortlaut', 'Testo sconosciuto', 'Texto desconocido', 'Texto desconhecido',
+    // A delivery still to come is a notice, not progress.
+    'Will be delivered tomorrow', 'Sera livré demain', 'Wird morgen zugestellt', 'Sarà consegnato domani',
+    'Será entregado mañana', 'Será entregue amanhã', 'Voraussichtlich zugestellt am Montag',
   ])('[generated unknown] does not invent progress for %s', (description) => {
     expect(trackingLanguageStage(description)).toBeUndefined();
     expect(event('2026-01-01T12:00:00Z', description)?.stage).toBe('pending');
@@ -131,7 +135,6 @@ describe('intuitive language contrasts', () => {
     ['Delivered to the sender', 'returned'],
     ['Returned and delivered to sender', 'returned'],
     ['Expected to be delivered on Monday', 'in_transit'],
-    ['Voraussichtlich zugestellt am Montag', 'registered'],
     ['Not yet delivered', 'failed_attempt'],
     ['Undelivered', 'failed_attempt'],
     ['Your parcel is being delivered', 'out_for_delivery'],

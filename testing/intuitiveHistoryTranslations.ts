@@ -955,10 +955,11 @@ export const intuitiveHistoryTranslations: IntuitiveHistoryTranslation[] = [
     provenance: "intuitive-translation",
     derivedFrom: "Prise en charge de votre colis sur notre site logistique de [location].",
     sourceLanguage: "fr",
+    // Each hub on the way logs this: handling in transit, not the first acceptance.
     translations: {
-      en: "Your parcel was accepted at our logistics site in [location].",
-      de: "Ihr Paket wurde an unserem Logistikstandort in [location] übernommen.",
-      it: "Il pacco è stato preso in carico nel nostro sito logistico di [location].",
+      en: "Your parcel was processed at our logistics site in [location].",
+      de: "Ihr Paket wurde an unserem Logistikstandort in [location] bearbeitet.",
+      it: "Il pacco è stato elaborato nel nostro sito logistico di [location].",
     },
   },
   // GENERATED from the observed EN description; overridable by carrier evidence.

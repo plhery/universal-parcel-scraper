@@ -10,7 +10,7 @@
  */
 import { DateTime } from 'luxon';
 import { trackingLanguageStage } from '../../core/status/index.js';
-import { nonterminalEnglishReturn } from '../../core/status/language.js';
+import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { IndeterminateError, InvalidInputError } from '../../core/errors/index.js';
@@ -47,12 +47,16 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // Public aggregators retain the carrier's French wording even in English.
   const french = description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
   if (/colis en preparation chez l'expediteur/.test(french)) return 'registered';
-  if (/prise en charge de votre colis sur notre site logistique/.test(french)) return 'accepted';
+  // Mondial Relay's hub scan, after the parcel was handed in at a relay or locker.
+  if (/prise en charge de votre colis sur notre site logistique/.test(french)) return 'in_transit';
   // Posti's handling labels survive in aggregator histories. Registration is
   // a repeated physical scan here, and the reason can describe future customs
   // or delivery without making either the event's stage.
   if (/^(?:the )?item (?:accepted from transport(?:[.!]?$|[.!]? this is a transportation marking\b)|has arrived to destination country(?:[.!]?$|[.!]? the item has reached (?:the target country|finland)\b)|is ready for delivery in destination country[.!]?$|in process in office of exchange(?:[.!]?$|[.!]? the item is being processed\b))/i.test(description)
     || /^(?:the )?item has been registered(?:[.!]?$| the item can be registered several times during delivery\b)/i.test(description)) return 'in_transit';
+  // A delivery still to come is no movement; only the rest of the text counts.
+  const reported = deliveryForecastRemainder(description);
+  if (reported !== undefined) return reported ? sourceEventStage(reported, includeBroadMovement) : undefined;
   if (nonterminalEnglishReturn(description)) return 'exception';
   if (/returned to (?:the )?sender/i.test(description)) return 'returned';
   if (/not delivered|could not.*deliver|unable to deliver|delivery (?:attempt|failed)/i.test(description)) return 'failed_attempt';
@@ -65,7 +69,7 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (/delivered to (?:the )?(?:local carrier|delivery partner|post office)/i.test(description)) return 'in_transit';
   if (/will be available for (?:pickup|collection)/i.test(description)) return 'in_transit';
   // Sender pre-advice such as Quickpac's "Shipment recorded by sender (data delivered)".
-  if (/will be delivered|being prepared by the sender|recorded by (?:the )?(?:foreign )?sender|\bdata delivered\b|en route to .*awaiting processing/i.test(description)) return 'registered';
+  if (/being prepared by the sender|recorded by (?:the )?(?:foreign )?sender|\bdata delivered\b|en route to .*awaiting processing/i.test(description)) return 'registered';
   // The bare word also appears in handoffs, forecasts and negations ("delivered
   // to airline", "expected to be delivered", "not yet delivered"); those follow
   // the language rules instead of reading as a delivery.

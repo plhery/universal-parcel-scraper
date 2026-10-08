@@ -12,16 +12,52 @@ export function nonterminalEnglishReturn(description: string): boolean {
   return /\breturn(?:ing)? to (?:the )?sender\b|\b(?:will|would|should|shall|must|may|might|can|could|ought to|needs? to|to) (?:(?:not|never|yet|still|already|soon|shortly|eventually|possibly|probably) )*(?:be|have been) returned to (?:the )?sender\b|\b(?:not|never)(?: yet| already| still)? (?:(?:have|has|be|been|being) )*returned to (?:the )?sender\b|\bbeing returned to (?:the )?sender\b|\breturn (?:has been )?(?:initiated|requested|started)\b/.test(text);
 }
 
+function comparable(description: string): string {
+  return description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')
+    .replace(/[’‘]/g, "'").replace(/ł/g, 'l').replace(/[_–—-]/g, ' ').replace(/\s+/g, ' ').trim().replace(/[.!]+$/, '');
+}
+
+// One character of the same sentence: a dot inside a date or "a.m." does not end it.
+const SENTENCE = String.raw`(?:[^.;!?]|\.(?=\S))`;
+/**
+ * A delivery still to come: a forecast, a notice, an instruction or a
+ * condition such as paying duties, from its verb to the end of the sentence.
+ * Delivery back to the sender is a return and stays with the return rules.
+ */
+const DELIVERY_FORECAST = new RegExp(`(?:${[
+  String.raw`\b(?:will|would|shall|should|may|might|must|won't|can(?! ?not\b)|could(?! not\b))(?: (?:not|now|then|still|also|likely|probably|possibly|hopefully|soon|shortly|only|normally|usually|again|today|tomorrow))* be delivered\b(?! (?:back )?to (?:the )?(?:sender|shipper)\b)`,
+  String.raw`\b(?:sera|seront|serait|seraient|va etre|vont etre|doit etre|doivent etre|devrait etre|devraient etre|pourra etre|pourront etre|pourrait etre)(?: \w+){0,2}? livree?s?\b(?! a l'expediteur)`,
+  String.raw`\b(?:wird|werden|soll|sollte|sollen|sollten)\b${SENTENCE}*?(?<!\bnicht )\bzugestellt\b`,
+  String.raw`\bvoraussichtlich\w*\b${SENTENCE}*?\b(?:zugestellt|zustellung)\b|\b(?:zustellung|zustelltermin) (?:(?:ist|erfolgt) )?(?:voraussichtlich|geplant)\b`,
+  String.raw`\b(?:sara|saranno|verra|verranno|potra essere|potrebbe essere|dovrebbe essere|dovra essere)(?: \w+){0,2}? consegnat[oaie]\b(?! al mittente)`,
+  String.raw`(?<!\bnao )\b(?:sera|seran|serao|va a ser|van a ser|vai ser|vao ser)(?: (?:hoy|manana|hoje|amanha|pronto|proximamente|brevemente|en breve|em breve))? (?:entregad[oa]s?|repartid[oa]s?|entregues?)\b(?! (?:al|ao|a la|a) (?:remitente|remetente|origen|origem)\b)|\bse (?:le |te |lo |la |les )?entregaran?\b`,
+].join('|')})${SENTENCE}*`, 'g');
+
+/**
+ * What a description reports besides the delivery it announces, in the
+ * comparable form the language rules read, or undefined when it announces
+ * none. Such a notice is no movement: "Arrived at the depot, will be
+ * delivered tomorrow" is in transit and "Will be delivered tomorrow" has no
+ * stage, so the previous one stands.
+ */
+export function deliveryForecastRemainder(description: string): string | undefined {
+  const text = comparable(description);
+  const rest = text.replace(DELIVERY_FORECAST, ' ');
+  return rest === text ? undefined : comparable(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, ''));
+}
+
 /**
  * INFERRED language rules, not captured carrier codes. EN/FR/DE/IT/ES/PT/PL equivalents
  * are intuitive and overridable: an adapter must resolve verified codes and
  * carrier-specific semantics before consulting this fallback. No fixture import.
  */
 export function trackingLanguageStage(description: string): Stage | undefined {
-  const text = description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')
-    .replace(/[’‘]/g, "'").replace(/ł/g, 'l').replace(/[_–—-]/g, ' ').replace(/\s+/g, ' ').trim().replace(/[.!]+$/, '');
+  const text = comparable(description);
 
   if (/^wird zugestellt$/.test(text)) return 'out_for_delivery';
+  // Every rule below reads only what happened, never a delivery still to come.
+  const reported = deliveryForecastRemainder(text);
+  if (reported !== undefined) return reported ? trackingLanguageStage(reported) : undefined;
 
   // Specific negatives, future steps and handoffs precede broad delivery words.
   if (nonterminalEnglishReturn(text)) return 'exception';
@@ -29,7 +65,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/\b(?:en|em) (?:proceso de |processo de )?devolu(?:cion|cao)\b|^devolu(?:cion|cao)$|\bdevolu(?:cion|cao) (?:en curso|em curso|iniciada|solicitada|en transito|em transito)\b|\bdevolu(?:cion|cao) (?:al|ao|a la|a) (?:remitente|remetente|origen|origem)\b(?! (?:completad|finalizad|concluid|entregad|entregue|realizad|efectuad|efetuad))|\ben camino (?:de vuelta |de regreso )?(?:al|hacia el) remitente\b|\b(?:a caminho (?:de volta )?(?:do|ao)|em transito para o) remetente\b|\b(?:siendo|sendo|a ser) (?:(?:devuelt|devolvid)[oa]s?|entregad[oa]s? al remitente|entregues? ao remetente)\b|\b(?:no|nao) (?:(?:ha|han|se|fue|foi|foram|sido|ser|sera|puede|pode|pudo|podido|todavia|aun|ainda|ya|ja) )*(?:(?:devuelt|devolvid)[oa]s?|entregad[oa]s? al remitente|entregues? ao remetente)\b|\b(?:sera|seran|serao|va a ser|vai ser|puede ser|pode ser|debe ser|deve ser|devera ser) (?:(?:pronto|proximamente|en breve|em breve|brevemente) )?(?:(?:devuelt|devolvid)[oa]s?|entregad[oa]s? al remitente|entregues? ao remetente)\b|\bse (?:le )?devolvera\b/.test(text)) return 'exception';
   if (/returned to (?:the )?sender|retour(?:ne)? a l'expediteur|zuruck an (?:den )?absender|an (?:den )?absender zuruck|retour a l'expediteur|reso al mittente|restituit[oa] al mittente|delivered (?:back )?to (?:the )?(?:sender|shipper)/.test(text)) return 'returned';
   if (/^(?:(?:envio|paquete|pedido|objeto|encomenda|pacote|remessa) )?(?:devuelt|devolvid)[oa]$|\b(?:devuelt|devolvid|retornad)[oa]s? (?:al|ao|a la|a) (?:remitente|remetente|origen|origem)\b|\bentregad[oa]s? al remitente\b|\bentregues? ao remetente\b|\bdevolu(?:cion|cao) (?:(?:al|ao|a la|a) (?:remitente|remetente|origen|origem) )?(?:completad|finalizad|concluid|entregad|entregue|realizad|efectuad|efetuad)/.test(text)) return 'returned';
-  if (/not (?:yet )?delivered|\bundelivered\b|could not.*deliver|unable to deliver|delivery (?:attempt|failed)|non livre|n'(?:a|avons) (?:pas )?pu.*(?:remis|remettre)|n'a pas pu etre (?:distribue|livre)|livraison (?:impossible|echouee)|tentative de livraison|nicht zugestellt|nicht zugestellt werden|zustellung.*(?:fehlgeschlagen|nicht moglich)|zustellversuch|non consegnat[oa]|non e stato possibile consegnare|consegna (?:fallita|non riuscita)|tentativo di consegna/.test(text)) return 'failed_attempt';
+  if (/not (?:yet )?delivered|\bundelivered\b|could not.*deliver|\bcan(?: ?not|'t) be delivered\b|unable to deliver|delivery (?:attempt|failed)|non livre|n'(?:a|avons) (?:pas )?pu.*(?:remis|remettre)|n'a pas pu etre (?:distribue|livre)|livraison (?:impossible|echouee)|tentative de livraison|nicht zugestellt|nicht zugestellt werden|zustellung.*(?:fehlgeschlagen|nicht moglich)|zustellversuch|non consegnat[oa]|non e stato possibile consegnare|consegna (?:fallita|non riuscita)|tentativo di consegna/.test(text)) return 'failed_attempt';
   if (/\bno (?:(?:ha|han|hemos|se|le|lo|la|fue|sido|ser|es|era|pudo|puede|podido|posible|todavia|aun) )*(?:entregad[oa]s?|entregar(?:lo|la|le|se)?|repartid[oa]s?|realizar la entrega|efectuar la entrega)\b|\bsin entregar\b|\b(?:entrega|reparto) (?:fallid[oa]|imposible|no (?:(?:ha|han|se|fue|sido|ser|pudo|puede|podido) )*(?:realizad[oa]|efectuad[oa]|completad[oa]|posible|conseguid[oa]))\b|\bimposible (?:entregar|realizar la entrega|efectuar la entrega)\b|\bfallo (?:en la|de) entrega\b|\bintento fallido\b|\bintento de (?:entrega|reparto)\b(?! (?:programad|previst|para (?:hoy|manana|el)|manana|hoy))|\bnao (?:(?:foi|foram|ser|sera|pode|podemos|conseguimos|conseguiu|se|possivel|e|ainda|tem sido|esta|estava) )*(?:entregues?|entregar|efetuar a entrega|efectuar a entrega|realizar a entrega)\b|\bentrega (?:falhada|sem sucesso|impossivel|nao (?:(?:foi|pode|ser|sera|tem sido) )*(?:efetuada|efectuada|realizada|conseguida|concretizada|possivel))\b|\bfalha (?:na|de) entrega\b|\btentativa (?:de entrega|sem sucesso)\b(?! (?:agendada|prevista|programada|para (?:hoje|amanha)|amanha|hoje))|\bcarteiro nao atendido\b/.test(text)) return 'failed_attempt';
   // Missed rounds worded around the attempt, the absent recipient or a closed
   // business. A scheduled attempt is not a missed one, nor is a sender pickup.
@@ -68,9 +104,6 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/will be available|sera disponible|(?:sera|va etre|doit etre) (?:distribue|remis)|wird.*verfugbar|sara disponibile|to be delivered|a livrer|noch zuzustellen|da consegnare|(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery/.test(text)) return 'in_transit';
   if (/\bestara disponi(?:ble|vel)\b|\bpor entregar\b|\bpendiente de (?:entrega|entregar|reparto)\b|\bpendente de entrega\b|\b(?:aguarda|aguardando|a aguardar) (?:a )?entrega\b|\bsera (?:enviad|transportad|expedid|encaminhad)[oa]s?\b/.test(text)) return 'in_transit';
 
-  if (/will be delivered|sera livre|wird.*zugestellt|voraussichtlich.*zugestellt|sara consegnat/.test(text)) return 'registered';
-  if (/\b(?:sera|seran|serao|va a ser|vai ser) (?:(?:hoy|manana|hoje|amanha|pronto|proximamente|en breve|em breve|brevemente) )?(?:entregad[oa]s?|repartid[oa]s?|entregues?)\b|\bse (?:le |te |lo |la )?entregara\b/.test(text)) return 'registered';
-
   if (/ready for (?:pickup|collection)|ready to collect|available for (?:pickup|collection)|awaiting (?:customer |recipient |your )?(?:pickup|collection)|pret.*(?:retrait|retire)|disponible.*(?:retrait|collecte)|vous attend (?:au|en|dans|chez|a)\b|mise? a disposition (?:au|en|dans|a)\b.*(?:point (?:de )?retrait|relais|consigne|locker|bureau de poste|agence)|jours? restants? pour (?:le )?retirer|abholbereit|zur abholung bereit|pront[oa] per il ritiro|disponibile per il ritiro|(?:deposited|depose|hinterlegt|depositat[oa]).*mypost24/.test(text)) return 'ready_for_pickup';
   if (/(?<!\b(?:no|nao|ya no|ja nao) (?:(?:esta|estara|se encuentra|se encontra|e|era|foi) )?)\bdisponi(?:ble|vel) (?:para (?:su |ser )?(?:recoger|recogida|recogid[oa]|retirar|retiro|retirada|retirad[oa]|levantamento|levantar|levantad[oa]|recolha|recolher)|(?:en|no|na|num|numa|em) (?:el |la |un |una |su |tu |nuestr[oa] )?(?:punto|oficina|tienda|locker|taquilla|consigna|citypaq|parcel ?shop|buzon inteligente|agencia|delegacion|sucursal|ponto|loja|cacifo|estacao|balcao|payshop|posto|unidade))\b|\blist[oa] para (?:su |ser )?(?:recoger|recogida|recogid[oa]|retirar|retiro)\b|\bpront[oa] (?:para|a) (?:ser )?(?:levantamento|levantar|levantad[oa]|recolha|recolher|retirada|retirar)\b|\b(?:ya )?(?:puede|puedes|podra|podras) (?:pasar a )?recoger(?:lo|la)?\b|\b(?:aguarda|aguardando|a aguardar) (?:o |a )?(?:levantamento|retirada)\b|\besperando (?:su|tu) recogida\b|\b(?:pendiente de|esperando|a la espera de) (?:ser )?recogid[oa] por (?:el |la )?destinatari[oa]\b/.test(text)) return 'ready_for_pickup';
 
@@ -102,7 +135,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
     || /^(?:the )?item in process in office of exchange\b/.test(text)) return 'in_transit';
   if (/^(?:posting\/collection|posted|origin scan)$|received at (?:our |the )?(?:[a-z]+ )?origin (?:office|facility|hub)|dropped off (?:after|before) (?:the )?latest drop ?off time/.test(text)) return 'accepted';
   if (/accepted|picked up|pick up was successful|^drop off$|pick ?up scan|prepared the package for return to ups or pickup by ups|handed (?:over )?to (?:dpd|gls)|package received at dhl|item booked|consignment was mailed|posted at a postal point|pris en charge|prise en charge|collecte.*(?:reussi|effectue)|recupere.*boite aux lettres|depose.*point postal|remis a (?:dpd|gls)|envoi.*depose|abholung.*erfolgreich|eingeliefert|an (?:dpd|gls) ubergeben|paket.*(?:angenommen|ubernommen)|ritiro.*(?:riuscito|effettuato)|pres[oa] in carico|affidat[oa] a (?:dpd|gls)|depositat.*punto postale|spedizione.*impostata/.test(text)) return 'accepted';
-  if (/transit|en route|on (?:its|the) way|\bfacility\b|airport|\bleaving\b|\bdispatched\b|^delay(?:ed)?$|received by (?:the )?(?:local )?(?:delivery|logistics) company|received by postnl|notification.*sent to the recipient|delivery option requested|instruction de livraison recue|expedie (?:depuis|du|de)\b|acheminement|unterwegs|transport|trasport|arriv|depart|processed|processing completed|sorted|sorting|\btri\b|trie|traitement|traite|sortier|bearbeitet|bearbeitung|elaborat|elaborazion|smistat|parcel cent(?:er|re)|delivery cent(?:er|re)|centre.*(?:colis|distribution)|paketzentrum|verteilzentrum|centro.*(?:pacchi|distribuzione)|depot|import scan|scan.*import|importscan|scansione.*import|delivery.*delayed|livraison.*retard|zustellung.*verzogert|consegna.*ritard|transferred|transfere|weitergeleitet|inoltrato|left.*(?:point|center)|quitte|verlassen|raggiunto|close bag|fermeture du sac|sack.*geschlossen|chiusura.*sacco|scanned into|scanne dans|eingescannt|scansionat|\bloaded\b|^(?:item|parcel|shipment) distributed$|charg.*vehicule de transport|transportfahrzeug.*geladen|caric.*veicolo.*trasporto/.test(text)) return 'in_transit';
+  // A linehaul is the trunk haul between hubs, whatever was handed over.
+  if (/transit|\bline ?haul\b|en route|on (?:its|the) way|\bfacility\b|airport|\bleaving\b|\bdispatched\b|^delay(?:ed)?$|received by (?:the )?(?:local )?(?:delivery|logistics) company|received by postnl|notification.*sent to the recipient|delivery option requested|instruction de livraison recue|expedie (?:depuis|du|de)\b|acheminement|unterwegs|transport|trasport|arriv|depart|processed|processing completed|sorted|sorting|\btri\b|trie|traitement|traite|sortier|bearbeitet|bearbeitung|elaborat|elaborazion|smistat|parcel cent(?:er|re)|delivery cent(?:er|re)|centre.*(?:colis|distribution)|paketzentrum|verteilzentrum|centro.*(?:pacchi|distribuzione)|depot|import scan|scan.*import|importscan|scansione.*import|delivery.*delayed|livraison.*retard|zustellung.*verzogert|consegna.*ritard|transferred|transfere|weitergeleitet|inoltrato|left.*(?:point|center)|quitte|verlassen|raggiunto|close bag|fermeture du sac|sack.*geschlossen|chiusura.*sacco|scanned into|scanne dans|eingescannt|scansionat|\bloaded\b|^(?:item|parcel|shipment) distributed$|charg.*vehicule de transport|transportfahrzeug.*geladen|caric.*veicolo.*trasporto/.test(text)) return 'in_transit';
   if (/^enviad[oa]$|\bclasificad[oa]s?\b|\bclasificacion\b|\ben ruta\b|\ben camino\b|\bllegad[oa]s? (?:a|al|en)\b|\bllegada (?:a|al|en|de)\b|\bha llegado\b|\bllego (?:a|al)\b|\bsalida (?:de|del|desde)\b|\b(?:ha )?salido (?:de|del)\b|\bsalio (?:de|del)\b|\ben destino\b|\b(?:agencia|delegacion|plataforma|oficina|franquicia) (?:de )?destino\b|\b(?:unidad|centro|oficina|delegacion|base|agencia|plataforma) de reparto\b|\bcentro (?:de )?(?:clasificacion|distribucion|tratamiento|logistico|operaciones|operativo)\b|\blectura\b|\bleid[oa]s?\b|\brecepcionad[oa]s?\b|\bprocesad[oa]s?\b|\bexpedid[oa]s?\b|\btriagem\b|\btriad[oa]s?\b|\bem tratamento\b|\btratad[oa]s?\b|\bcentro (?:de )?(?:distribuicao|tratamento|triagem|operacional)\b|\bchegad[ao] (?:a|ao|no|na|em)\b|\bchegou (?:a|ao|no|na|em)\b|\bsaida (?:do|da|de|dos|das)\b|\bsaiu (?:do|da|de|dos|das)\b|\bem rota\b|\ba caminho\b|\bencaminhad[oa]s?\b|\b(?:em )?transferencia\b|\btransferid[oa]s?\b|\bprocessad[oa]s?\b|\brecebid[oa] (?:no|na|em) (?:centro|armazem|unidade|plataforma)\b|\brecibid[oa] en (?:el |la |nuestr[oa] )?(?:almacen|centro|delegacion|plataforma|hub|agencia)\b/.test(text)) return 'in_transit';
   return undefined;
 }

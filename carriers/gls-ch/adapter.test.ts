@@ -216,6 +216,8 @@ describe('GLS Switzerland response normalization', () => {
     ['The parcel has not been released by customs.', 'customs'],
     ['The parcel is in delivery.', 'out_for_delivery'],
     ['The parcel has reached the parcel center.', 'in_transit'],
+    // A delivery notice, not a delivery and not pre-advice.
+    ['The parcel will be delivered on 20.06.2026.', 'in_transit'],
   ])('maps the history scan %s to %s', (evtDscr, stage) => {
     const result = parseGLSSwitzerlandTrackingResponse({
       tuNo: OFFICIAL_TEST_PARCEL_NUMBER,

@@ -9,6 +9,7 @@
  * multilingual classifier.
  */
 import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status/index.js';
+import { deliveryForecastRemainder } from '../../core/status/language.js';
 
 export type { ClassifiedStatus };
 
@@ -52,6 +53,8 @@ export function classifyDescription(description: string): ClassifiedStatus {
   }
   const translated = trackingLanguageStage(description);
   if (translated) return { status: languageStageStatus(translated), stage: translated };
+  // A delivery notice ("will be delivered tomorrow") is no movement either.
+  if (deliveryForecastRemainder(description) !== undefined) return { status: 'unknown', stage: 'in_transit' };
   const value = description
     .toLocaleLowerCase('en-US')
     .replace(/[^a-z0-9]+/g, ' ')

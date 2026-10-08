@@ -253,8 +253,8 @@ describe('classifyWording', () => {
       ['Será devuelto al remitente', 'exception'],
       ['O envio está a ser devolvido ao remetente', 'exception'],
       ['Não foi devolvido', 'exception'],
-      ['Será entregado mañana', 'registered'],
-      ['Será entregue amanhã', 'registered'],
+      ['Su envío ha llegado al centro de distribución y será entregado mañana', 'in_transit'],
+      ['A encomenda chegou ao centro de distribuição e será entregue amanhã', 'in_transit'],
       ['Pendiente de entrega', 'in_transit'],
       ['Estará disponible para recoger mañana', 'in_transit'],
     ] as const) expect(classifyWording(wording)).toEqual({ stage, source: 'wording:language' });
@@ -269,6 +269,43 @@ describe('classifyWording', () => {
       'Fecha de entrega modificada',
       'No disponible para recoger',
     ]) expect(['delivered', 'failed_attempt', 'ready_for_pickup']).not.toContain(wordingStage(wording, 'pending'));
+  });
+
+  // GENERATED notices: a delivery still to come reports no movement, so a
+  // forecast alone takes the caller's fallback and a sentence that also
+  // reports a scan keeps that scan's stage.
+  it.each(['Your parcel will be delivered on Tuesday between 10:00 a.m. and 11:00 a.m.',
+    'Your parcel will be delivered to a safe place as you instructed', 'Your parcel will now be delivered on Wednesday',
+    'Will not be delivered today', "Won't be delivered before Monday", 'Your parcel will be delivered to a pickup point',
+    'Votre colis sera livré demain', 'Il sera livré après paiement des droits et taxes', 'Votre colis va être livré aujourd’hui',
+    'Ihre Sendung wird am Dienstag zugestellt', 'Voraussichtliche Zustellung am 06.10.2026', 'Zustellung voraussichtlich morgen',
+    'Il pacco sarà consegnato domani', 'Il pacco verrà consegnato domani', 'Será entregado mañana', 'Se entregará a la mayor brevedad',
+    'Será entregue amanhã', 'Vai ser entregue hoje'])('gives the notice "%s" no stage', wording => {
+    expect(trackingLanguageStage(wording)).toBeUndefined();
+    expect(classifyWording(wording, 'pending')).toEqual({ stage: 'pending', source: 'none' });
+    expect(classifyWording(wording, 'in_transit')).toEqual({ stage: 'in_transit', source: 'none' });
+  });
+
+  it.each([
+    ['Your parcel has arrived at the depot and will be delivered tomorrow', 'in_transit'],
+    ['Out for delivery. Your parcel will be delivered between 10:00 and 11:00', 'out_for_delivery'],
+    ['Label created; your parcel will be delivered by the carrier', 'registered'],
+    ['Shipment information received, it will be delivered next week', 'registered'],
+    ["Les formalités d'importation de votre envoi sont terminées et il sera livré contre paiement des droits et taxes", 'in_transit'],
+    ['Votre colis est en cours de livraison, il sera livré avant 13 h', 'out_for_delivery'],
+    ['Die Sendung ist im Paketzentrum angekommen und wird voraussichtlich am 06.10.2026 zugestellt', 'in_transit'],
+    ['Die Sendung wird heute nicht zugestellt', 'failed_attempt'],
+    ['Não será entregue hoje', 'failed_attempt'],
+    ['Delivery attempt failed. Your parcel will be delivered again tomorrow', 'failed_attempt'],
+    ['Your parcel cannot be delivered', 'failed_attempt'],
+    ['Will be delivered back to sender', 'exception'],
+  ] as const)('reads only what "%s" reports: %s', (wording, stage) => {
+    expect(classifyWording(wording, 'pending')).toEqual({ stage, source: 'wording:language' });
+  });
+
+  it('files a linehaul handover as transit, not acceptance', () => {
+    expect(classifyWording('Handed over from linehaul office', 'pending')).toEqual({ stage: 'in_transit', source: 'wording:language' });
+    expect(classifyWording('Parcel handed over', 'pending')).toEqual({ stage: 'accepted', source: 'wording:accepted' });
   });
 
   it('falls back without a rule id when nothing matches', () => {
