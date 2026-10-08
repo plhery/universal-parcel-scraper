@@ -2,7 +2,7 @@
   "carrier": "hermes",
   "records": [
     {
-      "number": "62162057330000611",
+      "number": "62100000000000000",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "official_shape",
@@ -14,7 +14,7 @@
           "dhl-ecommerce"
         ]
       },
-      "note": "Made-up number that follows the published format. Filed under Hermes Einrichtungs-Service, which no rule claims."
+      "note": "Made-up number in the 17-digit parcel-number shape. Hermes rejects it, so it opens no order. Filed under Hermes Einrichtungs-Service, which no rule claims."
     }
   ]
 }

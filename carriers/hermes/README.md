@@ -45,5 +45,6 @@ generic, so the user picks the carrier by hand.
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/hermes` (no env vars). It checks the
-carrier's published delivered sample and the empty-order not-found for a wrong number.
+`npm run test:carriers:live -- carriers/hermes` checks the empty-order not-found for a wrong
+number. Set `HERMES_TRACKING_NUMBER` outside the repository to also check a real order's
+history; the number unlocks the order, so it never goes in the repository.

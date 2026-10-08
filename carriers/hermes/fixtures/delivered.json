@@ -1,10 +1,10 @@
 {
   "body": {
     "auftragsdaten": {
-      "auftragId": 66508126,
+      "auftragId": 10000001,
       "auftragsart": "Lieferung",
       "lieferdatum": "2026-08-05",
-      "lieferscheinnummer": "62162057330000611",
+      "lieferscheinnummer": "62100000000000000",
       "statusjourneyDto": {
         "auftragstatusdaten": [
           {

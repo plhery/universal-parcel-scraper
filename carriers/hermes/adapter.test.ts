@@ -5,7 +5,7 @@ import { HermesTracker, parseHermesTrackingResponse } from './adapter.js';
 import { hermesStatus } from './status.js';
 
 const WRONG_HERMES_NUMBER = '12345678';
-const DELIVERED_NUMBER = '62162057330000611';
+const DELIVERED_NUMBER = '62100000000000000';
 
 const fixture = (name: string): Record<string, unknown> => JSON.parse(
   readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'),
@@ -184,7 +184,7 @@ describe('Hermes no-data response', () => {
     for (const internalValue of [
       'Ware geliefert.',
       'Ihre Sendung wurde bei der angegebenen Adresse zugestellt.',
-      '66508126',
+      '10000001',
     ]) expect(serialized).not.toContain(internalValue);
   });
 
