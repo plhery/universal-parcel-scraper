@@ -2300,13 +2300,15 @@
           "time": "2026-01-16T23:50:00-08:00",
           "description": "In Transit to Next Facility",
           "provider_code": "412",
-          "location": "Hub City, EX"
+          "location": "Hub City, EX",
+          "stage": "in_transit"
         },
         {
           "time": "2026-01-15T10:20:00-08:00",
           "description": "Departed GOFO Regional Hub",
           "provider_code": "411",
-          "location": "Origin City, EX"
+          "location": "Origin City, EX",
+          "stage": "in_transit"
         },
         {
           "time": "2026-01-15T10:10:00-08:00",
