@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
-import { DPD_DE_APP_API, DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
+import { DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
+import { DPD_DE_APP_API } from './service.js';
 import { DPD_DE_APP_SCANS } from './status.js';
 
 // All identifiers, credentials, sessions, clocks and private-field markers here are invented.

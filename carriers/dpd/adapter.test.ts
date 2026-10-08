@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
+import { DPD_DE_APP_API } from '../dpd-de/service.js';
 import {
   DPDChallengeError,
   DPDTracker,
@@ -45,6 +46,30 @@ const unanswered: typeof fetch = (_url, init) => new Promise<Response>((_resolve
 
 afterEach(() => vi.restoreAllMocks());
 
+type GuestScan = Record<string, unknown>;
+// The Swiss shop scan's code is not known: an unmapped one leaves the stage to the reply's status.
+const SHOP_SCAN: GuestScan = {
+  date: '2026-07-16', time: '10:12:00', city: 'Zürich', country: 'CH', depotCountry: 'CH',
+  pudoId: 'CH00001', pudoType: 100, eventType: 'ZZZ', translation: 'Your parcel is ready for collection at the Pickup parcelshop',
+};
+const OUT_SCAN: GuestScan = {
+  date: '2026-07-16', time: '06:10:45', city: 'Urdorf', country: 'CH', depotCountry: 'CH',
+  pudoId: null, pudoType: null, eventType: 'DLO', translation: 'Your parcel is out for delivery',
+};
+/** A verified reply for a parcel waiting at a Pickup shop, newest scan first. */
+function awaitingShop(scans: GuestScan[] = [SHOP_SCAN, OUT_SCAN], description = 'AVAILABLE_FOR_COLLECTION'): Record<string, unknown> {
+  return {
+    ...DELIVERED_VERIFIED,
+    status: {
+      ...(DELIVERED_VERIFIED.status as Record<string, unknown>),
+      description, deliveryType: 'PARCELSHOP', homeDelivery: false, eventDateAndTime: '2026-07-16T10:12:00',
+    },
+    parcelHistory: [],
+    parcelEvents: scans,
+  };
+}
+const SHOP = { name: 'Kiosk Example', address: 'EXAMPLE STREET 1\n0000 EXAMPLE TOWN' };
+
 describe('DPD guest API projection', () => {
   it('returns every declared capability across the fixtures', () => {
     const collection = parseDPDTrackingApi(READY_FOR_COLLECTION, TRACKING_NUMBER, true);
@@ -75,6 +100,16 @@ describe('DPD guest API projection', () => {
     ]) {
       expect(serialized).not.toContain(privateValue);
     }
+  });
+
+  it('never names the recipient as the pickup point', () => {
+    const unnamed = { ...READY_FOR_COLLECTION, pickupPoint: undefined };
+    expect(parseDPDTrackingApi(unnamed, TRACKING_NUMBER)).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(parseDPDTrackingApi(unnamed, TRACKING_NUMBER).pickup_point).toBeUndefined();
+    // The verified shape's receiver object names the recipient too.
+    const verified = parseDPDTrackingApi(awaitingShop(), TRACKING_NUMBER, true);
+    expect(verified.current_stage).toBe('ready_for_pickup');
+    expect(verified.pickup_point).toBeUndefined();
   });
 
   it('maps the collection milestone and keeps the delivery window out of the stage', () => {
@@ -838,6 +873,85 @@ describe('DPDTracker steps', () => {
   });
 });
 
+describe('DPD pickup shop address', () => {
+  /** A tracker whose shop records answer `shop`; its timeout leaves room for the lookup. */
+  function shopTracker(shop: (id: string, options: { signal: AbortSignal; timeoutMs: number }) => Promise<typeof SHOP | undefined>, timeoutMs = 10_000) {
+    const parcelShop = vi.fn(shop);
+    return { parcelShop, tracker: new DPDTracker({ timeoutMs, trawl: null, shops: { parcelShop } }) };
+  }
+
+  it('adds the address of the shop holding the parcel to its name', async () => {
+    mockGuestApi(Response.json(awaitingShop()));
+    const { parcelShop, tracker } = shopTracker(async () => SHOP);
+
+    const result = await tracker.fetch(TRACKING_NUMBER, '8000');
+
+    // The verified reply names no shop: the shop's record does.
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Kiosk Example\nEXAMPLE STREET 1\n0000 EXAMPLE TOWN' });
+    expect(parcelShop).toHaveBeenCalledOnce();
+    const [id, options] = parcelShop.mock.calls[0]!;
+    expect(id).toBe('CH00001');
+    expect(options.signal).toBeInstanceOf(AbortSignal);
+    // The lookup keeps a moment to answer without the address.
+    expect(options.timeoutMs).toBeGreaterThan(0);
+    expect(options.timeoutMs).toBeLessThanOrEqual(5_000);
+    expect(JSON.stringify(result)).not.toMatch(/Private|CH00001/);
+
+    // A shop the reply names keeps that name.
+    mockGuestApi(Response.json({ ...awaitingShop(), pickupPoint: { name: 'Pickup parcelshop Zürich Wiedikon' } }));
+    await expect(shopTracker(async () => SHOP).tracker.fetch(TRACKING_NUMBER, '8000')).resolves.toMatchObject({
+      pickup_point: 'Pickup parcelshop Zürich Wiedikon\nEXAMPLE STREET 1\n0000 EXAMPLE TOWN',
+    });
+  });
+
+  it('keeps the result as it was without the shop record', async () => {
+    mockGuestApi(Response.json(awaitingShop()));
+    const unaddressed = await shopTracker(async () => undefined).tracker.fetch(TRACKING_NUMBER, '8000');
+    expect(unaddressed.current_stage).toBe('ready_for_pickup');
+    expect(unaddressed.pickup_point).toBeUndefined();
+
+    mockGuestApi(Response.json({ ...awaitingShop(), pickupPoint: { name: 'Pickup parcelshop Zürich Wiedikon' } }));
+    await expect(shopTracker(async () => undefined).tracker.fetch(TRACKING_NUMBER, '8000'))
+      .resolves.toMatchObject({ pickup_point: 'Pickup parcelshop Zürich Wiedikon' });
+
+    // A record without a name adds nothing to a reply without one.
+    mockGuestApi(Response.json(awaitingShop()));
+    expect((await shopTracker(async () => ({ ...SHOP, name: '' })).tracker.fetch(TRACKING_NUMBER, '8000')).pickup_point)
+      .toBeUndefined();
+  });
+
+  it.each([
+    ['a parcel no longer waiting', awaitingShop(undefined, 'DELIVERED'), 10_000, 'delivered'],
+    ['a parcel the sender dropped off at a shop', awaitingShop([
+      { ...OUT_SCAN, time: '18:05:12', eventType: 'ORI', translation: 'Your parcel arrived at our depot' }, SHOP_SCAN,
+    ]), 10_000, 'ready_for_pickup'],
+    ['a reply without a shop scan', awaitingShop([OUT_SCAN]), 10_000, 'ready_for_pickup'],
+    ['a shop id of another shape', awaitingShop([{ ...SHOP_SCAN, pudoId: 'shop 1' }]), 10_000, 'ready_for_pickup'],
+    ['an unverified reply', { ...DELIVERED_UNVERIFIED, status: awaitingShop().status }, 10_000, 'ready_for_pickup'],
+    ['a lookup without time to wait for it', awaitingShop(), 1_000, 'ready_for_pickup'],
+  ])('does not ask for a shop record for %s', async (_, payload, timeoutMs, stage) => {
+    mockGuestApi(Response.json(payload));
+    const { parcelShop, tracker } = shopTracker(async () => SHOP, timeoutMs);
+
+    const result = await tracker.fetch(TRACKING_NUMBER, '8000');
+
+    expect(result.current_stage).toBe(stage);
+    expect(parcelShop).not.toHaveBeenCalled();
+    expect(result.pickup_point).toBeUndefined();
+  });
+
+  it('ends a lookup cancelled while it waits for the shop record', async () => {
+    mockGuestApi(Response.json(awaitingShop()));
+    const controller = new AbortController();
+    const { tracker } = shopTracker((_id, { signal }) => {
+      controller.abort(new Error('caller cancelled'));
+      return Promise.reject(signal.reason as Error);
+    });
+
+    await expect(tracker.fetch(TRACKING_NUMBER, '8000', { signal: controller.signal })).rejects.toThrow();
+  });
+});
+
 describe('DPD adapter factory', () => {
   it('declares both tiers and forwards the postcode as the tracking credential', async () => {
     const fetcher = mockGuestApi(Response.json(READY_FOR_COLLECTION));
@@ -868,6 +982,32 @@ describe('DPD adapter factory', () => {
     await adapter({ ...environment, env: { DPD_FIREBASE_API_KEY: ' ' } })
       .track({ number: TRACKING_NUMBER, postcode: '8000' });
     expect(keyOf(pinned.mock.calls[0])).toMatch(/^AIza/);
+  });
+
+  it("reads the shop's record from the German DPD app's service through the host's transport", async () => {
+    const soap = (operation: string, result: string) => new Response('<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+      + `<soap:Body><${operation}Response xmlns="https://cloud.dpd.com/"><${operation}Result><Ack>true</Ack>${result}`
+      + `</${operation}Result></${operation}Response></soap:Body></soap:Envelope>`, { headers: { 'content-type': 'text/xml' } });
+    const replies: Record<string, Response> = {
+      getSessionFullState: soap('getSessionFullState', '<SessionFullState><SessionToken>U1lOVEhFVElDX1NFU1NJT04=</SessionToken></SessionFullState>'),
+      getParcelShopByID: soap('getParcelShopByID', '<ParcelShop><ShopAddress><Company>Kiosk Example</Company><Street>EXAMPLE STREET</Street>'
+        + '<HouseNo>1</HouseNo><ZipCode>0000</ZipCode><City>EXAMPLE TOWN</City></ShopAddress><PUDOID>CH00001</PUDOID></ParcelShop>'),
+    };
+    const guest = mockGuestApi(Response.json(awaitingShop()), vi.fn<typeof fetch>());
+    const operations: string[] = [];
+    const fetcher: typeof fetch = async (url, init) => {
+      if (String(url) !== DPD_DE_APP_API) return guest(url, init);
+      const operation = /\/(\w+)"$/.exec(new Headers(init?.headers).get('SOAPAction') ?? '')![1]!;
+      operations.push(operation);
+      return replies[operation]!;
+    };
+
+    const result = await adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {}, fetcher })
+      .track({ number: TRACKING_NUMBER, postcode: '8000' });
+
+    expect(result.pickup_point).toBe('Kiosk Example\nEXAMPLE STREET 1\n0000 EXAMPLE TOWN');
+    expect(operations).toEqual(['getSessionFullState', 'getParcelShopByID']);
+    expect(guest).toHaveBeenCalledTimes(4);
   });
 });
 

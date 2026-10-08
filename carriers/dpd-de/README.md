@@ -51,7 +51,9 @@ name and token with a `KeyPhase` derived from its partner password, the
 operation and the minute of the UTC day. These credentials are compiled into the
 app, the same for every install and independent of any account, and are
 included in the adapter. The app also sends a Firebase App Check token, which
-the service does not require.
+the service does not require. The client is in [service.ts](service.ts), shared
+with [DPD Switzerland](../dpd/README.md), whose Pickup shops
+`getParcelShopByID` also knows.
 
 - The service takes tens of seconds to open a session, whatever the device
   data, language or user agent, and then accepts it for hours. One session is

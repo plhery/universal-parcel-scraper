@@ -12,6 +12,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay, isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { TrawlClient, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { DpdAppService, type DpdParcelShop } from '../dpd-de/service.js';
 import {
   API_LABELS, PROOF_OF_DELIVERY_SCAN, apiStage, apiStatus, scanStage, wordingStatus,
 } from './status.js';
@@ -54,6 +55,8 @@ const TOKEN_FAILURE_MEMORY_MS = 30_000;
 /** The browser service may spend the whole request timeout plus its own transport allowance. */
 const SOLVER_ALLOWANCE_MS = 15_000;
 const MAX_BYTES = 10_000_000;
+/** Left to a lookup that waited for its pickup shop's address, to answer without it. */
+const SHOP_RESERVE_MS = 5_000;
 
 /** Cloudflare interrupted the consignee page with an interactive challenge. */
 export class DPDChallengeError extends ChallengeError {
@@ -200,14 +203,32 @@ function apiSender(payload: JsonObject, current: JsonObject): string | null {
 function apiPickupPoint(payload: JsonObject, current: JsonObject, stage: string | null): string | null {
   if (stage !== 'ready_for_pickup') return null;
   // ParcelShop collection points are operational locations, not private
-  // addresses. `receiverName` is the last fallback and is only read as text.
+  // addresses. The receiver's name is not one: it names the recipient.
   const value = firstText(
     ...[current.pickupPoint, current.parcelShop, payload.pickupPoint, payload.parcelShop]
       .map((candidate) => (isRecord(candidate) ? firstText(candidate.name, candidate.shopName) : candidate)),
-    current.receiverName,
-    payload.receiverName,
   );
   return value ? value.slice(0, 200) : null;
+}
+
+/** Scans at DPD's depots and hubs. */
+const DEPOT_SCANS = new Set(['ORI', 'SPL', 'HUI', 'HUS', 'DLI', 'DLS', 'DLQ', 'DLO']);
+
+/**
+ * The PUDO id of the shop the parcel waits at: that of the newest scan naming
+ * one, unless a depot scan came after it, as after the sender's drop-off at a
+ * shop. Verified replies only: `parcelHistory` names no shop.
+ */
+function pickupShopId(payload: JsonObject): string {
+  const scans = (Array.isArray(payload.parcelEvents) ? payload.parcelEvents.filter(isRecord) : [])
+    .map((raw, index) => ({ raw, index, wallClock: `${clean(raw.date)}T${clean(raw.time)}` }))
+    .sort((left, right) => right.wallClock.localeCompare(left.wallClock) || left.index - right.index);
+  for (const { raw } of scans) {
+    const id = clean(raw.pudoId);
+    if (/^[A-Z]{2}\d{1,12}$/.test(id)) return id;
+    if (DEPOT_SCANS.has(scanCode(raw.eventType))) return '';
+  }
+  return '';
 }
 
 function apiLocation(event: JsonObject): string {
@@ -367,7 +388,8 @@ export function parseDPDTrackingApi(
     }
   };
   // Only the fields below leave a scan. `podUrl` embeds the parcel number, and
-  // `pudoId`, `buShortName` and `depotCountry` are DPD's own routing data.
+  // `pudoId`, `buShortName` and `depotCountry` are DPD's own routing data: a
+  // scan's `pudoId` only finds the address of the shop holding the parcel.
   for (const raw of parcelEvents) {
     const code = scanCode(raw.eventType);
     const wallClock = scanWallClock(raw);
@@ -584,6 +606,13 @@ export interface DPDTrackerOptions {
   userAgent?: string;
   /** A further German tier, ahead of the guest tier when no postcode is given. */
   app?: DPDAppTier;
+  /** Finds the address of the Pickup shop a parcel waits at, by its PUDO id. */
+  shops?: DPDParcelShops;
+}
+
+export interface DPDParcelShops {
+  /** The shop, or nothing when it is not found in time; only the signal ends it with an error. */
+  parcelShop(id: string, options: { signal: AbortSignal; timeoutMs: number }): Promise<DpdParcelShop | undefined>;
 }
 
 export interface DPDAppTier {
@@ -604,6 +633,7 @@ export class DPDTracker {
   private readonly recorder?: StepRecorder;
   private readonly userAgent: string;
   private readonly app?: DPDAppTier;
+  private readonly shops?: DPDParcelShops;
   #accessToken = '';
   #accessTokenExpiresAt = 0;
   #basicToken = '';
@@ -624,6 +654,7 @@ export class DPDTracker {
     this.recorder = options.recorder;
     this.userAgent = userAgentOf(options.userAgent);
     this.app = options.app;
+    this.shops = options.shops;
   }
 
   /** The browser service, resolved late so a malformed URL fails the page step, not construction. */
@@ -741,6 +772,14 @@ export class DPDTracker {
       postcodeVerified = false;
     }
     const result = parseDPDTrackingApi(payload, trackingNumber, postcodeVerified);
+    const shopId = this.shops && result.current_stage === 'ready_for_pickup' ? pickupShopId(payload) : '';
+    if (shopId) {
+      // The reply names the shop, if at all, without its address: the shop's own
+      // record adds it. Without the record the result stays as it was.
+      const shop = await this.pickupShop(shopId, lookup);
+      const name = result.pickup_point || shop?.name.slice(0, 200);
+      if (shop && name) result.pickup_point = `${name}\n${shop.address}`;
+    }
     // The guest service can answer for another business unit. A selected
     // German adapter must not project explicit evidence for another country.
     if (this.country === 'DE' && isRecord(payload.status)) {
@@ -751,6 +790,12 @@ export class DPDTracker {
     }
     if (this.country === 'DE') requireGuestActivity(payload, result);
     return result;
+  }
+
+  /** The shop's record, within the budget less a moment for the lookup to answer without it. */
+  private async pickupShop(id: string, lookup: LookupBudget): Promise<DpdParcelShop | undefined> {
+    const timeoutMs = Math.min(this.timeoutMs, lookup.remainingMs()) - SHOP_RESERVE_MS;
+    return timeoutMs > 0 ? this.shops!.parcelShop(id, { signal: lookup.signal, timeoutMs }) : undefined;
   }
 
   private async detailsWithFreshToken(trackingNumber: string, postcode: string | undefined, lookup: LookupBudget): Promise<JsonObject> {
@@ -1040,6 +1085,8 @@ export const adapter: AdapterFactory = (environment) => {
     userAgent: environment.userAgent,
     // A host can follow a rotated key without waiting for a release.
     firebaseApiKey: environment.env.DPD_FIREBASE_API_KEY?.trim() || undefined,
+    // The German DPD app's service holds the group's Pickup shops, Swiss ones included.
+    shops: new DpdAppService({ fetcher: environment.fetcher, userAgent: environment.userAgent }),
   });
   return {
     id: 'dpd',

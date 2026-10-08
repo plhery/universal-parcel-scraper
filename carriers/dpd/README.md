@@ -58,6 +58,21 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
   window for the reply's own day; a different day in the reply wins. An
   unreadable newest notice leaves no estimate, and a notice lapses at a pickup
   point or once a later scan passes its day. Notices remain events.
+- While the parcel waits at a Pickup shop, the pickup point is the shop's
+  name, then its street and its town on their own lines. Verified scans carry
+  the shop's PUDO id: the newest scan with one names the shop, unless a depot
+  scan came after it, as after the sender's drop-off at a shop. The German DPD
+  app's `getParcelShopByID` ([shared service](../dpd-de/service.ts)) answers
+  for Swiss shops too, and its record must name the same id. It gives the
+  street and town in capitals. The reply's own shop name wins over the
+  record's.
+- That service opens an anonymous session once per adapter instance, which
+  takes tens of seconds. A lookup waits for it within its budget, keeping five
+  seconds to answer without the address, and the opening continues for the
+  next lookup. Without the record the pickup point keeps the reply's name, or
+  stays empty.
+- `receiverName` and the `receiver` object are never read as the pickup
+  point: they can name the recipient.
 - Public, app-restricted Firebase identifiers are part of the anonymous app
   protocol. `DPD_FIREBASE_API_KEY` can override the key in the adapter
   environment.
@@ -66,15 +81,21 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
 
 The group-wide API's identity echo alone does not establish Swiss activity.
 Recognition uses only the guest tier; an outage remains a failure instead of
-classifying the number as unknown. Without a postcode, places and verified
-scans are unavailable. Recipient details, addresses, delivery-proof URLs and
-preference links are discarded.
+classifying the number as unknown. Without a postcode, places, verified scans
+and the pickup shop's address are unavailable. Recipient details, addresses,
+delivery-proof URLs and preference links are discarded.
+
+The guest API has no shop lookup by PUDO id. DPD Switzerland's website lists
+shops near a coordinate, with ids and addresses, from
+`www.dpd.com/ch/en/online-shipping/resources/get-pudo-points` without a key;
+it cannot search by id.
 
 The [Dutch myDPD page](https://www.dpd.com/nl/nl/ontvangen/) links to the same
 Geopost Android package, `com.dpdgroup.chatbot.lemny.prod`. Its country selector
 does not establish a separate Dutch API or authorize treating Dutch parcels as
 Swiss. The German national app has a separate
-[SOAP flow](../dpd-de/README.md#mobile-api-alternative).
+[SOAP service](../dpd-de/README.md#app-service), which this adapter asks only
+for Pickup shops.
 
 ## Testing
 

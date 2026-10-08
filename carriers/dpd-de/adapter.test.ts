@@ -4,7 +4,7 @@ import type { TrackingContext } from '../../core/adapter/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { DPDTracker } from '../dpd/adapter.js';
 import { adapter } from './adapter.js';
-import { DPD_DE_APP_API } from './app.js';
+import { DPD_DE_APP_API } from './service.js';
 
 const NUMBER = '01000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8')) as Record<string, unknown>;

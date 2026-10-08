@@ -1,27 +1,16 @@
-import { createHash, randomBytes } from 'node:crypto';
 import { DateTime } from 'luxon';
-import { CarrierError, ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { CarrierError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { calendarDay, isoTime, zonedTime } from '../../core/time/index.js';
-import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
+import type { XmlNode } from '../../core/transport/xml.js';
+import {
+  children, DpdAppService, invalid, one, optional, PostcodeRejected, scalar, SessionExpired, type DpdDePartner,
+} from './service.js';
 import { DPD_DE_APP_SCANS, dpdDeScanKey } from './status.js';
 
-export const DPD_DE_APP_API = 'https://api.paketnavigator.de/services/v1/Navigator3Service.asmx';
 /** Activity the service places outside Germany; the app tier would read the same parcel. */
 export const DPD_DE_OTHER_COUNTRY = 'other_country';
-/** The lookup stopped waiting for the session, which keeps opening for the next one. */
-export const DPD_DE_SESSION_OPENING = 'session_opening';
-const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
-const SERVICE = 'https://cloud.dpd.com/';
-const MAX_BYTES = 2_000_000;
-/** Opening a session has taken up to 42 seconds. */
-const SESSION_OPEN_MS = 75_000;
-// Shared partner credentials of the public app, distributed with the maintainer's approval.
-const PARTNER: DpdDePartner = { name: 'Android Paketnavigator3', token: 'A33363237662F5945576', password: '272 WetFd2mpXrgD' };
-
-export interface DpdDePartner { name: string; token: string; password: string }
 
 /** The app's progress rail: one coarse state for the whole parcel. */
 export const DPD_DE_APP_RAIL: Readonly<Record<string, ClassifiedStatus>> = {
@@ -33,29 +22,6 @@ export const DPD_DE_APP_RAIL: Readonly<Record<string, ClassifiedStatus>> = {
   // Set while the return travels and after it reaches the sender: its own scans tell them apart.
   RETURN_TO_SENDER: { status: 'exception', stage: 'exception' },
 };
-
-function invalid(): never { throw new SchemaError('DPD Germany', 'DPD Germany returned invalid tracking XML'); }
-
-function children(node: XmlNode, name: string, uri = SERVICE): XmlNode[] {
-  return node.children.filter(child => child.name === name && child.uri === uri);
-}
-
-function one(node: XmlNode, name: string, uri = SERVICE): XmlNode {
-  const matches = children(node, name, uri);
-  return matches.length === 1 ? matches[0]! : invalid();
-}
-
-function scalar(node: XmlNode, name: string, max = 200): string {
-  const matches = children(node, name);
-  if (matches.length > 1 || matches[0]?.children.length) invalid();
-  return clean(matches[0]?.text ?? '', max);
-}
-
-function optional(node: XmlNode, name: string): XmlNode | undefined {
-  const matches = children(node, name);
-  if (matches.length > 1) invalid();
-  return matches[0];
-}
 
 const affirmative = (value: string) => value === 'true' || value === '1';
 const placeholderDay = (day: string) => day === '2000-01-01' || day === '0001-01-01';
@@ -110,15 +76,6 @@ function deliveryEstimate(tracking: XmlNode, announced: string | null): string |
   return day ?? announced ?? estimateDay(scalar(tracking, 'DeliveryDateTime', 64));
 }
 
-const escaped = (value: string) => value.replace(/[<>&"']/g, character => `&#${character.charCodeAt(0)};`);
-
-type Fields = { readonly [name: string]: string | Fields };
-const elements = (fields: Fields): string => Object.entries(fields)
-  .map(([name, value]) => `<${name}>${typeof value === 'string' ? escaped(value) : elements(value)}</${name}>`).join('');
-
-class SessionExpired extends Error {}
-class PostcodeRejected extends Error {}
-
 /** A two-letter country, where the service puts a placeholder three-letter one for an unknown depot. */
 function countryOf(node: XmlNode | undefined): string {
   const country = node ? scalar(node, 'Country', 8) : '';
@@ -141,17 +98,6 @@ function shopOf(row: XmlNode): { id: string; name: string } | undefined {
     if (named && named[2]!.trim()) return { id: named[1]!, name: named[2]!.trim() };
   }
   return undefined;
-}
-
-/** The street and town of the shop that `getParcelShopByID` returns, a line each, if it is the requested one. */
-function addressOf(result: XmlNode, id: string): string {
-  const shop = one(result, 'ParcelShop');
-  if (scalar(shop, 'PUDOID', 40) !== id) return '';
-  const address = one(shop, 'ShopAddress');
-  const street = scalar(address, 'Street', 120);
-  const city = scalar(address, 'City', 80);
-  if (!street || !city) return '';
-  return `${[street, scalar(address, 'HouseNo', 20)].filter(Boolean).join(' ')}\n${[scalar(address, 'ZipCode', 16), city].filter(Boolean).join(' ')}`;
 }
 
 /** The measured length, width and height, in millimetres; the shipper's own figures are not read. */
@@ -242,25 +188,12 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
   return { result, shop: pickup?.id ?? '' };
 }
 
-/**
- * The German app's SOAP service. Tracking needs an anonymous device session, which the
- * service takes tens of seconds to open and then accepts for hours: one is kept per client.
- * The opening runs on its own clock, so a lookup that stops waiting leaves it to the next.
- */
+/** DPD Germany's tracking through the German app's service, which keeps one session per client. */
 export class DpdDeAppClient {
-  readonly #partner: DpdDePartner;
-  readonly #fetcher?: typeof fetch;
-  readonly #userAgent: string;
-  readonly #now: () => number;
-  readonly #device = randomBytes(8).toString('hex');
-  #session = '';
-  #opening: { token: Promise<string>; holders: Set<AbortSignal>; release: () => void } | null = null;
+  readonly #service: DpdAppService;
 
   constructor(options: { partner?: DpdDePartner; fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {
-    this.#partner = options.partner ?? PARTNER;
-    this.#fetcher = options.fetcher;
-    this.#userAgent = userAgentOf(options.userAgent);
-    this.#now = options.now ?? Date.now;
+    this.#service = new DpdAppService(options);
   }
 
   /**
@@ -276,9 +209,9 @@ export class DpdDeAppClient {
     const left = () => Math.max(1, Math.floor(deadline - performance.now()));
     try {
       for (let attempt = 0; ; attempt += 1) {
-        const session = await this.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity));
+        const session = await this.#service.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity));
         // Read-only: the parcel is neither added to the session nor redirected.
-        const tracking = (zip: string) => this.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: zip,
+        const tracking = (zip: string) => this.#service.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: zip,
           UpdateNewDeliveryData: 'false', addParcelIfNoTrackingdataAvailable: 'false', ParcelFlowTypeID: 'receiving' }, options.signal, left());
         try {
           let data: XmlNode;
@@ -292,19 +225,18 @@ export class DpdDeAppClient {
             data = await tracking('');
             verified = false;
           }
-          const scans = await this.call('getTrackingScanList', { SessionToken: session, ParcelNo: number,
+          const scans = await this.#service.call('getTrackingScanList', { SessionToken: session, ParcelNo: number,
             DeliveryZipCode: verified ? postcode : '' }, options.signal, left());
           const { result, shop } = parseDpdDeApp(data, scans, number);
           // The scans name the shop without its address, which the shop's own record adds.
-          if (shop) {
-            const address = await this.shopAddress(session, shop, options.signal, left());
-            if (address) result.pickup_point = `${result.pickup_point}\n${address}`;
-          }
+          // Without it, the parcel is found all the same and its pickup point keeps the name alone.
+          const address = shop ? (await this.#service.parcelShop(shop, { signal: options.signal, timeoutMs: left() }))?.address : undefined;
+          if (address) result.pickup_point = `${result.pickup_point}\n${address}`;
           if (verified !== undefined) result.dpd_postcode_verified = verified;
           return result;
         } catch (error) {
           if (!(error instanceof SessionExpired) || attempt) throw error;
-          if (this.#session === session) this.#session = '';
+          this.#service.expire(session);
         }
       }
     } catch (error) {
@@ -316,89 +248,5 @@ export class DpdDeAppClient {
       });
       throw new TransportError('DPD Germany', 'DPD Germany app request failed');
     }
-  }
-
-  /** The shop's street and town, or nothing: the parcel is found, and its pickup point keeps its name without them. */
-  private async shopAddress(session: string, id: string, signal: AbortSignal, timeoutMs: number): Promise<string> {
-    try {
-      return addressOf(await this.call('getParcelShopByID', { SessionToken: session, ParcelShopID: '0', PudoID: id,
-        ParcelShopOnly: 'false' }, signal, timeoutMs), id);
-    } catch {
-      signal.throwIfAborted();
-      return '';
-    }
-  }
-
-  /**
-   * One session for every lookup. The opening runs while a lookup that asked for it is still
-   * running, even one that stopped waiting; each lookup waits until its signal or `waitMs` ends.
-   */
-  private async session(signal: AbortSignal, waitMs: number): Promise<string> {
-    if (this.#session) return this.#session;
-    signal.throwIfAborted();
-    if (!this.#opening) {
-      const controller = new AbortController();
-      const holders = new Set<AbortSignal>();
-      const token = this.call('getSessionFullState', { SessionToken: '', DeviceData: {
-        HardwareID: this.#device, BootSystemID: 'Android_Phone', Version: '15', AppVersion: '4.2.0',
-      } }, controller.signal, SESSION_OPEN_MS).then(result => {
-        const value = scalar(one(result, 'SessionFullState'), 'SessionToken', 600);
-        if (!/^[A-Za-z0-9+/=]{16,512}$/.test(value)) invalid();
-        return this.#session = value;
-      });
-      const release = () => {
-        for (const holder of holders) if (holder.aborted) holders.delete(holder);
-        if (!holders.size) controller.abort(new Error('No lookup is waiting for the DPD Germany session'));
-      };
-      const opening = { token, holders, release };
-      this.#opening = opening;
-      void token.catch(() => undefined).finally(() => {
-        if (this.#opening === opening) this.#opening = null;
-        for (const holder of holders) holder.removeEventListener('abort', release);
-      });
-    }
-    const { token, holders, release } = this.#opening;
-    if (!holders.has(signal)) {
-      holders.add(signal);
-      signal.addEventListener('abort', release, { once: true });
-    }
-    let leave!: () => void;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const left = new Promise<never>((_resolve, reject) => {
-      leave = () => reject(signal.reason as Error);
-      timer = setTimeout(() => reject(new IndeterminateError('DPD Germany', 'DPD Germany app session is still opening', {
-        reason: DPD_DE_SESSION_OPENING,
-      })), Math.max(0, Math.min(waitMs, SESSION_OPEN_MS)));
-    });
-    signal.addEventListener('abort', leave, { once: true });
-    try { return await Promise.race([token, left]); }
-    finally { clearTimeout(timer); signal.removeEventListener('abort', leave); }
-  }
-
-  private async call(operation: string, fields: Fields, signal: AbortSignal, timeoutMs: number): Promise<XmlNode> {
-    // The service checks a key derived from the minute of the UTC day.
-    const now = new Date(this.#now());
-    const phase = String((now.getUTCHours() * 60 + now.getUTCMinutes() + 1000) * 3);
-    const key = phase + createHash('md5').update(`${phase}${this.#partner.name}0${operation}${this.#partner.password}`).digest('base64').slice(0, 16);
-    const body = `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="${SOAP}"><soap:Body><${operation} xmlns="${SERVICE}"><${operation}Request>${elements({
-      Version: '100', Language: 'de_EN', PartnerCredentials: { Name: this.#partner.name, Token: this.#partner.token, KeyPhase: key }, ...fields,
-    })}</${operation}Request></${operation}></soap:Body></soap:Envelope>`;
-    const { response, bytes } = await fetchBounded(DPD_DE_APP_API, { method: 'POST', signal, body,
-      headers: { 'Content-Type': 'text/xml; charset=utf-8', SOAPAction: `"${SERVICE}${operation}"`, Accept: 'text/xml', 'User-Agent': this.#userAgent } }, {
-      provider: 'DPD Germany', maxBytes: MAX_BYTES, timeoutMs, fetcher: this.#fetcher, allowHttpStatuses: [404, 410],
-    });
-    if (response.status !== 200) throw new TransportError('DPD Germany', 'DPD Germany app service is unavailable', { status: response.status });
-    const root = xmlDocument(decodeText(bytes), MAX_BYTES) ?? invalid();
-    if (root.name !== 'Envelope' || root.uri !== SOAP) invalid();
-    const result = one(one(one(root, 'Body', SOAP), `${operation}Response`), `${operation}Result`);
-    const codes = children(result, 'ErrorDataList').flatMap(list => children(list, 'ErrorData')).map(error => scalar(error, 'ErrorCode', 80));
-    if (codes.some(code => code === 'ERROR_PARTNER' || code === 'ERROR_KEYPHASE')) {
-      throw new ChallengeError('DPD Germany', 'DPD Germany refused the app credential');
-    }
-    if (codes.includes('ERROR_SESSION_NOT_VALID')) throw new SessionExpired();
-    if (codes.includes('ERROR_TRACKING_DELIVERYZIPCODE_NOT_VALID')) throw new PostcodeRejected();
-    // "No tracking data" also answers for parcels the scan list still knows: it proves no absence.
-    if (scalar(result, 'Ack', 8) !== 'true') throw new IndeterminateError('DPD Germany', 'DPD Germany returned no confirmed parcel');
-    return result;
   }
 }
