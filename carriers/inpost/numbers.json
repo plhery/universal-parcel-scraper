@@ -26,6 +26,9 @@
       "source": {
         "url": "https://pl.trustpilot.com/reviews/6a847d65986657d4111d520e"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -35,7 +38,7 @@
           "bpost"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Quoted in a merchant's reply. The source attributes it to InPost, which stays one candidate among several."
+      "note": "Quoted in a merchant's reply. InPost's tracker returns its history; twenty-four digits stay one candidate among several."
     },
     {
       "number": "640000000000000000000001",
@@ -138,7 +141,7 @@
         "dateKind": "publication"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "InPost PL",
         "reportedRole": "shipment_tracking"
       },
@@ -151,7 +154,67 @@
           "bpost"
         ]
       },
-      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+      "note": "Public report names this carrier. InPost's tracker returns its history."
+    },
+    {
+      "number": "200000046672400966269614",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pl.trustpilot.com/reviews/6ac5fdcadc41c15304ea1acc",
+        "date": "2026-10-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ciblex",
+          "inpost",
+          "bpost"
+        ]
+      },
+      "note": "A parcel to an InPost point abroad that was sent back, per a public review. InPost's tracker returns its history."
+    },
+    {
+      "number": "200000033661600038871668",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pl.trustpilot.com/reviews/6ac5fdcadc41c15304ea1acc",
+        "date": "2026-10-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "relationships": [
+        {
+          "kind": "return_of",
+          "number": "200000046672400966269614",
+          "source": {
+            "url": "https://pl.trustpilot.com/reviews/6ac5fdcadc41c15304ea1acc",
+            "date": "2026-10-07",
+            "dateKind": "publication",
+            "access": "full_page"
+          }
+        }
+      ],
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ciblex",
+          "inpost",
+          "bpost"
+        ]
+      },
+      "note": "The new number the same review gives for the parcel's return. InPost's tracker returns its history, which starts when the outbound parcel turned back."
     }
   ]
 }

@@ -25,11 +25,14 @@
         "url": "https://www.chinapostaltracking.com/qa/blocked-since-july-161167/",
         "date": "2026-09-22"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "intl-post",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Poczta Polska; detection selects the generic postal carrier. Sent from Poland to China; the page does not name the carrier."
+      "note": "Publicly reported parcel sent from Poland to China. Poczta Polska's tracker returns its history; detection selects the generic postal carrier."
     },
     {
       "number": "PX0000000013",
@@ -38,11 +41,14 @@
       "source": {
         "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "poczta-polska",
         "confidence": "high"
       },
-      "note": "Official documentation example, not a real shipment."
+      "note": "Official documentation example. Poczta Polska's tracker returns a history for it."
     },
     {
       "number": "PX7678676761",
@@ -52,11 +58,14 @@
         "url": "https://www.trustpilot.com/reviews/6aa57c3bf5ad63b0c0d968f3",
         "date": "2026-09-12"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "poczta-polska",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Pocztex parcel."
+      "note": "Publicly reported Pocztex parcel that went back to its sender. Poczta Polska's tracker returns its history."
     },
     {
       "number": "CP123456789PL",
@@ -152,7 +161,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "pocztex",
         "reportedRole": "reported_shipment"
       },
@@ -160,7 +169,47 @@
         "carrier": "poczta-polska",
         "confidence": "high"
       },
-      "note": "Public positive delivery review explicitly supplies this tracking number."
+      "note": "Public positive delivery review explicitly supplies this tracking number. Poczta Polska's tracker returns its history."
+    },
+    {
+      "number": "PX2140553297",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pl.trustpilot.com/reviews/6a99acc26cbba8ca230ebf15",
+        "date": "2026-09-03",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "pocztex"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      },
+      "note": "One of two Pocztex parcels a public review names. Poczta Polska's tracker returns its history."
+    },
+    {
+      "number": "PX2140539622",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pl.trustpilot.com/reviews/6a99acc26cbba8ca230ebf15",
+        "date": "2026-09-03",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "pocztex"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      },
+      "note": "The second Pocztex parcel the same review names. Poczta Polska's tracker returns its history."
     }
   ]
 }

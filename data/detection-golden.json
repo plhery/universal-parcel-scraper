@@ -1265,6 +1265,74 @@
     ]
   },
   {
+    "input": "0504921974068",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
+    "input": "0504929314946",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
+    "input": "0505629661187",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
+    "input": "0505677206289",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "0505683900154",
     "carrier": "unknown",
     "confidence": "low",
@@ -3198,6 +3266,36 @@
     ]
   },
   {
+    "input": "200000033661600038871668",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ciblex",
+      "inpost",
+      "bpost"
+    ],
+    "asked": [
+      "inpost",
+      "bpost",
+      "ciblex"
+    ]
+  },
+  {
+    "input": "200000046672400966269614",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ciblex",
+      "inpost",
+      "bpost"
+    ],
+    "asked": [
+      "inpost",
+      "bpost",
+      "ciblex"
+    ]
+  },
+  {
     "input": "200252251046",
     "carrier": "unknown",
     "confidence": "low",
@@ -4277,6 +4375,28 @@
     ]
   },
   {
+    "input": "30411776824",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
     "input": "3072708247886",
     "carrier": "unknown",
     "confidence": "low",
@@ -4900,6 +5020,25 @@
       "blue-dart",
       "japan-post",
       "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "36570542917",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
       "dhl-ecommerce-pl"
     ],
     "asked": [
@@ -8131,6 +8270,22 @@
     ]
   },
   {
+    "input": "8965001153808",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "8G12345678905",
     "carrier": "la-poste",
     "confidence": "high",
@@ -9906,6 +10061,14 @@
     ]
   },
   {
+    "input": "CR217319655NO",
+    "carrier": "bring-posten",
+    "confidence": "high",
+    "candidates": [
+      "bring-posten"
+    ]
+  },
+  {
     "input": "CRIN26062320118472",
     "carrier": "unknown",
     "confidence": "low",
@@ -11304,6 +11467,22 @@
     ]
   },
   {
+    "input": "LL031892682NO",
+    "carrier": "bring-posten",
+    "confidence": "high",
+    "candidates": [
+      "bring-posten"
+    ]
+  },
+  {
+    "input": "LL107781905NO",
+    "carrier": "bring-posten",
+    "confidence": "high",
+    "candidates": [
+      "bring-posten"
+    ]
+  },
+  {
     "input": "LN242142606US",
     "carrier": "intl-post",
     "confidence": "high",
@@ -12057,6 +12236,22 @@
   },
   {
     "input": "PX2121532015",
+    "carrier": "poczta-polska",
+    "confidence": "high",
+    "candidates": [
+      "poczta-polska"
+    ]
+  },
+  {
+    "input": "PX2140539622",
+    "carrier": "poczta-polska",
+    "confidence": "high",
+    "candidates": [
+      "poczta-polska"
+    ]
+  },
+  {
+    "input": "PX2140553297",
     "carrier": "poczta-polska",
     "confidence": "high",
     "candidates": [

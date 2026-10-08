@@ -23,11 +23,65 @@
         "url": "https://www.chinapostaltracking.com/qa/missing-package-161210/",
         "date": "2026-09-23"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "bring-posten",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Sent from Norway to China."
+      "note": "Publicly reported parcel sent from Norway to China. Bring's tracker returns its history."
+    },
+    {
+      "number": "LL107781905NO",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/erlendsellie/HomeAssistantConfig/blob/master/packages/posten_tracking.yaml",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "bring-posten",
+        "confidence": "high"
+      },
+      "note": "A Posten parcel followed by a published home automation configuration. Bring's tracker returns its history."
+    },
+    {
+      "number": "LL031892682NO",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/erlendsellie/HomeAssistantConfig/blob/master/packages/helthjem.yaml",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "bring-posten",
+        "confidence": "high"
+      },
+      "note": "A Posten parcel queried by a published home automation configuration. Bring's tracker no longer returns it."
+    },
+    {
+      "number": "CR217319655NO",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/vshipdk/php-sdk/blob/master/src/Tests/fixtures/actions/shipment/get-response-200-2.json",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "bring-posten",
+        "confidence": "high"
+      },
+      "note": "Parcel number in a shipping platform's recorded Bring booking. Bring's tracker no longer returns it."
     }
   ]
 }

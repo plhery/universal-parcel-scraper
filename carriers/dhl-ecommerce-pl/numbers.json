@@ -82,6 +82,61 @@
         ]
       },
       "note": "Official documentation example, not a real shipment. No rule offers this network for twelve digits; the adapter reads one when the carrier is named."
+    },
+    {
+      "number": "30411776824",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pl.trustpilot.com/reviews/6a7e188f93d3f2755f36c638",
+        "date": "2026-08-14",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Waybill in a public review of DHL in Poland. The portal returns its status, a return to the sender."
+    },
+    {
+      "number": "36570542917",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pl.trustpilot.com/reviews/6a7209a965171728817bef2d",
+        "date": "2026-08-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "Waybill in a public review of DHL in Poland. The portal returns its status, a return to the sender."
     }
   ]
 }
