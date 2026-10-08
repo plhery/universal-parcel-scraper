@@ -50,10 +50,10 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionAskedCarriers('2820000000001')).toContain('delhivery');
   });
 
-  it('uses OnTrac HTTP confirmation for C and D numbers while preserving LaserShip detection', () => {
+  it('selects OnTrac for C and D numbers that pass its check while preserving LaserShip detection', () => {
     for (const number of ['C00000000000006', 'D00000000000005']) {
-      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ontrac'] });
-      expect(recognitionCandidates(number).map(candidate => candidate.carrier)).toContain('ontrac');
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'ontrac', confidence: 'high', candidates: ['ontrac'] });
+      expect(recognitionCandidates(number)).toEqual([]);
     }
     expect(detectCarrierMatch('C00000000000001').candidates).not.toContain('ontrac');
     expect(detectCarrierMatch('1LS0000000000001')).toMatchObject({ carrier: 'ontrac', confidence: 'high' });

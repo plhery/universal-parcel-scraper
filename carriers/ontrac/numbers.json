@@ -88,11 +88,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -104,11 +101,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -120,11 +114,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -136,11 +127,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/ontrac.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -236,11 +224,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
     },
@@ -258,11 +243,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
     },
@@ -318,11 +300,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "ontrac"
-        ]
+        "carrier": "ontrac",
+        "confidence": "high"
       },
       "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
     },

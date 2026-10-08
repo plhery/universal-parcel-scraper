@@ -2777,7 +2777,7 @@
     "detectionRules": [
       {
         "pattern": "^[CD]\\d{14}$",
-        "confidence": "low",
+        "confidence": "high",
         "checksum": "ontrac"
       },
       {

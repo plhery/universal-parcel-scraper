@@ -2779,7 +2779,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^[CD]\\d{14}$",
-        "confidence": "low",
+        "confidence": "high",
         "checksum": "ontrac"
       },
       {

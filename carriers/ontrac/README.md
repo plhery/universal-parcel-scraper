@@ -9,10 +9,11 @@ match the request. A generic missing-resource problem response cannot distinguis
 unknown parcel from an unavailable endpoint, so it remains inconclusive. An empty or
 mismatched package list is inconclusive or a schema failure.
 
-The `C` and `D` number families remain suggestions because their shape alone
-does not establish the operator. They are offered only when the last digit matches UPS's
-`1Z` check, with C counted as 4 and D as 5. HTTP recognition requires matching shipment scans; an unavailable
-tracking resource remains a failed probe.
+The `C` and `D` number families select OnTrac when the last digit matches UPS's `1Z`
+check, with C counted as 4 and D as 5. Nearly every number archived from OnTrac's tracker
+passes it, and no other carrier's rule takes the shape; a number that fails it is not
+offered. HTTP recognition requires matching shipment scans; an unavailable tracking
+resource remains a failed probe.
 
 ## Notes
 

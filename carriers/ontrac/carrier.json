@@ -65,7 +65,7 @@
     {
       "id": "ontrac-1",
       "pattern": "^[CD]\\d{14}$",
-      "confidence": "low",
+      "confidence": "high",
       "checksum": "ontrac"
     },
     {
