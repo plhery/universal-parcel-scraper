@@ -11,15 +11,24 @@
         "Date": "2026-08-30T10:30:00",
         "Libelle": "Votre colis est disponible dans votre Point Relais®",
         "DetailPointRelais": {
+          "Numero": 12345,
+          "Horaires": [
+            { "HeureOuvertureAM": "PRIVATE OPENING", "HeureFermetureAM": "PRIVATE CLOSING", "JourSemaine": 1 }
+          ],
+          "Services": [{ "Code": "PRINT", "Libelle": "PRIVATE SERVICE" }],
           "Adresse": {
-            "AdresseLigne1": "10 PRIVATE STREET",
-            "Ville": "PRIVATE CITY",
-            "CodePostal": "PRIVATE POSTCODE"
+            "Libelle": "EXAMPLE RELAY",
+            "LibelleComplement": "",
+            "AdresseLigne1": "1 EXAMPLE STREET",
+            "AdresseLigne2": "",
+            "CodePostal": "00000",
+            "Ville": "EXAMPLE CITY",
+            "CodePays": "FR"
           },
           "Telephone": "PRIVATE PHONE",
           "Email": "private@example.test",
-          "Latitude": "PRIVATE LATITUDE",
-          "Longitude": "PRIVATE LONGITUDE"
+          "Geolocalisation": { "Latitude": "PRIVATE LATITUDE", "Longitude": "PRIVATE LONGITUDE" },
+          "InfosComplementaires": "PRIVATE INFO"
         },
         "Destinataire": "PRIVATE RECIPIENT"
       },

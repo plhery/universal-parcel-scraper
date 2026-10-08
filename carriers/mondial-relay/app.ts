@@ -85,9 +85,26 @@ function milestoneStatus(steps: readonly JsonObject[]): ClassifiedStatus | null 
 }
 
 /**
- * The app's parcel detail: a headline, milestones and their dated events. It
- * carries no delivery estimate, and its relay, barcode and contact fields are
- * never read.
+ * The relay or locker the detail names as the parcel's delivery point, as the
+ * app shows it: `line1` is its name, the other lines and the town its address.
+ * Its opening hours, coordinates and photo are not read.
+ */
+function deliveryPoint(detail: JsonObject): string {
+  const address = isRecord(detail.deliveryPointModel) ? detail.deliveryPointModel.address : undefined;
+  if (!isRecord(address)) return '';
+  const name = cleanScalar(address.line1, 120);
+  if (!/\p{L}/u.test(name)) return '';
+  const streets = [address.line2, address.line3, address.line4].map((line) => cleanScalar(line, 120)).filter(Boolean);
+  const city = cleanScalar(address.city, 80);
+  return streets.length && city
+    ? [name, ...streets, [cleanScalar(address.postcode, 16), city].filter(Boolean).join(' ')].join('\n')
+    : name;
+}
+
+/**
+ * The app's parcel detail: a headline, milestones and their dated events, and
+ * the delivery point. It carries no delivery estimate, and its pickup code,
+ * barcode and contact fields are never read.
  */
 export function parseMondialRelayApp(payload: unknown, uid: string): CarrierResult {
   if (!Array.isArray(payload)) invalid();
@@ -120,12 +137,15 @@ export function parseMondialRelayApp(payload: unknown, uid: string): CarrierResu
     ? hinted
     : parsed.find(({ classified }) => classified.status !== 'unknown')?.classified ?? milestoneStatus(steps);
   if (!events.length && !current) throw new IndeterminateError('Mondial Relay', 'Mondial Relay app returned no shipment activity');
+  // The delivery point, while the parcel waits there.
+  const pickup = current?.stage === 'ready_for_pickup' ? deliveryPoint(parcel.detail) : '';
   return {
     status: current?.status ?? 'unknown',
     ...(current ? { current_stage: current.stage } : {}),
     last_status_text: hint || events[0]?.description || 'Tracking information received',
     last_update: events[0]?.time ?? null,
     expected_delivery: null,
+    ...(pickup ? { pickup_point: pickup } : {}),
     timezone: ZONE,
     events,
     source: 'mondial_relay_app',

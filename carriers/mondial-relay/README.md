@@ -76,6 +76,13 @@ for another shipment → `SchemaError`.
   "depuis le site METZ"), and that name becomes the scan's location, without a
   country. Both sources word scans alike, so a scan keeps one identity whichever
   answers; a scan stored without its site gains it in place.
+- While the parcel waits at a relay or locker, that point becomes the pickup
+  point: its name, then its street and town on their own lines. The website
+  gives a relay's record (`DetailPointRelais`) on the scans made there, the
+  sender's drop-off included, so only a record on the scans since the parcel
+  reached its pickup point counts: its arrival there and the locker countdown. The app gives the parcel's delivery point
+  (`detail.deliveryPointModel`), whose first address line is its name, as the
+  app shows it.
 
 ## Mobile API
 
@@ -119,8 +126,6 @@ eight-digit shipment number; the brand remains part of the identity.
   Mondial Relay parcel.
 - Mapping milestone numbers first: they show progress-bar position, not what
   happened.
-- Keeping the Point Relais name: the reply doesn't separate it from the
-  address block, so the whole block is skipped.
 - Reading timestamps as UTC: the backend is Paris; offsets would be wrong half
   the year.
 
@@ -130,8 +135,9 @@ eight-digit shipment number; the brand remains part of the identity.
 - Scans at a relay or locker have no location: the website names the relay on
   drop-off and collection scans, but the app does not, and one scan would then
   differ by source.
-- Relay address, contacts and coordinates, recipient name and postcode are never
-  read; the offline test asserts none reach the result.
+- A relay's contacts, opening hours and coordinates, the app's pickup code and
+  the recipient's name and postcode are never read; the offline tests assert
+  none reach the result.
 
 ## Testing
 

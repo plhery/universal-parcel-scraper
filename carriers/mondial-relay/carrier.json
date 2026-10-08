@@ -41,7 +41,8 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "pickup_point"
   ],
   "portal": {
     "url": "https://www.mondialrelay.fr/suivi-de-colis/?numeroExpedition={trackingNumber}",
@@ -59,10 +60,10 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "pickup_point"
     ],
     "discarded": [
-      "pickup_point",
       "recipient_name",
       "recipient_address"
     ],

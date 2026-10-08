@@ -160,7 +160,7 @@ describe('Mondial Relay tracking input', () => {
 });
 
 describe('Mondial Relay response normalization', () => {
-  it('verifies identity, maps history, and projects no relay or recipient data', () => {
+  it('verifies identity, maps history, and projects the relay but no contact or recipient data', () => {
     const result = parseMondialRelayTrackingResponse(
       syntheticSuccessFixture(),
       PUBLIC_CREDENTIAL,
@@ -172,6 +172,7 @@ describe('Mondial Relay response normalization', () => {
       last_status_text: 'Votre colis est disponible dans votre Point Relais®',
       last_update: '2026-08-30T10:30:00+02:00',
       expected_delivery: '2026-08-31',
+      pickup_point: 'EXAMPLE RELAY\n1 EXAMPLE STREET\n00000 EXAMPLE CITY',
       timezone: 'Europe/Paris',
       source: 'mondial_relay_public_web',
     });
@@ -192,13 +193,14 @@ describe('Mondial Relay response normalization', () => {
 
     const serialized = JSON.stringify(result);
     for (const privateValue of [
-      'PRIVATE STREET',
-      'PRIVATE CITY',
-      'PRIVATE POSTCODE',
+      'PRIVATE OPENING',
+      'PRIVATE CLOSING',
+      'PRIVATE SERVICE',
       'PRIVATE PHONE',
       'private@example.test',
       'PRIVATE LATITUDE',
       'PRIVATE LONGITUDE',
+      'PRIVATE INFO',
       'PRIVATE RECIPIENT',
       'PRIVATE DEPOT ADDRESS',
       'PRIVATE REPLACEMENT ADDRESS',
@@ -336,10 +338,41 @@ describe('Mondial Relay response normalization', () => {
     ((fixture.Expedition as Record<string, unknown>).Evenements as unknown[])
       .push({ Date: '2026-08-29T09:00:00', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' });
     const result = parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'pickup_point']);
+    expect(result.pickup_point).toBeTruthy();
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.at(-1)?.location).toBe('EXAMPLE TOWN');
     expect(result.expected_delivery).toBe('2026-08-31');
+  });
+
+  it('names the relay holding the parcel only while it waits there', () => {
+    const relay = (Libelle: string, AdresseLigne1 = '', Ville = '') => ({ Numero: 1,
+      Adresse: { Libelle, LibelleComplement: '', AdresseLigne1, AdresseLigne2: '', CodePostal: '00000', Ville, CodePays: 'FR' } });
+    const parse = (headline: string, ...Evenements: unknown[]) => {
+      const fixture = syntheticSuccessFixture();
+      Object.assign(fixture.Expedition as Record<string, unknown>, { SuiviContextuel: headline, Evenements });
+      return parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
+    };
+    const droppedOff = { Date: '2026-08-27T18:00:00', Libelle: 'Colis pris en charge en Locker',
+      DetailPointRelais: relay('EXAMPLE DROP-OFF LOCKER', '2 EXAMPLE ROAD', 'EXAMPLE TOWN') };
+    const countdown = { Date: '2026-08-30T08:00:00', Libelle: '5 jours restants pour retirer le colis en Locker' };
+    const waiting = (detail: unknown) => parse('Colis disponible au Locker', { ...countdown, DetailPointRelais: detail }, droppedOff);
+    expect(waiting(relay('EXAMPLE LOCKER', '1 EXAMPLE STREET', 'EXAMPLE CITY')).pickup_point)
+      .toBe('EXAMPLE LOCKER\n1 EXAMPLE STREET\n00000 EXAMPLE CITY');
+    // Without its street or town the relay keeps its name; without a name it is none.
+    expect(waiting(relay('EXAMPLE LOCKER', '1 EXAMPLE STREET')).pickup_point).toBe('EXAMPLE LOCKER');
+    expect(waiting(relay('', '1 EXAMPLE STREET', 'EXAMPLE CITY')).pickup_point).toBeUndefined();
+    // The sender's drop-off relay, named before the parcel reached its pickup point, is not where it waits.
+    expect(parse('Colis disponible au Locker', countdown, droppedOff).pickup_point).toBeUndefined();
+    // The relay named on the arrival still counts once the countdown follows it.
+    const arrived = { Date: '2026-08-29T10:00:00', Libelle: 'Colis disponible au Locker',
+      DetailPointRelais: relay('EXAMPLE LOCKER', '1 EXAMPLE STREET', 'EXAMPLE CITY') };
+    expect(parse('Colis disponible au Locker', countdown, arrived, droppedOff).pickup_point)
+      .toBe('EXAMPLE LOCKER\n1 EXAMPLE STREET\n00000 EXAMPLE CITY');
+    const collected = { Date: '2026-08-31T12:00:00', Libelle: 'Colis livré au destinataire',
+      DetailPointRelais: relay('EXAMPLE LOCKER', '1 EXAMPLE STREET', 'EXAMPLE CITY') };
+    expect(parse('Colis livré au destinataire', collected, countdown, droppedOff)).toMatchObject({ current_stage: 'delivered' });
+    expect(parse('Colis livré au destinataire', collected, countdown, droppedOff).pickup_point).toBeUndefined();
   });
 
   it('places a scan at the logistics site its wording names, and nowhere else', () => {

@@ -47,6 +47,8 @@ interface ParsedEvent {
   classified: ClassifiedStatus;
   timestamp: number;
   index: number;
+  /** The relay or locker the scan names, as a pickup point. */
+  relay: string;
 }
 
 /** Strip the markup Mondial Relay embeds in its labels, entities included. */
@@ -155,6 +157,23 @@ function expectedDelivery(value: unknown): string | null {
   return date.isValid ? date.toISODate() : null;
 }
 
+/**
+ * A relay or locker record, `DetailPointRelais`: its name, then its street and
+ * town on their own lines when it gives them. Its contacts, opening hours,
+ * services and coordinates are not read.
+ */
+function relayPoint(detail: unknown): string {
+  if (!isRecord(detail) || !isRecord(detail.Adresse)) return '';
+  const address = detail.Adresse;
+  const name = plainText(address.Libelle, 120);
+  if (!/\p{L}/u.test(name)) return '';
+  const streets = [address.AdresseLigne1, address.AdresseLigne2].map((line) => plainText(line, 120)).filter(Boolean);
+  const city = plainText(address.Ville, 80);
+  return streets.length && city
+    ? [name, ...streets, [plainText(address.CodePostal, 16), city].filter(Boolean).join(' ')].join('\n')
+    : name;
+}
+
 function parseEvents(expedition: JsonObject): ParsedEvent[] {
   if (!Array.isArray(expedition.Evenements)) return [];
   const parsed: ParsedEvent[] = [];
@@ -178,6 +197,7 @@ function parseEvents(expedition: JsonObject): ParsedEvent[] {
       classified,
       timestamp: time.timestamp,
       index,
+      relay: relayPoint(rawEvent.DetailPointRelais),
     });
   });
   parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
@@ -237,6 +257,12 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
     : parsedEvents.find((event) => event.classified.status !== 'unknown')?.classified
       ?? milestoneStatus(expedition);
   const status = current?.status ?? 'unknown';
+  // The scans since the parcel reached its pickup point, newest first: its
+  // arrival there and the locker countdown, which names no relay. Drop-off and
+  // collection scans name a relay too, so only one named among these counts.
+  const stay = current?.stage === 'ready_for_pickup' ? parsedEvents : [];
+  const arrived = stay.findIndex((event) => event.event.stage !== 'ready_for_pickup');
+  const pickup = stay.slice(0, arrived < 0 ? undefined : arrived).find((event) => event.relay)?.relay;
 
   return {
     status,
@@ -248,6 +274,7 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
     expected_delivery: ['delivered', 'exception'].includes(status)
       ? null
       : expectedDelivery(expedition.EstimatedDeliveryDate),
+    ...(pickup ? { pickup_point: pickup } : {}),
     timezone: ZONE,
     events,
     source: 'mondial_relay_public_web',
