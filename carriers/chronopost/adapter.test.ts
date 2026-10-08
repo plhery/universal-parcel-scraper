@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry } from '../../core/adapter/index.js';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -152,13 +153,14 @@ describe('Chronopost direct tracking', () => {
       .toThrow(expect.objectContaining({ kind: 'challenge' }));
   });
 
-  it('shares the whole-number validation and asks Chronopost for a generic postal number over HTTP', async () => {
+  it('shares the whole-number validation, claims its own prefixes and asks Chronopost for a generic postal number over HTTP', async () => {
     expect(normalizeChronopostNumber('xt 123456785 ts')).toBe(number);
     expect(normalizeChronopostNumber('12345678901234E')).toBe('12345678901234E');
     for (const invalid of ['12345678901234A', '6A00000000000', '12345678901234', number + '<tag>']) {
       expect(() => normalizeChronopostNumber(invalid)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
-    expect(recognitionCandidates(number).map(candidate => candidate.carrier)).toContain('chronopost');
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'chronopost', confidence: 'high' });
+    expect(recognitionCandidates('RR123456785TS').map(candidate => candidate.carrier)).toContain('chronopost');
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(fixture));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.recognize!(number)).resolves.toMatchObject({ known: true, lastActivityAt: '2026-01-04T17:38:28.000Z' });

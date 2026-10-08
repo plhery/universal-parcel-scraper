@@ -39,6 +39,24 @@ describe('S10, with one implementation for the client and the server', () => {
   });
 });
 
+describe('Chronopost numbers with an S10 check digit', () => {
+  it.each(['XR123456785TS', 'XT123456785TS', 'XT123456785FR', 'XR123456785DE'])('selects Chronopost for %s', (number) => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'chronopost', confidence: 'high', candidates: ['chronopost'] });
+    expect(recognitionAskedCarriers(number)).toEqual([]);
+  });
+
+  it('keeps a mistyped number a Chronopost suggestion rather than international mail', () => {
+    expect(detectCarrierMatch('XT123456789TS')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['chronopost'] });
+    expect(recognitionAskedCarriers('XT123456789TS')).toEqual(['chronopost']);
+  });
+
+  it.each(['RR123456785TS', 'RR123456785JF'])('asks Chronopost about %s, whose suffix is its own rather than a country', (number) => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['chronopost'] });
+    expect(recognitionAskedCarriers(number)).toEqual(['chronopost']);
+    expect(checksumRejections(number)).toEqual([]);
+  });
+});
+
 describe('normalization', () => {
   it('uppercases and strips the separators carriers print', () => {
     expect(normalizeTrackingNumber(' ra 123 456-789 ch ')).toBe('RA123456789CH');

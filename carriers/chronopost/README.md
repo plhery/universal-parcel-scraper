@@ -19,10 +19,12 @@ The public page's `tracking-no-cms/suivi-colis` fragment and Shop2Shop's
 
 ## Routing and interpretation
 
-Dedicated postal prefixes select Chronopost; other postal-shaped identifiers
-need direct confirmation. A fifteen-character numeric identifier must pass
-the shared DPD check-character validation. These shapes suggest a lookup,
-not carrier ownership.
+Dedicated postal prefixes select Chronopost when their S10 check digit passes.
+Their suffix can be a code of Chronopost's own, such as TS or JF, rather than
+a country, so these numbers are not international mail. Other postal-shaped
+identifiers need direct confirmation. A fifteen-character numeric identifier
+must pass the shared DPD check-character validation. These shapes suggest a
+lookup, not carrier ownership.
 
 Scans retain their supplied offsets and seconds. Offset-less clocks stay
 local. Notifications retain activity without changing the last established

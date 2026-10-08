@@ -110,6 +110,62 @@
       "note": "Made-up number that follows the published format."
     },
     {
+      "number": "XR123456785TS",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of Chronopost parcels whose S10 check digit passes and whose TS suffix is no country."
+    },
+    {
+      "number": "XT123456785TS",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of Chronopost parcels whose S10 check digit passes and whose TS suffix is no country."
+    },
+    {
+      "number": "XT010847192TS",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://suivi-de-colis.fr/chronopost/",
+        "access": "full_page",
+        "date": "2020-06-04",
+        "dateKind": "comment publication"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Parcel number a reader posted under a third-party Chronopost tracking page; the attribution was not independently verified."
+    },
+    {
+      "number": "XT335285235FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://suivi-de-colis.fr/chronopost/",
+        "access": "full_page",
+        "date": "2020-06-18",
+        "dateKind": "comment publication"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Parcel number a reader posted under a third-party Chronopost tracking page, describing a Chronopost agency; the attribution was not independently verified."
+    },
+    {
       "number": "XW295445484JF",
       "role": "shipment",
       "evidence": "public_shipment_report",

@@ -96,7 +96,7 @@
     },
     {
       "id": "la-poste-3",
-      "pattern": "^(?!(?:PZ|XU|XW|XY))[A-Z]{2}\\d{9}FR$",
+      "pattern": "^(?!(?:PZ|XR|XT|XU|XW|XY))[A-Z]{2}\\d{9}FR$",
       "confidence": "high",
       "checksum": "s10"
     }

@@ -21,9 +21,9 @@ oracles. Keep their inputs intact, including spaces, case and leading zeroes.
 Quarantine means unresolved evidence, not a claim that a number is fake. It is for a number
 whose carrier or role is in doubt. A report that names its carrier stays out of quarantine
 even when detection does not know the shape: `expect` records that gap, and the gap is what
-to fix. The suffix of a checksum-valid S10 number names the postal operator that issued it,
-which is attribution enough for a report of one; the delivery carrier can differ. A
-documentation placeholder whose check digit fails is a negative. Matching official history
+to fix. The country suffix of a checksum-valid S10 number names the postal operator that
+issued it, which is attribution enough for a report of one; the delivery carrier can differ.
+A documentation placeholder whose check digit fails is a negative. Matching official history
 resolves a quarantined record; an absent result can reflect expired records.
 
 Every quarantined record names its reason in `context.assessment`:
