@@ -1,5 +1,6 @@
 [
   { "country": "FR", "names": ["Roissy"], "town": "Roissy-en-France", "airport": "CDG" },
   { "country": "GB", "names": ["Heathrow"], "town": "London", "airport": "LHR" },
-  { "country": "GB", "names": ["East Midlands"], "town": "Castle Donington", "airport": "EMA" }
+  { "country": "GB", "names": ["East Midlands"], "town": "Castle Donington", "airport": "EMA" },
+  { "country": "PL", "names": ["Sękocin Stary"], "town": "Sękocin Stary", "latitude": 52.108, "longitude": 20.88, "source": "https://download.geonames.org/export/zip/PL.zip" }
 ]

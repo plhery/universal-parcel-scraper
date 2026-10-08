@@ -58,7 +58,9 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   the airport as `site`. A bare code ("CDG") places nothing: three letters are too often
   something else.
 - `hubs.json` lists hubs named after a place that is not their town ("ROISSY" is the
-  Charles de Gaulle airport, not Roissy-en-Brie), with the town and airport they stand for.
+  Charles de Gaulle airport, not Roissy-en-Brie), with the town and airport they stand for,
+  and hubs in villages too small for the gazetteer ("SEKOCIN STARY", by Warsaw), with their
+  point and its source.
 - A carrier's own coordinates, supplied through the `points` option, move a scan
   to the facility when they are within 30 km of the town its text names. Scans with the same
   text share a point, so a carrier that places some scans of an office keeps them together.

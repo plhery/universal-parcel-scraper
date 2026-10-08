@@ -71,6 +71,10 @@ describe('locatePlace', () => {
     // Roissy is the airport, not Roissy-en-Brie on the other side of Paris.
     expect(place('ROISSY COURRIER INTERNATIONAL')).toMatchObject({ country: 'FR', name: 'Roissy-en-France', site: 'Charles de Gaulle International Airport' });
     expect(place('EAST MIDLANDS - UK')).toMatchObject({ country: 'GB', site: 'East Midlands Airport' });
+    // A hub in a village the gazetteer does not list.
+    for (const location of ['SEKOCIN STARY PL', 'SEKOCIN STARY, PL', 'Sekocin Stary, Poland']) {
+      expect(place(location), location).toEqual({ precision: 'city', country: 'PL', name: location.startsWith('SEKOCIN') ? 'Sękocin Stary' : 'Sekocin Stary', latitude: 52.108, longitude: 20.88 });
+    }
     // A country or a region in the text names no airport.
     for (const location of ['Cuernavaca, Mexico', 'HSINCHU - TAIWAN', 'Soyapango, San Salvador']) expect(place(location)?.site, location).toBeUndefined();
   });

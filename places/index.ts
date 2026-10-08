@@ -105,7 +105,8 @@ const NAMESAKE_THOUSANDS = 100;
 
 // Swiss Post scans end in the site's six-digit number: "Zürich Briefzentrum 801050".
 const FACILITIES = new Map(facilityList.map((facility) => [`${facility.country}:${facility.code}`, facility]));
-// Names carriers give a hub instead of its town: "ROISSY" is Paris-Charles de Gaulle, not Roissy-en-Brie.
+// Names carriers give a hub instead of its town ("ROISSY" is Paris-Charles de Gaulle, not
+// Roissy-en-Brie), and hubs in villages the gazetteer is too coarse for ("SEKOCIN STARY").
 const HUBS = new Map(hubList.flatMap((hub) => hub.names.map((name) => [nameKey(name), hub])));
 
 let loaded: Gazetteer | null = null;
@@ -280,24 +281,26 @@ interface Candidate {
   hub?: boolean;
 }
 
-/** The places a phrase can name. A hub's nickname replaces the towns of its country that share it. */
+/** The places a phrase can name. A hub's name replaces the towns of its country that share it. */
 function candidates(data: Gazetteer, key: string): Candidate[] {
   const hub = HUBS.get(key);
-  const airport = hub && data.airports.get(hub.airport);
+  // At its airport, or at its own point when its village is too small for the gazetteer.
+  const airport = hub?.airport ? data.airports.get(hub.airport) : undefined;
+  const point = airport ?? (hub?.latitude !== undefined && hub.longitude !== undefined ? { latitude: hub.latitude, longitude: hub.longitude } : undefined);
   const towns = [data.keys.get(key) ?? []].flat().flatMap((entry): Candidate[] => {
     const index = entry < 0 ? ~entry : entry;
     const country = data.codes[data.country[index]!]!;
-    if (airport && country === hub.country) return [];
+    if (point && country === hub!.country) return [];
     return [{
       country, admin1: data.codes[data.admin1[index]!] ?? '', admin2: data.codes[data.admin2[index]!] ?? '',
       latitude: data.latitude[index]!, longitude: data.longitude[index]!, thousands: data.population[index]!,
       alternate: entry < 0, name: data.names[index]!,
     }];
   });
-  if (!airport) return towns;
+  if (!hub || !point) return towns;
   return [...towns, {
-    country: hub.country, admin1: '', admin2: '', latitude: airport.latitude, longitude: airport.longitude,
-    thousands: HUB_THOUSANDS, alternate: false, name: hub.town, site: airport.name, hub: true,
+    country: hub.country, admin1: '', admin2: '', latitude: point.latitude, longitude: point.longitude,
+    thousands: HUB_THOUSANDS, alternate: false, name: hub.town, ...(airport ? { site: airport.name } : {}), hub: true,
   }];
 }
 
