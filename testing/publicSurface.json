@@ -267,19 +267,23 @@
       "isKnownCarrierName",
       "latestResultTime",
       "nationalPostCandidate",
+      "normalizeStatusWording",
       "parcelTrackingLinks",
       "parcelTrackingNumbers",
       "recognitionAskedCarriers",
       "resultTimezone",
       "sameInstantIdentityPolicy",
+      "statusMapAnswer",
       "trackingLocationCountry",
       "trackingPlace",
       "universalCarrierHints"
     ],
     "types": [
+      "ObservedStatus",
       "ParcelTrackingLink",
       "SameInstantIdentityPolicy",
       "SameInstantScan",
+      "StatusMapAnswer",
       "TrackedParcel",
       "TrackingPlace"
     ]

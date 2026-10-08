@@ -8,6 +8,7 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../generated/catalog.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /** Codes that mean the parcel reached its recipient. */
 export const POSTLOGISTICS_DELIVERED_CODES = ['DEL', 'DLV', 'POD', 'SIG'] as const;
@@ -34,3 +35,9 @@ export function postlogisticsStatus(code: string): CarrierStatus {
   if (stage === 'registered') return 'pending';
   return 'in_transit';
 }
+
+/** What the map says about one scan, by its code. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code) => (code ? postlogisticsStage(code) : undefined),
+  gaps: [{ code: POSTLOGISTICS_IMAGE_CODE, note: 'A picture taken with a scan, not a movement of the parcel.' }],
+};

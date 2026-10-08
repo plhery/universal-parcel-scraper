@@ -17,7 +17,8 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import { languageStageStatus, trackingLanguageStage, type Stage } from '../../core/status/index.js';
-import { clean } from '../../core/transport/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { clean } from '../../core/transport/text.js';
 
 /** Progress-bar groups, the coarse key every event carries. */
 export const GROUP_STATUSES = new Map<string, CarrierStatus>([
@@ -145,3 +146,23 @@ export function eventStage(group: string, code: string, label: string): Stage {
   if (ACCEPTANCE_CODES.has(normalizedCode)) return 'accepted';
   return 'in_transit';
 }
+
+/** The codes the map reads on their own, beside those of `CODE_STATUSES`. */
+const KNOWN_CODES = new Set([...CODE_STATUSES.keys(), PICKUP_CODE, CUSTOMS_ENTRY_CODE, ...ACCEPTANCE_CODES]);
+
+/**
+ * What the map says about one scan. Its provider code is `GROUP/CODE`, or the
+ * group or the code alone. The answer covers the groups and codes the map
+ * reads; under keys it does not know, a scan's stage comes from its wording
+ * and a default, which stay open for review.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (providerCode, wording) => {
+    const keys = (providerCode ?? '').toLocaleUpperCase('en-US').split('/');
+    const single = keys.length === 1 ? keys[0]! : null;
+    const group = single === null ? keys[0]! : KNOWN_CODES.has(single) ? '' : single;
+    const code = single === null ? keys.slice(1).join('/') : KNOWN_CODES.has(single) ? single : '';
+    return GROUP_STATUSES.has(group) || KNOWN_CODES.has(code) ? eventStage(group, code, wording) : undefined;
+  },
+  gaps: [],
+};

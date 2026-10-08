@@ -47,7 +47,8 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
   enumeration, or where DPD's label names one movement: `HUI`, `HUS`, `DLS` and
   `DLQ` are hub and delivery-depot scans. `ORI` and `SPL` read like
   `IN_TRANSIT` and appear on both sides of the origin depot, so they stay
-  unmapped.
+  unmapped. `statusMap` in [status.ts](status.ts) lists every code and label
+  left unmapped on purpose, for the app's review queue.
 - A proof-of-delivery bookkeeping entry is omitted when the actual delivery
   scan exists, so it cannot shift the delivery time. Delivery estimates are
   omitted after completion or an exception.

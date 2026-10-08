@@ -12,6 +12,7 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../generated/catalog.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /** Shipment-level `globalStatus` → status. The event codes below refine it. */
 export const STATUS_MAP = new Map<string, CarrierStatus>([
@@ -126,4 +127,15 @@ export const GLOBAL_STATUS_STAGE: Record<string, Stage> = {
   NOT_DELIVERED: 'failed_attempt',
   RETURNED: 'returned',
   CUSTOMS: 'customs',
+};
+
+/**
+ * What the map says about one scan. The map reads the last segment of the
+ * dotted event code. A revoked scan's wording ends with its sub-event's label,
+ * "— Revocation", and takes no stage.
+ */
+export const statusMap: CarrierStatusMap = {
+  codeKey: (code) => code.split('.').at(-1) ?? code,
+  stage: (code, wording) => (code && !wording.includes('— revocation') ? swissPostEventStage(code) : undefined),
+  gaps: [{ code: '9112', note: 'An enquiry note, not a movement: the shipment summary decides the stage.' }],
 };

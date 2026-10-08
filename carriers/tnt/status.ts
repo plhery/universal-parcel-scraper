@@ -1,4 +1,5 @@
 import type { ClassifiedStatus } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const STATUS: Record<string, ClassifiedStatus> = {
   "colis chez l'expéditeur": { status: 'pending', stage: 'registered' },
@@ -40,3 +41,9 @@ const EXPRESS_CODES: Record<string, ClassifiedStatus> = {
 export function tntExpressStatus(code: string): ClassifiedStatus | undefined {
   return Object.hasOwn(EXPRESS_CODES, code) ? EXPRESS_CODES[code] : undefined;
 }
+
+/** What the map says about one scan: tnt.com scans carry a code, TNT France's rows only wording. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => (code ? tntExpressStatus(code) : tntFranceStatus(wording))?.stage,
+  gaps: [],
+};

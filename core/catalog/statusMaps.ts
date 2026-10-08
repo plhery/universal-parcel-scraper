@@ -1,0 +1,73 @@
+/**
+ * The carriers' status maps, asked about one scan at a time.
+ *
+ * The parcel app keeps the wording no carrier map staged for review, keyed by
+ * carrier, provider code and normalized wording. `statusMapAnswer` tells it
+ * what the map of the scraper it runs says about such a key: the stage the map
+ * gives it, a gap the map leaves on purpose, or nothing. A carrier declares its
+ * `statusMap` next to its map in `status.ts`; carriers without one answer
+ * `unknown`.
+ */
+import { statusMap as chronopost } from '../../carriers/chronopost/status.js';
+import { statusMap as dhlExpress } from '../../carriers/dhl-express/status.js';
+import { statusMap as dpd } from '../../carriers/dpd/status.js';
+import { statusMap as laPoste } from '../../carriers/la-poste/status.js';
+import { statusMap as postlogistics } from '../../carriers/postlogistics/status.js';
+import { statusMap as swissPost } from '../../carriers/swiss-post/status.js';
+import { statusMap as tnt } from '../../carriers/tnt/status.js';
+import { statusMap as ups } from '../../carriers/ups/status.js';
+import { statusMap as yunexpress } from '../../carriers/yunexpress/status.js';
+import type { CarrierId, Stage } from '../../generated/catalog.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../status/statusMap.js';
+import { CARRIER_DEFINITIONS } from './definitions.js';
+
+/** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
+export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  chronopost, 'dhl-express': dhlExpress, dpd, 'la-poste': laPoste, postlogistics, 'swiss-post': swissPost, tnt, ups, yunexpress,
+};
+
+/** One scan as the app observed it. */
+export interface ObservedStatus {
+  /** The catalog carrier that served the scan, the prefix of the app's provider event id. */
+  readonly carrier: string;
+  readonly providerCode?: string | null;
+  /** The scan's wording, as the carrier sent it or already normalized. */
+  readonly description: string;
+}
+
+/**
+ * What the carrier's map says about a scan: it gives the scan a stage, it
+ * leaves it without one on purpose, or it does not know it.
+ */
+export type StatusMapAnswer =
+  | { readonly kind: 'mapped'; readonly stage: Stage }
+  | { readonly kind: 'intentional_gap'; readonly note: string }
+  | { readonly kind: 'unknown' };
+
+const UNKNOWN: StatusMapAnswer = { kind: 'unknown' };
+
+function carrierStatusMap(carrier: string): CarrierStatusMap | undefined {
+  const adapter = Object.hasOwn(CARRIER_DEFINITIONS, carrier)
+    ? CARRIER_DEFINITIONS[carrier as CarrierId].tracking.adapter
+    : null;
+  return adapter && Object.hasOwn(STATUS_MAPS, adapter) ? STATUS_MAPS[adapter] : undefined;
+}
+
+/**
+ * What the carrier's map says about one observed scan, keyed as the app keys
+ * its observations: carrier, provider code and `normalizeStatusWording`
+ * wording. A gap without a code covers only wording that came without one; a
+ * gap without wording covers every wording of its code.
+ */
+export function statusMapAnswer(observed: ObservedStatus): StatusMapAnswer {
+  const map = carrierStatusMap(observed.carrier);
+  const wording = normalizeStatusWording(observed.description);
+  if (!map || !wording) return UNKNOWN;
+  const code = observed.providerCode || null;
+  const stage = map.stage(code, wording);
+  if (stage) return { kind: 'mapped', stage };
+  const key = code === null ? null : map.codeKey?.(code) ?? code;
+  const gap = map.gaps.find((candidate) => (candidate.code ?? null) === key
+    && (candidate.wording === undefined || candidate.wording === wording));
+  return gap ? { kind: 'intentional_gap', note: gap.note } : UNKNOWN;
+}

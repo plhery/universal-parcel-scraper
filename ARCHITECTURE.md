@@ -29,8 +29,8 @@ decision based on an earlier check belong to whoever calls it.
 - `universal-parcel-scraper/data/*` exposes the generated JSON contracts.
 - `universal-parcel-scraper/app` holds helpers shaped for the parcel app this package was
   extracted from: its parcel view, the carrier-name hints for provider results, the
-  result-clock helpers its sync uses, carrier scan-identity policies and the country a scan's
-  location names. It imports no Node runtime modules and has no backward-compatibility
+  result-clock helpers its sync uses, carrier scan-identity policies, what a carrier's status
+  map says about a scan and the country a scan's location names. It imports no Node runtime modules and has no backward-compatibility
   guarantee; coordinate breaking changes with the app. General-purpose tracking and catalog
   helpers belong in the stable entry points, even when the app is their only consumer.
 
@@ -178,6 +178,19 @@ fallback decisions without mistaking them for explicit maps.
 
 Each carrier's `statuses.json` records the codes and wordings seen from that carrier and the
 stage each one means. [CORPUS.md](CORPUS.md) describes those records.
+
+A carrier can declare a `statusMap` next to its map in `status.ts`: the stage its map gives
+one provider code and wording, and the codes and wordings it leaves without a stage on
+purpose, each with a note. [statusMaps.ts](core/catalog/statusMaps.ts) registers them by
+adapter, so Delivengo reads La Poste's. `statusMapAnswer()` in the app entry asks them the
+way the app keys the wording it reviews: carrier, provider code, and the wording in
+`normalizeStatusWording()` form. It answers `mapped` with the stage, `intentional_gap` with
+the note, or `unknown`. A gap without a code covers only wording that came without one, and
+a gap without wording covers every wording of its code. The answer reads the code and
+wording alone: a stage that depends on the rest of the reply, such as a DPD scan staged by
+its enumeration twin, is `unknown`, and so is every scan of a carrier without a declaration.
+After a release the app can ask it about every open review entry and close those the map
+now stages or leaves out on purpose, under the version it runs.
 
 Some carrier categories cover several milestones. Exact carrier labels refine those cases;
 explanatory reasons and future delivery instructions do not establish a new milestone.

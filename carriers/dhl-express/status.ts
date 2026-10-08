@@ -5,6 +5,7 @@
  * their fixed start. Other wording goes to the shared classifier.
  */
 import { classifyWording, type Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const EXACT: ReadonlyMap<string, Stage> = new Map([
   ['shipment information received', 'registered'],
@@ -35,3 +36,9 @@ export function dhlExpressStage(description: string): { stage: Stage; source: st
   const stage = dhlExpressCheckpointStage(description);
   return stage ? { stage, source: 'carrier_map' } : classifyWording(description, 'pending');
 }
+
+/** What the map says about one scan: the web feed's codes are not read, only the checkpoint wording. */
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => dhlExpressCheckpointStage(wording),
+  gaps: [],
+};

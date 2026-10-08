@@ -13,6 +13,7 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const EXCEPTION_TERMS = [
   'return to sender', 'returned', 'delivery attempted', 'we missed you',
@@ -91,3 +92,9 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
 export function upsActivityStage(code: string): Stage | undefined {
   return ACTIVITY_STAGES.get(code.trim().toUpperCase());
 }
+
+/** What the map says about one scan, by its activity code. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code) => (code ? upsActivityStage(code) : undefined),
+  gaps: [],
+};

@@ -56,7 +56,9 @@ The script writes the folder. From there:
 2. Add public or synthetic sample numbers to `numbers.json`.
 3. Implement retrieval and a pure parser. The existing carrier folders show the adapter
    contract.
-4. Record the status codes and wordings you saw in `statuses.json`.
+4. Record the status codes and wordings you saw in `statuses.json`. A `status.ts` that
+   declares a `statusMap`, with the codes it leaves unmapped on purpose, is registered in
+   [statusMaps.ts](core/catalog/statusMaps.ts).
 5. Add synthetic fixtures with offline tests.
 6. Write the README.
 7. Run `npm run generate` to rebuild the catalog and the registry.

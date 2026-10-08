@@ -1,4 +1,5 @@
 import { classifyWording, type ClassifiedWording } from '../../core/status/index.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const observed = new Map<string, { label: string; stage: ClassifiedWording['stage'] }>([
   ['DC', { label: "Colis en cours de préparation chez l'expéditeur", stage: 'registered' }],
@@ -16,8 +17,10 @@ const observed = new Map<string, { label: string; stage: ClassifiedWording['stag
   ['SK', { label: "Colis en attente d'informations complémentaires de votre part", stage: 'exception' }],
 ]);
 
+const NOTIFICATION = 'Destinataire informé par SMS ou mail';
+
 export function isChronopostNotification(label: string): boolean {
-  return label === 'Destinataire informé par SMS ou mail';
+  return label === NOTIFICATION;
 }
 
 /** The courier's drop-off scan, which can follow the pickup point's own arrival scan. */
@@ -31,3 +34,15 @@ export function chronopostStage(code: string, label: string): ClassifiedWording 
   if (known?.label === label) return { stage: known.stage, source: 'carrier_map' };
   return classifyWording(label, 'pending');
 }
+
+/** What the map says about one scan: a code whose observed wording it carries. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => {
+    const known = code ? observed.get(code) : undefined;
+    return known && normalizeStatusWording(known.label) === wording ? known.stage : undefined;
+  },
+  gaps: [{
+    code: 'SM', wording: normalizeStatusWording(NOTIFICATION),
+    note: 'A notice to the recipient, not a scan: it keeps the stage the parcel already had.',
+  }],
+};

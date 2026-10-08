@@ -15,7 +15,8 @@
  * unmapped so the sync's classifier records the wording for review instead of
  * this map inventing a milestone. Scan codes are mapped where a live lookup
  * paired them with an enumeration value, or where DPD's own label names one
- * movement inside its network (see `scanStage`).
+ * movement inside its network (see `scanStage`). `statusMap` lists the codes
+ * and labels left unmapped on purpose.
  *
  * Provenance: the enumeration, the scan codes and their English labels are
  * what the myDPD guest API returns for Swiss consignee lookups; the wording
@@ -24,6 +25,7 @@
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
 import { deliveryForecastRemainder } from '../../core/status/language.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /** English labels for the guest API enumeration, used when the API sends no translation. */
 export const API_LABELS: Record<string, string> = {
@@ -117,3 +119,29 @@ export function scanStage(code: string): Stage | null {
  * with no place. Paperwork, not a movement of the parcel.
  */
 export const PROOF_OF_DELIVERY_SCAN = 'DEYY';
+
+const MOVES_WITHOUT_MILESTONE = "DPD's map leaves it unmapped on purpose: it moves the parcel in transit without a milestone of its own.";
+
+/**
+ * What the map says about one scan. A scan code or an enumeration value is all
+ * it reads: the rendered page's prose has no code and gets no stage here, and
+ * a code staged by its enumeration twin depends on the reply, so it is not
+ * answered by the code alone.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (code) => (code ? scanStage(code) ?? apiStage(code) : null) ?? undefined,
+  gaps: [
+    { code: 'PARCEL_HANDED', note: MOVES_WITHOUT_MILESTONE },
+    { code: 'IN_TRANSIT', note: MOVES_WITHOUT_MILESTONE },
+    { code: 'AT_DELIVERY_CENTER', note: MOVES_WITHOUT_MILESTONE },
+    { code: 'ORI', note: "DPD's map leaves it unmapped on purpose, like its twin PARCEL_HANDED, so an import that cleared customs does not step back to accepted." },
+    { wording: 'parcel handed to dpd', note: "The label of PARCEL_HANDED, which DPD's map leaves unmapped on purpose." },
+    { wording: 'your parcel is on its way', note: "The label of IN_TRANSIT, which DPD's map leaves unmapped on purpose." },
+    { wording: 'at delivery center', note: "The label of AT_DELIVERY_CENTER, which DPD's map leaves unmapped on purpose." },
+    { code: 'SPL', note: 'Worded like IN_TRANSIT and seen on both sides of the origin depot, so it names no movement of its own.' },
+    { code: 'OTHER', note: "The guest API's catch-all, which names no movement." },
+    { code: 'SPE', note: 'A delivery estimate or a changed delivery day, not a scan.' },
+    { code: 'MSDLO', note: 'The notice DPD emailed for the delivery round, not a scan.' },
+    { code: 'MIDLI', note: "The recipient's delivery instruction, not a scan." },
+  ],
+};

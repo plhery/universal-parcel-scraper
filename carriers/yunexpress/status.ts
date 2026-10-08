@@ -1,8 +1,6 @@
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
-
-/** Yuntrack's scan wording, compared without case or repeated spaces. */
-const wordingKey = (description: string) => description.toLocaleLowerCase('en-US').trim().split(/\s+/).join(' ');
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Shipment information received', { status: 'pending', stage: 'registered' }],
@@ -60,7 +58,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['REMINDER EMAIL SENT FAILED', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
 ];
 
-const WORDING = new Map(ENTRIES.map(([text, status]) => [wordingKey(text), status]));
+/** Yuntrack's scan wording, compared without case or repeated spaces. */
+const WORDING = new Map(ENTRIES.map(([text, status]) => [normalizeStatusWording(text), status]));
 
 // The page labels these latest-event codes Processing and Transit. They give
 // the parcel's status when its newest wording is new, never a scan's stage.
@@ -70,10 +69,19 @@ export function yunExpressStatus(description: string, code?: unknown): Classifie
   // The latest event's explicit delivered code also covers partner wording
   // containing variable delivery notes. It is never inherited by older scans.
   if (code === 50) return { status: 'delivered', stage: 'delivered' };
-  return WORDING.get(wordingKey(description));
+  return WORDING.get(normalizeStatusWording(description));
 }
 
 /** The status the latest event's own code states, for wording the map does not know. */
 export function yunExpressCodeStatus(code: unknown): CarrierStatus | undefined {
   return CODE_STATUS.get(code);
 }
+
+/**
+ * What the map says about one scan. Scans carry no code: the delivered code
+ * comes only with the latest event and is never a scan's own.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => yunExpressStatus(wording)?.stage,
+  gaps: [],
+};
