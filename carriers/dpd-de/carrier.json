@@ -47,6 +47,7 @@
     "sender_name",
     "pickup_point",
     "weight",
+    "dimensions",
     "delivered_at",
     "provider_code"
   ],
@@ -64,6 +65,10 @@
       "history",
       "location",
       "eta",
+      "pickup_point",
+      "weight",
+      "dimensions",
+      "delivered_at",
       "provider_code"
     ],
     "discarded": [

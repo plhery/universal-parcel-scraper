@@ -292,6 +292,81 @@ describe('DPD Germany app service', () => {
   });
 });
 
+describe('DPD Germany app projection', () => {
+  type Row = [day: string, time: string, wording: string, location: string, additional?: [code: string, text: string]];
+  const scanList = (rows: Row[]) => fixture('scans').replace(/<TrackingScanList>[\s\S]*<\/TrackingScanList>/, `<TrackingScanList>${rows.map(([day, time, wording, location, additional]) =>
+    `<TrackingScan><ScanDate>${day}</ScanDate><ScanTime>${time}</ScanTime><StatusText>${wording}</StatusText><Location>${location}</Location>`
+    + `<ServiceCode>101</ServiceCode><TrackingScanAdditionalList>${additional ? `<TrackingScanAdditionalType><AdditionalCode>${additional[0]}</AdditionalCode>`
+    + `<Description>${additional[1]}</Description></TrackingScanAdditionalType>` : ''}</TrackingScanAdditionalList></TrackingScan>`).join('')}</TrackingScanList>`);
+  const tracking = (rail: string, order = '') => fixture('tracking').replace('<StatusID>AT_DELIVERY_DEPOT</StatusID>', `<StatusID>${rail}</StatusID>`)
+    .replace('<Weight>2,50</Weight>', `<Weight>2,50</Weight>${order}`);
+  const track = (rail: string, rows: Row[], order = '') => service({
+    getTrackingData: [() => xml(tracking(rail, order))], getTrackingScanList: [() => xml(scanList(rows))],
+  }).track();
+  const stages = (result: Awaited<ReturnType<typeof track>>) => result.events?.map(event => [event.description, event.stage]);
+
+  it('reads a return to the sender as an exception that ends in a returned stage', async () => {
+    const returning: Row[] = [
+      ['05.01.2026', '10:00', 'Unfortunately we have not been able to deliver your parcel.', 'Musterstadt (DE)', ['011', 'Consignee address not correct.']],
+      ['05.01.2026', '16:00', 'Back at parcel delivery centre after an unsuccessful delivery attempt.', 'Musterstadt (DE)'],
+      ['08.01.2026', '03:00', 'At parcel delivery centre. (Return to sender)', 'Absenderstadt (DE)'],
+    ];
+    // The rail turns to the return before the return's own scans, and stays there after its delivery.
+    await expect(track('RETURN_TO_SENDER', [...returning, ['08.01.2026', '05:00', 'A future notice', 'Absenderstadt (DE)']]))
+      .resolves.toMatchObject({ status: 'exception', current_stage: 'exception' });
+    const result = await track('RETURN_TO_SENDER', [...returning, ['09.01.2026', '12:00', 'Delivered. (Return to sender)', 'Absenderstadt (DE)']]);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', expected_delivery: null });
+    expect(result.delivered_at).toBeUndefined();
+    expect(stages(result)).toEqual([
+      ['Delivered. (Return to sender)', 'returned'],
+      ['At parcel delivery centre. (Return to sender)', 'exception'],
+      ['Back at parcel delivery centre after an unsuccessful delivery attempt.', 'failed_attempt'],
+      ['Unfortunately we have not been able to deliver your parcel.', 'failed_attempt'],
+    ]);
+    expect(JSON.stringify(result)).not.toContain('Consignee');
+  });
+
+  it('reads a sender collection, a mailbox delivery, the delivery time and the measured size', async () => {
+    const result = await track('DELIVERED', [
+      ['05.01.2026', '00:05', 'Pickup ordered for: 05.01.2026', 'Absenderstadt (DE)'],
+      ['05.01.2026', '14:50', 'Pickup not possible No goods acceptance / goods pickup.', 'Absenderstadt (DE)'],
+      ['06.01.2026', '10:00', 'Parcel handed to DPD', 'Absenderstadt (DE)'],
+      ['07.01.2026', '12:31', 'Parcel has been left in: mail box', 'Musterstadt (DE)'],
+      ['07.01.2026', '12:31', 'Delivered.', 'Musterstadt (DE)'],
+    ], '<Length>550</Length><Width>420</Width><Height>305</Height><LengthByCustomer>0</LengthByCustomer>');
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-07T12:31:00+01:00',
+      dimensions_text: '55 × 42 × 30.5 cm', weight_kg: 2.5 });
+    expect(stages(result)).toEqual([
+      ['Delivered.', 'delivered'],
+      ['Parcel has been left in: mail box', 'delivered'],
+      ['Parcel handed to DPD', 'accepted'],
+      ['Pickup not possible No goods acceptance / goods pickup.', 'registered'],
+      ['Pickup ordered for: 05.01.2026', 'registered'],
+    ]);
+    expect(result.events?.every(event => event.stage_source === 'carrier_map')).toBe(true);
+  });
+
+  it('skips a size with an unmeasured side', async () => {
+    const result = await track('AT_DELIVERY_DEPOT', [['05.01.2026', '10:00', 'At parcel delivery centre.', 'Musterstadt (DE)']],
+      '<Length>0</Length><Width>0</Width><Height>0</Height><LengthByCustomer>350</LengthByCustomer><WidthByCustomer>250</WidthByCustomer><HeightByCustomer>100</HeightByCustomer>');
+    expect(result.dimensions_text).toBeUndefined();
+  });
+
+  it('names the shop holding the parcel only while it waits there', async () => {
+    const atShop: Row[] = [
+      ['05.01.2026', '13:33', 'Transfer to DPD Pickup station by DPD driver.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']],
+      ['05.01.2026', '13:34', 'Delivered by driver to DPD Pickup parcelshop/ station.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']],
+    ];
+    // The rail keeps its handover state after the pickup too, so the scans decide.
+    const waiting = await track('HANDOVER_TO_PARCELSHOP', atShop);
+    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', pickup_point: 'Kiosk Muster', expected_delivery: null });
+    const collected = await track('HANDOVER_TO_PARCELSHOP', [...atShop,
+      ['06.01.2026', '09:57', 'Picked up from DPD Pickup station by consignee.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']]]);
+    expect(collected).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-06T09:57:00+01:00' });
+    expect(collected.pickup_point).toBeUndefined();
+  });
+});
+
 describe('DPD Germany app vocabulary', () => {
   const recorded = (JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')) as {
     entries: Array<{ code?: string; wording: string; stage?: string; note?: string }>;

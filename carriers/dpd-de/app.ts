@@ -29,22 +29,38 @@ export const DPD_DE_APP_RAIL: Readonly<Record<string, ClassifiedStatus>> = {
   AT_DELIVERY_DEPOT: { status: 'in_transit', stage: 'in_transit' },
   OUT_FOR_DELIVERY: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   DELIVERED: { status: 'delivered', stage: 'delivered' },
+  // Set while the return travels and after it reaches the sender: its own scans tell them apart.
+  RETURN_TO_SENDER: { status: 'exception', stage: 'exception' },
 };
 
-/** Scans carry wording only. The shared classifier misreads several of these, so each is mapped whole. */
+/**
+ * Scans carry wording only. The shared classifier misreads several of these, so each is mapped
+ * whole; a variable date is recorded as an ellipsis.
+ */
 export const DPD_DE_APP_SCANS: Readonly<Record<string, Stage>> = {
   'Order information has been transmitted to DPD.': 'registered',
+  // The sender booked a collection, which has not happened yet.
+  'Pickup ordered for: …': 'registered',
+  'Pickup not possible No goods acceptance / goods pickup.': 'registered',
+  'Parcel handed to DPD': 'accepted',
   'Parcel handed to Pickup parcelshop by consignor.': 'accepted',
   'In transit.': 'in_transit',
   'At parcel delivery centre.': 'in_transit',
   'Transfer to DPD Pickup station by DPD driver.': 'in_transit',
   'Out for delivery.': 'out_for_delivery',
   'Unfortunately we have not been able to deliver your parcel.': 'failed_attempt',
+  'Back at parcel delivery centre after an unsuccessful delivery attempt.': 'failed_attempt',
   "We're sorry but your parcel couldn't be delivered as arranged.": 'exception',
   'Delivered by driver to DPD Pickup parcelshop/ station.': 'ready_for_pickup',
   'Picked up from DPD Pickup station by consignee.': 'delivered',
+  'Parcel has been left in: mail box': 'delivered',
   'Delivered.': 'delivered',
+  // The return's own scans: under way it stays nonterminal, then it reaches the sender.
+  'At parcel delivery centre. (Return to sender)': 'exception',
+  'Delivered. (Return to sender)': 'returned',
 };
+
+const scanKey = (wording: string) => wording.replace(/^(Pickup ordered for:) \d{2}\.\d{2}\.\d{4}$/, '$1 …');
 
 function invalid(): never { throw new SchemaError('DPD Germany', 'DPD Germany returned invalid tracking XML'); }
 
@@ -137,10 +153,28 @@ function countryOf(node: XmlNode | undefined): string {
   return /^[A-Z]{2}$/.test(country) ? country : '';
 }
 
+/** As on the guest API: a parcel waiting at a shop is out for delivery, and a failed attempt stays in transit. */
 function statusOf(stage: string | undefined): CarrierStatus {
   if (stage === 'delivered' || stage === 'out_for_delivery' || stage === 'exception') return stage;
+  if (stage === 'ready_for_pickup') return 'out_for_delivery';
+  if (stage === 'returned') return 'exception';
   if (stage === 'registered') return 'pending';
   return stage ? 'in_transit' : 'unknown';
+}
+
+/** The shop a scan names, as `<shop id>|<shop name>` under additional code 999. */
+function shopOf(row: XmlNode): string {
+  const named = children(row, 'TrackingScanAdditionalList').flatMap(list => children(list, 'TrackingScanAdditionalType'))
+    .filter(entry => scalar(entry, 'AdditionalCode', 8) === '999')
+    .map(entry => /^[A-Z]{2}\d{1,12}\|(.{1,120})$/.exec(scalar(entry, 'Description', 200))?.[1]?.trim() ?? '');
+  return named.find(Boolean) ?? '';
+}
+
+/** The measured length, width and height, in millimetres; the shipper's own figures are not read. */
+function dimensionsOf(order: XmlNode): string | null {
+  const sides = ['Length', 'Width', 'Height'].map(name => scalar(order, name, 16));
+  if (!sides.every(side => /^\d{1,5}$/.test(side) && Number(side) > 0)) return null;
+  return `${sides.map(side => Number(side) / 10).join(' × ')} cm`;
 }
 
 /** Scans arrive oldest first, with a facility's wall clock and no offset. */
@@ -153,6 +187,7 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
   const seen = new Set<string>();
   let placed = '';
   let announced: string | null = null;
+  let shop = '';
   for (const row of rows) {
     const wording = scalar(row, 'StatusText', 500);
     if (!wording) invalid();
@@ -169,14 +204,16 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
     // German facilities keep German civil time; a clock elsewhere has no established zone.
     const clock = zonedTime(`${day} ${time}`, 'dd.MM.yyyy HH:mm', place?.[2] === 'DE' ? 'Europe/Berlin' : 'UTC');
     if (!clock) invalid();
-    const stage = DPD_DE_APP_SCANS[wording];
+    const key = scanKey(wording);
+    const stage = Object.hasOwn(DPD_DE_APP_SCANS, key) ? DPD_DE_APP_SCANS[key] : undefined;
+    if (stage === 'ready_for_pickup') shop = shopOf(row);
     const event: CarrierEvent = {
       ...(place?.[2] === 'DE' ? { time: clock.iso } : { local_time: clock.iso.slice(0, 19), provider_time_text: `${day} ${time}` }),
       ...(place ? { location: `${place[1]}, ${place[2]}` } : {}),
       description: /\b(?:delivered to|signed (?:for )?by|received by)\b/i.test(wording) ? 'Delivery update' : wording,
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
     };
-    // Reason codes, shop names and service descriptions are not projected.
+    // Reason codes and service descriptions are not projected.
     const identity = JSON.stringify(event);
     if (seen.has(identity)) continue;
     seen.add(identity);
@@ -193,10 +230,14 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
   }
   events.reverse();
   const current = events[0]!;
-  const rail = DPD_DE_APP_RAIL[scalar(one(tracking, 'LastStatusInfo'), 'StatusID', 64)];
+  const railId = scalar(one(tracking, 'LastStatusInfo'), 'StatusID', 64);
+  const rail = Object.hasOwn(DPD_DE_APP_RAIL, railId) ? DPD_DE_APP_RAIL[railId] : undefined;
   const stage = current.stage ?? rail?.stage;
   const status = rail?.status ?? statusOf(current.stage);
-  const kilograms = Number(scalar(one(tracking, 'OrderInfo'), 'Weight', 16).replace(',', '.'));
+  const order = one(tracking, 'OrderInfo');
+  const kilograms = Number(scalar(order, 'Weight', 16).replace(',', '.'));
+  const dimensions = dimensionsOf(order);
+  const deliveredAt = status === 'delivered' ? events.find(event => event.stage === 'delivered')?.time : undefined;
   return {
     status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description ?? null, last_update: current.time ?? null,
@@ -204,6 +245,10 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
       || stage === 'delivered' || stage === 'ready_for_pickup' ? null : deliveryEstimate(tracking, announced),
     ...(current.time ? {} : { last_update_local: current.local_time }),
     ...(Number.isFinite(kilograms) && kilograms > 0 ? { weight_kg: kilograms } : {}),
+    ...(dimensions ? { dimensions_text: dimensions } : {}),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    // The shop holding the parcel, while it waits there.
+    ...(stage === 'ready_for_pickup' && shop ? { pickup_point: shop } : {}),
     events: events.slice(0, 100),
   };
 }

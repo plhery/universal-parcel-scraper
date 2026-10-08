@@ -74,9 +74,12 @@ the service does not require.
   scan's, else the country of the last status's depot; an unknown depot has a
   three-letter placeholder.
 - Scans carry English wording without codes. Each known wording is mapped
-  whole, because the shared classifier misreads several of them. An announced
-  delivery day is read as an estimate, without becoming a scan or changing
-  tracking freshness.
+  whole, because the shared classifier misreads several of them. A collection
+  the sender booked is still registration. A return names itself in its scans:
+  it stays an exception under way and becomes returned at the sender, and the
+  progress rail's return state keeps the result in the exception status. An
+  announced delivery day is read as an estimate, without becoming a scan or
+  changing tracking freshness.
 - Estimates use the flagged live delivery window, a specified planned date,
   or a fully dated announcement. A changed planned date replaces the previous
   window, as in the app. Placeholder dates, incomplete windows and display
@@ -87,7 +90,11 @@ the service does not require.
   in German civil time, which agrees with the guest API's offsets for the same
   scans. A clock elsewhere stays local.
 - The scans name their facility's town and country without a postcode, and
-  include order registration before the first guest API event.
+  include order registration before the first guest API event. A parcel shop
+  or locker scan also names the shop, which becomes the pickup point while the
+  parcel waits there.
+- The order's measured length, width and height are in millimetres. A side of
+  zero means no measurement, and the shipper's declared size is not read.
 - The service reports "no tracking data" for parcels its scan list still
   knows, so that answer is inconclusive. A delivery address outside Germany is
   inconclusive too.
@@ -95,9 +102,10 @@ the service does not require.
 ## Limitations
 
 Recipient details, addresses, delivery proofs and preference links are discarded.
-No UK service is inferred from a German result. The app service's reason codes,
-parcel shop names and driver details are not projected. An estimate requires a
-forecast in DPD's reply. A delivery postcode can unlock the guest API's window.
+No UK service is inferred from a German result. The app service's reason codes
+and driver details are not projected. The app service does not name the sender,
+nor does the guest API's unverified reply. An estimate requires a forecast in
+DPD's reply. A delivery postcode can unlock the guest API's window.
 
 ## Testing
 
