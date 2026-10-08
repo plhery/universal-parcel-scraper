@@ -37,6 +37,50 @@
         ]
       },
       "note": "Synthetic domestic waybill shape; DPD France shares its length, so it stays ambiguous."
+    },
+    {
+      "number": "313016422911811",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260621145320/https://web.yundaex.com/infoInquiry?nav_id=262&cid=0&homeWaybill=313016422911811",
+        "date": "2026-06-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "yunda"
+        ]
+      },
+      "note": "A Yunda tracking link archived by the Wayback Machine. Yunda's tracker returns its history, ending with collection from a pickup point."
+    },
+    {
+      "number": "434715294041092",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250913034423/https://web.yundaex.com/infoInquiry?nav_id=262&cid=0&homeWaybill=434715294041092",
+        "date": "2025-09-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "yunda"
+        ]
+      },
+      "note": "A Yunda tracking link archived by the Wayback Machine. Yunda's tracker no longer shows any scan for it, so it stays unconfirmed."
     }
   ]
 }
