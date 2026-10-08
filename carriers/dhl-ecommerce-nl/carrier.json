@@ -39,6 +39,7 @@
       "status",
       "history",
       "eta",
+      "eta_window",
       "delivered_at",
       "recipient_address",
       "signature",
@@ -48,6 +49,7 @@
       "status",
       "history",
       "eta",
+      "eta_window",
       "delivered_at"
     ],
     "discarded": [],

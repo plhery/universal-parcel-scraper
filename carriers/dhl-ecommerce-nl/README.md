@@ -26,6 +26,10 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
   and next-day plans, so those two categories only mean movement.
 - A delivery or a return to the sender stays the current stage when a notice
   follows it.
+- A scan can carry a planned window or a single expected moment, both with
+  offsets. The newest one is the estimate; a scan with both counts as its
+  window, as on the tracking page. A delivery, a parcel waiting at a
+  ServicePoint or a later scan clears it.
 - The feed repeats a scan it received from two systems; one is kept.
 - The gateway also follows parcels of DHL's European road network that enter
   the Benelux, including German `JJD` numbers. Detection leaves those with DHL
@@ -33,7 +37,7 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
 
 ## Limitations
 
-- Scans have no location. The planned delivery window is reduced to its day.
+- Scans have no location.
 - `3S` numbers are accepted by the adapter and claimed by no detection rule:
   no public sample was found to tell them from PostNL's.
 

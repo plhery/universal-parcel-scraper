@@ -30,14 +30,61 @@ describe('DHL eCommerce Netherlands parser', () => {
       'failed_attempt', 'out_for_delivery', 'in_transit', 'in_transit', 'accepted', 'registered', 'registered']);
   });
 
-  it('keeps the planned day while the parcel is on its way', () => {
-    const payload = clone();
-    payload[0]!.events = payload[0]!.events.slice(0, 6);
-    delete (payload[0] as { deliveredAt?: string }).deliveredAt;
-    const result = parseDhlEcommerceNl(payload, NUMBER);
-    expect(result.status).toBe('out_for_delivery');
-    expect(result.expected_delivery).toBe('2026-04-02');
-    expect(result.delivered_at).toBeUndefined();
+  it('keeps the newest planned window or expected moment while the parcel is on its way', () => {
+    const upTo = (count: number) => {
+      const payload = clone();
+      payload[0]!.events = payload[0]!.events.slice(0, count);
+      delete (payload[0] as { deliveredAt?: string }).deliveredAt;
+      return parseDhlEcommerceNl(payload, NUMBER);
+    };
+    expect(upTo(4)).toMatchObject({ status: 'in_transit', expected_delivery: null });
+    expect(upTo(4)).not.toHaveProperty('expected_delivery_from');
+    expect(upTo(5)).toMatchObject({ expected_delivery_from: '2026-04-02T10:00:00+02:00', expected_delivery: '2026-04-02T18:00:00+02:00' });
+    // A later moment replaces the window, and a new plan after a missed delivery replaces the moment.
+    expect(upTo(6)).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-04-02T14:00:00+02:00' });
+    expect(upTo(6)).not.toHaveProperty('expected_delivery_from');
+    expect(upTo(6).delivered_at).toBeUndefined();
+    expect(upTo(7)).toMatchObject({ current_stage: 'failed_attempt', expected_delivery: '2026-04-02T14:00:00+02:00' });
+    expect(upTo(8)).toMatchObject({ expected_delivery: '2026-04-03T14:00:00+02:00' });
+    // At the ServicePoint the moment is when it can be collected, not an estimate.
+    expect(upTo(10)).toMatchObject({ current_stage: 'ready_for_pickup', expected_delivery: null });
+    expect(upTo(10).events).toHaveLength(10);
+  });
+
+  it('drops an estimate a later scan has passed or that does not read', () => {
+    const withEstimate = (estimate: Record<string, string>, later?: string) => {
+      const payload = clone();
+      payload[0]!.events = payload[0]!.events.slice(0, 4);
+      delete (payload[0] as { deliveredAt?: string }).deliveredAt;
+      payload[0]!.events.push({ category: 'UNDERWAY', localTimestamp: '2026-04-02T06:40:11+02:00', leg: { network: 'ECOMMERCE' },
+        status: 'INFORMATION_ON_DELIVERY_TRANSMITTED', timestamp: '2026-04-02T04:40:11Z', type: 'PIECE_EVENT', ...estimate });
+      if (later) payload[0]!.events.push({ category: 'UNDERWAY', localTimestamp: later, leg: { network: 'ECOMMERCE' },
+        status: 'PARCEL_SORTED_AT_HUB', timestamp: later, type: 'PIECE_EVENT' });
+      return parseDhlEcommerceNl(payload, NUMBER);
+    };
+    const moment = { momentIndication: '2026-04-02T14:00:00+02:00' };
+    expect(withEstimate(moment, '2026-04-02T13:59:00+02:00').expected_delivery).toBe('2026-04-02T14:00:00+02:00');
+    expect(withEstimate(moment, '2026-04-02T14:01:00+02:00').expected_delivery).toBeNull();
+    // The page reads the window first when a scan carries both.
+    expect(withEstimate({ ...moment, plannedDeliveryTimeframe: '2026-04-02T10:00:00+02:00/2026-04-02T12:00:00+02:00' }))
+      .toMatchObject({ expected_delivery_from: '2026-04-02T10:00:00+02:00', expected_delivery: '2026-04-02T12:00:00+02:00' });
+    expect(withEstimate({ plannedDeliveryTimeframe: '2026-04-02T10:00:00+02:00/2026-04-02T10:00:00+02:00' })).not.toHaveProperty('expected_delivery_from');
+    // A clock without an offset keeps only its day.
+    expect(withEstimate({ momentIndication: '2026-04-02T14:00:00' }).expected_delivery).toBe('2026-04-02');
+    expect(withEstimate({ plannedDeliveryTimeframe: '2026-04-02T10:00:00/2026-04-02T18:00:00' })).toMatchObject({ expected_delivery: '2026-04-02' });
+    for (const unreadable of [{ momentIndication: 'soon' }, { plannedDeliveryTimeframe: '2026-04-02T18:00:00+02:00/2026-04-02T10:00:00+02:00' },
+      { plannedDeliveryTimeframe: '2026-04-02T10:00:00+02:00/2026-04-02T12:00:00+02:00/2026-04-02T14:00:00+02:00' }]) {
+      // An unreadable newer estimate does not bring back an older one.
+      const payload = clone();
+      delete (payload[0] as { deliveredAt?: string }).deliveredAt;
+      const events: Record<string, unknown>[] = payload[0]!.events.slice(0, 5);
+      Object.assign(events[4]!, { plannedDeliveryTimeframe: undefined }, unreadable);
+      events.splice(4, 0, { ...events[3]!, status: 'INFORMATION_ON_DELIVERY_TRANSMITTED',
+        plannedDeliveryTimeframe: '2026-04-02T10:00:00+02:00/2026-04-02T18:00:00+02:00' });
+      const result = parseDhlEcommerceNl([{ ...payload[0], events }], NUMBER);
+      expect(result.expected_delivery, JSON.stringify(unreadable)).toBeNull();
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
   });
 
   it('does not let a later notice undo a delivery', () => {
