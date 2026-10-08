@@ -108,13 +108,15 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     const classified = classifyPosteItalianeStatus(rawEvent.statoLavorazione);
     parsed.push({
       // luogo fields are dropped: nothing distinguishes a depot from a
-      // recipient address without evidence. Sender, dimensions, flags and
-      // pickup-office blocks on the envelope are never retained either.
+      // recipient address without evidence. A post-office scan names its
+      // office, which becomes the location; the office's address, postcode
+      // and hours are not kept. Sender, dimensions and pickup-office blocks
+      // on the envelope are never retained either.
       // Unmapped wording keeps no stage: the sync classifies it and records
       // where the stage came from instead of assuming movement here.
       event: {
         time: time.iso,
-        location: '',
+        location: clean(rawEvent.denominazioneUfficio, 80),
         description: wording,
         ...(classified ? { stage: classified.stage } : {}),
       },

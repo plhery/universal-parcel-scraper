@@ -215,6 +215,24 @@ describe('Poste Italiane response parsing', () => {
     expect(result.events).toHaveLength(1);
   });
 
+  it('locates a post-office scan at its office without the office address, postcode or hours', () => {
+    const result = parsePosteItalianeTrackingResponse(parcel({
+      stato: '3',
+      listaMovimenti: [
+        { ...movement('la spedizione è stata presa in carico da un nostro operatore presso l\'Ufficio Postale', 1767225600000),
+          idUfficio: '99999', denominazioneUfficio: 'UFFICIO DI PROVA', indirizzoUfficio: 'VIA DI PROVA 1', capUfficio: '00000',
+          provinciaUfficio: 'XX', orarioLunedi: '08:20-13:35', frazionario: '99999' },
+        movement('la spedizione è in transito', 1767312000000),
+      ],
+    }), TRACKING_NUMBER);
+    expect(result.events?.map((event) => [event.stage, event.location])).toEqual([
+      ['in_transit', ''],
+      ['registered', 'UFFICIO DI PROVA'],
+    ]);
+    const serialized = JSON.stringify(result);
+    for (const secret of ['VIA DI PROVA', '00000', '99999', '08:20', 'Test Depot']) expect(serialized).not.toContain(secret);
+  });
+
   it('never retains customer, dimension, office, place or estimate-source data', () => {
     const result = parsePosteItalianeTrackingResponse(parcel({
       nombre_cliente: 'Example Customer',
@@ -233,9 +251,13 @@ describe('Poste Italiane response parsing', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    expect(CAPABILITIES).toEqual(['history', 'eta']);
+    expect(CAPABILITIES).toEqual(['history', 'eta', 'location']);
     const delivered = parsePosteItalianeTrackingResponse(parcel(), TRACKING_NUMBER);
     expect(delivered.events?.length).toBeGreaterThan(0);
+    const accepted = parsePosteItalianeTrackingResponse(parcel({ listaMovimenti: [
+      { ...movement('la spedizione è stata presa in carico', 1767225600000), denominazioneUfficio: 'UFFICIO DI PROVA' },
+    ] }), TRACKING_NUMBER);
+    expect(accepted.events?.[0]?.location).toBe('UFFICIO DI PROVA');
     // The estimate only exists while the parcel is still moving.
     const active = parsePosteItalianeTrackingResponse(parcel({
       stato: '4',

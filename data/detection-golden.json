@@ -8048,6 +8048,14 @@
     ]
   },
   {
+    "input": "5P65D73186819",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
     "input": "600000728632002019026599",
     "carrier": "unknown",
     "confidence": "low",
@@ -14323,6 +14331,14 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "RA 00032528599",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
     ]
   },
   {

@@ -28,7 +28,8 @@
   },
   "capabilities": [
     "history",
-    "eta"
+    "eta",
+    "location"
   ],
   "portal": {
     "url": "https://www.poste.it/cerca/index.html#/risultati-spedizioni/{trackingNumber}",
@@ -48,10 +49,10 @@
     "scraped": [
       "status",
       "history",
-      "eta"
+      "eta",
+      "location"
     ],
     "discarded": [
-      "location",
       "sender_name",
       "recipient_name",
       "recipient_address",

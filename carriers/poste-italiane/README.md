@@ -35,7 +35,8 @@ matching native Poste status or progress confirms them. Other postal shapes use 
   stage rather than a regex catch-all guess; the sync records it for review.
 - Customs release wording maps to `in_transit`.
 - `luogo` is dropped: nothing tells a depot from a recipient address, and guessing could leak
-  the address.
+  the address. A post-office scan names its office, which becomes the event location; the
+  office's address, postcode and hours are not kept.
 - `dataPrevistaConsegna` is Italian prose ("Consegna prevista entro Venerdì 2 Gennaio 2026"),
   reduced to a calendar day and cleared once delivered. Unparsable text yields no estimate.
 - `dataOra` is epoch milliseconds, so there is no zone to guess. A local helper renders it
@@ -48,7 +49,7 @@ matching native Poste status or progress confirms them. Other postal shapes use 
 
 ## Limitations
 
-- No event locations.
+- Event locations only for post-office scans.
 - Day-resolution estimate only.
 
 ## Testing

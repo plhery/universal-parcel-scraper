@@ -231,6 +231,44 @@
         "confidence": "high"
       },
       "note": "A Trustpilot review of Poste Italiane gives this code. Poste Italiane's tracker returns its history, which ends with the delivery back to its sender."
+    },
+    {
+      "number": "RA 00032528599",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://it.trustpilot.com/reviews/6a97ee2da1cdc686b65e69ab",
+        "date": "2026-09-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "poste-italiane",
+        "confidence": "high"
+      },
+      "note": "A Trustpilot review of Poste Italiane gives this code, typed with a space. Poste Italiane's tracker returns its history, which ends with the delivery back to its sender."
+    },
+    {
+      "number": "5P65D73186819",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://it.trustpilot.com/reviews/6a903ec0e9b6597ed7ac4b45",
+        "date": "2026-08-27",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "poste-italiane",
+        "confidence": "high"
+      },
+      "note": "A Trustpilot review of Poste Italiane gives this code. Poste Italiane's tracker returns its history."
     }
   ]
 }
