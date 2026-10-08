@@ -2,15 +2,15 @@
  * The universal discovery chain: what runs when no dedicated carrier adapter
  * can answer for a parcel.
  *
- * Default order is ParcelsApp -> Ship24 -> 17TRACK -> UPU, with Postal Ninja inserted before
- * 17TRACK only when the host enables it. A carrier with coverage evidence
- * (coverage.ts) gets its own order: fuller history first, HTTP before the
+ * Default order is ParcelsApp -> Ship24 -> 17TRACK -> UPU, with Postal Ninja after
+ * the other aggregators only when the host enables it. A carrier with coverage
+ * evidence (coverage.ts) gets its own order: fuller history first, HTTP before the
  * browser service within a tier, providers that answered with another parcel or
- * refused the format left out. Validated China Post C/L numbers put 17TRACK
- * first. Each provider is asked once per lookup and the first usable history
- * wins; the per-parcel router remembers which provider answered, except UPU
- * stays last and requires a postal S10. The source names are persisted in
- * routing state and must not change.
+ * refused the format left out, Postal Ninja still after the other aggregators.
+ * Validated China Post C/L numbers put 17TRACK first. Each provider is asked
+ * once per lookup and the first usable history wins; the per-parcel router
+ * remembers which provider answered, except UPU stays last and requires a
+ * postal S10. The source names are persisted in routing state and must not change.
  *
  * This module owns the order and the aggregate failure; every protocol detail
  * lives in the provider folder next to it.

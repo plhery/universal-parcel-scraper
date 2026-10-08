@@ -1,7 +1,8 @@
 # Postal Ninja
 
 Opt-in universal provider: selecting `Postal Ninja` in `providers` (`SCRAPER_PROVIDERS` for
-the CLI and server) inserts it before 17TRACK.
+the CLI and server) asks it after the other aggregators, whatever its coverage evidence,
+because its histories rarely have a scan a consumer can place.
 Through TRAWL it returns full histories, often with destination legs. Its scan times
 usually have no zone. Persisted provider name: `Postal Ninja`. The results page needs a
 handle from a verified lookup, which cannot be built from the tracking number, so the

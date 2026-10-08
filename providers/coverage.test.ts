@@ -138,10 +138,19 @@ describe('coverage-based lookup order', () => {
 
   it('asks fuller history first, HTTP before the browser service within a tier', () => {
     expect(plan('usps').sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24', 'Postal Ninja', 'UPU']);
-    expect(plan('ups').sources).toEqual(['ParcelsApp', 'Postal Ninja', '17TRACK', 'Ship24', 'UPU']);
-    expect(plan('australia-post').sources.slice(0, 1)).toEqual(['Postal Ninja']);
-    expect(plan('spring-gds').sources).toEqual(['Ship24', 'Postal Ninja', 'ParcelsApp', '17TRACK', 'UPU']);
+    expect(plan('ups').sources).toEqual(['ParcelsApp', '17TRACK', 'Ship24', 'Postal Ninja', 'UPU']);
+    expect(plan('spring-gds').sources).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(plan('ups').rank('ParcelsApp')).toBeLessThan(plan('ups').rank('Ship24'));
+  });
+
+  it('asks Postal Ninja after the other aggregators and never ranks it fuller than them', () => {
+    // Its rows rarely carry a clock a consumer can place, whatever their count.
+    for (const carrier of ['ups', 'australia-post', 'china-post', 'geodis']) {
+      const { sources, tier, rank } = plan(carrier);
+      expect(sources.slice(-2), carrier).toEqual(['Postal Ninja', 'UPU']);
+      expect(['full', 'partial'], carrier).toContain(tier('Postal Ninja'));
+      for (const other of sources.filter((source) => source !== 'UPU')) expect(rank('Postal Ninja'), carrier).toBeGreaterThanOrEqual(rank(other));
+    }
   });
 
   it('leaves out excluded providers and Postal Ninja when it is disabled', () => {

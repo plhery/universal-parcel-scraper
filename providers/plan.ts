@@ -32,19 +32,29 @@ export interface UniversalPlan {
 }
 
 const TIER_RANK: Record<CoverageTier, number> = { full: 0, partial: 1, unknown: 2, empty: 3, excluded: 4 };
-const tierRank = (tiers: Partial<Record<Source, CoverageTier>> | null, source: Source): number =>
-  TIER_RANK[source === 'UPU' ? 'unknown' : tiers?.[source] ?? 'unknown'];
+/**
+ * UPU's sparse feed ranks as a provider without evidence. Postal Ninja ranks no
+ * higher than one without history: its histories rarely have a scan whose clock
+ * a consumer can place, so its rows are not usable history.
+ */
+function tierRank(tiers: Partial<Record<Source, CoverageTier>> | null, source: Source): number {
+  const rank = TIER_RANK[tiers?.[source] ?? 'unknown'];
+  if (source === 'UPU') return TIER_RANK.unknown;
+  return source === 'Postal Ninja' ? Math.max(rank, TIER_RANK.empty) : rank;
+}
+/** Asked after the other aggregators whatever the evidence: Postal Ninja, then UPU. */
+const lastResort = (source: Source): number => source === 'UPU' ? 2 : source === 'Postal Ninja' ? 1 : 0;
 
 /**
  * Orders providers (given in the default order) by a carrier's coverage tiers:
  * fuller history first, HTTP before the browser service, then the default order.
- * Excluded providers are left out unless nothing else would remain. UPU stays
- * last whatever its evidence: sparse, never a preferred source.
+ * Excluded providers are left out unless nothing else would remain. Postal Ninja
+ * and then UPU stay last whatever their evidence.
  */
 export function orderUniversalSources(eligible: readonly Source[], tiers: Partial<Record<Source, CoverageTier>> | null): Source[] {
   const excluded = (source: Source) => source !== 'UPU' && tiers?.[source] === 'excluded';
   const usable = eligible.some((source) => source !== 'UPU' && !excluded(source)) ? eligible.filter((source) => !excluded(source)) : [...eligible];
-  return usable.sort((a, b) => Number(a === 'UPU') - Number(b === 'UPU') || tierRank(tiers, a) - tierRank(tiers, b)
+  return usable.sort((a, b) => lastResort(a) - lastResort(b) || tierRank(tiers, a) - tierRank(tiers, b)
     || Number(BROWSER_SOURCES.has(a)) - Number(BROWSER_SOURCES.has(b)) || eligible.indexOf(a) - eligible.indexOf(b));
 }
 
@@ -59,7 +69,7 @@ export function universalPlan(options: {
   enablePostalNinja?: boolean;
 } = {}): UniversalPlan {
   const { trackingNumber, enablePostalNinja = false } = options;
-  const defaults: Source[] = enablePostalNinja ? ['ParcelsApp', 'Ship24', 'Postal Ninja', '17TRACK', 'UPU'] : [...UNIVERSAL_SOURCES];
+  const defaults: Source[] = enablePostalNinja ? ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'] : [...UNIVERSAL_SOURCES];
   const eligible = defaults.filter((source) => source !== 'UPU' || trackingNumber === undefined || isValidS10TrackingNumber(trackingNumber));
   const carrier = (options.carriers ?? []).find((candidate) => coverageTiers(candidate)) ?? null;
   const tiers = coverageTiers(carrier);

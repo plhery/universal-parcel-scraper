@@ -9,8 +9,10 @@ keep the default order. A source that was inconclusive or empty stays eligible. 
 answered with the wrong carrier or refused the format is left out, as long as another usable
 source remains. Extra references inform the tiers without changing the README comparison.
 
-Two rules sit on top. Validated China Post C/L postal numbers go to 17TRACK first. UPU needs
-a valid S10 number and stays last, because its exchange-office history is sparse.
+Three rules sit on top. Validated China Post C/L postal numbers go to 17TRACK first. Postal
+Ninja, when enabled, comes after the other aggregators and never ranks above them, because
+its histories rarely have a scan a consumer can place. UPU needs a valid S10 number and stays
+last, because its exchange-office history is sparse.
 
 A provider is called at most once per lookup, with a bounded budget. The aggregators run only
 when the consumer selects them, and the facade's default is UPU alone.

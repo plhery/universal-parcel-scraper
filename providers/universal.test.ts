@@ -39,7 +39,7 @@ describe('universal discovery chain', () => {
   it('keeps the persisted provider names and the opt-in position of Postal Ninja', () => {
     expect(UNIVERSAL_SOURCES).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
     expect(universalSources()).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
-    expect(universalSources(true)).toEqual(['ParcelsApp', 'Ship24', 'Postal Ninja', '17TRACK', 'UPU']);
+    expect(universalSources(true)).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(universalSources(false, number)).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
     expect(universalSources(false, 'EB000000005CN')).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
     // A carrier's coverage evidence reorders them.
@@ -135,14 +135,15 @@ describe('universal discovery chain', () => {
     expect(fetcher).toHaveBeenCalledTimes(3);
   });
 
-  it('tries Postal Ninja before 17TRACK when Ship24 and ParcelsApp fail', async () => {
+  it('tries Postal Ninja only after the other aggregators fail', async () => {
     const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('Unavailable'));
     const browserLookup = vi.fn().mockRejectedValueOnce(new Error('Challenge'))
       .mockResolvedValueOnce(seen('Postal Ninja', 'delivered'));
     const result = await new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  trawlUrl: 'http://browser.test', fetcher, browserLookup, enablePostalNinja: true }).fetch(number);
     expect(result.tracking_provider).toBe('Postal Ninja');
     expect(browserLookup.mock.calls).toEqual([['Ship24', number], ['Postal Ninja', number]]);
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    // ParcelsApp's two requests, then 17TRACK's capture.
+    expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual(['parcelsapp.com', 'parcelsapp.com', 'browser.test']);
   });
 
   it('can use the form scrapers without TRAWL and stops on Ship24 success', async () => {
