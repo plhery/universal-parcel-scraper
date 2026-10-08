@@ -13300,6 +13300,17 @@
     "candidates": []
   },
   {
+    "input": "EG100124135PA",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "EG466054800IN",
     "carrier": "india-post",
     "confidence": "high",
@@ -13515,6 +13526,17 @@
     "confidence": "high",
     "candidates": [
       "singapore-post"
+    ]
+  },
+  {
+    "input": "EY000077129DZ",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -13875,6 +13897,17 @@
     "confidence": "high",
     "candidates": [
       "royal-mail"
+    ]
+  },
+  {
+    "input": "HN003911227AE",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -14721,6 +14754,17 @@
     ]
   },
   {
+    "input": "LK056233672SK",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "LK201223662AU",
     "carrier": "intl-post",
     "confidence": "high",
@@ -15122,6 +15166,17 @@
     ]
   },
   {
+    "input": "LX000453730UZ",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "LX072774186NZ",
     "carrier": "nz-post",
     "confidence": "high",
@@ -15266,6 +15321,17 @@
     "confidence": "high",
     "candidates": [
       "china-post"
+    ]
+  },
+  {
+    "input": "ML545911751MH",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -15970,6 +16036,17 @@
     ]
   },
   {
+    "input": "RC045003744LT",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RD094411515CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -16184,6 +16261,17 @@
     "confidence": "high",
     "candidates": [
       "canada-post"
+    ]
+  },
+  {
+    "input": "RO400351158EE",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -16821,7 +16909,40 @@
     ]
   },
   {
+    "input": "UA523765527VU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "UB024113792HU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "UB209300714LV",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "UC931513415TW",
     "carrier": "intl-post",
     "confidence": "high",
     "candidates": [
@@ -16837,6 +16958,17 @@
     "confidence": "low",
     "candidates": [
       "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "UH015319935DO",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
     ],
     "asked": [
       "chronopost"
@@ -17509,6 +17641,17 @@
     ]
   },
   {
+    "input": "ZA587200125LV",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "ZBH2FY7Q",
     "carrier": "unknown",
     "confidence": "low",
@@ -17596,6 +17739,17 @@
     "confidence": "high",
     "candidates": [
       "jd-logistics"
+    ]
+  },
+  {
+    "input": "ll357362359lu",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {

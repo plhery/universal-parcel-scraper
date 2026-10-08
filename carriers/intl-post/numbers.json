@@ -42,6 +42,272 @@
         ]
       },
       "note": "Invented number whose S10 check digit passes but whose TS suffix is a Chronopost code rather than an issuing country, so it is not international mail."
+    },
+    {
+      "number": "RO400351158EE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250818143123/https://global.cainiao.com/detail.htm?mailNoList=RO400351158EE",
+        "date": "2025-08-18",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The EE suffix names the postal operator of Estonia, which has no adapter here."
+    },
+    {
+      "number": "ML545911751MH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240110234402/https://global.cainiao.com/global/detail.json?mailNos=ML545911751MH&lang=en-US&language=en-US",
+        "date": "2024-01-10",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The MH suffix names the postal operator of the Marshall Islands, which has no adapter here."
+    },
+    {
+      "number": "UB024113792HU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251026001000/https://global.cainiao.com/global/check.json?mailNos=UB024113792HU&lang=en-US&language=en-US",
+        "date": "2025-10-26",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The HU suffix names the postal operator of Hungary, which has no adapter here."
+    },
+    {
+      "number": "UC931513415TW",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260930203312/https://global.cainiao.com/newDetail.htm?mailNoList=UC931513415TW",
+        "date": "2026-09-30",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The TW suffix names the postal operator of Taiwan, which has no adapter here."
+    },
+    {
+      "number": "ZA587200125LV",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250712201458/https://global.cainiao.com/detail.htm?mailNoList=ZA587200125LV",
+        "date": "2025-07-12",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The LV suffix names the postal operator of Latvia, which has no adapter here."
+    },
+    {
+      "number": "RC045003744LT",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250527144216/https://global.cainiao.com/newDetail.htm?mailNoList=RC045003744LT",
+        "date": "2025-05-27",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The LT suffix names the postal operator of Lithuania, which has no adapter here."
+    },
+    {
+      "number": "LK056233672SK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251225115352/https://global.cainiao.com/newDetail.htm?mailNoList=LK056233672SK",
+        "date": "2025-12-25",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The SK suffix names the postal operator of Slovakia, which has no adapter here."
+    },
+    {
+      "number": "LX000453730UZ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240304093930/https://global.cainiao.com/newDetail.htm?mailNoList=LX000453730UZ&otherMailNoList=",
+        "date": "2024-03-04",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The UZ suffix names the postal operator of Uzbekistan, which has no adapter here."
+    },
+    {
+      "number": "EY000077129DZ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240403024818/http://global.cainiao.com/global/detail.json?mailNos=EY000076881DZ,EY000077129DZ,EY000106301DZ&lang=en-US&language=en-US",
+        "date": "2024-04-03",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The DZ suffix names the postal operator of Algeria, which has no adapter here."
+    },
+    {
+      "number": "HN003911227AE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250219121722/https://global.cainiao.com/detail.htm?mailNoList=HN003911227AE",
+        "date": "2025-02-19",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The AE suffix names the postal operator of the United Arab Emirates, which has no adapter here."
+    },
+    {
+      "number": "EG100124135PA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250116204607/https://www.ems.post/en/global-network/tracking?itemId=EG100124135PA&language=EN",
+        "date": "2025-01-16",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on the EMS Cooperative tracker archived by the Wayback Machine. The PA suffix names the postal operator of Panama, which has no adapter here."
+    },
+    {
+      "number": "ll357362359lu",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220626110729/https://track.4px.com/query/ll355897719lu,300612643777,300611985456,300611780533,300610504645,ll357362359lu,ll355844129lu,ll355844132lu,ll355605818lu,lf427019491cn,lf425086048cn,rp053164465cn,rp052477135cn,rp052228632cn,rp050996172cn",
+        "date": "2022-06-26",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. The LU suffix names the postal operator of Luxembourg, which has no adapter here. It was published in lower case."
+    },
+    {
+      "number": "UA523765527VU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231224235259/https://global.cainiao.com/global/detail.json?mailNos=UA523765527VU&lang=en-US&language=en-US",
+        "date": "2023-12-24",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The VU suffix names the postal operator of Vanuatu, which has no adapter here."
+    },
+    {
+      "number": "UH015319935DO",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240717140453/https://global.cainiao.com/global/detail.json?mailNos=UH015319935DO&lang=en-US&language=en-US",
+        "date": "2024-07-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The DO suffix names the postal operator of the Dominican Republic, which has no adapter here."
     }
   ]
 }
