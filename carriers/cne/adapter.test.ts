@@ -11,13 +11,15 @@ const handoffFixture = () => JSON.parse(readFileSync(new URL('./fixtures/deliver
 afterEach(() => vi.restoreAllMocks());
 
 describe('CNE response projection', () => {
-  it('binds the shipment and reverses oldest-first history while preserving unqualified clocks', () => {
+  it('binds the shipment and reverses oldest-first history, keeping zone-less clocks as wall clocks', () => {
     const result = parseCne(fixture(), NUMBER);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map',
-      destination_country: 'SA', last_update: null });
+      destination_country: 'SA', last_update: null, last_update_local: '2026-01-04T14:32:41' });
     expect(result.events?.map(event => event.stage)).toEqual(['returned', 'exception', 'in_transit', 'accepted', 'registered']);
-    expect(result.events?.[0]).toMatchObject({ provider_time_text: '2026-01-04 14:32:41', location: 'CN.Example Sort Facility' });
-    expect(result.events?.every(event => event.time === undefined)).toBe(true);
+    expect(result.events?.[0]).toMatchObject({ local_time: '2026-01-04T14:32:41', location: 'CN.Example Sort Facility' });
+    expect(result.events?.map(event => event.local_time)).toEqual(['2026-01-04T14:32:41', '2026-01-03T01:02:08',
+      '2026-01-02T19:47:49', '2026-01-02T12:47:13', '2026-01-01T10:21:12']);
+    expect(result.events?.every(event => event.time === undefined && event.provider_time_text === undefined)).toBe(true);
     expect(result.delivery_tracking_number).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE-SYNTHETIC');
   });
@@ -50,23 +52,27 @@ describe('CNE response projection', () => {
     expect(() => parseCne(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
-  it.each(['2026-01-04T14:32:41+99:00', '2026-01-04T14:32:41+02:99', '2026-01-04T14:32:41+14:01', '2026-02-30T14:32:41Z'])('keeps an invalid clock unresolved: %s', clock => {
+  it.each(['2026-01-04T14:32:41+99:00', '2026-01-04T14:32:41+02:99', '2026-01-04T14:32:41+14:01', '2026-02-30T14:32:41Z',
+    '2026-02-30 14:32:41', '2026-01-04 24:00:00', '2026-01-04 14:32'])('keeps an invalid clock unresolved: %s', clock => {
     const payload = fixture(); payload.trackingEventList.at(-1).date = clock;
     const result = parseCne(payload, NUMBER);
-    expect(result.last_update).toBeNull();
+    expect(result.last_update).toBeNull(); expect(result.last_update_local).toBeUndefined();
     expect(result.events?.[0]).toMatchObject({ provider_time_text: clock });
-    expect(result.events?.[0]?.time).toBeUndefined();
+    expect(result.events?.[0]?.time).toBeUndefined(); expect(result.events?.[0]?.local_time).toBeUndefined();
   });
 
   it('uses explicit instants without borrowing older clocks or changing source order', () => {
     const payload = fixture(); delete payload.Response_Info.status;
     payload.trackingEventList.at(-1).details = 'Delivered';
     payload.trackingEventList.at(-1).date = '2026-01-04T14:32:41+08:00';
-    expect(parseCne(payload, NUMBER)).toMatchObject({ status: 'delivered', last_update: '2026-01-04T14:32:41+08:00', delivered_at: '2026-01-04T14:32:41+08:00' });
+    const placed = parseCne(payload, NUMBER);
+    expect(placed).toMatchObject({ status: 'delivered', last_update: '2026-01-04T14:32:41+08:00', delivered_at: '2026-01-04T14:32:41+08:00' });
+    expect(placed.last_update_local).toBeUndefined(); expect(placed.events?.[1]?.local_time).toBe('2026-01-03T01:02:08');
     payload.trackingEventList.at(-1).date = 'invalid';
     payload.trackingEventList[0].date = '2026-01-01T00:00:00Z';
     const result = parseCne(payload, NUMBER);
     expect(result.last_update).toBeNull(); expect(result.delivered_at).toBeUndefined();
+    expect(result.last_update_local).toBeUndefined();
     expect(result.events?.at(-1)?.time).toBe('2026-01-01T00:00:00Z');
   });
 
@@ -79,6 +85,7 @@ describe('CNE response projection', () => {
       ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'],
       ['accepted', 'carrier_map'], ['registered', 'carrier_map'],
     ]);
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-02-10T12:00:00' });
     expect(result.delivered_at).toBeUndefined();
   });
 

@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -47,6 +48,19 @@ function scanTime(value: string) {
   return explicitOffsetTime(value);
 }
 
+// CNE's clocks name no zone, and its legs cross zones: a valid one stays a
+// wall clock in `local_time`, never placed in a zone.
+function scanClock(value: string): { time?: string; local_time?: string; provider_time_text?: string } {
+  const instant = scanTime(value);
+  if (instant) return { time: instant.iso };
+  const wall = DateTime.fromFormat(value, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' });
+  // Luxon rolls 24:00:00 over to the next day; only a clock that reads back unchanged is kept.
+  if (wall.isValid && wall.toFormat('yyyy-MM-dd HH:mm:ss') === value) {
+    return { local_time: wall.toISO({ includeOffset: false, suppressMilliseconds: true }) };
+  }
+  return value ? { provider_time_text: value } : {};
+}
+
 function stageOf(description: string, code: string): { stage: Stage; source: string } | undefined {
   // Last-mile partners write "label；explanation". The explanation can announce
   // a later step ("It will be out for delivery"), so only the label is read.
@@ -69,9 +83,7 @@ function scan(raw: unknown): CarrierEvent {
   const description = clean(raw.details, 1000), clock = clean(raw.date, 64);
   const location = clean(raw.place, 200), code = cleanScalar(raw.state);
   const mapped = stageOf(description, code);
-  const time = scanTime(clock);
-  return { description, ...(location ? { location } : {}),
-    ...(time ? { time: time.iso } : clock ? { provider_time_text: clock } : {}),
+  return { description, ...(location ? { location } : {}), ...scanClock(clock),
     ...(mapped ? { stage: mapped.stage, stage_source: mapped.source } : {}),
     ...(code ? { provider_code: code } : {}) };
 }
@@ -112,6 +124,7 @@ export function parseCne(payload: unknown, raw: string): CarrierResult {
   return { status: stage ? languageStageStatus(stage as Stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
+    ...(typeof latest.local_time === 'string' ? { last_update_local: latest.local_time } : {}),
     ...(stage === 'delivered' && latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
     ...(partner ? { delivery_carrier: partner } : {}), ...(handoff ? { delivery_tracking_number: handoff } : {}),

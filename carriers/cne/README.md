@@ -14,7 +14,7 @@ A named last-mile supplier declares the hand-off: its transfer number becomes th
 
 ## Limitations
 
-Only the `3A5V` family, which CNE's own tracking answers, selects CNE automatically. Unqualified cross-border clocks remain provider text; scan locations alone do not prove which clock the backend uses. The summary's delivery date has no zone either, so it gives no delivery time. Rejections and empty replies do not establish parcel absence.
+Only the `3A5V` family, which CNE's own tracking answers, selects CNE automatically. Scan clocks name no zone and a journey crosses zones, so a valid clock without an offset stays a wall clock in `local_time`, in CNE's order. When the newest scan has one, it gives `last_update_local` instead of `last_update`, and no delivery time. Scan locations alone do not prove which zone a clock uses. A clock that is not a valid date and time stays provider text. The summary's delivery date has no zone either, so it gives no delivery time. Rejections and empty replies do not establish parcel absence.
 
 ## Testing
 
