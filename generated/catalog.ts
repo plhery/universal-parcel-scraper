@@ -2982,6 +2982,14 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^GFUS\\d{14}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^GF\\d{13}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^CR\\d{12}$",
+        "confidence": "low"
       }
     ]
   },
@@ -5270,7 +5278,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "landmark-global": ["landmark-global-1"],
   "old-dominion": ["old-dominion-1","old-dominion-2"],
   "spee-dee": ["spee-dee-1","spee-dee-2"],
-  "gofo": ["gofo-1"],
+  "gofo": ["gofo-1","gofo-2","gofo-3"],
   "estafeta": ["estafeta-1","estafeta-full-guide","estafeta-lettered-guide"],
   "correios-br": ["correios-br-1"],
   "correos-chile": ["correos-chile-1","correos-chile-2"],

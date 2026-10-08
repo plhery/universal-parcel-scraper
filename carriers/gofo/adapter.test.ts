@@ -89,6 +89,23 @@ describe('GOFO US history', () => {
     expect(() => parseGofo(scan, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it.each(['GF0000000000001', 'CR000000000001'])('tracks the older %s waybill series and binds it like a GFUS number', (waybill) => {
+    const value = fixture();
+    for (const row of [item(value), ...item(value).trackEventList]) {
+      if (row.waybillNo != null) row.waybillNo = waybill;
+      if (row.trackingNumber != null) row.trackingNumber = waybill;
+    }
+    bind(value);
+    expect(parseGofo(value, waybill.toLowerCase())).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    const shipper = structuredClone(value);
+    for (const row of [item(shipper), ...item(shipper).trackEventList]) if (row.trackingNumber != null) row.trackingNumber = 'CR000000000002';
+    bind(shipper);
+    expect(() => parseGofo(shipper, waybill)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    for (const near of ['GF000000000001', 'CR0000000000001', 'GFUS0000000000001', 'GB0000000000001']) {
+      expect(() => normalizeGofoNumber(near)).toThrow(InvalidInputError);
+    }
+  });
+
   it('requires the observed numeric envelope and exact US absence, keeping reroutes and empty replies uncertain', () => {
     const negative = { success: 1, code: 200, data: { success: [], error: { errorCount: 1, us: [NUMBER] } } };
     expect(() => parseGofo(negative, NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));

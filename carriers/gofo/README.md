@@ -6,9 +6,11 @@ Other regional services are outside this adapter's scope.
 ## How it works
 
 One bounded JSON POST asks for Pacific clocks, one of the public page's time
-options. The waybill must be the requested GFUS number; the tracking number
-repeats it or is the shipper's own reference, never another GOFO number. The
-latest summary must agree with the first scan.
+options. GOFO US waybills are `GFUS` and 14 digits, or the older `GF` and 13 and
+`CR` and 12 series its tracker still serves; detection only suggests the older
+two. The waybill must be the requested number; the tracking number repeats it
+or is the shipper's own reference, never another GOFO number. The latest summary
+must agree with the first scan.
 
 The public page renders the whole list without paging and ignores the event
 counter, which can count scans the list omits. A larger counter is accepted only

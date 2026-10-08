@@ -13003,6 +13003,22 @@
     ]
   },
   {
+    "input": "CR010720791546",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
+    "input": "CR010740141269",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
     "input": "CR217319655NO",
     "carrier": "bring-posten",
     "confidence": "high",
@@ -13727,6 +13743,22 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "GF6547710773248",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
+    "input": "GF6597956287600",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gofo"
+    ]
   },
   {
     "input": "GFUS01011884214272",

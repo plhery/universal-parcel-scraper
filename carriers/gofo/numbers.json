@@ -154,6 +154,97 @@
         "confidence": "high"
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
+    },
+    {
+      "number": "GF6597956287600",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250908191348/https://www.gofoexpress.com/tracking.html?searchID=GF6597956287600",
+        "date": "2025-09-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GOFO Express",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
+    },
+    {
+      "number": "CR010740141269",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260428232029/https://www.gofo.com/us/track?searchID=CR010740141269",
+        "date": "2026-04-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GOFO Express",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
+    },
+    {
+      "number": "CR010720791546",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260321153918/https://www.gofo.com/us/track?searchID=CR010720791546",
+        "date": "2026-03-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GOFO Express",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
+    },
+    {
+      "number": "GF6547710773248",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250903132723/https://www.gofoexpress.com/tracking.html?searchID=GF6547710773248",
+        "date": "2025-09-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker no longer lists it as a US parcel."
     }
   ]
 }

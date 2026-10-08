@@ -75,6 +75,16 @@
       "id": "gofo-1",
       "pattern": "^GFUS\\d{14}$",
       "confidence": "high"
+    },
+    {
+      "id": "gofo-2",
+      "pattern": "^GF\\d{13}$",
+      "confidence": "low"
+    },
+    {
+      "id": "gofo-3",
+      "pattern": "^CR\\d{12}$",
+      "confidence": "low"
     }
   ]
 }

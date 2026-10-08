@@ -2980,6 +2980,14 @@
       {
         "pattern": "^GFUS\\d{14}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^GF\\d{13}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^CR\\d{12}$",
+        "confidence": "low"
       }
     ]
   },
