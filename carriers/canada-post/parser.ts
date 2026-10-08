@@ -3,7 +3,7 @@ import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
-import { explicitOffsetTime } from '../../core/time/index.js';
+import { canadaProvinceTimeZone, explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, isKnownCanadaPostScan, statusForStage } from './status.js';
@@ -86,6 +86,42 @@ function eventClock(value: unknown): Record<string, string> {
   return raw ? { provider_time_text: raw } : {};
 }
 
+interface Row {
+  event: CarrierEvent;
+  region: string;
+  country: string;
+}
+
+/**
+ * The zone of the office delivering the parcel: the province of its newest
+ * out-for-delivery scan, when that scan's offset agrees with the province's
+ * main clock. Several provinces span more than one zone.
+ */
+function deliveryZone(rows: readonly Row[]): string | null {
+  const out = rows.find(row => row.event.stage === 'out_for_delivery');
+  if (!out?.event.time || (out.country && out.country !== 'CA')) return null;
+  const zone = canadaProvinceTimeZone(out.region);
+  const shown = DateTime.fromISO(out.event.time, { setZone: true });
+  return zone && shown.isValid && shown.offset === shown.setZone(zone).offset ? zone : null;
+}
+
+const WINDOW_CLOCK = /^(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/;
+
+/**
+ * The window the tracking page shows on the expected day, as wall clocks.
+ * "End of day" says no more than the day itself.
+ */
+function deliveryWindow(window: unknown, day: string, zone: string | null, after: number | null) {
+  if (!zone || !isRecord(window) || window.dlvryWindowEOD === true) return null;
+  const start = clean(window.dlvryWindowStartTime, 16);
+  const end = clean(window.dlvryWindowEndTime, 16);
+  if (!WINDOW_CLOCK.test(start) || !WINDOW_CLOCK.test(end)) return null;
+  const from = isoTime(`${day}T${start}`, zone);
+  const to = isoTime(`${day}T${end}`, zone);
+  if (!from || !to || from.timestamp >= to.timestamp || (after !== null && to.timestamp < after)) return null;
+  return { expected_delivery: to.iso, expected_delivery_from: from.iso };
+}
+
 function returnStarted(text: string): boolean {
   if (/\b(?:will|may|might|would)\b.*\breturn(?:ed)?\b/i.test(text)) return false;
   return /\b(?:being returned|returning|en\s?route|in transit)\b.*\bsender\b|\breturned to (?:the )?sender\b/i.test(text);
@@ -108,12 +144,14 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
     const type = textField(raw, 'type', 64);
     if (!code || !/^[A-Za-z0-9_-]+$/.test(code) || !description) throw new SchemaError('canada-post', 'Canada Post returned an incomplete scan');
     if (raw.locationAddr != null && !isRecord(raw.locationAddr)) throw new SchemaError('canada-post', 'Canada Post returned an invalid scan location');
+    const region = isRecord(raw.locationAddr) ? textField(raw.locationAddr, 'regionCd', 40) : '';
+    const country = isRecord(raw.locationAddr) ? textField(raw.locationAddr, 'countryCd', 8).toUpperCase() : '';
     const location = isRecord(raw.locationAddr)
-      ? [textField(raw.locationAddr, 'city', 160), textField(raw.locationAddr, 'regionCd', 40)].filter(Boolean).join(', ') : '';
+      ? [textField(raw.locationAddr, 'city', 160), region].filter(Boolean).join(', ') : '';
     const stage = type === 'Signature' || code === '20' ? null : canadaPostScanStage(code, description) ?? canadaPostStage(description);
     const event: CarrierEvent = { ...eventClock(raw.datetime), description: stage === 'delivered' ? 'Delivered' : description,
       provider_code: code, ...(stage ? { stage } : {}), ...(location ? { location } : {}) };
-    return { event, type, sourceDate: isRecord(raw.datetime) ? calendarDate(raw.datetime.date) : null,
+    return { event, type, region, country, sourceDate: isRecord(raw.datetime) ? calendarDate(raw.datetime.date) : null,
       returnCue: returnStarted(description) || type === 'RtsLabelProc' };
   });
   // Native detail history is newest first. Compare instants only when every
@@ -166,6 +204,10 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
   const expected = !currentReturn && current !== 'delivered' && current !== 'returned' && current !== 'exception' && current !== 'failed_attempt'
     && summary !== 'FullProgressAlert' && summary !== 'InTransitAlert' && isKnownCanadaPostScan(latest.event.provider_code!)
     && candidate && latest.sourceDate && candidate >= latest.sourceDate ? candidate : null;
+  // The tracking page shows a window only while the parcel is accepted, moving or out for delivery.
+  const window = expected && (summaryStage === 'accepted' || summaryStage === 'in_transit' || summaryStage === 'out_for_delivery')
+    ? deliveryWindow(payload.expectedDlvryWindow, expected, deliveryZone(rows), latest.event.time ? Date.parse(latest.event.time) : null)
+    : null;
   // The tracking page labels this "Sender": the business account that shipped the parcel.
   const sender = typeof payload.custNm === 'string' && !payload.custNm.includes('*') ? clean(payload.custNm, 160) : '';
   return { status: current ? statusForStage(current) : 'unknown', ...(current ? { current_stage: current } : {}),
@@ -173,6 +215,7 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
       : current === 'returned' ? 'Returned to sender' : latest.event.description,
     last_update: snapshot ? null : latest.event.time ?? null,
     ...(!snapshot && latest.event.local_time ? { last_update_local: latest.event.local_time } : {}),
-    expected_delivery: expected, ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(sender ? { sender_name: sender } : {}),
+    expected_delivery: window?.expected_delivery ?? expected,
+    ...(window ? { expected_delivery_from: window.expected_delivery_from } : {}), ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(sender ? { sender_name: sender } : {}),
     events: events.slice(0, 100) };
 }

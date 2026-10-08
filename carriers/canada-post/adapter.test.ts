@@ -206,6 +206,57 @@ describe('Canada Post clock and estimate boundaries', () => {
     p.expectedDlvryDateTime.revisedDate = null; p.expectedDlvryDateTime.dlvryDate = {};
     expect(() => parse(p, MOVING_NUMBER)).toThrow(SchemaError);
   });
+
+  describe('delivery window', () => {
+    const window = { dlvryWindowStartTime: '13:00:00', dlvryWindowEndTime: '17:00:00', dlvryWindowEOD: false };
+    // Out for delivery on the expected day, in Ontario on Eastern daylight time.
+    const windowed = (value: unknown, out: Record<string, unknown> = {}) => {
+      const p = moving(); p.status = 'FullProgress'; p.expectedDlvryWindow = value;
+      p.events.unshift({ cd: '0174', descEn: 'Item out for delivery', type: 'Out',
+        datetime: { date: '2026-03-20', time: '08:05:00', zoneOffset: '-04:00' },
+        locationAddr: { city: 'EXAMPLE CITY', regionCd: 'ON', countryCd: 'CA' }, ...out });
+      return p;
+    };
+
+    it('reads the window on the clock of the province delivering the parcel', () => {
+      expect(parse(windowed(window), MOVING_NUMBER)).toMatchObject({ current_stage: 'out_for_delivery',
+        expected_delivery: '2026-03-20T17:00:00-04:00', expected_delivery_from: '2026-03-20T13:00:00-04:00' });
+      const western = windowed({ dlvryWindowStartTime: '09:30', dlvryWindowEndTime: '12:00' }, {
+        datetime: { date: '2026-03-20', time: '07:10:00', zoneOffset: '-07:00' },
+        locationAddr: { city: 'EXAMPLE CITY', regionCd: 'BC', countryCd: 'CA' } });
+      expect(parse(western, MOVING_NUMBER)).toMatchObject({
+        expected_delivery: '2026-03-20T12:00:00-07:00', expected_delivery_from: '2026-03-20T09:30:00-07:00' });
+    });
+
+    it.each([
+      ['an end-of-day window', { dlvryWindowEOD: true }, {}],
+      ['an end-of-day flag beside clocks', { ...window, dlvryWindowEOD: true }, {}],
+      ['a malformed clock', { ...window, dlvryWindowEndTime: '5 pm' }, {}],
+      ['a window ending before it starts', { ...window, dlvryWindowEndTime: '12:00:00' }, {}],
+      ['a window over by the latest scan', { dlvryWindowStartTime: '07:00:00', dlvryWindowEndTime: '08:00:00' }, {}],
+      ['an offset the province does not keep', window, { datetime: { date: '2026-03-20', time: '08:05:00', zoneOffset: '-05:00' } }],
+      ['an office abroad', window, { locationAddr: { city: 'EXAMPLE CITY', regionCd: 'ON', countryCd: 'US' } }],
+      ['an office without a province', window, { locationAddr: { city: 'EXAMPLE CITY' } }],
+    ])('keeps the day for %s', (_label, value, out) => {
+      const result = parse(windowed(value, out), MOVING_NUMBER);
+      expect(result.expected_delivery).toBe('2026-03-20');
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    });
+
+    it('keeps the day before the parcel is out for delivery or once the page hides the window', () => {
+      const early = windowed(window); early.status = 'InTransit'; early.events.shift();
+      expect(parse(early, MOVING_NUMBER)).toMatchObject({ expected_delivery: '2026-03-20' });
+      expect(parse(early, MOVING_NUMBER)).not.toHaveProperty('expected_delivery_from');
+      const held = windowed(window); held.status = 'HalfDelivered';
+      held.events.unshift({ cd: '1410', descEn: "Item on hold at recipient's request", type: 'Attempted',
+        datetime: { date: '2026-03-20', time: '10:00:00', zoneOffset: '-04:00' }, locationAddr: { city: 'EXAMPLE CITY', regionCd: 'ON', countryCd: 'CA' } });
+      expect(parse(held, MOVING_NUMBER)).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-03-20' });
+      expect(parse(held, MOVING_NUMBER)).not.toHaveProperty('expected_delivery_from');
+      const done = delivered(); done.expectedDlvryWindow = window;
+      expect(parse(done)).toMatchObject({ expected_delivery: null });
+      expect(parse(done)).not.toHaveProperty('expected_delivery_from');
+    });
+  });
 });
 
 describe('Canada Post identity and negative boundaries', () => {

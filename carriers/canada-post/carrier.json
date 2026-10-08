@@ -37,6 +37,7 @@
       "status",
       "history",
       "eta",
+      "eta_window",
       "location",
       "delivered_at",
       "sender_name"
@@ -45,6 +46,7 @@
       "status",
       "history",
       "eta",
+      "eta_window",
       "location",
       "delivered_at",
       "sender_name"
