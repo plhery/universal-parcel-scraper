@@ -102,7 +102,7 @@ describe('recognition candidates', () => {
     expect(recognitionCandidates('CE123456789FI').map(({ carrier }) => carrier)).not.toContain('posti');
     // Chronopost accepts proprietary aliases with the same shape, which need
     // not have an S10 checksum. Its lookup still has to confirm the identity.
-    expect(recognitionCandidates('HL123456789JB')).toEqual([
+    expect(recognitionCandidates('CE123456789FI')).toEqual([
       { carrier: 'chronopost', needsInput: null, preferred: false },
     ]);
     expect(recognitionCandidates('RA123456785CH')).toEqual([]);

@@ -51,7 +51,16 @@ describe('Chronopost numbers with an S10 check digit', () => {
     expect(recognitionAskedCarriers('XT123456789TS')).toEqual(['chronopost']);
   });
 
-  it.each(['RR123456785TS', 'RR123456785JF', 'RR123456785JB', 'RR123456785RV', 'RR123456785VF'])('asks Chronopost about %s, whose suffix is its own rather than a country', (number) => {
+  it.each(['RR123456785TS', 'RR123456785JF', 'RR123456785JB', 'NP123456789JB', 'HL123456789JF'])(
+    'selects Chronopost for %s, whose suffix is its own rather than a country',
+    (number) => {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'chronopost', confidence: 'high', candidates: ['chronopost'] });
+      expect(recognitionAskedCarriers(number)).toEqual([]);
+      expect(checksumRejections(number)).toEqual([]);
+    },
+  );
+
+  it.each(['RR123456785RV', 'RR123456785VF'])('asks Chronopost about %s, a rarer suffix of its own', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['chronopost'] });
     expect(recognitionAskedCarriers(number)).toEqual(['chronopost']);
     expect(checksumRejections(number)).toEqual([]);

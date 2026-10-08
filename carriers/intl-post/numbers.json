@@ -32,16 +32,13 @@
       "derivedFrom": "invented",
       "shapeConfirmed": "2026-10-08",
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "chronopost"
-        ],
+        "carrier": "chronopost",
+        "confidence": "high",
         "not": [
           "intl-post"
         ]
       },
-      "note": "Invented number whose S10 check digit passes but whose TS suffix is a Chronopost code rather than an issuing country, so it is not international mail."
+      "note": "Invented number whose S10 check digit passes but whose TS suffix is a Chronopost code rather than an issuing country, so it is Chronopost's and not international mail."
     },
     {
       "number": "RO400351158EE",

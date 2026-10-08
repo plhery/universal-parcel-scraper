@@ -239,7 +239,7 @@ describe('Chronopost direct tracking', () => {
       expect(() => normalizeChronopostNumber(invalid)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'chronopost', confidence: 'high' });
-    expect(recognitionCandidates('RR123456785TS').map(candidate => candidate.carrier)).toContain('chronopost');
+    expect(recognitionCandidates('RA123456785DE').map(candidate => candidate.carrier)).toContain('chronopost');
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(fixture));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.recognize!(number)).resolves.toMatchObject({ known: true, lastActivityAt: '2026-01-04T17:38:28.000Z' });

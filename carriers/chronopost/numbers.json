@@ -134,6 +134,18 @@
       "note": "Made-up number in the shape of Chronopost parcels whose S10 check digit passes and whose TS suffix is no country."
     },
     {
+      "number": "NP123456789JB",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Made-up number with Chronopost's own JB suffix and no S10 check digit, as its numbers outside the dedicated prefixes often have."
+    },
+    {
       "number": "XT010847192TS",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -295,13 +307,10 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "chronopost"
-        ]
+        "carrier": "chronopost",
+        "confidence": "high"
       },
-      "note": "Chronopost's tracker returns its history. The JB suffix names no country, so detection suggests Chronopost rather than international mail."
+      "note": "Chronopost's tracker returns its history. The JB suffix is Chronopost's own code, not a country."
     },
     {
       "number": "XR657749906TS",
@@ -336,11 +345,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "chronopost"
-        ]
+        "carrier": "chronopost",
+        "confidence": "high"
       },
       "note": "Chronopost's tracker returns its history, delivered in Spain through the DPD network."
     },
@@ -358,13 +364,67 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "chronopost"
-        ]
+        "carrier": "chronopost",
+        "confidence": "high"
       },
-      "note": "Chronopost's tracker returns its history, dropped off at a relay by the sender. The JB suffix names no country, so detection suggests Chronopost rather than international mail."
+      "note": "Chronopost's tracker returns its history, dropped off at a relay by the sender. The JB suffix is Chronopost's own code, not a country."
+    },
+    {
+      "number": "NP989065909JB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260704104531/https://www.chronopost.fr/tracking-no-cms/suivi-page?listeNumerosLT=NP989065909JB&langue=de",
+        "date": "2026-07-04",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Chronopost's tracker returns its history. It has no S10 check digit, like many JB numbers whose prefix is not one of Chronopost's dedicated ones."
+    },
+    {
+      "number": "BC989633266JB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260630120634/https://www.chronopost.fr/tracking-no-cms/suivi-page?langue=es&listeNumerosLT=BC989633266JB",
+        "date": "2026-06-30",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Chronopost's tracker returns its history. It has no S10 check digit."
+    },
+    {
+      "number": "GH205472665JB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260602155627/https://www.chronopost.fr/tracking-no-cms/suivi-page?listeNumerosLT=GH205472665JB",
+        "date": "2026-06-02",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "Chronopost's tracker returns its history. Its S10 check digit passes, but the JB suffix names no country, so it is not international mail."
     },
     {
       "number": "XS431625991FR",

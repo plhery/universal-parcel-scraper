@@ -74,6 +74,11 @@
       "checksum": "s10"
     },
     {
+      "id": "chronopost-own-suffix",
+      "pattern": "^(?!(?:PZ|XR|XT|XU|XW|XY))[A-Z]{2}\\d{9}(?:JB|JF|TS)$",
+      "confidence": "high"
+    },
+    {
       "id": "chronopost-2",
       "pattern": "^\\d{14}[0-9A-Z]$",
       "confidence": "low",

@@ -20,9 +20,13 @@ The public page's `tracking-no-cms/suivi-colis` fragment and Shop2Shop's
 ## Routing and interpretation
 
 Dedicated postal prefixes select Chronopost when their S10 check digit passes.
-Their suffix can be a code of Chronopost's own, such as TS or JF, rather than
-a country, so these numbers are not international mail. Other postal-shaped
-identifiers need direct confirmation. A fifteen-character numeric identifier
+Their suffix can be a code of Chronopost's own, such as TS, JF, JB, RV or VF,
+rather than a country, so these numbers are not international mail. The
+common TS, JF and JB suffixes also select Chronopost after any other
+two-letter prefix, with or without an S10 check digit: such numbers often
+carry none, and no other carrier issues them. RV and VF have rarely been seen
+outside the dedicated prefixes, so there they only suggest Chronopost, as
+other postal-shaped identifiers do. A fifteen-character numeric identifier
 must pass the shared DPD check-character validation. These shapes suggest a
 lookup, not carrier ownership.
 
