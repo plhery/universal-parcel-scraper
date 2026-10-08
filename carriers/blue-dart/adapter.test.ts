@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { BlueDartTracker } from './adapter.js';
 import { parseBlueDart } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { classifyBlueDartStatus } from './status.js';
 
 const NUMBER = '00000000001';
 const html = readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');
@@ -12,6 +14,18 @@ describe('Blue Dart direct tracking', () => {
     expect(result.events?.map(e => e.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit']);
     expect(JSON.stringify(result)).not.toMatch(/Private Recipient|private-reference|no information/);
     expect(JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities).toEqual(['history']);
+  });
+  it('maps a pickup run, the pickup and a shipment back with its shipper', () => {
+    const value = html
+      .replace('<th>Status</th><td>Shipment Delivered</td>', '<th>Status</th><td>Shipment Returned Back To Shipper</td>')
+      .replace('<td>Example Facility</td><td>Shipment Delivered</td>', '<td>Example Facility</td><td>Shipment Returned Back To Shipper</td>')
+      .replace('Shipment Out For Delivery', 'Shipment Picked Up')
+      .replace('Shipment Arrived At Hub', 'Pickup Employee Is Out To P/U Shipment');
+    const result = parseBlueDart(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Shipment Returned Back To Shipper' });
+    expect(result.events?.map(e => e.stage)).toEqual(['returned', 'accepted', 'registered']);
+    expect(result).not.toHaveProperty('delivered_at');
+    for (const entry of statuses.entries) expect(classifyBlueDartStatus(entry.wording)?.stage, entry.wording).toBe(entry.stage);
   });
   it('rejects wrong and duplicate summaries and treats an empty shell as schema failure', () => {
     for (const value of [html.replace(NUMBER, '00000000002'), html + html, '<html>Unavailable</html>']) {

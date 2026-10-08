@@ -2,6 +2,19 @@
   "carrier": "blue-dart",
   "entries": [
     {
+      "wording": "Pickup Employee Is Out To P/U Shipment",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "A pickup run to the shipper; the parcel is not with Blue Dart yet."
+    },
+    {
+      "wording": "Shipment Picked Up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
       "wording": "Shipment Delivered",
       "language": "en",
       "stage": "delivered",
@@ -54,6 +67,13 @@
       "language": "en",
       "stage": "failed_attempt",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment Returned Back To Shipper",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "note": "Shown as the shipment's status once it is back with the shipper."
     }
   ]
 }

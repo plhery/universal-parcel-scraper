@@ -9,6 +9,9 @@
         "url": "https://www.trustpilot.com/reviews/6ab5202501cff3e7b1b7d7de",
         "date": "2026-09-24"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -23,7 +26,7 @@
           "dhl-ecommerce-pl"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Blue Dart, which stays one candidate among several."
+      "note": "Publicly reported shipment number. Blue Dart's tracker returns its history. The source attributes it to Blue Dart, which stays one candidate among several."
     },
     {
       "number": "51963160653",
@@ -33,6 +36,9 @@
         "url": "https://www.trustpilot.com/reviews/6aaeff36682a8671edecce99",
         "date": "2026-09-19"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -47,7 +53,7 @@
           "dhl-ecommerce-pl"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Blue Dart, which stays one candidate among several."
+      "note": "Publicly reported shipment number. Blue Dart's tracker returns its history. The source attributes it to Blue Dart, which stays one candidate among several."
     },
     {
       "number": "79034111041",
@@ -103,6 +109,9 @@
         "url": "https://www.consumercomplaints.in/blue-dart-express-b100070",
         "date": "2026-08-10"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -117,7 +126,7 @@
           "dhl-ecommerce-pl"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Blue Dart, which stays one candidate among several."
+      "note": "Publicly reported shipment number. Blue Dart's tracker returns its history. The source attributes it to Blue Dart, which stays one candidate among several."
     }
   ]
 }
