@@ -115,6 +115,9 @@ step exists for future protocol changes.
   (Ship24's instants and Swiss Post's own scan agree once they are read that way), so
   they go through the steps like any other scan, US ones included (below). Those that
   name only the country stay as labeled, hours early.
+- So do Paack's scans. Paack's timeline gives instants, not wall clocks, and ParcelsApp's
+  `date` is their UTC instant: Paack's own lookup gives the same instants scan for scan.
+  Read on Paack's Paris clock, they came out two hours early in summer.
 - North American scans: the dates of UPS, FedEx, UniUni and EasyShip are the scan's local
   clock, as UPS's own instants, FedEx's own page, UniUni's own feed and Ship24's offsets
   show on US scans (UPS's also in Germany, the Netherlands and Spain; no public Canadian

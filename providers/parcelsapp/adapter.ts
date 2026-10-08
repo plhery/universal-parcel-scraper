@@ -65,7 +65,9 @@ export function parseParcelsAppResponse(payload: unknown, trackingNumber: string
  * international scans stay as labeled too: tnt.com gives them offsets, and
  * ParcelsApp's UTC matches them. So do Asendia USA's, wherever they happened:
  * their dates are the UTC instants of Asendia's A1 feed, and Swiss Post's own
- * scans of the same item agree (checked 2026-09-30).
+ * scans of the same item agree (checked 2026-09-30). So do Paack's: its
+ * timeline gives instants, and Paack's own lookup has ParcelsApp's UTC scan
+ * for scan (checked 2026-10-07).
  */
 function stateCarrierName(payload: Record<string, unknown>, state: Record<string, unknown>): unknown {
   const carriers = Array.isArray(payload.carriers) ? payload.carriers : [];
@@ -133,6 +135,7 @@ function scanZone(payload: Record<string, unknown>, state: Record<string, unknow
   const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
   if (carrier === 'tnt' && /^\d{9}$/.test(number)) return null;
   if (typeof name === 'string' && ASENDIA_USA.test(name.trim())) return null;
+  if (carrier === 'paack') return null;
   const zone = carrier ? carrierTimezone(carrier) : 'UTC';
   // A country-qualified routing name can identify a branch rather than the
   // scan location. Keep its clock as a guess even when the alias is catalogued.

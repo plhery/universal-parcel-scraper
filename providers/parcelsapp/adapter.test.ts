@@ -484,6 +484,25 @@ describe('ParcelsApp result parsing', () => {
     expect(scan('1000000000000001')).toBe('2026-07-02T09:20:00.000Z');
   });
 
+  it.each(['json', 'html'])('keeps the UTC instants ParcelsApp gives Paack scans, with the stages of Paack\'s own lookup (%s)', (transport) => {
+    // Live shape (2026-10-07): Paack's labels at Paack's own instants, located
+    // only by country. Read on the Paris clock they came out two hours early.
+    const states = [
+      { date: '2026-07-02T15:40:00Z', status: 'In Paack’s distribution centre', carrier: 0, location: 'FR' },
+      { date: '2026-07-02T09:15:00Z', status: 'Order details received', carrier: 0, location: 'FR' },
+    ];
+    const page = rendered([carrierRow('02 Jul 2026', '15:40', 'In Paack’s distribution centre', 'Paack'),
+      carrierRow('02 Jul 2026', '09:15', 'Order details received', 'Paack')].join(''));
+    const result = transport === 'json'
+      ? parseParcelsAppResponse({ carriers: ['Paack'], states }, number, identity(), 'Europe/Paris')
+      : parseParcelsAppHtml(page, number, 'Europe/Paris');
+    expect(result.events?.map((scan) => [scan.time, scan.description, scan.stage, scan.stage_source])).toEqual([
+      ['2026-07-02T15:40:00.000Z', 'Shipment accepted', 'accepted', 'carrier_map'],
+      ['2026-07-02T09:15:00.000Z', 'Shipment registered', 'registered', 'carrier_map'],
+    ]);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted', discovered_carrier: 'paack' });
+  });
+
   it('reads Asendia scans filed under another name in their place\'s clock, not as UTC', () => {
     // Live shape (2026-09-30): an eBay shipment whose Asendia scans ParcelsApp
     // files under "EasyShip", on local clocks. Ship24's instants agree.
