@@ -4,8 +4,8 @@
     "consignmentId": "00000000000000001",
     "numberOfConsignmentItems": 1,
     "domain": {"isMultiParcel": false},
-    "senderName": "PRIVATE sender",
-    "recipientAddress": {"addressLine1": "PRIVATE address"},
+    "senderName": "Example Shop AS",
+    "recipientAddress": {"addressLine1": "PRIVATE address", "countryCode": "NO"},
     "packageSet": [{
       "brand": "POSTEN",
       "packageNumber": "RR000000005NO",

@@ -20,7 +20,7 @@ export class BringTracker {
       if (response.status === 404 || response.status === 410) throw new IndeterminateError('Bring', 'No identity-bound parcel history');
       let payload: unknown;
       try { payload = JSON.parse(decodeText(bytes)); } catch { throw new SchemaError('Bring'); }
-      return parseBring(payload, number);
+      return parseBring(payload, raw);
     } }]);
   }
 }

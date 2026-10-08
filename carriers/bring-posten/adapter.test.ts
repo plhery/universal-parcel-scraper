@@ -15,17 +15,36 @@ const latest = (value: ReturnType<typeof payload>, changes: Record<string, unkno
   Object.assign(parcel(value).domain.latestSignificantEvent, changes);
 };
 
+/** The fixture parcel still on its way, with an estimate the portal says is available. */
+const travelling = (eta: unknown = { status: 'AVAILABLE', dateOfEstimatedDeliveryIso: '2026-01-08' }) => {
+  const value = payload(); parcel(value).eventSet.shift(); parcel(value).eventSet.shift();
+  parcel(value).eventSet.shift(); Object.assign(parcel(value).domain, { currentStatus: 'EN_ROUTE', eta,
+    latestSignificantEvent: { ...parcel(value).eventSet[0] } });
+  return parseBring(value, NUMBER);
+};
+/** The fixture parcel waiting at its pickup point. */
+const waiting = (pickup: Record<string, unknown> = { expectedPickupUnitName: 'Example Kiosk' }) => {
+  const value = payload(); parcel(value).eventSet.splice(0, 2); Object.assign(parcel(value), pickup);
+  Object.assign(parcel(value).domain, { currentStatus: 'READY_FOR_PICKUP', eta: { status: 'AVAILABLE', dateOfEstimatedDeliveryIso: '2026-01-08' },
+    deliveryType: { type: 'pickup-point', pickupPointInfo: { expectedPickupUnitName: 'Example Locker' } },
+    latestSignificantEvent: { ...parcel(value).eventSet[0] } });
+  return parseBring(value, NUMBER);
+};
+
 describe('Bring consumer parcel projection', () => {
   it('binds both consignment and S10 queries, preserves units and excludes personal fields', () => {
     const result = normalizeCarrierResult(parseBring(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-06T12:00:00+01:00',
-      delivered_at: '2026-01-06T12:00:00+01:00', expected_delivery: null, weight_kg: 0.5, dimensions_text: '20 × 15 × 4 cm' });
+      delivered_at: '2026-01-06T12:00:00+01:00', expected_delivery: null, weight_kg: 0.5, dimensions_text: '20 × 15 × 4 cm',
+      sender_name: 'Example Shop AS', destination_country: 'NO' });
+    expect(result).not.toHaveProperty('pickup_point'); expect(result).not.toHaveProperty('canonical_tracking_number');
     expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'ready_for_pickup', 'accepted', 'registered']);
     expect(parseBring(payload(), 'RR000000005NO').events).toEqual(result.events);
-    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|description.*signature|Address|sender|recipient|pickup.code/);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|description.*signature|Address|recipient|pickup.code/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location),
-      delivered_at: Boolean(result.delivered_at), weight: Boolean(result.weight_kg), dimensions: Boolean(result.dimensions_text) };
+      delivered_at: Boolean(result.delivered_at), weight: Boolean(result.weight_kg), dimensions: Boolean(result.dimensions_text),
+      sender_name: Boolean(result.sender_name), pickup_point: Boolean(waiting().pickup_point), eta: Boolean(travelling().expected_delivery) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
   });
 
@@ -102,6 +121,77 @@ describe('Bring consumer parcel projection', () => {
     const units = payload(); parcel(units).weightInKgs = '0.5'; parcel(units).lengthInCm = -1;
     expect(parseBring(units, NUMBER)).not.toHaveProperty('weight_kg'); expect(parseBring(units, NUMBER)).not.toHaveProperty('dimensions_text');
     expect(() => parseBring({ errorState: 'NOT_FOUND', error: 'No shipments found' }, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+});
+
+describe('Bring fields, pieces and causes', () => {
+  it('reads the estimated day only while the parcel travels and the portal says it is available', () => {
+    expect(travelling()).toMatchObject({ status: 'in_transit', current_stage: 'accepted', expected_delivery: '2026-01-08' });
+    expect(travelling({ status: 'AVAILABLE', dateOfEstimatedDeliveryIso: '2026-01-09T00:00:00+01:00' }).expected_delivery).toBe('2026-01-09');
+    for (const eta of [{ status: 'NOT_AVAILABLE', dateOfEstimatedDeliveryIso: '2026-01-08' }, { status: 'MISSING' },
+      { status: 'AVAILABLE', dateOfEstimatedDeliveryIso: '2026-02-30' }, { status: 'AVAILABLE', dateOfEstimatedDeliveryIso: 'soon' }, null]) {
+      expect(travelling(eta).expected_delivery).toBeNull();
+    }
+    expect(waiting().expected_delivery).toBeNull();
+  });
+
+  it('names the pickup point only while the parcel waits there', () => {
+    expect(waiting()).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Example Kiosk' });
+    expect(waiting({}).pickup_point).toBe('Example Locker');
+    expect(travelling()).not.toHaveProperty('pickup_point');
+  });
+
+  it('leaves out a sender or country the portal does not give', () => {
+    const value = payload(); delete value.consignmentWithDomainAsync.senderName; parcel(value).senderName = 'Example Brand AS';
+    value.consignmentWithDomainAsync.recipientAddress.countryCode = 'Norway';
+    expect(parseBring(value, NUMBER)).toMatchObject({ sender_name: 'Example Brand AS' });
+    expect(parseBring(value, NUMBER)).not.toHaveProperty('destination_country');
+    delete parcel(value).senderName; expect(parseBring(value, NUMBER)).not.toHaveProperty('sender_name');
+  });
+
+  it('follows the piece asked for in a larger consignment, but not the consignment number', () => {
+    const value = payload(); const second = structuredClone(parcel(value));
+    Object.assign(second, { packageNumber: '370000000000000002', weightInKgs: 2 });
+    Object.assign(value.consignmentWithDomainAsync, { numberOfConsignmentItems: 2, domain: { isMultiParcel: true } });
+    value.consignmentWithDomainAsync.packageSet.push(second);
+    expect(parseBring(value, '370000000000000002')).toMatchObject({ status: 'delivered', weight_kg: 2 });
+    expect(parseBring(value, 'RR000000005NO')).toMatchObject({ weight_kg: 0.5 });
+    expect(() => parseBring(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    value.consignmentWithDomainAsync.numberOfConsignmentItems = 3;
+    expect(() => parseBring(value, '370000000000000002')).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+
+  it('asks for the parcel number behind an SSCC with its 00 identifier and reports that number', async () => {
+    const value = payload(); parcel(value).packageNumber = '370000000000000001';
+    expect(normalizeBringNumber('00 370000000000000001')).toBe('370000000000000001');
+    expect(parseBring(value, '00370000000000000001')).toMatchObject({ canonical_tracking_number: '370000000000000001' });
+    expect(parseBring(value, '370000000000000001')).not.toHaveProperty('canonical_tracking_number');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(value));
+    await new BringTracker({ fetcher }).fetch('00370000000000000001');
+    expect(String(fetcher.mock.calls[0]![0])).toBe('https://sporing.bring.no/sporing/json/370000000000000001?lang=en');
+  });
+
+  it('matches the summary past a newer delivery change notice, which takes no stage', () => {
+    const value = payload(); parcel(value).eventSet.unshift({ status: 'DELIVERY_CHANGED', description: 'PRIVATE choice',
+      dateIso: '2026-01-07T12:00:00+01:00', insignificant: false, lmEventCode: 'YG', city: '' });
+    const result = parseBring(value, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', last_update: '2026-01-06T12:00:00+01:00' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'DELIVERY_CHANGED', description: 'Delivery details changed' });
+    expect(result.events?.[0]).not.toHaveProperty('stage');
+  });
+
+  it('reads deviation causes, customs and missed deliveries', () => {
+    const value = payload(); parcel(value).domain.currentStatus = 'EN_ROUTE';
+    latest(value, { status: 'DEVIATION', lmCauseCode: '28' });
+    expect(parseBring(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'Handed in after the deadline' });
+    latest(value, { status: 'DEVIATION', lmCauseCode: '41' });
+    expect(parseBring(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Delayed' });
+    latest(value, { status: 'DEVIATION', lmCauseCode: '99' });
+    expect(parseBring(value, NUMBER)).toMatchObject({ current_stage: 'exception', last_status_text: 'Delivery exception' });
+    latest(value, { status: 'CUSTOMS', lmCauseCode: '' });
+    expect(parseBring(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'customs' });
+    latest(value, { status: 'ATTEMPTED_DELIVERY' });
+    expect(parseBring(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
   });
 });
 

@@ -1711,6 +1711,8 @@
       "last_update": null,
       "last_update_local": "2026-01-06T12:00:00.000",
       "expected_delivery": null,
+      "sender_name": "Example Shop AS",
+      "destination_country": "NO",
       "weight_kg": 0.5,
       "dimensions_text": "20 × 15 × 4 cm",
       "events": [

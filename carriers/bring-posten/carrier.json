@@ -31,7 +31,10 @@
     "location",
     "delivered_at",
     "weight",
-    "dimensions"
+    "dimensions",
+    "sender_name",
+    "pickup_point",
+    "eta"
   ],
   "portal": {
     "url": "https://sporing.bring.no/sporing/{trackingNumber}?lang=en",
@@ -42,23 +45,29 @@
       "location",
       "eta",
       "weight",
-      "dimensions"
+      "dimensions",
+      "sender_name",
+      "pickup_point",
+      "destination_country"
     ],
     "scraped": [
       "status",
       "history",
       "location",
+      "eta",
       "delivered_at",
       "weight",
-      "dimensions"
+      "dimensions",
+      "sender_name",
+      "pickup_point",
+      "destination_country"
     ],
     "discarded": [
       "descriptions",
       "addresses",
       "contact_details",
       "proof_images",
-      "pickup_code",
-      "eta"
+      "pickup_code"
     ],
     "unavailable": []
   },
