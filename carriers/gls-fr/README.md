@@ -20,7 +20,12 @@ The parser:
    first and keeps 100;
 3. takes the parcel status from `statutColis`, falling back to the newest event.
 
-HTTP recognition uses the same French endpoint and identity check. Unsupported
+While the parcel waits at a shop or locker, a second `GET {consignee-ws}/api/v2/searchNode/{trackid}/{point}`
+reads that point's record, as the portal does, under a short bound. Optional: if
+it fails, the parcel has no pickup point.
+
+HTTP recognition uses the same French endpoint and identity check, without the
+pickup point. Unsupported
 numbers and definite not-found replies remain unknown; endpoint failures and
 mismatched shipments remain failures. Shared GLS number shapes still require
 this confirmation before they can identify the French network.
@@ -43,6 +48,14 @@ this confirmation before they can identify the French network.
   shows the scan's own day. When `deliveryDateReliability` is `0` the portal presents
   the same day as a latest date.
 - The sender is `libelleExpediteur`, the label the portal shows as the sender.
+- While the parcel waits at a shop or locker, the pickup point is the record of
+  the point its own `relaisGlsColis` names: its name, then its street and its
+  postcode and town on their own lines, as the portal prints them. The record must
+  name the same point and be a shop or locker; without a street or town the name
+  stands alone. A neighbour who keeps parcels (`2501` ids) is a private person and
+  is never asked for, nor is the depot (`codeActionColis` 20). The endpoint answers
+  any point under any parcel code, so the point comes only from the parcel's own
+  record. Opening hours and coordinates are not read.
 - Not used: scraping `moncolis.gls-france.com` — the endpoint returns the same
   data as JSON.
 - The parser reads an allowlist of fields. Address, signature, contact and
@@ -55,8 +68,9 @@ this confirmation before they can identify the French network.
   valid GLS check digit. A GLS parcel number is 11 digits, so a 12-digit number is
   looked up by its first 11 and, only if that is not found, once more as printed;
   either way the parcel is identified by its 11 digits.
-- No pickup-point name (the portal reads it from a second endpoint), weight or
-  dimensions in the response, so those capabilities are not declared.
+- No weight or dimensions in the response, so those capabilities are not declared.
+- A parcel waiting at the depot has no pickup point: the portal reads that
+  depot from a third endpoint the adapter does not call.
 - The endpoint only keeps recent parcels: older numbers answer the "no command
   found" 404.
 

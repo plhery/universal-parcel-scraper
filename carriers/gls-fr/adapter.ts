@@ -5,7 +5,9 @@
  * record, its event list, and blocks describing the people involved; `parse()`
  * builds its result from an explicit allowlist of status, timing, sender and
  * operational-location fields, so recipient names, street addresses, contacts,
- * signatures and delivery instructions never leave this module.
+ * signatures and delivery instructions never leave this module. While the parcel
+ * waits at a shop or locker, a second GET reads that point's record, as the
+ * tracking page does, for its name and address.
  */
 
 import { DateTime } from 'luxon';
@@ -16,6 +18,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import type { Stage } from '../../generated/catalog.js';
 import {
   FAILED_DELAYED_DELIVERY,
   glsFranceStatusCode,
@@ -28,12 +31,19 @@ export { glsFranceStatus } from './status.js';
 const PROVIDER = 'GLS France';
 const TRACKING_API =
   'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v1/command/public/codes';
+const NODE_API = 'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v2/searchNode';
 const TRACKING_PAGE = 'https://moncolis.gls-france.com/fr';
 const TIMEZONE = 'Europe/Paris';
 const DEFAULT_TIMEOUT_MS = 12_000;
 const MAX_RESPONSE_BYTES = 750_000;
 const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
+/** The pickup point is optional: its request gets a short bound and never the parcel's whole budget. */
+const PICKUP_TIMEOUT_MS = 4_000;
+const MAX_NODE_BYTES = 100_000;
+/** Shops and lockers. A neighbour who keeps parcels for GLS is a private person and is never read. */
+const PICKUP_POINT_TYPES = new Set(['PARCEL_SHOP', 'LOCKER']);
+const NEIGHBOUR_NETWORK = '2501';
 
 function locationCode(value: unknown): string {
   const code = cleanScalar(value, 16).toLocaleUpperCase('en-US');
@@ -144,10 +154,51 @@ function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
   };
 }
 
+/**
+ * The shop or locker holding the parcel, from its own record, while the parcel waits there. The
+ * tracking page asks for that point unless the parcel waits at the depot (action 20). A
+ * neighbour's id is never asked for.
+ */
+function waitingPoint(parcel: JsonObject, stage: Stage | undefined): string {
+  if (stage !== 'ready_for_pickup' || cleanScalar(parcel.codeActionColis, 8) === '20') return '';
+  const point = cleanScalar(parcel.relaisGlsColis, 20);
+  return /^\d{6,15}$/.test(point) && !/^0+$/.test(point) && !point.startsWith(NEIGHBOUR_NETWORK) ? point : '';
+}
+
+/**
+ * The point's record, if it is the requested shop or locker: its name, then its street and its
+ * postcode and town on their own lines, as the tracking page prints them. A record without a street
+ * or town keeps the name alone. Its opening hours and coordinates are not read.
+ */
+export function glsFrancePickupPoint(node: unknown, point: string): string {
+  if (!isRecord(node) || cleanScalar(node.parcelShopId, 20) !== point) return '';
+  if (!PICKUP_POINT_TYPES.has(cleanScalar(node.parcelShopType, 20)) || cleanScalar(node.type, 20) === 'KEEPER') return '';
+  const name = clean(node.name, 120);
+  if (!name) return '';
+  const address = isRecord(node.address) ? node.address : {};
+  const street = clean(address.street, 120);
+  const town = clean(address.city, 80);
+  if (!street || !town) return name;
+  const postcode = cleanScalar(address.zipCode, 10);
+  return `${name}\n${street}\n${[/^\d{5}$/.test(postcode) ? postcode : '', town].filter(Boolean).join(' ')}`;
+}
+
+interface ParsedTracking {
+  result: CarrierResult;
+  /** The parcel's own code, which the tracking page names in the point's request. */
+  code: string;
+  /** The shop or locker holding the parcel, else empty. */
+  point: string;
+}
+
 export function parseGLSFranceTrackingResponse(
   payload: unknown,
   trackingNumber: string,
 ): CarrierResult {
+  return parseTracking(payload, trackingNumber).result;
+}
+
+function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking {
   const requested = normalizeGLSFranceTrackingNumber(trackingNumber);
   if (!isRecord(payload) || !isRecord(payload.colis)) {
     throw new SchemaError(PROVIDER, 'GLS France returned an invalid tracking response');
@@ -199,15 +250,19 @@ export function parseGLSFranceTrackingResponse(
   // The portal shows this label as the sender.
   const sender = clean(parcel.libelleExpediteur, 200);
   return {
-    status,
-    last_status_text: current?.description
-      ?? latestEvent?.description
-      ?? 'Tracking information received',
-    last_update: latestEvent?.time ?? fallbackUpdate?.iso ?? null,
-    expected_delivery: settled ? null : expectedDelivery(parcel.dateTheoriqueLivraison),
-    ...(sender ? { sender_name: sender } : {}),
-    timezone: TIMEZONE,
-    events,
+    result: {
+      status,
+      last_status_text: current?.description
+        ?? latestEvent?.description
+        ?? 'Tracking information received',
+      last_update: latestEvent?.time ?? fallbackUpdate?.iso ?? null,
+      expected_delivery: settled ? null : expectedDelivery(parcel.dateTheoriqueLivraison),
+      ...(sender ? { sender_name: sender } : {}),
+      timezone: TIMEZONE,
+      events,
+    },
+    code: normalizedCandidate(parcel.trackid) || requested,
+    point: waitingPoint(parcel, stage),
   };
 }
 
@@ -232,30 +287,61 @@ export class GLSFranceTracker {
     this.#userAgent = userAgentOf(options.userAgent);
   }
 
-  async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  /** Recognition only needs the parcel, so it can leave its pickup point unread. */
+  async fetch(trackingNumber: string, context: TrackingContext = {}, { pickupPoint = true } = {}): Promise<CarrierResult> {
     const normalized = normalizeGLSFranceTrackingNumber(trackingNumber);
     const printed = printedNumber(trackingNumber);
     const budget = lookupBudget(context, this.timeoutMs);
+    let parsed: ParsedTracking;
     try {
-      return await this.lookup(normalized, normalized, budget);
+      parsed = await this.lookup(normalized, normalized, budget);
     } catch (error) {
       // The 11-digit parcel number is what GLS keys a parcel by. Should the
       // French backend only know the number as printed, ask for it once too.
       if (printed === normalized || !(error instanceof UpstreamHttpError) || error.status !== 404) throw error;
-      return await this.lookup(printed, normalized, budget);
+      parsed = await this.lookup(printed, normalized, budget);
+    }
+    const { result, code, point } = parsed;
+    const pickup = pickupPoint && point ? await this.pickupPoint(code, point, budget, context.signal) : '';
+    return pickup ? { ...result, pickup_point: pickup } : result;
+  }
+
+  /** The pickup point, or nothing: the parcel is found without it. Only the caller's cancellation ends the lookup. */
+  private async pickupPoint(code: string, point: string, budget: LookupBudget, signal: AbortSignal | undefined): Promise<string> {
+    // Half of what is left at most, so the parcel itself is never late for its point.
+    const timeoutMs = Math.min(PICKUP_TIMEOUT_MS, Math.floor(budget.remainingMs() / 2));
+    if (timeoutMs < 100) return '';
+    try {
+      const { bytes } = await fetchBounded(`${NODE_API}/${encodeURIComponent(code)}/${encodeURIComponent(point)}`, {
+        signal: budget.signal,
+        headers: this.#headers(),
+      }, {
+        provider: 'GLS France pickup point',
+        timeoutMs,
+        maxBytes: MAX_NODE_BYTES,
+        fetcher: this.#fetcher,
+      });
+      return glsFrancePickupPoint(parseJsonBytes(bytes, PROVIDER), point);
+    } catch {
+      signal?.throwIfAborted();
+      return '';
     }
   }
 
-  private async lookup(code: string, normalized: string, budget: LookupBudget): Promise<CarrierResult> {
+  #headers(): Record<string, string> {
+    return {
+      Accept: 'application/json',
+      'Accept-Language': 'fr-FR,fr;q=0.9',
+      Origin: 'https://moncolis.gls-france.com',
+      Referer: `${TRACKING_PAGE}/`,
+      'User-Agent': this.#userAgent,
+    };
+  }
+
+  private async lookup(code: string, normalized: string, budget: LookupBudget): Promise<ParsedTracking> {
     const { response, bytes } = await fetchBounded(`${TRACKING_API}/${encodeURIComponent(code)}`, {
       signal: budget.signal,
-      headers: {
-        Accept: 'application/json',
-        'Accept-Language': 'fr-FR,fr;q=0.9',
-        Origin: 'https://moncolis.gls-france.com',
-        Referer: `${TRACKING_PAGE}/`,
-        'User-Agent': this.#userAgent,
-      },
+      headers: this.#headers(),
     }, {
       provider: 'GLS France tracking',
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
@@ -272,7 +358,7 @@ export class GLSFranceTracker {
       }
       throw new TransportError(PROVIDER, 'GLS France tracking endpoint is unavailable', { status: response.status });
     }
-    return parseGLSFranceTrackingResponse(parseJsonBytes(bytes, PROVIDER), normalized);
+    return parseTracking(parseJsonBytes(bytes, PROVIDER), normalized);
   }
 }
 
@@ -283,7 +369,7 @@ export const adapter: AdapterFactory = (environment) => {
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(
-      () => tracker.fetch(number, context),
+      () => tracker.fetch(number, context, { pickupPoint: false }),
       () => accepted(() => normalizeGLSFranceTrackingNumber(number)),
     ),
   };

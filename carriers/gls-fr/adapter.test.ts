@@ -6,6 +6,7 @@ import { SchemaError } from '../../core/errors/index.js';
 import {
   GLSFranceTracker,
   adapter,
+  glsFrancePickupPoint,
   glsFranceTrackingApiUrl,
   glsFranceTrackingUrl,
   normalizeGLSFranceTrackingNumber,
@@ -20,6 +21,9 @@ const PRINTED_TRACKING_NUMBER = '366310000017';
 const CAPABILITIES: readonly string[] = JSON.parse(
   readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'carrier.json'), 'utf8'),
 ).capabilities;
+const POINT = '2503999999';
+const NODE_API = 'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v2/searchNode';
+const SHOP = "EXAMPLE TABAC PRESSE\n1 RUE DE L'EXEMPLE\n99999 Exempleville";
 
 interface Fixture {
   colis: Record<string, unknown>;
@@ -45,6 +49,39 @@ function outForDeliveryFixture(): Fixture {
     codelieuEvenement: 'FR0012',
   }];
   return fixture;
+}
+
+/** The same parcel waiting at the shop the point fixture describes. */
+function waitingFixture(): Fixture {
+  const fixture = deliveredFixture();
+  fixture.colis.statutColis = 'LIP';
+  fixture.colis.relaisGlsColis = POINT;
+  fixture.colis.codeActionColis = 0;
+  fixture.evenements = [fixture.evenements[0]!, {
+    datereference: '2026-08-29 10:05:00.0',
+    statutEvenement: 'LIP',
+    typeEvenement: 'INF',
+    codelieuEvenement: 'FR0012',
+    relaisglsEvenement: POINT,
+  }];
+  return fixture;
+}
+
+function pointFixture(): Record<string, unknown> {
+  return JSON.parse(readFileSync(
+    path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', 'pickup-point.json'),
+    'utf8',
+  )) as Record<string, unknown>;
+}
+
+function pickupLookup(parcel: Fixture, node: () => Response | Promise<Response> = () => new Response(JSON.stringify(pointFixture()))) {
+  const urls: string[] = [];
+  const fetcher = vi.fn<typeof fetch>(async (input) => {
+    const url = String(input);
+    urls.push(url);
+    return url.startsWith(NODE_API) ? node() : new Response(JSON.stringify(parcel));
+  });
+  return { urls, fetcher, tracker: new GLSFranceTracker({ timeoutMs: 1_000, fetcher }) };
 }
 
 afterEach(() => vi.restoreAllMocks());
@@ -234,13 +271,15 @@ describe('GLS France response normalization', () => {
     expect(parseGLSFranceTrackingResponse(unnamed, TRACKING_NUMBER)).not.toHaveProperty('sender_name');
   });
 
-  it('returns every capability declared in carrier.json', () => {
+  it('returns every capability declared in carrier.json', async () => {
     const result = parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER);
+    const waiting = await pickupLookup(waitingFixture()).tracker.fetch(TRACKING_NUMBER);
     const checks: Record<string, () => boolean> = {
       history: () => (result.events?.length ?? 0) > 0,
       location: () => (result.events ?? []).some((event) => Boolean(event.location)),
       eta: () => result.expected_delivery != null,
       sender_name: () => result.sender_name != null,
+      pickup_point: () => Boolean(waiting.pickup_point),
       provider_code: () => (result.events ?? []).some((event) => Boolean(event.provider_code)),
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
@@ -427,5 +466,113 @@ describe('GLS France response normalization', () => {
 
     await expect(new GLSFranceTracker({ timeoutMs: 1_000 }).fetch(TRACKING_NUMBER))
       .rejects.toThrow('unexpectedly large response');
+  });
+});
+
+describe('GLS France pickup point', () => {
+  it('names the shop holding the parcel and its address only while it waits there', async () => {
+    const app = pickupLookup(waitingFixture());
+    const result = await app.tracker.fetch(TRACKING_NUMBER);
+    expect(result).toMatchObject({ status: 'out_for_delivery', pickup_point: SHOP });
+    expect(app.urls).toEqual([glsFranceTrackingApiUrl(TRACKING_NUMBER), `${NODE_API}/${TRACKING_NUMBER}/${POINT}`]);
+    expect(app.fetcher.mock.calls[1]![1]).toMatchObject({
+      cache: 'no-store',
+      redirect: 'error',
+      headers: expect.objectContaining({ Origin: 'https://moncolis.gls-france.com' }),
+    });
+    expect(JSON.stringify(result)).not.toMatch(/MONDAY|09:00|0\.000000|Private|private/);
+
+    const collected = waitingFixture();
+    collected.colis.statutColis = 'LIV';
+    const done = pickupLookup(collected);
+    const delivered = await done.tracker.fetch(TRACKING_NUMBER);
+    expect(delivered).toMatchObject({ status: 'delivered' });
+    expect(delivered.pickup_point).toBeUndefined();
+    expect(done.urls).toHaveLength(1);
+  });
+
+  it('asks for the point under the parcel code its record gives, as the tracking page does', async () => {
+    const fixture = waitingFixture();
+    fixture.colis.numeroalphaColis = Number(NUMERIC_TRACKING_NUMBER);
+    const app = pickupLookup(fixture);
+    await expect(app.tracker.fetch(NUMERIC_TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: SHOP });
+    expect(app.urls[1]).toBe(`${NODE_API}/${TRACKING_NUMBER}/${POINT}`);
+  });
+
+  it('never asks for a neighbour, the depot, or a point the parcel is not waiting at', async () => {
+    const changes: Array<(fixture: Fixture) => void> = [
+      (fixture) => { fixture.colis.relaisGlsColis = '2501999999'; },
+      (fixture) => { fixture.colis.codeActionColis = 20; },
+      (fixture) => { fixture.colis.relaisGlsColis = '0'; },
+      (fixture) => { fixture.colis.relaisGlsColis = ''; },
+      (fixture) => { fixture.colis.relaisGlsColis = '2503/../99'; },
+      (fixture) => { delete fixture.colis.relaisGlsColis; },
+      (fixture) => {
+        fixture.colis.statutColis = 'TRV';
+        fixture.evenements[1]!.statutEvenement = 'TRV';
+      },
+    ];
+    for (const change of changes) {
+      const fixture = waitingFixture();
+      change(fixture);
+      const app = pickupLookup(fixture);
+      expect((await app.tracker.fetch(TRACKING_NUMBER)).pickup_point).toBeUndefined();
+      expect(app.urls).toEqual([glsFranceTrackingApiUrl(TRACKING_NUMBER)]);
+    }
+  });
+
+  it('reads a shop and a locker as their records give them, and never a neighbour', () => {
+    const shop = pointFixture();
+    expect(glsFrancePickupPoint(shop, POINT)).toBe(SHOP);
+    expect(glsFrancePickupPoint({ ...shop, name: 'EXAMPLE LOCKER', type: 'LOCKER', parcelShopType: 'LOCKER' }, POINT))
+      .toBe("EXAMPLE LOCKER\n1 RUE DE L'EXEMPLE\n99999 Exempleville");
+    expect(glsFrancePickupPoint({ ...shop, parcelShopType: 'NEIGHBOUR' }, POINT)).toBe('');
+    expect(glsFrancePickupPoint({ ...shop, type: 'KEEPER' }, POINT)).toBe('');
+    expect(glsFrancePickupPoint({ ...shop, parcelShopType: null }, POINT)).toBe('');
+    expect(glsFrancePickupPoint(shop, '2503999998')).toBe('');
+  });
+
+  it('keeps the name alone without a street or town, and nothing without a name', () => {
+    const shop = pointFixture();
+    const address = shop.address as Record<string, unknown>;
+    expect(glsFrancePickupPoint({ ...shop, address: { ...address, street: ' ' } }, POINT)).toBe('EXAMPLE TABAC PRESSE');
+    expect(glsFrancePickupPoint({ ...shop, address: { ...address, city: null } }, POINT)).toBe('EXAMPLE TABAC PRESSE');
+    expect(glsFrancePickupPoint({ ...shop, address: 'EXAMPLE' }, POINT)).toBe('EXAMPLE TABAC PRESSE');
+    expect(glsFrancePickupPoint({ ...shop, address: { ...address, zipCode: 'EXAMPLE' } }, POINT))
+      .toBe("EXAMPLE TABAC PRESSE\n1 RUE DE L'EXEMPLE\nExempleville");
+    expect(glsFrancePickupPoint({ ...shop, name: ['EXAMPLE'] }, POINT)).toBe('');
+    expect(glsFrancePickupPoint([shop], POINT)).toBe('');
+  });
+
+  it.each([
+    ['another point', () => new Response(JSON.stringify({ ...pointFixture(), parcelShopId: '2503999998' }))],
+    ['an empty record', () => new Response('{}')],
+    ['a blocked reply', () => new Response('<html>sorry</html>', { headers: { 'Content-Type': 'text/html' } })],
+    ['an outage', () => new Response('', { status: 503 })],
+    ['a network failure', () => Promise.reject(new TypeError('fetch failed'))],
+  ])('keeps the parcel without a pickup point after %s', async (_, reply) => {
+    const result = await pickupLookup(waitingFixture(), reply).tracker.fetch(TRACKING_NUMBER);
+    expect(result).toMatchObject({ status: 'out_for_delivery', last_status_text: 'Ready for pickup at GLS ParcelShop' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'LIP' });
+    expect(result.pickup_point).toBeUndefined();
+  });
+
+  it('ends a lookup cancelled during the point request', async () => {
+    const controller = new AbortController();
+    const app = pickupLookup(waitingFixture(), () => {
+      controller.abort(new Error('caller cancelled'));
+      return new Response('', { status: 503 });
+    });
+    await expect(app.tracker.fetch(TRACKING_NUMBER, { signal: controller.signal })).rejects.toThrow('caller cancelled');
+  });
+
+  it('recognizes a waiting parcel without asking for its point', async () => {
+    const app = pickupLookup(waitingFixture());
+    const instance = adapter({
+      fetcher: app.fetcher, trawl: null, browserExecutablePath: null, env: {},
+      recorder: { step() {}, lookup() {} },
+    });
+    await expect(instance.recognize!(TRACKING_NUMBER, { budgetMs: 1_000 })).resolves.toMatchObject({ known: true });
+    expect(app.urls).toEqual([glsFranceTrackingApiUrl(TRACKING_NUMBER)]);
   });
 });

@@ -32,6 +32,7 @@
     "history",
     "location",
     "eta",
+    "pickup_point",
     "sender_name",
     "provider_code"
   ],
@@ -43,6 +44,7 @@
       "history",
       "location",
       "eta",
+      "pickup_point",
       "sender_name",
       "recipient_name",
       "recipient_address",
@@ -55,6 +57,7 @@
       "history",
       "location",
       "eta",
+      "pickup_point",
       "sender_name"
     ],
     "discarded": [
