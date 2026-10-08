@@ -746,6 +746,7 @@
       "expected_delivery": null,
       "weight_kg": 0.32,
       "dimensions_text": "26.1 × 7.5 × 38.4 cm",
+      "destination_country": "BE",
       "events": [
         {
           "local_time": "2026-01-04T12:00:00",

@@ -46,6 +46,9 @@
         "url": "https://www.trustpilot.com/reviews/6aad4fb49a4ec9a1f36c3a6c",
         "date": "2026-09-18"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -55,7 +58,7 @@
           "inpost"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to bpost, which stays one candidate among several."
+      "note": "Publicly reported shipment number. bpost's tracking returned its history, a parcel from abroad collected at a pickup point. Twenty-four digits stay one candidate among several."
     },
     {
       "number": "CE500137339BE",
@@ -79,11 +82,14 @@
         "url": "https://www.trustpilot.com/reviews/6aad494aa36ef0697f60cd4d",
         "date": "2026-09-18"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "bpost",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Cross-border item handled by Landmark Global."
+      "note": "Publicly reported shipment number. bpost's tracking returned its history, a cross-border item handled by Landmark Global."
     },
     {
       "number": "UI539489067BE",

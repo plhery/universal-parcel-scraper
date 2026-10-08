@@ -14,6 +14,19 @@ export function normalizeBpostNumber(raw: string): string {
   return number;
 }
 
+/** A two-letter country code, or '' for anything else. */
+function countryCode(value: unknown): string {
+  const code = clean(value, 8).toUpperCase();
+  return /^[A-Z]{2}$/.test(code) ? code : '';
+}
+
+/** The pickup point's name, in the first language bpost provides. Its address is never read. */
+function pickupPointName(point: unknown): string {
+  if (!isRecord(point) || !isRecord(point.name)) return '';
+  const names = point.name;
+  return ['en', 'fr', 'nl', 'de'].map((language) => clean(names[language], 160)).find(Boolean) ?? '';
+}
+
 export function parseBpost(payload: unknown, number: string): CarrierResult {
   const requested = normalizeBpostNumber(number);
   if (!isRecord(payload)) throw new SchemaError('bpost');
@@ -64,6 +77,11 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
   const latest = events[0]!;
   const mapped = classifyBpostStatus(latest.description!);
   const current = returnDelivery && mapped?.stage === 'delivered' ? { status: 'exception' as const, stage: 'returned' as const } : mapped;
+  const destination = isRecord(item.receiver) ? countryCode(item.receiver.countryCode) : '';
+  const pickupPoint = current?.stage === 'ready_for_pickup' ? pickupPointName(item.deliveryPoint) : '';
+  // The sender's barcode is kept only when it is an S10 number other than the one searched.
+  const senderBarcode = clean(item.senderBarcode, 32).toUpperCase();
+  const international = senderBarcode !== requested && isValidS10TrackingNumber(senderBarcode) ? senderBarcode : '';
   const grams = item.weightInGrams;
   const dimensions = clean(item.dimensionsInCm, 100);
   const dimensionMatch = dimensions.match(/^(\d+(?:\.\d+)?)cm x (\d+(?:\.\d+)?)cm x (\d+(?:\.\d+)?)cm$/);
@@ -73,5 +91,8 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
     ...(typeof grams === 'number' && Number.isFinite(grams) && grams > 0 ? { weight_kg: grams / 1000 } : {}),
     ...(dimensionMatch && dimensionMatch.slice(1).every((value) => Number(value) > 0)
       ? { dimensions_text: `${dimensionMatch.slice(1).join(' × ')} cm` } : {}),
+    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
+    ...(destination ? { destination_country: destination } : {}),
+    ...(international ? { international_tracking_number: international } : {}),
     events: events.slice(0, 100) };
 }

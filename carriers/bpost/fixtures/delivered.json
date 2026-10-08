@@ -15,7 +15,8 @@
       "dimensionsInCm": "26.1cm x 7.5cm x 38.4cm",
       "receiver": {
         "name": "PRIVATE_RECIPIENT",
-        "address": "PRIVATE_ADDRESS"
+        "address": "PRIVATE_ADDRESS",
+        "countryCode": "BE"
       },
       "sender": {
         "name": "PRIVATE_SENDER"
@@ -23,6 +24,27 @@
       "actualDeliveryTime": {
         "day": "2026-01-04",
         "time": "12:00"
+      },
+      "deliveryPoint": {
+        "acCode": "PRIVATE_POINT_CODE",
+        "name": {
+          "en": "Example Post Point",
+          "fr": "Point Poste Exemple",
+          "nl": "Voorbeeld Postpunt",
+          "de": "Beispiel Postpunkt"
+        },
+        "street": {
+          "en": "PRIVATE_STREET"
+        },
+        "streetNumber": {
+          "en": "PRIVATE_NUMBER"
+        },
+        "postcode": {
+          "en": "PRIVATE_POSTCODE"
+        },
+        "municipality": {
+          "en": "PRIVATE_TOWN"
+        }
       },
       "events": [
         {

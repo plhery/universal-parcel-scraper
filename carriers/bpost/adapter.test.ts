@@ -16,14 +16,20 @@ describe('bpost direct history', () => {
   it('reads the identity-bound timeline and preserves clocks without inventing offsets', () => {
     const result = normalizeCarrierResult(parseBpost(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null,
-      last_update_local: '2026-01-04T12:00:00', weight_kg: 0.32, dimensions_text: '26.1 × 7.5 × 38.4 cm', expected_delivery: null });
+      last_update_local: '2026-01-04T12:00:00', weight_kg: 0.32, dimensions_text: '26.1 × 7.5 × 38.4 cm', expected_delivery: null,
+      destination_country: 'BE' });
+    // A collected parcel no longer waits at its pickup point.
+    expect(result).not.toHaveProperty('pickup_point');
+    expect(result).not.toHaveProperty('international_tracking_number');
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'registered']);
     expect(result.events?.every((event) => event.local_time && !event.time)).toBe(true);
     expect(result).not.toHaveProperty('delivered_at');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|recipient|receiver|sender|actualDeliveryTime|activeStep/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
+    const waiting = payload(); waiting.items[0].events.shift();
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location),
-      weight: typeof result.weight_kg === 'number', dimensions: Boolean(result.dimensions_text) };
+      weight: typeof result.weight_kg === 'number', dimensions: Boolean(result.dimensions_text),
+      pickup_point: Boolean(parseBpost(waiting, NUMBER).pickup_point) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
   });
 
@@ -72,7 +78,14 @@ describe('bpost direct history', () => {
 
   it('keeps pickup availability, unrecognized scans and return delivery distinct', () => {
     const pickup = payload(); pickup.items[0].events.shift();
-    expect(parseBpost(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup' });
+    expect(parseBpost(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup',
+      pickup_point: 'Example Post Point' });
+    // The point's name only: its code, street, number, postcode and town are never read.
+    expect(JSON.stringify(parseBpost(pickup, NUMBER))).not.toMatch(/PRIVATE/);
+    delete pickup.items[0].deliveryPoint.name.en;
+    expect(parseBpost(pickup, NUMBER).pickup_point).toBe('Point Poste Exemple');
+    pickup.items[0].deliveryPoint.name = 'Example Post Point';
+    expect(parseBpost(pickup, NUMBER)).not.toHaveProperty('pickup_point');
     const unknown = payload(); unknown.items[0].events[0].key.EN.description = 'Delivery expected';
     expect(parseBpost(unknown, NUMBER).status).toBe('unknown');
     expect(parseBpost(unknown, NUMBER).events?.[0]).not.toHaveProperty('stage');
@@ -83,6 +96,20 @@ describe('bpost direct history', () => {
     expect(parseBpost(returned, NUMBER).events?.[0]).toMatchObject({ provider_leg: 'return', stage: 'returned' });
     expect(classifyBpostStatus('Item available at Pick-up point')?.stage).toBe('ready_for_pickup');
     for (const wording of ['__proto__', 'constructor', 'Delivery expected']) expect(classifyBpostStatus(wording)).toBeUndefined();
+  });
+
+  it('reads the destination country code and another S10 number the sender printed', () => {
+    for (const [countryCode, expected] of [['fr', 'FR'], ['Belgium', undefined], ['B', undefined], [56, undefined]] as const) {
+      const value = payload(); value.items[0].receiver.countryCode = countryCode;
+      expect(parseBpost(value, NUMBER).destination_country).toBe(expected);
+    }
+    const s10 = payload(); s10.items[0].senderBarcode = 'CB123456785FR';
+    expect(parseBpost(s10, NUMBER).international_tracking_number).toBe('CB123456785FR');
+    s10.items[0].senderBarcode = 'CB123456784FR';
+    expect(parseBpost(s10, NUMBER)).not.toHaveProperty('international_tracking_number');
+    const same = payload();
+    Object.assign(same.items[0], { itemCode: 'CB123456785BE', searchCode: 'CB123456785BE', senderBarcode: 'CB123456785BE' });
+    expect(parseBpost(same, 'CB123456785BE')).not.toHaveProperty('international_tracking_number');
   });
 
   it('keeps only explicitly labelled positive measurements', () => {

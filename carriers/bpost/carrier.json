@@ -27,7 +27,8 @@
     "history",
     "location",
     "weight",
-    "dimensions"
+    "dimensions",
+    "pickup_point"
   ],
   "portal": {
     "url": "https://track.bpost.cloud/",
@@ -37,14 +38,16 @@
       "history",
       "location",
       "weight",
-      "dimensions"
+      "dimensions",
+      "pickup_point"
     ],
     "scraped": [
       "status",
       "history",
       "location",
       "weight",
-      "dimensions"
+      "dimensions",
+      "pickup_point"
     ],
     "discarded": [
       "recipient",

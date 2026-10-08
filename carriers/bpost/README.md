@@ -20,12 +20,19 @@ numeric barcodes; only the batch service's explicit absence reply is negative.
 The [documented parcel prefixes](https://www.bpost.be/en/faq/what-does-barcode-look-and-where-can-i-find-it)
 prioritize recognition while retaining numeric ambiguity.
 
+The receiver's country code becomes `destination_country`. While the parcel
+waits at a pickup point, `pickup_point` is that point's name. The sender's
+barcode becomes `international_tracking_number` only when it is a valid S10
+number other than the one searched, as on a parcel posted abroad.
+
 ## Limitations
 
 Scan clocks have no offsets. The adapter preserves their local digits and the
 provider's order; see [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for unresolved
-history handling. Weight and dimensions have explicit units. Addresses, recipient data,
-delivery instructions and proof assets are excluded.
+history handling. Weight and dimensions have explicit units. Addresses (pickup
+points' included), other recipient data, delivery instructions and proof assets
+are excluded. The delivery time bpost lists for a delivered parcel has no offset
+either, so `delivered_at` stays empty.
 
 ## Testing
 
