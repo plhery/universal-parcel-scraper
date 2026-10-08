@@ -1,14 +1,18 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { IndeterminateError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError } from '../../core/errors/index.js';
+import { resolveResult } from '../../core/result/resolve.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { UPSTracker, parseUPSTrackingHtml, parseUPSTrackingResponse, upsTrackingUrl } from './adapter.js';
-import { UPS_PROGRESS_STATUS, upsStatus } from './status.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { UPS_PROGRESS_STATUS, upsActivityStage, upsStatus } from './status.js';
 
 // 1Z999AA10123456784 is a made-up number in UPS's published format; it is the
 // same value numbers.json records as synthetic. No real shipment, recipient or
 // session cookie appears in this file.
 const TRACKING_NUMBER = '1Z999AA10123456784';
+// The same number with a check digit that does not match.
+const BAD_CHECK_DIGIT = '1Z999AA10123456785';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
 const TRAWL_URL = 'http://trawl.internal:8191';
 const OUT_FOR_DELIVERY = JSON.parse(
@@ -32,6 +36,36 @@ function fixture(): Record<string, unknown> {
   return structuredClone(OUT_FOR_DELIVERY);
 }
 
+/** One synthetic scan; `utc` is the UTC pair UPS sends as `gmtDate` / `gmtTime`. */
+function scan(actCode: string, activityScan: string, utc: string | null, location = 'EXAMPLE CITY, DE'): Record<string, unknown> {
+  return {
+    actCode, activityScan, location,
+    ...(utc ? { gmtDate: utc.slice(0, 8), gmtTime: utc.slice(9), gmtOffset: '+02:00' } : {}),
+  };
+}
+
+/** The fixture's parcel with other scans and package fields. */
+function withScans(activities: Record<string, unknown>[], detail: Record<string, unknown> = {}): Record<string, unknown> {
+  const payload = fixture();
+  const [first] = payload.trackDetails as Record<string, unknown>[];
+  Object.assign(first!, { scheduledDeliveryDateDetail: null, shipmentProgressActivities: activities }, detail);
+  return payload;
+}
+
+const ACCESS_POINT = {
+  locationType: 'Retail store',
+  location: {
+    companyName: 'EXAMPLE KIOSK',
+    attentionName: 'PRIVATE ATTENTION NAME',
+    streetAddress1: 'PRIVATE ACCESS POINT STREET',
+    city: 'EXAMPLE CITY',
+    zipCode: 'PRIVATE POSTCODE',
+    country: 'DE',
+  },
+  geoLatitude: '1.2345',
+  geoLongitude: '2.3456',
+};
+
 function stepRecorder(): { recorder: StepRecorder; records: string[] } {
   const records: string[] = [];
   return {
@@ -46,6 +80,14 @@ function stepRecorder(): { recorder: StepRecorder; records: string[] } {
 afterEach(() => vi.restoreAllMocks());
 
 describe('UPS status vocabulary', () => {
+  it('maps every activity code statuses.json records, and nothing else', () => {
+    const codes = statuses.entries.flatMap((entry) => 'code' in entry && /^[0-9A-Z]{2}$/.test(entry.code ?? '')
+      ? [{ code: entry.code!, stage: entry.stage }] : []);
+    expect(codes.length).toBeGreaterThan(30);
+    for (const { code, stage } of codes) expect(upsActivityStage(code), code).toBe(stage);
+    for (const code of ['', 'XX', 'constructor', 'toString', '__proto__']) expect(upsActivityStage(code)).toBeUndefined();
+  });
+
   it('maps the progress token, the prose, and nothing else', () => {
     expect(UPS_PROGRESS_STATUS.outfordelivery).toBe('out_for_delivery');
     expect(UPS_PROGRESS_STATUS.manifestupload).toBe('pending');
@@ -70,19 +112,132 @@ describe('UPS structured response', () => {
     const result = parseUPSTrackingResponse(fixture(), TRACKING_NUMBER, TODAY);
     expect(result).toMatchObject({
       status: 'out_for_delivery',
+      current_stage: 'out_for_delivery',
+      current_stage_source: 'carrier_map',
       last_status_text: 'Out For Delivery Today',
       last_update: '2026-08-04T07:12:04+00:00',
       expected_delivery: '2026-08-04',
+      destination_country: 'CH',
     });
+    const mapped = { stage_source: 'carrier_map' };
     expect(result.events).toEqual([
-      { time: '2026-08-04T07:12:04+00:00', location: 'ZUERICH, CH', description: 'Out For Delivery Today' },
-      { time: '2026-08-04T03:03:51+00:00', location: 'ZUERICH, CH', description: 'Arrived at Facility' },
+      {
+        time: '2026-08-04T07:12:04+00:00', location: 'ZUERICH, CH', description: 'Out For Delivery Today',
+        provider_code: 'OT', stage: 'out_for_delivery', ...mapped,
+      },
+      {
+        time: '2026-08-04T03:03:51+00:00', location: 'ZUERICH, CH', description: 'Arrived at Facility',
+        provider_code: 'AR', stage: 'in_transit', ...mapped,
+      },
       {
         time: '2026-08-03T21:41:10+00:00',
         location: 'KOELN, DE',
         description: 'Departed from Facility — Your package is on the way',
+        provider_code: 'DP', stage: 'in_transit', ...mapped,
       },
     ]);
+  });
+
+  it('lets the newest scan code outrank the progress token', () => {
+    // A Ground Saver delay: UPS's token reads Exception, the parcel is moving.
+    const delayed = parseUPSTrackingResponse(withScans([
+      scan('ZW', 'Package moving to local post office', '20260806 15:50:00'),
+      scan('Q5', 'We&#39;re sorry this package may experience a temporary delay.', '20260805 19:22:00'),
+      scan('MP', 'Shipper created a label, UPS has not received the package yet. ', null, 'United States'),
+    ], { progressBarType: 'Exception', packageStatus: 'Update' }), TRACKING_NUMBER, TODAY);
+    expect(delayed).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', expected_delivery: null });
+    expect(delayed.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['ZW', 'in_transit'], ['Q5', 'in_transit'], ['MP', 'registered'],
+    ]);
+    expect(delayed.events?.[1]?.description).toBe("We're sorry this package may experience a temporary delay.");
+    expect(delayed.delivered_at).toBeUndefined();
+
+    // A failed attempt is not a delivery, whatever the token says.
+    expect(parseUPSTrackingResponse(withScans([
+      scan('G3', 'We tried to deliver to the business, but it was closed.', '20260903 16:21:12'),
+      scan('OT', 'Out For Delivery Today', '20260903 07:26:42'),
+    ], { progressBarType: 'OutForDelivery' }), TRACKING_NUMBER, TODAY))
+      .toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+
+    // A code the map does not know leaves the stage to the shared classifier.
+    const unmapped = parseUPSTrackingResponse(withScans([
+      scan('X9', 'Wording UPS has not used before', '20260806 15:50:00'),
+      scan('AR', 'Arrived at Facility', '20260806 10:00:00'),
+    ], { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY);
+    expect(unmapped).toMatchObject({ status: 'in_transit' });
+    expect(unmapped.current_stage).toBeUndefined();
+    expect(unmapped.events?.[0]).toEqual({
+      time: '2026-08-06T15:50:00+00:00', location: 'EXAMPLE CITY, DE',
+      description: 'Wording UPS has not used before', provider_code: 'X9',
+    });
+  });
+
+  it('names the access point only while the parcel waits there', () => {
+    const waiting = parseUPSTrackingResponse(withScans([
+      scan('ZP', 'UPS Access Point&#8482; possession ', '20260811 09:22:52'),
+      scan('2Q', 'Delivered to UPS Access Point&#8482; ', '20260811 09:22:39'),
+      scan('ZC', 'The package will be delivered to the UPS Access Point&#8482; location requested by the receiver.', '20260810 16:22:20'),
+    ], { progressBarType: 'Delivered', upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY);
+    expect(waiting).toMatchObject({
+      status: 'out_for_delivery',
+      current_stage: 'ready_for_pickup',
+      pickup_point: 'EXAMPLE KIOSK',
+      last_status_text: 'UPS Access Point™ possession',
+    });
+    expect(waiting.delivered_at).toBeUndefined();
+    expect(waiting.events?.map((event) => event.stage)).toEqual(['ready_for_pickup', 'ready_for_pickup', 'in_transit']);
+
+    const collected = parseUPSTrackingResponse(withScans([
+      scan('2W', 'DELIVERED ', '20260811 10:14:47'),
+      scan('ZP', 'UPS Access Point™ possession ', '20260811 09:22:52'),
+    ], { progressBarType: 'Delivered', upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY);
+    expect(collected).toMatchObject({
+      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-11T10:14:47+00:00', expected_delivery: null,
+    });
+    expect(collected.pickup_point).toBeUndefined();
+
+    // A suggested access point on a parcel still on its way is not a pickup point.
+    const suggested = parseUPSTrackingResponse(withScans([scan('AR', 'Arrived at Facility', '20260806 10:00:00')],
+      { upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY);
+    expect(suggested.pickup_point).toBeUndefined();
+    // Without a business name the point stays unnamed: the attention name can be a person's.
+    const unnamed = parseUPSTrackingResponse(withScans([scan('ZP', 'UPS Access Point™ possession ', '20260811 09:22:52')],
+      { upsAccessPoint: { ...ACCESS_POINT, location: { ...ACCESS_POINT.location, companyName: '' } } }), TRACKING_NUMBER, TODAY);
+    expect(unnamed).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(unnamed.pickup_point).toBeUndefined();
+    for (const result of [waiting, collected, suggested, unnamed]) {
+      const serialized = JSON.stringify(result);
+      for (const value of ['PRIVATE', '1.2345', '2.3456']) expect(serialized).not.toContain(value);
+    }
+  });
+
+  it('keeps scans without a UTC pair on the clock UPS gives, and none when it gives none', () => {
+    const result = parseUPSTrackingResponse(withScans([
+      { actCode: 'AR', activityScan: 'Arrived at Facility', date: '08/04/2026', time: '12:05 P.M.', gmtOffset: '+02:00' },
+      { actCode: 'DP', activityScan: 'Departed from Facility', date: '08/04/2026', time: '12:41 A.M.' },
+      { actCode: 'XD', activityScan: 'Drop-Off', date: '08/03/2026' },
+      { actCode: 'MP', activityScan: 'Shipper created a label, UPS has not received the package yet. ' },
+    ]), TRACKING_NUMBER, TODAY);
+    expect(result.events?.map(({ time, local_time, provider_time_text }) => ({ time, local_time, provider_time_text }))).toEqual([
+      { time: '2026-08-04T12:05:00+02:00', local_time: undefined, provider_time_text: undefined },
+      { time: undefined, local_time: '2026-08-04T00:41:00', provider_time_text: undefined },
+      { time: undefined, local_time: undefined, provider_time_text: '08/03/2026' },
+      { time: undefined, local_time: undefined, provider_time_text: undefined },
+    ]);
+    expect(result.events?.every((event) => !('time' in event) || event.time)).toBe(true);
+    expect(resolveResult(result).events.map((event) => event.instant)).toEqual(['2026-08-04T12:05:00+02:00', null, null, null]);
+
+    const labelOnly = parseUPSTrackingResponse(withScans([
+      { actCode: 'MP', activityScan: 'Shipper created a label, UPS has not received the package yet. ' },
+    ], { progressBarType: 'ManifestUpload' }), TRACKING_NUMBER, TODAY);
+    expect(labelOnly).toMatchObject({ status: 'pending', current_stage: 'registered', last_update: null });
+  });
+
+  it('reports a number UPS refuses for its check digit as invalid input', () => {
+    const refused = { statusCode: '402', statusText: 'Invalid Request', trackDetails: null };
+    expect(() => parseUPSTrackingResponse(refused, BAD_CHECK_DIGIT)).toThrow(InvalidInputError);
+    // A number that passes the check proves nothing by a refusal.
+    expect(() => parseUPSTrackingResponse(refused, TRACKING_NUMBER)).toThrow(IndeterminateError);
   });
 
   it('keeps the recipient block out of the result', () => {
@@ -97,10 +252,15 @@ describe('UPS structured response', () => {
 
   it('produces every capability carrier.json declares', () => {
     const result = parseUPSTrackingResponse(fixture(), TRACKING_NUMBER, TODAY);
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'pickup_point', 'provider_code']);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
+    expect(result.events?.every((event) => event.provider_code)).toBe(true);
     expect(result.expected_delivery).toBeTruthy();
+    expect(parseUPSTrackingResponse(withScans([scan('KB', 'DELIVERED ', '20260804 10:28:15')]), TRACKING_NUMBER, TODAY)
+      .delivered_at).toBe('2026-08-04T10:28:15+00:00');
+    expect(parseUPSTrackingResponse(withScans([scan('2Q', 'Delivered to UPS Access Point™ ', '20260804 10:28:15')],
+      { upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY).pickup_point).toBe('EXAMPLE KIOSK');
   });
 
   it('fails closed on another parcel and reports an unavailable API as inconclusive', () => {
@@ -204,6 +364,27 @@ describe('UPS lookup steps', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(String(fetcher.mock.calls[0]?.[0])).toBe('http://trawl.internal:8191/scrape');
     expect(records).toEqual(['trawl:ok', 'lookup:trawl:ok']);
+  });
+
+  it('reports a refused check digit from either tier instead of a challenge', async () => {
+    const refused = JSON.stringify({ statusCode: '402', statusText: 'Invalid Request', trackDetails: null });
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({
+      tier: 2, statusCode: 200, url: upsTrackingUrl(BAD_CHECK_DIGIT), html: RENDERED_PAGE, cookies: [],
+      capturedResponses: [{ url: STATUS_API, status: 200, headers: {}, body: refused, truncated: false, base64Encoded: false, error: null }],
+    }));
+    await expect(new UPSTracker({ timeoutMs: 2_000, trawlUrl: TRAWL_URL }).fetch(BAD_CHECK_DIGIT))
+      .rejects.toMatchObject({ name: 'InvalidInputError', kind: 'invalid_input' });
+
+    const fetcher = vi.fn<typeof fetch>(async (url) => {
+      if (String(url) === STATUS_API) return new Response(refused, { headers: { 'Content-Type': 'application/json' } });
+      const page = new Response(RENDERED_PAGE, { headers: { 'Set-Cookie': 'X-XSRF-TOKEN-ST=token; Domain=ups.com; Path=/' } });
+      Object.defineProperty(page, 'url', { value: String(url) });
+      return page;
+    });
+    const { recorder, records } = stepRecorder();
+    await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(BAD_CHECK_DIGIT))
+      .rejects.toMatchObject({ name: 'InvalidInputError', kind: 'invalid_input' });
+    expect(records).toEqual(['direct:invalid_input', 'lookup:direct:invalid_input']);
   });
 
   it('rejects a number that is not a UPS number before any request', async () => {

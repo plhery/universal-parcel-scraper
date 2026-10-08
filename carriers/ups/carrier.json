@@ -23,7 +23,10 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "delivered_at",
+    "pickup_point",
+    "provider_code"
   ],
   "portal": {
     "url": "https://www.ups.com/track?tracknum={trackingNumber}",
@@ -32,16 +35,28 @@
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "pickup_point"
     ],
     "scraped": [
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "delivered_at",
+      "pickup_point",
+      "provider_code"
     ],
-    "discarded": [],
-    "unavailable": []
+    "discarded": [
+      "signatory",
+      "recipient_address",
+      "proof_of_delivery",
+      "service_name"
+    ],
+    "unavailable": [
+      "weight",
+      "sender_name"
+    ]
   },
   "links": [
     {

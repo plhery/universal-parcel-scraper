@@ -4,13 +4,15 @@ import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
-import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { isValidUpsTrackingNumber } from '../../core/detection/ups.js';
+import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
+import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { UPS_PROGRESS_STATUS, upsStatus } from './status.js';
+import { UPS_PROGRESS_STATUS, upsActivityStage, upsStatus } from './status.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
@@ -202,9 +204,10 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
   if (!location) {
     location = clean(`${$('#stApp_txtAddress').last().text()} ${$('#stApp_txtCountry').last().text()}`);
   }
+  // The banner has no clock, so its event carries none.
   const events: CarrierEvent[] = currentStatus === 'unknown'
     ? []
-    : [{ time: '', location, description: statusText }];
+    : [{ location, description: statusText }];
   return {
     status: currentStatus,
     last_status_text: statusText,
@@ -214,30 +217,55 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
   };
 }
 
+const NAMED_ENTITIES: Readonly<Record<string, string>> = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', reg: '\u00ae', trade: '\u2122', copy: '\u00a9',
+};
+
+/** UPS escapes its prose as HTML: "We&#39;re sorry", "UPS Standard&#174;". */
+function decodeEntities(value: string): string {
+  return value.replace(/&(#x[0-9a-f]{1,6}|#\d{1,7}|[a-z]{2,6});/gi, (entity, body: string) => {
+    if (!body.startsWith('#')) {
+      const name = body.toLocaleLowerCase('en-US');
+      return Object.hasOwn(NAMED_ENTITIES, name) ? NAMED_ENTITIES[name]! : entity;
+    }
+    const code = /^#x/i.test(body) ? Number.parseInt(body.slice(2), 16) : Number(body.slice(1));
+    return code > 0 && code <= 0x10ffff && (code < 0xd800 || code > 0xdfff) ? String.fromCodePoint(code) : entity;
+  });
+}
+
+/** A provider string with its HTML entities decoded, then cleaned. */
+function text(value: unknown, maxLength?: number): string {
+  return clean(typeof value === 'string' ? decodeEntities(value) : value, maxLength);
+}
+
+type ScanClock = Pick<CarrierEvent, 'time'> & { local_time?: string; provider_time_text?: string };
+
 /**
- * An activity timestamp. UPS sends the same scan twice: a UTC pair
- * (`gmtDate` / `gmtTime`) and a local pair with a `gmtOffset`. Both are
- * assembled into an offset-carrying ISO string rather than parsed, so no zone
- * is ever guessed; a scan with neither keeps the provider's own text.
+ * A scan's clock. UPS sends the same scan twice: a UTC pair (`gmtDate` /
+ * `gmtTime`) and a local pair with a `gmtOffset`. Either becomes an
+ * offset-carrying ISO string, so no zone is ever guessed. A local pair without
+ * an offset stays a `local_time`, other text stays as UPS wrote it, and a scan
+ * with no clock at all, like some label scans, gets none.
  */
-function activityTime(activity: JsonObject): string {
+function activityClock(activity: JsonObject): ScanClock {
   const gmtDate = cleanScalar(activity.gmtDate);
   const gmtTime = cleanScalar(activity.gmtTime);
   if (/^\d{8}$/.test(gmtDate) && /^\d{2}:\d{2}:\d{2}$/.test(gmtTime)) {
-    return `${gmtDate.slice(0, 4)}-${gmtDate.slice(4, 6)}-${gmtDate.slice(6, 8)}T${gmtTime}+00:00`;
+    return { time: `${gmtDate.slice(0, 4)}-${gmtDate.slice(4, 6)}-${gmtDate.slice(6, 8)}T${gmtTime}+00:00` };
   }
   const localDate = cleanScalar(activity.date);
-  const localTime = cleanScalar(activity.time).replace(/\.M\./gi, 'M');
-  const offset = cleanScalar(activity.gmtOffset);
+  const localTime = cleanScalar(activity.time);
   const dateMatch = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(localDate);
-  const timeMatch = /^(\d{1,2}):(\d{2})\s*([AP]M)$/i.exec(localTime);
-  if (dateMatch && timeMatch && /^[+-]\d{2}:\d{2}$/.test(offset)) {
-    let hour = Number(timeMatch[1]);
-    if (timeMatch[3]!.toUpperCase() === 'PM' && hour !== 12) hour += 12;
-    if (timeMatch[3]!.toUpperCase() === 'AM' && hour === 12) hour = 0;
-    return `${dateMatch[3]}-${dateMatch[1]}-${dateMatch[2]}T${String(hour).padStart(2, '0')}:${timeMatch[2]}:00${offset}`;
+  const timeMatch = /^(\d{1,2}):([0-5]\d)\s*([AP])\.?M\.?$/i.exec(localTime);
+  const hour = Number(timeMatch?.[1]);
+  if (dateMatch && timeMatch && hour >= 1 && hour <= 12) {
+    const hours = String(hour % 12 + (timeMatch[3]!.toUpperCase() === 'P' ? 12 : 0)).padStart(2, '0');
+    const local = `${dateMatch[3]}-${dateMatch[1]}-${dateMatch[2]}T${hours}:${timeMatch[2]}:00`;
+    const offset = cleanScalar(activity.gmtOffset);
+    return /^[+-]\d{2}:\d{2}$/.test(offset) ? { time: `${local}${offset}` } : { local_time: local };
   }
-  return clean(`${localDate} ${localTime}`);
+  const raw = clean(`${localDate} ${localTime}`);
+  return raw ? { provider_time_text: raw } : {};
 }
 
 const MONTHS: Record<string, number> = {
@@ -273,6 +301,10 @@ export function parseUPSTrackingResponse(
 ): CarrierResult {
   if (!isRecord(payload)) throw new SchemaError('UPS');
   if (payload.statusCode !== '200' && payload.statusCode !== 200) {
+    // UPS answers 402 "Invalid Request" for a number whose check digit fails.
+    if (cleanScalar(payload.statusCode) === '402' && !isValidUpsTrackingNumber(trackingNumber.toUpperCase())) {
+      throw new InvalidInputError('UPS', 'UPS rejected the number: its check digit does not match');
+    }
     throw new IndeterminateError('UPS', clean(payload.statusText) || 'UPS tracking is unavailable');
   }
   if (!Array.isArray(payload.trackDetails) || payload.trackDetails.length === 0) return notLocated();
@@ -285,7 +317,7 @@ export function parseUPSTrackingResponse(
   if (returned && returned.toUpperCase() !== expected) {
     throw new SchemaError('UPS', 'UPS did not return the requested parcel');
   }
-  const errorText = clean(detail.errorText);
+  const errorText = text(detail.errorText);
   if (detail.errorCode || errorText) {
     return { ...notLocated(), last_status_text: errorText || 'UPS could not locate the shipment' };
   }
@@ -293,36 +325,70 @@ export function parseUPSTrackingResponse(
   if (Array.isArray(detail.shipmentProgressActivities)) {
     for (const raw of detail.shipmentProgressActivities) {
       if (!isRecord(raw)) continue;
-      const milestone = isRecord(raw.milestoneName) ? clean(raw.milestoneName.name) : '';
-      let description = clean(raw.activityScan) || milestone;
-      const additional = clean(raw.activityAdditionalDescription);
+      const milestone = isRecord(raw.milestoneName) ? text(raw.milestoneName.name) : '';
+      let description = text(raw.activityScan) || milestone;
+      const additional = text(raw.activityAdditionalDescription);
       if (additional && !description.toLocaleLowerCase('en-US').includes(additional.toLocaleLowerCase('en-US'))) {
         description = clean(`${description} — ${additional}`);
       }
       if (!description) continue;
+      const code = cleanScalar(raw.actCode, 8).toUpperCase();
+      const stage = upsActivityStage(code);
       events.push({
-        time: activityTime(raw),
-        location: clean(raw.location),
+        ...activityClock(raw),
+        location: text(raw.location),
         description,
+        ...(/^[A-Z0-9]{1,4}$/.test(code) ? { provider_code: code } : {}),
+        ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
       });
     }
   }
-  const currentName = isRecord(detail.currentMilestone) ? clean(detail.currentMilestone.name) : '';
-  const statusText = events[0]?.description
-    || clean(detail.packageStatus ?? detail.simplifiedText)
+  const newest = events[0];
+  // UPS lists the newest scan first. Its code outranks the coarse progress
+  // token, which reads Exception for a mere delay.
+  const stage = newest?.stage as Stage | undefined;
+  const currentName = isRecord(detail.currentMilestone) ? text(detail.currentMilestone.name) : '';
+  const statusText = newest?.description
+    || text(detail.packageStatus ?? detail.simplifiedText)
     || currentName
     || 'Tracking information received';
   const progress = clean(detail.progressBarType).toLocaleLowerCase('en-US');
-  return {
-    status: UPS_PROGRESS_STATUS[progress] ?? upsStatus(
-      [detail.packageStatus, detail.simplifiedText, currentName, statusText].map((value) => clean(value)).join(' '),
+  const status: CarrierStatus = stage ? languageStageStatus(stage) : (Object.hasOwn(UPS_PROGRESS_STATUS, progress)
+    ? UPS_PROGRESS_STATUS[progress]!
+    : upsStatus(
+      [detail.packageStatus, detail.simplifiedText, currentName, statusText].map((value) => text(value)).join(' '),
       events.length > 0,
-    ),
+    ));
+  const delivered = stage ? stage === 'delivered' : status === 'delivered';
+  const deliveredAt = delivered ? newest?.time : undefined;
+  const country = [detail.shipToAddress, detail.deliveryAddress]
+    .map((address) => (isRecord(address) ? cleanScalar(address.country, 8).toUpperCase() : ''))
+    .find((code) => /^[A-Z]{2}$/.test(code));
+  const pickupPoint = stage === 'ready_for_pickup' ? accessPointName(detail) : '';
+  // Never projected: the ship-to and delivery addresses beyond their country,
+  // `receivedBy`, `leftAt`, the proof-of-delivery link, the access point's
+  // address and coordinates, and `senderShipperNumber`, an account number.
+  return {
+    status,
+    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: statusText,
-    last_update: events[0]?.time || null,
-    expected_delivery: expectedDelivery(detail, today),
+    last_update: newest?.time ?? null,
+    expected_delivery: delivered ? null : expectedDelivery(detail, today),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
+    ...(country ? { destination_country: country } : {}),
     events,
   };
+}
+
+/**
+ * The access point's business name; only read while the parcel waits there.
+ * The attention name is never a fallback: it can name a person.
+ */
+function accessPointName(detail: JsonObject): string {
+  const point = isRecord(detail.upsAccessPoint) ? detail.upsAccessPoint : null;
+  const location = point && isRecord(point.location) ? point.location : null;
+  return location ? text(location.companyName, 200) : '';
 }
 
 export interface UPSTrackerOptions {
@@ -401,6 +467,8 @@ export class UPSTracker {
             // A caller that cancelled gets its own reason back: no answer from
             // the page already fetched, no challenge report.
             context.signal?.throwIfAborted();
+            // UPS refused the number itself; no page or browser can answer it.
+            if (error instanceof InvalidInputError) throw error;
             if (page.html !== null) {
               try {
                 return this.#renderedResult(page.html, number);
@@ -479,6 +547,7 @@ export class UPSTracker {
       try {
         return this.#structuredResult(number, JSON.parse(entry.body));
       } catch (error) {
+        if (error instanceof InvalidInputError) throw error;
         // An unreadable or unrelated reply; the rendered page may still answer.
         captureError = error instanceof Error ? error : new SchemaError('UPS', 'UPS returned invalid tracking data', { cause: error });
       }

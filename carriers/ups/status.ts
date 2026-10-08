@@ -1,17 +1,18 @@
 /**
  * UPS status vocabulary.
  *
- * UPS answers with two things: `progressBarType`, a short machine token on the
- * shipment detail, and English prose (`packageStatus`, `simplifiedText`, the
- * milestone name, the activity scans). The token is the stable key and is
- * mapped first; the prose is matched on substrings because UPS localizes and
- * re-words it freely and the same page mixes several phrasings for one state.
+ * Every scan in UPS's `GetStatus` reply carries a two-character `actCode`. The
+ * code is the stable key: one wording can stand for two codes ("Arrived at
+ * Facility" is both the origin scan `OR` and an arrival `AR`), and the wording
+ * arrives HTML-escaped and reworded. The adapter maps the code to a stage and
+ * leaves a scan with an unmapped code to the shared wording classifier.
  *
- * The map produces a result-level `CarrierStatus`. UPS activities carry no
- * stable per-event code, so the adapter attaches no `stage` to an event: the
- * sync classifies the raw wording and records it for review instead.
+ * The shipment detail also carries `progressBarType`, a coarse token, and
+ * English prose. They decide the status only when the newest scan's code is
+ * unmapped, and for the rendered page, which has no scans.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 
 const EXCEPTION_TERMS = [
   'return to sender', 'returned', 'delivery attempted', 'we missed you',
@@ -51,3 +52,42 @@ export const UPS_PROGRESS_STATUS: Readonly<Record<string, CarrierStatus>> = {
   delivered: 'delivered',
   exception: 'exception',
 };
+
+/**
+ * `actCode` on each scan, as seen live. A delay or a delivery instruction keeps
+ * the parcel in transit; an unlisted code is left to the wording classifier.
+ */
+const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
+  // Shipper created a label; UPS does not have the parcel yet.
+  ['MP', 'registered'],
+  // Drop-off at an access point, the access point readying it for UPS, a
+  // pickup scan, and the origin scan.
+  ['XD', 'accepted'], ['ZO', 'accepted'], ['PU', 'accepted'], ['OR', 'accepted'],
+  // Facility scans, export and import scans.
+  ['AR', 'in_transit'], ['DP', 'in_transit'], ['DS', 'in_transit'], ['YP', 'in_transit'],
+  ['EP', 'in_transit'], ['IP', 'in_transit'],
+  // Delays: a late flight, a possible delay, new delivery plans.
+  ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'],
+  // Address corrections, redirects and receiver requests, including a
+  // delivery to an access point that is still pending or only confirmed.
+  ['AL', 'in_transit'], ['HM', 'in_transit'], ['H6', 'in_transit'], ['TB', 'in_transit'],
+  ['ZA', 'in_transit'], ['ZB', 'in_transit'], ['ZC', 'in_transit'],
+  // Ground Saver's hand-off to the local post office.
+  ['ZW', 'in_transit'],
+  // Collected back from an access point, or moved off one that is closing.
+  ['3P', 'in_transit'], ['6B', 'in_transit'],
+  // Loaded on the delivery vehicle, and out for delivery.
+  ['OF', 'out_for_delivery'], ['OT', 'out_for_delivery'],
+  // Receiver absent, business closed, or diverted to an access point after a
+  // failed attempt.
+  ['48', 'failed_attempt'], ['G3', 'failed_attempt'], ['5R', 'failed_attempt'],
+  // Delivered to an access point, and held there.
+  ['2Q', 'ready_for_pickup'], ['ZP', 'ready_for_pickup'],
+  // Delivered, including collection from an access point.
+  ['9E', 'delivered'], ['FS', 'delivered'], ['KB', 'delivered'], ['2W', 'delivered'],
+]);
+
+/** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */
+export function upsActivityStage(code: string): Stage | undefined {
+  return ACTIVITY_STAGES.get(code.trim().toUpperCase());
+}

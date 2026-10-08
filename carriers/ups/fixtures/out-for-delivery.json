@@ -19,7 +19,8 @@
           "addressLine1": "10 PRIVATE STREET",
           "city": "PRIVATE CITY",
           "postalCode": "PRIVATE POSTCODE"
-        }
+        },
+        "country": "CH"
       },
       "signatureLink": "https://www.ups.com/PRIVATE-SIGNATURE-LINK",
       "deliveryPhotoLink": "https://www.ups.com/PRIVATE-PHOTO-LINK",
@@ -29,6 +30,7 @@
           "time": "9:12 A.M.",
           "location": "ZUERICH, CH",
           "activityScan": "Out For Delivery Today",
+          "actCode": "OT",
           "milestoneName": { "name": "Out for Delivery" },
           "gmtDate": "20260804",
           "gmtTime": "07:12:04",
@@ -39,6 +41,7 @@
           "time": "5:03 A.M.",
           "location": "ZUERICH, CH",
           "activityScan": "Arrived at Facility",
+          "actCode": "AR",
           "gmtDate": "20260804",
           "gmtTime": "03:03:51",
           "gmtOffset": "+02:00"
@@ -48,6 +51,7 @@
           "time": "11:41 P.M.",
           "location": "KOELN, DE",
           "activityScan": "Departed from Facility",
+          "actCode": "DP",
           "activityAdditionalDescription": "Your package is on the way",
           "gmtDate": "20260803",
           "gmtTime": "21:41:10",

@@ -39,17 +39,27 @@ rendered status, after that wait.
   cooldown.
 - `direct` is disabled whenever a browser exists, with no cooldown probe: every probe costs
   the full direct timeout and hits the same block.
-- Status comes from `progressBarType` first, then substring matches on the prose. UPS scans
-  carry no stable code, so events get no stage; the sync classifies each scan's wording.
-- UPS's `Exception` token does not say whether it is a failed attempt or a return; both
-  surface as `exception`.
+- Each scan's `actCode` is kept as `provider_code` and mapped to a stage
+  ([statuses.json](statuses.json)). One wording can cover two codes: `OR` and `AR` both read
+  "Arrived at Facility". An unmapped code gets no stage; the sync classifies its wording.
+- The newest scan's code sets the current stage and status. `progressBarType`, then the
+  prose, decide only when that code is unmapped. The token reads `Exception` for a mere delay.
+- `pickup_point` names the access point only while the newest scan is `2Q` or `ZP`. Replies
+  can carry an access point the parcel never reached. Only the business name is read; the
+  attention name can name a person.
+- `delivered_at` is the delivering scan's time; `destination_country` the ship-to or delivery
+  country code.
+- Prose arrives HTML-escaped (`We&#39;re`, `&#174;`) and is decoded.
+- A 402 "Invalid Request" for a number whose check digit fails is `InvalidInputError`, from
+  either step. Other refusals stay indeterminate.
 - The app scan-identity policy updates a scan when UPS adds its location, provided its
   exact instant, wording and known stage agree. Conflicting locations and distinct
   messages at one instant remain separate.
 - The rendered-page parser reads only the active progress-bar milestone. Reading the whole
   bar classified label-created parcels as out for delivery.
 - Scan times are built from the UTC pair UPS sends, or the local pair plus its explicit
-  offset. A scan with neither keeps the raw text; no zone is guessed.
+  offset. A local pair without an offset stays `local_time` and other text
+  `provider_time_text`; no zone is guessed. Some label scans come with no clock and get none.
 - The scheduled delivery date has no year. The adapter picks the year that puts it within
   the last week or in the future.
 - The canary URL is a static PDF so the canary itself is not challenged.
@@ -80,10 +90,12 @@ it can replace browser retrieval. Application configuration and tokens stay outs
 
 ## Limitations
 
-- No delivery window, weight or dimensions: the endpoint returns none.
+- No delivery window or dimensions. The weight field comes back empty.
+- No sender name: `senderShipperNumber` is the shipper's account number.
+- The service name (`UPS Ground Saver®`) is in the reply, but the result has no field for it.
 - Without a browser service there is no history.
-- Recipient name, address, signature and delivery photo are in the reply but never kept; a
-  test asserts it.
+- The ship-to address beyond its country, the signatory, the proof-of-delivery link and the
+  access point's address are in the reply but never kept; a test asserts it.
 
 ## Testing
 
