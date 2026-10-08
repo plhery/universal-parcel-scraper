@@ -18,16 +18,15 @@ describe('bpost direct history', () => {
     const result = normalizeCarrierResult(parseBpost(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null,
       last_update_local: '2026-01-04T12:00:00', weight_kg: 0.32, dimensions_text: '26.1 × 7.5 × 38.4 cm', expected_delivery: null,
-      destination_country: 'BE', pickup_point: POINT });
+      delivered_at: '2026-01-04T12:00:00+01:00', destination_country: 'BE', pickup_point: POINT });
     expect(result).not.toHaveProperty('international_tracking_number');
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'registered']);
     expect(result.events?.every((event) => event.local_time && !event.time)).toBe(true);
-    expect(result).not.toHaveProperty('delivered_at');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|recipient|receiver|sender|actualDeliveryTime|activeStep/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const waiting = payload(); waiting.items[0].events.shift();
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location),
-      weight: typeof result.weight_kg === 'number', dimensions: Boolean(result.dimensions_text),
+      weight: typeof result.weight_kg === 'number', dimensions: Boolean(result.dimensions_text), delivered_at: Boolean(result.delivered_at),
       pickup_point: Boolean(parseBpost(waiting, NUMBER).pickup_point) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
   });
@@ -147,6 +146,26 @@ describe('bpost direct history', () => {
     const same = payload();
     Object.assign(same.items[0], { itemCode: 'CB123456785BE', searchCode: 'CB123456785BE', senderBarcode: 'CB123456785BE' });
     expect(parseBpost(same, 'CB123456785BE')).not.toHaveProperty('international_tracking_number');
+  });
+
+  it('reads the delivery time on Brussels time, only for a delivered receiver in Belgium', () => {
+    const summer = payload(); summer.items[0].actualDeliveryTime = { day: '2026-07-01', time: '14:11:05' };
+    expect(parseBpost(summer, NUMBER).delivered_at).toBe('2026-07-01T14:11:05+02:00');
+    for (const actualDeliveryTime of [undefined, null, '2026-07-01 14:11', { day: '2026-02-30', time: '12:00' },
+      { day: '2026-07-01', time: '25:00' }, { day: '01/07/2026', time: '12:00' }, { day: '2026-07-01' }]) {
+      const value = payload(); value.items[0].actualDeliveryTime = actualDeliveryTime;
+      expect(parseBpost(value, NUMBER)).not.toHaveProperty('delivered_at');
+    }
+    // Abroad, bpost's clock may belong to another zone or partner.
+    for (const countryCode of ['FR', '', undefined]) {
+      const value = payload(); value.items[0].receiver.countryCode = countryCode;
+      expect(parseBpost(value, NUMBER)).not.toHaveProperty('delivered_at');
+    }
+    const waiting = payload(); waiting.items[0].events.shift();
+    expect(parseBpost(waiting, NUMBER)).not.toHaveProperty('delivered_at');
+    const returned = payload(); returned.items[0].retourOrBackToSender = true;
+    returned.items[0].activeStep.knownProcessStep = 'DELIVERED_TO_SENDER';
+    expect(parseBpost(returned, NUMBER)).not.toHaveProperty('delivered_at');
   });
 
   it('keeps only explicitly labelled positive measurements', () => {

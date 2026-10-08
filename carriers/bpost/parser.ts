@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyBpostStatus } from './status.js';
@@ -47,6 +48,18 @@ function pickupPoint(point: unknown): string {
   const street = [localized(point.street, 120, [language]), localized(point.streetNumber, 16, any)].filter(Boolean).join(' ');
   const town = [localized(point.postcode, 16, any), localized(point.municipality, 80, [language])].filter(Boolean).join(' ');
   return [name, street, town].join('\n');
+}
+
+/**
+ * The delivery time, on Brussels time. bpost gives it without an offset and its
+ * own page prints it as it comes, so it is read only for a receiver in Belgium.
+ */
+function deliveredInBelgium(value: unknown): string {
+  if (!isRecord(value)) return '';
+  const day = clean(value.day, 16);
+  const clock = clean(value.time, 16);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !/^\d{2}:\d{2}(?::\d{2})?$/.test(clock)) return '';
+  return zonedTime(`${day} ${clock}`, clock.length === 5 ? 'yyyy-MM-dd HH:mm' : 'yyyy-MM-dd HH:mm:ss', 'Europe/Brussels')?.iso ?? '';
 }
 
 export function parseBpost(payload: unknown, number: string): CarrierResult {
@@ -106,6 +119,7 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
   const collected = current?.stage === 'delivered' && isRecord(item.activeStep)
     && typeof item.activeStep.knownProcessStep === 'string' && COLLECTED_STEPS.has(item.activeStep.knownProcessStep);
   const point = current?.stage === 'ready_for_pickup' || collected ? pickupPoint(item.deliveryPoint) : '';
+  const deliveredAt = current?.status === 'delivered' && destination === 'BE' ? deliveredInBelgium(item.actualDeliveryTime) : '';
   // The sender's barcode is kept only when it is an S10 number other than the one searched.
   const senderBarcode = clean(item.senderBarcode, 32).toUpperCase();
   const international = senderBarcode !== requested && isValidS10TrackingNumber(senderBarcode) ? senderBarcode : '';
@@ -119,6 +133,7 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
     ...(dimensionMatch && dimensionMatch.slice(1).every((value) => Number(value) > 0)
       ? { dimensions_text: `${dimensionMatch.slice(1).join(' × ')} cm` } : {}),
     ...(point ? { pickup_point: point } : {}),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
     ...(destination ? { destination_country: destination } : {}),
     ...(international ? { international_tracking_number: international } : {}),
     events: events.slice(0, 100) };

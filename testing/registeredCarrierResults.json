@@ -777,6 +777,7 @@
       "weight_kg": 0.32,
       "dimensions_text": "26.1 × 7.5 × 38.4 cm",
       "pickup_point": "Example Post Point\nExample Street 1\n1000 Example Town",
+      "delivered_at": "2026-01-04T12:00:00+01:00",
       "destination_country": "BE",
       "events": [
         {

@@ -40,7 +40,9 @@ provider's order; see [ROUTING.md](https://github.com/plhery/delivery-tracker/bl
 history handling. Weight and dimensions have explicit units. Recipient and
 sender names and addresses, the point's code, delivery instructions and proof
 assets are excluded. The delivery time bpost lists for a delivered parcel has no
-offset either, so `delivered_at` stays empty.
+offset either, and bpost's own page prints it as it comes. For a receiver in
+Belgium it is read on Brussels time as `delivered_at`; for one abroad it stays
+empty.
 
 ## Testing
 
