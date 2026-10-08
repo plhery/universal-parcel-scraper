@@ -17,13 +17,13 @@ describe('PostNord direct tracking', () => {
     const result = parsePostnord(payload(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-04T12:00:00Z',
       delivered_at: '2026-01-04T12:00:00Z', expected_delivery: null, weight_kg: 1.5, dimensions_text: '40 × 30 × 20 cm',
-      sender_name: 'Example Shop AB', destination_country: 'SE', pickup_point: 'Example Service Point' });
+      sender_name: 'Example Shop AB', destination_country: 'SE', pickup_point: 'Example Service Point', service_name: 'Parcel' });
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'registered']);
     expect(JSON.stringify(result.events)).not.toContain('text message');
     const waiting = payload(); waiting.items[0].events.splice(4, 1);
     waiting.items[0].status = { code: 'AVAILABLE_FOR_DELIVERY', header: 'The shipment item has been delivered to a service point' };
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(declared.capabilities).toEqual(['history', 'location', 'delivered_at', 'weight', 'dimensions', 'sender_name', 'pickup_point']);
+    expect(declared.capabilities).toEqual(['history', 'location', 'delivered_at', 'weight', 'dimensions', 'sender_name', 'pickup_point', 'service_name']);
     expect(parsePostnord(waiting, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: 'Example Service Point' });
     expect(parsePostnord(waiting, NUMBER)).not.toHaveProperty('delivered_at');
   });

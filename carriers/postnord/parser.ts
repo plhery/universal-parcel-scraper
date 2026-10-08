@@ -97,10 +97,11 @@ export function parsePostnord(payload: unknown, number: string): CarrierResult {
   const country = isRecord(payload.receiver) && isRecord(payload.receiver.address) ? payload.receiver.address.countryCode : undefined;
   const pickupScan = atPickupPoint(mapped?.stage, events);
   const pickup = pickupScan ? pickupPoint(payload.servicePoint, pickupScan.location ?? '') : '';
+  const service = clean(payload.serviceName, 80);
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: header || events[0]!.description, last_update: events[0]!.time,
     expected_delivery: null, ...(delivery?.time ? { delivered_at: delivery.time } : {}),
-    ...(sender ? { sender_name: sender } : {}), ...(pickup ? { pickup_point: pickup } : {}),
+    ...(sender ? { sender_name: sender } : {}), ...(pickup ? { pickup_point: pickup } : {}), ...(service ? { service_name: service } : {}),
     ...(typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
     ...(weight ? { weight_kg: (weight.value as number) / (weight.unit === 'g' ? 1000 : 1) } : {}),
     ...(dimensions.every(Boolean) ? { dimensions_text: `${dimensions.map((dimension) => dimension!.value).join(' × ')} cm` } : {}),

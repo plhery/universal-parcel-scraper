@@ -8,6 +8,7 @@
     "recipientAddress": {"addressLine1": "PRIVATE address", "countryCode": "NO"},
     "packageSet": [{
       "brand": "POSTEN",
+      "productName": "Home Delivery Parcel",
       "packageNumber": "RR000000005NO",
       "weightInKgs": 0.5,
       "lengthInCm": 20,

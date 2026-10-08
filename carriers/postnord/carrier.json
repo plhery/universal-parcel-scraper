@@ -29,7 +29,8 @@
     "weight",
     "dimensions",
     "sender_name",
-    "pickup_point"
+    "pickup_point",
+    "service_name"
   ],
   "portal": {
     "url": "https://tracking.postnord.com/en/?id={trackingNumber}",
@@ -43,7 +44,8 @@
       "recipient",
       "sender_name",
       "pickup_point",
-      "destination_country"
+      "destination_country",
+      "service_name"
     ],
     "scraped": [
       "status",
@@ -54,7 +56,8 @@
       "dimensions",
       "sender_name",
       "pickup_point",
-      "destination_country"
+      "destination_country",
+      "service_name"
     ],
     "discarded": [
       "recipient"

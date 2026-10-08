@@ -134,12 +134,13 @@ export function parseBring(payload: unknown, rawNumber: string): CarrierResult {
     || (current?.stage === 'delivered' && collectedAt(parcel.eventSet.filter(isRecord), parcel.expectedPickupUnitId));
   const pickup = atPickupPoint ? text(parcel.expectedPickupUnitName, 200) || text(pickupInfo.expectedPickupUnitName, 200) : '';
   const country = isRecord(consignment.recipientAddress) ? consignment.recipientAddress.countryCode : undefined;
+  const service = text(parcel.productName, 80);
   const active = current && ['pending', 'in_transit', 'out_for_delivery'].includes(current.status) && current.stage !== 'ready_for_pickup';
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: bringWording(String(summary.status), currentCause), last_update: currentClock.time ?? null,
     last_update_local: currentClock.local_time ?? null, expected_delivery: active ? estimatedDay(parcel.domain) : null,
     ...(current?.status === 'delivered' && currentClock.time ? { delivered_at: currentClock.time } : {}),
-    ...(sender ? { sender_name: sender } : {}), ...(pickup ? { pickup_point: pickup } : {}),
+    ...(sender ? { sender_name: sender } : {}), ...(pickup ? { pickup_point: pickup } : {}), ...(service ? { service_name: service } : {}),
     ...(typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
     ...(normalizeTrackingNumber(rawNumber) !== number ? { canonical_tracking_number: number } : {}),
     ...(typeof weight === 'number' && Number.isFinite(weight) && weight > 0 && weight <= 100_000 ? { weight_kg: weight } : {}),

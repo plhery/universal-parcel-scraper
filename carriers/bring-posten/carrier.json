@@ -34,7 +34,8 @@
     "dimensions",
     "sender_name",
     "pickup_point",
-    "eta"
+    "eta",
+    "service_name"
   ],
   "portal": {
     "url": "https://sporing.bring.no/sporing/{trackingNumber}?lang=en",
@@ -48,7 +49,8 @@
       "dimensions",
       "sender_name",
       "pickup_point",
-      "destination_country"
+      "destination_country",
+      "service_name"
     ],
     "scraped": [
       "status",
@@ -60,7 +62,8 @@
       "dimensions",
       "sender_name",
       "pickup_point",
-      "destination_country"
+      "destination_country",
+      "service_name"
     ],
     "discarded": [
       "descriptions",

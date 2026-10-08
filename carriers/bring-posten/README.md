@@ -28,9 +28,9 @@ use different codes. A parcel handed in after the day's deadline reads as
 accepted; other deviations are exceptions. Per-scan offsets establish instants;
 incomplete clocks remain local evidence.
 
-The sender the portal names, usually the shop, and the destination country are
-kept. The estimated day is kept while the parcel travels and the portal marks the
-estimate available.
+The sender the portal names, usually the shop, the destination country and the
+parcel's `productName`, the Bring service it travels under, are kept. The estimated
+day is kept while the parcel travels and the portal marks the estimate available.
 
 The pickup point is named while the parcel waits there, and after it is collected
 there: the delivery, and the movement before it that made the parcel ready for

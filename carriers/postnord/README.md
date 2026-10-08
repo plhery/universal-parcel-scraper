@@ -20,9 +20,9 @@ history, so a delivered message cannot become a parcel-delivery milestone. A not
 response is inconclusive.
 Summary status comes from the selected item's current status. A drop-off by the sender, even
 after the day's last collection, reads as accepted. Customs clearance and a hold for a
-booked delivery are not exceptions. The sender the portal names, usually the shop, and the
-destination country are kept. Recipient names and addresses, sender references, delivery
-instructions and proof data are excluded.
+booked delivery are not exceptions. The sender the portal names, usually the shop, the
+destination country and the shipment's `serviceName` are kept. Recipient names and addresses,
+sender references, delivery instructions and proof data are excluded.
 
 A parcel waiting at a service point gets that point as its pickup point: the shipment's
 `servicePoint` record, which the widget shows under a parcel ready for pickup, gives its

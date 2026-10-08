@@ -36,7 +36,7 @@ describe('Bring consumer parcel projection', () => {
     const result = normalizeCarrierResult(parseBring(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-06T12:00:00+01:00',
       delivered_at: '2026-01-06T12:00:00+01:00', expected_delivery: null, weight_kg: 0.5, dimensions_text: '20 × 15 × 4 cm',
-      sender_name: 'Example Shop AS', destination_country: 'NO' });
+      sender_name: 'Example Shop AS', destination_country: 'NO', service_name: 'Home Delivery Parcel' });
     expect(result).not.toHaveProperty('pickup_point'); expect(result).not.toHaveProperty('canonical_tracking_number');
     expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'ready_for_pickup', 'accepted', 'registered']);
     expect(parseBring(payload(), 'RR000000005NO').events).toEqual(result.events);
@@ -44,7 +44,8 @@ describe('Bring consumer parcel projection', () => {
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location),
       delivered_at: Boolean(result.delivered_at), weight: Boolean(result.weight_kg), dimensions: Boolean(result.dimensions_text),
-      sender_name: Boolean(result.sender_name), pickup_point: Boolean(waiting().pickup_point), eta: Boolean(travelling().expected_delivery) };
+      sender_name: Boolean(result.sender_name), pickup_point: Boolean(waiting().pickup_point), eta: Boolean(travelling().expected_delivery),
+      service_name: Boolean(result.service_name) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
   });
 
