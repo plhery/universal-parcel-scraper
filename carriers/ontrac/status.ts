@@ -11,7 +11,7 @@ add(['XX', 'OVRC', 'AUTO', 'EXRL', 'INRL'], 'pending', 'registered');
 add(['PKUP', 'PU', 'RL', 'ALPK'], 'in_transit', 'accepted');
 add(['ARRD', 'ORIG', 'RCVD', 'OS', 'FCTF', 'SFCT', 'LOAD', 'NFRP'], 'in_transit', 'in_transit');
 add(['OFDL', 'OD'], 'out_for_delivery', 'out_for_delivery');
-add(['BCLD', 'UTLV', 'NH', 'ACSS', 'RFDM'], 'exception', 'failed_attempt');
+add(['BCLD', 'UTLV', 'NH', 'ACSS', 'NDMI', 'RFDM'], 'exception', 'failed_attempt');
 add(['DN', 'DLVD', 'CL', 'DM', 'DW', 'OK', 'DD'], 'delivered', 'delivered');
 add(['RETD', 'RETN', 'RS'], 'exception', 'returned');
 add(['LOST', 'MSPK', 'UD', 'ONHD'], 'exception', 'exception');

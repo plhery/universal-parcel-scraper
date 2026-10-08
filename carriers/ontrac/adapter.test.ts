@@ -109,7 +109,15 @@ describe('OnTrac direct tracking', () => {
     expect(result).not.toHaveProperty('delivered_at');
     expect(result.expected_delivery).toBe('2026-01-03T20:00:00-08:00');
   });
-  it.each(['DSPD', 'RRDV', 'NDMI', 'CTRF', 'PUKT', 'PURU'])('leaves generic or requested milestone %s unmapped', (code) => {
+  it('reads a delivery stopped for missing address details as a failed attempt', () => {
+    const value = payload();
+    Object.assign(value.Packages[0].Events[0], { EventCode: 'NDMI', EventShortDescription: 'Incomplete address. Please contact us' });
+    const result = parseOntrac(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Incomplete address. Please contact us' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'NDMI', stage: 'failed_attempt' });
+    expect(result).not.toHaveProperty('delivered_at');
+  });
+  it.each(['DSPD', 'RRDV', 'CTRF', 'PUKT', 'PURU'])('leaves generic or requested milestone %s unmapped', (code) => {
     const value = payload();
     Object.assign(value.Packages[0].Events[0], { EventCode: code, EventShortDescription: 'Provider request wording' });
     const result = parseOntrac(value, NUMBER);

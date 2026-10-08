@@ -65,6 +65,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "OnTrac holds the parcel until the recipient supplies address details or delivery instructions; its code list files this as an exception."
+    },
+    {
+      "code": "NDMI",
+      "wording": "Incomplete address. Please contact us",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The driver could not deliver for missing address details; OnTrac's code list files it as a delivery attempt."
     }
   ]
 }
