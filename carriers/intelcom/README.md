@@ -10,8 +10,8 @@ Observed Canadian status codes establish milestones even when the English label 
 
 ## Limitations
 
-Merchant references can identify Intelcom shipments without an Intelcom prefix. The `INTLCMD` family is an Intelcom identifier; the adapter sends its complete
-value. Detection suggests Intelcom for the `CRIN` family and the others require explicit carrier selection. Recipient addresses, driver names, proof images and delivery estimates are discarded. Local scan clocks stay unresolved because Canada spans several timezones.
+Merchant references can identify Intelcom shipments without an Intelcom prefix. `INTLCM` numbers, including the lettered series such as `INTLCMD` and `INTLCMJ`, are
+Intelcom identifiers; the adapter sends the complete value. Detection suggests Intelcom for the `CRIN` family; shipper and merchant references need an explicit carrier or an Intelcom tracking link. Recipient addresses, driver names, proof images and delivery estimates are discarded. Local scan clocks stay unresolved because Canada spans several timezones.
 
 ## Testing
 

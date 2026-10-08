@@ -92,10 +92,12 @@ describe('UK fourteen-digit parcel numbers', () => {
   });
 });
 
-it('recognizes the whole Intelcom INTLCMD family', () => {
-  const number = 'INTLCMD123456789';
-  expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'intelcom', confidence: 'high' });
-  expect(normalizeIntelcomNumber(number)).toBe(number);
-  expect(parseTrackingInput(`Tracking number: ${number}`).trackingNumber).toBe(number);
-  expect(detectCarrierMatch(`${number}0`).carrier).toBe('unknown');
+it('recognizes every lettered Intelcom series', () => {
+  for (const number of ['INTLCMD123456789', 'INTLCMJ123456789', 'INTLCMR123456789']) {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'intelcom', confidence: 'high' });
+    expect(normalizeIntelcomNumber(number)).toBe(number);
+    expect(parseTrackingInput(`Tracking number: ${number}`).trackingNumber).toBe(number);
+    expect(detectCarrierMatch(`${number}0`).carrier).toBe('unknown');
+  }
+  expect(detectCarrierMatch('INTLCMJ12345678').carrier).toBe('unknown');
 });

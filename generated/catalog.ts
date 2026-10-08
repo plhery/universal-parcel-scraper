@@ -4756,7 +4756,7 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       },
       {
-        "pattern": "^INTLCMD\\d{9}$",
+        "pattern": "^INTLCM[A-Z]\\d{9}$",
         "confidence": "high"
       }
     ]

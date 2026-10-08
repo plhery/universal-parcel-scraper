@@ -11607,6 +11607,12 @@
     ]
   },
   {
+    "input": "AECA00000001313353",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "AH992514975FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -11683,6 +11689,12 @@
     "candidates": [
       "an-post"
     ]
+  },
+  {
+    "input": "BAINT000290023984465",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "BE0000000001",
@@ -12623,6 +12635,17 @@
     ]
   },
   {
+    "input": "DT99000132801",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste"
+    ],
+    "asked": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "DX149431",
     "carrier": "unknown",
     "confidence": "low",
@@ -12894,6 +12917,12 @@
     ]
   },
   {
+    "input": "ESIG50011000560695",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "EW000000005FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -13045,12 +13074,24 @@
     ]
   },
   {
+    "input": "GRS01856MLZL2U4MC06",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "GV883319471GB",
     "carrier": "royal-mail",
     "confidence": "high",
     "candidates": [
       "royal-mail"
     ]
+  },
+  {
+    "input": "GWELL000226560",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "H000000000000008",
@@ -13281,6 +13322,46 @@
   },
   {
     "input": "INTLCMD417499538",
+    "carrier": "intelcom",
+    "confidence": "high",
+    "candidates": [
+      "intelcom"
+    ]
+  },
+  {
+    "input": "INTLCMG995787223",
+    "carrier": "intelcom",
+    "confidence": "high",
+    "candidates": [
+      "intelcom"
+    ]
+  },
+  {
+    "input": "INTLCMH811456830",
+    "carrier": "intelcom",
+    "confidence": "high",
+    "candidates": [
+      "intelcom"
+    ]
+  },
+  {
+    "input": "INTLCMI949734349",
+    "carrier": "intelcom",
+    "confidence": "high",
+    "candidates": [
+      "intelcom"
+    ]
+  },
+  {
+    "input": "INTLCMJ099862529",
+    "carrier": "intelcom",
+    "confidence": "high",
+    "candidates": [
+      "intelcom"
+    ]
+  },
+  {
+    "input": "INTLCMR130882753",
     "carrier": "intelcom",
     "confidence": "high",
     "candidates": [
@@ -13764,6 +13845,12 @@
     "candidates": [
       "j-and-t"
     ]
+  },
+  {
+    "input": "JY26CAA0T066574883",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "K1506235620",
@@ -15449,11 +15536,28 @@
     ]
   },
   {
+    "input": "SDMC21827093546145",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SE0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [
       "amazon-logistics"
+    ]
+  },
+  {
+    "input": "SE260924QUM3",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {
@@ -15738,6 +15842,17 @@
     "confidence": "low",
     "candidates": [
       "dtdc"
+    ]
+  },
+  {
+    "input": "TB0000672740",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {

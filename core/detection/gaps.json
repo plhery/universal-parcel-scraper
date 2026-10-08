@@ -153,6 +153,12 @@
     "reason": "A legacy Yodel reference the adapter does not take."
   },
   {
+    "carrier": "intelcom",
+    "pattern": "^(?!INTLCM|CRIN)[A-Z0-9]{12,20}$",
+    "kind": "by_design",
+    "reason": "Merchant and shipper references that Intelcom's tracker accepts. Nothing in them names Intelcom, so they need an explicit carrier or an Intelcom tracking link."
+  },
+  {
     "carrier": "j-and-t-cargo",
     "pattern": "^57\\d{10}$",
     "kind": "open",
