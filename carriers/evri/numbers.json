@@ -9,6 +9,9 @@
         "url": "https://ie.trustpilot.com/reviews/6a0adb5e679c6b7f4d03ee29",
         "date": "2026-05-18"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -17,7 +20,7 @@
           "evri-uk"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Evri International parcel."
+      "note": "Public report of an Evri International parcel. Evri's international tracker returns its history."
     },
     {
       "number": "H06R4A1011299623",

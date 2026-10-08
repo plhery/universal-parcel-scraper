@@ -11098,6 +11098,24 @@
     ]
   },
   {
+    "input": "H00I5A0016803719",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H00IAA2837885851",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H00RVA0538924343",
     "carrier": "unknown",
     "confidence": "low",
@@ -11107,7 +11125,43 @@
     ]
   },
   {
+    "input": "H00RVD0551541466",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H01SVA0063090608",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H01ZUA0013877550",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H03AHA0001245865",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H045HA0042372767",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -11134,10 +11188,46 @@
     ]
   },
   {
+    "input": "H05QTA0313516897",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H06R4A0220769609",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H06R4A1011299623",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "H0742A0312973872",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H07TSA0001255372",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
   },
   {
     "input": "H1028030626845901017",
@@ -13378,6 +13468,15 @@
     "confidence": "high",
     "candidates": [
       "sunyou"
+    ]
+  },
+  {
+    "input": "T002FA0079665708",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
     ]
   },
   {
