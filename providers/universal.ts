@@ -16,6 +16,7 @@
  * lives in the provider folder next to it.
  */
 import type { AdapterEnvironment, CarrierAdapter, TrackingContext } from '../core/adapter/index.js';
+import { uspsPackageIdentifier } from '../core/detection/usps.js';
 import { BudgetExceededError, IndeterminateError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
@@ -121,7 +122,11 @@ export class UniversalTracker {
   }
 
   async fetchSource(source: Source, trackingNumber: string, timeoutMs = this.options.timeoutMs ?? universalSourceBudget(source), postcode?: string | null, timezone?: string | null, signal?: AbortSignal, countryHint?: string | null): Promise<CarrierResult> {
-    const number = numberOf(trackingNumber);
+    const typed = numberOf(trackingNumber);
+    // A USPS routing barcode opens with the recipient's ZIP code. Providers are
+    // asked for the package identifier after it, the number USPS tracks, and
+    // bind their answer to it. Detection still reads the barcode as typed.
+    const number = uspsPackageIdentifier(typed) ?? typed;
     const result = this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')
       ? await this.options.browserLookup(source, number)
       : await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null, countryHint: countryHint ?? null }, { budgetMs: timeoutMs, signal });

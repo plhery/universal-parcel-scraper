@@ -87,6 +87,19 @@ describe('standalone tracker', () => {
     expect(fetcher).toHaveBeenCalled();
   });
 
+  it('detects a USPS routing barcode as typed and gives providers only its package identifier', async () => {
+    // An invented package identifier, outside the PIC rule, behind the routing prefix and a made-up ZIP code.
+    const pic = '9205510000000012345670';
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ data: {
+      tracking_number: pic, events: [{ timestamp: '2026-01-02T12:00:00Z', status: 'Delivered', dispatch_code_id: 7 }],
+    } }), { status: 201, headers: { 'Content-Type': 'application/json' } }));
+    const answer = await createTracker({ fetcher, providers: ['Ship24'] }).track({ number: `42000000${pic}` });
+    expect(answer).toMatchObject({ carrier: 'unknown', source: 'Ship24', result: { status: 'delivered' } });
+    // Alone, this identifier also fits other carriers' formats; as typed, no carrier is asked to recognize it.
+    expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual(['api.ship24.com']);
+    expect(fetcher.mock.calls.map(([url, init]) => `${String(url)} ${String(init?.body)}`).join(' ')).not.toContain('42000000');
+  });
+
   it('accepts a country hint without retrying an empty universal answer', async () => {
     const lookup = vi.fn().mockRejectedValue(new NotFoundError('UPS'));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ error: 'NO_DATA' }));

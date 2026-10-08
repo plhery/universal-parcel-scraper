@@ -118,10 +118,12 @@ USPS barcode validation shares the carrier adapter's whole-identifier checks. A 
 routing prefix is removed only when it yields one valid package identifier; ambiguous splits
 are rejected. Result normalization applies the same rule to every number a result reports, so
 the delivery, canonical and international numbers never carry the recipient's ZIP code: a
-routing barcode keeps its package identifier or is dropped. A 22-digit PIC whose channel,
-Mailer ID and check digit agree selects USPS, apart from the families DHL eCommerce also
-tracks. Other checksum-valid USPS formats prioritize a candidate and still require carrier
-confirmation.
+routing barcode keeps its package identifier or is dropped. Universal providers are asked
+for that package identifier too. A 22-digit PIC whose channel, Mailer ID and check digit
+agree selects USPS, apart from the families DHL eCommerce also tracks. Other checksum-valid
+USPS formats prioritize a candidate and still require carrier confirmation. Detection and
+recognition read a routing barcode as typed: outside that PIC rule, a bare identifier also
+fits other carriers' formats.
 
 Recognition uses HTTP by default. Consumers can request `recognitionCandidates` with
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's

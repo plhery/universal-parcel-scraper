@@ -203,6 +203,23 @@ describe('universal discovery chain', () => {
     expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual(['api.ship24.com', 'parcelsapp.com', 'api.ship24.com']);
   });
 
+  it('asks for the package identifier of a USPS routing barcode, never the ZIP code before it', async () => {
+    // An invented package identifier behind the routing prefix and a made-up ZIP code.
+    const pic = '9210090000000012345679';
+    const history = { data: { tracking_number: pic,
+      events: [{ timestamp: '2026-09-10T10:00:00-04:00', status: 'Delivered', dispatch_code_id: 7 }] } };
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(history));
+    const tracker = new UniversalTracker({ providers: ['Ship24'], fetcher });
+    await expect(tracker.fetchSource('Ship24', `420 00000 ${pic}`, 20_000)).resolves.toMatchObject({ current_stage: 'delivered' });
+    await expect(tracker.fetch(`42000000${pic}`)).resolves.toMatchObject({ current_stage: 'delivered' });
+    const sent = fetcher.mock.calls.map(([url, init]) => `${String(url)} ${String(init?.body)}`);
+    expect(sent).toHaveLength(2);
+    for (const request of sent) {
+      expect(request).toContain(pic);
+      expect(request).not.toContain('42000000');
+    }
+  });
+
   it('treats a history without one dated scan as inconclusive and moves on', async () => {
     // No offset, courier or place: the scan keeps its wall time and has no instant.
     const undated = { data: { tracking_number: number, events: [{ timestamp: '2026-09-10T10:00:00', status: 'Delivered', dispatch_code_id: 7 }] } };
