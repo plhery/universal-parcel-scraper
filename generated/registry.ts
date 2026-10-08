@@ -55,6 +55,7 @@ import { adapter as gofo } from '../carriers/gofo/adapter.js';
 import { adapter as heppner } from '../carriers/heppner/adapter.js';
 import { adapter as hermes } from '../carriers/hermes/adapter.js';
 import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
+import { adapter as hongkongPost } from '../carriers/hongkong-post/adapter.js';
 import { adapter as indiaPost } from '../carriers/india-post/adapter.js';
 import { adapter as inpost } from '../carriers/inpost/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
@@ -166,6 +167,7 @@ export const REGISTRY: RegistryDefinition = {
     "heppner": heppner,
     "hermes": hermes,
     "hermes-de": hermesDe,
+    "hongkong-post": hongkongPost,
     "india-post": indiaPost,
     "inpost": inpost,
     "intelcom": intelcom,
@@ -280,7 +282,7 @@ export const REGISTRY: RegistryDefinition = {
     "heppner": "heppner",
     "hermes": "hermes",
     "hermes-de": "hermes-de",
-    "hongkong-post": "universal",
+    "hongkong-post": "hongkong-post",
     "india-post": "india-post",
     "inpost": "inpost",
     "intelcom": "intelcom",

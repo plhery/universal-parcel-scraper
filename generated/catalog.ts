@@ -3827,9 +3827,10 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hongkong-post",
+      "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://chatbot.hongkongpost.hk/en",
     "trackingUrlTemplate": "https://webapp.hongkongpost.hk/en/mail_tracking2/index.html",
     "linkRules": [],
     "detectionRules": [

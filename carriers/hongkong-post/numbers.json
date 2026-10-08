@@ -9,11 +9,14 @@
         "url": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q12329081017",
         "date": "2026-06-20"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "hongkong-post",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. AliExpress item to Japan; the page does not name the carrier."
+      "note": "AliExpress item to Japan; the page does not name the carrier. Hongkong Post's tracking returns its history and its chatbot the same latest status."
     },
     {
       "number": "RE113184005HK",

@@ -14,17 +14,32 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "hongkong-post",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
   "capabilities": [],
   "portal": {
     "url": "https://webapp.hongkongpost.hk/en/mail_tracking2/index.html",
-    "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
+    "canaryUrl": "https://chatbot.hongkongpost.hk/en",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "history",
+      "location",
+      "eta",
+      "offset_timestamps",
+      "verified_scan_timezone"
+    ]
   },
   "links": [],
   "detection": [

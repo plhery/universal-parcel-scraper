@@ -80,7 +80,7 @@ asked after the other aggregators whatever its count.
 | [Yamato Transport](../carriers/yamato/README.md) | Yes | ✓ 7 (yearless dates) | Error | Wrong carrier | No history | No history | N/A |
 | [Correios Brazil](../carriers/correios-br/README.md) | Yes (local OCR) | ✓ 8 | ✓ 8 | No history | ✓ 8 | Error | No history |
 | [Singapore Post](../carriers/singapore-post/README.md) | Yes | ✓ 9 | ✓ 4, partial | ✓ 12 | ✓ 18 | ✓ 11 | ✓ 4 |
-| [Hongkong Post](../carriers/hongkong-post/README.md) | No adapter | Blocked | ✓ 26 | ✓ 35 | ✓ 17, partial | ✓ 35 | No history |
+| [Hongkong Post](../carriers/hongkong-post/README.md) | Yes (latest status) | Unverified; alternate summary only | ✓ 26 | ✓ 35 | ✓ 17, partial | ✓ 35 | No history |
 | [Korea Post](../carriers/korea-post/README.md) | Yes (international) | ✓ 20 | ✓ 36 | ✓ 41 | ✓ 28 | ✓ 27 | ✓ 1 |
 | [Planzer](../carriers/planzer/README.md) | Yes | ✓ 4 | No history | No history | No history | No history | N/A |
 | [Quickpac](../carriers/quickpac/README.md) | Yes (via Planzer) | No history | No history | No history | No history | No history | N/A |

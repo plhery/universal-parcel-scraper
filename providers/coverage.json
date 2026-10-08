@@ -904,10 +904,11 @@
     },
     {
       "carrier": "hongkong-post",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes (latest status)",
+      "sample": "Unverified; alternate summary only",
       "references": [
         {
+          "note": "Original comparison reference has not been retried through the chatbot. An alternate public reference returned its latest status and clock, without history: https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q12329081017",
           "results": {
             "Ship24": 26,
             "ParcelsApp": 35,
