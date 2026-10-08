@@ -47,9 +47,11 @@ Parsing, in order:
 
 ## Notes
 
-- Accepting a foreign S10 number does not make detection pick USPS. The S10 suffix names
-  the issuing country, not the destination; callers select USPS or go through the
-  delivery-partner handoff route.
+- Accepting an S10 number does not make detection pick USPS. The S10 suffix names
+  the issuing country, not the deliverer, so a US-issued number stays with the unknown
+  postal carrier. It makes USPS a candidate for opt-in browser recognition only, since
+  USPS has no HTTP lookup. Other suffixes reach USPS when callers select it or through
+  the delivery-partner handoff route.
 - Scan times are facility-local. The state in the location maps to a zone (multi-zone states
   use their majority zone). With no resolvable state the event keeps an offset-free
   `local_time`, or `raw_time` for date-only text, and the page's newest-first order is kept

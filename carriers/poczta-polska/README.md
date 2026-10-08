@@ -1,7 +1,11 @@
 # Poczta Polska
 
 Tracks registered postal items and parcel barcodes through the official
-eMonitoring widget's anonymous JSON service.
+eMonitoring widget's anonymous JSON service. Polish-issued postal numbers are
+candidates for recognition through the same lookup. The
+[UPU S10 standard](https://www.upu.int/UPU/media/upu/files/postalSolutions/programmesAndServices/standards/S10-12.pdf)
+names the issuing country, not the deliverer, so the suffix alone never selects
+Poczta Polska.
 
 ## How it works
 

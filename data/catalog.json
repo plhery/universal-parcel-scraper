@@ -2612,6 +2612,12 @@
         "confidence": "low",
         "checksum": "usps",
         "preferred": true
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}US$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
       }
     ]
   },
@@ -3958,6 +3964,12 @@
       {
         "pattern": "^PX\\d{10}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}PL$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
       }
     ]
   },

@@ -85,6 +85,13 @@
       "id": "poczta-polska-2",
       "pattern": "^PX\\d{10}$",
       "confidence": "high"
+    },
+    {
+      "id": "poczta-polska-s10",
+      "pattern": "^[A-Z]{2}\\d{9}PL$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "s10"
     }
   ]
 }

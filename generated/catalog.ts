@@ -2614,6 +2614,12 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "usps",
         "preferred": true
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}US$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
       }
     ]
   },
@@ -3960,6 +3966,12 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^PX\\d{10}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}PL$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
       }
     ]
   },
@@ -5285,7 +5297,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ecoscooting": ["ecoscooting-1","ecoscooting-2"],
   "tipsa": ["tipsa-1","tipsa-2"],
   "ukrposhta": ["ukrposhta-1"],
-  "usps": ["usps-impb","usps-3","usps-1","usps-2","usps-4"],
+  "usps": ["usps-impb","usps-3","usps-1","usps-2","usps-4","usps-s10"],
   "canada-post": ["canada-post-1","canada-post-2"],
   "purolator": ["purolator-1","purolator-2"],
   "canpar": ["canpar-1"],
@@ -5322,7 +5334,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ninja-van": ["ninja-van-1","ninja-van-2","ninja-van-3"],
   "china-post": ["china-post-1"],
   "packeta": ["packeta-1"],
-  "poczta-polska": ["poczta-polska-1","poczta-polska-barcode","poczta-polska-2"],
+  "poczta-polska": ["poczta-polska-1","poczta-polska-barcode","poczta-polska-2","poczta-polska-s10"],
   "bring-posten": ["bring-posten-1","bring-posten-2","bring-posten-3","bring-posten-4"],
   "aramex": ["aramex-1"],
   "tnt": ["tnt-1","tnt-2"],

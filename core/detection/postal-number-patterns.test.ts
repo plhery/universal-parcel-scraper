@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { recognitionAskedCarriers } from '../catalog/recognition.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { checksumRejections, detectCarrierMatch } from './index.js';
 
 describe('S10-shaped numbers', () => {
@@ -15,5 +15,26 @@ describe('S10-shaped numbers', () => {
 
   it('keeps a country suffix with no dedicated post in international mail', () => {
     expect(detectCarrierMatch('RR123456785EE')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+  });
+
+  it('asks Poczta Polska first about a Polish-issued number without selecting it', () => {
+    expect(detectCarrierMatch('cp 123 456 785 pl')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    expect(recognitionCandidates('cp 123 456 785 pl')).toEqual([
+      { carrier: 'poczta-polska', needsInput: null, preferred: true },
+      { carrier: 'chronopost', needsInput: null, preferred: false },
+    ]);
+    expect(recognitionAskedCarriers('CP123456789PL')).not.toContain('poczta-polska');
+  });
+
+  it('offers USPS a US-issued number in the browser phase only', () => {
+    expect(detectCarrierMatch('EC123456785US')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    expect(recognitionAskedCarriers('EC123456785US')).not.toContain('usps');
+    expect(recognitionCandidates('EC123456785US', { phase: 'browser' })).toEqual([
+      { carrier: 'usps', needsInput: null, preferred: true },
+    ]);
+    expect(recognitionCandidates('EC123456789US', { phase: 'browser' })).toEqual([]);
+    // Asendia USA's own numbers keep their carrier.
+    expect(detectCarrierMatch('AS123456785US')).toMatchObject({ carrier: 'asendia', confidence: 'high' });
+    expect(recognitionCandidates('AS123456785US', { phase: 'browser' })).toEqual([]);
   });
 });

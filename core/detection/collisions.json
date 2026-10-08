@@ -209,6 +209,33 @@
     "reason": "The Finnish issuer suffix suggests Posti but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
   },
   {
+    "shape": "AA9{9}PL with a valid S10 check digit",
+    "carriers": [
+      "chronopost",
+      "intl-post",
+      "poczta-polska"
+    ],
+    "reason": "The Polish issuer suffix suggests Poczta Polska but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
+  },
+  {
+    "shape": "AA9{9}US with a valid S10 check digit",
+    "carriers": [
+      "chronopost",
+      "intl-post",
+      "usps"
+    ],
+    "reason": "The US issuer suffix suggests USPS but does not establish the delivering carrier; the postal fallback remains selected, and only browser recognition can ask USPS to confirm it."
+  },
+  {
+    "shape": "AS9{9}US with a valid S10 check digit",
+    "carriers": [
+      "asendia",
+      "chronopost",
+      "usps"
+    ],
+    "reason": "Asendia USA's AS numbers carry the US issuer suffix that suggests USPS; the Asendia rule decides."
+  },
+  {
     "shape": "AA9{9}AA",
     "carriers": [
       "chronopost",

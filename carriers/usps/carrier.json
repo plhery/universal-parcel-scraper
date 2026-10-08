@@ -92,6 +92,13 @@
       "confidence": "low",
       "checksum": "usps",
       "preferred": true
+    },
+    {
+      "id": "usps-s10",
+      "pattern": "^[A-Z]{2}\\d{9}US$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "s10"
     }
   ]
 }
