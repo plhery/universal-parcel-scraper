@@ -7142,6 +7142,29 @@
     ]
   },
   {
+    "input": "73161537761233",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
     "input": "73800244620101503002000732",
     "carrier": "mondial-relay",
     "confidence": "high",
@@ -7230,6 +7253,22 @@
       "mondial-relay",
       "colisweb",
       "heppner"
+    ]
+  },
+  {
+    "input": "773307869218603",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "yunda"
+    ]
+  },
+  {
+    "input": "775510496178076",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "yunda"
     ]
   },
   {

@@ -25,6 +25,36 @@
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to ZTO Express, which stays one candidate among several."
+    },
+    {
+      "number": "73161537761233",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210715090957/https://m.zto.com/waybill/detail?id=73161537761233",
+        "date": "2021-07-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "A ZTO tracking link archived by the Wayback Machine. ZTO has no adapter here, so it stays unconfirmed; fourteen digits starting 7 do not yet suggest ZTO."
     }
   ]
 }
