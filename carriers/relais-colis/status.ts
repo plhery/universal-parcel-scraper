@@ -11,9 +11,8 @@
  * pickup states, and only then delivery, because the network's vocabulary
  * reuses "relais" across several stages. Unlike the other French adapters this
  * one keeps the provider's own sentence as the event description, so the map
- * only decides the stage. Sentences it does not recognize get no carrier
- * stage assignment beyond the transit default and are left to the sync's
- * wording classifier.
+ * only decides the stage. Sentences it does not recognize get no stage and
+ * are left to the shared wording classifier.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -21,7 +20,8 @@ import type { Stage } from '../../generated/catalog.js';
 
 export interface ClassifiedRelaisColisStatus {
   status: CarrierStatus;
-  stage: Stage;
+  /** Absent when no rule matched: the shared wording classifier decides instead. */
+  stage?: Stage;
 }
 
 /** Lower-case, unaccent and reduce a French sentence to letters, digits and single spaces. */
@@ -116,5 +116,5 @@ export function classifyRelaisColisStatus(description: string): ClassifiedRelais
     'expedie vers',
   ])) return { status: 'in_transit', stage: 'in_transit' };
 
-  return { status: 'unknown', stage: 'in_transit' };
+  return { status: 'unknown' };
 }

@@ -111,7 +111,7 @@ export function parseRelaisColisTrackingHtml(html: string, rawTrackingNumber: st
     parsed.push({ event: {
       ...(clock.instant ? { time: clock.instant.iso } : clock.local ? { local_time: clock.local } : {}),
       ...(!clock.instant && time ? { provider_time_text: time } : {}),
-      location: '', description, stage: classified.stage,
+      location: '', description, ...(classified.stage ? { stage: classified.stage } : {}),
     }, status: classified.status, local: clock.instant ? null : clock.local });
   };
   if ($('.follow-step').length > 250) throw new SchemaError('Relais Colis', 'Relais Colis returned excessive tracking history');

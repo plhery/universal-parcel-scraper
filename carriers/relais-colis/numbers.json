@@ -35,7 +35,10 @@
         "carrier": "relais-colis",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. Relais Colis's tracker returns its history.",
+      "context": {
+        "assessment": "confirmed"
+      }
     },
     {
       "number": "CC200000000401",

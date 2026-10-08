@@ -29,9 +29,11 @@ keep their ambiguity until the recipient form confirms a matching history.
 ## Normalization
 
 Scan sentences supply the status. Paris wall clocks become timestamps; date-only
-or invalid clocks remain unresolved history. Unfamiliar current wording cannot
-borrow an older delivery state. Planned or ongoing returns are not terminal. Address and recipient containers are discarded
-before extracting scan fields.
+or invalid clocks remain unresolved history. Unfamiliar wording gets no stage
+from the map, so the shared wording classifier reads it, and current wording
+cannot borrow an older delivery state. Planned or ongoing returns are not
+terminal. Address and recipient containers are discarded before extracting
+scan fields.
 
 ## Limitations
 

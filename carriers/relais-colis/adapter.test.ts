@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { resolveResult } from '../../core/result/resolve.js';
 import {
   adapter,
   RelaisColisTracker,
@@ -127,8 +128,7 @@ describe('Relais Colis status vocabulary', () => {
       .toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(classifyRelaisColisStatus('Votre colis sera retourné à votre vendeur'))
       .toEqual({ status: 'unknown', stage: 'in_transit' });
-    expect(classifyRelaisColisStatus('Nouvelle formulation inconnue'))
-      .toEqual({ status: 'unknown', stage: 'in_transit' });
+    expect(classifyRelaisColisStatus('Nouvelle formulation inconnue')).toEqual({ status: 'unknown' });
   });
 });
 
@@ -302,6 +302,8 @@ describe('Relais Colis HTML normalization', () => {
     expect(result).toMatchObject({ status: 'unknown', last_update: null, last_update_local: '2026-08-29',
       events: [{ local_time: '2026-08-29', provider_time_text: '29/08/2026' }, { stage: 'delivered' }] });
     expect(result.events?.[0]?.time).toBeUndefined();
+    expect(result.events?.[0]?.stage).toBeUndefined();
+    expect(resolveResult(result).events[0]).toMatchObject({ stage: 'in_transit', stage_source: 'none' });
     for (const date of ['date inconnue', '', '31/02/2026 à 10:00', '29/03/2026 à 02:30', '25/10/2026 à 02:30']) {
       const unresolved = parseRelaisColisTrackingHtml(trackingPage({ rows: [[date, 'Votre colis a été annoncé']] }), OFFICIAL_EXAMPLE);
       expect(unresolved.last_update).toBeNull();
