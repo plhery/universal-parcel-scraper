@@ -192,6 +192,24 @@ describe('17TRACK result parsing', () => {
     expect(() => utc({ time_utc: 'broken' })).toThrow('invalid tracking event');
   });
 
+  it('counts India Post take-offs, whose airport clock 17TRACK reads as UTC, without dating them', () => {
+    // A Frankfurt take-off at 21:20 local, shown as if 21:20 were UTC.
+    const scan = (description: string, time: string) => ({ time_iso: `2026-10-04T${time}+05:30`, time_utc: `2026-10-03T21:${time.slice(3, 5)}:00Z`,
+      time_raw: { date: '2026-10-04', time, timezone: null }, description, location: '', stage: null, sub_status: 'InTransit_Other' });
+    const reply = (events: Record<string, unknown>[], name = 'India Post'): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key: 9021, name }, events }] } } }] });
+    const result = parse17TrackResponse(reply([
+      scan('UPLIFT', '02:55:00'), scan('Aircraft Departure', '02:50:00'), scan('Bag dispatched', '01:10:00'),
+    ]), number);
+    expect(result.events?.map((event) => event.description)).toEqual(['Bag dispatched']);
+    // The scans before it still say where the parcel is.
+    expect(result).toMatchObject({ current_stage: 'in_transit', undated_event_count: 2 });
+    // Other operators, and India Post's other rows, keep 17TRACK's reading.
+    expect(parse17TrackResponse(reply([scan('Aircraft Departure', '02:50:00')], 'Example Parcel Co'), number).events)
+      .toHaveLength(1);
+    expect(parse17TrackResponse(reply([scan('Aircraft departure scheduled', '02:50:00')]), number).events).toHaveLength(1);
+  });
+
   it('requires a completed identity-matched NotFound and an empty history for a negative answer', () => {
     expect(thrown(() => parse17TrackResponse(postalHistory([], 'NotFound'), number)))
       .toMatchObject({ name: 'NotFoundError', kind: 'not_found', status: 404 });

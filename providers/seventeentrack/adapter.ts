@@ -11,6 +11,7 @@
  */
 import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
+import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { ChallengeError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -85,6 +86,18 @@ function facilityWall(raw: Record<string, unknown>): string | null {
     && typeof clock.time === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(clock.time) ? `${clock.date}T${clock.time}` : null;
 }
 
+/**
+ * An India Post take-off, which India Post dates with the departure airport's
+ * wall clock labelled UTC, and 17TRACK takes the label at its word: it showed
+ * a Mumbai take-off 5.5 hours late and one from Frankfurt 2 hours late
+ * (checked 2026-10-08). India Post's own adapter places them in the airport's
+ * zone; 17TRACK's row says nothing reliable about when the flight left.
+ */
+function misdatedTakeOff(carrierName: unknown, raw: Record<string, unknown>): boolean {
+  return typeof carrierName === 'string' && carrierIdFromName(carrierName) === 'india-post'
+    && /^(?:aircraft departure|uplift)$/i.test(text(raw.description));
+}
+
 function requestsPostcode(shipment: Record<string, unknown>): boolean {
   if (Array.isArray(shipment.params_v2)) return shipment.params_v2.some(p => isRecord(p) && p.key === 'postal_code');
   return (isRecord(shipment.param) && shipment.param.type === 'PostalCode')
@@ -147,7 +160,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const unplaced = wall !== null && !placed?.isValid;
       latest.see(wall ?? String(raw.time_iso ?? raw.time_utc).slice(0, 19), unplaced);
       // With no zone for the facility it is a wall time, counted like a row without a date.
-      if (unplaced) undated++;
+      // A take-off is counted the same way, but the scans before it still say where the parcel is.
+      if (unplaced || misdatedTakeOff(name, raw)) undated++;
       else events.push(parsed);
     }
   }

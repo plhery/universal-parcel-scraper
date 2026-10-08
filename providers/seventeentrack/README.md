@@ -79,6 +79,11 @@ carrier.
   [DHL Express rule](../../carriers/dhl-express/clock.ts) reads from their location
   instead. A scan the rule cannot place is counted in `undated_event_count`, and when it
   is the reply's latest scan the reply is inconclusive.
+- India Post dates a take-off with the departure airport's wall clock labelled UTC, and
+  17TRACK keeps the label: a Mumbai take-off showed 5.5 hours late, a Frankfurt one 2 hours
+  late. India Post rows worded `Aircraft Departure` or `UPLIFT` are counted in
+  `undated_event_count` instead of dated. The scans before one still describe the parcel,
+  so the reply stays conclusive. India Post's own adapter places take-offs.
 - Original scan text is kept. The English interface does not translate descriptions.
 - Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details.
 - At most 20 carrier legs and 1000 events. `shipping_info` and per-event `address` are
