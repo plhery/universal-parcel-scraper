@@ -76,7 +76,9 @@ universal provider.
 - Timestamps already carry their Paris offset and are passed through verbatim.
   `isoTime` only validates them; impossible dates are dropped.
 - `contextData.partner` names the foreign carrier after export; it becomes
-  `delivery_carrier` and `delivery_tracking_number`.
+  `delivery_carrier` and `delivery_tracking_number`. An item whose `product` is
+  Chronopost names Chronopost instead, whose own tracking holds the scans and
+  references this feed can omit, so the tracker asks it too.
 - `contextData.merchantName` is the sender the tracking page shows. While the
   parcel waits for collection, `removalPoint.name` names the post office, locker
   or shop holding it and becomes the pickup point. The feed has no address for

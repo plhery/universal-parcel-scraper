@@ -242,9 +242,13 @@ function parseShipment(payload: unknown, trackingNumber: string): { result: Carr
   const removal = isRecord(context.removalPoint) ? context.removalPoint : {};
   const pickupPoint = latest?.stage === 'ready_for_pickup' && clean(removal.type, 20) ? clean(removal.name, 200) : '';
   const point = clean(removal.idPoint, 40);
+  // A Chronopost item names Chronopost, whose own tracking holds the scans after
+  // export and the partner references this feed can omit. Its number there is
+  // the feed's identity, which only differs from the input by a check character.
+  const chronopost = clean(shipment.product, 40).toLocaleLowerCase('en-US') === 'chronopost';
   const partner = isRecord(context.partner) ? context.partner : {};
-  const deliveryCarrier = carrierIdFromPartner(clean(partner.name, 80), clean(partner.url, 2048));
-  const deliveryNumber = clean(partner.reference, 64).toUpperCase();
+  const deliveryCarrier = chronopost ? 'chronopost' : carrierIdFromPartner(clean(partner.name, 80), clean(partner.url, 2048));
+  const deliveryNumber = !chronopost ? clean(partner.reference, 64).toUpperCase() : shipped !== requested ? shipped : '';
   const result: CarrierResult = {
     status: eventStatus(latestGroup, latestCode, latestLabel, events.length > 0),
     // The status vocabulary has no pickup or customs value; without the stage

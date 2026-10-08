@@ -99,7 +99,8 @@ consumer's choice.
 
 Chronopost reads its own credential-free tracking operation, including scans after export
 and partner references. La Poste's unified feed can omit that history without a completeness
-marker, so its fast success does not replace Chronopost's direct result. A checked Geopost
+marker, so its fast success does not replace Chronopost's direct result: La Poste names
+Chronopost as the delivery partner of an item the feed marks as Chronopost's. A checked Geopost
 reference and explicit German destination propose a DPD Germany confirmation lookup.
 
 Consumers with their own router can call `trackCarrier` from `/node` with an

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { UpstreamHttpError } from '../../core/errors/index.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import {
@@ -436,9 +437,31 @@ describe('La Poste response normalization', () => {
     expect(result).toMatchObject({
       status: 'delivered',
       last_status_text: 'Livraison effectuée',
+      delivery_carrier: 'chronopost',
       events: [{ provider_code: 'DI1', stage: 'delivered' }],
     });
+    expect(result.delivery_tracking_number).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('must never survive');
+  });
+
+  it('hands a Chronopost item to Chronopost, under the identity the feed answered', () => {
+    const fixture = deliveredFixture();
+    Object.assign(fixture[0]!.shipment, { idShip: 'XA123456785FR', product: 'Chronopost', contextData: {
+      partner: { name: 'Posti', reference: 'LOCAL12345' },
+    } });
+    const result = parseLaPosteTrackingResponse(fixture, 'XA123456785FR');
+    expect(result).toMatchObject({ delivery_carrier: 'chronopost' });
+    expect(result.delivery_tracking_number).toBeUndefined();
+    expect(deliveryHandoff('la-poste', 'XA123456785FR', result))
+      .toEqual({ carrier: 'chronopost', number: 'XA123456785FR', basis: 'partner' });
+    Object.assign(fixture[0]!.shipment, { idShip: '87001234567890I' });
+    expect(parseLaPosteTrackingResponse(fixture, '87001234567890')).toMatchObject({
+      delivery_carrier: 'chronopost', delivery_tracking_number: '87001234567890I',
+    });
+    fixture[0]!.shipment.product = 'colissimo';
+    expect(parseLaPosteTrackingResponse(fixture, '87001234567890')).toMatchObject({
+      delivery_carrier: 'posti', delivery_tracking_number: 'LOCAL12345',
+    });
   });
 
   it('uses return semantics rather than treating every final event as delivered', () => {
