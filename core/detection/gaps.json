@@ -93,6 +93,12 @@
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to this network."
   },
   {
+    "carrier": "dhl-ecommerce-es",
+    "pattern": "^JJD",
+    "kind": "by_design",
+    "reason": "The JJD licence plate is shared by DHL's European parcel networks and detected as DHL. The Iberian portal reads it when the carrier is named."
+  },
+  {
     "carrier": "dhl-ecommerce-nl",
     "pattern": "^3S[A-Z]{3}\\d{9}$",
     "kind": "open",

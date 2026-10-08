@@ -2967,6 +2967,24 @@
     ]
   },
   {
+    "input": "1351378503",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "estafeta",
+      "dhl-ecommerce-es"
+    ],
+    "asked": [
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
+    ]
+  },
+  {
     "input": "13629600176857",
     "carrier": "unknown",
     "confidence": "low",
@@ -4887,6 +4905,24 @@
     ],
     "asked": [
       "dhl-express",
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
+    ]
+  },
+  {
+    "input": "2541275700",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "estafeta",
+      "dhl-ecommerce-es"
+    ],
+    "asked": [
       "relais-colis",
       "tipsa",
       "dhl-ecommerce-es"
@@ -11622,6 +11658,14 @@
     ]
   },
   {
+    "input": "CA786219293DE",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
     "input": "CB212298281IE",
     "carrier": "an-post",
     "confidence": "high",
@@ -11825,6 +11869,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "CH540450562DE",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
     ]
   },
   {
@@ -12244,6 +12296,17 @@
     "confidence": "high",
     "candidates": [
       "amazon-logistics"
+    ]
+  },
+  {
+    "input": "DE30493380",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce-es"
+    ],
+    "asked": [
+      "dhl-ecommerce-es"
     ]
   },
   {
@@ -13130,6 +13193,14 @@
     ]
   },
   {
+    "input": "JJD00006135051474093003",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
     "input": "JJD0002123456789012",
     "carrier": "dhl",
     "confidence": "high",
@@ -13146,6 +13217,38 @@
     ]
   },
   {
+    "input": "JJD00026906000002411001",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
+    "input": "JJD00026926000797050001",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
+    "input": "JJD00026926000832370001",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
+    "input": "JJD00036806102768486001",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
     "input": "JJD0099999999",
     "carrier": "dhl",
     "confidence": "high",
@@ -13155,6 +13258,14 @@
   },
   {
     "input": "JJD149020000300000000173",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
+    "input": "JJD149021938753000158483",
     "carrier": "dhl",
     "confidence": "high",
     "candidates": [
