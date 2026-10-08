@@ -16,13 +16,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "swiss-post-cargo",
           "postnord",
+          "swiss-post-cargo",
           "usps",
           "nz-post"
         ]
       },
-      "note": "Public report attributed to PostNord, whose tracker returns its history. Twenty digits stay one candidate among several."
+      "note": "Public report attributed to PostNord, whose tracker returns its history. Twenty digits stay a suggestion; the Swedish GS1 prefix lists PostNord first."
     },
     {
       "number": "84971563697SE",
@@ -109,13 +109,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "swiss-post-cargo",
           "postnord",
+          "swiss-post-cargo",
           "usps",
           "nz-post"
         ]
       },
-      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay one candidate among several."
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay a suggestion; the Swedish GS1 prefix lists PostNord first."
     },
     {
       "number": "00357059930440074440",
@@ -134,13 +134,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "swiss-post-cargo",
           "postnord",
+          "swiss-post-cargo",
           "usps",
           "nz-post"
         ]
       },
-      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay one candidate among several."
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay a suggestion; the Danish GS1 prefix lists PostNord first."
     },
     {
       "number": "00573132901652718107",
@@ -159,13 +159,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "swiss-post-cargo",
           "postnord",
+          "swiss-post-cargo",
           "usps",
           "nz-post"
         ]
       },
-      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay one candidate among several."
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay a suggestion; the Swedish GS1 prefix lists PostNord first."
     },
     {
       "number": "24622447660SE",

@@ -2104,8 +2104,15 @@ export const CARRIER_CATALOG = {
         "checksum": "s10"
       },
       {
+        "pattern": "^00(?!373)\\d(?:57|73)\\d{15}$",
+        "confidence": "low",
+        "checksum": "sscc",
+        "preferred": true
+      },
+      {
         "pattern": "^00\\d(?:57|73|70|64)\\d{15}$",
-        "confidence": "low"
+        "confidence": "low",
+        "checksum": "sscc"
       }
     ]
   },
@@ -5288,7 +5295,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "an-post": ["an-post-1"],
   "bpost": ["bpost-numeric-prefix","bpost-1","bpost-2","bpost-3"],
   "austrian-post": ["austrian-post-1","austrian-post-2"],
-  "postnord": ["postnord-1","postnord-2","postnord-3"],
+  "postnord": ["postnord-1","postnord-2","postnord-3","postnord-4"],
   "posti": ["posti-1","posti-2"],
   "correos-express": ["correos-express-1","correos-express-2"],
   "seur": ["seur-1","seur-2","seur-3"],

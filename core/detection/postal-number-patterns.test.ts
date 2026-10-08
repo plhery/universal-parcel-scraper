@@ -50,3 +50,24 @@ describe('Korea Post domestic numbers', () => {
     }
   });
 });
+
+describe('Nordic SSCCs behind the 00 identifier', () => {
+  it.each(['00357123456789012348', '00073123456789012347', '00573123456789012342'])(
+    'lists PostNord first for %s, a Danish or Swedish GS1 prefix',
+    (number) => {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates[0]).toBe('postnord');
+    },
+  );
+
+  it('keeps PostNord out when the SSCC check digit fails', () => {
+    expect(detectCarrierMatch('00357123456789012349').candidates).not.toContain('postnord');
+    expect(checksumRejections('00357123456789012349')).toContainEqual({ carrier: 'postnord', rule: 'postnord-3', checksum: 'sscc' });
+  });
+
+  it.each(['00370123456789012347', '00373123456789012348'])('keeps Bring first for its parcel SSCC %s', (number) => {
+    const { candidates } = detectCarrierMatch(number);
+    expect(candidates[0]).toBe('bring-posten');
+    expect(candidates).toContain('postnord');
+  });
+});

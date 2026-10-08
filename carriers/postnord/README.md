@@ -2,6 +2,12 @@
 
 Tracks individual parcels through the anonymous JSON service used by PostNord's official tracking widget.
 
+An SSCC typed with its 00 identifier is suggested with PostNord first when it
+carries a Danish (57) or Swedish (73) GS1 prefix and its check digit passes.
+Bring stays first for its 00370 and 00373 parcels, and Norwegian and Finnish
+prefixes keep PostNord among the other candidates. Several carriers share
+twenty digits and PostNord has no recognition step, so callers select it.
+
 ## How it works
 
 One GET returns the shipment and scans. The request carries the widget's bounded SHA-512

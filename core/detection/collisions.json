@@ -1457,14 +1457,14 @@
     "reason": "The Planzer 99990 range sits inside the 13-digit space four carriers match broadly; the Planzer rule decides."
   },
   {
-    "shape": "9{20} with a Nordic GS1 prefix",
+    "shape": "9{20} SSCC with a Nordic GS1 prefix",
     "carriers": [
       "nz-post",
       "postnord",
       "swiss-post-cargo",
       "usps"
     ],
-    "reason": "Nordic SSCC prefixes overlap Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates; the number stays a low-confidence suggestion."
+    "reason": "Nordic SSCCs fit PostNord's rule, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. A Danish or Swedish prefix lists PostNord first, and the number stays a low-confidence suggestion."
   },
   {
     "shape": "Twelve digits that pass the FedEx and Purolator checks",

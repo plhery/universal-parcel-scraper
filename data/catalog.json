@@ -2102,8 +2102,15 @@
         "checksum": "s10"
       },
       {
+        "pattern": "^00(?!373)\\d(?:57|73)\\d{15}$",
+        "confidence": "low",
+        "checksum": "sscc",
+        "preferred": true
+      },
+      {
         "pattern": "^00\\d(?:57|73|70|64)\\d{15}$",
-        "confidence": "low"
+        "confidence": "low",
+        "checksum": "sscc"
       }
     ]
   },
