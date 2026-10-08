@@ -71,6 +71,12 @@
   ],
   "detection": [
     {
+      "id": "dhl-ecommerce-uk-2",
+      "pattern": "^6012\\d{10}$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
       "id": "dhl-ecommerce-uk-1",
       "pattern": "^\\d{14}$",
       "confidence": "low"

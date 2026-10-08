@@ -78,6 +78,20 @@ describe('Royal Mail domestic references', () => {
   });
 });
 
+describe('UK fourteen-digit parcel numbers', () => {
+  // Synthetic numbers in the ranges the carriers' own tracking pages show.
+  it.each([['15500000000001', 'dpd-uk'], ['15500000000001M', 'dpd-uk'], ['60120000000000', 'dhl-ecommerce-uk']])(
+    'suggests the carrier of its range first: %s', (number, carrier) => {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates[0]).toBe(carrier);
+    });
+
+  it('suggests neither first outside those ranges, nor for a wrong check character', () => {
+    expect(detectCarrierMatch('31500000000000').candidates.slice(0, 1)).not.toEqual(expect.arrayContaining(['dpd-uk', 'dhl-ecommerce-uk']));
+    expect(detectCarrierMatch('15500000000001N').candidates).not.toContain('dpd-uk');
+  });
+});
+
 it('recognizes the whole Intelcom INTLCMD family', () => {
   const number = 'INTLCMD123456789';
   expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'intelcom', confidence: 'high' });

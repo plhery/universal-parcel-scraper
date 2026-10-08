@@ -21,6 +21,9 @@ before reading history under the returned handle.
 - The sender is the account that booked the parcel, under the name the page
   shows.
 - A cancellation by the sender is an exception.
+- Fourteen digits is also the shape of other DPD networks and carriers.
+  Detection suggests DPD UK first for numbers starting with 1550, the range
+  its tracking pages show most.
 - Scan times have no stated timezone, including delivery-partner scans. They
   remain local clocks; the adapter does not assign a London offset.
 - History stays in the page's newest-first order. Exact repeated scans are

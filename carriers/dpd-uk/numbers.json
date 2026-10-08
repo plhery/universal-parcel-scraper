@@ -15,6 +15,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -24,7 +25,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       },
@@ -44,6 +44,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -53,7 +54,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       },
@@ -74,6 +74,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -83,7 +84,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -105,6 +105,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -114,7 +115,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -136,6 +136,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -145,7 +146,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -167,6 +167,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -176,7 +177,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -198,6 +198,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -207,7 +208,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       },
@@ -230,6 +230,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -239,7 +240,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       },
@@ -262,6 +262,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -271,7 +272,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -293,6 +293,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -303,7 +304,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -325,6 +325,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -334,7 +335,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       },
@@ -357,6 +357,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -366,7 +367,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -388,6 +388,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-uk",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -397,7 +398,6 @@
           "delhivery",
           "dhl-ecommerce-uk",
           "dpd-de",
-          "dpd-uk",
           "xpressbees"
         ]
       }
@@ -465,6 +465,86 @@
         ]
       },
       "note": "DPD UK did not find it in October 2026."
+    },
+    {
+      "number": "15501828452647C",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251015031455/http://www.dpd.co.uk/apps/tracking/?reference=15501828452647C",
+        "date": "2025-10-15",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-uk",
+          "dpd",
+          "chronopost",
+          "dpd-de"
+        ]
+      },
+      "note": "Printed with its check character. DPD UK did not find it in October 2026."
+    },
+    {
+      "number": "155017871591058",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231231141612/http://www.dpd.co.uk/apps/tracking/?reference=155017871591058",
+        "date": "2023-12-31",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-uk",
+          "dpd",
+          "dpd-fr",
+          "chronopost",
+          "yunda",
+          "dpd-de"
+        ]
+      },
+      "note": "Printed with a digit as its check character. DPD UK did not find it in October 2026."
+    },
+    {
+      "number": "155017878487382",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230131061048/http://www.dpd.co.uk/apps/tracking/?reference=155017878487382",
+        "date": "2023-01-31",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "dpd-uk",
+          "dpd",
+          "dpd-fr",
+          "chronopost",
+          "yunda",
+          "dpd-de"
+        ]
+      },
+      "note": "Printed with a digit as its check character, which FedEx's fifteen-digit check also accepts. DPD UK did not find it in October 2026."
     }
   ]
 }

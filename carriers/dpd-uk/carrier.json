@@ -65,6 +65,19 @@
   ],
   "detection": [
     {
+      "id": "dpd-uk-3",
+      "pattern": "^1550\\d{10}$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
+      "id": "dpd-uk-4",
+      "pattern": "^1550\\d{10}[0-9A-Z]$",
+      "confidence": "low",
+      "checksum": "dpd",
+      "preferred": true
+    },
+    {
       "id": "dpd-uk-1",
       "pattern": "^\\d{14}$",
       "confidence": "low"

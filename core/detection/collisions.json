@@ -858,6 +858,19 @@
     "reason": "La Poste's tracked-letter numbers end in the same ISO 7064 check character DPD prints; La Poste's high-confidence rule decides."
   },
   {
+    "shape": "Fourteen digits and a digit check character that passes both DPD's and FedEx's checks",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "fedex",
+      "yunda"
+    ],
+    "reason": "The fifteen digits also carry a valid FedEx check digit, so FedEx's rule lists FedEx first. DPD UK's own tracking page published such a number."
+  },
+  {
     "shape": "Six letters",
     "carriers": [
       "gls-ch",

@@ -4469,6 +4469,11 @@
     ],
     "detectionRules": [
       {
+        "pattern": "^6012\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
         "pattern": "^\\d{14}$",
         "confidence": "low"
       }
@@ -4601,6 +4606,17 @@
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^1550\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^1550\\d{10}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd",
+        "preferred": true
+      },
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"

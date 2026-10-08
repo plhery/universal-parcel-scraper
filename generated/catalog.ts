@@ -4471,6 +4471,11 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
+        "pattern": "^6012\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
         "pattern": "^\\d{14}$",
         "confidence": "low"
       }
@@ -4603,6 +4608,17 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^1550\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^1550\\d{10}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd",
+        "preferred": true
+      },
       {
         "pattern": "^\\d{14}$",
         "confidence": "low"
@@ -5280,10 +5296,10 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-es": ["dhl-ecommerce-es-1","dhl-ecommerce-es-2"],
   "dhl-ecommerce-nl": ["dhl-ecommerce-nl-1"],
   "dhl-ecommerce-pl": ["dhl-ecommerce-pl-1"],
-  "dhl-ecommerce-uk": ["dhl-ecommerce-uk-1"],
+  "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill"],
   "dpd-de": ["dpd-de-1","dpd-de-2"],
-  "dpd-uk": ["dpd-uk-1","dpd-uk-2"],
+  "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "ekart": ["ekart-ecommerce"],
   "evri-uk": ["evri-uk-1","evri-uk-2","evri-uk-3"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],

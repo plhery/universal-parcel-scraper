@@ -40,13 +40,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-ecommerce-uk",
           "dpd",
           "relais-colis",
           "ciblex",
           "seur",
           "brt",
           "delhivery",
-          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]
@@ -68,13 +68,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-ecommerce-uk",
           "dpd",
           "relais-colis",
           "ciblex",
           "seur",
           "brt",
           "delhivery",
-          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]
@@ -259,13 +259,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhl-ecommerce-uk",
           "dpd",
           "relais-colis",
           "ciblex",
           "seur",
           "brt",
           "delhivery",
-          "dhl-ecommerce-uk",
           "dpd-de",
           "dpd-uk"
         ]
@@ -288,6 +288,299 @@
         "confidence": "none"
       },
       "note": "Posted in a review of DHL eCommerce UK for a parcel to Taiwan. It may be an order reference."
+    },
+    {
+      "number": "60120257503461",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901100235/https://track.dhlecommerce.co.uk/?con=60120257503461",
+        "date": "2026-09-01",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "60120257505821",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901022916/https://track.dhlecommerce.co.uk/?con=60120257505821",
+        "date": "2026-09-01",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "60120257500057",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901022031/https://track.dhlecommerce.co.uk/?con=60120257500057",
+        "date": "2026-09-01",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "60120256298061",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260820122807/https://track.dhlecommerce.co.uk/?con=60120256298061",
+        "date": "2026-08-20",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "60120256278861",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260820122719/https://track.dhlecommerce.co.uk/?con=60120256278861",
+        "date": "2026-08-20",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "60120255056579",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260812142410/https://track.dhlecommerce.co.uk/?con=60120255056579",
+        "date": "2026-08-12",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "60120255056624",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260811160101/https://track.dhlecommerce.co.uk/?con=60120255056624",
+        "date": "2026-08-11",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce-uk",
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "41903752118928",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260519113531/https://track.dhlecommerce.co.uk/?con=41903752118928",
+        "date": "2026-05-19",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      }
+    },
+    {
+      "number": "31548430003445",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260212192435/https://track.dhlecommerce.co.uk/default.aspx?con=31548430003445",
+        "date": "2026-02-12",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Not found in October 2026: the page drops a shipment some time after delivery."
+    },
+    {
+      "number": "31518311067677",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260303120654/https://track.dhlecommerce.co.uk/contact/help-with-my-parcel-delivery?consignmentnumber=31518311067677",
+        "date": "2026-03-03",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Not found in October 2026: the page drops a shipment some time after delivery."
     }
   ]
 }
