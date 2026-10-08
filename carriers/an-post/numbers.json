@@ -49,6 +49,348 @@
         "confidence": "high"
       },
       "note": "Sender names An Post and registered shipment from Ireland to China."
+    },
+    {
+      "number": "AY063253261IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260921201835/https://www.anpost.com/Post-Parcels/Track/History?item=AY063253261IE",
+        "date": "2026-09-21",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CP482331501IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260916114753/https://www.anpost.com/Post-Parcels/Track/History?item=CP482331501IE",
+        "date": "2026-09-16",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CB212298281IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260906131813/https://www.anpost.com/Post-Parcels/Track/History?item=CB212298281IE",
+        "date": "2026-09-06",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "LJ243135898IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260818134025/https://www.anpost.com/Post-Parcels/Track/History?item=LJ243135898IE",
+        "date": "2026-08-18",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "LX477703749IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260815220102/https://www.anpost.com/Post-Parcels/Track/History?item=LX477703749IE",
+        "date": "2026-08-15",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "AW656677641IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260711081414/https://www.anpost.com/Post-Parcels/Track/History?item=AW656677641IE",
+        "date": "2026-07-11",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "RL046314589IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260630103125/https://www.anpost.com/Post-Parcels/Track/History?item=RL046314589IE",
+        "date": "2026-06-30",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "TP289004151IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516111741/https://www.anpost.com/Post-Parcels/Track/History?item=TP289004151IE",
+        "date": "2026-05-16",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CE477307703IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260506130635/https://www.anpost.com/Post-Parcels/Track/History?item=CE477307703IE",
+        "date": "2026-05-06",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "SX446838689IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230606115814/https://www.anpost.com/Post-Parcels/Track/History?item=SX446838689IE",
+        "date": "2023-06-06",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "LK816300340IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250919180700/https://www.anpost.com/Post-Parcels/Track/History?item=LK816300340IE",
+        "date": "2025-09-19",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CH979981125IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250115173620/https://www.anpost.com/Post-Parcels/Track/History?item=CH979981125IE",
+        "date": "2025-01-15",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "RK805653363IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250626103544/https://www.anpost.com/Post-Parcels/Track/History?item=RK805653363IE",
+        "date": "2025-06-26",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "AZ648883377IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250928133413/https://www.anpost.com/Post-Parcels/Track/History?item=AZ648883377IE",
+        "date": "2025-09-28",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CA697168966IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250715182207/https://www.anpost.com/Post-Parcels/Track/History?item=CA697168966IE",
+        "date": "2025-07-15",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "LE016419501IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20241128215539/https://www.anpost.com/Post-Parcels/Track/History?item=LE016419501IE",
+        "date": "2024-11-28",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "LG132270470IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230201143518/https://www.anpost.com/Post-Parcels/Track/History?item=LG132270470IE",
+        "date": "2023-02-01",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CN055992433IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240814001444/https://www.anpost.com/Post-Parcels/Track/History?item=CN055992433IE",
+        "date": "2024-08-14",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "CJ060328561IE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230420145432/https://www.anpost.com/Post-Parcels/Track/History?item=CJ060328561IE",
+        "date": "2023-04-20",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "an-post",
+        "confidence": "high"
+      }
     }
   ]
 }

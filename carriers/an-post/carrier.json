@@ -19,7 +19,7 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://track.anpost.ie/",
+    "url": "https://www.anpost.com/Post-Parcels/Track/History?item={trackingNumber}",
     "canaryUrl": "https://t.17track.net/",
     "shows": [],
     "scraped": [],

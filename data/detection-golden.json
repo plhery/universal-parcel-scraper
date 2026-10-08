@@ -10602,6 +10602,30 @@
     ]
   },
   {
+    "input": "AW656677641IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
+    "input": "AY063253261IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
+    "input": "AZ648883377IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "BE0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -10781,11 +10805,27 @@
     ]
   },
   {
+    "input": "CA697168966IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "CA732400595DE",
     "carrier": "dhl",
     "confidence": "high",
     "candidates": [
       "dhl"
+    ]
+  },
+  {
+    "input": "CB212298281IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
     ]
   },
   {
@@ -10893,6 +10933,14 @@
     ]
   },
   {
+    "input": "CE477307703IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "CE500137339BE",
     "carrier": "bpost",
     "confidence": "high",
@@ -10963,6 +11011,14 @@
     ]
   },
   {
+    "input": "CH979981125IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "CH9999999999DE",
     "carrier": "unknown",
     "confidence": "none",
@@ -10974,6 +11030,14 @@
     "confidence": "high",
     "candidates": [
       "japan-post"
+    ]
+  },
+  {
+    "input": "CJ060328561IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
     ]
   },
   {
@@ -11049,6 +11113,14 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "CN055992433IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
     ]
   },
   {
@@ -11162,6 +11234,14 @@
   },
   {
     "input": "CP476340265IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
+    "input": "CP482331501IE",
     "carrier": "an-post",
     "confidence": "high",
     "candidates": [
@@ -12645,6 +12725,14 @@
     ]
   },
   {
+    "input": "LE016419501IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "LE10917377",
     "carrier": "ontrac",
     "confidence": "high",
@@ -12699,6 +12787,14 @@
     ]
   },
   {
+    "input": "LG132270470IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "LH13830790",
     "carrier": "ontrac",
     "confidence": "high",
@@ -12737,6 +12833,14 @@
     ]
   },
   {
+    "input": "LJ243135898IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "LK201223662AU",
     "carrier": "intl-post",
     "confidence": "high",
@@ -12745,6 +12849,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "LK816300340IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
     ]
   },
   {
@@ -13084,6 +13196,14 @@
     "confidence": "high",
     "candidates": [
       "correos-spain"
+    ]
+  },
+  {
+    "input": "LX477703749IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
     ]
   },
   {
@@ -13826,6 +13946,14 @@
     ]
   },
   {
+    "input": "RK805653363IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "RK887474423FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -13875,6 +14003,14 @@
   },
   {
     "input": "RL 678 194 950 IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
+    "input": "RL046314589IE",
     "carrier": "an-post",
     "confidence": "high",
     "candidates": [
@@ -14257,6 +14393,14 @@
     ]
   },
   {
+    "input": "SX446838689IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
+    ]
+  },
+  {
     "input": "SY12345678901",
     "carrier": "sunyou",
     "confidence": "high",
@@ -14357,6 +14501,14 @@
     "confidence": "high",
     "candidates": [
       "purolator"
+    ]
+  },
+  {
+    "input": "TP289004151IE",
+    "carrier": "an-post",
+    "confidence": "high",
+    "candidates": [
+      "an-post"
     ]
   },
   {

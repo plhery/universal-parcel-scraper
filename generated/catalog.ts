@@ -1975,7 +1975,7 @@ export const CARRIER_CATALOG = {
       "adapter": "universal"
     },
     "canaryUrl": "https://t.17track.net/",
-    "trackingUrlTemplate": "https://track.anpost.ie/",
+    "trackingUrlTemplate": "https://www.anpost.com/Post-Parcels/Track/History?item={trackingNumber}",
     "linkRules": [],
     "detectionRules": [
       {
