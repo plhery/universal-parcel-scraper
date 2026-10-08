@@ -1,4 +1,6 @@
+import { DateTime } from 'luxon';
 import type { CarrierEvent } from '../../core/result/index.js';
+import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import type { Stage } from '../../generated/catalog.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { event, text } from '../shared/result.js';
@@ -22,11 +24,29 @@ const SUB_STAGES: Record<string, Stage> = {
   Exception_Destroyed: 'exception', Exception_Cancel: 'exception',
 };
 
-/** Keep scan codes/operator and the origin of 17TRACK's converted timestamp. */
-export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject): CarrierEvent | null {
+/**
+ * 17TRACK's two readings of a scan usually name one instant. When they
+ * disagree, `time_iso` is the clock and offset 17TRACK shows: on India Post's
+ * legs `time_utc` lands 30 minutes after it, on scans India Post itself dates.
+ */
+function scanTime(raw: JsonObject): unknown {
+  const { time_utc: utc, time_iso: iso } = raw;
+  if (typeof utc === 'string' && typeof iso === 'string' && EXPLICIT_OFFSET_PATTERN.test(iso)) {
+    const shown = DateTime.fromISO(iso, { setZone: true });
+    const converted = DateTime.fromISO(utc, { setZone: true });
+    if (shown.isValid && converted.isValid && shown.toMillis() !== converted.toMillis()) return iso;
+  }
+  return utc ?? iso;
+}
+
+/**
+ * Keep scan codes/operator and the origin of 17TRACK's converted timestamp.
+ * `placed` is the instant a caller read from the facility's own clock instead.
+ */
+export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, placed?: string): CarrierEvent | null {
   // Some completed responses contain undated explanatory rows alongside real
   // scans. Skip only absent dates; malformed nonempty timestamps still fail.
-  const time = raw.time_utc ?? raw.time_iso;
+  const time = placed ?? scanTime(raw);
   if (time === null || time === undefined) return null;
   const code = text(raw.sub_status);
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;

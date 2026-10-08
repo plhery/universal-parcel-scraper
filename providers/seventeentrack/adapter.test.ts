@@ -166,9 +166,30 @@ describe('17TRACK result parsing', () => {
     expect(carrierErrorKind(thrown(() => parse17TrackResponse(reply([
       scan('2026-10-05', '09:13:00', 'EXAMPLE CITY - EXAMPLELAND'), scan('2026-10-04', '09:20:00', 'EXAMPLE CITY - ITALY'),
     ]), number)))).toBe('indeterminate');
-    // Another carrier's scans keep 17TRACK's reading.
-    expect(parse17TrackResponse(reply([scan('2026-10-05', '09:13:00', 'EXAMPLE CITY - ITALY')], 'Example Parcel Co'), number).events?.[0]?.time)
-      .toBe('2026-10-05T09:13:00.000Z');
+    // Another carrier's scans keep 17TRACK's reading: the clock and offset it shows.
+    expect(parse17TrackResponse(reply([scan('2026-10-04', '17:34:00', 'EXAMPLE CITY - HONG KONG SAR, CHINA')], 'Example Parcel Co'), number)
+      .events?.[0]?.time).toBe('2026-10-04T15:34:00.000Z');
+  });
+
+  it('reads the clock and offset 17TRACK shows when its UTC conversion disagrees', () => {
+    // An India Post leg: the wall clock under India's offset, and a conversion 30 minutes after it.
+    const scan = { time_iso: '2026-07-14T14:40:00+05:30', time_utc: '2026-07-14T09:40:00Z',
+      time_raw: { date: '2026-07-14', time: '14:40:00', timezone: null },
+      description: 'Item received', location: 'EXAMPLE OFFICE', stage: null, sub_status: 'InTransit_Other' };
+    const reply: Payload = { meta: { code: 200 }, shipments: [{ number, code: 200, shipment: { latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key: 9021, name: 'India Post' }, events: [scan] }] } } }] };
+    expect(parse17TrackResponse(reply, number).events?.[0]).toMatchObject({
+      time: '2026-07-14T09:10:00.000Z', provider_time_iso: '2026-07-14T14:40:00+05:30',
+      reporting_carrier: 'India Post', time_provenance: 'provider_inferred',
+    });
+    // Agreeing readings, or a shown clock without an offset, leave time_utc in charge.
+    const utc = (overrides: Record<string, unknown>) =>
+      parse17TrackResponse(postalHistory([{ ...postalScan('InTransit_Other'), ...overrides }]), number).events?.[0]?.time;
+    expect(utc({})).toBe('2026-09-20T04:22:00.000Z');
+    expect(utc({ time_iso: '2026-09-20T12:22:00' })).toBe('2026-09-20T04:22:00.000Z');
+    expect(utc({ time_iso: null })).toBe('2026-09-20T04:22:00.000Z');
+    expect(utc({ time_utc: null })).toBe('2026-09-20T04:22:00.000Z');
+    expect(() => utc({ time_utc: 'broken' })).toThrow('invalid tracking event');
   });
 
   it('requires a completed identity-matched NotFound and an empty history for a negative answer', () => {

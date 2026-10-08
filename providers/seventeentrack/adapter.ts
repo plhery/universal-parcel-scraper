@@ -141,7 +141,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const zone = wall ? facilityZone(text(raw.location)) : null;
       const placed = wall && zone ? DateTime.fromISO(wall, { zone }) : null;
       let parsed: CarrierEvent | null;
-      try { parsed = seventeenTrackEvent(placed?.isValid ? { ...raw, time_utc: placed.toUTC().toISO() } : raw, operator); }
+      try { parsed = seventeenTrackEvent(raw, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed) continue;
       const unplaced = wall !== null && !placed?.isValid;
