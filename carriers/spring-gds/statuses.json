@@ -5,7 +5,7 @@
       "wording": "pre-advised",
       "language": "en",
       "stage": "registered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -13,7 +13,7 @@
       "wording": "preparing",
       "language": "en",
       "stage": "registered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -21,7 +21,7 @@
       "wording": "processing",
       "language": "en",
       "stage": "accepted",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -37,7 +37,7 @@
       "wording": "arrived",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -53,7 +53,7 @@
       "wording": "transit",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -77,7 +77,7 @@
       "wording": "pick-up point",
       "language": "en",
       "stage": "ready_for_pickup",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -85,7 +85,7 @@
       "wording": "delivered",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -93,7 +93,7 @@
       "wording": "unsuccesfull",
       "language": "en",
       "stage": "failed_attempt",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "PostNL's own spelling."
     },
@@ -109,7 +109,7 @@
       "wording": "undelivered",
       "language": "en",
       "stage": "failed_attempt",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-09-12",
       "note": "Event category; matched case-insensitively after trimming."
     },
@@ -148,7 +148,7 @@
       "wording": "The item has arrived at the domestic sorting centre",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-10-04",
       "note": "The Processing category also covers handling after acceptance."
     },
@@ -156,9 +156,73 @@
       "wording": "The item is at the local sorting centre",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "fixture",
+      "confirmedBy": "live",
       "firstSeen": "2026-10-04",
       "note": "The Processing category also covers handling after acceptance."
+    },
+    {
+      "wording": "The item is on transport to the local sorting centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The Processing category also covers handling after acceptance."
+    },
+    {
+      "wording": "The item is at the local delivery office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The Processing category also covers handling after acceptance."
+    },
+    {
+      "wording": "Consignment received at the PostNL Acceptance Centre",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The Transit category also covers PostNL's acceptance scans."
+    },
+    {
+      "wording": "The item is received by PostNL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "An item scan that can follow the acceptance centre scan by days; stays with the Transit category."
+    },
+    {
+      "wording": "The shipment is handed over in bulk final acceptance of the item to be confirmed",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The Transit category also covers PostNL's acceptance scans."
+    },
+    {
+      "wording": "Driver is en route to the pickup location",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen on the way to a pickup point; the Processing category would read it as acceptance."
+    },
+    {
+      "wording": "Undeliverable item, has been returned to shipper",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The Undelivered category also covers attempts that end in a new delivery."
+    },
+    {
+      "wording": "The item has been returned and arrived at PostNL",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The Undelivered category also covers attempts that end in a new delivery."
     }
   ]
 }

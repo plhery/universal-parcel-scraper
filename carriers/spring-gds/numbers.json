@@ -113,11 +113,14 @@
         "url": "https://www.paketda.de/fragen-antworten.php",
         "date": "2026-04-15"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "spring-gds",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. PostNL's tracking returned its history, a delivered international item."
     },
     {
       "number": "CP112251335NL",
@@ -153,11 +156,14 @@
         "url": "https://www.paketda.de/fragen-antworten.php",
         "date": "2026-04-15"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "spring-gds",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. PostNL's tracking returned its history, a delivered international item."
     },
     {
       "number": "LX123456785NL",
@@ -325,6 +331,215 @@
         "confidence": "high"
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "LR290020050NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260702172806/https://postnl.post/track?barcodes=LR290020050NL",
+        "date": "2026-07-02",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, an item delivered abroad."
+    },
+    {
+      "number": "LX080903280NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260710185941/https://postnl.post/track?barcodes=LX080903280NL",
+        "date": "2026-07-10",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, an item delivered abroad."
+    },
+    {
+      "number": "UT973056433NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260603193042/https://postnl.post/track/?barcodes=UT973056433NL",
+        "date": "2026-06-03",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, which ends on arrival in the destination country."
+    },
+    {
+      "number": "CG691833419NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260120000322/https://postnl.post/track?barcodes=CG691833419NL",
+        "date": "2026-01-20",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns only its pre-advice scans."
+    },
+    {
+      "number": "CK085117104NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260108154228/https://postnl.post/track?barcodes=CK085117104NL",
+        "date": "2026-01-08",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, which ends with a return to the shipper."
+    },
+    {
+      "number": "3SMRWF000088081",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251009103315/https://postnl.post/track?barcodes=3SMRWF000088081",
+        "date": "2025-10-09",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. A fifteen-character 3S barcode; PostNL's tracker returns a domestic delivery."
+    },
+    {
+      "number": "CI016840515NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251209040958/https://postnl.post/track?barcodes=CI016840515NL",
+        "date": "2025-12-09",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, an item delivered abroad."
+    },
+    {
+      "number": "LR616917539NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260608161842/https://postnl.post/track?barcodes=LR616917539NL",
+        "date": "2026-06-08",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. PostNL's tracker returns its history, a domestic item collected at a pickup point."
+    },
+    {
+      "number": "EH013600697NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260128114805/https://postnl.post/details?barcodes=EH013600697NL",
+        "date": "2026-01-28",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. The NL suffix names PostNL as the issuer; PostNL's tracker no longer returns it."
+    },
+    {
+      "number": "RU658372378NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250706003130/https://postnl.post/track?barcodes=RU658372378NL",
+        "date": "2025-07-06",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. The NL suffix names PostNL as the issuer; PostNL's tracker no longer returns it."
+    },
+    {
+      "number": "3SAMAZ009932827",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250224222853/https://postnl.post/details/?barcodes=3SAMAZ009932827",
+        "date": "2025-02-24",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link archived by the Wayback Machine. A fifteen-character 3S barcode; PostNL's tracker no longer returns it."
     }
   ]
 }

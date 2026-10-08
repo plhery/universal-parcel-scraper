@@ -30,7 +30,8 @@
     "history",
     "location",
     "sender_name",
-    "delivered_at"
+    "delivered_at",
+    "provider_code"
   ],
   "portal": {
     "url": "https://postnl.post/track?barcodes={trackingNumber}",
@@ -43,7 +44,8 @@
     "scraped": [
       "status",
       "history",
-      "sender_name"
+      "sender_name",
+      "provider_code"
     ],
     "discarded": [],
     "unavailable": []

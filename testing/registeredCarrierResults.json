@@ -1062,24 +1062,28 @@
           "local_time": "2026-09-03T10:12:00",
           "location": "United States",
           "description": "Shipment delivered",
+          "provider_code": "37",
           "stage": "delivered"
         },
         {
           "time": "2026-09-03T06:40:00+02:00",
           "location": "Netherlands",
           "description": "Shipment out for delivery",
+          "provider_code": "74",
           "stage": "out_for_delivery"
         },
         {
           "time": "2026-09-01T19:05:00+02:00",
           "location": "Netherlands",
           "description": "Customs clearance completed",
+          "provider_code": "6060",
           "stage": "customs"
         },
         {
           "time": "2026-08-28T11:00:00+08:00",
           "location": "CN",
           "description": "Shipment data received",
+          "provider_code": "1233",
           "stage": "registered"
         }
       ]

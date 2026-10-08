@@ -66,6 +66,12 @@ function comparableIdentifier(value: unknown): string {
   return text(value).trim().toLocaleUpperCase('en-US');
 }
 
+/** The event's numeric `status`, PostNL's code for the scan. */
+function eventCode(value: unknown): string | undefined {
+  if (typeof value === 'number') return Number.isSafeInteger(value) && value >= 0 ? String(value) : undefined;
+  return /^\d{1,8}$/.test(text(value).trim()) ? text(value).trim() : undefined;
+}
+
 /** A wall clock read in `zone`, refusing DST gap shifts and repeated clocks rather than choosing an offset. */
 function wallInZone(wall: string, zone: string): ParsedTime | null {
   const parsed = DateTime.fromISO(wall, { zone });
@@ -137,10 +143,12 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
   const events = rawEvents.slice(0, 100).map((event, index): CarrierEvent => {
     const classified = postNLStatus(event.category, event.status_description);
     const { local_time, provider_time_text } = clocks[index]!;
+    const code = eventCode(event.status);
     return {
       ...(times[index] ? { time: times[index].iso } : local_time ? { local_time } : provider_time_text ? { provider_time_text } : {}),
       location: (text(event.country_name) || text(event.country_code)).slice(0, 200),
       description: (text(event.status_description) || text(event.category)).slice(0, 500),
+      ...(code ? { provider_code: code } : {}),
       ...(classified ? { stage: classified.stage } : {}),
     };
   });

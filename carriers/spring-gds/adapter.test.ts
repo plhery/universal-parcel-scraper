@@ -223,11 +223,11 @@ describe('PostNL declared capabilities and privacy', () => {
       sender_name: 'Example Webshop',
       delivered_at: '2026-09-03T10:12:00+02:00',
     });
-    expect(delivered.events?.map((event) => [event.stage, event.location])).toEqual([
-      ['delivered', 'Netherlands'],
-      ['out_for_delivery', 'Netherlands'],
-      ['customs', 'Netherlands'],
-      ['registered', 'CN'],
+    expect(delivered.events?.map((event) => [event.stage, event.location, event.provider_code])).toEqual([
+      ['delivered', 'Netherlands', '37'],
+      ['out_for_delivery', 'Netherlands', '74'],
+      ['customs', 'Netherlands', '6060'],
+      ['registered', 'CN', '1233'],
     ]);
   });
 
@@ -266,6 +266,18 @@ describe('PostNL ambiguity and clock safety', () => {
     ['Processing', 'The item is out for delivery', 'out_for_delivery'],
     ['Processing', 'The item is at the local sorting centre', 'in_transit'],
     ['Processing', 'The item has arrived at the domestic sorting centre', 'in_transit'],
+    ['Processing', 'The item is on transport to the local sorting centre', 'in_transit'],
+    ['Processing', 'The item is at the local delivery office', 'in_transit'],
+    ['Transit', 'Consignment received at the PostNL Acceptance Centre', 'accepted'],
+    // An item scan that can follow the acceptance centre by days.
+    ['Transit', 'The item is received by PostNL', 'in_transit'],
+    ['Transit', 'The shipment is handed over in bulk final acceptance of the item to be confirmed', 'accepted'],
+    ['Transit', 'The item is on transport to the country of destination', 'in_transit'],
+    ['Arrived', 'Consignment received at the PostNL Acceptance Centre', 'in_transit'],
+    ['Processing', 'Driver is en route to the pickup location', 'in_transit'],
+    ['Undelivered', 'Undeliverable item, has been returned to shipper', 'returned'],
+    ['Undelivered', 'The item has been returned and arrived at PostNL', 'returned'],
+    ['Undelivered', 'The item cannot be delivered and will be returned', 'failed_attempt'],
     ['Customs', 'The item is released by customs', 'in_transit'],
     ['Customs', 'The item is not released by customs', 'customs'],
     ['Customs', 'The item will be released by customs', 'customs'],
@@ -276,6 +288,13 @@ describe('PostNL ambiguity and clock safety', () => {
     const result = parsePostNLTrackingResponse(payload([{ category, status_description: description }]), number);
     expect(result.events?.[0]?.stage).toBe(stage);
     expect(result.current_stage).toBe(stage);
+  });
+
+  it.each([
+    [37, '37'], ['3054', '3054'], [' 74 ', '74'], [-1, undefined], [1.5, undefined], ['B24', undefined], [null, undefined],
+  ])('keeps only a numeric scan code as the provider code: %j', (status, expected) => {
+    const result = parsePostNLTrackingResponse(payload([{ category: 'Processing', status }]), number);
+    expect(result.events?.[0]?.provider_code).toBe(expected);
   });
 
   it('refuses duplicate matching identities and an echo with empty history', () => {

@@ -6864,6 +6864,14 @@
     ]
   },
   {
+    "input": "3SAMAZ009932827",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "3SBCC000123456",
     "carrier": "unknown",
     "confidence": "none",
@@ -6887,6 +6895,14 @@
   },
   {
     "input": "3SKABA3131106",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
+    "input": "3SMRWF000088081",
     "carrier": "spring-gds",
     "confidence": "high",
     "candidates": [
@@ -12016,6 +12032,14 @@
     ]
   },
   {
+    "input": "CG691833419NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "CG738165082DE",
     "carrier": "dhl",
     "confidence": "high",
@@ -12100,6 +12124,14 @@
     "candidates": []
   },
   {
+    "input": "CI016840515NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "CI076369983JP",
     "carrier": "japan-post",
     "confidence": "high",
@@ -12121,6 +12153,14 @@
     "confidence": "high",
     "candidates": [
       "bring-posten"
+    ]
+  },
+  {
+    "input": "CK085117104NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
     ]
   },
   {
@@ -12699,6 +12739,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "EH013600697NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
   },
   {
     "input": "EH167890111GB",
@@ -14129,6 +14177,22 @@
     ]
   },
   {
+    "input": "LR290020050NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
+    "input": "LR616917539NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "LR999773056CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -14327,6 +14391,14 @@
     "confidence": "high",
     "candidates": [
       "nz-post"
+    ]
+  },
+  {
+    "input": "LX080903280NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
     ]
   },
   {
@@ -15347,6 +15419,14 @@
     ]
   },
   {
+    "input": "RU658372378NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "RX067132330JP",
     "carrier": "japan-post",
     "confidence": "high",
@@ -15879,6 +15959,14 @@
     "confidence": "high",
     "candidates": [
       "postnord"
+    ]
+  },
+  {
+    "input": "UT973056433NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
     ]
   },
   {
