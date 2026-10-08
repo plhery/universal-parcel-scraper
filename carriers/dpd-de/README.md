@@ -44,8 +44,9 @@ does not know or a delivery placed in another country.
 ## App service
 
 `getSessionFullState` opens an anonymous device session, `getTrackingData`
-binds the whole parcel number and gives the progress rail, and
-`getTrackingScanList` supplies the scans. Each call carries the app's partner
+binds the whole parcel number and gives the progress rail,
+`getTrackingScanList` supplies the scans, and `getParcelShopByID` gives the
+address of the shop holding the parcel. Each call carries the app's partner
 name and token with a `KeyPhase` derived from its partner password, the
 operation and the minute of the UTC day. These credentials are compiled into the
 app, the same for every install and independent of any account, and are
@@ -91,8 +92,11 @@ the service does not require.
   scans. A clock elsewhere stays local.
 - The scans name their facility's town and country without a postcode, and
   include order registration before the first guest API event. A parcel shop
-  or locker scan also names the shop, which becomes the pickup point while the
-  parcel waits there.
+  or locker scan also names the shop and its PUDO id. While the parcel waits
+  there, the shop becomes the pickup point: its name, then its street and its
+  town on their own lines. The address comes from `getParcelShopByID` for that
+  PUDO id and must name the same one. Without it the name stands alone. The
+  shop's phone, opening hours and coordinates are not read.
 - The order's measured length, width and height are in millimetres. A side of
   zero means no measurement, and the shipper's declared size is not read.
 - The service reports "no tracking data" for parcels its scan list still
@@ -101,7 +105,7 @@ the service does not require.
 
 ## Limitations
 
-Recipient details, addresses, delivery proofs and preference links are discarded.
+Recipient details and addresses, delivery proofs and preference links are discarded.
 No UK service is inferred from a German result. The app service's reason codes
 and driver details are not projected. The app service does not name the sender,
 nor does the guest API's unverified reply. An estimate requires a forecast in

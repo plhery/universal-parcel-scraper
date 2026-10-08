@@ -162,12 +162,24 @@ function statusOf(stage: string | undefined): CarrierStatus {
   return stage ? 'in_transit' : 'unknown';
 }
 
-/** The shop a scan names, as `<shop id>|<shop name>` under additional code 999. */
-function shopOf(row: XmlNode): string {
-  const named = children(row, 'TrackingScanAdditionalList').flatMap(list => children(list, 'TrackingScanAdditionalType'))
-    .filter(entry => scalar(entry, 'AdditionalCode', 8) === '999')
-    .map(entry => /^[A-Z]{2}\d{1,12}\|(.{1,120})$/.exec(scalar(entry, 'Description', 200))?.[1]?.trim() ?? '');
-  return named.find(Boolean) ?? '';
+/** The shop a scan names, as `<PUDO id>|<shop name>` under additional code 999. */
+function shopOf(row: XmlNode): { id: string; name: string } | undefined {
+  for (const entry of children(row, 'TrackingScanAdditionalList').flatMap(list => children(list, 'TrackingScanAdditionalType'))) {
+    const named = scalar(entry, 'AdditionalCode', 8) === '999' && /^([A-Z]{2}\d{1,12})\|(.{1,120})$/.exec(scalar(entry, 'Description', 200));
+    if (named && named[2]!.trim()) return { id: named[1]!, name: named[2]!.trim() };
+  }
+  return undefined;
+}
+
+/** The street and town of the shop that `getParcelShopByID` returns, a line each, if it is the requested one. */
+function addressOf(result: XmlNode, id: string): string {
+  const shop = one(result, 'ParcelShop');
+  if (scalar(shop, 'PUDOID', 40) !== id) return '';
+  const address = one(shop, 'ShopAddress');
+  const street = scalar(address, 'Street', 120);
+  const city = scalar(address, 'City', 80);
+  if (!street || !city) return '';
+  return `${[street, scalar(address, 'HouseNo', 20)].filter(Boolean).join(' ')}\n${[scalar(address, 'ZipCode', 16), city].filter(Boolean).join(' ')}`;
 }
 
 /** The measured length, width and height, in millimetres; the shipper's own figures are not read. */
@@ -177,8 +189,11 @@ function dimensionsOf(order: XmlNode): string | null {
   return `${sides.map(side => Number(side) / 10).join(' × ')} cm`;
 }
 
-/** Scans arrive oldest first, with a facility's wall clock and no offset. */
-export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): CarrierResult {
+/**
+ * Scans arrive oldest first, with a facility's wall clock and no offset. `shop` is the PUDO id of
+ * the shop the result names as its pickup point, else empty.
+ */
+export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { result: CarrierResult; shop: string } {
   const tracking = one(data, 'TrackingData');
   if (scalar(tracking, 'ParcelNo', 40) !== number) throw new SchemaError('DPD Germany', 'DPD Germany returned a different parcel');
   const rows = children(one(scans, 'TrackingScanList'), 'TrackingScan');
@@ -187,7 +202,7 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
   const seen = new Set<string>();
   let placed = '';
   let announced: string | null = null;
-  let shop = '';
+  let shop: ReturnType<typeof shopOf>;
   for (const row of rows) {
     const wording = scalar(row, 'StatusText', 500);
     if (!wording) invalid();
@@ -238,7 +253,9 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
   const kilograms = Number(scalar(order, 'Weight', 16).replace(',', '.'));
   const dimensions = dimensionsOf(order);
   const deliveredAt = status === 'delivered' ? events.find(event => event.stage === 'delivered')?.time : undefined;
-  return {
+  // The shop holding the parcel, while it waits there.
+  const pickup = stage === 'ready_for_pickup' ? shop : undefined;
+  const result: CarrierResult = {
     status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description ?? null, last_update: current.time ?? null,
     expected_delivery: affirmative(scalar(tracking, 'Delivered', 8)) || status === 'delivered' || status === 'exception'
@@ -247,10 +264,10 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): Ca
     ...(Number.isFinite(kilograms) && kilograms > 0 ? { weight_kg: kilograms } : {}),
     ...(dimensions ? { dimensions_text: dimensions } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
-    // The shop holding the parcel, while it waits there.
-    ...(stage === 'ready_for_pickup' && shop ? { pickup_point: shop } : {}),
+    ...(pickup ? { pickup_point: pickup.name } : {}),
     events: events.slice(0, 100),
   };
+  return { result, shop: pickup?.id ?? '' };
 }
 
 /**
@@ -305,7 +322,12 @@ export class DpdDeAppClient {
           }
           const scans = await this.call('getTrackingScanList', { SessionToken: session, ParcelNo: number,
             DeliveryZipCode: verified ? postcode : '' }, options.signal, left());
-          const result = parseDpdDeApp(data, scans, number);
+          const { result, shop } = parseDpdDeApp(data, scans, number);
+          // The scans name the shop without its address, which the shop's own record adds.
+          if (shop) {
+            const address = await this.shopAddress(session, shop, options.signal, left());
+            if (address) result.pickup_point = `${result.pickup_point}\n${address}`;
+          }
           if (verified !== undefined) result.dpd_postcode_verified = verified;
           return result;
         } catch (error) {
@@ -321,6 +343,17 @@ export class DpdDeAppClient {
         status: error.status, retryAfterMs: error.retryAfterMs, reason: error.reason,
       });
       throw new TransportError('DPD Germany', 'DPD Germany app request failed');
+    }
+  }
+
+  /** The shop's street and town, or nothing: the parcel is found, and its pickup point keeps its name without them. */
+  private async shopAddress(session: string, id: string, signal: AbortSignal, timeoutMs: number): Promise<string> {
+    try {
+      return addressOf(await this.call('getParcelShopByID', { SessionToken: session, ParcelShopID: '0', PudoID: id,
+        ParcelShopOnly: 'false' }, signal, timeoutMs), id);
+    } catch {
+      signal.throwIfAborted();
+      return '';
     }
   }
 

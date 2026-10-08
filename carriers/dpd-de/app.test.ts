@@ -28,7 +28,7 @@ function service(replies: Record<string, Array<() => Response | Promise<Response
     calls.push({ operation, body: String(init?.body), headers, signal: init?.signal });
     const queued = replies[operation]?.shift();
     if (queued) return Promise.resolve(queued());
-    const name = { getSessionFullState: 'session', getTrackingData: 'tracking', getTrackingScanList: 'scans' }[operation];
+    const name = { getSessionFullState: 'session', getTrackingData: 'tracking', getTrackingScanList: 'scans', getParcelShopByID: 'shop' }[operation];
     return name ? Promise.resolve(xml(fixture(name))) : Promise.reject(new Error('Unexpected operation'));
   }) as typeof fetch;
   const client = new DpdDeAppClient({ partner: PARTNER, fetcher, userAgent: 'Host/1.0', now: () => NOW });
@@ -300,9 +300,12 @@ describe('DPD Germany app projection', () => {
     + `<Description>${additional[1]}</Description></TrackingScanAdditionalType>` : ''}</TrackingScanAdditionalList></TrackingScan>`).join('')}</TrackingScanList>`);
   const tracking = (rail: string, order = '') => fixture('tracking').replace('<StatusID>AT_DELIVERY_DEPOT</StatusID>', `<StatusID>${rail}</StatusID>`)
     .replace('<Weight>2,50</Weight>', `<Weight>2,50</Weight>${order}`);
-  const track = (rail: string, rows: Row[], order = '') => service({
-    getTrackingData: [() => xml(tracking(rail, order))], getTrackingScanList: [() => xml(scanList(rows))],
-  }).track();
+  const lookup = (rail: string, rows: Row[], order = '', shop?: () => Response) => {
+    const app = service({ getTrackingData: [() => xml(tracking(rail, order))], getTrackingScanList: [() => xml(scanList(rows))],
+      ...(shop ? { getParcelShopByID: [shop] } : {}) });
+    return { calls: app.calls, result: app.track() };
+  };
+  const track = (rail: string, rows: Row[], order = '') => lookup(rail, rows, order).result;
   const stages = (result: Awaited<ReturnType<typeof track>>) => result.events?.map(event => [event.description, event.stage]);
 
   it('reads a return to the sender as an exception that ends in a returned stage', async () => {
@@ -352,18 +355,42 @@ describe('DPD Germany app projection', () => {
     expect(result.dimensions_text).toBeUndefined();
   });
 
-  it('names the shop holding the parcel only while it waits there', async () => {
-    const atShop: Row[] = [
-      ['05.01.2026', '13:33', 'Transfer to DPD Pickup station by DPD driver.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']],
-      ['05.01.2026', '13:34', 'Delivered by driver to DPD Pickup parcelshop/ station.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']],
-    ];
+  const atShop: Row[] = [
+    ['05.01.2026', '13:33', 'Transfer to DPD Pickup station by DPD driver.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']],
+    ['05.01.2026', '13:34', 'Delivered by driver to DPD Pickup parcelshop/ station.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']],
+  ];
+
+  it('names the shop holding the parcel and its address only while it waits there', async () => {
     // The rail keeps its handover state after the pickup too, so the scans decide.
-    const waiting = await track('HANDOVER_TO_PARCELSHOP', atShop);
-    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', pickup_point: 'Kiosk Muster', expected_delivery: null });
-    const collected = await track('HANDOVER_TO_PARCELSHOP', [...atShop,
+    const waiting = lookup('HANDOVER_TO_PARCELSHOP', atShop);
+    expect(await waiting.result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
+      pickup_point: 'Kiosk Muster\nMusterstr. 1\n00000 Musterstadt', expected_delivery: null });
+    const shop = waiting.calls.find(call => call.operation === 'getParcelShopByID')!;
+    expect(shop.body).toContain('<ParcelShopID>0</ParcelShopID><PudoID>DE00001</PudoID><ParcelShopOnly>false</ParcelShopOnly>');
+    expect(JSON.stringify(await waiting.result)).not.toMatch(/SHOP|07:00|8\.1/);
+    const collected = lookup('HANDOVER_TO_PARCELSHOP', [...atShop,
       ['06.01.2026', '09:57', 'Picked up from DPD Pickup station by consignee.', 'Musterstadt (DE)', ['999', 'DE00001|Kiosk Muster']]]);
-    expect(collected).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-06T09:57:00+01:00' });
-    expect(collected.pickup_point).toBeUndefined();
+    expect(await collected.result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-06T09:57:00+01:00' });
+    expect((await collected.result).pickup_point).toBeUndefined();
+    expect(collected.calls.map(call => call.operation)).not.toContain('getParcelShopByID');
+  });
+
+  it.each([
+    ['another shop', () => xml(fixture('shop').replace('DE00001', 'DE00002'))],
+    ['a shop without a street', () => xml(fixture('shop').replace('<Street>Musterstr.</Street>', '<Street />'))],
+    ['a refusal', () => xml(failure('getParcelShopByID', 'ERROR_NO_PARCELSHOP'))],
+    ['a malformed reply', () => xml('<html>PRIVATE</html>')],
+    ['an outage', () => xml('', 503)],
+  ])('keeps the shop name alone after %s', async (_, reply) => {
+    const result = await lookup('HANDOVER_TO_PARCELSHOP', atShop, '', reply).result;
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Kiosk Muster' });
+  });
+
+  it('ends a lookup cancelled during the address request', async () => {
+    const controller = new AbortController();
+    const app = service({ getTrackingData: [() => xml(tracking('HANDOVER_TO_PARCELSHOP'))], getTrackingScanList: [() => xml(scanList(atShop))],
+      getParcelShopByID: [() => { controller.abort(new Error('Cancelled')); return xml('', 503); }] });
+    await expect(app.track(controller.signal)).rejects.toThrow('Cancelled');
   });
 });
 
