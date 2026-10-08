@@ -15,7 +15,7 @@ describe('Canpar parcel history', () => {
   it('retains native local scans, trims codes and excludes private detail and stale estimates', () => {
     const result = normalizeCarrierResult(parseCanpar(fixture(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null,
-      last_update_local: '2026-01-05T10:00:00', expected_delivery: null });
+      last_update_local: '2026-01-05T10:00:00', expected_delivery: null, service_name: 'GROUND' });
     expect(result.events).toHaveLength(6);
     expect(result.events?.[0]).toMatchObject({ provider_code: 'DEL', stage: 'delivered', location: 'Example City, EX' });
     expect(result.events?.[1]).toMatchObject({ provider_code: 'WC', stage: 'out_for_delivery' });
@@ -24,7 +24,9 @@ describe('Canpar parcel history', () => {
     expect(result).not.toHaveProperty('delivered_at');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|time_shift|signed_by|reference_num|signature|estimated_delivery|web_description/);
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(metadata.capabilities).toEqual(['history', 'location']);
+    expect(metadata.capabilities).toEqual(['history', 'location', 'service_name']);
+    const unnamed = fixture(); unnamed.result[0].service_description_en = null;
+    expect(parseCanpar(unnamed, NUMBER)).not.toHaveProperty('service_name');
   });
 
   it('accepts the public client package envelope without retaining pickup address data', () => {

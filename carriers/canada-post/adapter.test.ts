@@ -40,9 +40,10 @@ describe('Canada Post native history', () => {
 
   it('projects every declared capability without sensitive blocks', () => {
     const meta = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(meta.capabilities).toEqual(['history', 'location', 'eta', 'delivered_at', 'sender_name']);
+    expect(meta.capabilities).toEqual(['history', 'location', 'eta', 'delivered_at', 'sender_name', 'service_name']);
     const result = parse(delivered());
     expect(result.events?.some(event => event.location)).toBe(true);
+    expect(result.service_name).toBe('Expedited Parcels');
     expect(result.delivered_at).toBeTruthy();
     expect(parse(moving(), MOVING_NUMBER).expected_delivery).toBeTruthy();
     const encoded = JSON.stringify(result);

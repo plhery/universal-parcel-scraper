@@ -1306,6 +1306,7 @@
       "last_update": null,
       "last_update_local": "2026-01-05T10:00:00",
       "expected_delivery": null,
+      "service_name": "GROUND",
       "events": [
         {
           "description": "Our Package was Delivered",
@@ -1841,6 +1842,7 @@
       "last_status_text": "Delivered",
       "last_update": null,
       "expected_delivery": null,
+      "service_name": "Expedited Parcels",
       "events": [
         {
           "description": "Delivered",

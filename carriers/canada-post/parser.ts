@@ -210,6 +210,8 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
     : null;
   // The tracking page labels this "Sender": the business account that shipped the parcel.
   const sender = typeof payload.custNm === 'string' && !payload.custNm.includes('*') ? clean(payload.custNm, 160) : '';
+  // The page's "Service type", in English.
+  const service = clean(payload.productNmEn, 80);
   return { status: current ? statusForStage(current) : 'unknown', ...(current ? { current_stage: current } : {}),
     last_status_text: snapshot === 'return' ? 'Return to sender' : current === 'delivered' ? 'Delivered'
       : current === 'returned' ? 'Returned to sender' : latest.event.description,
@@ -217,5 +219,5 @@ export function parseCanadaPostTrackingResponse(payload: unknown, trackingNumber
     ...(!snapshot && latest.event.local_time ? { last_update_local: latest.event.local_time } : {}),
     expected_delivery: window?.expected_delivery ?? expected,
     ...(window ? { expected_delivery_from: window.expected_delivery_from } : {}), ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(sender ? { sender_name: sender } : {}),
-    events: events.slice(0, 100) };
+    ...(service ? { service_name: service } : {}), events: events.slice(0, 100) };
 }

@@ -14,7 +14,8 @@ Scans retain the provider's newest-first order and local clocks. The public
 client ignores the ambiguous clock-shift field; no instant or delivery timestamp
 is inferred from it. The host retains those scans and asks providers for dated
 progress. Each scan uses its own code. A completed return does not override later
-movement or delivery. Estimates, references, full addresses, comments, contacts,
+movement or delivery. The service, such as `GROUND`, is kept in English as
+`service_name`. Estimates, references, full addresses, comments, contacts,
 signatures and proof images are excluded.
 
 Delivery notices, short barcodes and reference searches require different lookup

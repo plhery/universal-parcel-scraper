@@ -58,9 +58,10 @@ export function parseCanpar(payload: unknown, rawNumber: string): CarrierResult 
   }
   const latest = events[0]!;
   const mapped = canparStatus(latest.provider_code!);
+  const service = clean(item.service_description_en, 80);
   // RTN describes a completed return scan, not an instruction to relabel
   // every later scan. Native histories can resume movement and delivery.
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null,
-    expected_delivery: null, events: events.slice(0, 100) };
+    expected_delivery: null, ...(service ? { service_name: service } : {}), events: events.slice(0, 100) };
 }
