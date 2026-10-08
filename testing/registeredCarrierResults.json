@@ -775,6 +775,7 @@
       "expected_delivery": null,
       "weight_kg": 0.32,
       "dimensions_text": "26.1 × 7.5 × 38.4 cm",
+      "pickup_point": "Example Post Point\nExample Street 1\n1000 Example Town",
       "destination_country": "BE",
       "events": [
         {

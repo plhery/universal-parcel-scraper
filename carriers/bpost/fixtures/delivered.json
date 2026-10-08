@@ -34,16 +34,28 @@
           "de": "Beispiel Postpunkt"
         },
         "street": {
-          "en": "PRIVATE_STREET"
+          "en": "Example Street",
+          "fr": "Rue Exemple",
+          "nl": "Voorbeeldstraat",
+          "de": "Beispielstrasse"
         },
         "streetNumber": {
-          "en": "PRIVATE_NUMBER"
+          "en": "1",
+          "fr": "1",
+          "nl": "1",
+          "de": "1"
         },
         "postcode": {
-          "en": "PRIVATE_POSTCODE"
+          "en": "1000",
+          "fr": "1000",
+          "nl": "1000",
+          "de": "1000"
         },
         "municipality": {
-          "en": "PRIVATE_TOWN"
+          "en": "Example Town",
+          "fr": "Ville Exemple",
+          "nl": "Voorbeeldstad",
+          "de": "Beispielstadt"
         }
       },
       "events": [

@@ -52,7 +52,7 @@
     "discarded": [
       "recipient",
       "sender",
-      "addresses",
+      "recipient_address",
       "contact_details",
       "delivery_preferences",
       "proof_of_delivery"

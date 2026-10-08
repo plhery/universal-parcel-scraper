@@ -20,11 +20,33 @@ function countryCode(value: unknown): string {
   return /^[A-Z]{2}$/.test(code) ? code : '';
 }
 
-/** The pickup point's name, in the first language bpost provides. Its address is never read. */
-function pickupPointName(point: unknown): string {
-  if (!isRecord(point) || !isRecord(point.name)) return '';
-  const names = point.name;
-  return ['en', 'fr', 'nl', 'de'].map((language) => clean(names[language], 160)).find(Boolean) ?? '';
+const LANGUAGES = ['en', 'fr', 'nl', 'de'];
+
+/** A field bpost gives per language, in the first of these languages it provides. */
+function localized(field: unknown, maxLength: number, languages: readonly string[] = LANGUAGES): string {
+  return isRecord(field) ? languages.map((language) => clean(field[language], maxLength)).find(Boolean) ?? '' : '';
+}
+
+// The steps for which bpost's tracker shows "Collected" at the delivery point
+// instead of "Delivered to" the recipient's address.
+const COLLECTED_STEPS = new Set(['PICKED_UP_IN_POST_OFFICE', 'PICKED_UP_IN_POST_POINT', 'PICKED_UP_IN_KARIBOO_POINT',
+  'PICKED_UP_IN_PARCEL_LOCKER', 'PICKED_UP_IN_SHOP', 'PICKED_UP_IN_PICKUP_POINT_INTERNATIONAL']);
+
+/**
+ * The pickup point's name, then its street and number, then "postcode town",
+ * in one language. The name alone when the street or town is missing. Its code
+ * and opening hours are not read.
+ */
+function pickupPoint(point: unknown): string {
+  if (!isRecord(point)) return '';
+  const name = localized(point.name, 160);
+  const language = LANGUAGES.find((code) => localized(point.street, 120, [code]) && localized(point.municipality, 80, [code]));
+  if (!name || !language) return name;
+  // A number or postcode reads the same in every language.
+  const any = [language, ...LANGUAGES];
+  const street = [localized(point.street, 120, [language]), localized(point.streetNumber, 16, any)].filter(Boolean).join(' ');
+  const town = [localized(point.postcode, 16, any), localized(point.municipality, 80, [language])].filter(Boolean).join(' ');
+  return [name, street, town].join('\n');
 }
 
 export function parseBpost(payload: unknown, number: string): CarrierResult {
@@ -78,7 +100,12 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
   const mapped = classifyBpostStatus(latest.description!);
   const current = returnDelivery && mapped?.stage === 'delivered' ? { status: 'exception' as const, stage: 'returned' as const } : mapped;
   const destination = isRecord(item.receiver) ? countryCode(item.receiver.countryCode) : '';
-  const pickupPoint = current?.stage === 'ready_for_pickup' ? pickupPointName(item.deliveryPoint) : '';
+  // The delivery point is the pickup point itself, apart from the receiver: bpost's
+  // tracker shows it with opening hours and directions from its own coordinates.
+  // It stays once the parcel is collected there, never after a door delivery.
+  const collected = current?.stage === 'delivered' && isRecord(item.activeStep)
+    && typeof item.activeStep.knownProcessStep === 'string' && COLLECTED_STEPS.has(item.activeStep.knownProcessStep);
+  const point = current?.stage === 'ready_for_pickup' || collected ? pickupPoint(item.deliveryPoint) : '';
   // The sender's barcode is kept only when it is an S10 number other than the one searched.
   const senderBarcode = clean(item.senderBarcode, 32).toUpperCase();
   const international = senderBarcode !== requested && isValidS10TrackingNumber(senderBarcode) ? senderBarcode : '';
@@ -91,7 +118,7 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
     ...(typeof grams === 'number' && Number.isFinite(grams) && grams > 0 ? { weight_kg: grams / 1000 } : {}),
     ...(dimensionMatch && dimensionMatch.slice(1).every((value) => Number(value) > 0)
       ? { dimensions_text: `${dimensionMatch.slice(1).join(' × ')} cm` } : {}),
-    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
+    ...(point ? { pickup_point: point } : {}),
     ...(destination ? { destination_country: destination } : {}),
     ...(international ? { international_tracking_number: international } : {}),
     events: events.slice(0, 100) };

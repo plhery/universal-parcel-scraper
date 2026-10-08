@@ -11,15 +11,14 @@ const NUMBER = '000000000000000000000001';
 const OTHER = '000000000000000000000002';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 const payload = () => structuredClone(fixture);
+const POINT = 'Example Post Point\nExample Street 1\n1000 Example Town';
 
 describe('bpost direct history', () => {
   it('reads the identity-bound timeline and preserves clocks without inventing offsets', () => {
     const result = normalizeCarrierResult(parseBpost(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null,
       last_update_local: '2026-01-04T12:00:00', weight_kg: 0.32, dimensions_text: '26.1 × 7.5 × 38.4 cm', expected_delivery: null,
-      destination_country: 'BE' });
-    // A collected parcel no longer waits at its pickup point.
-    expect(result).not.toHaveProperty('pickup_point');
+      destination_country: 'BE', pickup_point: POINT });
     expect(result).not.toHaveProperty('international_tracking_number');
     expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'registered']);
     expect(result.events?.every((event) => event.local_time && !event.time)).toBe(true);
@@ -78,14 +77,9 @@ describe('bpost direct history', () => {
 
   it('keeps pickup availability, unrecognized scans and return delivery distinct', () => {
     const pickup = payload(); pickup.items[0].events.shift();
-    expect(parseBpost(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup',
-      pickup_point: 'Example Post Point' });
-    // The point's name only: its code, street, number, postcode and town are never read.
+    expect(parseBpost(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: POINT });
+    // The point's code and the receiver's fields are never read.
     expect(JSON.stringify(parseBpost(pickup, NUMBER))).not.toMatch(/PRIVATE/);
-    delete pickup.items[0].deliveryPoint.name.en;
-    expect(parseBpost(pickup, NUMBER).pickup_point).toBe('Point Poste Exemple');
-    pickup.items[0].deliveryPoint.name = 'Example Post Point';
-    expect(parseBpost(pickup, NUMBER)).not.toHaveProperty('pickup_point');
     const unknown = payload(); unknown.items[0].events[0].key.EN.description = 'Delivery expected';
     expect(parseBpost(unknown, NUMBER).status).toBe('unknown');
     expect(parseBpost(unknown, NUMBER).events?.[0]).not.toHaveProperty('stage');
@@ -93,9 +87,52 @@ describe('bpost direct history', () => {
     expect(() => parseBpost(returned, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     returned.items[0].activeStep.knownProcessStep = 'DELIVERED_TO_SENDER';
     expect(parseBpost(returned, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(parseBpost(returned, NUMBER)).not.toHaveProperty('pickup_point');
     expect(parseBpost(returned, NUMBER).events?.[0]).toMatchObject({ provider_leg: 'return', stage: 'returned' });
     expect(classifyBpostStatus('Item available at Pick-up point')?.stage).toBe('ready_for_pickup');
     for (const wording of ['__proto__', 'constructor', 'Delivery expected']) expect(classifyBpostStatus(wording)).toBeUndefined();
+  });
+
+  it('keeps the pickup point after collection there, never after a door delivery or in transit', () => {
+    for (const step of ['PICKED_UP_IN_POST_POINT', 'PICKED_UP_IN_KARIBOO_POINT', 'PICKED_UP_IN_PARCEL_LOCKER',
+      'PICKED_UP_IN_SHOP', 'PICKED_UP_IN_PICKUP_POINT_INTERNATIONAL']) {
+      const value = payload(); value.items[0].activeStep.knownProcessStep = step;
+      expect(parseBpost(value, NUMBER).pickup_point, step).toBe(POINT);
+    }
+    for (const activeStep of [{ name: 'delivered', knownProcessStep: 'DELIVERED_AT_HOME' },
+      { name: 'delivered', knownProcessStep: 'DELIVERED_AT_NEIGHBOUR' }, { name: 'delivered' }, null]) {
+      const value = payload(); value.items[0].activeStep = activeStep;
+      expect(parseBpost(value, NUMBER)).toMatchObject({ current_stage: 'delivered' });
+      expect(parseBpost(value, NUMBER)).not.toHaveProperty('pickup_point');
+    }
+    // bpost's step alone is no collection: the newest scan must be the delivery.
+    const transit = payload(); transit.items[0].events.splice(0, 2);
+    expect(parseBpost(transit, NUMBER)).toMatchObject({ current_stage: 'out_for_delivery' });
+    expect(parseBpost(transit, NUMBER)).not.toHaveProperty('pickup_point');
+  });
+
+  it('lays out the point as name, street and number, then postcode and town, in one language', () => {
+    const point = () => { const value = payload(); return [value, value.items[0].deliveryPoint] as const; };
+    let [value, deliveryPoint] = point();
+    delete deliveryPoint.street.en;
+    expect(parseBpost(value, NUMBER).pickup_point).toBe('Example Post Point\nRue Exemple 1\n1000 Ville Exemple');
+    [value, deliveryPoint] = point();
+    delete deliveryPoint.name.en; delete deliveryPoint.streetNumber.en; delete deliveryPoint.postcode.en;
+    expect(parseBpost(value, NUMBER).pickup_point).toBe('Point Poste Exemple\nExample Street 1\n1000 Example Town');
+    [value, deliveryPoint] = point();
+    deliveryPoint.streetNumber = {}; deliveryPoint.postcode = null;
+    expect(parseBpost(value, NUMBER).pickup_point).toBe('Example Post Point\nExample Street\nExample Town');
+    for (const field of ['street', 'municipality']) {
+      [value, deliveryPoint] = point(); deliveryPoint[field] = { en: ' ' };
+      expect(parseBpost(value, NUMBER).pickup_point, field).toBe('Example Post Point');
+    }
+    // Street and town in no common language: the name alone.
+    [value, deliveryPoint] = point(); deliveryPoint.street = { fr: 'Rue Exemple' }; deliveryPoint.municipality = { nl: 'Voorbeeldstad' };
+    expect(parseBpost(value, NUMBER).pickup_point).toBe('Example Post Point');
+    [value, deliveryPoint] = point(); deliveryPoint.name = 'Example Post Point';
+    expect(parseBpost(value, NUMBER)).not.toHaveProperty('pickup_point');
+    [value] = point(); value.items[0].deliveryPoint = 'Example Post Point';
+    expect(parseBpost(value, NUMBER)).not.toHaveProperty('pickup_point');
   });
 
   it('reads the destination country code and another S10 number the sender printed', () => {
