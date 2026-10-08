@@ -1198,6 +1198,14 @@
     ]
   },
   {
+    "input": "0304/14852112",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
     "input": "03071790000523483741",
     "carrier": "unknown",
     "confidence": "low",
@@ -1207,6 +1215,30 @@
     ],
     "asked": [
       "nz-post"
+    ]
+  },
+  {
+    "input": "0310/11355244",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
+    "input": "0316/11189371",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
+    "input": "0333/12085216",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
     ]
   },
   {
@@ -1781,6 +1813,14 @@
     ],
     "asked": [
       "bpost"
+    ]
+  },
+  {
+    "input": "0841/14977894",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
     ]
   },
   {
@@ -4935,6 +4975,14 @@
     ]
   },
   {
+    "input": "2841/12379753",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
     "input": "2850/11247170",
     "carrier": "nacex",
     "confidence": "high",
@@ -6322,6 +6370,14 @@
     ]
   },
   {
+    "input": "3900/11331774",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
     "input": "39181147009513",
     "carrier": "unknown",
     "confidence": "low",
@@ -6945,6 +7001,14 @@
     ]
   },
   {
+    "input": "4601/11507532",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
     "input": "460150000103706789",
     "carrier": "unknown",
     "confidence": "low",
@@ -6954,6 +7018,14 @@
     ],
     "asked": [
       "bpost"
+    ]
+  },
+  {
+    "input": "4616/14822082",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
     ]
   },
   {
@@ -7363,6 +7435,14 @@
     ]
   },
   {
+    "input": "5002/14090132",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
     "input": "501-46-75268-1",
     "carrier": "unknown",
     "confidence": "low",
@@ -7382,6 +7462,14 @@
       "gls-de",
       "postlogistics",
       "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "5015/11546076",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
     ]
   },
   {
@@ -8910,6 +8998,22 @@
     ]
   },
   {
+    "input": "7266/11946352",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
+    "input": "7266/11951222",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
+    ]
+  },
+  {
     "input": "7310061500015768",
     "carrier": "unknown",
     "confidence": "low",
@@ -9009,6 +9113,14 @@
     "asked": [
       "brt",
       "colis-prive"
+    ]
+  },
+  {
+    "input": "7490/11263764",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
     ]
   },
   {
@@ -10943,6 +11055,14 @@
     "confidence": "high",
     "candidates": [
       "planzer"
+    ]
+  },
+  {
+    "input": "9999/16070306",
+    "carrier": "nacex",
+    "confidence": "high",
+    "candidates": [
+      "nacex"
     ]
   },
   {
