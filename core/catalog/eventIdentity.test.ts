@@ -8,6 +8,12 @@ describe('same-instant identity policies', () => {
     });
   });
 
+  it('requires Amazon Shipping scans to retain their event code', () => {
+    expect(sameInstantIdentityPolicy('amazon-shipping')).toEqual({
+      sourceCarrierId: 'amazon-shipping', storedSources: ['amazon-shipping'], requireProviderCode: true,
+    });
+  });
+
   it('keeps DPD postcode variants and universal copies eligible', () => {
     expect(sameInstantIdentityPolicy('dpd')).toEqual({
       sourceCarrierId: 'dpd', storedSources: ['dpd', 'unknown'], requireProviderCode: false,

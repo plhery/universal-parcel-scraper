@@ -64,6 +64,8 @@ function eventDescription(raw: JsonObject, classified: ClassifiedStatus): string
     .join(' ');
   if (key.includes('creationconfirmed')) return 'Shipment information received';
   if (key.includes('pickupdone') || key.includes('detailpickedup')) return 'Shipment picked up';
+  // Out-for-delivery scans carry the string id of the delivery centre's arrival; the code decides.
+  if (classified.stage !== 'in_transit') return classified.description;
   if (key.includes('arrivedatdeliverycenter')) return 'Arrived at delivery center';
   if (key.includes('arrivedatsortcenter')) return 'Arrived at sorting center';
   if (key.includes('departed')) return 'Departed facility';
@@ -277,7 +279,8 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
       ?? metadataValue(metadata, 'expectedDeliveryDate')
       ?? metadataValue(metadata, 'promisedDeliveryDate'), zone,
   );
-  const delivery = active.stage === 'delivered'
+  const delivered = active.stage === 'delivered';
+  const delivery = delivered
     ? parsedEvents.find((item) => item.classified.stage === 'delivered' && item.event.time)?.event.time
     : undefined;
   return {
@@ -286,7 +289,7 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
     last_status_text: active.description,
     last_update: events[0]?.time ?? fallbackUpdate?.iso ?? null,
     ...(!events[0]?.time && events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),
-    expected_delivery: expected?.iso.slice(0, 10) ?? null,
+    expected_delivery: delivered ? null : expected?.iso.slice(0, 10) ?? null,
     ...(delivery ? { delivered_at: delivery } : {}),
     ...(zone ? { timezone: zone } : {}),
     events,

@@ -18,6 +18,27 @@ const fixture = (name: string): Record<string, unknown> => JSON.parse(
 const deliveredFixture = () => fixture('delivered');
 const notFoundFixture = () => fixture('not-found');
 const historyExpiredFixture = () => fixture('history-expired');
+/** The delivered parcel earlier that day: its out-for-delivery scan names the delivery centre's arrival. */
+const outForDeliveryFixture = () => {
+  const value = deliveredFixture();
+  const progress = JSON.parse(String(value.progressTracker)) as Record<string, unknown>;
+  progress.summary = {
+    status: 'OutForDelivery',
+    metadata: { trackingStatus: { stringValue: 'OUT_FOR_DELIVERY' }, expectedDeliveryDate: { date: 'Aug 11, 2026, 6:00:00 PM' } },
+    containerStatusTags: ['OUT_FOR_DELIVERY'],
+  };
+  value.progressTracker = JSON.stringify(progress);
+  const history = JSON.parse(String(value.eventHistory)) as { eventHistory: Record<string, unknown>[] };
+  history.eventHistory = [...history.eventHistory.slice(0, 2), {
+    eventCode: 'OutForDelivery',
+    subReasonCode: 'NONE',
+    statusSummary: { localisedStringId: 'swa_rex_detail_arrived_at_delivery_Center' },
+    eventTime: 'Aug 11, 2026, 8:05:00 AM',
+    location: { city: 'Paris', stateProvince: 'Île-de-France', countryCode: 'FR' },
+  }];
+  value.eventHistory = JSON.stringify(history);
+  return value;
+};
 const capabilities = (JSON.parse(
   readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
 ) as { capabilities: string[] }).capabilities;
@@ -78,7 +99,7 @@ describe('Amazon Shipping France response normalization', () => {
       current_stage: 'delivered',
       last_status_text: 'Delivered',
       last_update: '2026-08-11T16:31:56+02:00',
-      expected_delivery: '2026-08-11',
+      expected_delivery: null,
       delivered_at: '2026-08-11T16:31:56+02:00',
       timezone: 'Europe/Paris',
       events: [{
@@ -116,8 +137,34 @@ describe('Amazon Shipping France response normalization', () => {
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);
-    expect(result.expected_delivery).toBe('2026-08-11');
+    expect(parseAmazonShippingTrackingResponse(outForDeliveryFixture()).expected_delivery).toBe('2026-08-11');
     expect(result.delivered_at).toBe(result.events?.[0]?.time);
+  });
+
+  it('words an out-for-delivery scan by its code, and drops the estimate once delivered', () => {
+    const result = parseAmazonShippingTrackingResponse(outForDeliveryFixture());
+    expect(result).toMatchObject({
+      status: 'out_for_delivery',
+      current_stage: 'out_for_delivery',
+      last_status_text: 'Out for delivery',
+      expected_delivery: '2026-08-11',
+    });
+    expect(result.events?.[0]).toEqual({
+      time: '2026-08-11T08:05:00+02:00',
+      location: 'Paris, Île-de-France, FR',
+      description: 'Out for delivery',
+      stage: 'out_for_delivery',
+      provider_code: 'OutForDelivery',
+    });
+    expect(result).not.toHaveProperty('delivered_at');
+    const arrival = outForDeliveryFixture();
+    const history = JSON.parse(String(arrival.eventHistory)) as { eventHistory: Record<string, unknown>[] };
+    history.eventHistory[2]!.eventCode = 'Received';
+    arrival.eventHistory = JSON.stringify(history);
+    expect(parseAmazonShippingTrackingResponse(arrival).events?.[0]).toMatchObject({
+      description: 'Arrived at delivery center', stage: 'in_transit', provider_code: 'Received',
+    });
+    expect(parseAmazonShippingTrackingResponse(deliveredFixture()).expected_delivery).toBeNull();
   });
 
   it('uses event history when the summary status is absent', () => {

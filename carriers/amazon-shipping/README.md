@@ -40,7 +40,12 @@ Checks, before any history is read:
   identify no time zone, so offset-free event times stay wall-clock `local_time` readings in
   the tracker's order and the result has no `timezone`: stamping UTC would shift every event
   by hours. A clock that cannot be read keeps its text.
-- `delivered_at` is the newest delivery scan's time, when that time has a zone.
+- `delivered_at` is the newest delivery scan's time, when that time has a zone. A delivered
+  parcel has no `expected_delivery`.
+- A scan's wording follows its event code. Out-for-delivery scans carry the string id of the
+  delivery centre's arrival, so only in-transit scans take the arrival, sorting and departure
+  wording. The app identity policy requires the same instant and event code before updating a
+  reworded stored scan.
 - Dates mix ISO-8601, RFC 2822 and US long form ("Aug 11, 2026, 4:31:56 PM"), so the adapter
   uses its own parser instead of a `core/time` helper.
 - `DELAYED` / `LATE` map to `in_transit`: a delay is not an exception.
