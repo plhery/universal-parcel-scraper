@@ -63,7 +63,8 @@ numbers or handles cannot end the lookup.
 - `dt` has no zone, even across countries. It is kept as `local_time`, and as `time` only
   when it carries an explicit offset. The provider's order is kept, because wall times
   cannot be sorted reliably against UTC instants. If the newest scan has no offset,
-  `last_update` is null.
+  `last_update` is null. A history with no offset at all, the usual case, is
+  inconclusive through `fetchSource()`: it gives a consumer no scan it can place.
 - `track.toAddress` is never read. At most 1000 events.
 
 ## Rejected approaches

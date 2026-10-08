@@ -14,6 +14,9 @@ const track17 = {
 };
 const parcels = { states: [{ date: '2026-08-18T03:04:00Z', status: 'Electronic information submitted by shipper' }] };
 const reply = (data: unknown) => new Response(JSON.stringify(data), { status: 201 });
+/** What the browser seam returns for a provider: one dated scan at the given stage. */
+const seen = (source: string, stage: string) => ({ tracking_provider: source, current_stage: stage,
+  events: [{ time: '2026-08-31T18:50:50.000Z', description: 'Scanned', stage }] });
 const browserResponse = (source: '17TRACK' | 'ParcelsApp', data: unknown, overrides = {}) => new Response(JSON.stringify({
   url: source === '17TRACK' ? `https://t.17track.net/en#nums=${number}` : `https://parcelsapp.com/en/tracking/${number}`,
   html: identity(), statusCode: 200, tier: 3,
@@ -87,7 +90,7 @@ describe('universal discovery chain', () => {
       ? new Response('', { status: 503 })
       : browserResponse('17TRACK', { meta: { code: 200 }, shipments: [{ number: postalNumber, code: 400, shipment: null }] },
         { url: `https://t.17track.net/en#nums=${postalNumber}` }));
-    const browserLookup = vi.fn().mockResolvedValue({ tracking_provider: 'Ship24', current_stage: 'delivered' });
+    const browserLookup = vi.fn().mockResolvedValue(seen('Ship24', 'delivered'));
     await expect(new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  trawlUrl: 'http://browser.test', fetcher, browserLookup }).fetch(postalNumber))
       .resolves.toMatchObject({ tracking_provider: 'Ship24', current_stage: 'delivered' });
     expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual(['browser.test', 'parcelsapp.com']);
@@ -135,7 +138,7 @@ describe('universal discovery chain', () => {
   it('tries Postal Ninja before 17TRACK when Ship24 and ParcelsApp fail', async () => {
     const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('Unavailable'));
     const browserLookup = vi.fn().mockRejectedValueOnce(new Error('Challenge'))
-      .mockResolvedValueOnce({ status: 'delivered', current_stage: 'delivered', tracking_provider: 'Postal Ninja' });
+      .mockResolvedValueOnce(seen('Postal Ninja', 'delivered'));
     const result = await new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  trawlUrl: 'http://browser.test', fetcher, browserLookup, enablePostalNinja: true }).fetch(number);
     expect(result.tracking_provider).toBe('Postal Ninja');
     expect(browserLookup.mock.calls).toEqual([['Ship24', number], ['Postal Ninja', number]]);
@@ -144,7 +147,7 @@ describe('universal discovery chain', () => {
 
   it('can use the form scrapers without TRAWL and stops on Ship24 success', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status: 503 }));
-    const browserLookup = vi.fn().mockResolvedValue({ tracking_provider: 'Ship24', current_stage: 'in_transit' });
+    const browserLookup = vi.fn().mockResolvedValue(seen('Ship24', 'in_transit'));
     await expect(new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  trawlUrl: '', fetcher, browserLookup }).fetch(number)).resolves.toMatchObject({ tracking_provider: 'Ship24' });
     expect(fetcher).toHaveBeenCalledOnce();
     expect(browserLookup).toHaveBeenCalledOnce();
@@ -197,5 +200,26 @@ describe('universal discovery chain', () => {
       current_stage: 'delivered', tracking_provider: 'Ship24',
     });
     expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual(['api.ship24.com', 'parcelsapp.com', 'api.ship24.com']);
+  });
+
+  it('treats a history without one dated scan as inconclusive and moves on', async () => {
+    // No offset, courier or place: the scan keeps its wall time and has no instant.
+    const undated = { data: { tracking_number: number, events: [{ timestamp: '2026-09-10T10:00:00', status: 'Delivered', dispatch_code_id: 7 }] } };
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => String(url).startsWith('https://api.ship24.com/')
+      ? reply(undated) : browserResponse('17TRACK', track17));
+    const tracker = new UniversalTracker({ providers: ['Ship24', '17TRACK'], trawlUrl: 'http://browser.test', fetcher });
+    const refused = await tracker.fetchSource('Ship24', number, 20_000).catch((error: unknown) => error);
+    expect(refused).toMatchObject({ kind: 'indeterminate', provider: 'Ship24', reason: 'undated_history' });
+    // With the parcel carrier's zone the same scan has an instant.
+    await expect(tracker.fetchSource('Ship24', number, 20_000, null, 'Europe/Zurich'))
+      .resolves.toMatchObject({ tracking_provider: 'Ship24', last_update: '2026-09-10T08:00:00.000Z' });
+    await expect(tracker.fetch(number)).resolves.toMatchObject({ tracking_provider: '17TRACK' });
+    const seam = new UniversalTracker({ providers: ['Postal Ninja'], enablePostalNinja: true, browserLookup: vi.fn().mockResolvedValue({
+      tracking_provider: 'Postal Ninja', current_stage: 'delivered', events: [{ local_time: '2026-09-10T10:00:00', description: 'Delivered', stage: 'delivered' }],
+    }) });
+    await expect(seam.fetchSource('Postal Ninja', number)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'undated_history' });
+    // An answer without scans is not an undated history.
+    const bare = new UniversalTracker({ providers: ['Ship24'], browserLookup: vi.fn().mockResolvedValue({ tracking_provider: 'Ship24', current_stage: 'pending', events: [] }) });
+    await expect(bare.fetchSource('Ship24', number)).resolves.toMatchObject({ tracking_provider: 'Ship24' });
   });
 });

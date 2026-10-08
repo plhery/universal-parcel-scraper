@@ -49,6 +49,9 @@ and [COVERAGE.md](COVERAGE.md) holds what was measured.
   their own.
 - UI notices (postcode or country prompts, sign-in requests, "no information") never
   become events. A result made only of input prompts raises `input_required`.
+- `fetchSource()` treats a history in which no scan has an instant (only wall times with
+  no known zone) as inconclusive: `indeterminate` with reason `undated_history`, so the
+  chain moves on. UPU is exempt, because its local clocks are by design.
 - Privacy: a non-delivered event that mentions a PIN, access code, door number or
   signature is dropped, and a delivered event's text becomes `Delivered`. Recipient
   fields are never read.

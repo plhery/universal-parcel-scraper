@@ -16,7 +16,7 @@
  * lives in the provider folder next to it.
  */
 import type { AdapterEnvironment, CarrierAdapter, TrackingContext } from '../core/adapter/index.js';
-import { BudgetExceededError } from '../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
@@ -122,10 +122,16 @@ export class UniversalTracker {
 
   async fetchSource(source: Source, trackingNumber: string, timeoutMs = this.options.timeoutMs ?? universalSourceBudget(source), postcode?: string | null, timezone?: string | null, signal?: AbortSignal, countryHint?: string | null): Promise<CarrierResult> {
     const number = numberOf(trackingNumber);
-    if (this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')) {
-      return await this.options.browserLookup(source, number);
+    const result = this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')
+      ? await this.options.browserLookup(source, number)
+      : await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null, countryHint: countryHint ?? null }, { budgetMs: timeoutMs, signal });
+    // A history whose scans all lack an instant can't be placed on a timeline or weighed
+    // against another provider's, so it isn't an answer. An answer without scans keeps
+    // its stage and carrier as before. UPU's local clocks are by design.
+    if (source !== 'UPU' && result.events?.length && !result.events.some((event) => event.time)) {
+      throw new IndeterminateError(source, 'No dated tracking events', { reason: 'undated_history' });
     }
-    return await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null, countryHint: countryHint ?? null }, { budgetMs: timeoutMs, signal });
+    return result;
   }
 
   /** One provider adapter, built from this tracker's environment. */
