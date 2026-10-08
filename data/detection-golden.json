@@ -71,46 +71,6 @@
     ]
   },
   {
-    "input": "0000100000104002721178",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tipsa",
-      "austrian-post",
-      "ctt-express",
-      "usps",
-      "estafeta"
-    ],
-    "preferred": [
-      "tipsa"
-    ],
-    "asked": [
-      "tipsa",
-      "austrian-post",
-      "ctt-express"
-    ]
-  },
-  {
-    "input": "0000100000104002832159",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tipsa",
-      "austrian-post",
-      "ctt-express",
-      "usps",
-      "estafeta"
-    ],
-    "preferred": [
-      "tipsa"
-    ],
-    "asked": [
-      "tipsa",
-      "austrian-post",
-      "ctt-express"
-    ]
-  },
-  {
     "input": "000123450000000027",
     "carrier": "unknown",
     "confidence": "low",
@@ -1289,78 +1249,6 @@
     ],
     "asked": [
       "brt"
-    ]
-  },
-  {
-    "input": "0280010280017023109268",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tipsa",
-      "austrian-post",
-      "usps",
-      "estafeta"
-    ],
-    "preferred": [
-      "tipsa"
-    ],
-    "asked": [
-      "tipsa",
-      "austrian-post"
-    ]
-  },
-  {
-    "input": "0280010280017024597412",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tipsa",
-      "austrian-post",
-      "usps",
-      "estafeta"
-    ],
-    "preferred": [
-      "tipsa"
-    ],
-    "asked": [
-      "tipsa",
-      "austrian-post"
-    ]
-  },
-  {
-    "input": "0280010280017024880903",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tipsa",
-      "austrian-post",
-      "usps",
-      "estafeta"
-    ],
-    "preferred": [
-      "tipsa"
-    ],
-    "asked": [
-      "tipsa",
-      "austrian-post"
-    ]
-  },
-  {
-    "input": "0280010280017024921126",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tipsa",
-      "austrian-post",
-      "usps",
-      "estafeta"
-    ],
-    "preferred": [
-      "tipsa"
-    ],
-    "asked": [
-      "tipsa",
-      "austrian-post"
     ]
   },
   {
