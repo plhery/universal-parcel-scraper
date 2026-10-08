@@ -3,7 +3,8 @@
 UK S10 and domestic 2D-reference parcel history through the public tracking application. Automatic
 tracking uses a fresh local Chromium configured by `TRACKING_CHROMIUM_PATH`. The same tracker
 answers for [Parcelforce](../parcelforce/README.md), whose numbers this adapter also accepts,
-including its 14-character `PB` parcel numbers.
+including its 14-character `PB` parcel numbers, and for mail from abroad, which keeps the
+sending post's S10 number once it reaches the UK.
 
 ## Retrieval
 

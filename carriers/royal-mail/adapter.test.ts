@@ -479,6 +479,11 @@ describe('Royal Mail lookup steps', () => {
     expect(() => royalMailTrackingUrl('PBZZ00000000001')).toThrow('Parcelforce parcel number');
   });
 
+  it('accepts another post\'s S10 number, which the tracker answers once the item reaches the UK, when its check digit holds', () => {
+    expect(royalMailTrackingUrl('zz 000 000 005 nl')).toBe('https://www.royalmail.com/track-your-item#/tracking-results/ZZ000000005NL');
+    expect(() => royalMailTrackingUrl('ZZ000000004NL')).toThrow('UPU S10 format');
+  });
+
   it('builds the canonical tracking and summary URLs', () => {
     expect(royalMailTrackingUrl(DELIVERED_NUMBER)).toBe(
       `https://www.royalmail.com/track-your-item#/tracking-results/${DELIVERED_NUMBER}`);

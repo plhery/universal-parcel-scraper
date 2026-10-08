@@ -6,6 +6,7 @@ import { clean, cleanScalar } from '../../core/transport/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { royalMailEventStage, royalMailStage, royalMailSummaryStage, statusForStage } from './status.js';
 
 /** Read the response produced by Royal Mail's form and hCaptcha callback. */
@@ -19,7 +20,9 @@ const PARCELFORCE_PARCEL = /^PB[A-Z]{2}\d{10}$/;
 
 export function normalizeRoyalMailNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^[A-Z]{2}\d{9}GB$/.test(value) && !isRoyalMailDomesticReference(value) && !PARCELFORCE_PARCEL.test(value)) {
+  // Mail arriving from abroad keeps the sending post's S10 number on Royal Mail's tracker.
+  if (!/^[A-Z]{2}\d{9}GB$/.test(value) && !isValidS10TrackingNumber(value) && !isRoyalMailDomesticReference(value)
+    && !PARCELFORCE_PARCEL.test(value)) {
     throw new InvalidInputError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format, a domestic 2D reference or a Parcelforce parcel number');
   }
   return value;
