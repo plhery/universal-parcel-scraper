@@ -80,6 +80,8 @@ const CUSTOMS_RELEASED = new RegExp([
   String.raw`\b(?:liberad|desembaracad)[oa]s? (?:pela|na|da) (?:alfandega|aduana|fiscalizacao(?: aduaneira)?|receita federal)\b|\bdesalfandegad[oa]s?\b|\b(?:desalfandegamento|desembaraco(?: aduaneiro)?|fiscalizacao aduaneira|tramites aduaneiros|processo aduaneiro) (?:(?:foi|esta|foram) )?(?:concluid|finalizad|terminad|realizad|efetuad|efectuad)[oa]s?\b|\b(?:saiu|saida) (?:da|de) (?:alfandega|aduana)\b`,
   String.raw`\bodprawa celna (?:\w+ )?(?:zakonczona|zakonczyla sie|ukonczona)\b|\bodprawion[aey] celnie\b|\bzwolnion[aey] (?:przez urzad celny|z urzedu celnego)\b|\bopuscil[aoy]? urzad celny\b`,
 ].join('|'));
+/** A parcel customs holds, detains or retains, in each language. */
+const CUSTOMS_HOLD = new RegExp(String.raw`\bcustoms (?:hold|detention)\b|\b(?:held|on hold|detained|retained) (?:by|in|at) (?:the )?${CUSTOMS_SIDE}customs?\b|retenu en douane|vom zoll zuruckgehalten|fermo in dogana|retenido en aduana|retido na alfandega|zatrzyman[ay] przez (?:urzad celny|cel)`);
 /** A customs problem or hold that has ended: the parcel moves on. */
 const CUSTOMS_PROBLEM_ENDED = new RegExp([
   String.raw`\b(?:released|freed|cleared) (?:from|of) (?:the )?customs (?:hold|detention|inspection|examination)\b`,
@@ -138,7 +140,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/refused by (?:the )?(?:recipient|consignee)|\brefused\b|rejected by (?:the )?recipient|refus(?:e|ee)? par le destinataire|refus du destinataire|(?:colis|envoi|pli) refuse|annahme verweigert|verweigert|rifiutat|rechazad|recusad|odmowa przyjecia|odmowiono przyjecia/.test(text)) return 'exception';
   if (/address (?:incomplete|incorrect|invalid|insufficient|unknown)|(?:incorrect|incomplete|insufficient|wrong|invalid) address|(?:updated|correct(?:ed)?|complete) (?:delivery )?address (?:is )?(?:required|needed)|address(?:ee)? (?:unknown|cannot be located)|recipient unknown|adresse (?:incorrecte|incomplete|erronee|invalide|inconnue)|destinataire inconnu|(?:adresse|anschrift) (?:unvollstandig|falsch|unbekannt)|empfanger unbekannt|indirizzo (?:errato|incompleto|insufficiente|sconosciuto)|destinatario sconosciuto|direccion (?:incorrecta|incompleta|erronea|desconocida)|destinatario desconocido|endereco (?:incorreto|incompleto|errado|desconhecido)|destinatario desconhecido|adres (?:niepelny|nieprawidlowy|bledny)|nieznany adresat/.test(text)) return 'exception';
   if (CUSTOMS_PROBLEM_ENDED.test(text)) return 'in_transit';
-  if (/customs (?:issue|problem|hold)|held (?:by|in|at) customs|detained by customs|probleme de douane|retenu en douane|zollproblem|vom zoll zuruckgehalten|problema doganale|fermo in dogana|problema de aduana|retenido en aduana|problema (?:alfandegario|na alfandega)|retido na alfandega|problem celny|zatrzyman[ay] przez (?:urzad celny|cel)/.test(text)) return 'exception';
+  // A customs problem is an exception; a customs hold is customs at work.
+  if (/customs (?:issue|problem)|probleme de douane|zollproblem|problema doganale|problema de aduana|problema (?:alfandegario|na alfandega)|problem celny/.test(text)) return 'exception';
+  if (CUSTOMS_HOLD.test(text)) return 'customs';
   if (/(?:shipment|parcel|package) (?:is )?(?:held|blocked|on hold)|held pending|awaiting (?:your )?instructions|action required|(?:colis|envoi|pli) (?:bloque|retenu)|en attente d'instructions|action requise|sendung (?:blockiert|zuruckgehalten|angehalten)|wartet auf anweisungen|handlung erforderlich|spedizione (?:bloccata|trattenuta)|in attesa di istruzioni|envio (?:bloqueado|retenido)|en espera de instrucciones|accion requerida|encomenda (?:bloqueada|retida)|aguarda instrucoes|acao necessaria|przesylka (?:zatrzymana|wstrzymana)|oczekuje na instrukcje/.test(text)) return 'exception';
   if (/\bincident\b|\banomal(?:y|ie|ia)\b|delivery exception|shipment exception|irregularit|unregelmassigkeit|storung|vorfall|inconveniente|incidencia|nieprawidlowosc/.test(text)) return 'exception';
 

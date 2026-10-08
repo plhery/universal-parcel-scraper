@@ -200,6 +200,20 @@ describe('classifyWording', () => {
     }
   });
 
+  it('reads a customs hold as customs and a customs problem as an exception', () => {
+    for (const wording of [
+      'Held by customs', 'Held by Custom', 'Shipment held at customs', 'Parcel on hold at customs', 'Customs hold',
+      'Detained by customs', 'Colis retenu en douane', 'Vom Zoll zurückgehalten', 'Fermo in dogana', 'Retenido en aduana',
+      'Retido na alfândega', 'Przesyłka zatrzymana przez urząd celny',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'customs', source: 'wording:language' });
+    for (const wording of ['Customs issue', 'Customs problem, documents missing', 'Problème de douane', 'Zollproblem',
+      'Problema doganale', 'Problema de aduana', 'Problem celny', 'Shipment on hold']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'exception', source: 'wording:language' });
+    }
+    expect(wordingStage('Customs hold lifted')).toBe('in_transit');
+    expect(wordingStage('Held by customs, delivery attempt failed')).toBe('failed_attempt');
+  });
+
   it('reads a completed release or clearance as transit in each language', () => {
     for (const wording of [
       'Released From Import Customs', 'Shipment released from customs', 'Cleared by the broker and released at customs',

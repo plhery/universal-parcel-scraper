@@ -242,6 +242,8 @@ describe('universal provider rules and the shared reading', () => {
     expect(event(TIME, 'Released from import customs', 'InTransit')?.stage).toBe('in_transit');
     expect(event(TIME, 'Arrived at customs', 'InTransit')?.stage).toBe('customs');
     expect(event(TIME, 'Customs issue', 'InTransit')?.stage).toBe('exception');
+    expect(event(TIME, 'Held by customs', 'InTransit')?.stage).toBe('customs');
+    expect(event(TIME, 'Shipment held at customs')?.stage).toBe('customs');
     expect(event(TIME, 'Shipment on hold', 'InTransit')?.stage).toBe('exception');
     expect(event(TIME, 'Delivery attempt, recipient absent', 'InTransit')?.stage).toBe('failed_attempt');
     expect(event(TIME, 'No payment, new delivery attempt on the next delivery day', 'InTransit')?.stage).toBe('failed_attempt');

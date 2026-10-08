@@ -200,7 +200,8 @@ A delivery still to come (a forecast, a notice, an instruction or a duty-payment
 is no scan. The classifier reads only the rest of the sentence, so a notice alone takes the
 caller's fallback with `none` and never steps a parcel back to registered.
 Customs that cleared or released a parcel puts it back in transit; holds, inspections,
-submissions and a clearance still to come or negated stay `customs`.
+submissions and a clearance still to come or negated stay `customs`. A customs problem is an
+`exception`.
 Universal providers preserve Posti's handling labels, where registration can record repeated
 physical handling rather than electronic pre-advice.
 
