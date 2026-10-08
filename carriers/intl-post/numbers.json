@@ -41,6 +41,78 @@
       "note": "Invented number whose S10 check digit passes but whose TS suffix is a Chronopost code rather than an issuing country, so it is Chronopost's and not international mail."
     },
     {
+      "number": "RR123456785TY",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose TY suffix names no country. Cainiao's tracker answers AliExpress economy parcels to Canada under this suffix, so it is not international mail."
+    },
+    {
+      "number": "RR123456785MI",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose MI suffix names no country. Cainiao's tracker lists an AliExpress number with this suffix, so it is not international mail."
+    },
+    {
+      "number": "RR123456785YW",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose YW suffix names no country, so it is not international mail."
+    },
+    {
+      "number": "RR123456785CS",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose CS suffix is a withdrawn country code no postal operator issues today, so it is not international mail."
+    },
+    {
       "number": "RO400351158EE",
       "role": "shipment",
       "evidence": "public_shipment_report",

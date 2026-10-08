@@ -16838,10 +16838,54 @@
     ]
   },
   {
+    "input": "RR123456785CS",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "RR123456785MI",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR123456785TS",
     "carrier": "chronopost",
     "confidence": "high",
     "candidates": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "RR123456785TY",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "RR123456785YW",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
       "chronopost"
     ]
   },
