@@ -67,6 +67,7 @@ describe('status map answers', () => {
     expect(answer('ups', null, 'Arrived at Facility')).toEqual(unknown);
     expect(answer('ups', 'ZZ', 'Delivered')).toEqual(unknown);
     expect(answer('yunexpress', null, 'Arrived at GOFO Regional Destination Facility')).toEqual(mapped('in_transit'));
+    expect(answer('yunexpress', null, 'REMINDER EMAIL SENT FAILED')).toEqual(gap);
     expect(answer('dhl-express', 'PL', 'Processed at EXAMPLE CITY - FRANCE')).toEqual(mapped('in_transit'));
     expect(answer('dhl-express', null, 'Synthetic checkpoint')).toEqual(unknown);
   });

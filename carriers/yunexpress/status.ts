@@ -53,10 +53,20 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['OUTBOUND SCANNED', { status: 'in_transit', stage: 'in_transit' }],
   ['ORDER EXCEPTION RELEASED', { status: 'in_transit', stage: 'in_transit' }],
   ['DELIVERING, WAIT FOR CONSIGNEE PICK UP', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
-  // The reminder concerns a parcel already left for collection; it is not a
-  // delivery attempt, which the word "failed" would otherwise suggest.
-  ['REMINDER EMAIL SENT FAILED', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
+  // A courier partner's acceptance follows the scans of the network that
+  // brought the parcel to it: a hand-over, not the parcel's acceptance.
+  ['Package accepted at courier partner', { status: 'in_transit', stage: 'in_transit' }],
 ];
+
+// A relayed notice about the parcel rather than a scan of it names no stage,
+// so the parcel keeps the one it had: here a reminder to collect it that
+// failed to send.
+const NOTICE = normalizeStatusWording('REMINDER EMAIL SENT FAILED');
+
+/** Whether the wording is a relayed notice the map gives no stage on purpose. */
+export function isYunExpressNotice(description: string): boolean {
+  return normalizeStatusWording(description) === NOTICE;
+}
 
 /** Yuntrack's scan wording, compared without case or repeated spaces. */
 const WORDING = new Map(ENTRIES.map(([text, status]) => [normalizeStatusWording(text), status]));
@@ -83,5 +93,5 @@ export function yunExpressCodeStatus(code: unknown): CarrierStatus | undefined {
  */
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => yunExpressStatus(wording)?.stage,
-  gaps: [],
+  gaps: [{ wording: NOTICE, note: 'A reminder that failed to send, not a movement: the parcel keeps the stage it had.' }],
 };

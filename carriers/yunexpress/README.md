@@ -35,8 +35,11 @@ customer's order number is never read.
 
 Scan stages come from [status.ts](status.ts), which compares Yuntrack's wording
 without case or repeated spaces. "Delivered to local carrier" is the hand-over
-to the destination's last-mile carrier, so it stays in transit; only the latest
-event's delivered code marks a delivery.
+to the destination's last-mile carrier, so it stays in transit, as does a
+courier partner's acceptance; only the latest event's delivered code marks a
+delivery. A relayed notice, such as a reminder that failed to send, gets no
+stage, and the scan before it gives the status. "Handed over to the courier"
+follows DHL Parcel Netherlands, which files it as out for delivery.
 
 Run `npm run test:carriers:live -- carriers/yunexpress` with a
 configured browser. Set `YUNEXPRESS_TRACKING_NUMBER` outside the repository to

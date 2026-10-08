@@ -53,6 +53,7 @@ describe('YunExpress captured response projection', () => {
 
   it('stages the destination leg, and a hand-over to the local carrier is no delivery', () => {
     expect(yunExpressStatus('Delivered to local carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
     expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');
     // Yuntrack's capitals and spacing vary; the wording does not.
@@ -153,6 +154,25 @@ describe('YunExpress captured response projection', () => {
     expect(transit.events?.[0]!.stage).toBeUndefined();
     item.TrackInfo.LastTrackEvent.TrackingStatus = 60;
     expect(parse(payload, NUMBER).status).toBe('unknown');
+  });
+
+  it('leaves a relayed notice without a stage and the status to the scan before it', () => {
+    const payload = fixture();
+    const item = payload.ResultList[0];
+    const [newest, previous] = [item.TrackData.ProcessGroupList[0].ProcessDetailList[0], item.TrackData.ProcessGroupList[1].ProcessDetailList[0]];
+    newest.ProcessContent = 'REMINDER EMAIL SENT FAILED----Example facility';
+    previous.ProcessContent = 'DELIVERING, WAIT FOR CONSIGNEE PICK UP----Example facility';
+    item.TrackInfo.LastTrackEvent.ProcessContent = 'REMINDER EMAIL SENT FAILED';
+    item.TrackInfo.LastTrackEvent.TrackingStatus = 20;
+    const waiting = parse(payload, NUMBER);
+    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'REMINDER EMAIL SENT FAILED' });
+    expect(waiting.events?.[0]!.stage).toBeUndefined();
+    expect(waiting.events?.[1]!.stage).toBe('ready_for_pickup');
+    // A delivery before the notice is no delivery at the notice's time.
+    previous.ProcessContent = 'POD available----Example facility';
+    const delivered = parse(payload, NUMBER);
+    expect(delivered).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(delivered.delivered_at).toBeUndefined();
   });
 
   it('rejects a projection that omits scans present in the raw history', () => {

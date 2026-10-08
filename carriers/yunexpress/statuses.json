@@ -357,11 +357,18 @@
     },
     {
       "wording": "REMINDER EMAIL SENT FAILED",
-      "stage": "ready_for_pickup",
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Relayed from a Canadian last-mile carrier after the parcel was left for collection: a failed pickup reminder, not a failed delivery attempt."
+      "note": "Relayed from a Canadian last-mile carrier while the parcel waited for collection: a reminder that failed to send, not a movement or a failed delivery attempt, so it has no stage and the parcel keeps the one it had."
+    },
+    {
+      "wording": "Package accepted at courier partner",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed after the parcel left the facilities of the network that brought it to the courier partner: a hand-over, not the parcel's acceptance."
     },
     {
       "code": "10",

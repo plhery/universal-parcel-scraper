@@ -12,7 +12,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
-import { yunExpressCodeStatus, yunExpressStatus } from './status.js';
+import { isYunExpressNotice, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
 const MAX_BYTES = 1_000_000;
@@ -77,6 +77,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const seen = new Set<string>();
   let scans = 0;
   let current: ClassifiedStatus | undefined;
+  let decider: CarrierEvent | undefined;
   for (const group of groups) {
     if (!isRecord(group) || !Array.isArray(group.ProcessDetailList) || !group.ProcessDetailList.length) throw new SchemaError('YunExpress');
     for (const raw of group.ProcessDetailList) {
@@ -102,8 +103,13 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       if (seen.has(key)) continue;
       seen.add(key);
       const classified = yunExpressStatus(description, exactLast ? last.TrackingStatus : undefined);
-      if (events.length === 0) current = classified;
-      events.push({ ...clock, description, location, ...(classified ? { stage: classified.stage } : {}) });
+      const event: CarrierEvent = { ...clock, description, location, ...(classified ? { stage: classified.stage } : {}) };
+      // A relayed notice leaves the status to the scan before it.
+      if (!decider && (classified || !isYunExpressNotice(description))) {
+        current = classified;
+        decider = event;
+      }
+      events.push(event);
     }
   }
   if (!events.length) throw new IndeterminateError('YunExpress');
@@ -119,7 +125,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   // The first event is the exact latest event, so its code belongs to it.
   return { status: classified?.status ?? yunExpressCodeStatus(last.TrackingStatus) ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
-    ...(classified?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(classified?.stage === 'delivered' && decider?.time ? { delivered_at: decider.time } : {}),
     ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) };
 }
