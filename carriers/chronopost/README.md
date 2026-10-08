@@ -28,13 +28,18 @@ lookup, not carrier ownership.
 
 Scans retain their supplied offsets and seconds. Offset-less clocks stay
 local. Notifications retain activity without changing the last established
-shipment stage. Observed codes are used only when their wording agrees,
-because partner scans can reuse codes.
+shipment stage, and neither does a courier's drop-off scan that follows the
+pickup point's arrival scan. Observed codes are used only when their wording
+agrees, because partner scans can reuse codes.
 
-A delivery instruction can carry the redelivery day the recipient chose. The
-newest such instruction becomes the expected delivery; an unreadable day gives
-none. It lapses once a later scan is not progress towards that delivery or
-falls on a later day.
+A delivery instruction can carry the redelivery day the recipient chose, and
+scans can carry the booked appointment window. The newest scan with either
+becomes the expected delivery, a redelivery day replacing a window on the same
+scan; an unreadable value gives none. It lapses once a later scan is not
+progress towards that delivery or falls on a later day.
+
+The pickup point's name, the first part of its address, is kept only while the
+parcel waits there.
 
 A checked `GEO/` parcel reference with an explicit German delivery country
 proposes DPD Germany. The tracker asks that adapter with the partner's number
@@ -45,10 +50,11 @@ remain separate.
 
 ## Limitations
 
-The tracking operation supplies no delivery estimate beyond a chosen
-redelivery day. Recipient addresses, postcodes, delivery-point contact details
-and free-form supplementary comments are discarded; only the delivery
-country's code is read from the address field.
+The tracking operation supplies no delivery estimate beyond appointment
+windows and chosen redelivery days. Recipient addresses, postcodes,
+delivery-point contact details and free-form supplementary comments are
+discarded; only the delivery country's code and a pickup point's name are read
+from the address field.
 
 ## Testing
 

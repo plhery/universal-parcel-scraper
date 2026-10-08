@@ -15,6 +15,16 @@ const number = 'XT123456785TS';
 const fixture = readFileSync(new URL('./fixtures/international.xml', import.meta.url), 'utf8');
 const envelope = (body: string) => `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>${body}</s:Body></s:Envelope>`;
 const empty = envelope(`<t:trackSkybillV2Response xmlns:t="http://cxf.tracking.soap.chronopost.fr/"><return><errorCode>0</errorCode><listEventInfoComp><skybillNumber>${number}</skybillNumber></listEventInfoComp></return></t:trackSkybillV2Response>`);
+const scan = (code: string, date: string, label: string, infos: Record<string, string> = {}) => `<events><code>${code}</code>`
+  + `<eventDate>${date}</eventDate><eventLabel>${label}</eventLabel><officeLabel>EXAMPLE HUB</officeLabel>`
+  + Object.entries(infos).map(([name, value]) => `<infoCompList><name>${name}</name><value>${value}</value></infoCompList>`).join('')
+  + '</events>';
+const history = (...scans: string[]) => empty.replace('<skybillNumber>', scans.join('') + '<skybillNumber>');
+const appointment = { 'Début créneau RDV': '27/06/2026 10:00', 'Fin créneau RDV': '27/06/2026 12:00' };
+const prepared = scan('DC', '2026-06-26T18:00:00+02:00', "Colis en cours de préparation chez l'expéditeur", appointment);
+const outForDelivery = scan('TA', '2026-06-27T07:05:43+02:00', 'Colis en cours de livraison par le livreur',
+  { 'Début créneau RDV': '27/06/2026 10:00:00', 'Fin créneau RDV': '27/06/2026 12:00:00' });
+const relay = { 'Type de retrait': 'Relais CHRONOPOST', 'Point de livraison': 'EXAMPLE RELAY - 1 EXAMPLE STREET - 00000 - EXAMPLE CITY - FR' };
 
 describe('Chronopost direct tracking', () => {
   it('keeps the complete international history, precise clocks and a checked partner reference', () => {
@@ -81,6 +91,68 @@ describe('Chronopost direct tracking', () => {
   it('does not let a relayed code override contradictory wording', () => {
     expect(chronopostStage('DC', 'Livraison effectuée')).toMatchObject({ stage: 'delivered', source: 'wording:language' });
     expect(chronopostStage('UNKNOWN', 'Unmapped carrier message')).toEqual({ stage: 'pending', source: 'none' });
+  });
+
+  it.each([
+    ['T', "Entrée dans l'agence", 'in_transit'],
+    ['TT', 'Colis remis par le relais Pickup au chauffeur', 'in_transit'],
+    ['EI', 'Colis entré dans le pays de destination', 'in_transit'],
+    ['A2', "Colis retardé à l'agence de distribution", 'in_transit'],
+    ['IS', 'Livraison prévue lundi prochain', 'in_transit'],
+    ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
+    ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
+  ])('maps the observed %s scan when its wording agrees', (code, label, stage) => {
+    expect(chronopostStage(code, label)).toEqual({ stage, source: 'carrier_map' });
+    expect(chronopostStage(code, 'Unmapped carrier message')).toEqual({ stage: 'pending', source: 'none' });
+  });
+
+  it('reads the newest appointment window or redelivery day until it passes or the parcel stops moving', () => {
+    expect(parseChronopostTrackingXml(history(prepared), number)).toMatchObject({
+      current_stage: 'registered', expected_delivery: '2026-06-27 10:00–12:00' });
+    expect(parseChronopostTrackingXml(history(prepared, outForDelivery), number)).toMatchObject({
+      current_stage: 'out_for_delivery', expected_delivery: '2026-06-27 10:00–12:00' });
+    const failed = scan('P', '2026-06-27T11:02:54+02:00', "Echec de livraison suite à l'absence du destinataire.");
+    expect(parseChronopostTrackingXml(history(prepared, outForDelivery, failed), number)).toMatchObject({
+      status: 'exception', current_stage: 'failed_attempt', expected_delivery: null });
+    const instruction = scan('CL', '2026-06-27T11:10:00+02:00', 'Instruction de livraison reçue',
+      { ...appointment, 'Date de relivraison': '29/06/2026' });
+    expect(parseChronopostTrackingXml(history(prepared, outForDelivery, failed, instruction), number)).toMatchObject({
+      current_stage: 'in_transit', expected_delivery: '2026-06-29' });
+    const delayed = scan('A2', '2026-06-30T09:00:00+02:00', "Colis retardé à l'agence de distribution");
+    expect(parseChronopostTrackingXml(history(prepared, outForDelivery, failed, instruction, delayed), number))
+      .toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
+    const invalid: Record<string, string>[] = [{ 'Début créneau RDV': '31/02/2026 10:00', 'Fin créneau RDV': '31/02/2026 12:00' },
+      { 'Début créneau RDV': '27/06/2026 12:00', 'Fin créneau RDV': '27/06/2026 10:00' },
+      { 'Début créneau RDV': '27/06/2026 10:00', 'Fin créneau RDV': '28/06/2026 12:00' }, { 'Date de relivraison': '2026-06-29' }];
+    for (const infos of invalid) {
+      const xml = history(scan('DC', '2026-06-26T18:00:00+02:00', "Colis en cours de préparation chez l'expéditeur", infos));
+      expect(parseChronopostTrackingXml(xml, number).expected_delivery).toBeNull();
+    }
+  });
+
+  it('names the pickup point only while the parcel waits there, and dates the delivery', () => {
+    const arrived = scan('AB', '2026-06-27T11:07:04+02:00', 'Colis mis à disposition au point de retrait', relay);
+    const dropOff = scan('RB', '2026-06-27T11:08:00+02:00', 'Colis en cours de livraison au point de retrait',
+      { 'Point de retrait': relay['Point de livraison'] });
+    const waiting = parseChronopostTrackingXml(history(prepared, outForDelivery, arrived, dropOff), number);
+    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
+      pickup_point: 'EXAMPLE RELAY', expected_delivery: null });
+    expect(waiting.events?.[0]).toMatchObject({ provider_code: 'RB', stage: 'ready_for_pickup', stage_source: 'none' });
+    expect(JSON.stringify(waiting)).not.toMatch(/EXAMPLE STREET|00000|EXAMPLE CITY/);
+    const collected = scan('D', '2026-06-27T16:04:28+02:00', 'Livraison effectuée', relay);
+    const notified = scan('SM', '2026-06-27T16:05:00+02:00', 'Destinataire informé par SMS ou mail');
+    const delivered = parseChronopostTrackingXml(history(prepared, arrived, collected, notified), number);
+    expect(delivered).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-06-27T16:04:28+02:00', expected_delivery: null });
+    expect(delivered.pickup_point).toBeUndefined();
+    // A home address or an unexpected layout never becomes a pickup point.
+    const unnamed: Record<string, string>[] = [{ 'Point de livraison': relay['Point de livraison'] },
+      { ...relay, 'Point de livraison': 'EXAMPLE RELAY - FR' }];
+    for (const infos of unnamed) {
+      const result = parseChronopostTrackingXml(history(scan('AB', '2026-06-27T11:07:04+02:00',
+        'Colis mis à disposition au point de retrait', infos)), number);
+      expect(result).toMatchObject({ current_stage: 'ready_for_pickup' });
+      expect(result.pickup_point).toBeUndefined();
+    }
   });
 
   it('preserves local and invalid clocks without inventing instants', () => {

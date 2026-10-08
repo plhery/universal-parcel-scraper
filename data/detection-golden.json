@@ -634,6 +634,24 @@
     ]
   },
   {
+    "input": "015750676972097",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "dpd-fr",
+      "chronopost",
+      "yunda",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "chronopost"
+    ]
+  },
+  {
     "input": "01975035168241",
     "carrier": "unknown",
     "confidence": "low",
@@ -1285,6 +1303,22 @@
       "seur",
       "brt",
       "relais-colis"
+    ]
+  },
+  {
+    "input": "05368806451396L",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "chronopost",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "chronopost"
     ]
   },
   {
@@ -9256,6 +9290,14 @@
     ]
   },
   {
+    "input": "AH992514975FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "AHOY1X39DP45",
     "carrier": "asendia",
     "confidence": "high",
@@ -10370,6 +10412,17 @@
     "candidates": []
   },
   {
+    "input": "FZ246006535JB",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "GB0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -10547,6 +10600,17 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "HV520454959JF",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -12016,6 +12080,14 @@
     ]
   },
   {
+    "input": "PZ282567966EE",
+    "carrier": "chronopost",
+    "confidence": "high",
+    "candidates": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "Px1684005605",
     "carrier": "poczta-polska",
     "confidence": "high",
@@ -13030,11 +13102,38 @@
     "candidates": []
   },
   {
+    "input": "XN136114912JB",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "XR123456785TS",
     "carrier": "chronopost",
     "confidence": "high",
     "candidates": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "XR657749906TS",
+    "carrier": "chronopost",
+    "confidence": "high",
+    "candidates": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "XS431625991FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {
@@ -13086,6 +13185,14 @@
     ]
   },
   {
+    "input": "XW269574225JF",
+    "carrier": "chronopost",
+    "confidence": "high",
+    "candidates": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "XW295445484JF",
     "carrier": "chronopost",
     "confidence": "high",
@@ -13101,6 +13208,14 @@
       "chronopost"
     ],
     "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "XY252584055RV",
+    "carrier": "chronopost",
+    "confidence": "high",
+    "candidates": [
       "chronopost"
     ]
   },

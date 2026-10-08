@@ -6,7 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, countryCode, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
-import { chronopostStage, isChronopostNotification } from './status.js';
+import { chronopostStage, isChronopostNotification, isPickupDropOff } from './status.js';
 
 export const CHRONOPOST_MAX_BYTES = 2_000_000;
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
@@ -55,6 +55,21 @@ function clock(raw: string): { time?: string; local_time?: string; provider_time
 function redeliveryDay(value: string): string | null {
   const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
   return match ? calendarDay(Number(match[3]), Number(match[2]), Number(match[1])) : null;
+}
+
+/** An appointment window within one day, printed as dd/MM/yyyy HH:mm[:ss] at both ends. */
+function appointmentWindow(start: string, end: string): string | null {
+  const ends = [start, end].map(value => /^(\d{2})\/(\d{2})\/(\d{4}) ([01]\d|2[0-3]):([0-5]\d)(?::[0-5]\d)?$/.exec(value));
+  const days = ends.map(match => match ? calendarDay(Number(match[3]), Number(match[2]), Number(match[1])) : null);
+  const clocks = ends.map(match => match ? `${match[4]}:${match[5]}` : '');
+  return days[0] && days[0] === days[1] && clocks[0]! < clocks[1]! ? `${days[0]} ${clocks[0]}–${clocks[1]}` : null;
+}
+
+/** The relay or locker name is the first part of its address; the rest is never read. */
+function pickupName(point: string): string {
+  const parts = point.split(' - ');
+  const name = clean(parts[0], 200);
+  return parts.length >= 3 && /\p{L}/u.test(name) && /^[\p{L}\p{M}\p{N} .,'’&()/-]+$/u.test(name) ? name : '';
 }
 
 /** The calendar day of a scan's own clock, or '' without one. */
@@ -109,11 +124,18 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     const extras = children(scan, 'infoCompList');
     let place = '';
     let redelivery: string | null | undefined;
+    let start: string | undefined;
+    let end: string | undefined;
+    let collection = '';
+    let point = '';
     for (const extra of extras) {
       const name = scalar(extra, 'name');
       const value = scalar(extra, 'value');
       if (name === 'Lieu') place = value;
       if (name === 'Date de relivraison') redelivery = redeliveryDay(value);
+      if (name === 'Début créneau RDV') start = value;
+      if (name === 'Fin créneau RDV') end = value;
+      if (name === 'Type de retrait') collection = value;
       if (name === 'Numéro partenaire') {
         const match = /^(?:GEO\/)?([A-Z0-9]{4,40})$/.exec(value.toUpperCase());
         if (match) {
@@ -122,7 +144,8 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
         }
       }
       if (name === 'Point de livraison') {
-        // Only the terminal country is projected; discard the address itself.
+        // Only the terminal country and a pickup point's name are projected.
+        point = value;
         const country = countryCode(/ - ([A-Z]{2})$/.exec(value)?.[1]);
         if (country) destinations.add(country);
       }
@@ -134,7 +157,9 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
       ...(code ? { provider_code: code } : {}),
     };
     const mapped = chronopostStage(code, description);
-    return { event, mapped, notification: isChronopostNotification(description), index, redelivery };
+    return { event, mapped, notification: isChronopostNotification(description), index, redelivery,
+      appointment: start === undefined && end === undefined ? undefined : appointmentWindow(start ?? '', end ?? ''),
+      dropOff: isPickupDropOff(code, description), pickup: collection && point ? pickupName(point) : '' };
   });
   // The operation returns oldest first. Reorder only when all scan clocks
   // establish instants, so mixed local clocks cannot create a guessed order.
@@ -144,22 +169,31 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
   }
   let stage: Stage = 'pending';
   let stageSource = 'none';
+  let pickupPoint = '';
+  let deliveredAt: string | undefined;
   for (const scan of projected) {
-    if (!scan.notification && scan.mapped.source !== 'none') {
+    // An alert records activity, but does not regress delivery or prove movement.
+    // Nor does a drop-off scan that follows the pickup point's arrival scan.
+    const kept = scan.notification || (scan.dropOff && stage === 'ready_for_pickup');
+    if (!kept && scan.mapped.source !== 'none') {
       stage = scan.mapped.stage;
       stageSource = scan.mapped.source;
+      pickupPoint = stage === 'ready_for_pickup' ? scan.pickup : '';
+      if (stage === 'delivered') deliveredAt = scan.event.time;
     }
-    // An alert records activity, but does not regress delivery or prove movement.
-    scan.event.stage = scan.notification ? stage : scan.mapped.stage;
-    scan.event.stage_source = scan.notification ? 'none' : scan.mapped.source;
+    scan.event.stage = kept ? stage : scan.mapped.stage;
+    scan.event.stage_source = kept ? 'none' : scan.mapped.source;
   }
-  // The newest instruction that names a redelivery day decides, even when its
-  // day is unreadable. A later scan that is not progress towards that delivery,
-  // or that falls on a later day, ends it.
+  // The newest scan that names a redelivery day or an appointment window
+  // decides, even when its value is unreadable; a redelivery day replaces the
+  // window on the same scan. A later scan that is not progress towards that
+  // delivery, or that falls on a later day, ends it.
   let promised: string | null = null;
   for (const scan of projected) {
     if (scan.redelivery !== undefined) promised = scan.redelivery;
-    else if (promised && (clockDay(scan.event) > promised || (!scan.notification && !ONGOING.has(scan.mapped.stage)))) {
+    else if (scan.appointment !== undefined) promised = scan.appointment;
+    else if (promised && (clockDay(scan.event) > promised.slice(0, 10)
+      || (!scan.notification && !ONGOING.has(scan.mapped.stage)))) {
       promised = null;
     }
   }
@@ -177,6 +211,8 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     last_status_text: latest.description,
     last_update: latest.time ?? null,
     expected_delivery: ['delivered', 'returned', 'ready_for_pickup'].includes(stage) ? null : promised,
+    ...(stage === 'delivered' && deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     ...(reference ? { delivery_tracking_number: reference } : {}),
     ...(partner ? { delivery_carrier: partner } : {}),
     ...(destination ? { destination_country: destination } : {}),

@@ -29,6 +29,8 @@
     "history",
     "location",
     "eta",
+    "pickup_point",
+    "delivered_at",
     "provider_code",
     "delivery_tracking_number"
   ],

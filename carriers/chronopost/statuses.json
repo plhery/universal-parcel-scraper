@@ -98,6 +98,70 @@
       "note": "Notification after an in-transit scan; inherits the preceding shipment stage rather than establishing a milestone.",
       "wording": "Destinataire informé par SMS ou mail",
       "language": "fr"
+    },
+    {
+      "code": "T",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Entrée dans l'agence",
+      "language": "fr"
+    },
+    {
+      "code": "TT",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis remis par le relais Pickup au chauffeur",
+      "language": "fr"
+    },
+    {
+      "code": "EI",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Colis entré dans le pays de destination",
+      "language": "fr"
+    },
+    {
+      "code": "A2",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. A delay at the delivery depot, not a fault.",
+      "wording": "Colis retardé à l'agence de distribution",
+      "language": "fr"
+    },
+    {
+      "code": "IS",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Livraison prévue lundi prochain",
+      "language": "fr"
+    },
+    {
+      "code": "P",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "wording": "Echec de livraison suite à l'absence du destinataire.",
+      "language": "fr"
+    },
+    {
+      "code": "SK",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The recipient must act before delivery resumes.",
+      "wording": "Colis en attente d'informations complémentaires de votre part",
+      "language": "fr"
+    },
+    {
+      "code": "RB",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Read from wording. When it follows the pickup point's arrival scan (AB), it keeps ready_for_pickup.",
+      "wording": "Colis en cours de livraison au point de retrait",
+      "language": "fr"
     }
   ]
 }

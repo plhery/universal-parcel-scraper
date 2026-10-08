@@ -835,6 +835,18 @@
     "reason": "DPD prints a check character after the parcel number, and Chronopost delivers DPD parcels under the same label. Direct tracking must confirm the carrier."
   },
   {
+    "shape": "Fifteen digits starting with 0 or 1 that end in their DPD check digit and fail the GS1 check",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "yunda"
+    ],
+    "reason": "When DPD's check character is a digit, DPD France's and Yunda's fifteen-digit rules match too, and Chronopost delivers DPD parcels entering France under the same number. Direct tracking must confirm the carrier."
+  },
+  {
     "shape": "La Poste Smart Data prefix (865, 866, 870, 875, 880 or 885), eleven digits and their check letter",
     "carriers": [
       "chronopost",
