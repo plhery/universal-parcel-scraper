@@ -24,7 +24,13 @@ deadline and cancellation signal, and the browser closes after each lookup.
 
 ## Notes
 
-- Summary categories and individual scan codes have separate meanings.
+- Summary categories and individual scan codes have separate meanings. The
+  sender's despatch notice and a booked collection are registrations; a
+  collection or a Post Office drop-off is the acceptance.
+- A delivery's scan time becomes `delivered_at`. The details reply's
+  destination country becomes `destination_country`.
+- Scan places lose the postcode Royal Mail appends to a Post Office branch,
+  and a place given only as a postcode is dropped.
 - Offset-free or invalid clocks remain in `provider_time_text`; sorting
   requires every event clock to resolve.
 - Delivered wording is reduced to `Delivered`. Recipient, signature, photo,

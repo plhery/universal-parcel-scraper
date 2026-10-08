@@ -9,6 +9,12 @@ const PROVIDER = 'Royal Mail';
 const ORIGIN = 'https://www.royalmail.com';
 const MAX_BYTES = 2_000_000;
 
+/** The destination the full-history reply adds to the summary, and nothing else from it. */
+export function royalMailDestination(summary: unknown): { summary?: { destinationCountryCode: string } } {
+  const code = isRecord(summary) ? summary.destinationCountryCode : undefined;
+  return typeof code === 'string' && /^[A-Z]{2}$/.test(code) ? { summary: { destinationCountryCode: code } } : {};
+}
+
 /** Observe the application's request; its issued session stays in the browser. */
 export async function captureRoyalMailReply(page: Page, url: string, number: string, phase: 'summary' | 'events',
   signal: AbortSignal, timeoutMs: number, trigger: () => Promise<void>): Promise<Record<string, unknown>> {
@@ -70,7 +76,7 @@ export async function captureRoyalMailReply(page: Page, url: string, number: str
       }
       // Drop proof, recipient and credential fields before merging the replies.
       resolve(phase === 'summary' ? { mailPieceId: number, summary: piece.summary, estimatedDelivery: piece.estimatedDelivery }
-        : { mailPieceId: number, events: piece.events,
+        : { mailPieceId: number, events: piece.events, ...royalMailDestination(piece.summary),
           ...(isRecord(piece.estimatedDelivery) ? { estimatedDelivery: { date: piece.estimatedDelivery.date } } : {}) });
     })().catch(error => { if (active) reject(carrierErrorKind(error) ? error : new TransportError(PROVIDER)); });
   };
@@ -157,7 +163,8 @@ export function fetchRoyalMailInBrowser(number: string, executablePath: string, 
       const history = fullHistory ? await captureRoyalMailReply(page, royalMailEventsApiUrl(number), number, 'events', session,
         Math.min(25_000, remainingMs()), () => page.locator('#btn-more-details').click({ timeout: timeout() })) : undefined;
       session.throwIfAborted();
-      return { ...parseRoyalMailTrackingResponse({ mailPieces: { ...summary, ...(history ?? {}) } }, number),
+      return { ...parseRoyalMailTrackingResponse({ mailPieces: { ...summary, ...(history ?? {}),
+        summary: { ...(summary.summary as Record<string, unknown>), ...(history?.summary as Record<string, unknown> | undefined) } } }, number),
         tracking_url: royalMailTrackingUrl(number), tracking_source: 'structured-web-response' };
     } catch (error) {
       session.throwIfAborted();

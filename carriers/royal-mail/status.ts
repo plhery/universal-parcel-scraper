@@ -25,14 +25,24 @@ const IN_TRANSIT_TERMS = ['despatched', 'dispatched', 'redirected', 'in transit'
 
 // Codes present in the public tracking application's full-history response.
 // Several movement scans share "Item Received", which alone cannot place them.
+// The sender's despatch notice and a booked collection precede acceptance.
 const EVENT_STAGES = new Map<string, Stage>([
   ['EVKOP', 'delivered'],
   ['EVGPD', 'out_for_delivery'],
+  ['EVKPD', 'out_for_delivery'],
   ['EVIMC', 'in_transit'],
   ['EVIAV', 'in_transit'],
   ['EVDAC', 'in_transit'],
   ['EVDAV', 'in_transit'],
-  ['EVAIP', 'in_transit'],
+  ['EVIPP', 'in_transit'],
+  ['EVGID', 'in_transit'],
+  ['EVHAC', 'in_transit'],
+  ['EVHOE', 'in_transit'],
+  ['EVIIS', 'in_transit'],
+  ['EVCAD', 'accepted'],
+  ['EVPPA', 'accepted'],
+  ['EVAIP', 'registered'],
+  ['ECCSB', 'registered'],
 ]);
 
 export function royalMailEventStage(code: string): Stage | null {

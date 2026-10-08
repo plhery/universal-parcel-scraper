@@ -140,12 +140,52 @@ describe('Royal Mail structured response', () => {
       ],
     } }, DELIVERED_NUMBER);
     expect(result.events?.map(event => event.stage)).toEqual([
-      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'registered',
     ]);
+    expect(result.delivered_at).toBe('2026-01-03T09:56:31Z');
     expect(result.events?.every(event => event.stage_source === 'carrier_map')).toBe(true);
     expect(result.events?.[0]?.description).toBe('Delivered');
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
     expect(JSON.stringify(result)).not.toContain('**');
+  });
+
+  it('places an international journey by its codes and names the destination', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER,
+      summary: { statusCategory: 'Delivered', statusDescription: '**Delivered**', destinationCountryCode: 'US', destinationCountryName: 'Example' },
+      events: [
+        { eventCode: 'EVKOP', eventName: '**Delivered**', eventDateTime: '2026-01-09T15:24:00+01:00', locationName: 'Exampleville, United States of America' },
+        { eventCode: 'EVKPD', eventName: '**Due to be delivered today**', eventDateTime: '2026-01-09T13:10:00+01:00', locationName: '99999' },
+        { eventCode: 'EVGID', eventName: '**Arrived at Delivery Office**', eventDateTime: '2026-01-09T12:59:00+01:00', locationName: '99999-1234' },
+        { eventCode: 'EVIIS', eventName: '**Item received at Sorting Office**', eventDateTime: '2026-01-08T16:28:00+01:00' },
+        { eventCode: 'EVHOE', eventName: '**Item Leaving the UK**', eventDateTime: '2026-01-05T23:38:26+01:00' },
+        { eventCode: 'EVHAC', eventName: '**Item Received by Royal Mail**', eventDateTime: '2026-01-05T22:54:18+01:00' },
+        { eventCode: 'EVIPP', eventName: 'Received at Delivery Depot', eventDateTime: '2026-01-05T20:00:00+01:00' },
+        { eventCode: 'EVPPA', eventName: '**Accepted at Parcelshop**', eventDateTime: '2026-01-04T16:48:51+01:00', locationName: 'Example Post Office [ZZ9 9ZZ]' },
+        { eventCode: 'EVCAD', eventName: 'Item Collected', eventDateTime: '2026-01-04T11:36:41+01:00', locationName: 'Example DO [Main]' },
+        { eventCode: 'ECCSB', eventName: 'Collection Request Succesfully booked for item', eventDateTime: '2026-01-03T14:35:45+01:00' },
+      ],
+    } }, DELIVERED_NUMBER);
+    expect(result.events?.map(event => event.stage)).toEqual([
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'accepted', 'registered',
+    ]);
+    expect(result).toMatchObject({ status: 'delivered', delivered_at: '2026-01-09T15:24:00+01:00', destination_country: 'US' });
+    expect(result.events?.map(event => event.location)).toEqual([
+      'Exampleville, United States of America', undefined, undefined, undefined, undefined, undefined, undefined, 'Example Post Office', 'Example DO [Main]', undefined,
+    ]);
+  });
+
+  it('dates a summary-only delivery from its last event and ignores an unusable destination', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: DELIVERED_NUMBER, summary: {
+      statusCategory: 'Delivered', statusDescription: 'Delivered', lastEventCode: 'EVKOP', lastEventDateTime: '2026-01-03T09:56:31+00:00',
+      destinationCountryCode: 'United Kingdom',
+    } } }, DELIVERED_NUMBER);
+    expect(result).toMatchObject({ summary_only: true, delivered_at: '2026-01-03T09:56:31Z' });
+    expect(result).not.toHaveProperty('destination_country');
+    const pending = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: DELIVERED_NUMBER, summary: {
+      statusCategory: 'In transit', statusDescription: 'In transit', lastEventCode: 'EVKOP', lastEventDateTime: '2026-01-03T09:56:31+00:00',
+    } } }, DELIVERED_NUMBER);
+    expect(pending).not.toHaveProperty('delivered_at');
   });
 
   it('leaves an unknown full-history code and future wording unstaged', () => {
@@ -158,10 +198,12 @@ describe('Royal Mail structured response', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'provider_code']);
     const result = parseRoyalMailTrackingResponse(structuredClone(DELIVERED), DELIVERED_NUMBER);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
+    expect(result.delivered_at).toBeTruthy();
+    expect(result.events?.some((event) => event.provider_code)).toBe(true);
     expect(parseRoyalMailTrackingResponse(structuredClone(IN_TRANSIT), IN_TRANSIT_NUMBER).expected_delivery).toBeTruthy();
   });
 

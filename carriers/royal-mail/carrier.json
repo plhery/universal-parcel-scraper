@@ -25,7 +25,9 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "delivered_at",
+    "provider_code"
   ],
   "portal": {
     "url": "https://www.royalmail.com/portal/rm/track?trackNumber={trackingNumber}",
@@ -34,18 +36,23 @@
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "destination"
     ],
     "scraped": [
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "destination",
+      "delivered_at",
+      "provider_code"
     ],
     "discarded": [
       "signatory",
       "proof of delivery extras",
-      "recipient details"
+      "recipient details",
+      "postcodes"
     ],
     "unavailable": []
   },

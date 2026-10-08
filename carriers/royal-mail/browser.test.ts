@@ -68,6 +68,16 @@ describe('Royal Mail browser response capture', () => {
       .resolves.toEqual({ mailPieceId: NUMBER, events: [], estimatedDelivery: { date: '2026-01-03' } });
   });
 
+  it('retains only the destination country from the details summary', async () => {
+    const h = harness('events');
+    await expect(h.capture(() => h.respond({ mailPieces: { mailPieceId: NUMBER, events: [], summary: {
+      destinationCountryCode: 'US', destinationCountryName: 'PRIVATE', deliveredInfo: 'PRIVATE', productName: 'PRIVATE' } } })))
+      .resolves.toEqual({ mailPieceId: NUMBER, events: [], summary: { destinationCountryCode: 'US' } });
+    const other = harness('events');
+    await expect(other.capture(() => other.respond({ mailPieces: { mailPieceId: NUMBER, events: [], summary: { destinationCountryCode: 'PRIVATE' } } })))
+      .resolves.toEqual({ mailPieceId: NUMBER, events: [] });
+  });
+
   it.each([[401, 'challenge'], [404, 'transport'], [410, 'transport']])('classifies a non-JSON HTTP %s without reading private HTML', async (status, kind) => {
     const h = harness();
     const body = vi.fn(async () => Buffer.from('PRIVATE HTML'));

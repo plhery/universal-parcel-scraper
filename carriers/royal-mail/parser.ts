@@ -42,6 +42,16 @@ function eventTime(value: unknown): string | null {
   return explicitOffsetTime(raw)?.iso ?? null;
 }
 
+// Royal Mail appends a Post Office branch's postcode in brackets, and an
+// overseas partner can report a delivery office by postcode alone.
+const POSTCODE = /^(?:[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|\d{3,10}(?:-\d{3,4})?)$/i;
+
+/** A scan's place without postcodes, which can narrow down a recipient's area. */
+function placeName(value: unknown): string {
+  const text = cleanScalar(value, 250).replace(/\s*\[([^\]]*)\]$/, (bracket, inner: string) => POSTCODE.test(inner.trim()) ? '' : bracket);
+  return POSTCODE.test(text) ? '' : text;
+}
+
 /** A delivery estimate reduced to its calendar day. */
 function expectedDelivery(value: unknown): string | null {
   const raw = cleanScalar(value, 64);
@@ -87,7 +97,7 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
     const stage = mapped ?? royalMailStage(description) ?? undefined;
     const time = eventTime(raw.eventDateTime);
     const timeText = cleanScalar(raw.eventDateTime, 64);
-    const location = cleanScalar(raw.locationName, 250);
+    const location = placeName(raw.locationName);
     const event: CarrierEvent = {
       ...(time ? { time } : {}),
       ...(!time && timeText ? { provider_time_text: timeText } : {}),
@@ -114,6 +124,10 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   if (!statusText) throw new SchemaError('Royal Mail', 'Royal Mail returned no usable tracking status');
   const stage = royalMailSummaryStage(summaryCategory, statusText) ?? undefined;
   const delivered = stage === 'delivered';
+  const deliveredAt = !delivered ? null : trimmed.find(event => event.stage === 'delivered' && event.time)?.time
+    ?? (royalMailEventStage(cleanScalar(summary.lastEventCode, 64)) === 'delivered' ? eventTime(summary.lastEventDateTime) : null);
+  // Only the full-history reply names the destination.
+  const destination = cleanScalar(summary.destinationCountryCode, 8);
   return {
     status: stage ? statusForStage(stage) : 'unknown',
     ...(stage ? { current_stage: stage } : {}),
@@ -121,6 +135,8 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
     last_update: eventTime(summary.lastEventDateTime) || trimmed[0]?.time || null,
     expected_delivery: delivered || !isRecord(mailpiece.estimatedDelivery)
       ? null : expectedDelivery(mailpiece.estimatedDelivery.date),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
     events: trimmed,
     ...(trimmed.length ? {} : { summary_only: true }),
   };

@@ -147,10 +147,89 @@
       "code": "EVAIP",
       "wording": "Sender has despatched item",
       "language": "en",
-      "stage": "in_transit",
+      "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-05",
-      "note": "Full-history code takes precedence over repeated display wording."
+      "note": "The sender's despatch notice, before Royal Mail has the item; also worded \"Sender preparing item\"."
+    },
+    {
+      "code": "ECCSB",
+      "wording": "Collection Request Succesfully booked for item",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A booked collection; the item is not yet with Royal Mail."
+    },
+    {
+      "code": "EVCAD",
+      "wording": "Item Collected",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Collected from the sender."
+    },
+    {
+      "code": "EVPPA",
+      "wording": "Accepted at Parcelshop",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Dropped off at a Post Office or parcel shop."
+    },
+    {
+      "code": "EVIPP",
+      "wording": "Received at Delivery Depot",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The code places it; the shared wording \"received\" alone would read as acceptance."
+    },
+    {
+      "code": "EVHAC",
+      "wording": "Item Received by Royal Mail",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen at an international hub after collection."
+    },
+    {
+      "code": "EVHOE",
+      "wording": "Item Leaving the UK",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "EVIIS",
+      "wording": "Item received at Sorting Office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A sorting scan in the destination country."
+    },
+    {
+      "code": "EVGID",
+      "wording": "Arrived at Delivery Office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "EVKPD",
+      "wording": "Due to be delivered today",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The destination partner's out-for-delivery scan."
     }
   ]
 }

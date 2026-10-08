@@ -5,7 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { fetchRoyalMailInBrowser } from './browser.js';
+import { fetchRoyalMailInBrowser, royalMailDestination } from './browser.js';
 import { normalizeRoyalMailNumber, parseRoyalMailTrackingHtml, parseRoyalMailTrackingResponse,
   royalMailEventsApiUrl, royalMailSummaryApiUrl, royalMailTrackingUrl } from './parser.js';
 
@@ -165,7 +165,7 @@ export class RoyalMailTracker {
         }
         const summaryPiece = (summaryPayload as { mailPieces: Record<string, unknown> }).mailPieces;
         return this.#structuredResult(number, { mailPieces: {
-          mailPieceId: number, summary: summaryPiece.summary,
+          mailPieceId: number, summary: { ...(summaryPiece.summary as Record<string, unknown>), ...royalMailDestination(historyPiece.summary).summary },
           estimatedDelivery: historyPiece.estimatedDelivery ?? summaryPiece.estimatedDelivery, events: historyPiece.events,
         } });
       }
