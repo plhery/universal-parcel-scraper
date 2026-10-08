@@ -15,6 +15,7 @@ const STATUS = new Map<string, ClassifiedStatus>([
   ['Presented to import customs', { status: 'in_transit', stage: 'customs' }],
   ['Released from import customs', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed from destination import office', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at sorting center', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at post office', { status: 'in_transit', stage: 'in_transit' }],
   ['Out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Delivered', { status: 'delivered', stage: 'delivered' }],

@@ -116,6 +116,7 @@ describe('EMS result projection', () => {
     ['Export cancelled', 'exception', 'exception'],
     ['Returned to sender', 'exception', 'returned'],
     ['Released from import customs', 'in_transit', 'in_transit'],
+    ['Arrived at sorting center', 'in_transit', 'in_transit'],
   ])('maps the exact wording %s without changing older stages', (wording, status, stage) => {
     const result = parse(withLastStatus(wording), NUMBER);
     expect(result).toMatchObject({ status, current_stage: stage });

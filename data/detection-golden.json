@@ -13300,6 +13300,14 @@
     "candidates": []
   },
   {
+    "input": "EG466054800IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "EH013600697NL",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -13410,6 +13418,17 @@
     ]
   },
   {
+    "input": "EP992072779US",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "ES0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -13484,6 +13503,14 @@
   },
   {
     "input": "EX232685554SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
+    ]
+  },
+  {
+    "input": "EX249824825SG",
     "carrier": "singapore-post",
     "confidence": "high",
     "candidates": [
@@ -17539,6 +17566,14 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "em595337205jp",
+    "carrier": "japan-post",
+    "confidence": "high",
+    "candidates": [
+      "japan-post"
     ]
   },
   {
