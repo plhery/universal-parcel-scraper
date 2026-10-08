@@ -11,6 +11,7 @@ import { sameInstantIdentityPolicy as mondialRelay } from '../../carriers/mondia
 import { sameInstantIdentityPolicy as posti } from '../../carriers/posti/identity.js';
 import { sameInstantIdentityPolicy as ups } from '../../carriers/ups/app.js';
 import { sameInstantIdentityPolicy as swissPost } from '../../carriers/swiss-post/app.js';
+import { sameInstantIdentityPolicy as yanwen } from '../../carriers/yanwen/app.js';
 import { sameInstantIdentityPolicy as universal } from '../../providers/shared/app.js';
 
 /** Scan evidence available to the app before it reuses a stored identity. */
@@ -40,7 +41,7 @@ export interface SameInstantIdentityPolicy {
 }
 
 const policies: ReadonlyMap<string, SameInstantIdentityPolicy> = new Map(
-  [aliexpress, amazonShipping, australiaPost, chronopost, ciblex, dpd, dpdFrance, indiaPost, lbcExpress, mondialRelay, posti, ups, swissPost, universal].map((policy) => [policy.sourceCarrierId, policy]),
+  [aliexpress, amazonShipping, australiaPost, chronopost, ciblex, dpd, dpdFrance, indiaPost, lbcExpress, mondialRelay, posti, ups, swissPost, yanwen, universal].map((policy) => [policy.sourceCarrierId, policy]),
 );
 
 /** Unlisted sources cannot identify a reworded scan by its instant alone. */

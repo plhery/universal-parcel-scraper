@@ -59,6 +59,30 @@ function eventTime(day: string, raw: string): string {
   return parsed.toISO({ suppressMilliseconds: true });
 }
 
+/**
+ * Some partner histories come twice: on the local wall clock and on the UTC
+ * wall clock under the same offset, which puts US scans hours late. A scan with
+ * the same wording, icon and offset exactly that offset away, in the same place
+ * or with one place missing, is the UTC copy: the local scan stays and keeps
+ * the copy's place. A scan that could pair with more than one stays as it is.
+ */
+function withoutUtcCopies(events: CarrierEvent[]): CarrierEvent[] {
+  const clocks = events.map((event) => DateTime.fromISO(event.time!, { setZone: true }));
+  const pairs: Array<[local: number, copy: number]> = [];
+  events.forEach((local, i) => events.forEach((copy, j) => {
+    const { offset } = clocks[i]!;
+    if (offset && clocks[j]!.offset === offset && clocks[j]!.toMillis() === clocks[i]!.toMillis() - offset * 60_000
+      && copy.description === local.description && copy.provider_code === local.provider_code
+      && (!copy.location || !local.location || copy.location === local.location)) pairs.push([i, j]);
+  }));
+  const uses = new Map<number, number>();
+  for (const index of pairs.flat()) uses.set(index, (uses.get(index) ?? 0) + 1);
+  const unique = pairs.filter((pair) => pair.every((index) => uses.get(index) === 1));
+  const copies = new Set(unique.map(([, copy]) => copy));
+  const places = new Map(unique.map(([local, copy]) => [local, events[local]!.location || events[copy]!.location]));
+  return events.flatMap((event, index) => copies.has(index) ? [] : [places.has(index) ? { ...event, location: places.get(index) } : event]);
+}
+
 export function parse(html: string, trackingNumber: string): CarrierResult {
   const number = normalizeYanwenNumber(trackingNumber);
   const $ = load(html);
@@ -79,7 +103,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     if (timeline.length !== 1) throw new IndeterminateError('Yanwen', 'Yanwen returned no parcel timeline');
     const scans = timeline.find('dl > dd');
     if (!scans.length || scans.length > 500) throw new SchemaError('Yanwen', 'Yanwen returned incomplete tracking history');
-    const events: CarrierEvent[] = [];
+    const scanned: CarrierEvent[] = [];
     const seen = new Set<string>();
     for (const scan of scans.toArray()) {
       const row = $(scan);
@@ -95,8 +119,9 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
       if (seen.has(key)) continue;
       seen.add(key);
       const classified = yanwenStatus(description, code);
-      events.push({ time, description, location, ...(code ? { provider_code: code } : {}), ...(classified ? { stage: classified.stage } : {}) });
+      scanned.push({ time, description, location, ...(code ? { provider_code: code } : {}), ...(classified ? { stage: classified.stage } : {}) });
     }
+    const events = withoutUtcCopies(scanned);
     const latest = events[0]!;
     const scan = yanwenStatus(latest.description!, latest.provider_code);
     // The category gives the status when the newest scan's wording is new. A

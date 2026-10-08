@@ -20,6 +20,17 @@ function reworded(wording: string, keepIcon = false) {
   return $;
 }
 
+type Row = [day: string, clock: string, place: string, wording: string, icon?: string];
+
+/** The fixture with both timelines replaced by these rows, newest first. */
+function history(rows: Row[]) {
+  const $ = load(fixture());
+  $('.czhaodl dl').html(rows.map(([day, clock, where, wording, icon]) => `<dt>${day}</dt><dd><p class="timePoint">${clock}</p>`
+    + `<div class="cz_c"><img src="${icon ? `/static/img/${icon}.png` : NONE_ICON}"></div>`
+    + `<div class="cz_r">${where ? `<h6>[${where}]</h6>` : ''}<h6>${wording}</h6></div></dd>`).join(''));
+  return parse($.html(), NUMBER);
+}
+
 /** The fixture with a last-mile reference and the notes naming its distributor. */
 function distributed(reference: string, name: string, site: string) {
   const $ = load(fixture());
@@ -122,6 +133,51 @@ describe('Yanwen result projection', () => {
     expect(result.last_status_text).toBe('Delivered in the mailbox. If you have any questions, please contact Example.');
     expect(result.status).toBe('delivered');
     for (const value of ['Z9Z', '00000', 'PIN', 'Door']) expect(JSON.stringify([result.last_status_text, result.events])).not.toContain(value);
+  });
+
+  it('drops the UTC copy of a relayed history and keeps each local scan with its place', () => {
+    const result = history([
+      ['2026-03-06', '16:47:56 [GMT-04]', '', 'Delivered, In/At Mailbox', 'LM40'],
+      ['2026-03-06', '12:47:56 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Delivered, In/At Mailbox', 'LM40'],
+      ['2026-03-06', '10:10:00 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Out for Delivery'],
+      ['2026-03-06', '06:10:00 [GMT-04]', '', 'Out for Delivery'],
+      ['2026-03-05', '04:00:00 [GMT-04]', '', 'In Transit to Next Facility'],
+      ['2026-03-05', '00:00:00 [GMT-04]', '', 'In Transit to Next Facility'],
+      ['2026-03-04', '21:11:42 [GMT-05]', 'EXAMPLE CITY, ZZ', 'Accepted at USPS Origin Facility'],
+      ['2026-03-04', '16:11:42 [GMT-05]', 'EXAMPLE CITY, ZZ', 'Accepted at USPS Origin Facility'],
+      ['2026-03-02', '14:00:00 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ]);
+    expect(result).toMatchObject({ status: 'delivered', last_update: '2026-03-06T12:47:56-04:00', delivered_at: '2026-03-06T12:47:56-04:00' });
+    expect(result.events?.map((event) => [event.time, event.location])).toEqual([
+      ['2026-03-06T12:47:56-04:00', 'EXAMPLE TOWN, ZZ'], ['2026-03-06T06:10:00-04:00', 'EXAMPLE TOWN, ZZ'], ['2026-03-05T00:00:00-04:00', ''],
+      ['2026-03-04T16:11:42-05:00', 'EXAMPLE CITY, ZZ'], ['2026-03-02T14:00:00+08:00', ''],
+    ]);
+    // The copy carries the UTC wall clock, so under an eastern offset it reads early.
+    expect(history([
+      ['2026-03-03', '10:00:00 [GMT+08]', 'Example facility', 'Arrived at domestic terminal station'],
+      ['2026-03-03', '02:00:00 [GMT+08]', '', 'Arrived at domestic terminal station'],
+    ]).events?.map((event) => [event.time, event.location])).toEqual([['2026-03-03T10:00:00+08:00', 'Example facility']]);
+  });
+
+  it('keeps repeated scans that are not one UTC copy of another', () => {
+    const result = history([
+      // A day apart rather than an offset apart.
+      ['2026-03-06', '09:00:00 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Out for Delivery'],
+      ['2026-03-05', '09:00:00 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Out for Delivery'],
+      // An offset apart, but in two places, under two icons or under two offsets.
+      ['2026-03-04', '22:00:00 [GMT-04]', 'EXAMPLE CITY, ZZ', 'Departed USPS Regional Facility'],
+      ['2026-03-04', '18:00:00 [GMT-04]', 'OTHER CITY, ZZ', 'Departed USPS Regional Facility'],
+      ['2026-03-04', '12:00:00 [GMT-04]', '', 'Synthetic batch scan', 'LH40'],
+      ['2026-03-04', '08:00:00 [GMT-04]', '', 'Synthetic batch scan'],
+      ['2026-03-03', '21:00:00 [GMT-04]', '', 'Synthetic hub scan'],
+      ['2026-03-03', '16:00:00 [GMT-05]', '', 'Synthetic hub scan'],
+      // Three in a row an offset apart: no single pairing is sure.
+      ['2026-03-03', '08:00:00 [GMT-04]', '', 'In Transit to Next Facility'],
+      ['2026-03-03', '04:00:00 [GMT-04]', '', 'In Transit to Next Facility'],
+      ['2026-03-03', '00:00:00 [GMT-04]', '', 'In Transit to Next Facility'],
+      ['2026-03-02', '14:00:00 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ]);
+    expect(result.events).toHaveLength(12);
   });
 
   it('files every recorded wording, code and category under its recorded stage', () => {
