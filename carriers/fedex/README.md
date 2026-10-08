@@ -55,6 +55,15 @@ fallback')`.
   It returns the history with its confirmation so callers can reuse it after identification.
 - Status uses `keyStatusCD` / scan `statusCD` first, then substring matches on the prose. A
   `DL` code is terminal and outranks the wording.
+- Hold at location: `HL` and `HP` (FedEx's "Ready for pickup (Hold at Location)") are
+  `ready_for_pickup`; `RR` (delivery option requested) and `HA` (hold accepted) stay in
+  transit. A hold for a problem, such as clearance or a wrong address, carries another code
+  and stays an exception. An `OD` scan of a parcel on its way to the hold location stays out
+  for delivery, although the page labels it "Heading to pickup location".
+- While the parcel is ready for pickup, `pickup_point` is `halCmpnyName` on the first line,
+  then `halAddress`: its street lines, and "City, ST 12345" or, without a state or province,
+  "postcode city". Without a street or town it is the name alone; without a name, or for a
+  residential hold address, there is none.
 - Delivered scans are rewritten to "Delivered" because FedEx's line names the signatory.
 - Scan times come from `date` + `time` + `gmtOffset`. A scan without a usable triple keeps no
   time rather than a guessed zone.
@@ -96,6 +105,10 @@ application identifiers and issued tokens stay outside the repository.
   time.
 - Sender, recipient, signatory, service description, weight and dimensions are in the reply
   but never read; a test asserts it.
+- The anonymous reply carries the hold-location fields, but no held parcel's reply has been
+  captured, so their parsing follows the page bundle. For a hold arranged after shipping
+  (exception codes `A12`, `A13`, `015`) FedEx's page shows a guest only the town; if the reply
+  leaves out the name or street, `pickup_point` falls back as above.
 
 ## Testing
 

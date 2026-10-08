@@ -15,6 +15,7 @@ import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status.js';
 // this file; the fixtures carry PRIVATE … placeholders instead.
 const DELIVERED_NUMBER = '999999999999';
 const IN_TRANSIT_NUMBER = '999999999998';
+const HELD_NUMBER = '999999999996';
 const TRACK_API = 'https://api.fedex.com/track/v2/shipments';
 const TRAWL_URL = 'http://trawl.internal:8191';
 const DELIVERED = JSON.parse(
@@ -22,6 +23,9 @@ const DELIVERED = JSON.parse(
 ) as Record<string, unknown>;
 const IN_TRANSIT = JSON.parse(
   readFileSync(new URL('./fixtures/in-transit.json', import.meta.url), 'utf8'),
+) as Record<string, unknown>;
+const HELD = JSON.parse(
+  readFileSync(new URL('./fixtures/held.json', import.meta.url), 'utf8'),
 ) as Record<string, unknown>;
 const CAPABILITIES = (JSON.parse(
   readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
@@ -33,6 +37,13 @@ function deliveredFixture(): Record<string, unknown> {
 
 function inTransitFixture(): Record<string, unknown> {
   return structuredClone(IN_TRANSIT);
+}
+
+/** The held fixture's package, changed by `edit` first. */
+function heldFixture(edit: (shipment: Record<string, unknown>) => void = () => {}): Record<string, unknown> {
+  const payload = structuredClone(HELD);
+  edit((payload.output as { packages: Record<string, unknown>[] }).packages[0]!);
+  return payload;
 }
 
 function stepRecorder(): { recorder: StepRecorder; records: string[] } {
@@ -63,6 +74,18 @@ describe('FedEx status vocabulary', () => {
     expect(fedexStatus('XX', 'Wording FedEx has not used before')).toBe('unknown');
     expect(fedexStatus('XX', 'Wording FedEx has not used before', true)).toBe('in_transit');
     expect(fedexStage('Wording FedEx has not used before')).toBeNull();
+  });
+
+  it('reads a hold at location as ready for pickup only once the parcel waits there', () => {
+    expect(FEDEX_CODE_STAGE.HL).toBe('ready_for_pickup');
+    expect(FEDEX_CODE_STAGE.HP).toBe('ready_for_pickup');
+    expect(FEDEX_CODE_STAGE.RR).toBe('in_transit');
+    expect(FEDEX_CODE_STAGE.HA).toBe('in_transit');
+    expect(fedexStatus('HL', 'Wording FedEx has not used before')).toBe('out_for_delivery');
+    expect(fedexStage('Ready for pickup')).toBe('ready_for_pickup');
+    // A hold for a problem keeps its exception reading.
+    expect(fedexStatus('SE', 'Shipment exception — held at FedEx location')).toBe('exception');
+    expect(fedexStage('Package held at FedEx location')).toBe('exception');
   });
 });
 
@@ -112,11 +135,81 @@ describe('FedEx structured response', () => {
 
   it('produces every capability carrier.json declares', () => {
     const result = parseFedExTrackingResponse(deliveredFixture(), DELIVERED_NUMBER);
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'pickup_point']);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.delivered_at).toBeTruthy();
     expect(parseFedExTrackingResponse(inTransitFixture(), IN_TRANSIT_NUMBER).expected_delivery).toBeTruthy();
+    expect(parseFedExTrackingResponse(heldFixture(), HELD_NUMBER).pickup_point).toBeTruthy();
+  });
+
+  it('names the hold location while the parcel is ready for pickup', () => {
+    const result = parseFedExTrackingResponse(heldFixture(), HELD_NUMBER);
+    expect(result).toMatchObject({
+      status: 'out_for_delivery',
+      current_stage: 'ready_for_pickup',
+      last_status_text: 'Ready for pickup',
+      last_update: '2026-10-06T14:20:00-05:00',
+      expected_delivery: null,
+      pickup_point: 'FEDEX OFFICE PRINT & SHIP CENTER\n100 EXAMPLE AVE\nSUITE 2\nMEMPHIS, TN 38118',
+    });
+    expect(result.events?.map((event) => [event.description, event.stage])).toEqual([
+      ['Ready for pickup', 'ready_for_pickup'],
+      ['Hold at location request accepted', 'in_transit'],
+      ['Delivery option requested', 'in_transit'],
+      ['Arrived at FedEx location', 'in_transit'],
+      ['Picked up', 'accepted'],
+    ]);
+    // An `HP` package is ready for pickup too.
+    expect(parseFedExTrackingResponse(heldFixture((shipment) => { shipment.keyStatusCD = 'HP'; }), HELD_NUMBER))
+      .toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: result.pickup_point });
+  });
+
+  it('writes a hold location without a state as postcode and town', () => {
+    const result = parseFedExTrackingResponse(heldFixture((shipment) => {
+      shipment.halCmpnyName = 'FEDEX STATION';
+      shipment.halAddress = { streetLines: ['1 RUE EXEMPLE'], city: 'PARIS', stateOrProvinceCode: '', postalCode: '75001', countryCode: 'FR' };
+    }), HELD_NUMBER);
+    expect(result.pickup_point).toBe('FEDEX STATION\n1 RUE EXEMPLE\n75001 PARIS');
+  });
+
+  it('keeps the name alone without a street or town, and nothing without a name', () => {
+    for (const address of [
+      { streetLines: [], city: 'MEMPHIS', stateOrProvinceCode: 'TN', postalCode: '38118' },
+      { streetLines: ['100 EXAMPLE AVE'], city: '', stateOrProvinceCode: 'TN', postalCode: '38118' },
+      null,
+    ]) {
+      expect(parseFedExTrackingResponse(heldFixture((shipment) => { shipment.halAddress = address; }), HELD_NUMBER).pickup_point)
+        .toBe('FEDEX OFFICE PRINT & SHIP CENTER');
+    }
+    const unnamed = parseFedExTrackingResponse(heldFixture((shipment) => { shipment.halCmpnyName = ''; }), HELD_NUMBER);
+    expect(unnamed).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(unnamed).not.toHaveProperty('pickup_point');
+  });
+
+  it('never names a residential hold address', () => {
+    for (const edit of [
+      (shipment: Record<string, unknown>) => { shipment.halresidential = true; },
+      (shipment: Record<string, unknown>) => { (shipment.halAddress as Record<string, unknown>).residential = true; },
+    ]) {
+      expect(parseFedExTrackingResponse(heldFixture(edit), HELD_NUMBER)).not.toHaveProperty('pickup_point');
+    }
+  });
+
+  it('reads no hold location before the parcel waits there', () => {
+    const accepted = parseFedExTrackingResponse(heldFixture((shipment) => {
+      shipment.keyStatus = 'Hold at location request accepted';
+      shipment.keyStatusCD = 'HA';
+      shipment.scanEventList = (shipment.scanEventList as unknown[]).slice(1);
+    }), HELD_NUMBER);
+    expect(accepted).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(accepted).not.toHaveProperty('pickup_point');
+  });
+
+  it('keeps the recipient, shipper and destination of a held parcel out of the result', () => {
+    const serialized = JSON.stringify(parseFedExTrackingResponse(heldFixture(), HELD_NUMBER));
+    expect(serialized).not.toContain('PRIVATE');
+    expect(serialized).not.toContain('XMEMA');
   });
 
   it('fails closed on another parcel, duplicates and invalid envelopes', () => {

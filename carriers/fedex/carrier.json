@@ -24,7 +24,8 @@
     "history",
     "location",
     "eta",
-    "delivered_at"
+    "delivered_at",
+    "pickup_point"
   ],
   "portal": {
     "url": "https://www.fedex.com/fedextrack/?trknbr={trackingNumber}",
@@ -33,13 +34,15 @@
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "pickup_point"
     ],
     "scraped": [
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "pickup_point"
     ],
     "discarded": [
       "recipient name and address",

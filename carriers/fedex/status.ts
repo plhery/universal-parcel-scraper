@@ -12,6 +12,13 @@
  * delay flags, `DL`/`OD`/`OC`/`PU`/`AR`/`DP` come from the page bundle and
  * FedEx's tracking documentation; `IT`/`SE`/`CA` match the official Track API
  * vocabulary (prior art). `statuses.json` holds the full list.
+ *
+ * Hold at location: FedEx documents `HP` as "Ready for pickup (Hold at
+ * Location)", and the page puts an `HL` package on its "Ready for pickup"
+ * step. `RR` (delivery option requested) and `HA` (hold request accepted)
+ * come before, while the parcel still travels to the location. A hold for a
+ * problem, such as clearance or a wrong address, carries another code (`SE`,
+ * `DE`, `CD`) and is never read as ready for pickup.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
@@ -23,7 +30,11 @@ export const FEDEX_CODE_STAGE: Readonly<Record<string, Stage>> = {
   AR: 'in_transit',
   DP: 'in_transit',
   IT: 'in_transit',
+  RR: 'in_transit',
+  HA: 'in_transit',
   OD: 'out_for_delivery',
+  HL: 'ready_for_pickup',
+  HP: 'ready_for_pickup',
   DL: 'delivered',
   DE: 'failed_attempt',
   DY: 'exception',
@@ -54,6 +65,7 @@ const EXCEPTION_TERMS = [
   'action required',
   'clearance delay',
 ];
+const READY_FOR_PICKUP_TERMS = ['ready for pickup'];
 const DELIVERED_TERMS = ['delivered', 'signed for', 'left at', 'received by'];
 const CUSTOMS_TERMS = ['clearance', 'customs'];
 const OUT_FOR_DELIVERY_TERMS = ['out for delivery', 'on fedex vehicle for delivery', 'on vehicle for delivery'];
@@ -87,6 +99,7 @@ export function fedexStage(text: string): Stage | null {
   if (!value) return null;
   if (RETURNED_TERMS.some((term) => value.includes(term))) return 'returned';
   if (FAILED_ATTEMPT_TERMS.some((term) => value.includes(term))) return 'failed_attempt';
+  if (READY_FOR_PICKUP_TERMS.some((term) => value.includes(term))) return 'ready_for_pickup';
   if (DELIVERED_TERMS.some((term) => value.includes(term))) return 'delivered';
   if (OUT_FOR_DELIVERY_TERMS.some((term) => value.includes(term))) return 'out_for_delivery';
   if (CUSTOMS_TERMS.some((term) => value.includes(term))) return 'customs';

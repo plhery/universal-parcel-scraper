@@ -31,6 +31,7 @@ describe('FedEx live browser tracking', () => {
           'last_update',
           'expected_delivery',
           'delivered_at',
+          'pickup_point',
           'events',
           'tracking_source',
           'tracking_url',

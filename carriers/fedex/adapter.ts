@@ -32,8 +32,9 @@ import { FEDEX_CODE_STAGE, fedexStage, fedexStatus } from './status.js';
  *
  * Response shape provenance: the page bundle's package model (`trackingNbr`,
  * `keyStatus`/`keyStatusCD`, `scanEventList` items with
- * `date`/`time`/`gmtOffset`/`scanLocation`/`status`/`statusCD`/`scanDetails`),
- * inspected 2026-09-20.
+ * `date`/`time`/`gmtOffset`/`scanLocation`/`status`/`statusCD`/`scanDetails`,
+ * and the hold location's `halCmpnyName`/`halAddress`), inspected 2026-09-20
+ * and 2026-10-08.
  */
 const TRACKING_BASE = 'https://www.fedex.com/fedextrack/';
 const TRACK_API = 'https://api.fedex.com/track/v2/shipments';
@@ -98,6 +99,29 @@ function expectedDelivery(value: unknown): string | null {
 /** A delivered-at instant; offset-less or unparsable values are dropped. */
 function deliveredAt(value: unknown): string | null {
   return explicitOffsetTime(value)?.iso ?? null;
+}
+
+/**
+ * The hold location, read only while the parcel waits there: its name, then
+ * its street and its town on their own lines when FedEx gives both. These are
+ * the `halCmpnyName` and `halAddress` the page reads for a held parcel. The
+ * recipient and shipper blocks are never a fallback, and a residential hold
+ * address is someone's home, so it is never projected.
+ */
+function holdLocation(shipment: JsonObject): string {
+  const name = clean(shipment.halCmpnyName, 200);
+  const address: JsonObject = isRecord(shipment.halAddress) ? shipment.halAddress : {};
+  if (!name || shipment.halresidential === true || address.residential === true) return '';
+  const street = Array.isArray(address.streetLines)
+    ? address.streetLines.map((line) => clean(line, 120)).filter(Boolean)
+    : [];
+  const city = clean(address.city, 80);
+  if (street.length === 0 || !city) return name;
+  const postcode = cleanScalar(address.postalCode, 16);
+  // A US state or Canadian province comes before the postcode, after the town.
+  const region = clean(address.stateOrProvinceCode, 40);
+  const town = region ? `${city}, ${[region, postcode].filter(Boolean).join(' ')}` : [postcode, city].filter(Boolean).join(' ');
+  return [name, street[0], street.slice(1).join(', '), town].filter(Boolean).join('\n');
 }
 
 function errorCode(error: unknown): string {
@@ -187,6 +211,7 @@ export function parseFedExTrackingResponse(payload: unknown, trackingNumber: str
   const status = fedexStatus(keyStatusCD, `${keyStatus} ${statusDetails}`, trimmed.length > 0);
   const delivered = stage === 'delivered';
   const estimate = delivered ? null : expectedDelivery(shipment.estDeliveryDt);
+  const pickupPoint = stage === 'ready_for_pickup' ? holdLocation(shipment) : '';
   return {
     status,
     ...(stage ? { current_stage: stage } : {}),
@@ -195,6 +220,7 @@ export function parseFedExTrackingResponse(payload: unknown, trackingNumber: str
     expected_delivery: estimate,
     ...(delivered && deliveredAt(shipment.actDeliveryDt)
       ? { delivered_at: deliveredAt(shipment.actDeliveryDt) } : {}),
+    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     events: trimmed,
   };
 }
