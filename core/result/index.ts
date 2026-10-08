@@ -48,6 +48,8 @@ export interface CarrierResult extends JsonObject {
   /** How the adapter chose current_stage, when it records that decision. */
   current_stage_source?: string;
   last_status_text?: string | null;
+  /** The carrier's own code for the current status, when a summary has no scan to carry it. */
+  provider_code?: string;
   last_update?: string | null;
   expected_delivery?: string | null;
   expected_delivery_from?: string | null;
@@ -92,6 +94,7 @@ const CURRENT_STAGES = new Set<string>(STAGES);
 const OPTIONAL_TEXT_FIELDS = [
   'current_stage_source',
   'last_status_text',
+  'provider_code',
   'last_update',
   'expected_delivery',
   'expected_delivery_from',

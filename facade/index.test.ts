@@ -450,7 +450,7 @@ describe('standalone tracker', () => {
     it('takes a history that reached the direct delivery and scanned on, under the carrier\'s status', async () => {
       // The carrier's newest scan, uploaded after its delivery, leaves the parcel delivered.
       const truncated: CarrierResult = { status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-        last_status_text: 'Synthetic delivery', expected_delivery: '2026-01-05', history_truncated: true, events: [
+        last_status_text: 'Synthetic delivery', provider_code: 'D1', expected_delivery: '2026-01-05', history_truncated: true, events: [
           { time: '2026-01-04T09:00:00Z', description: 'In transit', stage: 'in_transit' },
           { time: '2026-01-03T09:00:00Z', description: 'Delivered', stage: 'delivered' }] };
       const summarized: CarrierResult = { ...stated('delivered', '2026-01-03T09:00:00Z'), status: 'delivered' };
@@ -460,6 +460,7 @@ describe('standalone tracker', () => {
         expect(answer).toMatchObject({ source: 'Ship24', direct: { current_stage: 'delivered' }, result: { status: 'delivered',
           current_stage: 'delivered', last_status_text: direct.last_status_text, last_update: '2026-01-04T09:00:00.000Z', expected_delivery: null } });
         expect(answer.result.current_stage_source).toBe(direct.current_stage_source);
+        expect(answer.result.provider_code).toBe(direct.provider_code);
         expect(answer.result.events.map(event => event.stage)).toEqual(['in_transit', 'delivered', 'in_transit', 'in_transit']);
       }
       // Not a history that delivered before the carrier did, never delivered, or shows an exception or a return after the delivery,

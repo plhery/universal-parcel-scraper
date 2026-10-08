@@ -85,6 +85,7 @@ import { adapter as postnord } from '../carriers/postnord/adapter.js';
 import { adapter as purolator } from '../carriers/purolator/adapter.js';
 import { adapter as relaisColis } from '../carriers/relais-colis/adapter.js';
 import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
+import { adapter as sagawa } from '../carriers/sagawa/adapter.js';
 import { adapter as seur } from '../carriers/seur/adapter.js';
 import { adapter as sfExpress } from '../carriers/sf-express/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
@@ -197,6 +198,7 @@ export const REGISTRY: RegistryDefinition = {
     "purolator": purolator,
     "relais-colis": relaisColis,
     "royal-mail": royalMail,
+    "sagawa": sagawa,
     "seur": seur,
     "sf-express": sfExpress,
     "singapore-post": singaporePost,
@@ -318,7 +320,7 @@ export const REGISTRY: RegistryDefinition = {
     "quickpac": "planzer",
     "relais-colis": "relais-colis",
     "royal-mail": "royal-mail",
-    "sagawa": "universal",
+    "sagawa": "sagawa",
     "seur": "seur",
     "sf-express": "sf-express",
     "shipup": "universal",

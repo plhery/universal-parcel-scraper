@@ -709,6 +709,9 @@
               "null"
             ]
           },
+          "provider_code": {
+            "type": "string"
+          },
           "last_update": {
             "type": [
               "string",

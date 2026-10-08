@@ -144,7 +144,7 @@ asked after the other aggregators whatever its count.
 | [Nova Poshta (Ukraine)](../carriers/nova-poshta/README.md) | Yes (Ukraine) | ✓ 10 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [SPX Express Philippines](../carriers/spx-ph/README.md) | Yes (Philippines) | ✓ 10 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [CNE Express](../carriers/cne/README.md) | Yes | ✓ 9 | Unverified | Unverified | Unverified | Unverified | N/A |
-| [Sagawa Express](../carriers/sagawa/README.md) | No adapter | Blocked | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Sagawa Express](../carriers/sagawa/README.md) | Yes (status only) | Unverified; alternate summary only | Unverified | Unverified | Unverified | Unverified | N/A |
 <!-- /GENERATED:coverage -->
 
 <!-- GENERATED:lookup-order -->

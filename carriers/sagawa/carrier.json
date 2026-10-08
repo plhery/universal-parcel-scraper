@@ -16,8 +16,10 @@
   "timezone": "Asia/Tokyo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "sagawa",
+    "steps": [
+      "app"
+    ]
   },
   "capabilities": [],
   "portal": {
@@ -27,7 +29,9 @@
       "status",
       "history"
     ],
-    "scraped": [],
+    "scraped": [
+      "status"
+    ],
     "discarded": [],
     "unavailable": []
   },

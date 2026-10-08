@@ -189,7 +189,7 @@ const CARRIER_FACTS = [
 ] as const;
 
 /** The carrier's current status, which a final stage keeps over a history that scanned on after reaching it. */
-const CARRIER_STATE = ['status', 'current_stage', 'current_stage_source', 'last_status_text'] as const;
+const CARRIER_STATE = ['status', 'current_stage', 'current_stage_source', 'last_status_text', 'provider_code'] as const;
 
 /**
  * A provider's history with the carrier's own facts it lacks. An estimate does not outlive a final

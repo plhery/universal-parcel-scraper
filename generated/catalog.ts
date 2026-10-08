@@ -5020,7 +5020,7 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Tokyo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sagawa"
     },
     "canaryUrl": "https://www.sagawa-exp.co.jp/send/howto-search.html",
     "trackingUrlTemplate": "https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp",

@@ -266,6 +266,32 @@
       "note": "Invented twelve digits whose last digit is not the remainder of the first eleven divided by seven, so Japan Post, Sagawa and Yamato stay out of the suggestions."
     },
     {
+      "number": "300000000005",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "Synthetic twelve-digit waybill in the form the official app accepts, with the mod 7 check digit. Shared numeric shapes do not select Sagawa."
+    },
+    {
       "number": "365729365455",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -298,6 +324,39 @@
         ]
       },
       "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel in transit to the delivery office."
+    },
+    {
+      "number": "368170593136",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260909062210/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=368170593136",
+        "date": "2026-09-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel delivered."
     },
     {
       "number": "440891443742",
@@ -365,6 +424,42 @@
         ]
       },
       "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel in transit to the delivery office."
+    },
+    {
+      "number": "491908774206",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260101144300/https://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do?okurijoNo=491908774206",
+        "date": "2026-01-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express",
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "sagawa"
+        ]
+      },
+      "note": "A Sagawa tracking link archived by the Wayback Machine. The capture is Sagawa's own tracker showing the parcel delivered."
     },
     {
       "number": "492207594082",

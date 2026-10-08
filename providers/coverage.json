@@ -2090,11 +2090,11 @@
     },
     {
       "carrier": "sagawa",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes (status only)",
+      "sample": "Unverified; alternate summary only",
       "references": [
         {
-          "note": "Sagawa has suspended public shipment inquiry and its carrier inquiry API; fresh anonymous history retrieval is unavailable: https://www2.sagawa-exp.co.jp/information/detail/425/",
+          "note": "Sagawa has suspended public shipment inquiry and its inquiry API, so no comparison reference can be checked against Sagawa's own history: https://www2.sagawa-exp.co.jp/information/detail/425/. Five of the seven archived lookups of the suspended inquiry page in carriers/sagawa/numbers.json were read through the app widget as alternate public references: four returned a delivered state without history, and one past the inquiry window returned not found",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",
