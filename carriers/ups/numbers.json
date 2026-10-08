@@ -842,6 +842,65 @@
       },
       "quarantine": true,
       "note": "Publicly reported numeric identifier of a separate UPS service; the parcel adapter accepts 1Z identifiers only."
+    },
+    {
+      "number": "1Z2231040309026972",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260922043823/https://www.ups.com/WebTracking?loc=en_US&requester=ST&trackNums=1Z2231040309026972",
+        "date": "2026-09-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "UPS Ground",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine. UPS's tracker returns its history."
+    },
+    {
+      "number": "1ze516600300600094",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260909151352/https://www.ups.com/webtracking?loc=en_us&requester=st&tracknums=1ze516600300600094",
+        "date": "2026-09-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "UPS Ground",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, in lower case as published. UPS's tracker returns its history."
+    },
+    {
+      "number": "1Z5F44813600X02768",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260528150202/https://www.ups.com/WebTracking?loc=en_US&amp;requester=ST&amp;trackNums=1Z5F44813600X02768",
+        "date": "2026-05-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ups"
+        ]
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine. Its check digit fails and UPS's tracker rejects it as an invalid request, so detection keeps it a low-confidence suggestion."
     }
   ]
 }

@@ -4158,6 +4158,14 @@
     ]
   },
   {
+    "input": "1Z2231040309026972",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1Z2Y363W6790639911",
     "carrier": "ups",
     "confidence": "high",
@@ -4185,6 +4193,14 @@
     "input": "1Z54V8630394427740",
     "carrier": "ups",
     "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1Z5F44813600X02768",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
       "ups"
     ]
@@ -4367,6 +4383,14 @@
   },
   {
     "input": "1z1wr3326806776473",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1ze516600300600094",
     "carrier": "ups",
     "confidence": "high",
     "candidates": [
