@@ -14,10 +14,13 @@ const SUMMARY_API_PREFIX = 'https://api-web.royalmail.com/mailpieces/microsummar
 const EVENTS_API_PREFIX = 'https://api-web.royalmail.com/mailpieces/v3/';
 const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
+/** A Parcelforce parcel: PB, its consignment number and the parcel's place in it. */
+const PARCELFORCE_PARCEL = /^PB[A-Z]{2}\d{10}$/;
+
 export function normalizeRoyalMailNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^[A-Z]{2}\d{9}GB$/.test(value) && !isRoyalMailDomesticReference(value)) {
-    throw new InvalidInputError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format or a domestic 2D reference');
+  if (!/^[A-Z]{2}\d{9}GB$/.test(value) && !isRoyalMailDomesticReference(value) && !PARCELFORCE_PARCEL.test(value)) {
+    throw new InvalidInputError('Royal Mail', 'Royal Mail tracking numbers must match the UPU S10 format, a domestic 2D reference or a Parcelforce parcel number');
   }
   return value;
 }

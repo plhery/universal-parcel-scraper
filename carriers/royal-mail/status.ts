@@ -28,6 +28,7 @@ const IN_TRANSIT_TERMS = ['despatched', 'dispatched', 'redirected', 'in transit'
 // The sender's despatch notice and a booked collection precede acceptance.
 const EVENT_STAGES = new Map<string, Stage>([
   ['EVKOP', 'delivered'],
+  ['EVKDN', 'delivered'],
   ['EVGPD', 'out_for_delivery'],
   ['EVKPD', 'out_for_delivery'],
   ['EVIMC', 'in_transit'],
@@ -39,9 +40,11 @@ const EVENT_STAGES = new Map<string, Stage>([
   ['EVHAC', 'in_transit'],
   ['EVHOE', 'in_transit'],
   ['EVIIS', 'in_transit'],
+  ['EVBAH', 'in_transit'],
   ['EVCAD', 'accepted'],
   ['EVPPA', 'accepted'],
   ['EVAIP', 'registered'],
+  ['EVAIE', 'registered'],
   ['ECCSB', 'registered'],
 ]);
 

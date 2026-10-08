@@ -158,6 +158,7 @@ describe('Royal Mail structured response', () => {
         { eventCode: 'EVKPD', eventName: '**Due to be delivered today**', eventDateTime: '2026-01-09T13:10:00+01:00', locationName: '99999' },
         { eventCode: 'EVGID', eventName: '**Arrived at Delivery Office**', eventDateTime: '2026-01-09T12:59:00+01:00', locationName: '99999-1234' },
         { eventCode: 'EVIIS', eventName: '**Item received at Sorting Office**', eventDateTime: '2026-01-08T16:28:00+01:00' },
+        { eventCode: 'EVBAH', eventName: '**Item Received**', eventDateTime: '2026-01-06T10:00:00+01:00' },
         { eventCode: 'EVHOE', eventName: '**Item Leaving the UK**', eventDateTime: '2026-01-05T23:38:26+01:00' },
         { eventCode: 'EVHAC', eventName: '**Item Received by Royal Mail**', eventDateTime: '2026-01-05T22:54:18+01:00' },
         { eventCode: 'EVIPP', eventName: 'Received at Delivery Depot', eventDateTime: '2026-01-05T20:00:00+01:00' },
@@ -167,11 +168,11 @@ describe('Royal Mail structured response', () => {
       ],
     } }, DELIVERED_NUMBER);
     expect(result.events?.map(event => event.stage)).toEqual([
-      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'accepted', 'registered',
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'accepted', 'registered',
     ]);
     expect(result).toMatchObject({ status: 'delivered', delivered_at: '2026-01-09T15:24:00+01:00', destination_country: 'US' });
     expect(result.events?.map(event => event.location)).toEqual([
-      'Exampleville, United States of America', undefined, undefined, undefined, undefined, undefined, undefined, 'Example Post Office', 'Example DO [Main]', undefined,
+      'Exampleville, United States of America', undefined, undefined, undefined, undefined, undefined, undefined, undefined, 'Example Post Office', 'Example DO [Main]', undefined,
     ]);
   });
 
@@ -462,6 +463,12 @@ describe('Royal Mail lookup steps', () => {
     await expect(lookup).rejects.toThrow('Royal Mail tracking numbers must match the UPU S10 format');
     await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('accepts a Parcelforce parcel number, which the same tracker answers, but not its consignment number', () => {
+    expect(royalMailTrackingUrl('pbzz 0000000 001')).toBe('https://www.royalmail.com/track-your-item#/tracking-results/PBZZ0000000001');
+    expect(() => royalMailTrackingUrl('ZZ0000000')).toThrow('Parcelforce parcel number');
+    expect(() => royalMailTrackingUrl('PBZZ00000000001')).toThrow('Parcelforce parcel number');
   });
 
   it('builds the canonical tracking and summary URLs', () => {

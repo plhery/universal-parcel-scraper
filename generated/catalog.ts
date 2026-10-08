@@ -1841,7 +1841,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?!(?:EA|EB|EC|ED|EE|CP|GI))[A-Z]{2}\\d{9}GB$",
+        "pattern": "^(?!(?:E[A-Z]|CP|GI))[A-Z]{2}\\d{9}GB$",
         "confidence": "high",
         "checksum": "s10"
       },
@@ -1865,7 +1865,7 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "royal-mail"
     },
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "trackingUrlTemplate": "https://www.royalmail.com/track-your-item#/tracking-results/{trackingNumber}",
@@ -1881,9 +1881,13 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:EA|EB|EC|ED|EE|CP|GI)\\d{9}GB$",
+        "pattern": "^(?:E[A-Z]|CP|GI)\\d{9}GB$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^PB[A-Z]{2}\\d{10}$",
+        "confidence": "high"
       }
     ]
   },
@@ -5207,7 +5211,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intl-post": ["intl-post-1"],
   "unknown": [],
   "royal-mail": ["royal-mail-1","royal-mail-2","royal-mail-3"],
-  "parcelforce": ["parcelforce-1"],
+  "parcelforce": ["parcelforce-1","parcelforce-2"],
   "evri": ["evri-1"],
   "inpost": ["inpost-1","inpost-2","inpost-3","inpost-4"],
   "an-post": ["an-post-1"],

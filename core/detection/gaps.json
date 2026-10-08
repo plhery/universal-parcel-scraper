@@ -188,6 +188,12 @@
     "reason": "Detection selects Packeta for the Z form only; ten bare digits are a crowded shape."
   },
   {
+    "carrier": "parcelforce",
+    "pattern": "^[A-Z]{2}\\d{7}$",
+    "kind": "by_design",
+    "reason": "A consignment number. Royal Mail's tracker, which now serves Parcelforce, no longer accepts it and asks for each parcel's 14-character number."
+  },
+  {
     "carrier": "planzer",
     "kind": "by_design",
     "reason": "A Planzer lookup needs the access key of its shared link."

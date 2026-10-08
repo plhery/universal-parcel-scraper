@@ -123,6 +123,63 @@
         ]
       },
       "note": "Packing Partner discussion quotes a Royal Mail domestic reference example; it is not a reported shipment."
+    },
+    {
+      "number": "MZ465962009GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260316193534/https://www.royalmail.com/portal/rm/track?trackNumber=MZ465962009GB",
+        "date": "2026-03-16",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "An archived Royal Mail tracking page. Royal Mail's tracker returns its history as a Tracked 24 item."
+    },
+    {
+      "number": "IV745750017GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260311233047/https://www.royalmail.com/portal/rm/track?trackNumber=IV745750017GB",
+        "date": "2026-03-11",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "An archived Royal Mail tracking page. Royal Mail's tracker returns its history as a Tracked 48 item."
+    },
+    {
+      "number": "JW461017368GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251221200313/https://www.royalmail.com/portal/rm/track?trackNumber=JW461017368GB",
+        "date": "2025-12-21",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "An archived Royal Mail tracking page. Royal Mail's tracker returns its history as a Tracked 48 item."
     }
   ]
 }

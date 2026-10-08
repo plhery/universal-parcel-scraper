@@ -230,6 +230,33 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "The destination partner's out-for-delivery scan."
+    },
+    {
+      "code": "EVKDN",
+      "wording": "Delivered to Neighbour/Reception by",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The wording goes on to name who took it in; the adapter reduces it to \"Delivered\"."
+    },
+    {
+      "code": "EVBAH",
+      "wording": "Item Received",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A parcel hub receipt."
+    },
+    {
+      "code": "EVAIE",
+      "wording": "Sender has despatched item",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Same notice as EVAIP."
     }
   ]
 }

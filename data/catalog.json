@@ -1839,7 +1839,7 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^(?!(?:EA|EB|EC|ED|EE|CP|GI))[A-Z]{2}\\d{9}GB$",
+        "pattern": "^(?!(?:E[A-Z]|CP|GI))[A-Z]{2}\\d{9}GB$",
         "confidence": "high",
         "checksum": "s10"
       },
@@ -1863,7 +1863,7 @@
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "royal-mail"
     },
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "trackingUrlTemplate": "https://www.royalmail.com/track-your-item#/tracking-results/{trackingNumber}",
@@ -1879,9 +1879,13 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:EA|EB|EC|ED|EE|CP|GI)\\d{9}GB$",
+        "pattern": "^(?:E[A-Z]|CP|GI)\\d{9}GB$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^PB[A-Z]{2}\\d{10}$",
+        "confidence": "high"
       }
     ]
   },

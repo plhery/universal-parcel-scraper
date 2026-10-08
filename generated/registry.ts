@@ -296,7 +296,7 @@ export const REGISTRY: RegistryDefinition = {
     "ontrac": "ontrac",
     "paack": "paack",
     "packeta": "packeta",
-    "parcelforce": "universal",
+    "parcelforce": "royal-mail",
     "planzer": "planzer",
     "poczta-polska": "poczta-polska",
     "pos-malaysia": "pos-malaysia",

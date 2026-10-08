@@ -1,7 +1,9 @@
 # Royal Mail
 
 UK S10 and domestic 2D-reference parcel history through the public tracking application. Automatic
-tracking uses a fresh local Chromium configured by `TRACKING_CHROMIUM_PATH`.
+tracking uses a fresh local Chromium configured by `TRACKING_CHROMIUM_PATH`. The same tracker
+answers for [Parcelforce](../parcelforce/README.md), whose numbers this adapter also accepts,
+including its 14-character `PB` parcel numbers.
 
 ## Retrieval
 

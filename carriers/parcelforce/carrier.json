@@ -14,16 +14,42 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "royal-mail",
+    "steps": [
+      "browser"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "delivered_at",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.royalmail.com/track-your-item#/tracking-results/{trackingNumber}",
     "canaryUrl": "https://www.royalmail.com/track-your-item",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "location",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta",
+      "location",
+      "destination",
+      "delivered_at",
+      "provider_code"
+    ],
+    "discarded": [
+      "signatory",
+      "recipient details",
+      "postcodes"
+    ],
     "unavailable": []
   },
   "links": [
@@ -39,9 +65,14 @@
   "detection": [
     {
       "id": "parcelforce-1",
-      "pattern": "^(?:EA|EB|EC|ED|EE|CP|GI)\\d{9}GB$",
+      "pattern": "^(?:E[A-Z]|CP|GI)\\d{9}GB$",
       "confidence": "high",
       "checksum": "s10"
+    },
+    {
+      "id": "parcelforce-2",
+      "pattern": "^PB[A-Z]{2}\\d{10}$",
+      "confidence": "high"
     }
   ]
 }
