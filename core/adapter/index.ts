@@ -8,7 +8,7 @@
  * `AdapterEnvironment` provides, and it reports through the `StepRecorder`.
  */
 import { BudgetExceededError, carrierErrorKind, InvalidInputError } from '../errors/index.js';
-import type { CarrierResult } from '../result/index.js';
+import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import type { StepRecorder } from '../telemetry/index.js';
 import type { TrawlClient } from '../transport/trawl.js';
 import { explicitOffsetTime } from '../time/index.js';
@@ -92,7 +92,7 @@ export interface Recognition {
   lastActivityAt?: string | null;
 }
 
-/** Browser confirmation retains the lookup so a consumer can reuse its history. */
+/** Browser confirmation retains the lookup, normalized like any tracking result, so a consumer can reuse its history. */
 export interface BrowserRecognition extends Recognition {
   result?: CarrierResult;
 }
@@ -171,7 +171,8 @@ export async function recognizeFromLookup(
 /** Browser shells and undated default statuses do not establish a shipment. */
 export async function recognizeFromBrowserLookup(lookup: () => Promise<CarrierResult>): Promise<BrowserRecognition> {
   let result: CarrierResult | undefined;
-  const answer = await recognizeFromLookup(async () => (result = await lookup()));
+  // The retained result passes the same checks as every tracking result before anyone reuses it.
+  const answer = await recognizeFromLookup(async () => (result = normalizeCarrierResult(await lookup())));
   if (!answer.known || !answer.lastActivityAt || !result) return { known: false, lastActivityAt: null };
   return { ...answer, result };
 }

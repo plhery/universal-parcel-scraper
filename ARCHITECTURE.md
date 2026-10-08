@@ -127,7 +127,7 @@ Recognition uses HTTP by default. Consumers can request `recognitionCandidates` 
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's
 `recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank;
 recipient inputs exclude a candidate. Browser confirmation requires dated shipment activity
-and returns its tracking result for reuse. An ambiguous ten-digit number includes DHL Express among its direct candidates when its waybill check passes. Its
+and returns its tracking result for reuse, normalized like any other. An ambiguous ten-digit number includes DHL Express among its direct candidates when its waybill check passes. Its
 facility clocks are dated where the scan's location settles a zone and stay unresolved
 elsewhere; Ship24 relays them with DHL's own offsets.
 DHL Express's HTTP path uses its mobile guest API and includes the shared

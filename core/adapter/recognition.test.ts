@@ -106,4 +106,15 @@ describe('browser confirmation', () => {
     await expect(recognizeFromBrowserLookup(async () => { throw new NotFoundError('Carrier'); })).resolves.toEqual({ known: false, lastActivityAt: null });
     await expect(recognizeFromBrowserLookup(async () => { throw new UpstreamHttpError('Carrier', 503); })).rejects.toThrow();
   });
+
+  it('normalizes the retained result like every tracking result', async () => {
+    // An invented USPS package identifier behind a routing prefix with a made-up ZIP code.
+    const pic = '9210090000000012345679';
+    const answer = await recognizeFromBrowserLookup(async () => ({ status: 'in_transit', delivery_carrier: 'usps',
+      delivery_tracking_number: `42000000${pic}`, events: [{ time: '2026-09-09T08:00:00Z', description: 'Sorted' }] }));
+    expect(answer).toMatchObject({ known: true, result: { delivery_carrier: 'usps', delivery_tracking_number: pic } });
+    // A result no tracking lookup would accept is a failure, not an answer.
+    await expect(recognizeFromBrowserLookup(async () => ({ status: 'in_transit', events: [{ time: '2026-09-09T08:00:00Z', description: 7 }] } as never)))
+      .rejects.toThrow(TypeError);
+  });
 });
