@@ -199,6 +199,12 @@
     "reason": "No rule offers Posti for its twenty-digit SSCC numbers."
   },
   {
+    "carrier": "postnord",
+    "pattern": "^\\d{14}$",
+    "kind": "by_design",
+    "reason": "A DPD parcel number that PostNord delivered. The shape is DPD's; PostNord's tracker also knows the parcel it delivers."
+  },
+  {
     "carrier": "seur",
     "pattern": "^\\d{15}$",
     "kind": "open",

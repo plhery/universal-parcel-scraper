@@ -119,6 +119,21 @@
     ]
   },
   {
+    "input": "00073215400717808731",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "postnord",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post",
+      "swiss-post-cargo"
+    ]
+  },
+  {
     "input": "00100909086360120251130131718",
     "carrier": "unknown",
     "confidence": "none",
@@ -275,6 +290,21 @@
     ]
   },
   {
+    "input": "00357059930440074440",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "postnord",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post",
+      "swiss-post-cargo"
+    ]
+  },
+  {
     "input": "00370722152587569988",
     "carrier": "unknown",
     "confidence": "low",
@@ -316,6 +346,21 @@
       "seur",
       "brt",
       "hermes-de"
+    ]
+  },
+  {
+    "input": "00573132901652718107",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "postnord",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post",
+      "swiss-post-cargo"
     ]
   },
   {
@@ -1387,6 +1432,30 @@
   },
   {
     "input": "05117981889732",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "dpd-fr",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "05222070232792",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -3850,6 +3919,14 @@
       "mondial-relay",
       "colisweb",
       "heppner"
+    ]
+  },
+  {
+    "input": "24622447660SE",
+    "carrier": "postnord",
+    "confidence": "high",
+    "candidates": [
+      "postnord"
     ]
   },
   {
@@ -12150,6 +12227,22 @@
     ]
   },
   {
+    "input": "LY393996456DK",
+    "carrier": "postnord",
+    "confidence": "high",
+    "candidates": [
+      "postnord"
+    ]
+  },
+  {
+    "input": "LZ136279514DK",
+    "carrier": "postnord",
+    "confidence": "high",
+    "candidates": [
+      "postnord"
+    ]
+  },
+  {
     "input": "LZ241238634CN",
     "carrier": "china-post",
     "confidence": "high",
@@ -12918,6 +13011,14 @@
     "confidence": "high",
     "candidates": [
       "india-post"
+    ]
+  },
+  {
+    "input": "RR078278874SE",
+    "carrier": "postnord",
+    "confidence": "high",
+    "candidates": [
+      "postnord"
     ]
   },
   {

@@ -91,6 +91,188 @@
         "confidence": "high"
       },
       "note": "Sender names PostNord; reply includes origin scans and return movement. No sender details retained."
+    },
+    {
+      "number": "00073215400717808731",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260924150633/https://tracking.postnord.com/dk/?id=00073215400717808731",
+        "date": "2026-09-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "postnord",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay one candidate among several."
+    },
+    {
+      "number": "00357059930440074440",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261001013540/https://tracking.postnord.com/dk/tracking?id=00357059930440074440",
+        "date": "2026-10-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "postnord",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay one candidate among several."
+    },
+    {
+      "number": "00573132901652718107",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260605020115/https://tracking.postnord.com/en/?id=00573132901652718107",
+        "date": "2026-06-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "postnord",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay one candidate among several."
+    },
+    {
+      "number": "24622447660SE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928121029/https://tracking.postnord.com/?id=24622447660SE",
+        "date": "2026-09-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "postnord",
+        "confidence": "high"
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history."
+    },
+    {
+      "number": "LY393996456DK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260422142013/https://tracking.postnord.com/se/?id=LY393996456DK&language=en",
+        "date": "2026-04-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "postnord",
+        "confidence": "high"
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history."
+    },
+    {
+      "number": "RR078278874SE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261005093915/https://tracking.postnord.com/en/tracking?id=RR078278874SE",
+        "date": "2026-10-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "postnord",
+        "confidence": "high"
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history."
+    },
+    {
+      "number": "LZ136279514DK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260609110332/https://tracking.postnord.com/se/?id=LZ136279514DK",
+        "date": "2026-06-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "postnord",
+        "confidence": "high"
+      },
+      "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history."
+    },
+    {
+      "number": "05222070232792",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260910201130/https://tracking.postnord.com/en/tracking?id=05222070232792",
+        "date": "2026-09-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "A DPD parcel number on a PostNord tracking link archived by the Wayback Machine. PostNord, which delivered it, returns its history."
     }
   ]
 }
