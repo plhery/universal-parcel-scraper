@@ -72,11 +72,12 @@ describe('The Courier Guy shipment projection', () => {
   it('keeps aggregate history, explicit scan instants and pickup readiness without private messages', () => {
     const result = normalizeCarrierResult(parseCourierGuy(payload(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-06T12:00:00.123Z',
-      delivered_at: '2026-01-06T12:00:00.123Z', expected_delivery: null });
+      delivered_at: '2026-01-06T12:00:00.123Z', expected_delivery: null, service_name: 'Economy' });
     expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'ready_for_pickup', 'accepted', 'registered']);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|recipient|shipment_time|estimated_delivery|message/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location), delivered_at: Boolean(result.delivered_at) };
+    const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location), delivered_at: Boolean(result.delivered_at),
+      service_name: Boolean(result.service_name) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
   });
 

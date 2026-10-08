@@ -1707,6 +1707,7 @@
       "last_update": null,
       "last_update_local": "2026-01-06T12:00:00.000",
       "expected_delivery": null,
+      "service_name": "Economy",
       "events": [
         {
           "local_time": "2026-01-06T12:00:00.000",

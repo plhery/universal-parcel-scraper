@@ -26,7 +26,8 @@
   "capabilities": [
     "history",
     "location",
-    "delivered_at"
+    "delivered_at",
+    "service_name"
   ],
   "portal": {
     "url": "https://portal.thecourierguy.co.za/track?ref={trackingNumber}",
@@ -41,7 +42,8 @@
       "status",
       "history",
       "location",
-      "delivered_at"
+      "delivered_at",
+      "service_name"
     ],
     "discarded": [
       "messages",

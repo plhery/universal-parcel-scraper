@@ -88,9 +88,10 @@ export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierRes
   const mapped = courierGuyStatus(latest.provider_code!);
   const seen = new Set<string>();
   const unique = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
+  const service = clean(shipment.service_level_name, 80);
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     ...(shipment.short_tracking_reference !== number ? { canonical_tracking_number: shipment.short_tracking_reference } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: null, ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    events: unique.slice(0, 100) };
+    ...(service ? { service_name: service } : {}), events: unique.slice(0, 100) };
 }

@@ -20,7 +20,8 @@ The adapter follows that rule; one delivered piece cannot complete a shipment.
 Status comes from the latest public scan and must agree with the public summary.
 An internal summary requires a dated, unambiguous public timeline. Contradictory
 scan order is rejected instead of promoting an older delivery to current status.
-Free-text messages, recipient details and proof images are excluded.
+The shipment's service level name becomes `service_name`. Free-text messages,
+recipient details and proof images are excluded.
 
 Cancelled collection bookings can omit their piece count. They are accepted only
 with one piece reference and a history containing creation, collection assignment,
