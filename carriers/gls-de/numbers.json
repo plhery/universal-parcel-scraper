@@ -162,7 +162,7 @@
         "dateKind": "publication"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "GLS DE",
         "reportedRole": "shipment_tracking"
       },
@@ -180,7 +180,7 @@
           "dhl-ecommerce-pl"
         ]
       },
-      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+      "note": "Public GLS Germany delivery complaint. GLS Germany's tracking shows the parcel delivered."
     },
     {
       "number": "841225178292",
