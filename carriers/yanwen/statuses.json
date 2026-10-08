@@ -126,6 +126,172 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28"
+    },
+    {
+      "wording": "Waybill Generated",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Logged before Yanwen's pickup scan, when the label is made."
+    },
+    {
+      "wording": "Shipping Order Created.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A last-mile order created before the parcel leaves China."
+    },
+    {
+      "wording": "Pre-Shipment, USPS Awaiting Item",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from USPS: a label it has not scanned yet."
+    },
+    {
+      "wording": "Registered parcel data, parcel not dispatched yet",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DPD Poland before the parcel leaves China."
+    },
+    {
+      "wording": "Shipping information received. Your parcel is on its way to UniUni for delivery to you",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from UniUni before the parcel leaves China, despite its wording."
+    },
+    {
+      "wording": "Accepted at USPS Origin Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from USPS after Yanwen hands the parcel over; Yanwen's pickup scan is the acceptance."
+    },
+    {
+      "wording": "Your shipment has been accepted by delivery carrier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The last-mile carrier's handover scan; Yanwen's pickup scan is the acceptance."
+    },
+    {
+      "wording": "Parcel dispatched to be delivered",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from DPD Poland when the courier takes the parcel, shortly before the delivery scan."
+    },
+    {
+      "wording": "UA.In the New Post Office",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Relayed from Nova Poshta: the parcel reached the branch where the recipient collects it."
+    },
+    {
+      "code": "LM40",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The milestone icon on the delivery scan, whatever wording the last-mile carrier used."
+    },
+    {
+      "code": "查询不到",
+      "wording": "Not_Found",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter. The lookup found nothing, so the parcel is reported as not found."
+    },
+    {
+      "code": "制单完成",
+      "wording": "Info_Received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter."
+    },
+    {
+      "code": "运输途中",
+      "wording": "In_Transportation",
+      "language": "en",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Gives the status in transit. The category spans customs and the partners' legs, so the newest scan names the stage."
+    },
+    {
+      "code": "正在派送",
+      "wording": "Out_For_Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter."
+    },
+    {
+      "code": "到达待取",
+      "wording": "Available_For_Pick_Up",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter."
+    },
+    {
+      "code": "投递成功",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter. A delivered result still needs a delivered scan."
+    },
+    {
+      "code": "追踪结束",
+      "wording": "End_of_Tracking",
+      "language": "en",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Yanwen stopped following the parcel; it says nothing about where the parcel is, so the scans decide."
+    },
+    {
+      "code": "投递失败",
+      "wording": "Undelivered",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter."
+    },
+    {
+      "code": "包裹异常",
+      "wording": "Exception",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter."
+    },
+    {
+      "code": "包裹退回",
+      "wording": "Returned",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "portal",
+      "firstSeen": "2026-10-08",
+      "note": "Category on the identity field, labelled by the page's status filter."
     }
   ]
 }

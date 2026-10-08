@@ -3,11 +3,13 @@ import { createHash } from 'node:crypto';
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { yanwenStatus } from './status.js';
+import { yanwenCategory, yanwenStatus } from './status.js';
 
 // This constant is shipped in the public browser script; it is part of the
 // anonymous form protocol, not a customer or account credential.
@@ -23,6 +25,30 @@ export function yanwenTrackingUrl(raw: string): string {
   const number = normalizeYanwenNumber(raw);
   const signature = createHash('md5').update(number + PUBLIC_FORM_SALT).digest('hex');
   return `https://track.yw56.com.cn/en/querydel?${new URLSearchParams({ nums: number, cyp: signature })}`;
+}
+
+// Partner scans can carry the delivery postcode: a Canadian one before the
+// town, a US ZIP after the state. A location keeps its town and region only.
+const POSTCODE = /^(?:[A-Z]\d[A-Z] ?\d[A-Z]\d|\d{5}(?:-\d{4})?)$/i;
+// GOFO's European delivery scans say whether a PIN was used and give a door
+// number; neither belongs in the wording.
+const DELIVERY_DETAIL = /\s*,?\s*\b(?:PIN|Door NO):[^,.]*/gi;
+
+function place(raw: string): string {
+  const parts = raw.split(',').map((part) => part.trim());
+  const kept = parts.map((part) => part.replace(/^([A-Z]{2}) \d{5}(?:-\d{4})?$/, '$1')).filter((part) => part && !POSTCODE.test(part));
+  return kept.join(',') === parts.join(',') ? raw : kept.join(', ');
+}
+
+/**
+ * The last-mile carrier the notes name. The catalog must know its name or
+ * site, and that carrier's own detection must offer the reference: one
+ * brand's site can serve regional networks outside the catalog carrier.
+ */
+function distributor(notes: string[], reference: string): string | undefined {
+  const field = (label: string) => notes.find((line) => line.startsWith(`${label}: `))?.slice(label.length + 2) ?? '';
+  const carrier = carrierIdFromPartner(field('Distributor'), field('Distributor Website'));
+  return carrier && carrier !== 'yanwen' && (detectCarrierMatch(reference).candidates as string[]).includes(carrier) ? carrier : undefined;
 }
 
 function eventTime(day: string, raw: string): string {
@@ -61,27 +87,37 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
       const time = eventTime(day, clean(row.find('.timePoint').text(), 64));
       const words = row.find('.cz_r h6');
       if (words.length < 1 || words.length > 2) throw new SchemaError('Yanwen');
-      const description = clean(words.last().text(), 500);
+      const description = clean(words.last().text(), 500).replace(DELIVERY_DETAIL, '');
       if (!description) throw new SchemaError('Yanwen', 'Yanwen returned an empty scan');
-      const location = words.length === 2 ? clean(words.first().text(), 200).replace(/^\[|\]$/g, '') : '';
+      const location = words.length === 2 ? place(clean(words.first().text(), 200).replace(/^\[|\]$/g, '')) : '';
       const code = /\/([A-Z]{2}\d{2})\.png$/.exec(row.find('.cz_c img').attr('src') ?? '')?.[1];
       const key = JSON.stringify([time, description, location]);
       if (seen.has(key)) continue;
       seen.add(key);
-      const classified = yanwenStatus(description);
+      const classified = yanwenStatus(description, code);
       events.push({ time, description, location, ...(code ? { provider_code: code } : {}), ...(classified ? { stage: classified.stage } : {}) });
     }
     const latest = events[0]!;
-    const classified = yanwenStatus(latest.description!);
+    const scan = yanwenStatus(latest.description!, latest.provider_code);
+    // The category gives the status when the newest scan's wording is new. A
+    // delivery still needs a delivered scan; the category alone never makes one.
+    const filed = yanwenCategory(identities.attr('status'));
+    const category = filed?.status === 'delivered' && !events.some((event) => event.stage === 'delivered') ? undefined : filed;
+    const status = scan?.status ?? category?.status ?? 'unknown';
+    const stage = scan?.stage ?? category?.stage;
+    const delivery = status === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
     const columns = block.children('.cx_top_nr').children('.colFlex');
     if (columns.length !== 5) throw new SchemaError('Yanwen', 'Yanwen returned an invalid parcel summary');
     columns.find('a').remove();
     const deliveryNumber = clean(columns.eq(1).text(), 64).toUpperCase();
+    const handoff = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
+    const notes = block.find('.addNotes p').toArray().map((line) => clean($(line).text(), 300));
+    const partner = handoff ? distributor(notes, handoff) : undefined;
     const country = clean(columns.eq(3).text(), 8).toUpperCase();
-    results.push({ status: classified?.status ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
+    results.push({ status, ...(stage ? { current_stage: stage } : {}),
       last_status_text: latest.description, last_update: latest.time,
-      ...(classified?.stage === 'delivered' ? { delivered_at: latest.time } : {}),
-      ...(deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? { delivery_tracking_number: deliveryNumber } : {}),
+      ...(delivery ? { delivered_at: delivery.time } : {}),
+      ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
       ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) });
   }
   // The server renders desktop and mobile copies. Require them to agree so

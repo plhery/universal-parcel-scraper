@@ -22,7 +22,8 @@
   "capabilities": [
     "history",
     "location",
-    "delivered_at"
+    "delivered_at",
+    "delivery_partner"
   ],
   "portal": {
     "url": "https://track.yw56.com.cn/en/index",
@@ -30,15 +31,28 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner",
+      "order_references",
+      "contact_details",
+      "postcodes",
+      "delivery_pin"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner"
     ],
-    "discarded": [],
-    "unavailable": []
+    "discarded": [
+      "order_references",
+      "contact_details",
+      "postcodes",
+      "delivery_pin"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {
