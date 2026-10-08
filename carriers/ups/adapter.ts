@@ -13,6 +13,7 @@ import { calendarDay } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPS_PROGRESS_STATUS, upsActivityStage, upsBannerStage, upsStatus } from './status.js';
+import { decodeEntities } from './text.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
@@ -215,22 +216,6 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
     expected_delivery: null,
     events,
   };
-}
-
-const NAMED_ENTITIES: Readonly<Record<string, string>> = {
-  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', reg: '\u00ae', trade: '\u2122', copy: '\u00a9',
-};
-
-/** UPS escapes its prose as HTML: "We&#39;re sorry", "UPS Standard&#174;". */
-function decodeEntities(value: string): string {
-  return value.replace(/&(#x[0-9a-f]{1,6}|#\d{1,7}|[a-z]{2,6});/gi, (entity, body: string) => {
-    if (!body.startsWith('#')) {
-      const name = body.toLocaleLowerCase('en-US');
-      return Object.hasOwn(NAMED_ENTITIES, name) ? NAMED_ENTITIES[name]! : entity;
-    }
-    const code = /^#x/i.test(body) ? Number.parseInt(body.slice(2), 16) : Number(body.slice(1));
-    return code > 0 && code <= 0x10ffff && (code < 0xd800 || code > 0xdfff) ? String.fromCodePoint(code) : entity;
-  });
 }
 
 /** A provider string with its HTML entities decoded, then cleaned. */

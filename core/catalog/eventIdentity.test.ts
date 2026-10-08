@@ -175,4 +175,23 @@ describe('same-instant identity policies', () => {
     }
     expect(policy?.matches?.({ ...incoming, description: '' }, { ...stored, description: '' })).toBe(false);
   });
+
+  it('matches a UPS scan stored escaped and staged by its wording, before its code was kept', () => {
+    const policy = sameInstantIdentityPolicy('ups', { supportsScanMatching: true });
+    const stored = {
+      stage: 'exception', description: 'We&#39;re sorry this package may experience a temporary delay.',
+      location: 'EXAMPLE CITY, US', providerCode: '',
+    };
+    const incoming = { ...stored, stage: 'in_transit', description: "We're sorry this package may experience a temporary delay.", providerCode: 'Q5' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, { ...stored, providerCode: 'Q5' })).toBe(true);
+    for (const different of [
+      { ...stored, providerCode: 'AR' },
+      { ...stored, description: 'We&#39;re sorry, the receiver was not available.' },
+      { ...stored, location: 'ANOTHER CITY, US' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    // Without a code on the new scan, its stage must still agree.
+    expect(policy?.matches?.({ ...incoming, providerCode: '' }, stored)).toBe(false);
+    expect(policy?.matches?.({ ...incoming, stage: 'unknown' }, stored)).toBe(false);
+  });
 });

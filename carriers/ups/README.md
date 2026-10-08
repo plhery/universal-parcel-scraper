@@ -56,7 +56,10 @@ rendered status, after that wait.
   either step. Other refusals stay indeterminate.
 - The app scan-identity policy updates a scan when UPS adds its location, provided its
   exact instant, wording and known stage agree. Conflicting locations and distinct
-  messages at one instant remain separate.
+  messages at one instant remain separate. Wording is compared with HTML escapes decoded.
+  Two scans with activity codes must share the code rather than the stage; a scan stored
+  before codes were kept was staged by its wording, so a coded scan need not share its
+  stage.
 - The rendered-page parser reads only the active progress-bar milestone. Reading the whole
   bar classified label-created parcels as out for delivery. The banner's one event has no
   code; "Label Created", "On the Way", "Out for Delivery" and "Delivered" get their stage from
