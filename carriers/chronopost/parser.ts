@@ -3,7 +3,7 @@ import { isValidDpdParcelNumber } from '../../core/detection/dpd.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { countryCode, explicitOffsetTime } from '../../core/time/index.js';
+import { calendarDay, countryCode, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 import { chronopostStage, isChronopostNotification } from './status.js';
@@ -51,6 +51,21 @@ function clock(raw: string): { time?: string; local_time?: string; provider_time
   return raw ? { provider_time_text: clean(raw, 64) } : {};
 }
 
+/** The recipient's chosen redelivery day, printed as dd/MM/yyyy. */
+function redeliveryDay(value: string): string | null {
+  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+  return match ? calendarDay(Number(match[3]), Number(match[2]), Number(match[1])) : null;
+}
+
+/** The calendar day of a scan's own clock, or '' without one. */
+const clockDay = (event: CarrierEvent) => {
+  const clock = event.time ?? event.local_time;
+  return typeof clock === 'string' ? /^\d{4}-\d{2}-\d{2}/.exec(clock)?.[0] ?? '' : '';
+};
+
+/** Stages on the way to a planned delivery. */
+const ONGOING = new Set<Stage>(['pending', 'registered', 'accepted', 'in_transit', 'customs', 'out_for_delivery']);
+
 /** Keep operational places, never the delivery-point address or shop contact block. */
 function location(office: string, place: string): string {
   if (/^[\p{L}\p{M} .,'’()-]{1,100} - [A-Z]{2}(?: \(depot \d{1,6}\))?$/u.test(place)) return place;
@@ -93,10 +108,12 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     if (!description) throw new SchemaError('Chronopost', 'Chronopost returned an empty tracking event');
     const extras = children(scan, 'infoCompList');
     let place = '';
+    let redelivery: string | null | undefined;
     for (const extra of extras) {
       const name = scalar(extra, 'name');
       const value = scalar(extra, 'value');
       if (name === 'Lieu') place = value;
+      if (name === 'Date de relivraison') redelivery = redeliveryDay(value);
       if (name === 'Numéro partenaire') {
         const match = /^(?:GEO\/)?([A-Z0-9]{4,40})$/.exec(value.toUpperCase());
         if (match) {
@@ -117,7 +134,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
       ...(code ? { provider_code: code } : {}),
     };
     const mapped = chronopostStage(code, description);
-    return { event, mapped, notification: isChronopostNotification(description), index };
+    return { event, mapped, notification: isChronopostNotification(description), index, redelivery };
   });
   // The operation returns oldest first. Reorder only when all scan clocks
   // establish instants, so mixed local clocks cannot create a guessed order.
@@ -136,6 +153,16 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     scan.event.stage = scan.notification ? stage : scan.mapped.stage;
     scan.event.stage_source = scan.notification ? 'none' : scan.mapped.source;
   }
+  // The newest instruction that names a redelivery day decides, even when its
+  // day is unreadable. A later scan that is not progress towards that delivery,
+  // or that falls on a later day, ends it.
+  let promised: string | null = null;
+  for (const scan of projected) {
+    if (scan.redelivery !== undefined) promised = scan.redelivery;
+    else if (promised && (clockDay(scan.event) > promised || (!scan.notification && !ONGOING.has(scan.mapped.stage)))) {
+      promised = null;
+    }
+  }
   const events = projected.reverse().slice(0, 100).map(scan => scan.event);
   const latest = events[0]!;
   const reference = references.size === 1 ? [...references][0] : undefined;
@@ -149,7 +176,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     current_stage_source: stageSource,
     last_status_text: latest.description,
     last_update: latest.time ?? null,
-    expected_delivery: null,
+    expected_delivery: ['delivered', 'returned', 'ready_for_pickup'].includes(stage) ? null : promised,
     ...(reference ? { delivery_tracking_number: reference } : {}),
     ...(partner ? { delivery_carrier: partner } : {}),
     ...(destination ? { destination_country: destination } : {}),

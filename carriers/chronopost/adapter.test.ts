@@ -37,6 +37,46 @@ describe('Chronopost direct tracking', () => {
     expect(result.events?.[1]).toMatchObject({ stage: 'delivered', stage_source: 'wording:language' });
   });
 
+  describe('redelivery day', () => {
+    const scan = (code: string, at: string, label: string, extras = '') => `<events><code>${code}</code><eventDate>${at}</eventDate>`
+      + `<eventLabel>${label}</eventLabel><officeLabel>EXAMPLE HUB CHRONOPOST</officeLabel>${extras}</events>`;
+    const extra = (name: string, value: string) => `<infoCompList><name>${name}</name><value>${value}</value></infoCompList>`;
+    const instruction = (day: string, at = '2026-01-05T10:00:00+01:00') => scan('CL ', at, 'Instruction de livraison reçue',
+      extra('Origine', 'Client via page de suivi') + extra('Date de relivraison', day)
+      + extra('Instruction choisie', 'Reprogrammation de la date de livraison'));
+    const tracked = (...scans: string[]) => parseChronopostTrackingXml(fixture.replace('<skybillNumber>', `${scans.join('')}<skybillNumber>`), number);
+    const sorting = (at: string) => scan('SD ', at, "Tri effectué dans l'agence de distribution");
+    const round = (at: string) => scan('TA ', at, 'Colis en cours de livraison par le livreur');
+
+    it('reads the day the recipient chose without projecting the instruction details', () => {
+      const result = tracked(instruction('07/01/2026'), sorting('2026-01-07T05:40:00+01:00'), round('2026-01-07T07:50:00+01:00'));
+      expect(result).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-01-07' });
+      expect(result.events?.[2]).toMatchObject({ description: 'Instruction de livraison reçue', provider_code: 'CL' });
+      expect(JSON.stringify(result)).not.toMatch(/Client via page|Reprogrammation|07\/01\/2026/);
+      expect(parseChronopostTrackingXml(fixture, number).expected_delivery).toBeNull();
+    });
+
+    it('uses only the newest instruction', () => {
+      expect(tracked(instruction('07/01/2026'), instruction('09/01/2026', '2026-01-06T09:00:00+01:00')).expected_delivery).toBe('2026-01-09');
+      for (const day of ['31/02/2026', '2026-01-09', 'Samedi']) {
+        expect(tracked(instruction('07/01/2026'), instruction(day, '2026-01-06T09:00:00+01:00')).expected_delivery).toBeNull();
+      }
+    });
+
+    it('ends the day after delivery, a failed attempt, a pickup point or a later scan', () => {
+      const notice = scan('SM ', '2026-01-07T12:45:00+01:00', 'Destinataire informé par SMS ou mail', extra('Type du message', 'Echec de livraison'));
+      expect(tracked(instruction('07/01/2026'), round('2026-01-07T07:50:00+01:00'), notice).expected_delivery).toBe('2026-01-07');
+      for (const ending of [
+        scan('D  ', '2026-01-07T10:55:00+01:00', 'Livraison effectuée'),
+        scan('NA ', '2026-01-07T12:20:00+01:00', "Echec de livraison, en attente d'instructions pour nouvelle livraison"),
+        scan('AB ', '2026-01-07T10:10:00+01:00', 'Colis mis à disposition au point de retrait'),
+        sorting('2026-01-08T05:40:00+01:00'),
+      ]) {
+        expect(tracked(instruction('07/01/2026'), round('2026-01-07T07:50:00+01:00'), ending).expected_delivery).toBeNull();
+      }
+    });
+  });
+
   it('does not let a relayed code override contradictory wording', () => {
     expect(chronopostStage('DC', 'Livraison effectuée')).toMatchObject({ stage: 'delivered', source: 'wording:language' });
     expect(chronopostStage('UNKNOWN', 'Unmapped carrier message')).toEqual({ stage: 'pending', source: 'none' });

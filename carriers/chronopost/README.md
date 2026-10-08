@@ -29,6 +29,11 @@ local. Notifications retain activity without changing the last established
 shipment stage. Observed codes are used only when their wording agrees,
 because partner scans can reuse codes.
 
+A delivery instruction can carry the redelivery day the recipient chose. The
+newest such instruction becomes the expected delivery; an unreadable day gives
+none. It lapses once a later scan is not progress towards that delivery or
+falls on a later day.
+
 A checked `GEO/` parcel reference with an explicit German delivery country
 proposes DPD Germany. The tracker asks that adapter with the partner's number
 and returns its independent confirmation for consumer routing. Other safe
@@ -38,9 +43,10 @@ remain separate.
 
 ## Limitations
 
-The tracking operation supplies no delivery estimate. Recipient addresses,
-postcodes, delivery-point contact details and free-form supplementary comments
-are discarded; only the delivery country's code is read from the address field.
+The tracking operation supplies no delivery estimate beyond a chosen
+redelivery day. Recipient addresses, postcodes, delivery-point contact details
+and free-form supplementary comments are discarded; only the delivery
+country's code is read from the address field.
 
 ## Testing
 

@@ -28,6 +28,7 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
     "provider_code",
     "delivery_tracking_number"
   ],
@@ -43,11 +44,10 @@
     "scraped": [
       "status",
       "history",
-      "location"
-    ],
-    "discarded": [
+      "location",
       "eta"
     ],
+    "discarded": [],
     "unavailable": []
   },
   "links": [
