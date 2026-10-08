@@ -17506,7 +17506,23 @@
     ]
   },
   {
+    "input": "UK938260415YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
     "input": "UL044811634YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL088532528YP",
     "carrier": "yanwen",
     "confidence": "high",
     "candidates": [
@@ -17530,6 +17546,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "UL191943101YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
     ]
   },
   {
@@ -17573,7 +17597,39 @@
     ]
   },
   {
+    "input": "UL324220891YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL335650526YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL357720878YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
     "input": "UL494089685YP",
+    "carrier": "yanwen",
+    "confidence": "high",
+    "candidates": [
+      "yanwen"
+    ]
+  },
+  {
+    "input": "UL506640310YP",
     "carrier": "yanwen",
     "confidence": "high",
     "candidates": [
