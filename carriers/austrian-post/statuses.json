@@ -42,6 +42,12 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28"
+    },
+    {
+      "code": "EXP",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Seen without wording, with reason R24. The tracking page lists the scan under its date and time alone, so it keeps its code, gets no stage and never gives the status text."
     }
   ]
 }

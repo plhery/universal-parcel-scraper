@@ -16,6 +16,11 @@ Timestamps carry explicit offsets, which are preserved. A scan place given
 only as `PLZ` and a postcode is the delivery area and is dropped; a facility
 keeps its name without the postcode.
 
+A scan can come without wording. The tracking page lists it under its date
+and time alone, with no label from its codes, so it keeps its code but gets
+no stage, and the status text comes from the newest scan with wording. A scan
+with neither wording nor a code is skipped.
+
 The query also asks for the measured size, in whole centimetres. It never
 asks for the shipper, which the public page shows only after sign-in, or
 anything about the recipient.

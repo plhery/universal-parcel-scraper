@@ -73,18 +73,23 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
     const reason = clean(raw.reasontypecode, 32);
     newestReason = reason;
     const time = explicitOffsetTime(raw.timestamp);
+    if (!time) throw new SchemaError(PROVIDER, 'Austrian Post returned an incomplete scan');
     const description = clean(raw.trackingDesc, 500);
-    if (!time || !description) throw new SchemaError(PROVIDER, 'Austrian Post returned an incomplete scan');
+    const code = clean(raw.status, 32);
+    const providerCode = /^[A-Z0-9]{1,8}$/.test(code) ? code : '';
+    // The tracking page lists a scan without wording under its date and time
+    // alone, with no label from its codes. It keeps its code but no stage; one
+    // without a code is skipped.
+    if (!description && !providerCode) return;
     // A bare `PLZ 1234` is the delivery area; a facility keeps its name without the postcode.
     const location = clean(raw.eventPlaceName, 200).replace(/(?:^|,\s*)PLZ\s*\d{4,5}$/i, '').trim();
-    const code = clean(raw.status, 32);
-    const mapped = austrianPostEventStatus(code, reason, description);
-    const key = JSON.stringify([time.iso, location, description]);
+    const mapped = description ? austrianPostEventStatus(code, reason, description) : undefined;
+    const key = JSON.stringify([time.iso, location, description, description ? '' : providerCode]);
     if (seen.has(key)) return;
     seen.add(key);
     parsed.push({ event: {
-      time: time.iso, description, ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}),
-      ...(/^[A-Z0-9]{1,8}$/.test(code) ? { provider_code: code } : {}),
+      time: time.iso, ...(description ? { description } : {}), ...(location ? { location } : {}),
+      ...(mapped ? { stage: mapped.stage } : {}), ...(providerCode ? { provider_code: providerCode } : {}),
     }, timestamp: time.timestamp, index });
   });
   parsed.sort((a, b) => b.timestamp - a.timestamp || b.index - a.index);
@@ -101,9 +106,11 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
   const measured = sides.length === 3 && sides.every((side) => Number.isInteger(side) && (side as number) > 0 && (side as number) < 10_000);
   const status = mapped?.status ?? 'unknown';
   const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
+  // The newest wording; a scan without any never gives the status text.
+  const text =events.find((event) => event.description)?.description ?? null;
   return {
     status, ...(mapped ? { current_stage: mapped.stage } : {}),
-    last_status_text: events[0]!.description!, last_update: events[0]!.time!, expected_delivery: expected?.expected_delivery ?? null,
+    last_status_text: text, last_update: events[0]!.time!, expected_delivery: expected?.expected_delivery ?? null,
     ...(expected?.expected_delivery_from ? { expected_delivery_from: expected.expected_delivery_from } : {}),
     ...(weight === null ? {} : { weight_kg: weight }),
     ...(measured ? { dimensions_text: `${sides.join(' × ')} cm` } : {}),

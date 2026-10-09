@@ -56,13 +56,46 @@ describe('Austrian Post public tracking', () => {
     expect(() => parseAustrianPostResponse(payload, NUMBER)).toThrow('without tracking history');
   });
 
-  it('requires scan wording and explicit timestamp offsets', () => {
+  it('requires explicit timestamp offsets', () => {
     const payload = fixture();
     payload.data.einzelsendung.sendungsEvents[0].timestamp = '2026-03-28T12:00:00';
     expect(() => parseAustrianPostResponse(payload, NUMBER)).toThrow('incomplete scan');
-    payload.data.einzelsendung.sendungsEvents[0].timestamp = '2026-03-28T12:00:00+02:00';
-    payload.data.einzelsendung.sendungsEvents[0].trackingDesc = '';
-    expect(() => parseAustrianPostResponse(payload, NUMBER)).toThrow('incomplete scan');
+  });
+
+  describe('a scan without wording', () => {
+    // A returned letter whose history holds an EXP scan without wording, as the page lists it.
+    const RETURNED = 'LP123456785AT';
+    const returned = () => JSON.parse(readFileSync(new URL('./fixtures/returned.json', import.meta.url), 'utf8'));
+    const wordless = (payload: ReturnType<typeof returned>) => payload.data.einzelsendung.sendungsEvents[2];
+
+    it('keeps its code, with no stage and no wording', () => {
+      const result = parseAustrianPostResponse(returned(), RETURNED);
+      expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Empfängeradresse ungenügend',
+        last_update: '2026-03-04T08:45:00Z', expected_delivery: null, weight_kg: 0.02 });
+      expect(result.events?.map((event) => event.provider_code)).toEqual(['RU', 'AZT', 'BNT', 'EXP', 'IV', 'BNT']);
+      expect(result.events?.[3]).toEqual({ time: '2026-03-03T03:10:45Z', provider_code: 'EXP' });
+    });
+
+    it('never gives the status text, even as the newest scan', () => {
+      const payload = returned();
+      wordless(payload).timestamp = '2026-03-05T07:00:00.000+00:00';
+      const result = parseAustrianPostResponse(payload, RETURNED);
+      expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Empfängeradresse ungenügend',
+        last_update: '2026-03-05T07:00:00Z' });
+      expect(result.events?.[0]).toEqual({ time: '2026-03-05T07:00:00Z', provider_code: 'EXP' });
+      for (const scan of payload.data.einzelsendung.sendungsEvents) scan.trackingDesc = null;
+      const silent = parseAustrianPostResponse(payload, RETURNED);
+      expect(silent).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: null });
+      expect(silent.events?.some((event) => event.description || event.stage)).toBe(false);
+    });
+
+    it('is skipped without a code', () => {
+      const payload = returned();
+      wordless(payload).status = '';
+      const result = parseAustrianPostResponse(payload, RETURNED);
+      expect(result.events?.map((event) => event.provider_code)).toEqual(['RU', 'AZT', 'BNT', 'IV', 'BNT']);
+      expect(result.events?.every((event) => event.description)).toBe(true);
+    });
   });
 
   it('deduplicates scans and keeps unfamiliar stages unresolved', () => {
