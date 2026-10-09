@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { sendsThrough } from '../../core/transport/transportOf.js';
 import { DPD_DE_APP_API, DpdAppService, sharedDpdAppService, type DpdSession } from './service.js';
 
 // All credentials, sessions, shop ids and addresses here are invented.
@@ -256,5 +257,14 @@ describe('DPD app service session', () => {
     expect(sharedDpdAppService({ fetcher })).toBe(sharedDpdAppService({ fetcher, userAgent: undefined }));
     expect(sharedDpdAppService({ fetcher })).not.toBe(sharedDpdAppService({ fetcher: service().fetcher }));
     expect(sharedDpdAppService({ fetcher })).not.toBe(sharedDpdAppService({ fetcher, userAgent: 'Host/1.0' }));
+  });
+
+  it('is the one of the fetcher under a tracker\'s wrapper', () => {
+    const { fetcher } = service();
+    const wrapper = sendsThrough((url, init) => fetcher(url, init), fetcher);
+    expect(sharedDpdAppService({ fetcher: wrapper })).toBe(sharedDpdAppService({ fetcher }));
+    const global = sendsThrough((url, init) => fetch(url, init), undefined);
+    expect(sharedDpdAppService({ fetcher: global })).toBe(sharedDpdAppService());
+    expect(sharedDpdAppService({ fetcher: (url, init) => fetcher(url, init) })).not.toBe(sharedDpdAppService({ fetcher }));
   });
 });

@@ -2,6 +2,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import type { AdapterEnvironment } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import { transportOf } from '../../core/transport/transportOf.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 import { isRecord } from '../../core/types.js';
 
@@ -394,25 +395,27 @@ const GLOBAL_FETCH = {};
 
 /**
  * The process's service for a transport and user agent. DPD Germany and DPD Switzerland share it,
- * and so do the adapters of every registry, so a session opens once for all of them.
+ * and so do the adapters of every registry and tracker, so a session opens once for all of them.
+ * A tracker's wrapper only adds each lookup's signal, so the service is that of the fetcher under it.
  */
 export function sharedDpdAppService(options: Pick<AdapterEnvironment, 'fetcher' | 'userAgent'> = {}): DpdAppService {
   const userAgent = userAgentOf(options.userAgent);
-  const key = options.fetcher ?? GLOBAL_FETCH;
+  const fetcher = transportOf(options.fetcher);
+  const key = fetcher ?? GLOBAL_FETCH;
   let byAgent = services.get(key);
   if (!byAgent) services.set(key, byAgent = new Map<string, DpdAppService>());
   let service = byAgent.get(userAgent);
-  if (!service) byAgent.set(userAgent, service = new DpdAppService({ fetcher: options.fetcher, userAgent }));
+  if (!service) byAgent.set(userAgent, service = new DpdAppService({ fetcher, userAgent }));
   return service;
 }
 
 /**
  * Opens the session DPD Germany and DPD Switzerland read the German DPD app's service with, in the
  * background, and keeps one open for the life of the process, so that no lookup waits the tens of
- * seconds an opening takes. For a long-lived host, with the `fetcher` and `userAgent` its adapter
- * environment has. With a `store`, a restart takes the saved session up again, and the sessions
- * no longer used are checked every hour until the service refuses them, which the store records.
- * The timers do not keep the process alive.
+ * seconds an opening takes. For a long-lived host, with the `fetcher` and `userAgent` it gives
+ * `createTracker` or its adapter environment. With a `store`, a restart takes the saved session up
+ * again, and the sessions no longer used are checked every hour until the service refuses them,
+ * which the store records. The timers do not keep the process alive.
  */
 export function warmDpdSession(environment: Pick<AdapterEnvironment, 'fetcher' | 'userAgent'> = {},
   options: { store?: DpdSessionStore } = {}): void {

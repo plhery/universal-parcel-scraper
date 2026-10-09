@@ -14,6 +14,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../core/telemetry/index.js';
 import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../core/time/index.js';
 import { eventTimestamp } from '../core/time/result.js';
 import { TrawlClient } from '../core/transport/trawl.js';
+import { sendsThrough } from '../core/transport/transportOf.js';
 import { userAgentOf } from '../core/transport/userAgent.js';
 import type { Stage } from '../generated/catalog.js';
 import { REGISTRY } from '../generated/registry.js';
@@ -234,12 +235,12 @@ export function createTracker(options: TrackerOptions = {}) {
   if (!Number.isFinite(spacing) || spacing < 0 || spacing > 60_000) throw new TypeError('Invalid provider spacing');
   const lookupSignals = new AsyncLocalStorage<AbortSignal>();
   const baseFetcher = options.fetcher ?? fetch;
-  const fetcher: typeof fetch = (url, init) => {
+  const fetcher: typeof fetch = sendsThrough((url, init) => {
     const current = lookupSignals.getStore();
     const inherited = init?.signal ?? (url instanceof Request ? url.signal : undefined);
     const signal = current && inherited ? AbortSignal.any([current, inherited]) : current ?? inherited;
     return baseFetcher(url, { ...init, ...(signal ? { signal } : {}) });
-  };
+  }, options.fetcher);
   const environment: AdapterEnvironment = {
     fetcher,
     userAgent: userAgentOf(options.userAgent),

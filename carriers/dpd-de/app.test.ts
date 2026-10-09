@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { createTracker } from '../../facade/index.js';
 import { adapter } from './adapter.js';
 import { DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
 import { DPD_DE_APP_API, sharedDpdAppService, warmDpdSession } from './service.js';
@@ -458,6 +459,16 @@ describe('DPD Germany tiers', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('reads with the session the host warmed for the fetcher it gives a tracker', async () => {
+    const { app, fetcher, guestCalls } = tiers(guest(Response.json({})));
+    warmDpdSession({ fetcher });
+    await vi.waitFor(() => expect(sharedDpdAppService({ fetcher }).opening).toBe(false));
+    const answer = await createTracker({ fetcher, providers: [] }).track({ number: NUMBER, carrier: 'dpd-de' });
+    expect(answer.result.events).toHaveLength(5);
+    expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getTrackingData', 'getTrackingScanList']);
+    expect(guestCalls).toHaveLength(0);
   });
 
   it('answers from the app service without a postcode, without asking the guest protocol', async () => {
