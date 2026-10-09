@@ -4,25 +4,7 @@ import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import type { Stage } from '../../generated/catalog.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { event, place, text } from '../shared/result.js';
-
-// Official v2 status vocabulary, plus TransportArrived/Departed observed in
-// public China Post histories. Expired describes tracking age, not a scan.
-const SUB_STAGES: Record<string, Stage> = {
-  InfoReceived: 'registered',
-  InTransit_PickedUp: 'accepted', InTransit_Other: 'in_transit',
-  InTransit_Departure: 'in_transit', InTransit_Arrival: 'in_transit',
-  InTransit_TransportArrived: 'in_transit', InTransit_TransportDeparted: 'in_transit',
-  InTransit_CustomsProcessing: 'customs', InTransit_CustomsReleased: 'in_transit',
-  InTransit_CustomsRequiringInformation: 'customs',
-  AvailableForPickup_Other: 'ready_for_pickup', OutForDelivery_Other: 'out_for_delivery',
-  DeliveryFailure_Other: 'failed_attempt', DeliveryFailure_NoBody: 'failed_attempt',
-  DeliveryFailure_Security: 'failed_attempt', DeliveryFailure_Rejected: 'failed_attempt',
-  DeliveryFailure_InvalidAddress: 'failed_attempt', Delivered_Other: 'delivered',
-  Exception_Other: 'exception', Exception_Returning: 'exception', Exception_Returned: 'returned',
-  Exception_NoBody: 'exception', Exception_Security: 'exception', Exception_Damage: 'exception',
-  Exception_Rejected: 'exception', Exception_Delayed: 'exception', Exception_Lost: 'exception',
-  Exception_Destroyed: 'exception', Exception_Cancel: 'exception',
-};
+import { SUB_STAGES, subStatusStage } from './status.js';
 
 /**
  * 17TRACK's two readings of a scan usually name one instant. When they
@@ -49,13 +31,10 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
   const time = placed ?? scanTime(raw);
   if (time === null || time === undefined) return null;
   const code = text(raw.sub_status);
-  const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
-  const parsed = event(time, raw.description, raw.stage ?? (mapped ? code.split('_')[0] : undefined));
+  const parsed = event(time, raw.description, raw.stage ?? (Object.hasOwn(SUB_STAGES, code) ? code.split('_')[0] : undefined));
   if (!parsed) return null;
-  // Preserve the shared delivered/negation/handoff safeguards. The specific
-  // code otherwise supplies semantics that Chinese wording cannot provide.
-  const genericTransit = code === 'InTransit_Other' && parsed.stage !== 'pending';
-  if (mapped && !genericTransit && (mapped !== 'delivered' || parsed.stage === 'delivered')) parsed.stage = mapped;
+  const coded = subStatusStage(code, parsed.stage as Stage);
+  if (coded) parsed.stage = coded;
   // 17TRACK's generic transit bucket loses Swiss Post's delivery-round scan.
   // Refine only that operator's precise native label; keep its original code.
   if (code === 'InTransit_Other' && operator.reporting_carrier === 'Swiss Post'

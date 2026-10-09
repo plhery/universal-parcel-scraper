@@ -62,7 +62,9 @@ and [COVERAGE.md](COVERAGE.md) holds what was measured.
   signature is dropped, and a delivered event's text becomes `Delivered`. Recipient
   fields are never read.
 - One wording-to-stage vocabulary serves all providers. Unmatched wording stays
-  `pending` and never inherits the shipment's stage.
+  `pending` and never inherits the shipment's stage. [status.ts](status.ts) declares it,
+  with 17TRACK's sub-statuses, as the status map `statusMapAnswer()` asks for the scans the
+  parcel app files under the carrier `unknown`.
 - English return instructions and a return in progress remain exceptions. Completed
   return wording can mark sender delivery; starting the return cannot complete it.
 - An exactly worded voided label ("Parcel Void", "Shipment voided") is an exception even

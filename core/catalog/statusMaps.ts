@@ -6,7 +6,9 @@
  * what the map of the scraper it runs says about such a key: the stage the map
  * gives it, a gap the map leaves on purpose, or nothing. A carrier declares its
  * `statusMap` next to its map in `status.ts`; carriers without one answer
- * `unknown`.
+ * `unknown`. The scans the app files under the carrier `unknown` come from the
+ * universal providers, whose map is the reading they give a scan
+ * (`providers/status.ts`).
  */
 import { statusMap as aliexpress } from '../../carriers/aliexpress/status.js';
 import { statusMap as chronopost } from '../../carriers/chronopost/status.js';
@@ -22,6 +24,7 @@ import { statusMap as tnt } from '../../carriers/tnt/status.js';
 import { statusMap as ups } from '../../carriers/ups/status.js';
 import { statusMap as yunexpress } from '../../carriers/yunexpress/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
+import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../status/statusMap.js';
 import { CARRIER_DEFINITIONS } from './definitions.js';
 
@@ -31,9 +34,15 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'la-poste': laPoste, postlogistics, 'swiss-post': swissPost, tnt, ups, yunexpress,
 };
 
+/** The carrier the app files the universal providers' scans under. */
+const UNIVERSAL_CARRIER = 'unknown';
+
 /** One scan as the app observed it. */
 export interface ObservedStatus {
-  /** The catalog carrier that served the scan, the prefix of the app's provider event id. */
+  /**
+   * The catalog carrier that served the scan, the prefix of the app's provider
+   * event id: `unknown` for a scan a universal provider relayed.
+   */
   readonly carrier: string;
   readonly providerCode?: string | null;
   /** The scan's wording, as the carrier sent it or already normalized. */
@@ -52,6 +61,7 @@ export type StatusMapAnswer =
 const UNKNOWN: StatusMapAnswer = { kind: 'unknown' };
 
 function carrierStatusMap(carrier: string): CarrierStatusMap | undefined {
+  if (carrier === UNIVERSAL_CARRIER) return universal;
   const adapter = Object.hasOwn(CARRIER_DEFINITIONS, carrier)
     ? CARRIER_DEFINITIONS[carrier as CarrierId].tracking.adapter
     : null;
@@ -62,7 +72,9 @@ function carrierStatusMap(carrier: string): CarrierStatusMap | undefined {
  * What the carrier's map says about one observed scan, keyed as the app keys
  * its observations: carrier, provider code and `normalizeStatusWording`
  * wording. A gap without a code covers only wording that came without one; a
- * gap without wording covers every wording of its code.
+ * gap without wording covers every wording of its code. A scan a universal
+ * provider relayed is `mapped` with the stage the providers' reading gives it,
+ * as the sync does, and `unknown` when neither its code nor a rule stages it.
  */
 export function statusMapAnswer(observed: ObservedStatus): StatusMapAnswer {
   const map = carrierStatusMap(observed.carrier);

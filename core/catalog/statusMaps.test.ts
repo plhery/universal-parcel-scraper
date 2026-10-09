@@ -3,7 +3,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { normalizeStatusWording, statusMapAnswer } from '../../app.js';
+import { seventeenTrackEvent } from '../../providers/seventeentrack/events.js';
+import { event } from '../../providers/shared/result.js';
+import { statusMap as universal } from '../../providers/status.js';
+import type { CarrierEvent } from '../result/index.js';
 import type { CarrierStatusMap } from '../status/statusMap.js';
+import { classifyWording } from '../status/wording.js';
 import { STATUS_MAPS } from './statusMaps.js';
 
 const carriers = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../carriers');
@@ -138,12 +143,80 @@ describe('status map answers', () => {
     expect(answer('correos-spain', null, 'Admitido.')).toEqual(unknown);
   });
 
-  it.each(['unknown', 'app', '', 'china-post', '__proto__', 'toString'])('does not know %s', (carrier) => {
+  it.each(['app', '', 'china-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });
 
   it('does not know a scan without wording', () => {
     expect(answer('dpd', 'DLO', '   ')).toEqual(unknown);
+  });
+});
+
+describe("universal providers' answers", () => {
+  const TIME = '2026-01-01T12:00:00Z';
+
+  it('answer by the wording rules the providers apply, as the app files their scans under unknown', () => {
+    expect(answer('unknown', null, 'Processed at EXAMPLE CITY - FRANCE')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', null, 'Shipment information received')).toEqual(mapped('registered'));
+    expect(answer('unknown', null, 'Clearance processing complete at EXAMPLE GATEWAY - USA')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', null, "  Colis en préparation chez l'expéditeur ")).toEqual(mapped('registered'));
+    expect(answer('unknown', null, 'Delivered')).toEqual(mapped('delivered'));
+    // Wording no rule reads, and a delivery still to come, stay open as gaps.
+    expect(answer('unknown', null, 'Estado interno 99')).toEqual(unknown);
+    expect(answer('unknown', null, 'Will be delivered tomorrow')).toEqual(unknown);
+    expect(answer('unknown', null, '   ')).toEqual(unknown);
+  });
+
+  it("answer by the providers' own reading, not the generic classifier's keyword rules", () => {
+    // Posti's repeated handling scan, which the providers read before the shared rules.
+    expect(classifyWording('The item has been registered').stage).toBe('registered');
+    expect(answer('unknown', null, 'The item has been registered')).toEqual(mapped('in_transit'));
+    // The providers leave a bare "Returned" unread, so the sync stores it unstaged.
+    expect(classifyWording('Returned').source).toBe('wording:returned');
+    expect(answer('unknown', null, 'Returned')).toEqual(unknown);
+  });
+
+  it('let a 17TRACK sub-status outrank the wording where the sync does', () => {
+    expect(answer('unknown', 'Exception_Cancel', 'Estado interno 99')).toEqual(mapped('exception'));
+    expect(answer('unknown', 'Exception_Returned', 'Delivered')).toEqual(mapped('returned'));
+    expect(answer('unknown', 'InfoReceived', 'Shipping label created')).toEqual(mapped('registered'));
+    expect(answer('unknown', 'InTransit_PickedUp', 'Processed at EXAMPLE HUB')).toEqual(mapped('accepted'));
+    // Generic transit yields to any reading of the wording, and a delivery code
+    // to wording that does not read as delivered.
+    expect(answer('unknown', 'InTransit_Other', 'Arrived at customs')).toEqual(mapped('customs'));
+    expect(answer('unknown', 'InTransit_Other', 'Estado interno 99')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', 'Delivered_Other', 'Not delivered')).toEqual(mapped('failed_attempt'));
+    expect(answer('unknown', 'Delivered_Other', 'Estado interno 99')).toEqual(unknown);
+    // Any other code, such as a UPU event code the provider does not map, leaves it to the wording.
+    expect(answer('unknown', 'EMZ', 'Processed at EXAMPLE HUB')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', 'NotFound_Other', 'Estado interno 99')).toEqual(unknown);
+  });
+
+  it('give every scan the sync would review the stage the sync stored', () => {
+    const wordings = ['Processed at EXAMPLE CITY - FRANCE', 'Shipment information received', 'Arrived at customs',
+      'Released from import customs', 'Not delivered', 'Delivered', 'The item has been registered', 'Returned',
+      'Will be delivered tomorrow', 'Estado interno 99', 'Parcel on hold at recipient’s request', 'Shipping label created'];
+    const codes = [undefined, 'InfoReceived', 'InTransit_Other', 'InTransit_PickedUp', 'Delivered_Other',
+      'Exception_Cancel', 'Exception_Returned', 'NotFound_Other'];
+    const scans: CarrierEvent[] = [];
+    for (const description of wordings) {
+      scans.push(event(TIME, description)!);
+      // 17TRACK's own stage label, absent or one the providers do not map, decides whether the scan is reviewed.
+      for (const code of codes) for (const stage of [null, 'Synthetic']) {
+        scans.push(seventeenTrackEvent({ time_utc: TIME, description, stage, sub_status: code }, {})!);
+      }
+    }
+    // The app reviews every scan whose stage did not come from a map.
+    const reviewed = scans.filter(({ stage_source }) => stage_source !== 'carrier_map');
+    expect(reviewed.filter(({ provider_code: code }) => code).length).toBeGreaterThan(50);
+    for (const scan of reviewed) {
+      expect(answer('unknown', scan.provider_code ?? null, scan.description!), JSON.stringify(scan))
+        .toEqual(scan.stage === 'pending' ? unknown : mapped(scan.stage!));
+    }
+  });
+
+  it('leave nothing out on purpose', () => {
+    expect(universal.gaps).toEqual([]);
   });
 });
 

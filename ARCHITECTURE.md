@@ -218,8 +218,12 @@ the note, or `unknown`. A gap without a code covers only wording that came witho
 a gap without wording covers every wording of its code. The answer reads the code and
 wording alone: a stage that depends on the rest of the reply, such as a DPD scan staged by
 its enumeration twin, is `unknown`, and so is every scan of a carrier without a declaration.
-After a release the app can ask it about every open review entry and close those the map
-now stages or leaves out on purpose, under the version it runs.
+The app files the scans a universal provider relays under the carrier `unknown`. Their map is
+the reading the providers give a scan ([providers/status.ts](providers/status.ts)): a 17TRACK
+sub-status where it outranks the wording, else the wording rules every provider applies,
+which put their own vocabulary around the shared language rules. A scan neither its code
+nor a rule stages is `unknown`. After a release the app can ask it about every open review entry and close
+those the map now stages or leaves out on purpose, under the version it runs.
 
 Some carrier categories cover several milestones. Exact carrier labels refine those cases;
 explanatory reasons and future delivery instructions do not establish a new milestone.
