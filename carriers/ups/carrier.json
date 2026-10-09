@@ -27,7 +27,9 @@
     "delivered_at",
     "pickup_point",
     "provider_code",
-    "service_name"
+    "service_name",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://www.ups.com/track?tracknum={trackingNumber}",
@@ -38,7 +40,8 @@
       "eta",
       "location",
       "pickup_point",
-      "service_name"
+      "service_name",
+      "delivery_partner"
     ],
     "scraped": [
       "status",
@@ -48,7 +51,8 @@
       "delivered_at",
       "pickup_point",
       "provider_code",
-      "service_name"
+      "service_name",
+      "delivery_partner"
     ],
     "discarded": [
       "signatory",

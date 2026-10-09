@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { IndeterminateError, InvalidInputError, NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -13,6 +14,8 @@ import { UPS_PROGRESS_STATUS, upsActivityStage, upsStatus } from './status.js';
 const TRACKING_NUMBER = '1Z999AA10123456784';
 // The same number with a check digit that does not match.
 const BAD_CHECK_DIGIT = '1Z999AA10123456785';
+// A made-up 26-digit USPS package number with a valid check digit.
+const POSTAL_PIC = '92612900000000000000123454';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
 const TRAWL_URL = 'http://trawl.internal:8191';
 const OUT_FOR_DELIVERY = JSON.parse(
@@ -331,9 +334,32 @@ describe('UPS structured response', () => {
     }
   });
 
+  it('names the USPS number of a parcel handed to the post office, and nothing that is not one', () => {
+    const handedOver = (postalServiceTrackingID: unknown) => withScans([
+      scan('YC', 'Package delivered by local post office ', '20260804 15:10:00', 'EXAMPLE TOWN, NY, US'),
+      scan('YH', 'Received by the local post office', '20260804 07:30:00', 'EXAMPLE TOWN, NY, US'),
+      scan('LX', 'Package transferred to post office', '20260803 22:05:00', 'EXAMPLE CITY, NY, US'),
+    ], { additionalInformation: { serviceInformation: { serviceName: 'UPS Ground Saver&#174;' }, postalServiceTrackingID } });
+    const result = parseUPSTrackingResponse(handedOver(POSTAL_PIC), TRACKING_NUMBER, TODAY);
+    expect(result).toMatchObject({
+      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-04T15:10:00+00:00',
+      service_name: 'UPS Ground Saver', delivery_carrier: 'usps', delivery_tracking_number: POSTAL_PIC,
+    });
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([['YC', 'delivered'], ['YH', 'in_transit'], ['LX', 'in_transit']]);
+    expect(deliveryHandoff('ups', TRACKING_NUMBER, resolveResult(result))).toEqual({ carrier: 'usps', number: POSTAL_PIC, basis: 'partner' });
+    // A routing barcode keeps only the package number after its ZIP code.
+    expect(parseUPSTrackingResponse(handedOver(`42000000${POSTAL_PIC}`), TRACKING_NUMBER, TODAY).delivery_tracking_number).toBe(POSTAL_PIC);
+    for (const id of [null, undefined, '', `${POSTAL_PIC.slice(0, -1)}5`, TRACKING_NUMBER, 'NOT AVAILABLE', { id: POSTAL_PIC }]) {
+      const dropped = parseUPSTrackingResponse(handedOver(id), TRACKING_NUMBER, TODAY);
+      expect(dropped).not.toHaveProperty('delivery_carrier');
+      expect(dropped).not.toHaveProperty('delivery_tracking_number');
+    }
+  });
+
   it('produces every capability carrier.json declares', () => {
     const result = parseUPSTrackingResponse(fixture(), TRACKING_NUMBER, TODAY);
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'pickup_point', 'provider_code', 'service_name']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'delivered_at', 'pickup_point', 'provider_code', 'service_name',
+      'delivery_partner', 'delivery_tracking_number']);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.every((event) => event.provider_code)).toBe(true);
@@ -345,6 +371,10 @@ describe('UPS structured response', () => {
     const served = fixture();
     Object.assign((served.trackDetails as Record<string, unknown>[])[0]!, { additionalInformation: { serviceInformation: { serviceName: 'UPS Ground' } } });
     expect(parseUPSTrackingResponse(served, TRACKING_NUMBER, TODAY).service_name).toBe('UPS Ground');
+    const handed = fixture();
+    Object.assign((handed.trackDetails as Record<string, unknown>[])[0]!, { additionalInformation: { postalServiceTrackingID: POSTAL_PIC } });
+    expect(parseUPSTrackingResponse(handed, TRACKING_NUMBER, TODAY))
+      .toMatchObject({ delivery_carrier: 'usps', delivery_tracking_number: POSTAL_PIC });
   });
 
   it('fails closed on another parcel and reports an unavailable API as inconclusive', () => {

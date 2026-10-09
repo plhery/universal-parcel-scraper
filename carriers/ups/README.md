@@ -53,6 +53,12 @@ rendered status, after that wait.
   country code.
 - `service_name` is the service `additionalInformation.serviceInformation` names, without
   the trademark signs UPS adds to it.
+- A parcel UPS hands to the U.S. Postal Service for the last leg (Ground Saver, for one) has
+  its USPS number in `additionalInformation.postalServiceTrackingID`, which the page offers
+  as USPS tracking. It becomes `delivery_tracking_number` with `delivery_carrier` `usps` only
+  when it reads as a USPS package number; a routing barcode keeps the package number after
+  its ZIP code. `LX`, `YH` and `YC` are the hand-off, the post office's receipt and its
+  delivery.
 - Prose arrives HTML-escaped (`We&#39;re`, `&#174;`) and is decoded.
 - A 402 "Invalid Request" for a number whose check digit fails is `InvalidInputError`, from
   either step. Other refusals stay indeterminate.
@@ -108,7 +114,6 @@ it can replace browser retrieval. Application configuration and tokens stay outs
 
 - No delivery window or dimensions. The weight field comes back empty.
 - No sender name: `senderShipperNumber` is the shipper's account number.
-- The service name (`UPS Ground Saver®`) is in the reply, but the result has no field for it.
 - Without a browser service there is no history.
 - The ship-to address beyond its country, the signatory, the proof-of-delivery link and the
   access point's attention name, hours and coordinates are in the reply but never kept; a

@@ -5,6 +5,7 @@ import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { isValidUpsTrackingNumber } from '../../core/detection/ups.js';
+import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
@@ -382,6 +383,12 @@ export function parseUPSTrackingResponse(
   // UPS writes its service names with trademark signs ("UPS Standard&#174;"), which are not part of the name.
   const information = isRecord(detail.additionalInformation) ? detail.additionalInformation.serviceInformation : null;
   const service = isRecord(information) ? clean(text(information.serviceName, 200).replace(/[®™℠]/g, ' '), 80) : '';
+  // A parcel UPS hands to the U.S. Postal Service for the last leg (Ground
+  // Saver, for one) names its USPS number. Anything that is not a USPS package
+  // number is dropped, and a routing barcode keeps only its package number.
+  const postal = isRecord(detail.additionalInformation)
+    ? uspsPackageIdentifier(cleanScalar(detail.additionalInformation.postalServiceTrackingID))
+    : null;
   // Never projected: the ship-to and delivery addresses beyond their country,
   // `receivedBy`, `leftAt`, the proof-of-delivery link, the access point's
   // attention name, hours and coordinates, and `senderShipperNumber`, an
@@ -396,6 +403,7 @@ export function parseUPSTrackingResponse(
     ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     ...(country ? { destination_country: country } : {}),
     ...(service ? { service_name: service } : {}),
+    ...(postal ? { delivery_carrier: 'usps', delivery_tracking_number: postal } : {}),
     events,
   };
 }

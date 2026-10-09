@@ -67,14 +67,16 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // Facility scans, export and import scans.
   ['AR', 'in_transit'], ['DP', 'in_transit'], ['DS', 'in_transit'], ['YP', 'in_transit'],
   ['EP', 'in_transit'], ['IP', 'in_transit'],
-  // Delays: a late flight, a possible delay, new delivery plans.
-  ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'],
+  // Delays and new delivery plans: a late flight, a possible delay, a new
+  // plan, a delivery a day early.
+  ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'], ['2U', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed.
   ['AL', 'in_transit'], ['HM', 'in_transit'], ['H6', 'in_transit'], ['TB', 'in_transit'],
   ['ZA', 'in_transit'], ['ZB', 'in_transit'], ['ZC', 'in_transit'],
-  // Ground Saver's hand-off to the local post office.
-  ['ZW', 'in_transit'],
+  // Ground Saver's hand-off to the post office: moving there, transferred, and
+  // received by it.
+  ['ZW', 'in_transit'], ['LX', 'in_transit'], ['YH', 'in_transit'],
   // Collected back from an access point, or moved off one that is closing.
   ['3P', 'in_transit'], ['6B', 'in_transit'],
   // Loaded on the delivery vehicle, and out for delivery.
@@ -84,8 +86,10 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['48', 'failed_attempt'], ['G3', 'failed_attempt'], ['5R', 'failed_attempt'],
   // Delivered to an access point, and held there.
   ['2Q', 'ready_for_pickup'], ['ZP', 'ready_for_pickup'],
-  // Delivered, including collection from an access point.
-  ['9E', 'delivered'], ['FS', 'delivered'], ['KB', 'delivered'], ['2W', 'delivered'],
+  // Delivered, including collection from an access point and delivery by the
+  // post office after a hand-off.
+  ['9E', 'delivered'], ['FS', 'delivered'], ['KB', 'delivered'], ['KE', 'delivered'],
+  ['2W', 'delivered'], ['YC', 'delivered'],
 ]);
 
 /** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */
