@@ -8,7 +8,7 @@
  * response capture, cookies, user agent) and the legacy `/v1` command API
  * (`request.get`). Both are bounded like every other provider call.
  */
-import { CarrierError, UpstreamHttpError, type CarrierErrorOptions } from '../errors/index.js';
+import { CarrierError, ChallengeError, UpstreamHttpError, type CarrierErrorOptions } from '../errors/index.js';
 import { decodeText, fetchBounded, parseJsonBytes } from './boundedFetch.js';
 import { cleanScalar } from './text.js';
 import { isRecord, type JsonObject } from '../types.js';
@@ -77,6 +77,14 @@ const DEFAULT_MAX_BYTES = 10_000_000;
  */
 export const TRAWL_TRANSPORT_ALLOWANCE_MS = 15_000;
 const TRANSPORT_ALLOWANCE_MS = TRAWL_TRANSPORT_ALLOWANCE_MS;
+
+function pageHttpError(provider: string, status: number, headers: unknown): UpstreamHttpError {
+  const retryHeader = isRecord(headers)
+    ? Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1] : undefined;
+  const retryAfterMs = typeof retryHeader !== 'string' ? undefined : /^\d+$/.test(retryHeader.trim())
+    ? Number(retryHeader) * 1_000 : Date.parse(retryHeader) - Date.now();
+  return new UpstreamHttpError(provider, status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined);
+}
 
 /**
  * End the call when its signal has aborted. A cancellation is rethrown as the
@@ -217,7 +225,7 @@ export class TrawlClient {
 
   private async scrapeOnce(request: TrawlScrapeRequest, options: TrawlCallOptions): Promise<TrawlScrapeResponse> {
     throwIfEnded(options);
-    const { bytes } = await fetchBounded(this.scrapeUrl(), {
+    const { bytes, response } = await fetchBounded(this.scrapeUrl(), {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(request),
@@ -226,15 +234,38 @@ export class TrawlClient {
       timeoutMs: options.timeoutMs + TRANSPORT_ALLOWANCE_MS,
       maxBytes: options.maxBytes ?? DEFAULT_MAX_BYTES,
       fetcher: this.requestFetcher(options),
+      // An HTTP-only lookup has exactly one upstream outcome. TRAWL wraps its
+      // blocked responses in HTTP 500, including upstream 429 and HTTP 200 walls.
+      allowHttpStatuses: request.maxTier === 1 ? [500] : undefined,
     });
     throwIfEnded(options);
-    const value = parseJsonBytes(bytes, options.provider);
+    let value: unknown;
+    try { value = parseJsonBytes(bytes, options.provider); }
+    catch (error) {
+      if (response.status === 500) throw new UpstreamHttpError(options.provider, 500);
+      throw error;
+    }
     if (!isRecord(value)) throw new TrawlError(options.provider, 'The browser service returned an invalid response');
+    if (request.maxTier === 1 && value.error === 'Max tier reached without success'
+      && Array.isArray(value.timings) && value.timings.length === 1) {
+      const attempt: unknown = value.timings[0];
+      if (isRecord(attempt) && attempt.tier === 1 && ['blocked', 'needs-js', 'error'].includes(String(attempt.status))) {
+        if (Number.isInteger(attempt.statusCode) && Number(attempt.statusCode) >= 400) {
+          throw pageHttpError(options.provider, Number(attempt.statusCode), attempt.responseHeaders);
+        }
+        if (attempt.statusCode === 200 && ['blocked', 'needs-js'].includes(String(attempt.status))) {
+          throw new ChallengeError(options.provider, 'The tracking page requires browser verification');
+        }
+      }
+    }
+    if (response.status === 500) throw new UpstreamHttpError(options.provider, 500);
     if (value.error) {
       throw new TrawlError(options.provider, cleanScalar(value.error, 200) || 'The browser service could not fetch the page');
     }
     const statusCode = Number(value.statusCode);
-    if (Number.isInteger(statusCode) && statusCode >= 400) throw new UpstreamHttpError(options.provider, statusCode);
+    if (Number.isInteger(statusCode) && statusCode >= 400) {
+      throw pageHttpError(options.provider, statusCode, value.responseHeaders);
+    }
     const tier = Number(value.tier);
     if ((options.requireSolved ?? true) && (![2, 3].includes(tier) || statusCode !== 200)) {
       throw new TrawlError(options.provider, 'The browser service did not solve the page');

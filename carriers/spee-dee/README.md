@@ -13,6 +13,14 @@ progress page behind the detail view of the
    redirect to this page. Spee-Dee publishes no tracking app, and the page needs no
    credential, cookie or session. The number is checked before any request, the read stops
    at 256 KB, redirects are not followed and the request gives up after 10 seconds.
+2. `trawl`: when that connection is dropped or refused, a configured TRAWL service fetches
+   the same page from its network. It uses only TRAWL's HTTP tier, with no browser or
+   CAPTCHA solver. The final URL must still name the same progress page and barcode, and
+   the same size limit and parser apply. An answered direct request is never repeated.
+
+Both steps share the caller's deadline and cancellation. The default budget is 30 seconds
+with TRAWL configured, otherwise 15 seconds. The direct request and waiting for the service
+each have a 10-second cap.
 
 ## Notes
 
@@ -44,9 +52,9 @@ progress page behind the detail view of the
 
 - The host drops or refuses connections from many networks, including common cloud ranges.
   That is a transport failure, never not found, whose message says the host refuses some
-  networks; a deployment needs a network the host accepts. A failed name lookup, a bad
-  certificate, or a reply that starts and then breaks or stalls is a plain transport
-  failure.
+  networks; either the caller or its TRAWL service needs a network the host accepts.
+  A failed name lookup, a bad certificate, or a reply that starts and then breaks or
+  stalls is a plain transport failure.
 - An earlier shipment that did not end in a delivery cannot be told apart from the current
   one, and any scan after a delivery is read as the start of a new shipment.
 - A barcode reused for a new shipment that has no scans yet is answered with the previous
@@ -61,3 +69,4 @@ progress page behind the detail view of the
 skips only when the connection is dropped or refused or no reply starts within the request
 limit; any other failure fails it. Set `SPEE_DEE_TRACKING_NUMBER` to read the history of an
 authorized real barcode.
+Set `FLARESOLVERR_URL` to exercise remote recovery when the local network is refused.

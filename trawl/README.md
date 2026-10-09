@@ -5,6 +5,10 @@ Some carriers and universal providers only answer a full browser session. This i
 Australia Post, YunExpress, 17TRACK and SF Express. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
+Spee-Dee also uses the service's HTTP tier after a refused direct connection; the benefit
+is the service's network, and no browser is launched. Dingxiang (ZTO) and MTCaptcha
+(Hongkong Post) are not supported by this image's solvers.
+
 ## Sessions
 
 The service reuses browser sessions, never parcel responses. FedEx keeps one verified context

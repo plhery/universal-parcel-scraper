@@ -16,7 +16,8 @@
     "mode": "automatic",
     "adapter": "spee-dee",
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
     "localClocks": true
   },

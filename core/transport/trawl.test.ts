@@ -54,6 +54,52 @@ describe('TrawlClient.scrape', () => {
     await expect(client({ html: '<html/>', tier: 1, statusCode: 200 }).scrape({ url: 'https://e.test' }, { ...options, requireSolved: false })).resolves.toMatchObject({ tier: 1 });
   });
 
+  it.each([
+    [{ 'retry-after': '120' }, 120_000],
+    [{ 'Retry-After': 'Tue, 01 Jan 2030 00:01:00 GMT' }, 60_000],
+    [{ 'retry-after': 'Mon, 31 Dec 2029 23:59:00 GMT' }, 0],
+    [{ 'retry-after': 'invalid' }, undefined],
+    [{ 'retry-after': { seconds: 120 } }, undefined],
+    [null, undefined],
+  ])('preserves a captured page cooldown without forwarding response details', async (responseHeaders, retryAfterMs) => {
+    const now = vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2030-01-01T00:00:00Z'));
+    try {
+      const client = new TrawlClient('http://trawl:8191', jsonFetcher({ statusCode: 429, responseHeaders }));
+      await expect(client.scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({
+        kind: 'rate_limited', retryAfterMs, diagnostics: undefined, request: undefined,
+      });
+    } finally { now.mockRestore(); }
+  });
+
+  it.each([
+    ['blocked', 429, 'rate_limited', 90_000],
+    ['blocked', 403, 'challenge', 90_000],
+    ['needs-js', 200, 'challenge', undefined],
+    ['error', 503, 'maintenance', 90_000],
+  ])('reads the single HTTP-tier failure inside the service error envelope', async (status, statusCode, kind, retryAfterMs) => {
+    const fetcher = jsonFetcher({ error: 'Max tier reached without success', timings: [{
+      tier: 1, status, statusCode, responseHeaders: { 'retry-after': '90', 'set-cookie': 'PRIVATE' },
+      body: 'PRIVATE challenge material',
+    }] }, 500);
+    const client = new TrawlClient('http://trawl:8191', fetcher);
+    const error: unknown = await client.scrape({ url: 'https://e.test', maxTier: 1 }, options).catch(caught => caught);
+    expect(error).toMatchObject({ kind, retryAfterMs });
+    expect(JSON.stringify(error)).not.toContain('PRIVATE');
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    { error: 'Other failure', timings: [{ tier: 1, status: 'blocked', statusCode: 429 }] },
+    { error: 'Max tier reached without success', timings: [{ tier: 2, status: 'blocked', statusCode: 429 }] },
+    { error: 'Max tier reached without success', timings: [{ tier: 1, status: 'blocked', statusCode: 429 }, { tier: 1, status: 'error' }] },
+    { error: 'Max tier reached without success', timings: [{ tier: 1, status: 'error' }] },
+  ])('does not infer a page outcome from an ambiguous service failure', async payload => {
+    const fetcher = jsonFetcher(payload, 500);
+    await expect(new TrawlClient('http://trawl:8191', fetcher).scrape({ url: 'https://e.test', maxTier: 1 }, options))
+      .rejects.toMatchObject({ kind: 'indeterminate', status: 500 });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it('solves through the legacy command API', async () => {
     const fetcher = jsonFetcher({ status: 'ok', solution: { status: 200, response: '<html>solved</html>' } });
     const client = new TrawlClient('http://trawl:8191', fetcher);

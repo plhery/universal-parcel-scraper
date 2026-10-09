@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { adapter, speeDeeUnanswered } from './adapter.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { TrawlClient } from '../../core/transport/trawl.js';
 
-const instance = () => adapter({ fetcher: fetch, env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
+const instance = () => adapter({ fetcher: fetch, env: {}, recorder: NOOP_RECORDER,
+  trawl: TrawlClient.fromEnvironment(), browserExecutablePath: null });
 
 describe('Spee-Dee live package progress', () => {
   it('answers a well-formed unknown barcode with a clean not-found', async (context) => {

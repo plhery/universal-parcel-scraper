@@ -6,6 +6,7 @@ import { carrierDefinition } from '../../core/catalog/index.js';
 import { detectCarrier } from '../../core/detection/index.js';
 import { loadNumberCorpusFiles } from '../../core/testing/corpus.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { TrawlClient } from '../../core/transport/trawl.js';
 import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 import { REGISTRY } from '../../generated/registry.js';
 import { adapter, speeDeeProgressUrl, speeDeeUnanswered } from './adapter.js';
@@ -24,7 +25,7 @@ describe('Spee-Dee adapter', () => {
     const registry = new AdapterRegistry(REGISTRY, environment(fetcher, 'ExampleHost/1.0'));
     expect(registry.adapterIdFor('spee-dee')).toBe('spee-dee');
     const instance = registry.for('spee-dee')!;
-    expect(instance.steps).toEqual(['direct']);
+    expect(instance.steps).toEqual(['direct', 'trawl']);
     expect(instance.recognize).toBeUndefined();
     await expect(instance.track({ number: 'sp 0000 0000 0000 0000 17' })).resolves.toMatchObject({ status: 'delivered', current_stage: 'delivered' });
     expect(fetcher).toHaveBeenCalledTimes(1);
@@ -194,5 +195,92 @@ describe('Spee-Dee adapter', () => {
       expect(normalizeSpeeDeeNumber(record.number)).toBe(record.number);
     }
     expect(carrierDefinition('spee-dee')).toMatchObject({ timezone: 'UTC', tracking: { adapter: 'spee-dee', localClocks: true } });
+  });
+});
+
+
+describe('Spee-Dee remote network recovery', () => {
+  const refused = () => new TypeError('fetch failed', { cause: Object.assign(new Error('refused'), { code: 'ECONNREFUSED' }) });
+  const reply = (html: string, extra: Record<string, unknown> = {}) => new Response(JSON.stringify({
+    url: URL_FOR_NUMBER, html, statusCode: 200, tier: 1, ...extra,
+  }));
+  const setup = (fetcher: typeof fetch, recorder = NOOP_RECORDER) => adapter({ ...environment(fetcher), recorder,
+    trawl: new TrawlClient('https://browser.invalid') });
+
+  it('recovers through the configured transport, keeps the failed attempt and drops private fields', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValueOnce(refused()).mockResolvedValueOnce(reply(DELIVERED));
+    const step = vi.fn(), lookup = vi.fn();
+    const result = await setup(fetcher, { step, lookup }).track({ number: NUMBER }, { budgetMs: 25_000 });
+    expect(result.events).toHaveLength(5);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|Signed|Delivered to|00000\)/);
+    const [url, init] = fetcher.mock.calls[1]!;
+    expect(String(url)).toBe('https://browser.invalid/scrape');
+    expect(JSON.parse(String(init?.body))).toEqual({ url: URL_FOR_NUMBER, maxTier: 1, maxTimeout: 10_000 });
+    expect(init?.signal).toBeInstanceOf(AbortSignal);
+    expect(step.mock.calls.map(([event]) => [event.step, event.outcome])).toEqual([['direct', 'transport'], ['trawl', 'ok']]);
+    expect(step.mock.calls[1]![0]).toMatchObject({ fallbackFrom: 'direct', fallbackReason: 'transport', fallbackError: { reason: 'unanswered' } });
+  });
+
+  it.each([
+    [html(DELIVERED), null],
+    [html(fixture('unknown.html')), 'not_found'],
+    [html('denied', { status: 403 }), 'challenge'],
+    [html('slow', { status: 429 }), 'rate_limited'],
+    [html('down', { status: 503 }), 'maintenance'],
+    [html('changed'), 'schema'],
+  ])('does not retry an answered direct request', async (response, kind) => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response);
+    const pending = setup(fetcher).track({ number: NUMBER });
+    if (kind) await expect(pending).rejects.toMatchObject({ kind });
+    else await expect(pending).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    [fixture('unknown.html'), {}, 'not_found'],
+    [DELIVERED.replaceAll(NUMBER, 'SP000000000000000033'), {}, 'schema'],
+    ['<html><title>Just a moment...</title></html>', {}, 'challenge'],
+    [DELIVERED, { url: 'https://packages.speedeedelivery.com/login' }, 'schema'],
+    [DELIVERED, { tier: 2 }, 'schema'],
+    ['x'.repeat(256 * 1024 + 1), {}, 'schema'],
+  ])('validates remote identity, bounds and final outcome', async (body, extra, kind) => {
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValueOnce(refused()).mockResolvedValueOnce(reply(body, extra));
+    await expect(setup(fetcher).track({ number: NUMBER })).rejects.toMatchObject({ kind });
+  });
+
+  it.each([[404, 'transport'], [410, 'transport'], [429, 'rate_limited'], [503, 'maintenance']])(
+    'preserves remote HTTP %i without treating a missing endpoint as a missing package', async (statusCode, kind) => {
+      const fetcher = vi.fn<typeof fetch>().mockRejectedValueOnce(refused()).mockResolvedValueOnce(
+        reply('Unavailable', { statusCode, responseHeaders: { 'retry-after': '120' } }));
+      const error = await setup(fetcher).track({ number: NUMBER }).catch((caught: unknown) => caught);
+      expect(error).toMatchObject({ kind });
+      if (statusCode === 429 || statusCode === 503) expect(error).toMatchObject({ retryAfterMs: 120_000 });
+      expect(fetcher).toHaveBeenCalledTimes(2);
+    },
+  );
+
+  it('caps waiting for the service even when the caller has a larger budget', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValueOnce(refused()).mockImplementationOnce((_url, init) =>
+      new Promise((_resolve, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal!.reason), { once: true })));
+    const timeout = AbortSignal.timeout.bind(AbortSignal);
+    const shortened = vi.spyOn(AbortSignal, 'timeout').mockImplementation(ms => timeout(ms === 10_000 ? 20 : ms));
+    try {
+      await expect(setup(fetcher).track({ number: NUMBER }, { budgetMs: 60_000 })).rejects.toMatchObject({ kind: 'transport' });
+      expect(shortened).toHaveBeenCalledWith(10_000);
+      expect(fetcher).toHaveBeenCalledTimes(2);
+    } finally { shortened.mockRestore(); }
+  });
+
+  it('passes cancellation and the remaining budget through recovery', async () => {
+    const controller = new AbortController();
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValueOnce(refused()).mockImplementationOnce(async (_url, init) => {
+      expect(JSON.parse(String(init?.body)).maxTimeout).toBeLessThanOrEqual(1000);
+      controller.abort(new Error('cancelled'));
+      expect(init?.signal?.aborted).toBe(true);
+      init?.signal?.throwIfAborted();
+      return reply(DELIVERED);
+    });
+    await expect(setup(fetcher).track({ number: NUMBER }, { signal: controller.signal, budgetMs: 1000 })).rejects.toThrow();
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });

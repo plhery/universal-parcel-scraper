@@ -4,6 +4,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import type { TrawlClient } from '../../core/transport/trawl.js';
 import { normalizeSpeeDeeNumber, parseSpeeDee } from './parser.js';
 
 const PROVIDER = 'Spee-Dee';
@@ -45,11 +46,13 @@ export function speeDeeUnanswered(error: unknown): boolean {
 }
 
 export class SpeeDeeTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
+  constructor(private readonly options: {
+    fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null;
+  } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeSpeeDeeNumber(raw);
-    return runSteps({ carrier: 'spee-dee', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
+    return runSteps({ carrier: 'spee-dee', budgetMs: context.budgetMs ?? (this.options.trawl ? 30_000 : 15_000), signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       let fetched: Awaited<ReturnType<typeof fetchBounded>>;
       // Set once the status and headers arrive. A body that then breaks or
@@ -79,11 +82,37 @@ export class SpeeDeeTracker {
       }
       if (REDIRECTS.includes(fetched.response.status)) throw new SchemaError(PROVIDER, 'Spee-Dee tracking page moved');
       return parseSpeeDee(decodeText(fetched.bytes), number);
-    } }]);
+    } }, {
+      id: 'trawl', enabled: Boolean(this.options.trawl), recovers: speeDeeUnanswered,
+      run: async ({ signal, remainingMs }) => {
+        const url = speeDeeProgressUrl(number);
+        // The remote network is the recovery; this page needs no browser or solver.
+        const timeoutMs = Math.max(1, Math.min(REQUEST_TIMEOUT_MS, Math.floor(remainingMs)));
+        let reply: Awaited<ReturnType<TrawlClient['scrape']>>;
+        try {
+          reply = await this.options.trawl!.scrape({ url, maxTier: 1, maxTimeout: timeoutMs }, {
+            provider: PROVIDER, timeoutMs, signal: AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]),
+            fetcher: this.options.fetcher,
+            maxBytes: 4_000_000, requireSolved: false,
+          });
+        } catch (error) {
+          if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {
+            throw new TransportError(PROVIDER, 'Spee-Dee remote tracking page is unavailable', { cause: error });
+          }
+          throw error;
+        }
+        if (reply.url !== url || reply.statusCode !== 200 || reply.tier !== 1) {
+          throw new SchemaError(PROVIDER, 'Spee-Dee remote tracking page changed');
+        }
+        if (Buffer.byteLength(reply.html) > MAX_BYTES) throw new SchemaError(PROVIDER, 'Spee-Dee returned excessive tracking data');
+        return parseSpeeDee(reply.html, number);
+      },
+    }]);
   }
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new SpeeDeeTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'spee-dee', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  const tracker = new SpeeDeeTracker({ fetcher: environment.fetcher, recorder: environment.recorder,
+    userAgent: environment.userAgent, trawl: environment.trawl });
+  return { id: 'spee-dee', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

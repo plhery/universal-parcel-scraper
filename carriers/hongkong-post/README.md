@@ -39,8 +39,10 @@ status wording and its clock, with no history.
 The [official tracker](https://webapp.hongkongpost.hk/en/mail_tracking2/index.html)
 uses MTCaptcha text verification before posting to
 `https://webapp1.hongkongpost.hk/api1/v1/mailTracking/mail-tracking-message-mtCaptcha`.
-The verification token belongs to the browser session. Reading the challenge does
-not establish that verification passed or that the tracker returned a shipment.
+The verification token belongs to the browser session. The bundled TRAWL image has no
+MTCaptcha text solver, so loading this page through it does not provide history.
+Reading the challenge does not establish that verification passed or that the tracker
+returned a shipment.
 The older `MailTracking_app3/latestResult` route remains in the public page's
 client code.
 
