@@ -26,13 +26,15 @@ const CATALOG_NAMES = new Set([
 ]);
 
 // Postal lookup candidates, not proof of which operator delivers a shipment.
-// Only operators with a dedicated adapter are useful here. The host also
-// checks adapter availability and required inputs before making a request.
+// Only operators whose dedicated adapter looks up mail from abroad by its S10
+// number are useful here; Poste Italiane's takes only its own identifiers. The
+// host also checks adapter availability and required inputs before making a request.
 const NATIONAL_POSTS: ReadonlyMap<string, CarrierId> = new Map([
-  ['CA', 'canada-post'], ['CH', 'swiss-post'], ['DE', 'dhl'],
+  ['AU', 'australia-post'], ['CA', 'canada-post'], ['CH', 'swiss-post'], ['DE', 'dhl'],
   ['ES', 'correos-spain'], ['FI', 'posti'], ['FR', 'la-poste'],
-  ['GB', 'royal-mail'], ['IN', 'india-post'], ['IT', 'poste-italiane'],
-  ['JP', 'japan-post'], ['MY', 'pos-malaysia'], ['NL', 'spring-gds'], ['PT', 'ctt'], ['SE', 'postnord'], ['US', 'usps'],
+  ['GB', 'royal-mail'], ['IN', 'india-post'],
+  ['JP', 'japan-post'], ['MY', 'pos-malaysia'], ['NL', 'spring-gds'], ['PL', 'poczta-polska'], ['PT', 'ctt'], ['SE', 'postnord'],
+  ['UA', 'ukrposhta'], ['US', 'usps'],
 ]);
 const englishCountries = new Intl.DisplayNames(['en'], { type: 'region' });
 // Deprecated codes carry their successor's name, so fold them into it ("FX" is France).

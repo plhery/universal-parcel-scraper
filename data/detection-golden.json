@@ -15941,6 +15941,14 @@
     ]
   },
   {
+    "input": "LB278261857GB",
+    "carrier": "royal-mail",
+    "confidence": "high",
+    "candidates": [
+      "royal-mail"
+    ]
+  },
+  {
     "input": "LB571181225HK",
     "carrier": "hongkong-post",
     "confidence": "high",
@@ -16131,6 +16139,14 @@
     "confidence": "high",
     "candidates": [
       "an-post"
+    ]
+  },
+  {
+    "input": "LK033840008FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {
@@ -17513,6 +17529,17 @@
     "confidence": "high",
     "candidates": [
       "hongkong-post"
+    ]
+  },
+  {
+    "input": "RC034998210EE",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {

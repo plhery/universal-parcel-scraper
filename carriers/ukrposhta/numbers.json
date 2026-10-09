@@ -295,6 +295,25 @@
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."
+    },
+    {
+      "number": "RC034998210EE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260425094046/https://track.ukrposhta.ua/tracking_UA.html?barcode=RC034998210EE",
+        "date": "2026-04-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Mail from Estonia whose Ukrposhta tracking page the Wayback Machine archived. Ukrposhta's status API returns its journey, from posting abroad to delivery in Ukraine, under the sending post's number."
     }
   ]
 }

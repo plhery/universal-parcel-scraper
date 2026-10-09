@@ -4,6 +4,7 @@ The Italian postal operator. Tracked through the keyless DoveQuando REST endpoin
 `poste.it/cerca` tracker. Dutch handoffs of Poste Italiane consignments stay with
 [PostNL](../spring-gds/README.md). SDA parcel shapes are recognition candidates;
 matching native Poste status or progress confirms them. Other postal shapes use the generic postal fallback.
+The adapter refuses S10 numbers, so mail from abroad to Italy is not handed to Poste Italiane.
 
 ## How it works
 

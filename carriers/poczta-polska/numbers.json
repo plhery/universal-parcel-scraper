@@ -210,6 +210,44 @@
         "confidence": "high"
       },
       "note": "The second Pocztex parcel the same review names. Poczta Polska's tracker returns its history."
+    },
+    {
+      "number": "LB278261857GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260224203503/https://emonitoring.poczta-polska.pl/?numer=LB278261857GB",
+        "date": "2026-02-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "Mail from the United Kingdom whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its journey, from posting abroad to delivery in Poland, under the sending post's number."
+    },
+    {
+      "number": "LK033840008FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260209211522/https://emonitoring.poczta-polska.pl/?numer=LK033840008FR",
+        "date": "2026-02-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "Mail from France whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its journey, from posting abroad to delivery in Poland, under the sending post's number."
     }
   ]
 }
