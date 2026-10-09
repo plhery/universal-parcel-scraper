@@ -46,6 +46,24 @@ export function deliveryForecastRemainder(description: string): string | undefin
   return rest === text ? undefined : comparable(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, ''));
 }
 
+/** What a carrier does once it has the parcel. */
+const CARRIER_STEP = String.raw`(?:dispatched|despatched|shipped|sent|received|processed|handed (?:over|in)|posted)\b`;
+/**
+ * A step the carrier has not taken yet ("not yet received", "not dispatched
+ * yet"), from the negation to the end of its sentence.
+ */
+const NOT_YET = new RegExp(String.raw`\bnot (?:yet (?:been )?${CARRIER_STEP}|(?:been )?${CARRIER_STEP}(?: \w+){0,3}? yet\b)${SENTENCE}*`, 'g');
+
+/** A handover the carrier made, not a pickup order passed on or the sender's own hand-in. */
+const HANDED_TO = String.raw`(?<!\b(?:(?:pick ?up|collection) (?:order|request)|sender|shipper|seller|merchant|consignor)(?: has| have)?(?: been)? )\bhanded (?:over )?to `;
+/**
+ * A courier no name or role sets apart: the one delivering the parcel. A
+ * "SingPost courier", a "courier company" or The Courier Guy is another network.
+ */
+const COURIER = String.raw`(?:(?:the|a|an|our|your) )?(?:delivery )?couriers?\b(?! (?:compan|service|partner|network|guy\b))`;
+const HANDED_TO_COURIER = new RegExp(`${HANDED_TO}${COURIER}`);
+const HANDED_TO_NETWORK = new RegExp(String.raw`${HANDED_TO}(?!${COURIER})(?:the |a |an |our |your )?(?:[\w-]+ ){0,2}?(?:courier|carrier)s?\b`);
+
 /** The side of customs a scan may name: "import", "export", "import/export". */
 const CUSTOMS_SIDE = String.raw`(?:(?:import|export)(?:\/(?:import|export))? |local |destination |origin )?`;
 /**
@@ -63,8 +81,8 @@ const CUSTOMS_PENDING = new RegExp([
   String.raw`dedouanement.*(?:non termine|pas termine)|\b(?:pas|non|jamais)\b(?: (?:encore|ete|etre|completement|totalement))* (?:dedouane|(?:sorti|libere)e?s? (?:de |par )?(?:la )?douane)|\b(?:sera|seront|serait|va etre|vont etre|doit etre|doivent etre|devra etre|devrait etre|pourra etre|en attente d'etre)(?: \w+){0,2}? (?:dedouane|libere)`,
   String.raw`zollabfertigung.*nicht abgeschlossen|nicht.*zoll.*freigegeben|\bnicht (?:\w+ )?verzollt\b|\b(?:wird|werden|muss|mussen|soll|sollen|kann|konnen)\b${SENTENCE}*?\bverzollt\b|\b(?:verzollung|zollabfertigung|zollfreigabe|zollkontrolle)\b${SENTENCE}*?\b(?:nicht|steht aus|ausstehend)\b`,
   String.raw`sdoganamento.*non completato|\bnon\b(?: \w+){0,3}? (?:sdoganat|uscit[oaie] dalla dogana|svincolat)|\b(?:sara|saranno|verra|verranno|deve essere|devono essere|dovra essere|in attesa di essere|attende di essere)(?: \w+){0,2}? sdoganat`,
-  String.raw`\b(?:no|sin)\b(?: \w+){0,3}? (?:(?:liberad|despachad)[oa]s?|salido|salio|sale|salir) (?:por|de|en|desde) (?:la )?aduana|\b(?:sera|seran|va a ser|van a ser|debe ser|deben ser|pendiente de|en espera de|a la espera de|esperando)\b(?: \w+){0,2}? (?:(?:liberad|despachad)[oa]s?|liberacion|despacho|salida)\b${SENTENCE}*?\baduan`,
-  String.raw`\bnao\b(?: \w+){0,3}? (?:desalfandegad[oa]s?|desembaracad[oa]s?|(?:liberad[oa]s?|saiu) (?:pela|na|da|de) (?:alfandega|aduana|fiscalizacao))\b|\b(?:aguardando|a aguardar|aguarda|em espera de|pendente de|sera|serao|vai ser|deve ser)\b(?: \w+){0,2}? (?:desalfandeg|(?:liberad|liberacao|desembarac)\w*${SENTENCE}*?\b(?:alfandeg|aduan|fiscalizacao))`,
+  String.raw`\b(?:no|sin)\b(?: \w+){0,3}? (?:(?:liberad|despachad)[oa]s?|salido|salio|sale|salir) (?:por|de|en|desde) (?:la )?aduana|\b(?:sera|seran|va a ser|van a ser|debe ser|deben ser|pendiente de|en espera de|a la espera de|esperando)\b(?: \w+){0,2}? (?:(?:liberad|despachad)[oa]s?|liberacion|despacho|salida)\b${SENTENCE}*?\baduan[ae]`,
+  String.raw`\bnao\b(?: \w+){0,3}? (?:desalfandegad[oa]s?|desembaracad[oa]s?|(?:liberad[oa]s?|saiu) (?:pela|na|da|de) (?:alfandega|aduana|fiscalizacao))\b|\b(?:aguardando|a aguardar|aguarda|em espera de|pendente de|sera|serao|vai ser|deve ser)\b(?: \w+){0,2}? (?:desalfandeg|(?:liberad|liberacao|desembarac)\w*${SENTENCE}*?\b(?:alfandeg|aduan[ae]|fiscalizacao))`,
   String.raw`\b(?:nie|oczekuje na|czeka na|w trakcie|przed)\b(?: \w+){0,2}? (?:odpraw|zwolnion)\w*${SENTENCE}*?\b(?:celn|urzad)`,
 ].join('|'));
 /** Clearance completed or the parcel released, in each language. */
@@ -156,9 +174,6 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/(?<!\b(?:sera|seran|serao|ser|sea|seja|for|siendo|sendo) )\bentregad[oa]s? (?:en|a|al) (?:el |la |un |una |su |tu )?(?:punto (?:de )?(?:recogida|conveniencia)|punto (?:pack|celeritas|collectt|nacex|inpost|dpd|gls|seur|mrw|ups|correos)|locker|taquilla|consigna|citypaq|parcel ?shop|buzon inteligente)\b|(?<!\b(?:sera|serao|ser|seja|for|sendo) )\bentregues? (?:no|num|na|numa|em|ao|a) (?:ponto (?:de )?(?:recolha|levantamento|pickup|entrega)|ponto (?:ctt|dpd|gls|inpost|ups|payshop)|cacifo|locker|loja ctt|payshop)\b/.test(text)) return 'ready_for_pickup';
   if (/delivered to (?:the |a |an |our )?(?:local |destination |final |next |onward |last mile )?(?:carrier|courier|airline|air carrier|hub|depot|terminal|forwarder|(?:handling )?agent|(?:logistics|transport(?:ation)?|shipping|delivery|courier) (?:company|provider|partner|agent|service)|sorting (?:center|centre|facility)|(?:processing |distribution |transit |delivery |logistics )?(?:center|centre|facility)|post office(?! box)|postal (?:operator|service|office)|destination country)\b|delivered to (?:the )?(?:\w+ )?(?:post|poste|posta)\b(?! box| office box)|delivered to (?:dhl|dpd|gls|ups|fedex|usps|tnt|hermes|evri|colissimo|chronopost|quickpac|planzer)\b|handed (?:over )?to (?:the |a |an |our )?(?:local |last mile )?delivery partner|en cours de livraison (?:au|en|vers (?:le|un|votre)) (?:point (?:de )?retrait|point relais|relais|consigne)|livre au transporteur|remis au transporteur local|an den lokalen zusteller ubergeben|consegnat[oa] al (?:corriere|vettore|trasportatore)/.test(text)) return 'in_transit';
   if (/(?<!\b(?:sera|seran|ser|sea|for) )\bentregad[oa]s? (?:(?:el|su|tu) (?:paquete|envio|pedido|bulto) )?(?:a|al|en) (?:el |la |un |una |nuestr[oa] )?(?:transportista|agencia (?:de )?(?:transporte|colaboradora|destino|origen)|operador(?: postal| logistico)?|mensajer(?:o|ia)|courier|empresa de (?:transporte|mensajeria|paqueteria)|compania (?:aerea|de transporte)|aerolinea|centro (?:de )?(?:clasificacion|distribucion|tratamiento|logistico|operaciones)|almacen|delegacion|plataforma|hub|correos|seur|mrw|nacex|tipsa|ctt|gls|dhl|dpd|ups|fedex|tnt|envialia|zeleris|paack|celeritas|inpost)\b|\bentregad[oa] por el remitente\b|(?<!\b(?:sera|serao|ser|seja|for) )\bentregues? (?:(?:a|o) (?:encomenda|envio|objeto) )?(?:a|ao|aos|as|na|no|nos|em) (?:transportadora|transportador|operador(?: postal| logistico)?|parceiro|companhia aerea|centro (?:de )?(?:distribuicao|tratamento|triagem|operacional|logistico)|armazem|plataforma|hub|ctt|correios|dpd|gls|dhl|ups|fedex|tnt|seur|mrw|nacex|tipsa|inpost)\b|\bentregue pelo remetente\b/.test(text)) return 'in_transit';
-  // A handover to the courier or carrier that takes the parcel on; a pickup order
-  // passed to a courier, or the sender's own hand-in, is not one.
-  if (/(?<!\b(?:(?:pick ?up|collection) (?:order|request)|sender|shipper|seller|merchant|consignor)(?: has| have)?(?: been)? )\bhanded (?:over )?to (?:the |a |an |our |your )?(?:[\w-]+ ){0,2}?(?:courier|carrier)s?\b/.test(text)) return 'in_transit';
   if (/will (?:shortly |soon )?be handed|bientot.*(?:confie|remis)|prochainement.*remis|wird.*(?:kurze|bald).*ubergeben|sara.*(?:breve|presto).*affidat/.test(text)) return 'registered';
   // The sender still has to hand the parcel over: "Pendiente de entregar a TIPSA".
   if (/\bpendiente de (?:entregar|entrega|recepcion|admision|recibir) (?:a|al|en|por) (?:la |el )?(?:agencia|transportista|operador|correos|seur|mrw|nacex|tipsa|ctt|gls|dhl|dpd|ups|fedex|envialia|zeleris|paack|inpost|celeritas)\b|\bpendiente de (?:recepcion|admision)\b|\baguarda entrada\b|\bpendente de (?:rececao|recepcao|entrada)\b/.test(text)) return 'registered';
@@ -174,27 +189,36 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/label (?:created|printed)|(?:created|generated) a (?:new )?(?:shipment |shipping )?label|etiquette.*(?:cree|imprime)|cree une etiquette|versandetikett.*(?:erstellt|gedruckt)|etikett erstellt|etichetta.*(?:creata|stampata)|creato un'etichetta|elektronisch|electroni(?:c|que|sch)|elettronic|pre.?advi[cs]|preannunciat|vorangemeldet|preannonce|data.*entered|donnees.*saisies|daten.*erfasst|dati.*inseriti/.test(text)) return 'registered';
   if (/shipment information (?:received|sent to)|\bdata received\b|(?:package|parcel|shipment) data (?:was |has been )?sent to|\bpre ?notification\b|informations d'expedition recues|sendungsinformationen erhalten|informazioni.*spedizione ricevute|(?:consignment|shipment|parcel|package) recorded by|envoi enregistre par|sendung.*absender.*erfasst|spedizione registrata dal/.test(text)) return 'registered';
   if (/preparation chez.*expediteur|preparation.*expediteur|preparazione.*mittente|being prepared.*sender|(?:shipper|sender)(?: that)? (?:they are|is|are) preparing|beim absender.*vorbereitet|warehouse of the sender|shippers warehouse|entrepot de l'expediteur|lager des absenders|magazzino del mittente|demande d'envoi.*prise en compte|collection request.*(?:received|recorded)|abholauftrag.*erfasst|richiesta.*ritiro.*registrata/.test(text)) return 'registered';
-  // The carrier has not had the parcel yet: "Shipment not yet received or processed".
-  if (/\bnot yet (?:been )?(?:dispatched|despatched|shipped|sent|received|processed|handed (?:over|in)|posted)\b|\bnot (?:been )?(?:dispatched|despatched|shipped|sent|received|processed|handed (?:over|in)|posted)\b(?: \w+){0,3}? yet\b/.test(text)
-    && !/\b(?:at|in|by) (?:the )?(?:destination|delivery|recipient|consignee|addressee|customer|customs|office of exchange)\b/.test(text)) return 'registered';
+  // The carrier has not had the parcel yet: "Shipment not yet received or
+  // processed". What else the scan reports still counts: "Arrived at hub; not
+  // yet processed" is in transit, and a clearance delay stays with customs.
+  if (!/\b(?:at|in|by) (?:the )?(?:destination|delivery|recipient|consignee|addressee|customer|customs|office of exchange)\b/.test(text)) {
+    const rest = text.replace(NOT_YET, ' ');
+    if (rest !== text) return trackingLanguageStage(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, '')) ?? 'registered';
+  }
   if (/^(?:reported|recorded|announced|item created|enregistre|annonce|erfasst|angekundigt|registrato|annunciato)$/.test(text)) return 'registered';
 
   // A completed clearance or release moves the parcel on; holds, inspections,
   // submissions and clearance still pending or negated stay with customs.
   if (CUSTOMS_PENDING.test(text)) return 'customs';
   if (CUSTOMS_RELEASED.test(text)) return 'in_transit';
-  if (/customs|clearance|douan|formalites (?:d')?(?:import|export)|zoll|dogan|aduan|alfandeg|\bceln|government agency|autorite gouvernementale|staatliche behorde|autorita governativa/.test(text)) return 'customs';
+  if (/customs|clearance|douan|formalites (?:d')?(?:import|export)|zoll|dogan|\b(?:des)?aduan[ae]|alfandeg|\bceln|government agency|autorite gouvernementale|staatliche behorde|autorita governativa/.test(text)) return 'customs';
 
   if (/out for (?:physical )?delivery|being delivered|in delivery|(?:loading|loaded).*delivery vehicle|on (?:\w+ )?vehicle for delivery|(?:courier|driver|delivery champion) has (?:the|your) (?:shipment|parcel|package|item)|en cours de livraison|en livraison|de la livraison de (?:son|votre) colis ce jour|charg(?:e|ement).*vehicule de livraison|in zustellung|zustellfahrzeug.*(?:geladen|verladen)|(?:beladen|verladung).*zustellfahrzeug|in consegna|caric(?:at|amento).*veicolo.*consegna/.test(text)) return 'out_for_delivery';
   // "Reparto" alone is the round, but not the "unidad de reparto" it leaves from;
   // "distribuição" is the round, but not the "centro de distribuição".
   if (/^(?:en )?reparto$|\ben reparto\b|\b(?:siendo|sendo|a ser) (?:entregad[oa]s?|entregues?|repartid[oa]s?|distribuid[oa]s?)\b|\b(?:salida|salio|sale|ha salido) (?:a|para) (?:el )?reparto\b|\bruta de (?:reparto|entrega)\b|\ben proceso de entrega\b|\bvehiculo de reparto\b|\b(?:repartidor|mensajero|cartero|conductor) (?:ya )?(?:tiene|lleva) (?:tu|su|el|la) (?:paquete|envio|pedido|encomienda)\b|\bem distribuicao\b|\bsaiu para (?:a )?(?:entrega|distribuicao)\b|\bem (?:rota|processo|curso) de entrega\b|\bem entrega\b|\bveiculo de (?:entrega|distribuicao)\b|\b(?:carteiro|estafeta|motorista|entregador) (?:ja )?(?:tem|leva) (?:a|o) (?:sua |tua )?(?:encomenda|envio|objeto|pacote|volume)\b/.test(text)) return 'out_for_delivery';
+  // Handed to the courier alone is the delivery round, as DHL eCommerce NL and
+  // YunExpress file it, unless the scan names a pickup, a return or the sender.
+  if (HANDED_TO_COURIER.test(text) && !/\b(?:pick ?up|collection|return|sender|shipper|seller|merchant|consignor)/.test(text)) return 'out_for_delivery';
   if (/\bdelivered\b|^final delivery$|delivery complete(?:d)?\b|delivery (?:was )?successful|(?:a ete|est) distribue|^(?:livre|livree)(?:$|[ ,])|(?:colis|envoi|est|a ete) livre|zugestellt|\bconsegnat[oa]\b|livraison effectuee|consegna completata/.test(text)) return 'delivered';
   // A delivery still to come ("una vez entregado", "que se entregue", "quando
   // for entregue") is not one; Spanish "entregue" is also a subjunctive.
   if (!/\b(?:una vez|cuando|hasta que|antes de que|para que|en cuanto|tan pronto como|uma vez|quando|assim que|ate que|logo que)\b[^.;:]*\bentreg/.test(text)
     && /(?<!\b(?:sea|sean|fuera|fuese|ser|seja|sejam|fosse|for|forem|que|se) )\b(?:entregad[oa]s?|entregues?)\b|\bentrega (?:realizada|efectuada|efetuada|completada|concluida|finalizada)\b|\brecogid[oa] por (?:el |la )?destinatari[oa]\b|\b(?:levantad|retirad)[oa] pelo destinatario\b/.test(text)) return 'delivered';
 
+  // A handover to another network, a carrier or a courier set apart, takes the parcel on.
+  if (HANDED_TO_NETWORK.test(text)) return 'in_transit';
   // Posting/collection by the carrier, not recipient pickup or data submission.
   if (/^(?:the |your )?(?:item|package|parcel|shipment) (?:has been |was |is )?(?:received for transport|dropped off by (?:the )?sender at (?:our |the )?postal partner)\b/.test(text)) return 'accepted';
   // A vehicle load and a gateway scan prove handling, but do not name the delivery round.

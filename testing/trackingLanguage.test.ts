@@ -238,6 +238,21 @@ describe('universal provider rules and the shared reading', () => {
     }
   });
 
+  it('agree on a step not yet taken, a courier handover and a complaint', () => {
+    for (const [description, stage] of [
+      ['Clearance delay: payment not yet received', 'customs'],
+      ['Arrived at hub; not yet processed', 'in_transit'],
+      ['Out for delivery, handed over to our courier', 'out_for_delivery'],
+      ['Handed over to the courier', 'out_for_delivery'],
+      ['Handed Over to SingPost Courier', 'in_transit'],
+      ['Pengaduan pelanggan diterima', 'pending'],
+      ['Aduan pelanggan diterima', 'pending'],
+    ] as const) {
+      expect(inferStage(description, 'pending'), description).toBe(stage);
+      expect(event(TIME, description)?.stage, description).toBe(stage);
+    }
+  });
+
   it('still outrank a provider stage for customs, problems and failed rounds', () => {
     expect(event(TIME, 'Released from import customs', 'InTransit')?.stage).toBe('in_transit');
     expect(event(TIME, 'Arrived at customs', 'InTransit')?.stage).toBe('customs');

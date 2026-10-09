@@ -387,7 +387,6 @@ describe('classifyWording', () => {
   it('reads the last-mile wording that consolidators relay', () => {
     for (const [wording, stage] of [
       ['Your package is ready to be picked up.', 'ready_for_pickup'],
-      ['Handed over to the courier', 'in_transit'],
       ['Parcel has been handed over to a third-party courier', 'in_transit'],
       ['New delivery attempt on the next delivery day', 'in_transit'],
       ['We missed each other', 'failed_attempt'],
@@ -401,13 +400,41 @@ describe('classifyWording', () => {
       expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
     }
     expect(wordingStage('Failed delivery notification sent')).toBe('failed_attempt');
-    // A parcel the carrier still has to collect, a pickup order passed on, a failed
-    // new attempt, a missed round with the parcel waiting, a parcel already abroad.
+    // A parcel the carrier still has to collect, a failed new attempt, a missed
+    // round with the parcel waiting, a parcel already abroad.
     expect(wordingStage('Parcel ready to be picked up by the courier')).not.toBe('ready_for_pickup');
-    expect(wordingStage('Pickup order handed over to the courier')).not.toBe('in_transit');
     expect(wordingStage('New delivery attempt failed')).toBe('failed_attempt');
     expect(wordingStage('We missed each other, ready for collection at the sorting centre')).toBe('ready_for_pickup');
     expect(wordingStage('Item not yet received at the destination office')).not.toBe('registered');
+  });
+
+  it('lets the rest of a scan outrank a step not yet taken and a courier handover', () => {
+    for (const [wording, stage] of [
+      // A step the carrier has not taken yet leaves the rest of the scan to read.
+      ['Clearance delay: payment not yet received', 'customs'],
+      ['Arrived at hub; not yet processed', 'in_transit'],
+      ['Parcel not yet handed over to the courier', 'registered'],
+      // The courier alone is the round; a carrier or a courier set apart is another network.
+      ['Out for delivery, handed over to our courier', 'out_for_delivery'],
+      ['Handed over to the courier', 'out_for_delivery'],
+      ['Handed Over to SingPost Courier', 'in_transit'],
+      ['Handed over to the last-mile carrier', 'in_transit'],
+      ['Handed over to the courier company', 'in_transit'],
+      ['Handed over to The Courier Guy', 'in_transit'],
+    ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    // A pickup order, a return or the sender's hand-in is not the round.
+    for (const wording of ['Pickup order handed over to the courier', 'Return handed over to the courier',
+      'Parcel handed over to the courier by the sender']) expect(trackingLanguageStage(wording), wording).toBeUndefined();
+  });
+
+  it('reads customs from Spanish and Portuguese stems, not from a Malay or Indonesian complaint', () => {
+    for (const wording of ['Pengaduan pelanggan diterima', 'Aduan pelanggan diterima']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
+    }
+    for (const wording of ['Envío en aduana', 'Gestión aduanera en curso', 'Desaduanaje en proceso',
+      'Em fiscalização aduaneira', 'Aguardando liberação aduaneira']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'customs', source: 'wording:language' });
+    }
   });
 
   it('falls back without a rule id when nothing matches', () => {
