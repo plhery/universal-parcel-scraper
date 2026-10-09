@@ -34,9 +34,11 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // Last-mile wording the feed relays without codes. DPD files its data
   // record before the parcel leaves China and its proof of delivery after the
   // delivery scan. The DHL Parcel Netherlands lines follow that carrier's codes.
+  // A partner's order pre-advice is a data record too.
   ['Sender goods issue', { status: 'pending', stage: 'registered' }],
   ['POD available', { status: 'delivered', stage: 'delivered' }],
   ['Shipment not yet received or processed', { status: 'pending', stage: 'registered' }],
+  ['Order information received. We\'re expecting your parcel to arrive with us.', { status: 'pending', stage: 'registered' }],
   ['We deliver your shipment at a DHL ServicePoint', { status: 'in_transit', stage: 'in_transit' }],
   ['Request by the recipient for delivery at DHL ServicePoint', { status: 'in_transit', stage: 'in_transit' }],
   ['Delivery instruction changed to delivery at DHL ServicePoint', { status: 'in_transit', stage: 'in_transit' }],

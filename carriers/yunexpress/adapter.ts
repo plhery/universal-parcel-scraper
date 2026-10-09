@@ -83,11 +83,15 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     for (const raw of group.ProcessDetailList) {
       if (!isRecord(raw) || typeof raw.ProcessContent !== 'string' || ++scans > 500) throw new SchemaError('YunExpress');
       const content = clean(raw.ProcessContent, MAX_BYTES);
-      const divider = content.lastIndexOf('----');
+      // The feed joins wording and place with "----". A relayed line can give
+      // a dash as its place, which runs into the divider and is no place.
+      let dashes = 0;
+      while (dashes < content.length && content[content.length - 1 - dashes] === '-') dashes += 1;
+      const divider = dashes > 4 ? content.length - dashes : content.lastIndexOf('----');
       const fullDescription = clean(divider < 0 ? content : content.slice(0, divider), MAX_BYTES);
       const fullLocation = divider < 0 ? '' : clean(content.slice(divider + 4), MAX_BYTES);
       const description = clean(fullDescription, 500);
-      const location = clean(fullLocation, 200);
+      const location = /^-+$/.test(fullLocation) ? '' : clean(fullLocation, 200);
       // The portal can list an older row with a place but no wording. It names
       // no status, so it is skipped; the newest row must still say something.
       if (!description && events.length) continue;

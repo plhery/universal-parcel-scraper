@@ -20,7 +20,8 @@ Earlier scans often contain only local wall clocks, retained as `local_time`
 in portal order. Storage timezone fields never supply scan offsets. The
 reply is inconclusive when its latest summary does not match the first scan.
 A shorter projection than the returned raw history is incomplete. An older row
-with a place but no wording is skipped.
+with a place but no wording is skipped. Each row joins wording and place with
+`----`; a dash given as the place is no place.
 
 The downstream reference is retained for separate carrier confirmation. The
 page's notes link to the last-mile carrier's site; that carrier becomes

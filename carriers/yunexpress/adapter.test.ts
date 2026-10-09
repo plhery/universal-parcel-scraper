@@ -117,6 +117,26 @@ describe('YunExpress captured response projection', () => {
     expect(result.events?.some((event) => !event.description)).toBe(false);
   });
 
+  it('keeps a dash given as the place out of a relayed line, newest or older', () => {
+    const payload = fixture();
+    const item = payload.ResultList[0];
+    const rows = item.TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: unknown[] }) => group.ProcessDetailList);
+    const preAdvice = 'Order information received. We\'re expecting your parcel to arrive with us.';
+    rows[13].ProcessContent = `${preAdvice}-----`;
+    const older = parse(payload, NUMBER);
+    expect(older.events?.[13]).toMatchObject({ description: preAdvice, location: '', stage: 'registered' });
+    // The latest scan's own record gives the dash as its place.
+    rows[0].ProcessContent = `${preAdvice}-----`;
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: preAdvice, ProcessLocation: '-' });
+    const newest = parse(payload, NUMBER);
+    expect(newest).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: preAdvice });
+    expect(newest.events?.[0]).toMatchObject({ description: preAdvice, location: '', time: '2026-03-20T13:39:00-04:00' });
+    rows[0].ProcessContent = 'Customs inspection - Import----Example facility';
+    rows[13].ProcessContent = 'Shipment information received----Example-facility';
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: 'Customs inspection - Import', ProcessLocation: 'Example facility' });
+    expect(parse(payload, NUMBER).events?.[13]).toMatchObject({ description: 'Shipment information received', location: 'Example-facility' });
+  });
+
   it('names the last-mile carrier its notes link to only when that carrier offers the reference', () => {
     const payload = fixture();
     const info = payload.ResultList[0].TrackInfo;

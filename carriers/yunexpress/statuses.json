@@ -220,6 +220,14 @@
       "note": "Relayed from DHL Parcel Netherlands, which files it as a pre-notification."
     },
     {
+      "wording": "Order information received. We're expecting your parcel to arrive with us.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "A partner's pre-advice, relayed between the order data and import clearance with a dash for its place."
+    },
+    {
       "wording": "We deliver your shipment at a DHL ServicePoint",
       "stage": "in_transit",
       "language": "en",
