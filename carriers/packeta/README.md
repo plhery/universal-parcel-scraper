@@ -23,17 +23,21 @@ CZ, SK, HU, RO and PL. Tracked through the keyless endpoint behind the public tr
   fixed locale turns them into a stable vocabulary that substring matching can classify.
 - Two independent maps: `packetStatusId` sets the parcel's stage, the canned sentences set
   each event's stage. The overall stage never borrows from the sentences.
-- Only `packetStatusId` `3` (delivered) is confirmed live; the other ids are reconstructed
-  from prior art. An unmapped id is treated as schema drift: `unknown`, no guessed stage.
+- The `packetStatusId` names come from the tracking page's own script. Only `3` (delivered)
+  and the returns `5` and `21` are confirmed live; the other ids are reconstructed. The script
+  names `21` LOST_OR_UNKNOWN, but its live wording is "Return (on the way back)", so it maps to
+  `returned`. An unmapped id is treated as schema drift: `unknown`, no guessed stage.
 - Times are naive and read as `Europe/Prague`, the zone the backend stamps. The result
   carries `timezone: Europe/Prague` so clients render them correctly. Stamping UTC would
   shift every event by one or two hours.
 - `sender` (merchant) and `branchAddress` (Z-BOX or partner shop) are kept as sender name
   and pickup point; neither holds recipient data. Recipient name, address, phone and
   signature are never read; a test asserts it.
-- For a parcel a courier brings to the door, `branchAddress` names a home-delivery branch,
-  such as "PL Home Delivery HD". A delivered parcel therefore keeps the pickup point only when
-  its last movement before the delivery made it ready for pickup there.
+- For a parcel a courier brings to the door, `courierId` is `"1"` and `branchAddress` names a
+  home-delivery branch, such as "PL Home Delivery HD", which Packeta's page does not link to.
+  Such a parcel has no pickup point at any stage. Neither has a returned one: its branch is
+  then a depot or the point it no longer waits at. A delivered parcel keeps the pickup point
+  only when its last movement before the delivery made it ready for pickup there.
 - At most 20 events are returned, newest first.
 - Links use the canonical `/en/{code}` path; the legacy `?id=` form 301-redirects to it and
   is still recognized.

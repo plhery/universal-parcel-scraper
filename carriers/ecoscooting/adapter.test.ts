@@ -81,8 +81,15 @@ describe('Ecoscooting parcel history', () => {
     expect(parseEcoscooting(nameOnly, NUMBER).pickup_point).toBe('Example Parcel Shop');
     const unnamed = pickupFixture(); unnamed.popStationParam = { pinCode: 'PRIVATE_SYNTHETIC_PICKUP_PIN' };
     expect(parseEcoscooting(unnamed, NUMBER)).not.toHaveProperty('pickup_point');
-    const returned = returnedFixture(); returned.popStationParam = pickupFixture().popStationParam;
-    expect(parseEcoscooting(returned, NUMBER)).toMatchObject({ current_stage: 'returned', pickup_point: PICKUP_POINT });
+  });
+  it('names no pickup point once the parcel goes back to the sender', () => {
+    // From the deadline passing at the shop to the sender signing for it.
+    for (const scans of [6, 0]) {
+      const returned = returnedFixture(); returned.statuses = returned.statuses.slice(scans);
+      returned.popStationParam = pickupFixture().popStationParam;
+      expect(parseEcoscooting(returned, NUMBER)).toMatchObject({ current_stage: 'returned' });
+      expect(parseEcoscooting(returned, NUMBER)).not.toHaveProperty('pickup_point');
+    }
   });
   it('names no pickup point once the courier delivers the parcel instead', () => {
     const atDoor = pickupFixture();

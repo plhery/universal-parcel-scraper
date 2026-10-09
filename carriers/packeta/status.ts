@@ -11,12 +11,16 @@
  *   where the final stage came from.
  *
  * Provenance: derived from the prior-art client
- * https://github.com/ha-parcel-integrations/ha-packeta (MIT). Only
- * `packetStatusId` "3" (delivered) is live-confirmed there; the other ids are
- * reconstructed. The event sentences were confirmed live on 2026-08-19 against
- * real delivered parcels (values fictionalized in that project's fixtures).
+ * https://github.com/ha-parcel-integrations/ha-packeta (MIT), and from the id
+ * names the public tracking page's own script declares (read 2026-10-09).
+ * `packetStatusId` "3" (delivered), "5" (returned to sender) and "21" are
+ * live-confirmed; the other ids are reconstructed. The event sentences were
+ * confirmed live on 2026-08-19 against real delivered parcels (values
+ * fictionalized in that project's fixtures); the return's sentence on 2026-10-09.
  */
 import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
+
+const RETURNED: ClassifiedStatus = { status: 'exception', stage: 'returned' };
 
 const PACKET_STATUS: Record<string, ClassifiedStatus> = {
   // TO_BE_PROCESSED
@@ -27,11 +31,20 @@ const PACKET_STATUS: Record<string, ClassifiedStatus> = {
   '31': { status: 'in_transit', stage: 'in_transit' },
   // READY_FOR_PICKUP
   '2': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
+  // READY_LAST_DAY: the last day it waits at the point
+  '996': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   // ISSUED_AND_ACCOUNTED (live-confirmed delivered wording:
   // "The package has been delivered")
   '3': { status: 'delivered', stage: 'delivered' },
-  // LOST_OR_UNKNOWN
-  '21': { status: 'exception', stage: 'failed_attempt' },
+  // RETURNED_AND_ACCOUNTED (live wording "Returned to sender")
+  '5': RETURNED,
+  // RETURN
+  '20': RETURNED,
+  // TO_BE_RETURNED
+  '998': RETURNED,
+  // Named LOST_OR_UNKNOWN in the page's script, but worded "Return (on the way
+  // back)" live.
+  '21': RETURNED,
 };
 
 const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
@@ -45,6 +58,7 @@ const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
   ['ready for pickup', 'ready_for_pickup'],
   ['the parcel is with you', 'delivered'],
   ['investigating the status of the parcel', 'failed_attempt'],
+  ['returned the parcel back to the sender', 'returned'],
 ];
 
 /** The stage and status for a `packetStatusId`, or undefined when unmapped. */

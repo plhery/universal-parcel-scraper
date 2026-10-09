@@ -4,7 +4,7 @@ import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } fro
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { zonedTime } from '../../core/time/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
+import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyPacketaStatus, packetaEventStage } from './status.js';
 
@@ -18,10 +18,11 @@ import { classifyPacketaStatus, packetaEventStage } from './status.js';
 //   Expired 2023-era reported Z codes return the same 404 (unknown and expired
 //   are intentionally indistinguishable to anonymous callers).
 // - Shape reference: the prior-art payload samples (confirmed live 2026-08-19
-//   against real delivered parcels; values fictionalized there). Only
-//   packetStatusId "3" (delivered) is live-confirmed; the other codes are
-//   reconstructed — an unmapped code is schema drift, never a guess. The maps
-//   live in status.ts.
+//   against real delivered parcels; values fictionalized there). The
+//   packetStatusId names come from the public tracking page's own script;
+//   only "3" (delivered), "5" and "21" (returns) are live-confirmed, the other
+//   codes are reconstructed — an unmapped code is schema drift, never a guess.
+//   The maps live in status.ts.
 const TRACKING_ENDPOINT = 'https://tracking.packeta.com/api/getPacketById';
 const TRACKING_LOCALE = 'en';
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -100,12 +101,15 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   // Sender (merchant) and branchAddress (Z-BOX/partner shop) carry no
   // recipient PII and are the only pickup signal — Packeta exposes no ETA.
-  // For a parcel a courier brings to the door, branchAddress names a
-  // home-delivery branch, so a delivered parcel keeps it only when its last
-  // movement made it ready for pickup.
+  // For a parcel a courier brings to the door, courierId is "1" and
+  // branchAddress names a home-delivery branch, which Packeta's own page does
+  // not link to. A returned parcel's branch is a depot or the point it no
+  // longer waits at, and a delivered one keeps its branch only when its last
+  // movement made it ready for pickup there.
   const sender = clean(item.sender, 200) || null;
-  const pickupPoint = classified?.stage === 'delivered' && lastMovement(events) !== 'ready_for_pickup'
-    ? null : clean(item.branchAddress, 300) || null;
+  const atPoint = cleanScalar(item.courierId, 8) !== '1' && classified?.stage !== 'returned'
+    && (classified?.stage !== 'delivered' || lastMovement(events) === 'ready_for_pickup');
+  const pickupPoint = atPoint ? clean(item.branchAddress, 300) || null : null;
   const deliveredAt = classified?.status === 'delivered' ? events[0]?.time ?? null : null;
   if (!classified) {
     return {

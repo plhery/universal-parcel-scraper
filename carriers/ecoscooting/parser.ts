@@ -72,10 +72,11 @@ export function parseEcoscooting(payload: unknown, rawNumber: string): CarrierRe
 
 // A shop's name and address, once a scan places the parcel there. It stays
 // after collection so the parcel still says where it was collected, but a
-// delivery by the courier, at the door, has none. The pickup PIN, the shop's
-// phone and the station id are never read.
+// delivery by the courier, at the door, has none, and neither has a parcel on
+// its way back to the sender, which no longer waits there. The pickup PIN, the
+// shop's phone and the station id are never read.
 function pickupPoint(station: unknown, events: CarrierEvent[], stage: string | undefined): { pickup_point?: string } {
-  if (!isRecord(station) || !events.some(event => PICKUP_POINT_CODES.has(String(event.provider_code)))) return {};
+  if (!isRecord(station) || stage === 'returned' || !events.some(event => PICKUP_POINT_CODES.has(String(event.provider_code)))) return {};
   if (stage === 'delivered' && !COLLECTION_CODES.has(String(events[0]?.provider_code))) return {};
   const lines = [...new Set([clean(station.stationName, 160), clean(station.detailAddress, 300)].filter(Boolean))];
   return lines.length ? { pickup_point: lines.join('\n') } : {};

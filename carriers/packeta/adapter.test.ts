@@ -72,7 +72,11 @@ describe('Packeta response parsing', () => {
       ['31', 'in_transit', 'in_transit'],
       ['2', 'out_for_delivery', 'ready_for_pickup'],
       ['3', 'delivered', 'delivered'],
-      ['21', 'exception', 'failed_attempt'],
+      ['996', 'out_for_delivery', 'ready_for_pickup'],
+      ['5', 'exception', 'returned'],
+      ['20', 'exception', 'returned'],
+      ['998', 'exception', 'returned'],
+      ['21', 'exception', 'returned'],
     ];
     for (const [code, status, stage] of cases) {
       expect(classifyPacketaStatus(code)).toEqual({ status, stage });
@@ -89,6 +93,7 @@ describe('Packeta response parsing', () => {
 
   it('classifies event sentences and leaves unrecognized wording unstaged', () => {
     expect(packetaEventStage('The parcel has been handed over to the carrier XYZ.')).toBe('in_transit');
+    expect(packetaEventStage('We have returned the parcel back to the sender.')).toBe('returned');
     expect(packetaEventStage('Something completely new happened.')).toBeNull();
     const result = parsePacketaTrackingResponse({ item: packet({
       packetStatusId: '31',
@@ -175,6 +180,40 @@ describe('Packeta response parsing', () => {
     // On its way, the branch is still the one Packeta names.
     expect(parsePacketaTrackingResponse({ item: packet({ packetStatusId: '31' }) }, TRACKING_NUMBER).pickup_point)
       .toBe('Example Pickup Point, Example Street 1');
+  });
+
+  it('names no pickup point for a parcel Packeta sends to the door, at any stage', () => {
+    // courierId "1" marks a courier delivery: its branch is a home-delivery one,
+    // which Packeta's own page does not link to.
+    for (const [packetStatusId, courierId] of [['31', '1'], ['31', 1], ['2', '1'], ['3', '1']] as const) {
+      const result = parsePacketaTrackingResponse({ item: packet({
+        packetStatusId, courierId, branchAddress: 'XX Home Delivery HD',
+      }) }, TRACKING_NUMBER);
+      expect(result).not.toHaveProperty('pickup_point');
+    }
+    // A parcel bound for a point keeps it while it travels and waits there.
+    for (const packetStatusId of ['31', '2']) {
+      expect(parsePacketaTrackingResponse({ item: packet({ packetStatusId }) }, TRACKING_NUMBER).pickup_point)
+        .toBe('Example Pickup Point, Example Street 1');
+    }
+  });
+
+  it('names no pickup point on a parcel going back to its sender', () => {
+    const returned = parsePacketaTrackingResponse({ item: packet({
+      packetStatusId: '5',
+      packetStatus: 'Returned to sender',
+      branchAddress: 'Example Depot, Example Street 2',
+      trackingDetails: [
+        { text: 'We have successfully received the parcel for transport. Example Z-BOX 3', time: '2026-07-23 17:00:00' },
+        { text: 'We have returned the parcel back to the sender.', time: '2026-08-20 12:00:00' },
+      ],
+    }) }, TRACKING_NUMBER);
+    expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Returned to sender' });
+    expect(returned.events?.[0]).toMatchObject({ stage: 'returned' });
+    expect(returned).not.toHaveProperty('pickup_point');
+    // On its way back, the branch is the point it no longer waits at.
+    expect(parsePacketaTrackingResponse({ item: packet({ packetStatusId: '21', packetStatus: 'Return (on the way back)' }) }, TRACKING_NUMBER))
+      .not.toHaveProperty('pickup_point');
   });
 
   it('never retains recipient identity, address or signature data', () => {
