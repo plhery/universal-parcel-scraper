@@ -186,7 +186,7 @@ export class DpdAppService {
     }
   }
 
-  /** Whether a lookup would wait for a session to open: none is open. */
+  /** Whether no session is open, as while one opens or a host's store gives back its sessions. */
   get opening(): boolean {
     return this.#session === null;
   }
@@ -336,8 +336,9 @@ export class DpdAppService {
    * running, even one that stopped waiting; each lookup waits until its signal or `waitMs` ends.
    * A session past its renewal age answers at once while the next one opens. `waiting` is called
    * when the lookup starts waiting for an opening, once a host's store has given back its sessions.
+   * A lookup whose `stop` aborts stops waiting with its reason, and still holds the opening.
    */
-  async session(signal: AbortSignal, waitMs: number, waiting?: () => void): Promise<string> {
+  async session(signal: AbortSignal, waitMs: number, options: { waiting?: () => void; stop?: AbortSignal } = {}): Promise<string> {
     if (this.#loading) await until(this.#loading, signal);
     const current = this.#session;
     const due = !current || this.#now() - current.openedAt >= SESSION_RENEW_MS;
@@ -350,18 +351,17 @@ export class DpdAppService {
       signal.addEventListener('abort', release, { once: true });
     }
     if (current) return current.token;
-    waiting?.();
-    let leave!: () => void;
+    options.waiting?.();
+    const ended = options.stop ? AbortSignal.any([signal, options.stop]) : signal;
+    ended.throwIfAborted();
     let timer: ReturnType<typeof setTimeout> | undefined;
-    const left = new Promise<never>((_resolve, reject) => {
-      leave = () => reject(signal.reason as Error);
+    const late = new Promise<never>((_resolve, reject) => {
       timer = setTimeout(() => reject(new IndeterminateError('DPD Germany', 'DPD Germany app session is still opening', {
         reason: DPD_DE_SESSION_OPENING,
       })), Math.max(0, Math.min(waitMs, SESSION_OPEN_MS)));
     });
-    signal.addEventListener('abort', leave, { once: true });
-    try { return await Promise.race([token, left]); }
-    finally { clearTimeout(timer); signal.removeEventListener('abort', leave); }
+    try { return await until(Promise.race([token, late]), ended); }
+    finally { clearTimeout(timer); }
   }
 
   async call(operation: string, fields: Fields, signal: AbortSignal, timeoutMs: number): Promise<XmlNode> {

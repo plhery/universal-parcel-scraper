@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { IndeterminateError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter } from './adapter.js';
@@ -383,6 +384,27 @@ describe('DPD Germany app projection', () => {
   });
 
   it.each([
+    ['its tracking data', 'getTrackingData', ['getSessionFullState', 'getTrackingData']],
+    ['its scans', 'getTrackingScanList', ['getSessionFullState', 'getTrackingData', 'getTrackingScanList']],
+  ])('reads nothing more once stopped while it waits for %s', async (_, operation, expected) => {
+    let answer!: () => void;
+    const held = (reply: () => Response) => () => new Promise<Response>((resolve) => { answer = () => resolve(reply()); });
+    const data = () => xml(tracking('HANDOVER_TO_PARCELSHOP'));
+    const scans = () => xml(scanList(atShop));
+    const app = service({
+      getTrackingData: [operation === 'getTrackingData' ? held(data) : data],
+      getTrackingScanList: [operation === 'getTrackingScanList' ? held(scans) : scans],
+    });
+    const stop = new AbortController();
+    const pending = app.client.track(NUMBER, { signal: new AbortController().signal, timeoutMs: 1_000, stop: stop.signal });
+    await vi.waitFor(() => expect(app.calls.at(-1)?.operation).toBe(operation));
+    stop.abort(new IndeterminateError('DPD Germany', 'Answered without the app service', { reason: 'session_opening' }));
+    answer();
+    await expect(pending).rejects.toMatchObject({ kind: 'indeterminate', reason: 'session_opening' });
+    expect(app.calls.map(call => call.operation)).toEqual(expected);
+  });
+
+  it.each([
     ['another shop', () => xml(fixture('shop').replace('DE00001', 'DE00002'))],
     ['a shop without a street', () => xml(fixture('shop').replace('<Street>Musterstr.</Street>', '<Street />'))],
     ['a refusal', () => xml(failure('getParcelShopByID', 'ERROR_NO_PARCELSHOP'))],
@@ -491,6 +513,19 @@ describe('DPD Germany tiers', () => {
     expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState']);
   });
 
+  it('stops waiting for the session once the guest protocol ends the lookup, and still holds the opening', async () => {
+    vi.useFakeTimers();
+    try {
+      const { app, tracking } = tiers(guest(unknownParcel()));
+      app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+      await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+      expect(vi.getTimerCount()).toBe(0);
+      expect(app.calls[0]!.signal?.aborted).toBe(false);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('keeps the session opening for the next lookup without reading the parcel the guest protocol ended', async () => {
     let open!: () => void;
     const { app, fetcher, tracking } = tiers(guest(unknownParcel()));
@@ -550,6 +585,30 @@ describe('DPD Germany tiers', () => {
     expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getTrackingData', 'getSessionFullState']);
   });
 
+  it('waits for the session replacing a refused one only as long as is left of its wait', async () => {
+    vi.useFakeTimers();
+    try {
+      const { app, guestCalls, steps, tracking } = tiers(guest(Response.json(delivered)));
+      app.replies.getSessionFullState = [
+        () => new Promise<Response>((resolve) => { setTimeout(() => resolve(xml(fixture('session'))), 30_000); }),
+        () => new Promise<Response>(() => undefined),
+      ];
+      app.replies.getTrackingData = [() => xml(failure('getTrackingData', 'ERROR_SESSION_NOT_VALID'))];
+      const pending = tracking.track({ number: NUMBER }, { budgetMs: 60_000 });
+      await vi.advanceTimersByTimeAsync(30_000);
+      expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getTrackingData', 'getSessionFullState']);
+      // The wait ends 40 seconds after the lookup began, not 40 seconds after the second opening.
+      await vi.advanceTimersByTimeAsync(10_000 - 1);
+      expect(steps).toEqual([]);
+      await vi.advanceTimersByTimeAsync(1);
+      expect((await pending).status).toBe('delivered');
+      expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'ok']]);
+      expect(guestCalls).toHaveLength(4);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('answers with the guest reply when a kept session opens too late, and keeps it opening for the next lookup', async () => {
     vi.useFakeTimers();
     try {
@@ -605,6 +664,25 @@ describe('DPD Germany tiers', () => {
         expect(guestCalls).toHaveLength(0);
         expect(app.calls.map(call => call.operation)).toEqual(['getTrackingData', 'getTrackingScanList']);
         expect(app.calls[0]!.body).toContain(`<SessionToken>${SAVED}</SessionToken>`);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('holds lookups for a store that does not answer, then asks the guest protocol beside the opening', async () => {
+      vi.useFakeTimers();
+      try {
+        const { app, fetcher, guestCalls, steps, tracking } = tiers(guest(unknownParcel()));
+        app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+        warmDpdSession({ fetcher }, { store: { load: () => new Promise<never>(() => {}), save: async () => {} } });
+        const pending = tracking.track({ number: NUMBER });
+        const ended = expect(pending).rejects.toMatchObject({ kind: 'not_found' });
+        await vi.advanceTimersByTimeAsync(5_000 - 1);
+        expect(guestCalls).toHaveLength(0);
+        await vi.advanceTimersByTimeAsync(1);
+        await ended;
+        expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'not_found']]);
+        expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState']);
       } finally {
         vi.useRealTimers();
       }

@@ -197,9 +197,10 @@ export class DpdDeAppClient {
   }
 
   /**
-   * `sessionWaitMs` bounds the wait for a session still opening; the whole `timeoutMs` by default.
-   * `waiting` is called when the lookup starts waiting for one. Once `stop` aborts, the lookup ends
-   * with its reason when the session opens, and reads nothing.
+   * `sessionWaitMs` is how long from its start the lookup may wait for a session still opening, also
+   * for one that replaces a session the service refused; the whole `timeoutMs` by default. `waiting`
+   * is called when the lookup starts waiting for one. Once `stop` aborts, the lookup stops waiting,
+   * ends with its reason and reads nothing.
    * DPD checks a `postcode` against the recipient's: a rejected one gets one lookup without it, and
    * the result says which, as on the guest API.
    */
@@ -211,9 +212,12 @@ export class DpdDeAppClient {
     if (postcode && !/^\d{5}$/.test(postcode)) throw new TypeError('DPD Germany app tracking takes a 5-digit postcode');
     const deadline = performance.now() + options.timeoutMs;
     const left = () => Math.max(1, Math.floor(deadline - performance.now()));
+    const waitEnds = Math.min(deadline, performance.now() + (options.sessionWaitMs ?? Infinity));
     try {
       for (let attempt = 0; ; attempt += 1) {
-        const session = await this.#service.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity), options.waiting);
+        const session = await this.#service.session(options.signal, Math.max(0, waitEnds - performance.now()), {
+          waiting: options.waiting, stop: options.stop,
+        });
         options.stop?.throwIfAborted();
         // Read-only: the parcel is neither added to the session nor redirected.
         const tracking = (zip: string) => this.#service.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: zip,
@@ -230,11 +234,13 @@ export class DpdDeAppClient {
             data = await tracking('');
             verified = false;
           }
+          options.stop?.throwIfAborted();
           const scans = await this.#service.call('getTrackingScanList', { SessionToken: session, ParcelNo: number,
             DeliveryZipCode: verified ? postcode : '' }, options.signal, left());
           const { result, shop } = parseDpdDeApp(data, scans, number);
           // The scans name the shop without its address, which the shop's own record adds.
           // Without it, the parcel is found all the same and its pickup point keeps the name alone.
+          options.stop?.throwIfAborted();
           const address = shop ? (await this.#service.parcelShop(shop, { signal: options.signal, timeoutMs: left() }))?.address : undefined;
           if (address) result.pickup_point = `${result.pickup_point}\n${address}`;
           if (verified !== undefined) result.dpd_postcode_verified = verified;

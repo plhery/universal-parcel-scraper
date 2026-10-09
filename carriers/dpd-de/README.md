@@ -98,7 +98,9 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   is saved as `checkedAt`. `refusedAt - openedAt` is how long the service
   accepted the session, and checks stop a week after it opened. Checks of
   several sessions are five seconds apart. A failing store leaves lookups as
-  they are without one.
+  they are without one, once it has failed: one that does not answer holds the
+  lookups that arrive meanwhile for those five seconds, and only then do they
+  ask the guest API.
 - `getTrackingData` and `getTrackingScanList` take the postcode as
   `DeliveryZipCode`. A matching one returns `DataViewStatus`
   `DeliveryZipCode_isValid`; a wrong one, or any postcode for an unknown parcel,
