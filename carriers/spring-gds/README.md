@@ -54,10 +54,12 @@ native catalog all carry it; everything user-facing says PostNL.
 - The reply names no sender, recipient or address. Only the fields above are read; the
   fixture carries a recipient, an address and a signature link so the test can assert that
   they stay out.
-- PostNL's `3S` barcodes carry a four-letter customer code. DHL Parcel prints `3S` barcodes
-  as well, mostly with three letters, so those go to
-  [DHL eCommerce Netherlands](../dhl-ecommerce-nl/README.md). The shorter codes PostNL's
-  barcode documentation shows stay suggestions.
+- PostNL's `3S` barcodes nearly all carry a four-letter customer code, which selects PostNL.
+  DHL Parcel prints `3S` barcodes as well, mostly with three letters, so those go to
+  [DHL eCommerce Netherlands](../dhl-ecommerce-nl/README.md); a few barcodes of each carrier
+  land with the other. Shorter codes, such as the two-letter ones PostNL's barcode
+  documentation shows, stay suggestions. Recognition never asks PostNL about them: its
+  endpoint calls them incorrect (see Limitations).
 - `mailingtechnology.com/tracking?tn=` (Spring GDS) and retired `postnl.post/details/{n}`
   links are recognized when pasted. New links use `/track?barcodes=`.
 - Not used: the Spring GDS portal. It shows extra internal legs for the same barcode, but it

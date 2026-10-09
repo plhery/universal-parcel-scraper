@@ -255,7 +255,7 @@
     "carrier": "spring-gds",
     "pattern": "^3S[A-Z]{3}\\d{8}$",
     "kind": "collision",
-    "reason": "PostNL's barcode documentation shows a three-letter customer code at this length, the shape DHL Parcel prints. DHL's rule takes it; PostNL's own barcodes carry four letters."
+    "reason": "PostNL's barcode documentation shows a three-letter customer code at this length, the shape most DHL Parcel barcodes have, and a few archived PostNL barcodes carry one. DHL's rule takes it: nearly all PostNL barcodes carry four letters."
   },
   {
     "carrier": "sto",
