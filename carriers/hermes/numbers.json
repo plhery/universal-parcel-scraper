@@ -2,11 +2,10 @@
   "carrier": "hermes",
   "records": [
     {
-      "number": "62100000000000000",
+      "number": "62162057330000611",
       "role": "shipment",
       "evidence": "synthetic",
-      "derivedFrom": "official_shape",
-      "shapeConfirmed": "2026-09-10",
+      "derivedFrom": "donated_real",
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -14,7 +13,7 @@
           "dhl-ecommerce"
         ]
       },
-      "note": "Made-up number in the 17-digit parcel-number shape. Hermes rejects it, so it opens no order. Filed under Hermes Einrichtungs-Service, which no rule claims."
+      "note": "A real delivered order that the live test checks. Filed under Hermes Einrichtungs-Service, which no rule claims."
     }
   ]
 }
