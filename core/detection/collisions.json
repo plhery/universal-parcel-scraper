@@ -1027,6 +1027,17 @@
     "reason": "DPD prints a check character after the parcel number, and Chronopost delivers DPD parcels under the same label. Direct tracking must confirm the carrier."
   },
   {
+    "shape": "Fourteen digits starting 13 and their DPD check character",
+    "carriers": [
+      "chronopost",
+      "dpd",
+      "dpd-de",
+      "dpd-pl",
+      "dpd-uk"
+    ],
+    "reason": "DPD Poland prints the same check character after its fourteen-digit parcel numbers, whose 13 range it is listed first for. The other DPD networks track the same parcel and Chronopost delivers DPD parcels under the same label, so direct tracking must confirm the carrier."
+  },
+  {
     "shape": "Fifteen digits starting with 0 or 1 that end in their DPD check digit and fail the GS1 check",
     "carriers": [
       "brt",

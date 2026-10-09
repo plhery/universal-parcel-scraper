@@ -20,7 +20,9 @@ and the United Kingdom have separate carrier ids.
   detection suggests DPD Poland first for numbers starting with 13, the range
   its archived tracking pages show most.
 - A number typed with the label's check character is looked up by its
-  fourteen digits, as in [dpd](../dpd/README.md).
+  fourteen digits, as in [dpd](../dpd/README.md). Detection suggests DPD
+  Poland first for that form too when the digits start with 13 and the
+  character matches.
 - Tracking links are `parcelDetails` pages on `tracktrace.dpd.com.pl` or
   `tt.dpd.com.pl`, with the number in `p1`. Archived links that name another
   search type in `typ` carry parcel numbers too, so `typ` is not read.

@@ -296,6 +296,32 @@
         ]
       },
       "note": "Parcel number with its printed check character, from the German consumer forum. DPD Germany's tracking returns the fourteen-digit parcel's history."
+    },
+    {
+      "number": "13499302309359E",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220128062637/https://tracking.dpd.de/status/de_DE/parcel/13499302309359E",
+        "date": "2022-01-28",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-pl",
+          "dpd",
+          "chronopost",
+          "dpd-de",
+          "dpd-uk"
+        ]
+      },
+      "note": "Printed with its check character. Its 13 depot range is the one DPD Poland's own archived tracking pages show. Neither DPD Germany nor DPD Poland found it in October 2026."
     }
   ]
 }

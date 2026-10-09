@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { detectCarrierMatch, isValidDpdParcelNumber, parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
@@ -84,6 +86,24 @@ describe('DPD Poland direct tracking', () => {
       .toMatchObject({ trackingNumber: NUMBER, carrier: 'dpd-pl', confidence: 'high', source: 'link' });
     expect(parseTrackingInput('https://tt.dpd.com.pl/EN/parcelDetails?p1=13000000000002&typ=3'))
       .toMatchObject({ trackingNumber: '13000000000002', carrier: 'dpd-pl', confidence: 'high', source: 'link' });
+  });
+
+  it('lists its range first for a parcel number typed with its check character, and only when the character matches', () => {
+    const checked = (digits: string) => `${digits}${[...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'].find(character => dpdParcelNumber(`${digits}${character}`))!}`;
+    for (const number of [checked('13000000000002'), checked('13000000000038')]) {
+      const match = detectCarrierMatch(number);
+      expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['dpd-pl'] });
+      expect(match.candidates[0]).toBe('dpd-pl');
+      expect(match.candidates).toEqual(expect.arrayContaining(['dpd', 'dpd-de', 'dpd-uk', 'chronopost']));
+      expect(recognitionAskedCarriers(number)[0]).toBe('dpd-pl');
+    }
+    // The second check character is a digit, so fifteen-digit rules of other carriers match too.
+    expect(detectCarrierMatch(checked('13000000000038')).candidates).toEqual(expect.arrayContaining(['dpd-fr', 'brt', 'yunda']));
+    const valid = checked('13000000000002');
+    const wrong = `${valid.slice(0, 14)}${valid.endsWith('A') ? 'B' : 'A'}`;
+    expect(detectCarrierMatch(wrong).candidates).not.toContain('dpd-pl');
+    expect(detectCarrierMatch(checked('14000000000002'))).not.toMatchObject({ preferred: ['dpd-pl'] });
+    expect(detectCarrierMatch(checked('14000000000002')).candidates).not.toContain('dpd-pl');
   });
 
   it('reports a parcel absent only on the scoped no-trace answer naming the number', () => {

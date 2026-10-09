@@ -4911,6 +4911,12 @@ export const CARRIER_CATALOG = {
         "pattern": "^13\\d{12}$",
         "confidence": "low",
         "preferred": true
+      },
+      {
+        "pattern": "^13\\d{12}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd",
+        "preferred": true
       }
     ]
   },
@@ -5688,7 +5694,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill"],
   "dpd-de": ["dpd-de-1","dpd-de-2"],
-  "dpd-pl": ["dpd-pl-1","dpd-pl-2"],
+  "dpd-pl": ["dpd-pl-1","dpd-pl-2","dpd-pl-3"],
   "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "ekart": ["ekart-ecommerce"],
   "emile": ["emile-1"],

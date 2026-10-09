@@ -4909,6 +4909,12 @@
         "pattern": "^13\\d{12}$",
         "confidence": "low",
         "preferred": true
+      },
+      {
+        "pattern": "^13\\d{12}[0-9A-Z]$",
+        "confidence": "low",
+        "checksum": "dpd",
+        "preferred": true
       }
     ]
   },
