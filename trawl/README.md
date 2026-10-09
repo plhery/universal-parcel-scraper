@@ -7,7 +7,9 @@ the requested parcel. A solved challenge alone is not tracking history.
 
 Spee-Dee also uses the service's HTTP tier after a refused direct connection; the benefit
 is the service's network, and no browser is launched. Dingxiang (ZTO) and MTCaptcha
-(Hongkong Post) are not supported by this image's solvers.
+(Hongkong Post) need carrier-specific handling that this image's solvers do not provide.
+Their [ZTO](../carriers/zto/README.md) and [Hongkong Post](../carriers/hongkong-post/README.md)
+documentation describes the verification flows.
 
 ## Sessions
 
@@ -20,6 +22,8 @@ the number and postcode in its outgoing request.
 
 Redis is optional. It stores cookies and user agents with a TTL, not tracking history, and a
 cached session that fails falls back to a fresh browser. Do not expose Redis.
+Keeping a browser session does not make an application CAPTCHA token reusable;
+the site can require fresh verification for each action.
 
 ## Run it
 

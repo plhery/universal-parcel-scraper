@@ -68,7 +68,11 @@ The tracking service takes a single-use reCAPTCHA Enterprise token with each cal
 so there is no plain HTTP route: a missing, junk or replayed token gets the empty `500`. The
 adapter lets the page obtain its own token and never makes or replays one. A low score ends the
 lookup as a challenge, which enabled universal providers can take over; the score depends on the
-browser build and the network. Each lookup takes a turn in the process's one local Chromium, a
+browser build and the network. The page uses [score-based verification](https://docs.cloud.google.com/recaptcha/docs/instrument-web-pages),
+which has no interactive puzzle to solve manually. Each action generates a fresh token that
+must be assessed within two minutes. Retaining an accepted browser profile can preserve context
+for future scoring, but does not create a reusable verification token. The adapter uses fresh
+contexts. Each lookup takes a turn in the process's one local Chromium, a
 few seconds when the page answers, so other browser lookups queue behind it. The account tracking
 API (`v2.0`) requires an ODFL.com login. The former `OD4mobile` app is discontinued, and no
 current app (no `com.odfl.*` package) offers another public route.

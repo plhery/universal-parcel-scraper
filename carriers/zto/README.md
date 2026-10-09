@@ -12,7 +12,11 @@ before it issues a token. Its verification response and the repeated tracking re
 must both succeed; a hidden slider or a loaded tracking page proves neither.
 
 The bundled TRAWL image has no Dingxiang solver. Its GeeTest slider support does not cover
-this widget or the character challenge. ZTO therefore remains on universal providers.
+this widget or the character challenge. The [Correios OCR model](../correios-br/model/README.md)
+recognizes lowercase Latin letters and digits as a string. Ordered Chinese-character verification
+requires recognition of the requested glyphs, their image positions and the click order.
+The OCR worker infrastructure can be reused with a suitable model; the Correios weights
+do not cover this task. ZTO therefore remains on universal providers.
 
 ## Limitations
 

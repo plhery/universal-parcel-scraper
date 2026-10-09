@@ -34,17 +34,19 @@ status wording and its clock, with no history.
 - Only the first line of the answer is read. The contact link and menu lines after it are
   dropped.
 
-## Rejected approaches
+## Other tracking routes
 
 The [official tracker](https://webapp.hongkongpost.hk/en/mail_tracking2/index.html)
-uses MTCaptcha text verification before posting to
-`https://webapp1.hongkongpost.hk/api1/v1/mailTracking/mail-tracking-message-mtCaptcha`.
-The verification token belongs to the browser session. The bundled TRAWL image has no
-MTCaptcha text solver, so loading this page through it does not provide history.
-Reading the challenge does not establish that verification passed or that the tracker
-returned a shipment.
-The older `MailTracking_app3/latestResult` route remains in the public page's
-client code.
+uses MTCaptcha before posting to
+`/api1/v1/mailTracking/mail-tracking-message-mtCaptcha` on
+`webapp1.hongkongpost.hk` or `webapp2.hongkongpost.hk`.
+MTCaptcha supports [invisible verification, text images and an audio alternative](https://docs.mtcaptcha.com/dev-guide).
+The page obtains its own verification token; an accepted browser can proceed without
+a visible puzzle. The bundled TRAWL image has no MTCaptcha solver. Its speech-to-text
+support for reCAPTCHA does not handle MTCaptcha's widget or submission flow.
+A capture must bind the visible widget's image or audio to that same challenge,
+confirm verification and then validate the tracking reply for the requested item.
+The older `MailTracking_app3/latestResult` route remains in the public page's client code.
 
 The Android app `com.hkpost.android` links to the same chatbot. Its guest session
 (`m.hongkongpost.hk/api/sign-in`, then a JWT) needs no account, but its tracking SOAP
