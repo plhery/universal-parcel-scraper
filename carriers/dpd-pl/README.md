@@ -58,9 +58,9 @@ and the United Kingdom have separate carrier ids.
 Reference, dispatch code and order number searches are not supported. Depot
 codes are not places, so events carry no location. The recipient, the pickup
 point and the parcel's other packages are not read, and the page shows no
-estimate, sender or weight. After "Sent outside Poland" the history continues
-on the destination country's DPD tracker, which is not asked. Polish wording
-is not mapped.
+estimate, sender or weight. After "Sent outside Poland" the page goes on
+with the destination network's scans up to delivery; the destination
+country's own DPD tracker is not asked. Polish wording is not mapped.
 
 ## Testing
 
