@@ -18,6 +18,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://omgoexpress.cn/",
+    "searchUrl": "https://omgoexpress.cn/",
     "canaryUrl": "https://omgoexpress.cn/",
     "shows": [],
     "scraped": [],

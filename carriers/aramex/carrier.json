@@ -28,6 +28,7 @@
   ],
   "portal": {
     "url": "https://www.aramex.com/us/en/track/shipments?ShipmentNumber={trackingNumber}",
+    "searchUrl": "https://www.aramex.com/us/en/track/shipments",
     "canaryUrl": "https://www.aramex.com/us/en/track/shipments",
     "shows": [
       "status",

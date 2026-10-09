@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://www.delhivery.com/tracking",
+    "searchUrl": "https://www.delhivery.com/tracking",
     "canaryUrl": "https://www.delhivery.com/tracking",
     "shows": [
       "status",

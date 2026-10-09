@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://www.fedex.com/fedextrack/?trknbr={trackingNumber}",
+    "searchUrl": "https://www.fedex.com/en-ch/tracking.html",
     "canaryUrl": "https://www.fedex.com/fedextrack/",
     "shows": [
       "status",

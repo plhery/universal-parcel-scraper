@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://www.orangeconnex.com/tracking",
+    "searchUrl": "https://www.orangeconnex.com/tracking",
     "canaryUrl": "https://www.orangeconnex.com/tracking",
     "shows": [
       "status",

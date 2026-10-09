@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
+    "searchUrl": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
     "canaryUrl": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
     "shows": [
       "status",

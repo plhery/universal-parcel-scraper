@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { trackingPageVerdict } from './trackingLinkProbe.js';
+import { searchPageVerdict, trackingPageVerdict } from './trackingLinkProbe.js';
 
 const route = /^https:\/\/carrier\.example\/tracking(?:\?|$)/;
 const marker = /track your parcel/i;
@@ -35,5 +35,31 @@ describe('tracking link page validation', () => {
   });
   it.each([200, 403, 429])('reports a challenge (%s) as blocked, never healthy', (status) => {
     expect(trackingPageVerdict({ ...page, status, title: 'Just a moment...' }, route, marker)).toBe('blocked');
+  });
+});
+
+describe('search page validation', () => {
+  const search = { status: 200, url: 'https://carrier.example/track', title: 'Track a parcel', text: 'Enter your tracking number' };
+  it('accepts a page that shows a field to type a number in', () => {
+    expect(searchPageVerdict(search, 1)).toBe('search-page');
+  });
+  it('rejects a page with no field, such as a desktop-only form or an empty result', () => {
+    expect(searchPageVerdict(search, 0)).toBe('broken');
+  });
+  it('leaves an empty, untitled document unverified', () => {
+    expect(searchPageVerdict({ ...search, title: '', text: '' }, 0)).toBe('unverified');
+    expect(searchPageVerdict({ ...search, text: '' }, 0)).toBe('broken');
+  });
+  it.each([404, 410, 500])('rejects HTTP %s even with a field', (status) => {
+    expect(searchPageVerdict({ ...search, status }, 1)).toBe('broken');
+  });
+  it('rejects a soft 404 that keeps the site search', () => {
+    expect(searchPageVerdict({ ...search, title: 'Page not found' }, 1)).toBe('broken');
+  });
+  it.each([403, 412, 429])('reports a challenge (%s) as blocked, never healthy', (status) => {
+    expect(searchPageVerdict({ ...search, status, title: 'Access Denied' }, 0)).toBe('blocked');
+  });
+  it('keeps a field shown above a human check', () => {
+    expect(searchPageVerdict({ ...search, text: 'Enter your tracking number. Verify you are human.' }, 1)).toBe('search-page');
   });
 });

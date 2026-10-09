@@ -31,6 +31,7 @@
   ],
   "portal": {
     "url": "https://www.royalmail.com/portal/rm/track?trackNumber={trackingNumber}",
+    "searchUrl": "https://www.royalmail.com/portal/rm/track",
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "shows": [
       "status",

@@ -39,6 +39,7 @@
   ],
   "portal": {
     "url": "https://sporing.bring.no/sporing/{trackingNumber}?lang=en",
+    "searchUrl": "https://sporing.bring.no/sporing/?lang=en",
     "canaryUrl": "https://sporing.bring.no/sporing/",
     "shows": [
       "status",

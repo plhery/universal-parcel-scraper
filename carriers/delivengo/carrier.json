@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://www.laposte.fr/outils/suivre-vos-envois?code={trackingNumber}",
+    "searchUrl": "https://www.laposte.fr/outils/suivre-vos-envois",
     "canaryUrl": "https://www.laposte.fr/outils/suivre-vos-envois",
     "shows": [
       "status",

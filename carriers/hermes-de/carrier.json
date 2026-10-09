@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://www.myhermes.de/empfangen/sendungsverfolgung/sendungsinformation#{trackingNumber}",
+    "searchUrl": "https://www.myhermes.de/empfangen/sendungsverfolgung/",
     "canaryUrl": "https://www.myhermes.de/empfangen/sendungsverfolgung/",
     "shows": [
       "status",

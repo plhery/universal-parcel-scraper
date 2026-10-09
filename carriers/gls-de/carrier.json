@@ -53,6 +53,7 @@
   ],
   "portal": {
     "url": "https://gls-group.eu/DE/de/paketverfolgung?match={trackingNumber}",
+    "searchUrl": "https://gls-group.eu/DE/de/paketverfolgung",
     "canaryUrl": "https://gls-group.eu/EU/en/parcel-tracking",
     "shows": [
       "status",

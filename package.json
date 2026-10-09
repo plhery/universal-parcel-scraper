@@ -65,8 +65,9 @@
     "test:generated": "node scripts/generate-catalog.mjs --check && node scripts/generate-registry.mjs --strict --check && node scripts/generate-region-towns.mjs --check && node scripts/coverage-tables.mjs --check && node scripts/generate-readme.mjs --check",
     "test:package": "node scripts/test-package.mjs",
     "test:carriers:live": "vitest run --config vitest.carriers-live.config.ts",
-    "test:carriers:canary": "vitest run --config vitest.carriers-live.config.ts --exclude testing/trackingLinks.live.test.ts",
+    "test:carriers:canary": "vitest run --config vitest.carriers-live.config.ts --exclude testing/trackingLinks.live.test.ts --exclude testing/trackingSearchPages.live.test.ts",
     "test:tracking-links": "vitest run --config vitest.carriers-live.config.ts testing/trackingLinks.live.test.ts",
+    "test:search-pages": "vitest run --config vitest.carriers-live.config.ts testing/trackingSearchPages.live.test.ts",
     "canary": "node dist/scripts/carrier-canary.js",
     "carrier:new": "node scripts/new-carrier.mjs"
   },

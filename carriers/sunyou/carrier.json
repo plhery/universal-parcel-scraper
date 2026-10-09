@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://sypost.net/search?orderNo={trackingNumber}",
+    "searchUrl": "https://sypost.net/search",
     "canaryUrl": "https://sypost.net/",
     "shows": [
       "status",

@@ -7,7 +7,8 @@
  *
  *   node scripts/new-carrier.mjs --id <id> --name "<Name>" \
  *     [--mode automatic|link-only] [--adapter universal|<id>] \
- *     [--timezone <tz>] [--color #hex] [--portal-url <url>] [--canary-url <url>]
+ *     [--timezone <tz>] [--color #hex] [--portal-url <url>] [--search-url <url>] \
+ *     [--canary-url <url>]
  */
 
 import { mkdir, writeFile, access } from 'node:fs/promises';
@@ -25,7 +26,8 @@ const emptyCorpusGap = 'no public sample found yet';
 const usage = [
   'Usage: node scripts/new-carrier.mjs --id <id> --name "<Name>"',
   '         [--mode automatic|link-only] [--adapter universal|<id>]',
-  '         [--timezone <tz>] [--color #hex] [--portal-url <url>] [--canary-url <url>]',
+  '         [--timezone <tz>] [--color #hex] [--portal-url <url>] [--search-url <url>]',
+  '         [--canary-url <url>]',
 ].join('\n');
 
 function parseOptions(argv) {
@@ -43,7 +45,7 @@ function parseOptions(argv) {
 
 function readOptions(argv) {
   const options = parseOptions(argv);
-  const known = new Set(['id', 'name', 'mode', 'adapter', 'timezone', 'color', 'portal-url', 'canary-url']);
+  const known = new Set(['id', 'name', 'mode', 'adapter', 'timezone', 'color', 'portal-url', 'search-url', 'canary-url']);
   const unknown = Object.keys(options).filter((key) => !known.has(key));
   if (unknown.length > 0) throw new Error(`Unknown option --${unknown[0]}\n${usage}`);
   if (!options.id || !options.name) throw new Error(`--id and --name are required\n${usage}`);
@@ -65,6 +67,7 @@ function readOptions(argv) {
     timezone: options.timezone ?? 'UTC',
     color,
     portalUrl: options['portal-url'],
+    searchUrl: options['search-url'],
     canaryUrl: options['canary-url'],
   };
 }
@@ -73,6 +76,7 @@ function readOptions(argv) {
 function carrierDocument(options) {
   const portal = {};
   if (options.portalUrl) portal.url = options.portalUrl;
+  if (options.searchUrl) portal.searchUrl = options.searchUrl;
   if (options.canaryUrl) portal.canaryUrl = options.canaryUrl;
   return {
     id: options.id,

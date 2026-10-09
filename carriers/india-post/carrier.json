@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://myspeedpost.com/track?n={trackingNumber}&sync=true",
+    "searchUrl": "https://myspeedpost.com/track",
     "canaryUrl": "https://myspeedpost.com/track",
     "shows": [
       "status",

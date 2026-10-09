@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://www.zto.com/",
+    "searchUrl": "https://www.zto.com/check",
     "canaryUrl": "https://www.zto.com/check",
     "shows": [],
     "scraped": [],

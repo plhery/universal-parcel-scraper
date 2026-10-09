@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://mydhl.express.dhl/gb/en/tracking.html#/results?id={trackingNumber}",
+    "searchUrl": "https://www.dhl.com/gb-en/home/tracking.html",
     "canaryUrl": "https://mydhl.express.dhl/gb/en/tracking.html",
     "shows": [
       "status",

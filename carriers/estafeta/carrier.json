@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://cs.estafeta.com/es/Tracking/searchByGet?wayBill={trackingNumber}&isShipmentDetail=True",
+    "searchUrl": "https://www.estafeta.com/rastrear-envio",
     "canaryUrl": "https://cs.estafeta.com/",
     "shows": [
       "status",

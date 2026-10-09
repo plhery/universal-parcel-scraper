@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://items.ems.post/api/publicTracking/track?language=EN&itemId={trackingNumber}",
+    "searchUrl": "https://items.ems.post/",
     "canaryUrl": "https://items.ems.post/",
     "shows": [
       "status",

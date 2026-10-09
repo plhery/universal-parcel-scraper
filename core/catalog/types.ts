@@ -70,6 +70,8 @@ export interface CarrierInfo {
   /** Accent used for the carrier chip in the UI. */
   color: string;
   trackingUrl?: (trackingNumber: string) => string;
+  /** The carrier's public page for typing a tracking number in, linked when the number is hidden. */
+  trackingSearchUrl?: string;
   capabilities: CarrierCapabilities;
 }
 
@@ -125,6 +127,7 @@ export interface CarrierDefinition {
     localClocks?: boolean;
   };
   trackingUrlTemplate?: string;
+  trackingSearchUrl?: string;
   linkRules: readonly RawTrackingLinkRule[];
   detectionRules: readonly DetectionRule[];
 }

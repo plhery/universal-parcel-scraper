@@ -64,6 +64,7 @@
   ],
   "portal": {
     "url": "https://track.amazon.fr/tracking/{trackingNumber}",
+    "searchUrl": "https://track.amazon.fr/",
     "canaryUrl": "https://track.amazon.fr/",
     "shows": [
       "status",

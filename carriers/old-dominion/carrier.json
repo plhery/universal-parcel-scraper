@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html?proNumbers={trackingNumber}",
+    "searchUrl": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html",
     "canaryUrl": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html",
     "shows": [
       "status",

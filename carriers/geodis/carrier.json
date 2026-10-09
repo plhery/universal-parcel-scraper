@@ -28,6 +28,7 @@
   ],
   "portal": {
     "url": "https://espace-client.geodis.com/services/destinataires/#/fr/suivi/{trackingNumber}",
+    "searchUrl": "https://espace-client.geodis.com/services/destinataires/",
     "canaryUrl": "https://espace-client.geodis.com/services/destinataires/",
     "shows": [
       "status",

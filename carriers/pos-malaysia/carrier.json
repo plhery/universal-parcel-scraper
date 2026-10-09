@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://tracking.pos.com.my/tracking/{trackingNumber}",
+    "searchUrl": "https://tracking.pos.com.my/tracking/",
     "canaryUrl": "https://tracking.pos.com.my/",
     "shows": [
       "status",

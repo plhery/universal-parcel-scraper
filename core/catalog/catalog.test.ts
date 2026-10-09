@@ -33,6 +33,7 @@ describe('the derived CARRIERS record', () => {
     });
     expect(CARRIERS['swiss-post'].trackingUrl?.('RA123456785CH'))
       .toBe('https://service.post.ch/ekp-web/ui/entry/search/RA123456785CH');
+    expect(CARRIERS['swiss-post'].trackingSearchUrl).toBe('https://www.post.ch/de/empfangen/sendung-verfolgen');
     expect(SELECTABLE_CARRIERS.every((carrier) => carrier.capabilities.selectable)).toBe(true);
     expect(tracksAutomatically('swiss-post')).toBe(true);
   });
@@ -128,6 +129,9 @@ describe('tracking links', () => {
 
   it('localizes only the portals that support it', () => {
     expect(localizedCarrierUrl('swiss-post', 'https://service.post.ch/x', 'fr')).toContain('lang=fr');
+    // post.ch moves its search page to the language the parameter names.
+    expect(localizedCarrierUrl('swiss-post', CARRIERS['swiss-post'].trackingSearchUrl!, 'fr'))
+      .toBe('https://www.post.ch/de/empfangen/sendung-verfolgen?lang=fr');
     expect(localizedCarrierUrl('swiss-post', 'https://service.post.ch/x')).toBe('https://service.post.ch/x');
     expect(localizedCarrierUrl('dhl', 'https://www.dhl.com/x', 'fr')).toBe('https://www.dhl.com/x');
   });

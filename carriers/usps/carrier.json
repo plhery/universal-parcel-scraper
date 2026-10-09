@@ -31,6 +31,7 @@
   ],
   "portal": {
     "url": "https://tools.usps.com/go/TrackConfirmAction?tLabels={trackingNumber}",
+    "searchUrl": "https://tools.usps.com/go/TrackConfirmAction",
     "canaryUrl": "https://www.usps.com/",
     "shows": [
       "status",

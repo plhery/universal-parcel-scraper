@@ -39,6 +39,7 @@
   ],
   "portal": {
     "url": "https://www.dhl.com/ch-en/home/tracking.html?tracking-id={trackingNumber}&submit=1",
+    "searchUrl": "https://www.dhl.com/ch-en/home/tracking.html",
     "canaryUrl": "https://www.dhl.com/ch-en/home/tracking.html",
     "shows": [
       "status",

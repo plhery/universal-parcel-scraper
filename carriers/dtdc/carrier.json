@@ -25,6 +25,7 @@
   ],
   "portal": {
     "url": "https://web.mydtdc.in/",
+    "searchUrl": "https://www.dtdc.com/track-your-shipment/",
     "canaryUrl": "https://web.mydtdc.in/",
     "shows": [
       "status",

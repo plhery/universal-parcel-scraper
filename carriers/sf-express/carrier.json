@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://htm.sf-express.com/tw/en/dynamic_function/waybill/#search/bill-number/{trackingNumber}",
+    "searchUrl": "https://htm.sf-express.com/tw/en/dynamic_function/waybill/",
     "canaryUrl": "https://htm.sf-express.com/tw/en/dynamic_function/waybill/",
     "shows": [
       "status",

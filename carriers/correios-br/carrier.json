@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://rastreamento.correios.com.br/app/index.php?objetos={trackingNumber}",
+    "searchUrl": "https://rastreamento.correios.com.br/app/index.php",
     "canaryUrl": "https://rastreamento.correios.com.br/app/index.php",
     "shows": [
       "status",

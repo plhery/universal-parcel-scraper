@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://www.canpar.com/en/tracking/track.htm?barcode={trackingNumber}",
+    "searchUrl": "https://www.canpar.com/en/tracking/track.htm",
     "canaryUrl": "https://www.canpar.com/en/tracking/track.htm",
     "shows": [
       "status",

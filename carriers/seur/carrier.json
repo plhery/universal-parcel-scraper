@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://www.seur.com/miseur/mis-envios?tracking={trackingNumber}",
+    "searchUrl": "https://www.seur.com/miseur/mis-envios",
     "canaryUrl": "https://www.seur.com/miseur/mis-envios",
     "shows": [
       "status",

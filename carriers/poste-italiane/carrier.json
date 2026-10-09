@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://www.poste.it/cerca/index.html#/risultati-spedizioni/{trackingNumber}",
+    "searchUrl": "https://www.poste.it/cerca/index.html",
     "canaryUrl": "https://www.poste.it/",
     "shows": [
       "status",

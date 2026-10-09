@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://web.yundaex.com/infoInquiry?nav_id=262&cid=0&homeWaybill={trackingNumber}",
+    "searchUrl": "https://web.yundaex.com/infoInquiry",
     "canaryUrl": "https://web.yundaex.com/infoInquiry",
     "shows": [
       "status",

@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://www.ups.com/track?tracknum={trackingNumber}",
+    "searchUrl": "https://www.ups.com/track",
     "canaryUrl": "https://www.ups.com/assets/resources/webcontent/en_US/terms_service.pdf",
     "shows": [
       "status",

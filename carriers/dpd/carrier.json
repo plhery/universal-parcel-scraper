@@ -52,6 +52,7 @@
   ],
   "portal": {
     "url": "https://www.dpdgroup.com/ch/mydpd/my-parcels/incoming?parcelNumber={trackingNumber}",
+    "searchUrl": "https://www.dpd.com/ch/de/",
     "canaryUrl": "https://www.dpdgroup.com/ch/mydpd/my-parcels/incoming",
     "shows": [
       "status",

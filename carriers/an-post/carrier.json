@@ -28,6 +28,7 @@
   ],
   "portal": {
     "url": "https://www.anpost.com/Post-Parcels/Track/History?item={trackingNumber}",
+    "searchUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
     "canaryUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
     "shows": [
       "status",

@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://www.canadapost-postescanada.ca/track-reperage/en/search?searchFor={trackingNumber}",
+    "searchUrl": "https://www.canadapost-postescanada.ca/track-reperage/en/search",
     "canaryUrl": "https://www.canadapost-postescanada.ca/track-reperage/en/home",
     "shows": [
       "status",

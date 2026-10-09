@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://mojdhl.pl/tracking?paczki={trackingNumber}",
+    "searchUrl": "https://mojdhl.pl/tracking",
     "canaryUrl": "https://mojdhl.pl/tracking",
     "shows": [
       "status",

@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://tracking.speedx.io/{trackingNumber}",
+    "searchUrl": "https://tracking.speedx.io/",
     "canaryUrl": "https://tracking.speedx.io/",
     "shows": [
       "status",

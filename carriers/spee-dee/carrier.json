@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://www.speedeedelivery.com/track/?tracking={trackingNumber}",
+    "searchUrl": "https://www.speedeedelivery.com/track/",
     "canaryUrl": "https://speedeedelivery.com/track-a-shipment/",
     "shows": [
       "status",

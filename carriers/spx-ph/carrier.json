@@ -31,6 +31,7 @@
   ],
   "portal": {
     "url": "https://spx.ph/track?{trackingNumber}",
+    "searchUrl": "https://spx.ph/track",
     "canaryUrl": "https://spx.ph/en",
     "shows": [
       "status",

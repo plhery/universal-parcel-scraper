@@ -58,6 +58,7 @@ function builtCarrierInfo(id: CarrierId, carrier: CarrierDefinition): CarrierInf
     trackingSiteName: carrier.trackingSiteName,
     color: carrier.color,
     trackingUrl: trackingLink(id, carrier.trackingUrlTemplate),
+    trackingSearchUrl: carrier.trackingSearchUrl,
     capabilities: {
       tracking: {
         mode: carrier.tracking.mode,

@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://www.ctt.pt/feapl_2/app/open/objectSearch/objectSearch.jspx?objects={trackingNumber}",
+    "searchUrl": "https://www.ctt.pt/feapl_2/app/open/objectSearch/objectSearch.jspx",
     "canaryUrl": "https://www.ctt.pt/",
     "shows": [
       "status",

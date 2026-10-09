@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://track.dhlecommerce.co.uk/?con={trackingNumber}",
+    "searchUrl": "https://track.dhlecommerce.co.uk/",
     "canaryUrl": "https://track.dhlecommerce.co.uk/",
     "shows": [
       "status",

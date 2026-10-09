@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://track.bpost.cloud/",
+    "searchUrl": "https://track.bpost.cloud/",
     "canaryUrl": "https://track.bpost.cloud/",
     "shows": [
       "status",

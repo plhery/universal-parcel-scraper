@@ -37,6 +37,7 @@
   ],
   "portal": {
     "url": "https://tracking.postnord.com/en/?id={trackingNumber}",
+    "searchUrl": "https://tracking.postnord.com/en/",
     "canaryUrl": "https://tracking.postnord.com/en/",
     "shows": [
       "status",

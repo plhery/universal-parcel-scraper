@@ -32,6 +32,7 @@
   ],
   "portal": {
     "url": "https://colisprive.com/moncolis/pages/DetailColis.aspx?numColis={trackingNumber}&lang=fr",
+    "searchUrl": "https://colisprive.com/moncolis/pages/DetailColis.aspx",
     "canaryUrl": "https://colisprive.com/moncolis/pages/DetailColis.aspx",
     "shows": [
       "status",

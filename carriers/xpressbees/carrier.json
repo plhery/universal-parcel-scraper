@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://shipmentv2.xpressbees.com/orders/tracking/{trackingNumber}",
+    "searchUrl": "https://shipmentv2.xpressbees.com/orders/tracking/",
     "canaryUrl": "https://www.xpressbees.com/track",
     "shows": [
       "status",

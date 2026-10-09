@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://www.colisweb.com/suivi-livraison?value={trackingNumber}",
+    "searchUrl": "https://www.colisweb.com/suivi-livraison",
     "canaryUrl": "https://www.colisweb.com/suivi-livraison",
     "shows": [
       "status",

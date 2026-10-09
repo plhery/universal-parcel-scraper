@@ -53,6 +53,9 @@ npm run carrier:new -- --id example --name "Example" --canary-url https://exampl
 The script writes the folder. From there:
 
 1. Fill `carrier.json`: the portal facts, the tracking links and the detection rules.
+   `portal.searchUrl` is the page, with no number in it, where someone on a phone types a
+   tracking number. Open it at phone size before you set it: some trackers only show their
+   field on a desktop.
 2. Add public or synthetic sample numbers to `numbers.json`.
 3. Implement retrieval and a pure parser. The existing carrier folders show the adapter
    contract.

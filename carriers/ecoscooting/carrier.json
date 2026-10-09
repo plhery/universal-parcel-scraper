@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://ecoscooting.com/tracking/{trackingNumber}",
+    "searchUrl": "https://ecoscooting.com/",
     "canaryUrl": "https://ecoscooting.com/tracking/1",
     "shows": [
       "status",

@@ -32,6 +32,7 @@
   ],
   "portal": {
     "url": "https://www.sto.cn/",
+    "searchUrl": "https://www.sto.cn/",
     "canaryUrl": "https://page.sto.cn/ued-projects/sto-customer-onlinekf",
     "shows": [
       "status",

@@ -42,6 +42,7 @@
   ],
   "portal": {
     "url": "https://tracking.app.planzer.ch/delivery/info?deliveryNumber={trackingNumber}",
+    "searchUrl": "https://www.planzer-paket.ch/de/",
     "canaryUrl": "https://tracking.app.planzer.ch/",
     "shows": [
       "status",
