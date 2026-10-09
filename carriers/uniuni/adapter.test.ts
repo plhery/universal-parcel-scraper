@@ -231,6 +231,22 @@ describe('UniUni direct retrieval', () => {
     expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(U9999_NUMBER);
   });
 
+  it('probes cross-border shipper references with CAA0, and answers their exact absence', async () => {
+    const reference = 'ZZ00CAA0Z000000001';
+    const value = uuscFixture(); value.data.valid_tno[0].tno = reference;
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(Response.json(value))
+      .mockResolvedValueOnce(Response.json({ status: 'SUCCESS', data: { invalid_tno: reference, valid_tno: [] } }));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    await expect(instance.recognize!('zz00-caa0 z000000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
+    expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(reference);
+    await expect(instance.recognize!(reference)).resolves.toEqual({ known: false });
+    for (const number of ['ZZ00CAA1Z000000001', 'ZZ00CAA0Z00000001', 'Z100CAA0Z000000001', 'ZZ00CAA00000000001']) {
+      expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(InvalidInputError);
+      await expect(instance.recognize!(number)).resolves.toEqual({ known: false });
+    }
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
   it('recognizes only supported formats, exact absence and dated activity while preserving uncertain failures', async () => {
     const fetcher = vi.fn<typeof fetch>();
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });

@@ -19,7 +19,9 @@ export function normalizeUniuniNumber(raw: string): string {
 /** Discovery only probes formats confirmed for individual parcels. */
 export function normalizeUniuniRecognitionNumber(raw: string): string {
   const number = normalizeUniuniNumber(raw);
-  if (!/^(?:UUS[A-Z0-9]{16}|UUSC\d{12}|U\d{15}|4C\d{9}US)$/.test(number)) throw new InvalidInputError(PROVIDER, 'UniUni recognition requires a supported parcel format');
+  if (!/^(?:UUS[A-Z0-9]{16}|UUSC\d{12}|U\d{15}|4C\d{9}US|[A-Z]{2}\d{2}CAA0[A-Z]\d{9})$/.test(number)) {
+    throw new InvalidInputError(PROVIDER, 'UniUni recognition requires a supported parcel format');
+  }
   return number;
 }
 
