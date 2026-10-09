@@ -28,6 +28,7 @@
   ],
   "portal": {
     "url": "https://track.dpd.co.uk/?reference={trackingNumber}",
+    "searchUrl": "https://track.dpd.co.uk/",
     "canaryUrl": "https://track.dpd.co.uk/",
     "shows": [
       "status",

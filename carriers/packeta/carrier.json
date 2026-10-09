@@ -36,6 +36,7 @@
   ],
   "portal": {
     "url": "https://tracking.packeta.com/en/{trackingNumber}",
+    "searchUrl": "https://tracking.packeta.com/en/",
     "canaryUrl": "https://tracking.packeta.com/",
     "shows": [
       "status",

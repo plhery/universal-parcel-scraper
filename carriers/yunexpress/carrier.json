@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://www.yuntrack.com/parcelTracking?id={trackingNumber}",
+    "searchUrl": "https://www.yuntrack.com/",
     "canaryUrl": "https://www.yuntrack.com/",
     "shows": [
       "status",

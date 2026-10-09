@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://globaleco.app/track",
+    "searchUrl": "https://globaleco.app/track",
     "canaryUrl": "https://globaleco.app/track/",
     "shows": [
       "status",

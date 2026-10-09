@@ -46,6 +46,7 @@
   ],
   "portal": {
     "url": "https://www.mondialrelay.fr/suivi-de-colis/?numeroExpedition={trackingNumber}",
+    "searchUrl": "https://www.mondialrelay.fr/suivi-de-colis/",
     "canaryUrl": "https://www.mondialrelay.fr/suivi-de-colis/",
     "shows": [
       "status",

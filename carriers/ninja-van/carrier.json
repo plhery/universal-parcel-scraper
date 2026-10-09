@@ -35,6 +35,7 @@
   ],
   "portal": {
     "url": "https://www.ninjavan.co/en-my/tracking?id={trackingNumber}",
+    "searchUrl": "https://www.ninjavan.co/en-my/tracking",
     "canaryUrl": "https://www.ninjavan.co/en-my/tracking",
     "shows": [
       "status",

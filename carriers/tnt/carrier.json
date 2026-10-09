@@ -28,6 +28,7 @@
   ],
   "portal": {
     "url": "https://www.tnt.com/express/en_gb/site/shipping-tools/tracking.html?searchType=con&cons={trackingNumber}",
+    "searchUrl": "https://www.tnt.com/express/en_gb/site/shipping-tools/tracking.html",
     "canaryUrl": "https://www.tnt.fr/public/suivi_colis/recherche/index.do",
     "shows": [
       "status",

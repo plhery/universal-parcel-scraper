@@ -36,6 +36,7 @@
   ],
   "portal": {
     "url": "https://www.chronopost.fr/tracking-no-cms/suivi-page?langue=fr&listeNumerosLT={trackingNumber}",
+    "searchUrl": "https://www.chronopost.fr/fr/suivi-colis",
     "canaryUrl": "https://www.chronopost.fr/tracking-no-cms/suivi-page",
     "shows": [
       "status",

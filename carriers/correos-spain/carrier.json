@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number={trackingNumber}",
+    "searchUrl": "https://www.correos.es/es/es/herramientas/localizador/envios/detalle",
     "canaryUrl": "https://www.correos.es/",
     "shows": [
       "status",

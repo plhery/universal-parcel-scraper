@@ -32,6 +32,7 @@
   ],
   "portal": {
     "url": "https://auspost.com.au/mypost/track/details/{trackingNumber}",
+    "searchUrl": "https://auspost.com.au/mypost/track/details/",
     "canaryUrl": "https://auspost.com.au/mypost/track/",
     "shows": [
       "status",

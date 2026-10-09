@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://track.ukrposhta.ua/en/?barcode={trackingNumber}",
+    "searchUrl": "https://track.ukrposhta.ua/en/",
     "canaryUrl": "https://track.ukrposhta.ua/en/",
     "shows": [
       "status",

@@ -33,6 +33,7 @@
   ],
   "portal": {
     "url": "https://track.4px.com/#/result/0/{trackingNumber}",
+    "searchUrl": "https://track.4px.com/",
     "canaryUrl": "https://track.4px.com/",
     "shows": [
       "status",

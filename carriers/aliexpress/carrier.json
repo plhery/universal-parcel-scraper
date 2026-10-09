@@ -35,6 +35,7 @@
   ],
   "portal": {
     "url": "https://global.cainiao.com/detail.htm?mailNoList={trackingNumber}",
+    "searchUrl": "https://global.cainiao.com/detail.htm",
     "canaryUrl": "https://global.cainiao.com/",
     "shows": [
       "status",

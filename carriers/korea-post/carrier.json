@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://trace.epost.go.kr/xtts/servlet/kpl.tts.common.svl.SttSVL?target_command=kpl.tts.tt.epost.cmd.RetrieveEmsTraceEngCmd&JspURI=%2Fxtts%2Ftt%2Fepost%2Fems%2FEmsSearchResultEng.jsp&POST_CODE={trackingNumber}",
+    "searchUrl": "https://trace.epost.go.kr/xtts/tt/epost/ems/ems_eng.jsp",
     "canaryUrl": "https://trace.epost.go.kr/xtts/tt/epost/ems/ems_eng.jsp",
     "shows": [
       "status",

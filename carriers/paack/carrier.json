@@ -45,6 +45,7 @@
   ],
   "portal": {
     "url": "https://mydeliveries.paack.app/tracking?tracking_number={trackingNumber}",
+    "searchUrl": "https://mydeliveries.paack.app/tracking",
     "canaryUrl": "https://mydeliveries.paack.app/tracking",
     "shows": [
       "status",

@@ -37,6 +37,7 @@
   ],
   "portal": {
     "url": "https://service.post.ch/ekp-web/ui/entry/search/{trackingNumber}",
+    "searchUrl": "https://www.post.ch/de/empfangen/sendung-verfolgen",
     "canaryUrl": "https://service.post.ch/",
     "shows": [
       "status",

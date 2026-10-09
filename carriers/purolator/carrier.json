@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://www.purolator.com/en/shipping/tracker?pins={trackingNumber}",
+    "searchUrl": "https://www.purolator.com/en/shipping/tracker",
     "canaryUrl": "https://www.purolator.com/en/shipping/tracker",
     "shows": [
       "status",

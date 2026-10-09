@@ -36,6 +36,7 @@
   ],
   "portal": {
     "url": "https://inpost.pl/sledzenie-przesylek",
+    "searchUrl": "https://inpost.pl/sledzenie-przesylek",
     "canaryUrl": "https://inposteasy.com/",
     "shows": [
       "status",

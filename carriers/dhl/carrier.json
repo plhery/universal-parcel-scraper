@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode={trackingNumber}",
+    "searchUrl": "https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html",
     "canaryUrl": "https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html",
     "shows": [
       "status",

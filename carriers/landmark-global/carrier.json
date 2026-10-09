@@ -24,6 +24,7 @@
   ],
   "portal": {
     "url": "https://track.landmarkglobal.com/?search={trackingNumber}",
+    "searchUrl": "https://track.landmarkglobal.com/",
     "canaryUrl": "https://track.landmarkglobal.com/",
     "shows": [
       "status",

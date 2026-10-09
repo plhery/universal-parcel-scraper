@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://t.17track.net/en#nums={trackingNumber}",
+    "searchUrl": "https://t.17track.net/en",
     "siteName": "17TRACK",
     "canaryUrl": "https://parcelsapp.com/en",
     "shows": [],

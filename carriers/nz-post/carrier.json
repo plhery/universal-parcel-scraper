@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://www.nzpost.co.nz/tools/tracking?trackid={trackingNumber}",
+    "searchUrl": "https://www.nzpost.co.nz/tools/tracking",
     "canaryUrl": "https://www.nzpost.co.nz/tools/tracking",
     "shows": [
       "status",

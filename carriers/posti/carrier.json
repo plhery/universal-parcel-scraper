@@ -32,6 +32,7 @@
   ],
   "portal": {
     "url": "https://www.posti.fi/en/tracking/{trackingNumber}",
+    "searchUrl": "https://www.posti.fi/en/tracking/",
     "canaryUrl": "https://www.posti.fi/en/tracking",
     "shows": [
       "status",

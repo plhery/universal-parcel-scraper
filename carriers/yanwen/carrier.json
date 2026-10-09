@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://track.yw56.com.cn/en/index",
+    "searchUrl": "https://www.yw56.com.cn/en/",
     "canaryUrl": "https://track.yw56.com.cn/en/index",
     "shows": [
       "status",

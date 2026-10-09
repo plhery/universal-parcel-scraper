@@ -38,6 +38,7 @@
   ],
   "portal": {
     "url": "https://clientesparcel.dhl.es/LiveTracking/ModificarEnvio/{trackingNumber}",
+    "searchUrl": "https://clientesparcel.dhl.es/LiveTracking/",
     "canaryUrl": "https://clientesparcel.dhl.es/LiveTracking/",
     "shows": [
       "status",

@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://www.correos.cl/seguimiento-en-linea",
+    "searchUrl": "https://www.correos.cl/seguimiento-en-linea",
     "canaryUrl": "https://t.17track.net/",
     "shows": [
       "status",

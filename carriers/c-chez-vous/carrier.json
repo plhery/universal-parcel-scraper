@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://www.cchezvous.fr/suivi-colis/{trackingNumber}",
+    "searchUrl": "https://www.cchezvous.fr/suivi-colis/",
     "canaryUrl": "https://www.cchezvous.fr/suivi-colis",
     "shows": [
       "status",

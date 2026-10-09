@@ -27,6 +27,7 @@
   ],
   "portal": {
     "url": "https://www.mrw.es/seguimiento",
+    "searchUrl": "https://www.mrw.es/seguimiento",
     "canaryUrl": "https://www.mrw.es/seguimiento/",
     "shows": [
       "status",

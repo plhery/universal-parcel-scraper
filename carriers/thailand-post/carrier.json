@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://track.thailandpost.co.th/?trackNumber={trackingNumber}",
+    "searchUrl": "https://international.thailandpost.com/track-status/?lang=en",
     "canaryUrl": "https://track.thailandpost.co.th/",
     "shows": [
       "status",

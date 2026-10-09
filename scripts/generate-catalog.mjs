@@ -118,6 +118,17 @@ function validateCarrierSemantics(carrier, adapterFolders) {
       throw new Error(`${where} must define a public HTTPS portal.canaryUrl`);
     }
   }
+  if (portal.searchUrl !== undefined) {
+    let searchUrl;
+    try {
+      searchUrl = new URL(portal.searchUrl);
+    } catch {
+      throw new Error(`${where} must define a valid portal.searchUrl`);
+    }
+    if (searchUrl.username || searchUrl.password) {
+      throw new Error(`${where} must define a credential-free portal.searchUrl`);
+    }
+  }
   const fields = new Set();
   for (const requirement of tracking.requirements ?? []) {
     const validators = carrierInputValidators[requirement.field];
@@ -195,6 +206,7 @@ function contractEntry(carrier) {
   entry.tracking = contractTracking(carrier.tracking);
   if (carrier.portal.canaryUrl !== undefined) entry.canaryUrl = carrier.portal.canaryUrl;
   if (carrier.portal.url !== undefined) entry.trackingUrlTemplate = carrier.portal.url;
+  if (carrier.portal.searchUrl !== undefined) entry.trackingSearchUrl = carrier.portal.searchUrl;
   if (carrier.portal.siteName !== undefined) entry.trackingSiteName = carrier.portal.siteName;
   entry.linkRules = carrier.links;
   entry.detectionRules = carrier.detection.map(contractDetectionRule);

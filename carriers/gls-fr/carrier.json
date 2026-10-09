@@ -38,6 +38,7 @@
   ],
   "portal": {
     "url": "https://moncolis.gls-france.com/fr/{trackingNumber}",
+    "searchUrl": "https://gls-group.com/FR/fr/suivi-colis",
     "canaryUrl": "https://moncolis.gls-france.com/fr/",
     "shows": [
       "status",

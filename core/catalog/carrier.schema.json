@@ -215,6 +215,11 @@
           "description": "Public tracking URL template containing {trackingNumber}.",
           "type": "string"
         },
+        "searchUrl": {
+          "description": "Public page, with no number in it, where a visitor on a phone types a tracking number. Linked when the number is hidden. Left out when the carrier has no such page.",
+          "type": "string",
+          "pattern": "^https://[^\\s{}]+$"
+        },
         "siteName": {
           "description": "Name of the site the portal URL points at, when it is not the carrier itself.",
           "type": "string",

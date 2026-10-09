@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://trace.dpd.fr/fr/trace/{trackingNumber}",
+    "searchUrl": "https://trace.dpd.fr/fr/trace",
     "canaryUrl": "https://trace.dpd.fr/fr/trace",
     "shows": [
       "status",

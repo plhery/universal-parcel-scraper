@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://my.dhlecommerce.nl/home/tracktrace/{trackingNumber}",
+    "searchUrl": "https://my.dhlecommerce.nl/home/tracktrace/",
     "canaryUrl": "https://my.dhlecommerce.nl/home/tracktrace",
     "shows": [
       "status",

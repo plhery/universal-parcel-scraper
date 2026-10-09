@@ -25,6 +25,7 @@
   ],
   "portal": {
     "url": "https://www.bluedart.com/trackdartresultthirdparty?trackFor=0&trackNo={trackingNumber}",
+    "searchUrl": "https://www.bluedart.com/tracking",
     "canaryUrl": "https://www.bluedart.com/trackdartresultthirdparty",
     "shows": [
       "status",

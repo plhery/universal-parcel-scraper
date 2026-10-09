@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://ekartlogistics.com/ekartlogistics-web/shipmenttrack/{trackingNumber}",
+    "searchUrl": "https://www.ekartlogistics.in/track-order",
     "canaryUrl": "https://www.ekartlogistics.in/track-order",
     "shows": [
       "status",

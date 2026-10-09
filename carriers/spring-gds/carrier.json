@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://postnl.post/track?barcodes={trackingNumber}",
+    "searchUrl": "https://postnl.post/track",
     "canaryUrl": "https://postnl.post/",
     "shows": [
       "status",

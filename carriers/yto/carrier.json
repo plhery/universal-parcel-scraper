@@ -26,6 +26,7 @@
   ],
   "portal": {
     "url": "https://www.yto.net.cn/ytoExpress/waybill/search",
+    "searchUrl": "https://www.yto.net.cn/ytoExpress/waybill/search",
     "canaryUrl": "https://www.yto.net.cn/ytoExpress/waybill/search",
     "shows": [
       "status",

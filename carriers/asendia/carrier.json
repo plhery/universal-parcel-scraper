@@ -35,6 +35,7 @@
   ],
   "portal": {
     "url": "https://track.asendia.com/track/{trackingNumber}",
+    "searchUrl": "https://track.asendia.com/track/",
     "canaryUrl": "https://a1.asendiausa.com/tracking/",
     "shows": [
       "status",

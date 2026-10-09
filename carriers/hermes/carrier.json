@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://myhes.de/",
+    "searchUrl": "https://myhes.de/",
     "canaryUrl": "https://myhes.de/",
     "shows": [
       "status",

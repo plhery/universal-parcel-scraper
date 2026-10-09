@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://www.evri.com/track/parcel/{trackingNumber}/details",
+    "searchUrl": "https://www.evri.com/track-a-parcel",
     "canaryUrl": "https://www.evri.com/track-a-parcel",
     "shows": [
       "status",
