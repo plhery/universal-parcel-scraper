@@ -16,7 +16,7 @@
     { "code": "CANCELLED", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-08-30", "note": "Both spellings appear." },
     { "code": "FINAL", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-08-30", "note": "" },
     { "code": "NORECORD", "stage": "pending", "confirmedBy": "prior-art", "firstSeen": "2026-08-30", "note": "Reported as status 'unknown'." },
-    { "wording": "The parcel has not been handed over to GLS.", "language": "en", "confirmedBy": "fixture", "firstSeen": "2026-08-30", "note": "Deliberately unmapped: a negative handoff does not prove GLS possession. Reported as status 'unknown' with stage in_transit." },
+    { "wording": "The parcel has not been handed over to GLS.", "language": "en", "stage": "registered", "confirmedBy": "fixture", "firstSeen": "2026-08-30", "note": "Wording rule, checked before the handover to GLS: GLS knows of the parcel but does not have it." },
     { "wording": "The parcel was handed over to GLS.", "language": "en", "stage": "accepted", "confirmedBy": "fixture", "firstSeen": "2026-08-30", "note": "Wording rule for rows with no status code." },
     { "wording": "The parcel data was entered into the GLS IT system…", "language": "en", "stage": "registered", "confirmedBy": "fixture", "firstSeen": "2026-08-30", "note": "Wording rule; contains 'not yet handed over to GLS' and must not read as a handoff." },
     { "wording": "The parcel was released by customs.", "language": "en", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-08-30", "note": "Release is completion, not active clearance." },

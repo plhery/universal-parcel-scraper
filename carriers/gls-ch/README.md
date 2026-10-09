@@ -44,8 +44,9 @@ HTTP 400, 403 and 404 all mean "no such parcel" and raise
 - Codes beat wording: codes are stable across languages. Rows without a code use
   wording rules ordered negatives first, then `core/status`'s multilingual
   classifier.
-- "The parcel has not been handed over to GLS." is deliberately unmapped: a
-  "handed over to GLS" rule would read it as acceptance.
+- "The parcel has not been handed over to GLS." is `registered`: GLS knows of
+  the parcel but does not have it. It is checked before the "handed over to
+  GLS" acceptance.
 - Scan date and time arrive as separate offset-less fields and are read in
   `Europe/Zurich` (gls-de relabels the timezone only).
 - The estimate is dropped once the parcel is delivered or in exception.

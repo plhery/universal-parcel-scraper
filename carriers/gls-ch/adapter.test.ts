@@ -226,7 +226,7 @@ describe('GLS Switzerland response normalization', () => {
   it.each([
     ['The parcel has been released by customs.', 'in_transit'],
     ['The parcel has been handed over to GLS.', 'accepted'],
-    ['The parcel has not been handed over to GLS.', 'in_transit'],
+    ['The parcel has not been handed over to GLS.', 'registered'],
     ['The parcel has not been released by customs.', 'customs'],
     ['The parcel is in delivery.', 'out_for_delivery'],
     ['The parcel has reached the parcel center.', 'in_transit'],
@@ -239,6 +239,15 @@ describe('GLS Switzerland response normalization', () => {
       history: [{ date: '2026-06-19', time: '08:00', evtDscr }],
     }, OFFICIAL_TEST_PARCEL_NUMBER);
     expect(result.events?.[0]!.stage).toBe(stage);
+  });
+
+  it('reads a parcel GLS has not been handed as registered when no code names the stage', () => {
+    const result = parseGLSSwitzerlandTrackingResponse({
+      tuNo: OFFICIAL_TEST_PARCEL_NUMBER,
+      progressBar: {},
+      history: [{ date: '2026-06-19', time: '08:00', evtDscr: 'The parcel has not been handed over to GLS.' }],
+    }, OFFICIAL_TEST_PARCEL_NUMBER);
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered' });
   });
 
   it.each([

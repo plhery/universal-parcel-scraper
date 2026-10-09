@@ -47,9 +47,9 @@ export function glsSwitzerlandStatus(value: unknown): ClassifiedStatus['status']
 
 /** Classify a history row that carries no status code, from its wording alone. */
 export function classifyDescription(description: string): ClassifiedStatus {
-  // EXISTING regression wording: a negative handoff does not prove GLS possession.
+  // GLS knows of the parcel but does not have it yet: no acceptance.
   if (/^(?:the )?parcel has not been handed over to gls[.!]?$/i.test(description.trim())) {
-    return { status: 'unknown', stage: 'in_transit' };
+    return { status: 'pending', stage: 'registered' };
   }
   const translated = trackingLanguageStage(description);
   if (translated) return { status: languageStageStatus(translated), stage: translated };
