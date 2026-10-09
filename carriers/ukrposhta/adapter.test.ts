@@ -263,9 +263,11 @@ describe('Ukrposhta direct status API retrieval', () => {
 
   it('recognizes through the status API alone, reading its miss as unknown only for a domestic barcode', async () => {
     const seam = browserSeam();
-    const recognize = (fetcher: typeof fetch, number = NUMBER) =>
-      adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder: NOOP_RECORDER, fetcher, env: {} }).recognize!(number);
+    const recognize = (fetcher: typeof fetch, number = NUMBER, budgetMs?: number) =>
+      adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder: NOOP_RECORDER, fetcher, env: {} }).recognize!(number, { budgetMs });
     await expect(recognize(statusApi())).resolves.toEqual({ known: true, lastActivityAt: null });
+    // A recognition budget past the lookup's minute still asks.
+    await expect(recognize(statusApi(), NUMBER, 120_000)).resolves.toEqual({ known: true, lastActivityAt: null });
     await expect(recognize(statusApi({ message: 'Shipment not found' }, 404))).resolves.toEqual({ known: false });
     await expect(recognize(statusApi({ message: 'Shipment not found' }, 404), 'RR000000005UA')).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(recognize(statusApi([]))).rejects.toMatchObject({ kind: 'indeterminate' });

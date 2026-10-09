@@ -141,12 +141,13 @@ export const adapter: AdapterFactory = environment => {
   const options = { token: environment.env.UKRPOSHTA_TRACKING_TOKEN?.trim() || APPLICATION_BEARER,
     userAgent: environment.userAgent, fetcher: environment.fetcher, recorder: environment.recorder };
   const tracker = new UkrposhtaTracker({ ...options, executablePath: environment.browserExecutablePath });
-  // Recognition is plain HTTP: the status API alone.
+  // Recognition is plain HTTP: the status API alone. A recognition budget can be
+  // longer than the minute a lookup takes at most.
   const statusApi = new UkrposhtaTracker({ ...options, executablePath: null });
   return { id: 'ukrposhta', recordsSteps: true, steps: ['direct', 'browser'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(async () => {
       try {
-        return await statusApi.fetch(number, context);
+        return await statusApi.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) });
       } catch (error) {
         // The portal reads the same domestic records, so the status API's miss means Ukrposhta
         // does not know a domestic barcode now. The portal can still know an international reference.

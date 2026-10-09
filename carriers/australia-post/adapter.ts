@@ -254,7 +254,9 @@ export class AustraliaPostTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new AustraliaPostTracker({ trawl: environment.trawl, fetcher: environment.fetcher, recorder: environment.recorder });
   // Recognition is plain HTTP: it asks the gateway alone, and a refusal there fails instead of starting a browser.
+  // A recognition budget can be longer than the minute a lookup takes at most.
   const gateway = new AustraliaPostTracker({ trawl: null, fetcher: environment.fetcher, recorder: environment.recorder });
   return { id: 'australia-post', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => gateway.fetch(number, context), () => accepted(() => normalizeAustraliaPostNumber(number))) };
+    recognize: (number, context) => recognizeFromLookup(() => gateway.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) }),
+      () => accepted(() => normalizeAustraliaPostNumber(number))) };
 };

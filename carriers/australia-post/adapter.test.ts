@@ -305,6 +305,9 @@ describe('Australia Post recognition', () => {
     const instance = adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
     fetcher.mockResolvedValueOnce(Response.json(fixture()));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z' });
+    // A recognition budget past the lookup's minute still asks.
+    fetcher.mockResolvedValueOnce(Response.json(fixture()));
+    await expect(instance.recognize!(NUMBER, { budgetMs: 120_000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z' });
     const unknown = empty(); unknown[0].trackingIds = [NUMBER];
     fetcher.mockResolvedValueOnce(Response.json(unknown));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
