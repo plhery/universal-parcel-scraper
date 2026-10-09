@@ -53,9 +53,13 @@ its published source map).
   and codes — "Not delivered" contains "delivered", and a false delivery ends
   tracking.
 - `DLV` is confirmed from a capture and `POD`, `SIG` and `IMG` from live
-  histories, where the delivery picture (`IMG`) comes just before the delivery
-  scan and the signature (`SIG`) at its instant. `P40` is carried over from the
-  original map as a delivery code.
+  histories, where the delivery picture (`IMG`) comes at or just before the
+  delivery scan's instant, listed ahead of it, and the signature (`SIG`) at
+  that instant. `P40` is carried over from the original map as a delivery code.
+- A barcode's `IMG` and `SIG` rows are folded into its delivery scan: left in,
+  the picture would sit on top of the scan it shares an instant with and become
+  the status text. Without a delivery scan they stay, as the only sign of the
+  delivery, behind any scan of the same instant.
 - The newest delivery scan's time is the delivery time; eos sends no estimate.
 - Times arrive as Swiss wall-clock without an offset. They are read in
   `Europe/Zurich` (`isoTime`), never in the server's zone, and so are the
@@ -69,6 +73,10 @@ its published source map).
 ## Limitations
 
 - No delivery estimate: `expected_delivery` is always `null`.
+- No delivery picture or signature. The public endpoint and tracker carry only
+  the `IMG` and `SIG` labels, with no link, id or image data; eos serves the
+  images to signed-in portal accounts (`GET /api/trackandtrace/signature/{id}`
+  answers 401 without a session).
 - A reference whose one current consignment belongs to someone else still
   resolves to it; nothing in the answer tells them apart.
 

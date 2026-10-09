@@ -18,6 +18,8 @@ const PROVIDER = 'Swiss Post Cargo';
 const ZONE = 'Europe/Zurich';
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 2_000_000;
+/** The delivery photo and signature rows: proof of a delivery, not scans of their own. */
+const DELIVERY_PROOF_CODES = new Set(['IMG', 'SIG']);
 
 export interface SwissPostCargoOptions {
   timeoutMs?: number;
@@ -121,23 +123,33 @@ export function parseSwissPostCargoResponse(
     event: CarrierEvent;
     status: CarrierStatus;
     timestamp: number;
+    proof: boolean;
     index: number;
   }> = [];
   const seen = new Set<string>();
   let index = 0;
   for (const shipment of shipments.slice(0, 100)) {
     if (!Array.isArray(shipment.History)) continue;
+    const rows = [];
     for (const candidate of shipment.History.slice(0, 500)) {
       if (!isRecord(candidate)) continue;
       const time = eventTimestamp(candidate.TimeStamp);
       const description = cleanScalar(candidate.Description);
       if (!time || !description) continue;
-      const location = cleanScalar(candidate.City, 120);
       const code = cleanScalar(candidate.Status, 32).toLocaleUpperCase('en-US');
+      rows.push({
+        time, description, code, location: cleanScalar(candidate.City, 120),
+        classified: statusFor(code, description), proof: DELIVERY_PROOF_CODES.has(code),
+      });
+    }
+    // A barcode's photo and signature are part of its delivery scan: folded
+    // into it, they never stand on top of it.
+    const deliveryScan = rows.some((row) => !row.proof && row.classified.stage === 'delivered');
+    for (const { time, description, code, location, classified, proof } of rows) {
+      if (proof && deliveryScan) continue;
       const identity = JSON.stringify([time.iso, location, description, code]);
       if (seen.has(identity)) continue;
       seen.add(identity);
-      const classified = statusFor(code, description);
       parsedEvents.push({
         event: {
           time: time.iso,
@@ -148,12 +160,16 @@ export function parseSwissPostCargoResponse(
         },
         status: classified.status,
         timestamp: time.timestamp,
+        proof,
         index,
       });
       index += 1;
     }
   }
-  parsedEvents.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  // Ties keep the carrier's order, except that a photo or signature never
+  // passes a scan made at the same instant.
+  parsedEvents.sort((left, right) => right.timestamp - left.timestamp
+    || Number(left.proof) - Number(right.proof) || left.index - right.index);
   const events = parsedEvents.slice(0, 100);
   if (events.length === 0) {
     throw new SchemaError(PROVIDER, 'Swiss Post Cargo returned no usable tracking events');

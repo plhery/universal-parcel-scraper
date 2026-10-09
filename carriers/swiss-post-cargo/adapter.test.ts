@@ -149,6 +149,47 @@ describe('Swiss Post Cargo tracking', () => {
     expect(() => parseSwissPostCargoResponse(relayed, '1234ABC789')).toThrow('different shipment');
   });
 
+  it('folds the delivery photo and signature into the delivery scan', () => {
+    // eos lists the photo first, at the delivery scan's very instant and with no place.
+    const result = parseSwissPostCargoResponse({
+      Type: 1,
+      Data: [{
+        Identifier: '1234ABC789',
+        History: [
+          { Id: 4, TimeStamp: '2026-08-30T12:30:00.917', City: '', Status: 'IMG', Description: 'IMAGE' },
+          { Id: 3, TimeStamp: '2026-08-30T12:30:00.917', City: 'Zürich', Status: 'POD', Description: 'DELIVERED SCANNED' },
+          { Id: 5, TimeStamp: '2026-08-30T12:30:14.2', City: 'Zürich', Status: 'SIG', Description: 'SIGNATURE' },
+          { Id: 2, TimeStamp: '2026-08-30T07:16:23.363', City: '', Status: 'SCA', Description: 'Loaded for Delivery' },
+        ],
+      }],
+    }, '1234ABC789');
+    expect(result).toMatchObject({
+      status: 'delivered',
+      current_stage: 'delivered',
+      last_status_text: 'DELIVERED SCANNED',
+      last_update: '2026-08-30T12:30:00.917+02:00',
+      delivered_at: '2026-08-30T12:30:00.917+02:00',
+    });
+    expect(result.events?.map((event) => [event.provider_code, event.location])).toEqual([
+      ['POD', 'Zürich'], ['SCA', ''],
+    ]);
+    // Before the delivery scan arrives, the photo is the only sign of the
+    // delivery, but it never passes a scan made at the same instant.
+    const photoOnly = parseSwissPostCargoResponse({
+      Type: 1,
+      Data: [{
+        Identifier: '1234ABC789',
+        History: [
+          { TimeStamp: '2026-08-30T12:30:00.917', City: '', Status: 'IMG', Description: 'IMAGE' },
+          { TimeStamp: '2026-08-30T12:30:00.917', City: 'Zürich', Status: 'SCA', Description: 'Loaded for Delivery' },
+          { TimeStamp: '2026-08-30T12:45:00', City: '', Status: 'SIG', Description: 'SIGNATURE' },
+        ],
+      }],
+    }, '1234ABC789');
+    expect(photoOnly.events?.map((event) => event.provider_code)).toEqual(['SIG', 'SCA', 'IMG']);
+    expect(photoOnly).toMatchObject({ status: 'delivered', last_status_text: 'SIGNATURE' });
+  });
+
   it('classifies negative delivery wording before the delivered substring', () => {
     expect(statusFor('ERR', 'Not delivered')).toEqual({ status: 'exception', stage: 'failed_attempt' });
     expect(parseSwissPostCargoResponse({
@@ -249,12 +290,13 @@ describe('Swiss Post Cargo customer references', () => {
     expect(result).toMatchObject({
       status: 'delivered',
       current_stage: 'delivered',
-      last_status_text: 'Signature captured',
+      last_status_text: 'Delivered',
       tracking_url: 'https://apv.swisspost-cargo.com/public/trackandtrace/12345678',
     });
-    // Both barcodes of the current consignment; their shared announcement once.
+    // Both barcodes of the current consignment, each signature folded into its
+    // delivery scan; their shared announcement once.
     expect(result.events?.map((event) => [event.provider_code, event.location])).toEqual([
-      ['SIG', 'Zürich'], ['POD', 'Zürich'], ['SIG', 'Zürich'], ['POD', 'Zürich'],
+      ['POD', 'Zürich'], ['POD', 'Zürich'],
       ['SCA', ''], ['SCA', ''], ['RFS', 'Dintikon'], ['RFS', 'Dintikon'],
       ['TOV', ''], ['TOV', ''], ['NTF', ''],
     ]);
