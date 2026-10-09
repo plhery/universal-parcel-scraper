@@ -46,7 +46,14 @@ describe('delivery partner evidence', () => {
     ['', 'https://evil.test/?url=https://www.posti.fi/', undefined],
     ['', 'javascript://www.posti.fi/', undefined],
     ['', 'not a URL', undefined],
-    // A rule limited to some paths of a shared host covers only those paths.
+    // A named partner stands unless its link is on another carrier's host.
+    ['DHL eCommerce', 'https://www.dhl.com/', 'dhl-ecommerce'],
+    ['DHL eCommerce', 'https://www.dhl.com/us-en/home.html', 'dhl-ecommerce'],
+    ['DHL eCommerce', 'https://www.dhl.com/us-en/home/tracking/tracking-ecommerce.html', 'dhl-ecommerce'],
+    ['GLS Germany', 'https://gls-group.eu/EU/en/parcel-tracking', 'gls-de'],
+    ['GLS France', 'https://gls-group.eu/EU/en/parcel-tracking', 'gls-fr'],
+    ['GLS Germany', 'https://www.dhl.com/', undefined],
+    // Without a name, a rule limited to some paths of a shared host covers only those paths.
     ['', 'https://www.gofo.com/', 'gofo'],
     ['', 'https://www.gofo.com/us/track?searchID=GFUS01000000000001', 'gofo'],
     ['', 'https://www.gofo.com/fr/', undefined],

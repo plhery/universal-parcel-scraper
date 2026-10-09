@@ -149,23 +149,34 @@ export function brandTimeZones(name: string): string[] {
   return zones.includes('UTC') ? [] : [...new Set(zones)];
 }
 
-/** Known portal hosts only. This identifies a lookup hint; it never follows the URL. */
-function carriersFromUrl(raw: string): string[] {
+/**
+ * Known portal hosts only. This identifies a lookup hint; it never follows the
+ * URL. With `byPath`, a rule limited to some paths of its host covers only
+ * those paths.
+ */
+function carriersFromUrl(raw: string, byPath: boolean): string[] {
   let url: URL;
   try { url = new URL(raw); } catch { return []; }
   if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) return [];
   // Arrival notices also use the Swiss Post homepage instead of its tracking subdomain.
   if (['post.ch', 'www.post.ch'].includes(url.hostname)) return ['swiss-post'];
-  // A rule limited to some paths of a shared host covers only those paths.
   return [...new Set(TRACKING_LINK_RULES.filter((rule) => rule.domains.some((domain) => matchesDomain(url.hostname, domain))
-    && (!rule.pathPattern || rule.pathPattern.test(url.pathname))).map((rule) => rule.carrier))];
+    && (!byPath || !rule.pathPattern || rule.pathPattern.test(url.pathname))).map((rule) => rule.carrier))];
 }
 
-/** Reconcile a structured partner name and optional official link, without country guesses. */
+/**
+ * Reconcile a structured partner name and optional official link, without
+ * country guesses. A named partner stands unless its link is on another
+ * carrier's host: partners often give a home page, not a tracking path. Only a
+ * link without a name uses the path to choose among the carriers of its host.
+ */
 export function carrierIdFromPartner(name: string, url = ''): string | undefined {
   const named = carrierIdFromName(name);
-  const linked = carriersFromUrl(url);
-  if (named) return !linked.length || linked.includes(named) ? named : undefined;
+  if (named) {
+    const hosted = carriersFromUrl(url, false);
+    return !hosted.length || hosted.includes(named) ? named : undefined;
+  }
+  const linked = carriersFromUrl(url, true);
   return linked.length === 1 ? linked[0] : undefined;
 }
 
@@ -173,7 +184,7 @@ export function carrierIdFromPartner(name: string, url = ''): string | undefined
 export function carrierIdsFromPartnerLinks(descriptions: (string | null | undefined)[], origin: string): string[] {
   const candidates = new Set(descriptions.flatMap((description) =>
     [...String(description ?? '').matchAll(/https?:\/\/[^\s<>"')]+/gi)]
-      .flatMap(([url]) => carriersFromUrl(url)).filter((carrier) => carrier !== origin),
+      .flatMap(([url]) => carriersFromUrl(url, true)).filter((carrier) => carrier !== origin),
   ));
   return [...candidates];
 }
