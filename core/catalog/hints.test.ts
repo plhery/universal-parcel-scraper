@@ -17,14 +17,14 @@ describe('national postal lookup candidates', () => {
   it.each([
     ['CH', 'swiss-post'], [' Switzerland ', 'swiss-post'], ['FI', 'posti'], ['finland', 'posti'],
     ['NL', 'spring-gds'], ['FR', 'la-poste'], ['GB', 'royal-mail'], ['US', 'usps'],
-    ['CA', 'canada-post'], ['DE', 'dhl'], ['ES', 'correos-spain'], ['IN', 'india-post'],
-    ['JP', 'japan-post'], ['Japan', 'japan-post'], ['MY', 'pos-malaysia'], ['PT', 'ctt'],
-    ['AU', 'australia-post'], ['Australia', 'australia-post'], ['PL', 'poczta-polska'], ['UA', 'ukrposhta'], ['Ukraine', 'ukrposhta'],
+    ['CA', 'canada-post'], ['DE', 'dhl'], ['ES', 'correos-spain'], ['JP', 'japan-post'], ['Japan', 'japan-post'],
+    ['AU', 'australia-post'], ['Australia', 'australia-post'],
   ])('suggests one operator for destination %s', (country, expected) => {
     expect(nationalPostCandidate(country)).toBe(expected);
   });
-  // Poste Italiane's lookup refuses S10 numbers, so Italy has no candidate.
-  it.each(['XX', 'LI', 'IT', 'Italy', 'unknown', 'Arrived in Switzerland', 'constructor', '', null, 123])(
+  // The posts of Italy, India, Malaysia and Portugal look up only numbers of their own, and
+  // those of Poland and Ukraine give scans no instant, so these destinations have no candidate.
+  it.each(['XX', 'LI', 'IT', 'Italy', 'IN', 'MY', 'PT', 'PL', 'Poland', 'UA', 'Ukraine', 'unknown', 'Arrived in Switzerland', 'constructor', '', null, 123])(
     'leaves unavailable or ambiguous destinations alone: %s', (country) => {
       expect(nationalPostCandidate(country)).toBeUndefined();
     },

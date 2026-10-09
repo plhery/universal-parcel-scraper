@@ -1,6 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff, hasDirectHandoffAdapter } from './handoff.js';
+import { AdapterRegistry } from '../adapter/index.js';
+import { carrierErrorKind } from '../errors/index.js';
 import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
+import { NOOP_RECORDER } from '../telemetry/index.js';
+import { REGISTRY } from '../../generated/registry.js';
+
+afterEach(() => { vi.unstubAllGlobals(); });
 
 describe('general delivery handoff candidates', () => {
   it('keeps tracking history when optional partner evidence is malformed', () => {
@@ -27,18 +33,37 @@ describe('general delivery handoff candidates', () => {
     })).toEqual({ carrier: 'posti', number: 'LOCAL12345', basis: 'partner' });
     expect(deliveryHandoff('la-poste', 'CW123456785FR', { delivery_carrier: 'usps' })?.carrier).toBe('usps');
   });
-  it.each(['XX', 'IT', undefined])('does not guess an operator without a supported destination: %s', (destination_country) => {
+  it.each(['XX', 'IT', 'PL', 'UA', undefined])('does not guess an operator without a supported destination: %s', (destination_country) => {
     for (const number of ['CW123456785FR', 'LX123456785CH', '1234567890']) {
       expect(deliveryHandoff('la-poste', number, { destination_country })).toBeNull();
     }
   });
   it.each([['FI', 'posti'], ['CH', 'swiss-post'], ['FR', 'la-poste'], ['US', 'usps'], ['SE', 'postnord'], ['Sweden', 'postnord'],
-    ['AU', 'australia-post'], ['PL', 'poczta-polska'], ['Poland', 'poczta-polska'], ['UA', 'ukrposhta']])(
+    ['AU', 'australia-post'], ['Australia', 'australia-post']])(
     'proposes one national post for a checksum-valid postal reference going to %s', (destination_country, target) => {
       expect(deliveryHandoff('spring-gds', 'LX123456785NL', { destination_country }))
         .toEqual({ carrier: target, number: 'LX123456785NL', basis: 'destination' });
     },
   );
+  it('proposes a national post only for a postal number its adapter looks up', async () => {
+    const regions = Array.from({ length: 26 * 26 }, (_, index) => String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)));
+    // Registered, tracked letter, parcel and EMS items issued abroad.
+    const proposals = regions.flatMap((destination_country) => ['RA', 'LX', 'CP', 'EA'].map((service) =>
+      deliveryHandoff('aliexpress', `${service}123456785CN`, { destination_country }))).filter((proposal) => proposal !== null);
+    expect(proposals.map(({ carrier }) => carrier)).toContain('australia-post');
+    for (const { carrier, number } of proposals) {
+      const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('offline'));
+      vi.stubGlobal('fetch', fetcher);
+      const registry = new AdapterRegistry(REGISTRY, { fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+      expect(registry.has(carrier), carrier).toBe(true);
+      // Some adapters refuse synchronously, before returning a promise.
+      const error = await (async () => registry.for(carrier)!.track({ number, postcode: null }, { budgetMs: 2_000 }))()
+        .catch((caught: unknown) => caught);
+      // Offline, a lookup fails on its request or on a missing browser service, never on the number.
+      expect(carrierErrorKind(error), `${carrier} ${number}`).not.toBeNull();
+      expect(carrierErrorKind(error), `${carrier} ${number}`).not.toBe('invalid_input');
+    }
+  });
   it.each(['LX123456789NL', '1234567890', '3SABC12345678', 'LP00000000000001'])(
     'does not try a national post for a non-postal or invalid reference: %s', (number) => {
       expect(deliveryHandoff('spring-gds', number, { destination_country: 'CH' })).toBeNull();
