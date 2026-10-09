@@ -3,6 +3,7 @@ import type { AdapterEnvironment } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
+import { isRecord } from '../../core/types.js';
 
 // The German DPD app's SOAP service, shared between carriers. DPD Germany tracks parcels
 // through it, and DPD Switzerland reads the address of the Pickup shop holding a parcel
@@ -20,9 +21,24 @@ const SESSION_OPEN_MS = 120_000;
  * The service accepts a session for at least eight hours, one left idle for four too. From this
  * age the next one opens beside it, and replaces it once open.
  */
-const SESSION_RENEW_MS = 3 * 3_600_000;
+const SESSION_RENEW_MS = 8 * 3_600_000;
 /** A kept session that failed to open is tried again after this long. */
 const SESSION_RETRY_MS = 15 * 60_000;
+/** A host's store has this long to give back its sessions before the service opens one. */
+const STORE_LOAD_MS = 5_000;
+/**
+ * With a store, a session lookups no longer use is checked this often, until the service refuses
+ * it twice in a row: while slow, it can refuse a session it accepts again later.
+ */
+const CHECK_EVERY_MS = 3_600_000;
+/** And for at most this long after it opened. */
+const CHECK_FOR_MS = 7 * 24 * 3_600_000;
+/** A check takes a fraction of a second, and checks of several sessions are this far apart. */
+const CHECK_TIMEOUT_MS = 30_000;
+const CHECK_GAP_MS = 5_000;
+/** A shop id no shop has: the service answers it without a shop, or refuses the session. */
+const CHECK_PUDO_ID = 'XX0000';
+const TOKEN = /^[A-Za-z0-9+/=]{16,512}$/;
 // Shared partner credentials of the public app, distributed with the maintainer's approval.
 const PARTNER: DpdDePartner = { name: 'Android Paketnavigator3', token: 'A33363237662F5945576', password: '272 WetFd2mpXrgD' };
 
@@ -61,6 +77,8 @@ const elements = (fields: Fields): string => Object.entries(fields)
 export class SessionExpired extends Error {}
 /** DPD does not hold the postcode to be the recipient's. */
 export class PostcodeRejected extends Error {}
+/** The service took the session, but confirmed nothing. */
+class Unconfirmed extends IndeterminateError {}
 
 /** A Pickup shop as its own record names it: its name, then its street and its town on a line each. */
 export interface DpdParcelShop { name: string; address: string }
@@ -81,6 +99,41 @@ function shopOf(result: XmlNode, id: string): DpdParcelShop | undefined {
 
 interface Opening { token: Promise<string>; holders: Set<AbortSignal>; release: () => void }
 
+/** A session as a host keeps it between processes. Times are milliseconds since the epoch. */
+export interface DpdSession {
+  token: string;
+  openedAt: number;
+  /** The last time a check found the service accepting it, once lookups no longer used it. */
+  checkedAt?: number;
+  /** When the service began refusing it, once a second check confirmed it. */
+  refusedAt?: number;
+}
+
+/**
+ * Where a long-lived host keeps the sessions, so that a restart takes the current one up again
+ * instead of opening another, and so that how long the service accepts one can be read back
+ * from `refusedAt - openedAt`. The service carries on without a store that fails.
+ */
+export interface DpdSessionStore {
+  /** The sessions saved that the service has not refused, in any order. */
+  load(): Promise<readonly DpdSession[]>;
+  /** Saves a session, replacing what was saved for the same token. */
+  save(session: DpdSession): Promise<void>;
+}
+
+/** A session lookups no longer use, checked until the service refuses it. */
+interface Retired { session: DpdSession; refusedSince?: number }
+
+/** The promise's outcome, or the signal's reason once it aborts first. */
+async function until<T>(promise: Promise<T>, signal: AbortSignal): Promise<T> {
+  signal.throwIfAborted();
+  let leave!: () => void;
+  const left = new Promise<never>((_resolve, reject) => { leave = () => reject(signal.reason as Error); });
+  signal.addEventListener('abort', leave, { once: true });
+  try { return await Promise.race([promise, left]); }
+  finally { signal.removeEventListener('abort', leave); }
+}
+
 /**
  * The service needs an anonymous device session, which it takes tens of seconds to open and then
  * accepts for hours. One is kept per instance, and `sharedDpdAppService` gives the process one
@@ -97,6 +150,9 @@ export class DpdAppService {
   #opening: Opening | null = null;
   #kept = false;
   #timer: ReturnType<typeof setTimeout> | undefined;
+  #store: DpdSessionStore | undefined;
+  #loading: Promise<void> | null = null;
+  readonly #retired = new Map<string, Retired>();
 
   constructor(options: { partner?: DpdDePartner; fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {
     this.#partner = options.partner ?? PARTNER;
@@ -131,18 +187,101 @@ export class DpdAppService {
 
   /** Forgets a session the service refused, unless another lookup already replaced it. */
   expire(session: string): void {
-    if (this.#session?.token === session) this.#session = null;
+    if (this.#session?.token !== session) return;
+    this.#retire(this.#session, this.#now());
+    this.#session = null;
   }
 
   /**
    * Keeps a session open from now on, for a long-lived host: one opens at once if there is none,
    * and the next before the current one lapses. Openings then run whether or not a lookup waits
-   * for them. The timer does not keep the process alive.
+   * for them. With a store, the current session saved there is taken up again instead, and the
+   * sessions lookups no longer use are checked until the service refuses them. The timers do not
+   * keep the process alive.
    */
-  keep(): void {
+  keep(store?: DpdSessionStore): void {
     if (this.#kept) return;
     this.#kept = true;
-    this.#renew();
+    this.#store = store;
+    if (!store) return this.#renew();
+    this.#loading = this.#load(store).finally(() => {
+      this.#loading = null;
+      this.#renew();
+      this.#follow();
+    });
+  }
+
+  /** Takes up the newest saved session while it is younger than the renewal age, and follows the others. */
+  async #load(store: DpdSessionStore): Promise<void> {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const late = new Promise<never>((_resolve, reject) => { timer = setTimeout(() => reject(new Error('The store did not answer')), STORE_LOAD_MS); });
+    let saved: readonly DpdSession[];
+    try { saved = await Promise.race([Promise.resolve().then(() => store.load()), late]); }
+    catch { return; }
+    finally { clearTimeout(timer); }
+    const now = this.#now();
+    const sessions = (Array.isArray(saved) ? saved as readonly unknown[] : [])
+      .filter((session): session is DpdSession => isRecord(session) && typeof session.token === 'string' && TOKEN.test(session.token)
+        && typeof session.openedAt === 'number' && session.openedAt <= now && now - session.openedAt < CHECK_FOR_MS
+        && session.refusedAt == null)
+      .sort((left, right) => right.openedAt - left.openedAt);
+    const [newest, ...older] = sessions;
+    if (newest && !this.#session && now - newest.openedAt < SESSION_RENEW_MS) this.#session = { token: newest.token, openedAt: newest.openedAt };
+    else if (newest) older.unshift(newest);
+    for (const session of older) this.#retired.set(session.token, { session: { ...session } });
+  }
+
+  /** Saves a session's state in the host's store, if there is one, without waiting for it. */
+  #save(session: DpdSession): void {
+    const store = this.#store;
+    if (store) void Promise.resolve().then(() => store.save({ ...session })).catch(() => undefined);
+  }
+
+  /** Follows a session lookups no longer use, when a store keeps what its checks find. */
+  #retire(session: { token: string; openedAt: number }, refusedAt?: number): void {
+    if (this.#store && !this.#retired.has(session.token)) this.#retired.set(session.token, { session: { ...session }, refusedSince: refusedAt });
+  }
+
+  /** Checks the sessions lookups no longer use, every hour. */
+  #follow(): void {
+    const timer = setTimeout(() => void this.#check().finally(() => this.#follow()), CHECK_EVERY_MS);
+    timer.unref?.();
+  }
+
+  /**
+   * Asks the service once for each followed session whether it still accepts it. A refusal
+   * confirmed by the next check is saved as the time it began; a reply that is not about the
+   * session says nothing.
+   */
+  async #check(): Promise<void> {
+    let first = true;
+    for (const [token, retired] of [...this.#retired]) {
+      const now = this.#now();
+      if (now - retired.session.openedAt >= CHECK_FOR_MS) { this.#retired.delete(token); continue; }
+      if (!first) await new Promise<void>((resolve) => { setTimeout(resolve, CHECK_GAP_MS).unref?.(); });
+      first = false;
+      let accepted: boolean;
+      try {
+        await this.call('getParcelShopByID', { SessionToken: token, ParcelShopID: '0', PudoID: CHECK_PUDO_ID, ParcelShopOnly: 'false' },
+          AbortSignal.timeout(CHECK_TIMEOUT_MS), CHECK_TIMEOUT_MS);
+        accepted = true;
+      } catch (error) {
+        if (error instanceof SessionExpired) accepted = false;
+        else if (error instanceof Unconfirmed) accepted = true;
+        else continue;
+      }
+      if (accepted) {
+        retired.refusedSince = undefined;
+        retired.session.checkedAt = this.#now();
+        this.#save(retired.session);
+      } else if (retired.refusedSince === undefined) {
+        retired.refusedSince = this.#now();
+      } else {
+        retired.session.refusedAt = retired.refusedSince;
+        this.#retired.delete(token);
+        this.#save(retired.session);
+      }
+    }
   }
 
   /** Opens the next session if the current one is due, or waits until it is. */
@@ -168,8 +307,10 @@ export class DpdAppService {
       HardwareID: this.#device, BootSystemID: 'Android_Phone', Version: '15', AppVersion: '4.2.0',
     } }, controller.signal, SESSION_OPEN_MS).then(result => {
       const value = scalar(one(result, 'SessionFullState'), 'SessionToken', 600);
-      if (!/^[A-Za-z0-9+/=]{16,512}$/.test(value)) invalid();
+      if (!TOKEN.test(value)) invalid();
+      if (this.#session) this.#retire(this.#session);
       this.#session = { token: value, openedAt: this.#now() };
+      this.#save(this.#session);
       return value;
     });
     const release = () => {
@@ -190,6 +331,7 @@ export class DpdAppService {
    * A session past its renewal age answers at once while the next one opens.
    */
   async session(signal: AbortSignal, waitMs: number): Promise<string> {
+    if (this.#loading) await until(this.#loading, signal);
     const current = this.#session;
     const due = !current || this.#now() - current.openedAt >= SESSION_RENEW_MS;
     if (current && !due) return current.token;
@@ -237,7 +379,7 @@ export class DpdAppService {
     if (codes.includes('ERROR_SESSION_NOT_VALID')) throw new SessionExpired();
     if (codes.includes('ERROR_TRACKING_DELIVERYZIPCODE_NOT_VALID')) throw new PostcodeRejected();
     // "No tracking data" also answers for parcels the scan list still knows: it proves no absence.
-    if (scalar(result, 'Ack', 8) !== 'true') throw new IndeterminateError('DPD Germany', 'DPD Germany returned no confirmed parcel');
+    if (scalar(result, 'Ack', 8) !== 'true') throw new Unconfirmed('DPD Germany', 'DPD Germany returned no confirmed parcel');
     return result;
   }
 }
@@ -263,8 +405,11 @@ export function sharedDpdAppService(options: Pick<AdapterEnvironment, 'fetcher' 
  * Opens the session DPD Germany and DPD Switzerland read the German DPD app's service with, in the
  * background, and keeps one open for the life of the process, so that no lookup waits the tens of
  * seconds an opening takes. For a long-lived host, with the `fetcher` and `userAgent` its adapter
- * environment has. The renewal timer does not keep the process alive.
+ * environment has. With a `store`, a restart takes the saved session up again, and the sessions
+ * no longer used are checked every hour until the service refuses them, which the store records.
+ * The timers do not keep the process alive.
  */
-export function warmDpdSession(environment: Pick<AdapterEnvironment, 'fetcher' | 'userAgent'> = {}): void {
-  sharedDpdAppService(environment).keep();
+export function warmDpdSession(environment: Pick<AdapterEnvironment, 'fetcher' | 'userAgent'> = {},
+  options: { store?: DpdSessionStore } = {}): void {
+  sharedDpdAppService(environment).keep(options.store);
 }

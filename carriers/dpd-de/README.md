@@ -64,7 +64,7 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   again later.
 - One session serves the process for each transport and user agent, shared by
   DPD Germany and DPD Switzerland and by the adapters of every registry. It is
-  replaced when the service refuses it. From three hours old it keeps serving
+  replaced when the service refuses it. From eight hours old it keeps serving
   while a lookup opens the next one beside it.
 - Lookups share the opening, which can take two minutes and runs while a
   lookup that asked for it is still running. Ahead of the guest API, a lookup
@@ -75,9 +75,20 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
 - A long-lived host calls `warmDpdSession()` from `universal-parcel-scraper/node`
   at start, with its adapter environment's `fetcher` and `userAgent` if it sets
   them. The session then opens in the background and stays open: openings run
-  to their end without a lookup, the next one opens three hours after the last,
-  and a failed one is tried again a quarter of an hour later. The timer does
+  to their end without a lookup, the next one opens eight hours after the last,
+  and a failed one is tried again a quarter of an hour later. The timers do
   not keep the process alive.
+- The host can also pass a `DpdSessionStore` as `{ store }`, which loads and
+  saves `DpdSession` records. At start, the newest saved session younger than
+  eight hours is taken up again instead of opening one; lookups wait up to five
+  seconds for the store. Every session lookups stop using, renewed or refused
+  during a lookup, is then checked once an hour with a shop id no shop has: the
+  service answers it without a shop, or refuses the session. A refusal counts
+  once the next check repeats it, and is saved as `refusedAt`; each acceptance
+  is saved as `checkedAt`. `refusedAt - openedAt` is how long the service
+  accepted the session, and checks stop a week after it opened. Checks of
+  several sessions are five seconds apart. A failing store leaves lookups as
+  they are without one.
 - `getTrackingData` and `getTrackingScanList` take the postcode as
   `DeliveryZipCode`. A matching one returns `DataViewStatus`
   `DeliveryZipCode_isValid`; a wrong one, or any postcode for an unknown parcel,

@@ -221,6 +221,8 @@
       "AdapterFactory",
       "BrowserRecognition",
       "CarrierAdapter",
+      "DpdSession",
+      "DpdSessionStore",
       "LocalBrowserOptions",
       "LocalBrowserSession",
       "LookupBudget",
