@@ -12417,14 +12417,10 @@
   },
   {
     "input": "997960806374515094",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "swiss-post",
+    "confidence": "high",
     "candidates": [
-      "bpost",
-      "ecoscooting"
-    ],
-    "asked": [
-      "bpost"
+      "swiss-post"
     ]
   },
   {

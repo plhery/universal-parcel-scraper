@@ -62,7 +62,7 @@
     "carrier": "australia-post",
     "pattern": "^9979\\d{14}$",
     "kind": "open",
-    "reason": "Australia Post barcodes that wrap a 14-digit article behind 9979. bpost and ecoscooting rules take any 18 digits, and no rule offers Australia Post yet."
+    "reason": "Archived Australia Post tracking links carry 18-digit barcodes starting with 9979, none with scans left to confirm them. Swiss Post's rule takes every 18 digits starting with 98 or 99, and no rule offers Australia Post."
   },
   {
     "carrier": "austrian-post",

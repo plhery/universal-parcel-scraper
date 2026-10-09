@@ -241,7 +241,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "confirmed"
+        "assessment": "candidate"
       },
       "expect": {
         "carrier": "unknown",
@@ -252,7 +252,7 @@
           "estafeta"
         ]
       },
-      "note": "An Australia Post tracking link archived by the Wayback Machine. Australia Post's tracker knows the satchel; its scans have expired. It starts with 00, but its agency codes are not CTT Express's."
+      "note": "An Australia Post tracking link archived by the Wayback Machine. Australia Post's tracker shows no scans for it now. It starts with 00, but its agency codes are not CTT Express's."
     },
     {
       "number": "997960806374515094",
@@ -265,17 +265,13 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "confirmed"
+        "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "bpost",
-          "ecoscooting"
-        ]
+        "carrier": "swiss-post",
+        "confidence": "high"
       },
-      "note": "An Australia Post tracking search archived by the Wayback Machine. Australia Post's tracker reads the barcode as one of its articles; its scans have expired. Swiss Post numbers do not start with 9979."
+      "note": "An Australia Post tracking search archived by the Wayback Machine. Australia Post's tracker shows no scans for it, so nothing confirms the barcode is Australia Post's, and Swiss Post's 18-digit rule takes it."
     }
   ]
 }

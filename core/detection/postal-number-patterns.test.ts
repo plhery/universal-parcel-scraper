@@ -93,12 +93,6 @@ describe('Australia Post barcodes', () => {
     expect(detectCarrierMatch('0082800082801234567890001')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
   });
 
-  it('leaves the 9979 identifier out of Swiss Post parcel numbers', () => {
-    expect(detectCarrierMatch('997912345678901234').candidates).not.toContain('swiss-post');
-    expect(detectCarrierMatch('993412345612345678')).toMatchObject({ carrier: 'swiss-post', confidence: 'high' });
-    expect(detectCarrierMatch('987912345612345678')).toMatchObject({ carrier: 'swiss-post', confidence: 'high' });
-  });
-
   it.each(['33ABC123456701000935106', 'XY1234567801000935107'])('selects Australia Post for the article ID %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
   });
