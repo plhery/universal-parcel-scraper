@@ -38,11 +38,15 @@ lets a scan stored with one of them keep its row once it loses it, provided its
 instant, wording and known stage agree.
 
 Scans retain their supplied offsets and seconds. Offset-less clocks stay
-local. Notifications retain activity without changing the last established
-shipment stage, and neither does a courier's drop-off scan that follows the
-pickup point's arrival scan. Observed codes are used only when their wording
-agrees, because partner scans can reuse codes; a code can carry several
-wordings, each read on its own.
+local. Notifications and the recipient's delivery instructions retain activity
+without changing the last established shipment stage, and neither does a
+courier's drop-off scan that follows the pickup point's arrival scan. Observed
+codes are used only when their wording agrees, because partner scans can reuse
+codes; a code can carry several wordings, each read on its own.
+
+Once a scan sends the parcel back to the sender, it is an exception with no
+delivery estimate. The return's own scans keep their stages, and a delivery
+after that reaches the sender, so it is `returned`.
 
 A delivery instruction can carry the redelivery day the recipient chose, and
 scans can carry the booked appointment window. The newest scan with either

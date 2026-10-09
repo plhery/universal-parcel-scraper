@@ -77,6 +77,15 @@
       "language": "fr"
     },
     {
+      "code": "EC",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The first depot's sort as it takes the parcel over, worded like SC.",
+      "wording": "Tri effectué dans l'agence de départ",
+      "language": "fr"
+    },
+    {
       "code": "TS",
       "stage": "in_transit",
       "confirmedBy": "live",
@@ -109,6 +118,14 @@
       "language": "fr"
     },
     {
+      "code": "CL",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "The recipient's delivery instruction, such as a redelivery day or an address complement. It moves nothing: the scan keeps the stage the parcel already had.",
+      "wording": "Instruction de livraison reçue",
+      "language": "fr"
+    },
+    {
       "code": "T",
       "stage": "in_transit",
       "confirmedBy": "live",
@@ -133,6 +150,15 @@
       "language": "fr"
     },
     {
+      "code": "SJ",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Customs released the parcel, which moves on.",
+      "wording": "Problème douanier résolu, colis en cours d'acheminement",
+      "language": "fr"
+    },
+    {
       "code": "A2",
       "stage": "in_transit",
       "confirmedBy": "live",
@@ -146,6 +172,15 @@
       "confirmedBy": "live",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
       "wording": "Livraison prévue lundi prochain",
+      "language": "fr"
+    },
+    {
+      "code": "SD",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The delivery depot's sort, ahead of its round.",
+      "wording": "Tri effectué dans l'agence de distribution",
       "language": "fr"
     },
     {
@@ -176,6 +211,15 @@
       "language": "fr"
     },
     {
+      "code": "TA",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The courier's round.",
+      "wording": "Colis en cours de livraison par le livreur",
+      "language": "fr"
+    },
+    {
       "code": "P",
       "stage": "failed_attempt",
       "confirmedBy": "live",
@@ -189,6 +233,15 @@
       "confirmedBy": "live",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The recipient must act before delivery resumes.",
       "wording": "Colis en attente d'informations complémentaires de votre part",
+      "language": "fr"
+    },
+    {
+      "code": "R",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The parcel starts back to the sender. Like other returns under way it stays nonterminal: the return's own scans follow, and a delivery after it is staged returned.",
+      "wording": "Colis en retour expéditeur",
       "language": "fr"
     },
     {
@@ -206,6 +259,15 @@
       "firstSeen": "2026-10-08",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Seen with the delivering partner's own pickup-point arrival scan, and staged like La Poste's AG1.",
       "wording": "Colis mis à disposition au point de retrait",
+      "language": "fr"
+    },
+    {
+      "code": "D",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. After R, the delivery reaches the sender and is staged returned.",
+      "wording": "Livraison effectuée",
       "language": "fr"
     }
   ]

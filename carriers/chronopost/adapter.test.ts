@@ -126,18 +126,24 @@ describe('Chronopost direct tracking', () => {
 
   it.each([
     ['EA', "Colis faisant partie d'une expédition groupée", 'registered'],
+    ['EC', "Tri effectué dans l'agence de départ", 'in_transit'],
     ['T', "Entrée dans l'agence", 'in_transit'],
     ['TT', 'Colis remis par le relais Pickup au chauffeur', 'in_transit'],
     ['EI', 'Colis entré dans le pays de destination', 'in_transit'],
+    ['SJ', "Problème douanier résolu, colis en cours d'acheminement", 'in_transit'],
+    ['SD', "Tri effectué dans l'agence de distribution", 'in_transit'],
     ['A2', "Colis retardé à l'agence de distribution", 'in_transit'],
     ['IS', 'Livraison prévue lundi prochain', 'in_transit'],
     ['SD', 'Livraison reportée de 24h', 'in_transit'],
     ['IA', 'Livraison reportée de 24h', 'in_transit'],
     ['TA', 'Colis en cours de livraison', 'out_for_delivery'],
+    ['TA', 'Colis en cours de livraison par le livreur', 'out_for_delivery'],
     ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
     ['AB', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
+    ['D', 'Livraison effectuée', 'delivered'],
     ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
     ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
+    ['R', 'Colis en retour expéditeur', 'exception'],
   ])('maps the observed %s scan when its wording agrees', (code, label, stage) => {
     expect(chronopostStage(code, label)).toEqual({ stage, source: 'carrier_map' });
     expect(chronopostStage(code, 'Unmapped carrier message')).toEqual({ stage: 'pending', source: 'none' });
@@ -146,7 +152,8 @@ describe('Chronopost direct tracking', () => {
 
   it('maps each wording a code carries on its own, and no other code\'s', () => {
     expect(statusMap.stage('SD', normalizeStatusWording('Livraison reportée de 24h'))).toBe('in_transit');
-    expect(statusMap.stage('SD', normalizeStatusWording("Tri effectué dans l'agence de distribution"))).toBeUndefined();
+    expect(statusMap.stage('SD', normalizeStatusWording("Tri effectué dans l'agence de distribution"))).toBe('in_transit');
+    expect(statusMap.stage('IA', normalizeStatusWording("Tri effectué dans l'agence de distribution"))).toBeUndefined();
     expect(statusMap.stage('IA', normalizeStatusWording("Colis retardé à l'agence de distribution"))).toBeUndefined();
     expect(statusMap.stage('EA', normalizeStatusWording('Livraison reportée de 24h'))).toBeUndefined();
     expect(statusMap.stage(null, normalizeStatusWording('Livraison reportée de 24h'))).toBeUndefined();
@@ -163,7 +170,7 @@ describe('Chronopost direct tracking', () => {
     const instruction = scan('CL', '2026-06-27T11:10:00+02:00', 'Instruction de livraison reçue',
       { ...appointment, 'Date de relivraison': '29/06/2026' });
     expect(parseChronopostTrackingXml(history(prepared, outForDelivery, failed, instruction), number)).toMatchObject({
-      current_stage: 'in_transit', expected_delivery: '2026-06-29' });
+      current_stage: 'failed_attempt', expected_delivery: '2026-06-29' });
     const delayed = scan('A2', '2026-06-30T09:00:00+02:00', "Colis retardé à l'agence de distribution");
     expect(parseChronopostTrackingXml(history(prepared, outForDelivery, failed, instruction, delayed), number))
       .toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
@@ -174,6 +181,48 @@ describe('Chronopost direct tracking', () => {
       const xml = history(scan('DC', '2026-06-26T18:00:00+02:00', "Colis en cours de préparation chez l'expéditeur", infos));
       expect(parseChronopostTrackingXml(xml, number).expected_delivery).toBeNull();
     }
+  });
+
+  it("keeps the stage the parcel had through the recipient's delivery instruction", () => {
+    const instruction = (at: string) => scan('CL', at, 'Instruction de livraison reçue', { Origine: 'Destinataire' });
+    const during = parseChronopostTrackingXml(history(prepared, outForDelivery, instruction('2026-06-27T10:07:00+02:00')), number);
+    expect(during).toMatchObject({ current_stage: 'out_for_delivery', current_stage_source: 'carrier_map',
+      last_status_text: 'Instruction de livraison reçue' });
+    expect(during.events?.[0]).toMatchObject({ provider_code: 'CL', stage: 'out_for_delivery', stage_source: 'none' });
+    const asked = scan('SK', '2026-06-27T12:00:00+02:00', "Colis en attente d'informations complémentaires de votre part");
+    expect(parseChronopostTrackingXml(history(prepared, asked, instruction('2026-06-27T12:30:00+02:00')), number))
+      .toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(parseChronopostTrackingXml(history(instruction('2026-06-27T10:07:00+02:00')), number))
+      .toMatchObject({ current_stage: 'pending', current_stage_source: 'none' });
+    expect(statusMap.stage('CL', normalizeStatusWording('Instruction de livraison reçue'))).toBeUndefined();
+    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['SM', 'CL']);
+  });
+
+  it('reads a delivery after the parcel started back to the sender as returned', () => {
+    const customs = scan('SJ', '2026-04-22T14:42:00+02:00', "Problème douanier résolu, colis en cours d'acheminement");
+    const sentBack = scan('R', '2026-04-22T14:49:00+02:00', 'Colis en retour expéditeur', { Motif: 'Synthetic reason' });
+    const sorted = scan('SC', '2026-04-22T15:42:00+02:00', "Tri effectué dans l'agence de départ");
+    const depot = scan('SD', '2026-04-23T06:25:00+02:00', "Tri effectué dans l'agence de distribution");
+    const round = scan('TA', '2026-04-23T07:02:00+02:00', 'Colis en cours de livraison par le livreur',
+      { 'Début créneau RDV': '23/04/2026 10:00', 'Fin créneau RDV': '23/04/2026 12:00' });
+    const delivered = scan('D', '2026-04-23T09:01:00+02:00', 'Livraison effectuée');
+    expect(parseChronopostTrackingXml(history(customs, sentBack), number)).toMatchObject({
+      status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map' });
+    const underWay = parseChronopostTrackingXml(history(customs, sentBack, sorted, depot, round), number);
+    expect(underWay).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: null });
+    const back = parseChronopostTrackingXml(history(customs, sentBack, sorted, depot, round, delivered), number);
+    expect(back).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map',
+      expected_delivery: null });
+    expect(back.delivered_at).toBeUndefined();
+    expect(back.events?.map(event => [event.provider_code, event.stage])).toEqual([
+      ['D', 'returned'], ['TA', 'out_for_delivery'], ['SD', 'in_transit'], ['SC', 'in_transit'], ['R', 'exception'], ['SJ', 'in_transit']]);
+    expect(JSON.stringify(back)).not.toContain('Synthetic reason');
+    // Without the return, the same delivery is the recipient's.
+    expect(parseChronopostTrackingXml(history(customs, sorted, depot, round, delivered), number)).toMatchObject({
+      status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map', delivered_at: '2026-04-23T09:01:00+02:00' });
+    // Only the return's own code and wording start it.
+    expect(parseChronopostTrackingXml(history(customs, scan('RX', '2026-04-22T14:49:00+02:00', 'Colis en retour expéditeur'),
+      sorted, delivered), number)).toMatchObject({ current_stage: 'delivered' });
   });
 
   it('names the pickup point and its address only while the parcel waits there, and dates the delivery', () => {

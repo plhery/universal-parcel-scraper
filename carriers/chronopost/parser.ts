@@ -7,7 +7,7 @@ import { calendarDay, countryCode, explicitOffsetTime } from '../../core/time/in
 import { clean } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 import { isChronopostService } from './identity.js';
-import { chronopostStage, isChronopostNotification, isPickupDropOff } from './status.js';
+import { chronopostStage, isChronopostNotification, isPickupDropOff, isReturnToSender } from './status.js';
 
 export const CHRONOPOST_MAX_BYTES = 2_000_000;
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
@@ -180,7 +180,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     const mapped = chronopostStage(code, description);
     return { event, mapped, notification: isChronopostNotification(description), index, redelivery,
       appointment: start === undefined && end === undefined ? undefined : appointmentWindow(start ?? '', end ?? ''),
-      dropOff: isPickupDropOff(code, description),
+      dropOff: isPickupDropOff(code, description), returnStart: isReturnToSender(code, description),
       // A delivery point is a relay only when the scan names how it is collected.
       pickup: relay ? relayPoint(relay) : collection && point ? relayPoint(point) : '' };
   });
@@ -194,18 +194,23 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
   let stageSource = 'none';
   let pickupPoint = '';
   let deliveredAt: string | undefined;
+  let returning = false;
   for (const scan of projected) {
-    // An alert records activity, but does not regress delivery or prove movement.
-    // Nor does a drop-off scan that follows the pickup point's arrival scan.
+    // An alert or an instruction records activity, but does not regress delivery or prove
+    // movement. Nor does a drop-off scan that follows the pickup point's arrival scan.
     const kept = scan.notification || (scan.dropOff && stage === 'ready_for_pickup');
-    if (!kept && scan.mapped.source !== 'none') {
-      stage = scan.mapped.stage;
-      stageSource = scan.mapped.source;
+    // Once the parcel starts back to the sender, the scans that follow are the return's,
+    // and a delivery reaches the sender.
+    returning ||= scan.returnStart;
+    const mapped = returning && scan.mapped.stage === 'delivered' ? { ...scan.mapped, stage: 'returned' as const } : scan.mapped;
+    if (!kept && mapped.source !== 'none') {
+      stage = mapped.stage;
+      stageSource = mapped.source;
       pickupPoint = stage === 'ready_for_pickup' ? scan.pickup : '';
       if (stage === 'delivered') deliveredAt = scan.event.time;
     }
-    scan.event.stage = kept ? stage : scan.mapped.stage;
-    scan.event.stage_source = kept ? 'none' : scan.mapped.source;
+    scan.event.stage = kept ? stage : mapped.stage;
+    scan.event.stage_source = kept ? 'none' : mapped.source;
   }
   // The newest scan that names a redelivery day or an appointment window
   // decides, even when its value is unreadable; a redelivery day replaces the
@@ -233,7 +238,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     current_stage_source: stageSource,
     last_status_text: latest.description,
     last_update: latest.time ?? null,
-    expected_delivery: ['delivered', 'returned', 'ready_for_pickup'].includes(stage) ? null : promised,
+    expected_delivery: returning || ['delivered', 'returned', 'ready_for_pickup'].includes(stage) ? null : promised,
     ...(stage === 'delivered' && deliveredAt ? { delivered_at: deliveredAt } : {}),
     ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     ...(reference ? { delivery_tracking_number: reference } : {}),

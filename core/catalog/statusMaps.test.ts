@@ -104,8 +104,10 @@ describe('status map answers', () => {
     expect(answer('chronopost', 'TA', 'Colis en cours de livraison')).toEqual(mapped('out_for_delivery'));
     expect(answer('chronopost', 'RB', 'Colis en cours de livraison au point de retrait')).toEqual(mapped('in_transit'));
     expect(answer('chronopost', 'AB', 'Colis mis à disposition au point de retrait')).toEqual(mapped('ready_for_pickup'));
-    expect(answer('chronopost', 'TA', 'Colis en cours de livraison par le livreur')).toEqual(unknown);
+    expect(answer('chronopost', 'TA', 'Colis en cours de livraison par le livreur')).toEqual(mapped('out_for_delivery'));
+    expect(answer('chronopost', 'TA', 'Livraison effectuée')).toEqual(unknown);
     expect(answer('chronopost', 'SM', 'Destinataire informé par SMS ou mail')).toEqual(gap);
+    expect(answer('chronopost', 'CL', 'Instruction de livraison reçue')).toEqual(gap);
     expect(answer('chronopost', 'SM', 'Autre message')).toEqual(unknown);
   });
 
