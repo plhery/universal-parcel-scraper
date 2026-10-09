@@ -131,6 +131,13 @@ describe('4PX result projection', () => {
     expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
   });
 
+  it('names Emile, a link-only carrier, as the provider of a Canadian parcel', () => {
+    const payload = fixture(); const card = payload.data[0].channelContact;
+    card.contact = '【服务商】Emile\n【联系方式】\nPRIVATE_CONTACT'; card.website = 'https://www.emileps.com/';
+    payload.data[0].serverCode = 'EM000000000001CA';
+    expect(parse(payload, NUMBER)).toMatchObject({ delivery_carrier: 'emile', delivery_tracking_number: 'EM000000000001CA' });
+  });
+
   it.each([
     ['FPX_D_FD', 'Delivery attempt unsuccessful', 'exception', 'failed_attempt', 'carrier_map'],
     ['FPX_F_ST', 'Shipment in transit', 'in_transit', 'in_transit', 'carrier_map'],

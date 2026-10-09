@@ -144,6 +144,18 @@ describe('evidence-backed tracking formats', () => {
       .toMatchObject({ trackingNumber: '200123456789', carrier: 'j-and-t-cargo', source: 'link' });
   });
 
+  it('suggests Emile for its sixteen-character EM…CA numbers and reads its link', () => {
+    expect(detectCarrierMatch('EM000000000001CA')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['emile'] });
+    expect(parseTrackingInput('Tracking: EM000000000001CA')).toMatchObject({ trackingNumber: 'EM000000000001CA', confidence: 'low' });
+    for (const number of ['EM00000000001CA', 'EM0000000000001CA', 'EE000000000001CA', 'EM000000000001US']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('emile');
+    }
+    // Canada Post's EMS items share the prefix and suffix but carry nine digits.
+    expect(detectCarrierMatch('EM123456785CA')).toMatchObject({ carrier: 'canada-post', confidence: 'high' });
+    expect(parseTrackingInput('https://www.emileps.com/tracking?tracking=EM000000000001CA'))
+      .toMatchObject({ trackingNumber: 'EM000000000001CA', carrier: 'emile', source: 'link' });
+  });
+
   it('takes a number without a digit only as unbroken letters a carrier claims, entered whole', () => {
     for (const input of ['AALZJR', 'aalzjr', ' ABCDEF ']) expect(validTrackingNumber(input)).toBe(true);
     // No carrier issues seven letters, and twelve are outside what a rule may claim.

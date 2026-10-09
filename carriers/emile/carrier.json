@@ -1,0 +1,56 @@
+{
+  "id": "emile",
+  "displayName": "Emile",
+  "aliases": [
+    "Emile Express"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#e42920"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "link-only",
+    "adapter": null,
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.emileps.com/tracking?tracking={trackingNumber}",
+    "searchUrl": "https://www.emileps.com/tracking",
+    "canaryUrl": "https://www.emileps.com/",
+    "shows": [
+      "status",
+      "history",
+      "delivery_photo"
+    ],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": [
+      "status",
+      "history"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "emileps.com"
+      ],
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "emile-1",
+      "pattern": "^EM\\d{12}CA$",
+      "confidence": "low"
+    }
+  ]
+}

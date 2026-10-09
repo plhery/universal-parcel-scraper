@@ -17,6 +17,9 @@ scope. Their public sources are in [the number corpus](../carriers/dhl/numbers.j
 OMGO is outside the comparison cohort. ParcelsApp returns OMGO history; the other
 providers are unverified for it.
 
+Emile, which is link only, is outside it too. ParcelsApp returns the history a consolidator
+relays for an Emile number; the other providers are unverified for it.
+
 ## Reading the table
 
 A check mark means scan history came back. The number beside it counts projected rows,

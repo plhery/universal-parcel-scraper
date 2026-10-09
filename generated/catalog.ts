@@ -5001,6 +5001,41 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "emile": {
+    "displayName": "Emile",
+    "color": "#e42920",
+    "aliases": [
+      "Emile Express"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "link-only",
+      "adapter": null
+    },
+    "canaryUrl": "https://www.emileps.com/",
+    "trackingUrlTemplate": "https://www.emileps.com/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.emileps.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "emileps.com"
+        ],
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^EM\\d{12}CA$",
+        "confidence": "low"
+      }
+    ]
+  },
   "evri-uk": {
     "displayName": "Evri UK",
     "color": "#00014d",
@@ -5525,6 +5560,7 @@ export const CARRIER_IDS = [
   "dpd-pl",
   "dpd-uk",
   "ekart",
+  "emile",
   "evri-uk",
   "intelcom",
   "j-and-t-cargo",
@@ -5655,6 +5691,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-pl": ["dpd-pl-1","dpd-pl-2"],
   "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "ekart": ["ekart-ecommerce"],
+  "emile": ["emile-1"],
   "evri-uk": ["evri-uk-1","evri-uk-2","evri-uk-3"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
   "j-and-t-cargo": ["j-and-t-cargo-1"],

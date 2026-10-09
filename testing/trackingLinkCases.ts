@@ -376,6 +376,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'evri', number: 'H000000000000001',
     route: /^https:\/\/globaleco\.app\/track\/?$/,
     marker: /Search by tracking number/i, forwarding: 'none' },
+  // The page fills its field in; a lookup waits for the visitor's Turnstile check.
+  { carrier: 'emile', number: 'EM000000000001CA',
+    route: /^https:\/\/www\.emileps\.com\/tracking\?/,
+    marker: /Track Your\s+Shipment|Enter tracking number/i },
   // The page posts the PRO to its tracking service on load, verified or not.
   { carrier: 'old-dominion', number: '7200000001',
     route: /^https:\/\/www\.odfl\.com\/us\/en\/tools\/trace-track-ltl-freight\.html\?proNumbers=/,

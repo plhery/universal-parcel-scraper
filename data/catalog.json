@@ -4999,6 +4999,41 @@
       }
     ]
   },
+  "emile": {
+    "displayName": "Emile",
+    "color": "#e42920",
+    "aliases": [
+      "Emile Express"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "link-only",
+      "adapter": null
+    },
+    "canaryUrl": "https://www.emileps.com/",
+    "trackingUrlTemplate": "https://www.emileps.com/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.emileps.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "emileps.com"
+        ],
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^EM\\d{12}CA$",
+        "confidence": "low"
+      }
+    ]
+  },
   "evri-uk": {
     "displayName": "Evri UK",
     "color": "#00014d",

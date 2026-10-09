@@ -159,6 +159,14 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
   });
 
+  it('names Emile, a link-only carrier, when the notes link its site for an EM…CA reference', () => {
+    const payload = fixture();
+    const info = payload.ResultList[0].TrackInfo;
+    info.TrackingNumber = 'EM000000000001CA';
+    info.AdditionalNotes = '<p>Last Mile Website:</p><p><a href="https://www.emileps.com/" target="_blank">https://www.emileps.com</a></p>';
+    expect(parse(payload, NUMBER)).toMatchObject({ delivery_carrier: 'emile', delivery_tracking_number: 'EM000000000001CA' });
+  });
+
   it('files every recorded wording under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (!entry.wording) expect(yunExpressCodeStatus(Number(entry.code)), entry.code).toBeDefined();

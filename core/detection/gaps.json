@@ -155,8 +155,8 @@
   {
     "carrier": "four-px",
     "pattern": "^EM\\d{12}CA$",
-    "kind": "open",
-    "reason": "The Canadian courier Emile's number, which 4PX's feed answers for the parcels it hands over; Emile has no adapter and one sample does not establish a rule."
+    "kind": "by_design",
+    "reason": "An Emile number on a parcel 4PX handed over to Emile. The shape is Emile's; 4PX's feed also knows the parcels it hands over."
   },
   {
     "carrier": "hermes",
