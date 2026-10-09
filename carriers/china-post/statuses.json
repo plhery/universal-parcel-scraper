@@ -1,0 +1,343 @@
+{
+  "carrier": "china-post",
+  "entries": [
+    {
+      "code": "713",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 邮件到达【office】 (arrived at a Chinese office)."
+    },
+    {
+      "code": "954",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 邮件到达【office】 at an international exchange office."
+    },
+    {
+      "code": "989",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 邮件离开【office】，正在发往下一站 (left a Chinese office)."
+    },
+    {
+      "code": "423",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-09",
+      "note": "Scan code (operationCode). 【office】已出口直封 (closed into an export dispatch at an international exchange office)."
+    },
+    {
+      "code": "404",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 已交承运商运输 (handed to the carrier for transport)."
+    },
+    {
+      "code": "500",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 航空公司接收 (accepted by the airline)."
+    },
+    {
+      "code": "457",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 航空公司启运 (departed with the airline)."
+    },
+    {
+      "code": "505",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 飞机进港 (flight arrived)."
+    },
+    {
+      "code": "489",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 离开境外经转局 (left a foreign transit office)."
+    },
+    {
+      "code": "459",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-09",
+      "note": "Scan code (operationCode). 到达寄达地处理中心 (arrived at the destination processing centre); the destination post can upload it after the delivery."
+    },
+    {
+      "code": "911",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 邮件已乘机由【city】飞往【city】 (left on a domestic flight); state label 已起飞."
+    },
+    {
+      "code": "912",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 邮件到达【city】，准备发往【office】 (landed); state label 已落地."
+    },
+    {
+      "code": "460",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 离开【country】处理中心 (left the destination processing centre)."
+    },
+    {
+      "code": "461",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 已到达【country】投递局 (arrived at the destination delivery office)."
+    },
+    {
+      "code": "EXA",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 送交出口海关 (presented to export customs)."
+    },
+    {
+      "code": "EXB",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 出口海关/留存待验 (held by export customs for inspection)."
+    },
+    {
+      "code": "EXC",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 出口海关/放行 (released by export customs); transit resumes."
+    },
+    {
+      "code": "462",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 【country】安排投递 (out for delivery abroad)."
+    },
+    {
+      "code": "702",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 邮件正在派送中 (out for delivery); the rest of the text is courier contact prose and is dropped."
+    },
+    {
+      "code": "463",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 【country】已妥投 (delivered abroad)."
+    },
+    {
+      "code": "542",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 已试投/投递失败(...) (delivery attempted); its state label still reads 运送中."
+    },
+    {
+      "code": "711",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "Scan code (operationCode). 您的邮件已代签收…成功退回至寄件人 (returned to the sender); the text carries a signer and phones, so the state label 已退回 is shown."
+    },
+    {
+      "wording": "运送中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "清关中",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "到达境外目的地",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "派送中",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "已签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "已退回",
+      "language": "zh",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "已揽收",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "已揽件",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "到达目的地",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "启运",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "交运输商",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "已起飞",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc), also in the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "已落地",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-08",
+      "note": "State label (stateDesc), also in the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "出口清关",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "进口清关",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "预报关中",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "等待客户网点取件",
+      "language": "zh",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "待取件",
+      "language": "zh",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "正在安排派送",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table (arranging delivery); consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "派件异常",
+      "language": "zh",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "邮件异常",
+      "language": "zh",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "退回寄件人",
+      "language": "zh",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table; consulted only for scan codes without a mapping."
+    },
+    {
+      "wording": "待退回",
+      "language": "zh",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "firstSeen": "2026-10-08",
+      "note": "State label from the app's own state table (return to the sender pending); consulted only for scan codes without a mapping."
+    }
+  ]
+}

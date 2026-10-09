@@ -1,4 +1,7 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { adapter as chinaPostAdapter } from '../carriers/china-post/adapter.js';
+import { CHINA_POST_CHECK_PATH } from '../carriers/china-post/app.js';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
 import { InvalidInputError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
@@ -287,17 +290,18 @@ describe('standalone tracker', () => {
     /** Two days in transit, then the given scan on the third. */
     const ending = (status: string): Scan[] => [...days(2), ['2026-01-03T09:00:00Z', status]];
     const postal = 'RR123456785GB';
+    const chinaPost = 'LZ123456785CN';
     const UPU_LABELS: Record<string, string> = { EMA: 'Posting/collection', EMC: 'Departure from outward office of exchange',
       EMD: 'Arrival at inward office of exchange' };
     /**
      * Synthetic provider replies by host; a provider without scans answers 503. UPU scans are wall clocks and event codes.
-     * Ship24 answers for the postal number when asked for it.
+     * Ship24 answers for the postal or China Post number when asked for it.
      */
     function providerReplies(scans: { ship24?: Scan[]; parcelsApp?: Scan[]; upu?: Scan[]; couriers?: string[] }) {
       return vi.fn<typeof fetch>().mockImplementation(async (url) => {
         const target = String(url);
         if (target.includes('ship24') && scans.ship24) return new Response(JSON.stringify({ data: {
-          tracking_number: target.includes(postal) ? postal : number,
+          tracking_number: [postal, chinaPost].find(known => target.includes(known)) ?? number,
           events: scans.ship24.map(([timestamp, status]) => ({ timestamp, status })),
           ...(scans.couriers ? { couriers: scans.couriers.map(name => ({ translation: { name } })) } : {}) } }),
         { status: 201, headers: { 'Content-Type': 'application/json' } });
@@ -491,6 +495,57 @@ describe('standalone tracker', () => {
           attempts: [{ source: 'royal-mail', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
         expect(answer.result.events).toHaveLength(3);
       });
+
+    it('takes a fuller provider history over China Post\'s guest window, and keeps China Post\'s answer beside it', async () => {
+      // China Post's own adapter reads a synthetic trace: the newest three of forty scans, ending in delivery, and the dated acceptance.
+      const fixture = (name: string) => readFileSync(new URL(`../carriers/china-post/fixtures/${name}.json`, import.meta.url), 'utf8');
+      let trace = fixture('delivered');
+      const app = vi.fn<typeof fetch>().mockImplementation(async (url) => new Response(
+        String(url).endsWith(CHINA_POST_CHECK_PATH) ? fixture('check-open') : trace,
+        { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }));
+      const chinaPostOnly = new AdapterRegistry({ factories: { 'china-post': chinaPostAdapter }, carriers: { 'china-post': 'china-post' } },
+        { ...environment, fetcher: app });
+      const trackChinaPost = (fetcher: typeof fetch, providers: UniversalSource[]) => createTracker({ registry: chinaPostOnly, fetcher, providers })
+        .track({ number: chinaPost, carrier: 'china-post' });
+      const own = (await trackChinaPost(vi.fn<typeof fetch>(), [])).result;
+      expect(own).toMatchObject({ current_stage: 'delivered', destination_country: 'US', history_truncated: true });
+      expect(own.events).toHaveLength(4);
+      // The provider holds the acceptance, the legs China Post's window hides, and the delivery on the same day.
+      const history: Scan[] = [['2026-08-14T08:13:38Z', 'Accepted'], ['2026-08-16T02:00:00Z', 'In transit'],
+        ['2026-08-20T09:00:00Z', 'In transit'], ['2026-09-01T15:10:00Z', 'In transit'], ['2026-09-01T17:10:00Z', 'Out for delivery'],
+        ['2026-09-01T22:25:00Z', 'Delivered']];
+      const fuller = await trackChinaPost(providerReplies({ ship24: history }), ['Ship24']);
+      expect(fuller).toMatchObject({ carrier: 'china-post', source: 'Ship24', result: { current_stage: 'delivered', destination_country: 'US' },
+        attempts: [{ source: 'china-post', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(fuller.result.events).toHaveLength(6);
+      expect(fuller.result).not.toHaveProperty('history_truncated');
+      expect(fuller.direct).toEqual(own);
+      // A provider history with no more scans than China Post's leaves China Post's answer in place.
+      const shorter = await trackChinaPost(providerReplies({ ship24: history.slice(2) }), ['Ship24']);
+      expect(shorter).toMatchObject({ carrier: 'china-post', source: 'china-post',
+        attempts: [{ source: 'china-post', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(shorter.result).toEqual(own);
+      expect(shorter).not.toHaveProperty('direct');
+
+      // A destination scan uploaded after the delivery leaves China Post's answer delivered.
+      const reply = JSON.parse(trace) as { info: { mail: { mailInfos: Record<string, unknown>[] } } };
+      const [, outForDelivery, delivery] = reply.info.mail.mailInfos;
+      reply.info.mail.mailInfos = [outForDelivery!, delivery!, { ...delivery, operationCode: '459', operation: '到达寄达地处理中心',
+        stateDesc: '到达境外目的地', orgCode: 'USJFKA', orgName: '', time: '2026-09-03 14:13:00' }];
+      trace = JSON.stringify(reply);
+      const late = (await trackChinaPost(vi.fn<typeof fetch>(), [])).result;
+      expect(late).toMatchObject({ current_stage: 'delivered', last_status_text: '【美国】已妥投', last_update_local: '2026-09-03T14:13:00' });
+      // A provider history with the delivery and that scan replaces it under China Post's status; one without the scan is behind.
+      const rescanned = await trackChinaPost(providerReplies({ ship24: [...history, ['2026-09-03T19:13:00Z', 'Arrival at inward office of exchange']] }),
+        ['Ship24']);
+      expect(rescanned).toMatchObject({ source: 'Ship24', direct: late, result: { status: 'delivered', current_stage: 'delivered',
+        last_status_text: '【美国】已妥投', destination_country: 'US' } });
+      expect(rescanned.result.events).toHaveLength(7);
+      expect(rescanned.result.events[0]).toMatchObject({ description: 'Arrival at inward office of exchange', stage: 'in_transit' });
+      const behind = await trackChinaPost(providerReplies({ ship24: history }), ['Ship24']);
+      expect(behind).toMatchObject({ source: 'china-post', attempts: [{ source: 'china-post', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(behind.result).toEqual(late);
+    });
 
     it('compares UPU wall clocks with a direct answer by the offsets they could carry', async () => {
       const older: Scan[] = [['2026-01-01T09:00:00', 'EMA'], ['2026-01-03T09:00:00', 'EMC']];

@@ -3948,9 +3948,10 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "china-post",
+      "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://ec.ems.com.cn/ect-web/mail/getGisTraces/checkMail",
     "trackingUrlTemplate": "https://www.ems.com.cn/mailtracking/you_jian_cha_xun.html",
     "linkRules": [],
     "detectionRules": [

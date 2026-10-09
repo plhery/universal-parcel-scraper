@@ -12,6 +12,7 @@
  */
 import { statusMap as aliexpress } from '../../carriers/aliexpress/status.js';
 import { statusMap as anPost } from '../../carriers/an-post/status.js';
+import { statusMap as chinaPost } from '../../carriers/china-post/status.js';
 import { statusMap as chronopost } from '../../carriers/chronopost/status.js';
 import { statusMap as correosSpain } from '../../carriers/correos-spain/status.js';
 import { statusMap as dhlExpress } from '../../carriers/dhl-express/status.js';
@@ -36,9 +37,9 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
-  aliexpress, 'an-post': anPost, chronopost, 'correos-spain': correosSpain, 'dhl-express': dhlExpress, dpd, 'dpd-de': dpdDe,
-  'dpd-fr': dpdFr, 'j-and-t': jAndT, 'la-poste': laPoste, postlogistics, sagawa, speedx, sto, 'swiss-post': swissPost,
-  'thailand-post': thailandPost, tnt, ups, yunexpress,
+  aliexpress, 'an-post': anPost, 'china-post': chinaPost, chronopost, 'correos-spain': correosSpain, 'dhl-express': dhlExpress,
+  dpd, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'j-and-t': jAndT, 'la-poste': laPoste, postlogistics, sagawa, speedx, sto,
+  'swiss-post': swissPost, 'thailand-post': thailandPost, tnt, ups, yunexpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

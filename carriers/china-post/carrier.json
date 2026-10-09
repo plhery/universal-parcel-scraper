@@ -14,17 +14,52 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "china-post",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.ems.com.cn/mailtracking/you_jian_cha_xun.html",
-    "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://ec.ems.com.cn/ect-web/mail/getGisTraces/checkMail",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "service_name",
+      "contact_details",
+      "sender_details",
+      "recipient_details",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country"
+    ],
+    "discarded": [
+      "service_name",
+      "contact_details",
+      "sender_details",
+      "recipient_details",
+      "coordinates"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "pickup_point",
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": [

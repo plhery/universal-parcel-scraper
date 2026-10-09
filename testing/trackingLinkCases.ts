@@ -382,6 +382,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'an-post': 'Radware Bot Manager sends automated sessions on www.anpost.com to validate.perfdrive.com and a CAPTCHA, so number forwarding cannot be verified',
+  'china-post': 'www.ems.com.cn answers automated Chrome with an empty HTTP 400 from its web application firewall, and its tracker asks for a click CAPTCHA before each lookup',
   cne: 'the tracking portal redirects inspected Chrome sessions to about:blank through its anti-debug script, preventing a stable rendered-page check',
   'colis-prive': 'an unknown number-and-postcode credential redirects to the homepage, so only a real parcel verifies the link',
   dtdc: 'the MyDTDC Flutter page exposes no visible body text until accessibility is enabled, and the portal link opens its home page',

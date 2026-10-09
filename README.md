@@ -13,7 +13,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 [![License: Apache-2.0](https://img.shields.io/badge/core-Apache--2.0-blue.svg)](LICENSE)
 
 <!-- GENERATED:summary -->
-**3,500+ carriers** through **111 dedicated adapters** and **5 universal fallbacks**
+**3,500+ carriers** through **112 dedicated adapters** and **5 universal fallbacks**
 
 <sub>124 catalog entries · 58 countries represented</sub>
 <!-- /GENERATED:summary -->
@@ -155,7 +155,7 @@ createTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', '
 <!-- GENERATED:stages -->
 <img src="docs/assets/stages.svg" alt="DHL: Die Sendung wurde in das Zustellfahrzeug geladen.; Mondial Relay: En cours de livraison; Correios Brazil: Objeto saiu para entrega ao destinatário; Correos Express: EN REPARTO; Yamato Transport: 配達中; La Poste / Colissimo: DISTOU. All are filed under out_for_delivery." width="760">
 
-The carrier folders record 2,928 such statuses, each filed under one stage.
+The carrier folders record 2,973 such statuses, each filed under one stage.
 <!-- /GENERATED:stages -->
 
 Wording nobody recorded yet goes through a classifier that reads seven European languages.

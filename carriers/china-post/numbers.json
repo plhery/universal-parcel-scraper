@@ -268,6 +268,26 @@
         "confidence": "high"
       },
       "note": "Publicly reported shipment number. China Post's official tracker returns matching activity after character verification. China to Colombia."
+    },
+    {
+      "number": "CP557517201CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/cp557517201cn-161390/",
+        "date": "2026-10-05",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "Public status question about an ordinary China Post air parcel to New Zealand. China Post's own trace knows the number."
     }
   ]
 }

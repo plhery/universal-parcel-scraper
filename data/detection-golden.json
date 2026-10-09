@@ -13829,6 +13829,14 @@
     ]
   },
   {
+    "input": "CP557517201CN",
+    "carrier": "china-post",
+    "confidence": "high",
+    "candidates": [
+      "china-post"
+    ]
+  },
+  {
     "input": "CP865614593AT",
     "carrier": "unknown",
     "confidence": "low",

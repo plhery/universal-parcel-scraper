@@ -15,6 +15,7 @@ import { adapter as brt } from '../carriers/brt/adapter.js';
 import { adapter as cChezVous } from '../carriers/c-chez-vous/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
+import { adapter as chinaPost } from '../carriers/china-post/adapter.js';
 import { adapter as chronopost } from '../carriers/chronopost/adapter.js';
 import { adapter as ciblex } from '../carriers/ciblex/adapter.js';
 import { adapter as cne } from '../carriers/cne/adapter.js';
@@ -129,6 +130,7 @@ export const REGISTRY: RegistryDefinition = {
     "c-chez-vous": cChezVous,
     "canada-post": canadaPost,
     "canpar": canpar,
+    "china-post": chinaPost,
     "chronopost": chronopost,
     "ciblex": ciblex,
     "cne": cne,
@@ -243,7 +245,7 @@ export const REGISTRY: RegistryDefinition = {
     "c-chez-vous": "c-chez-vous",
     "canada-post": "canada-post",
     "canpar": "canpar",
-    "china-post": "universal",
+    "china-post": "china-post",
     "chronopost": "chronopost",
     "ciblex": "ciblex",
     "cne": "cne",

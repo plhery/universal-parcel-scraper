@@ -197,7 +197,21 @@ describe('status map answers', () => {
     expect(answer('an-post', null, 'Your item has been delivered')).toEqual(unknown);
   });
 
-  it.each(['app', '', 'china-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
+  it("answers China Post by its scan code, and by the state label that replaced a scan's text", () => {
+    expect(answer('china-post', '461', '已到达【美国】投递局')).toEqual(mapped('in_transit'));
+    expect(answer('china-post', 'EXB', '出口海关/留存待验')).toEqual(mapped('customs'));
+    // The code decides: a delivery attempt keeps its stage under the label 运送中.
+    expect(answer('china-post', '542', '运送中')).toEqual(mapped('failed_attempt'));
+    expect(answer('china-post', '711', '已退回')).toEqual(mapped('returned'));
+    // The acceptance dated from the collector record has no code.
+    expect(answer('china-post', null, '已揽收')).toEqual(mapped('accepted'));
+    expect(answer('china-post', '999', '已签收')).toEqual(mapped('delivered'));
+    // An unmapped code with the scan's own text is staged by a label the key does not hold.
+    expect(answer('china-post', '999', '【美国】已妥投')).toEqual(unknown);
+    expect(answer('china-post', null, 'Delivered')).toEqual(unknown);
+  });
+
+  it.each(['app', '', 'hongkong-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });
 

@@ -248,10 +248,11 @@
     },
     {
       "carrier": "china-post",
-      "direct": "No adapter",
-      "sample": "Blocked",
+      "direct": "Yes (newest three scans)",
+      "sample": "Unverified; alternate \u2713 4, partial",
       "references": [
         {
+          "note": "Comparison reference not retried through the direct adapter. An alternate public reference returned the newest three of its 43 scans and the dated acceptance, bound to the number and flagged as truncated: https://www.chinapostaltracking.com/qa/wanted-an-update-on-my-package-160844/",
           "results": {
             "Ship24": {
               "rows": 1,
