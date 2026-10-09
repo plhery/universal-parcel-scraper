@@ -39,6 +39,21 @@ const outForDeliveryFixture = () => {
   value.eventHistory = JSON.stringify(history);
   return value;
 };
+const PARIS = { city: 'Paris', stateProvince: 'Île-de-France', countryCode: 'FR' };
+/** The out-for-delivery parcel with a summary of its own and later scans. */
+const outForDeliveryWith = (summary: Record<string, unknown>, ...scans: Record<string, unknown>[]) => {
+  const value = outForDeliveryFixture();
+  const progress = JSON.parse(String(value.progressTracker)) as Record<string, unknown>;
+  progress.summary = summary;
+  value.progressTracker = JSON.stringify(progress);
+  const history = JSON.parse(String(value.eventHistory)) as { eventHistory: Record<string, unknown>[] };
+  history.eventHistory.push(...scans);
+  value.eventHistory = JSON.stringify(history);
+  return value;
+};
+const scan = (eventCode: string, localisedStringId: string, eventTime: string, location: Record<string, unknown> = PARIS) => ({
+  eventCode, statusSummary: { localisedStringId }, eventTime, location,
+});
 const capabilities = (JSON.parse(
   readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'),
 ) as { capabilities: string[] }).capabilities;
@@ -165,6 +180,65 @@ describe('Amazon Shipping France response normalization', () => {
       description: 'Arrived at delivery center', stage: 'in_transit', provider_code: 'Received',
     });
     expect(parseAmazonShippingTrackingResponse(deliveredFixture()).expected_delivery).toBeNull();
+  });
+
+  it('words the final hub as the delivery center it is', () => {
+    const hub = outForDeliveryFixture();
+    const history = JSON.parse(String(hub.eventHistory)) as { eventHistory: Record<string, unknown>[] };
+    history.eventHistory[2] = scan('Received', 'swa_rex_arrived_at_final_hub', 'Aug 11, 2026, 5:48:16 AM');
+    hub.eventHistory = JSON.stringify(history);
+    expect(parseAmazonShippingTrackingResponse(hub).events?.[0]).toEqual({
+      time: '2026-08-11T05:48:16+02:00', location: 'Paris, Île-de-France, FR',
+      description: 'Arrived at delivery center', stage: 'in_transit', provider_code: 'Received',
+    });
+  });
+
+  it('keeps a parcel out for delivery when the van leaves the station', () => {
+    const summary = {
+      status: 'Departed', metadata: { trackingStatus: { stringValue: 'OUT_FOR_DELIVERY' } }, containerStatusTags: ['OUT_FOR_DELIVERY'],
+    };
+    const departed = scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 8:05:04 AM');
+    const result = parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, departed));
+    expect(result).toMatchObject({
+      status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for delivery',
+      last_update: '2026-08-11T08:05:04+02:00',
+    });
+    expect(result.events?.slice(0, 2)).toEqual([
+      {
+        time: '2026-08-11T08:05:04+02:00', location: 'Paris, Île-de-France, FR',
+        description: 'Departed facility', stage: 'out_for_delivery', provider_code: 'Departed',
+      },
+      {
+        time: '2026-08-11T08:05:00+02:00', location: 'Paris, Île-de-France, FR',
+        description: 'Out for delivery', stage: 'out_for_delivery', provider_code: 'OutForDelivery',
+      },
+    ]);
+    // Wall clocks keep the tracker's order, and the same reading.
+    expect(parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, departed), null).events?.[0])
+      .toMatchObject({ local_time: '2026-08-11T08:05:04', stage: 'out_for_delivery' });
+    // A summary whose only signal repeats the departure's code defers to the scan.
+    expect(parseAmazonShippingTrackingResponse(outForDeliveryWith({ status: 'Departed', metadata: {} }, departed)))
+      .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for delivery' });
+
+    // A departure from another place, from an unnamed one, hours later, or after the parcel came back, is a journey on.
+    for (const later of [
+      scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 8:05:04 AM', { city: 'Lyon', countryCode: 'FR' }),
+      scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 8:05:04 AM', {}),
+      scan('Departed', 'swa_rex_detail_departed', 'Aug 13, 2026, 8:05:04 AM'),
+    ]) {
+      expect(parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, later)).events?.[0])
+        .toMatchObject({ description: 'Departed facility', stage: 'in_transit' });
+    }
+    const twice = parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, departed,
+      scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 8:30:00 AM')));
+    expect(twice.events?.slice(0, 2).map((event) => event.stage)).toEqual(['in_transit', 'out_for_delivery']);
+    const back = parseAmazonShippingTrackingResponse(outForDeliveryWith({ status: 'Departed', metadata: {} },
+      scan('Received', 'swa_rex_arrived_at_sort_center', 'Aug 11, 2026, 6:10:00 PM'),
+      scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 9:40:00 PM')));
+    expect(back).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(back.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'out_for_delivery', 'in_transit', 'registered']);
+    expect(parseAmazonShippingTrackingResponse(deliveredFixture()).events?.[1])
+      .toMatchObject({ provider_code: 'Departed', stage: 'in_transit' });
   });
 
   it('uses event history when the summary status is absent', () => {

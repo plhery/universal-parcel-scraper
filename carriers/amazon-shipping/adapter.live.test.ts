@@ -27,20 +27,28 @@ describe('Amazon Shipping live anonymous tracking', () => {
       expect(result.status).not.toBe('unknown');
       expect(result.current_stage).toEqual(expect.any(String));
       expect(result.last_status_text).toEqual(expect.any(String));
+      // TBA, TBC and TBM numbers name no zone: their clocks stay wall-clock readings.
+      const zoned = !/^TB/i.test(LIVE_TRACKING_NUMBER);
+      const delivered = result.current_stage === 'delivered';
       expect(Object.keys(result).sort()).toEqual([
         'current_stage',
+        ...(zoned && delivered ? ['delivered_at'] : []),
         'events',
         'expected_delivery',
         'last_status_text',
         'last_update',
+        ...(!zoned && result.events?.[0]?.local_time ? ['last_update_local'] : []),
         'status',
-        ...(/^TBA/i.test(LIVE_TRACKING_NUMBER) ? [] : ['timezone']),
+        ...(zoned ? ['timezone'] : []),
       ]);
+      if (delivered) expect(result.expected_delivery).toBeNull();
       for (const event of result.events ?? []) {
         expect(Object.keys(event).every((key) => [
           'description',
+          'local_time',
           'location',
           'provider_code',
+          'provider_time_text',
           'stage',
           'time',
         ].includes(key))).toBe(true);

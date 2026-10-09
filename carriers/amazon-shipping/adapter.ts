@@ -27,7 +27,11 @@ interface ParsedEvent {
   classified: ClassifiedStatus;
   timestamp: number;
   sourceIndex: number;
+  /** A facility departure, by its event code or string id. */
+  departure: boolean;
 }
+
+const VAN_DEPARTURE: ClassifiedStatus = { status: 'out_for_delivery', stage: 'out_for_delivery', description: 'Out for delivery' };
 
 export interface AmazonShippingOptions {
   timeoutMs?: number;
@@ -57,16 +61,20 @@ export class AmazonShippingHistoryExpiredError extends IndeterminateError {
   }
 }
 
-function eventDescription(raw: JsonObject, classified: ClassifiedStatus): string {
+function eventKey(raw: JsonObject): string {
   const summary = isRecord(raw.statusSummary) ? raw.statusSummary : {};
-  const key = [summary.localisedStringId, raw.eventCode, raw.subReasonCode]
+  return [summary.localisedStringId, raw.eventCode, raw.subReasonCode]
     .map(statusKey)
     .join(' ');
+}
+
+function eventDescription(key: string, classified: ClassifiedStatus): string {
   if (key.includes('creationconfirmed')) return 'Shipment information received';
   if (key.includes('pickupdone') || key.includes('detailpickedup')) return 'Shipment picked up';
   // Out-for-delivery scans carry the string id of the delivery centre's arrival; the code decides.
   if (classified.stage !== 'in_transit') return classified.description;
-  if (key.includes('arrivedatdeliverycenter')) return 'Arrived at delivery center';
+  // Amazon reads the final hub as "the final hub/delivery station".
+  if (key.includes('arrivedatdeliverycenter') || key.includes('arrivedatfinalhub')) return 'Arrived at delivery center';
   if (key.includes('arrivedatsortcenter')) return 'Arrived at sorting center';
   if (key.includes('departed')) return 'Departed facility';
   return classified.description;
@@ -171,19 +179,50 @@ function parseEvent(raw: JsonObject, sourceIndex: number, zone: string | null): 
   const code = providerCode(raw.eventCode);
   if (!time && !code && classified.status === 'unknown') return null;
   const eventLocation = location(raw.location);
+  const key = eventKey(raw);
   return {
     classified,
     // Local readings keep the tracker's order: their zones are unknown and can differ.
     timestamp: time?.timestamp ?? Number.NEGATIVE_INFINITY,
     sourceIndex,
+    departure: classified.stage === 'in_transit' && key.includes('departed'),
     event: {
       ...(time ? { time: time.iso } : local ? { local_time: local } : clockText ? { provider_time_text: clockText } : {}),
       ...(eventLocation ? { location: eventLocation } : {}),
-      description: eventDescription(raw, classified),
+      description: eventDescription(key, classified),
       stage: classified.stage,
       ...(code ? { provider_code: code } : {}),
     },
   };
+}
+
+/** How soon after the out-for-delivery scan a departure from its station is the van leaving. */
+const VAN_DEPARTURE_MS = 3_600_000;
+
+/** Milliseconds from one scan to the next, on clocks of the same kind, or NaN. */
+function scanGapMs(from: CarrierEvent, to: CarrierEvent): number {
+  if (from.time && to.time) return Date.parse(to.time) - Date.parse(from.time);
+  const [start, end] = [from.local_time, to.local_time];
+  return typeof start === 'string' && typeof end === 'string' ? Date.parse(`${end}Z`) - Date.parse(`${start}Z`) : Number.NaN;
+}
+
+/**
+ * A departure scanned right after the out-for-delivery scan, within the hour
+ * and at the same station, is the van leaving with the parcel: still out for
+ * delivery. Read as a facility departure it would step the newest scan back to
+ * in transit. `events` is newest first.
+ */
+function restageVanDepartures(events: ParsedEvent[]): void {
+  for (let index = events.length - 2; index >= 0; index--) {
+    const item = events[index]!;
+    const previous = events[index + 1]!;
+    const gap = scanGapMs(previous.event, item.event);
+    if (item.departure && previous.classified.stage === 'out_for_delivery' && previous.classified !== VAN_DEPARTURE
+      && item.event.location && item.event.location === previous.event.location && gap >= 0 && gap <= VAN_DEPARTURE_MS) {
+      item.classified = VAN_DEPARTURE;
+      item.event.stage = VAN_DEPARTURE.stage;
+    }
+  }
 }
 
 function metadataValue(metadata: JsonObject, field: string): unknown {
@@ -251,6 +290,7 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   parsedEvents.sort((left, right) => (
     right.timestamp - left.timestamp || right.sourceIndex - left.sourceIndex
   ));
+  restageVanDepartures(parsedEvents);
   const events = parsedEvents.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
 
   const summary = isRecord(progress.summary) ? progress.summary : {};
@@ -258,13 +298,15 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   const tags = Array.isArray(summary.containerStatusTags)
     ? summary.containerStatusTags.join(' ')
     : '';
-  const current = classifyStatus(
-    metadataValue(metadata, 'trackingStatus'),
-    summary.status,
-    tags,
-  );
+  const trackingStatus = metadataValue(metadata, 'trackingStatus');
+  const current = classifyStatus(trackingStatus, summary.status, tags);
   const latestKnown = parsedEvents.find((item) => item.classified.status !== 'unknown');
-  const active = current.status !== 'unknown' ? current : latestKnown?.classified;
+  // A summary whose only signal repeats the newest scan's event code says less
+  // than that scan, which is also read by its string id and the scan before it.
+  const newestCode = parsedEvents[0]?.event.provider_code;
+  const echoesNewest = !statusKey(trackingStatus) && !tags && newestCode !== undefined
+    && statusKey(summary.status) === statusKey(newestCode);
+  const active = current.status !== 'unknown' && !echoesNewest ? current : latestKnown?.classified;
   if (!active) {
     throw new SchemaError(PROVIDER, 'Amazon Shipping returned incomplete tracking details');
   }

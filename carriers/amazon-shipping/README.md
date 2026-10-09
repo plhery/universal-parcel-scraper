@@ -44,14 +44,19 @@ Checks, before any history is read:
   parcel has no `expected_delivery`.
 - A scan's wording follows its event code. Out-for-delivery scans carry the string id of the
   delivery centre's arrival, so only in-transit scans take the arrival, sorting and departure
-  wording. The app identity policy requires the same instant and event code before updating a
-  reworded stored scan.
+  wording. The final hub, "the final hub/delivery station" on Amazon's tracker, reads
+  "Arrived at delivery center". The app identity policy requires the same instant and event
+  code before updating a reworded or restaged stored scan.
+- A departure scanned right after the out-for-delivery scan, within the hour and at the same
+  station, is the van leaving with the parcel. It keeps the "Departed facility" wording but
+  stays out for delivery, so the newest scan does not step back to in transit.
 - Dates mix ISO-8601, RFC 2822 and US long form ("Aug 11, 2026, 4:31:56 PM"), so the adapter
   uses its own parser instead of a `core/time` helper.
 - `DELAYED` / `LATE` map to `in_transit`: a delay is not an exception.
 - Events are deduplicated on (clock, location, code, description), sorted newest first and
-  capped at 100. Shipment status comes from the summary, else from the newest event that
-  classifies.
+  capped at 100. Shipment status comes from the summary's `trackingStatus`, `status` and
+  tags, else from the newest event that classifies. A summary whose only signal is a
+  `status` repeating the newest scan's event code defers to that scan.
 - No universal-provider fallback: Amazon is the only source for these numbers.
 
 ## Limitations
