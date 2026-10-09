@@ -374,3 +374,57 @@ describe('DHL eCommerce Webtrack', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });
+
+describe('DHL eCommerce USPS routing barcodes', () => {
+  // A synthetic 9261 PIC with its check digit, behind a made-up ZIP code.
+  const PIC = '9261290000000012345677';
+  const BARCODE = `42000000${PIC}`;
+  function routed() {
+    const payload = webtrack();
+    Object.assign(payload.packages[0]!, { trackedValue: PIC, trackingId: BARCODE, deliveryConfirmationNumber: PIC });
+    return payload;
+  }
+
+  it('asks Webtrack for the package identifier and reports it, never the ZIP code', async () => {
+    for (const raw of [BARCODE, `420 00000 ${PIC}`, `420000000000${PIC}`]) expect(normalizeDHLEcommerceNumber(raw)).toBe(PIC);
+    const fetcher = vi.fn(async (_url: string | URL | Request, init?: RequestInit) => {
+      expect(init?.body).toBe(JSON.stringify({ trackedValue: PIC, offset: 0, locale: 'en-US' }));
+      return reply(routed());
+    });
+    const tracker = new DHLEcommerceTracker({ fetcher });
+    const result = await tracker.fetch(BARCODE);
+    expect(result).toMatchObject({ status: 'in_transit', canonical_tracking_number: PIC });
+    expect(JSON.stringify(result)).not.toContain(BARCODE);
+    expect(await tracker.fetch(PIC)).not.toHaveProperty('canonical_tracking_number');
+    await expect(tracker.recognize(BARCODE)).resolves.toMatchObject({ known: true });
+    expect(fetcher).toHaveBeenCalledTimes(3);
+  });
+
+  it('opens the global page with the package identifier after a regional miss', async () => {
+    const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage').mockImplementation(async (_options, spec, parse) => {
+      expect(spec.url).toBe(dhlEcommerceTrackingUrl(PIC));
+      expect(spec.responseUrl).toContain(`trackingNumber=${PIC}&`);
+      return parse(shipment());
+    });
+    const tracker = new DHLEcommerceTracker({ executablePath: '/test/chromium', fetcher: vi.fn(async () => reply(EMPTY_WEBTRACK)) });
+    await expect(tracker.fetch(BARCODE)).resolves.toMatchObject({ canonical_tracking_number: PIC });
+    // The result recognition lends the lookup names it too.
+    await expect(tracker.recognizeWithBrowser(BARCODE)).resolves.toMatchObject({ known: true, result: { canonical_tracking_number: PIC } });
+    expect(browser).toHaveBeenCalledTimes(2);
+  });
+
+  it('sends no routing barcode without a single package identifier', async () => {
+    const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage');
+    const fetcher = vi.fn(async () => reply(routed()));
+    const tracker = new DHLEcommerceTracker({ executablePath: '/test/chromium', fetcher });
+    // A wrong check digit, and a ZIP+4 whose 26-digit reading fits as well as the PIC after it.
+    for (const raw of [`42000000${PIC.slice(0, -1)}8`, `420000009300${PIC}`]) {
+      expect(() => normalizeDHLEcommerceNumber(raw)).toThrow('single package identifier');
+      await expect(tracker.fetch(raw)).rejects.toMatchObject({ kind: 'invalid_input' });
+      await expect(tracker.recognize(raw)).resolves.toEqual({ known: false });
+      await expect(tracker.recognizeWithBrowser(raw)).rejects.toMatchObject({ kind: 'invalid_input' });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(browser).not.toHaveBeenCalled();
+  });
+});

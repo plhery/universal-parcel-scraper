@@ -22,6 +22,11 @@ lookups are serialized per instance.
 Opt-in browser recognition goes straight to the global page after an inconclusive
 HTTP check. It requires dated activity and returns the history with its confirmation.
 
+A USPS routing barcode opens with the recipient's ZIP code. Every lookup asks for the
+package identifier after it instead, which Webtrack also tracks, and the result reports
+that identifier as `canonical_tracking_number`. A barcode without a single identifier is
+refused before any request.
+
 ## Parsing
 
 Webtrack must return one identified package matching the requested number or

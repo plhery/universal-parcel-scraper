@@ -9,6 +9,7 @@
 
 import { DateTime } from 'luxon';
 import { accepted, lookupBudget, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
+import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detection/usps.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
@@ -41,10 +42,23 @@ function clean(value: unknown, limit = 500): string {
   return typeof value === 'string' ? cleanText(value.replace(/<[^>]*>/g, ''), limit) : '';
 }
 
+function cleanNumber(raw: string): string {
+  return raw.toUpperCase().replace(/[\s.-]/g, '');
+}
+
+/**
+ * The number DHL is asked for. A USPS routing barcode opens with the
+ * recipient's ZIP code; Webtrack also knows the package by the identifier
+ * after it, so only that identifier is sent, and a barcode without a single
+ * one is not sent at all.
+ */
 export function normalizeDHLEcommerceNumber(raw: string): string {
-  const number = raw.toUpperCase().replace(/[\s.-]/g, '');
+  const number = cleanNumber(raw);
   if (!/^(?=.*\d)[A-Z0-9]{5,40}$/.test(number)) throw new InvalidInputError(PROVIDER, 'DHL eCommerce tracking number is invalid');
-  return number;
+  if (!USPS_ROUTING_BARCODE.test(number)) return number;
+  const pic = uspsPackageIdentifier(number);
+  if (!pic) throw new InvalidInputError(PROVIDER, 'A USPS routing barcode without a single package identifier is not sent');
+  return pic;
 }
 
 export function dhlEcommerceTrackingUrl(number: string): string {
@@ -225,6 +239,14 @@ export interface DHLEcommerceTrackerOptions extends Omit<UniversalBrowserOptions
   userAgent?: string;
 }
 
+/**
+ * The package identifier of a typed routing barcode is the number DHL was
+ * asked for, and the one USPS tracks, so consumers can keep that.
+ */
+function withPackageIdentifier(typed: string, number: string, result: CarrierResult): CarrierResult {
+  return cleanNumber(typed) !== number ? { ...result, canonical_tracking_number: number } : result;
+}
+
 export class DHLEcommerceTracker {
   private readonly recorder: StepRecorder;
   private readonly serialize = singleFlight();
@@ -241,7 +263,7 @@ export class DHLEcommerceTracker {
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeDHLEcommerceNumber(trackingNumber);
     const timeoutMs = this.options.timeoutMs ?? 45_000;
-    return takeTurn(this.serialize, PROVIDER, context, ({ signal, budgetMs }) => runSteps<CarrierResult>(
+    const result = await takeTurn(this.serialize, PROVIDER, context, ({ signal, budgetMs }) => runSteps<CarrierResult>(
       { carrier: 'dhl-ecommerce', budgetMs: budgetMs ?? this.options.budgetMs ?? timeoutMs + 15_000, signal, recorder: this.recorder },
       [
         { id: 'direct', run: (step) => this.direct(number, Math.min(DIRECT_TIMEOUT_MS, step.remainingMs), step.signal) },
@@ -249,6 +271,7 @@ export class DHLEcommerceTracker {
           run: (step) => this.browser(number, Math.max(1, Math.floor(Math.min(timeoutMs, step.remainingMs))), step.signal) },
       ],
     ));
+    return withPackageIdentifier(trackingNumber, number, result);
   }
 
   /** Recognition never starts the global page or spends a browser budget. */
@@ -303,10 +326,11 @@ export class DHLEcommerceTracker {
       throw previousError instanceof Error ? previousError : new Error('DHL eCommerce HTTP recognition cannot recover through a browser');
     }
     const normalized = normalizeDHLEcommerceNumber(number);
-    return takeTurn(this.serialize, PROVIDER, context, (step) => recognizeFromBrowserLookup(() => runSteps<CarrierResult>(
-      { carrier: 'dhl-ecommerce', budgetMs: step.budgetMs ?? 20_000, signal: step.signal, recorder: this.recorder },
-      [{ id: 'browser', run: ({ signal, remainingMs }) => this.browser(normalized, remainingMs, signal) }],
-    )));
+    return takeTurn(this.serialize, PROVIDER, context, (step) => recognizeFromBrowserLookup(async () => withPackageIdentifier(number, normalized,
+      await runSteps<CarrierResult>(
+        { carrier: 'dhl-ecommerce', budgetMs: step.budgetMs ?? 20_000, signal: step.signal, recorder: this.recorder },
+        [{ id: 'browser', run: ({ signal, remainingMs }) => this.browser(normalized, remainingMs, signal) }],
+      ))));
   }
 }
 
