@@ -51,6 +51,22 @@ export class UPSSessionRejected extends ChallengeError {
 }
 
 /**
+ * UPS's tracking system is down. Its own page reads error 298 or 299 as "the
+ * system is temporarily unavailable": an outage, never an answer about the
+ * parcel. It is thrown past every fallback, so a rendered page cannot stand in
+ * for it.
+ */
+export class UPSUnavailableError extends IndeterminateError {
+  constructor(code: string) {
+    super('UPS', `UPS tracking is temporarily unavailable (error ${code})`);
+    this.name = 'UPSUnavailableError';
+  }
+}
+
+/** The error codes UPS's page answers with "try again later". */
+const OUTAGE_CODES: ReadonlySet<string> = new Set(['298', '299']);
+
+/**
  * What one lookup lends each request. A session outlives the lookup that
  * built it, so it is handed these per request and keeps neither.
  */
@@ -159,6 +175,11 @@ class UPSHttpSession {
     }
     return result.bytes;
   }
+}
+
+/** An answer no other tier or rendered page may replace. */
+function isFinalAnswer(error: unknown): boolean {
+  return error instanceof InvalidInputError || error instanceof NotFoundError || error instanceof UPSUnavailableError;
 }
 
 function withoutIcons(value: string): string {
@@ -286,6 +307,8 @@ export function parseUPSTrackingResponse(
 ): CarrierResult {
   if (!isRecord(payload)) throw new SchemaError('UPS');
   if (payload.statusCode !== '200' && payload.statusCode !== 200) {
+    const code = cleanScalar(payload.statusCode).toUpperCase();
+    if (OUTAGE_CODES.has(code)) throw new UPSUnavailableError(code);
     // UPS answers 402 "Invalid Request" for a number whose check digit fails.
     if (cleanScalar(payload.statusCode) === '402' && !isValidUpsTrackingNumber(trackingNumber.toUpperCase())) {
       throw new InvalidInputError('UPS', 'UPS rejected the number: its check digit does not match');
@@ -298,15 +321,17 @@ export function parseUPSTrackingResponse(
     && cleanScalar(item.trackingNumber ?? item.requestedTrackingNumber).toUpperCase() === expected)
     ?? payload.trackDetails[0];
   if (!isRecord(detail)) throw new SchemaError('UPS');
+  // An outage is not about any parcel, whichever number the reply names.
+  const errorCode = cleanScalar(detail.errorCode).toUpperCase();
+  if (OUTAGE_CODES.has(errorCode)) throw new UPSUnavailableError(errorCode);
   const returned = cleanScalar(detail.trackingNumber ?? detail.requestedTrackingNumber);
   if (returned && returned.toUpperCase() !== expected) {
     throw new SchemaError('UPS', 'UPS did not return the requested parcel');
   }
   const errorText = text(detail.errorText);
   // Error 504 in a successful reply that names the number: UPS has no record of
-  // it, expired or not active yet, as its own page reads the code. An outage
-  // answers with another status code instead.
-  if (returned && cleanScalar(detail.errorCode) === '504') throw new NotFoundError('UPS');
+  // it, expired or not active yet, as its own page reads the code.
+  if (returned && errorCode === '504') throw new NotFoundError('UPS');
   if (detail.errorCode || errorText) {
     return { ...notLocated(), last_status_text: errorText || 'UPS could not locate the shipment' };
   }
@@ -472,8 +497,9 @@ export class UPSTracker {
             // A caller that cancelled gets its own reason back: no answer from
             // the page already fetched, no challenge report.
             context.signal?.throwIfAborted();
-            // UPS refused or does not know the number; no page or browser can answer it.
-            if (error instanceof InvalidInputError || error instanceof NotFoundError) throw error;
+            // UPS refused the number, does not know it or is down; no page or
+            // browser can answer it.
+            if (isFinalAnswer(error)) throw error;
             if (page.html !== null) {
               try {
                 return this.#renderedResult(page.html, number);
@@ -552,7 +578,7 @@ export class UPSTracker {
       try {
         return this.#structuredResult(number, JSON.parse(entry.body));
       } catch (error) {
-        if (error instanceof InvalidInputError || error instanceof NotFoundError) throw error;
+        if (isFinalAnswer(error)) throw error;
         // An unreadable or unrelated reply; the rendered page may still answer.
         captureError = error instanceof Error ? error : new SchemaError('UPS', 'UPS returned invalid tracking data', { cause: error });
       }

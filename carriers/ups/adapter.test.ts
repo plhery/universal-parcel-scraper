@@ -32,6 +32,13 @@ const UNKNOWN_NUMBER = JSON.stringify({
     requestedTrackingNumber: TRACKING_NUMBER, trackingNumber: TRACKING_NUMBER,
   }],
 });
+/** A successful reply whose parcel carries one of the error codes UPS's page reads as an outage. */
+function outage(errorCode: string, trackingNumber?: string): string {
+  return JSON.stringify({
+    statusCode: '200', statusText: 'Successful',
+    trackDetails: [{ errorCode, errorText: 'Example outage text', ...(trackingNumber ? { trackingNumber } : {}) }],
+  });
+}
 const RENDERED_PAGE = `
   <html><head><meta name="stapp-tracknum" content="${TRACKING_NUMBER}"></head>
   <body>
@@ -275,8 +282,28 @@ describe('UPS structured response', () => {
     unnamed.trackDetails = [{ errorCode: '504', errorText: 'Tracking number not found in database' }];
     expect(parseUPSTrackingResponse(unnamed, TRACKING_NUMBER)).toMatchObject({ status: 'unknown', events: [] });
     const other = structuredClone(unknown);
-    Object.assign(other.trackDetails[0]!, { errorCode: '299', errorText: 'System unavailable' });
-    expect(parseUPSTrackingResponse(other, TRACKING_NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'System unavailable' });
+    Object.assign(other.trackDetails[0]!, { errorCode: '505', errorText: 'Example error text' });
+    expect(parseUPSTrackingResponse(other, TRACKING_NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'Example error text' });
+  });
+
+  it('reports the codes UPS reads as an outage as inconclusive, whichever number the reply names', () => {
+    const thrown = (payload: unknown): unknown => {
+      try {
+        parseUPSTrackingResponse(payload, TRACKING_NUMBER, TODAY);
+      } catch (error) {
+        return error;
+      }
+      return undefined;
+    };
+    for (const code of ['298', '299']) {
+      const unavailable = { name: 'UPSUnavailableError', kind: 'indeterminate', message: `UPS tracking is temporarily unavailable (error ${code})` };
+      expect(thrown({ statusCode: code, statusText: 'Example outage text' })).toMatchObject(unavailable);
+      for (const payload of [outage(code, TRACKING_NUMBER), outage(code), outage(code, '1Z999AA10123456793')]) {
+        const error = thrown(JSON.parse(payload));
+        expect(error).toBeInstanceOf(IndeterminateError);
+        expect(error).toMatchObject(unavailable);
+      }
+    }
   });
 
   it('keeps the recipient block out of the result', () => {
@@ -462,6 +489,37 @@ describe('UPS lookup steps', () => {
     await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(TRACKING_NUMBER))
       .rejects.toMatchObject({ name: 'NotFoundError', kind: 'not_found' });
     expect(records).toEqual(['direct:not_found', 'lookup:direct:not_found']);
+  });
+
+  it('reports an outage from either tier instead of the rendered page or a challenge', async () => {
+    const unavailable = { name: 'UPSUnavailableError', kind: 'indeterminate' };
+    // The page the browser rendered reads "Delivered"; it must not hide the outage.
+    for (const captured of [
+      { url: STATUS_API, status: 200, headers: {}, body: outage('299', TRACKING_NUMBER), truncated: false, base64Encoded: false, error: null },
+      { url: STATUS_API, status: 200, headers: {}, body: JSON.stringify({ statusCode: '298' }), truncated: false, base64Encoded: false, error: null },
+    ]) {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({
+        tier: 2, statusCode: 200, url: upsTrackingUrl(TRACKING_NUMBER), html: RENDERED_PAGE, cookies: [], capturedResponses: [captured],
+      }));
+      await expect(new UPSTracker({ timeoutMs: 2_000, trawlUrl: TRAWL_URL }).fetch(TRACKING_NUMBER)).rejects.toMatchObject(unavailable);
+    }
+    // An HTTP 428 is the firewall's challenge, not an outage: the rendered page still answers.
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({
+      tier: 2, statusCode: 200, url: upsTrackingUrl(TRACKING_NUMBER), html: RENDERED_PAGE, cookies: [], capturedResponses: [
+        { url: STATUS_API, status: 428, headers: {}, body: '', truncated: false, base64Encoded: false, error: null },
+      ],
+    }));
+    await expect(new UPSTracker({ timeoutMs: 2_000, trawlUrl: TRAWL_URL }).fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'rendered-page' });
+
+    const fetcher = vi.fn<typeof fetch>(async (url) => {
+      if (String(url) === STATUS_API) return new Response(outage('299', TRACKING_NUMBER), { headers: { 'Content-Type': 'application/json' } });
+      const page = new Response(RENDERED_PAGE, { headers: { 'Set-Cookie': 'X-XSRF-TOKEN-ST=token; Domain=ups.com; Path=/' } });
+      Object.defineProperty(page, 'url', { value: String(url) });
+      return page;
+    });
+    const { recorder, records } = stepRecorder();
+    await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(TRACKING_NUMBER)).rejects.toMatchObject(unavailable);
+    expect(records).toEqual(['direct:indeterminate', 'lookup:direct:indeterminate']);
   });
 
   it('rejects a number that is not a UPS number before any request', async () => {

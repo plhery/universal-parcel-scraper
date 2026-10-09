@@ -58,7 +58,10 @@ rendered status, after that wait.
   either step. Other refusals stay indeterminate.
 - Error 504 in a successful reply that names the number is `NotFoundError`, from either step:
   UPS has no record of it, expired or not active yet, and its own page reads the code that
-  way. An outage answers with another status code. Other error codes keep the
+  way.
+- Error 298 or 299, as the reply's status or a parcel's error, is `UPSUnavailableError`, an
+  `IndeterminateError`, from either step. UPS's page reads them as "the system is temporarily
+  unavailable". The rendered page never stands in for them. Other error codes keep the
   "could not locate" result.
 - The app scan-identity policy updates a scan when UPS adds its location, provided its
   exact instant, wording and known stage agree. Conflicting locations and distinct
