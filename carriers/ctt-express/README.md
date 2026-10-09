@@ -11,8 +11,9 @@ its package code must identify the sole package according to the carrier's
 Package inputs retain their counter and must match the returned package exactly.
 Multi-piece shipments remain inconclusive because the public response contains
 only one package's scans. Portuguese postal references use the universal providers.
-TIPSA numbers share the agency, agency, waybill layout. A reference starting `000010`
-stays ambiguous between the two and any other selects CTT Express.
+Every code in CTT Express's agency list starts with `00`, so detection claims a reference only when
+both its agency codes do. TIPSA numbers share the agency, agency, waybill layout. A reference starting
+`000010` stays ambiguous between the two and any other selects CTT Express.
 
 ## Notes
 

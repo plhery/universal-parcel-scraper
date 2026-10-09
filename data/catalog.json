@@ -2361,15 +2361,15 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^000010\\d{16}$",
+        "pattern": "^00001000\\d{14}$",
         "confidence": "low"
       },
       {
-        "pattern": "^00\\d{20}$",
+        "pattern": "^00\\d{4}00\\d{14}$",
         "confidence": "high"
       },
       {
-        "pattern": "^00\\d{20}001$",
+        "pattern": "^00\\d{4}00\\d{14}001$",
         "confidence": "high"
       }
     ]

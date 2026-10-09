@@ -126,6 +126,30 @@
         "confidence": "none"
       },
       "note": "The source does not name Australia Post; the destination and prefix do not establish carrier ownership."
+    },
+    {
+      "number": "0001006070398164630998",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250522042436/https://auspost.com.au/mypost/track/details/0001006070398164630998",
+        "date": "2025-05-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine. Australia Post's tracker knows the satchel; its scans have expired. It starts with 00, but its agency codes are not CTT Express's."
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
+import { isCttExpressTrackingNumber } from './cttExpress.js';
 import { checksumRejections, detectCarrierMatch } from './index.js';
 
 describe('S10-shaped numbers', () => {
@@ -78,5 +79,14 @@ describe('Nordic SSCCs behind the 00 identifier', () => {
     for (const number of ['00264123456789012340', '00265123456789012346']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('posti');
     }
+  });
+});
+
+describe('Australia Post barcodes', () => {
+  it('keeps CTT Express to references whose two agency codes start with 00', () => {
+    expect(isCttExpressTrackingNumber('0001001234567812340995')).toBe(false);
+    expect(detectCarrierMatch('0001001234567812340995').candidates).not.toContain('ctt-express');
+    expect(detectCarrierMatch('0082800082801234567890')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
+    expect(detectCarrierMatch('0082800082801234567890001')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
   });
 });

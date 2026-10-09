@@ -71,6 +71,19 @@
     ]
   },
   {
+    "input": "0001006070398164630998",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "austrian-post",
+      "usps",
+      "estafeta"
+    ],
+    "asked": [
+      "austrian-post"
+    ]
+  },
+  {
     "input": "000123450000000027",
     "carrier": "unknown",
     "confidence": "low",

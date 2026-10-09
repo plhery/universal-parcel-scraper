@@ -59,17 +59,17 @@
   "detection": [
     {
       "id": "ctt-express-3",
-      "pattern": "^000010\\d{16}$",
+      "pattern": "^00001000\\d{14}$",
       "confidence": "low"
     },
     {
       "id": "ctt-express-1",
-      "pattern": "^00\\d{20}$",
+      "pattern": "^00\\d{4}00\\d{14}$",
       "confidence": "high"
     },
     {
       "id": "ctt-express-2",
-      "pattern": "^00\\d{20}001$",
+      "pattern": "^00\\d{4}00\\d{14}001$",
       "confidence": "high"
     }
   ]
