@@ -2649,6 +2649,11 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       },
       {
+        "pattern": "^420\\d{5}(?:(?!9[2-4])\\d{4})?(?!9[23]61)(?:91\\d{2}9\\d{17}|92\\d{3}9\\d{16}|93\\d{3}[0-8]\\d{16}|9[45]\\d{20})$",
+        "confidence": "high",
+        "checksum": "usps"
+      },
+      {
         "pattern": "^420(?:\\d{5}9[1-5]\\d{20}(?:\\d{4})?|\\d{9}9[1-5]\\d{20})$",
         "confidence": "low",
         "checksum": "usps",
@@ -5400,7 +5405,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ecoscooting": ["ecoscooting-1","ecoscooting-2"],
   "tipsa": ["tipsa-1","tipsa-2"],
   "ukrposhta": ["ukrposhta-1"],
-  "usps": ["usps-impb","usps-3","usps-1","usps-2","usps-4","usps-s10"],
+  "usps": ["usps-impb","usps-3","usps-1","usps-2","usps-impb-routing","usps-4","usps-s10"],
   "canada-post": ["canada-post-1","canada-post-2"],
   "purolator": ["purolator-1","purolator-2"],
   "canpar": ["canpar-1"],

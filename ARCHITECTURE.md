@@ -151,11 +151,12 @@ identifier. A number of that shape without one is never sent to them, as typed o
 reading: each provider step is inconclusive, `indeterminate` with reason
 `usps_routing_barcode`, before any request. The USPS adapter rejects it as invalid input,
 so the lookup ends inconclusive without a request. A 22-digit PIC whose channel, Mailer ID
-and check digit agree selects USPS, apart from the families DHL eCommerce also tracks. Other
-checksum-valid USPS formats prioritize a candidate and still require carrier confirmation;
-for routing barcodes those are the 30- and 34-digit forms Publication 199 defines. Detection
-and recognition read a routing barcode as typed: outside that PIC rule, a bare identifier
-also fits other carriers' formats.
+and check digit agree selects USPS, apart from the families DHL eCommerce also tracks. A
+routing barcode built on such a PIC selects USPS too, unless its ZIP+4 add-on starts with
+92 to 94 and could open a 26-digit PIC instead. Other checksum-valid USPS formats prioritize
+a candidate and still require carrier confirmation; for routing barcodes those are the 30-
+and 34-digit forms Publication 199 defines. Detection and recognition read a routing barcode
+as typed: outside that PIC rule, a bare identifier also fits other carriers' formats.
 
 Recognition uses HTTP by default. Consumers can request `recognitionCandidates` with
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's

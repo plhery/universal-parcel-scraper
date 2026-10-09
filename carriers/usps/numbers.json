@@ -192,11 +192,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
     },
@@ -240,11 +237,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
     },
@@ -445,11 +439,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
       "note": "Public sandbox example; not evidence of a consumer shipment."
     },

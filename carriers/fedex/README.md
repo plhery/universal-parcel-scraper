@@ -14,7 +14,8 @@ last digit matches (weights 3, 1, 7 from the left, sum mod 11, then mod 10), for
 Ground number whose last digit is its GS1 mod 10 check, and for a label barcode whose
 embedded number passes its check; it drops FedEx otherwise. Every shape stays shared: any
 22 digits fit Austrian Post, Estafeta and USPS, and a USPS `420` barcode can carry zeros
-where the 34-digit layout expects them. Without a browser service it fails at once with
+where the 34-digit layout expects them; it still selects USPS when its package identifier
+would. Without a browser service it fails at once with
 `ChallengeError('FedEx challenged direct tracking; configure FLARESOLVERR_URL for browser
 fallback')`.
 

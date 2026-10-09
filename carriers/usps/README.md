@@ -21,8 +21,10 @@ A 22-digit PIC selects USPS when its check digit passes and its Mailer ID fits t
 channel: nine digits starting with 9 for `92` and the legacy `91`, six digits
 starting with 0 to 8 for `93`. Austrian Post and Estafeta also issue 22-digit
 numbers, but none known starts with a USPS channel. DHL eCommerce tracks the `9261`
-and `9361` families as well, so those stay suggestions. Other matching IMpb rules
-prioritize USPS as a candidate. None of them establish shipment existence.
+and `9361` families as well, so those stay suggestions. A routing barcode selects USPS
+when its PIC would, unless a ZIP+4 add-on starting with 92 to 94 could also open a
+26-digit PIC. Other matching IMpb rules prioritize USPS as a candidate. None of them
+establish shipment existence.
 Opt-in browser recognition reuses the lookup
 and requires dated activity. Anything else is rejected before a request. Without a browser service it
 fails at once with `ChallengeError('USPS challenged direct tracking; configure

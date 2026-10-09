@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionCandidates } from '../catalog/recognition.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
+import { isValidFedEx1DBarcode } from './fedex.js';
 import { isValidUspsPackageBarcode, uspsPackageIdentifier } from './usps.js';
 import { normalizeUSPSNumber, parseUSPSTrackingHtml, uspsTrackingUrl } from '../../carriers/usps/adapter.js';
 import { normalizeRoyalMailNumber, parseRoyalMailTrackingResponse, royalMailSummaryApiUrl } from '../../carriers/royal-mail/parser.js';
@@ -21,10 +22,40 @@ describe('USPS whole package barcodes', () => {
       expect(uspsPackageIdentifier(raw)).toBe(PIC);
       expect(normalizeUSPSNumber(raw)).toBe(PIC);
       expect(new URL(uspsTrackingUrl(raw)).searchParams.get('tLabels')).toBe(PIC);
-      expect(detectCarrierMatch(raw)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
-      expect(recognitionCandidates(raw)).toEqual([]);
-      expect(recognitionCandidates(raw, { phase: 'browser' }).map(candidate => candidate.carrier)).toContain('usps');
     }
+  });
+
+  it('selects USPS for a routing barcode when the bare PIC rule would select it', () => {
+    for (const zip of ['00000', '000000000']) {
+      for (const pic of [PIC, '9300100000012345678902', '9400100000000123456780', '9505500000000123456782', '9101900000000123456788']) {
+        expect(detectCarrierMatch(`420${zip}${pic}`)).toMatchObject({ carrier: 'usps', confidence: 'high', candidates: ['usps'] });
+        expect(recognitionCandidates(`420${zip}${pic}`, { phase: 'browser' })).toEqual([]);
+      }
+      // A Mailer ID that does not fit its channel, or a family DHL eCommerce also tracks.
+      for (const pic of ['9205510000000012345670', '9300190000012345678903', '9100000000000000000002', '9261290000000012345677', '9361200000012345678900']) {
+        const raw = `420${zip}${pic}`;
+        expect(detectCarrierMatch(raw)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+        expect(detectCarrierMatch(raw).preferred).toContain('usps');
+        const dhl = zip.length === 5 && /^9[23]61/.test(pic);
+        expect(recognitionCandidates(raw).map(candidate => candidate.carrier)).toEqual(dhl ? ['dhl-ecommerce'] : []);
+        expect(recognitionCandidates(raw, { phase: 'browser' }).map(candidate => candidate.carrier)).toContain('usps');
+      }
+    }
+    expect(detectCarrierMatch(`42000000${PIC.slice(0, -1)}1`).candidates).not.toContain('usps');
+    // The zeros and the last twelve digits also fit FedEx's 34-digit barcode and pass its check.
+    const shared = '4200000000009210090000000012340094';
+    expect(isValidFedEx1DBarcode(shared)).toBe(true);
+    expect(detectCarrierMatch(shared)).toMatchObject({ carrier: 'usps', confidence: 'high', candidates: ['usps'] });
+  });
+
+  it('keeps a suggestion when a ZIP+4 add-on could open a 26-digit PIC', () => {
+    // The PIC after ZIP+4 9201 is the identifier: the 26-digit reading's Mailer ID does not fit.
+    expect(uspsPackageIdentifier(`420000009201${PIC}`)).toBe(PIC);
+    expect(detectCarrierMatch(`420000009201${PIC}`)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
+    // Here the 22 digits after ZIP+4 9301 fail the check and the 26 after the ZIP pass it.
+    const raw = `420000009301${PIC.slice(0, -1)}8`;
+    expect(uspsPackageIdentifier(raw)).toBe(raw.slice(8));
+    expect(detectCarrierMatch(raw)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
   });
 
   it('accepts a complete 26-digit PIC, without treating the checksum as ownership', () => {

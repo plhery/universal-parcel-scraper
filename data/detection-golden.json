@@ -7909,12 +7909,9 @@
   },
   {
     "input": "4201002334249200190132607600833457",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "usps",
+    "confidence": "high",
     "candidates": [
-      "usps"
-    ],
-    "preferred": [
       "usps"
     ]
   },
@@ -7972,23 +7969,17 @@
   },
   {
     "input": "4203278000009205596900893430673167",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "usps",
+    "confidence": "high",
     "candidates": [
-      "usps"
-    ],
-    "preferred": [
       "usps"
     ]
   },
   {
     "input": "420787459400111206206406260787",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "usps",
+    "confidence": "high",
     "candidates": [
-      "usps"
-    ],
-    "preferred": [
       "usps"
     ]
   },
