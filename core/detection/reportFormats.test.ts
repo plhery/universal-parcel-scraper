@@ -72,7 +72,7 @@ describe('evidence-backed tracking formats', () => {
   });
 
   it('offers Correos Express for a 23-digit reference and nothing shorter or longer', () => {
-    expect(detectCarrierMatch('90000000000000000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['correos-express'] });
+    expect(detectCarrierMatch('90000000000000123000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['correos-express'] });
     expect(detectCarrierMatch('9000000000000000000001').candidates).not.toContain('correos-express');
     expect(detectCarrierMatch('900000000000000000000001').candidates).not.toContain('correos-express');
   });

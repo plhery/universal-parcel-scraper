@@ -74,5 +74,16 @@
       "path": "^/mypost/track/details/([^/?#]+)/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "australia-post-article",
+      "pattern": "^(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
+      "confidence": "high"
+    },
+    {
+      "id": "australia-post-consignment",
+      "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
+      "confidence": "low"
+    }
+  ]
 }

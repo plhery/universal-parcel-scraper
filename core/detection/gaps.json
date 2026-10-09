@@ -54,12 +54,6 @@
   },
   {
     "carrier": "australia-post",
-    "pattern": "^7T\\d{19}$",
-    "kind": "by_design",
-    "reason": "A confirmed article ID. Domestic IDs start with a merchant location code and vary by product, so there is no carrier-wide shape to match."
-  },
-  {
-    "carrier": "australia-post",
     "pattern": "^0[0-3]\\d{20}$",
     "kind": "open",
     "reason": "Australia Post's 22-digit satchel barcodes. Austrian Post, USPS and Estafeta rules take the same length, and no rule offers Australia Post yet."

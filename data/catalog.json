@@ -3760,7 +3760,16 @@
         "path": "^/mypost/track/details/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
+        "confidence": "low"
+      }
+    ]
   },
   "hongkong-post": {
     "displayName": "Hongkong Post",

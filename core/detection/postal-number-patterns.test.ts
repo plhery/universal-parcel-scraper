@@ -95,4 +95,19 @@ describe('Australia Post barcodes', () => {
     expect(detectCarrierMatch('993412345612345678')).toMatchObject({ carrier: 'swiss-post', confidence: 'high' });
     expect(detectCarrierMatch('987912345612345678')).toMatchObject({ carrier: 'swiss-post', confidence: 'high' });
   });
+
+  it.each(['33ABC123456701000935106', 'XY1234567801000935107'])('selects Australia Post for the article ID %s', (number) => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
+  });
+
+  it('selects Australia Post for an all-digit article ID that also passes the GS1 check', () => {
+    expect(detectCarrierMatch('99722123456701000830900')).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
+    expect(detectCarrierMatch('90000000000000123000001')).toMatchObject({ carrier: 'unknown', candidates: ['correos-express'] });
+  });
+
+  it('suggests Australia Post for a consignment number whose location ID has a letter', () => {
+    expect(detectCarrierMatch('33ABC1234567')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('343AY1234567').candidates).toContain('australia-post');
+    expect(detectCarrierMatch('331231234567').candidates).not.toContain('australia-post');
+  });
 });

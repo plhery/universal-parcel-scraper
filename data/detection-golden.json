@@ -6660,9 +6660,11 @@
   },
   {
     "input": "33QAG752421901000931500",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "australia-post",
+    "confidence": "high",
+    "candidates": [
+      "australia-post"
+    ]
   },
   {
     "input": "3408372365",
@@ -6708,6 +6710,18 @@
       "seur",
       "brt",
       "relais-colis"
+    ]
+  },
+  {
+    "input": "343AY5090159",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "australia-post"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {
@@ -6840,6 +6854,14 @@
       "gls-de",
       "postlogistics",
       "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "36GMB353861501000935107",
+    "carrier": "australia-post",
+    "confidence": "high",
+    "candidates": [
+      "australia-post"
     ]
   },
   {
@@ -7183,6 +7205,18 @@
     ],
     "asked": [
       "bpost"
+    ]
+  },
+  {
+    "input": "38RUP5218413",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "australia-post"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {
@@ -10500,9 +10534,11 @@
   },
   {
     "input": "7T2514965601000935102",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "australia-post",
+    "confidence": "high",
+    "candidates": [
+      "australia-post"
+    ]
   },
   {
     "input": "80003280379",
@@ -12214,6 +12250,14 @@
     "confidence": "high",
     "candidates": [
       "swiss-post"
+    ]
+  },
+  {
+    "input": "99722999536301000830908",
+    "carrier": "australia-post",
+    "confidence": "high",
+    "candidates": [
+      "australia-post"
     ]
   },
   {
@@ -17439,6 +17483,14 @@
     "confidence": "high",
     "candidates": [
       "ekart"
+    ]
+  },
+  {
+    "input": "ST2273888401000960300",
+    "carrier": "australia-post",
+    "confidence": "high",
+    "candidates": [
+      "australia-post"
     ]
   },
   {

@@ -3762,7 +3762,16 @@ export const CARRIER_CATALOG = {
         "path": "^/mypost/track/details/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
+        "confidence": "low"
+      }
+    ]
   },
   "hongkong-post": {
     "displayName": "Hongkong Post",
@@ -5345,7 +5354,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "korea-post": ["korea-post-1","korea-post-2","korea-post-3"],
   "thailand-post": ["thailand-post-1"],
   "dtdc": ["dtdc-1","dtdc-2","dtdc-3","dtdc-4"],
-  "australia-post": [],
+  "australia-post": ["australia-post-article","australia-post-consignment"],
   "hongkong-post": ["hongkong-post-1"],
   "pos-malaysia": ["pos-malaysia-1","pos-malaysia-2"],
   "ninja-van": ["ninja-van-1","ninja-van-2","ninja-van-3"],
