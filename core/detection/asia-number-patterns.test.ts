@@ -66,12 +66,16 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionCandidates('300000000005').map(candidate => candidate.carrier)).not.toContain('purolator');
   });
 
-  it('selects OnTrac for C and D numbers that pass its check while preserving LaserShip detection', () => {
-    for (const number of ['C00000000000006', 'D00000000000005']) {
+  it('selects OnTrac only in its own C and D ranges while preserving LaserShip detection', () => {
+    for (const number of ['C10000000000004', 'C17000000000007', 'D10000000000003']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'ontrac', confidence: 'high', candidates: ['ontrac'] });
       expect(recognitionCandidates(number)).toEqual([]);
     }
-    expect(detectCarrierMatch('C00000000000001').candidates).not.toContain('ontrac');
+    for (const number of ['C00000000000006', 'C25000000000007', 'D00000000000005', 'D11000000000002']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ontrac'] });
+      expect(recognitionCandidates(number).map(candidate => candidate.carrier)).toContain('ontrac');
+    }
+    for (const number of ['C10000000000001', 'C00000000000001']) expect(detectCarrierMatch(number).candidates).not.toContain('ontrac');
     expect(detectCarrierMatch('1LS0000000000001')).toMatchObject({ carrier: 'ontrac', confidence: 'high' });
   });
 

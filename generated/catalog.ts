@@ -2791,8 +2791,13 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^[CD]\\d{14}$",
+        "pattern": "^(?:C1\\d|D10)\\d{12}$",
         "confidence": "high",
+        "checksum": "ontrac"
+      },
+      {
+        "pattern": "^[CD]\\d{14}$",
+        "confidence": "low",
         "checksum": "ontrac"
       },
       {
@@ -5357,7 +5362,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "canada-post": ["canada-post-1","canada-post-2"],
   "purolator": ["purolator-1","purolator-2"],
   "canpar": ["canpar-1"],
-  "ontrac": ["ontrac-1","ontrac-2","ontrac-3","ontrac-4"],
+  "ontrac": ["ontrac-5","ontrac-1","ontrac-2","ontrac-3","ontrac-4"],
   "speedx": ["speedx-1","speedx-2"],
   "uniuni": ["uniuni-1","uniuni-2","uniuni-3","uniuni-4","uniuni-5","uniuni-6"],
   "landmark-global": ["landmark-global-1"],

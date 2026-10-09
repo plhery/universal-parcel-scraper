@@ -2789,8 +2789,13 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^[CD]\\d{14}$",
+        "pattern": "^(?:C1\\d|D10)\\d{12}$",
         "confidence": "high",
+        "checksum": "ontrac"
+      },
+      {
+        "pattern": "^[CD]\\d{14}$",
+        "confidence": "low",
         "checksum": "ontrac"
       },
       {

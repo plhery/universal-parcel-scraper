@@ -63,9 +63,15 @@
   ],
   "detection": [
     {
+      "id": "ontrac-5",
+      "pattern": "^(?:C1\\d|D10)\\d{12}$",
+      "confidence": "high",
+      "checksum": "ontrac"
+    },
+    {
       "id": "ontrac-1",
       "pattern": "^[CD]\\d{14}$",
-      "confidence": "high",
+      "confidence": "low",
       "checksum": "ontrac"
     },
     {
