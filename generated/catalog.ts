@@ -4424,7 +4424,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "cne"
+      "adapter": "cne",
+      "localClocks": true
     },
     "canaryUrl": "https://www.cne.com/track",
     "trackingUrlTemplate": "https://www.cne.com/en/track?no={trackingNumber}",

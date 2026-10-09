@@ -171,6 +171,7 @@
           "additionalProperties": false
         },
         "localClocks": {
+          "description": "True when the adapter can return scans without an instant: a wall clock with no UTC offset, or provider text. Consumers can keep that history beside instants and ask fallback providers for dated scans.",
           "type": "boolean"
         },
         "browserRecognition": {

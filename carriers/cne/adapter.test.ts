@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { carrierDefinition } from '../../core/catalog/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, CneTracker } from './adapter.js';
 import { normalizeCneNumber, parseCne } from './parser.js';
@@ -22,6 +23,7 @@ describe('CNE response projection', () => {
     expect(result.events?.every(event => event.time === undefined && event.provider_time_text === undefined)).toBe(true);
     expect(result.delivery_tracking_number).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE-SYNTHETIC');
+    expect(carrierDefinition('cne').tracking).toMatchObject({ localClocks: true });
   });
 
   it.each(['different', 'missing', 'conflicting'])('rejects %s source identity', mode => {
