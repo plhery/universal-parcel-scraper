@@ -11,7 +11,9 @@ and checksum-valid UPU S10 numbers with any country suffix. Scanned IMpb barcode
 may include a five- or nine-digit routing ZIP after `420`; the adapter strips only
 a uniquely valid routing prefix before querying and checking response identity, and
 reports the package identifier as `canonical_tracking_number` so a consumer can keep
-the number without the recipient's ZIP code.
+the number without the recipient's ZIP code. When both readings of a 34-digit barcode
+pass the check digit, the one whose Mailer ID fits its channel is kept; when both or
+neither fit, the barcode is rejected.
 [Publication 199](https://postalpro.usps.com/pub199) defines that structure and
 the PIC checksum and its channel identifiers: `92` to `94`, plus retail `95` and the
 legacy `91` on 22-digit PICs.

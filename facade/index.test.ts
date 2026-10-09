@@ -88,16 +88,42 @@ describe('standalone tracker', () => {
   });
 
   it('detects a USPS routing barcode as typed and gives providers only its package identifier', async () => {
-    // An invented package identifier, outside the PIC rule, behind the routing prefix and a made-up ZIP code.
+    // Invented package identifiers, the 22-digit one outside the PIC rule, behind the made-up ZIP code 00314,
+    // with or without a ZIP+4: 30, 34 and 38 digits.
     const pic = '9205510000000012345670';
-    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ data: {
-      tracking_number: pic, events: [{ timestamp: '2026-01-02T12:00:00Z', status: 'Delivered', dispatch_code_id: 7 }],
-    } }), { status: 201, headers: { 'Content-Type': 'application/json' } }));
-    const answer = await createTracker({ fetcher, providers: ['Ship24'] }).track({ number: `42000000${pic}` });
-    expect(answer).toMatchObject({ carrier: 'unknown', source: 'Ship24', result: { status: 'delivered' } });
-    // Alone, this identifier also fits other carriers' formats; as typed, no carrier is asked to recognize it.
-    expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual(['api.ship24.com']);
-    expect(fetcher.mock.calls.map(([url, init]) => `${String(url)} ${String(init?.body)}`).join(' ')).not.toContain('42000000');
+    const pic26 = '92000000000123456789012344';
+    for (const [typed, expected] of [[`42000314${pic}`, pic], [`420003142718${pic}`, pic], [`42000314${pic26}`, pic26],
+      [`420003142718${pic26}`, pic26]] as const) {
+      const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ data: {
+        tracking_number: expected, events: [{ timestamp: '2026-01-02T12:00:00Z', status: 'Delivered', dispatch_code_id: 7 }],
+      } }), { status: 201, headers: { 'Content-Type': 'application/json' } }));
+      const answer = await createTracker({ fetcher, providers: ['Ship24'] }).track({ number: typed });
+      expect(answer).toMatchObject({ carrier: 'unknown', source: 'Ship24', result: { status: 'delivered' } });
+      // Alone, the 22-digit identifier also fits other carriers' formats; as typed, no carrier is asked to recognize it.
+      expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([`https://api.ship24.com/api/parcels/${expected}?lang=en`]);
+      expect(fetcher.mock.calls.map(([url, init]) => `${String(url)} ${String(init?.body)}`).join(' ')).not.toContain('00314');
+    }
+  });
+
+  it('leaves a USPS routing barcode without a single package identifier to the USPS adapter', async () => {
+    // The made-up ZIP code 00314. The ZIP+4 9300 and the invented PIC read as a channel 93 PIC that passes its
+    // check digit too, each Mailer ID fitting its channel, so neither reading is the package identifier.
+    const typed = '4200031493009210090000000012345679';
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('no request expected'));
+    const tracker = createTracker({ fetcher, providers: ['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU'],
+      trawlUrl: 'http://browser.test' });
+    for (const carrier of [undefined, 'usps']) {
+      const failure = await tracker.track({ number: typed, carrier }).catch((error: unknown) => error);
+      expect(failure).toBeInstanceOf(TrackingError);
+      const { attempts, hint } = failure as TrackingError;
+      // USPS's adapter refuses it before a request; every provider step is inconclusive without one.
+      expect(attempts.filter(({ source }) => source === 'usps').map(({ kind }) => kind)).toEqual(carrier ? ['invalid_input'] : []);
+      const providerKinds = attempts.filter(({ source }) => source !== 'usps').map(({ kind }) => kind);
+      expect(providerKinds.length).toBeGreaterThan(0);
+      expect(new Set(providerKinds)).toEqual(new Set(['indeterminate']));
+      expect(hint.kind).toBe('indeterminate');
+    }
+    expect(fetcher).not.toHaveBeenCalled();
   });
 
   it('accepts a country hint without retrying an empty universal answer', async () => {

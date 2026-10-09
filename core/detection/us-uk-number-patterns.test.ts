@@ -9,6 +9,9 @@ import { normalizeIntelcomNumber } from '../../carriers/intelcom/parser.js';
 // Synthetic identifiers; the PIC check digit is calculated independently.
 const PIC = '9210090000000012345679';
 const PIC26 = '92000000000123456789012344';
+// Channel 93 with a six-digit Mailer ID; its last 22 digits also pass the check
+// digit, as a channel 92 PIC whose Mailer ID does not start with 9.
+const WIDE = '93009200000000123456789013';
 
 describe('USPS whole package barcodes', () => {
   it('uses the PIC checksum without counting its routing prefix', () => {
@@ -60,9 +63,29 @@ describe('USPS whole package barcodes', () => {
     }
   });
 
-  it('refuses wrong checksums, malformed routing and ambiguous ZIP/PIC splits', () => {
-    for (const raw of [`42000000${PIC.slice(0, -1)}1`, `420ABCDE${PIC}`, `4200000${PIC}`, `420000000${PIC}`, `420000000000${PIC26}`,
-      `420000009201${PIC}`]) {
+  it('reads a ZIP+4 before a 26-digit PIC, the only split of 38 digits', () => {
+    const raw = `420000000000${PIC26}`;
+    expect(raw).toHaveLength(38);
+    expect(uspsPackageIdentifier(raw)).toBe(PIC26);
+    expect(normalizeUSPSNumber(raw)).toBe(PIC26);
+    expect(new URL(uspsTrackingUrl(raw)).searchParams.get('tLabels')).toBe(PIC26);
+    expect(uspsPackageIdentifier(`420000000000${PIC26.slice(0, -1)}5`)).toBeNull();
+  });
+
+  it('settles a 34-digit split by the Mailer ID layout when both readings pass the check digit', () => {
+    // ZIP+4 9201 makes a channel 92 PIC whose Mailer ID does not start with 9.
+    expect(uspsPackageIdentifier(`420000009201${PIC}`)).toBe(PIC);
+    expect(normalizeUSPSNumber(`420000009201${PIC}`)).toBe(PIC);
+    // The 22-digit reading of this ZIP5 barcode is that kind of channel 92 PIC.
+    expect(isValidUspsPackageBarcode(WIDE.slice(4))).toBe(true);
+    expect(uspsPackageIdentifier(`42000000${WIDE}`)).toBe(WIDE);
+    expect(normalizeUSPSNumber(`42000000${WIDE}`)).toBe(WIDE);
+  });
+
+  it('refuses wrong checksums, malformed routing and ZIP/PIC splits the layout cannot settle', () => {
+    // ZIP+4 9300 reads as a channel 93 PIC with a six-digit Mailer ID, as valid as the PIC after it.
+    expect(isValidUspsPackageBarcode(`9300${PIC}`)).toBe(true);
+    for (const raw of [`42000000${PIC.slice(0, -1)}1`, `420ABCDE${PIC}`, `4200000${PIC}`, `420000000${PIC}`, `420000009300${PIC}`]) {
       expect(uspsPackageIdentifier(raw)).toBeNull();
       expect(() => normalizeUSPSNumber(raw)).toThrow();
       expect(detectCarrierMatch(raw).candidates).not.toContain('usps');

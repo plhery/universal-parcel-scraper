@@ -204,20 +204,49 @@ describe('universal discovery chain', () => {
   });
 
   it('asks for the package identifier of a USPS routing barcode, never the ZIP code before it', async () => {
-    // An invented package identifier behind the routing prefix and a made-up ZIP code.
+    // Invented package identifiers behind the made-up ZIP code 00314, with or without a ZIP+4: 30, 34 and
+    // 38 digits. In the last two, the other reading passes the check digit too, as a channel 92 PIC whose
+    // Mailer ID does not start with 9.
     const pic = '9210090000000012345679';
-    const history = { data: { tracking_number: pic,
-      events: [{ timestamp: '2026-09-10T10:00:00-04:00', status: 'Delivered', dispatch_code_id: 7 }] } };
-    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(history));
-    const tracker = new UniversalTracker({ providers: ['Ship24'], fetcher });
-    await expect(tracker.fetchSource('Ship24', `420 00000 ${pic}`, 20_000)).resolves.toMatchObject({ current_stage: 'delivered' });
-    await expect(tracker.fetch(`42000000${pic}`)).resolves.toMatchObject({ current_stage: 'delivered' });
-    const sent = fetcher.mock.calls.map(([url, init]) => `${String(url)} ${String(init?.body)}`);
-    expect(sent).toHaveLength(2);
-    for (const request of sent) {
-      expect(request).toContain(pic);
-      expect(request).not.toContain('42000000');
+    const pic26 = '92000000000123456789012344';
+    const wide = '93009200000000123456789013';
+    for (const [typed, expected] of [[`420 00314 ${pic}`, pic], [`420003142718${pic}`, pic], [`42000314${pic26}`, pic26],
+      [`420003142718${pic26}`, pic26], [`420003149201${pic}`, pic], [`42000314${wide}`, wide]] as const) {
+      const history = { data: { tracking_number: expected,
+        events: [{ timestamp: '2026-09-10T10:00:00-04:00', status: 'Delivered', dispatch_code_id: 7 }] } };
+      const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(history));
+      const tracker = new UniversalTracker({ providers: ['Ship24'], fetcher });
+      await expect(tracker.fetchSource('Ship24', typed, 20_000)).resolves.toMatchObject({ current_stage: 'delivered' });
+      await expect(tracker.fetch(typed)).resolves.toMatchObject({ current_stage: 'delivered' });
+      expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).pathname)).toEqual(Array(2).fill(`/api/parcels/${expected}`));
+      expect(fetcher.mock.calls.map(([url, init]) => `${String(url)} ${String(init?.body)}`).join(' ')).not.toContain('00314');
     }
+  });
+
+  it('sends no provider a USPS routing barcode without a single package identifier, nor either reading', async () => {
+    // The made-up ZIP code 00314. The ZIP+4 9300 and the PIC read as a channel 93 PIC that passes its check
+    // digit too, each Mailer ID fitting its channel; the other barcode fails its check digit.
+    const pic = '9210090000000012345679';
+    const providers = ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'] as const;
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('no request expected'));
+    const browserLookup = vi.fn().mockRejectedValue(new Error('no lookup expected'));
+    for (const options of [{ trawlUrl: 'http://browser.test' }, { browserLookup }]) {
+      const tracker = new UniversalTracker({ providers: [...providers], enablePostalNinja: true, fetcher, ...options });
+      for (const typed of [`420003149300${pic}`, `42000314${pic.slice(0, -1)}0`]) {
+        for (const source of providers) {
+          await expect(tracker.fetchSource(source, typed, 20_000))
+            .rejects.toMatchObject({ kind: 'indeterminate', provider: source, reason: 'usps_routing_barcode' });
+        }
+        const chain = await tracker.fetch(typed).catch((error: unknown) => error);
+        expect(chain).toBeInstanceOf(UniversalTrackingError);
+        expect((chain as UniversalTrackingError).failures.length).toBeGreaterThan(0);
+        for (const { error } of (chain as UniversalTrackingError).failures) {
+          expect(error).toMatchObject({ kind: 'indeterminate', reason: 'usps_routing_barcode' });
+        }
+      }
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(browserLookup).not.toHaveBeenCalled();
   });
 
   it('treats a history without one dated scan as inconclusive and moves on', async () => {

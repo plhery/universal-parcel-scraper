@@ -475,14 +475,23 @@ const RECIPES: Record<ChecksumId, (recipe: Recipe) => void> = {
     const mod10 = (head: string) => completeBy(hasGs1CheckDigit, head);
     r.add(mod10(`91${r.string(23)}`), mod10(`95${r.string(23)}`), mod10(`90${r.string(19)}`), mod10(`96${r.string(19)}`));
     // A 34-digit scan fits ZIP5 with a 26-digit PIC or ZIP9 with a 22-digit
-    // one. When both readings hold, it is rejected; a ZIP+4 starting 91 or 95
-    // never makes the 26-digit reading valid.
+    // one. When both readings pass the check digit, the one whose Mailer ID
+    // fits its channel is kept, and with none or both the scan is rejected. A
+    // ZIP+4 starting 92 here gives the 26-digit reading a Mailer ID without
+    // its leading 9; one starting 91 or 95 never makes that reading valid.
     const inner = pic('4', 22);
     for (const channel of ['91', '95', '92', '93', '94']) {
       const plus4 = completeBy((value) => hasGs1CheckDigit(value + inner), channel + r.string(1));
       r.add(`420${r.string(5)}${plus4}${inner}`);
     }
     r.add(`421${valid.at(-3)!.slice(3)}`, `420${r.string(9)}${r.string(18)}`, `${valid.at(-3)!}0`);
+    // The other way round: the last 22 digits of this channel 93 PIC also pass
+    // the check digit, as a channel 92 PIC whose Mailer ID starts with 0, which
+    // does not fit, or 9, which does.
+    for (const mailerId of ['0', '9']) r.add(`420${r.string(5)}${r.complete(`930092${r.string(3)}${mailerId}${r.string(15)}`)}`);
+    // A ZIP+4 before a 26-digit PIC has a single reading.
+    const routed38 = `420${r.string(9)}${pic('3', 26)}`;
+    r.add(routed38, `${routed38.slice(0, -1)}${(Number(routed38.at(-1)) + 5) % 10}`);
   },
 };
 

@@ -15,14 +15,29 @@ function validPic(number: string): boolean {
   return sum % 10 === 0;
 }
 
-/** A whole IMpb, with an optional five- or nine-digit routing ZIP. */
+/** The ship-to AI 420 and a five- or nine-digit ZIP before a 22- or 26-digit PIC, by length alone. */
+export const USPS_ROUTING_BARCODE = /^420(?:\d{5}|\d{9})(?:\d{22}|\d{26})$/;
+
+// Publication 199, sections 1.4 and 4.3: channel 92 carries a nine-digit
+// Mailer ID, which starts with 9, and 93 a six-digit one, which starts with 0
+// to 8; the legacy 91 has its nine-digit Mailer ID after a two-digit service
+// code. Online 94 and retail 95 PICs can carry either length.
+const MAILER_ID_LAYOUT = /^(?:91\d{2}9|92\d{3}9|93\d{3}[0-8]|9[45])/;
+
+/**
+ * A whole IMpb, with an optional five- or nine-digit routing ZIP. A 34-digit
+ * scan reads as a ZIP5 and a 26-digit PIC or a ZIP9 and a 22-digit one. When
+ * both readings pass the check digit, the one whose Mailer ID fits its channel
+ * is the identifier; if both or neither fit, there is none.
+ */
 export function uspsPackageIdentifier(raw: string): string | null {
   const number = normalizeTrackingNumber(raw);
   if (validPic(number)) return number;
-  if (!/^420\d{27}(?:\d{4})?$/.test(number)) return null;
-  const matches = [number.slice(8), number.slice(12)].filter(validPic);
-  // A 34-digit scan could contain a ZIP5/PIC26 or ZIP9/PIC22. Never guess.
-  return matches.length === 1 ? matches[0]! : null;
+  if (!USPS_ROUTING_BARCODE.test(number)) return null;
+  const readings = [number.slice(8), number.slice(12)].filter(validPic);
+  if (readings.length < 2) return readings[0] ?? null;
+  const laidOut = readings.filter((pic) => MAILER_ID_LAYOUT.test(pic));
+  return laidOut.length === 1 ? laidOut[0]! : null;
 }
 
 export function isValidUspsPackageBarcode(raw: string): boolean {

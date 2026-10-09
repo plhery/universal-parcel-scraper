@@ -15,11 +15,14 @@ describe('reported tracking numbers', () => {
       international_tracking_number: `42000000${PIC26}`,
     })).toMatchObject({ delivery_carrier: 'usps', delivery_tracking_number: PIC, canonical_tracking_number: PIC,
       international_tracking_number: PIC26 });
+    // A ZIP+4 before a 26-digit PIC, and a split whose other reading lacks the Mailer ID its channel needs.
+    expect(normalizeCarrierResult({ delivery_tracking_number: `420000000000${PIC26}`, canonical_tracking_number: `420000009201${PIC}` }))
+      .toMatchObject({ delivery_tracking_number: PIC26, canonical_tracking_number: PIC });
   });
 
   it('drop a routing barcode whose package identifier cannot be split off cleanly', () => {
-    // An ambiguous ZIP/PIC split, a wrong check digit, and a ZIP+4 before a 26-digit PIC.
-    for (const number of [`420000009201${PIC}`, `42000000${PIC.slice(0, -1)}0`, `420000000000${PIC26}`]) {
+    // Two readings with conforming Mailer IDs and passing check digits, then a wrong check digit.
+    for (const number of [`420000009300${PIC}`, `42000000${PIC.slice(0, -1)}0`, `420000000000${PIC26.slice(0, -1)}5`]) {
       const result = normalizeCarrierResult(Object.fromEntries([['delivery_carrier', 'usps'], ...NUMBER_FIELDS.map((field) => [field, number])]));
       expect(result.delivery_carrier, number).toBe('usps');
       for (const field of NUMBER_FIELDS) expect(result[field], `${field} ${number}`).toBeUndefined();

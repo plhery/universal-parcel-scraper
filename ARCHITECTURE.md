@@ -114,16 +114,23 @@ caller. An adapter with `recordsSteps` reports its own lookup, so dispatch does 
 telemetry a second time. `CarrierError.reason` separates expected details, such as Amazon
 Shipping's expired history, from transport failures.
 
-USPS barcode validation shares the carrier adapter's whole-identifier checks. A scanned
-routing prefix is removed only when it yields one valid package identifier; ambiguous splits
-are rejected. Result normalization applies the same rule to every number a result reports, so
-the delivery, canonical and international numbers never carry the recipient's ZIP code: a
-routing barcode keeps its package identifier or is dropped. Universal providers are asked
-for that package identifier too. A 22-digit PIC whose channel, Mailer ID and check digit
-agree selects USPS, apart from the families DHL eCommerce also tracks. Other checksum-valid
-USPS formats prioritize a candidate and still require carrier confirmation. Detection and
-recognition read a routing barcode as typed: outside that PIC rule, a bare identifier also
-fits other carriers' formats.
+USPS barcode validation shares the carrier adapter's whole-identifier checks. A routing
+barcode is `420`, the recipient's five- or nine-digit ZIP code and a 22- or 26-digit package
+identifier, so 30 and 38 digits split one way and 34 digits two ways. The prefix is removed
+when only one reading passes the check digit, or when both 34-digit readings pass and only
+one has a Mailer ID that fits its channel. Otherwise the barcode has no identifier. Result
+normalization applies the same rule to every number a result reports, so the delivery,
+canonical and international numbers never carry the recipient's ZIP code: a routing barcode
+keeps its package identifier or is dropped. Universal providers are asked for that package
+identifier. A number of that shape without one is never sent to them, as typed or as either
+reading: each provider step is inconclusive, `indeterminate` with reason
+`usps_routing_barcode`, before any request. The USPS adapter rejects it as invalid input,
+so the lookup ends inconclusive without a request. A 22-digit PIC whose channel, Mailer ID
+and check digit agree selects USPS, apart from the families DHL eCommerce also tracks. Other
+checksum-valid USPS formats prioritize a candidate and still require carrier confirmation;
+for routing barcodes those are the 30- and 34-digit forms Publication 199 defines. Detection
+and recognition read a routing barcode as typed: outside that PIC rule, a bare identifier
+also fits other carriers' formats.
 
 Recognition uses HTTP by default. Consumers can request `recognitionCandidates` with
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's

@@ -44,8 +44,12 @@ and [COVERAGE.md](COVERAGE.md) holds what was measured.
   `fetchSource()` per provider, each under its own budget.
 - Numbers are uppercased with spaces, dots and dashes removed, and must match
   `^(?=.*\d)[A-Z0-9]{4,40}$`. Every result must be bound to the requested number.
-  A USPS routing barcode whose package identifier splits off cleanly is requested as
-  that identifier, without the `420` prefix and the recipient's ZIP code.
+  A USPS routing barcode is requested as its package identifier, without the `420`
+  prefix and the recipient's ZIP code. A number of that shape without a single package
+  identifier (a failed check digit, or a 34-digit barcode whose two readings pass it and
+  the Mailer ID layout does not settle) is never sent, as typed or as either reading:
+  `fetchSource()` throws `indeterminate` with reason `usps_routing_barcode` before any
+  request. [ARCHITECTURE.md](../ARCHITECTURE.md) has the split rule.
 - A supplied postcode is passed to every provider; ParcelsApp and 17TRACK use it. The
   carrier's time zone is passed too. It is used only for scans with no trustworthy zone of
   their own.
