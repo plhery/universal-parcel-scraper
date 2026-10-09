@@ -4283,6 +4283,10 @@
         "pattern": "^[A-Z]{2}\\d{9}YP$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^YW[A-Z]{3}\\d{12}$",
+        "confidence": "high"
       }
     ]
   },

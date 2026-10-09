@@ -29,7 +29,7 @@ describe('French carrier number candidates', () => {
 
   it('does not read a postcode into Yanwen\'s US last-mile numbers', () => {
     // YW, a US hub code and twelve digits: the last five look like a French postcode.
-    expect(detectCarrierMatch('YWLAX000000075001')).toMatchObject({ carrier: 'unknown', confidence: 'none', candidates: [] });
+    expect(detectCarrierMatch('YWLAX000000075001')).toMatchObject({ carrier: 'yanwen', confidence: 'high', candidates: ['yanwen'] });
     expect(detectCarrierMatch('YWLA0000000075001').candidates).toEqual(['colis-prive']);
     expect(detectCarrierMatch('XWLAX000000075001').candidates).toEqual(['colis-prive']);
   });

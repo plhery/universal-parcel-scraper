@@ -287,12 +287,6 @@
     "reason": "A public experience table attributes this reference to Yanwen; no official source establishes the family."
   },
   {
-    "carrier": "yanwen",
-    "pattern": "^YW[A-Z]{3}\\d{12}$",
-    "kind": "open",
-    "reason": "Yanwen's US last-mile number, a hub code and twelve digits. Yanwen's tracker answers it with the parcel's page under the parcel's own number, which the adapter refuses as another parcel."
-  },
-  {
     "carrier": "yunexpress",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

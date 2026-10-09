@@ -579,8 +579,8 @@
         "reportedRole": "last_mile_tracking"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "yanwen",
+        "confidence": "high"
       },
       "note": "The last-mile number on an archived Yanwen tracking page for a parcel delivered in the United States. Yanwen's tracker answers it with that parcel's history, under the parcel's own number."
     },
@@ -599,8 +599,8 @@
         "reportedRole": "last_mile_tracking"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "yanwen",
+        "confidence": "high"
       },
       "note": "The last-mile number on an archived Yanwen tracking page for a parcel delivered in the United States. Yanwen's tracker answers it with that parcel's history, under the parcel's own number."
     }

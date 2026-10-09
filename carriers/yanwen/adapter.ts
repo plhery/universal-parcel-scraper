@@ -87,16 +87,22 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   const number = normalizeYanwenNumber(trackingNumber);
   const $ = load(html);
   $('script, style, noscript').remove();
-  const identities = $('.ny_cxjg > input[name="wcdhA"]').filter((_, element) => $(element).attr('value') === number);
+  const pages = $('.ny_cxjg > input[name="wcdhA"]');
+  // The tracker answers a last-mile number with its parcel's page, which
+  // names that number beside the parcel's own and in the parcel summary.
+  const own = pages.length === 1 ? pages.attr('value') ?? '' : '';
+  const parcel = own !== number && /^[A-Z0-9]{8,40}$/.test(own) && $('.ny_cxjg > input').filter((_, element) =>
+    $(element).attr('name') === `wcdhB${own}` && $(element).attr('value') === number).length === 1 ? own : number;
+  const identities = pages.filter((_, element) => $(element).attr('value') === parcel);
   if (identities.length !== 1) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
-  const resultBlocks = $('.cx_lb').filter((_, element) => clean($(element).find('.cx_bt_xx > h5').text()) === number);
+  const resultBlocks = $('.cx_lb').filter((_, element) => clean($(element).find('.cx_bt_xx > h5').text()) === parcel);
   if (resultBlocks.length < 1 || resultBlocks.length > 2) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
   const results: CarrierResult[] = [];
   for (const element of resultBlocks.toArray()) {
     const block = $(element);
     const timeline = block.find('.czhaodl');
     const summary = clean(block.find('.cx_bt_xx > p').text(), 200);
-    if (timeline.length === 0 && summary === 'No information was found' && identities.attr('status') === '查询不到') {
+    if (parcel === number && timeline.length === 0 && summary === 'No information was found' && identities.attr('status') === '查询不到') {
       results.push({ missing: true });
       continue;
     }
@@ -135,13 +141,14 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     if (columns.length !== 5) throw new SchemaError('Yanwen', 'Yanwen returned an invalid parcel summary');
     columns.find('a').remove();
     const deliveryNumber = clean(columns.eq(1).text(), 64).toUpperCase();
+    if (parcel !== number && deliveryNumber !== number) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
     const handoff = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
     const notes = block.find('.addNotes p').toArray().map((line) => clean($(line).text(), 300));
     const partner = handoff ? distributor(notes, handoff) : undefined;
     const country = clean(columns.eq(3).text(), 8).toUpperCase();
     results.push({ status, ...(stage ? { current_stage: stage } : {}),
       last_status_text: latest.description, last_update: latest.time,
-      ...(delivery ? { delivered_at: delivery.time } : {}),
+      ...(delivery ? { delivered_at: delivery.time } : {}), ...(parcel !== number ? { canonical_tracking_number: parcel } : {}),
       ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
       ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) });
   }

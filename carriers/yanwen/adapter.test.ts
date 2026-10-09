@@ -69,6 +69,30 @@ describe('Yanwen result projection', () => {
     expect(() => parse('<input id="numbers_en"><h1>YW TRACKING</h1>', NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('answers a last-mile number with the parcel whose page names it', () => {
+    const LAST_MILE = 'YWABC000000000001';
+    const page = (reference = LAST_MILE, named = LAST_MILE) => {
+      const $ = load(fixture());
+      $('.ny_cxjg').append(`<input name="wcdhB${NUMBER}" type="hidden" value="${named}">`);
+      $('.cx_top_nr').each((_, element) => { $(element).children('.colFlex').eq(1).html(`${reference}<a></a>`); });
+      return $.html();
+    };
+    const result = normalizeCarrierResult(parse(page(), LAST_MILE));
+    expect(result).toMatchObject({ status: 'delivered', canonical_tracking_number: NUMBER, delivered_at: '2026-03-05T12:00:00+01:00' });
+    expect(result.delivery_tracking_number).toBeUndefined();
+    expect(result.events).toHaveLength(4);
+    // Asked by its own number, the parcel still hands off to the last-mile number.
+    const own = parse(page(), NUMBER);
+    expect(own.delivery_tracking_number).toBe(LAST_MILE);
+    expect(own.canonical_tracking_number).toBeUndefined();
+    // The identity field and every summary copy must name the number.
+    expect(() => parse(page('YWABC000000000002'), LAST_MILE)).toThrow('different or ambiguous');
+    expect(() => parse(page(LAST_MILE, 'YWABC000000000002'), LAST_MILE)).toThrow('different or ambiguous');
+    const $ = load(page());
+    $('.cx_top_nr').last().children('.colFlex').eq(1).html('YWABC000000000002<a></a>');
+    expect(() => parse($.html(), LAST_MILE)).toThrow('different or ambiguous');
+  });
+
   it.each(['date', 'offset', 'empty', 'missing-timeline'])('rejects invalid %s instead of promoting earlier scans', (mode) => {
     const $ = load(fixture());
     if (mode === 'date') $('.czhaodl dt').first().text('2026-02-30');

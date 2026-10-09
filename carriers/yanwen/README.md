@@ -10,6 +10,12 @@ to the requested number, requires them to agree, and reads the actual dated
 timeline rather than the progress rail. Each scan carries its own GMT offset.
 The external link opens the official form.
 
+Detection also selects Yanwen for the numbers of its US last-mile service: `YW`,
+a hub code and twelve digits. The tracker answers such a number with its
+parcel's page. The adapter accepts that page only when its identity field and
+every summary copy give the number as the parcel's last-mile number, and returns
+the parcel's own number as `canonical_tracking_number`.
+
 The newest scan decides the status when the map knows its wording; the LM40
 icon marks the delivery scan whatever the last-mile carrier wrote. Otherwise
 the category on the identity field, which the page's status filter labels,

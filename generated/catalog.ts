@@ -4285,6 +4285,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^[A-Z]{2}\\d{9}YP$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^YW[A-Z]{3}\\d{12}$",
+        "confidence": "high"
       }
     ]
   },
@@ -5435,7 +5439,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aramex": ["aramex-1"],
   "tnt": ["tnt-1","tnt-2"],
   "correos-spain": ["correos-spain-1","correos-spain-2","correos-spain-3","correos-spain-4"],
-  "yanwen": ["yanwen-1","yanwen-2"],
+  "yanwen": ["yanwen-1","yanwen-2","yanwen-3"],
   "the-courier-guy": ["the-courier-guy-1"],
   "j-and-t": ["j-and-t-1","j-and-t-2","j-and-t-3","j-and-t-4","j-and-t-5","j-and-t-6"],
   "ems": [],
