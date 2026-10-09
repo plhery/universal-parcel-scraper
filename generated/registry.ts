@@ -74,6 +74,7 @@ import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as ninjaVan } from '../carriers/ninja-van/adapter.js';
 import { adapter as novaPoshta } from '../carriers/nova-poshta/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
+import { adapter as oldDominion } from '../carriers/old-dominion/adapter.js';
 import { adapter as ontrac } from '../carriers/ontrac/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
 import { adapter as packeta } from '../carriers/packeta/adapter.js';
@@ -189,6 +190,7 @@ export const REGISTRY: RegistryDefinition = {
     "ninja-van": ninjaVan,
     "nova-poshta": novaPoshta,
     "nz-post": nzPost,
+    "old-dominion": oldDominion,
     "ontrac": ontrac,
     "paack": paack,
     "packeta": packeta,
@@ -307,7 +309,7 @@ export const REGISTRY: RegistryDefinition = {
     "ninja-van": "ninja-van",
     "nova-poshta": "nova-poshta",
     "nz-post": "nz-post",
-    "old-dominion": "universal",
+    "old-dominion": "old-dominion",
     "omgo": "universal",
     "ontrac": "ontrac",
     "paack": "paack",

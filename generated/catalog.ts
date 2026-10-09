@@ -2954,10 +2954,10 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "old-dominion"
     },
-    "canaryUrl": "https://t.17track.net/",
-    "trackingUrlTemplate": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight/trace.html?proNumbers={trackingNumber}",
+    "canaryUrl": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html",
+    "trackingUrlTemplate": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html?proNumbers={trackingNumber}",
     "linkRules": [
       {
         "domains": [

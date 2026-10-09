@@ -211,6 +211,17 @@ describe('status map answers', () => {
     expect(answer('china-post', null, 'Delivered')).toEqual(unknown);
   });
 
+  it('answers Old Dominion by its status, which is its provider code', () => {
+    expect(answer('old-dominion', 'In Transit', 'Arrived at EXAMPLE CITY, ST (ABC)')).toEqual(mapped('in_transit'));
+    expect(answer('old-dominion', 'Returned To Dock', 'Returned To Dock')).toEqual(mapped('in_transit'));
+    expect(answer('old-dominion', 'Pickup Confirmed', 'Pickup Confirmed')).toEqual(mapped('registered'));
+    expect(answer('old-dominion', 'Agent Handoff', 'Agent Handoff')).toEqual(mapped('out_for_delivery'));
+    expect(answer('old-dominion', 'Delivery Confirmed', 'Delivery Confirmed')).toEqual(mapped('delivered'));
+    expect(answer('old-dominion', 'Synthetic Status', 'Synthetic Status')).toEqual(unknown);
+    // Every scan of the trace service carries its status.
+    expect(answer('old-dominion', null, 'Delivered')).toEqual(unknown);
+  });
+
   it.each(['app', '', 'hongkong-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });

@@ -1657,10 +1657,11 @@
     },
     {
       "carrier": "old-dominion",
-      "direct": "No adapter",
-      "sample": "Not tested",
+      "direct": "Yes (local Chromium)",
+      "sample": "Unverified; alternate \u2713 18, intermittent",
       "references": [
         {
+          "note": "No comparison reference. An alternate public reference returned 18 identity-bound scans in one run of fresh headless local Chromium on macOS: https://github.com/jkeen/tracking_number_data/blob/main/couriers/old_dominion.json. Other fresh headless runs on the same host, before and after it, ended as challenges: the page's reCAPTCHA Enterprise score decides each lookup. Linux server hosts are unverified.",
           "results": {
             "Ship24": "unverified",
             "ParcelsApp": "unverified",

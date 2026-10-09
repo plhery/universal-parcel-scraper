@@ -14,16 +14,52 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "old-dominion",
+    "steps": [
+      "browser"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "delivered_at",
+    "provider_code",
+    "weight"
+  ],
   "portal": {
-    "url": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight/trace.html?proNumbers={trackingNumber}",
-    "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "url": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html?proNumbers={trackingNumber}",
+    "canaryUrl": "https://www.odfl.com/us/en/tools/trace-track-ltl-freight.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at",
+      "weight",
+      "parcel_count",
+      "signature",
+      "recipient_address",
+      "sender_details",
+      "customer_reference",
+      "eta_window"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "eta_window",
+      "delivered_at",
+      "weight"
+    ],
+    "discarded": [
+      "signature",
+      "recipient_address",
+      "sender_details",
+      "customer_reference",
+      "parcel_count"
+    ],
     "unavailable": []
   },
   "links": [

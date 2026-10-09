@@ -118,7 +118,7 @@ asked after the other aggregators whatever its count.
 | [The Courier Guy](../carriers/the-courier-guy/README.md) | Yes | ✓ 14; alternate ✓ 13 | No history | No history | No history | Refused | N/A |
 | [GEODIS](../carriers/geodis/README.md) | Yes | Summary only | No history | Postcode prompt | ✓ 4, partial | ✓ 2 | N/A |
 | [Dachser](../carriers/dachser/README.md) | Yes (tracking link) | Not tested (link) | No history | No history | No history | No history | N/A |
-| [Old Dominion](../carriers/old-dominion/carrier.json) | No adapter | Not tested | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Old Dominion](../carriers/old-dominion/README.md) | Yes (local Chromium) | Unverified; alternate ✓ 18, intermittent | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Swiss Post Cargo](../carriers/swiss-post-cargo/README.md) | Yes | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
 | [PostLogistics](../carriers/postlogistics/README.md) | Yes | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Hermes Einrichtungs-Service](../carriers/hermes/README.md) | Yes | ✓ 10 | No history | No history | No history | No history | N/A |

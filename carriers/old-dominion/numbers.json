@@ -47,11 +47,14 @@
       "source": {
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/old_dominion.json"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "old-dominion",
         "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment."
+      "note": "Open-source project example; Old Dominion's trace page returns its delivered history."
     },
     {
       "number": "80003280379",
