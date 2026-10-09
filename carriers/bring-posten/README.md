@@ -29,8 +29,18 @@ accepted; other deviations are exceptions. Per-scan offsets establish instants;
 incomplete clocks remain local evidence.
 
 The sender the portal names, usually the shop, and the destination country are
-kept. The pickup point is named while the parcel waits there. The estimated day
-is kept while the parcel travels and the portal marks the estimate available.
+kept. The estimated day is kept while the parcel travels and the portal marks the
+estimate available.
+
+The pickup point is named while the parcel waits there, and after it is collected
+there: the delivery, and the movement before it that made the parcel ready for
+pickup, were both scanned at the unit the portal names as the pickup point
+(`expectedPickupUnitId`). A parcel taken back out for delivery keeps none. The
+reply gives the point's name, unit id and map link but not its address. The map
+page the link opens loads each unit's visiting address under the same id, but
+only as one large list of every unit in the country
+(`/kort/_/service/no.posten.map/enonicUnits?country=…`), with no lookup by id,
+so the adapter does not read it.
 
 Status wording comes from public event and cause codes. Free-text descriptions,
 addresses, pickup codes and proof images are excluded. Weight and dimensions have

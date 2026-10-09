@@ -3,7 +3,7 @@ import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/de
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
-import { clean } from '../../core/transport/index.js';
+import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { bringStatus, bringWording } from './status.js';
 
@@ -66,6 +66,19 @@ function estimatedDay(domain: Record<string, unknown>): string | null {
   return day ? calendarDay(Number(day[1]), Number(day[2]), Number(day[3])) : null;
 }
 
+/**
+ * Whether the parcel was collected at the pickup point the portal names: the
+ * delivery, and the movement before it that made the parcel ready for pickup,
+ * were scanned at that point's unit. Notices prove no movement.
+ */
+function collectedAt(rows: Record<string, unknown>[], pickupUnit: unknown): boolean {
+  const unit = cleanScalar(pickupUnit, 32);
+  const moves = rows.filter(row => bringStatus(String(row.status), text(row.lmCauseCode, 8)));
+  const index = moves.findIndex(row => row.status !== 'DELIVERED');
+  return Boolean(unit) && index > 0 && moves[index]!.status === 'READY_FOR_PICKUP'
+    && moves.slice(0, index + 1).every(row => cleanScalar(row.unitId, 32) === unit);
+}
+
 export function parseBring(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeBringNumber(rawNumber);
   if (!isRecord(payload)) throw new SchemaError('Bring');
@@ -117,8 +130,9 @@ export function parseBring(payload: unknown, rawNumber: string): CarrierResult {
   const sender = text(consignment.senderName, 200) || text(parcel.senderName, 200);
   const pickupInfo = isRecord(parcel.domain.deliveryType) && isRecord(parcel.domain.deliveryType.pickupPointInfo)
     ? parcel.domain.deliveryType.pickupPointInfo : {};
-  const pickup = current?.stage === 'ready_for_pickup'
-    ? text(parcel.expectedPickupUnitName, 200) || text(pickupInfo.expectedPickupUnitName, 200) : '';
+  const atPickupPoint = current?.stage === 'ready_for_pickup'
+    || (current?.stage === 'delivered' && collectedAt(parcel.eventSet.filter(isRecord), parcel.expectedPickupUnitId));
+  const pickup = atPickupPoint ? text(parcel.expectedPickupUnitName, 200) || text(pickupInfo.expectedPickupUnitName, 200) : '';
   const country = isRecord(consignment.recipientAddress) ? consignment.recipientAddress.countryCode : undefined;
   const active = current && ['pending', 'in_transit', 'out_for_delivery'].includes(current.status) && current.stage !== 'ready_for_pickup';
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),

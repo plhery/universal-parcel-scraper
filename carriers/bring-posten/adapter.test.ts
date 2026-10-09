@@ -135,10 +135,31 @@ describe('Bring fields, pieces and causes', () => {
     expect(waiting().expected_delivery).toBeNull();
   });
 
-  it('names the pickup point only while the parcel waits there', () => {
+  it('names the pickup point while the parcel waits there and after it is collected there', () => {
     expect(waiting()).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Example Kiosk' });
     expect(waiting({}).pickup_point).toBe('Example Locker');
     expect(travelling()).not.toHaveProperty('pickup_point');
+
+    const collected = () => JSON.parse(readFileSync(new URL('./fixtures/collected.json', import.meta.url), 'utf8'));
+    const rows = (value: ReturnType<typeof collected>) => parcel(value).eventSet as Record<string, unknown>[];
+    const result = parseBring(collected(), '370000000000000001');
+    expect(result).toMatchObject({ status: 'delivered', pickup_point: 'Example Parcel Locker' });
+    // The scans themselves are unchanged.
+    expect(result.events?.slice(0, 2)).toMatchObject([{ description: 'Delivered', location: '' }, { description: 'Ready for pickup', location: 'EXAMPLE TOWN' }]);
+    const numeric = collected(); parcel(numeric).expectedPickupUnitId = 100001;
+    expect(parseBring(numeric, '370000000000000001').pickup_point).toBe('Example Parcel Locker');
+    const noticed = collected(); rows(noticed).splice(1, 0, { ...rows(noticed)[2], status: 'NOTIFICATION_SENT', unitId: '' });
+    expect(parseBring(noticed, '370000000000000001').pickup_point).toBe('Example Parcel Locker');
+    // Delivered at another unit, taken back out for delivery, or with no pickup unit: no pickup point.
+    const elsewhere = collected(); rows(elsewhere)[0]!.unitId = '200001'; parcel(elsewhere).domain.latestSignificantEvent.unitId = '200001';
+    const readyElsewhere = collected(); rows(readyElsewhere)[1]!.unitId = '200001';
+    const redelivered = collected(); rows(redelivered).splice(1, 0, { ...rows(redelivered)[2], dateIso: '2026-01-06T08:00:00+01:00', unitId: '100001' });
+    const unbound = collected(); parcel(unbound).expectedPickupUnitId = null;
+    for (const value of [elsewhere, readyElsewhere, redelivered, unbound]) {
+      expect(parseBring(value, '370000000000000001')).not.toHaveProperty('pickup_point');
+    }
+    // Nor does the fixture parcel, delivered to the door after it was ready for pickup.
+    expect(parseBring(payload(), NUMBER)).not.toHaveProperty('pickup_point');
   });
 
   it('leaves out a sender or country the portal does not give', () => {
