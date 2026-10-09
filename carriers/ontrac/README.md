@@ -26,7 +26,8 @@ The parser reads short scan descriptions and city/state, the weight and the parc
 sides in OnTrac's unit, excluding recipient details, references, signatures and
 proof-of-delivery images. The hold code asking the recipient for address details or
 instructions is an exception; a delivery stopped for missing address details is a failed
-attempt.
+attempt. NFRP, an order transferred to another carrier, is in transit although OnTrac's page
+calls it delivered: the reply does not name the carrier that delivers it.
 
 ## Testing
 

@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { adapter, OntracTracker } from './adapter.js';
 import { normalizeOntracNumber, parseOntrac } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { classifyOntracStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
@@ -108,6 +110,12 @@ describe('OnTrac direct tracking', () => {
     expect(result.events?.[0]).toMatchObject({ stage });
     expect(result).not.toHaveProperty('delivered_at');
     expect(result.expected_delivery).toBe('2026-01-03T20:00:00-08:00');
+  });
+  it('stages every code statuses.json records as the map does', () => {
+    expect(statuses.entries.length).toBeGreaterThan(10);
+    for (const entry of statuses.entries) expect(classifyOntracStatus(entry.code)?.stage, entry.code).toBe(entry.stage);
+    // OnTrac's page calls the handoff delivered; the parcel is with another carrier.
+    expect(classifyOntracStatus('NFRP')).toEqual({ status: 'in_transit', stage: 'in_transit' });
   });
   it('reads a delivery stopped for missing address details as a failed attempt', () => {
     const value = payload();
