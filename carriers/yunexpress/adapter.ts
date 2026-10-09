@@ -83,24 +83,30 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     for (const raw of group.ProcessDetailList) {
       if (!isRecord(raw) || typeof raw.ProcessContent !== 'string' || ++scans > 500) throw new SchemaError('YunExpress');
       const content = clean(raw.ProcessContent, MAX_BYTES);
+      const rawTime = clean(raw.ProcessDate, 64);
       // The feed joins wording and place with "----". A relayed line can give
-      // a dash as its place, which runs into the divider and is no place.
+      // a dash as its place, which runs into the divider and is no place. A
+      // wording ending in a dash before an empty place reads the same, so the
+      // newest row takes the split its latest-scan record confirms.
       let dashes = 0;
       while (dashes < content.length && content[content.length - 1 - dashes] === '-') dashes += 1;
-      const divider = dashes > 4 ? content.length - dashes : content.lastIndexOf('----');
-      const fullDescription = clean(divider < 0 ? content : content.slice(0, divider), MAX_BYTES);
-      const fullLocation = divider < 0 ? '' : clean(content.slice(divider + 4), MAX_BYTES);
+      const splits = [...new Set([dashes > 4 ? content.length - dashes : content.lastIndexOf('----'), content.lastIndexOf('----')])]
+        .map((divider) => ({
+          fullDescription: clean(divider < 0 ? content : content.slice(0, divider), MAX_BYTES),
+          fullLocation: divider < 0 ? '' : clean(content.slice(divider + 4), MAX_BYTES),
+        }));
+      // Only the separately described latest scan supplies a verified offset.
+      // Storage/creation timezone fields say nothing about earlier scan clocks.
+      const isLast = (split: { fullDescription: string; fullLocation: string }) => rawTime === last.ProcessDate
+        && split.fullDescription === clean(last.ProcessContent, MAX_BYTES) && split.fullLocation === clean(last.ProcessLocation, MAX_BYTES);
+      const { fullDescription, fullLocation } = (events.length === 0 ? splits.find(isLast) : undefined) ?? splits[0]!;
       const description = clean(fullDescription, 500);
       const location = /^-+$/.test(fullLocation) ? '' : clean(fullLocation, 200);
       // The portal can list an older row with a place but no wording. It names
       // no status, so it is skipped; the newest row must still say something.
       if (!description && events.length) continue;
       if (!description) throw new SchemaError('YunExpress', 'YunExpress returned an empty scan');
-      const rawTime = clean(raw.ProcessDate, 64);
-      // Only the separately described latest scan supplies a verified offset.
-      // Storage/creation timezone fields say nothing about earlier scan clocks.
-      const exactLast = rawTime === last.ProcessDate && fullDescription === clean(last.ProcessContent, MAX_BYTES)
-        && fullLocation === clean(last.ProcessLocation, MAX_BYTES);
+      const exactLast = isLast({ fullDescription, fullLocation });
       const clock = eventClock(rawTime, exactLast ? lastOffset : undefined);
       if (events.length === 0 && !exactLast) throw new IndeterminateError('YunExpress', 'YunExpress latest summary does not match its first scan');
       const key = JSON.stringify([clock, description, location]);

@@ -135,6 +135,10 @@ describe('YunExpress captured response projection', () => {
     rows[13].ProcessContent = 'Shipment information received----Example-facility';
     Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: 'Customs inspection - Import', ProcessLocation: 'Example facility' });
     expect(parse(payload, NUMBER).events?.[13]).toMatchObject({ description: 'Shipment information received', location: 'Example-facility' });
+    // A wording that ends in a dash before an empty place, as its latest-scan record gives it.
+    rows[0].ProcessContent = 'Arrived at sorting center -----';
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: 'Arrived at sorting center -', ProcessLocation: '' });
+    expect(parse(payload, NUMBER).events?.[0]).toMatchObject({ description: 'Arrived at sorting center -', location: '' });
   });
 
   it('names the last-mile carrier its notes link to only when that carrier offers the reference', () => {
