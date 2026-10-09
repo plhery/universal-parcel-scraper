@@ -148,8 +148,11 @@ its recovery policy, including rate limits and malformed responses.
 
 Callers can order eligible recognition candidates with a `countryHint` and aggregate
 `priorities`. A provider's carrier hint and preferred number evidence come first, followed
-by the country (home before other served countries), aggregate scores and catalog rank.
-These signals do not add candidates, confirm ownership or change how answers are settled.
+by the country (home before other served countries), aggregate scores, a passing check digit
+and catalog rank. These signals do not add candidates, confirm ownership or change how answers
+are settled. `recognitionAskedCarriers` asks at most `MAX_RECOGNITIONS`. Without a country
+hint, when only rank placed the last of them, that place goes to the best-ranked candidate
+from a continent the others do not serve.
 `recognitionNumberShape` retains only character classes and run lengths for private
 aggregate analysis. Keep direct-confirmed live inputs outside Git; repeated observations
 of one number do not establish independent evidence.

@@ -50,6 +50,22 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionAskedCarriers('2820000000001')).toContain('delhivery');
   });
 
+  it('gives the last place to another continent when only popularity fills them', () => {
+    // Synthetic fourteen digits: Europe's popular carriers outrank Delhivery.
+    const number = '28000000000001';
+    const ranked = recognitionCandidates(number).map(candidate => candidate.carrier);
+    expect(ranked.indexOf('delhivery')).toBeGreaterThan(4);
+    expect(recognitionAskedCarriers(number)).toEqual([...ranked.slice(0, 4), 'delhivery']);
+    expect(recognitionAskedCarriers(number, { countryHint: 'FR' })).not.toContain('delhivery');
+    expect(recognitionAskedCarriers(number, { countryHint: 'IN' })[0]).toBe('delhivery');
+  });
+
+  it('ranks a carrier whose check digit passes ahead of popularity alone', () => {
+    // Synthetic twelve digits; only the first passes Purolator's Luhn check.
+    expect(recognitionCandidates('300000000004')[0]!.carrier).toBe('purolator');
+    expect(recognitionCandidates('300000000005').map(candidate => candidate.carrier)).not.toContain('purolator');
+  });
+
   it('selects OnTrac for C and D numbers that pass its check while preserving LaserShip detection', () => {
     for (const number of ['C00000000000006', 'D00000000000005']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'ontrac', confidence: 'high', candidates: ['ontrac'] });

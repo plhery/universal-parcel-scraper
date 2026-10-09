@@ -49,7 +49,8 @@ describe('recognition candidates', () => {
   });
 
   it('keeps the carriers that can answer, hint first, then number evidence, then popularity', () => {
-    expect(recognitionCandidates('12345678901231').map((candidate) => candidate.carrier)).toEqual(['dpd', 'dpd-de', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk', 'delhivery']);
+    // Hermes's check digit passes, which puts Hermes ahead of popularity alone.
+    expect(recognitionCandidates('12345678901231').map((candidate) => candidate.carrier)).toEqual(['hermes-de', 'dpd', 'dpd-de', 'seur', 'brt', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk', 'delhivery']);
     expect(recognitionCandidates('06080000000002')).toEqual([
       { carrier: 'dpd', needsInput: null, preferred: true },
       { carrier: 'dpd-de', needsInput: null, preferred: false },
@@ -142,11 +143,11 @@ describe('asking carriers', () => {
       if (carrier === 'seur' || carrier === 'brt') return { known: false };
       return new Promise(() => undefined);
     }, 20);
-    expect(started).toEqual(['dpd', 'dpd-de', 'seur', 'brt', 'hermes-de', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk', 'delhivery']);
+    expect(started).toEqual(['hermes-de', 'dpd', 'dpd-de', 'seur', 'brt', 'relais-colis', 'ciblex', 'dhl-ecommerce-uk', 'delhivery']);
     expect(outcomes.map(({ carrier, status }) => [carrier, status])).toEqual([
-      ['dpd', 'known'], ['dpd-de', 'failed'], ['seur', 'unknown'], ['brt', 'unknown'], ['hermes-de', 'failed'], ['relais-colis', 'failed'], ['ciblex', 'failed'], ['dhl-ecommerce-uk', 'failed'], ['delhivery', 'failed'],
+      ['hermes-de', 'failed'], ['dpd', 'known'], ['dpd-de', 'failed'], ['seur', 'unknown'], ['brt', 'unknown'], ['relais-colis', 'failed'], ['ciblex', 'failed'], ['dhl-ecommerce-uk', 'failed'], ['delhivery', 'failed'],
     ]);
-    expect(outcomes[0]!.lastActivityAt).toBe('2026-09-09T08:00:00Z');
+    expect(outcomes[1]!.lastActivityAt).toBe('2026-09-09T08:00:00Z');
   });
 });
 
