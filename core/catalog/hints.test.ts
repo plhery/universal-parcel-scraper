@@ -60,6 +60,9 @@ describe('delivery partner evidence', () => {
     ['', 'https://www.gofo.com/usa/', undefined],
     ['', 'https://gls-group.eu/FR/fr/suivi-colis', 'gls-fr'],
     ['', 'https://gls-group.eu/', undefined],
+    // DHL's eCommerce tracking page is shared, like its global one; its other pages are DHL's.
+    ['', 'https://www.dhl.com/us-en/home/tracking/tracking-ecommerce.html', undefined],
+    ['', 'https://www.dhl.com/us-en/home/tracking/tracking-express.html', 'dhl'],
   ])('resolves name %s and URL %s without guessing', (name, url, expected) => {
     expect(carrierIdFromPartner(name, url)).toBe(expected);
   });

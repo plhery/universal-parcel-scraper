@@ -545,7 +545,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "dhl.com"
         ],
-        "pathPattern": "/home/tracking[.]html$",
+        "pathPattern": "/home/tracking(?:/tracking-ecommerce)?[.]html$",
         "params": [
           "tracking-id",
           "trackingId"

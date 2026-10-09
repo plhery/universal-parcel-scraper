@@ -53,6 +53,11 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('GM1234567890123456')).toMatchObject({ carrier: 'dhl-ecommerce', confidence: 'high' });
   });
 
+  it.each(['GM1234567890123456', '1234567890', '9261290100130412345678'])('reads a DHL eCommerce tracking page link like the global one: %s', (number) => {
+    expect(parseTrackingInput(`https://www.dhl.com/us-en/home/tracking/tracking-ecommerce.html?submit=1&tracking-id=${number}`))
+      .toEqual(parseTrackingInput(`https://www.dhl.com/us-en/home/tracking.html?submit=1&tracking-id=${number}`));
+  });
+
   it.each(['JX1234567890', 'jx 1234 5678 90'])('selects J&T for its Indonesian JX waybill: %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'j-and-t', confidence: 'high' });
   });
