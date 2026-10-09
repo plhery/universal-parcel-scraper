@@ -69,7 +69,7 @@ signal.
   app's `getParcelShopByID` ([shared service](../dpd-de/service.ts)) answers
   for Swiss shops too, and its record must name the same id. It gives the
   street and town in capitals. The reply's own shop name wins over the
-  record's.
+  record's. A delivered parcel has none, collected there or not.
 - That service needs an anonymous session, which takes tens of seconds to
   open. DPD Germany shares it, and a long-lived host opens it ahead with
   `warmDpdSession()` ([how it is kept](../dpd-de/README.md#app-service)). A

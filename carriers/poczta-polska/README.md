@@ -28,7 +28,7 @@ broader “in delivery” state, so that state does not override the scan. The o
 state read on its own is “returned”: from that scan on, the item travels back,
 and a final delivery means the sender has it again. Weight is provided in
 kilograms. Office names provide locations, and the office holding an item for
-collection is its pickup point. The destination country is the two-letter code
+collection is its pickup point; a delivered item has none. The destination country is the two-letter code
 the service gives; office addresses, opening hours and payment documents are
 excluded.
 

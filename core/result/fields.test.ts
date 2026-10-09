@@ -48,3 +48,54 @@ describe('the shipping service', () => {
     }
   });
 });
+
+describe('the pickup point of a delivered parcel', () => {
+  const POINT = 'Example Parcel Shop\nExample Street 1\n1000 Example Town';
+  const scan = (stage: string | undefined, time: string) => ({ time, description: `Synthetic ${stage ?? 'scan'}`, ...(stage ? { stage } : {}) });
+  const delivered = (...events: ReturnType<typeof scan>[]) => normalizeCarrierResult({
+    status: 'delivered', current_stage: 'delivered', pickup_point: POINT, events });
+
+  it('is dropped after a door delivery the parcel went out for after waiting there', () => {
+    const result = delivered(scan('delivered', '2026-03-04T15:00:00+01:00'), scan('out_for_delivery', '2026-03-04T08:00:00+01:00'),
+      scan('ready_for_pickup', '2026-03-02T10:00:00+01:00'), scan('in_transit', '2026-03-01T10:00:00+01:00'));
+    expect(result).not.toHaveProperty('pickup_point');
+    // A notice or a problem report between moves nothing; neither does a second delivery scan.
+    expect(delivered(scan('delivered', '2026-03-04T15:05:00+01:00'), scan('delivered', '2026-03-04T15:00:00+01:00'),
+      scan('pending', '2026-03-04T12:00:00+01:00'), scan('exception', '2026-03-04T11:00:00+01:00'),
+      scan('out_for_delivery', '2026-03-04T08:00:00+01:00'), scan('ready_for_pickup', '2026-03-02T10:00:00+01:00')))
+      .not.toHaveProperty('pickup_point');
+    // A status alone, without a current stage, still says delivered.
+    expect(normalizeCarrierResult({ status: 'delivered', pickup_point: POINT,
+      events: [scan('delivered', '2026-03-04T15:00:00+01:00'), scan('out_for_delivery', '2026-03-04T08:00:00+01:00')] }))
+      .not.toHaveProperty('pickup_point');
+  });
+
+  it('reads scans oldest first by their instants', () => {
+    expect(delivered(scan('ready_for_pickup', '2026-03-02T10:00:00+01:00'), scan('out_for_delivery', '2026-03-04T08:00:00+01:00'),
+      scan('delivered', '2026-03-04T15:00:00+01:00'))).not.toHaveProperty('pickup_point');
+    expect(delivered(scan('out_for_delivery', '2026-03-02T08:00:00+01:00'), scan('ready_for_pickup', '2026-03-02T10:00:00+01:00'),
+      scan('delivered', '2026-03-04T15:00:00+01:00')).pickup_point).toBe(POINT);
+  });
+
+  it('stays where the parcel was collected', () => {
+    expect(delivered(scan('delivered', '2026-03-04T15:00:00+01:00'), scan('pending', '2026-03-03T09:00:00+01:00'),
+      scan('ready_for_pickup', '2026-03-02T10:00:00+01:00'), scan('out_for_delivery', '2026-03-02T08:00:00+01:00')).pickup_point).toBe(POINT);
+    // A point-delivery service whose collection follows a transit scan.
+    expect(delivered(scan('delivered', '2026-03-04T15:00:00+01:00'), scan('in_transit', '2026-03-02T10:00:00+01:00')).pickup_point).toBe(POINT);
+  });
+
+  it('stays as the carrier gave it when the scans prove no door delivery', () => {
+    // Nothing moved, or no scan is known.
+    expect(delivered(scan('delivered', '2026-03-04T15:00:00+01:00'), scan('registered', '2026-03-01T10:00:00+01:00')).pickup_point).toBe(POINT);
+    expect(delivered().pickup_point).toBe(POINT);
+    // A scan without a stage may have been the arrival at the point.
+    expect(delivered(scan('delivered', '2026-03-04T15:00:00+01:00'), scan(undefined, '2026-03-04T12:00:00+01:00'),
+      scan('out_for_delivery', '2026-03-04T08:00:00+01:00')).pickup_point).toBe(POINT);
+    // Local clocks keep the order given; a movement listed before the delivery leaves it in doubt.
+    expect(delivered(scan('out_for_delivery', '2026-03-04T08:00:00'), scan('delivered', '2026-03-04T15:00:00')).pickup_point).toBe(POINT);
+    expect(delivered(scan('delivered', '2026-03-04T15:00:00'), scan('out_for_delivery', '2026-03-04T08:00:00'))).not.toHaveProperty('pickup_point');
+    // A parcel not yet delivered keeps it.
+    expect(normalizeCarrierResult({ status: 'out_for_delivery', current_stage: 'out_for_delivery', pickup_point: POINT,
+      events: [scan('out_for_delivery', '2026-03-04T08:00:00+01:00'), scan('ready_for_pickup', '2026-03-02T10:00:00+01:00')] }).pickup_point).toBe(POINT);
+  });
+});

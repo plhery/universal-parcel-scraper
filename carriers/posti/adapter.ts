@@ -2,6 +2,7 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { CarrierError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { lastMovement } from '../../core/result/pickup.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
@@ -79,13 +80,10 @@ function pickupPoint(raw: unknown): string | null {
 
 /**
  * Whether the parcel waits at its pickup point, or was collected there: its
- * last movement before the delivery made it ready for pickup. Notices prove
- * no movement.
+ * last movement before the delivery made it ready for pickup.
  */
 function atPickupPoint(stage: string | undefined, events: readonly CarrierEvent[]): boolean {
-  if (stage === 'ready_for_pickup') return true;
-  if (stage !== 'delivered') return false;
-  return events.find((event) => !['pending', 'delivered'].includes(event.stage ?? ''))?.stage === 'ready_for_pickup';
+  return stage === 'ready_for_pickup' || (stage === 'delivered' && lastMovement(events) === 'ready_for_pickup');
 }
 
 function measurement(raw: unknown, units: Record<string, number>): number | null {

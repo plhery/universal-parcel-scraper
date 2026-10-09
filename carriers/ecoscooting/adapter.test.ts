@@ -84,7 +84,19 @@ describe('Ecoscooting parcel history', () => {
     const returned = returnedFixture(); returned.popStationParam = pickupFixture().popStationParam;
     expect(parseEcoscooting(returned, NUMBER)).toMatchObject({ current_stage: 'returned', pickup_point: PICKUP_POINT });
   });
-  it.each([['statusName', 'Different'], ['description', 'Not collected'], ['status', 'finish'], ['statusGroup', 'delivered']])('keeps a pickup-point collection inconclusive when %s changes or a flag appears', (field, value) => {
+  it('names no pickup point once the courier delivers the parcel instead', () => {
+    const atDoor = pickupFixture();
+    atDoor.statuses.splice(0, 2,
+      { opTimestamp: '1770399000000', actionCode: 'GTMS_SIGNED', statusName: 'Delivery Success', description: 'Parcel has been delivered successfully' },
+      { opTimestamp: '1770372000000', actionCode: 'GTMS_DO_DEPART', statusName: 'Out for Delivery', description: 'Your shipment is out for delivery' });
+    expect(parseEcoscooting(atDoor, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(parseEcoscooting(atDoor, NUMBER)).not.toHaveProperty('pickup_point');
+    // The delivery code alone says so, with or without the round before it.
+    atDoor.statuses.splice(1, 1);
+    expect(parseEcoscooting(atDoor, NUMBER)).not.toHaveProperty('pickup_point');
+  });
+
+  it.each([['statusName', 'Different'],['description', 'Not collected'], ['status', 'finish'], ['statusGroup', 'delivered']])('keeps a pickup-point collection inconclusive when %s changes or a flag appears', (field, value) => {
     const collected = pickupFixture(); collected.statuses[0][field] = value;
     expect(() => parseEcoscooting(collected, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });

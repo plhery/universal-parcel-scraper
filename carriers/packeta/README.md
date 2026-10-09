@@ -31,6 +31,9 @@ CZ, SK, HU, RO and PL. Tracked through the keyless endpoint behind the public tr
 - `sender` (merchant) and `branchAddress` (Z-BOX or partner shop) are kept as sender name
   and pickup point; neither holds recipient data. Recipient name, address, phone and
   signature are never read; a test asserts it.
+- For a parcel a courier brings to the door, `branchAddress` names a home-delivery branch,
+  such as "PL Home Delivery HD". A delivered parcel therefore keeps the pickup point only when
+  its last movement before the delivery made it ready for pickup there.
 - At most 20 events are returned, newest first.
 - Links use the canonical `/en/{code}` path; the legacy `?id=` form 301-redirects to it and
   is still recognized.

@@ -63,7 +63,7 @@ fallback')`.
 - While the parcel is ready for pickup, `pickup_point` is `halCmpnyName` on the first line,
   then `halAddress`: its street lines, and "City, ST 12345" or, without a state or province,
   "postcode city". Without a street or town it is the name alone; without a name, or for a
-  residential hold address, there is none.
+  residential hold address, there is none. A delivered parcel has none, collected there or not.
 - Delivered scans are rewritten to "Delivered" because FedEx's line names the signatory.
 - Scan times come from `date` + `time` + `gmtOffset`. A scan without a usable triple keeps no
   time rather than a guessed zone.

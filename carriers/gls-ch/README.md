@@ -52,7 +52,8 @@ HTTP 400, 403 and 404 all mean "no such parcel" and raise
 - While the parcel waits at a ParcelShop, its `parcelShop` object, the one the
   tracking page prints, gives the pickup point: the shop's name, then its
   street and town on their own lines. Without it, the scan that names the shop
-  gives the name alone. The shop's id and opening hours are not read.
+  gives the name alone. The shop's id and opening hours are not read. A
+  delivered parcel has none, collected there or not.
 - `recognizes(number)`, the adapter's `recognize()`, reads the overview alone.
   Unlike a lookup, it takes only a 404 with GLS's `lastError: E000` as a
   not-found: a 400 or 403 there can be a challenge. Carrier recognition uses it,

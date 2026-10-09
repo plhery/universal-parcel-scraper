@@ -82,7 +82,7 @@ for another shipment → `SchemaError`.
   sender's drop-off included, so only a record on the scans since the parcel
   reached its pickup point counts: its arrival there and the locker countdown. The app gives the parcel's delivery point
   (`detail.deliveryPointModel`), whose first address line is its name, as the
-  app shows it.
+  app shows it. A delivered parcel has none, collected there or not.
 
 ## Mobile API
 

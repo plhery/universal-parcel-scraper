@@ -60,7 +60,7 @@ and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
   lines, as the pickup notice shows them. The record must name the same site.
   A terminal's record can repeat its name in place of a street, which is then
   left out; without a town the name stands alone. The notice's deadlines are
-  not read.
+  not read. A delivered parcel has none, collected there or not.
 - Weight (sent in grams), measurements (millimetres; most letters have two),
   destination country and delivery time come from the shipment summary. The
   delivery estimate is dropped once the shipment is delivered or returned.

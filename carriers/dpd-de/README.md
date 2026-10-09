@@ -114,7 +114,8 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   there, the shop becomes the pickup point: its name, then its street and its
   town on their own lines. The address comes from `getParcelShopByID` for that
   PUDO id and must name the same one. Without it the name stands alone. The
-  shop's phone, opening hours and coordinates are not read.
+  shop's phone, opening hours and coordinates are not read. A delivered parcel
+  has none, collected there or not.
 - The order's measured length, width and height are in millimetres. A side of
   zero means no measurement, and the shipper's declared size is not read.
 - The service reports "no tracking data" for parcels its scan list still

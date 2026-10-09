@@ -86,7 +86,7 @@ universal provider.
   carries the point's record as JSON in `Yext["profile"]`. When its `meta.id` is
   that id, the record's street (`address.line1`) and its postcode and town
   follow the name on their own lines. The point's phone, opening hours and
-  coordinates are not read.
+  coordinates are not read. A delivered parcel has none, collected there or not.
 - `arrivalCountry` repeats `originCountry` on some international items, inbound
   ones included. Such a pair stands only while every scan stays in that
   country; otherwise a delivery scan's country is the destination.

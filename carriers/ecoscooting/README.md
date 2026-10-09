@@ -28,7 +28,8 @@ code for that deadline (`GTMS_PUDO_OVERDUE`); only the last-mile one
 published `CNESP` references.
 The labelled gram weight is converted to kilograms. Once a scan places the
 parcel at a pickup point, the shop's name and address become `pickup_point`.
-They stay after collection so the parcel still shows where it was collected.
+They stay after collection so the parcel still shows where it was collected. A
+parcel the courier delivers instead (`GTMS_SIGNED`, `LM_SIGN_SUCCESS`) has none.
 The pickup PIN, the shop's phone, opening hours and station id are never read.
 Destination addresses, postcodes, coordinates, delivery photos, order
 identifiers and routing features are excluded. References

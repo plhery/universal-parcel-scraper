@@ -158,6 +158,25 @@ describe('Packeta response parsing', () => {
     expect(JSON.stringify(result)).not.toContain('branchAddress');
   });
 
+  it('names no pickup point on a parcel a courier brought to the door', () => {
+    const atDoor = (handOver: string) => parsePacketaTrackingResponse({ item: packet({
+      branchAddress: 'XX Home Delivery HD',
+      trackingDetails: [
+        { text: 'We have successfully received the parcel for transport. Example Depot', time: '2026-07-05 09:00:00' },
+        { text: handOver, time: '2026-07-06 08:00:00' },
+        { text: 'The parcel is with you. Thank you, and we look forward to next time.', time: '2026-07-07 13:00:00' },
+      ],
+    }) }, TRACKING_NUMBER);
+    // Packeta names a home-delivery branch there, and its partner carrier's hand-over is the last movement.
+    const handedOver = atDoor('The parcel has been handed over to the carrier. Tracking number: EXAMPLE');
+    expect(handedOver).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(handedOver).not.toHaveProperty('pickup_point');
+    expect(atDoor('The parcel is on its way to you.')).not.toHaveProperty('pickup_point');
+    // On its way, the branch is still the one Packeta names.
+    expect(parsePacketaTrackingResponse({ item: packet({ packetStatusId: '31' }) }, TRACKING_NUMBER).pickup_point)
+      .toBe('Example Pickup Point, Example Street 1');
+  });
+
   it('never retains recipient identity, address or signature data', () => {
     const serialized = JSON.stringify(parsePacketaTrackingResponse({ item: packet() }, TRACKING_NUMBER));
     for (const secret of [

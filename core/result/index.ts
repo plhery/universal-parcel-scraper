@@ -12,6 +12,7 @@ import { isRecord, type JsonObject } from '../types.js';
 import { CARRIER_CATALOG, STAGES } from '../../generated/catalog.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../detection/usps.js';
+import { deliveredToDoor } from './pickup.js';
 
 export type CarrierStatus =
   | 'pending'
@@ -52,6 +53,11 @@ export interface CarrierResult extends JsonObject {
   expected_delivery_from?: string | null;
   sender_name?: string | null;
   receiver_name?: string | null;
+  /**
+   * The point the parcel waits at for collection: its name, then its address on
+   * the following lines. On a delivered parcel, the point it was collected from;
+   * a parcel brought to the door has none.
+   */
   pickup_point?: string | null;
   delivered_at?: string | null;
   weight_kg?: number | null;
@@ -188,5 +194,9 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
     }
     return event;
   });
+  // Some carriers keep naming a pickup point on a parcel the courier brought to
+  // the door: the one it waited at before going back out, or the one it would
+  // have gone to.
+  if (normalized.pickup_point != null && deliveredToDoor(normalized)) delete normalized.pickup_point;
   return normalized;
 }

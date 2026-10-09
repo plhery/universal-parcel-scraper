@@ -101,6 +101,16 @@ A result's `service_name` is the carrier's own name for the shipping service the
 travels under, as its page shows it. It names the product only, never a status, the merchant
 or the kind of parcel. The carriers whose `capabilities` list `service_name` fill it.
 
+A result's `pickup_point` is the point the parcel waits at for collection: its name, then its
+address on the following lines. On a delivered parcel it is the point the recipient collected
+it from. A parcel brought to the door has none, although some carriers still name a point
+then. A parcel was collected there when its last movement before the delivery made it ready
+for pickup; notices, problem reports and further delivery scans move nothing. Adapters apply
+this with their carrier's own signals. Result normalization also drops the point whenever
+the scans prove a door delivery: the last movement before the delivery took the parcel out
+for delivery. A scan without a stage, or a history in which nothing moved, leaves the point
+as the carrier gave it.
+
 Chronopost reads its own credential-free tracking operation, including scans after export
 and partner references. La Poste's unified feed can omit that history without a completeness
 marker, so its fast success does not replace Chronopost's direct result: La Poste names

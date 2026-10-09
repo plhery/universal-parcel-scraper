@@ -54,7 +54,8 @@ While the parcel waits at a relay or locker, that becomes the pickup point: its
 name, then its street and town on their own lines when its address has the
 usual name, street, postcode, city and country layout. A scan names it as the
 pickup point, or as the delivery point together with how the parcel is
-collected; a delivery point alone can be the recipient's home.
+collected; a delivery point alone can be the recipient's home. A delivered
+parcel has none, collected there or not.
 
 A checked `GEO/` parcel reference with an explicit German delivery country
 proposes DPD Germany. The tracker asks that adapter with the partner's number

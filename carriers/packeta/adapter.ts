@@ -2,6 +2,7 @@
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { lastMovement } from '../../core/result/pickup.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -99,8 +100,12 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   // Sender (merchant) and branchAddress (Z-BOX/partner shop) carry no
   // recipient PII and are the only pickup signal — Packeta exposes no ETA.
+  // For a parcel a courier brings to the door, branchAddress names a
+  // home-delivery branch, so a delivered parcel keeps it only when its last
+  // movement made it ready for pickup.
   const sender = clean(item.sender, 200) || null;
-  const pickupPoint = clean(item.branchAddress, 300) || null;
+  const pickupPoint = classified?.stage === 'delivered' && lastMovement(events) !== 'ready_for_pickup'
+    ? null : clean(item.branchAddress, 300) || null;
   const deliveredAt = classified?.status === 'delivered' ? events[0]?.time ?? null : null;
   if (!classified) {
     return {

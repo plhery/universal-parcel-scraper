@@ -56,7 +56,8 @@ this confirmation before they can identify the French network.
   parcels (`2501` ids) is a private person and is never asked for, nor is the depot
   (`PAQ`, or `codeActionColis` 20), even when the record still names a shop. The
   endpoint answers any point under any parcel code, so the point comes only from the
-  parcel's own record. Opening hours and coordinates are not read.
+  parcel's own record. Opening hours and coordinates are not read. A delivered
+  parcel has none, collected there or not.
 - Not used: scraping `moncolis.gls-france.com` — the endpoint returns the same
   data as JSON.
 - The parser reads an allowlist of fields. Address, signature, contact and

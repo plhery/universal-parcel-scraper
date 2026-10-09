@@ -45,7 +45,7 @@ postcode.
 - While the parcel waits at a PaackGo Point, `pickup_point` is `pudo_name`, then
   `pudo_address` on the following lines, or the name alone. The address is one string Paack
   formats itself; like the page, it is kept as it comes and only broken where it holds a line
-  break.
+  break. A delivered parcel has none, collected there or not.
 - `activeEvent` decides the overall status when it maps: the banner can be ahead of the
   timeline. The timeline keeps its own per-event stages.
 - The timeline also lists the steps still to come, without a timestamp. Those and entries
