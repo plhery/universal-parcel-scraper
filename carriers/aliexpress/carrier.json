@@ -81,6 +81,13 @@
       "id": "aliexpress-lp-reference",
       "pattern": "^LP\\d{14}$",
       "confidence": "low"
+    },
+    {
+      "id": "aliexpress-ty",
+      "pattern": "^[A-Z]{2}\\d{9}TY$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "s10"
     }
   ]
 }

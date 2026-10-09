@@ -262,6 +262,14 @@
     "reason": "The Ukrainian issuer suffix suggests Ukrposhta but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
   },
   {
+    "shape": "AA9{9}TY with a valid S10 check digit",
+    "carriers": [
+      "aliexpress",
+      "chronopost"
+    ],
+    "reason": "TY names no country, but Cainiao numbers AliExpress parcels with it, and Chronopost's low-confidence rule accepts any S10 shape. The AliExpress rule is preferred, so AliExpress is asked first; the number stays a suggestion."
+  },
+  {
     "shape": "AA9{9}US with a valid S10 check digit",
     "carriers": [
       "chronopost",

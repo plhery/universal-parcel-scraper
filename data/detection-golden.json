@@ -17928,9 +17928,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "aliexpress",
       "chronopost"
     ],
+    "preferred": [
+      "aliexpress"
+    ],
     "asked": [
+      "aliexpress",
       "chronopost"
     ]
   },
@@ -18396,6 +18401,17 @@
     "confidence": "high",
     "candidates": [
       "australia-post"
+    ]
+  },
+  {
+    "input": "SU022328243MI",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -18996,6 +19012,54 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "UT168665911TY",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "aliexpress",
+      "chronopost"
+    ],
+    "preferred": [
+      "aliexpress"
+    ],
+    "asked": [
+      "aliexpress",
+      "chronopost"
+    ]
+  },
+  {
+    "input": "UT185831622TY",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "aliexpress",
+      "chronopost"
+    ],
+    "preferred": [
+      "aliexpress"
+    ],
+    "asked": [
+      "aliexpress",
+      "chronopost"
+    ]
+  },
+  {
+    "input": "UT190556738TY",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "aliexpress",
+      "chronopost"
+    ],
+    "preferred": [
+      "aliexpress"
+    ],
+    "asked": [
+      "aliexpress",
+      "chronopost"
+    ]
   },
   {
     "input": "UT973056433NL",

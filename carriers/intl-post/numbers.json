@@ -50,6 +50,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "aliexpress",
           "chronopost"
         ],
         "not": [

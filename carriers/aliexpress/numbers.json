@@ -352,6 +352,101 @@
         "confidence": "none"
       },
       "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracker returns its history."
+    },
+    {
+      "number": "UT168665911TY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230704215309/https://global.cainiao.com/global/detail.json?mailNos=UT168665911TY&lang=en-US&language=en-US",
+        "date": "2023-07-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress",
+          "chronopost"
+        ]
+      },
+      "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to Canada. The TY suffix names no country."
+    },
+    {
+      "number": "UT185831622TY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231011161521/https://global.cainiao.com/global/detail.json?mailNos=UT185831622TY&lang=en-US&language=en-US",
+        "date": "2023-10-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress",
+          "chronopost"
+        ]
+      },
+      "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to Canada. The TY suffix names no country."
+    },
+    {
+      "number": "UT190556738TY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231101170119/https://global.cainiao.com/global/detail.json?mailNos=UT190556738TY&lang=en-US&language=en-US",
+        "date": "2023-11-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress",
+          "chronopost"
+        ]
+      },
+      "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to Canada. The TY suffix names no country."
+    },
+    {
+      "number": "SU022328243MI",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260102213844/https://global.cainiao.com/global/check.json?mailNos=SU022328243MI&lang=en-US&language=en-US",
+        "date": "2026-01-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Cainiao tracking leg"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "A Cainiao tracking link archived by the Wayback Machine; Cainiao's tracker returns its history, an AliExpress parcel to the Czech Republic. The MI suffix names no country."
     }
   ]
 }
