@@ -425,6 +425,15 @@
       "note": "Also carries a hard-coded fallback wording."
     },
     {
+      "code": "1204",
+      "wording": "Consignment is being processed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-09",
+      "note": "Scanned at a parcel centre, before it sorts the parcel for delivery."
+    },
+    {
       "code": "1213",
       "wording": "Sorted for delivery",
       "language": "en",

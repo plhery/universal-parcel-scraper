@@ -60,6 +60,7 @@ describe('Swiss Post historical event codes', () => {
     ['934', 'Delivery failed: Shipment undeliverable', 'failed_attempt'],
     ['1001', 'Arrival at the collection/delivery point', 'in_transit'],
     ['1100', 'Arrival at the delivery point', 'in_transit'],
+    ['1204', 'Consignment is being processed', 'in_transit'],
     ['1213', 'Sorted for delivery', 'in_transit'],
     ['1218', 'Sorted for delivery', 'in_transit'],
     ['3800', 'Delivered to the mailbox/letter box', 'delivered'],
