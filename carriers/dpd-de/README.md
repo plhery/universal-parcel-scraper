@@ -101,6 +101,14 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   they are without one, once it has failed: one that does not answer holds the
   lookups that arrive meanwhile for those five seconds, and only then do they
   ask the guest API.
+- An `onSession` observer in the same options hears of each session: a
+  `DpdSessionEvent` when a saved one is taken up at start (`taken_up`, with
+  its `ageMs` and the store's load time as `durationMs`), and when an opening
+  ends (`opened` or `failed`, with its `durationMs` and, for a failure, an
+  `errorKind`). Its `trigger` says what began the opening: `start`, `renewal`,
+  `retry` after a failed one, `refused` after the service refused the session,
+  or `lookup` when a lookup found none open. It never receives a token, runs
+  apart from lookups, and what it throws or rejects is ignored.
 - `getTrackingData` and `getTrackingScanList` take the postcode as
   `DeliveryZipCode`. A matching one returns `DataViewStatus`
   `DeliveryZipCode_isValid`; a wrong one, or any postcode for an unknown parcel,

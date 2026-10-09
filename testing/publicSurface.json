@@ -222,6 +222,7 @@
       "BrowserRecognition",
       "CarrierAdapter",
       "DpdSession",
+      "DpdSessionEvent",
       "DpdSessionStore",
       "LocalBrowserOptions",
       "LocalBrowserSession",

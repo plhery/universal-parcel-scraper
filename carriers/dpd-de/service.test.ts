@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { sendsThrough } from '../../core/transport/transportOf.js';
-import { DPD_DE_APP_API, DpdAppService, sharedDpdAppService, type DpdSession } from './service.js';
+import { DPD_DE_APP_API, DpdAppService, sharedDpdAppService, type DpdSession, type DpdSessionEvent } from './service.js';
 
 // All credentials, sessions, shop ids and addresses here are invented.
 const PARTNER = { name: 'Synthetic Partner', token: 'SYNTHETIC_TOKEN', password: 'SYNTHETIC_PASSWORD' };
@@ -167,7 +167,7 @@ describe('DPD app service session', () => {
     const start = Date.now();
     const { calls, shops } = service();
     const { saves, store } = memory([{ token: SAVED, openedAt: start - 2 * HOUR }, { token: OLDER, openedAt: start - 30 * HOUR }]);
-    shops.keep(store);
+    shops.keep({ store });
     // A lookup waits for the store rather than opening a session of its own.
     await lookup(shops);
     expect(opened(calls)).toBe(0);
@@ -190,7 +190,7 @@ describe('DPD app service session', () => {
     const start = Date.now();
     const { calls, shops } = service({ getParcelShopByID: [unconfirmed, expired, unconfirmed, () => xml('', 503), expired, expired] });
     const { saves, store } = memory([{ token: SAVED, openedAt: start - 9 * HOUR, checkedAt: start - 2 * HOUR }]);
-    shops.keep(store);
+    shops.keep({ store });
     await vi.advanceTimersByTimeAsync(0);
     // Too old to take up: the next one opens, and the saved one is followed.
     expect(opened(calls)).toBe(1);
@@ -215,7 +215,7 @@ describe('DPD app service session', () => {
     const start = Date.now();
     const { calls, shops } = service({ getSessionFullState: [session(SAVED)], getParcelShopByID: [expired] });
     const { saves, store } = memory([{ token: OLDER, openedAt: start - 20 * HOUR }]);
-    shops.keep(store);
+    shops.keep({ store });
     await vi.advanceTimersByTimeAsync(0);
     await vi.advanceTimersByTimeAsync(10 * MINUTE);
     await expect(lookup(shops)).resolves.toMatchObject({ name: 'Kiosk Muster' });
@@ -232,11 +232,11 @@ describe('DPD app service session', () => {
   it('opens a session as before when the store fails, answers late or cannot save', async () => {
     vi.useFakeTimers();
     const failing = service();
-    failing.shops.keep({ load: () => Promise.reject(new Error('Unavailable')), save: () => Promise.reject(new Error('Unavailable')) });
+    failing.shops.keep({ store: { load: () => Promise.reject(new Error('Unavailable')), save: () => Promise.reject(new Error('Unavailable')) } });
     await vi.advanceTimersByTimeAsync(0);
     expect(opened(failing.calls)).toBe(1);
     const late = service();
-    late.shops.keep({ load: () => new Promise<never>(() => {}), save: () => { throw new Error('Unavailable'); } });
+    late.shops.keep({ store: { load: () => new Promise<never>(() => {}), save: () => { throw new Error('Unavailable'); } } });
     await vi.advanceTimersByTimeAsync(5_000 - 1);
     expect(opened(late.calls)).toBe(0);
     await vi.advanceTimersByTimeAsync(1);
@@ -245,11 +245,74 @@ describe('DPD app service session', () => {
     expect(late.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getParcelShopByID']);
     // A lookup that stops waiting for the store ends with its signal.
     const waiting = service();
-    waiting.shops.keep({ load: () => new Promise<never>(() => {}), save: async () => {} });
+    waiting.shops.keep({ store: { load: () => new Promise<never>(() => {}), save: async () => {} } });
     const controller = new AbortController();
     const pending = waiting.shops.parcelShop('CH00001', { signal: controller.signal, timeoutMs: 1_000 });
     controller.abort(new Error('Cancelled'));
     await expect(pending).rejects.toThrow('Cancelled');
+  });
+
+  /** A host's observer, which keeps what it hears. */
+  const observer = () => {
+    const events: DpdSessionEvent[] = [];
+    return { events, onSession: (event: DpdSessionEvent) => { events.push(event); } };
+  };
+  const unreachable = () => Promise.reject(new TypeError('fetch failed'));
+
+  it('tells the host how each opening ended, what began it and how long it took', async () => {
+    vi.useFakeTimers();
+    const { calls, shops } = service({ getSessionFullState: [
+      () => new Promise<Response>((resolve) => { setTimeout(() => resolve(session(SAVED)()), 42_000); }),
+      unreachable,
+      session(OLDER),
+    ] });
+    const { events, onSession } = observer();
+    shops.keep({ onSession });
+    await vi.advanceTimersByTimeAsync(42_000);
+    expect(events).toEqual([{ outcome: 'opened', trigger: 'start', durationMs: 42_000 }]);
+    await vi.advanceTimersByTimeAsync(8 * HOUR);
+    expect(events.at(-1)).toEqual({ outcome: 'failed', trigger: 'renewal', durationMs: 0, errorKind: 'transport' });
+    await vi.advanceTimersByTimeAsync(15 * MINUTE);
+    expect(events.at(-1)).toEqual({ outcome: 'opened', trigger: 'retry', durationMs: 0 });
+    expect(opened(calls)).toBe(3);
+    // The tokens stay with the service.
+    expect(JSON.stringify(events)).not.toMatch(new RegExp(`${SAVED}|${OLDER}|${FIXTURE}`.replace(/[+=]/g, '\\$&')));
+  });
+
+  it('tells the host of a session taken up at start, and of one opened after a refusal or for a lookup', async () => {
+    vi.useFakeTimers();
+    const start = Date.now();
+    const { shops } = service({ getParcelShopByID: [expired] });
+    const { store } = memory([{ token: SAVED, openedAt: start - 2 * HOUR }]);
+    const { events, onSession } = observer();
+    shops.keep({ store: { ...store, load: () => new Promise(resolve => { setTimeout(() => resolve(store.load()), 300); }) }, onSession });
+    await vi.advanceTimersByTimeAsync(300);
+    expect(events).toEqual([{ outcome: 'taken_up', trigger: 'start', durationMs: 300, ageMs: 2 * HOUR + 300 }]);
+    // The service refuses the session taken up: the lookup opens the next one.
+    await expect(lookup(shops)).resolves.toMatchObject({ name: 'Kiosk Muster' });
+    expect(events.at(-1)).toEqual({ outcome: 'opened', trigger: 'refused', durationMs: 0 });
+    // A lookup that finds no session open after a failed opening opens one itself.
+    const failed = service({ getSessionFullState: [unreachable] });
+    const heard = observer();
+    failed.shops.keep({ onSession: heard.onSession });
+    await vi.advanceTimersByTimeAsync(0);
+    await expect(lookup(failed.shops)).resolves.toMatchObject({ name: 'Kiosk Muster' });
+    expect(heard.events).toEqual([
+      { outcome: 'failed', trigger: 'start', durationMs: 0, errorKind: 'transport' },
+      { outcome: 'opened', trigger: 'lookup', durationMs: 0 },
+    ]);
+  });
+
+  it('keeps lookups and openings going when the observer fails', async () => {
+    vi.useFakeTimers();
+    for (const onSession of [() => { throw new Error('Observer failed'); }, () => Promise.reject(new Error('Observer failed'))]) {
+      const { calls, shops } = service({ getSessionFullState: [unreachable] });
+      shops.keep({ onSession });
+      await vi.advanceTimersByTimeAsync(0);
+      await expect(lookup(shops)).resolves.toMatchObject({ name: 'Kiosk Muster' });
+      await vi.advanceTimersByTimeAsync(8 * HOUR);
+      expect(opened(calls)).toBe(3);
+    }
   });
 
   it('is one per transport and user agent in the process', () => {
