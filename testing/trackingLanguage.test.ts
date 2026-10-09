@@ -256,6 +256,8 @@ describe('universal provider rules and the shared reading', () => {
       ['Clearance delay: payment not yet received', 'customs'],
       ['Arrived at hub; not yet processed', 'in_transit'],
       ['The parcel has not been handed over to GLS.', 'registered'],
+      ['Not handed over to the carrier: awaiting customs clearance', 'customs'],
+      ['Not yet handed over to the carrier: awaiting customs clearance', 'customs'],
       ['Out for delivery, handed over to our courier', 'out_for_delivery'],
       ['Handed over to the courier', 'out_for_delivery'],
       ['Handed Over to SingPost Courier', 'in_transit'],

@@ -86,6 +86,8 @@ const COURIER = String.raw`(?:(?:the|a|an|our|your) )?(?:delivery )?couriers?\b(
 const HANDED_TO_COURIER = new RegExp(`${HANDED_TO}${COURIER}`);
 const HANDED_TO_NETWORK = new RegExp(String.raw`${HANDED_TO}(?!${COURIER})(?:the |a |an |our |your )?(?:[\w-]+ ){0,2}?(?:courier|carrier)s?\b`);
 
+/** Customs or clearance named in any language. */
+const CUSTOMS = /customs|clearance|douan|formalites (?:d')?(?:import|export)|zoll|dogan|\b(?:des)?aduan[ae]|alfandeg|\bceln|government agency|autorite gouvernementale|staatliche behorde|autorita governativa/;
 /** The side of customs a scan may name: "import", "export", "import/export". */
 const CUSTOMS_SIDE = String.raw`(?:(?:import|export)(?:\/(?:import|export))? |local |destination |origin )?`;
 /**
@@ -257,10 +259,16 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/preparation chez.*expediteur|preparation.*expediteur|preparazione.*mittente|being prepared.*sender|(?:shipper|sender)(?: that)? (?:they are|is|are) preparing|beim absender.*vorbereitet|warehouse of the sender|shippers warehouse|entrepot de l'expediteur|lager des absenders|magazzino del mittente|demande d'envoi.*prise en compte|collection request.*(?:received|recorded)|abholauftrag.*erfasst|richiesta.*ritiro.*registrata/.test(text)) return 'registered';
   // The carrier has not had the parcel yet: "Shipment not yet received or
   // processed". What else the scan reports still counts: "Arrived at hub; not
-  // yet processed" is in transit, and a clearance delay stays with customs.
+  // yet processed" is in transit, and a clearance delay stays with customs,
+  // even worded within the step's own sentence ("Not handed over to the
+  // carrier: awaiting customs clearance"), as a release there moves it on
+  // unless it is still to come ("clearance not completed").
   if (!/\b(?:at|in|by) (?:the )?(?:destination|delivery|recipient|consignee|addressee|customer|customs|office of exchange)\b/.test(text)) {
     const rest = text.replace(NOT_YET, ' ');
-    if (rest !== text) return trackingLanguageStage(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, '')) ?? 'registered';
+    if (rest !== text) {
+      return trackingLanguageStage(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, ''))
+        ?? (CUSTOMS.test(text) ? (!CUSTOMS_PENDING.test(text) && CUSTOMS_RELEASED.test(text) ? 'in_transit' : 'customs') : 'registered');
+    }
   }
   if (/^(?:reported|recorded|announced|item created|enregistre|annonce|erfasst|angekundigt|registrato|annunciato)$/.test(text)) return 'registered';
   // A shipment record the sender created ("Shipment created"), and nothing else.
@@ -270,7 +278,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // submissions and clearance still pending or negated stay with customs.
   if (CUSTOMS_PENDING.test(text)) return 'customs';
   if (CUSTOMS_RELEASED.test(text)) return 'in_transit';
-  if (/customs|clearance|douan|formalites (?:d')?(?:import|export)|zoll|dogan|\b(?:des)?aduan[ae]|alfandeg|\bceln|government agency|autorite gouvernementale|staatliche behorde|autorita governativa/.test(text)) return 'customs';
+  if (CUSTOMS.test(text)) return 'customs';
 
   if (/out for (?:physical )?delivery|\bout with (?:the |a |our |your )?(?:delivery )?(?:courier|driver)s?\b(?! for (?:pick ?up|collection|return))|being delivered|in delivery|(?:loading|loaded).*delivery vehicle|on (?:\w+ )?vehicle for delivery|(?:courier|driver|delivery champion) has (?:the|your) (?:shipment|parcel|package|item)|en cours de livraison|en livraison|de la livraison de (?:son|votre) colis ce jour|charg(?:e|ement).*vehicule de livraison|in zustellung|zustellfahrzeug.*(?:geladen|verladen)|(?:beladen|verladung).*zustellfahrzeug|in consegna|caric(?:at|amento).*veicolo.*consegna/.test(text)) return 'out_for_delivery';
   // "Reparto" alone is the round, but not the "unidad de reparto" it leaves from;

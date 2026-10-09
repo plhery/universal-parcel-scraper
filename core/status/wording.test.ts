@@ -482,6 +482,23 @@ describe('classifyWording', () => {
       ['Clearance delay: payment not yet received', 'customs'],
       ['Arrived at hub; not yet processed', 'in_transit'],
       ['Parcel not yet handed over to the courier', 'registered'],
+      // Clearance worded within the step's own sentence stays with customs too.
+      ['Payment not yet received: clearance delay', 'customs'],
+      ['Not handed over to the carrier: awaiting customs clearance', 'customs'],
+      ['Not yet handed over to the carrier: awaiting customs clearance', 'customs'],
+      ['Not handed over to the carrier yet, awaiting customs clearance', 'customs'],
+      ['Item not yet handed over to customs', 'customs'],
+      // A release moves the parcel on, whatever the punctuation, but not one still to come.
+      ['Not yet handed over to the carrier: customs cleared', 'in_transit'],
+      ['Not yet handed over to the carrier. Customs cleared', 'in_transit'],
+      ['Not yet handed over to the airline; export customs cleared', 'in_transit'],
+      ['Das Paket wurde noch nicht an GLS übergeben: Zollabfertigung abgeschlossen', 'in_transit'],
+      ['Not yet handed over to the carrier: customs clearance not completed', 'customs'],
+      ['Not yet handed over to the carrier: once released from customs', 'customs'],
+      ['Not yet handed over to the carrier: waiting for customs clearance to be completed', 'customs'],
+      ['Das Paket wurde noch nicht an GLS übergeben: Zollabfertigung nicht abgeschlossen', 'customs'],
+      ["Le colis n'a pas encore été remis au transporteur : dédouanement non terminé", 'customs'],
+      ['Il pacco non è ancora stato affidato al corriere: sdoganamento non completato', 'customs'],
       // The courier alone is the round; a carrier or a courier set apart is another network.
       ['Out for delivery, handed over to our courier', 'out_for_delivery'],
       ['Handed over to the courier', 'out_for_delivery'],
