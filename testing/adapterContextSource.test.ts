@@ -38,6 +38,11 @@ const WITHOUT_SIGNAL: Readonly<Record<string, string>> = {
     + 'and the request keeps its timeout.',
   'carriers/dpd-de/service.ts #schedule': 'Renews the DPD app session a long-lived host keeps open: no lookup waits on the timer, '
     + 'which does not keep the process alive.',
+  'carriers/dpd-de/service.ts #load': 'Bounds the wait for a long-lived host\'s session store at start; a lookup waits for the '
+    + 'load on its own signal.',
+  'carriers/dpd-de/service.ts #follow': 'Checks the DPD app sessions a long-lived host no longer uses every hour: no lookup waits '
+    + 'on the timer, which does not keep the process alive.',
+  'carriers/dpd-de/service.ts #check': 'Spaces those checks apart: no lookup waits on them.',
 };
 
 const { config } = ts.readConfigFile(path.join(root, 'tsconfig.json'), (file) => ts.sys.readFile(file));
