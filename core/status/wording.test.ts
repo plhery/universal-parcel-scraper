@@ -119,6 +119,64 @@ describe('classifyWording', () => {
     }
   });
 
+  it('reads a handover that has not happened as registered in French, German and Italian too', () => {
+    for (const wording of [
+      "Le colis n'a pas encore été remis à GLS.", "Le colis n'a pas été remis au transporteur",
+      'Colis pas encore confié au transporteur', "Le colis n'a jamais été remis à l'opérateur",
+      'Das Paket wurde noch nicht an GLS übergeben.', 'Die Sendung ist noch nicht an den Paketdienst übergeben worden',
+      'Paket noch nicht an DPD übergeben', 'Il pacco non è ancora stato affidato a GLS.',
+      'Spedizione non affidata al corriere', "Pacco non ancora affidato all'operatore",
+    ]) expect(classifyWording(wording), wording).toEqual({ stage: 'registered', source: 'wording:language' });
+    // The handover made keeps its reading.
+    for (const [wording, stage] of [
+      ['Le colis a été remis à GLS.', 'accepted'], ['Le colis a été remis au transporteur', 'in_transit'],
+      ['Il a été remis au transporteur pour son acheminement.', 'in_transit'],
+      ['Das Paket wurde an GLS übergeben.', 'accepted'], ['Il pacco è stato affidato a GLS.', 'accepted'],
+    ] as const) expect(wordingStage(wording), wording).toBe(stage);
+    // So does what else the scan reports.
+    expect(wordingStage('Im Paketzentrum angekommen; noch nicht an den Zusteller übergeben')).toBe('in_transit');
+    // Only a handover to a carrier or an operator that has not happened: not one that
+    // cannot or will not happen, nor one to the recipient's side, a place, the sender or
+    // customs, nor an idiom. Each keeps the reading it had.
+    for (const [wording, stage] of [
+      ['Die Sendung konnte nicht an der Haustür übergeben werden', 'pending'],
+      ['Das Paket wird nicht an Feiertagen übergeben', 'pending'],
+      ['Le colis ne peut pas être remis au point relais', 'pending'],
+      ["Le suivi n'a pas été remis à jour", 'pending'],
+      ['Le colis ne sera pas remis au transporteur', 'in_transit'],
+      ['Retour : colis pas remis au point relais', 'returned'],
+      ['Il pacco non è stato affidato al corriere: mancata consegna', 'failed_attempt'],
+      ["Le colis n'a pas encore été remis au destinataire", 'pending'],
+      ["Le colis n'a pas été remis à la douane", 'customs'],
+      ["Le colis n'a pas encore été remis à l'expéditeur", 'pending'],
+      ['Das Paket wurde noch nicht an den Empfänger übergeben', 'pending'],
+      ['Das Paket wurde nicht an die Packstation übergeben', 'pending'],
+      ['Das Paket wurde nicht an den Zoll übergeben', 'customs'],
+      ['Il pacco non è ancora stato affidato al destinatario', 'pending'],
+      ["Il pacco non è stato affidato all'indirizzo indicato", 'pending'],
+      ['Il pacco non è stato affidato alla dogana', 'customs'],
+      // A carrier's shop, locker or pickup point is a place too, named by brand or not.
+      ['Das Paket wurde noch nicht an die DHL Packstation übergeben', 'pending'],
+      ['Paket noch nicht an DHL-Packstation übergeben', 'pending'],
+      ['Das Paket wurde noch nicht an den GLS PaketShop übergeben', 'pending'],
+      ['Das Paket wurde noch nicht an den Hermes PaketShop übergeben', 'pending'],
+      ['Das Paket wurde noch nicht an den DPD Pickup Paketshop übergeben', 'pending'],
+      ['Das Paket wurde noch nicht an den UPS Access Point übergeben', 'pending'],
+      ['Das Paket wurde noch nicht an die Post Filiale übergeben', 'pending'],
+      ["Le colis n'a pas encore été remis au Chronopost Pickup", 'pending'],
+      ["Le colis n'a pas encore été remis à UPS Access Point", 'pending'],
+      ["Le colis n'a pas encore été remis à la poste restante", 'pending'],
+      ['Il pacco non è ancora stato affidato al BRT-fermopoint', 'pending'],
+      ['Il pacco non è ancora stato affidato a InPost locker', 'pending'],
+      ['Parcel not yet handed to the DHL Packstation', 'pending'],
+    ] as const) expect(wordingStage(wording, 'pending'), wording).toBe(stage);
+    // The carrier named on its own, or its post, still is one.
+    for (const wording of ["Le colis n'a pas encore été remis à la Poste", "Le colis n'a pas encore été remis aux transporteurs",
+      'Il pacco non è ancora stato affidato alle Poste', 'Das Paket ist noch nicht an die Deutsche Post übergeben worden']) {
+      expect(classifyWording(wording), wording).toEqual({ stage: 'registered', source: 'wording:language' });
+    }
+  });
+
   it('reads a hold the recipient asked for as a delivery choice, not a problem', () => {
     for (const wording of [
       "Item on hold at recipient's request", 'Held at customer request', 'On hold per recipient’s request',

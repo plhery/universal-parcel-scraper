@@ -50,12 +50,31 @@ export function deliveryForecastRemainder(description: string): string | undefin
 const CARRIER_STEP = String.raw`(?:dispatched|despatched|shipped|sent|received|processed|handed (?:over|in)|posted)\b`;
 /** A handover to a carrier or courier, not to the recipient's side or to customs. */
 const HANDED_TO_CARRIER = String.raw`handed (?:over )?to (?!(?:the |a |an |your )?(?:recipient|addressee|consignee|customer|receiver|neighbou?r|customs|you|person)\b)`;
+/** A carrier by its brand, as handovers to one are worded. */
+const CARRIER_BRAND = String.raw`(?:gls|dpd|dhl|ups|fedex|tnt|hermes|colissimo|chronopost|brt|sda|inpost)\b`;
+/** A place a carrier delivers to, worded after the brand or noun of its network: "DHL Packstation". */
+const CARRIER_PLACE = String.raw`(?:packstation|paketstation|paketshop|parcelshop|shop|filiale|access point|pick ?up|locker|consigne|relais|restante|fermopoint|point|punto|box|station)\b`;
+/** A carrier named on its own, not one of its places. */
+const NOT_A_PLACE = String.raw`(?! ${CARRIER_PLACE})`;
+/**
+ * The same handover negated in French ("n'a pas encore été remis à GLS"),
+ * German ("wurde noch nicht an GLS übergeben", or a heading such as "Paket
+ * noch nicht an DPD übergeben") and Italian ("non è ancora stato affidato a
+ * GLS"): one that has not happened, to a carrier or an operator, not one that
+ * cannot or will not happen, nor one to the carrier's shop, locker or pickup
+ * point.
+ */
+const NOT_HANDED_TO_CARRIER = [
+  String.raw`(?:\bn'(?:a|ont)(?: toujours)? (?:pas|jamais)(?: encore)? ete|\bpas encore) (?:remis|confie)e?s? (?:a|au|aux) (?:(?:la|le|les) |l')?(?:(?:transporteur|livreur|coursier|messagerie|operateur|prestataire)s?|poste|${CARRIER_BRAND})\b${NOT_A_PLACE}`,
+  String.raw`(?:\b(?:wurde|wurden|ist|sind|war|waren)\b(?: [\w'-]+){0,4}? |(?:^|[.;:] )(?:(?:das|die|der|ihr|ihre) )?(?:[\w-]+ )?(?:noch )?)nicht an (?:(?:den|die|das|dem|der|unseren|unsere|unserem) )?(?:[\w-]+ )?(?:zusteller|paketzusteller|paketdienst|kurier|kurierdienst|versanddienst|spediteur|post|${CARRIER_BRAND}) ubergeben\b(?! werden)`,
+  String.raw`\bnon (?:(?:e|sono|ancora|stat[oaie]|mai) )*affidat[oaie] (?:(?:a|ad|al|allo|alla|ai|agli|alle) |all')(?:corrier[ei]|vettor[ei]|trasportator[ei]|spedizionier[ei]|operatore|posta|poste|${CARRIER_BRAND})\b${NOT_A_PLACE}`,
+].join('|');
 /**
  * A step the carrier has not taken yet ("not yet received", "not dispatched
  * yet") or a handover that has not happened ("has not been handed over to
  * GLS"), from the negation to the end of its sentence.
  */
-const NOT_YET = new RegExp(String.raw`(?:\bnot (?:yet (?:been )?${CARRIER_STEP}|(?:been )?${CARRIER_STEP}(?: \w+){0,3}? yet\b)|(?:\bnot|n't)(?: been)? ${HANDED_TO_CARRIER})${SENTENCE}*`, 'g');
+const NOT_YET = new RegExp(String.raw`(?:\bnot (?:yet (?:been )?${CARRIER_STEP}|(?:been )?${CARRIER_STEP}(?: \w+){0,3}? yet\b)|(?:\bnot|n't)(?: been)? ${HANDED_TO_CARRIER}|(?:\bnot|n't) yet(?: been)? ${HANDED_TO_CARRIER}(?!(?:the |a |an |your )?(?:[\w-]+ )?${CARRIER_PLACE})|${NOT_HANDED_TO_CARRIER})${SENTENCE}*`, 'g');
 
 /** A handover the carrier made, not a pickup order passed on or the sender's own hand-in. */
 const HANDED_TO = String.raw`(?<!\b(?:(?:pick ?up|collection) (?:order|request)|sender|shipper|seller|merchant|consignor)(?: has| have)?(?: been)? )\bhanded (?:over )?to `;
@@ -173,7 +192,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // the last one failed ("No payment, new delivery attempt") it stays a failed attempt.
   if (/^(?:a )?(?:new|next|another|further) (?:delivery )?attempt\b/.test(text)
     && !/\b(?:not|unable|fail(?:ed|ure)?|unsuccessful|missed|absent|closed|refused|nobody|no one)\b|n't\b/.test(text)) return 'in_transit';
-  if (/not (?:yet )?delivered|\bundelivered\b|could not.*deliver|\bcan(?: ?not|'t) be delivered\b|unable to deliver|delivery (?:attempt|failed)|non livre|n'(?:a|avons) (?:pas )?pu.*(?:remis|remettre)|n'a pas pu etre (?:distribue|livre)|\bne (?:peut|pourra|pourrait|pouvait) (?:pas )?etre (?:distribue|livre)|livraison (?:impossible|echouee)|\bechec (?:de (?:la )?)?livraison|tentative de livraison|nicht zugestellt|nicht zugestellt werden|zustellung.*(?:fehlgeschlagen|nicht moglich)|zustellversuch|non consegnat[oa]|non e stato possibile consegnare|consegna (?:fallita|non riuscita)|tentativo di consegna/.test(text)) return 'failed_attempt';
+  if (/not (?:yet )?delivered|\bundelivered\b|could not.*deliver|\bcan(?: ?not|'t) be delivered\b|unable to deliver|delivery (?:attempt|failed)|non livre|n'(?:a|avons) (?:pas )?pu.*(?:remis|remettre)|n'a pas pu etre (?:distribue|livre)|\bne (?:peut|pourra|pourrait|pouvait) (?:pas )?etre (?:distribue|livre)|livraison (?:impossible|echouee)|\bechec (?:de (?:la )?)?livraison|tentative de livraison|nicht zugestellt|nicht zugestellt werden|zustellung.*(?:fehlgeschlagen|nicht moglich)|zustellversuch|non consegnat[oa]|\bmancata consegna\b|non e stato possibile consegnare|consegna (?:fallita|non riuscita)|tentativo di consegna/.test(text)) return 'failed_attempt';
   if (/\bno (?:(?:ha|han|hemos|se|le|lo|la|fue|sido|ser|es|era|pudo|puede|podido|posible|todavia|aun) )*(?:entregad[oa]s?|entregar(?:lo|la|le|se)?|repartid[oa]s?|realizar la entrega|efectuar la entrega)\b|\bsin entregar\b|\b(?:entrega|reparto) (?:fallid[oa]|imposible|no (?:(?:ha|han|se|fue|sido|ser|pudo|puede|podido) )*(?:realizad[oa]|efectuad[oa]|completad[oa]|posible|conseguid[oa]))\b|\bimposible (?:entregar|realizar la entrega|efectuar la entrega)\b|\bfallo (?:en la|de) entrega\b|\bintento fallido\b|\bintento de (?:entrega|reparto)\b(?! (?:programad|previst|para (?:hoy|manana|el)|manana|hoy))|\bnao (?:(?:foi|foram|ser|sera|pode|podemos|conseguimos|conseguiu|se|possivel|e|ainda|tem sido|esta|estava) )*(?:entregues?|entregar|efetuar a entrega|efectuar a entrega|realizar a entrega)\b|\bentrega (?:falhada|sem sucesso|impossivel|nao (?:(?:foi|pode|ser|sera|tem sido) )*(?:efetuada|efectuada|realizada|conseguida|concretizada|possivel))\b|\bfalha (?:na|de) entrega\b|\btentativa (?:de entrega|sem sucesso)\b(?! (?:agendada|prevista|programada|para (?:hoje|amanha)|amanha|hoje))|\bcarteiro nao atendido\b/.test(text)) return 'failed_attempt';
   // Missed rounds worded around the attempt, the absent recipient or a closed
   // business. A scheduled attempt is not a missed one, nor is a sender pickup.

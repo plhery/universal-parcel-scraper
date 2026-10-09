@@ -52,6 +52,8 @@ const contrasts: { expected: Stage; en: string; fr: string; de: string; it: stri
     it: 'Etichetta creata; il corriere non ha ancora ricevuto il pacco' },
   { expected: 'accepted', en: 'Parcel handed to DPD', fr: 'Colis remis à DPD',
     de: 'Paket an DPD übergeben', it: 'Pacco affidato a DPD' },
+  { expected: 'registered', en: 'Parcel not yet handed to DPD', fr: "Le colis n'a pas encore été remis à DPD",
+    de: 'Paket wurde noch nicht an DPD übergeben', it: 'Pacco non ancora affidato a DPD' },
   { expected: 'registered', en: 'Order details received', fr: 'Détails de la commande reçus',
     de: 'Auftragsdaten erhalten', it: "Dati dell'ordine ricevuti", es: 'Datos del pedido recibidos',
     pt: 'Dados da encomenda recebidos' },
