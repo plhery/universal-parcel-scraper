@@ -2104,7 +2104,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "postnord"
+      "adapter": "postnord",
+      "recognitionRank": 7
     },
     "canaryUrl": "https://tracking.postnord.com/en/",
     "trackingUrlTemplate": "https://tracking.postnord.com/en/?id={trackingNumber}",
@@ -2577,6 +2578,7 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "ukrposhta",
+      "recognitionRank": 5,
       "localClocks": true
     },
     "canaryUrl": "https://track.ukrposhta.ua/en/",
@@ -3807,7 +3809,8 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "australia-post"
+      "adapter": "australia-post",
+      "recognitionRank": 6
     },
     "canaryUrl": "https://auspost.com.au/mypost/track/",
     "trackingUrlTemplate": "https://auspost.com.au/mypost/track/details/{trackingNumber}",

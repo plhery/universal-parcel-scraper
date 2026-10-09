@@ -20,7 +20,10 @@
     "adapter": "postnord",
     "steps": [
       "direct"
-    ]
+    ],
+    "recognition": {
+      "rank": 7
+    }
   },
   "capabilities": [
     "history",

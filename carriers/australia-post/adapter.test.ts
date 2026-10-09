@@ -298,6 +298,31 @@ describe('Australia Post direct retrieval', () => {
   });
 });
 
+describe('Australia Post recognition', () => {
+  it('asks the gateway alone and reads only its not-found entry as unknown', async () => {
+    const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(service()));
+    const fetcher = vi.fn<typeof fetch>();
+    const instance = adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
+    fetcher.mockResolvedValueOnce(Response.json(fixture()));
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z' });
+    const unknown = empty(); unknown[0].trackingIds = [NUMBER];
+    fetcher.mockResolvedValueOnce(Response.json(unknown));
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
+    // A refusal, an unprocessable reference and a known article without scans are not answers.
+    fetcher.mockResolvedValueOnce(new Response('{}', { status: 403 }));
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    fetcher.mockResolvedValueOnce(Response.json([{ status: 500, trackingIds: [NUMBER], error: { errorCode: -1, message: 'Unexpected exception' } }]));
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    const bare = fixture(); bare[0].shipment.articles[0].details[0].events = [];
+    fetcher.mockResolvedValueOnce(Response.json(bare));
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(browser).not.toHaveBeenCalled();
+    fetcher.mockClear();
+    await expect(instance.recognize!('ABC123')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+});
+
 describe('Australia Post browser retrieval', () => {
   it('serializes exact capture and page URLs, reserves transport time and records the step', async () => {
     const { trawl, fetcher, direct: refusedDirect } = tracker(service());

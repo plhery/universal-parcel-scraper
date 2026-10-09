@@ -3,7 +3,8 @@
 Australia Post articles and consignments (10–34 alphanumeric characters), tracked through the
 anonymous shipments API behind the official [tracking app](https://auspost.com.au/mypost/track/).
 Plain HTTP answers when the request looks like the official Android app's; the TRAWL browser
-service takes over when it is refused.
+service takes over when it is refused. Recognition asks the same API over plain HTTP only, so a
+refusal there leaves the number unchecked instead of starting the browser.
 
 ## How it works
 

@@ -3,6 +3,7 @@
 /** Carriers whose adapter can recognize a number, by popularity rank (carrier.json tracking.recognition). */
 export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "aliexpress": 14,
+  "australia-post": 6,
   "austrian-post": 39,
   "bpost": 37,
   "brt": 42,
@@ -39,6 +40,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "poste-italiane": 46,
   "posti": 27,
   "postlogistics": 26,
+  "postnord": 7,
   "purolator": 12,
   "relais-colis": 25,
   "seur": 43,
@@ -47,5 +49,6 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "the-courier-guy": 29,
   "tipsa": 24,
   "tnt": 44,
+  "ukrposhta": 5,
   "uniuni": 33,
 };

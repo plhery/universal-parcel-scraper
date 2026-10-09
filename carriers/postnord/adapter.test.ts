@@ -2,7 +2,8 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
-import { PostnordTracker } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, PostnordTracker } from './adapter.js';
 import { normalizePostnordNumber, parsePostnord } from './parser.js';
 import { classifyPostnordStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
@@ -243,6 +244,22 @@ describe('PostNord direct tracking', () => {
     await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
     fetcher.mockResolvedValue(new Response('<h1>Unexpected service page</h1>'));
     await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+  });
+
+  it('recognizes a number through the same lookup, unknown only on the structured negative', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    fetcher.mockResolvedValueOnce(new Response(JSON.stringify(payload())));
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-04T12:00:00.000Z' });
+    fetcher.mockResolvedValueOnce(new Response(JSON.stringify({ message: 'Shipment was not found.' }), { status: 404 }));
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
+    fetcher.mockResolvedValueOnce(new Response('<h1>Not Found</h1>', { status: 404 }));
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    fetcher.mockResolvedValueOnce(new Response('Forbidden', { status: 403 }));
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    fetcher.mockClear();
+    await expect(instance.recognize!('RR000000006SE')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 
   it('honors cancellation before proof generation and during the fetch, and exhausted budgets make no request', async () => {

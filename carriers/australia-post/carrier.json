@@ -18,7 +18,10 @@
     "steps": [
       "direct",
       "trawl"
-    ]
+    ],
+    "recognition": {
+      "rank": 6
+    }
   },
   "capabilities": [
     "history",

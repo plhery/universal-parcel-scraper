@@ -19,6 +19,9 @@
       "direct",
       "browser"
     ],
+    "recognition": {
+      "rank": 5
+    },
     "localClocks": true
   },
   "capabilities": [

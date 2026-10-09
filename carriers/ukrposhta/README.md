@@ -46,12 +46,16 @@ Both sources read the same domestic records. When the status API does not know a
 domestic barcode the browser is not asked. An international reference still gets
 the portal, which also shows the destination post's scans.
 
+Recognition asks the status API alone, over plain HTTP. Its not-found reply makes
+a domestic barcode unknown to Ukrposhta; for an international reference the check
+stays unanswered, since the portal is not asked.
+
 ## Limitations
 
 Detection only suggests Ukrposhta for a thirteen-digit domestic barcode, a length
 other carriers share. International references follow the issuing post.
 The fallback needs `TRACKING_CHROMIUM_PATH`. Neither
-not-found reply names the barcode, so neither can establish parcel absence. On the
+not-found reply names the barcode, so tracking reports neither as parcel absence. On the
 portal, multiple-piece shipments, count changes between requests and conflicting
 current scans are inconclusive. Delivery and estimate dates are not inferred from
 local scan clocks or the query time. The portal can refuse the browser's automatic

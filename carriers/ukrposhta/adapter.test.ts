@@ -261,6 +261,22 @@ describe('Ukrposhta direct status API retrieval', () => {
     expect(seam.launch).toHaveBeenCalledOnce();
   });
 
+  it('recognizes through the status API alone, reading its miss as unknown only for a domestic barcode', async () => {
+    const seam = browserSeam();
+    const recognize = (fetcher: typeof fetch, number = NUMBER) =>
+      adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder: NOOP_RECORDER, fetcher, env: {} }).recognize!(number);
+    await expect(recognize(statusApi())).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(recognize(statusApi({ message: 'Shipment not found' }, 404))).resolves.toEqual({ known: false });
+    await expect(recognize(statusApi({ message: 'Shipment not found' }, 404), 'RR000000005UA')).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(recognize(statusApi([]))).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(recognize(statusApi('<html>403 Forbidden</html>', 403))).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(recognize(statusApi({ message: 'no Route matched' }, 404))).rejects.toMatchObject({ kind: 'transport' });
+    expect(seam.launch).not.toHaveBeenCalled();
+    const fetcher = statusApi();
+    await expect(recognize(fetcher, 'RR000000006UA')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
   it('keeps rate limits, a missing endpoint and changed replies apart from absence', async () => {
     browserSeam();
     const run = (fetcher: typeof fetch) => new UkrposhtaTracker({ token: TOKEN, fetcher }).fetch(NUMBER);
