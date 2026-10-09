@@ -178,8 +178,8 @@ describe('Delhivery direct tracking', () => {
     const result = parseDelhivery(freight(), FREIGHT);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-03-04T10:00:00+05:30',
       delivered_at: '2026-03-02T19:45:00+05:30', expected_delivery: null });
+    // The delivered status dates a later audit and repeats the milestone, so it adds no snapshot.
     expect(result.events?.filter(event => event.time).map(event => [event.description, event.time, event.stage])).toEqual([
-      ['DELIVERED', '2026-03-04T10:00:00+05:30', 'delivered'],
       ['Delivered', '2026-03-02T19:45:00+05:30', 'delivered'],
       ['Out for Delivery', '2026-03-02T10:30:00+05:30', 'out_for_delivery'],
       ['On the Way', '2026-02-27T06:00:00+05:30', 'in_transit'],
@@ -190,6 +190,12 @@ describe('Delhivery direct tracking', () => {
       ['Dispatched', 'Example City', 'out_for_delivery'], ['Delivered', 'Example City', 'delivered'],
     ]);
     expect(JSON.stringify(result)).not.toMatch(/Private|private-|Example Address/);
+    // Without a dated delivered milestone, the status still dates the delivery.
+    const undated = freight();
+    undated.data[0].trackingStates[3].date = 'Mon, 2 Mar';
+    const snapshot = parseDelhivery(undated, FREIGHT);
+    expect(snapshot.events?.[0]).toMatchObject({ description: 'DELIVERED', time: '2026-03-04T10:00:00+05:30', stage: 'delivered', summary_snapshot: true });
+    expect(snapshot.delivered_at).toBe('2026-03-04T10:00:00+05:30');
   });
   it('reads a milestone year from its weekday before the status date, or keeps the text', () => {
     const value = freight();

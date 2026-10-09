@@ -19,7 +19,8 @@ Freight (B2B) replies date each reached milestone instead of its scans, and a pi
 milestone can have no scans. Such a milestone becomes an event of its own. Its date has
 no year: it takes the year, no more than one before the status date, in which the day
 falls on the weekday shown, or else stays as written. The delivered milestone dates the
-delivery, since a freight status can date a later proof-of-delivery audit.
+delivery, since a freight status can date a later proof-of-delivery audit, and the
+delivered status then adds no snapshot of its own.
 Calendar days and invalid date labels remain unresolved instead of becoming midnight scans.
 The returned flow can still be in transit. Its shipment status determines current progress;
 return scans retain their leg, and sender delivery does not become recipient delivery.

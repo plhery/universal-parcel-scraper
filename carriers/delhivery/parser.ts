@@ -110,8 +110,10 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
     }
   }
   // Repeated scan labels cannot bind a summary timestamp to a particular
-  // historical location. Keep the dated status snapshot separate.
-  if (snapshotDescription && (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
+  // historical location. Keep the dated status snapshot separate. A dated
+  // delivered milestone already records the delivery the status repeats.
+  const deliveryRecorded = mapped?.stage === 'delivered' && deliveredAt !== null;
+  if (snapshotDescription && !deliveryRecorded && (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
     && event.description?.toUpperCase() === snapshotDescription.toUpperCase() && event.stage === mapped?.stage
     && (!returning || event.provider_leg === 'return')))) {
     events.unshift({ description: snapshotDescription, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
