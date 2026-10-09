@@ -212,6 +212,7 @@
       "trawlBody",
       "trawlEndpoint",
       "userAgentOf",
+      "warmDpdSession",
       "withLocalBrowser"
     ],
     "types": [

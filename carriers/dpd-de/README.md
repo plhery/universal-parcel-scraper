@@ -56,14 +56,26 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
 `getParcelShopByID` also knows.
 
 - The service takes tens of seconds to open a session, whatever the device
-  data, language or user agent, and then accepts it for hours. One session is
-  kept per adapter instance and replaced when the service rejects it.
-- Lookups share the opening, which lasts up to 75 seconds and runs while a
+  data, language or user agent. Sending a session's token back to
+  `getSessionFullState` takes as long and returns another token. The reply
+  gives no expiry. The service accepts a session for at least four hours, an
+  idle one too. While slow, it can refuse a session that it accepts again later.
+- One session serves the process for each transport and user agent, shared by
+  DPD Germany and DPD Switzerland and by the adapters of every registry. It is
+  replaced when the service refuses it. From three hours old it keeps serving
+  while a lookup opens the next one beside it.
+- Lookups share the opening, which can take two minutes and runs while a
   lookup that asked for it is still running. Ahead of the guest API, a lookup
   waits for it while keeping 20 seconds for the guest API. The default budget
-  leaves time to wait, so the first lookup of an adapter instance lasts as long
-  as the opening. A lookup with less budget goes on to the guest API at once,
-  and the opening continues until that lookup's budget ends.
+  leaves time to wait, so the first lookup of a process lasts as long as the
+  opening. A lookup with less budget goes on to the guest API at once, and the
+  opening continues until that lookup's budget ends.
+- A long-lived host calls `warmDpdSession()` from `universal-parcel-scraper/node`
+  at start, with its adapter environment's `fetcher` and `userAgent` if it sets
+  them. The session then opens in the background and stays open: openings run
+  to their end without a lookup, the next one opens three hours after the last,
+  and a failed one is tried again a quarter of an hour later. The timer does
+  not keep the process alive.
 - `getTrackingData` and `getTrackingScanList` take the postcode as
   `DeliveryZipCode`. A matching one returns `DataViewStatus`
   `DeliveryZipCode_isValid`; a wrong one, or any postcode for an unknown parcel,

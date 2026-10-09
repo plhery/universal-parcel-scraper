@@ -8,4 +8,5 @@ export { REGISTRY } from './generated/registry.js';
 export { UniversalTracker, UniversalTrackingError } from './providers/universal.js';
 export { TrackingCaptureError, SeventeenTrackLookupError, SeventeenTrackNoHistoryError, SeventeenTrackVerificationError } from './providers/universal.js';
 export { amazonShippingEligibility } from './carriers/amazon-shipping/eligibility.js';
+export { warmDpdSession } from './carriers/dpd-de/service.js';
 export { createTrackingServer, type TrackingServerOptions } from './server/index.js';

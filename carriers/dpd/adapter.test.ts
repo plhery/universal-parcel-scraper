@@ -984,13 +984,13 @@ describe('DPD adapter factory', () => {
     expect(keyOf(pinned.mock.calls[0])).toMatch(/^AIza/);
   });
 
-  it("reads the shop's record from the German DPD app's service through the host's transport", async () => {
+  it("reads the shop's record from the German DPD app's service through the host's transport, over the process's session", async () => {
     const soap = (operation: string, result: string) => new Response('<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
       + `<soap:Body><${operation}Response xmlns="https://cloud.dpd.com/"><${operation}Result><Ack>true</Ack>${result}`
       + `</${operation}Result></${operation}Response></soap:Body></soap:Envelope>`, { headers: { 'content-type': 'text/xml' } });
-    const replies: Record<string, Response> = {
-      getSessionFullState: soap('getSessionFullState', '<SessionFullState><SessionToken>U1lOVEhFVElDX1NFU1NJT04=</SessionToken></SessionFullState>'),
-      getParcelShopByID: soap('getParcelShopByID', '<ParcelShop><ShopAddress><Company>Kiosk Example</Company><Street>EXAMPLE STREET</Street>'
+    const replies: Record<string, () => Response> = {
+      getSessionFullState: () => soap('getSessionFullState', '<SessionFullState><SessionToken>U1lOVEhFVElDX1NFU1NJT04=</SessionToken></SessionFullState>'),
+      getParcelShopByID: () => soap('getParcelShopByID', '<ParcelShop><ShopAddress><Company>Kiosk Example</Company><Street>EXAMPLE STREET</Street>'
         + '<HouseNo>1</HouseNo><ZipCode>0000</ZipCode><City>EXAMPLE TOWN</City></ShopAddress><PUDOID>CH00001</PUDOID></ParcelShop>'),
     };
     const guest = mockGuestApi(Response.json(awaitingShop()), vi.fn<typeof fetch>());
@@ -999,15 +999,20 @@ describe('DPD adapter factory', () => {
       if (String(url) !== DPD_DE_APP_API) return guest(url, init);
       const operation = /\/(\w+)"$/.exec(new Headers(init?.headers).get('SOAPAction') ?? '')![1]!;
       operations.push(operation);
-      return replies[operation]!;
+      return replies[operation]!();
     };
-
-    const result = await adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {}, fetcher })
+    const track = () => adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {}, fetcher })
       .track({ number: TRACKING_NUMBER, postcode: '8000' });
+
+    const result = await track();
 
     expect(result.pickup_point).toBe('Kiosk Example\nEXAMPLE STREET 1\n0000 EXAMPLE TOWN');
     expect(operations).toEqual(['getSessionFullState', 'getParcelShopByID']);
     expect(guest).toHaveBeenCalledTimes(4);
+    // Another registry's adapter, over the same transport, reads with the same session.
+    mockGuestApi(Response.json(awaitingShop()), guest);
+    expect((await track()).pickup_point).toBe(result.pickup_point);
+    expect(operations).toEqual(['getSessionFullState', 'getParcelShopByID', 'getParcelShopByID']);
   });
 });
 

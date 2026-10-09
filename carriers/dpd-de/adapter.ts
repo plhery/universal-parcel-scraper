@@ -2,13 +2,15 @@ import type { AdapterFactory } from '../../core/adapter/index.js';
 import { CarrierError, carrierErrorKind } from '../../core/errors/index.js';
 import { DPDTracker } from '../dpd/adapter.js';
 import { DPD_DE_OTHER_COUNTRY, DpdDeAppClient } from './app.js';
+import { sharedDpdAppService } from './service.js';
 
 /** Left to the guest API when the app's session is still opening ahead of it. */
 const GUEST_RESERVE_MS = 20_000;
 
 /** Germany reads the German app's service, then the guest protocol with its own business-unit selector. */
 export const adapter: AdapterFactory = (environment) => {
-  const app = new DpdDeAppClient({ fetcher: environment.fetcher, userAgent: environment.userAgent });
+  // The process's session, which DPD Switzerland shares.
+  const app = new DpdDeAppClient({ service: sharedDpdAppService(environment) });
   const tracker = new DPDTracker({
     country: 'DE',
     fetcher: environment.fetcher,

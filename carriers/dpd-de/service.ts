@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from 'node:crypto';
+import type { AdapterEnvironment } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
@@ -13,8 +14,15 @@ export const DPD_DE_SESSION_OPENING = 'session_opening';
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
 const SERVICE = 'https://cloud.dpd.com/';
 const MAX_BYTES = 2_000_000;
-/** Opening a session has taken up to 42 seconds. */
-const SESSION_OPEN_MS = 75_000;
+/** Opening a session has taken up to 75 seconds. */
+const SESSION_OPEN_MS = 120_000;
+/**
+ * The service accepts a session for at least four hours, an idle one too. From this age the next
+ * one opens beside it, and replaces it once open.
+ */
+const SESSION_RENEW_MS = 3 * 3_600_000;
+/** A kept session that failed to open is tried again after this long. */
+const SESSION_RETRY_MS = 15 * 60_000;
 // Shared partner credentials of the public app, distributed with the maintainer's approval.
 const PARTNER: DpdDePartner = { name: 'Android Paketnavigator3', token: 'A33363237662F5945576', password: '272 WetFd2mpXrgD' };
 
@@ -71,10 +79,13 @@ function shopOf(result: XmlNode, id: string): DpdParcelShop | undefined {
   };
 }
 
+interface Opening { token: Promise<string>; holders: Set<AbortSignal>; release: () => void }
+
 /**
  * The service needs an anonymous device session, which it takes tens of seconds to open and then
- * accepts for hours: one is kept per instance. The opening runs on its own clock, so a lookup that
- * stops waiting leaves it to the next.
+ * accepts for hours. One is kept per instance, and `sharedDpdAppService` gives the process one
+ * instance per transport. The opening runs on its own clock, so a lookup that stops waiting
+ * leaves it to the next. A session past its renewal age serves while the next one opens.
  */
 export class DpdAppService {
   readonly #partner: DpdDePartner;
@@ -82,8 +93,10 @@ export class DpdAppService {
   readonly #userAgent: string;
   readonly #now: () => number;
   readonly #device = randomBytes(8).toString('hex');
-  #session = '';
-  #opening: { token: Promise<string>; holders: Set<AbortSignal>; release: () => void } | null = null;
+  #session: { token: string; openedAt: number } | null = null;
+  #opening: Opening | null = null;
+  #kept = false;
+  #timer: ReturnType<typeof setTimeout> | undefined;
 
   constructor(options: { partner?: DpdDePartner; fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {
     this.#partner = options.partner ?? PARTNER;
@@ -118,42 +131,76 @@ export class DpdAppService {
 
   /** Forgets a session the service refused, unless another lookup already replaced it. */
   expire(session: string): void {
-    if (this.#session === session) this.#session = '';
+    if (this.#session?.token === session) this.#session = null;
+  }
+
+  /**
+   * Keeps a session open from now on, for a long-lived host: one opens at once if there is none,
+   * and the next before the current one lapses. Openings then run whether or not a lookup waits
+   * for them. The timer does not keep the process alive.
+   */
+  keep(): void {
+    if (this.#kept) return;
+    this.#kept = true;
+    this.#renew();
+  }
+
+  /** Opens the next session if the current one is due, or waits until it is. */
+  #renew(): void {
+    if (this.#opening) return;
+    const age = this.#session ? this.#now() - this.#session.openedAt : Infinity;
+    if (age < SESSION_RENEW_MS) this.#schedule(SESSION_RENEW_MS - age);
+    else this.#opening = this.#open();
+  }
+
+  #schedule(ms: number): void {
+    if (!this.#kept) return;
+    clearTimeout(this.#timer);
+    this.#timer = setTimeout(() => this.#renew(), ms);
+    this.#timer.unref?.();
+  }
+
+  /** An opening, which a kept service finishes and otherwise ends when no lookup holds it. */
+  #open(): Opening {
+    const controller = new AbortController();
+    const holders = new Set<AbortSignal>();
+    const token = this.call('getSessionFullState', { SessionToken: '', DeviceData: {
+      HardwareID: this.#device, BootSystemID: 'Android_Phone', Version: '15', AppVersion: '4.2.0',
+    } }, controller.signal, SESSION_OPEN_MS).then(result => {
+      const value = scalar(one(result, 'SessionFullState'), 'SessionToken', 600);
+      if (!/^[A-Za-z0-9+/=]{16,512}$/.test(value)) invalid();
+      this.#session = { token: value, openedAt: this.#now() };
+      return value;
+    });
+    const release = () => {
+      for (const holder of holders) if (holder.aborted) holders.delete(holder);
+      if (!holders.size && !this.#kept) controller.abort(new Error('No lookup is waiting for the DPD Germany session'));
+    };
+    const opening = { token, holders, release };
+    void token.then(() => this.#schedule(SESSION_RENEW_MS), () => this.#schedule(SESSION_RETRY_MS)).finally(() => {
+      if (this.#opening === opening) this.#opening = null;
+      for (const holder of holders) holder.removeEventListener('abort', release);
+    });
+    return opening;
   }
 
   /**
    * One session for every lookup. The opening runs while a lookup that asked for it is still
    * running, even one that stopped waiting; each lookup waits until its signal or `waitMs` ends.
+   * A session past its renewal age answers at once while the next one opens.
    */
   async session(signal: AbortSignal, waitMs: number): Promise<string> {
-    if (this.#session) return this.#session;
+    const current = this.#session;
+    const due = !current || this.#now() - current.openedAt >= SESSION_RENEW_MS;
+    if (current && !due) return current.token;
     signal.throwIfAborted();
-    if (!this.#opening) {
-      const controller = new AbortController();
-      const holders = new Set<AbortSignal>();
-      const token = this.call('getSessionFullState', { SessionToken: '', DeviceData: {
-        HardwareID: this.#device, BootSystemID: 'Android_Phone', Version: '15', AppVersion: '4.2.0',
-      } }, controller.signal, SESSION_OPEN_MS).then(result => {
-        const value = scalar(one(result, 'SessionFullState'), 'SessionToken', 600);
-        if (!/^[A-Za-z0-9+/=]{16,512}$/.test(value)) invalid();
-        return this.#session = value;
-      });
-      const release = () => {
-        for (const holder of holders) if (holder.aborted) holders.delete(holder);
-        if (!holders.size) controller.abort(new Error('No lookup is waiting for the DPD Germany session'));
-      };
-      const opening = { token, holders, release };
-      this.#opening = opening;
-      void token.catch(() => undefined).finally(() => {
-        if (this.#opening === opening) this.#opening = null;
-        for (const holder of holders) holder.removeEventListener('abort', release);
-      });
-    }
-    const { token, holders, release } = this.#opening;
+    const opening = this.#opening ??= this.#open();
+    const { token, holders, release } = opening;
     if (!holders.has(signal)) {
       holders.add(signal);
       signal.addEventListener('abort', release, { once: true });
     }
+    if (current) return current.token;
     let leave!: () => void;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const left = new Promise<never>((_resolve, reject) => {
@@ -193,4 +240,31 @@ export class DpdAppService {
     if (scalar(result, 'Ack', 8) !== 'true') throw new IndeterminateError('DPD Germany', 'DPD Germany returned no confirmed parcel');
     return result;
   }
+}
+
+const services = new WeakMap<object, Map<string, DpdAppService>>();
+const GLOBAL_FETCH = {};
+
+/**
+ * The process's service for a transport and user agent. DPD Germany and DPD Switzerland share it,
+ * and so do the adapters of every registry, so a session opens once for all of them.
+ */
+export function sharedDpdAppService(options: Pick<AdapterEnvironment, 'fetcher' | 'userAgent'> = {}): DpdAppService {
+  const userAgent = userAgentOf(options.userAgent);
+  const key = options.fetcher ?? GLOBAL_FETCH;
+  let byAgent = services.get(key);
+  if (!byAgent) services.set(key, byAgent = new Map<string, DpdAppService>());
+  let service = byAgent.get(userAgent);
+  if (!service) byAgent.set(userAgent, service = new DpdAppService({ fetcher: options.fetcher, userAgent }));
+  return service;
+}
+
+/**
+ * Opens the session DPD Germany and DPD Switzerland read the German DPD app's service with, in the
+ * background, and keeps one open for the life of the process, so that no lookup waits the tens of
+ * seconds an opening takes. For a long-lived host, with the `fetcher` and `userAgent` its adapter
+ * environment has. The renewal timer does not keep the process alive.
+ */
+export function warmDpdSession(environment: Pick<AdapterEnvironment, 'fetcher' | 'userAgent'> = {}): void {
+  sharedDpdAppService(environment).keep();
 }

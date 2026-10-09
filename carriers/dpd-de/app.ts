@@ -188,12 +188,12 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
   return { result, shop: pickup?.id ?? '' };
 }
 
-/** DPD Germany's tracking through the German app's service, which keeps one session per client. */
+/** DPD Germany's tracking through the German app's service, over the given one or a new one. */
 export class DpdDeAppClient {
   readonly #service: DpdAppService;
 
-  constructor(options: { partner?: DpdDePartner; fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {
-    this.#service = new DpdAppService(options);
+  constructor(options: { service?: DpdAppService; partner?: DpdDePartner; fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {
+    this.#service = options.service ?? new DpdAppService(options);
   }
 
   /**

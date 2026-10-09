@@ -66,11 +66,12 @@ can enter the page tier. Both tiers share the caller's deadline and signal.
   for Swiss shops too, and its record must name the same id. It gives the
   street and town in capitals. The reply's own shop name wins over the
   record's.
-- That service opens an anonymous session once per adapter instance, which
-  takes tens of seconds. A lookup waits for it within its budget, keeping five
-  seconds to answer without the address, and the opening continues for the
-  next lookup. Without the record the pickup point keeps the reply's name, or
-  stays empty.
+- That service needs an anonymous session, which takes tens of seconds to
+  open. DPD Germany shares it, and a long-lived host opens it ahead with
+  `warmDpdSession()` ([how it is kept](../dpd-de/README.md#app-service)). A
+  lookup waits for it within its budget, keeping five seconds to answer
+  without the address, and the opening continues for the next lookup. Without
+  the record the pickup point keeps the reply's name, or stays empty.
 - `receiverName` and the `receiver` object are never read as the pickup
   point: they can name the recipient.
 - Public, app-restricted Firebase identifiers are part of the anonymous app

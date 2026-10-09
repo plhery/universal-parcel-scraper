@@ -36,6 +36,8 @@ const WITHOUT_SIGNAL: Readonly<Record<string, string>> = {
   'carriers/correios-br/ocr.ts solve': 'The timer closes the OCR worker once it is idle: no lookup waits on it.',
   'carriers/mondial-relay/app.ts #renew': 'One token renewal serves every lookup waiting for it; each stops waiting on its own signal, '
     + 'and the request keeps its timeout.',
+  'carriers/dpd-de/service.ts #schedule': 'Renews the DPD app session a long-lived host keeps open: no lookup waits on the timer, '
+    + 'which does not keep the process alive.',
 };
 
 const { config } = ts.readConfigFile(path.join(root, 'tsconfig.json'), (file) => ts.sys.readFile(file));

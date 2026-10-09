@@ -1,10 +1,10 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 import { DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
-import { DPD_DE_APP_API } from './service.js';
+import { DPD_DE_APP_API, warmDpdSession } from './service.js';
 import { DPD_DE_APP_SCANS } from './status.js';
 
 // All identifiers, credentials, sessions, clocks and private-field markers here are invented.
@@ -429,11 +429,27 @@ describe('DPD Germany tiers', () => {
       ? app.fetcher(url, init) : Promise.resolve(replies.shift() ?? new Response('', { status: 500 }))) as typeof fetch;
     const tracking = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {},
       recorder: { ...NOOP_RECORDER, step: event => { steps.push([event.step, event.outcome]); } } });
-    return { app, steps, tracking };
+    return { app, fetcher, steps, tracking };
   }
 
   it('declares the app service before the guest protocol', () => {
     expect(tiers([]).tracking.steps).toEqual(['app', 'direct']);
+  });
+
+  it('reads with the session the host warmed for its transport', async () => {
+    vi.useFakeTimers();
+    try {
+      const replies = guest(Response.json({}));
+      const { app, fetcher, steps, tracking } = tiers(replies);
+      warmDpdSession({ fetcher });
+      await vi.advanceTimersByTimeAsync(0);
+      expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState']);
+      expect((await tracking.track({ number: NUMBER })).events).toHaveLength(5);
+      expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getTrackingData', 'getTrackingScanList']);
+      expect(steps).toEqual([['app', 'ok']]);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('answers from the app service without a postcode, without asking the guest protocol', async () => {

@@ -12,7 +12,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay, isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { TrawlClient, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { DpdAppService, type DpdParcelShop } from '../dpd-de/service.js';
+import { sharedDpdAppService, type DpdParcelShop } from '../dpd-de/service.js';
 import {
   API_LABELS, PROOF_OF_DELIVERY_SCAN, apiStage, apiStatus, scanStage, wordingStatus,
 } from './status.js';
@@ -1086,7 +1086,8 @@ export const adapter: AdapterFactory = (environment) => {
     // A host can follow a rotated key without waiting for a release.
     firebaseApiKey: environment.env.DPD_FIREBASE_API_KEY?.trim() || undefined,
     // The German DPD app's service holds the group's Pickup shops, Swiss ones included.
-    shops: new DpdAppService({ fetcher: environment.fetcher, userAgent: environment.userAgent }),
+    // Its session is the process's, which DPD Germany shares.
+    shops: sharedDpdAppService(environment),
   });
   return {
     id: 'dpd',
