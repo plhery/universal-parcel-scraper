@@ -10,6 +10,7 @@
 import { DateTime } from 'luxon';
 import { REGION_TOWNS } from '../../generated/regionTowns.js';
 import { clean } from '../transport/text.js';
+import { townName } from './townNames.js';
 
 export interface ParsedTime {
   /** ISO 8601 with the source offset preserved and no milliseconds. */
@@ -164,10 +165,6 @@ const REGION_CODES = new Set(Array.from({ length: 26 * 26 }, (_, index) =>
 /** A name compared without case, accents or spacing differences. */
 const regionKey = (name: string) =>
   name.normalize('NFD').replace(/\p{Mn}/gu, '').toUpperCase().replace(/[\u2019`]/g, "'").replace(/\s+/g, ' ').trim();
-// Names in other languages that are also towns of 15,000 or more people name
-// the town as often as the country, so only English reads them.
-const TOWN_NAMES = new Set(['ALAND', 'GRANADA', 'GUADALUPE', 'LIBANO', 'NORFOLK', 'SAINT-BARTHELEMY', 'SALVADOR',
-  'SAN BARTOLOME', 'SAN MARTIN', 'SANTA ELENA', 'SANTA LUCIA', 'SINGAPUR', 'TAILANDIA']);
 const REGION_BY_NAME = new Map<string, string>();
 for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl']) {
   const names = language === 'en' ? ENGLISH_REGIONS : new Intl.DisplayNames([language], { type: 'region' });
@@ -176,7 +173,8 @@ for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl']) {
     // German written without umlauts puts an e after the vowel: "Oesterreich".
     const spellings = language === 'de' ? [name, name.replace(/[äöüÄÖÜ]/g, (vowel) => `${vowel.normalize('NFD')[0]}e`)] : [name];
     for (const key of spellings.map(regionKey)) {
-      if (!REGION_BY_NAME.has(key) && (language === 'en' || !TOWN_NAMES.has(key))) REGION_BY_NAME.set(key, code);
+      // A name a large town shares names the town as often as the country.
+      if (!REGION_BY_NAME.has(key) && (language === 'en' || !townName(key))) REGION_BY_NAME.set(key, code);
     }
   }
 }

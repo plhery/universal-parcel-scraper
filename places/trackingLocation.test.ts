@@ -31,6 +31,16 @@ describe('tracking places', () => {
     expect(trackingPlace(location)).toEqual({ country: null, place: location });
   });
 
+  it('reads a localized country name a large town shares as the town', () => {
+    for (const location of ['Granada', 'GRANADA', 'Franca', 'Salvador', 'Santa Helena', 'Włochy', 'Granada Centro']) {
+      expect(trackingPlace(location), location).toEqual({ country: null, place: location });
+    }
+    expect(trackingLocationCountry('Andalucía, Granada')).toBeNull();
+    // The English name still reads, and so does a country's name in its own language.
+    expect(trackingPlace('Grenada')).toEqual({ country: 'GD', place: '' });
+    expect(trackingPlace('Polska')).toEqual({ country: 'PL', place: '' });
+  });
+
   it('keeps Passport evidence to a final field that names a region', () => {
     expect(trackingLocationCountry('Zürich, CH')).toBe('CH');
     expect(trackingLocationCountry('Switzerland Haerkingen')).toBeNull();
