@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionCandidates } from '../catalog/recognition.js';
-import { detectCarrierMatch, parseTrackingInput } from './index.js';
+import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 import { isValidUspsPackageBarcode, uspsPackageIdentifier } from './usps.js';
 import { normalizeUSPSNumber, parseUSPSTrackingHtml, uspsTrackingUrl } from '../../carriers/usps/adapter.js';
 import { normalizeRoyalMailNumber, parseRoyalMailTrackingResponse, royalMailSummaryApiUrl } from '../../carriers/royal-mail/parser.js';
@@ -167,6 +167,18 @@ it('suggests Old Dominion for eleven-digit PROs only when the Luhn check passes'
   for (const number of ['12300000003', '45600000018', '1230000002', '123000000002']) {
     expect(detectCarrierMatch(number).candidates).not.toContain('old-dominion');
   }
+});
+
+it('selects Old Dominion by its PRO prefixes only when the Luhn check passes', () => {
+  // Synthetic PROs on each prefix the high rules claim, and twins with another check digit.
+  for (const number of ['07200000011', '77700000001', '77800000000', '78000000022', '80000000002']) {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'old-dominion', confidence: 'high' });
+  }
+  for (const number of ['07200000012', '77700000002', '77800000001', '78000000023', '80000000003']) {
+    expect(detectCarrierMatch(number).candidates).not.toContain('old-dominion');
+  }
+  expect(checksumRejections('77700000002')).toContainEqual({ carrier: 'old-dominion', rule: 'old-dominion-1', checksum: 'luhn' });
+  expect(checksumRejections('80000000003')).toContainEqual({ carrier: 'old-dominion', rule: 'old-dominion-2', checksum: 'luhn' });
 });
 
 it('suggests UniUni for cross-border shipper references without selecting it', () => {

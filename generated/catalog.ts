@@ -2971,11 +2971,13 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^(?:072|777|778|780)\\d{8}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "luhn"
       },
       {
         "pattern": "^80\\d{9}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "luhn"
       },
       {
         "pattern": "^\\d{11}$",

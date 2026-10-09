@@ -76,12 +76,14 @@
     {
       "id": "old-dominion-1",
       "pattern": "^(?:072|777|778|780)\\d{8}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "luhn"
     },
     {
       "id": "old-dominion-2",
       "pattern": "^80\\d{9}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "luhn"
     },
     {
       "id": "old-dominion-3",
