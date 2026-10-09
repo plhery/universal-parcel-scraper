@@ -14,17 +14,43 @@
   "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "spee-dee",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.speedeedelivery.com/track/?tracking={trackingNumber}",
-    "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://speedeedelivery.com/track-a-shipment/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "recipient_address",
+      "signature",
+      "route_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "delivered_at",
+      "recipient_address",
+      "signature",
+      "route_number"
+    ],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
   },
   "links": [
     {

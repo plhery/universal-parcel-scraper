@@ -396,5 +396,6 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'poste-italiane': 'the results page exposes no readable text to headless Chrome',
   'thailand-post': 'some of the tracker\'s servers stall on its script bundles, so the page often stays empty past the render window',
   sagawa: 'the inquiry page the link opens answers Access Denied while Sagawa keeps its inquiry service suspended after unauthorized access',
+  'spee-dee': 'the tracker shows its result in a frame from packages.speedeedelivery.com, which drops connections from many networks, so number forwarding cannot be verified daily',
   usps: 'tools.usps.com answers automated Chrome with an anti-bot script instead of the page',
 };

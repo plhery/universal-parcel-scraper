@@ -2994,9 +2994,10 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "spee-dee",
+      "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://speedeedelivery.com/track-a-shipment/",
     "trackingUrlTemplate": "https://www.speedeedelivery.com/track/?tracking={trackingNumber}",
     "linkRules": [
       {

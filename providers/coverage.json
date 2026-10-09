@@ -2107,6 +2107,23 @@
           }
         }
       ]
+    },
+    {
+      "carrier": "spee-dee",
+      "direct": "Yes",
+      "sample": "Unverified; alternate \u2713 5",
+      "references": [
+        {
+          "note": "No comparison reference has been looked up through every source. From a network the host accepts, an alternate public reference returned five identity-bound scans on the package progress page: https://github.com/jkeen/tracking_number_data/blob/main/couriers/speedee.json",
+          "results": {
+            "Ship24": "unverified",
+            "ParcelsApp": "unverified",
+            "17TRACK": "unverified",
+            "Postal Ninja": "unverified",
+            "UPU": "n/a"
+          }
+        }
+      ]
     }
   ]
 }

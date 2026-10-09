@@ -145,6 +145,7 @@ asked after the other aggregators whatever its count.
 | [SPX Express Philippines](../carriers/spx-ph/README.md) | Yes (Philippines) | ✓ 10 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [CNE Express](../carriers/cne/README.md) | Yes | ✓ 9 | Unverified | Unverified | Unverified | Unverified | N/A |
 | [Sagawa Express](../carriers/sagawa/README.md) | Yes (status only) | Unverified; alternate summary only | Unverified | Unverified | Unverified | Unverified | N/A |
+| [Spee-Dee](../carriers/spee-dee/README.md) | Yes | Unverified; alternate ✓ 5 | Unverified | Unverified | Unverified | Unverified | N/A |
 <!-- /GENERATED:coverage -->
 
 <!-- GENERATED:lookup-order -->
