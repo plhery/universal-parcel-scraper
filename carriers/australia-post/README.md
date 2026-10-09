@@ -41,12 +41,20 @@ cache headers of the `no-store` mode. The app also sends an
 ## Notes
 
 - Detection selects Australia Post for an article ID: an optional two-digit prefix, a
-  three-character merchant location ID, nine digits, `000` and six digits. A consignment number
-  (two digits, a location ID with a letter, seven digits) is only suggested, since a broader
-  twelve-character rule takes it too. All-digit consignments and 22-digit satchel barcodes have no
-  rule: other carriers' rules take those lengths. An Australian-issued postal number makes
-  Australia Post the first carrier recognition asks; the S10 suffix names the issuing country,
-  not the deliverer, so it never selects Australia Post.
+  three-character merchant location ID, nine digits, `000` and six digits. It only suggests
+  Australia Post for:
+  - A consignment number: an optional two-digit prefix, a location ID with a letter, seven
+    digits. With the prefix, Australia Post comes before Colis Privé's rule for any twelve
+    characters. Without it, a location ID of two letters and a digit is left out, since other
+    carriers' ten-character numbers start that way.
+  - A 22-digit barcode of a prepaid satchel, envelope or label: `00` to `03`, then digits ending
+    in a GS1 check digit. Other carriers' rules take any 22 digits; the passing check digit moves
+    Australia Post ahead of them in recognition.
+  - An Australian-issued postal number, which Australia Post is asked about first. The S10 suffix
+    names the issuing country, not the deliverer, so it never selects Australia Post.
+- All-digit consignments have no rule: other carriers' rules take those lengths, and no check
+  digit sets Australia Post's apart. Neither do 18-digit barcodes starting `9979`: Swiss Post's
+  rule takes them, and none with scans has shown they are Australia Post's.
 - The context uses `AUSTRALIA_POST_BROWSER_LOCALE` (default `de-DE`) because the pool's `en-US` and
   `en-AU` locales got HTTP 403 from the deployment network. Another network may need its own value.
   It does not affect status language or event time zones.

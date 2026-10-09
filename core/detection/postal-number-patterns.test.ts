@@ -117,9 +117,34 @@ describe('Australia Post barcodes', () => {
     expect(detectCarrierMatch('90000000000000123000001')).toMatchObject({ carrier: 'unknown', candidates: ['correos-express'] });
   });
 
-  it('suggests Australia Post for a consignment number whose location ID has a letter', () => {
-    expect(detectCarrierMatch('33ABC1234567')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+  it('suggests Australia Post first for a twelve-character consignment number whose location ID has a letter', () => {
+    expect(detectCarrierMatch('33ABC1234567')).toEqual({
+      carrier: 'unknown', confidence: 'low', candidates: ['australia-post', 'colis-prive'], preferred: ['australia-post'],
+    });
+    expect(recognitionAskedCarriers('33ABC1234567')).toEqual(['australia-post', 'colis-prive']);
     expect(detectCarrierMatch('343AY1234567').candidates).toContain('australia-post');
     expect(detectCarrierMatch('331231234567').candidates).not.toContain('australia-post');
+  });
+
+  it.each(['2AB1234567', 'A2B1234567', 'ABC1234567', '12A1234567', 'A121234567'])(
+    'suggests Australia Post alone for the ten-character consignment number %s',
+    (number) => {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['australia-post'] });
+    },
+  );
+
+  it.each(['AB12345678', '1231234567'])('leaves the ten-character number %s to the carriers that share its shape', (number) => {
+    expect(detectCarrierMatch(number).candidates).not.toContain('australia-post');
+  });
+
+  it('suggests Australia Post for a 22-digit prepaid barcode only when its GS1 check passes', () => {
+    expect(detectCarrierMatch('0208061234567890123456')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('0208061234567890123456').candidates).toContain('australia-post');
+    expect(recognitionAskedCarriers('0208061234567890123456')[0]).toBe('australia-post');
+    expect(detectCarrierMatch('0208061234567890123457').candidates).not.toContain('australia-post');
+    expect(checksumRejections('0208061234567890123457')).toEqual([
+      { carrier: 'australia-post', rule: 'australia-post-prepaid', checksum: 'gs1' },
+    ]);
+    expect(detectCarrierMatch('0408061234567890123454').candidates).not.toContain('australia-post');
   });
 });

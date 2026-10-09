@@ -86,7 +86,19 @@
     {
       "id": "australia-post-consignment",
       "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
+      "id": "australia-post-consignment-10",
+      "pattern": "^(?![A-Z]{2}\\d)(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
       "confidence": "low"
+    },
+    {
+      "id": "australia-post-prepaid",
+      "pattern": "^0[0-3]\\d{20}$",
+      "confidence": "low",
+      "checksum": "gs1"
     },
     {
       "id": "australia-post-s10",

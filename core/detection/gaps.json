@@ -54,12 +54,6 @@
   },
   {
     "carrier": "australia-post",
-    "pattern": "^0[0-3]\\d{20}$",
-    "kind": "open",
-    "reason": "Australia Post's 22-digit satchel barcodes. Austrian Post, USPS and Estafeta rules take the same length, and no rule offers Australia Post yet."
-  },
-  {
-    "carrier": "australia-post",
     "pattern": "^9979\\d{14}$",
     "kind": "open",
     "reason": "Archived Australia Post tracking links carry 18-digit barcodes starting with 9979, none with scans left to confirm them. Swiss Post's rule takes every 18 digits starting with 98 or 99, and no rule offers Australia Post."

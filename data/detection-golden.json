@@ -85,9 +85,11 @@
     "candidates": [
       "austrian-post",
       "usps",
-      "estafeta"
+      "estafeta",
+      "australia-post"
     ],
     "asked": [
+      "australia-post",
       "austrian-post"
     ]
   },
@@ -1124,6 +1126,21 @@
     ]
   },
   {
+    "input": "0201022941323006040991",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "austrian-post",
+      "usps",
+      "estafeta",
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post",
+      "austrian-post"
+    ]
+  },
+  {
     "input": "020207021381215",
     "carrier": "unknown",
     "confidence": "low",
@@ -1404,9 +1421,11 @@
     "candidates": [
       "austrian-post",
       "usps",
-      "estafeta"
+      "estafeta",
+      "australia-post"
     ],
     "asked": [
+      "australia-post",
       "austrian-post"
     ]
   },
@@ -5491,6 +5510,17 @@
     ]
   },
   {
+    "input": "23B2189391",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "24622447660SE",
     "carrier": "postnord",
     "confidence": "high",
@@ -6198,6 +6228,17 @@
     "confidence": "high",
     "candidates": [
       "la-poste"
+    ]
+  },
+  {
+    "input": "2EY0108031",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
     ]
   },
   {
@@ -7109,12 +7150,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "colis-prive",
+      "australia-post",
+      "colis-prive"
+    ],
+    "preferred": [
       "australia-post"
     ],
     "asked": [
-      "colis-prive",
-      "australia-post"
+      "australia-post",
+      "colis-prive"
     ]
   },
   {
@@ -7633,12 +7677,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "colis-prive",
+      "australia-post",
+      "colis-prive"
+    ],
+    "preferred": [
       "australia-post"
     ],
     "asked": [
-      "colis-prive",
-      "australia-post"
+      "australia-post",
+      "colis-prive"
     ]
   },
   {
@@ -13084,6 +13131,17 @@
     "confidence": "high",
     "candidates": [
       "la-poste"
+    ]
+  },
+  {
+    "input": "A7Z0364716",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
     ]
   },
   {
@@ -19238,6 +19296,17 @@
     "confidence": "high",
     "candidates": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "YJF0019250",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
     ]
   },
   {

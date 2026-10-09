@@ -3843,7 +3843,17 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^(?![A-Z]{2}\\d)(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^0[0-3]\\d{20}$",
+        "confidence": "low",
+        "checksum": "gs1"
       },
       {
         "pattern": "^[A-Z]{2}\\d{9}AU$",
@@ -5494,7 +5504,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "korea-post": ["korea-post-1","korea-post-2","korea-post-3"],
   "thailand-post": ["thailand-post-1"],
   "dtdc": ["dtdc-1","dtdc-2","dtdc-3","dtdc-4"],
-  "australia-post": ["australia-post-article","australia-post-consignment","australia-post-s10"],
+  "australia-post": ["australia-post-article","australia-post-consignment","australia-post-consignment-10","australia-post-prepaid","australia-post-s10"],
   "hongkong-post": ["hongkong-post-1"],
   "pos-malaysia": ["pos-malaysia-1","pos-malaysia-2"],
   "ninja-van": ["ninja-van-1","ninja-van-2","ninja-van-3"],

@@ -92,8 +92,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
-          "australia-post"
+          "australia-post",
+          "colis-prive"
         ]
       },
       "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A consignment number, which Colis Privé's twelve-character rule also takes."
@@ -115,11 +115,99 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
-          "australia-post"
+          "australia-post",
+          "colis-prive"
         ]
       },
       "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A consignment number whose location ID mixes a digit and letters."
+    },
+    {
+      "number": "23B2189391",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260904072252/https://auspost.com.au/mypost/track/details/23B2189391",
+        "date": "2026-09-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A ten-character consignment number."
+    },
+    {
+      "number": "2EY0108031",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260903013810/https://auspost.com.au/mypost/track/details/2EY0108031",
+        "date": "2026-09-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A ten-character consignment number."
+    },
+    {
+      "number": "A7Z0364716",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901021033/https://auspost.com.au/mypost/track/details/A7Z0364716",
+        "date": "2026-09-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A ten-character consignment number."
+    },
+    {
+      "number": "YJF0019250",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260929060157/https://auspost.com.au/mypost/track/details/YJF0019250",
+        "date": "2026-09-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A ten-character consignment number."
     },
     {
       "number": "0301006785462006320995",
@@ -138,7 +226,8 @@
         "candidates": [
           "austrian-post",
           "usps",
-          "estafeta"
+          "estafeta",
+          "australia-post"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Australia Post, which no rule claims."
@@ -325,10 +414,36 @@
         "candidates": [
           "austrian-post",
           "usps",
-          "estafeta"
+          "estafeta",
+          "australia-post"
         ]
       },
       "note": "An Australia Post tracking link archived by the Wayback Machine. Australia Post's tracker shows no scans for it now. It starts with 00, but its agency codes are not CTT Express's."
+    },
+    {
+      "number": "0201022941323006040991",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260820080731/https://auspost.com.au/mypost/track/details/0201022941323006040991",
+        "date": "2026-08-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta",
+          "australia-post"
+        ]
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A 22-digit barcode of a prepaid product, whose last digit is the GS1 check."
     },
     {
       "number": "997960806374515094",
