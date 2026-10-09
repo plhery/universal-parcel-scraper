@@ -227,13 +227,14 @@ complete history.
 The app's scan-identity policies, one per source in `core/catalog/eventIdentity.ts`, say
 what identifies a stored scan that its source now reports at the same instant with a
 location, without one it no longer reads as a place (a service's name, a status, Posti's
-"abroad"), with a corrected stage or with new wording: an unchanged instant, wording and
-known stage, the provider code, or a comparison specific to the carrier. Matches must be
-unique in both directions, and distinct wording can distinguish scans sharing an instant.
-Conflicting locations stay separate, and older apps that cannot compare scan evidence only
-use the policies that need no comparison. A policy's `relabelledFrom` names the zone a
-source once put on every wall clock: a scan whose wall clock now carries another offset
-takes over the row stored under the old label, by provider code and location.
+"abroad", Austrian Post's `PLZ` delivery area), with a corrected stage or with new
+wording: an unchanged instant, wording and known stage, the provider code, or a comparison
+specific to the carrier. Matches must be unique in both directions, and distinct wording
+can distinguish scans sharing an instant. Conflicting locations stay separate, and older
+apps that cannot compare scan evidence only use the policies that need no comparison. A
+policy's `relabelledFrom` names the zone a source once put on every wall clock: a scan
+whose wall clock now carries another offset takes over the row stored under the old label,
+by provider code and location.
 
 ## Fallback providers
 

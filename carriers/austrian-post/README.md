@@ -13,8 +13,11 @@ to match. The optional Post account flow is unnecessary for public history.
 Summary codes and scan codes use different vocabularies. A scan marked `IZ` can
 describe completed delivery; its reason and wording determine the event stage.
 Timestamps carry explicit offsets, which are preserved. A scan place given
-only as `PLZ` and a postcode is the delivery area and is dropped; a facility
-keeps its name without the postcode.
+only as `PLZ` and a postcode, or as `PLZ` and a country code with or without
+part of a postcode (`PLZ DE`), is the delivery area and is dropped; a facility
+keeps its name without the postcode. The app's scan-identity policy lets a scan
+stored with such a place keep its row once it loses it, provided its instant,
+wording and known stage agree.
 
 A scan can come without wording. The tracking page lists it under its date
 and time alone, with no label from its codes, so it keeps its code but gets

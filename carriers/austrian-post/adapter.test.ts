@@ -2,11 +2,15 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, AustrianPostTracker, normalizeAustrianPostNumber, parseAustrianPostResponse } from './adapter.js';
+import { austrianPostPlace } from './identity.js';
 import { austrianPostEventStatus, austrianPostSummaryStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '1000000000000000000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
+// A returned letter, scanned in the destination country under its delivery area.
+const RETURNED = 'LP123456785AT';
+const returned = () => JSON.parse(readFileSync(new URL('./fixtures/returned.json', import.meta.url), 'utf8'));
 
 describe('Austrian Post public tracking', () => {
   it('binds history to the item and classifies scans independently of the summary', () => {
@@ -41,6 +45,15 @@ describe('Austrian Post public tracking', () => {
     expect(JSON.stringify(result)).not.toMatch(/PLZ|9873|8762/);
   });
 
+  it('gives a scan no place rather than its delivery area abroad', () => {
+    const result = parseAustrianPostResponse(returned(), RETURNED);
+    expect(result.events?.map((event) => event.location)).toEqual([undefined, undefined, undefined, undefined, 'Synthetic logistics centre', undefined]);
+    expect(JSON.stringify(result)).not.toContain('PLZ');
+    for (const area of ['PLZ IT', 'plz at', 'PLZ FR 1', 'PLZ  NL  X', 'PLZ GB AB1 2CD', 'PLZ 12345']) expect(austrianPostPlace(area), area).toBe('');
+    // A place with the letters inside a word stays.
+    for (const place of ['Plzeň', 'PLZEN 1', 'Logistikzentrum Plzeňská']) expect(austrianPostPlace(place), place).toBe(place);
+  });
+
   it('rejects a different returned item', () => {
     const payload = fixture();
     payload.data.einzelsendung.sendungsnummer = '1000000000000000000002';
@@ -63,9 +76,7 @@ describe('Austrian Post public tracking', () => {
   });
 
   describe('a scan without wording', () => {
-    // A returned letter whose history holds an EXP scan without wording, as the page lists it.
-    const RETURNED = 'LP123456785AT';
-    const returned = () => JSON.parse(readFileSync(new URL('./fixtures/returned.json', import.meta.url), 'utf8'));
+    // The returned letter's history holds an EXP scan without wording, as the page lists it.
     const wordless = (payload: ReturnType<typeof returned>) => payload.data.einzelsendung.sendungsEvents[2];
 
     it('keeps its code, with no stage and no wording', () => {

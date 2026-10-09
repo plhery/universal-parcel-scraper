@@ -33,21 +33,21 @@
           "status": "BNT",
           "reasontypecode": "2046",
           "trackingDesc": "Sendung von Postbetreiber Zielland übernommen",
-          "eventPlaceName": "Synthetic exchange office"
+          "eventPlaceName": "PLZ DE"
         },
         {
           "timestamp": "2026-03-04T06:20:00.000+00:00",
           "status": "AZT",
           "reasontypecode": "AT",
           "trackingDesc": "Sendung in Zustellung",
-          "eventPlaceName": "Synthetic delivery base"
+          "eventPlaceName": "PLZ DE 1"
         },
         {
           "timestamp": "2026-03-04T08:45:00.000+00:00",
           "status": "RU",
           "reasontypecode": "FA",
           "trackingDesc": "Empfängeradresse ungenügend",
-          "eventPlaceName": ""
+          "eventPlaceName": "PLZ DE X"
         }
       ]
     }

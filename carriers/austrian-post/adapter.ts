@@ -7,6 +7,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { austrianPostPlace } from './identity.js';
 import { austrianPostEventStatus, austrianPostShowsEstimate, austrianPostSummaryStatus } from './status.js';
 
 const PROVIDER = 'Austrian Post';
@@ -81,8 +82,7 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
     // alone, with no label from its codes. It keeps its code but no stage; one
     // without a code is skipped.
     if (!description && !providerCode) return;
-    // A bare `PLZ 1234` is the delivery area; a facility keeps its name without the postcode.
-    const location = clean(raw.eventPlaceName, 200).replace(/(?:^|,\s*)PLZ\s*\d{4,5}$/i, '').trim();
+    const location = austrianPostPlace(clean(raw.eventPlaceName, 200));
     const mapped = description ? austrianPostEventStatus(code, reason, description) : undefined;
     const key = JSON.stringify([time.iso, location, description, description ? '' : providerCode]);
     if (seen.has(key)) return;
