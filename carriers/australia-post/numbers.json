@@ -230,7 +230,7 @@
           "australia-post"
         ]
       },
-      "note": "Open-source project example, not a real shipment. The source attributes it to Australia Post, which no rule claims."
+      "note": "Open-source project example, not a real shipment. The source attributes it to Australia Post. Other carriers' 22-digit rules match too, so detection only suggests Australia Post."
     },
     {
       "number": "LH290032509AU",

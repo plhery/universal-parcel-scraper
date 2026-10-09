@@ -49,7 +49,8 @@ cache headers of the `no-store` mode. The app also sends an
     carriers' ten-character numbers start that way.
   - A 22-digit barcode of a prepaid satchel, envelope or label: `00` to `03`, then digits ending
     in a GS1 check digit. Other carriers' rules take any 22 digits; the passing check digit moves
-    Australia Post ahead of them in recognition.
+    Australia Post ahead of them in recognition. TIPSA stays first for a barcode in its layout, and
+    CTT Express's prefix selects CTT Express outright.
   - An Australian-issued postal number, which Australia Post is asked about first. The S10 suffix
     names the issuing country, not the deliverer, so it never selects Australia Post.
 - All-digit consignments have no rule: other carriers' rules take those lengths, and no check
