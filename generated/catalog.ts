@@ -450,6 +450,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "dhl.com"
         ],
+        "pathPattern": "^/(?![a-z]+-[a-z]+/(?:home/our-divisions|ecommerce)(?:[/.]|$))",
         "params": [
           "tracking-id",
           "trackingId",

@@ -58,6 +58,9 @@ once.
   as Swiss Post) becomes `delivery_carrier`; the host confirms the shipment
   through that carrier before switching. Lookalike hosts and userinfo URLs are
   ignored.
+- Links to dhl.com name DHL, except DHL's division pages and DHL eCommerce's
+  regional pages: the network they mean depends on the country, so they name
+  none.
 - Not used: Deutsche Post's business tracking API — needs contractual
   credentials for data the recipient page exposes publicly.
 - Not used: the Post & DHL app (`de.dhl.paket`). Its tracking tab is a web view

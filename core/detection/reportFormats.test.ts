@@ -58,6 +58,19 @@ describe('evidence-backed tracking formats', () => {
       .toEqual(parseTrackingInput(`https://www.dhl.com/us-en/home/tracking.html?submit=1&tracking-id=${number}`));
   });
 
+  it('reads DHL links on its local tracking and service pages, not on its division pages', () => {
+    // A reference detection alone does not recognize shows that DHL's rule read it.
+    for (const page of ['de-de/home/sendungsverfolgung.html', 'fr-fr/home/service-client.html', 'gb-en/home/tracking/tracking-parcel.html']) {
+      expect(parseTrackingInput(`https://www.dhl.com/${page}?tracking-id=TESTA1`)).toMatchObject({
+        trackingNumber: 'TESTA1', carrier: 'dhl', confidence: 'high', source: 'link',
+      });
+    }
+    for (const page of ['gb-en/home/our-divisions/parcel/business-users/help.html', 'gb-en/ecommerce/uk/about/privacy-notice.html']) {
+      expect(parseTrackingInput(`https://www.dhl.com/${page}?tracking-id=TESTA1`))
+        .toEqual(parseTrackingInput(`https://example.test/${page}?tracking-id=TESTA1`));
+    }
+  });
+
   it.each(['JX1234567890', 'jx 1234 5678 90'])('selects J&T for its Indonesian JX waybill: %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'j-and-t', confidence: 'high' });
   });

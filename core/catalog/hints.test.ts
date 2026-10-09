@@ -79,9 +79,15 @@ describe('delivery partner evidence', () => {
     ['', 'https://track.thecourierguy.co.za/', 'the-courier-guy'],
     ['', 'https://portal.thecourierguy.co.za/track', 'the-courier-guy'],
     ['', 'https://portal.thecourierguy.co.za/shipments/new', undefined],
-    // DHL's eCommerce tracking page is shared, like its global one; its other pages are DHL's.
+    // DHL's eCommerce tracking page is shared, like its global one; its other pages are DHL's,
+    // except its division pages and DHL eCommerce's regional pages, whose network depends on the country.
     ['', 'https://www.dhl.com/us-en/home/tracking/tracking-ecommerce.html', undefined],
     ['', 'https://www.dhl.com/us-en/home/tracking/tracking-express.html', 'dhl'],
+    ['', 'https://www.dhl.com/gb-en/home.html', 'dhl'],
+    ['', 'https://www.dhl.com/gb-en/home/our-divisions/parcel/business-users/help.html', undefined],
+    ['', 'https://www.dhl.com/gb-en/home/our-divisions.html', undefined],
+    ['', 'https://www.dhl.com/gb-en/ecommerce/uk/about/privacy-notice.html', undefined],
+    ['DHL eCommerce', 'https://www.dhl.com/gb-en/home/our-divisions/parcel.html', 'dhl-ecommerce'],
   ])('resolves name %s and URL %s without guessing', (name, url, expected) => {
     expect(carrierIdFromPartner(name, url)).toBe(expected);
   });
