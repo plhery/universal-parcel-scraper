@@ -171,6 +171,31 @@ describe('Ukrposhta status API projection', () => {
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 
+  it('dates scans in Ukraine on Kyiv time to the minute both sources share, and keeps other clocks local', () => {
+    const countries = ['UKRAINE', '', 'EXAMPLE COUNTRY', 'Ukraine', 'UKRAINE'];
+    const rows = statuses(); rows.forEach((row: Record<string, unknown>, index: number) => { row.country = countries[index]; });
+    const api = parseUkrposhtaStatuses(rows, NUMBER);
+    expect(api.last_update).toBe('2026-03-29T16:03:00+03:00');
+    expect(api.events?.map(event => event.time ?? event.local_time)).toEqual(['2026-03-29T16:03:00+03:00',
+      '2026-03-28T13:32:00+02:00', '2026-03-28T11:27:44', '2026-03-27T10:34:44', '2026-03-25T18:11:00+02:00']);
+    expect(api.events?.filter(event => event.time).every(event => !event.local_time)).toBe(true);
+    const pair = fixture(); pair.overview.result[0].country = countries[4];
+    pair.history.result.forEach((row: Record<string, unknown>, index: number) => { row.gtt_country = countries[4 - index]; });
+    const portal = parseUkrposhtaHistory(pair.history, parseUkrposhtaOverview(pair.overview, NUMBER));
+    const dated = (result: typeof api) => result.events?.filter(event => event.time)
+      .map(event => [event.time, event.description, event.location, event.provider_code]);
+    expect(portal.last_update).toBe(api.last_update);
+    expect(dated(portal)).toEqual(dated(api));
+  });
+
+  it.each(['2026-03-29T03:30:12', '2026-10-25T03:30:12'])('keeps a Kyiv wall clock the clocks skip or repeat local: %s', date => {
+    const rows = statuses(); Object.assign(rows[4], { country: 'UKRAINE', date });
+    const result = parseUkrposhtaStatuses(rows, NUMBER);
+    expect(result.last_update).toBeNull();
+    expect(result.events?.[0]).toMatchObject({ local_time: date });
+    expect(result.events?.[0]).not.toHaveProperty('time');
+  });
+
   it('orders by position, whatever order the reply or its clocks arrive in', () => {
     const rows = statuses().reverse();
     rows[0].date = '2020-01-01T00:00:00';

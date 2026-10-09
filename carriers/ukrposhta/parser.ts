@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { ukrposhtaReturnCue, ukrposhtaStatus } from './status.js';
@@ -38,6 +39,19 @@ export function ukrposhtaWallClock(value: string): string | null {
   return date.isValid && date.toFormat(format) === raw ? date.toFormat("yyyy-MM-dd'T'HH:mm:ss") : null;
 }
 
+/**
+ * A scan in Ukraine is dated on Kyiv time. The minute is the precision both
+ * sources share, so the status API and the portal date one scan alike. A wall
+ * clock the zone skips or repeats stays local.
+ */
+function kyivTime(local: string): string | null {
+  const minute = `${local.slice(0, 16)}:00`;
+  const parsed = DateTime.fromISO(minute, { zone: 'Europe/Kyiv' });
+  if (!parsed.isValid || parsed.toISO({ includeOffset: false, suppressMilliseconds: true }) !== minute
+    || parsed.getPossibleOffsets().length !== 1) return null;
+  return parsed.toISO({ suppressMilliseconds: true });
+}
+
 export interface UkrposhtaOverview {
   number: string;
   count: number;
@@ -71,7 +85,8 @@ interface ScanRow { date: string; code: string; label: string; location: string;
 function project(rows: ScanRow[]): CarrierResult {
   const latest = rows[0]!;
   // Both native histories are current-first. Keep that order across foreign
-  // wall clocks or missing dates instead of sorting them as UTC instants.
+  // wall clocks or missing dates instead of sorting them as instants. A row
+  // naming Ukraine is a Ukrposhta scan; others keep the clock they were given.
   let returnLeg = false;
   const events = new Array<CarrierEvent>(rows.length);
   for (let index = rows.length - 1; index >= 0; index--) {
@@ -81,10 +96,11 @@ function project(rows: ScanRow[]): CarrierResult {
     if (row.reason === '65' || row.reason === '66') classified = { status: 'exception', stage: 'exception' };
     if (classified?.stage === 'delivered' && returnLeg) classified = { status: 'exception', stage: 'returned' };
     const local = ukrposhtaWallClock(row.date);
+    const time = local && countryCode(row.country) === 'UA' ? kyivTime(local) : null;
     events[index] = {
       description: row.label, provider_code: row.code,
       ...(row.location || row.country ? { location: [row.location, row.country].filter(Boolean).join(', ') } : {}),
-      ...(local ? { local_time: local } : row.date ? { provider_time_text: row.date } : {}),
+      ...(time ? { time } : local ? { local_time: local } : row.date ? { provider_time_text: row.date } : {}),
       ...(classified ? { stage: classified.stage } : {}), ...(returnLeg ? { provider_leg: 'return' } : {}),
     };
   }
@@ -93,7 +109,7 @@ function project(rows: ScanRow[]): CarrierResult {
   const status = stage === 'returned' || stage === 'exception' ? 'exception' : ukrposhtaStatus(latest.code)?.status ?? 'unknown';
   const seen = new Set<string>();
   const deduplicated = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
-  return { status, ...(stage ? { current_stage: stage } : {}), last_status_text: latest.label, last_update: null, events: deduplicated.slice(0, 100) };
+  return { status, ...(stage ? { current_stage: stage } : {}), last_status_text: latest.label, last_update: current.time ?? null, events: deduplicated.slice(0, 100) };
 }
 
 /**

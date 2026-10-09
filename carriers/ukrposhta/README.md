@@ -41,8 +41,11 @@ The newer Flutter app `ua.ukrposhta.ukrposhta` tracks through account routes on
 
 The status API orders scans by position and its clocks include seconds. On the
 portal the batch clock includes seconds, while full history has minute precision;
-matching uses that shared precision. All offsetless scan clocks remain local,
-including foreign scans, and retain native order. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)
+matching uses that shared precision. Clocks carry no offset. A row naming Ukraine
+is dated on Kyiv time (`Europe/Kyiv`) to the shared minute, so both sources date
+a scan alike. Rows naming another country or none, such as airline legs, and wall
+clocks a daylight-saving change skips or repeats keep their local digits. Scans
+retain native order. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)
 for unresolved history handling. A return decision starts a separate leg; later
 transport remains active until a delivery scan completes that leg.
 
