@@ -13429,6 +13429,7 @@
       "intl-post"
     ],
     "asked": [
+      "ukrposhta",
       "chronopost"
     ]
   },
@@ -13625,6 +13626,18 @@
     "confidence": "high",
     "candidates": [
       "swiss-post"
+    ]
+  },
+  {
+    "input": "CF173866139AU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "australia-post",
+      "chronopost"
     ]
   },
   {
@@ -14526,6 +14539,7 @@
       "intl-post"
     ],
     "asked": [
+      "australia-post",
       "chronopost"
     ]
   },
@@ -14537,6 +14551,7 @@
       "intl-post"
     ],
     "asked": [
+      "australia-post",
       "chronopost"
     ]
   },
@@ -16074,6 +16089,31 @@
       "intl-post"
     ],
     "asked": [
+      "australia-post",
+      "chronopost"
+    ]
+  },
+  {
+    "input": "LH433912417AU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "australia-post",
+      "chronopost"
+    ]
+  },
+  {
+    "input": "LH435360977AU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "australia-post",
       "chronopost"
     ]
   },
@@ -16112,6 +16152,7 @@
       "intl-post"
     ],
     "asked": [
+      "australia-post",
       "chronopost"
     ]
   },
@@ -16123,6 +16164,19 @@
       "intl-post"
     ],
     "asked": [
+      "australia-post",
+      "chronopost"
+    ]
+  },
+  {
+    "input": "LK286032428AU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "australia-post",
       "chronopost"
     ]
   },

@@ -42,7 +42,7 @@ export const ADAPTER_CHECKED_RULES: ReadonlySet<string> = new Set([
   // S10 postal items.
   'an-post-1', 'austrian-post-2', 'bpost-3', 'bring-posten-1', 'canada-post-2', 'china-post-1', 'correios-br-1',
   'correos-chile-2', 'ctt-1', 'hongkong-post-1', 'india-post-1', 'japan-post-1', 'nz-post-1', 'poczta-polska-s10', 'postnord-2',
-  'thailand-post-1', 'usps-s10',
+  'thailand-post-1', 'ukrposhta-s10', 'usps-s10',
 ]);
 
 /**

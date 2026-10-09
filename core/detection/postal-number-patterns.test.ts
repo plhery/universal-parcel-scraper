@@ -27,6 +27,21 @@ describe('S10-shaped numbers', () => {
     expect(recognitionAskedCarriers('CP123456789PL')).not.toContain('poczta-polska');
   });
 
+  it('asks Australia Post and Ukrposhta first about the numbers they issue without selecting them', () => {
+    expect(detectCarrierMatch('rr 123 456 785 au')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    expect(recognitionCandidates('rr 123 456 785 au')).toEqual([
+      { carrier: 'australia-post', needsInput: null, preferred: true },
+      { carrier: 'chronopost', needsInput: null, preferred: false },
+    ]);
+    expect(recognitionAskedCarriers('RR123456789AU')).not.toContain('australia-post');
+    expect(detectCarrierMatch('RR123456785UA')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    expect(recognitionCandidates('RR123456785UA')).toEqual([
+      { carrier: 'ukrposhta', needsInput: null, preferred: true },
+      { carrier: 'chronopost', needsInput: null, preferred: false },
+    ]);
+    expect(recognitionAskedCarriers('RR123456789UA')).not.toContain('ukrposhta');
+  });
+
   it('offers USPS a US-issued number in the browser phase only', () => {
     expect(detectCarrierMatch('EC123456785US')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     expect(recognitionAskedCarriers('EC123456785US')).not.toContain('usps');

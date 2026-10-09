@@ -212,6 +212,82 @@
       "note": "Another customer posts their own Australia Post shipment."
     },
     {
+      "number": "CF173866139AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260929041018/https://auspost.com.au/mypost/track/details/CF173866139AU",
+        "date": "2026-09-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. An Australian-issued postal number, which other posts deliver too."
+    },
+    {
+      "number": "LH433912417AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901052240/https://auspost.com.au/mypost/track/details/LH433912417AU",
+        "date": "2026-09-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. An Australian-issued postal number, which other posts deliver too."
+    },
+    {
+      "number": "LH435360977AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260918172222/https://auspost.com.au/mypost/track/details/LH435360977AU",
+        "date": "2026-09-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. An Australian-issued postal number, which other posts deliver too."
+    },
+    {
+      "number": "LK286032428AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261003172322/https://auspost.com.au/mypost/track/details/LK286032428AU",
+        "date": "2026-10-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. An Australian-issued postal number, which other posts deliver too."
+    },
+    {
       "number": "33QAG752421901000931500",
       "role": "quarantined",
       "evidence": "public_shipment_report",

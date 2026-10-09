@@ -2598,6 +2598,12 @@ export const CARRIER_CATALOG = {
         "pattern": "^\\d{13}$",
         "confidence": "low",
         "checksum": "ukrposhta"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}UA$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
       }
     ]
   },
@@ -3838,6 +3844,12 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{9}AU$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
       }
     ]
   },
@@ -5450,7 +5462,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "brt": ["brt-1","brt-shipment-number","brt-parcel-id"],
   "ecoscooting": ["ecoscooting-1","ecoscooting-2"],
   "tipsa": ["tipsa-1","tipsa-2"],
-  "ukrposhta": ["ukrposhta-1"],
+  "ukrposhta": ["ukrposhta-1","ukrposhta-s10"],
   "usps": ["usps-impb","usps-3","usps-1","usps-2","usps-impb-routing","usps-4","usps-s10"],
   "canada-post": ["canada-post-1","canada-post-2"],
   "purolator": ["purolator-1","purolator-2"],
@@ -5482,7 +5494,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "korea-post": ["korea-post-1","korea-post-2","korea-post-3"],
   "thailand-post": ["thailand-post-1"],
   "dtdc": ["dtdc-1","dtdc-2","dtdc-3","dtdc-4"],
-  "australia-post": ["australia-post-article","australia-post-consignment"],
+  "australia-post": ["australia-post-article","australia-post-consignment","australia-post-s10"],
   "hongkong-post": ["hongkong-post-1"],
   "pos-malaysia": ["pos-malaysia-1","pos-malaysia-2"],
   "ninja-van": ["ninja-van-1","ninja-van-2","ninja-van-3"],

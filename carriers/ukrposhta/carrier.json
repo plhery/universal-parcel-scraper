@@ -68,6 +68,13 @@
       "pattern": "^\\d{13}$",
       "confidence": "low",
       "checksum": "ukrposhta"
+    },
+    {
+      "id": "ukrposhta-s10",
+      "pattern": "^[A-Z]{2}\\d{9}UA$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "s10"
     }
   ]
 }

@@ -44,7 +44,9 @@ cache headers of the `no-store` mode. The app also sends an
   three-character merchant location ID, nine digits, `000` and six digits. A consignment number
   (two digits, a location ID with a letter, seven digits) is only suggested, since a broader
   twelve-character rule takes it too. All-digit consignments and 22-digit satchel barcodes have no
-  rule: other carriers' rules take those lengths.
+  rule: other carriers' rules take those lengths. An Australian-issued postal number makes
+  Australia Post the first carrier recognition asks; the S10 suffix names the issuing country,
+  not the deliverer, so it never selects Australia Post.
 - The context uses `AUSTRALIA_POST_BROWSER_LOCALE` (default `de-DE`) because the pool's `en-US` and
   `en-AU` locales got HTTP 403 from the deployment network. Another network may need its own value.
   It does not affect status language or event time zones.

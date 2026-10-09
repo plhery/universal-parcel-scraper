@@ -234,6 +234,24 @@
     "reason": "The Polish issuer suffix suggests Poczta Polska but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
   },
   {
+    "shape": "AA9{9}AU with a valid S10 check digit",
+    "carriers": [
+      "australia-post",
+      "chronopost",
+      "intl-post"
+    ],
+    "reason": "The Australian issuer suffix suggests Australia Post but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
+  },
+  {
+    "shape": "AA9{9}UA with a valid S10 check digit",
+    "carriers": [
+      "chronopost",
+      "intl-post",
+      "ukrposhta"
+    ],
+    "reason": "The Ukrainian issuer suffix suggests Ukrposhta but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
+  },
+  {
     "shape": "AA9{9}US with a valid S10 check digit",
     "carriers": [
       "chronopost",
