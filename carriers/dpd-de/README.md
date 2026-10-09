@@ -59,8 +59,9 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
 - The service takes tens of seconds to open a session, whatever the device
   data, language or user agent. Sending a session's token back to
   `getSessionFullState` takes as long and returns another token. The reply
-  gives no expiry. The service accepts a session for at least four hours, an
-  idle one too. While slow, it can refuse a session that it accepts again later.
+  gives no expiry. The service accepts a session for at least eight hours, one
+  left idle for four too. While slow, it can refuse a session that it accepts
+  again later.
 - One session serves the process for each transport and user agent, shared by
   DPD Germany and DPD Switzerland and by the adapters of every registry. It is
   replaced when the service refuses it. From three hours old it keeps serving

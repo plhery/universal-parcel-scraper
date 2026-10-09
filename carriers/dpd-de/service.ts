@@ -17,8 +17,8 @@ const MAX_BYTES = 2_000_000;
 /** Opening a session has taken up to 75 seconds. */
 const SESSION_OPEN_MS = 120_000;
 /**
- * The service accepts a session for at least four hours, an idle one too. From this age the next
- * one opens beside it, and replaces it once open.
+ * The service accepts a session for at least eight hours, one left idle for four too. From this
+ * age the next one opens beside it, and replaces it once open.
  */
 const SESSION_RENEW_MS = 3 * 3_600_000;
 /** A kept session that failed to open is tried again after this long. */
