@@ -63,7 +63,10 @@ describe('Nordic SSCCs behind the 00 identifier', () => {
 
   it('keeps PostNord out when the SSCC check digit fails', () => {
     expect(detectCarrierMatch('00357123456789012349').candidates).not.toContain('postnord');
-    expect(checksumRejections('00357123456789012349')).toContainEqual({ carrier: 'postnord', rule: 'postnord-3', checksum: 'sscc' });
+    expect(checksumRejections('00357123456789012349')).toEqual(expect.arrayContaining([
+      { carrier: 'postnord', rule: 'postnord-5', checksum: 'sscc' },
+      { carrier: 'postnord', rule: 'postnord-3', checksum: 'sscc' },
+    ]));
   });
 
   it.each(['00370123456789012347', '00373123456789012348'])('keeps Bring first for its parcel SSCC %s', (number) => {

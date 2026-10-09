@@ -88,14 +88,14 @@
       "checksum": "s10"
     },
     {
-      "id": "postnord-3",
+      "id": "postnord-5",
       "pattern": "^00(?!373)\\d(?:57|73)\\d{15}$",
       "confidence": "low",
       "preferred": true,
       "checksum": "sscc"
     },
     {
-      "id": "postnord-4",
+      "id": "postnord-3",
       "pattern": "^00\\d(?:57|73|70|64)\\d{15}$",
       "confidence": "low",
       "checksum": "sscc"

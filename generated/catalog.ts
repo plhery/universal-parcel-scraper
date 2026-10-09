@@ -5340,7 +5340,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "an-post": ["an-post-1"],
   "bpost": ["bpost-numeric-prefix","bpost-1","bpost-2","bpost-3"],
   "austrian-post": ["austrian-post-1","austrian-post-2"],
-  "postnord": ["postnord-1","postnord-2","postnord-3","postnord-4"],
+  "postnord": ["postnord-1","postnord-2","postnord-5","postnord-3"],
   "posti": ["posti-1","posti-2","posti-3"],
   "correos-express": ["correos-express-1","correos-express-2"],
   "seur": ["seur-1","seur-2","seur-3"],
