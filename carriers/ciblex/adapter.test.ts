@@ -11,6 +11,7 @@ import {
   normalizeCiblexTrackingNumber,
   parseCiblexTrackingHtml,
 } from './adapter.js';
+import { sameInstantIdentityPolicy } from '../../app.js';
 import { classifyCiblexStatus, comparableText, isCiblexNotice } from './status.js';
 
 // Fully synthetic identifier paired with a deterministic provider-shaped HTML
@@ -167,6 +168,37 @@ describe('Ciblex response normalization', () => {
     const result = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
     expect(result.events?.map(event => event.location)).toEqual(['EXAMPLEVILLE', 'SAINT-EXEMPLE SUR MER', 'Exampletown 99 (99)', '', '', '', '']);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|99X/);
+  });
+
+  it('reads the town alone of a hub written with its department only', () => {
+    const rows: Row[] = [
+      ['10/07/2026', '06:02', 'Colis Contrôle', 'EXAMPLEVILLE 44 (44 49X)'],
+      ['09/07/2026', '15:39', 'Colis Contrôle', 'SAINT-EXEMPLE 69'],
+      ['09/07/2026', '15:38', 'Colis Contrôle', "L'EXEMPLE-SUR-MER 06"],
+      ['09/07/2026', '15:37', 'Colis Contrôle', 'Exampletown 974'],
+      ['09/07/2026', '15:36', 'Colis Contrôle', 'EXAMPLEVILLE 00'],
+      ['09/07/2026', '15:35', 'Colis Contrôle', 'EXAMPLEVILLE 96'],
+      ['09/07/2026', '15:34', 'Colis Contrôle', 'EXAMPLEVILLE 6'],
+      ['09/07/2026', '15:33', 'Colis Contrôle', 'EXAMPLEVILLE 977'],
+      ['09/07/2026', '15:32', 'Colis Contrôle', 'PRIVATE STREET 75 10'],
+      ['09/07/2026', '15:31', 'Colis Contrôle', '10 PRIVATE STREET 75'],
+      ['09/07/2026', '15:30', 'COMPLEMENT ADRESSE', 'PRIVATE PLACE 75'],
+    ];
+    const result = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
+    expect(result.events?.map(event => event.location)).toEqual([
+      'EXAMPLEVILLE', 'SAINT-EXEMPLE', "L'EXEMPLE-SUR-MER", 'Exampletown', '', '', '', '', '', '', '',
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|49X/);
+  });
+
+  it('lets a stored hub scan without its town gain it in place', () => {
+    const rows: Row[] = [['09/07/2026', '15:39', 'Colis Contrôle', 'SAINT-EXEMPLE 69'], ['09/07/2026', '15:39', 'Colis Contrôle', 'SAINT-EXEMPLE 69']];
+    const [scan] = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER).events ?? [];
+    const incoming = { stage: scan!.stage ?? '', description: scan!.description ?? '', location: scan!.location ?? '', providerCode: '' };
+    const policy = sameInstantIdentityPolicy('ciblex', { supportsScanMatching: true });
+    expect(incoming.location).toBe('SAINT-EXEMPLE');
+    expect(policy?.matches?.(incoming, { ...incoming, location: '' })).toBe(true);
+    expect(policy?.matches?.(incoming, { ...incoming, location: 'EXAMPLEVILLE' })).toBe(false);
   });
 
   it('keeps the newest scan deciding over a later service notice', () => {

@@ -19,8 +19,9 @@ ties. If a clock is unresolved, native position remains authoritative and its
 text is preserved. Unknown current wording cannot inherit older delivery.
 
 The place column can contain recipient addresses. Only the established depot
-labels with a repeated department code are retained: `TOWN 68 (68)` as written,
-and the town alone of `TOWN 44 (44 49X)`, whose codes are dropped. Exception
+labels with their department code are retained: `TOWN 68 (68)` as written, and
+the town alone of `TOWN 44 (44 49X)` and of the origin hubs' `TOWN 69`, whose
+codes are dropped. Written once, the department must be a French one. Exception
 places are excluded. Customer and order blocks are ignored. Distinct native
 places remain separate scans even when privacy rules suppress both. A scan
 stored before its depot's town was read gains it in place.

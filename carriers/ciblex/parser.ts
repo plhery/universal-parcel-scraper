@@ -35,10 +35,11 @@ function scanTime(date: string, clock: string): { time?: string; local_time?: st
 function safeLocation(raw: string): string {
   const value = clean(raw, 100);
   // Free-form places can contain the recipient address. Retain only the
-  // established operational-depot labels with a repeated department code:
-  // "TOWN 68 (68)" as written, and the town alone of "TOWN 44 (44 49X)".
+  // established operational-depot labels with their department code:
+  // "TOWN 68 (68)" as written, and the town alone of "TOWN 44 (44 49X)" and of
+  // "TOWN 69", whose department, written once, must be a French one.
   if (/^([\p{Letter}\p{Mark} .'/-]{1,70}) (\d{2,3}) \(\2\)$/u.test(value)) return value;
-  const depot = /^([\p{Letter}\p{Mark} .'/-]{1,70}) (\d{2,3}) \(\2 [A-Z0-9]{1,4}\)$/u.exec(value);
+  const depot = /^([\p{Letter}\p{Mark} .'/-]{1,70}) (?:(\d{2,3}) \(\2 [A-Z0-9]{1,4}\)|(?:0[1-9]|[1-8]\d|9[0-5]|97[1-6]))$/u.exec(value);
   return depot ? depot[1]!.trim() : '';
 }
 
