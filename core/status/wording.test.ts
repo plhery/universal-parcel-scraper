@@ -483,6 +483,64 @@ describe('classifyWording', () => {
     }
   });
 
+  it('reads the recipient collecting a parcel as delivered, and the courier collecting it as acceptance', () => {
+    for (const wording of [
+      // By the recipient, consignee, addressee or customer, as DPD Germany, DHL eCommerce and Asendia word it.
+      'Parcel picked up by recipient', 'Picked up by consignee', 'Picked up from Pickup parcelshop by consignee.',
+      'Picked up from DPD Pickup station by consignee.', 'Collected by the recipient', 'collected by recipient',
+      'Collected at DHL ServicePoint by the recipient', 'Your shipment has been collected by consignee at the parcelshop',
+      'The recipient has picked up the shipment from the retail outlet.', 'Your parcel was collected by the addressee',
+      'Picked up by the customer', 'Picked-up by recipient',
+      // From a pickup point, a locker or a counter.
+      'Your parcel has been picked up from the Pickup point', 'Collected from DHL Locker by the recipient',
+      'Item collected from Parcel Locker', 'Final delivery - Collected at counter', 'Collected at the post office counter',
+      // French, German, Italian, Spanish, Portuguese and Polish.
+      'Retiré par le destinataire', 'Colis retiré par son destinataire', 'Votre colis a été retiré au point relais',
+      'Le destinataire a retiré son colis', 'Vom Empfänger abgeholt', 'Die Sendung wurde vom Empfänger in der Filiale abgeholt.',
+      'Der Empfänger hat die Sendung in der Filiale abgeholt.', 'Die Sendung wurde aus der Packstation abgeholt.',
+      'Ritirato dal destinatario', "La spedizione è stata ritirata dal destinatario presso l'ufficio postale",
+      'Il destinatario ha ritirato la spedizione', 'Recogido por el destinatario', 'Retirado por el destinatario',
+      'El destinatario ha retirado el envío de la tienda SEUR Pickup seleccionada.', 'Levantado pelo destinatário',
+      'Odebrana przez odbiorcę',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'delivered', source: 'wording:language' });
+    // A bare pickup is the sender's hand-in, and so is the courier's collection, even at a pickup point.
+    for (const wording of ['Picked up', 'Picked up at the client', 'Picked up by the courier', 'Picked up by the driver',
+      'Picked up from the sender', 'Picked up from shipper', 'Picked up at DHL ServicePoint by the courier',
+      'Picked up from DHL Locker by the courier', 'Picked up at post office by the courier', 'Picked up at parcelshop']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'accepted', source: 'wording:language' });
+    }
+    // A parcel shop or service point also takes in drop-offs the courier
+    // collects. Nor is a pickup point taking the parcel in, a mailbox
+    // collection, a sender pickup or a parcel taken off the round a delivery.
+    for (const wording of ['The shipment has been collected from the ServicePoint', 'Collected from the pickup point by the courier',
+      'Parcel collected by pickup point', 'Shipment collected from the shipper', 'We successfully picked it up from your mailbox.',
+      'Die Sendung wurde beim Absender abgeholt', 'Die Sendung wurde vom Paketboten in der Filiale abgeholt', 'Ritirato dal corriere',
+      'Colis retiré de la tournée', 'Picked up by customer service']) {
+      expect(wordingStage(wording, 'pending'), wording).not.toBe('delivered');
+    }
+    // A parcel still to collect.
+    for (const wording of ['Ready to be picked up', 'Ready to be picked up by the recipient', 'Your parcel is ready to be collected',
+      'Prêt à être retiré']) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'ready_for_pickup', source: 'wording:language' });
+    for (const wording of ['To be collected by the recipient', 'The parcel can be collected from the parcel locker',
+      'Your parcel will be kept at the pickup point until it is collected', 'Die Sendung kann vom Empfänger in der Filiale abgeholt werden',
+      'Held at the counter until collected by the recipient']) {
+      expect(wordingStage(wording, 'pending'), wording).not.toBe('delivered');
+    }
+    // A parcel nobody collected, which Spanish and Portuguese used to read as delivered.
+    for (const wording of ['Not collected by the recipient', 'Not collected at DHL ServicePoint', 'Parcel not picked up by the recipient',
+      'Parcel has not been collected from the pickup point', 'The recipient has not collected the parcel', 'Non retiré par le destinataire',
+      "Le colis n'a pas été retiré par le destinataire", 'Vom Empfänger nicht abgeholt', 'Non ritirato dal destinatario',
+      'No recogido por el destinatario', 'Não levantado pelo destinatário']) {
+      expect(wordingStage(wording, 'pending'), wording).not.toBe('delivered');
+    }
+    for (const [wording, stage] of [
+      ['Not collected by the recipient, return to sender', 'exception'],
+      ['Not collected from DHL Locker, return to the sender', 'exception'],
+      ['Shipment not collected by recipient, awaiting instructions', 'exception'],
+      ['Collected by the recipient and returned to sender', 'returned'],
+    ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+  });
+
   it('falls back without a rule id when nothing matches', () => {
     expect(classifyWording('Estado interno 99', 'pending')).toEqual({ stage: 'pending', source: 'none' });
     expect(wordingStage('Estado interno 99')).toBe('in_transit');

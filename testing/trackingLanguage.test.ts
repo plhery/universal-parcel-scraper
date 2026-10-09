@@ -62,6 +62,8 @@ const contrasts: { expected: Stage; en: string; fr: string; de: string; it: stri
   { expected: 'exception', en: 'Shipment cancelled', fr: 'Envoi annulé', de: 'Sendung storniert',
     it: 'Spedizione annullata', es: 'Envío cancelado', pt: 'Encomenda cancelada' },
   { expected: 'delivered', en: 'Delivered', fr: 'Livré', de: 'Zugestellt', it: 'Consegnato', es: 'Entregado', pt: 'Entregue' },
+  { expected: 'delivered', en: 'Collected by the recipient', fr: 'Retiré par le destinataire', de: 'Vom Empfänger abgeholt',
+    it: 'Ritirato dal destinatario', es: 'Recogido por el destinatario', pt: 'Levantado pelo destinatário' },
 ];
 
 describe('intuitive language contrasts', () => {

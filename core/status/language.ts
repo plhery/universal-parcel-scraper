@@ -116,6 +116,33 @@ const HOLD = String.raw`\b(?:on hold|held|hold|holding|retenu(?:e|s|es)?|en atte
 const RECIPIENT_HOLD = new RegExp(`${HOLD}${SENTENCE}*?${RECIPIENT_REQUEST}|${RECIPIENT_REQUEST}${SENTENCE}*?${HOLD}`);
 /** Where a held parcel waits for the recipient to collect it. */
 const COUNTER = /post office|postal outlet|pick ?up|collection|counter|retail (?:location|outlet)|bureau de poste|point (?:de )?retrait|point relais|filiale|abholung|ufficio postale|ritiro|oficina|recogida|levantamento|agencia/;
+
+/** The recipient's side by its role, not a service desk or an agent acting for it. */
+const RECIPIENT = String.raw`(?:recipient|addressee|consignee|customer|receiver)s?\b(?!'| (?:service|care|support)\b)`;
+/**
+ * Where only a recipient collects a parcel. Parcel shops, service points and
+ * access points also take in the drop-offs a courier then collects ("Picked
+ * up at parcelshop", "collected from the ServicePoint"), so a collection there
+ * has to name the recipient.
+ */
+const COLLECTION_PLACE = String.raw`(?:pick ?up (?:point|station|parcel ?shop|locker)|collection point|(?:parcel )?lockers?|packstation|(?:post office |postal )?counter)\b`;
+const COLLECTED = String.raw`(?:picked up|collected)`;
+/**
+ * A parcel collected from its pickup point: by the recipient, the consignee or
+ * the customer, or from a pickup point, locker or counter, in each language.
+ */
+const RECIPIENT_COLLECTED = new RegExp([
+  String.raw`\b${COLLECTED}(?: [\w'-]+){0,6}? by (?:the |a |an |its |your )?${RECIPIENT}|\b${RECIPIENT} (?:has |have )?(?:already )?${COLLECTED}\b|\b${COLLECTED} (?:from|at|in) (?:the |a |an |its |your |our )?(?:[\w-]+ ){0,2}?${COLLECTION_PLACE}`,
+  String.raw`\bretire(?:e|s|es)?\b${SENTENCE}*? par (?:le |la |l'|son |sa )?(?:destinataire|cliente?)\b|\b(?:destinataire|cliente?) a retire\b|\bretire(?:e|s|es)? (?:au |en |dans (?:le |la |l'|un |une |votre |son )|a la |a l')(?:point (?:de )?retrait|point relais|relais|consigne|locker|bureau de poste)\b`,
+  String.raw`\b(?:vom|von (?:der|dem)|durch (?:den|die)) (?:empfanger(?:in)?|kunden|kundin|adressaten|adressatin)\b${SENTENCE}*?\babgeholt\b|\b(?:empfanger(?:in)?|kunde|kundin) hat\b${SENTENCE}*?\babgeholt\b|\b(?:in|aus) (?:der|dem|einer|einem|ihrer|ihrem) (?:[\w-]+ )?(?:filiale|postfiliale|packstation|paketstation|abholstation|postamt)\b${SENTENCE}*?\babgeholt\b`,
+  String.raw`\britirat[oaie]\b${SENTENCE}*? dal(?:la)? (?:destinatari[oa]|cliente)\b|\b(?:destinatari[oa]|cliente) ha ritirato\b|\britirat[oaie] (?:presso|in|al|nel|nella) (?:il |la |lo |l')?(?:punto (?:di )?ritiro|locker|ufficio postale)\b`,
+  String.raw`\b(?:recogid|retirad)[oa]s? por (?:el |la )?destinatari[oa]\b|\bdestinatari[oa] (?:ya )?ha (?:recogido|retirado)\b|\b(?:levantad|retirad)[oa]s? pel[oa] destinatari[oa]\b|\bodebran[aeoy] przez (?:odbiorce|adresata)\b`,
+].join('|'));
+const COLLECT_VERB = String.raw`(?:picked up|collected|retire|abgeholt|ritirat|recogid|retirad|levantad|odebran)`;
+/** A collection negated, still to come or made a condition, in each language. */
+const COLLECTION_PENDING = new RegExp(String.raw`(?:\b(?:not|never|nothing|non|pas|jamais|nicht|nao|nie)\b|n't)${SENTENCE}*?${COLLECT_VERB}|\bno (?:(?:ha|han|fue|sido|se) )*(?:recogid|retirad)|\b(?:be|being|once|when|until|till|if|unless|before|etre|sera|seront|serait|essere|sara|saranno|verra|verranno)(?: [\w']+){0,3}? ${COLLECT_VERB}|\babgeholt (?:werden|wird)\b|\b(?:wird|werden|kann|konnen|muss|soll)\b${SENTENCE}*?\babgeholt\b`);
+/** A courier, a driver or the sender's side collecting it, in each language. */
+const COLLECTED_BY_CARRIER = new RegExp(String.raw`\b(?:by|from|par|de|du|vom|von|beim|dal|dalla|dallo|por|del|pelo|przez) (?:the |a |an |our |your |le |la |l'|den |der |dem |il |lo |el |o )?(?:[\w-]+ )?(?:couriers?|drivers?|carriers?|senders?|shippers?|sellers?|merchants?|consignors?|chauffeur|livreur|transporteur|coursier|expediteur|\w*(?:fahrer|kurier|zusteller|boten?)|absender|corriere|autista|vettore|mittente|repartidor|mensajero|transportista|remitente|motorista|estafeta|remetente|kuriera|nadawcy)\b(?!')`);
 /**
  * A shipment, order or label cancelled, and nothing else in the scan, in each
  * language and Turkish ("İptal Edildi"). A cancelled return, pickup or hold,
@@ -182,6 +209,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Left for the carrier to admit, not admitted yet: Correos's "Depositado para
   // admisión", a parcel the sender dropped in a CityPaq locker.
   if (/\bpara (?:su )?(?:admision|admissao)\b|\b(?:deposited|dropped off)\b(?: [\w']+){0,8}? for (?:admission|acceptance)\b/.test(text)) return 'registered';
+  // The recipient collecting the parcel ends the delivery, ahead of the drop-off
+  // at the pickup point the scan may also name; the courier's or the sender's
+  // collection is an acceptance below.
+  if (RECIPIENT_COLLECTED.test(text) && !COLLECTION_PENDING.test(text) && !COLLECTED_BY_CARRIER.test(text)) return 'delivered';
   // "Delivered to" a pickup point or an intermediary is not delivery to the
   // recipient; a parcel already waiting at its pickup point outranks the
   // "sera remis" (will be handed over) that follows in La Poste's sentence.
@@ -233,7 +264,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // A delivery still to come ("una vez entregado", "que se entregue", "quando
   // for entregue") is not one; Spanish "entregue" is also a subjunctive.
   if (!/\b(?:una vez|cuando|hasta que|antes de que|para que|en cuanto|tan pronto como|uma vez|quando|assim que|ate que|logo que)\b[^.;:]*\bentreg/.test(text)
-    && /(?<!\b(?:sea|sean|fuera|fuese|ser|seja|sejam|fosse|for|forem|que|se) )\b(?:entregad[oa]s?|entregues?)\b|\bentrega (?:realizada|efectuada|efetuada|completada|concluida|finalizada)\b|\brecogid[oa] por (?:el |la )?destinatari[oa]\b|\b(?:levantad|retirad)[oa] pelo destinatario\b/.test(text)) return 'delivered';
+    && /(?<!\b(?:sea|sean|fuera|fuese|ser|seja|sejam|fosse|for|forem|que|se) )\b(?:entregad[oa]s?|entregues?)\b|\bentrega (?:realizada|efectuada|efetuada|completada|concluida|finalizada)\b/.test(text)) return 'delivered';
 
   // A handover to another network, a carrier or a courier set apart, takes the parcel on.
   if (HANDED_TO_NETWORK.test(text)) return 'in_transit';
