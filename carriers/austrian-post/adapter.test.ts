@@ -50,8 +50,13 @@ describe('Austrian Post public tracking', () => {
     expect(result.events?.map((event) => event.location)).toEqual([undefined, undefined, undefined, undefined, 'Synthetic logistics centre', undefined]);
     expect(JSON.stringify(result)).not.toContain('PLZ');
     for (const area of ['PLZ IT', 'plz at', 'PLZ FR 1', 'PLZ  NL  X', 'PLZ GB AB1 2CD', 'PLZ 12345']) expect(austrianPostPlace(area), area).toBe('');
-    // A place with the letters inside a word stays.
-    for (const place of ['Plzeň', 'PLZEN 1', 'Logistikzentrum Plzeňská']) expect(austrianPostPlace(place), place).toBe(place);
+    // A partner's scan abroad names the country after the delivery area.
+    for (const area of ['PLZ 12345, Deutschland', 'plz 01234,  Italien', 'PLZ DE, Deutschland']) expect(austrianPostPlace(area), area).toBe('');
+    // A place with the letters inside a word stays, and so does a depot the partner names after them.
+    for (const place of [
+      'Plzeň', 'PLZEN 1', 'Logistikzentrum Plzeňská', 'PLZ BEISPIELSTADT 2, Deutschland', 'PLZ Beispielort, Italien',
+      'Logistikzentrum Beispielstadt, Deutschland',
+    ]) expect(austrianPostPlace(place), place).toBe(place);
   });
 
   it('rejects a different returned item', () => {

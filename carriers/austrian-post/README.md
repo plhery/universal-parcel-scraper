@@ -14,10 +14,12 @@ Summary codes and scan codes use different vocabularies. A scan marked `IZ` can
 describe completed delivery; its reason and wording determine the event stage.
 Timestamps carry explicit offsets, which are preserved. A scan place given
 only as `PLZ` and a postcode, or as `PLZ` and a country code with or without
-part of a postcode (`PLZ DE`), is the delivery area and is dropped; a facility
-keeps its name without the postcode. The app's scan-identity policy lets a scan
-stored with such a place keep its row once it loses it, provided its instant,
-wording and known stage agree.
+part of a postcode (`PLZ DE`), is the delivery area and is dropped, also when a
+partner's scan abroad adds the country's name. A facility keeps its name
+without the postcode, and a depot a partner names after `PLZ` stays as the page
+shows it. The app's scan-identity policy lets a scan stored with a delivery
+area as its place keep its row once it loses it, provided its instant, wording
+and known stage agree.
 
 A scan can come without wording. The tracking page lists it under its date
 and time alone, with no label from its codes, so it keeps its code but gets
@@ -38,9 +40,9 @@ than the estimate's end also drops it.
 ## Limitations
 
 Account-only delivery options and recipient details are not retrieved. The
-estimate follows the page's code: no public item in transit was available to
-check a live value. Empty history and GraphQL errors remain inconclusive so
-another source can help.
+estimate follows the page's code and has not been checked against a live
+value. Empty history and GraphQL errors remain inconclusive so another source
+can help.
 
 ## Testing
 
