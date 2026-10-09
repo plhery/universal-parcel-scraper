@@ -10,7 +10,8 @@ const GUEST_RESERVE_MS = 20_000;
 /** Germany reads the German app's service, then the guest protocol with its own business-unit selector. */
 export const adapter: AdapterFactory = (environment) => {
   // The process's session, which DPD Switzerland shares.
-  const app = new DpdDeAppClient({ service: sharedDpdAppService(environment) });
+  const service = sharedDpdAppService(environment);
+  const app = new DpdDeAppClient({ service });
   const tracker = new DPDTracker({
     country: 'DE',
     fetcher: environment.fetcher,
@@ -18,14 +19,15 @@ export const adapter: AdapterFactory = (environment) => {
     recorder: environment.recorder,
     userAgent: environment.userAgent,
     app: {
-      run: (number, { signal, timeoutMs, leads, postcode }) => app.track(number, {
-        signal, timeoutMs, postcode, sessionWaitMs: leads ? Math.max(0, timeoutMs - GUEST_RESERVE_MS) : timeoutMs,
+      run: (number, { signal, stop, timeoutMs, leads, postcode }) => app.track(number, {
+        signal, stop, timeoutMs, postcode, sessionWaitMs: leads ? Math.max(0, timeoutMs - GUEST_RESERVE_MS) : timeoutMs,
       }),
       // Each service has its own host, limits and outages, so either answers when
       // the other fails. Both read the same parcel: neither can place another
       // country's delivery in Germany, nor find a parcel the guest API does not know.
       recovers: error => carrierErrorKind(error) !== 'not_found'
         && !(error instanceof CarrierError && error.reason === DPD_DE_OTHER_COUNTRY),
+      opening: () => service.opening,
     },
   });
   return {

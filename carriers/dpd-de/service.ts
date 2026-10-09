@@ -185,6 +185,11 @@ export class DpdAppService {
     }
   }
 
+  /** Whether a lookup would wait for a session to open: none is open. */
+  get opening(): boolean {
+    return this.#session === null;
+  }
+
   /** Forgets a session the service refused, unless another lookup already replaced it. */
   expire(session: string): void {
     if (this.#session?.token !== session) return;

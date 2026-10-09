@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 import { DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
-import { DPD_DE_APP_API, warmDpdSession } from './service.js';
+import { DPD_DE_APP_API, sharedDpdAppService, warmDpdSession } from './service.js';
 import { DPD_DE_APP_SCANS } from './status.js';
 
 // All identifiers, credentials, sessions, clocks and private-field markers here are invented.
@@ -427,11 +427,17 @@ describe('DPD Germany tiers', () => {
   function tiers(replies: Response[]) {
     const app = service();
     const steps: Array<[string, string]> = [];
-    const fetcher = ((url: string | URL, init?: RequestInit) => String(url) === DPD_DE_APP_API
-      ? app.fetcher(url, init) : Promise.resolve(replies.shift() ?? new Response('', { status: 500 }))) as typeof fetch;
+    const guestCalls: string[] = [];
+    const fetcher = ((url: string | URL, init?: RequestInit) => {
+      if (String(url) === DPD_DE_APP_API) return app.fetcher(url, init);
+      guestCalls.push(String(url));
+      return Promise.resolve(replies.shift() ?? new Response('', { status: 500 }));
+    }) as typeof fetch;
     const tracking = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {},
       recorder: { ...NOOP_RECORDER, step: event => { steps.push([event.step, event.outcome]); } } });
-    return { app, fetcher, steps, tracking };
+    /** Opens the session the adapter reads with, as an earlier lookup would have. */
+    const opened = () => sharedDpdAppService({ fetcher }).session(new AbortController().signal, 1_000);
+    return { app, fetcher, guestCalls, opened, steps, tracking };
   }
 
   it('declares the app service before the guest protocol', () => {
@@ -456,12 +462,61 @@ describe('DPD Germany tiers', () => {
 
   it('answers from the app service without a postcode, without asking the guest protocol', async () => {
     const replies = guest(Response.json({}));
-    const { steps, tracking } = tiers(replies);
+    const { guestCalls, opened, steps, tracking } = tiers(replies);
+    await opened();
     const result = await tracking.track({ number: NUMBER });
     expect(result).toMatchObject({ status: 'in_transit', tracking_url: `https://tracking.dpd.de/status/en_US/parcel/${NUMBER}` });
     expect(result.events).toHaveLength(5);
     expect(steps).toEqual([['app', 'ok']]);
-    expect(replies).toHaveLength(4);
+    expect(guestCalls).toHaveLength(0);
+  });
+
+  it('asks the guest protocol while the session opens and ends on a parcel it does not know', async () => {
+    const { app, guestCalls, steps, tracking } = tiers(guest(unknownParcel()));
+    app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+    await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'not_found']]);
+    expect(guestCalls).toHaveLength(4);
+    expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState']);
+  });
+
+  it('keeps the session opening for the next lookup without reading the parcel the guest protocol ended', async () => {
+    let open!: () => void;
+    const { app, fetcher, tracking } = tiers(guest(unknownParcel()));
+    app.replies.getSessionFullState = [() => new Promise<Response>((resolve) => { open = () => resolve(xml(fixture('session'))); })];
+    await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    open();
+    await vi.waitFor(() => expect(sharedDpdAppService({ fetcher }).opening).toBe(false));
+    await new Promise(resolve => setTimeout(resolve, 20));
+    expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState']);
+  });
+
+  it('keeps waiting for the session while the guest protocol knows the parcel, then answers with its reply', async () => {
+    const { app, guestCalls, steps, tracking } = tiers(guest(Response.json(delivered)));
+    app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+    // The app service waits for its session all but 20 seconds of the budget.
+    expect((await tracking.track({ number: NUMBER }, { budgetMs: 20_200 })).status).toBe('delivered');
+    expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'ok']]);
+    expect(guestCalls).toHaveLength(4);
+  });
+
+  it('reads the app service once its session opens, after asking the guest protocol beside it', async () => {
+    let open!: () => void;
+    const { app, guestCalls, steps, tracking } = tiers(guest(Response.json(delivered)));
+    app.replies.getSessionFullState = [() => new Promise<Response>((resolve) => { open = () => resolve(xml(fixture('session'))); })];
+    const pending = tracking.track({ number: NUMBER });
+    await vi.waitFor(() => expect(guestCalls).toHaveLength(4));
+    open();
+    expect((await pending).events).toHaveLength(5);
+    expect(steps).toEqual([['app', 'ok']]);
+  });
+
+  it('asks the guest protocol again in its own step when it failed beside the opening session', async () => {
+    const { app, guestCalls, steps, tracking } = tiers([...guest(new Response('', { status: 500 })), Response.json(delivered)]);
+    app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+    expect((await tracking.track({ number: NUMBER }, { budgetMs: 20_200 })).status).toBe('delivered');
+    expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'ok']]);
+    expect(guestCalls).toHaveLength(5);
   });
 
   it.each([
@@ -495,11 +550,12 @@ describe('DPD Germany tiers', () => {
 
   it('does not ask the guest protocol about a delivery the app service places in another country', async () => {
     const replies = guest(Response.json(delivered));
-    const { app, steps, tracking } = tiers(replies);
+    const { app, guestCalls, opened, steps, tracking } = tiers(replies);
+    await opened();
     app.replies.getTrackingScanList = [() => xml(fixture('scans').replaceAll('Musterstadt (DE)', 'Musterville (GB)'))];
     await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'indeterminate', reason: 'other_country' });
     expect(steps).toEqual([['app', 'indeterminate']]);
-    expect(replies).toHaveLength(4);
+    expect(guestCalls).toHaveLength(0);
   });
 
   it.each([

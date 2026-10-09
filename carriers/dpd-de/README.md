@@ -68,10 +68,13 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   while a lookup opens the next one beside it.
 - Lookups share the opening, which can take two minutes and runs while a
   lookup that asked for it is still running. Ahead of the guest API, a lookup
-  waits for it while keeping 20 seconds for the guest API. The default budget
-  leaves time to wait, so the first lookup of a process lasts as long as the
-  opening. A lookup with less budget goes on to the guest API at once, and the
-  opening continues until that lookup's budget ends.
+  waits for it while keeping 20 seconds for the guest API, and asks the guest
+  API meanwhile. A parcel the guest API does not know, or places in another
+  country, ends the wait at once. Otherwise the default budget leaves time to
+  wait, so the first lookup of a process lasts as long as the opening, and the
+  guest API's reply answers if the session does not open in time. A lookup
+  with less budget goes on to the guest API at once, and the opening continues
+  until that lookup's budget ends.
 - A long-lived host calls `warmDpdSession()` from `universal-parcel-scraper/node`
   at start, with its adapter environment's `fetcher` and `userAgent` if it sets
   them. The session then opens in the background and stays open: openings run

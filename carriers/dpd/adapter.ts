@@ -12,7 +12,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay, isoTime, explicitOffsetTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { TrawlClient, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { sharedDpdAppService, type DpdParcelShop } from '../dpd-de/service.js';
+import { DPD_DE_SESSION_OPENING, sharedDpdAppService, type DpdParcelShop } from '../dpd-de/service.js';
 import {
   API_LABELS, PROOF_OF_DELIVERY_SCAN, apiStage, apiStatus, scanStage, wordingStatus,
 } from './status.js';
@@ -626,10 +626,15 @@ export interface DPDParcelShops {
 }
 
 export interface DPDAppTier {
-  /** `leads` when the guest tier is still to come and needs time left. `postcode` is empty when none was given. */
-  run(number: string, context: { signal: AbortSignal; timeoutMs: number; leads: boolean; postcode: string }): Promise<CarrierResult>;
+  /**
+   * `leads` when the guest tier is still to come and needs time left. `postcode` is empty when none was given.
+   * `stop` aborts when the lookup has its answer without the tier, which then reads nothing more.
+   */
+  run(number: string, context: { signal: AbortSignal; stop: AbortSignal; timeoutMs: number; leads: boolean; postcode: string }): Promise<CarrierResult>;
   /** The failures of either tier the other may answer after. */
   recovers(error: unknown): boolean;
+  /** Whether a lookup would first wait for the tier's session to open. */
+  opening?(): boolean;
 }
 
 export class DPDTracker {
@@ -700,12 +705,39 @@ export class DPDTracker {
     // Without a postcode the app's scans are the richer history; with one, the
     // guest tier's verified reply comes first.
     const appLeads = app !== undefined && !resolvedPostcode;
+    // The guest tier's reply, kept for its step when it was asked beside the app.
+    let guest: Promise<CarrierResult> | undefined;
+    const guestReply = () => guest ??= this.apiFetch(trackingNumber, resolvedPostcode, lookup);
+    /**
+     * While the app's session opens, the guest tier is asked beside it. A parcel
+     * the guest tier does not know, or places in another country, the app does
+     * not answer either: the app stops waiting, reads nothing once its session
+     * opens, and the guest tier's step reports it. Otherwise the app keeps
+     * waiting, and the reply serves the guest tier's step if the session does
+     * not open in time. A failed reply is asked again there.
+     */
+    const besideGuest = (tracked: Promise<CarrierResult>, stop: AbortController): Promise<CarrierResult> => {
+      const reply = guestReply();
+      const pending = new Promise<never>(() => {});
+      return Promise.race([tracked, reply.then(() => pending, (error: unknown) => {
+        if (!app!.recovers(error)) {
+          const stopped = new IndeterminateError('DPD Germany', 'DPD Germany app session is still opening', { reason: DPD_DE_SESSION_OPENING });
+          stop.abort(stopped);
+          throw stopped;
+        }
+        if (guest === reply) guest = undefined;
+        return pending;
+      })]);
+    };
     const appStep = (leads: boolean) => ({
       id: 'app',
       ...(leads ? {} : { recovers: appRecovers }),
-      run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => app!.run(trackingNumber, {
-        signal, timeoutMs: remainingMs, leads, postcode: resolvedPostcode,
-      }),
+      run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => {
+        const opening = leads && app!.opening?.() === true;
+        const stop = new AbortController();
+        const tracked = app!.run(trackingNumber, { signal, stop: stop.signal, timeoutMs: remainingMs, leads, postcode: resolvedPostcode });
+        return opening ? besideGuest(tracked, stop) : tracked;
+      },
     });
     const result = await runSteps<CarrierResult>({
       carrier, budgetMs: lookup.budgetMs, signal: lookup.signal, recorder: this.recorder,
@@ -714,7 +746,7 @@ export class DPDTracker {
       {
         id: 'direct',
         ...(appLeads ? { recovers: appRecovers } : {}),
-        run: () => this.apiFetch(trackingNumber, resolvedPostcode, lookup).catch((error: unknown) => {
+        run: () => guestReply().catch((error: unknown) => {
           // The signal ends the guest tier a moment before the runner counts
           // the budget as spent: the tier reports the budget itself, so the
           // page is not entered in between.
