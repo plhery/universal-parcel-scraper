@@ -46,6 +46,13 @@ describe('delivery partner evidence', () => {
     ['', 'https://evil.test/?url=https://www.posti.fi/', undefined],
     ['', 'javascript://www.posti.fi/', undefined],
     ['', 'not a URL', undefined],
+    // A rule limited to some paths of a shared host covers only those paths.
+    ['', 'https://www.gofo.com/', 'gofo'],
+    ['', 'https://www.gofo.com/us/track?searchID=GFUS01000000000001', 'gofo'],
+    ['', 'https://www.gofo.com/fr/', undefined],
+    ['', 'https://www.gofo.com/usa/', undefined],
+    ['', 'https://gls-group.eu/FR/fr/suivi-colis', 'gls-fr'],
+    ['', 'https://gls-group.eu/', undefined],
   ])('resolves name %s and URL %s without guessing', (name, url, expected) => {
     expect(carrierIdFromPartner(name, url)).toBe(expected);
   });

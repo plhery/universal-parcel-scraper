@@ -1,7 +1,10 @@
 # GOFO Express
 
 Tracks individual US parcels through the official anonymous tracking service.
-Other regional services are outside this adapter's scope.
+Other regional services are outside this adapter's scope: links to gofo.com's
+home page, its `/us` pages and gofoexpress.com name this carrier, while
+gofo.com's other regions and the French and Italian sites, gofoexpress.fr and
+gofoexpress.it, name none.
 
 ## How it works
 

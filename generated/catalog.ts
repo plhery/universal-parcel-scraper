@@ -3030,7 +3030,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "gofo.com"
         ],
-        "path": "^/us/track/?$",
+        "pathPattern": "^/(?:$|us(?:/|$))",
         "params": [
           "searchID"
         ]

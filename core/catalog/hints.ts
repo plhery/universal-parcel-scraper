@@ -1,5 +1,5 @@
 import { CARRIER_DEFINITIONS, carrierTimezone } from './definitions.js';
-import { matchesDomain } from './linkRules.js';
+import { TRACKING_LINK_RULES, matchesDomain } from './linkRules.js';
 import { countryTimeZone } from '../time/index.js';
 import { NETWORK_BRANDS, carrierBrand } from './networks.js';
 import type { CarrierId } from '../../generated/catalog.js';
@@ -156,9 +156,9 @@ function carriersFromUrl(raw: string): string[] {
   if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) return [];
   // Arrival notices also use the Swiss Post homepage instead of its tracking subdomain.
   if (['post.ch', 'www.post.ch'].includes(url.hostname)) return ['swiss-post'];
-  return Object.entries(CARRIER_DEFINITIONS).filter(([, definition]) =>
-    definition.linkRules.some((rule) => rule.domains.some((domain) => matchesDomain(url.hostname, domain))),
-  ).map(([id]) => id);
+  // A rule limited to some paths of a shared host covers only those paths.
+  return [...new Set(TRACKING_LINK_RULES.filter((rule) => rule.domains.some((domain) => matchesDomain(url.hostname, domain))
+    && (!rule.pathPattern || rule.pathPattern.test(url.pathname))).map((rule) => rule.carrier))];
 }
 
 /** Reconcile a structured partner name and optional official link, without country guesses. */
