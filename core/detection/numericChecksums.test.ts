@@ -80,17 +80,17 @@ describe('numeric checksum candidates', () => {
   });
 
   it('suggests DHL for twelve digits that end in the Identcode check without assigning it', () => {
-    // Worked examples of the public check-digit descriptions: weights 4 and 9 from the left.
-    for (const number of ['218025809066', '201298452277', '000000000000']) expect(isValidDhlIdentcode(number)).toBe(true);
-    for (const number of ['218025809065', '218025809060', '21802580906', '2180258090666', '218025809066\n', '21802 5809066']) {
+    // The public check-digit description's worked example, and constructed numbers: weights 4 and 9 from the left.
+    for (const number of ['123456789016', '201298452277', '000000000000']) expect(isValidDhlIdentcode(number)).toBe(true);
+    for (const number of ['123456789015', '123456789010', '12345678901', '1234567890166', '123456789016\n', '12345 6789016']) {
       expect(isValidDhlIdentcode(number)).toBe(false);
     }
-    expect(detectCarrierMatch('21.802 580.906 6')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
-    expect(detectCarrierMatch('218025809066').candidates).toContain('dhl');
-    expect(detectCarrierMatch('218025809066').preferred).not.toContain('dhl');
-    expect(recognitionAskedCarriers('218025809066')).not.toContain('dhl');
-    expect(detectCarrierMatch('218025809065').candidates).not.toContain('dhl');
-    expect(detectCarrierMatch('218025809065').candidates.length).toBeGreaterThan(0);
+    expect(detectCarrierMatch('12.345 678.901 6')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('123456789016').candidates).toContain('dhl');
+    expect(detectCarrierMatch('123456789016').preferred).not.toContain('dhl');
+    expect(recognitionAskedCarriers('123456789016')).not.toContain('dhl');
+    expect(detectCarrierMatch('123456789015').candidates).not.toContain('dhl');
+    expect(detectCarrierMatch('123456789015').candidates.length).toBeGreaterThan(0);
   });
 
   it('asks Swiss Post Cargo about an SSCC behind its 00 identifier without assigning it', () => {
