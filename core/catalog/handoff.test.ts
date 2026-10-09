@@ -47,8 +47,8 @@ describe('general delivery handoff candidates', () => {
   );
   it('proposes a national post only for a postal number its adapter looks up', async () => {
     const regions = Array.from({ length: 26 * 26 }, (_, index) => String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)));
-    // Registered, tracked letter, parcel and EMS items issued abroad.
-    const proposals = regions.flatMap((destination_country) => ['RA', 'LX', 'CP', 'EA'].map((service) =>
+    // Registered, tracked letter, parcel, EMS and customs-label items issued abroad.
+    const proposals = regions.flatMap((destination_country) => ['RA', 'LX', 'CP', 'EA', 'UA'].map((service) =>
       deliveryHandoff('aliexpress', `${service}123456785CN`, { destination_country }))).filter((proposal) => proposal !== null);
     expect(proposals.map(({ carrier }) => carrier)).toContain('australia-post');
     for (const { carrier, number } of proposals) {
@@ -63,6 +63,13 @@ describe('general delivery handoff candidates', () => {
       expect(carrierErrorKind(error), `${carrier} ${number}`).not.toBeNull();
       expect(carrierErrorKind(error), `${carrier} ${number}`).not.toBe('invalid_input');
     }
+  });
+  it('hands Japan Post no customs label, which it does not track', () => {
+    expect(deliveryHandoff('aliexpress', 'RA123456785CN', { destination_country: 'JP' }))
+      .toEqual({ carrier: 'japan-post', number: 'RA123456785CN', basis: 'destination' });
+    expect(deliveryHandoff('aliexpress', 'UA123456785CN', { destination_country: 'JP' })).toBeNull();
+    expect(deliveryHandoff('aliexpress', 'UA123456785CN', { destination_country: 'FR' }))
+      .toEqual({ carrier: 'la-poste', number: 'UA123456785CN', basis: 'destination' });
   });
   it.each(['LX123456789NL', '1234567890', '3SABC12345678', 'LP00000000000001'])(
     'does not try a national post for a non-postal or invalid reference: %s', (number) => {

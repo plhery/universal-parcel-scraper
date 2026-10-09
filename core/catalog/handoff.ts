@@ -36,8 +36,10 @@ export function deliveryHandoff(carrier: string, number: string, result: Carrier
   // S10 binds the postal identity across borders. Its issuer suffix does not
   // identify the destination operator; try that country's post only when no
   // partner is named, and let the shared progress/freshness checks confirm it.
+  // Japan Post does not track `U`-prefixed customs labels.
   if (!target && isValidS10TrackingNumber(reference)) {
     target = nationalPostCandidate(destination);
+    if (target === 'japan-post' && reference.startsWith('U')) target = undefined;
     if (target) basis = 'destination';
   }
   // A downstream reference binds the two identities, but does not prove its
