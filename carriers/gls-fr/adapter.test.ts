@@ -6,6 +6,7 @@ import { SchemaError } from '../../core/errors/index.js';
 import {
   GLSFranceTracker,
   adapter,
+  glsFranceDepot,
   glsFrancePickupPoint,
   glsFranceTrackingApiUrl,
   glsFranceTrackingUrl,
@@ -23,7 +24,10 @@ const CAPABILITIES: readonly string[] = JSON.parse(
 ).capabilities;
 const POINT = '2503999999';
 const NODE_API = 'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v2/searchNode';
+const AGENCY_API = 'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v1/agency';
 const SHOP = "EXAMPLE TABAC PRESSE\n1 RUE DE L'EXEMPLE\n99999 Exempleville";
+const DEPOT_CODE = 'FR0012';
+const DEPOT = "EXEMPLEVILLE GLS FRANCE\n1 RUE DE L'EXEMPLE\nZONE D'ACTIVITE DE L'EXEMPLE\n99999 EXEMPLEVILLE";
 
 interface Fixture {
   colis: Record<string, unknown>;
@@ -67,19 +71,49 @@ function waitingFixture(): Fixture {
   return fixture;
 }
 
-function pointFixture(): Record<string, unknown> {
+/** The same parcel waiting for collection at its delivery depot. */
+function depotFixture(): Fixture {
+  const fixture = deliveredFixture();
+  fixture.colis.statutColis = 'PAQ';
+  fixture.colis.lieuTheoriqueLivraison = DEPOT_CODE;
+  fixture.colis.codeActionColis = 0;
+  fixture.evenements = [fixture.evenements[0]!, {
+    datereference: '2026-08-29 10:05:00.0',
+    statutEvenement: 'PAQ',
+    typeEvenement: 'INF',
+    codelieuEvenement: DEPOT_CODE,
+  }];
+  return fixture;
+}
+
+function recordFixture(name: string): Record<string, unknown> {
   return JSON.parse(readFileSync(
-    path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', 'pickup-point.json'),
+    path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', name),
     'utf8',
   )) as Record<string, unknown>;
 }
 
-function pickupLookup(parcel: Fixture, node: () => Response | Promise<Response> = () => new Response(JSON.stringify(pointFixture()))) {
+function pointFixture(): Record<string, unknown> {
+  return recordFixture('pickup-point.json');
+}
+
+function depotRecord(): Record<string, unknown> {
+  return recordFixture('depot.json');
+}
+
+type Reply = () => Response | Promise<Response>;
+
+function pickupLookup(
+  parcel: Fixture,
+  node: Reply = () => new Response(JSON.stringify(pointFixture())),
+  agency: Reply = () => new Response(JSON.stringify(depotRecord())),
+) {
   const urls: string[] = [];
   const fetcher = vi.fn<typeof fetch>(async (input) => {
     const url = String(input);
     urls.push(url);
-    return url.startsWith(NODE_API) ? node() : new Response(JSON.stringify(parcel));
+    if (url.startsWith(NODE_API)) return node();
+    return url.startsWith(AGENCY_API) ? agency() : new Response(JSON.stringify(parcel));
   });
   return { urls, fetcher, tracker: new GLSFranceTracker({ timeoutMs: 1_000, fetcher }) };
 }
@@ -507,9 +541,10 @@ describe('GLS France pickup point', () => {
     await expect(app.tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: SHOP });
 
     fixture.evenements[1]!.statutEvenement = 'PAQ';
+    fixture.colis.lieuTheoriqueLivraison = DEPOT_CODE;
     const depot = pickupLookup(fixture);
-    expect((await depot.tracker.fetch(TRACKING_NUMBER)).pickup_point).toBeUndefined();
-    expect(depot.urls).toHaveLength(1);
+    await expect(depot.tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: DEPOT });
+    expect(depot.urls[1]).toBe(`${AGENCY_API}/${TRACKING_NUMBER}/${DEPOT_CODE}`);
   });
 
   it('asks for the point under the parcel code its record gives, as the tracking page does', async () => {
@@ -520,15 +555,11 @@ describe('GLS France pickup point', () => {
     expect(app.urls[1]).toBe(`${NODE_API}/${TRACKING_NUMBER}/${POINT}`);
   });
 
-  it('never asks for a neighbour, the depot, or a point the parcel is not waiting at', async () => {
+  it('never asks for a neighbour, or a point the parcel is not waiting at', async () => {
     const changes: Array<(fixture: Fixture) => void> = [
       (fixture) => { fixture.colis.relaisGlsColis = '2501999999'; },
+      // Collection at the depot was asked for.
       (fixture) => { fixture.colis.codeActionColis = 20; },
-      // Waiting at the depot, although the record still names a shop.
-      (fixture) => {
-        fixture.colis.statutColis = 'PAQ';
-        fixture.evenements[1]!.statutEvenement = 'PAQ';
-      },
       (fixture) => { fixture.colis.relaisGlsColis = '0'; },
       (fixture) => { fixture.colis.relaisGlsColis = ''; },
       (fixture) => { fixture.colis.relaisGlsColis = '2503/../99'; },
@@ -592,13 +623,105 @@ describe('GLS France pickup point', () => {
     await expect(app.tracker.fetch(TRACKING_NUMBER, { signal: controller.signal })).rejects.toThrow('caller cancelled');
   });
 
-  it('recognizes a waiting parcel without asking for its point', async () => {
-    const app = pickupLookup(waitingFixture());
+  it.each([['a shop', waitingFixture], ['a depot', depotFixture]])('recognizes a parcel waiting at %s without asking for its point', async (_, fixture) => {
+    const app = pickupLookup(fixture());
     const instance = adapter({
       fetcher: app.fetcher, trawl: null, browserExecutablePath: null, env: {},
       recorder: { step() {}, lookup() {} },
     });
     await expect(instance.recognize!(TRACKING_NUMBER, { budgetMs: 1_000 })).resolves.toMatchObject({ known: true });
     expect(app.urls).toEqual([glsFranceTrackingApiUrl(TRACKING_NUMBER)]);
+  });
+});
+
+describe('GLS France depot', () => {
+  it('names the depot holding the parcel for collection and its address', async () => {
+    const app = pickupLookup(depotFixture());
+    const result = await app.tracker.fetch(TRACKING_NUMBER);
+    expect(result).toMatchObject({
+      status: 'out_for_delivery',
+      last_status_text: 'Ready for pickup at GLS depot',
+      pickup_point: DEPOT,
+    });
+    expect(app.urls).toEqual([glsFranceTrackingApiUrl(TRACKING_NUMBER), `${AGENCY_API}/${TRACKING_NUMBER}/${DEPOT_CODE}`]);
+    expect(app.fetcher.mock.calls[1]![1]).toMatchObject({
+      cache: 'no-store',
+      redirect: 'error',
+      headers: expect.objectContaining({ Origin: 'https://moncolis.gls-france.com' }),
+    });
+    expect(JSON.stringify(result)).not.toMatch(/\+33|8h30|Lun au Ven|Exempleville FR0012/);
+  });
+
+  it('asks for the depot, never the shop, once collection there was asked for or the parcel went back', async () => {
+    const asked = depotFixture();
+    asked.colis.codeActionColis = 20;
+    const collection = pickupLookup(asked);
+    await expect(collection.tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: DEPOT });
+    expect(collection.urls[1]).toBe(`${AGENCY_API}/${TRACKING_NUMBER}/${DEPOT_CODE}`);
+
+    // The record still names the shop the parcel was meant for.
+    const back = depotFixture();
+    back.colis.relaisGlsColis = POINT;
+    const depot = pickupLookup(back);
+    await expect(depot.tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: DEPOT });
+    expect(depot.urls).toHaveLength(2);
+    expect(depot.urls.some((url) => url.startsWith(NODE_API))).toBe(false);
+  });
+
+  it('asks for no depot while the parcel is not waiting there, or without a depot code', async () => {
+    const changes: Array<(fixture: Fixture) => void> = [
+      (fixture) => {
+        fixture.colis.statutColis = 'LIV';
+        fixture.colis.codeActionColis = 20;
+      },
+      (fixture) => {
+        fixture.colis.statutColis = 'TRV';
+        fixture.evenements[1]!.statutEvenement = 'TRV';
+      },
+      (fixture) => { delete fixture.colis.lieuTheoriqueLivraison; },
+      (fixture) => { fixture.colis.lieuTheoriqueLivraison = ''; },
+      (fixture) => { fixture.colis.lieuTheoriqueLivraison = 'FR12'; },
+      (fixture) => { fixture.colis.lieuTheoriqueLivraison = 'FR/../1'; },
+      (fixture) => { fixture.colis.lieuTheoriqueLivraison = { code: DEPOT_CODE }; },
+    ];
+    for (const change of changes) {
+      const fixture = depotFixture();
+      change(fixture);
+      const app = pickupLookup(fixture);
+      expect((await app.tracker.fetch(TRACKING_NUMBER)).pickup_point).toBeUndefined();
+      expect(app.urls).toEqual([glsFranceTrackingApiUrl(TRACKING_NUMBER)]);
+    }
+  });
+
+  it('reads the depot its record gives, as the tracking page prints it', () => {
+    const depot = depotRecord();
+    expect(glsFranceDepot(depot, DEPOT_CODE)).toBe(DEPOT);
+    expect(glsFranceDepot({ ...depot, codeLieu: 'fr0012' }, DEPOT_CODE)).toBe(DEPOT);
+    expect(glsFranceDepot({ ...depot, libelleAdresse2Lieu: null, libelleAdresse3Lieu: 'EXEMPLE CEDEX' }, DEPOT_CODE))
+      .toBe("EXEMPLEVILLE GLS FRANCE\n1 RUE DE L'EXEMPLE\nEXEMPLE CEDEX\n99999 EXEMPLEVILLE");
+    expect(glsFranceDepot({ ...depot, codepostalLieu: 'EXEMPLE' }, DEPOT_CODE))
+      .toBe("EXEMPLEVILLE GLS FRANCE\n1 RUE DE L'EXEMPLE\nZONE D'ACTIVITE DE L'EXEMPLE\nEXEMPLEVILLE");
+  });
+
+  it('keeps the name alone without a street or town, and nothing for another depot or without a name', () => {
+    const depot = depotRecord();
+    const noStreet = { ...depot, libelleAdresse1Lieu: ' ', libelleAdresse2Lieu: null, libelleAdresse3Lieu: '' };
+    expect(glsFranceDepot(noStreet, DEPOT_CODE)).toBe('EXEMPLEVILLE GLS FRANCE');
+    expect(glsFranceDepot({ ...depot, villeLieu: null }, DEPOT_CODE)).toBe('EXEMPLEVILLE GLS FRANCE');
+    expect(glsFranceDepot({ ...depot, codeLieu: 'FR0013' }, DEPOT_CODE)).toBe('');
+    expect(glsFranceDepot({ ...depot, codeLieu: undefined }, DEPOT_CODE)).toBe('');
+    expect(glsFranceDepot({ ...depot, libelleLieu: ['EXAMPLE'] }, DEPOT_CODE)).toBe('');
+    expect(glsFranceDepot([depot], DEPOT_CODE)).toBe('');
+  });
+
+  it.each([
+    ['another depot', () => new Response(JSON.stringify({ ...depotRecord(), codeLieu: 'FR0013' }))],
+    ['the error the endpoint gives an unknown code', () => new Response('{"code_erreur":"E999:Exception"}', { status: 500 })],
+    ['a blocked reply', () => new Response('<html>sorry</html>', { headers: { 'Content-Type': 'text/html' } })],
+    ['a network failure', () => Promise.reject(new TypeError('fetch failed'))],
+  ])('keeps the parcel without a pickup point after %s', async (_, reply) => {
+    const result = await pickupLookup(depotFixture(), undefined, reply).tracker.fetch(TRACKING_NUMBER);
+    expect(result).toMatchObject({ status: 'out_for_delivery', last_status_text: 'Ready for pickup at GLS depot' });
+    expect(result.pickup_point).toBeUndefined();
   });
 });

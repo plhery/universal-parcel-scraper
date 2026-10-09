@@ -21,8 +21,9 @@ The parser:
 3. takes the parcel status from `statutColis`, falling back to the newest event.
 
 While the parcel waits at a shop or locker, a second `GET {consignee-ws}/api/v2/searchNode/{trackid}/{point}`
-reads that point's record, as the portal does, under a short bound. Optional: if
-it fails, the parcel has no pickup point.
+reads that point's record, as the portal does, under a short bound. While it waits
+at its depot, `GET {consignee-ws}/api/v1/agency/{trackid}/{depot}` reads the
+depot's the same way. Optional: if it fails, the parcel has no pickup point.
 
 HTTP recognition uses the same French endpoint and identity check, without the
 pickup point. Unsupported
@@ -44,7 +45,7 @@ this confirmation before they can identify the French network.
   and are dropped. No single `core/time` policy covers this, so parsing is local.
 - Locations are GLS facility codes (`FR0012`), not resolved to cities.
 - The estimate is the day part of `dateTheoriqueLivraison`. It is dropped once the
-  parcel is delivered, waiting at a shop or locker, or in exception: the portal then
+  parcel is delivered, waiting for collection, or in exception: the portal then
   shows the scan's own day. When `deliveryDateReliability` is `0` the portal presents
   the same day as a latest date.
 - The sender is `libelleExpediteur`, the label the portal shows as the sender.
@@ -53,11 +54,16 @@ this confirmation before they can identify the French network.
   names: its name, then its street and its postcode and town on their own lines, as
   the portal prints them. The record must name the same point and be a shop or
   locker; without a street or town the name stands alone. A neighbour who keeps
-  parcels (`2501` ids) is a private person and is never asked for, nor is the depot
-  (`PAQ`, or `codeActionColis` 20), even when the record still names a shop. The
-  endpoint answers any point under any parcel code, so the point comes only from the
-  parcel's own record. Opening hours and coordinates are not read. A delivered
-  parcel has none, collected there or not.
+  parcels (`2501` ids) is a private person and is never asked for. Under
+  `codeActionColis` 20, collection at the depot, no shop is asked for.
+- While the status says the parcel waits at its depot (`PAQ`), the portal tells the
+  recipient to collect it there with an ID, and the pickup point is the depot its
+  own `lieuTheoriqueLivraison` names: its name, then its address lines and its
+  postcode and town, as the portal prints them. The record must name the same
+  depot. A shop the record still names is not read then.
+- Both endpoints answer any point or depot under any parcel code, so the place comes
+  only from the parcel's own record. Phones, opening hours and coordinates are not
+  read. A delivered parcel has none, collected there or not.
 - Not used: scraping `moncolis.gls-france.com` — the endpoint returns the same
   data as JSON.
 - The parser reads an allowlist of fields. Address, signature, contact and
@@ -71,8 +77,6 @@ this confirmation before they can identify the French network.
   looked up by its first 11 and, only if that is not found, once more as printed;
   either way the parcel is identified by its 11 digits.
 - No weight or dimensions in the response, so those capabilities are not declared.
-- A parcel waiting at the depot has no pickup point: the portal reads that
-  depot from a third endpoint the adapter does not call.
 - The endpoint only keeps recent parcels: older numbers answer the "no command
   found" 404.
 

@@ -6,8 +6,8 @@
  * builds its result from an explicit allowlist of status, timing, sender and
  * operational-location fields, so recipient names, street addresses, contacts,
  * signatures and delivery instructions never leave this module. While the parcel
- * waits at a shop or locker, a second GET reads that point's record, as the
- * tracking page does, for its name and address.
+ * waits at a shop, a locker or its depot, a second GET reads that place's record,
+ * as the tracking page does, for its name and address.
  */
 
 import { DateTime } from 'luxon';
@@ -31,6 +31,7 @@ const PROVIDER = 'GLS France';
 const TRACKING_API =
   'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v1/command/public/codes';
 const NODE_API = 'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v2/searchNode';
+const AGENCY_API = 'https://public.infra-prod.prod.cloud.fr.gls-group.com/consignee-ws/api/v1/agency';
 const TRACKING_PAGE = 'https://moncolis.gls-france.com/fr';
 const TIMEZONE = 'Europe/Paris';
 const DEFAULT_TIMEOUT_MS = 12_000;
@@ -43,8 +44,10 @@ const MAX_NODE_BYTES = 100_000;
 /** Shops and lockers. A neighbour who keeps parcels for GLS is a private person and is never read. */
 const PICKUP_POINT_TYPES = new Set(['PARCEL_SHOP', 'LOCKER']);
 const NEIGHBOUR_NETWORK = '2501';
-/** Waiting at a shop or locker. PAQ, waiting at the depot, is not one of them. */
+/** Waiting at a shop or locker. */
 const WAITING_AT_POINT = new Set(['LIP', 'LTP', 'LIK', 'LTK']);
+/** Waiting at the depot, where the recipient collects it. */
+const WAITING_AT_DEPOT = 'PAQ';
 
 function locationCode(value: unknown): string {
   const code = cleanScalar(value, 16).toLocaleUpperCase('en-US');
@@ -157,13 +160,23 @@ function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
 
 /**
  * The shop or locker holding the parcel, from its own record, while its status says it waits
- * there. A parcel waiting at the depot has none: neither PAQ nor action 20, for which the
- * tracking page asks for no point. A neighbour's id is never asked for.
+ * there. Not under action 20, collection at the depot, for which the tracking page asks for the
+ * depot instead. A neighbour's id is never asked for.
  */
 function waitingPoint(parcel: JsonObject, code: string): string {
   if (!WAITING_AT_POINT.has(code) || cleanScalar(parcel.codeActionColis, 8) === '20') return '';
   const point = cleanScalar(parcel.relaisGlsColis, 20);
   return /^\d{6,15}$/.test(point) && !/^0+$/.test(point) && !point.startsWith(NEIGHBOUR_NETWORK) ? point : '';
+}
+
+/**
+ * The depot holding the parcel, while its status says it waits there for collection: the parcel's
+ * theoretical delivery place, the six-character code the tracking page asks the agency endpoint for.
+ */
+function waitingDepot(parcel: JsonObject, code: string): string {
+  if (code !== WAITING_AT_DEPOT) return '';
+  const depot = cleanScalar(parcel.lieuTheoriqueLivraison, 8).toLocaleUpperCase('en-US');
+  return /^[A-Z]{2}[A-Z0-9]{4}$/.test(depot) ? depot : '';
 }
 
 /**
@@ -180,8 +193,28 @@ export function glsFrancePickupPoint(node: unknown, point: string): string {
   const street = clean(address.street, 120);
   const town = clean(address.city, 80);
   if (!street || !town) return name;
-  const postcode = cleanScalar(address.zipCode, 10);
-  return `${name}\n${street}\n${[/^\d{5}$/.test(postcode) ? postcode : '', town].filter(Boolean).join(' ')}`;
+  return pointLines(name, [street], cleanScalar(address.zipCode, 10), town);
+}
+
+/**
+ * The depot's record, if it is the requested depot: its name, then its address lines and its
+ * postcode and town on their own lines, as the tracking page prints them. A record without a street
+ * or town keeps the name alone. Its phone, opening hours and coordinates are not read.
+ */
+export function glsFranceDepot(record: unknown, depot: string): string {
+  if (!isRecord(record) || cleanScalar(record.codeLieu, 16).toLocaleUpperCase('en-US') !== depot) return '';
+  const name = clean(record.libelleLieu, 120);
+  if (!name) return '';
+  const street = [record.libelleAdresse1Lieu, record.libelleAdresse2Lieu, record.libelleAdresse3Lieu]
+    .map((line) => clean(line, 120))
+    .filter(Boolean);
+  const town = clean(record.villeLieu, 80);
+  if (street.length === 0 || !town) return name;
+  return pointLines(name, street, cleanScalar(record.codepostalLieu, 10), town);
+}
+
+function pointLines(name: string, street: string[], postcode: string, town: string): string {
+  return [name, ...street, [/^\d{5}$/.test(postcode) ? postcode : '', town].filter(Boolean).join(' ')].join('\n');
 }
 
 interface ParsedTracking {
@@ -190,6 +223,8 @@ interface ParsedTracking {
   code: string;
   /** The shop or locker holding the parcel, else empty. */
   point: string;
+  /** The depot holding the parcel for collection, else empty. */
+  depot: string;
 }
 
 export function parseGLSFranceTrackingResponse(
@@ -266,6 +301,7 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
     },
     code: normalizedCandidate(parcel.trackid) || requested,
     point: waitingPoint(parcel, stageCode),
+    depot: waitingDepot(parcel, stageCode),
   };
 }
 
@@ -304,18 +340,30 @@ export class GLSFranceTracker {
       if (printed === normalized || !(error instanceof UpstreamHttpError) || error.status !== 404) throw error;
       parsed = await this.lookup(printed, normalized, budget);
     }
-    const { result, code, point } = parsed;
-    const pickup = pickupPoint && point ? await this.pickupPoint(code, point, budget, context.signal) : '';
+    const { result, code, point, depot } = parsed;
+    let pickup = '';
+    if (pickupPoint && point) {
+      pickup = await this.pickupPoint(`${NODE_API}/${encodeURIComponent(code)}/${encodeURIComponent(point)}`,
+        (record) => glsFrancePickupPoint(record, point), budget, context.signal);
+    } else if (pickupPoint && depot) {
+      pickup = await this.pickupPoint(`${AGENCY_API}/${encodeURIComponent(code)}/${encodeURIComponent(depot)}`,
+        (record) => glsFranceDepot(record, depot), budget, context.signal);
+    }
     return pickup ? { ...result, pickup_point: pickup } : result;
   }
 
   /** The pickup point, or nothing: the parcel is found without it. Only the caller's cancellation ends the lookup. */
-  private async pickupPoint(code: string, point: string, budget: LookupBudget, signal: AbortSignal | undefined): Promise<string> {
+  private async pickupPoint(
+    url: string,
+    read: (record: unknown) => string,
+    budget: LookupBudget,
+    signal: AbortSignal | undefined,
+  ): Promise<string> {
     // Half of what is left at most, so the parcel itself is never late for its point.
     const timeoutMs = Math.min(PICKUP_TIMEOUT_MS, Math.floor(budget.remainingMs() / 2));
     if (timeoutMs < 100) return '';
     try {
-      const { bytes } = await fetchBounded(`${NODE_API}/${encodeURIComponent(code)}/${encodeURIComponent(point)}`, {
+      const { bytes } = await fetchBounded(url, {
         signal: budget.signal,
         headers: this.#headers(),
       }, {
@@ -324,7 +372,7 @@ export class GLSFranceTracker {
         maxBytes: MAX_NODE_BYTES,
         fetcher: this.#fetcher,
       });
-      return glsFrancePickupPoint(parseJsonBytes(bytes, PROVIDER), point);
+      return read(parseJsonBytes(bytes, PROVIDER));
     } catch {
       signal?.throwIfAborted();
       return '';
