@@ -4848,7 +4848,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "tracking.dpd.de"
         ],
-        "path": "^/status/[a-z]{2}_[A-Z]{2}/parcel/(\\d{14})/?$"
+        "path": "^/status/[a-z]{2}_[A-Z]{2}/parcel/(\\d{14}[0-9A-Z]?)/?$"
       },
       {
         "domains": [

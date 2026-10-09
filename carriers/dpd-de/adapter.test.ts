@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import type { TrackingContext } from '../../core/adapter/index.js';
+import { dpdParcelNumber } from '../../core/detection/dpd.js';
+import { parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { DPDTracker } from '../dpd/adapter.js';
 import { adapter } from './adapter.js';
@@ -128,5 +130,18 @@ describe('DPD Germany recognition', () => {
   it('leaves a reply without a country inconclusive and does not know a missing parcel', async () => {
     await expect(recognize(guest(placed(undefined)))).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(recognize(guest(new Response('', { status: 404 })))).resolves.toEqual({ known: false });
+  });
+});
+
+describe('DPD Germany tracking links', () => {
+  it('reads a parcel link with or without the label\'s check character', () => {
+    const check = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'].find(character => dpdParcelNumber(`${NUMBER}${character}`))!;
+    for (const number of [NUMBER, `${NUMBER}${check}`]) {
+      expect(parseTrackingInput(`https://tracking.dpd.de/status/de_DE/parcel/${number}`))
+        .toMatchObject({ trackingNumber: number, carrier: 'dpd-de', confidence: 'high', source: 'link' });
+    }
+    expect(parseTrackingInput(`https://tracking.dpd.de/status/en_US/parcel/${NUMBER}${check}/`))
+      .toMatchObject({ trackingNumber: `${NUMBER}${check}`, carrier: 'dpd-de', source: 'link' });
+    expect(parseTrackingInput(`https://tracking.dpd.de/status/de_DE/parcel/${NUMBER}${check}${check}`).source).not.toBe('link');
   });
 });
