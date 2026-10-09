@@ -491,6 +491,27 @@ describe('GLS France pickup point', () => {
     expect(done.urls).toHaveLength(1);
   });
 
+  it.each(['LIP', 'LTP', 'LIK', 'LTK'])('asks for the point while the parcel status is %s', async (code) => {
+    const fixture = waitingFixture();
+    fixture.colis.statutColis = code;
+    fixture.evenements[1]!.statutEvenement = code;
+    const app = pickupLookup(fixture);
+    await expect(app.tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: SHOP });
+    expect(app.urls).toHaveLength(2);
+  });
+
+  it('reads the waiting status from the newest event when the parcel has none', async () => {
+    const fixture = waitingFixture();
+    delete fixture.colis.statutColis;
+    const app = pickupLookup(fixture);
+    await expect(app.tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ pickup_point: SHOP });
+
+    fixture.evenements[1]!.statutEvenement = 'PAQ';
+    const depot = pickupLookup(fixture);
+    expect((await depot.tracker.fetch(TRACKING_NUMBER)).pickup_point).toBeUndefined();
+    expect(depot.urls).toHaveLength(1);
+  });
+
   it('asks for the point under the parcel code its record gives, as the tracking page does', async () => {
     const fixture = waitingFixture();
     fixture.colis.numeroalphaColis = Number(NUMERIC_TRACKING_NUMBER);
@@ -503,6 +524,11 @@ describe('GLS France pickup point', () => {
     const changes: Array<(fixture: Fixture) => void> = [
       (fixture) => { fixture.colis.relaisGlsColis = '2501999999'; },
       (fixture) => { fixture.colis.codeActionColis = 20; },
+      // Waiting at the depot, although the record still names a shop.
+      (fixture) => {
+        fixture.colis.statutColis = 'PAQ';
+        fixture.evenements[1]!.statutEvenement = 'PAQ';
+      },
       (fixture) => { fixture.colis.relaisGlsColis = '0'; },
       (fixture) => { fixture.colis.relaisGlsColis = ''; },
       (fixture) => { fixture.colis.relaisGlsColis = '2503/../99'; },

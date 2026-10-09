@@ -48,14 +48,15 @@ this confirmation before they can identify the French network.
   shows the scan's own day. When `deliveryDateReliability` is `0` the portal presents
   the same day as a latest date.
 - The sender is `libelleExpediteur`, the label the portal shows as the sender.
-- While the parcel waits at a shop or locker, the pickup point is the record of
-  the point its own `relaisGlsColis` names: its name, then its street and its
-  postcode and town on their own lines, as the portal prints them. The record must
-  name the same point and be a shop or locker; without a street or town the name
-  stands alone. A neighbour who keeps parcels (`2501` ids) is a private person and
-  is never asked for, nor is the depot (`codeActionColis` 20). The endpoint answers
-  any point under any parcel code, so the point comes only from the parcel's own
-  record. Opening hours and coordinates are not read.
+- While the parcel's status says it waits at a shop or locker (`LIP`, `LTP`, `LIK`,
+  `LTK`), the pickup point is the record of the point its own `relaisGlsColis`
+  names: its name, then its street and its postcode and town on their own lines, as
+  the portal prints them. The record must name the same point and be a shop or
+  locker; without a street or town the name stands alone. A neighbour who keeps
+  parcels (`2501` ids) is a private person and is never asked for, nor is the depot
+  (`PAQ`, or `codeActionColis` 20), even when the record still names a shop. The
+  endpoint answers any point under any parcel code, so the point comes only from the
+  parcel's own record. Opening hours and coordinates are not read.
 - Not used: scraping `moncolis.gls-france.com` — the endpoint returns the same
   data as JSON.
 - The parser reads an allowlist of fields. Address, signature, contact and

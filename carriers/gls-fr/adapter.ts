@@ -18,7 +18,6 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import type { Stage } from '../../generated/catalog.js';
 import {
   FAILED_DELAYED_DELIVERY,
   glsFranceStatusCode,
@@ -44,6 +43,8 @@ const MAX_NODE_BYTES = 100_000;
 /** Shops and lockers. A neighbour who keeps parcels for GLS is a private person and is never read. */
 const PICKUP_POINT_TYPES = new Set(['PARCEL_SHOP', 'LOCKER']);
 const NEIGHBOUR_NETWORK = '2501';
+/** Waiting at a shop or locker. PAQ, waiting at the depot, is not one of them. */
+const WAITING_AT_POINT = new Set(['LIP', 'LTP', 'LIK', 'LTK']);
 
 function locationCode(value: unknown): string {
   const code = cleanScalar(value, 16).toLocaleUpperCase('en-US');
@@ -155,12 +156,12 @@ function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
 }
 
 /**
- * The shop or locker holding the parcel, from its own record, while the parcel waits there. The
- * tracking page asks for that point unless the parcel waits at the depot (action 20). A
- * neighbour's id is never asked for.
+ * The shop or locker holding the parcel, from its own record, while its status says it waits
+ * there. A parcel waiting at the depot has none: neither PAQ nor action 20, for which the
+ * tracking page asks for no point. A neighbour's id is never asked for.
  */
-function waitingPoint(parcel: JsonObject, stage: Stage | undefined): string {
-  if (stage !== 'ready_for_pickup' || cleanScalar(parcel.codeActionColis, 8) === '20') return '';
+function waitingPoint(parcel: JsonObject, code: string): string {
+  if (!WAITING_AT_POINT.has(code) || cleanScalar(parcel.codeActionColis, 8) === '20') return '';
   const point = cleanScalar(parcel.relaisGlsColis, 20);
   return /^\d{6,15}$/.test(point) && !/^0+$/.test(point) && !point.startsWith(NEIGHBOUR_NETWORK) ? point : '';
 }
@@ -244,6 +245,8 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
   const fallbackUpdate = parsedTime(parcel.dateActionColis);
   const status = current?.status ?? latestEventStatus?.status ?? 'unknown';
   const stage = current?.stage ?? latestEventStatus?.stage;
+  // The code the stage comes from: the parcel's own, else its newest event's.
+  const stageCode = current ? currentCode : latestEvent?.provider_code ?? '';
   // Delivered, waiting at a shop or in trouble, the portal shows the scan's
   // own day instead of the theoretical one, which is then stale.
   const settled = status === 'delivered' || status === 'exception' || stage === 'ready_for_pickup';
@@ -262,7 +265,7 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
       events,
     },
     code: normalizedCandidate(parcel.trackid) || requested,
-    point: waitingPoint(parcel, stage),
+    point: waitingPoint(parcel, stageCode),
   };
 }
 
