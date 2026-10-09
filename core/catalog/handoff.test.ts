@@ -33,13 +33,13 @@ describe('general delivery handoff candidates', () => {
     })).toEqual({ carrier: 'posti', number: 'LOCAL12345', basis: 'partner' });
     expect(deliveryHandoff('la-poste', 'CW123456785FR', { delivery_carrier: 'usps' })?.carrier).toBe('usps');
   });
-  it.each(['XX', 'IT', 'PL', 'UA', undefined])('does not guess an operator without a supported destination: %s', (destination_country) => {
+  it.each(['XX', 'IT', 'UA', undefined])('does not guess an operator without a supported destination: %s', (destination_country) => {
     for (const number of ['CW123456785FR', 'LX123456785CH', '1234567890']) {
       expect(deliveryHandoff('la-poste', number, { destination_country })).toBeNull();
     }
   });
   it.each([['FI', 'posti'], ['CH', 'swiss-post'], ['FR', 'la-poste'], ['US', 'usps'], ['SE', 'postnord'], ['Sweden', 'postnord'],
-    ['AU', 'australia-post'], ['Australia', 'australia-post']])(
+    ['AU', 'australia-post'], ['Australia', 'australia-post'], ['PL', 'poczta-polska'], ['Poland', 'poczta-polska']])(
     'proposes one national post for a checksum-valid postal reference going to %s', (destination_country, target) => {
       expect(deliveryHandoff('spring-gds', 'LX123456785NL', { destination_country }))
         .toEqual({ carrier: target, number: 'LX123456785NL', basis: 'destination' });

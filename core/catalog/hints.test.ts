@@ -18,13 +18,14 @@ describe('national postal lookup candidates', () => {
     ['CH', 'swiss-post'], [' Switzerland ', 'swiss-post'], ['FI', 'posti'], ['finland', 'posti'],
     ['NL', 'spring-gds'], ['FR', 'la-poste'], ['GB', 'royal-mail'], ['US', 'usps'],
     ['CA', 'canada-post'], ['DE', 'dhl'], ['ES', 'correos-spain'], ['JP', 'japan-post'], ['Japan', 'japan-post'],
-    ['AU', 'australia-post'], ['Australia', 'australia-post'],
+    ['AU', 'australia-post'], ['Australia', 'australia-post'], ['PL', 'poczta-polska'], ['Poland', 'poczta-polska'],
   ])('suggests one operator for destination %s', (country, expected) => {
     expect(nationalPostCandidate(country)).toBe(expected);
   });
   // The posts of Italy, India, Malaysia and Portugal look up only numbers of their own, and
-  // those of Poland and Ukraine give scans no instant, so these destinations have no candidate.
-  it.each(['XX', 'LI', 'IT', 'Italy', 'IN', 'MY', 'PT', 'PL', 'Poland', 'UA', 'Ukraine', 'unknown', 'Arrived in Switzerland', 'constructor', '', null, 123])(
+  // Ukraine's would need a browser session for mail from abroad, so these destinations have no
+  // candidate.
+  it.each(['XX', 'LI', 'IT', 'Italy', 'IN', 'MY', 'PT', 'UA', 'Ukraine', 'unknown', 'Arrived in Switzerland', 'constructor', '', null, 123])(
     'leaves unavailable or ambiguous destinations alone: %s', (country) => {
       expect(nationalPostCandidate(country)).toBeUndefined();
     },

@@ -28,14 +28,17 @@ const CATALOG_NAMES = new Set([
 // Postal lookup candidates, not proof of which operator delivers a shipment.
 // Only operators whose dedicated adapter looks up mail from abroad by its S10
 // number are useful here: India Post's, Pos Malaysia's, CTT's and Poste
-// Italiane's take only numbers of their own. Poczta Polska and Ukrposhta give
-// wall clocks without an offset, so a host cannot tell their scans follow the
-// origin's. The host also checks adapter availability and required inputs
-// before making a request.
+// Italiane's take only numbers of their own. Poczta Polska dates scans at its
+// delivery office, and other inward scans when they name a Polish office; those
+// relayed from the origin keep its wall clock. Ukrposhta now dates its scans in
+// Ukraine, but its status API can miss mail from abroad, and its portal then
+// needs a browser session for every lookup. The host also checks adapter
+// availability and required inputs before making a request.
 const NATIONAL_POSTS: ReadonlyMap<string, CarrierId> = new Map([
   ['AU', 'australia-post'], ['CA', 'canada-post'], ['CH', 'swiss-post'], ['DE', 'dhl'],
   ['ES', 'correos-spain'], ['FI', 'posti'], ['FR', 'la-poste'], ['GB', 'royal-mail'],
-  ['JP', 'japan-post'], ['NL', 'spring-gds'], ['SE', 'postnord'], ['US', 'usps'],
+  ['JP', 'japan-post'], ['NL', 'spring-gds'], ['PL', 'poczta-polska'], ['SE', 'postnord'],
+  ['US', 'usps'],
 ]);
 const englishCountries = new Intl.DisplayNames(['en'], { type: 'region' });
 // Deprecated codes carry their successor's name, so fold them into it ("FX" is France).
