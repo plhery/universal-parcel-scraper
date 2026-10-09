@@ -28,10 +28,13 @@ scope.
   delivered rules are anchored (sentence start, "a été livré", or a parcel noun before it).
 - Unmapped wording keeps its text and gets no stage, so the sync classifies it.
 - The active timeline step's label is the current status text and sets the current stage,
-  falling back to the newest scan whose wording is mapped. Terminal booleans override the
-  wording: `etatLivre` / `etatRetire` force `delivered`, `finDeVie` forces `exception`, or
-  `returned` when the wording says so. `finDeVie` alone is not `returned`: it also covers
-  write-offs and closures. The estimate is dropped once any of them is set.
+  falling back to the newest scan whose wording is mapped. The steps follow the delivery
+  route, and the page only turns the current one red when the recipient has to act, so a
+  newest scan reporting a missed delivery, a problem, a return or a parcel held for
+  collection wins over the step. Terminal booleans override the wording: `etatLivre` /
+  `etatRetire` force `delivered`, `finDeVie` forces `exception`, or `returned` when the
+  wording says so. `finDeVie` alone is not `returned`: it also covers write-offs and
+  closures. The estimate is dropped once any of them is set.
 - Times are display strings (`DD/MM/YYYY HH:mm:ss`) kept verbatim: the endpoint sends no
   offset, so no instant is invented. A UTC-based number is used only as a sort key.
 - Read: status, timeline, `libelleCentre` (location), the planned date, the sender's name

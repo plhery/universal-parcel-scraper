@@ -34,6 +34,13 @@ const MAX_RESPONSE_BYTES = 1_000_000;
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_EVENTS_TO_RETURN = 100;
 const MAX_WEIGHT_KG = 100_000;
+/**
+ * The timeline steps follow the delivery route, and the page only turns the
+ * current one red when the recipient has to act. A newest scan reporting a
+ * missed delivery, a problem, a return or a parcel held for collection wins
+ * over the step.
+ */
+const SCAN_FIRST_STAGES: ReadonlySet<Stage> = new Set(['failed_attempt', 'exception', 'returned', 'ready_for_pickup']);
 
 interface ParsedEvent {
   event: CarrierEvent;
@@ -244,7 +251,10 @@ export function parseGeodisTrackingResponse(
   const events = parsedEvents.map(({ event }) => event);
   const timelineLabel = activeTimelineLabel(content);
   const latestDescription = events[0]?.description ?? '';
-  const currentDescription = timelineLabel || latestDescription || 'Tracking information received';
+  const newestStage = parsedEvents[0]?.stage;
+  const scanFirst = newestStage !== undefined && SCAN_FIRST_STAGES.has(newestStage);
+  const currentDescription = (scanFirst ? latestDescription : timelineLabel || latestDescription)
+    || 'Tracking information received';
   const current = classifyStatus(currentDescription);
   const latestKnown = parsedEvents.find((event) => event.status !== 'unknown');
   let status = current.status !== 'unknown' ? current.status : latestKnown?.status ?? 'unknown';

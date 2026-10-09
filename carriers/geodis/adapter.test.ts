@@ -178,6 +178,49 @@ describe('GEODIS response normalization', () => {
     }), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
   });
 
+  it.each([
+    ['Destinataire absent', 'exception', 'failed_attempt'],
+    ['Livraison échouée', 'exception', 'failed_attempt'],
+    ['Colis endommagé', 'exception', 'exception'],
+    ["Retour à l'expéditeur", 'exception', 'returned'],
+    ['Disponible pour retrait en agence', 'out_for_delivery', 'ready_for_pickup'],
+  ])('lets a newest scan "%s" win over the delivery round step', (label, status, stage) => {
+    const payload = (overrides: Record<string, unknown> = {}) => successPayload({
+      timeline: { listTimesteps: [{ actif: true, libelle: 'Mise en livraison' }] },
+      listJoursSuivis: [{
+        dateSuivi: '29/08/2026',
+        suivis: [
+          { heureSuivi: '14:10:00', libelleSuivi: label },
+          { heureSuivi: '09:30:00', libelleSuivi: 'En cours de livraison' },
+        ],
+      }],
+      ...overrides,
+    });
+    expect(parseGeodisTrackingResponse(payload(), OFFICIAL_SYNTHETIC_NUMBER))
+      .toMatchObject({ status, current_stage: stage, last_status_text: label });
+    expect(parseGeodisTrackingResponse(payload({ etatLivre: true }), OFFICIAL_SYNTHETIC_NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+  });
+
+  it('keeps the timeline step over an older problem or a newer routine scan', () => {
+    const payload = (suivis: unknown[]) => successPayload({
+      timeline: { listTimesteps: [{ actif: true, libelle: 'Mise en livraison' }] },
+      listJoursSuivis: [{ dateSuivi: '30/08/2026', suivis }],
+    });
+    expect(parseGeodisTrackingResponse(payload([
+      { heureSuivi: '08:00:00', libelleSuivi: 'En cours de livraison' },
+      { heureSuivi: '07:00:00', libelleSuivi: 'Destinataire absent' },
+    ]), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({
+      status: 'out_for_delivery',
+      current_stage: 'out_for_delivery',
+      last_status_text: 'Mise en livraison',
+    });
+    expect(parseGeodisTrackingResponse(payload([
+      { heureSuivi: '08:00:00', libelleSuivi: 'Nouveau libellé GEODIS' },
+      { heureSuivi: '07:00:00', libelleSuivi: 'Destinataire absent' },
+    ]), OFFICIAL_SYNTHETIC_NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+  });
+
   it('emits an unmapped scan without a stage', () => {
     const result = parseGeodisTrackingResponse(successPayload({
       timeline: { listTimesteps: [] },
