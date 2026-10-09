@@ -5,7 +5,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter } from './adapter.js';
 import { DPD_DE_APP_RAIL, DpdDeAppClient } from './app.js';
-import { DPD_DE_APP_API, sharedDpdAppService, warmDpdSession } from './service.js';
+import { DPD_DE_APP_API, sharedDpdAppService, warmDpdSession, type DpdSession } from './service.js';
 import { DPD_DE_APP_SCANS } from './status.js';
 
 // All identifiers, credentials, sessions, clocks and private-field markers here are invented.
@@ -528,6 +528,112 @@ describe('DPD Germany tiers', () => {
     expect((await tracking.track({ number: NUMBER }, { budgetMs: 20_200 })).status).toBe('delivered');
     expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'ok']]);
     expect(guestCalls).toHaveLength(5);
+  });
+
+  it('ends at once on a parcel the guest protocol places in another country while the session opens', async () => {
+    const { app, guestCalls, steps, tracking } = tiers(guest(Response.json({ parcelNumber: NUMBER, status: { description: 'DELIVERED', countryCode: 'CH' },
+      parcelHistory: [{ description: 'DELIVERED', eventDateAndTime: '2026-01-03T10:00:00+01:00' }] })));
+    app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+    await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'indeterminate', reason: 'other_country' });
+    expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'indeterminate']]);
+    expect(guestCalls).toHaveLength(4);
+  });
+
+  it('asks the guest protocol beside the next session when the service refuses the open one', async () => {
+    const { app, guestCalls, opened, steps, tracking } = tiers(guest(unknownParcel()));
+    await opened();
+    app.replies.getTrackingData = [() => xml(failure('getTrackingData', 'ERROR_SESSION_NOT_VALID'))];
+    app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+    await expect(tracking.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'not_found']]);
+    expect(guestCalls).toHaveLength(4);
+    expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getTrackingData', 'getSessionFullState']);
+  });
+
+  it('answers with the guest reply when a kept session opens too late, and keeps it opening for the next lookup', async () => {
+    vi.useFakeTimers();
+    try {
+      let open!: () => void;
+      const { app, fetcher, guestCalls, steps, tracking } = tiers(guest(Response.json(delivered)));
+      app.replies.getSessionFullState = [() => new Promise<Response>((resolve) => { open = () => resolve(xml(fixture('session'))); })];
+      warmDpdSession({ fetcher });
+      const pending = tracking.track({ number: NUMBER }, { budgetMs: 21_000 });
+      await vi.advanceTimersByTimeAsync(0);
+      expect(guestCalls).toHaveLength(4);
+      // The guest reply waits for the session all but 20 seconds of the budget.
+      await vi.advanceTimersByTimeAsync(999);
+      expect(steps).toEqual([]);
+      await vi.advanceTimersByTimeAsync(1);
+      expect((await pending).status).toBe('delivered');
+      expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'ok']]);
+      await vi.advanceTimersByTimeAsync(60_000);
+      open();
+      await vi.advanceTimersByTimeAsync(0);
+      // Only the renewal waits on a timer.
+      expect(vi.getTimerCount()).toBe(1);
+      expect((await tracking.track({ number: NUMBER })).events).toHaveLength(5);
+      expect(steps.at(-1)).toEqual(['app', 'ok']);
+      expect(guestCalls).toHaveLength(4);
+      expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState', 'getTrackingData', 'getTrackingScanList']);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  describe('with a host\'s store', () => {
+    const SAVED = 'U0FWRURfU0VTU0lPTl9UT0tFTg==';
+    const HOUR = 3_600_000;
+    /** A store that gives back its sessions when the test says so. */
+    function store() {
+      let give!: (sessions: DpdSession[]) => void;
+      return { give: (sessions: DpdSession[]) => give(sessions),
+        store: { load: () => new Promise<DpdSession[]>((resolve) => { give = resolve; }), save: async () => {} } };
+    }
+
+    it('waits for the store rather than asking the guest protocol, and reads with the session it gives back', async () => {
+      vi.useFakeTimers();
+      try {
+        const { app, fetcher, guestCalls, steps, tracking } = tiers(guest(Response.json(delivered)));
+        const saved = store();
+        warmDpdSession({ fetcher }, { store: saved.store });
+        const pending = tracking.track({ number: NUMBER });
+        await vi.advanceTimersByTimeAsync(1_000);
+        expect(guestCalls).toHaveLength(0);
+        saved.give([{ token: SAVED, openedAt: Date.now() - HOUR }]);
+        expect((await pending).events).toHaveLength(5);
+        expect(steps).toEqual([['app', 'ok']]);
+        expect(guestCalls).toHaveLength(0);
+        expect(app.calls.map(call => call.operation)).toEqual(['getTrackingData', 'getTrackingScanList']);
+        expect(app.calls[0]!.body).toContain(`<SessionToken>${SAVED}</SessionToken>`);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it.each([
+      ['none', () => []],
+      ['only one past its renewal age', () => [{ token: SAVED, openedAt: Date.now() - 9 * HOUR }]],
+    ])('asks the guest protocol beside the opening once the store gives back %s', async (_, sessions) => {
+      vi.useFakeTimers();
+      try {
+        const { app, fetcher, guestCalls, steps, tracking } = tiers(guest(unknownParcel()));
+        app.replies.getSessionFullState = [() => new Promise<Response>(() => undefined)];
+        const saved = store();
+        warmDpdSession({ fetcher }, { store: saved.store });
+        const pending = tracking.track({ number: NUMBER });
+        const ended = expect(pending).rejects.toMatchObject({ kind: 'not_found' });
+        await vi.advanceTimersByTimeAsync(1_000);
+        expect(guestCalls).toHaveLength(0);
+        saved.give(sessions());
+        await vi.advanceTimersByTimeAsync(0);
+        await ended;
+        expect(steps).toEqual([['app', 'indeterminate'], ['direct', 'not_found']]);
+        expect(guestCalls).toHaveLength(4);
+        expect(app.calls.map(call => call.operation)).toEqual(['getSessionFullState']);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
   });
 
   it.each([

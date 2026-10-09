@@ -198,11 +198,14 @@ export class DpdDeAppClient {
 
   /**
    * `sessionWaitMs` bounds the wait for a session still opening; the whole `timeoutMs` by default.
-   * Once `stop` aborts, the lookup ends with its reason when the session opens, and reads nothing.
+   * `waiting` is called when the lookup starts waiting for one. Once `stop` aborts, the lookup ends
+   * with its reason when the session opens, and reads nothing.
    * DPD checks a `postcode` against the recipient's: a rejected one gets one lookup without it, and
    * the result says which, as on the guest API.
    */
-  async track(number: string, options: { signal: AbortSignal; timeoutMs: number; sessionWaitMs?: number; postcode?: string; stop?: AbortSignal }): Promise<CarrierResult> {
+  async track(number: string, options: {
+    signal: AbortSignal; timeoutMs: number; sessionWaitMs?: number; postcode?: string; stop?: AbortSignal; waiting?: () => void;
+  }): Promise<CarrierResult> {
     if (!/^\d{14}$/.test(number)) throw new TypeError('DPD Germany app tracking takes 14 digits');
     const postcode = options.postcode ?? '';
     if (postcode && !/^\d{5}$/.test(postcode)) throw new TypeError('DPD Germany app tracking takes a 5-digit postcode');
@@ -210,7 +213,7 @@ export class DpdDeAppClient {
     const left = () => Math.max(1, Math.floor(deadline - performance.now()));
     try {
       for (let attempt = 0; ; attempt += 1) {
-        const session = await this.#service.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity));
+        const session = await this.#service.session(options.signal, Math.min(left(), options.sessionWaitMs ?? Infinity), options.waiting);
         options.stop?.throwIfAborted();
         // Read-only: the parcel is neither added to the session nor redirected.
         const tracking = (zip: string) => this.#service.call('getTrackingData', { SessionToken: session, ParcelNo: number, DeliveryZipCode: zip,

@@ -71,8 +71,13 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
 - Lookups share the opening, which can take two minutes and runs while a
   lookup that asked for it is still running. Ahead of the guest API, a lookup
   waits for it while keeping 20 seconds for the guest API, and asks the guest
-  API meanwhile. A parcel the guest API does not know, or places in another
-  country, ends the wait at once. Otherwise the default budget leaves time to
+  API meanwhile, also when the service refused the session it had, but not
+  while a host's store gives back its sessions. A parcel the guest API does
+  not know, or places in another country, ends the wait at once. Otherwise the
+  lookup keeps waiting: the unverified guest reply has one entry per
+  milestone, without places, registration or repeated delivery attempts, and
+  its clocks and wording differ from the app's scans, so a consumer that
+  stored both would keep each scan twice. The default budget leaves time to
   wait, so the first lookup of a process lasts as long as the opening, and the
   guest API's reply answers if the session does not open in time. A lookup
   with less budget goes on to the guest API at once, and the opening continues

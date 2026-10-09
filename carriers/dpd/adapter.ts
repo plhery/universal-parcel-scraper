@@ -628,13 +628,14 @@ export interface DPDParcelShops {
 export interface DPDAppTier {
   /**
    * `leads` when the guest tier is still to come and needs time left. `postcode` is empty when none was given.
+   * `waiting`, given to a leading tier, is called when the lookup starts waiting for the tier's session to open.
    * `stop` aborts when the lookup has its answer without the tier, which then reads nothing more.
    */
-  run(number: string, context: { signal: AbortSignal; stop: AbortSignal; timeoutMs: number; leads: boolean; postcode: string }): Promise<CarrierResult>;
+  run(number: string, context: {
+    signal: AbortSignal; stop: AbortSignal; timeoutMs: number; leads: boolean; postcode: string; waiting?: () => void;
+  }): Promise<CarrierResult>;
   /** The failures of either tier the other may answer after. */
   recovers(error: unknown): boolean;
-  /** Whether a lookup would first wait for the tier's session to open. */
-  opening?(): boolean;
 }
 
 export class DPDTracker {
@@ -709,17 +710,23 @@ export class DPDTracker {
     let guest: Promise<CarrierResult> | undefined;
     const guestReply = () => guest ??= this.apiFetch(trackingNumber, resolvedPostcode, lookup);
     /**
-     * While the app's session opens, the guest tier is asked beside it. A parcel
-     * the guest tier does not know, or places in another country, the app does
-     * not answer either: the app stops waiting, reads nothing once its session
-     * opens, and the guest tier's step reports it. Otherwise the app keeps
-     * waiting, and the reply serves the guest tier's step if the session does
-     * not open in time. A failed reply is asked again there.
+     * While the app's session opens, the guest tier is asked beside it, not
+     * while a host's store gives back a saved session. A parcel the guest tier
+     * does not know, or places in another country, the app does not answer
+     * either: the app stops waiting, reads nothing once its session opens, and
+     * the guest tier's step reports it. Otherwise the app keeps waiting, because
+     * the guest tier's reply without a postcode is a summary: one entry per
+     * milestone, without places, registration, repeated delivery attempts and
+     * failures, or the parcel's size. Its clocks and wording also differ from
+     * the app's scans, so a consumer that stored it would keep both versions of
+     * a scan once a later lookup reads the app. The reply serves the guest
+     * tier's step if the session does not open in time. A failed reply is
+     * asked again there.
      */
-    const besideGuest = (tracked: Promise<CarrierResult>, stop: AbortController): Promise<CarrierResult> => {
+    const besideGuest = (stop: AbortController): Promise<never> => {
       const reply = guestReply();
       const pending = new Promise<never>(() => {});
-      return Promise.race([tracked, reply.then(() => pending, (error: unknown) => {
+      return reply.then(() => pending, (error: unknown) => {
         if (!app!.recovers(error)) {
           const stopped = new IndeterminateError('DPD Germany', 'DPD Germany app session is still opening', { reason: DPD_DE_SESSION_OPENING });
           stop.abort(stopped);
@@ -727,16 +734,18 @@ export class DPDTracker {
         }
         if (guest === reply) guest = undefined;
         return pending;
-      })]);
+      });
     };
     const appStep = (leads: boolean) => ({
       id: 'app',
       ...(leads ? {} : { recovers: appRecovers }),
       run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => {
-        const opening = leads && app!.opening?.() === true;
         const stop = new AbortController();
-        const tracked = app!.run(trackingNumber, { signal, stop: stop.signal, timeoutMs: remainingMs, leads, postcode: resolvedPostcode });
-        return opening ? besideGuest(tracked, stop) : tracked;
+        const tier = { signal, stop: stop.signal, timeoutMs: remainingMs, leads, postcode: resolvedPostcode };
+        if (!leads) return app!.run(trackingNumber, tier);
+        let waiting!: () => void;
+        const opening = new Promise<void>((resolve) => { waiting = resolve; });
+        return Promise.race([app!.run(trackingNumber, { ...tier, waiting }), opening.then(() => besideGuest(stop))]);
       },
     });
     const result = await runSteps<CarrierResult>({

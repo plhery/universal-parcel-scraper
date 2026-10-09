@@ -334,9 +334,10 @@ export class DpdAppService {
   /**
    * One session for every lookup. The opening runs while a lookup that asked for it is still
    * running, even one that stopped waiting; each lookup waits until its signal or `waitMs` ends.
-   * A session past its renewal age answers at once while the next one opens.
+   * A session past its renewal age answers at once while the next one opens. `waiting` is called
+   * when the lookup starts waiting for an opening, once a host's store has given back its sessions.
    */
-  async session(signal: AbortSignal, waitMs: number): Promise<string> {
+  async session(signal: AbortSignal, waitMs: number, waiting?: () => void): Promise<string> {
     if (this.#loading) await until(this.#loading, signal);
     const current = this.#session;
     const due = !current || this.#now() - current.openedAt >= SESSION_RENEW_MS;
@@ -349,6 +350,7 @@ export class DpdAppService {
       signal.addEventListener('abort', release, { once: true });
     }
     if (current) return current.token;
+    waiting?.();
     let leave!: () => void;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const left = new Promise<never>((_resolve, reject) => {
