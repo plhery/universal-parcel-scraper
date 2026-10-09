@@ -64,7 +64,7 @@
       "domains": [
         "vas.brt.it"
       ],
-      "path": "^/vas/sped_det_new\\.htm$",
+      "pathPattern": "^/(?:$|vas/sped_)",
       "params": [
         "brtCode"
       ]

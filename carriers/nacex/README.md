@@ -30,6 +30,9 @@ Delivery recipient text, signatures and free-form instructions are excluded.
 A negative requires the portal's explicit no-shipment result after submission;
 empty pages, generic HTTP errors and missing histories remain inconclusive.
 
+Links to nacex.es's home page and its `seguimiento` pages name NACEX; its other
+pages name none.
+
 ## Testing
 
 Set `NACEX_TRACKING_NUMBER` to an authorized real reference and optionally

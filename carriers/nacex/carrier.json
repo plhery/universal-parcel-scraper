@@ -62,7 +62,7 @@
         "www.nacex.es",
         "nacex.es"
       ],
-      "path": "^/seguimientoFormularioExterno\\.do$",
+      "pathPattern": "^/(?:$|(?:irHome|(?:ir)?seguimiento[a-z]*)\\.do(?:;|$))",
       "params": [
         "intcli"
       ]

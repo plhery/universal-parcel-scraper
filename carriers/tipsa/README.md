@@ -34,6 +34,9 @@ not ask.
   layout, and every six-digit agency code seen so far starts with 0. Recognition asks
   TIPSA first for such numbers.
 
+Links to tip-sa.com's home page and its `datos`, `datos_env` and
+`datos_prestashop` shipment pages name TIPSA; its other pages name none.
+
 ## Limitations
 
 - Ten-digit waybills can't be looked up without their agency codes; recognition answers

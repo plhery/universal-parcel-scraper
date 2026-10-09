@@ -38,6 +38,9 @@ requested identifier are excluded from the result.
 A negative requires the portal's matching parcel-label error. Empty replies,
 redirects and generic HTTP errors remain inconclusive.
 
+Links to the shipment pages (`/vas/sped_…`) and the root of vas.brt.it name
+BRT; its other pages, such as pickup orders and help, name none.
+
 ## Testing
 
 Set `BRT_TRACKING_NUMBER` to an authorized shipment number, BRTcode or parcel ID and optionally

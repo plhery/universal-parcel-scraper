@@ -244,6 +244,51 @@ describe('the detection engine', () => {
   });
 });
 
+describe('carrier links limited to some pages of their host', () => {
+  // Each page form the rule reads, ending in its number parameter, and another page of the host.
+  it.each([
+    ['brt', '99000000000002', [
+      'https://vas.brt.it/vas/sped_det_new.htm?lang=en&brtCode=',
+      'https://vas.brt.it/vas/sped_det_show.htm?brtCode=',
+    ], 'https://vas.brt.it/vas/orm_det_show.htm?brtCode='],
+    ['seur', '9900002', [
+      'https://www.seur.com/miseur/mis-envios?tracking=',
+      'https://www.seur.com/miseur/mis-envios/detalle?tracking=',
+      'https://seur.com/en/miseur/mis-envios?tracking=',
+    ], 'https://www.seur.com/envio-online/?tracking='],
+    ['tipsa', '0990010990010000000017', [
+      'https://www.tip-sa.com/cliente/datos_env.php?id=',
+      'https://aplicaciones.tip-sa.com/cliente/datos.php?id=',
+      'https://www.tip-sa.com/cliente/datos_prestashop.php?id=',
+    ], 'https://www.tip-sa.com/contacto.php?id='],
+    ['nacex', '9900/99000002', [
+      'https://www.nacex.es/seguimientoFormularioExterno.do?intcli=',
+      'https://nacex.es/seguimientoFormularioExterno.do;jsessionid=TEST?intcli=',
+    ], 'https://www.nacex.es/irCerca.do?intcli='],
+    ['estafeta', '9000000001', [
+      'https://cs.estafeta.com/es/Tracking/searchByGet?isShipmentDetail=True&wayBill=',
+      'https://cs.estafeta.com/en/Tracking/searchByGet/?wayBill=',
+    ], 'https://cs.estafeta.com/es/Tracking/GetTrackingItemHistory?wayBill='],
+    ['the-courier-guy', 'TESTA1', [
+      'https://portal.thecourierguy.co.za/track?ref=',
+      'https://track.thecourierguy.co.za/?ref=',
+      'https://track.thecourierguy.co.za/track/?ref=',
+    ], 'https://portal.thecourierguy.co.za/request-invoice?ref='],
+  ])('%s', (carrier, number, pages, other) => {
+    // A reference detection alone does not recognize shows that the rule read it.
+    for (const page of pages) {
+      for (const reference of [number, 'TESTA1']) {
+        expect(parseTrackingInput(`${page}${reference}`)).toMatchObject({
+          trackingNumber: reference, carrier, confidence: 'high', source: 'link',
+        });
+      }
+    }
+    const { pathname, search } = new URL(`${other}TESTA1`);
+    expect(parseTrackingInput(`${other}TESTA1`)).toEqual(parseTrackingInput(`https://example.test${pathname}${search}`));
+    expect(parseTrackingInput(`${other}TESTA1`).carrier).not.toBe(carrier);
+  });
+});
+
 describe('checksum rejections', () => {
   it('names the rule whose failed checksum kept its carrier out of the suggestions', () => {
     expect(checksumRejections('1234567890')).toEqual([{ carrier: 'dhl-express', rule: 'dhl-express-waybill', checksum: 'dhl-express' }]);

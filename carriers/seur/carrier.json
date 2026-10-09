@@ -63,7 +63,7 @@
         "www.seur.com",
         "seur.com"
       ],
-      "path": "^/miseur/mis-envios(?:/.*)?$",
+      "pathPattern": "^/(?:(?:[a-z]{2}/?)?$|(?:[a-z]{2}/)?miseur/mis-envios(?:/|$)|livetracking(?:/|$))",
       "params": [
         "tracking"
       ]

@@ -2235,7 +2235,7 @@
           "www.seur.com",
           "seur.com"
         ],
-        "path": "^/miseur/mis-envios(?:/.*)?$",
+        "pathPattern": "^/(?:(?:[a-z]{2}/?)?$|(?:[a-z]{2}/)?miseur/mis-envios(?:/|$)|livetracking(?:/|$))",
         "params": [
           "tracking"
         ]
@@ -2308,7 +2308,7 @@
           "www.nacex.es",
           "nacex.es"
         ],
-        "path": "^/seguimientoFormularioExterno\\.do$",
+        "pathPattern": "^/(?:$|(?:irHome|(?:ir)?seguimiento[a-z]*)\\.do(?:;|$))",
         "params": [
           "intcli"
         ]
@@ -2467,7 +2467,7 @@
         "domains": [
           "vas.brt.it"
         ],
-        "path": "^/vas/sped_det_new\\.htm$",
+        "pathPattern": "^/(?:$|vas/sped_)",
         "params": [
           "brtCode"
         ]
@@ -2545,7 +2545,7 @@
         "domains": [
           "tip-sa.com"
         ],
-        "path": "^/cliente/datos(?:_prestashop|_env)?\\.php$",
+        "pathPattern": "^/(?:$|cliente/datos(?:_prestashop|_env)?\\.php$)",
         "params": [
           "id"
         ]
@@ -3089,7 +3089,7 @@
         "domains": [
           "cs.estafeta.com"
         ],
-        "path": "^/es/Tracking/searchByGet/?$",
+        "pathPattern": "^/(?:$|(?:[a-z]{2}/)?Tracking/searchByGet/?$)",
         "params": [
           "wayBill"
         ]
@@ -4314,7 +4314,7 @@
           "portal.thecourierguy.co.za",
           "track.thecourierguy.co.za"
         ],
-        "path": "^/track/?$",
+        "pathPattern": "^/(?:track/?)?$",
         "params": [
           "ref"
         ]

@@ -2237,7 +2237,7 @@ export const CARRIER_CATALOG = {
           "www.seur.com",
           "seur.com"
         ],
-        "path": "^/miseur/mis-envios(?:/.*)?$",
+        "pathPattern": "^/(?:(?:[a-z]{2}/?)?$|(?:[a-z]{2}/)?miseur/mis-envios(?:/|$)|livetracking(?:/|$))",
         "params": [
           "tracking"
         ]
@@ -2310,7 +2310,7 @@ export const CARRIER_CATALOG = {
           "www.nacex.es",
           "nacex.es"
         ],
-        "path": "^/seguimientoFormularioExterno\\.do$",
+        "pathPattern": "^/(?:$|(?:irHome|(?:ir)?seguimiento[a-z]*)\\.do(?:;|$))",
         "params": [
           "intcli"
         ]
@@ -2469,7 +2469,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "vas.brt.it"
         ],
-        "path": "^/vas/sped_det_new\\.htm$",
+        "pathPattern": "^/(?:$|vas/sped_)",
         "params": [
           "brtCode"
         ]
@@ -2547,7 +2547,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "tip-sa.com"
         ],
-        "path": "^/cliente/datos(?:_prestashop|_env)?\\.php$",
+        "pathPattern": "^/(?:$|cliente/datos(?:_prestashop|_env)?\\.php$)",
         "params": [
           "id"
         ]
@@ -3091,7 +3091,7 @@ export const CARRIER_CATALOG = {
         "domains": [
           "cs.estafeta.com"
         ],
-        "path": "^/es/Tracking/searchByGet/?$",
+        "pathPattern": "^/(?:$|(?:[a-z]{2}/)?Tracking/searchByGet/?$)",
         "params": [
           "wayBill"
         ]
@@ -4316,7 +4316,7 @@ export const CARRIER_CATALOG = {
           "portal.thecourierguy.co.za",
           "track.thecourierguy.co.za"
         ],
-        "path": "^/track/?$",
+        "pathPattern": "^/(?:track/?)?$",
         "params": [
           "ref"
         ]

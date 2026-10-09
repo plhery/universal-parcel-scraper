@@ -32,6 +32,9 @@ Explicit scan offsets establish instants. Offsetless or incomplete clocks remain
 local evidence. Estimates are omitted because delivered responses retain old
 promises and their active-shipment provenance is unverified.
 
+Links to the `/track` page and the root of the portal and tracking hosts name
+The Courier Guy; their other pages name none.
+
 ## Live test
 
 Set `COURIER_GUY_TRACKING_NUMBER` outside the repository and run

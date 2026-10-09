@@ -25,6 +25,9 @@ reference and does not prove absence.
 Recipient names, postcodes, signatures, proof images and report actions are
 excluded. Scheduled-date controls retain dates after delivery and are omitted.
 
+Links to cs.estafeta.com's home page and its `Tracking/searchByGet` page, in any
+language, name Estafeta; its other pages name none.
+
 ## Live test
 
 Set `ESTAFETA_TRACKING_NUMBER` outside the repository and run

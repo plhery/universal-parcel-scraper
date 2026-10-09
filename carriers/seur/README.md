@@ -25,6 +25,9 @@ The no-history error also covers recent or out-of-range identifiers and remains
 inconclusive. Empty replies, redirects and generic HTTP errors do too. The
 firewall's script page is a challenge, never a missing parcel.
 
+Links to seur.com's home page, its `miseur/mis-envios` pages, in Spanish or
+English, and its `livetracking` page name SEUR; its other pages name none.
+
 ## Testing
 
 Set `SEUR_TRACKING_NUMBER` to an authorized reference and optionally

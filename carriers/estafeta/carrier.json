@@ -53,7 +53,7 @@
       "domains": [
         "cs.estafeta.com"
       ],
-      "path": "^/es/Tracking/searchByGet/?$",
+      "pathPattern": "^/(?:$|(?:[a-z]{2}/)?Tracking/searchByGet/?$)",
       "params": [
         "wayBill"
       ]

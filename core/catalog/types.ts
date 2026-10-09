@@ -92,7 +92,9 @@ export interface RawTrackingLinkRule {
   params?: readonly string[];
   /** Capture a number from the whole query, for portals without named parameters. */
   query?: string;
+  /** Capture a number from the path; a path it does not capture from yields none. */
   path?: string;
+  /** Limit the rule to the paths it matches, for pasted and partner links alike. */
   pathPattern?: string;
   fragment?: string;
   detectFromNumber?: boolean;

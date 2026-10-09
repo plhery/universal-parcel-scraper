@@ -72,7 +72,7 @@
       "domains": [
         "tip-sa.com"
       ],
-      "path": "^/cliente/datos(?:_prestashop|_env)?\\.php$",
+      "pathPattern": "^/(?:$|cliente/datos(?:_prestashop|_env)?\\.php$)",
       "params": [
         "id"
       ]

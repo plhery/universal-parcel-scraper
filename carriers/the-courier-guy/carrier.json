@@ -59,7 +59,7 @@
         "portal.thecourierguy.co.za",
         "track.thecourierguy.co.za"
       ],
-      "path": "^/track/?$",
+      "pathPattern": "^/(?:track/?)?$",
       "params": [
         "ref"
       ]

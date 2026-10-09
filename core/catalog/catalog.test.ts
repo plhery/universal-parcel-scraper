@@ -116,6 +116,16 @@ describe('tracking links', () => {
     expect(carrierLinkRules('swiss-post')[0]!.path).toBeInstanceOf(RegExp);
   });
 
+  it('reads a number with every path, query and fragment pattern', () => {
+    // Without a capture group the pattern reads nothing and filters nothing: a
+    // rule limited to some pages lists them in pathPattern.
+    for (const rule of TRACKING_LINK_RULES) {
+      for (const pattern of [rule.path, rule.query, rule.fragment]) {
+        if (pattern) expect(new RegExp(`${pattern.source}|`).exec('')!.length, `${rule.carrier} ${pattern.source}`).toBeGreaterThan(1);
+      }
+    }
+  });
+
   it('localizes only the portals that support it', () => {
     expect(localizedCarrierUrl('swiss-post', 'https://service.post.ch/x', 'fr')).toContain('lang=fr');
     expect(localizedCarrierUrl('swiss-post', 'https://service.post.ch/x')).toBe('https://service.post.ch/x');
