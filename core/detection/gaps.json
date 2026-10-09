@@ -207,6 +207,12 @@
     "reason": "A documentation example of a merchant-prefixed ID; the adapter takes Malaysian NLMY parcel IDs only."
   },
   {
+    "carrier": "old-dominion",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "PROs whose last digit fails the Luhn check most Old Dominion PROs pass. Old Dominion's tracker answered one, but eleven digits alone fit many carriers, so detection suggests Old Dominion only when the check passes."
+  },
+  {
     "carrier": "paack",
     "kind": "by_design",
     "reason": "Paack identifiers are retailer order numbers with no stable shape, so one can match another carrier's rule."

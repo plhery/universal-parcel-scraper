@@ -2959,6 +2959,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^80\\d{9}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^\\d{11}$",
+        "confidence": "low",
+        "checksum": "luhn"
       }
     ]
   },
@@ -5356,7 +5361,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "speedx": ["speedx-1","speedx-2"],
   "uniuni": ["uniuni-1","uniuni-2","uniuni-3","uniuni-4","uniuni-5","uniuni-6"],
   "landmark-global": ["landmark-global-1"],
-  "old-dominion": ["old-dominion-1","old-dominion-2"],
+  "old-dominion": ["old-dominion-1","old-dominion-2","old-dominion-3"],
   "spee-dee": ["spee-dee-1","spee-dee-2"],
   "gofo": ["gofo-1","gofo-2","gofo-3"],
   "estafeta": ["estafeta-1","estafeta-full-guide","estafeta-lettered-guide"],

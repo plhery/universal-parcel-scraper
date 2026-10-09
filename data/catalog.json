@@ -2957,6 +2957,11 @@
       {
         "pattern": "^80\\d{9}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^\\d{11}$",
+        "confidence": "low",
+        "checksum": "luhn"
       }
     ]
   },

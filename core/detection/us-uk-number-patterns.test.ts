@@ -136,6 +136,16 @@ it('recognizes every lettered Intelcom series', () => {
   expect(detectCarrierMatch('INTLCMJ12345678').carrier).toBe('unknown');
 });
 
+it('suggests Old Dominion for eleven-digit PROs only when the Luhn check passes', () => {
+  // Synthetic PROs outside the prefixes Old Dominion's high rules claim.
+  for (const number of ['12300000002', '45600000017']) {
+    expect(detectCarrierMatch(number).candidates).toContain('old-dominion');
+  }
+  for (const number of ['12300000003', '45600000018', '1230000002', '123000000002']) {
+    expect(detectCarrierMatch(number).candidates).not.toContain('old-dominion');
+  }
+});
+
 it('suggests UniUni for cross-border shipper references without selecting it', () => {
   for (const number of ['GV00CAA0U000000001', 'JY00CAA0D000000001']) {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['uniuni'] });

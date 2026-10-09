@@ -598,7 +598,7 @@
     "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{11} with an Old Dominion prefix that passes the mod 7 check",
+    "shape": "9{11} that passes the mod 7 check and either the Luhn check or an Old Dominion prefix",
     "carriers": [
       "aramex",
       "blue-dart",
@@ -610,7 +610,7 @@
       "postlogistics",
       "dhl-ecommerce-pl"
     ],
-    "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share."
+    "reason": "Old Dominion's prefixes still decide. Elsewhere its Luhn check digit only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share."
   },
   {
     "shape": "9{13} starting with 7, 8 or 9",
@@ -1451,7 +1451,7 @@
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{11} with an Old Dominion prefix that fails the mod 7 check",
+    "shape": "9{11} that fails the mod 7 check and passes the Luhn check or has an Old Dominion prefix",
     "carriers": [
       "dhl-ecommerce-pl",
       "gls-ch",
@@ -1460,7 +1460,7 @@
       "old-dominion",
       "postlogistics"
     ],
-    "reason": "Old Dominion's prefix still decides when its number also fits the broad PostLogistics compact shape."
+    "reason": "Old Dominion's prefixes still decide. Elsewhere its Luhn check digit only adds it as a suggestion beside the broad PostLogistics compact shape."
   },
   {
     "shape": "9{13} in the Planzer 99990 range",
