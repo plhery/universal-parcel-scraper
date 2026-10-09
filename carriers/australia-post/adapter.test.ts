@@ -134,10 +134,11 @@ describe('Australia Post parser', () => {
 });
 
 type RawEvent = { eventCode: string; description: string; location: string; milestone: string; localeDateTime: string };
-function journey(destination: string, events: RawEvent[], summary = 'Delivered') {
+function journey(destination: string, events: RawEvent[], summary = 'Delivered', details: Record<string, unknown> = {}) {
   const payload = fixture();
   const article = payload[0].shipment.articles[0];
   article.trackStatusOfArticle = summary;
+  Object.assign(article.details[0], details);
   Object.assign(article.details[0].address, { country: destination });
   Object.assign(article.details[0].fromAddress, { country: 'AU' });
   article.details[0].events = events.map((event) => ({ ...event, dateTime: Date.parse(event.localeDateTime) }));
@@ -200,6 +201,32 @@ describe('Australia Post status codes and places', () => {
     expect(waiting).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Example Post Office', destination_country: 'AU' });
     const abroad = journey('NL', [scan('INT-2180', 'Flight landed', '', '2026-06-07T17:39:00+11:00')], 'Future summary');
     expect(abroad).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Future summary' });
+  });
+
+  it('keeps the collection point once the parcel is collected there, and never after a door delivery', () => {
+    const delivered = scan('DD-ER13', 'Delivered', 'EXAMPLE VIC', '2026-06-13T10:15:00+10:00', 'Delivered');
+    const waiting = scan('DD-ER4', 'Awaiting collection at Example Post Office', 'EXAMPLE VIC', '2026-06-12T12:02:24+10:00', 'Awaiting collection');
+    const attempted = scan('DD-ER5', 'Delivery location closed', 'EXAMPLE VIC', '2026-06-12T10:48:14+10:00', 'Attempted delivery');
+    // The point's work-centre id and the collection credentials are never read.
+    const collection = { collectionInstruction: { delegate: { allowed: true, reason: 'PRIVATE REASON' },
+      facility: { workCentreId: 'PRIVATE FACILITY ID', type: 'WORK_CENTRE' }, accessNumber: 'PRIVATE ACCESS NUMBER' } };
+    const collected = journey('AU', [delivered, waiting, attempted], 'Delivered', collection);
+    expect(collected).toMatchObject({ status: 'delivered', current_stage: 'delivered', pickup_point: 'Example Post Office' });
+    expect(JSON.stringify(collected)).not.toMatch(/PRIVATE/);
+    const locker = scan('NT-ER4', 'Awaiting collection at Example Parcel Locker', 'EXAMPLE VIC', '2026-06-12T12:02:24+10:00', 'Awaiting collection');
+    expect(journey('AU', [delivered, locker]).pickup_point).toBe('Example Parcel Locker');
+
+    const onboard = scan('AFP-ER13', 'Onboard for delivery', 'EXAMPLE VIC', '2026-06-13T08:10:00+10:00', "It's coming today");
+    const notice = scan('XX-ER99', 'A future notice', 'EXAMPLE VIC', '2026-06-13T08:10:00+10:00', 'A future milestone');
+    const safePlace = scan('DD-ER15', 'Delivered - Left in a safe place', 'EXAMPLE VIC', '2026-06-13T10:15:00+10:00', 'Delivered');
+    for (const events of [[delivered, onboard, waiting], [delivered, notice, waiting], [safePlace, waiting], [delivered, attempted]]) {
+      const result = journey('AU', events);
+      expect(result.current_stage).toBe('delivered');
+      expect(result).not.toHaveProperty('pickup_point');
+    }
+    // A scan that names no place gives no point.
+    expect(journey('AU', [scan('DD-ER4', 'Awaiting collection', 'EXAMPLE VIC', '2026-06-12T12:02:24+10:00', 'Awaiting collection')],
+      'Awaiting collection')).not.toHaveProperty('pickup_point');
   });
 });
 

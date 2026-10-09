@@ -67,8 +67,16 @@ cache headers of the `no-store` mode. The app also sends an
   Canadian province, else the foreign country's single zone; otherwise the wall clock stays in
   `local_time` and sorts on the zone the reply's other scans abroad keep. The scan identity policy
   in `app.ts` (`relabelledFrom: 'UTC'`) lets such a scan take over the row stored under the label.
-- A parcel awaiting collection at a post office or locker gets that place, as its newest scan names
-  it, in `pickup_point`. The address block gives only `destination_country`.
+- A parcel awaiting collection at a post office or locker gets that place, as its awaiting-collection
+  scan (`DD-ER4`, `NT-ER4`) names it, in `pickup_point`. It keeps it once collected: when only
+  deliveries follow that scan and none was left in a safe place. A delivery after another round, or
+  after a notice the map does not know, gets none.
+- The reply gives no address for the point, so `pickup_point` is its name alone. The anonymous address
+  block is empty but for the country, which gives `destination_country`, and
+  `collectionInstruction.facility` carries only the point's work-centre id and type. Lead: the tracking
+  page's "View location and collection hours" opens `auspost.com.au/locate/showpop/{workCentreId}`,
+  which resolves the id through `digitalapi.auspost.com.au/locations-private/v3/workcentres`; that API
+  refuses a request without its `AUTH-KEY`, so the address is not looked up.
 - `statusModificationDateTime` and summary milestone timestamps are not scan times (they can be hours
   off the delivery scan). `last_update` and `delivered_at` come from events.
 - Delivered wording is replaced with `Delivered` so signature or safe-place text can't leak a name.

@@ -55,6 +55,25 @@ function abroadZone(location: string, abroad: string): string | null {
   return countryTimeZone(abroad);
 }
 
+/** Scans that leave the parcel at an Australian post office or parcel locker for collection. */
+const COLLECTION_SCANS = new Set(['DD-ER4', 'NT-ER4']);
+/** Deliveries left in a safe place, at the door. */
+const SAFE_PLACE = new Set(['DD-ER15', 'DD-ER38']);
+
+/**
+ * The post office or locker its awaiting-collection scan names: the newest scan while the
+ * parcel waits there, or the scan just before its delivery once it is collected there. A
+ * delivery left in a safe place was not collected.
+ */
+function collectionPoint(stage: string | undefined, events: readonly CarrierEvent[]): string | undefined {
+  const index = events.findIndex((event) => event.stage !== 'delivered');
+  const placed = stage === 'ready_for_pickup' ? index === 0
+    : stage === 'delivered' && index > 0 && !events.slice(0, index).some((event) => SAFE_PLACE.has(String(event.provider_code)));
+  const scan = placed ? events[index] : undefined;
+  if (!scan || !COLLECTION_SCANS.has(String(scan.provider_code))) return undefined;
+  return /^Awaiting collection at (.+)$/i.exec(scan.description ?? '')?.[1]?.trim() || undefined;
+}
+
 /** The one lookup entry and article must independently match the submitted reference. */
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const number = normalizeAustraliaPostNumber(trackingNumber);
@@ -149,9 +168,8 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const latest = events[0]!;
   const status = australiaPostStatus(summary) ?? latest.classified;
   const deliveredAt = status?.status === 'delivered' ? events.find(({ event }) => event.stage === 'delivered')?.event.time : null;
-  // The post office or locker holding the parcel, as its newest scan names it.
-  const pickup = status?.stage === 'ready_for_pickup' && ['DD-ER4', 'NT-ER4'].includes(String(latest.event.provider_code))
-    ? /^Awaiting collection at (.+)$/i.exec(latest.event.description ?? '')?.[1]?.trim() : undefined;
+  // The reply names the point but gives no address for it.
+  const pickup = collectionPoint(status?.stage, events.map(({ event }) => event));
   // Summary modification/milestone timestamps are not scan times. In the
   // observed reply they differed from the delivery event by about ten hours.
   return {
