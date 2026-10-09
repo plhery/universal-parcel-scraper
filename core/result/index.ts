@@ -75,6 +75,8 @@ export interface CarrierResult extends JsonObject {
   timezone?: string;
   /** An identity-bound current status without a scan history. */
   summary_only?: boolean;
+  /** The carrier returned only part of a longer scan history, such as its newest scans. */
+  history_truncated?: boolean;
   events?: CarrierEvent[];
 }
 
@@ -170,6 +172,10 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
   }
   if (typeof normalized.destination_country_name !== 'string' || normalized.destination_country_name.length > 80) {
     delete normalized.destination_country_name;
+  }
+  // Completeness flags qualify the history; one that is not a boolean says nothing.
+  for (const flag of ['summary_only', 'history_truncated'] as const) {
+    if (typeof normalized[flag] !== 'boolean') delete normalized[flag];
   }
 
   const rawEvents = normalized.events ?? [];

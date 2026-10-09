@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-28 -2 936 292" role="img" aria-label="An input is detected offline and fetched by the carrier's dedicated adapter, or by an enabled fallback when that finds no history. Each scan's wording is mapped to a stage, and the result is one timeline.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-28 -2 936 292" role="img" aria-label="An input is detected offline and fetched by the carrier's dedicated adapter, or by an enabled fallback when that finds no history or only part of it. Each scan's wording is mapped to a stage, and the result is one timeline.">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; text-anchor: middle; }
     .title { font-size: 14px; font-weight: 600; fill: #fffaf0; }
@@ -64,6 +64,6 @@
   <text class="sub" x="530.5" y="246">ParcelsApp, Ship24, 17TRACK, Postal Ninja on request</text>
 
   <path class="flow" d="M440.5 122V165" marker-end="url(#head)"/>
-  <text class="sub" x="452" y="148" style="text-anchor: start">no history</text>
+  <text class="sub" x="452" y="148" style="text-anchor: start">no or partial history</text>
   <path class="flow" d="M620.5 165V122" marker-end="url(#head)"/>
 </svg>

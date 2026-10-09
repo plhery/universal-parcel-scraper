@@ -4,7 +4,7 @@ One lookup goes in and one timeline comes out. The package answers a question ab
 parcel and keeps nothing afterwards. Accounts, parcel storage, polling, notifications and any
 decision based on an earlier check belong to whoever calls it.
 
-<img src="docs/assets/how-it-works.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback the caller enabled when that finds no history. Each scan's wording is filed under a stage, and the result is one timeline.">
+<img src="docs/assets/how-it-works.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback the caller enabled when that finds no history or only part of it. Each scan's wording is filed under a stage, and the result is one timeline.">
 
 ## Where things live
 
@@ -85,6 +85,20 @@ identifies an international postal item, is settled by asking the carriers that 
 it cheaply. A postal issuer is a lookup candidate, not proof of the delivery carrier.
 The tracker then tries the carrier's
 dedicated adapter, and after that the fallbacks the caller enabled, in the coverage order.
+A direct answer marked `summary_only` or `history_truncated` asks them too. The first
+fallback with more scans that names no other carrier and is not behind the carrier's state
+replaces it; a scan relayed twice in two wordings counts once. A checksum-valid S10 number is
+one postal item for every operator that carries it, so a fallback for it may name any of them.
+A clock without an offset may be any instant from 14 hours before its wall time to 12 hours
+after, so a history whose newest scan is older at every reading loses. A delivered or returned
+answer needs the same stage, and an earlier stage never wins, unless the history also reached
+the carrier's stage, no earlier than the carrier, with only scans of an earlier rank after it,
+as with a scan uploaded after the delivery; the carrier's status then stays. An exception
+against another stage, or another stage of the same rank, needs a newest scan that is later
+at every reading. Two exceptions can be two problems, so the provider's must be no earlier at
+every reading, as when it relays the carrier's own. The winner takes the carrier's own facts
+it lacks, such as the estimate, destination or weight, and `direct` keeps the carrier's answer
+as it came. Otherwise, even when every fallback fails, the carrier's answer stands.
 The `countryHint` input is still accepted but no longer affects a lookup.
 One deadline and one cancellation signal cover the whole call. The answer lists every
 attempt with its source and outcome.
@@ -95,7 +109,8 @@ repeating at once.
 
 When a result names a delivery partner, the tracker also asks that partner's adapter. Its
 answer comes back separately, checked against the number on its own. Adopting it is the
-consumer's choice.
+consumer's choice. When a partial carrier answer names the partner, the fallbacks leave that
+lookup a third of the budget, at most 30 seconds.
 
 A result's `service_name` is the carrier's own name for the shipping service the parcel
 travels under, as its page shows it. It names the product only, never a status, the merchant
@@ -257,10 +272,11 @@ by provider code and location.
 
 ## Fallback providers
 
-The universal providers answer when no dedicated adapter can. Commercial ones run only when
-the caller names them, and UPU is the default. `universalPlan()` orders the eligible providers
-from recorded evidence. [providers/COMPARISON.md](providers/COMPARISON.md) explains the
-order and [providers/COVERAGE.md](providers/COVERAGE.md) holds the evidence.
+The universal providers answer when no dedicated adapter can, and can complete a dedicated
+adapter's partial answer. Commercial ones run only when the caller names them, and UPU is the
+default. `universalPlan()` orders the eligible providers from recorded evidence.
+[providers/COMPARISON.md](providers/COMPARISON.md) explains the order and
+[providers/COVERAGE.md](providers/COVERAGE.md) holds the evidence.
 
 ## HTTP server
 
@@ -269,8 +285,9 @@ request limits and optional bearer authentication. It has no database.
 
 A failed lookup is held too, for at least `failureCacheMs` and longer when the upstream or
 the carrier's own after-failure interval asks for it. `Retry-After` says when the server will
-ask again. A lookup run on a caller's own `budgetMs` is never held. Limits count the socket
-address unless `trustedProxies` says how many proxies append to `X-Forwarded-For`.
+ask again. A failure on a caller's own `budgetMs` is never held, nor is an answer whose
+sources that budget cut short. Limits count the socket address unless `trustedProxies` says
+how many proxies append to `X-Forwarded-For`.
 
 Its logs carry route names, status codes and durations only. Library consumers connect their
 own observability through `StepRecorder`. The routes are in [openapi.json](server/openapi.json).

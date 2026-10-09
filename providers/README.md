@@ -3,7 +3,7 @@
 The universal providers follow parcels for many carriers at once: the aggregators
 ParcelsApp, Ship24, 17TRACK and Postal Ninja, and UPU, the postal union's own data. The
 library uses them as fallbacks, when a carrier has no dedicated adapter or its adapter finds
-no history. They are not carriers a user can select.
+no history or only part of it. They are not carriers a user can select.
 
 The aggregators run only when the caller names them in `providers` (`SCRAPER_PROVIDERS` for
 the CLI and the server). UPU is on by default. Every enabled provider receives the tracking

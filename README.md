@@ -134,7 +134,7 @@ It answers one lookup at a time. Storing parcels and polling are yours.
 
 ## How it works
 
-<img src="docs/assets/how-it-works.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback you enabled when that finds no history. Each scan's wording is filed under a stage, and the result is one timeline.">
+<img src="docs/assets/how-it-works.svg" width="840" alt="An input is detected offline and fetched by the carrier's dedicated adapter, or by a fallback you enabled when that finds no history or only part of it. Each scan's wording is filed under a stage, and the result is one timeline.">
 
 **Fetching.** Adapters use plain HTTP where the site allows it. For sites that only answer a
 browser, install `playwright-core sharp onnxruntime-web` and pass `chromiumPath`, or run the
@@ -142,7 +142,9 @@ browser, install `playwright-core sharp onnxruntime-web` and pass `chromiumPath`
 install to carriers.
 
 **Fallbacks.** When an adapter finds no history, the lookup moves to the universal trackers
-you enabled. Only UPU is on by default. Each one you enable receives the tracking number.
+you enabled. When it finds only a current status or its newest scans, the tracker asks them
+too and takes a fuller history that is not behind the carrier's. Only UPU is on by default.
+Each one you enable receives the tracking number.
 
 ```js
 createTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'] });

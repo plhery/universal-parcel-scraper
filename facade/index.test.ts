@@ -1,8 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
 import { InvalidInputError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
+import type { CarrierResult } from '../core/result/index.js';
+import { resolveResult } from '../core/result/resolve.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { DEFAULT_USER_AGENT } from '../core/transport/userAgent.js';
+import type { UniversalSource } from '../providers/types.js';
 import { createTracker, TrackingError } from './index.js';
 
 const number = '1Z999AA10123456784';
@@ -275,6 +278,307 @@ describe('standalone tracker', () => {
     expect(await sent('ExampleHost/1.0')).toBe('ExampleHost/1.0');
     expect(await sent()).toBe(DEFAULT_USER_AGENT);
     expect(() => createTracker({ userAgent: 'Example\r\nX-Injected: 1' })).toThrow(TypeError);
+  });
+
+  describe('after a partial direct answer', () => {
+    type Scan = [time: string, status: string];
+    const days = (count: number, hour = '09:00'): Scan[] =>
+      Array.from({ length: count }, (_, day) => [`2026-01-0${day + 1}T${hour}:00Z`, 'In transit']);
+    /** Two days in transit, then the given scan on the third. */
+    const ending = (status: string): Scan[] => [...days(2), ['2026-01-03T09:00:00Z', status]];
+    const postal = 'RR123456785GB';
+    const UPU_LABELS: Record<string, string> = { EMA: 'Posting/collection', EMC: 'Departure from outward office of exchange',
+      EMD: 'Arrival at inward office of exchange' };
+    /**
+     * Synthetic provider replies by host; a provider without scans answers 503. UPU scans are wall clocks and event codes.
+     * Ship24 answers for the postal number when asked for it.
+     */
+    function providerReplies(scans: { ship24?: Scan[]; parcelsApp?: Scan[]; upu?: Scan[]; couriers?: string[] }) {
+      return vi.fn<typeof fetch>().mockImplementation(async (url) => {
+        const target = String(url);
+        if (target.includes('ship24') && scans.ship24) return new Response(JSON.stringify({ data: {
+          tracking_number: target.includes(postal) ? postal : number,
+          events: scans.ship24.map(([timestamp, status]) => ({ timestamp, status })),
+          ...(scans.couriers ? { couriers: scans.couriers.map(name => ({ translation: { name } })) } : {}) } }),
+        { status: 201, headers: { 'Content-Type': 'application/json' } });
+        if (target.includes('parcelsapp') && scans.parcelsApp) return Response.json({ states: scans.parcelsApp.map(([date, status]) => ({ date, status })) });
+        if (target.includes('globaltracktrace') && scans.upu) return Response.json([{ ID: postal,
+          Events: scans.upu.map(([EventDT, EventCd]) => ({ EventDT, EventCd, EventNm: UPU_LABELS[EventCd] })) }]);
+        return new Response('', { status: 503 });
+      });
+    }
+    /** Every request waits for its signal. */
+    const stalled = () => vi.fn<typeof fetch>().mockImplementation((_url, init) => new Promise((_, reject) => {
+      init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+    }));
+    const summary: CarrierResult = { status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In transit',
+      last_update: '2026-01-03T09:00:45Z', summary_only: true, events: [] };
+    /** A summary at a stage, without a clock unless one is given. */
+    const stated = (current_stage: string, last_update: string | null = null): CarrierResult =>
+      ({ status: 'in_transit', current_stage, last_status_text: 'Synthetic status', last_update, summary_only: true, events: [] });
+    const track = (direct: CarrierResult, fetcher: typeof fetch, providers: UniversalSource[], context = {}) =>
+      createTracker({ registry: registry(vi.fn().mockResolvedValue(direct)), fetcher, providers }).track({ number }, context);
+    /** Royal Mail's own answer for a postal number, with the default providers unless others are given. */
+    const trackPostal = (direct: CarrierResult, fetcher: typeof fetch, providers?: UniversalSource[]) => createTracker({ fetcher,
+      ...(providers ? { providers } : {}), registry: new AdapterRegistry({
+      factories: { 'royal-mail': () => ({ id: 'royal-mail', steps: ['direct'], track: async () => direct }) },
+      carriers: { 'royal-mail': 'royal-mail' } }, environment) }).track({ number: postal, carrier: 'royal-mail' });
+
+    it('prefers a provider\'s fuller history over a summary and keeps the summary beside it', async () => {
+      // The provider relays the summary's scan without its seconds.
+      const answer = await track(summary, providerReplies({ ship24: days(3) }), ['Ship24']);
+      expect(answer).toMatchObject({ carrier: 'ups', source: 'Ship24', result: { current_stage: 'in_transit' },
+        direct: { summary_only: true, last_update: summary.last_update, events: [] },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(answer.result.events).toHaveLength(3);
+      expect(answer.result).not.toHaveProperty('summary_only');
+    });
+
+    it('proposes the delivery partner the carrier named, whichever history is chosen', async () => {
+      const partner = vi.fn().mockResolvedValue({ status: 'delivered', events: [{ time: '2026-01-04T09:00:00Z', description: 'Delivered', stage: 'delivered' }] });
+      const named = { ...summary, delivery_carrier: 'posti', delivery_tracking_number: 'LOCAL12345' };
+      const partnered = new AdapterRegistry({ factories: { ups: () => ({ id: 'ups', steps: ['direct'], track: async () => named }),
+        posti: () => ({ id: 'posti', steps: ['direct'], track: partner }) }, carriers: { ups: 'ups', posti: 'posti' } }, environment);
+      const answer = await createTracker({ registry: partnered, fetcher: providerReplies({ ship24: days(3) }), providers: ['Ship24'] }).track({ number });
+      expect(answer).toMatchObject({ source: 'Ship24', direct: { delivery_carrier: 'posti' },
+        handoff: { carrier: 'posti', number: 'LOCAL12345', basis: 'partner', confirmed: true } });
+      expect(partner.mock.calls[0]![0]).toEqual({ number: 'LOCAL12345' });
+    });
+
+    it('looks past a provider that does not improve on the direct answer', async () => {
+      const fetcher = providerReplies({ parcelsApp: days(1), ship24: days(3) });
+      await expect(track(summary, fetcher, ['ParcelsApp', 'Ship24'])).resolves.toMatchObject({ source: 'Ship24',
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'ParcelsApp', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+    });
+
+    it('does not take a provider history with no dated scan', async () => {
+      // Wall times with no offset, courier or place, and UPS names no zone: no scan has an instant.
+      const undated = days(4).map(([time, status]): Scan => [time.replace(/Z$/, ''), status]);
+      const answer = await track(summary, providerReplies({ ship24: undated }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'ups', result: { summary_only: true },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'indeterminate' }] });
+      expect(answer).not.toHaveProperty('direct');
+    });
+
+    it('keeps a truncated direct history over fewer or older provider scans', async () => {
+      const newest: CarrierResult = { status: 'in_transit', history_truncated: true, events: days(5, '10:00').slice(2).reverse()
+        .map(([time, description]) => ({ time, description, stage: 'in_transit' })) };
+      // Two scans, then five whose newest is an hour behind the carrier's.
+      for (const ship24 of [days(2, '10:00'), days(5)]) {
+        const answer = await track(newest, providerReplies({ ship24 }), ['Ship24']);
+        expect(answer).toMatchObject({ source: 'ups', result: { history_truncated: true },
+          attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+        expect(answer.result.events).toHaveLength(3);
+        expect(answer).not.toHaveProperty('direct');
+      }
+    });
+
+    it('counts a scan a provider relays twice in two wordings once', async () => {
+      const truncated: CarrierResult = { status: 'in_transit', history_truncated: true, events: [
+        { time: '2026-01-03T09:00:00Z', description: 'Arrived at hub', stage: 'in_transit' },
+        { time: '2026-01-02T09:00:00Z', description: 'Departed origin', stage: 'in_transit' },
+        { time: '2025-12-20T09:00:00Z', description: 'Accepted', stage: 'accepted' }] };
+      // Four entries, but only the carrier's two newest scans, each in two wordings.
+      const twice: Scan[] = [['2026-01-02T09:00:00Z', 'Departed origin'], ['2026-01-02T09:00:00Z', 'Departed from origin facility'],
+        ['2026-01-03T09:00:00Z', 'Arrived at hub'], ['2026-01-03T09:00:00Z', 'Arrived at sorting hub']];
+      const answer = await track(truncated, providerReplies({ ship24: twice }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'ups', result: { history_truncated: true },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(answer.result.events).toHaveLength(3);
+      expect(answer).not.toHaveProperty('direct');
+      // With the acceptance and another leg, it holds more scans than the carrier.
+      const longer = await track(truncated, providerReplies({ ship24: [['2025-12-20T09:00:00Z', 'Accepted'],
+        ['2025-12-28T09:00:00Z', 'In transit'], ...twice] }), ['Ship24']);
+      expect(longer).toMatchObject({ source: 'Ship24', direct: { history_truncated: true } });
+      expect(longer.result.events).toHaveLength(6);
+    });
+
+    it('keeps a direct delivery over newer provider scans that have not reached it', async () => {
+      const delivered: CarrierResult = { ...summary, status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',
+        last_update: '2026-01-02T10:00:00Z' };
+      const answer = await track(delivered, providerReplies({ ship24: days(3) }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'ups', result: { current_stage: 'delivered', summary_only: true },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(answer).not.toHaveProperty('direct');
+    });
+
+    it('replaces a truncated history with one that holds its newest scan', async () => {
+      const truncated: CarrierResult = { status: 'in_transit', history_truncated: true, events: [
+        { time: '2026-01-03T09:00:45Z', description: 'In transit', stage: 'in_transit' },
+        { time: '2026-01-02T09:00:00Z', description: 'In transit', stage: 'in_transit' }] };
+      const answer = await track(truncated, providerReplies({ ship24: days(3) }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'Ship24', direct: { history_truncated: true } });
+      expect(answer.result.events).toHaveLength(3);
+      expect(answer.result).not.toHaveProperty('history_truncated');
+    });
+
+    it.each([
+      ['delivered', null, 'Shipment exception'],
+      ['delivered', null, 'Returned to sender'],
+      ['delivered', '2026-01-02T10:00:00Z', 'Shipment exception'],
+      ['returned', null, 'Delivered'],
+      ['exception', null, 'In transit'],
+      ['exception', '2026-01-03T09:00:30Z', 'In transit'],
+      // A month is no clock: it cannot prove the history newer.
+      ['exception', '2026-01', 'In transit'],
+      // Two exceptions can be two problems: the provider's must be no earlier at every reading.
+      ['exception', null, 'Shipment exception'],
+      ['exception', '2026-01-03T10:00:00', 'Shipment exception'],
+      ['in_transit', null, 'Shipment exception'],
+      ['ready_for_pickup', null, 'Out for delivery'],
+      ['out_for_delivery', '2026-01-02T10:00:00Z', 'In transit'],
+    ])('keeps a direct %s stated at %s over a provider history ending in "%s"', async (stage, clock, newest) => {
+      const answer = await track(stated(stage, clock), providerReplies({ ship24: ending(newest) }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'ups', result: { current_stage: stage },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      expect(answer).not.toHaveProperty('direct');
+    });
+
+    it.each([
+      ['delivered', null, 'Delivered', 'delivered'],
+      ['in_transit', null, 'In transit', 'in_transit'],
+      ['in_transit', null, 'Delivered', 'delivered'],
+      ['exception', '2026-01-02T10:00:00Z', 'In transit', 'in_transit'],
+      ['ready_for_pickup', '2026-01-02T10:00:00Z', 'Out for delivery', 'out_for_delivery'],
+      ['in_transit', '2026-01-02T10:00:00Z', 'Shipment exception', 'exception'],
+      ['exception', '2026-01-03T09:00:30Z', 'Shipment exception', 'exception'],
+    ])('takes a provider history over a direct %s stated at %s when it ends in "%s"', async (stage, clock, newest, current) => {
+      const answer = await track(stated(stage, clock), providerReplies({ ship24: ending(newest) }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'Ship24', result: { current_stage: current }, direct: { current_stage: stage } });
+    });
+
+    it('takes a history that reached the direct delivery and scanned on, under the carrier\'s status', async () => {
+      // The carrier's newest scan, uploaded after its delivery, leaves the parcel delivered.
+      const truncated: CarrierResult = { status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+        last_status_text: 'Synthetic delivery', expected_delivery: '2026-01-05', history_truncated: true, events: [
+          { time: '2026-01-04T09:00:00Z', description: 'In transit', stage: 'in_transit' },
+          { time: '2026-01-03T09:00:00Z', description: 'Delivered', stage: 'delivered' }] };
+      const summarized: CarrierResult = { ...stated('delivered', '2026-01-03T09:00:00Z'), status: 'delivered' };
+      const later: Scan = ['2026-01-04T09:00:00Z', 'In transit'];
+      for (const direct of [truncated, summarized]) {
+        const answer = await track(direct, providerReplies({ ship24: [...ending('Delivered'), later] }), ['Ship24']);
+        expect(answer).toMatchObject({ source: 'Ship24', direct: { current_stage: 'delivered' }, result: { status: 'delivered',
+          current_stage: 'delivered', last_status_text: direct.last_status_text, last_update: '2026-01-04T09:00:00.000Z', expected_delivery: null } });
+        expect(answer.result.current_stage_source).toBe(direct.current_stage_source);
+        expect(answer.result.events.map(event => event.stage)).toEqual(['in_transit', 'delivered', 'in_transit', 'in_transit']);
+      }
+      // Not a history that delivered before the carrier did, never delivered, or shows an exception or a return after the delivery,
+      // whether that is its newest scan or not.
+      const after: Scan = ['2026-01-05T09:00:00Z', 'In transit'];
+      for (const ship24 of [[...days(1), ['2026-01-02T09:00:00Z', 'Delivered'], later], days(4), [...ending('Delivered'), [later[0], 'Shipment exception']],
+        [...ending('Delivered'), [later[0], 'Returned to sender']], [...ending('Delivered'), [later[0], 'Shipment exception'], after],
+        [...ending('Delivered'), [later[0], 'Returned to sender'], after]] as Scan[][]) {
+        const answer = await track(truncated, providerReplies({ ship24 }), ['Ship24']);
+        expect(answer, JSON.stringify(ship24)).toMatchObject({ source: 'ups', result: { current_stage: 'delivered', history_truncated: true },
+          attempts: [{ source: 'ups', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+      }
+    });
+
+    it('keeps the direct answer when the provider attributes the parcel to another carrier', async () => {
+      const elsewhere = await track(summary, providerReplies({ ship24: ending('Delivered'), couriers: ['Royal Mail'] }), ['Ship24']);
+      expect(elsewhere).toMatchObject({ source: 'ups', result: { current_stage: 'in_transit' } });
+      const named = await track(summary, providerReplies({ ship24: ending('Delivered'), couriers: ['UPS'] }), ['Ship24']);
+      expect(named).toMatchObject({ source: 'Ship24', result: { current_stage: 'delivered', discovered_carrier: 'ups' } });
+    });
+
+    it.each([['La Poste', 'la-poste'], ['Cainiao', 'aliexpress']])(
+      'takes the history of a provider naming only %s for a checksum-valid S10 item', async (courier, discovered) => {
+        // The S10 number names one postal item for the destination post and the consolidator as for the issuer.
+        const answer = await trackPostal(summary, providerReplies({ ship24: days(3), couriers: [courier] }), ['Ship24']);
+        expect(answer).toMatchObject({ source: 'Ship24', result: { discovered_carrier: discovered },
+          direct: { summary_only: true, last_update: summary.last_update },
+          attempts: [{ source: 'royal-mail', kind: 'ok' }, { source: 'Ship24', kind: 'ok' }] });
+        expect(answer.result.events).toHaveLength(3);
+      });
+
+    it('compares UPU wall clocks with a direct answer by the offsets they could carry', async () => {
+      const older: Scan[] = [['2026-01-01T09:00:00', 'EMA'], ['2026-01-03T09:00:00', 'EMC']];
+      const fresh: CarrierResult = { ...summary, last_update: '2026-01-20T09:00:00Z' };
+      // Even read at UTC-12, UPU's newest wall time is weeks before the carrier's instant.
+      const stale = await trackPostal(fresh, providerReplies({ upu: older }));
+      expect(stale).toMatchObject({ source: 'royal-mail', result: { last_update: fresh.last_update },
+        attempts: [{ source: 'royal-mail', kind: 'ok' }, { source: 'UPU', kind: 'ok' }] });
+      // A wall time an hour before it can be the same moment somewhere.
+      const reaching = await trackPostal(fresh, providerReplies({ upu: [...older, ['2026-01-20T08:00:00', 'EMD']] }));
+      expect(reaching).toMatchObject({ source: 'UPU', direct: { last_update: fresh.last_update } });
+      // A truncated history in wall clocks, against an older UPU history and one reaching its newest scan.
+      const truncated: CarrierResult = { status: 'in_transit', history_truncated: true, events: [
+        { local_time: '2026-01-25T10:00:00', description: 'Arrived at delivery office', stage: 'in_transit' },
+        { local_time: '2026-01-24T10:00:00', description: 'In transit', stage: 'in_transit' }] };
+      await expect(trackPostal(truncated, providerReplies({ upu: [...older, ['2026-01-14T09:00:00', 'EMD']] })))
+        .resolves.toMatchObject({ source: 'royal-mail', result: { history_truncated: true } });
+      await expect(trackPostal(truncated, providerReplies({ upu: [...older, ['2026-01-25T10:00:00', 'EMD']] })))
+        .resolves.toMatchObject({ source: 'UPU', direct: { history_truncated: true } });
+    });
+
+    it('keeps the carrier\'s own facts that the provider\'s history lacks, and the carrier\'s answer untouched', async () => {
+      const facts: CarrierResult = { ...summary, expected_delivery: '2026-01-05', canonical_tracking_number: 'SYNTHETIC123',
+        destination_country: 'FR', weight_kg: 1.5, pickup_point: 'Synthetic locker', sender_name: 'Synthetic shop',
+        service_name: 'Synthetic Express', receiver_name: 'Synthetic recipient', timezone: 'Europe/Paris' };
+      const answer = await track(facts, providerReplies({ ship24: days(3) }), ['Ship24']);
+      expect(answer).toMatchObject({ source: 'Ship24', result: { expected_delivery: '2026-01-05', canonical_tracking_number: 'SYNTHETIC123',
+        destination_country: 'FR', weight_kg: 1.5, pickup_point: 'Synthetic locker', sender_name: 'Synthetic shop',
+        service_name: 'Synthetic Express', timezone: 'UTC' } });
+      // A recipient's name stays with the carrier's own answer.
+      expect(answer.result.receiver_name ?? null).toBeNull();
+      expect(answer.direct).toEqual(resolveResult(facts));
+      // An estimate does not outlive a delivery the provider saw.
+      const delivered = await track(facts, providerReplies({ ship24: ending('Delivered') }), ['Ship24']);
+      expect(delivered).toMatchObject({ source: 'Ship24', result: { current_stage: 'delivered', expected_delivery: null, destination_country: 'FR' } });
+      expect(delivered.result.pickup_point).toBe('Synthetic locker');
+      // Nor a pickup point a delivery to the door that the provider saw.
+      const door = await track(facts, providerReplies({ ship24: [...ending('Out for delivery'), ['2026-01-03T15:00:00Z', 'Delivered']] }), ['Ship24']);
+      expect(door).toMatchObject({ source: 'Ship24', result: { current_stage: 'delivered', destination_country: 'FR' } });
+      expect(door.result.pickup_point ?? null).toBeNull();
+    });
+
+    it('keeps time for the partner the carrier named when the providers stall', async () => {
+      const partner = vi.fn().mockResolvedValue({ status: 'delivered', events: [{ time: '2026-01-04T09:00:00Z', description: 'Delivered', stage: 'delivered' }] });
+      const named = { ...summary, delivery_carrier: 'posti', delivery_tracking_number: 'LOCAL12345' };
+      const partnered = new AdapterRegistry({ factories: { ups: () => ({ id: 'ups', steps: ['direct'], track: async () => named }),
+        posti: () => ({ id: 'posti', steps: ['direct'], track: partner }) }, carriers: { ups: 'ups', posti: 'posti' } }, environment);
+      const answer = await createTracker({ registry: partnered, fetcher: stalled(), providers: ['ParcelsApp', 'Ship24'] })
+        .track({ number }, { budgetMs: 300 });
+      expect(answer).toMatchObject({ source: 'ups', handoff: { carrier: 'posti', confirmed: true },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'ParcelsApp', kind: 'budget' }, { source: 'posti', kind: 'ok' }] });
+      expect(answer.attempts).toHaveLength(3);
+    });
+
+    it('returns the direct answer unchanged without enabled providers', async () => {
+      const fetcher = vi.fn<typeof fetch>();
+      await expect(track(summary, fetcher, [])).resolves.toEqual({ carrier: 'ups', source: 'ups', result: resolveResult(summary),
+        attempts: [{ source: 'ups', kind: 'ok', durationMs: expect.any(Number) }] });
+      expect(fetcher).not.toHaveBeenCalled();
+    });
+
+    it('keeps the direct answer when every provider fails', async () => {
+      const answer = await track(summary, providerReplies({}), ['ParcelsApp', 'Ship24']);
+      expect(answer).toMatchObject({ source: 'ups', result: { summary_only: true } });
+      expect(answer.attempts.map(attempt => [attempt.source, attempt.kind === 'ok'])).toEqual([['ups', true], ['ParcelsApp', false], ['Ship24', false]]);
+      expect(answer).not.toHaveProperty('direct');
+    });
+
+    it('keeps the direct answer when the deadline ends the fall-through, and starts no provider after it', async () => {
+      const fetcher = vi.fn<typeof fetch>().mockImplementation((_url, init) => new Promise((_, reject) => {
+        init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+      }));
+      const answer = await track(summary, fetcher, ['ParcelsApp', 'Ship24'], { budgetMs: 100 });
+      expect(answer).toMatchObject({ source: 'ups', result: { summary_only: true },
+        attempts: [{ source: 'ups', kind: 'ok' }, { source: 'ParcelsApp', kind: 'budget' }] });
+      expect(answer.attempts).toHaveLength(2);
+      expect(fetcher.mock.calls.every(([url]) => String(url).includes('parcelsapp'))).toBe(true);
+    });
+
+    it('rejects with the caller\'s reason when the caller cancels during the fall-through', async () => {
+      const controller = new AbortController();
+      const reason = new Error('caller cancelled');
+      const fetcher = vi.fn<typeof fetch>().mockImplementation((_url, init) => new Promise((_, reject) => {
+        init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
+        controller.abort(reason);
+      }));
+      await expect(track(summary, fetcher, ['ParcelsApp', 'Ship24'], { signal: controller.signal })).rejects.toBe(reason);
+      expect(fetcher).toHaveBeenCalledOnce();
+    });
   });
 
   it('exposes a safe aggregate error without adapter diagnostics', async () => {

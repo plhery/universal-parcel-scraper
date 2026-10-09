@@ -185,7 +185,11 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       try {
         const value = await tracker.track(input, { budgetMs });
         const refresh = (carrierDefinition(value.carrier).tracking as { refresh?: { minMinutes: number } }).refresh;
-        remember({ until: now() + Math.max(cacheMs, (refresh?.minMinutes ?? 0) * 60_000), value });
+        // An answer the caller's own budget cut short, such as a carrier summary whose provider
+        // history was still loading, is not what the next caller would get either.
+        if (budgetMs === undefined || !value.attempts.some(attempt => attempt.kind === 'budget')) {
+          remember({ until: now() + Math.max(cacheMs, (refresh?.minMinutes ?? 0) * 60_000), value });
+        }
         return value;
       } catch (error) {
         // A failure is remembered only when the lookup ran on the server's own budget and did not

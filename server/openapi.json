@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Universal Parcel Scraper",
-    "version": "0.51.0"
+    "version": "0.52.0"
   },
   "paths": {
     "/health": {
@@ -678,6 +678,10 @@
               "$ref": "#/components/schemas/Attempt"
             }
           },
+          "direct": {
+            "$ref": "#/components/schemas/CarrierResult",
+            "description": "The carrier's own partial answer as it came, when a provider's fuller history became `result`."
+          },
           "handoff": {
             "type": "object"
           }
@@ -716,6 +720,14 @@
               "string",
               "null"
             ]
+          },
+          "summary_only": {
+            "type": "boolean",
+            "description": "A current status without a scan history."
+          },
+          "history_truncated": {
+            "type": "boolean",
+            "description": "Only part of a longer scan history, such as its newest scans."
           },
           "events": {
             "type": "array",

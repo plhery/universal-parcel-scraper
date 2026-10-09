@@ -137,6 +137,21 @@ describe('tracking HTTP API', () => {
     expect(track).toHaveBeenCalledTimes(2);
   });
 
+  it('remembers no answer whose sources the caller\'s own budget cut short', async () => {
+    const cut: TrackingResponse = { ...answer, attempts: [{ source: 'ups', kind: 'ok', durationMs: 1 }, { source: 'Ship24', kind: 'budget', durationMs: 199 }] };
+    const track = vi.fn().mockResolvedValueOnce(cut).mockResolvedValue(answer);
+    const url = await started({ tracker: tracker(track) });
+    expect(await (await post(url, { ...input, budgetMs: 200 })).json()).toMatchObject({ attempts: [{ kind: 'ok' }, { kind: 'budget' }] });
+    expect(await (await post(url)).json()).toMatchObject({ attempts: [] });
+    expect((await post(url)).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(2);
+    // On the server's own budget the same answer is held.
+    track.mockResolvedValue(cut);
+    expect((await post(url, { ...input, postcode: '0000' })).status).toBe(200);
+    expect((await post(url, { ...input, postcode: '0000' })).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(3);
+  });
+
   it('advertises the time until it asks the upstream again, in the header and in the hint', async () => {
     let time = 0;
     const track = vi.fn().mockRejectedValue(failed('rate_limited', 2_000));

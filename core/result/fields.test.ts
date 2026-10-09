@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { normalizeCarrierResult } from './index.js';
+import { resolveResult } from './resolve.js';
 
 // Synthetic identifiers; the PIC check digits are calculated independently.
 const PIC = '9210090000000012345679';
@@ -45,6 +46,24 @@ describe('the shipping service', () => {
   it('drops a service name that is empty, too long or not text', () => {
     for (const service_name of ['', '   ', 'x'.repeat(81), 7, null, { name: 'Example Ground' }]) {
       expect(normalizeCarrierResult({ service_name })).not.toHaveProperty('service_name');
+    }
+  });
+});
+
+describe('result completeness flags', () => {
+  it('keeps a boolean flag through normalization and resolution', () => {
+    const scans = [{ time: '2026-01-02T12:00:00Z', description: 'In transit', stage: 'in_transit' }];
+    expect(normalizeCarrierResult({ history_truncated: true, summary_only: false, events: scans }))
+      .toMatchObject({ history_truncated: true, summary_only: false });
+    expect(resolveResult({ status: 'in_transit', history_truncated: true, events: scans })).toMatchObject({ history_truncated: true });
+  });
+
+  it('drops a flag that is not a boolean and keeps the history', () => {
+    for (const value of ['true', 1, null, {}]) {
+      const result = normalizeCarrierResult({ history_truncated: value, summary_only: value, events: [{ description: 'In transit' }] });
+      expect(result).not.toHaveProperty('history_truncated');
+      expect(result).not.toHaveProperty('summary_only');
+      expect(result.events).toEqual([{ description: 'In transit' }]);
     }
   });
 });
