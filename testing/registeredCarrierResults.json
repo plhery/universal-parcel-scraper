@@ -1656,35 +1656,34 @@
       "status": "delivered",
       "current_stage": "delivered",
       "last_status_text": "Final delivery",
-      "last_update": null,
-      "last_update_local": "2026-01-06T12:00:00",
+      "last_update": "2026-01-06T12:00:00+01:00",
       "expected_delivery": null,
       "weight_kg": 0.35,
       "destination_country": "PL",
       "events": [
         {
-          "local_time": "2026-01-06T12:00:00",
+          "time": "2026-01-06T12:00:00+01:00",
           "description": "Final delivery",
           "provider_code": "P_D",
           "location": "Example Post Office",
           "stage": "delivered"
         },
         {
-          "local_time": "2026-01-06T08:00:00",
+          "time": "2026-01-06T08:00:00+01:00",
           "description": "In delivery",
           "provider_code": "P_WD",
           "location": "Example Post Office",
           "stage": "out_for_delivery"
         },
         {
-          "local_time": "2026-01-05T16:00:00",
+          "time": "2026-01-05T16:00:00+01:00",
           "description": "In delivery",
           "provider_code": "P_ND",
           "location": "Example Distribution Centre",
           "stage": "exception"
         },
         {
-          "local_time": "2026-01-04T12:00:00",
+          "time": "2026-01-04T12:00:00+01:00",
           "description": "Posting/collection",
           "provider_code": "P_NAD",
           "location": "Example Post Office",

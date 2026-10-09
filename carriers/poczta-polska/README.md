@@ -34,9 +34,11 @@ excluded.
 
 ## Limitations
 
-The service includes international partner scans without clock offsets. Local
-digits and provider order are preserved; a timezone is never inferred from the
-carrier's home country. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for
+Clocks carry no offset. A scan at a Polish office, which carries an office type,
+is read on Polish time (`Europe/Warsaw`). Scans relayed from partners abroad,
+office-less scans such as electronic pre-advice, and wall clocks that a
+daylight-saving change skips or repeats keep their local digits. Scans keep the
+provider's order. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for
 unresolved history handling. Empty history, invalidated scans and ambiguous
 reused numbers are inconclusive. Pallet consignments and references with linked
 components need parcel-level history and are not supported.

@@ -19,7 +19,23 @@ export function normalizePocztaPolskaNumber(raw: string): string {
   return `${number}${(10 - sum % 10) % 10}`;
 }
 
-function eventClock(value: unknown): Record<string, string> {
+// Poczta Polska's own offices carry an office type. Scans relayed from partners
+// abroad carry none and keep the sending country's wall clock; an office code
+// alone could be a foreign postcode.
+function polishOffice(office: unknown): boolean {
+  return isRecord(office) && clean(office.officeType, 40) !== '';
+}
+
+// A Polish office dates its scans on Polish time. A wall clock the zone skips
+// or repeats stays local.
+function warsawTime(local: string): string | null {
+  const parsed = DateTime.fromISO(local, { zone: 'Europe/Warsaw' });
+  if (!parsed.isValid || parsed.toISO({ includeOffset: false, suppressMilliseconds: true }) !== local
+    || parsed.getPossibleOffsets().length !== 1) return null;
+  return parsed.toISO({ suppressMilliseconds: true });
+}
+
+function eventClock(value: unknown, polish: boolean): Record<string, string> {
   if (value != null && typeof value !== 'string') throw new SchemaError('poczta-polska', 'Poczta Polska returned an invalid clock field');
   const raw = clean(value, 64);
   if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/i.test(raw)) {
@@ -30,6 +46,8 @@ function eventClock(value: unknown): Record<string, string> {
     // UTC validates the calendar only. It is never attached to local digits.
     const parsed = DateTime.fromISO(raw, { zone: 'UTC' });
     const local = parsed.isValid ? parsed.toISO({ includeOffset: false, suppressMilliseconds: true }) : null;
+    const time = local && polish ? warsawTime(local) : null;
+    if (time) return { time };
     if (local) return { local_time: local };
   }
   return raw ? { provider_time_text: raw } : {};
@@ -64,14 +82,13 @@ export function parsePocztaPolska(payload: unknown, number: string): CarrierResu
     const mapped = classifyPocztaPolskaStatus(code);
     if (startsPocztaPolskaReturn(code, isRecord(raw.state) ? clean(raw.state.code, 16) : '')) returning = true;
     const stage = returning && mapped?.stage === 'delivered' ? 'returned' : mapped?.stage;
-    return { ...eventClock(raw.time), description, provider_code: code,
+    return { ...eventClock(raw.time, polishOffice(raw.postOffice)), description, provider_code: code,
       ...(location ? { location } : {}), ...(stage ? { stage } : {}), ...(returning ? { provider_leg: 'return' } : {}) };
   });
   if (!projected.length) throw new IndeterminateError('poczta-polska', 'Poczta Polska returned no parcel history');
-  // The widget's last source row is current. Do not compare offsetless wall
-  // clocks from different countries or move malformed clocks behind old scans.
+  // The widget's last source row is current, so the provider's order stands even
+  // when every scan is dated: the clocks never reorder it.
   projected.reverse();
-  if (projected.every(event => event.time)) projected.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const seen = new Set<string>();
   const events = projected.filter(event => {
     const key = JSON.stringify(event);

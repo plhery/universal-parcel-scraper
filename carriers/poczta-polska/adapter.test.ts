@@ -14,13 +14,18 @@ const payload = () => structuredClone(fixture);
 const negative = () => ({ number: NUMBER, mailStatus: -1 });
 
 describe('Poczta Polska identity-bound scans', () => {
-  it('preserves local digits, office names and explicit kg weight without addresses or invented offsets', () => {
+  it('reads Polish offices on Warsaw time and keeps office names and explicit kg weight without addresses', () => {
     const result = normalizeCarrierResult(parsePocztaPolska(payload(), NUMBER));
-    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null,
-      last_update_local: '2026-01-06T12:00:00', weight_kg: 0.35, expected_delivery: null });
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-06T12:00:00+01:00',
+      weight_kg: 0.35, expected_delivery: null });
+    expect(result).not.toHaveProperty('last_update_local');
     expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'exception', 'accepted', 'registered']);
     expect(result.events?.[0]).toMatchObject({ location: 'Example Post Office', description: 'Final delivery', provider_code: 'P_D' });
-    expect(result.events?.every(event => event.local_time && !event.time)).toBe(true);
+    // An office type marks a Polish office; the electronic sender has none.
+    expect(result.events?.map(event => event.time ?? event.local_time)).toEqual(['2026-01-06T12:00:00+01:00',
+      '2026-01-06T08:00:00+01:00', '2026-01-05T16:00:00+01:00', '2026-01-04T12:00:00+01:00', '2026-01-04T08:00:00']);
+    expect(result.events?.slice(0, 4).every(event => !event.local_time)).toBe(true);
+    expect(result.events?.[4]).not.toHaveProperty('time');
     expect(result).not.toHaveProperty('delivered_at'); expect(result).not.toHaveProperty('timezone');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|openingHours|additionalServices|dispatchDate/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
@@ -63,12 +68,67 @@ describe('Poczta Polska identity-bound scans', () => {
     });
 
   it('uses explicit offsets when provided and keeps local order across countries', () => {
-    const explicit = payload(); for (const event of explicit.mailInfo.events) event.time += '+01:00';
-    expect(parsePocztaPolska(explicit, NUMBER)).toMatchObject({ last_update: '2026-01-06T12:00:00+01:00' });
+    const explicit = payload(); for (const event of explicit.mailInfo.events) event.time += '-03:00';
+    expect(parsePocztaPolska(explicit, NUMBER)).toMatchObject({ last_update: '2026-01-06T12:00:00-03:00' });
+    // Scans relayed from abroad name no Polish office and keep their own wall clock.
     const relayed = payload(); relayed.mailInfo.recipientCountryCode = 'NZ';
+    relayed.mailInfo.events.at(-2).postOffice = { name: 'International Postal System' };
     relayed.mailInfo.events.at(-2).time = '2026-01-07T08:00:00';
-    expect(parsePocztaPolska(relayed, NUMBER).last_update_local).toBe('2026-01-06T12:00:00');
-    expect(parsePocztaPolska(relayed, NUMBER).events?.[0]!.description).toBe('Final delivery');
+    const result = parsePocztaPolska(relayed, NUMBER);
+    expect(result).toMatchObject({ last_update: '2026-01-06T12:00:00+01:00' });
+    expect(result).not.toHaveProperty('last_update_local');
+    expect(result.events?.map(event => event.provider_code)).toEqual(['P_D', 'P_WD', 'P_ND', 'P_NAD', 'P_REJ_KN1']);
+    expect(result.events?.[1]).toMatchObject({ local_time: '2026-01-07T08:00:00' });
+    expect(result.events?.[1]).not.toHaveProperty('time');
+  });
+
+  it('dates an item from abroad once a Polish office scans it, on winter or summer time', () => {
+    const office = { code: '000003', name: 'Example Exchange Office', officeType: 'CP WER' };
+    const inbound = (date: string) => {
+      const value = payload(); value.mailInfo.events = [
+        { ...scan('P_NAD', 'Posting/collection', 'NA', `${date}T09:00:00`, 'International Postal System') },
+        { ...scan('P_WYOC', 'Dispatch from the country of origin', 'TR', `${date}T23:30:00`), postOffice: {} },
+        { ...scan('P_WEPL', 'Arrival in Poland', 'TR', `${date}T22:15:00`), postOffice: office },
+        { ...scan('P_D', 'Final delivery', 'DO', `${date}T23:45:00`), postOffice: { name: 'Example Post Office', officeType: 'UP' } }];
+      return parsePocztaPolska(value, NUMBER);
+    };
+    const winter = inbound('2026-01-10');
+    expect(winter).toMatchObject({ status: 'delivered', last_update: '2026-01-10T23:45:00+01:00' });
+    expect(winter.events?.map(event => event.time ?? event.local_time)).toEqual(['2026-01-10T23:45:00+01:00',
+      '2026-01-10T22:15:00+01:00', '2026-01-10T23:30:00', '2026-01-10T09:00:00']);
+    expect(inbound('2026-07-10').events?.slice(0, 2).map(event => event.time))
+      .toEqual(['2026-07-10T23:45:00+02:00', '2026-07-10T22:15:00+02:00']);
+  });
+
+  it('needs an office type, since a relayed office code can be a foreign postcode', () => {
+    const value = payload(); value.mailInfo.events.at(-1).postOffice = { code: '000004', name: 'Example Foreign Office' };
+    const result = parsePocztaPolska(value, NUMBER);
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-01-06T12:00:00' });
+    expect(result.events?.[0]).not.toHaveProperty('time');
+  });
+
+  it("keeps the provider's order when every scan is dated", () => {
+    const office = { code: '000001', name: 'Example Post Office', officeType: 'UP' };
+    const value = payload(); value.mailInfo.events = [
+      { ...scan('P_NAD', 'Posting/collection', 'NA', '2026-01-06T12:00:00'), postOffice: office },
+      { ...scan('P_WD', 'In delivery', 'DOR', '2026-01-06T10:00:00'), postOffice: office },
+      { ...scan('P_D', 'Final delivery', 'DO', '2026-01-06T09:59:00'), postOffice: office }];
+    const dated = parsePocztaPolska(value, NUMBER);
+    expect(dated).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-06T09:59:00+01:00' });
+    expect(dated.events?.map(event => event.provider_code)).toEqual(['P_D', 'P_WD', 'P_NAD']);
+    value.mailInfo.events.unshift(scan('P_REJ_KN1', 'Electronic item data received', 'PRZ', '2026-01-05T08:00:00', 'Electronic Sender'));
+    expect(parsePocztaPolska(value, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    const offsets = payload(); offsets.mailInfo.events = value.mailInfo.events.slice(1)
+      .map((event: { time: string }) => ({ ...event, time: `${event.time}+01:00` }));
+    expect(parsePocztaPolska(offsets, NUMBER).events?.map(event => event.provider_code)).toEqual(['P_D', 'P_WD', 'P_NAD']);
+  });
+
+  it.each(['2026-03-29T02:30:00', '2026-10-25T02:30:00'])('keeps a Polish wall clock the clocks skip or repeat local: %s', (time) => {
+    const value = payload(); value.mailInfo.events.at(-1).time = time;
+    const result = parsePocztaPolska(value, NUMBER);
+    expect(result).toMatchObject({ last_update: null, last_update_local: time });
+    expect(result.events?.[0]).not.toHaveProperty('time');
+    expect(result.events?.map(event => event.provider_code)).toEqual(['P_D', 'P_WD', 'P_ND', 'P_NAD', 'P_REJ_KN1']);
   });
 
   it('uses specific failure codes and never borrows a broad state or finished flag for unknown scans', () => {
@@ -211,7 +271,7 @@ describe('Poczta Polska public widget request', () => {
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T11:00:00.000Z' });
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
     await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
   });
