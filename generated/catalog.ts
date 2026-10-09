@@ -37,7 +37,7 @@ export const CARRIER_CATALOG = {
         "checksum": "s10"
       },
       {
-        "pattern": "^9[89]\\d{16}$",
+        "pattern": "^(?!9979)9[89]\\d{16}$",
         "confidence": "high"
       }
     ]

@@ -150,6 +150,29 @@
         ]
       },
       "note": "An Australia Post tracking link archived by the Wayback Machine. Australia Post's tracker knows the satchel; its scans have expired. It starts with 00, but its agency codes are not CTT Express's."
+    },
+    {
+      "number": "997960806374515094",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251016114451/https://auspost.com.au/mypost/track/search?id=997960806374515094",
+        "date": "2025-10-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "An Australia Post tracking search archived by the Wayback Machine. Australia Post's tracker reads the barcode as one of its articles; its scans have expired. Swiss Post numbers do not start with 9979."
     }
   ]
 }

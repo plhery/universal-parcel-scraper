@@ -65,6 +65,12 @@
     "reason": "Australia Post's 22-digit satchel barcodes. Austrian Post, USPS and Estafeta rules take the same length, and no rule offers Australia Post yet."
   },
   {
+    "carrier": "australia-post",
+    "pattern": "^9979\\d{14}$",
+    "kind": "open",
+    "reason": "Australia Post barcodes that wrap a 14-digit article behind 9979. bpost and ecoscooting rules take any 18 digits, and no rule offers Australia Post yet."
+  },
+  {
     "carrier": "austrian-post",
     "pattern": "^\\d{14}$",
     "kind": "open",
