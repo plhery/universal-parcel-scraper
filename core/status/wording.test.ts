@@ -107,6 +107,16 @@ describe('classifyWording', () => {
     ]) expect(classifyWording(wording)).toEqual({ stage: 'registered', source: 'wording:language' });
     // The carrier itself taking the parcel is still acceptance.
     expect(wordingStage('The parcel was handed over to GLS.')).toBe('accepted');
+    // A handover that has not happened is not, with or without "yet".
+    for (const wording of ['The parcel has not been handed over to GLS.', "The parcel hasn't been handed over to DPD",
+      'Shipment not handed over to the carrier']) {
+      expect(classifyWording(wording), wording).toEqual({ stage: 'registered', source: 'wording:language' });
+    }
+    // Nor is a parcel not handed to the recipient's side or to customs still with its sender.
+    for (const wording of ['The parcel was not handed over to the recipient', 'Parcel was not handed over to a neighbour',
+      'Parcel has not been handed over to customs', 'The parcel was not handed to you', 'Parcel not handed to the person named']) {
+      expect(wordingStage(wording), wording).not.toBe('registered');
+    }
   });
 
   it('reads a hold the recipient asked for as a delivery choice, not a problem', () => {

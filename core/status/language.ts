@@ -48,11 +48,14 @@ export function deliveryForecastRemainder(description: string): string | undefin
 
 /** What a carrier does once it has the parcel. */
 const CARRIER_STEP = String.raw`(?:dispatched|despatched|shipped|sent|received|processed|handed (?:over|in)|posted)\b`;
+/** A handover to a carrier or courier, not to the recipient's side or to customs. */
+const HANDED_TO_CARRIER = String.raw`handed (?:over )?to (?!(?:the |a |an |your )?(?:recipient|addressee|consignee|customer|receiver|neighbou?r|customs|you|person)\b)`;
 /**
  * A step the carrier has not taken yet ("not yet received", "not dispatched
- * yet"), from the negation to the end of its sentence.
+ * yet") or a handover that has not happened ("has not been handed over to
+ * GLS"), from the negation to the end of its sentence.
  */
-const NOT_YET = new RegExp(String.raw`\bnot (?:yet (?:been )?${CARRIER_STEP}|(?:been )?${CARRIER_STEP}(?: \w+){0,3}? yet\b)${SENTENCE}*`, 'g');
+const NOT_YET = new RegExp(String.raw`(?:\bnot (?:yet (?:been )?${CARRIER_STEP}|(?:been )?${CARRIER_STEP}(?: \w+){0,3}? yet\b)|(?:\bnot|n't)(?: been)? ${HANDED_TO_CARRIER})${SENTENCE}*`, 'g');
 
 /** A handover the carrier made, not a pickup order passed on or the sender's own hand-in. */
 const HANDED_TO = String.raw`(?<!\b(?:(?:pick ?up|collection) (?:order|request)|sender|shipper|seller|merchant|consignor)(?: has| have)?(?: been)? )\bhanded (?:over )?to `;
