@@ -17,6 +17,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { MAX_RECOGNITIONS, recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { isValidColissimoParcelNumber } from '../detection/colissimo.js';
 import { isValidEvriParcelNumber } from '../detection/evri.js';
 import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from '../detection/fedex.js';
@@ -327,5 +328,13 @@ describe('swift golden file', () => {
       return;
     }
     expect(readDetectionGolden()).toEqual(buildDetectionGolden());
+  });
+
+  it('records the carriers the app asks: the first recognition candidates', () => {
+    for (const { input, asked } of readDetectionGolden()) {
+      const first = recognitionCandidates(input).slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
+      expect(recognitionAskedCarriers(input)).toEqual(first);
+      expect(asked ?? []).toEqual(first);
+    }
   });
 });

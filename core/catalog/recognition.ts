@@ -12,8 +12,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import { CHECKSUMS } from '../detection/checksums.js';
 import { detectCarrierMatch } from '../detection/detect.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
-import { countryTimeZone } from '../time/index.js';
-import { AUTOMATIC_CARRIER_IDS, CARRIER_DEFINITIONS, carrierAdapter, carrierTimezone, requiredRequirements } from './definitions.js';
+import { AUTOMATIC_CARRIER_IDS, CARRIER_DEFINITIONS, carrierAdapter, requiredRequirements } from './definitions.js';
 import { carrierBrand } from './networks.js';
 import type { CarrierInputField } from './types.js';
 
@@ -55,11 +54,6 @@ function checked(carrier: string, normalized: string, printed: string): boolean 
   return rule?.checksum !== undefined;
 }
 
-interface RankedCandidate extends RecognitionCandidate {
-  /** Something besides the catalog's rank placed it: a hint, number evidence, the country or a priority. */
-  backed: boolean;
-}
-
 /**
  * The low-confidence candidates worth asking, best first: the carrier a
  * universal provider named, then the ones number evidence backs, then the
@@ -72,10 +66,6 @@ export function recognitionCandidates(
   number: string,
   options: RecognitionOptions = {},
 ): RecognitionCandidate[] {
-  return rankedCandidates(number, options).map(({ carrier, needsInput, preferred }) => ({ carrier, needsInput, preferred }));
-}
-
-function rankedCandidates(number: string, options: RecognitionOptions): RankedCandidate[] {
   const detected = detectCarrierMatch(number);
   const unknownPostalCarrier = detected.carrier === 'intl-post';
   if (detected.confidence !== 'low' && !unknownPostalCarrier) return [];
@@ -136,37 +126,14 @@ function rankedCandidates(number: string, options: RecognitionOptions): RankedCa
       }
       return 0;
     })
-    .map(({ carrier, score }) => ({
+    .map(({ carrier }) => ({
       carrier,
       needsInput: requiredRequirements(carrier, number)[0]?.field ?? null,
       preferred: preferred.includes(carrier),
-      backed: score.slice(0, -1).some((value) => value > 0),
     })).filter((candidate) => options.phase !== 'browser' || !candidate.needsInput);
 }
 
-/** The continent of a carrier's home country, read from its clock; undefined where that says none. */
-function continent(carrier: string): string | undefined {
-  const zone = countryTimeZone(CARRIER_DEFINITIONS[carrier as CarrierId]?.countries?.[0]) ?? carrierTimezone(carrier);
-  return zone.includes('/') ? zone.split('/')[0] : undefined;
-}
-
-/**
- * The carriers the detect route asks about a number, best first; empty when none can answer.
- * Without the caller's country, popularity alone can fill every place with one continent's
- * carriers. The last place then goes to the best-ranked carrier from another continent,
- * unless something besides rank put its holder there.
- */
+/** The carriers the detect route asks about a number, best first; empty when none can answer. */
 export function recognitionAskedCarriers(number: string, options: RecognitionOptions = {}): string[] {
-  const ranked = rankedCandidates(number, options);
-  const asked = ranked.slice(0, MAX_RECOGNITIONS);
-  const last = asked.at(-1);
-  if (asked.length === MAX_RECOGNITIONS && !last!.backed && !options.countryHint?.trim()) {
-    const served = new Set(asked.slice(0, -1).map(({ carrier }) => continent(carrier)));
-    const other = ranked.slice(MAX_RECOGNITIONS).find(({ carrier }) => {
-      const place = continent(carrier);
-      return place !== undefined && !served.has(place);
-    });
-    if (other) asked[asked.length - 1] = other;
-  }
-  return asked.map(({ carrier }) => carrier);
+  return recognitionCandidates(number, options).slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
 }
