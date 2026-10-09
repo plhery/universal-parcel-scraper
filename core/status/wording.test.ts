@@ -437,6 +437,42 @@ describe('classifyWording', () => {
     }
   });
 
+  it('reads the first scans, the round and a cancellation that universal providers relayed', () => {
+    for (const [wording, stage] of [
+      // Sender data and a shipment record, as Paack's, DPD UK's, InPost's and Asendia's maps file them.
+      ['order details received', 'registered'],
+      ["We've received your order details, but have not yet received your parcel", 'registered'],
+      ['Dane zamówienia otrzymane', 'registered'],
+      ['shipment created', 'registered'],
+      ['Przesyłka utworzona', 'registered'],
+      ['Gönderi oluşturuldu', 'registered'],
+      // Correos: left for admission, pre-registered, admitted.
+      ['depositado para admisión. envío depositado por remitente en taquilla citypaq para admisión por correos', 'registered'],
+      ['Entregado en CityPaq para admisión', 'registered'],
+      ['pre-registered. shipment pre-registered in the postal correos spain system, pending acceptance', 'registered'],
+      ['Prerregistrado', 'registered'],
+      ['admitido.. el envío ha tenido admisión en origen.', 'accepted'],
+      ['ADMITIDO EN OFICINA DE CORREOS', 'accepted'],
+      // DHL Express's round.
+      ['shipment is out with courier for delivery', 'out_for_delivery'],
+      // A cancellation, as carriers' codes file it.
+      ['i̇ptal edildi', 'exception'],
+      ['Gönderi iptal edildi', 'exception'],
+      ['Order canceled', 'exception'],
+      ['Your parcel has been cancelled', 'exception'],
+      ['Przesyłka anulowana', 'exception'],
+    ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    // A cancelled return, pickup or hold lets the parcel go on; a return
+    // label is no new shipment; refused admission and a pickup round are
+    // not these steps. Too specific or too bare to read: Paack's origin
+    // scan, a Turkish "entered", Swiss Post's forward order.
+    for (const wording of ['Return cancelled', 'Pickup cancelled', 'Hold cancelled', 'Pickup order cancelled',
+      'Return shipment created', 'No admitido', 'Out with driver for pickup',
+      "in paack's distribution centre", 'girildi', 'order triggered by recipient: forward']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
+    }
+  });
+
   it('falls back without a rule id when nothing matches', () => {
     expect(classifyWording('Estado interno 99', 'pending')).toEqual({ stage: 'pending', source: 'none' });
     expect(wordingStage('Estado interno 99')).toBe('in_transit');

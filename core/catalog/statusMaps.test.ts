@@ -215,6 +215,16 @@ describe("universal providers' answers", () => {
     }
   });
 
+  it('close the relayed wording the shared rules read, and keep the rest open', () => {
+    expect(answer('unknown', null, 'order details received')).toEqual(mapped('registered'));
+    expect(answer('unknown', null, 'shipment is out with courier for delivery')).toEqual(mapped('out_for_delivery'));
+    expect(answer('unknown', null, 'admitido.. el envío ha tenido admisión en origen.')).toEqual(mapped('accepted'));
+    expect(answer('unknown', null, 'i̇ptal edildi')).toEqual(mapped('exception'));
+    for (const wording of ["in paack's distribution centre", 'girildi', 'order triggered by recipient: forward']) {
+      expect(answer('unknown', null, wording), wording).toEqual(unknown);
+    }
+  });
+
   it('leave nothing out on purpose', () => {
     expect(universal.gaps).toEqual([]);
   });

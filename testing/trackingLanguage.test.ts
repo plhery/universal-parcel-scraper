@@ -52,6 +52,15 @@ const contrasts: { expected: Stage; en: string; fr: string; de: string; it: stri
     it: 'Etichetta creata; il corriere non ha ancora ricevuto il pacco' },
   { expected: 'accepted', en: 'Parcel handed to DPD', fr: 'Colis remis à DPD',
     de: 'Paket an DPD übergeben', it: 'Pacco affidato a DPD' },
+  { expected: 'registered', en: 'Order details received', fr: 'Détails de la commande reçus',
+    de: 'Auftragsdaten erhalten', it: "Dati dell'ordine ricevuti", es: 'Datos del pedido recibidos',
+    pt: 'Dados da encomenda recebidos' },
+  { expected: 'registered', en: 'Shipment created', fr: 'Envoi créé', de: 'Sendung erstellt',
+    it: 'Spedizione creata', es: 'Envío creado', pt: 'Encomenda criada' },
+  { expected: 'registered', en: 'Shipment pre-registered', fr: 'Envoi pré-enregistré', de: 'Sendung vorregistriert',
+    it: 'Spedizione preregistrata', es: 'Envío prerregistrado', pt: 'Encomenda pré-registada' },
+  { expected: 'exception', en: 'Shipment cancelled', fr: 'Envoi annulé', de: 'Sendung storniert',
+    it: 'Spedizione annullata', es: 'Envío cancelado', pt: 'Encomenda cancelada' },
   { expected: 'delivered', en: 'Delivered', fr: 'Livré', de: 'Zugestellt', it: 'Consegnato', es: 'Entregado', pt: 'Entregue' },
 ];
 
@@ -247,6 +256,25 @@ describe('universal provider rules and the shared reading', () => {
       ['Handed Over to SingPost Courier', 'in_transit'],
       ['Pengaduan pelanggan diterima', 'pending'],
       ['Aduan pelanggan diterima', 'pending'],
+    ] as const) {
+      expect(inferStage(description, 'pending'), description).toBe(stage);
+      expect(event(TIME, description)?.stage, description).toBe(stage);
+    }
+  });
+
+  it('read the relayed wording no rule read', () => {
+    for (const [description, stage] of [
+      ['Order details received', 'registered'],
+      ['Shipment is out with courier for delivery', 'out_for_delivery'],
+      ['Shipment created', 'registered'],
+      ['Depositado para admisión. Envío depositado por remitente en taquilla CityPaq para admisión por Correos', 'registered'],
+      ['Admitido.. El envío ha tenido admisión en origen.', 'accepted'],
+      ['İptal Edildi', 'exception'],
+      ['Pre-registered. Shipment pre-registered in the postal Correos Spain system, pending acceptance', 'registered'],
+      // Paack's origin scan, a Turkish "entered" and Swiss Post's forward order, which its map leaves unstaged.
+      ["In Paack's distribution centre", 'pending'],
+      ['Girildi', 'pending'],
+      ['Order triggered by recipient: Forward', 'pending'],
     ] as const) {
       expect(inferStage(description, 'pending'), description).toBe(stage);
       expect(event(TIME, description)?.stage, description).toBe(stage);
