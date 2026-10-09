@@ -4732,6 +4732,48 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "dpd-pl": {
+    "displayName": "DPD Poland",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD Polska"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-pl",
+      "recognitionRank": 8
+    },
+    "canaryUrl": "https://tracktrace.dpd.com.pl/EN/findParcel",
+    "trackingUrlTemplate": "https://tracktrace.dpd.com.pl/EN/parcelDetails?typ=1&p1={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "tracktrace.dpd.com.pl",
+          "tt.dpd.com.pl"
+        ],
+        "pathPattern": "^/(?:EN/)?parcelDetails$",
+        "params": [
+          "p1"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{13}[A-Z]$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^13\\d{12}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "dpd-uk": {
     "displayName": "DPD UK",
     "color": "#dc0032",
@@ -5329,6 +5371,7 @@ export const CARRIER_IDS = [
   "dhl-ecommerce-uk",
   "dhl-express",
   "dpd-de",
+  "dpd-pl",
   "dpd-uk",
   "ekart",
   "evri-uk",
@@ -5458,6 +5501,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill"],
   "dpd-de": ["dpd-de-1","dpd-de-2"],
+  "dpd-pl": ["dpd-pl-1","dpd-pl-2"],
   "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "ekart": ["ekart-ecommerce"],
   "evri-uk": ["evri-uk-1","evri-uk-2","evri-uk-3"],

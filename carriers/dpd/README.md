@@ -1,8 +1,9 @@
 # DPD
 
 DPD Switzerland (myDPD), Swiss last-mile parcels only. Germany is
-[dpd-de](../dpd-de/README.md), France is [dpd-fr](../dpd-fr/README.md), and the
-United Kingdom is [dpd-uk](../dpd-uk/README.md).
+[dpd-de](../dpd-de/README.md), France is [dpd-fr](../dpd-fr/README.md), the
+United Kingdom is [dpd-uk](../dpd-uk/README.md), and Poland is
+[dpd-pl](../dpd-pl/README.md).
 
 ## How it works
 

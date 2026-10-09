@@ -6,7 +6,7 @@ import {
 
 describe('brand networks', () => {
   it('lists the catalog networks of a bare or group brand name', () => {
-    expect(new Set(brandCarrierIds('DPD Group'))).toEqual(new Set(['dpd', 'dpd-fr', 'dpd-de', 'dpd-uk']));
+    expect(new Set(brandCarrierIds('DPD Group'))).toEqual(new Set(['dpd', 'dpd-fr', 'dpd-de', 'dpd-uk', 'dpd-pl']));
     expect(brandCarrierIds('gls')).toEqual(expect.arrayContaining(['gls-ch', 'gls-de', 'gls-fr']));
     expect(brandCarrierIds('DPD UK')).toEqual([]);
     expect(brandCarrierIds('Swiss Post')).toEqual([]);
@@ -170,8 +170,9 @@ describe('zones implied by carrier names', () => {
   it('lists the zones of a bare brand only when all of its carriers keep a local clock', () => {
     // ParcelsApp reads brand-only scans in these zones. A catalog change here moves
     // stored scan instants, and so event ids: plan a re-key before updating the sets.
-    expect(new Set(brandTimeZones('DPD Group'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/London']));
-    expect(new Set(brandTimeZones('dpd'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/London']));
+    // London never shares the others' clock, so DPD's brand zone stays off whatever networks join.
+    expect(new Set(brandTimeZones('DPD Group'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/Warsaw', 'Europe/London']));
+    expect(new Set(brandTimeZones('dpd'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/Warsaw', 'Europe/London']));
     expect(new Set(brandTimeZones('GLS'))).toEqual(new Set(['Europe/Zurich', 'Europe/Berlin', 'Europe/Paris']));
     expect(brandTimeZones('Hermes')).toEqual(['Europe/Berlin']);
     // DHL eCommerce is UTC, so the brand's clock is unknown.

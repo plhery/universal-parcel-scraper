@@ -39,6 +39,7 @@ import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdDe } from '../carriers/dpd-de/adapter.js';
 import { adapter as dpdFr } from '../carriers/dpd-fr/adapter.js';
+import { adapter as dpdPl } from '../carriers/dpd-pl/adapter.js';
 import { adapter as dpdUk } from '../carriers/dpd-uk/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
@@ -156,6 +157,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd": dpd,
     "dpd-de": dpdDe,
     "dpd-fr": dpdFr,
+    "dpd-pl": dpdPl,
     "dpd-uk": dpdUk,
     "dtdc": dtdc,
     "ecoscooting": ecoscooting,
@@ -274,6 +276,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd": "dpd",
     "dpd-de": "dpd-de",
     "dpd-fr": "dpd-fr",
+    "dpd-pl": "dpd-pl",
     "dpd-uk": "dpd-uk",
     "dtdc": "dtdc",
     "ecoscooting": "ecoscooting",

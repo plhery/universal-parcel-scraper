@@ -419,6 +419,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-pl",
           "dpd",
           "dpd-fr",
           "relais-colis",
@@ -451,6 +452,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-pl",
           "dpd",
           "dpd-fr",
           "relais-colis",

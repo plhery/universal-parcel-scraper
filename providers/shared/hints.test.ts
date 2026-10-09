@@ -26,6 +26,9 @@ describe('carrier names reported by universal providers', () => {
     expect(brandCarrierForNumber('dpd', '10000000000001')).toBe('dpd-fr');
     // A DPD France 250… number is its own high-confidence shape.
     expect(brandCarrierForNumber('DPD', '250000000000000')).toBe('dpd-fr');
+    // DPD Poland's waybill, thirteen digits and a letter, and its 13xx depot range.
+    expect(brandCarrierForNumber('DPD', '1000000000002U')).toBe('dpd-pl');
+    expect(brandCarrierForNumber('DPD Group', '13000000000002')).toBe('dpd-pl');
     // Both DPD networks match and neither is preferred.
     expect(brandCarrierForNumber('DPD Group', '06200000000002')).toBeUndefined();
     // Germany and the UK share the number shape; the bare brand cannot pick a country.

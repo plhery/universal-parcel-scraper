@@ -1,0 +1,27 @@
+{
+  "carrier": "dpd-pl",
+  "entries": [
+    {"wording": "Registered parcel data, parcel not dispatched yet", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
+    {"wording": "Parcel collected by courier", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The courier's collection. Its stage depends on the scans before it: it accepts the parcel from the sender, and after an earlier acceptance or depot scan, such as at the pickup point the sender dropped it at or in another country's network, it is a hand-over in transit."},
+    {"wording": "Parcel collected", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "Seen on parcels from other DPD countries, before or after their depot scans; staged like a courier's collection."},
+    {"wording": "Parcel dropped-off in pickup point", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The sender dropped the parcel off at a pickup point."},
+    {"wording": "Parcel received by DPD depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
+    {"wording": "Sent outside Poland", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The parcel leaves for another DPD country, which delivers it."},
+    {"wording": "Parcel stored in depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "A short hold at a depot, seen before a pickup point run."},
+    {"wording": "Parcel dispatched to be collected by pickup point", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "On its way to the pickup point that will hold it for the recipient."},
+    {"wording": "Parcel dispatched to be delivered", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
+    {"wording": "Parcel collected by pickup point", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The pickup point received the parcel for the recipient."},
+    {"wording": "The Parcel has been placed in the DPD Pickup Station", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
+    {"wording": "To be collected personally", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "Waiting at a pickup point for the recipient."},
+    {"wording": "Parcel not delivered - recipient not available", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
+    {"wording": "Parcel not delivered - wrong address", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
+    {"wording": "Not delivered to pickup point - overloaded", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The pickup point was full; the parcel goes to another one."},
+    {"wording": "Parcel not delivered - recipient resigned", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The recipient refused the parcel."},
+    {"wording": "Waiting for pickup timeout", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "Nobody collected the parcel from the pickup point in time."},
+    {"wording": "Parcel return", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "A return to the sender under a new parcel number; the original parcel's history ends here."},
+    {"wording": "Parcel delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The recipient's name after it is not kept."},
+    {"wording": "Mail notification", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "A message to the recipient, not a movement: it has no stage of its own and the parcel keeps the one it had."},
+    {"wording": "SMS notification", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "A message to the recipient, not a movement: it has no stage of its own and the parcel keeps the one it had."},
+    {"wording": "Sent notification", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "A message to the recipient, not a movement: it has no stage of its own and the parcel keeps the one it had."}
+  ]
+}

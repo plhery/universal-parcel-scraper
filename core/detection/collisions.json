@@ -838,6 +838,43 @@
     "reason": "Relais Colis public shipment evidence also uses this numeric length; number shape alone cannot identify a carrier."
   },
   {
+    "shape": "14 digits starting 13",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-pl",
+      "dpd-uk",
+      "relais-colis",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk"
+    ],
+    "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
+  },
+  {
+    "shape": "14 digits starting 13",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-pl",
+      "dpd-uk",
+      "hermes-de",
+      "relais-colis",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk"
+    ],
+    "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
+  },
+  {
     "shape": "14 digits",
     "carriers": [
       "brt",

@@ -369,6 +369,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpd-uk', number: '00000000000001',
     route: /^https:\/\/track\.dpd\.co\.uk\/(?:\?|$)/,
     marker: /Enter the reference number and delivery postcode|Tracking Number, Calling card number/i },
+  { carrier: 'dpd-pl', number: '9999999999999U',
+    route: /^https:\/\/tracktrace\.dpd\.com\.pl\/EN\/parcelDetails\?/,
+    marker: /There is no trace for this parcel|Parcel history/ },
   // The international tracker is a POST-only form, so the link cannot carry the number.
   { carrier: 'evri', number: 'H000000000000001',
     route: /^https:\/\/globaleco\.app\/track\/?$/,

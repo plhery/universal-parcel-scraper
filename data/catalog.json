@@ -4730,6 +4730,48 @@
       }
     ]
   },
+  "dpd-pl": {
+    "displayName": "DPD Poland",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD Polska"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-pl",
+      "recognitionRank": 8
+    },
+    "canaryUrl": "https://tracktrace.dpd.com.pl/EN/findParcel",
+    "trackingUrlTemplate": "https://tracktrace.dpd.com.pl/EN/parcelDetails?typ=1&p1={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "tracktrace.dpd.com.pl",
+          "tt.dpd.com.pl"
+        ],
+        "pathPattern": "^/(?:EN/)?parcelDetails$",
+        "params": [
+          "p1"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{13}[A-Z]$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^13\\d{12}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "dpd-uk": {
     "displayName": "DPD UK",
     "color": "#dc0032",
