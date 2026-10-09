@@ -1244,10 +1244,11 @@
     },
     {
       "carrier": "an-post",
-      "direct": "No adapter",
-      "sample": "Not tested",
+      "direct": "Yes (Irish S10 numbers)",
+      "sample": "Unverified; alternate \u2713 13",
       "references": [
         {
+          "note": "The original comparison reference is not recorded, so it has not been retried through the app API. An alternate public reference returned thirteen identity-bound scans, including relayed delivery-partner scans: https://www.trustpilot.com/review/www.anpost.com. Another returned four ending in delivery: https://www.trustpilot.com/reviews/6ab509af46eee3df19b6496d",
           "results": {
             "Ship24": 4,
             "ParcelsApp": 4,

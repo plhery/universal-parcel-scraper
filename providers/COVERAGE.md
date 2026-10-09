@@ -96,7 +96,7 @@ asked after the other aggregators whatever its count.
 | [Poczta Polska](../carriers/poczta-polska/README.md) | Yes | ✓ 5 | ✓ 10 | ✓ 19 | ✓ 21 | ✓ 18 | ✓ 6 |
 | [Bring](../carriers/bring-posten/README.md) | Yes | ✓ 12 | ✓ 12 | ✓ 15 | ✓ 19 | ✓ 16 | ✓ 3 |
 | [Posti](../carriers/posti/README.md) | Yes | Unverified | Unverified | Unverified | Unverified | Unverified | N/A |
-| [An Post](../carriers/an-post/carrier.json) | No adapter | Not tested | ✓ 4 | ✓ 4 | ✓ 4 | ✓ 4 | No history |
+| [An Post](../carriers/an-post/README.md) | Yes (Irish S10 numbers) | Unverified; alternate ✓ 13 | ✓ 4 | ✓ 4 | ✓ 4 | ✓ 4 | No history |
 | [CTT Portugal](../carriers/ctt/README.md) | Yes | ✓ 4 | ✓ 4 | ✓ 5 | ✓ 5 | ✓ 3 | ✓ 2 |
 | [CTT Express](../carriers/ctt-express/README.md) | Yes | ✓ 5 | ✓ 5 | ✓ 5 | ✓ 4 | ✓ 6 | N/A |
 | [BRT](../carriers/brt/README.md) | Yes | ✓ 9 | No history | ✓ 23 | No history | ✓ 5 | N/A |

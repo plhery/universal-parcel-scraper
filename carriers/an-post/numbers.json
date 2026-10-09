@@ -9,11 +9,14 @@
         "url": "https://www.trustpilot.com/reviews/6ab509af46eee3df19b6496d",
         "date": "2026-09-24"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "an-post",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number; An Post's tracking returns its history."
     },
     {
       "number": "CP476340265IE",
@@ -23,11 +26,14 @@
         "url": "https://www.trustpilot.com/review/www.anpost.com",
         "date": "2026-08-31"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "an-post",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number; An Post's tracking returns its history."
     },
     {
       "number": "RL 678 194 950 IE",
@@ -61,12 +67,13 @@
         "dateKind": "capture"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "an-post",
         "confidence": "high"
-      }
+      },
+      "note": "Archived An Post tracking page; An Post's tracking returns its history, with a post office collection (code 52)."
     },
     {
       "number": "CP482331501IE",
@@ -79,12 +86,13 @@
         "dateKind": "capture"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "an-post",
         "confidence": "high"
-      }
+      },
+      "note": "Archived An Post tracking page; An Post's tracking returns its history, with relayed destination partner scans."
     },
     {
       "number": "CB212298281IE",
@@ -115,12 +123,13 @@
         "dateKind": "capture"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "an-post",
         "confidence": "high"
-      }
+      },
+      "note": "Archived An Post tracking page; An Post's tracking returns its history, with a safe spot delivery."
     },
     {
       "number": "LX477703749IE",

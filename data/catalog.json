@@ -1994,14 +1994,26 @@
       "IE"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Dublin",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "an-post",
+      "localClocks": true
     },
-    "canaryUrl": "https://t.17track.net/",
+    "canaryUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
     "trackingUrlTemplate": "https://www.anpost.com/Post-Parcels/Track/History?item={trackingNumber}",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "anpost.com"
+        ],
+        "pathPattern": "^/Post-Parcels/Track/History/?$",
+        "params": [
+          "item",
+          "barcode"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^[A-Z]{2}\\d{9}IE$",

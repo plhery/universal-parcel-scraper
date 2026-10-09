@@ -178,6 +178,25 @@ describe('status map answers', () => {
     expect(answer('sto', null, 'Delivered')).toEqual(unknown);
   });
 
+  it("answers An Post's trace codes, narrowed by wording, and its delivery attempt by the website's wording", () => {
+    expect(answer('an-post', '70', 'Your item is now available for collection')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('an-post', '35', 'We have received information about your incoming item from the sender')).toEqual(mapped('registered'));
+    expect(answer('an-post', '83', 'Synthetic customs wording')).toEqual(mapped('customs'));
+    // The app's broad in-transit and return categories take a narrower stage from wording.
+    expect(answer('an-post', '1', 'Synthetic scan')).toEqual(mapped('in_transit'));
+    expect(answer('an-post', '1', 'Your item is out for delivery')).toEqual(mapped('out_for_delivery'));
+    expect(answer('an-post', '53', 'Synthetic scan')).toEqual(mapped('returned'));
+    // Code 52 at a post office waits there for collection; at any other office it stays the app's sorting.
+    expect(answer('an-post', '52', 'Your delivery is in SYNTHETIC TOWN, POST OFFICE')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('an-post', '52', 'Your delivery is in SYNTHETIC MAIL CENTRE')).toEqual(mapped('in_transit'));
+    expect(answer('an-post', '16', 'Your item was delivered')).toEqual(mapped('delivered'));
+    expect(answer('an-post', '16', 'We attempted to deliver your item')).toEqual(mapped('failed_attempt'));
+    // Codes the map does not know, and wording without a code, stay open for review.
+    expect(answer('an-post', '9999', 'Your item has been delivered')).toEqual(unknown);
+    expect(answer('an-post', '014', 'Your item has been delivered')).toEqual(unknown);
+    expect(answer('an-post', null, 'Your item has been delivered')).toEqual(unknown);
+  });
+
   it.each(['app', '', 'china-post', '__proto__', 'toString', 'Unknown'])('does not know %s', (carrier) => {
     expect(answer(carrier, 'DLO', 'Delivered')).toEqual(unknown);
   });
