@@ -15,8 +15,10 @@ client ignores the ambiguous clock-shift field; no instant or delivery timestamp
 is inferred from it. The host retains those scans and asks providers for dated
 progress. Each scan uses its own code. A completed return does not override later
 movement or delivery. The service, such as `GROUND`, is kept in English as
-`service_name`. Estimates, references, full addresses, comments, contacts,
-signatures and proof images are excluded.
+`service_name`. The expected delivery day is kept while the parcel is on its way and
+dropped once a newer day's scan arrives or the parcel is delivered or returned.
+References, full addresses, comments, contacts, signatures and proof images are
+excluded.
 
 Delivery notices, short barcodes and reference searches require different lookup
 inputs and are outside this adapter's scope.

@@ -9,8 +9,15 @@ const codes: Record<string, ClassifiedStatus> = {
   DPT: { status: 'in_transit', stage: 'in_transit' },
   SRT: { status: 'in_transit', stage: 'in_transit' },
   COA: { status: 'in_transit', stage: 'in_transit' },
+  // A handoff to a local partner, extra handling and weather delays keep the parcel moving.
+  INO: { status: 'in_transit', stage: 'in_transit' },
+  XC: { status: 'in_transit', stage: 'in_transit' },
+  WXX: { status: 'in_transit', stage: 'in_transit' },
   MIS: { status: 'exception', stage: 'exception' },
+  // A parcel held at a facility, which the tracker says to ask an agent about.
+  HLD: { status: 'exception', stage: 'exception' },
   NL: { status: 'exception', stage: 'failed_attempt' },
+  NH: { status: 'exception', stage: 'failed_attempt' },
   RTN: { status: 'exception', stage: 'returned' },
 };
 

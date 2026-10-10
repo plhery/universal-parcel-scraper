@@ -23,6 +23,16 @@ function clock(raw: unknown): { local_time?: string; provider_time_text?: string
     : text ? { provider_time_text: text } : {};
 }
 
+// Canpar's expected delivery day, kept while the parcel is on its way and
+// dropped once a newer day's scan arrives or it is delivered or returned.
+function estimatedDay(value: unknown, stage: string | undefined, latest: CarrierEvent): string | null {
+  const day = DateTime.fromFormat(clean(value, 16), 'yyyyMMdd', { zone: 'UTC' });
+  if (!day.isValid || (stage && ['delivered', 'returned', 'ready_for_pickup'].includes(stage))) return null;
+  const iso = day.toISODate();
+  const clock = latest.local_time;
+  return typeof clock === 'string' && iso < clock.slice(0, 10) ? null : iso;
+}
+
 export function parseCanpar(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeCanparNumber(rawNumber);
   if (!isRecord(payload)) throw new SchemaError('Canpar');
@@ -63,5 +73,6 @@ export function parseCanpar(payload: unknown, rawNumber: string): CarrierResult 
   // every later scan. Native histories can resume movement and delivery.
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null,
-    expected_delivery: null, ...(service ? { service_name: service } : {}), events: events.slice(0, 100) };
+    expected_delivery: estimatedDay(item.estimated_delivery_date, mapped?.stage, latest),
+    ...(service ? { service_name: service } : {}), events: events.slice(0, 100) };
 }

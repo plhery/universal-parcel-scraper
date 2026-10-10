@@ -26,6 +26,7 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
     "service_name"
   ],
   "portal": {
@@ -43,10 +44,10 @@
       "status",
       "history",
       "location",
+      "estimated_delivery",
       "service_name"
     ],
     "discarded": [
-      "estimated_delivery",
       "proof_of_delivery",
       "recipient",
       "addresses",

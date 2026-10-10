@@ -24,9 +24,34 @@ describe('Canpar parcel history', () => {
     expect(result).not.toHaveProperty('delivered_at');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|time_shift|signed_by|reference_num|signature|estimated_delivery|web_description/);
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    expect(metadata.capabilities).toEqual(['history', 'location', 'service_name']);
+    expect(metadata.capabilities).toEqual(['history', 'location', 'eta', 'service_name']);
     const unnamed = fixture(); unnamed.result[0].service_description_en = null;
     expect(parseCanpar(unnamed, NUMBER)).not.toHaveProperty('service_name');
+  });
+
+  it('keeps the expected delivery day only while the parcel is on its way', () => {
+    const value = fixture(); value.result[0].events.splice(0, 2);
+    expect(parseCanpar(value, NUMBER)).toMatchObject({ status: 'in_transit', expected_delivery: '2026-01-05' });
+    value.result[0].estimated_delivery_date = '20260104';
+    expect(parseCanpar(value, NUMBER).expected_delivery).toBe('2026-01-04');
+    for (const day of ['20260102', '20260230', '2026-01-05', null]) {
+      value.result[0].estimated_delivery_date = day;
+      expect(parseCanpar(value, NUMBER).expected_delivery).toBeNull();
+    }
+  });
+
+  it('reads holds, handoffs, handling, weather delays and missed deliveries', () => {
+    for (const [code, description, status, stage] of [
+      ['HLD', 'Delayed at Facility', 'exception', 'exception'],
+      ['NH ', 'Consignee Not Home', 'exception', 'failed_attempt'],
+      ['INO', 'Handed Off to a Local Delivery Partner', 'in_transit', 'in_transit'],
+      ['XC ', 'Additional Handling Required', 'in_transit', 'in_transit'],
+      ['WXX', "Weather's Slowing Us Down, But We're on It!", 'in_transit', 'in_transit'],
+    ] as const) {
+      const value = fixture();
+      value.result[0].events.unshift({ ...value.result[0].events[2], code, code_description_en: description, local_date_time: '20260106 090000' });
+      expect(parseCanpar(value, NUMBER)).toMatchObject({ status, current_stage: stage });
+    }
   });
 
   it('accepts the public client package envelope without retaining pickup address data', () => {
