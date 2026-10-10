@@ -38,6 +38,9 @@ describe('Canpar parcel history', () => {
       value.result[0].estimated_delivery_date = day;
       expect(parseCanpar(value, NUMBER).expected_delivery).toBeNull();
     }
+    const pickup = fixture(); pickup.result[0].events.splice(0, 2);
+    pickup.result[0].events.unshift({ ...pickup.result[0].events[0], code: 'DRP', code_description_en: 'Ready for Pickup at Your Local SMARTSpot', local_date_time: '20260105 090000' });
+    expect(parseCanpar(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', expected_delivery: null });
   });
 
   it('reads holds, handoffs, handling, weather delays and missed deliveries', () => {

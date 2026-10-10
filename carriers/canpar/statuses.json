@@ -100,12 +100,19 @@
       "confirmedBy": "live"
     },
     {
+      "code": "DRP",
+      "wording": "Ready for Pickup at Your Local SMARTSpot",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
       "code": "HLD",
       "wording": "Delayed at Facility",
       "language": "en",
       "stage": "exception",
       "confirmedBy": "live",
-      "note": "The tracker says the parcel is on hold and to ask an agent."
+      "note": "French wording: Retardé au centre de tri. Seen after missed or failed deliveries, then either a delivery later that day or no further scan."
     },
     {
       "code": "NH",

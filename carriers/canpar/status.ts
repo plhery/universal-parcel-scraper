@@ -4,6 +4,7 @@ const codes: Record<string, ClassifiedStatus> = {
   DEL: { status: 'delivered', stage: 'delivered' },
   NSR: { status: 'delivered', stage: 'delivered' },
   WC: { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  DRP: { status: 'in_transit', stage: 'ready_for_pickup' },
   PIC: { status: 'in_transit', stage: 'accepted' },
   ARR: { status: 'in_transit', stage: 'in_transit' },
   DPT: { status: 'in_transit', stage: 'in_transit' },
@@ -14,7 +15,8 @@ const codes: Record<string, ClassifiedStatus> = {
   XC: { status: 'in_transit', stage: 'in_transit' },
   WXX: { status: 'in_transit', stage: 'in_transit' },
   MIS: { status: 'exception', stage: 'exception' },
-  // A parcel held at a facility, which the tracker says to ask an agent about.
+  // Delayed at Facility (Retardé au centre de tri): seen after missed or failed
+  // deliveries, then either a delivery later that day or no further scan.
   HLD: { status: 'exception', stage: 'exception' },
   NL: { status: 'exception', stage: 'failed_attempt' },
   NH: { status: 'exception', stage: 'failed_attempt' },
