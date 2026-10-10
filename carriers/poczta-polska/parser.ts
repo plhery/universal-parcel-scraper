@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { classifyPocztaPolskaStatus, startsPocztaPolskaReturn } from './status.js';
+import { classifyPocztaPolskaStatus, settlesPocztaPolskaDuty, startsPocztaPolskaReturn } from './status.js';
 
 export function normalizePocztaPolskaNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/\s/g, '');
@@ -60,6 +60,10 @@ export function parsePocztaPolska(payload: unknown, number: string): CarrierResu
   if (payload.mailStatus === -1 && !Object.hasOwn(payload, 'mailInfo')) throw new NotFoundError('poczta-polska');
   if (payload.mailStatus !== 0) throw new IndeterminateError('poczta-polska', 'Poczta Polska returned an ambiguous or incomplete parcel result');
   const item = payload.mailInfo;
+  // Unregistered letter post is answered with its mail type alone: there is no history to read.
+  if (isRecord(item) && item.typeOfMailCode === 'UNREGISTERED_MAIL_TYPE' && !Object.hasOwn(item, 'events')) {
+    throw new IndeterminateError('poczta-polska', 'Poczta Polska keeps no history for unregistered mail');
+  }
   if (!isRecord(item) || typeof item.number !== 'string' || item.number.trim().toUpperCase() !== requested
     || !Array.isArray(item.events) || item.events.length > 500) throw new SchemaError('poczta-polska');
   if (item.components != null && (!Array.isArray(item.components) || item.components.length > 100
@@ -95,16 +99,20 @@ export function parsePocztaPolska(payload: unknown, number: string): CarrierResu
     if (seen.has(key)) return false;
     seen.add(key); return true;
   });
-  const latest = events[0]!;
+  const latest = events.find(event => !settlesPocztaPolskaDuty(event.provider_code!)) ?? events[0]!;
   const current = latest.stage === 'returned' ? { status: 'exception' as const, stage: 'returned' }
     : classifyPocztaPolskaStatus(latest.provider_code!);
   const weight = item.weight;
   const country = item.recipientCountryCode;
+  const service = clean(item.typeOfMailName, 80);
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}), expected_delivery: null,
     // The office holding the item names where it waits; its address stays out.
     ...(current?.stage === 'ready_for_pickup' && latest.location ? { pickup_point: latest.location } : {}),
+    // Only a scan at a Polish office has an instant to date the delivery.
+    ...(current?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(service ? { service_name: service } : {}),
     ...(typeof weight === 'number' && Number.isFinite(weight) && weight > 0 ? { weight_kg: weight } : {}),
     ...(typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
     ...(number.toUpperCase().replace(/\s/g, '') !== requested ? { canonical_tracking_number: requested } : {}),

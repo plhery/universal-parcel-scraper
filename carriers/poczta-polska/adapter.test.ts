@@ -26,11 +26,13 @@ describe('Poczta Polska identity-bound scans', () => {
       '2026-01-06T08:00:00+01:00', '2026-01-05T16:00:00+01:00', '2026-01-04T12:00:00+01:00', '2026-01-04T08:00:00']);
     expect(result.events?.slice(0, 4).every(event => !event.local_time)).toBe(true);
     expect(result.events?.[4]).not.toHaveProperty('time');
-    expect(result).not.toHaveProperty('delivered_at'); expect(result).not.toHaveProperty('timezone');
+    expect(result).toMatchObject({ delivered_at: '2026-01-06T12:00:00+01:00', service_name: 'Synthetic parcel' });
+    expect(result).not.toHaveProperty('timezone');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|openingHours|additionalServices|dispatchDate/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length),
-      location: Boolean(result.events?.[0]?.location), weight: result.weight_kg === 0.35 };
+      location: Boolean(result.events?.[0]?.location), weight: result.weight_kg === 0.35,
+      delivered_at: Boolean(result.delivered_at), service_name: Boolean(result.service_name) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
   });
 
@@ -198,6 +200,42 @@ describe('Poczta Polska identity-bound scans', () => {
       value.mailInfo.recipientCountryCode = country;
       expect(parsePocztaPolska(value, NUMBER)).not.toHaveProperty('destination_country');
     }
+  });
+
+  it('follows an item from abroad through the exchange office and customs to its collection', () => {
+    const value = payload();
+    const office = { name: 'Example Post Office', officeType: 'UP' };
+    const exchange = { name: 'Example Exchange Office', officeType: 'WER' };
+    value.mailInfo.events = [
+      { ...scan('P_NAD', 'Posting/collection', 'NA', '2026-01-04T12:00:00', 'International Postal System'), postOffice: { name: 'International Postal System' } },
+      { ...scan('P_WYOC', 'Item departure', 'TR', '2026-01-05T10:00:00'), postOffice: null },
+      { ...scan('P_WEPL', 'Arrival at inward office of exchange (Poland)', 'TR', '2026-01-12T13:00:00'), postOffice: exchange },
+      { ...scan('P_ZWC', 'Customs service', 'OCP', '2026-01-12T14:00:00'), postOffice: exchange },
+      { ...scan('P_ZWOLDDOR', 'Customs service II', 'OCP', '2026-01-13T09:00:00'), postOffice: exchange },
+      { ...scan('P_KWD', 'Ready for pick-up at the Post Office', 'ODB', '2026-01-14T16:00:00'), postOffice: office },
+      { ...scan('P_OWU', 'Collected at the post office', 'OP', '2026-01-15T11:00:00'), postOffice: office },
+      { ...scan('P_ROZL_CEL', 'Customs service', 'OCP', '2026-01-21T08:00:00'), postOffice: exchange }];
+    const collected = normalizeCarrierResult(parsePocztaPolska(value, NUMBER));
+    expect(collected).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Collected at the post office',
+      last_update: '2026-01-15T11:00:00+01:00', delivered_at: '2026-01-15T11:00:00+01:00' });
+    expect(collected).not.toHaveProperty('pickup_point');
+    expect(collected.events?.map(event => event.provider_code)).toEqual(['P_ROZL_CEL', 'P_OWU', 'P_KWD', 'P_ZWOLDDOR', 'P_ZWC',
+      'P_WEPL', 'P_WYOC', 'P_NAD']);
+    expect(parsePocztaPolska(value, NUMBER).events?.slice(1, 7).map(event => event.stage)).toEqual(['delivered', 'ready_for_pickup',
+      'customs', 'customs', 'in_transit', 'in_transit']);
+    expect(parsePocztaPolska(value, NUMBER).events?.[0]).not.toHaveProperty('stage');
+    value.mailInfo.events = value.mailInfo.events.slice(0, 3);
+    expect(parsePocztaPolska(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
+  it('reads a second failed delivery and has nothing to read for unregistered mail', () => {
+    const value = payload(); value.mailInfo.events = [...unclaimed(),
+      scan('P_PA', 'Second unsuccessful (physical) delivery', 'AW', '2026-01-12T09:00:00')];
+    expect(parsePocztaPolska(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    const unregistered = { number: NUMBER, mailStatus: 0, mailInfo: { typeOfMailCode: 'UNREGISTERED_MAIL_TYPE', finished: true } };
+    expect(() => parsePocztaPolska(unregistered, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parsePocztaPolska({ ...unregistered, mailInfo: { typeOfMailCode: 'PRP', finished: true } }, NUMBER))
+      .toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('uses the widget check-digit alias while requiring the full returned barcode', () => {

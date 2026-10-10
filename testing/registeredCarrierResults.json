@@ -1664,6 +1664,8 @@
       "last_status_text": "Final delivery",
       "last_update": "2026-01-06T12:00:00+01:00",
       "expected_delivery": null,
+      "delivered_at": "2026-01-06T12:00:00+01:00",
+      "service_name": "Synthetic parcel",
       "weight_kg": 0.35,
       "destination_country": "PL",
       "events": [

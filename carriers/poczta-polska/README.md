@@ -29,8 +29,14 @@ state read on its own is “returned”: from that scan on, the item travels bac
 and a final delivery means the sender has it again. Weight is provided in
 kilograms. Office names provide locations, and the office holding an item for
 collection is its pickup point; a delivered item has none. The destination country is the two-letter code
-the service gives; office addresses, opening hours and payment documents are
+the service gives, and the mail type, such as Pocztex or EMS, is the service name; office addresses, opening hours and payment documents are
 excluded.
+
+An item from abroad arrives at an inward office of exchange and passes customs
+before delivery. Its collection at the office is a delivery. A customs
+settlement can follow days later: it books the duty collected at delivery and
+moves nothing, so the scan before it stays current. A delivery scan at a Polish
+office dates the delivery.
 
 ## Limitations
 
@@ -39,8 +45,9 @@ is read on Polish time (`Europe/Warsaw`). Scans relayed from partners abroad,
 office-less scans such as electronic pre-advice, and wall clocks that a
 daylight-saving change skips or repeats keep their local digits. Scans keep the
 provider's order. See [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for
-unresolved history handling. Empty history, invalidated scans and ambiguous
-reused numbers are inconclusive. Pallet consignments and references with linked
+unresolved history handling. Empty history, invalidated scans, ambiguous
+reused numbers and unregistered letter post, which the service answers with its mail type
+alone, are inconclusive. Pallet consignments and references with linked
 components need parcel-level history and are not supported.
 
 ## Testing

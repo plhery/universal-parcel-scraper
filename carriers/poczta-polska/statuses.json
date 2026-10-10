@@ -86,6 +86,56 @@
       "stage": "returned",
       "confirmedBy": "live",
       "note": "Starts the trip back to the sender; a later final delivery is the sender's."
+    },
+    {
+      "code": "P_WYOC",
+      "wording": "Item departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_WEPL",
+      "wording": "Arrival at inward office of exchange (Poland)",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_ZWOLDDOR",
+      "wording": "Customs service II",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_WPUCPP",
+      "wording": "Customs service",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "P_OWU",
+      "wording": "Collected at the post office",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The recipient collected the item: its state reads picked up at the point."
+    },
+    {
+      "code": "P_ROZL_CEL",
+      "wording": "Customs service",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Left unmapped: it books the duty collected at delivery, days after the item has gone, so the scan before it stays current."
+    },
+    {
+      "code": "P_PA",
+      "wording": "Second unsuccessful (physical) delivery",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
     }
   ]
 }
