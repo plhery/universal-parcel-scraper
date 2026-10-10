@@ -112,6 +112,9 @@
         "url": "https://www.trustpilot.com/reviews/6a680c8b8a48f47256b888b9",
         "date": "2026-07-28"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "swiss-post",
         "confidence": "high"
@@ -125,6 +128,9 @@
       "source": {
         "url": "https://www.trustpilot.com/reviews/6aa36fc3b355e35ecf1ef14e",
         "date": "2026-09-11"
+      },
+      "context": {
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "swiss-post",
@@ -153,6 +159,9 @@
         "url": "https://www.trustpilot.com/reviews/6a064349008e8e5d4cf776a3",
         "date": "2026-05-14"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "la-poste",
         "confidence": "high"
@@ -175,6 +184,73 @@
         "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Asendia; detection falls back to the generic postal rule."
+    },
+    {
+      "number": "ASDLP2465555",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6abcd8256a8ec4876d0eb51f",
+        "date": "2026-09-30",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Asendia USA's tracking returned this parcel's history, handed to USPS for Kyrgyzstan. One reported reference of this layout."
+    },
+    {
+      "number": "00393580940154104992",
+      "role": "full_barcode",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a4320194901e423a66fe928",
+        "date": "2026-06-30",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "reportedRole": "last-mile label number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "Asendia USA's tracking returned this parcel's history, flown from London and ready for pickup in Australia through DAI Post. A last-mile partner's label number, not an Asendia format."
+    },
+    {
+      "number": "EEUS026904543AE0",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/asendia.com",
+        "date": "2026-05-10",
+        "access": "full_page",
+        "dateKind": "publication"
+      },
+      "context": {
+        "service": "eBay International Shipping",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An eBay International Shipping number for the United Arab Emirates, reported on Asendia's review page. Asendia USA's tracking had no data for it."
     }
   ]
 }

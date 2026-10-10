@@ -53,6 +53,12 @@
     "reason": "eBay International Shipping numbers. Asendia's tracker takes them, but they are not specific to Asendia."
   },
   {
+    "carrier": "asendia",
+    "pattern": "^ASDLP\\d{7}$",
+    "kind": "open",
+    "reason": "One reported Asendia USA reference of this layout; the family is not established."
+  },
+  {
     "carrier": "australia-post",
     "pattern": "^9979\\d{14}$",
     "kind": "open",
