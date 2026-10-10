@@ -19,7 +19,8 @@ details, delivery names, identity numbers, notices and the branch directory are
 excluded. Free-form status text is replaced with a neutral update. A missing
 shipment response may also mean its history expired, so it remains inconclusive.
 
-The page can return a browser challenge instead of an anonymous session.
+The page can return a browser challenge instead of an anonymous session, or
+redirect to Radware's bot check; both are reported as challenges.
 
 ## Testing
 

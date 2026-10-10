@@ -147,6 +147,17 @@ describe('Correos de Chile anonymous tracking', () => {
     await expect(adapter(environment(inconclusive)).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'indeterminate' });
   });
 
+  it('reports the bot manager redirect as a challenge rather than a missing resource', async () => {
+    const page = '<html><head><title>302 Found</title><script>ssConf("cu", "validate.perfdrive.com, ssc");</script></head><body><center><h1>302 Found</h1></center><hr><center>rdwr</center></body></html>';
+    for (const body of [page, page.replace('validate.perfdrive.com, ssc', ''), page.replace('<center>rdwr</center>', '')]) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(body, { status: 302, headers: { Location: 'https://validate.example/check' } }));
+      await expect(new CorreosChileTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+      expect(fetcher).toHaveBeenCalledOnce();
+    }
+    const plain = vi.fn<typeof fetch>().mockResolvedValue(new Response('<html><center>nginx</center></html>', { status: 302 }));
+    await expect(new CorreosChileTracker({ fetcher: plain }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+  });
+
   it('preserves the single deadline and cancellation across bootstrap and tracking requests', async () => {
     const immediate = vi.fn<typeof fetch>().mockResolvedValue(pageResponse());
     await expect(new CorreosChileTracker({ fetcher: immediate }).fetch(NUMBER, { budgetMs: 0 }))

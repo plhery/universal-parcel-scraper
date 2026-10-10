@@ -46,6 +46,11 @@ export class CorreosChileTracker {
         });
         if (performance.now() >= deadline) throw new BudgetExceededError('Correos de Chile', budgetMs);
         signal.throwIfAborted();
+        // Radware's bot manager answers with a 302 page that sends the browser to
+        // its validation host, signed with its rdwr marker.
+        if (result.response.status === 302 && /validate\.perfdrive\.com|<center>rdwr<\/center>/i.test(decodeText(result.bytes))) {
+          throw new ChallengeError('Correos de Chile', 'Tracking page redirected to a bot check');
+        }
         if (result.response.status !== 200) {
           throw new IndeterminateError('Correos de Chile', 'Anonymous tracking resource is unavailable');
         }
