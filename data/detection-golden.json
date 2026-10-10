@@ -15725,6 +15725,15 @@
     ]
   },
   {
+    "input": "H0047C0059115519",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H00I5A0016803719",
     "carrier": "unknown",
     "confidence": "low",
@@ -15735,6 +15744,15 @@
   },
   {
     "input": "H00IAA2837885851",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H00MTC0094819738",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -15779,7 +15797,61 @@
     ]
   },
   {
+    "input": "H021SC0025881204",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H02SSA0001116024",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H037TC0044316147",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H0389C0000769444",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H0389C0000973928",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H03AHA0001245865",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H0431C0010139783",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -15806,7 +15878,34 @@
     ]
   },
   {
+    "input": "H04WQC0006873574",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H04YLC0002370689",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H0595C0000314450",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H0595C0001084692",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -15839,6 +15938,24 @@
     "candidates": []
   },
   {
+    "input": "H06R9C0000911076",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H071HC0000349178",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H0742A0312973872",
     "carrier": "unknown",
     "confidence": "low",
@@ -15848,7 +15965,25 @@
     ]
   },
   {
+    "input": "H07G3C0000017891",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
     "input": "H07TSA0001255372",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "evri",
+      "evri-uk"
+    ]
+  },
+  {
+    "input": "H07WRC0000036976",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
