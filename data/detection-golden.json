@@ -7275,6 +7275,24 @@
     ]
   },
   {
+    "input": "323212505100075400402247",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bpost",
+      "ciblex",
+      "inpost"
+    ],
+    "preferred": [
+      "bpost"
+    ],
+    "asked": [
+      "bpost",
+      "inpost",
+      "ciblex"
+    ]
+  },
+  {
     "input": "323245067847491492",
     "carrier": "unknown",
     "confidence": "low",
@@ -14901,6 +14919,14 @@
   },
   {
     "input": "CE500137339BE",
+    "carrier": "bpost",
+    "confidence": "high",
+    "candidates": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "CE642607416BE",
     "carrier": "bpost",
     "confidence": "high",
     "candidates": [

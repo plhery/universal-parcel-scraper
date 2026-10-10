@@ -259,6 +259,50 @@
         ]
       },
       "note": "Official parcel-barcode example; the documented prefix prioritizes recognition without asserting shipment existence."
+    },
+    {
+      "number": "CE642607416BE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260902084038/https://track.bpost.cloud/track/items?itemIdentifier=CE642607416BE",
+        "date": "2026-09-02",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "international parcel",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "bpost",
+        "confidence": "high"
+      },
+      "note": "A bpost tracking lookup for this number listed in the Wayback Machine's capture index. bpost's tracking returned a parcel posted in Belgium, carried by Landmark Global and waiting at a pickup point in France."
+    },
+    {
+      "number": "323212505100075400402247",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://track.bpost.cloud/track/items?itemIdentifier=323212505100075400402247",
+        "date": "2026-09-11",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ciblex",
+          "inpost"
+        ]
+      },
+      "note": "A bpost tracking lookup for this number listed in the Wayback Machine's capture index. bpost's tracking returned a parcel redirected between pickup points and collected there."
     }
   ]
 }
