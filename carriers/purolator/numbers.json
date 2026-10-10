@@ -363,6 +363,102 @@
         "confidence": "high"
       },
       "note": "A Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns its history."
+    },
+    {
+      "number": "610601361369",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260326204619/https://www.purolator.com/en/shipping/tracker?pins=610601361369",
+        "date": "2026-03-26",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "A twelve-digit Purolator PIN starting with a 6, whose tracking page the Wayback Machine archived. Purolator's tracker returns its history, from pickup to delivery."
+    },
+    {
+      "number": "603451229380",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251023071717/https://www.purolator.com/en/shipping/tracker?pin=603451229380&sdate=2015-05-07",
+        "date": "2025-10-23",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "A twelve-digit PIN starting with a 6 that passes the Luhn check, archived on Purolator's tracking page with a ship date years old. Purolator's tracker no longer finds it."
+    },
+    {
+      "number": "603532606119",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251016144854/https://www.purolator.com/en/shipping/tracker?pin=603532606119&sdate=2014-11-13",
+        "date": "2025-10-16",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "A twelve-digit PIN starting with a 6 that passes the Luhn check, archived on Purolator's tracking page with a ship date years old. Purolator's tracker no longer finds it."
     }
   ]
 }

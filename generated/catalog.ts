@@ -2814,6 +2814,11 @@ export const CARRIER_CATALOG = {
         "checksum": "luhn"
       },
       {
+        "pattern": "^6\\d{11}$",
+        "confidence": "low",
+        "checksum": "luhn"
+      },
+      {
         "pattern": "^(?!(?:BYS|LTN))[A-Z]{3}\\d{9}$",
         "confidence": "high"
       }
@@ -5751,7 +5756,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ukrposhta": ["ukrposhta-1","ukrposhta-s10"],
   "usps": ["usps-impb","usps-3","usps-1","usps-2","usps-impb-routing","usps-4","usps-s10"],
   "canada-post": ["canada-post-1","canada-post-2"],
-  "purolator": ["purolator-1","purolator-2"],
+  "purolator": ["purolator-1","purolator-pin-6","purolator-2"],
   "canpar": ["canpar-1"],
   "ontrac": ["ontrac-5","ontrac-1","ontrac-2","ontrac-3","ontrac-4"],
   "speedx": ["speedx-1","speedx-2"],

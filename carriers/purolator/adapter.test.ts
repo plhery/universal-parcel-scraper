@@ -5,6 +5,7 @@ import { adapter, PurolatorTracker } from './adapter.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { normalizePurolatorNumber, parsePurolator } from './parser.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 
 const NUMBER = '100000000001';
 const OTHER = '100000000002';
@@ -39,6 +40,7 @@ describe('Purolator direct tracking', () => {
     for (const [code, description, status, stage] of [
       ['9000', 'Shipment delivered', 'delivered', 'delivered'],
       ['3000', 'Shipper created a label', 'pending', 'registered'],
+      ['2300', 'Picked up by Purolator', 'in_transit', 'accepted'],
       ['0510', 'Delayed in transit due to rail delay', 'in_transit', 'in_transit'],
       ['7810', 'Cleared customs', 'in_transit', 'in_transit'],
       ['6500', 'Address correction required - resolution in progress', 'exception', 'exception'],
@@ -168,6 +170,13 @@ describe('Purolator direct tracking', () => {
     expect(headers.has('Cookie')).toBe(false);
     expect(normalizePurolatorNumber('100 000 000.001')).toBe(NUMBER);
     for (const invalid of ['123', 'BYS000000000', `${NUMBER}?tracking=other`]) expect(() => normalizePurolatorNumber(invalid)).toThrow(InvalidInputError);
+  });
+
+  it('accepts PINs that start with a 6 and offers them only when they pass the Luhn check', () => {
+    expect(normalizePurolatorNumber('600 000 000 007')).toBe('600000000007');
+    expect(() => normalizePurolatorNumber('700000000005')).toThrow(InvalidInputError);
+    expect(detectCarrierMatch('600000000007').candidates).toContain('purolator');
+    expect(detectCarrierMatch('600000000008').candidates).not.toContain('purolator');
   });
 
   it('classifies explicit AWS challenge replies, generic missing resources, malformed JSON, throttling and outages separately', async () => {

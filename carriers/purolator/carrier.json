@@ -75,6 +75,12 @@
       "checksum": "luhn"
     },
     {
+      "id": "purolator-pin-6",
+      "pattern": "^6\\d{11}$",
+      "confidence": "low",
+      "checksum": "luhn"
+    },
+    {
       "id": "purolator-2",
       "pattern": "^(?!(?:BYS|LTN))[A-Z]{3}\\d{9}$",
       "confidence": "high"

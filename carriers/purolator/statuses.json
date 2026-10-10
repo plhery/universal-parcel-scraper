@@ -2,6 +2,7 @@
   "carrier": "purolator",
   "entries": [
     { "code": "3010", "wording": "Label information electronically submitted", "language": "en", "stage": "registered", "confirmedBy": "live" },
+    { "code": "2300", "wording": "Picked up by Purolator", "language": "en", "stage": "accepted", "confirmedBy": "live" },
     { "code": "2380", "wording": "Picked up by Purolator", "language": "en", "stage": "accepted", "confirmedBy": "live" },
     { "code": "0300", "wording": "Arrived at sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "4060", "wording": "Arrived at sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live" },

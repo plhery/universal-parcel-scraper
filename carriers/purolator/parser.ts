@@ -8,7 +8,7 @@ import { classifyPurolatorStatus } from './status.js';
 
 export function normalizePurolatorNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^(?:[0-5]\d{11}|(?!BYS)[A-Z]{3}\d{9})$/.test(number)) throw new InvalidInputError('Purolator', 'Purolator requires a Purolator tracking PIN');
+  if (!/^(?:[0-6]\d{11}|(?!BYS)[A-Z]{3}\d{9})$/.test(number)) throw new InvalidInputError('Purolator', 'Purolator requires a Purolator tracking PIN');
   return number;
 }
 

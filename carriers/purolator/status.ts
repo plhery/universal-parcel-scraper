@@ -5,6 +5,7 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 const codes: Record<string, ClassifiedStatus> = {
   '3000': { status: 'pending', stage: 'registered' },
   '3010': { status: 'pending', stage: 'registered' },
+  '2300': { status: 'in_transit', stage: 'accepted' },
   '2380': { status: 'in_transit', stage: 'accepted' },
   '0200': { status: 'in_transit', stage: 'in_transit' },
   '0300': { status: 'in_transit', stage: 'in_transit' },
