@@ -32,8 +32,12 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 - Each event keeps its place, a town or hub with its country. A delivered parcel keeps
   its delivery time, and the destination country is kept; the origin country is not.
 - Recipient name, address, phone and signature fields are never read; a test asserts it.
-- Not used: ShipX (`api-shipx-pl.easypack24.net`). It is keyless but its success shape was
-  never confirmed. It might carry locker names and an estimate, so it stays the next lead.
+- The separate keyless ShipX route is `GET https://api-shipx-pl.easypack24.net/v1/tracking/{number}`.
+  Its [official schema](https://dokumentacja-inpost.atlassian.net/wiki/spaces/PL/pages/11731050)
+  includes locker names and addresses in `custom_attributes.target_machine_detail`.
+  `expected_flow` contains forecast stages, not completed scans or a delivery estimate.
+  ShipX does not cover every shipment the hub knows: its missing-item response cannot
+  discard hub history. Identity-bound positive retrieval is required before adding this source.
 
 ## Limitations
 

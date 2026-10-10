@@ -30,6 +30,19 @@ and nine digits only suggest UniUni: Intelcom's tracker accepts them too.
 Recognition looks them up at UniUni, whose tracker lists a reference it does not
 know as invalid.
 
+## Estimate endpoint lead
+
+The [official tracking client](https://www.uniuni.com/tracking/) also posts to
+`https://sj.uniexpress.ca/version2/orders/edd_information` with a `tnos` array
+and its public website key. It needs no account or browser session. The reply
+identifies each parcel by `tno`, with `edd_enabled` and `delivery_estimate`;
+an enabled record can still have no estimate.
+
+This adapter does not query that service. An estimate must match the parcel,
+have an enabled flag and retain its date or time-window precision without an
+invented offset. Its failure must leave tracking history usable, and a completed
+delivery or return must suppress the estimate.
+
 ## Live test
 
 Set `UNIUNI_TRACKING_NUMBER` outside the repository and run

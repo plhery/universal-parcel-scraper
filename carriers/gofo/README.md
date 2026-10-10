@@ -37,6 +37,21 @@ Detailed delivery prose and proof images are excluded. The weight has no
 verified unit, and estimates have no verified active-parcel provenance, so both
 are omitted. Proof lookup requires a postcode and is not queried.
 
+## Regional endpoint leads
+
+The official [French](https://www.gofo.com/fr/tracking-results/) and
+[Italian](https://www.gofo.com/it/tracking-results/) pages use a separate
+`POST /{region}/open-api/official/track/queryTrackV2` on `www.gofo.com`, with
+`numberList` in a JSON body and the page's `lang` header. The French route
+provides anonymous history without a token or browser. The Italian route is
+published by its client; its shipment retrieval is not established here.
+
+These regional networks need their own carrier ids. Their replies pair
+`trackingNumber` with `waybillNo` and carry `trackEventList`; the US parser's
+identity and clock rules cannot be reused unchanged. Offset-free `processDate`
+values remain local clocks. An empty result list does not establish parcel
+absence. Recipient verification and proof reads are separate from history.
+
 ## Live test
 
 Set `GOFO_TRACKING_NUMBER` outside the repository and run
