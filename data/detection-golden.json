@@ -12451,6 +12451,18 @@
     ]
   },
   {
+    "input": "70201290000043947769",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "7023210039414604",
     "carrier": "unknown",
     "confidence": "low",
@@ -14237,11 +14249,27 @@
     ]
   },
   {
+    "input": "9114901159818491962055",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
     "input": "91346097123456789012",
     "carrier": "planzer",
     "confidence": "high",
     "candidates": [
       "planzer"
+    ]
+  },
+  {
+    "input": "9200199992678200050497",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
     ]
   },
   {
@@ -14293,6 +14321,28 @@
     ]
   },
   {
+    "input": "92055902360629000000339661",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps"
+    ],
+    "preferred": [
+      "usps"
+    ]
+  },
+  {
+    "input": "92108901755477000015642562",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps"
+    ],
+    "preferred": [
+      "usps"
+    ]
+  },
+  {
     "input": "92243168110643",
     "carrier": "unknown",
     "confidence": "low",
@@ -14338,6 +14388,22 @@
       "relais-colis",
       "tipsa",
       "dhl-ecommerce-es"
+    ]
+  },
+  {
+    "input": "9234690363914900420615",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
+    "input": "9249090267338802160054",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
     ]
   },
   {
@@ -14446,6 +14512,17 @@
     ]
   },
   {
+    "input": "92612926998410543492584200",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps"
+    ],
+    "preferred": [
+      "usps"
+    ]
+  },
+  {
     "input": "92673858",
     "carrier": "unknown",
     "confidence": "low",
@@ -14550,6 +14627,24 @@
     ]
   },
   {
+    "input": "9361269901701007514836",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "dhl-ecommerce",
+      "austrian-post",
+      "estafeta"
+    ],
+    "preferred": [
+      "usps"
+    ],
+    "asked": [
+      "austrian-post",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "9361269903500011492028",
     "carrier": "unknown",
     "confidence": "low",
@@ -14583,6 +14678,14 @@
     "asked": [
       "austrian-post",
       "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "9374889692090679280873",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
     ]
   },
   {
@@ -14675,7 +14778,47 @@
     ]
   },
   {
+    "input": "9400136208303575551300",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
+    "input": "9405509699938427140330",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
     "input": "9405803699300124287899",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
+    "input": "9410803699300106691081",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
+    "input": "9418450899561003380423",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
+    "input": "9434 6508 9956 3068 6020 30",
     "carrier": "usps",
     "confidence": "high",
     "candidates": [
@@ -14737,6 +14880,14 @@
     ]
   },
   {
+    "input": "9489603699300000025094",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
     "input": "9500113562366007585132",
     "carrier": "usps",
     "confidence": "high",
@@ -14788,6 +14939,14 @@
     ]
   },
   {
+    "input": "9549015209416135255374",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
     "input": "9589071052700675045600",
     "carrier": "usps",
     "confidence": "high",
@@ -14797,6 +14956,14 @@
   },
   {
     "input": "9589071052702449080343",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
+    "input": "9590940288374005556043",
     "carrier": "usps",
     "confidence": "high",
     "candidates": [
@@ -16383,6 +16550,17 @@
     "confidence": "high",
     "candidates": [
       "an-post"
+    ]
+  },
+  {
+    "input": "CJ158165955US",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -19508,6 +19686,17 @@
     "confidence": "high",
     "candidates": [
       "ontrac"
+    ]
+  },
+  {
+    "input": "LJ150908992US",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
