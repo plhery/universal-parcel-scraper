@@ -58,6 +58,9 @@ once.
   as Swiss Post) becomes `delivery_carrier`; the host confirms the shipment
   through that carrier before switching. Lookalike hosts and userinfo URLs are
   ignored.
+- `zielland`, the destination country DHL names in English, becomes
+  `destination_country`, or `destination_country_name` when the name maps to no
+  ISO code. Nothing else of the delivery address is read.
 - Links to dhl.com name DHL, except DHL's division pages and DHL eCommerce's
   regional pages: the network they mean depends on the country, so they name
   none.
@@ -73,8 +76,8 @@ once.
   belonging to another DHL service, are explicit errors, not "not yet
   announced".
 - No weight, dimensions, sender or pickup-point data is read.
-- Recipient name, address, signature and service details are never read; a test
-  asserts it.
+- Recipient name, address (beyond its country), signature and service details
+  are never read; a test asserts it.
 
 ## Testing
 

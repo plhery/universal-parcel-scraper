@@ -25,7 +25,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { carrierIdFromPartnerLinks } from '../../core/catalog/hints.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { isoTime } from '../../core/time/index.js';
+import { countryCode, isoTime } from '../../core/time/index.js';
 import {
   clean as cleanText, fetchBounded, parseJsonBytes, TrawlClient, UpstreamHttpError, UpstreamNetworkError,
 } from '../../core/transport/index.js';
@@ -75,6 +75,14 @@ function date(value: unknown): string {
 
 function millis(value: unknown): number {
   return isoTime(value, TIMEZONE)?.timestamp ?? 0;
+}
+
+/** The destination country DHL names in `zielland`, never more of the address. */
+function destination(details: Record<string, unknown>): Pick<CarrierResult, 'destination_country' | 'destination_country_name'> {
+  const name = clean(details.zielland, 60);
+  if (!name) return {};
+  const code = countryCode(name);
+  return code ? { destination_country: code } : { destination_country_name: name };
 }
 
 function noData(): CarrierResult {
@@ -134,6 +142,7 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
     expected_delivery: ['delivered', 'returned'].includes(stage) ? null : expected.slice(0, 10) || null,
     timezone: TIMEZONE, events,
     ...(deliveryCarrier ? { delivery_carrier: deliveryCarrier } : {}),
+    ...destination(details),
   };
 }
 

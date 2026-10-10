@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { DHLSessionError, DHLTracker, dhlTrackingUrl, normalizeDHLTrackingNumber, parseDHLTrackingResponse } from './adapter.js';
 
@@ -76,6 +77,7 @@ describe('DHL public tracking normalization', () => {
       history: (result) => result.events?.length,
       location: (result) => result.events?.some((event) => event.location),
       eta: (result) => result.expected_delivery,
+      destination_country: (result) => result.destination_country,
     };
     const declared = json<{ capabilities: string[] }>('./carrier.json').capabilities;
     const result = parseDHLTrackingResponse(shipment(), NUMBER);
@@ -110,6 +112,33 @@ describe('DHL public tracking normalization', () => {
     expect(result.current_stage).toBe(stage);
     expect(result.status).toBe(status);
     expect(result.events?.[0]?.stage).toBe(stage);
+  });
+
+  it.each([
+    ['Germany', { destination_country: 'DE' }],
+    ['United Kingdom', { destination_country: 'GB' }],
+    ['Greece', { destination_country: 'GR' }],
+    ['Example Federation', { destination_country_name: 'Example Federation' }],
+  ])('reads the destination country %s and no more of the address', (zielland, expected) => {
+    const result = parseDHLTrackingResponse(shipment({ zielland }), NUMBER);
+    expect(result).toMatchObject(expected);
+    expect(JSON.stringify(result)).not.toContain('Private');
+  });
+
+  // ARCHITECTURE: an S10 item that names no partner is proposed to its
+  // destination's national post, which then has to confirm it.
+  it.each([
+    ['France', { carrier: 'la-poste', number: NUMBER, basis: 'destination' }],
+    ['Italy', null],
+  ])('proposes an S10 item bound for %s to that country’s post only when it has one', (zielland, expected) => {
+    const result = parseDHLTrackingResponse(shipment({ zielland }), NUMBER);
+    expect(deliveryHandoff('dhl', NUMBER, result)).toEqual(expected);
+  });
+
+  it('leaves the destination out when DHL names none', () => {
+    const result = parseDHLTrackingResponse(shipment({ zielland: undefined }), NUMBER);
+    expect(result).not.toHaveProperty('destination_country');
+    expect(result).not.toHaveProperty('destination_country_name');
   });
 
   it('uses the explicit delivered flag and removes stale estimates', () => {

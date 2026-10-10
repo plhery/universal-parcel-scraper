@@ -26,7 +26,8 @@
   "capabilities": [
     "history",
     "location",
-    "eta"
+    "eta",
+    "destination_country"
   ],
   "portal": {
     "url": "https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode={trackingNumber}",
@@ -37,6 +38,7 @@
       "history",
       "location",
       "eta",
+      "destination_country",
       "recipient_name",
       "recipient_address",
       "signature"
@@ -45,7 +47,8 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "destination_country"
     ],
     "discarded": [
       "recipient_name",
