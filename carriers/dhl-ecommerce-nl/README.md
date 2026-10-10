@@ -38,6 +38,11 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
 - The gateway also follows parcels of DHL's European road network that enter
   the Benelux, including German `JJD` numbers. Detection leaves those with DHL
   Paket; the adapter accepts them when the carrier is named.
+- It also answers a shipper's SSCC (`00` and eighteen digits with a valid GS1
+  check digit), seen on public tracking pages. A valid SSCC names no carrier,
+  so detection never offers DHL eCommerce Netherlands for one; the adapter
+  accepts it when the carrier is named. DHL Paket's own SSCCs (`0034043…`) stay
+  with DHL Paket.
 - PostNL prints `3S` barcodes too, nearly all with a four-letter customer code.
   DHL's usually carry three letters: three letters and eight to ten digits
   select DHL, and other two- and three-letter codes only suggest it. For

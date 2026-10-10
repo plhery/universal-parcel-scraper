@@ -1,3 +1,4 @@
+import { isValidSscc } from '../../core/detection/numericChecksums.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
@@ -12,11 +13,19 @@ const NOT_FOUND = 'No parcel found for the given key(s)';
 /** Stages that end a parcel's journey; a later notice or reminder does not undo them. */
 const FINAL: readonly Stage[] = ['delivered', 'returned'];
 
-/** The Benelux label families: JVGL and 3S barcodes, and the JJD licence plate of DHL's European road network. */
+/** A shipper's SSCC behind its GS1 `00`, outside the company prefixes DHL Paket issues its own under. */
+function isShipperSscc(number: string): boolean {
+  return isValidSscc(number) && !/^0034043[345]/.test(number);
+}
+
+/**
+ * The Benelux label families: JVGL and 3S barcodes, the JJD licence plate of
+ * DHL's European road network, and a shipper's SSCC.
+ */
 export function normalizeDhlEcommerceNlNumber(raw: string): string {
   const number = raw.trim().toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^(?:JVGL[A-Z0-9]{8,30}|3S[A-Z0-9]{9,18}|JJD[A-Z0-9]{8,30})$/.test(number)) {
-    throw new InvalidInputError(PROVIDER, 'DHL eCommerce Netherlands tracking requires a JVGL, 3S or JJD number');
+  if (!/^(?:JVGL[A-Z0-9]{8,30}|3S[A-Z0-9]{9,18}|JJD[A-Z0-9]{8,30})$/.test(number) && !isShipperSscc(number)) {
+    throw new InvalidInputError(PROVIDER, 'DHL eCommerce Netherlands tracking requires a JVGL, 3S, JJD or SSCC number');
   }
   return number;
 }

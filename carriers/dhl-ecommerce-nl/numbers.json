@@ -291,7 +291,7 @@
           "nz-post"
         ]
       },
-      "note": "A DHL eCommerce Netherlands tracking page for this number listed in the Wayback Machine's capture index. DHL's Dutch tracking gateway returned this shipper SSCC's delivered history, which the adapter's number check refuses."
+      "note": "A DHL eCommerce Netherlands tracking page for this number listed in the Wayback Machine's capture index. DHL's Dutch tracking gateway returned this shipper SSCC's delivered history."
     }
   ]
 }
