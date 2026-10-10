@@ -180,6 +180,25 @@ describe('Mondial Relay app service', () => {
     expect(() => parseMondialRelayApp({ steps: [] }, UID)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('reads the last leg of a home delivery as out for delivery where its milestone is dated', () => {
+    const home = detail(UID, '');
+    home[0]!.detail.steps = [
+      { number: 5, status: 'Colis livré au destinataire', date: null, events: [] },
+      { number: 4, status: 'Colis en cours de livraison', date: '2026-01-03T06:00:00Z', events: [
+        { label: 'Colis en route vers le point de livraison', date: '2026-01-03T06:00:00Z' },
+        { label: 'Colis expédié depuis le site EXAMPLE TOWN', date: '2026-01-03T06:00:00Z' },
+      ] },
+      { number: 3, status: "Colis sur l'agence de livraison", date: '2026-01-02T15:00:00Z', events: [
+        { label: 'Colis en route vers le point de livraison', date: '2026-01-02T15:00:00Z' },
+      ] },
+    ];
+    expect(parseMondialRelayApp(home, UID).events?.map((event) => [event.description, event.stage])).toEqual([
+      ['Colis en route vers le point de livraison', 'out_for_delivery'],
+      ['Colis expédié depuis le site EXAMPLE TOWN', 'in_transit'],
+      ['Colis en route vers le point de livraison', 'in_transit'],
+    ]);
+  });
+
   it('stops waiting for a renewal when the lookup is cancelled', async () => {
     const stalled = (() => new Promise<Response>(() => undefined)) as typeof fetch;
     const client = new MondialRelayAppClient({ refreshToken: REFRESH, fetcher: stalled, now: () => NOW });

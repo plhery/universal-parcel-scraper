@@ -338,7 +338,7 @@ describe('Mondial Relay response normalization', () => {
     ((fixture.Expedition as Record<string, unknown>).Evenements as unknown[])
       .push({ Date: '2026-08-29T09:00:00', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' });
     const result = parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
-    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'pickup_point']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'eta', 'pickup_point', 'delivered_at']);
     expect(result.pickup_point).toBeTruthy();
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.at(-1)?.location).toBe('EXAMPLE TOWN');
@@ -404,6 +404,97 @@ describe('Mondial Relay response normalization', () => {
       .toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(classifyStatus('Mise à jour de votre suivi'))
       .toEqual({ status: 'unknown', stage: 'in_transit' });
+  });
+
+  it('reads a returned merchant delivery as delivered and a replacement relay as movement', () => {
+    expect(classifyStatus("Votre colis a été livré à l'enseigne."))
+      .toEqual({ status: 'delivered', stage: 'delivered' });
+    for (const wording of ['Sollicitation Client pour replace colis', 'Relais de substitution choisi']) {
+      expect(classifyStatus(wording)).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    }
+  });
+
+  it('reads the last leg of a home delivery as out for delivery where its milestone is dated', () => {
+    const fixture = syntheticSuccessFixture();
+    const expedition = fixture.Expedition as Record<string, unknown>;
+    expedition.SuiviContextuel = 'Colis livré au destinataire';
+    expedition.DeliveryCountryParcel = 'FR';
+    expedition.Evenements = [
+      { Date: '2026-08-28T09:00:00.5', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' },
+      { Date: '2026-08-29T08:10:11.25', Libelle: 'Colis en route vers le point de livraison' },
+      { Date: '2026-08-29T11:42:00', Libelle: 'Colis livré au destinataire' },
+    ];
+    expedition.SuiviParEtapes = {
+      3: { Numero: 3, Libelle: "Colis sur l'agence de livraison", Evenement: { Date: '2026-08-28T09:00:00.5' } },
+      4: { Numero: 4, Libelle: 'Colis en cours de livraison', Evenement: { Date: '2026-08-29T08:10:11.250' } },
+      5: { Numero: 5, Libelle: 'Colis livré au destinataire', Evenement: { Date: '2026-08-29T11:42:00' } },
+    };
+    const result = parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
+    expect(result.events?.map((event) => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit']);
+    expect(result).toMatchObject({
+      status: 'delivered', delivered_at: '2026-08-29T11:42:00+02:00', destination_country: 'FR', expected_delivery: null,
+    });
+
+    // A relay delivery dates its fourth milestone at the parcel's arrival there.
+    (expedition.SuiviParEtapes as Record<string, Record<string, unknown>>)[4]!.Libelle = 'Colis disponible au point de retrait';
+    expedition.SuiviContextuel = 'Colis en route vers le point de livraison';
+    expedition.DeliveryCountryParcel = 'Belgique';
+    expedition.Evenements = (expedition.Evenements as unknown[]).slice(0, 2);
+    const relay = parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
+    expect(relay.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit']);
+    expect(relay).toMatchObject({ status: 'in_transit' });
+    expect(relay).not.toHaveProperty('delivered_at');
+    expect(relay).not.toHaveProperty('destination_country');
+  });
+
+  it('restages only the last-leg scan its out-for-delivery milestone is dated at', () => {
+    const fixture = syntheticSuccessFixture();
+    const expedition = fixture.Expedition as Record<string, unknown>;
+    expedition.SuiviContextuel = 'Colis livré au destinataire';
+    const stages = (events: Array<{ Date: string; Libelle: string }>, milestone: string) => {
+      expedition.Evenements = events;
+      expedition.SuiviParEtapes = {
+        4: { Numero: 4, Libelle: 'Colis en cours de livraison', Evenement: { Date: milestone } },
+        5: { Numero: 5, Libelle: 'Colis livré au destinataire', Evenement: { Date: '2026-08-29T11:42:00' } },
+      };
+      return parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL).events
+        ?.map((event) => [event.description, event.stage]);
+    };
+
+    // Another scan in the same second stays movement.
+    expect(stages([
+      { Date: '2026-08-29T08:10:11', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' },
+      { Date: '2026-08-29T08:10:11', Libelle: 'Colis en route vers le point de livraison' },
+      { Date: '2026-08-29T11:42:00', Libelle: 'Colis livré au destinataire' },
+    ], '2026-08-29T08:10:11')).toEqual([
+      ['Colis livré au destinataire', 'delivered'],
+      ['Colis expédié depuis le site EXAMPLE TOWN', 'in_transit'],
+      ['Colis en route vers le point de livraison', 'out_for_delivery'],
+    ]);
+    expect(stages([
+      { Date: '2026-08-29T08:10:11', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' },
+    ], '2026-08-29T08:10:11')).toEqual([['Colis expédié depuis le site EXAMPLE TOWN', 'in_transit']]);
+
+    // After a failed attempt, only the leg the milestone is dated at reads out for delivery.
+    expect(stages([
+      { Date: '2026-08-28T08:00:00', Libelle: 'Colis en route vers le point de livraison' },
+      { Date: '2026-08-28T15:00:00', Libelle: 'Échec de livraison' },
+      { Date: '2026-08-29T08:10:11', Libelle: 'Colis en route vers le point de livraison' },
+      { Date: '2026-08-29T11:42:00', Libelle: 'Colis livré au destinataire' },
+    ], '2026-08-29T08:10:11')?.map(([, stage]) => stage)).toEqual(['delivered', 'out_for_delivery', 'failed_attempt', 'in_transit']);
+  });
+
+  it('restores the leading zeroes of a shipment echoed as a JSON number', () => {
+    const fixture = syntheticSuccessFixture();
+    (fixture.Expedition as Record<string, unknown>).Numero = 1234567;
+    expect(parseMondialRelayTrackingResponse(fixture, '01234567', OFFICIAL_PAGE_POSTCODE))
+      .toMatchObject({ status: 'out_for_delivery' });
+    (fixture.Expedition as Record<string, unknown>).Numero = '1234567';
+    expect(() => parseMondialRelayTrackingResponse(fixture, '01234567', OFFICIAL_PAGE_POSTCODE))
+      .toThrow('invalid shipment number');
+    (fixture.Expedition as Record<string, unknown>).Numero = 1234568;
+    expect(() => parseMondialRelayTrackingResponse(fixture, '01234567', OFFICIAL_PAGE_POSTCODE))
+      .toThrow('different shipment');
   });
 
   it('reads the locker countdown as ready for pickup and the site scans as movement', () => {

@@ -61,12 +61,25 @@ for another shipment → `SchemaError`.
   for links and lookups.
 - Never read the barcode's routing suffix as a postcode: it looks like one, and a
   wrong postcode returns another parcel or nothing.
+- The website also finds an 8-digit shipment without a postcode when it is given
+  the brand code that notification links carry (`codeMarque`). The adapter has
+  no input for it.
+- Shipment numbers are reused: an old number can return a later parcel.
+- The website echoes the shipment as a JSON number, which drops leading zeroes;
+  they are put back before the identity check.
 - The postcode is part of the credential: kept out of logs, links and fixtures.
   The tracking link carries `numeroExpedition` only.
 - Status comes from the `SuiviContextuel` headline, then events, then the
   highest reached milestone (its label, then its number). The deciding stage is
   set as `current_stage`, because the status vocabulary has no pickup value and
   the sync would otherwise fall back to "out for delivery".
+- On a home delivery the website dates the "Colis en cours de livraison"
+  milestone at the scan that sends the parcel "en route vers le point de
+  livraison". That scan, and no other at that instant, reads out for delivery;
+  on a relay delivery it stays movement. The app's milestones are read the
+  same way.
+- The website names the delivery country, and a delivered parcel takes its
+  delivery scan's clock as its delivery time.
 - Website timestamps are offset-less Paris wall-clock. A bare calendar day stays
   a day. The estimate is reduced to a day and dropped once delivered or in
   exception. App timestamps are UTC instants, shown on Paris clocks.

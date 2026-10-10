@@ -8,7 +8,7 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import { cleanScalar, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
+import { classifyScan, classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
 
 export const MONDIAL_RELAY_APP_API = 'https://mobile-app-bff.mondialrelay.app/api/';
 const TOKEN_URL = 'https://account.inpost-group.com/oauth2/token';
@@ -84,6 +84,16 @@ function milestoneStatus(steps: readonly JsonObject[]): ClassifiedStatus | null 
   return worded.status !== 'unknown' ? worded : milestoneNumberStatus(Number(reached.number));
 }
 
+/** The instants of the reached milestones whose label reads out for delivery. */
+function outForDeliveryInstants(steps: readonly JsonObject[]): Set<number> {
+  const instants = new Set<number>();
+  for (const step of steps) {
+    const time = eventTime(step.date);
+    if (time && classifyStatus(cleanScalar(step.status, 200)).stage === 'out_for_delivery') instants.add(time.timestamp);
+  }
+  return instants;
+}
+
 /**
  * The relay or locker the detail names as the parcel's delivery point, as the
  * app shows it: `line1` is its name, the other lines and the town its address.
@@ -116,6 +126,7 @@ export function parseMondialRelayApp(payload: unknown, uid: string): CarrierResu
   const steps = parcel.detail.steps.filter(isRecord);
   const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus; timestamp: number }> = [];
   const seen = new Set<string>();
+  const outForDelivery = outForDeliveryInstants(steps);
   for (const step of steps) {
     for (const raw of Array.isArray(step.events) ? step.events : []) {
       if (!isRecord(raw)) continue;
@@ -125,7 +136,7 @@ export function parseMondialRelayApp(payload: unknown, uid: string): CarrierResu
       const identity = JSON.stringify([time.iso, description]);
       if (seen.has(identity)) continue;
       seen.add(identity);
-      const classified = classifyStatus(description);
+      const classified = classifyScan(description, time.timestamp, outForDelivery);
       parsed.push({ event: { time: time.iso, location: scanSite(description), description, stage: classified.stage }, classified, timestamp: time.timestamp });
     }
   }

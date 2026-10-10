@@ -48,6 +48,8 @@ export const MONDIAL_RELAY_WORDING: readonly { phrases: readonly string[]; class
     phrases: [
       'retire par le destinataire', 'retrait effectue', 'remis au destinataire',
       'livraison effectuee au destinataire', 'colis livre au destinataire',
+      // A return the merchant received: "Votre colis a été livré à l'enseigne."
+      'livre a l enseigne',
     ],
     classified: { status: 'delivered', stage: 'delivered' },
   },
@@ -93,6 +95,8 @@ export const MONDIAL_RELAY_WORDING: readonly { phrases: readonly string[]; class
       'en cours d acheminement', 'en transit', 'arrive sur l agence', 'arrive a l agence',
       'arrive au centre', 'depart de l agence', 'expedie vers', 'achemine vers',
       'expedie depuis', 'en cours de traitement sur le site', 'en route vers le point de livraison',
+      // The relay could not take the parcel and it goes on to another one.
+      'sollicitation client pour replace', 'relais de substitution',
     ],
     classified: { status: 'in_transit', stage: 'in_transit' },
   },
@@ -105,6 +109,21 @@ export function classifyStatus(description: string): ClassifiedStatus {
     if (rule.phrases.some((phrase) => value.includes(phrase))) return rule.classified;
   }
   return { status: 'unknown', stage: 'in_transit' };
+}
+
+const LAST_LEG = 'colis en route vers le point de livraison';
+const OUT_FOR_DELIVERY: ClassifiedStatus = { status: 'out_for_delivery', stage: 'out_for_delivery' };
+
+/**
+ * A scan's status, given the instants of the reached milestones whose label
+ * reads out for delivery. On a home delivery the carrier dates that milestone
+ * at the scan that sends the parcel "en route vers le point de livraison": the
+ * door, there. Only that scan, at that instant, reads out for delivery.
+ */
+export function classifyScan(description: string, timestamp: number, outForDelivery: ReadonlySet<number>): ClassifiedStatus {
+  return comparableText(description) === LAST_LEG && outForDelivery.has(timestamp)
+    ? OUT_FOR_DELIVERY
+    : classifyStatus(description);
 }
 
 /**

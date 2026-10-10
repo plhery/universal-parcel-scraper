@@ -24,7 +24,7 @@
     { "wording": "Vous attend au Point Relais", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "Vous attend dans le locker", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "Prêt à être retiré", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "" },
-    { "wording": "En cours de livraison", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Home-delivery offers; also matched as \"livraison en cours\"." },
+    { "wording": "En cours de livraison", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-09-12", "note": "The home-delivery milestone \"Colis en cours de livraison\", dated at the scan that sends the parcel on its last leg. Also matched as \"livraison en cours\"." },
     { "wording": "En cours de distribution", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "En cours de mise à disposition", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "Information transmise par l'expéditeur", "language": "fr", "stage": "registered", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Adapter result status: pending." },
@@ -46,6 +46,10 @@
     { "wording": "Colis en préparation chez l'expéditeur", "language": "fr", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-09-20", "note": "Adapter result status: pending." },
     { "wording": "Colis expédié depuis le site", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-20", "note": "Followed by the name of the logistics site." },
     { "wording": "Colis en cours de traitement sur le site", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-20", "note": "Followed by the name of the logistics site." },
-    { "wording": "Colis en route vers le point de livraison", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-20", "note": "" }
+    { "wording": "Colis en route vers le point de livraison", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-20", "note": "Read as out for delivery when the out-for-delivery milestone is dated at it, as on a home delivery." },
+    { "wording": "Votre colis a été livré à l'enseigne.", "language": "fr", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "Headline of a return the merchant received." },
+    { "wording": "Sollicitation Client pour replace colis", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "The relay could not take the parcel and the customer is asked to choose another; it then goes on to that relay." },
+    { "wording": "Relais de substitution choisi", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "Follows the request for another relay." },
+    { "wording": "Colis pris en charge en Locker", "language": "fr", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "The sender's drop-off at a locker; \"en Point Relais\" for a relay." }
   ]
 }

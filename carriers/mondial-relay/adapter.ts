@@ -13,7 +13,7 @@ import { isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, TrawlClient, type TrawlScrapeRequest, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { MondialRelayAppClient } from './app.js';
-import { classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
+import { classifyScan, classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://www.mondialrelay.fr/versioned-assets/2nMAiuVI9Rv9J3kZacblPYCfCABwzS-qZ3m7eFBQn4A/Scripts/vue/tracking/js/app.js
@@ -174,10 +174,23 @@ function relayPoint(detail: unknown): string {
     : name;
 }
 
+/** The instants of the reached milestones whose label reads out for delivery. */
+function outForDeliveryInstants(expedition: JsonObject): Set<number> {
+  const instants = new Set<number>();
+  if (!isRecord(expedition.SuiviParEtapes)) return instants;
+  for (const raw of Object.values(expedition.SuiviParEtapes)) {
+    if (!isRecord(raw) || !isRecord(raw.Evenement)) continue;
+    const time = eventTime(raw.Evenement.Date);
+    if (time && classifyStatus(plainText(raw.Libelle)).stage === 'out_for_delivery') instants.add(time.timestamp);
+  }
+  return instants;
+}
+
 function parseEvents(expedition: JsonObject): ParsedEvent[] {
   if (!Array.isArray(expedition.Evenements)) return [];
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
+  const outForDelivery = outForDeliveryInstants(expedition);
   expedition.Evenements.forEach((rawEvent, index) => {
     if (!isRecord(rawEvent)) return;
     const time = eventTime(rawEvent.Date);
@@ -186,7 +199,7 @@ function parseEvents(expedition: JsonObject): ParsedEvent[] {
     const identity = JSON.stringify([time.iso, description]);
     if (seen.has(identity)) return;
     seen.add(identity);
-    const classified = classifyStatus(description);
+    const classified = classifyScan(description, time.timestamp, outForDelivery);
     parsed.push({
       event: {
         time: time.iso,
@@ -239,7 +252,9 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
   }
 
   const expedition = payload.Expedition;
-  const returnedShipment = cleanScalar(expedition.Numero, 32).replace(/\s/g, '');
+  const echoed = cleanScalar(expedition.Numero, 32).replace(/\s/g, '');
+  // A shipment sent as a JSON number has lost its leading zeroes.
+  const returnedShipment = typeof expedition.Numero === 'number' && /^\d{1,7}$/.test(echoed) ? echoed.padStart(8, '0') : echoed;
   if (!/^(?:\d{8}|\d{10}|\d{12})$/.test(returnedShipment)) {
     throw new SchemaError('Mondial Relay', 'Mondial Relay returned an invalid shipment number');
   }
@@ -263,6 +278,8 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
   const stay = current?.stage === 'ready_for_pickup' ? parsedEvents : [];
   const arrived = stay.findIndex((event) => event.event.stage !== 'ready_for_pickup');
   const pickup = stay.slice(0, arrived < 0 ? undefined : arrived).find((event) => event.relay)?.relay;
+  const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
+  const destination = cleanScalar(expedition.DeliveryCountryParcel, 8);
 
   return {
     status,
@@ -275,6 +292,8 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
       ? null
       : expectedDelivery(expedition.EstimatedDeliveryDate),
     ...(pickup ? { pickup_point: pickup } : {}),
+    ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
     timezone: ZONE,
     events,
     source: 'mondial_relay_public_web',
