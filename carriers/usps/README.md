@@ -19,8 +19,8 @@ the PIC checksum and its channel identifiers: `92` to `94`, plus retail `95` and
 legacy `91` on 22-digit PICs.
 A 22-digit PIC selects USPS when its check digit passes and its Mailer ID fits the
 channel: nine digits starting with 9 for `92` and the legacy `91`, six digits
-starting with 0 to 8 for `93`. A 26-digit PIC on channel `92` or `93` selects USPS
-by the same test. Austrian Post and Estafeta also issue 22-digit
+starting with 0 to 8 for `93`. A 26-digit PIC on channel `92` selects USPS by the
+same test; one on `93` stays a suggestion. Austrian Post and Estafeta also issue 22-digit
 numbers, but none known starts with a USPS channel. DHL eCommerce tracks the `9261`
 and `9361` families as well, so those stay suggestions. A routing barcode selects USPS
 when its PIC would, unless a ZIP+4 add-on starting with 92 to 94 could also open a

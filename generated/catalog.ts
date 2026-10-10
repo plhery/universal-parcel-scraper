@@ -2713,7 +2713,7 @@ export const CARRIER_CATALOG = {
         "checksum": "usps"
       },
       {
-        "pattern": "^(?!9[23]61)(?:92\\d{3}9\\d{20}|93\\d{3}[0-8]\\d{20})$",
+        "pattern": "^(?!9261)92\\d{3}9\\d{20}$",
         "confidence": "high",
         "checksum": "usps"
       },

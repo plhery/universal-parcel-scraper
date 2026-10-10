@@ -65,12 +65,12 @@ describe('USPS whole package barcodes', () => {
     expect(detectCarrierMatch(PIC26)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
   });
 
-  it('selects USPS for a 26-digit PIC whose Mailer ID fits its channel', () => {
-    // Made-up PICs for channel 92 (nine-digit MID) and 93 (six-digit MID).
-    for (const pic of ['92055900000000000123456786', '93001000000001234567890125']) {
-      expect(detectCarrierMatch(pic)).toMatchObject({ carrier: 'usps', confidence: 'high', candidates: ['usps'] });
-      expect(recognitionCandidates(pic)).toEqual([]);
-    }
+  it('selects USPS for a 26-digit channel 92 PIC whose Mailer ID fits', () => {
+    // A made-up channel 92 PIC with a nine-digit MID.
+    expect(detectCarrierMatch('92055900000000000123456786')).toMatchObject({ carrier: 'usps', confidence: 'high', candidates: ['usps'] });
+    expect(recognitionCandidates('92055900000000000123456786')).toEqual([]);
+    // Channel 93 at 26 digits has too few public examples, so it stays a suggestion.
+    expect(detectCarrierMatch('93001000000001234567890125')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
     expect(detectCarrierMatch('92055900000000000123456787')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
     // The 9261 family stays a suggestion, as at 22 digits.
     expect(detectCarrierMatch('92612900000000000123456781')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['usps'] });
