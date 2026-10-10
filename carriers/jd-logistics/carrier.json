@@ -22,7 +22,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "provider_code"
   ],
   "portal": {
     "url": "https://www.jingdonglogistics.com/Tracking?waybillCodes={trackingNumber}",

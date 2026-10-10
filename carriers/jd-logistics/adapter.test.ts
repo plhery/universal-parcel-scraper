@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { JdLogisticsTracker } from './adapter.js';
 import { parseJdLogistics } from './parser.js';
 
@@ -62,6 +63,56 @@ describe('JD Logistics international projection', () => {
   it.each(['+99:00', '+02:99', '+14:01', '-1500'])('rejects an impossible offset: %s', offset => {
     const reply = history(); reply.data[0]!.wayBillTrackItemDtoList[0]!.trackNodeList[0]!.operatorTime = `2026-09-03T10:00:00${offset}`;
     expect(() => parseJdLogistics(reply, NUMBER)).toThrow('invalid scan offset');
+  });
+
+  it('stages scans by their operation code and keeps it', () => {
+    const reply = history();
+    const nodes = reply.data[0]!.wayBillTrackItemDtoList[0]!.trackNodeList as Record<string, unknown>[];
+    nodes[0] = { ...nodes[0], operatorDesc: 'Your package has been signed for, thank you for choosing JD Logistics!', operationCode: 'DLV' };
+    nodes[1] = { ...nodes[1], operatorDesc: 'Your package has begun clearance', operationCode: 'CCL' };
+    nodes.push({ operatorTime: '2026-09-01 08:00:00', operatorDesc: 'Something new', operationCode: 'ZZZ', timeZone: 'UTC+8' });
+    const result = parseJdLogistics(reply, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
+    expect(result.events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['DLV', 'delivered', 'carrier_map'], ['CCL', 'customs', 'carrier_map'], ['ZZZ', undefined, undefined],
+    ]);
+  });
+
+  it('drops the courier\'s name and phone from the out-for-delivery wording', () => {
+    const reply = history();
+    const nodes = reply.data[0]!.wayBillTrackItemDtoList[0]!.trackNodeList as Record<string, unknown>[];
+    nodes[0] = { ...nodes[0], operationCode: 'DMLMLS',
+      operatorDesc: 'Your package is on the way; the courier is 【EXP-Jane Example Courier，500000000】, please be   patient.' };
+    const result = parseJdLogistics(reply, NUMBER);
+    expect(result.events?.[0]).toMatchObject({ description: 'Your package is on the way; please be patient.', stage: 'out_for_delivery' });
+    expect(result.last_status_text).toBe('Your package is on the way; please be patient.');
+    expect(JSON.stringify(result)).not.toMatch(/Jane|500000000/);
+    // Bracketed places stay.
+    nodes[0] = { ...nodes[0], operationCode: 'VUVU', operatorDesc: 'Your package has been unloaded at【Example Hub】' };
+    expect(parseJdLogistics(reply, NUMBER).events?.[0]?.description).toBe('Your package has been unloaded at【Example Hub】');
+  });
+
+  it('lets a stored row that still holds the courier\'s contact take the redacted scan', () => {
+    const policy = sameInstantIdentityPolicy('jd-logistics', { supportsScanMatching: true });
+    const stored = { stage: 'in_transit', location: 'Example Province',
+      description: 'Your package is on the way; the courier is 【EXP-Jane Example Courier，500000000】, please be   patient.', providerCode: '' };
+    const incoming = { stage: 'out_for_delivery', location: 'Example Province',
+      description: 'Your package is on the way; please be patient.', providerCode: 'DMLMLS' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, { ...stored, location: 'Another Province' })).toBe(false);
+    expect(policy?.matches?.(incoming, { ...stored, description: 'Your package has been unloaded at【Example Hub】' })).toBe(false);
+  });
+
+  it('lets a scan stored before its code was kept take the code and its stage', () => {
+    const policy = sameInstantIdentityPolicy('jd-logistics', { supportsScanMatching: true });
+    expect(sameInstantIdentityPolicy('jd-logistics')).toBeUndefined();
+    const stored = { stage: '', description: 'Your package has been signed for', location: 'Example City', providerCode: '' };
+    const incoming = { ...stored, stage: 'delivered', providerCode: 'DLV' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    for (const different of [{ ...stored, providerCode: 'CCL' }, { ...stored, description: 'Order Created.' }, { ...stored, location: 'Another City' }]) {
+      expect(policy?.matches?.(incoming, different)).toBe(false);
+    }
+    expect(policy?.matches?.({ ...incoming, providerCode: '' }, stored)).toBe(false);
   });
 
   it('sends the official anonymous request with the caller signal', async () => {

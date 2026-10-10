@@ -18612,6 +18612,14 @@
     ]
   },
   {
+    "input": "JDW100615049942",
+    "carrier": "jd-logistics",
+    "confidence": "high",
+    "candidates": [
+      "jd-logistics"
+    ]
+  },
+  {
     "input": "JDX035829559533",
     "carrier": "jd-logistics",
     "confidence": "high",

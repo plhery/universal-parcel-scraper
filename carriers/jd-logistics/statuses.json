@@ -1,4 +1,61 @@
 {
   "carrier": "jd-logistics",
-  "entries": []
+  "entries": [
+    {
+      "code": "COSH",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Order created."
+    },
+    {
+      "code": "CCL",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Clearance begun."
+    },
+    {
+      "code": "CXCCRS",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Clearance completed."
+    },
+    {
+      "code": "DMSCR",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Unloaded at a sorting center."
+    },
+    {
+      "code": "SCVS",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Loaded at a sorting center."
+    },
+    {
+      "code": "VUVU",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Unloaded at a destination site."
+    },
+    {
+      "code": "DMLMLS",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "On the way with the courier."
+    },
+    {
+      "code": "DLV",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Signed for."
+    }
+  ]
 }
