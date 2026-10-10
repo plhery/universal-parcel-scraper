@@ -901,6 +901,215 @@
         ]
       },
       "note": "A UPS tracking link archived by the Wayback Machine. Its check digit fails and UPS's tracker rejects it as an invalid request, so detection keeps it a low-confidence suggestion."
+    },
+    {
+      "number": "1Z2FR0640200930520",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251116182955/https://www.ups.com/track?track=Track&TypeOfInquiryNumber=T&InquiryNumber1=1Z2FR0640200930520",
+        "date": "2025-11-16",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code 02. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z12FY431290735979",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251116074106/https://www.ups.com/track?HTMLVersion=5.0&Requester=NES&AgreeToTermsAndConditions=yes&loc=en_US&tracknum=1Z12FY431290735979",
+        "date": "2025-11-16",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code 12. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1ZE72A784201320700",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251226183834/https://www.ups.com/track?tracknums_displayed=5&TypeOfInquiryNumber=T&HTMLVersion=4.0&InquiryNumber1=1ZE72A784201320700&track=Track",
+        "date": "2025-12-26",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code 42. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1ZA69A791385264185",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251103172013/https://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=1ZA69A791385264185",
+        "date": "2025-11-03",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code 13. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z6F2197P254688438",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251029095252/https://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=1Z6F2197P254688438",
+        "date": "2025-10-29",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code P2. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z826E592012600933",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251115001628/https://www.ups.com/track?tracknums_displayed=1&TypeOfInquiryNumber=T&HTMLVersion=4.0&InquiryNumber1=1Z826E592012600933",
+        "date": "2025-11-15",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code 20. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z2543909064425405",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251027042308/https://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=1Z2543909064425405&loc=en_us",
+        "date": "2025-10-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code 90. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z114813A802830433",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251027162342/https://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=1Z114813A802830433&loc=en_us",
+        "date": "2025-10-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code A8. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z3YE028D995556900",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251027040419/https://www.ups.com/track?InquiryNumber1=1Z3YE028D995556900&TypeOfInquiryNumber=T&AcceptUPSLicenseAgreement=yes&submit=Track",
+        "date": "2025-10-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code D9. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1ZW48E67DA95018957",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251102230304/https://wwwapps.ups.com/WebTracking/track?loc=tr_TR&trackNums=1ZW48E67DA95018957&track.x=Submit",
+        "date": "2025-11-02",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code DA. UPS tracking needs the browser service, so it was not checked here."
+    },
+    {
+      "number": "1Z094834NY00038082",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251103082704/https://www.ups.com/track?tracknums_displayed=1&TypeOfInquiryNumber=T&HTMLVersion=4.0&InquiryNumber1=1Z094834NY00038082",
+        "date": "2025-11-03",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A UPS tracking link archived by the Wayback Machine, with service code NY. UPS tracking needs the browser service, so it was not checked here."
     }
   ]
 }

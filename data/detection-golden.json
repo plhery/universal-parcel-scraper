@@ -5118,6 +5118,14 @@
     ]
   },
   {
+    "input": "1Z094834NY00038082",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1Z0F2R789591320579",
     "carrier": "ups",
     "confidence": "high",
@@ -5127,6 +5135,22 @@
   },
   {
     "input": "1Z0Y59X66829152727",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1Z114813A802830433",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1Z12FY431290735979",
     "carrier": "ups",
     "confidence": "high",
     "candidates": [
@@ -5198,6 +5222,22 @@
     ]
   },
   {
+    "input": "1Z2543909064425405",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1Z2FR0640200930520",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1Z2Y363W6790639911",
     "carrier": "ups",
     "confidence": "high",
@@ -5207,6 +5247,14 @@
   },
   {
     "input": "1Z30R55F6867987158",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1Z3YE028D995556900",
     "carrier": "ups",
     "confidence": "high",
     "candidates": [
@@ -5262,6 +5310,14 @@
     ]
   },
   {
+    "input": "1Z6F2197P254688438",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1Z749EF46815786810",
     "carrier": "ups",
     "confidence": "high",
@@ -5271,6 +5327,14 @@
   },
   {
     "input": "1Z804W906858079845",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1Z826E592012600933",
     "carrier": "ups",
     "confidence": "high",
     "candidates": [
@@ -5318,7 +5382,23 @@
     ]
   },
   {
+    "input": "1ZA69A791385264185",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1ZA70B226827462186",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1ZE72A784201320700",
     "carrier": "ups",
     "confidence": "high",
     "candidates": [
@@ -5383,6 +5463,14 @@
   },
   {
     "input": "1ZW344W07914293490",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
+    "input": "1ZW48E67DA95018957",
     "carrier": "ups",
     "confidence": "high",
     "candidates": [
