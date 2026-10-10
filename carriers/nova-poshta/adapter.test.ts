@@ -43,10 +43,59 @@ describe('Nova Poshta movement parser', () => {
   it('projects only actual dated movements and keeps the carrier current point', () => {
     const result = parseNovaPoshtaHistory(history(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-03T10:00:00Z',
-      last_update: '2026-01-03T10:00:00Z', expected_delivery: '2026-01-03T12:00:00Z', weight_kg: 2.5 });
+      last_update: '2026-01-03T10:00:00Z', weight_kg: 2.5, destination_country: 'UA' });
+    expect(result.expected_delivery).toBeUndefined();
     expect(result.events).toHaveLength(3); expect(result.summary_only).toBeUndefined();
     expect(result.events?.map(row => row.stage)).toEqual(['delivered', 'ready_for_pickup', 'accepted']);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE-SYNTHETIC|Future delivery/);
+  });
+  it('keeps the schedule only while the parcel is on its way', () => {
+    const value = history(); value.tracking = value.tracking.slice(0, 1); value.tracking[0].event_status = 'now';
+    expect(parseNovaPoshtaHistory(value, NUMBER)).toMatchObject({ status: 'in_transit', expected_delivery: '2026-01-03T12:00:00Z' });
+    const waiting = history(); waiting.tracking = waiting.tracking.slice(0, 2); waiting.tracking[1].event_status = 'now';
+    expect(parseNovaPoshtaHistory(waiting, NUMBER).expected_delivery).toBeUndefined();
+  });
+  it('names the branch or locker the parcel waits at or was collected from', () => {
+    const value = history();
+    for (const row of value.tracking) row.division_name = 'parcel locker 2';
+    expect(parseNovaPoshtaHistory(value, NUMBER).pickup_point).toBe('parcel locker 2\nSample City');
+    value.tracking = value.tracking.slice(0, 2); value.tracking[1].event_status = 'now'; delete value.tracking[1].settlement_name;
+    expect(parseNovaPoshtaHistory(value, NUMBER)).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'parcel locker 2' });
+    const door = history(); door.tracking[2].event = 'ReceivedDoors'; door.tracking[2].event_name = 'Delivered at the address';
+    door.tracking[2].division_name = 'depot 1';
+    expect(parseNovaPoshtaHistory(door, NUMBER)).toMatchObject({ status: 'delivered' });
+    expect(parseNovaPoshtaHistory(door, NUMBER).pickup_point).toBeUndefined();
+  });
+  it('reads a return to the sending branch as returned, not delivered', () => {
+    const value = history();
+    value.tracking[1] = { ...value.tracking[1], code: '102', event: 'OrderCargoReturn', event_name: 'Return', division_name: 'customs terminal' };
+    value.tracking[2] = { ...value.tracking[2], event: 'ShipmentReturnReceived', event_name: 'Returned', division_name: 'branch 1' };
+    const result = parseNovaPoshtaHistory(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map' });
+    expect(result.events?.slice(0, 2).map(row => row.stage)).toEqual(['returned', 'returned']);
+    expect(result.delivered_at).toBeUndefined(); expect(result.pickup_point).toBeUndefined();
+    expect(result.expected_delivery).toBeUndefined(); expect(result.destination_country).toBeUndefined();
+  });
+  it('maps customs clearance in progress and a changed delivery time', () => {
+    const value = history();
+    value.tracking[0] = { ...value.tracking[0], code: '119', event: 'DeclarationCustomsClearanceInitiated', event_name: 'Customs clearance in progress' };
+    value.tracking[1] = { ...value.tracking[1], code: '112', event: 'ChangingTheDateWithTimeInterval', event_name: 'The recipient has changed the delivery time' };
+    const events = parseNovaPoshtaHistory(value, NUMBER).events!;
+    expect(events[1]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map', provider_code: '112' });
+    expect(events[2]).toMatchObject({ stage: 'customs', stage_source: 'carrier_map', provider_code: '119' });
+  });
+  it('reads one parcel\'s size, the destination country and a partner abroad', () => {
+    const value = history();
+    value.parcels[0] = { ...value.parcels[0], length: 40, width: 30, height: 20.5 };
+    value.recipient.country_code = 'de';
+    value.alternativeNumbersGWNew.push({ name: 'ClientOrder', number: 'ORDER-1' }, { name: 'UPS', number: '1z999aa10123456784' });
+    expect(parseNovaPoshtaHistory(value, NUMBER)).toMatchObject({ dimensions_text: '40 × 30 × 20.5 cm', destination_country: 'DE',
+      delivery_carrier: 'ups', delivery_tracking_number: '1Z999AA10123456784' });
+    value.parcels.push({ number: '59000000000001', length: 10, width: 10, height: 10 });
+    value.alternativeNumbersGWNew = value.alternativeNumbersGWNew.filter((reference: { name: string }) => reference.name !== 'UPS');
+    value.alternativeNumbersGWNew.push({ name: 'constructor', number: 'ABCDEFGH1234' });
+    const result = parseNovaPoshtaHistory(value, NUMBER);
+    expect(result.dimensions_text).toBeUndefined(); expect(result.delivery_carrier).toBeUndefined();
   });
   it('binds rerouted movements only to returned delivery references', () => {
     const value = history(); value.alternativeNumbersGWNew.push({ name: 'NPU_Redirecting', number: '59000000000002' });

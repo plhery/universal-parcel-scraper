@@ -28,7 +28,13 @@
     "history",
     "location",
     "eta",
-    "weight"
+    "weight",
+    "dimensions",
+    "pickup_point",
+    "delivered_at",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://novaposhta.ua/en/tracking/{trackingNumber}",
@@ -39,23 +45,35 @@
       "history",
       "location",
       "eta",
-      "weight"
+      "weight",
+      "dimensions",
+      "pickup_point",
+      "destination_country",
+      "delivery_partner",
+      "delivery_partner_reference"
     ],
     "scraped": [
       "status",
       "history",
       "location",
       "eta",
-      "weight"
+      "weight",
+      "dimensions",
+      "pickup_point",
+      "destination_country",
+      "delivery_partner",
+      "delivery_partner_reference"
     ],
     "discarded": [
       "recipient_details",
       "sender_details",
       "addresses",
-      "payment_details"
+      "payment_details",
+      "origin_country",
+      "order_references"
     ],
     "unavailable": [
-      "pickup_point"
+      "sender_name"
     ]
   },
   "links": [
