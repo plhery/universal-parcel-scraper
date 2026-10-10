@@ -2,6 +2,7 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { CarrierError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -78,6 +79,18 @@ function pickupPoint(raw: unknown): string | null {
   return [name, city].filter(Boolean).join('\n');
 }
 
+// Posti's main status stays at pre-advice until the item reaches Posti, while
+// an inbound item already moves abroad under the origin post's scans.
+const BEFORE_ARRIVAL = new Set(['ORDER_RECEIVED', 'WAITING']);
+const MOVING = new Set(['accepted', 'in_transit', 'customs']);
+
+/** The newest scan's movement where the main status still says pre-advice. */
+function currentStatus(main: ClassifiedStatus | undefined, code: string, events: readonly CarrierEvent[]): ClassifiedStatus | undefined {
+  if (!main || !BEFORE_ARRIVAL.has(code)) return main;
+  const moved = events.find((event) => event.stage && event.stage !== 'pending')?.stage;
+  return moved && MOVING.has(moved) ? { status: 'in_transit', stage: moved as Stage } : main;
+}
+
 /**
  * Whether the parcel waits at its pickup point, or was collected there: its
  * last movement before the delivery made it ready for pickup.
@@ -126,7 +139,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       stage: postiEventStage(description),
     };
   }).sort((left, right) => (Date.parse(right.time || '') || 0) - (Date.parse(left.time || '') || 0)).slice(0, 100);
-  const current = postiStatus(hit.status.main, hit.status.subStatus);
+  const current = currentStatus(postiStatus(hit.status.main, hit.status.subStatus), hit.status.main, events);
   const measurements = isRecord(hit.measurements) ? hit.measurements : {};
   const dimensions = ['length', 'width', 'height'].map((field) => measurement(measurements[field], { cm: 1, mm: 0.1, m: 100 }));
   return {

@@ -43,6 +43,25 @@ describe('Posti projection', () => {
     }
   });
 
+  it('lets the scans of an inbound item outrank a main status still at pre-advice', () => {
+    const data = fixture();
+    const waiting = (main: string, events: object[]) => parse({ data: { consumerSearchShipments: { totalHits: 1, hits: [{
+      ...hit(data), status: { main, subStatus: [] }, events,
+    }] } } }, NUMBER);
+    const advice = { eventDescription: 'We have received information about an upcoming delivery from the sender', city: '', timestamp: '2026-01-10T09:00:00Z' };
+    const mailed = { eventDescription: 'Item is in transport in country of origin.', city: '', timestamp: '2026-01-11T09:00:00Z' };
+    const departed = { eventDescription: 'Item has departed from country of origin', city: '', timestamp: '2026-01-12T09:00:00Z' };
+    const notice = { eventDescription: 'We sent the recipient a text message about the item', city: '', timestamp: '2026-01-13T09:00:00Z' };
+    for (const main of ['WAITING', 'ORDER_RECEIVED']) {
+      expect(waiting(main, [departed, mailed])).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', provider_status: main });
+      expect(waiting(main, [notice, departed])).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+      expect(waiting(main, [advice])).toMatchObject({ status: 'pending', current_stage: 'registered' });
+      expect(waiting(main, [])).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    }
+    // A main status past pre-advice keeps its own stage.
+    expect(waiting('READY_FOR_PICKUP', [departed])).toMatchObject({ current_stage: 'ready_for_pickup' });
+  });
+
   it('keeps the pickup point a delivered parcel was collected from, and no other', () => {
     const data = fixture('ready-for-pickup');
     const delivered = (events: object[]) => parse({ data: { consumerSearchShipments: { totalHits: 1, hits: [{

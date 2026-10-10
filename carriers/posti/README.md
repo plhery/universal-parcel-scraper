@@ -43,7 +43,10 @@ Bootstrap, lookup and refresh share one cancellable 15-second budget.
   responses stay failures.
 - Parcel-level enums (`status.main`/`subStatus`) and each event's English label are mapped
   independently. The main status wins even when its scan is missing, and past events never
-  inherit it.
+  inherit it. The exception is pre-advice (`WAITING`, `ORDER_RECEIVED`): Posti keeps it until
+  the item reaches Posti, while an inbound item already moves under the origin post's scans
+  ("Item has departed from country of origin"). There the newest scan that shows movement
+  (acceptance, transit or customs) sets the current stage.
 - Pickup availability is not delivery; transport back to the sender is not a completed
   return. Notification and pre-advice rows prove no movement.
 - `reasonDescription` is shown but never used to classify.
