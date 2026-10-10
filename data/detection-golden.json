@@ -3089,6 +3089,21 @@
     ]
   },
   {
+    "input": "123456789012345678900000",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ciblex",
+      "inpost",
+      "bpost"
+    ],
+    "asked": [
+      "inpost",
+      "bpost",
+      "ciblex"
+    ]
+  },
+  {
     "input": "12345678901234E",
     "carrier": "unknown",
     "confidence": "low",
@@ -9727,36 +9742,6 @@
       "colis-prive",
       "sto",
       "j-and-t"
-    ]
-  },
-  {
-    "input": "560815852502035603344150",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "ciblex",
-      "inpost",
-      "bpost"
-    ],
-    "asked": [
-      "inpost",
-      "bpost",
-      "ciblex"
-    ]
-  },
-  {
-    "input": "560815852502035613344150",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "ciblex",
-      "inpost",
-      "bpost"
-    ],
-    "asked": [
-      "inpost",
-      "bpost",
-      "ciblex"
     ]
   },
   {
