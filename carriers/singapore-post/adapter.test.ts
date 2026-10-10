@@ -49,6 +49,30 @@ describe('Singapore Post result projection', () => {
     expect(() => parse(contradictory, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('reads a letterbox delivery as delivered at its scan time', () => {
+    const payload = fixture();
+    payload.items[0].events.unshift(
+      { statusDescription: 'Item delivered to letterbox', date: '2026-03-14T13:00:00.000+08:00', location: 'Example Delivery Base', eventDescription: 'FD' },
+    );
+    payload.items[0].events.splice(1, 0,
+      { statusDescription: 'Out for delivery.', date: '2026-03-14T09:00:00.000+08:00', location: 'Example Delivery Base', eventDescription: 'AL' });
+    const result = normalizeCarrierResult(parse(payload, NUMBER));
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-03-14T13:00:00+08:00' });
+    expect(result.events?.[1]).toMatchObject({ provider_code: 'AL', stage: 'out_for_delivery' });
+    expect(normalizeCarrierResult(parse(fixture(), NUMBER)).delivered_at).toBeUndefined();
+  });
+
+  it('reads the Speedpost row of dashes as a missing item only when the marker says so', () => {
+    const dashes = { statusDescription: '-', date: '-', location: '-', beatNo: '', details: '', aceStatusCode: '-' };
+    const missing = fixture('not-found');
+    Object.assign(missing.items[0], { itemType: 'Speedpost', events: [dashes] });
+    expect(() => parse(missing, NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+    const found = structuredClone(missing); found.items[0].trackingNumberFound = 'true';
+    const mixed = structuredClone(missing); mixed.items[0].events.push(fixture().items[0].events[0]);
+    const dated = structuredClone(missing); dated.items[0].events[0].date = '2026-03-12T14:30:03';
+    for (const payload of [found, mixed, dated]) expect(() => parse(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it.each(['date', 'description', 'record'])('rejects an invalid latest %s instead of promoting an older scan', (mode) => {
     const payload = fixture();
     if (mode === 'date') payload.items[0].events[0].date = '2026-02-30T14:30:00+08:00';
@@ -69,7 +93,10 @@ describe('Singapore Post result projection', () => {
 
   it('proves the declared capabilities with synthetic fixtures', () => {
     const result = parse(fixture(), NUMBER);
-    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)) };
+    const delivered = fixture();
+    delivered.items[0].events.unshift({ statusDescription: 'Item delivered to letterbox', date: '2026-03-14T13:00:00.000+08:00', location: '', eventDescription: 'FD' });
+    const checks: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some((event) => event.location)),
+      delivered_at: Boolean(parse(delivered, NUMBER).delivered_at) };
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     for (const capability of metadata.capabilities) expect(checks[capability], capability).toBe(true);
   });

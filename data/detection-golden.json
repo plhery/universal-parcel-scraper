@@ -19581,6 +19581,14 @@
     ]
   },
   {
+    "input": "LQ097241126SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
+    ]
+  },
+  {
     "input": "LR288565359NL",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -20640,6 +20648,14 @@
     "candidates": []
   },
   {
+    "input": "PP023977837SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
+    ]
+  },
+  {
     "input": "PQ5HG7020002857V",
     "carrier": "correos-spain",
     "confidence": "high",
@@ -21363,6 +21379,14 @@
     ]
   },
   {
+    "input": "RT189178177SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
+    ]
+  },
+  {
     "input": "RU483017223HK",
     "carrier": "hongkong-post",
     "confidence": "high",
@@ -21520,6 +21544,14 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "SM607086634SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
     ]
   },
   {
@@ -22402,6 +22434,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "UT005176083SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
+    ]
   },
   {
     "input": "UT168665911TY",

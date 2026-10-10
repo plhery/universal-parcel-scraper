@@ -96,6 +96,20 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28"
+    },
+    {
+      "code": "AL",
+      "wording": "Out for delivery.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "FD",
+      "wording": "Item delivered to letterbox",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
     }
   ]
 }

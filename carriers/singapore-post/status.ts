@@ -13,6 +13,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['PL', { status: 'in_transit', stage: 'in_transit' }],
   ['DP', { status: 'in_transit', stage: 'accepted' }],
   ['IR', { status: 'pending', stage: 'registered' }],
+  ['AL', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['FD', { status: 'delivered', stage: 'delivered' }],
 ]);
 
 export function singaporePostStatus(code: string): ClassifiedStatus | undefined {

@@ -9,7 +9,9 @@ Mail scans supply offsets; Speedpost scans can omit them. The adapter keeps
 offset-free scans as `local_time`, retains the portal's newest-first sequence,
 and leaves `last_update` empty when the latest scan has no verified instant.
 Empty history for an existing item is inconclusive; only the explicit
-identity-bound missing-item response means not found.
+identity-bound missing-item response means not found. For Speedpost items that
+response carries a single row of dashes. A delivery scan's time is the result's
+`delivered_at`.
 
 Run `npm run test:carriers:live -- carriers/singapore-post`.
 Set `SINGAPORE_POST_TRACKING_NUMBER` outside the repository for a real parcel.

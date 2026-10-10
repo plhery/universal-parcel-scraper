@@ -22,7 +22,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://www.singpost.com/track-items?tracknumber={trackingNumber}",
@@ -31,12 +32,14 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivered_at"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivered_at"
     ],
     "discarded": [],
     "unavailable": []

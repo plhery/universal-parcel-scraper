@@ -32,13 +32,19 @@ function eventTime(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
   return { local_time: parsed.toISO({ suppressMilliseconds: true, includeOffset: false }) };
 }
 
+function isPlaceholderScan(raw: unknown): boolean {
+  return isRecord(raw) && [raw.statusDescription, raw.date, raw.location].every((value) => clean(value, 8) === '-');
+}
+
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const number = normalizeSingaporePostNumber(trackingNumber);
   if (!isRecord(payload) || payload.ok !== true || !Array.isArray(payload.items)) throw new SchemaError('Singapore Post');
   const matches = payload.items.filter((item) => isRecord(item) && clean(item.trackingNumber, 64).toUpperCase() === number);
   if (matches.length !== 1 || !isRecord(matches[0])) throw new SchemaError('Singapore Post', 'Singapore Post returned a different or ambiguous shipment');
   const item = matches[0];
-  if (item.trackingNumberFound === 'false' && Array.isArray(item.events) && item.events.length === 0) throw new NotFoundError('Singapore Post');
+  // Speedpost answers a missing item with one row of dashes instead of no rows.
+  if (item.trackingNumberFound === 'false' && Array.isArray(item.events) && item.events.length <= 1
+    && item.events.every(isPlaceholderScan)) throw new NotFoundError('Singapore Post');
   if (item.trackingNumberFound !== 'true' || !Array.isArray(item.events)) throw new SchemaError('Singapore Post');
   if (item.events.length === 0) throw new IndeterminateError('Singapore Post', 'Singapore Post returned no parcel scans');
   if (item.events.length > 500) throw new SchemaError('Singapore Post');
@@ -63,6 +69,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const country = clean(item.destinationCountry, 8).toUpperCase();
   return { status: classified?.status ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
+    ...(classified?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) };
 }
 
