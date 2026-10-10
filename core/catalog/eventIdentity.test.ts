@@ -132,6 +132,19 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(release, { ...named, description: 'Released to EXAMPLE PERSON' })).toBe(false);
   });
 
+  it('lets a Correos Express scan stored as a neutral update take its recognized label', () => {
+    expect(sameInstantIdentityPolicy('correos-express')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('correos-express', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['correos-express'], requireProviderCode: false, matchEachScan: true });
+    const stored = { stage: 'in_transit', description: 'Tracking update', location: 'EXAMPLE TOWN', providerCode: '' };
+    const incoming = { ...stored, stage: 'exception', description: 'EN GESTIÓN' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, incoming)).toBe(true);
+    for (const different of [{ ...stored, location: 'ANOTHER TOWN' }, { ...stored, description: 'EN REPARTO' }]) {
+      expect(policy?.matches?.(incoming, different)).toBe(false);
+    }
+    expect(policy?.matches?.({ ...incoming, description: 'NEW LABEL' }, stored)).toBe(false);
+  });
   it('keeps UPS disabled for apps that cannot check scan evidence', () => {
     expect(sameInstantIdentityPolicy('ups')).toBeUndefined();
     expect(sameInstantIdentityPolicy('ups', { supportsScanMatching: false })).toBeUndefined();

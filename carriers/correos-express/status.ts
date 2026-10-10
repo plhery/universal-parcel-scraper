@@ -16,6 +16,11 @@ const labels: Record<string, ClassifiedStatus> = {
   ENTREGADO: { status: 'delivered', stage: 'delivered' },
   DEVUELTO: { status: 'exception', stage: 'returned' },
   'EN ALMACEN': { status: 'exception', stage: 'exception' },
+  // Customer service is handling an incident on the shipment.
+  'EN GESTION': { status: 'exception', stage: 'exception' },
+  // The pickup point's holding period ended and the parcel goes back.
+  'EL PERIODO DE RECOGIDA DEL ENVIO EN EL PUNTO DE CONVENIENCIA SELECCIONADO HA FINALIZADO Y SE PROCEDERA A SU DEVOLUCION A ORIGEN':
+    { status: 'exception', stage: 'returned' },
   ESTACIONADO: { status: 'exception', stage: 'exception' },
   // The accompanying carrier wording describes a rescheduled delivery after
   // an unsuccessful attempt, with the new delivery still in the future.

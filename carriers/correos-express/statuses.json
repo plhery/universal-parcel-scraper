@@ -12,8 +12,10 @@
     { "wording": "DISPONIBLE EN PUNTO DE CONVENIENCIA", "language": "es", "stage": "ready_for_pickup", "confirmedBy": "live" },
     { "wording": "ENTREGADO", "language": "es", "stage": "delivered", "confirmedBy": "live" },
     { "wording": "DEVUELTO", "language": "es", "stage": "returned", "confirmedBy": "live" },
+    { "wording": "EL PERIODO DE RECOGIDA DEL ENVÍO EN EL PUNTO DE CONVENIENCIA SELECCIONADO HA FINALIZADO Y SE PROCEDERÁ A SU DEVOLUCIÓN A ORIGEN", "language": "es", "stage": "returned", "confirmedBy": "live", "note": "The pickup point's holding period ended and the parcel goes back to the sender." },
     { "wording": "EN ALMACÉN", "language": "es", "stage": "exception", "confirmedBy": "live" },
     { "wording": "ESTACIONADO", "language": "es", "stage": "exception", "confirmedBy": "live" },
+    { "wording": "EN GESTIÓN", "language": "es", "stage": "exception", "confirmedBy": "live", "note": "Customer service is handling an incident on the shipment." },
     { "wording": "NUEVO REPARTO", "language": "es", "stage": "in_transit", "confirmedBy": "live" }
   ]
 }

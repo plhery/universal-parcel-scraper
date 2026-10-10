@@ -1,9 +1,8 @@
 # Correos Express
 
 Tracks 16-digit shipment references through the anonymous public tracking form,
-and the 23-digit references some marketplace senders issue. Other reference
-formats use the universal providers. Both lengths end in a GS1 check digit,
-which detection requires.
+and the 23-digit parcel labels. Other reference formats use the universal
+providers. Both lengths end in a GS1 check digit, which detection requires.
 
 ## How it works
 
@@ -15,8 +14,12 @@ bootstrap, postcode or browser is needed.
 
 The form looks an input up as a shipment number and as a sender's own reference,
 so a short input can return someone else's shipment. That is why the label and
-the hidden field must both echo the request. A 23-digit reference is tracked
-whole; its first sixteen digits are not a shipment number.
+the hidden field must both echo the request. A 23-digit parcel label opens with
+the shipment number less its check digit, then gives the parcel's position, the
+destination postcode and its own check digit. Its page names that shipment, so
+the label is accepted when the hidden field echoes it and the visible label
+shows the shipment it opens with, which becomes the canonical number. The
+postcode never leaves the label.
 
 Scans retain the carrier's newest-first order. Their clocks have no stated zone,
 so valid digits remain local time and unresolved labels remain provider text.

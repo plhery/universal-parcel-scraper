@@ -51,6 +51,28 @@ describe('Correos Express direct tracking', () => {
     }
   });
 
+  it('accepts a parcel label whose page names the shipment it opens with, and reports that shipment', () => {
+    const LABEL = '99000000000000001999994', SHIPMENT = '9900000000000004';
+    const page = (shown: string, echoed = LABEL) => edit($ => { $('h3.status .shipping > span').text(shown); $('#shippingNumber').val(echoed); });
+    const result = parseCorreosExpress(page(SHIPMENT), LABEL);
+    expect(result).toMatchObject({ status: 'in_transit', canonical_tracking_number: SHIPMENT });
+    expect(parseCorreosExpress(page(LABEL), LABEL).canonical_tracking_number).toBeUndefined();
+    // Another shipment, an echo of another label, and a label whose own check digit fails.
+    for (const [changed, input] of [[page('9900000000000012'), LABEL], [page(SHIPMENT, '99000000000000002999993'), LABEL],
+      [page(SHIPMENT, '99000000000000001999995'), '99000000000000001999995']] as const) {
+      expect(() => parseCorreosExpress(changed, input)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
+  it('reads an incident in customer service and the end of the pickup period', () => {
+    const ended = 'EL PERIODO DE RECOGIDA DEL ENVÍO EN EL PUNTO DE CONVENIENCIA SELECCIONADO HA FINALIZADO Y SE PROCEDERÁ A SU DEVOLUCIÓN A ORIGEN';
+    for (const [label, status, stage] of [['EN GESTIÓN', 'exception', 'exception'], [ended, 'exception', 'returned']] as const) {
+      const result = parseCorreosExpress(edit($ => $('tbody tr').first().find('td').last().text(`${label}. PRIVATE_SYNTHETIC_NOTE`)), NUMBER);
+      expect(result).toMatchObject({ status, current_stage: stage, last_status_text: label, expected_delivery: null });
+      expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
+    }
+  });
+
   it('uses only a matching server-selected no-history outcome, never hidden message text alone', () => {
     expect(() => parseCorreosExpress(negative(), NUMBER)).toThrowError(expect.objectContaining({ kind: 'not_found' }));
     for (const code of ['', '-1', '1', 'unknown']) expect(() => parseCorreosExpress(negative(NUMBER, code), NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));

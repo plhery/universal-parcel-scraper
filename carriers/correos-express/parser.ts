@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { classifyCorreosExpressStatus } from './status.js';
@@ -16,6 +17,17 @@ export function normalizeCorreosExpressNumber(raw: string): string {
   // references of some marketplace senders. The longer one is not the shorter one extended.
   if (!/^(?:\d{16}|\d{23})$/.test(number)) throw new InvalidInputError('Correos Express', 'Correos Express requires a 16-digit or 23-digit shipment number');
   return number;
+}
+
+/**
+ * A twenty-three-digit parcel label opens with the shipment number less its
+ * check digit, then gives the parcel's position, the destination postcode and
+ * its own check digit. The page names the shipment it belongs to.
+ */
+function labelShipment(number: string): string | undefined {
+  if (number.length !== 23 || !hasGs1CheckDigit(number)) return undefined;
+  const base = number.slice(0, 15);
+  return [...'0123456789'].map(digit => base + digit).find(hasGs1CheckDigit);
 }
 
 function scanClock(raw: string): { local_time?: string; provider_time_text?: string } {
@@ -49,7 +61,9 @@ export function parseCorreosExpress(html: string, raw: string): CarrierResult {
   }
   const heading = $('h3.status');
   const identities = heading.find('.shipping > span').map((_, node) => clean($(node).text(), 40)).get();
-  if (tables.length !== 1 || heading.length !== 1 || heading.find('.shipping').length !== 1 || identities.length !== 1 || identities[0] !== number
+  const shipment = labelShipment(number);
+  if (tables.length !== 1 || heading.length !== 1 || heading.find('.shipping').length !== 1 || identities.length !== 1
+    || (identities[0] !== number && identities[0] !== shipment)
     || $('#shippingNumber').length !== 1 || $('#shippingNumber').val() !== number) {
     throw new SchemaError('Correos Express', 'Correos Express returned a different or ambiguous shipment');
   }
@@ -91,5 +105,6 @@ export function parseCorreosExpress(html: string, raw: string): CarrierResult {
   const active = mapped && ['pending', 'in_transit', 'out_for_delivery'].includes(mapped.status);
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null,
-    expected_delivery: active && day && latestDay && day >= latestDay ? day : null, events: events.slice(0, 100) };
+    expected_delivery: active && day && latestDay && day >= latestDay ? day : null,
+    ...(identities[0] === shipment ? { canonical_tracking_number: shipment } : {}), events: events.slice(0, 100) };
 }
