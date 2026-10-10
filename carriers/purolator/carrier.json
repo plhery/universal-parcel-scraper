@@ -26,6 +26,7 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
     "weight"
   ],
   "portal": {
@@ -37,6 +38,7 @@
       "history",
       "location",
       "estimated_delivery",
+      "destination",
       "weight",
       "recipient"
     ],
@@ -44,10 +46,11 @@
       "status",
       "history",
       "location",
+      "estimated_delivery",
+      "destination",
       "weight"
     ],
     "discarded": [
-      "estimated_delivery",
       "recipient"
     ],
     "unavailable": []

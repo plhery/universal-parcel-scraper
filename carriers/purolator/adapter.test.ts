@@ -34,6 +34,43 @@ describe('Purolator direct tracking', () => {
     expect(result.weight_kg).toBeCloseTo(0.90718474);
   });
 
+  it('maps the delivery, label, delay and address codes the tracker also sends', () => {
+    const scan = (code: string, description: string) => ({ dateTime: '2026-01-05 10:00:00', code, description, location: { city: 'Example City', provinceState: 'QC', countryCode: 'CA' } });
+    for (const [code, description, status, stage] of [
+      ['9000', 'Shipment delivered', 'delivered', 'delivered'],
+      ['3000', 'Shipper created a label', 'pending', 'registered'],
+      ['0510', 'Delayed in transit due to rail delay', 'in_transit', 'in_transit'],
+      ['7810', 'Cleared customs', 'in_transit', 'in_transit'],
+      ['6500', 'Address correction required - resolution in progress', 'exception', 'exception'],
+      ['9230', 'Address correction required - missing entry code', 'exception', 'failed_attempt'],
+      ['9250', 'Attempted delivery - receiver unavailable', 'exception', 'failed_attempt'],
+    ] as const) {
+      const value = payload(); value.shipment[0].package[0].events.unshift(scan(code, description));
+      const result = normalizeCarrierResult(parsePurolator(value, NUMBER));
+      expect(result).toMatchObject({ status, current_stage: stage });
+      expect(result.events?.[0]).toMatchObject({ provider_code: code, stage });
+    }
+  });
+
+  it('keeps the estimated delivery day only while the parcel is on its way, and reads the destination country', () => {
+    const value = payload(); value.shipment[0].package[0].events.splice(0, 4);
+    value.shipment[0].details.receiverCountryCode = 'CA';
+    expect(parsePurolator(value, NUMBER)).toMatchObject({ status: 'in_transit', expected_delivery: '2026-01-03', destination_country: 'CA' });
+    value.shipment[0].package[0].estimatedDeliveryDate = '2026-01-02';
+    expect(parsePurolator(value, NUMBER).expected_delivery).toBe('2026-01-02');
+    value.shipment[0].package[0].estimatedDeliveryDate = '2026-01-01';
+    expect(parsePurolator(value, NUMBER).expected_delivery).toBeNull();
+    for (const day of ['2026-02-30', '03/01/2026', 20260103]) {
+      value.shipment[0].package[0].estimatedDeliveryDate = day;
+      expect(parsePurolator(value, NUMBER).expected_delivery).toBeNull();
+    }
+    const pickup = payload(); pickup.shipment[0].package[0].events.shift();
+    expect(parsePurolator(pickup, NUMBER)).toMatchObject({ current_stage: 'ready_for_pickup', expected_delivery: null });
+    expect(parsePurolator(payload(), NUMBER).expected_delivery).toBeNull();
+    value.shipment[0].details.receiverCountryCode = 'Canada';
+    expect(parsePurolator(value, NUMBER)).not.toHaveProperty('destination_country');
+  });
+
   it('binds the returned search indexes to an exact unique package rather than selecting the first shipment', () => {
     const wrongSearch = payload(); wrongSearch.searchResult[0].trackingId = OTHER;
     const wrongItem = payload(); wrongItem.shipment[0].package[0].pin = OTHER;

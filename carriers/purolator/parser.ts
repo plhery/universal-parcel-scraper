@@ -12,6 +12,18 @@ export function normalizePurolatorNumber(raw: string): string {
   return number;
 }
 
+// The calendar day Purolator expects to deliver on. It is kept while the
+// parcel is still on its way and dropped once it is earlier than the newest
+// scan's day, delivered, returned or waiting at a counter.
+function estimatedDay(value: unknown, stage: string | undefined, latest: CarrierEvent): string | null {
+  const day = clean(value, 16);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !DateTime.fromISO(day, { zone: 'UTC' }).isValid) return null;
+  if (stage && ['delivered', 'returned', 'ready_for_pickup'].includes(stage)) return null;
+  const clock = latest.local_time ?? latest.time;
+  const latestDay = typeof clock === 'string' ? clock.slice(0, 10) : '';
+  return latestDay && day < latestDay ? null : day;
+}
+
 export function parsePurolator(payload: unknown, number: string): CarrierResult {
   const requested = normalizePurolatorNumber(number);
   if (!isRecord(payload) || !Array.isArray(payload.searchResult) || payload.searchResult.length !== 1 || !isRecord(payload.searchResult[0])
@@ -64,8 +76,11 @@ export function parsePurolator(payload: unknown, number: string): CarrierResult 
   const weight = measured && typeof measured.value === 'number' && Number.isFinite(measured.value) && measured.value > 0 ? measured.value : null;
   const unit = measured ? clean(measured.unit, 8).toUpperCase() : '';
   const weightKg = weight !== null ? unit === 'LB' ? weight * 0.45359237 : unit === 'KG' ? weight : null : null;
+  const destination = isRecord(shipment.details) ? clean(shipment.details.receiverCountryCode, 8) : '';
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
-    expected_delivery: null, ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    expected_delivery: estimatedDay(item.estimatedDeliveryDate, mapped?.stage, latest),
+    ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
     ...(weightKg !== null ? { weight_kg: weightKg } : {}), events: events.slice(0, 100) };
 }
