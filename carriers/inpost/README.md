@@ -6,7 +6,8 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 ## How it works
 
 1. `direct`: one `GET https://inposteasy.com/api/tracking/{trackingNumber}`. No cookies,
-   headers, account or browser state.
+   account or browser state. A hub-confirmed collection can also query ShipX
+   for its pickup point within the remaining budget.
    - The echoed `trackingNumber` must match the request, otherwise `SchemaError`.
    - HTTP 404 is not-found only when the structured `NOT_FOUND` problem identifies the
      requested shipment, directly or inside the tracking-error wrapper. An unrecognized
@@ -36,16 +37,22 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
   Its [official schema](https://dokumentacja-inpost.atlassian.net/wiki/spaces/PL/pages/11731050)
   includes locker names and addresses in `custom_attributes.target_machine_detail`.
   `expected_flow` contains forecast stages, not completed scans or a delivery estimate.
-  ShipX does not cover every shipment the hub knows: its missing-item response cannot
-  discard hub history. Identity-bound positive retrieval is required before adding this source.
+  Its point is added only for the same whole identifier, with matching collection
+  progress and a scan clock no older than the hub's. It must identify a locker or
+  public pickup service. Delivered parcels require actual collection evidence;
+  planned destinations, door deliveries and returns have no point. ShipX history
+  never replaces hub history, and its absence or failure leaves that history usable.
+  Recognition uses the hub alone.
 
 ## Limitations
 
-- No delivery estimate and no pickup point: the hub response has no estimate, and a place
-  names only the town, so the locker name the portal shows never reaches the result.
+- No delivery estimate. Pickup details depend on ShipX coverage and current
+  collection evidence; the hub's place alone names only the town.
 
 ## Testing
 
 `npm run test:carriers:live -- carriers/inpost`. The wrong-number check
 needs no env vars; set `INPOST_DELIVERED_TRACKING_NUMBER` to also check a real delivered
 parcel.
+Set `INPOST_PICKUP_TRACKING_NUMBER` to also check a parcel ready for collection
+or collected at a point.

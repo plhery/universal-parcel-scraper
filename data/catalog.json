@@ -5087,6 +5087,104 @@
       }
     ]
   },
+  "gofo-fr": {
+    "displayName": "GOFO France",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO FR",
+      "CIRRO Parcel France"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-fr",
+      "recognitionRank": 3,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/fr/",
+    "trackingUrlTemplate": "https://www.gofo.com/fr/tracking-results/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/fr/tracking-results/",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/fr(?:/|$)",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "domains": [
+          "gofoexpress.fr"
+        ],
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GF|CI)FR\\d{13,14}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^PK\\d{20}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "gofo-it": {
+    "displayName": "GOFO Italy",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO IT",
+      "CIRRO Parcel Italy"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-it",
+      "recognitionRank": 2,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/it/",
+    "trackingUrlTemplate": "https://www.gofo.com/it/tracking-results/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/it/tracking-results/",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/it(?:/|$)",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "domains": [
+          "gofoexpress.it"
+        ],
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GF|CI)IT\\d{13,14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "intelcom": {
     "displayName": "Intelcom / Dragonfly",
     "color": "#13a58f",
@@ -5251,11 +5349,13 @@
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "omgo",
+      "recognitionRank": 1,
+      "localClocks": true
     },
     "canaryUrl": "https://omgoexpress.cn/",
-    "trackingUrlTemplate": "https://omgoexpress.cn/",
-    "trackingSearchUrl": "https://omgoexpress.cn/",
+    "trackingUrlTemplate": "https://omgoexpress.cn/track-package/",
+    "trackingSearchUrl": "https://omgoexpress.cn/track-package/",
     "linkRules": [],
     "detectionRules": [
       {

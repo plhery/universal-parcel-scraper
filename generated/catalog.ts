@@ -5089,6 +5089,104 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "gofo-fr": {
+    "displayName": "GOFO France",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO FR",
+      "CIRRO Parcel France"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-fr",
+      "recognitionRank": 3,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/fr/",
+    "trackingUrlTemplate": "https://www.gofo.com/fr/tracking-results/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/fr/tracking-results/",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/fr(?:/|$)",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "domains": [
+          "gofoexpress.fr"
+        ],
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GF|CI)FR\\d{13,14}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^PK\\d{20}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "gofo-it": {
+    "displayName": "GOFO Italy",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO IT",
+      "CIRRO Parcel Italy"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-it",
+      "recognitionRank": 2,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/it/",
+    "trackingUrlTemplate": "https://www.gofo.com/it/tracking-results/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/it/tracking-results/",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/it(?:/|$)",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "domains": [
+          "gofoexpress.it"
+        ],
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GF|CI)IT\\d{13,14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "intelcom": {
     "displayName": "Intelcom / Dragonfly",
     "color": "#13a58f",
@@ -5253,11 +5351,13 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "omgo",
+      "recognitionRank": 1,
+      "localClocks": true
     },
     "canaryUrl": "https://omgoexpress.cn/",
-    "trackingUrlTemplate": "https://omgoexpress.cn/",
-    "trackingSearchUrl": "https://omgoexpress.cn/",
+    "trackingUrlTemplate": "https://omgoexpress.cn/track-package/",
+    "trackingSearchUrl": "https://omgoexpress.cn/track-package/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -5570,6 +5670,8 @@ export const CARRIER_IDS = [
   "ekart",
   "emile",
   "evri-uk",
+  "gofo-fr",
+  "gofo-it",
   "intelcom",
   "j-and-t-cargo",
   "lbc-express",
@@ -5701,6 +5803,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ekart": ["ekart-ecommerce"],
   "emile": ["emile-1"],
   "evri-uk": ["evri-uk-1","evri-uk-2","evri-uk-3"],
+  "gofo-fr": ["gofo-fr-1","gofo-fr-2"],
+  "gofo-it": ["gofo-it-1"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
   "j-and-t-cargo": ["j-and-t-cargo-1"],
   "lbc-express": ["lbc-domestic"],

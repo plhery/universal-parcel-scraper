@@ -9,7 +9,7 @@ export { carrierBrand };
 const key = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 // These brands have several regional/service adapters.
-const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'evri', 'post'];
+const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'evri', 'gofo', 'post'];
 // An alias also gives the name its carrier's clock, which moves the stored
 // instants, and so the event ids, of past scans under that name.
 const NAME_ALIASES: Readonly<Record<string, string>> = {

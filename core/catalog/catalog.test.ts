@@ -54,6 +54,10 @@ describe('the derived CARRIERS record', () => {
     expect(trackingNumberForLink('postlogistics', '12345678001')).toBe('12345678-001');
     expect(CARRIERS.postlogistics.trackingUrl?.('12345678001'))
       .toBe('https://apv.swisspost-cargo.com/public/trackandtrace/12345678-001');
+    expect(trackingNumberForLink('gofo-fr', 'PK00000000000000000001'))
+      .toBe('PK-0000000000000000000-1');
+    expect(CARRIERS['gofo-fr'].trackingUrl?.('PK00000000000000000001'))
+      .toBe('https://www.gofo.com/fr/tracking-results/?id=PK-0000000000000000000-1');
   });
 });
 

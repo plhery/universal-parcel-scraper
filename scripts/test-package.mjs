@@ -17,6 +17,10 @@ try {
   const dpdAppReplies = Object.fromEntries([
     ['getSessionFullState', 'session'], ['getTrackingData', 'tracking'], ['getTrackingScanList', 'scans'],
   ].map(([operation, fixture]) => [operation, readFileSync(path.join(root, 'carriers/dpd-de/fixtures', `app-${fixture}.xml`), 'utf8')]));
+  const regionalGofoReplies = Object.fromEntries(['fr', 'it'].map(region => [region,
+    JSON.parse(readFileSync(path.join(root, `carriers/gofo-${region}/fixtures/delivered.json`), 'utf8'))]));
+  const omgoReplies = Object.fromEntries(['tracking-page.html', 'tracking.json'].map(file => [file,
+    readFileSync(path.join(root, 'carriers/omgo/fixtures', file), 'utf8')]));
   writeFileSync(path.join(scratch,'smoke.mjs'), `
     import assert from 'node:assert/strict';
     import { readFileSync, existsSync } from 'node:fs';
@@ -56,6 +60,37 @@ try {
     } }).track({ number: '01000000000001', carrier: 'dpd-de' });
     assert.equal(dpd.result.expected_delivery, '2026-01-03');
     assert.equal(dpd.result.events.length, 5);
+    // Regional GOFO lookups must load their own maps and shared implementation from the package.
+    const regionalGofoReplies = ${JSON.stringify(regionalGofoReplies)};
+    for (const region of ['fr', 'it']) {
+      const carrier = 'gofo-' + region;
+      const number = regionalGofoReplies[region].data[0].waybillNo;
+      const answer = await createTracker({ providers: [], fetcher: async (url, init) => {
+        assert.equal(String(url), 'https://www.gofo.com/' + region + '/open-api/official/track/queryTrackV2');
+        assert(init.signal instanceof AbortSignal);
+        assert.deepEqual(JSON.parse(init.body), { numberList: [number] });
+        return Response.json(regionalGofoReplies[region]);
+      } }).track({ number, carrier });
+      assert.equal(answer.source, carrier);
+      assert.equal(answer.result.status, 'delivered');
+      assert(answer.result.events.length >= 7);
+    }
+    const omgoReplies = ${JSON.stringify(omgoReplies)};
+    let omgoRequests = 0;
+    const omgo = await createTracker({ providers: [], fetcher: async (url, init) => {
+      omgoRequests += 1;
+      assert(init.signal instanceof AbortSignal);
+      if (omgoRequests === 1) {
+        assert.equal(new URL(url).pathname, '/track-package/');
+        return new Response(omgoReplies['tracking-page.html']);
+      }
+      assert.equal(String(url), 'https://omgoexpress.cn/wp-admin/admin-ajax.php');
+      assert.equal(init.body.get('tracking_codes'), 'OMGO0000000000001');
+      return new Response(omgoReplies['tracking.json']);
+    } }).track({ number: 'OMGO0000000000001', carrier: 'omgo' });
+    assert.equal(omgo.source, 'omgo');
+    assert.equal(omgo.result.status, 'in_transit');
+    assert.equal(omgoRequests, 2);
     assert.deepEqual(catalog, CARRIER_CATALOG);
     assert(stages.includes('delivered') && golden.length > 0 && checksumVectors.vectors.ups.length > 0 && schema.type === 'object');
     assert.equal(locatePlace('Paris, FR').country, 'FR');

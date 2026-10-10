@@ -2,6 +2,25 @@
   "carrier": "omgo",
   "records": [
     {
+      "number": "OMGO0000002369780",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.parcelpanel.com/couriers/omgoexpress/",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "omgo express",
+        "reportedRole": "shipment"
+      },
+      "expect": {
+        "carrier": "omgo",
+        "confidence": "high"
+      },
+      "note": "Official tracking returns the whole shipment identity and cross-border history."
+    },
+    {
       "number": "OMGO0000000000001",
       "role": "shipment",
       "evidence": "synthetic",

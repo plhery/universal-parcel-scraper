@@ -7,6 +7,7 @@ import {
   InpostTracker,
 } from './adapter.js';
 import { classifyInpostStatus } from './status.js';
+import { parseInpostPickup } from './pickup.js';
 
 // All identifiers and timestamps below are synthetic. Status codes and the
 // response shape follow the keyless inposteasy.com hub as documented by the
@@ -168,10 +169,12 @@ describe('InPost response parsing', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    expect(CAPABILITIES).toEqual(['history', 'location', 'delivered_at']);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'delivered_at', 'pickup_point']);
     const result = parseInpostTrackingResponse(parcel(), TRACKING_NUMBER);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.delivered_at).toBeTruthy();
+    const shipx = JSON.parse(readFileSync(new URL('./fixtures/shipx-collected.json', import.meta.url), 'utf8'));
+    expect(parseInpostPickup(shipx, TRACKING_NUMBER, result)).toBeTruthy();
   });
 });
 
@@ -184,7 +187,8 @@ describe('InpostTracker fetch', () => {
     });
     const result = await new InpostTracker({ timeoutMs: 1_000 }).fetch(TRACKING_NUMBER);
     expect(result.status).toBe('delivered');
-    expect(seen).toEqual([`https://inposteasy.com/api/tracking/${TRACKING_NUMBER}`]);
+    expect(seen).toEqual([`https://inposteasy.com/api/tracking/${TRACKING_NUMBER}`,
+      `https://api-shipx-pl.easypack24.net/v1/tracking/${TRACKING_NUMBER}`]);
   });
 
   it('maps 404 to not-found and surfaces other failures distinctly', async () => {
@@ -241,7 +245,7 @@ describe('InpostTracker fetch', () => {
     expect(fetcher).toHaveBeenCalledOnce();
     await vi.advanceTimersByTimeAsync(1);
     await expect(result).resolves.toMatchObject({ status: 'delivered' });
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher).toHaveBeenCalledTimes(3);
   });
 
   it.each([429, 500, 503])('preserves HTTP %s diagnostics and a long retry window without reclassifying it', async (status) => {

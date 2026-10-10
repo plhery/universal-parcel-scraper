@@ -4,9 +4,11 @@ Tracks individual parcels recognized by the official anonymous tracking page.
 
 ## How it works
 
-One bounded GET uses the site's fixed public web configuration. No browser,
-account or session bootstrap is needed. The response must identify one matching
-parcel; master shipments with multiple pieces remain inconclusive.
+One bounded GET uses the site's fixed public web configuration. Active parcels
+also use the optional estimate service. Its website configuration is discovered
+from the current official page and cached in memory; no key is embedded for that
+service. No browser, account or session bootstrap is needed. Both responses must
+identify the whole parcel; master shipments with multiple pieces remain inconclusive.
 
 ## Notes
 
@@ -15,8 +17,7 @@ encodes local wall time and is excluded. Missing corrected seconds retain local
 clocks in provider order without advancing freshness. Impossible local dates retain
 their original text. Current status comes from
 the latest actual scan. The legacy estimate field is excluded because the
-current page uses a separate service with an explicit enabled flag. That
-optional estimate service is not queried. Detailed delivery prose, addresses,
+current page uses a separate service with an explicit enabled flag. Detailed delivery prose, addresses,
 coordinates, operators and proof images are excluded.
 
 After a handover, a partner courier's scans arrive without UniUni's English
@@ -30,7 +31,7 @@ and nine digits only suggest UniUni: Intelcom's tracker accepts them too.
 Recognition looks them up at UniUni, whose tracker lists a reference it does not
 know as invalid.
 
-## Estimate endpoint lead
+## Delivery estimates
 
 The [official tracking client](https://www.uniuni.com/tracking/) also posts to
 `https://sj.uniexpress.ca/version2/orders/edd_information` with a `tnos` array
@@ -38,13 +39,16 @@ and its public website key. It needs no account or browser session. The reply
 identifies each parcel by `tno`, with `edd_enabled` and `delivery_estimate`;
 an enabled record can still have no estimate.
 
-This adapter does not query that service. An estimate must match the parcel,
-have an enabled flag and retain its date or time-window precision without an
-invented offset. Its failure must leave tracking history usable, and a completed
-delivery or return must suppress the estimate.
+Only enabled estimates are kept. Dates remain dates; complete windows use their
+own explicit zone when it settles an unambiguous clock and otherwise retain
+local clocks. An invalid window retains its valid day. Estimate clocks never
+change scan clocks. Optional configuration or estimate failures leave history
+usable. Delivery and return histories suppress estimates, and recognition reads
+history alone.
 
 ## Live test
 
 Set `UNIUNI_TRACKING_NUMBER` outside the repository and run
 `npm run test:carriers:live -- carriers/uniuni/adapter.live.test.ts`.
 Optionally set `UNIUNI_UNKNOWN_NUMBER` to check an absent parcel.
+Set `UNIUNI_ESTIMATE_TRACKING_NUMBER` to check an active parcel with an enabled estimate.

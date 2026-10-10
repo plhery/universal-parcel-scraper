@@ -14015,6 +14015,38 @@
     ]
   },
   {
+    "input": "CIFR00000000000001",
+    "carrier": "gofo-fr",
+    "confidence": "high",
+    "candidates": [
+      "gofo-fr"
+    ]
+  },
+  {
+    "input": "CIFR0000000000001",
+    "carrier": "gofo-fr",
+    "confidence": "high",
+    "candidates": [
+      "gofo-fr"
+    ]
+  },
+  {
+    "input": "CIIT00000000000001",
+    "carrier": "gofo-it",
+    "confidence": "high",
+    "candidates": [
+      "gofo-it"
+    ]
+  },
+  {
+    "input": "CIIT0000000000001",
+    "carrier": "gofo-it",
+    "confidence": "high",
+    "candidates": [
+      "gofo-it"
+    ]
+  },
+  {
     "input": "CJ060328561IE",
     "carrier": "an-post",
     "confidence": "high",
@@ -15146,6 +15178,38 @@
     "confidence": "low",
     "candidates": [
       "gofo"
+    ]
+  },
+  {
+    "input": "GFFR0000000000001",
+    "carrier": "gofo-fr",
+    "confidence": "high",
+    "candidates": [
+      "gofo-fr"
+    ]
+  },
+  {
+    "input": "GFFR26162070068751",
+    "carrier": "gofo-fr",
+    "confidence": "high",
+    "candidates": [
+      "gofo-fr"
+    ]
+  },
+  {
+    "input": "GFIT0000000000001",
+    "carrier": "gofo-it",
+    "confidence": "high",
+    "candidates": [
+      "gofo-it"
+    ]
+  },
+  {
+    "input": "GFIT26104011851374",
+    "carrier": "gofo-it",
+    "confidence": "high",
+    "candidates": [
+      "gofo-it"
     ]
   },
   {
@@ -17373,6 +17437,14 @@
     ]
   },
   {
+    "input": "OMGO0000002369780",
+    "carrier": "omgo",
+    "confidence": "high",
+    "candidates": [
+      "omgo"
+    ]
+  },
+  {
     "input": "PBFC5968003001",
     "carrier": "parcelforce",
     "confidence": "high",
@@ -17510,6 +17582,17 @@
     "confidence": "high",
     "candidates": [
       "correos-spain"
+    ]
+  },
+  {
+    "input": "PK-4948681651650700612-0",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gofo-fr"
+    ],
+    "asked": [
+      "gofo-fr"
     ]
   },
   {

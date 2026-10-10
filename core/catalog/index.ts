@@ -10,6 +10,7 @@
 import { normalizeCourierGuyNumber } from '../../carriers/the-courier-guy/number.js';
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
 import type { CarrierId } from '../../generated/catalog.js';
+import { regionalGofoRequestNumber } from '../detection/gofo.js';
 import { isValidMondialRelayBarcode } from '../detection/mondialRelay.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { amazonOrdersUrl, amazonShippingUrl } from './amazon.js';
@@ -34,6 +35,7 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
     if (product) return normalizeCourierGuyNumber(normalized);
   }
   if (carrierId === 'postlogistics') return postlogisticsIdentifier(raw);
+  if (carrierId === 'gofo-fr') return regionalGofoRequestNumber(normalized);
   return raw;
 }
 

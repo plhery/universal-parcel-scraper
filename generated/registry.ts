@@ -56,6 +56,8 @@ import { adapter as glsCh } from '../carriers/gls-ch/adapter.js';
 import { adapter as glsDe } from '../carriers/gls-de/adapter.js';
 import { adapter as glsFr } from '../carriers/gls-fr/adapter.js';
 import { adapter as gofo } from '../carriers/gofo/adapter.js';
+import { adapter as gofoFr } from '../carriers/gofo-fr/adapter.js';
+import { adapter as gofoIt } from '../carriers/gofo-it/adapter.js';
 import { adapter as heppner } from '../carriers/heppner/adapter.js';
 import { adapter as hermes } from '../carriers/hermes/adapter.js';
 import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
@@ -77,6 +79,7 @@ import { adapter as ninjaVan } from '../carriers/ninja-van/adapter.js';
 import { adapter as novaPoshta } from '../carriers/nova-poshta/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
 import { adapter as oldDominion } from '../carriers/old-dominion/adapter.js';
+import { adapter as omgo } from '../carriers/omgo/adapter.js';
 import { adapter as ontrac } from '../carriers/ontrac/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
 import { adapter as packeta } from '../carriers/packeta/adapter.js';
@@ -175,6 +178,8 @@ export const REGISTRY: RegistryDefinition = {
     "gls-de": glsDe,
     "gls-fr": glsFr,
     "gofo": gofo,
+    "gofo-fr": gofoFr,
+    "gofo-it": gofoIt,
     "heppner": heppner,
     "hermes": hermes,
     "hermes-de": hermesDe,
@@ -196,6 +201,7 @@ export const REGISTRY: RegistryDefinition = {
     "nova-poshta": novaPoshta,
     "nz-post": nzPost,
     "old-dominion": oldDominion,
+    "omgo": omgo,
     "ontrac": ontrac,
     "paack": paack,
     "packeta": packeta,
@@ -295,6 +301,8 @@ export const REGISTRY: RegistryDefinition = {
     "gls-de": "gls-de",
     "gls-fr": "gls-fr",
     "gofo": "gofo",
+    "gofo-fr": "gofo-fr",
+    "gofo-it": "gofo-it",
     "heppner": "heppner",
     "hermes": "hermes",
     "hermes-de": "hermes-de",
@@ -318,7 +326,7 @@ export const REGISTRY: RegistryDefinition = {
     "nova-poshta": "nova-poshta",
     "nz-post": "nz-post",
     "old-dominion": "old-dominion",
-    "omgo": "universal",
+    "omgo": "omgo",
     "ontrac": "ontrac",
     "paack": "paack",
     "packeta": "packeta",

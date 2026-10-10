@@ -71,7 +71,8 @@ describe('UniUni parcel history', () => {
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.some(scan => scan.location)),
       delivered_at: Boolean(result.delivered_at) };
-    for (const capability of metadata.capabilities) expect(evidence[capability], capability).toBe(true);
+    // An estimate belongs to the separate active-parcel fixture.
+    for (const capability of metadata.capabilities.filter((value: string) => value !== 'eta')) expect(evidence[capability], capability).toBe(true);
   });
 
   it('keeps a partner courier\'s scans after a handover and a Uni Store drop-off', () => {

@@ -186,7 +186,7 @@
           "bpost"
         ]
       },
-      "note": "A parcel to an InPost point abroad that was sent back, per a public review. InPost's tracker returns its history."
+      "note": "A parcel to an InPost point abroad that was sent back, per a public review. InPost's tracker returns its history. The anonymous ShipX feed also returns identity-bound history."
     },
     {
       "number": "200000033661600038871668",
@@ -222,7 +222,7 @@
           "bpost"
         ]
       },
-      "note": "The new number the same review gives for the parcel's return. InPost's tracker returns its history, which starts when the outbound parcel turned back."
+      "note": "The new number the same review gives for the parcel's return. InPost's tracker returns its history, which starts when the outbound parcel turned back. The anonymous ShipX feed also returns identity-bound history."
     }
   ]
 }

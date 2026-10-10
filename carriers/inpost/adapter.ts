@@ -2,23 +2,25 @@
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyInpostStatus } from './status.js';
+import { needsInpostPickup, parseInpostPickup } from './pickup.js';
+import { inpostClock } from './clock.js';
 
 // Protocol provenance:
 // - Prior art (structure + vocabulary, verified independently below, MIT):
 //   https://github.com/ha-parcel-integrations/ha-inpost (const.py,
 //   parcels.py normalize_tracking_parcel/TRACKING_STATUS_MAP, tests).
 //   Two public surfaces exist: the ShipX tracking endpoint
-//   (api-shipx-pl.easypack24.net, keyless, but its success shape is
-//   unconfirmed) and the inposteasy.com per-country hubs below. Only the
-//   inposteasy hub is implemented here; ShipX remains a future lead.
+//   (api-shipx-pl.easypack24.net, keyless) and the inposteasy.com
+//   per-country hubs below. ShipX can enrich a hub-confirmed collection
+//   with its pickup point; its smaller coverage never replaces hub history.
 // - Unknown or expired numbers return an identity-bound NOT_FOUND problem,
 //   optionally JSON-encoded inside the tracking-error wrapper's detail field.
 // - The public cross-border status vocabulary lives in status.ts.
 const TRACKING_ENDPOINT = 'https://inposteasy.com/api/tracking';
+const PICKUP_ENDPOINT = 'https://api-shipx-pl.easypack24.net/v1/tracking';
 const DEFAULT_TIMEOUT_MS = 15_000;
 /** The pause `fetchBounded` takes before its one retry of a failed request. */
 const TRANSIENT_RETRY_DELAY_MS = 1_000;
@@ -70,7 +72,7 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
     const eventClassified = classifyInpostStatus(eventCode);
     // Observed event datetimes carry explicit offsets; require them rather than
     // assigning a zone to a multi-country lane (PL/IT/PT/GB hubs share this API).
-    const time = explicitOffsetTime(rawEvent.datetime);
+    const time = inpostClock(rawEvent.datetime);
     // statusTitle is the backend's fixed wording for the requested hub.
     const description = clean(rawEvent.statusTitle, 500) || eventCode;
     // A place is a town or hub with its country, such as "Exampletown (PL)";
@@ -135,7 +137,7 @@ export class InpostTracker {
     }
   }
 
-  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}, enrich = true): Promise<CarrierResult> {
     const trackingNumber = normalizeInpostTrackingNumber(rawTrackingNumber);
     // The default budget covers the request, the pause and the one transient retry.
     const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
@@ -161,7 +163,19 @@ export class InpostTracker {
       if (isNotFoundProblem(problem, trackingNumber)) throw new NotFoundError('InPost');
       throw new IndeterminateError('InPost', 'InPost returned an unrecognized not-found response');
     }
-    return parseInpostTrackingResponse(parseJsonBytes(bytes, 'InPost tracking'), trackingNumber);
+    const result = parseInpostTrackingResponse(parseJsonBytes(bytes, 'InPost tracking'), trackingNumber);
+    const allowance = Math.min(2_000, budget.deadline - performance.now() - 100);
+    if (enrich && /^\d{24}$/.test(trackingNumber) && needsInpostPickup(result) && allowance >= 500) {
+      try {
+        const { bytes: pointBytes } = await fetchBounded(`${PICKUP_ENDPOINT}/${trackingNumber}`, {
+          signal: budget.signal, headers: { Accept: 'application/json', 'User-Agent': this.userAgent },
+        }, { provider: 'InPost pickup', timeoutMs: Math.floor(allowance), maxBytes: MAX_RESPONSE_BYTES, fetcher: this.fetcher });
+        const point = parseInpostPickup(parseJsonBytes(pointBytes, 'InPost pickup'), trackingNumber, result);
+        if (point) result.pickup_point = point;
+      } catch { /* ShipX absence or failure leaves the hub's verified history usable. */ }
+    }
+    context.signal?.throwIfAborted();
+    return result;
   }
 }
 
@@ -171,6 +185,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'inpost',
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeInpostTrackingNumber(number))),
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context, false), () => accepted(() => normalizeInpostTrackingNumber(number))),
   };
 };

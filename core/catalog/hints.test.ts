@@ -8,6 +8,10 @@ describe('brand networks', () => {
   it('lists the catalog networks of a bare or group brand name', () => {
     expect(new Set(brandCarrierIds('DPD Group'))).toEqual(new Set(['dpd', 'dpd-fr', 'dpd-de', 'dpd-uk', 'dpd-pl']));
     expect(brandCarrierIds('gls')).toEqual(expect.arrayContaining(['gls-ch', 'gls-de', 'gls-fr']));
+    expect(brandCarrierIds('GOFO')).toEqual(expect.arrayContaining(['gofo', 'gofo-fr', 'gofo-it']));
+    expect(carrierIdFromName('GOFO')).toBeUndefined();
+    expect(carrierIdFromName('GOFO France')).toBe('gofo-fr');
+    expect(carrierIdFromName('GOFO Italy')).toBe('gofo-it');
     expect(brandCarrierIds('DPD UK')).toEqual([]);
     expect(brandCarrierIds('Swiss Post')).toEqual([]);
   });
@@ -59,7 +63,9 @@ describe('delivery partner evidence', () => {
     // Without a name, a rule limited to some paths of a shared host covers only those paths.
     ['', 'https://www.gofo.com/', 'gofo'],
     ['', 'https://www.gofo.com/us/track?searchID=GFUS01000000000001', 'gofo'],
-    ['', 'https://www.gofo.com/fr/', undefined],
+    ['', 'https://www.gofo.com/fr/', 'gofo-fr'],
+    ['', 'https://www.gofo.com/it/', 'gofo-it'],
+    ['', 'https://www.gofo.com/es/', undefined],
     ['', 'https://www.gofo.com/usa/', undefined],
     ['', 'https://gls-group.eu/FR/fr/suivi-colis', 'gls-fr'],
     ['', 'https://gls-group.eu/', undefined],

@@ -29,4 +29,11 @@ describe('InPost live anonymous tracking', () => {
   it('pins the not-found error contract used by routing cooldowns', () => {
     expect(new NotFoundError('InPost').status).toBe(404);
   });
+
+  it.skipIf(!process.env.INPOST_PICKUP_TRACKING_NUMBER)('adds an identity-bound point to collection history', async () => {
+    const result = await new InpostTracker().fetch(process.env.INPOST_PICKUP_TRACKING_NUMBER!);
+    expect(result.events?.length).toBeGreaterThan(0);
+    expect(['ready_for_pickup', 'delivered']).toContain(result.current_stage);
+    expect(result.pickup_point).toBeTruthy();
+  });
 });
