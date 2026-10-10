@@ -66,6 +66,14 @@
       "confirmedBy": "live"
     },
     {
+      "code": "LI582",
+      "wording": "EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA. DISCULPA LAS MOLESTIAS.",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "A delay notice in the EN DEMORA group, read like LI300."
+    },
+    {
       "code": "LC003",
       "wording": "EL ENVÍO ESTÁ EN REPARTO.",
       "language": "es",

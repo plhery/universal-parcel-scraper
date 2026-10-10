@@ -10,6 +10,7 @@ const observed: Record<string, { group: string; wording: string; mapped: Classif
   LL020: { group: 'ENTREGADO', wording: 'EL ENVÍO HA SIDO ENTREGADO A UN VECINO.', mapped: delivered },
   LC003: { group: 'EN REPARTO', wording: 'EL ENVÍO ESTÁ EN REPARTO.', mapped: { status: 'out_for_delivery', stage: 'out_for_delivery' } },
   LI300: { group: 'EN DEMORA', wording: 'EL ENVÍO HA SUFRIDO UN RETRASO Y ES POSIBLE QUE SE DEMORE LA ENTREGA. DISCULPA LAS MOLESTIAS.', mapped: exception },
+  LI582: { group: 'EN DEMORA', wording: 'EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA. DISCULPA LAS MOLESTIAS.', mapped: exception },
   LI523: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO SE HA ENTREGADO POR AUSENCIA O CIERRE. SE PUEDE REPROGRAMAR UNA NUEVA ENTREGA.', mapped: { status: 'exception', stage: 'failed_attempt' } },
   LI524: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO SE HA ENTREGADO PORQUE NO ES LA DIRECCIÓN ACTUAL DEL DESTINATARIO.', mapped: exception },
   LI530: { group: 'ENTREGA EN TIENDA', wording: 'EL ENVÍO ESTÁ DISPONIBLE PARA RECOGER EN EL PUNTO SEUR PICKUP.', mapped: { status: 'in_transit', stage: 'ready_for_pickup' } },

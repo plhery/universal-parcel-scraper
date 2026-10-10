@@ -30,6 +30,16 @@ describe('SEUR simplified anonymous tracking', () => {
     }
   });
 
+  it('reads both delay notices as exceptions', () => {
+    for (const code of ['LI300', 'LI582']) {
+      const body = copy();
+      body.situaciones = [{ fecha: '2026-01-24T10:00:00Z', cod_situacion: code, grupo_situacion: 'EN DEMORA',
+        descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording }] as typeof body.situaciones;
+      expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+      expect(parseSeur(body, NUMBER).events?.[0]).toMatchObject({ provider_code: code, stage: 'exception' });
+    }
+  });
+
   it('stages pickup points, failed attempts, agreed days and customs', () => {
     const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
       descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
