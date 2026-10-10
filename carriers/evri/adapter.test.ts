@@ -79,6 +79,12 @@ describe('Evri International parser', () => {
     ['Returned to sender', 'exception', 'returned'],
     ['Carrier label error', 'exception', 'exception'],
     ['Delivery Attempted', 'exception', 'failed_attempt'],
+    ['Delivery awaiting collection', 'in_transit', 'ready_for_pickup'],
+    ['Delivery Exception', 'exception', 'exception'],
+    ['Arrived In Country', 'in_transit', 'in_transit'],
+    ['Handed to Partner Carrier', 'in_transit', 'in_transit'],
+    ['Received by carrier', 'in_transit', 'in_transit'],
+    ['Delayed', 'in_transit', 'in_transit'],
   ])('maps %s without confusing completion, collection and return', (label, status, stage) => {
     expect(parse(html.replaceAll('Delivery Attempted', label), NUMBER)).toMatchObject({ status, current_stage: stage });
   });
