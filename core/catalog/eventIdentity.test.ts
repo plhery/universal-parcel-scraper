@@ -132,6 +132,21 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(release, { ...named, description: 'Released to EXAMPLE PERSON' })).toBe(false);
   });
 
+  it('lets an MRW hub scan gain its bracketed label', () => {
+    expect(sameInstantIdentityPolicy('mrw')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('mrw', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['mrw'], requireProviderCode: false, matchEachScan: true });
+    const stored = { stage: 'in_transit', description: 'En tránsito', location: '', providerCode: '' };
+    const incoming = { ...stored, location: '00000 Example (Plataforma)' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, incoming)).toBe(true);
+    for (const different of [
+      { ...stored, description: 'Envío en reparto' },
+      { ...stored, location: '00001 Example' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    expect(policy?.matches?.({ ...incoming, location: '00000 Example' }, stored)).toBe(false);
+  });
+
   it('lets a Correos Express scan stored as a neutral update take its recognized label', () => {
     expect(sameInstantIdentityPolicy('correos-express')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('correos-express', { supportsScanMatching: true });

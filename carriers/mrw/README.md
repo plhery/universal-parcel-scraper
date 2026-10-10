@@ -12,8 +12,13 @@ respect the portal's rate limit and share one time budget.
 ## Notes
 
 The portal sometimes returns a bound current summary with no history. That
-result is marked `summary_only` and contains no invented scans. A page that
-echoes an unknown number without a shipment table is inconclusive.
+result is marked `summary_only` and contains no invented scans; the summary's
+date and hour still give the current status's wall clock. A page that echoes an
+unknown number without a shipment table is inconclusive.
+
+Some history rows are followed by a breakdown of each parcel's own scans. Only
+the shipment's rows are read. Hub offices keep their bracketed kind, such as
+"(Plataforma)".
 
 Scan clocks are shown without offsets, so they remain local wall times. The catalog
 zone is `Europe/Madrid`, so aggregators relaying the same clocks read them as Spanish

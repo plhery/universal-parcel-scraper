@@ -84,14 +84,17 @@ function buildLocalDate(rawDate: string, rawHour: string): { local_time?: string
 
 function officeLabel(value: string): string {
   const text = clean(value, 80);
-  return /^(?:\d{5}|\d{4}-\d{3})\s+[\p{L} .'-]{2,70}$/u.test(text) ? text : '';
+  // Hubs carry their kind in brackets, such as "(Plataforma)".
+  return /^(?:\d{5}|\d{4}-\d{3})\s+[\p{L} .'-]{2,70}(?: \([\p{L} ]{2,30}\))?$/u.test(text) ? text : '';
 }
 
 function summaryOnly(summary: MrwSummary): CarrierResult {
   const mapped = classifyMrwStatus(summary.status);
   if (!mapped) throw new IndeterminateError('MRW', 'MRW returned only an unrecognized summary');
+  // The summary's date and hour are those of its current status, as the history's first row shows.
+  const clock = buildLocalDate(summary.date, summary.hour).local_time;
   return { status: mapped.status, current_stage: mapped.stage, last_status_text: clean(summary.status, 160),
-    last_update: null, expected_delivery: null, summary_only: true, events: [] };
+    last_update: null, ...(clock ? { last_update_local: clock } : {}), expected_delivery: null, summary_only: true, events: [] };
 }
 
 export function parseMrwHistory(html: string, raw: string, summary: MrwSummary): CarrierResult {
@@ -106,10 +109,12 @@ export function parseMrwHistory(html: string, raw: string, summary: MrwSummary):
   }
   const subtitle = clean($('#seguimientoEnvio h2.page-subtitle').text(), 120);
   if (tables.length !== 1 || subtitle !== `Seguimiento del número de envío ${number}`
-    || tables.find('thead th').map((_, el) => clean($(el).text(), 64)).get().join('|') !== HISTORY_HEADERS) {
+    || tables.children('thead').find('th').map((_, el) => clean($(el).text(), 64)).get().join('|') !== HISTORY_HEADERS) {
     throw new SchemaError('MRW', 'History does not identify the requested shipment');
   }
-  const rows = tables.find('tbody tr');
+  // Rows that list each parcel's own scans sit between the shipment's rows.
+  const rows = tables.children('tbody').children('tr')
+    .filter((_, row) => !$(row).hasClass('table-bultos') || $(row).find('table[title="Desglose de bultos"]').length !== 1);
   if (!rows.length) throw new IndeterminateError('MRW', 'Shipment history is empty');
   if (rows.length > 500) throw new SchemaError('MRW', 'Shipment history is unexpectedly large');
   const events: CarrierEvent[] = [];

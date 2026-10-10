@@ -11,6 +11,7 @@ import { sameInstantIdentityPolicy as hermesGermany } from '../../carriers/herme
 import { sameInstantIdentityPolicy as indiaPost } from '../../carriers/india-post/app.js';
 import { sameInstantIdentityPolicy as lbcExpress } from '../../carriers/lbc-express/identity.js';
 import { sameInstantIdentityPolicy as mondialRelay } from '../../carriers/mondial-relay/identity.js';
+import { sameInstantIdentityPolicy as mrw } from '../../carriers/mrw/identity.js';
 import { sameInstantIdentityPolicy as posti } from '../../carriers/posti/identity.js';
 import { sameInstantIdentityPolicy as ups } from '../../carriers/ups/app.js';
 import { sameInstantIdentityPolicy as swissPost } from '../../carriers/swiss-post/app.js';
@@ -44,7 +45,7 @@ export interface SameInstantIdentityPolicy {
 }
 
 const policies: ReadonlyMap<string, SameInstantIdentityPolicy> = new Map(
-  [aliexpress, amazonShipping, australiaPost, austrianPost, chronopost, ciblex, correosExpress, dpd, dpdFrance, hermesGermany, indiaPost, lbcExpress, mondialRelay, posti, ups, swissPost, yanwen, universal].map((policy) => [policy.sourceCarrierId, policy]),
+  [aliexpress, amazonShipping, australiaPost, austrianPost, chronopost, ciblex, correosExpress, dpd, dpdFrance, hermesGermany, indiaPost, lbcExpress, mondialRelay, mrw, posti, ups, swissPost, yanwen, universal].map((policy) => [policy.sourceCarrierId, policy]),
 );
 
 /** Unlisted sources cannot identify a reworded scan by its instant alone. */

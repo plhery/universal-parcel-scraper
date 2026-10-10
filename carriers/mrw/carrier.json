@@ -33,7 +33,8 @@
       "status",
       "history",
       "location",
-      "pickup_point_address"
+      "pickup_point_address",
+      "parcel_scans"
     ],
     "scraped": [
       "status",
@@ -41,7 +42,8 @@
       "location"
     ],
     "discarded": [
-      "pickup_point_address"
+      "pickup_point_address",
+      "parcel_scans"
     ],
     "unavailable": []
   },

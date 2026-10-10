@@ -41,7 +41,8 @@ describe('MRW anonymous tracking', () => {
   it('accepts a bound current status when the official history page is blank, without a synthetic scan', () => {
     expect(parseMrwHistory(fixture('blank-history'), NUMBER, summary())).toEqual({ status: 'delivered',
       current_stage: 'delivered', last_status_text: 'Envío entregado', last_update: null,
-      expected_delivery: null, summary_only: true, events: [] });
+      last_update_local: '2026-09-10T19:29:00', expected_delivery: null, summary_only: true, events: [] });
+    expect(parseMrwHistory(fixture('blank-history'), NUMBER, { ...summary(), date: '31/02/2026' }).last_update_local).toBeUndefined();
     expect(() => parseMrwHistory(fixture('blank-history'), NUMBER, { ...summary(), status: 'ENTREGADO A PRIVATE_SYNTHETIC' }))
       .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
@@ -76,6 +77,19 @@ describe('MRW anonymous tracking', () => {
     expect(result.events?.[0]!.description).toBe('Actualización de seguimiento');
     expect(result.events?.[0]!.provider_time_text).toBe('31/02/2026 19:29');
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC_RECIPIENT');
+  });
+
+  it('skips the per-parcel scans and keeps hub labels', () => {
+    const breakdown = '<tr id="infoBultos2" class="table-bultos"><td class="hidden-xs"></td><td colspan="2"><div class="table-responsive">'
+      + '<table class="zebra alt" title="Desglose de bultos"><thead><tr><th>Bulto</th><th>Fecha</th><th>Hora</th></tr></thead>'
+      + '<tbody><tr><td>001</td><td>07/09/2026</td><td>14:03</td></tr><tr><td>002</td><td>07/09/2026</td><td>13:58</td></tr></tbody></table></div></td></tr>';
+    const html = fixture('history').replace('<td>07/09/2026</td><td>14:03</td><td>En tránsito</td><td>28000 Madrid</td></tr>',
+      `<td>07/09/2026</td><td>14:03</td><td>En tránsito</td><td>00000 Example (Plataforma)</td></tr>${breakdown}`);
+    const result = parseMrwHistory(html, NUMBER, summary());
+    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'failed_attempt', 'in_transit', 'registered']);
+    expect(result.events?.[3]).toMatchObject({ local_time: '2026-09-07T14:03:00', location: '00000 Example (Plataforma)' });
+    const loose = html.replace('title="Desglose de bultos"', 'title="Otro"');
+    expect(() => parseMrwHistory(loose, NUMBER, summary())).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('keeps an agreed delivery in transit', () => {
