@@ -15,8 +15,8 @@
   "selectable": true,
   "timezone": "UTC",
   "tracking": {
-    "mode": "link-only",
-    "adapter": null,
+    "mode": "automatic",
+    "adapter": "universal",
     "steps": []
   },
   "capabilities": [],
@@ -32,8 +32,7 @@
     "scraped": [],
     "discarded": [],
     "unavailable": [
-      "status",
-      "history"
+      "delivery_photo"
     ]
   },
   "links": [

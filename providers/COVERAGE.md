@@ -17,8 +17,9 @@ scope. Their public sources are in [the number corpus](../carriers/dhl/numbers.j
 OMGO is outside the comparison cohort. ParcelsApp returns OMGO history; the other
 providers are unverified for it.
 
-Emile, which is link only, is outside it too. ParcelsApp returns the history a consolidator
-relays for an Emile number; the other providers are unverified for it.
+Emile is outside it too. ParcelsApp returns the history a consolidator relays for an Emile
+number, Emile's scans included; Ship24 had none for the same references. UPU does not take
+the format, and 17TRACK and Postal Ninja are unverified for it.
 
 ## Reading the table
 

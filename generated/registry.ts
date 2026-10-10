@@ -281,7 +281,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": "dtdc",
     "ecoscooting": "ecoscooting",
     "ekart": "ekart",
-    "emile": null,
+    "emile": "universal",
     "ems": "ems",
     "estafeta": "estafeta",
     "evri": "evri",

@@ -143,7 +143,7 @@ describe('Yanwen result projection', () => {
     expect(JSON.stringify(distributed('UUS0000000000000001', 'UniUni', 'https://www.uniuni.com/'))).not.toContain('PRIVATE');
   });
 
-  it('names Emile, a link-only carrier, as the distributor of its EM…CA reference', () => {
+  it('names Emile as the distributor of its EM…CA reference', () => {
     expect(distributed('EM000000000001CA', 'Emile', 'https://www.emileps.com/'))
       .toMatchObject({ delivery_carrier: 'emile', delivery_tracking_number: 'EM000000000001CA' });
   });

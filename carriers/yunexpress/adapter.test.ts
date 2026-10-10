@@ -159,7 +159,7 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
   });
 
-  it('names Emile, a link-only carrier, when the notes link its site for an EM…CA reference', () => {
+  it('names Emile when the notes link its site for an EM…CA reference', () => {
     const payload = fixture();
     const info = payload.ResultList[0].TrackInfo;
     info.TrackingNumber = 'EM000000000001CA';

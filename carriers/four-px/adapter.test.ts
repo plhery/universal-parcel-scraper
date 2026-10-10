@@ -131,7 +131,7 @@ describe('4PX result projection', () => {
     expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();
   });
 
-  it('names Emile, a link-only carrier, as the provider of a Canadian parcel', () => {
+  it('names Emile as the provider of a Canadian parcel', () => {
     const payload = fixture(); const card = payload.data[0].channelContact;
     card.contact = '【服务商】Emile\n【联系方式】\nPRIVATE_CONTACT'; card.website = 'https://www.emileps.com/';
     payload.data[0].serverCode = 'EM000000000001CA';
