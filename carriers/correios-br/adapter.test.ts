@@ -92,6 +92,7 @@ describe('Correios parser', () => {
       ['BDI', '01', 'Objeto entregue ao destinatário', 'delivered', 'delivered'],
       ['BDI', '40', 'Importação não autorizada', 'exception', 'exception'],
       ['FC', '82', 'Etiqueta emitida', 'pending', 'registered'],
+      ['FC', '03', 'Objeto em correção de rota', 'in_transit', 'in_transit'],
     ] as const) {
       const result = parseCorreios({ ...fixture, eventos: [scan(code, kind, description, clock), ...fixture.eventos] }, NUMBER);
       expect(result).toMatchObject({ status, current_stage: stage });

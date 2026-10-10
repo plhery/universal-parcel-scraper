@@ -21,6 +21,7 @@
     { "code": "OEC/09", "wording": "Objeto saiu para entrega ao remetente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Out for delivery back to the sender, not to the recipient." },
     { "code": "LDI/02", "wording": "Objeto aguardando retirada na Caixa Postal", "language": "pt", "stage": "ready_for_pickup", "confirmedBy": "live" },
     { "code": "FC/82", "wording": "Etiqueta emitida", "language": "pt", "stage": "registered", "confirmedBy": "live", "note": "A label was issued; Correios does not have the parcel yet." },
+    { "code": "FC/03", "wording": "Objeto em correção de rota", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "A missorted item that Correios will forward again; transfers follow." },
     { "code": "PO/09", "wording": "Objeto postado após o horário limite da unidade", "language": "pt", "stage": "accepted", "confirmedBy": "live", "note": "Posted after the counter's cut-off time." },
     { "code": "PAR/24", "wording": "Devolução determinada pela autoridade competente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Customs ordered the parcel back to its sender." }
   ]

@@ -17,6 +17,8 @@ const codes: Record<string, ClassifiedStatus> = {
   'OEC/09': { status: 'exception', stage: 'returned' },
   'LDI/02': { status: 'in_transit', stage: 'ready_for_pickup' },
   'FC/82': { status: 'pending', stage: 'registered' },
+  // A missorted item Correios has caught and will forward again.
+  'FC/03': { status: 'in_transit', stage: 'in_transit' },
   'DO/01': { status: 'in_transit', stage: 'in_transit' },
   'RO/01': { status: 'in_transit', stage: 'in_transit' },
   'PAR/10': { status: 'in_transit', stage: 'in_transit' },
