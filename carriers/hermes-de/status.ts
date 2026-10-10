@@ -6,9 +6,10 @@
  * rules, no language guessing. `description` is the fallback text used when the
  * row carries no `historyText` of its own.
  *
- * A code that is not in this map is deliberately left unclassified. The adapter
- * then reports the shipment as `unknown` rather than inventing a stage, and the
- * sync records the wording for review.
+ * A code that is not in this map is deliberately left unclassified. Its scan
+ * goes to the shared wording classifier, the adapter reports a shipment whose
+ * latest scan it is as `unknown` rather than inventing a stage, and the sync
+ * records the wording for review.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../generated/catalog.js';
@@ -55,10 +56,14 @@ export const STATUSES: Record<string, Milestone> = {
   DELIVERED_PARCELBOX: milestone('delivered', 'delivered', 'Delivered to the parcel box'),
   PICKED_UP_BY_RECIPIENT: milestone('delivered', 'delivered', 'Collected by the recipient'),
   COLLECTED: milestone('delivered', 'delivered', 'Collected by the recipient'),
+  PARCELSHOP_COLLECTED_BY_CUSTOMER: milestone('delivered', 'delivered', 'Collected at the ParcelShop'),
+  INTERNATIONAL_DELIVERED: milestone('delivered', 'delivered', 'Delivered'),
   READY_FOR_PICKUP: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection'),
   PARCELSHOP_ITEMS_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection at the ParcelShop'),
   READY_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection'),
+  PARCELSHOP_READY_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection at the ParcelShop'),
   DELIVERY_FAILED: milestone('failed_attempt', 'exception', 'Delivery attempt unsuccessful'),
+  DELIVERY_FAILED_ADDRESS_PROBLEM: milestone('failed_attempt', 'exception', 'Delivery address not found'),
   NOT_DELIVERABLE: milestone('exception', 'exception', 'Shipment not deliverable'),
   UNKNOWN_WHEREABOUTS: milestone('exception', 'exception', 'Shipment whereabouts unknown'),
   RETURN_TO_SENDER: milestone('returned', 'exception', 'Returning to sender'),
@@ -67,9 +72,12 @@ export const STATUSES: Record<string, Milestone> = {
   RETOURE_DELIVERED: milestone('returned', 'exception', 'Returned to sender'),
 };
 
-// Pre-announcement preference bookings fire before collection and must never
-// move the parcel backwards on their own.
-export const IGNORED_BOOKING_STATUS = new Set(['EDL_BOOKED_DROPOFF']);
+// Delivery preference bookings (a safe place, a ParcelShop) record the
+// recipient's wish, not a movement, and must never move the parcel backwards.
+export const IGNORED_BOOKING_STATUS = new Set(['EDL_BOOKED_DROPOFF', 'EDL_BOOKED_PARCELSHOP']);
+
+/** Codes for a parcel the recipient collected at a ParcelShop. */
+export const COLLECTED_AT_PARCELSHOP = new Set(['PARCELSHOP_COLLECTED_BY_CUSTOMER', 'DELIVERED_PARCELSHOP']);
 
 /** The milestone for a `parcelStatus`, or undefined when the code is not mapped. */
 export function hermesGermanyMilestone(parcelStatus: string): Milestone | undefined {

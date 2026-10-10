@@ -30,6 +30,7 @@
     "eta",
     "sender_name",
     "delivered_at",
+    "pickup_point",
     "provider_code"
   ],
   "portal": {
@@ -41,6 +42,7 @@
       "history",
       "eta",
       "sender_name",
+      "pickup_point",
       "recipient_name",
       "recipient_address",
       "delivery_instructions"
@@ -51,6 +53,7 @@
       "eta",
       "sender_name",
       "delivered_at",
+      "pickup_point",
       "provider_code"
     ],
     "discarded": [

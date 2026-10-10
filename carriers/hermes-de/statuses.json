@@ -287,6 +287,46 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "Delivered at the recipient's address; the parcel's delivered flag agrees."
+    },
+    {
+      "code": "PARCELSHOP_READY_FOR_COLLECTION",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Waiting at the ParcelShop its wording names, for up to seven working days."
+    },
+    {
+      "code": "PARCELSHOP_COLLECTED_BY_CUSTOMER",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Collected by the recipient at the ParcelShop its wording names."
+    },
+    {
+      "code": "INTERNATIONAL_DELIVERED",
+      "wording": "Die Sendung wurde erfolgreich zugestellt.",
+      "language": "de",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Delivered abroad after sorting in the destination country; the parcel's delivered flag agrees."
+    },
+    {
+      "code": "DELIVERY_FAILED_ADDRESS_PROBLEM",
+      "wording": "Die Zustelladresse wurde nicht gefunden. Mögliche Gründe: Fehler in der Adressübermittlung. Bitte PaketShop buchen oder Kundenservice kontaktieren.",
+      "language": "de",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "A delivery round that could not find the address; a later round delivered the parcel."
+    },
+    {
+      "code": "EDL_BOOKED_PARCELSHOP",
+      "wording": "Für die Sendung wurde ein WunschPaketShop gebucht.",
+      "language": "de",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Delivery preference booking, like EDL_BOOKED_DROPOFF; deliberately not mapped and dropped from the history so it cannot move the parcel backwards."
     }
   ]
 }

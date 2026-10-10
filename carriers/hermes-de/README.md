@@ -22,16 +22,28 @@ back to `Europe/Berlin`) and stored as UTC.
 - Barcodes shared with Evri remain ambiguous across services. Longer Hermes
   barcodes retain their existing recognition. Numeric detection uses the
   published checksum as a preference, since other carriers can pass it too.
-- Stages come from the `parcelStatus` enum only, no wording rules. The enum is
-  stable, and wording would only add a chance to be wrong. The enum was read
+- Stages come from the `parcelStatus` enum, no carrier wording rules. The enum
+  is stable, and wording would only add a chance to be wrong. The enum was read
   from the carrier's public bundle `gcp-prd.my-deliveries.de/tnt/bundle/tnt-bundle-v2.js`.
-- An unknown code as the newest row, with nothing saying delivered, reports the
-  shipment as `unknown` with the history intact. The sync then classifies the
-  wording; defaulting to `in_transit` could hide a new failure code.
+- A row with an unknown code carries no stage of its own: the shared wording
+  classifier reads its text. As the newest row, with nothing saying delivered,
+  it reports the shipment as `unknown` with the history intact. Defaulting to
+  `in_transit` could hide a new failure code.
+- Every row keeps its `parcelStatus` as `provider_code`. A row with
+  `historyText` only changes stage when its code is mapped. A row without that
+  text takes the code's own description instead of "Hermes tracking update",
+  which changes its stored identity, so [identity.ts](identity.ts) keeps it at
+  the same instant by its code.
 - `parcelAttributes.delivered` is a second delivery signal, so a delivery
   reported under a code we don't know yet is still recognised.
-- `EDL_BOOKED_DROPOFF` is dropped: it is a preference booking made before
-  collection, and as the newest row it would move the parcel backwards.
+- `EDL_BOOKED_DROPOFF` and `EDL_BOOKED_PARCELSHOP` are dropped: they are the
+  recipient's delivery preference (a safe place, a ParcelShop), not a movement,
+  and as the newest row they would move the parcel backwards.
+- `pickup_point` is the ParcelShop holding the parcel, or the one the recipient
+  collected it from: the shop's name, street and town from the reply's
+  `address` block, read only when its `addressType` is `PARCELSHOP` and the
+  newest row says the parcel waits there or was collected there. A booked shop
+  the parcel never reached gives none.
 - Display text is `historyText`, with the mapped milestone description as
   fallback. The row's `status` field only holds generic buckets
   (`HAPPY`/`FINISHED`).
@@ -46,8 +58,12 @@ back to `Europe/Berlin`) and stored as UTC.
 - History rows carry no scan location.
 - History expires: an old delivered number answers 404, shown as not found.
 - Hermes answers 403 to some networks, including GitHub runners.
-- The recipient `address` block and delivery preferences in the payload are
-  never read.
+- The `address` block is read only for a ParcelShop. A home, neighbour or
+  safe-place address and the delivery preferences in the payload are never
+  read.
+- Hermes answers some numbers with a leading zero too many under the shorter
+  barcode. The reply names another barcode than the one asked, so it is
+  rejected as a different parcel.
 
 ## Testing
 

@@ -5,7 +5,7 @@ import { InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { hermesGermanyMilestone, IGNORED_BOOKING_STATUS, type Milestone } from './status.js';
+import { COLLECTED_AT_PARCELSHOP, hermesGermanyMilestone, IGNORED_BOOKING_STATUS, type Milestone } from './status.js';
 
 // Public recipient protocol inspected 2026-09-08:
 // https://gcp-prd.my-deliveries.de/tnt/bundle/tnt-bundle-v2.js
@@ -53,6 +53,23 @@ export function normalizeHermesGermanyNumber(raw: string): string {
   return value;
 }
 
+/**
+ * The ParcelShop holding the parcel, or the one it was collected from: its
+ * name, street and town. Only a ParcelShop address is read; any other address
+ * type is the recipient's or a neighbour's and is never touched.
+ */
+function parcelShop(parcel: Record<string, unknown>, latest: { metadata?: Milestone; event: CarrierEvent }): string | null {
+  const address = isRecord(parcel.address) ? parcel.address : {};
+  if (address.addressType !== 'PARCELSHOP') return null;
+  const atShop = latest.metadata?.stage === 'ready_for_pickup'
+    || COLLECTED_AT_PARCELSHOP.has(String(latest.event.provider_code));
+  if (!atShop) return null;
+  const name = clean(address.lastName, 120);
+  if (!name) return null;
+  const town = [clean(address.zipCode, 16), clean(address.city, 80)].filter(Boolean).join(' ');
+  return [name, clean(address.street, 120), town].filter(Boolean).join('\n');
+}
+
 export function parseHermesGermanyResponse(payload: unknown, trackingNumber: string): CarrierResult {
   const requested = normalizeHermesGermanyNumber(trackingNumber);
   if (!Array.isArray(payload) || !payload.every(isRecord)) {
@@ -88,7 +105,8 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
       event: {
         time,
         description: rawText || metadata?.description || 'Hermes tracking update',
-        stage: metadata?.stage ?? 'in_transit',
+        // An unmapped code is left to the shared wording classifier.
+        ...(metadata ? { stage: metadata.stage } : {}),
         provider_code: entry.parcelStatus,
       },
     });
@@ -118,6 +136,7 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
   const status = delivered ? 'delivered' as const : latest.metadata!.status;
   const stage = latest.metadata?.stage ?? (delivered ? 'delivered' : 'in_transit');
   const deliveredAt = delivered ? latest.event.time : null;
+  const pickupPoint = parcelShop(parcel, latest);
   return {
     status,
     current_stage: stage,
@@ -127,6 +146,7 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
     timezone: 'Europe/Berlin',
     ...(sender ? { sender_name: sender } : {}),
     ...(deliveredAt && status === 'delivered' ? { delivered_at: deliveredAt } : {}),
+    ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     events: events.slice(0, 100).map(({ event }) => event),
   };
 }
