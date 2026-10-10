@@ -106,6 +106,20 @@
     ]
   },
   {
+    "input": "00040668261688049857",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "swiss-post-cargo",
+      "nz-post"
+    ]
+  },
+  {
     "input": "00073215400717808731",
     "carrier": "unknown",
     "confidence": "low",
@@ -191,6 +205,27 @@
     "asked": [
       "poczta-polska",
       "swiss-post-cargo",
+      "nz-post"
+    ]
+  },
+  {
+    "input": "00164300809500543996",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "posti",
+      "swiss-post-cargo",
+      "postnord",
+      "usps",
+      "nz-post"
+    ],
+    "preferred": [
+      "posti"
+    ],
+    "asked": [
+      "posti",
+      "swiss-post-cargo",
+      "postnord",
       "nz-post"
     ]
   },
@@ -8393,6 +8428,22 @@
     ]
   },
   {
+    "input": "3SCKP00380671",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
+    "input": "3SDGT469589101",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
     "input": "3SIJVT016274357",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -8425,6 +8476,14 @@
     ]
   },
   {
+    "input": "3SLRD0007081840",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
     "input": "3SMOP10072829",
     "carrier": "dhl-ecommerce-nl",
     "confidence": "high",
@@ -8441,11 +8500,38 @@
     ]
   },
   {
+    "input": "3SNTP100798558",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
     "input": "3SOPKD6075402",
     "carrier": "spring-gds",
     "confidence": "high",
     "candidates": [
       "spring-gds"
+    ]
+  },
+  {
+    "input": "3SQLW0041013549",
+    "carrier": "dhl-ecommerce-nl",
+    "confidence": "high",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ]
+  },
+  {
+    "input": "3SZH0001314477",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce-nl"
+    ],
+    "asked": [
+      "dhl-ecommerce-nl"
     ]
   },
   {
@@ -17038,6 +17124,14 @@
     ]
   },
   {
+    "input": "JJD000090254000065052505",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
+    ]
+  },
+  {
     "input": "JJD0002123456789012",
     "carrier": "unknown",
     "confidence": "low",
@@ -17138,7 +17232,31 @@
     ]
   },
   {
+    "input": "JJFI61706620145567903",
+    "carrier": "posti",
+    "confidence": "high",
+    "candidates": [
+      "posti"
+    ]
+  },
+  {
+    "input": "JJFI65305909000174386",
+    "carrier": "posti",
+    "confidence": "high",
+    "candidates": [
+      "posti"
+    ]
+  },
+  {
     "input": "JJFI65432155555123456",
+    "carrier": "posti",
+    "confidence": "high",
+    "candidates": [
+      "posti"
+    ]
+  },
+  {
+    "input": "JJFI67873820144153069",
     "carrier": "posti",
     "confidence": "high",
     "candidates": [
@@ -17485,6 +17603,14 @@
     "confidence": "high",
     "candidates": [
       "canpar"
+    ]
+  },
+  {
+    "input": "LA005217790NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
     ]
   },
   {
@@ -18397,6 +18523,14 @@
   },
   {
     "input": "LZ464222669CN",
+    "carrier": "china-post",
+    "confidence": "high",
+    "candidates": [
+      "china-post"
+    ]
+  },
+  {
+    "input": "LZ474407968CN",
     "carrier": "china-post",
     "confidence": "high",
     "candidates": [

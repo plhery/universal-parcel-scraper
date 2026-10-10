@@ -117,6 +117,18 @@
     "reason": "The JJD licence plate is shared by DHL's European parcel networks and detected as DHL. The Iberian portal reads it when the carrier is named."
   },
   {
+    "carrier": "dhl-ecommerce-nl",
+    "pattern": "^JJD\\d{21}$",
+    "kind": "by_design",
+    "reason": "DHL Paket owns its JJD licence plates. Parcels bound for the Netherlands reach DHL eCommerce Netherlands through the link DHL's tracker gives."
+  },
+  {
+    "carrier": "dhl-ecommerce-nl",
+    "pattern": "^00\\d{18}$",
+    "kind": "by_design",
+    "reason": "DHL eCommerce Netherlands tracks shippers' SSCCs, but a valid SSCC names no carrier, so only an explicit choice can reach its tracker."
+  },
+  {
     "carrier": "dhl-ecommerce-pl",
     "pattern": "^JJD",
     "kind": "by_design",
