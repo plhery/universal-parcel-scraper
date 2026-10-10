@@ -225,6 +225,12 @@
     "reason": "A piece number of a multi-piece consignment. One sample does not establish the family."
   },
   {
+    "carrier": "landmark-global",
+    "pattern": "^(?:PS\\d{6}[A-Z]\\d{10}|LDLBUS\\d{9})$",
+    "kind": "by_design",
+    "reason": "Merchant and shipper references that Landmark's tracking page resolves to a parcel. They are not specific to Landmark, so the adapter takes only LTN references."
+  },
+  {
     "carrier": "lbc-express",
     "pattern": "^\\d{10,11}$",
     "kind": "by_design",

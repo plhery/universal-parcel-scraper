@@ -19330,6 +19330,12 @@
     ]
   },
   {
+    "input": "LDLBUS030801974",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "LE016419501IE",
     "carrier": "an-post",
     "confidence": "high",
@@ -19854,6 +19860,14 @@
     ]
   },
   {
+    "input": "LTN410582505N1",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
     "input": "LTN413594884N1",
     "carrier": "landmark-global",
     "confidence": "high",
@@ -19862,7 +19876,31 @@
     ]
   },
   {
+    "input": "LTN414754507N1",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
     "input": "LTN416686164",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN419338937",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN419392138",
     "carrier": "landmark-global",
     "confidence": "high",
     "candidates": [
@@ -19879,6 +19917,70 @@
   },
   {
     "input": "LTN422206722",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN424021500",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN433189660N1",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN433367555",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN438274475",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN443417536N1",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN447346497",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN448984656N1",
+    "carrier": "landmark-global",
+    "confidence": "high",
+    "candidates": [
+      "landmark-global"
+    ]
+  },
+  {
+    "input": "LTN449786374",
     "carrier": "landmark-global",
     "confidence": "high",
     "candidates": [
@@ -20835,6 +20937,12 @@
     "candidates": [
       "correos-spain"
     ]
+  },
+  {
+    "input": "PS000427F0334063903",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "PT0000000001",
