@@ -132,6 +132,21 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(release, { ...named, description: 'Released to EXAMPLE PERSON' })).toBe(false);
   });
 
+  it('lets a Poste Italiane depot scan gain its town and province', () => {
+    expect(sameInstantIdentityPolicy('poste-italiane')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('poste-italiane', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['poste-italiane'], requireProviderCode: false, matchEachScan: true });
+    const stored = { stage: 'in_transit', description: 'la spedizione è in transito', location: '', providerCode: '' };
+    const incoming = { ...stored, location: 'EXAMPLE TOWN (XX)' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, incoming)).toBe(true);
+    for (const different of [
+      { ...stored, description: 'la spedizione è in consegna' },
+      { ...stored, location: 'UFFICIO DI PROVA' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    expect(policy?.matches?.({ ...incoming, location: 'UFFICIO DI PROVA' }, stored)).toBe(false);
+  });
+
   it('lets an MRW hub scan gain its bracketed label', () => {
     expect(sameInstantIdentityPolicy('mrw')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('mrw', { supportsScanMatching: true });

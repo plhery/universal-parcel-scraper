@@ -29,7 +29,8 @@
   "capabilities": [
     "history",
     "eta",
-    "location"
+    "location",
+    "service_name"
   ],
   "portal": {
     "url": "https://www.poste.it/cerca/index.html#/risultati-spedizioni/{trackingNumber}",
@@ -40,6 +41,7 @@
       "history",
       "eta",
       "location",
+      "service_name",
       "sender_name",
       "recipient_name",
       "recipient_address",
@@ -51,7 +53,8 @@
       "status",
       "history",
       "eta",
-      "location"
+      "location",
+      "service_name"
     ],
     "discarded": [
       "sender_name",

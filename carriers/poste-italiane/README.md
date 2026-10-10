@@ -35,22 +35,27 @@ The adapter refuses S10 numbers, so mail from abroad to Italy is not handed to P
   apostrophe are accepted (`e' stata consegnata` appears live). Unmapped wording gets no
   stage rather than a regex catch-all guess; the sync records it for review.
 - Customs release wording maps to `in_transit`.
-- `luogo` is dropped: nothing tells a depot from a recipient address, and guessing could leak
-  the address. A post-office scan names its office, which becomes the event location; the
-  office's address, postcode and hours are not kept.
+- A post-office scan names its office, which becomes the event location; the office's
+  address, postcode and hours are not kept. Other scans keep `luogo` only when it is a town
+  and province, such as `PESCARA (PE)`, or a delivery "dalla sede operativa di" that town.
+  Any other `luogo`, such as a post office's street address or a street named with its
+  province, is dropped.
+- `tipoProdotto` names the product, such as Poste Delivery Standard. Letter-post items echo
+  their own number there, which is not kept.
 - `dataPrevistaConsegna` is Italian prose ("Consegna prevista entro Venerdì 2 Gennaio 2026"),
   reduced to a calendar day and cleared once delivered. Unparsable text yields no estimate.
 - `dataOra` is epoch milliseconds, so there is no zone to guess. A local helper renders it
   with milliseconds (`.000Z`) because those strings are persisted and `core/time`'s
   `epochMillisTime` would drop them.
-- At most 20 events are returned, newest first.
+- At most 20 events are returned, newest first. Movements come oldest first, so of two
+  sharing an instant the later one is newer.
 - Sender, recipient, address, signature, weight, dimensions and pickup office are never read;
   a test asserts it.
 - Not used: scraping `poste.it/cerca`. It is a JavaScript app and its HTML carries no history.
 
 ## Limitations
 
-- Event locations only for post-office scans.
+- No event location for a scan at a post office's street address without its office name.
 - Day-resolution estimate only.
 
 ## Testing

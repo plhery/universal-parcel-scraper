@@ -66,6 +66,26 @@ function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
   return { iso, timestamp: millis };
 }
 
+/**
+ * A depot scan's place is a town and its province, as "PESCARA (PE)" or
+ * "NAPOLI NA", and a delivery reads "dalla sede operativa di" that town. Any
+ * other place, such as a post office's street address or a street named with
+ * its province, stays out.
+ */
+const STREET = /^(?:VIA|VIALE|VICOLO|PIAZZA|PIAZZALE|PIAZZETTA|CORSO|LARGO|STRADA|LUNGOMARE|LUNGOTEVERE|CONTRADA|LOCALIT(?:À|A'?)|FRAZIONE|SALITA)(?:\s|$)/u;
+function townLabel(value: unknown): string {
+  const text = clean(value, 120).replace(/^dalla sede operativa di\s+/u, '');
+  const match = /^([A-ZÀ-Ý][A-ZÀ-Ý' .-]{1,40}?)\s+(?:\(([A-Z]{2})\)|([A-Z]{2}))$/u.exec(text);
+  return match && !STREET.test(match[1]!) ? `${match[1]} (${match[2] ?? match[3]})` : '';
+}
+
+/** The product the parcel travels under; letter-post items echo their own number instead. */
+function serviceName(value: unknown, trackingNumber: string): string {
+  const text = clean(value, 80);
+  return /^[\p{L}][\p{L}\d '+.&-]{2,59}$/u.test(text) && !/\d{6}/.test(text)
+    && text.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '') !== trackingNumber ? text : '';
+}
+
 export function normalizePosteItalianeTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
   if (!isPosteItalianeTrackingNumber(value)) {
@@ -107,16 +127,15 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     seen.add(identity);
     const classified = classifyPosteItalianeStatus(rawEvent.statoLavorazione);
     parsed.push({
-      // luogo fields are dropped: nothing distinguishes a depot from a
-      // recipient address without evidence. A post-office scan names its
-      // office, which becomes the location; the office's address, postcode
-      // and hours are not kept. Sender, dimensions and pickup-office blocks
-      // on the envelope are never retained either.
+      // A post-office scan names its office, which becomes the location; the
+      // office's address, postcode and hours are not kept. Other scans keep
+      // luogo only when it is a town and province. Sender, dimensions and
+      // pickup-office blocks on the envelope are never retained either.
       // Unmapped wording keeps no stage: the sync classifies it and records
       // where the stage came from instead of assuming movement here.
       event: {
         time: time.iso,
-        location: clean(rawEvent.denominazioneUfficio, 80),
+        location: clean(rawEvent.denominazioneUfficio, 80) || townLabel(rawEvent.luogo),
         description: wording,
         ...(classified ? { stage: classified.stage } : {}),
       },
@@ -126,8 +145,11 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
       index,
     });
   });
-  parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  // Movements come oldest first, so of two sharing an instant the later one is newer.
+  parsed.sort((left, right) => right.timestamp - left.timestamp || right.index - left.index);
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
+  const service = serviceName(payload.tipoProdotto, requested);
+  const product = service ? { service_name: service } : {};
   if (rawMovements.length > 0 && events.length === 0) {
     throw new SchemaError('Poste Italiane', 'Poste Italiane returned unusable tracking history');
   }
@@ -146,6 +168,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
       last_status_text: events[0]?.description ?? 'Delivered',
       last_update: events[0]?.time ?? null,
       expected_delivery: null,
+      ...product,
       events,
     };
   }
@@ -159,6 +182,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
         last_status_text: events[0]!.description,
         last_update: events[0]?.time ?? null,
         expected_delivery: expectedDeliveryDay(payload.dataPrevistaConsegna),
+        ...product,
         events,
       };
     }
@@ -169,6 +193,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
         last_status_text: 'Tracking information received',
         last_update: null,
         expected_delivery: expectedDeliveryDay(payload.dataPrevistaConsegna),
+        ...product,
         events,
       };
     }
@@ -186,6 +211,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     last_status_text: latest.event.description,
     last_update: latest.event.time ?? null,
     expected_delivery: expectedDeliveryDay(payload.dataPrevistaConsegna),
+    ...product,
     events,
   };
 }

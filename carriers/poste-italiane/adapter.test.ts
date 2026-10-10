@@ -233,6 +233,48 @@ describe('Poste Italiane response parsing', () => {
     for (const secret of ['VIA DI PROVA', '00000', '99999', '08:20', 'Test Depot']) expect(serialized).not.toContain(secret);
   });
 
+  it('reads the later of two movements sharing an instant as the newer', () => {
+    const delivered = parsePosteItalianeTrackingResponse(parcel({ listaMovimenti: [
+      movement('la spedizione è in consegna', 1767398400000),
+      movement('la spedizione è stata consegnata', 1767398400000),
+    ] }), TRACKING_NUMBER);
+    expect(delivered.last_status_text).toBe('la spedizione è stata consegnata');
+    const moving = parsePosteItalianeTrackingResponse(parcel({ stato: '4', listaMovimenti: [
+      movement('la spedizione è in transito', 1767398400000),
+      movement('la spedizione è in consegna', 1767398400000),
+    ] }), TRACKING_NUMBER);
+    expect(moving).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'la spedizione è in consegna' });
+  });
+
+  it('locates depot scans at their town and province and names the product', () => {
+    const result = parsePosteItalianeTrackingResponse(parcel({
+      tipoProdotto: 'CRONO ECONOMY',
+      listaMovimenti: [
+        { ...movement('la spedizione è in transito', 1767225600000), luogo: 'EXAMPLE TOWN (XX)' },
+        { ...movement('la spedizione è in consegna', 1767312000000), luogo: 'SAN EXAMPLE DI PROVA XX' },
+        { ...movement('la spedizione è stata consegnata', 1767398400000), luogo: 'dalla sede operativa di EXAMPLE TOWN (XX)' },
+      ],
+    }), TRACKING_NUMBER);
+    expect(result.service_name).toBe('CRONO ECONOMY');
+    expect(result.events?.map((event) => event.location)).toEqual(['EXAMPLE TOWN (XX)', 'SAN EXAMPLE DI PROVA (XX)', 'EXAMPLE TOWN (XX)']);
+    const office = parsePosteItalianeTrackingResponse(parcel({
+      tipoProdotto: TRACKING_NUMBER,
+      listaMovimenti: [
+        { ...movement('la spedizione è stata consegnata', 1767398400000), luogo: 'Ufficio Postale EXAMPLE VIA DI PROVA 1, 00000 EXAMPLE (XX)' },
+      ],
+    }), TRACKING_NUMBER);
+    expect(office.service_name).toBeUndefined();
+    expect(office.events?.[0]?.location).toBe('');
+    expect(JSON.stringify(office)).not.toContain('VIA DI PROVA');
+    // A street named with its province is an address, not a town.
+    for (const street of ['VIA DI PROVA XX', 'PIAZZA EXAMPLE (XX)', 'CORSO EXAMPLE XX', 'LOCALITÀ EXAMPLE (XX)', 'dalla sede operativa di VIALE EXAMPLE (XX)']) {
+      const scan = parsePosteItalianeTrackingResponse(parcel({
+        listaMovimenti: [{ ...movement('la spedizione è in transito', 1767225600000), luogo: street }],
+      }), TRACKING_NUMBER);
+      expect(scan.events?.[0]?.location).toBe('');
+    }
+  });
+
   it('never retains customer, dimension, office, place or estimate-source data', () => {
     const result = parsePosteItalianeTrackingResponse(parcel({
       nombre_cliente: 'Example Customer',
@@ -251,9 +293,10 @@ describe('Poste Italiane response parsing', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    expect(CAPABILITIES).toEqual(['history', 'eta', 'location']);
+    expect(CAPABILITIES).toEqual(['history', 'eta', 'location', 'service_name']);
     const delivered = parsePosteItalianeTrackingResponse(parcel(), TRACKING_NUMBER);
     expect(delivered.events?.length).toBeGreaterThan(0);
+    expect(delivered.service_name).toBe('POSTEDELIVERY EUROPE');
     const accepted = parsePosteItalianeTrackingResponse(parcel({ listaMovimenti: [
       { ...movement('la spedizione è stata presa in carico', 1767225600000), denominazioneUfficio: 'UFFICIO DI PROVA' },
     ] }), TRACKING_NUMBER);
