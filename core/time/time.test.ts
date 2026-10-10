@@ -101,6 +101,12 @@ describe('time policies', () => {
     expect(countryCode('Switzerland')).toBe('CH');
     expect(countryCode('Côte d’Ivoire')).toBe('CI');
     expect(countryCode("COTE D'IVOIRE")).toBe('CI');
+    // Full or former names carriers still print.
+    expect(countryCode('United States of America')).toBe('US');
+    expect(countryCode('UNITED STATES OF AMERICA')).toBe('US');
+    expect(countryCode('Czech Republic')).toBe('CZ');
+    expect(countryTimeZone('czech republic')).toBe('Europe/Prague');
+    expect(countryTimeZone('United States of America')).toBeNull();
     // Retired codes, subdivisions and places are not countries.
     for (const value of ['UK', 'FX', 'ON', 'Example Hub', 'EXAMPLE CITY, CA', '', undefined]) expect(countryCode(value)).toBeNull();
   });
