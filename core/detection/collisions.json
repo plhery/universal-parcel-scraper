@@ -1865,5 +1865,22 @@
       "dhl"
     ],
     "reason": "A DHL JJD licence plate can carry 000 where Australia Post's article layout has it after a three-character code, so both high-confidence rules match and the number stays a suggestion, DHL first."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-de",
+      "dpd-uk",
+      "hermes-de",
+      "relais-colis",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk"
+    ],
+    "reason": "Hermes Germany parcel numbers share this numeric length with the DPD networks and these carriers, so number shape alone cannot identify a carrier."
   }
 ]
