@@ -17,6 +17,17 @@ function clean(value: unknown, limit = 500): string {
   return typeof value === 'string' ? cleanText(value.replace(/<[^>]*>/g, ''), limit) : '';
 }
 
+// Webtrack's handover to the last-mile partner, usually USPS, before its own scans
+// appear, and USPS accepting the parcel after it.
+const PARTNER_HANDOVER = /^tendered to (?:the )?delivery service provider\b/;
+const USPS_ACCEPTANCE = /^(?:shipment )?accepted by usps\b/;
+
+/** Whether a scan shows the parcel handed to its last-mile partner. */
+export function partnerHasParcel(description: unknown): boolean {
+  const text = clean(description).toLowerCase();
+  return PARTNER_HANDOVER.test(text) || USPS_ACCEPTANCE.test(text);
+}
+
 export function stageFor(event: JsonObject): string {
   const text = clean(event.description).toLowerCase();
   if (/return(?:ed|ing)? to (?:the )?sender/.test(text)) return 'returned';
@@ -31,8 +42,11 @@ export function stageFor(event: JsonObject): string {
   if (/customs.*(?:cleared|released)|clearance completed/.test(text)) return 'in_transit';
   if (/customs|clearance/.test(text)) return 'customs';
   if (/label created|manifest data received|en route to dhl ecommerce or awaiting processing|electronic|information received/.test(text)) return 'registered';
+  // USPS taking the parcel after DHL's handover is a step in transit, not its acceptance.
+  if (USPS_ACCEPTANCE.test(text)) return 'in_transit';
   if (/package received at dhl|picked up|accepted/.test(text)) return 'accepted';
   if (/^(?:close bag|scanned into sack\/container)$/.test(text)) return 'in_transit';
+  if (PARTNER_HANDOVER.test(text)) return 'in_transit';
   // A terminal provider code outranks an intuitive translated label.
   if (event.statusCode === 'delivered') return 'delivered';
   const translated = trackingLanguageStage(typeof event.description === 'string' ? event.description : '');

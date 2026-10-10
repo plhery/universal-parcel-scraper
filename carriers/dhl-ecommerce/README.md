@@ -35,11 +35,34 @@ does; the alias can differ from all concrete shipment identifiers. UTAPI accepts
 one `ecommerce` shipment from the exact requested response URL because it can
 return a different customer-confirmation identifier.
 
-Timestamps use explicit offsets, the event's country or an identified hub.
-Unresolved Webtrack clocks remain `local_time`; unresolved UTAPI clocks are
-omitted. Converted instants use UTC. The coarse status does not replace a more
-precise latest scan, and delivered descriptions omit signatures. Recipient
-addresses and customer references are excluded.
+Timestamps use explicit offsets, the event's country or an identified hub. Webtrack
+also names each scan's clock: a US zone (`ET`, `CT`, `MT`, `PT`), a fixed
+abbreviation such as `PDT`, an offset such as `+07`, or `LT` for the place's own
+time. A US label holds at a US place or one that names no country; at a place in
+another country the place's own zone holds, as for `LT`. At a hub or US state the
+label is checked: a hub or one-zone state keeps its own clock, since Arizona stays
+on standard time (except the Navajo Nation, read as the rest of the state) and
+Hawaii has its own zone; a state split between zones must be one the label can name;
+and an abbreviation's offset must be one the place's clock has on that date, which
+also settles a repeated hour. A code shared by a state and a country, such as `CA`, is read as the state
+when the label fits it. A clock that does not fit, falls in an hour a clock change
+skips, or falls in one it repeats without an abbreviation, remains `local_time`, as
+do other unresolved Webtrack clocks; unresolved UTAPI clocks are omitted. Converted
+instants use UTC. Scans keep Webtrack's newest-first order unless every one has an
+instant. The coarse status does not replace a more precise latest scan, and
+delivered descriptions omit signatures. Recipient addresses and customer references
+are excluded.
+
+Webtrack also gives the product name, the weight in pounds, and the last-mile
+partner with its own number for the parcel. The partner is named from the label
+onwards, so a USPS partner is reported only once a scan shows it has the parcel,
+with its number when that differs from the one asked for. `MIRROR` means DHL
+delivers itself.
+
+While a parcel is en route, Webtrack adds an `EN ROUTE` row without a place,
+stamped with the time of each request. It is an echo of the status, not a scan,
+so it is skipped. The handover to the last-mile partner ("TENDERED TO DELIVERY
+SERVICE PROVIDER") is in transit, and so is USPS accepting the parcel after it.
 
 ## Limitations
 

@@ -35,7 +35,11 @@
     "location",
     "eta",
     "sender_name",
-    "delivered_at"
+    "delivered_at",
+    "service_name",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://www.dhl.com/ch-en/home/tracking.html?tracking-id={trackingNumber}&submit=1",
@@ -57,7 +61,11 @@
       "location",
       "eta",
       "sender_name",
-      "delivered_at"
+      "delivered_at",
+      "service_name",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
     ],
     "discarded": [
       "recipient_address",

@@ -254,6 +254,147 @@
         ]
       },
       "note": "Public tracking link; the tracking page returned the history."
+    },
+    {
+      "number": "273551390D",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928010620/https://webtrack.dhlecs.com/?trackingnumber=273551390D",
+        "date": "2026-09-28",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Parcel Ground",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A shipper's package reference archived from a DHL eCommerce tracking link. Webtrack returned the parcel's history up to its USPS delivery and gave USPS's own number for it."
+    },
+    {
+      "number": "272085497D",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260915162452/https://webtrack.dhlecs.com/?trackingnumber=272085497D",
+        "date": "2026-09-15",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A shipper's package reference archived from a DHL eCommerce tracking link. Webtrack returned the parcel's history up to its USPS delivery."
+    },
+    {
+      "number": "9261290411503175907529",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261007204147/https://webtrack.dhlecs.com/orders?trackingNumber=9261290411503175907529",
+        "date": "2026-10-07",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Parcel Plus Ground",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
+        ]
+      },
+      "note": "Archived from a DHL eCommerce tracking link. Webtrack returned the parcel's history while it was still in DHL's network."
+    },
+    {
+      "number": "9261290357482657956985",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260927160405/https://webtrack.dhlecs.com/?trackingnumber=9261290357482657956985",
+        "date": "2026-09-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
+        ]
+      },
+      "note": "Archived from a DHL eCommerce tracking link. Webtrack returned the parcel's history, including USPS accepting it after DHL's handover."
+    },
+    {
+      "number": "7227062646824406",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260622120821/https://ecommerceportal.dhl.com/track/pages/customer/trackItNowPublic.xhtml?ref=7227062646824406",
+        "date": "2026-06-22",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Parcel Domestic",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "Archived from a DHL eCommerce Asia tracking link. Webtrack returned a domestic parcel in Thailand delivered by DHL itself."
+    },
+    {
+      "number": "2071070246595155",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250220202851/https://webtrack.dhlecs.com/orders?trackingNumber=2071070246595155",
+        "date": "2025-02-20",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "Archived from a DHL eCommerce tracking link. Webtrack no longer lists it."
     }
   ]
 }

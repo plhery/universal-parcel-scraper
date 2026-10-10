@@ -13,17 +13,20 @@ import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detectio
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
-import { countryTimeZone } from '../../core/time/index.js';
+import { countryCode, countryTimeZone, usStateTimeZone } from '../../core/time/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { clean as cleanText, fetchBounded, parseJsonBytes, UpstreamHttpError, UpstreamNetworkError, userAgentOf } from '../../core/transport/index.js';
 import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { stageFor, statusFor } from './status.js';
+import { partnerHasParcel, stageFor, statusFor } from './status.js';
 
 const PROVIDER = 'DHL eCommerce';
 const API = 'https://www.dhl.com/utapi';
 const WEBTRACK_API = 'https://api.dhlecs.com/webtrack/v4/tracking';
 const DIRECT_TIMEOUT_MS = 15_000;
+const POUNDS_TO_KG = 0.453_592_37;
+/** Webtrack's names for the last-mile partner; `MIRROR` means DHL delivers itself. */
+const WEBTRACK_PARTNERS: Readonly<Record<string, string>> = { USPS: 'usps' };
 /** Statuses DHL answers with while its challenge is unsolved. */
 const CHALLENGE_STATUSES = [401, 403, 419, 428];
 
@@ -136,19 +139,135 @@ export function parseDHLEcommerceResponse(payload: unknown): CarrierResult {
   };
 }
 
+// Webtrack names each scan's clock: a US zone (ET, CT, MT, PT), a fixed US abbreviation
+// such as PDT, an offset such as +07, or LT for the place's own time.
+const US_ZONES: Readonly<Record<string, string>> = {
+  ET: 'America/New_York', CT: 'America/Chicago', MT: 'America/Denver', PT: 'America/Los_Angeles',
+};
+const US_ABBREVIATIONS: Readonly<Record<string, readonly [family: string, zone: string]>> = {
+  EST: ['ET', 'UTC-5'], EDT: ['ET', 'UTC-4'], CST: ['CT', 'UTC-6'], CDT: ['CT', 'UTC-5'],
+  MST: ['MT', 'UTC-7'], MDT: ['MT', 'UTC-6'], PST: ['PT', 'UTC-8'], PDT: ['PT', 'UTC-7'],
+};
+// States spanning several zones, with the zones a label may rightly name there. None of
+// the four is Alaska's own.
+const SPLIT_STATES: Readonly<Record<string, readonly string[]>> = {
+  FL: ['ET', 'CT'], IN: ['ET', 'CT'], KY: ['ET', 'CT'], MI: ['ET', 'CT'], TN: ['ET', 'CT'],
+  KS: ['CT', 'MT'], NE: ['CT', 'MT'], ND: ['CT', 'MT'], SD: ['CT', 'MT'], TX: ['CT', 'MT'],
+  ID: ['MT', 'PT'], NV: ['MT', 'PT'], OR: ['MT', 'PT'], AK: [],
+};
+
+// The label a one-zone state's clocks carry. Arizona's is MT although it keeps standard time.
+const ZONE_LABELS: Readonly<Record<string, string>> = {
+  'America/New_York': 'ET', 'America/Chicago': 'CT', 'America/Denver': 'MT',
+  'America/Phoenix': 'MT', 'America/Los_Angeles': 'PT',
+};
+
+/** The US state that closes a text, with or without a ZIP code after it ("AZ", "AZ 00000"). */
+function stateIn(text: string): string | null {
+  const match = /(?:^|\s)([A-Z]{2})(?:\s+\d{5}(?:-\d{4})?)?$/.exec(text);
+  return match && usStateTimeZone(match[1]) ? match[1]! : null;
+}
+
+/** "US", "USA" or the country's name. */
+function namesUS(text: string): boolean {
+  return text === 'USA' || countryCode(text) === 'US';
+}
+
+/**
+ * A Webtrack place reads "Town, ST, US" in the United States, at times with a ZIP code
+ * after the state, without commas ("Town ST US") or without the country ("Town, ST"),
+ * and "Town, CC" or the country alone in another country. A code both a state's and a
+ * country's, such as CA or DE, is read as the state when the label fits that state, and
+ * as the country if not.
+ */
+function webtrackPlace(location: string, family: string): { state: string | null; foreign: boolean } {
+  const parts = location.toUpperCase().split(',').map((part) => part.trim()).filter(Boolean);
+  let last = parts.at(-1) ?? '';
+  let before = parts.at(-2) ?? '';
+  const spaced = /^(.+?)\s+(?:US|USA)$/.exec(last);
+  if (spaced && !namesUS(last)) [before, last] = [spaced[1]!, 'US'];
+  if (namesUS(last)) return { state: stateIn(before), foreign: false };
+  const zip = /\d$/.test(last);
+  const state = parts.length <= 2 || zip ? stateIn(last) : null;
+  const labels = state ? SPLIT_STATES[state] ?? [ZONE_LABELS[usStateTimeZone(state)!]] : [];
+  if (state && (zip || !countryCode(state) || labels.includes(family))) return { state, foreign: false };
+  return { state: null, foreign: countryCode(last) !== null };
+}
+
+/** The offsets a wall clock has in a zone: none in a skipped hour, two in a repeated one. */
+function wallOffsets(raw: string, zone: string): number[] {
+  const parsed = DateTime.fromISO(raw, { zone });
+  if (!parsed.isValid || parsed.toFormat("yyyy-MM-dd'T'HH:mm:ss") !== raw.slice(0, 19)) return [];
+  return parsed.getPossibleOffsets().map((candidate) => candidate.offset);
+}
+
+/**
+ * The zone of a US state: its own, or for a state split between zones the one the label
+ * names there. Undefined when the label names none of the state's zones; null without a
+ * state. Arizona stays on standard time, except the Navajo Nation, which this reads as the
+ * rest of the state.
+ */
+function stateZone(state: string | null, family: string): string | null | undefined {
+  if (!state) return null;
+  const split = SPLIT_STATES[state];
+  if (!split) return usStateTimeZone(state);
+  return split.includes(family) ? US_ZONES[family] : undefined;
+}
+
+/**
+ * The zone a scan's clock label names. A US label (ET or PDT) holds at a US place or one
+ * that names no country, checked against an identified hub or the place's state: a hub and
+ * a one-zone state keep their own clock (Arizona stays on standard time, Hawaii has its own
+ * zone), a split state must be one the label can name, and an abbreviation's offset must be
+ * one the place's clock has on that date. At a place in another country, as for LT or an unknown label, the place's
+ * own zone holds. Null keeps the clock local.
+ */
+function webtrackZone(label: unknown, location: string, raw: string): string | null {
+  const code = clean(label, 8).toUpperCase();
+  const generic = Object.hasOwn(US_ZONES, code) ? US_ZONES[code]! : null;
+  const abbreviation = Object.hasOwn(US_ABBREVIATIONS, code) ? US_ABBREVIATIONS[code]! : null;
+  const family = abbreviation ? abbreviation[0] : code;
+  const place = webtrackPlace(location, family);
+  if ((generic || abbreviation) && !place.foreign) {
+    const own = HUB_ZONES[location.toLowerCase()] ?? stateZone(place.state, family);
+    if (own === undefined) return null;
+    if (generic) return own ?? generic;
+    const fixed = abbreviation![1];
+    if (!own) return fixed;
+    return wallOffsets(raw, own).includes(DateTime.fromISO(raw, { zone: fixed }).offset) ? fixed : null;
+  }
+  const offset = /^([+-])(0\d|1[0-4])(?::?([0-5]\d))?$/.exec(code);
+  if (offset) return `UTC${offset[1]}${Number(offset[2])}${offset[3] && offset[3] !== '00' ? `:${offset[3]}` : ''}`;
+  const country = location.split(',').at(-1)?.trim() ?? '';
+  return countryTimeZone(country) ?? countryTimeZone(location) ?? HUB_ZONES[location.toLowerCase()] ?? null;
+}
+
+/** A wall clock the zone skips or repeats at a clock change has no single instant. */
+function zonedInstant(raw: string, zone: string): string | null {
+  if (wallOffsets(raw, zone).length !== 1) return null;
+  const parsed = DateTime.fromISO(raw, { zone });
+  return parsed.isValid ? parsed.toUTC().toISO() : null;
+}
+
 function webtrackClock(event: JsonObject): { time?: string; local_time?: string } | null {
   const date = clean(event.date, 32);
   const time = clean(event.time, 32);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)
     || !/^\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)?$/.test(time)) return null;
   const raw = `${date}T${time}`;
-  if (!DateTime.fromISO(raw, { zone: 'UTC', setZone: true }).isValid) return null;
-  const location = clean(event.location, 160);
-  const country = location.split(',').at(-1)?.trim().toUpperCase() ?? '';
-  const instant = eventTime({ timestamp: raw, location: { address: {
-    addressLocality: location, ...(/^[A-Z]{2}$/.test(country) ? { countryCode: country } : {}),
-  } } });
+  const explicit = DateTime.fromISO(raw, { zone: 'UTC', setZone: true });
+  if (!explicit.isValid) return null;
+  if (/(?:Z|[+-]\d{2}:\d{2})$/.test(time)) return { time: explicit.toUTC().toISO() };
+  const zone = webtrackZone(event.timeZone, clean(event.location, 160), raw);
+  const instant = zone ? zonedInstant(raw, zone) : null;
   return instant ? { time: instant } : { local_time: raw };
+}
+
+function webtrackWeight(value: unknown): number | null {
+  if (!isRecord(value) || typeof value.value !== 'number' || !Number.isFinite(value.value) || value.value <= 0) return null;
+  const unit = clean(value.unitOfMeasure, 8).toUpperCase();
+  const factor = unit === 'LB' ? POUNDS_TO_KG : unit === 'KG' ? 1 : null;
+  return factor === null ? null : Math.round(value.value * factor * 1000) / 1000;
 }
 
 /** Webtrack scopes the read to the requested alias and returns that alias on
@@ -187,10 +306,16 @@ export function parseDHLEcommerceWebtrackResponse(payload: unknown, trackingNumb
     const description = clean(event.primaryEventDescription);
     const clock = webtrackClock(event);
     if (!description || !clock) return [];
+    // While a parcel is en route, Webtrack adds an EN ROUTE row without a place, stamped
+    // with the time of each request: an echo of the status, not a scan.
+    if (description.toUpperCase() === 'EN ROUTE' && !clean(event.location, 160)) return [];
     const stage = stageFor({ description });
     return [{ ...clock, description: stage === 'delivered' ? 'Delivered' : description,
       location: clean(event.location, 160), stage }];
-  }).sort((left, right) => left.time && right.time ? right.time.localeCompare(left.time) : 0).slice(0, 100);
+  });
+  // Webtrack lists scans newest first. Its order stands unless every scan has an instant.
+  if (events.every((event) => event.time)) events.sort((left, right) => right.time!.localeCompare(left.time!));
+  events.splice(100);
   const summaryStage = stageFor({ description: summary, statusCode: summary === 'Delivered' ? 'delivered' : undefined });
   // A published scan carries finer semantics than Webtrack's coarse summary.
   const stage = ['delivered', 'returned'].includes(summaryStage) ? summaryStage : events[0]?.stage ?? summaryStage;
@@ -199,6 +324,13 @@ export function parseDHLEcommerceWebtrackResponse(payload: unknown, trackingNumb
   }
   const expected = clean(shipment.estimatedDeliveryDate, 32);
   const sender = clean(isRecord(shipment.sender) ? shipment.sender.name : null, 200);
+  const service = clean(shipment.productName, 80);
+  const weight = webtrackWeight(shipment.weight);
+  // The partner is named from the label onwards; it is reported once it has the parcel,
+  // with its own number for it, such as a USPS PIC, when that is not the one asked for.
+  const partner = shipment.events.some((event: JsonObject) => partnerHasParcel(event.primaryEventDescription))
+    ? WEBTRACK_PARTNERS[clean(shipment.dspName, 40).toUpperCase()] : undefined;
+  const partnerNumber = clean(shipment.deliveryConfirmationNumber, 40).toUpperCase().replace(/[\s.-]/g, '');
   return {
     status: statusFor(stage), current_stage: stage,
     last_status_text: stage === 'delivered' ? 'Delivered' : summary,
@@ -207,6 +339,11 @@ export function parseDHLEcommerceWebtrackResponse(payload: unknown, trackingNumb
       && DateTime.fromISO(expected).isValid ? expected : null,
     timezone: 'UTC', events,
     ...(sender ? { sender_name: sender } : {}),
+    ...(service ? { service_name: service } : {}),
+    ...(weight !== null ? { weight_kg: weight } : {}),
+    ...(partner ? { delivery_carrier: partner } : {}),
+    ...(partner && partnerNumber !== number && /^[A-Z0-9]{4,40}$/.test(partnerNumber)
+      ? { delivery_tracking_number: partnerNumber } : {}),
     ...(stage === 'delivered' && events[0]?.stage === 'delivered' && events[0].time ? { delivered_at: events[0].time } : {}),
   };
 }

@@ -43,6 +43,14 @@ function webtrack() {
     }],
   };
 }
+function handedToUsps() {
+  const payload = webtrack();
+  Object.assign(payload.packages[0]!, { productName: 'DHL Parcel Ground', weight: { value: 1.5, unitOfMeasure: 'LB' },
+    dspName: 'USPS', deliveryConfirmationNumber: '9261 2999 9999 9999 9999 99' });
+  payload.packages[0]!.events.unshift({ primaryEventDescription: 'TENDERED TO DELIVERY SERVICE PROVIDER',
+    date: '2026-09-10', time: '07:00:00', timeZone: 'CT', location: 'Sampleton, IL, US' });
+  return payload;
+}
 function reply(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), { status, headers: { 'content-type': 'application/json' } });
 }
@@ -87,9 +95,14 @@ describe('DHL eCommerce normalization', () => {
       eta: (result) => result.expected_delivery,
       sender_name: (result) => result.sender_name,
       delivered_at: (result) => result.delivered_at,
+      service_name: (result) => result.service_name,
+      weight: (result) => result.weight_kg,
+      delivery_partner: (result) => result.delivery_carrier,
+      delivery_tracking_number: (result) => result.delivery_tracking_number,
     };
     const declared = json<{ capabilities: string[] }>('./carrier.json').capabilities;
-    const results = [parseDHLEcommerceResponse(shipment()), parseDHLEcommerceResponse(json<Payload>('./fixtures/delivered.json'))];
+    const results = [parseDHLEcommerceResponse(shipment()), parseDHLEcommerceResponse(json<Payload>('./fixtures/delivered.json')),
+      parseDHLEcommerceWebtrackResponse(handedToUsps(), NUMBER)];
     expect(declared.length).toBeGreaterThan(0);
     for (const capability of declared) {
       expect(checks[capability], `no check for capability ${capability}`).toBeDefined();
@@ -274,6 +287,135 @@ describe('DHL eCommerce Webtrack', () => {
       expect.objectContaining({ local_time: '2026-09-01T09:00:00' }),
       expect.objectContaining({ time: '2026-09-01T14:00:00.000Z' }),
     ]);
+  });
+
+  it('reads the clock Webtrack names for each scan, checked against its place', () => {
+    const payload = webtrack(); payload.packages[0]!.events = [
+      { primaryEventDescription: 'OUT FOR DELIVERY', date: '2026-07-14', time: '08:20:00', timeZone: 'CT', location: 'Sampleton, IL, US' },
+      { primaryEventDescription: 'PROCESSED', date: '2026-07-13', time: '21:45:00', timeZone: 'PT', location: '' },
+      { primaryEventDescription: 'PROCESSED', date: '2026-07-13', time: '18:05:00', timeZone: 'PDT', location: 'Sampleton, CA, US' },
+      // Arizona stays on standard time while Mountain Time is on daylight time.
+      { primaryEventDescription: 'PROCESSED', date: '2026-07-13', time: '11:15:00', timeZone: 'MT', location: 'Sampleton, AZ, US' },
+      { primaryEventDescription: 'PROCESSED', date: '2026-07-12', time: '23:40:00', timeZone: 'PT', location: 'Sampleton, HI, US' },
+      // Part of Indiana keeps Central Time.
+      { primaryEventDescription: 'PROCESSED', date: '2026-07-12', time: '19:25:00', timeZone: 'CT', location: 'Sampleton, IN, US' },
+      { primaryEventDescription: 'PROCESSED', date: '2026-07-12', time: '14:50:00', timeZone: '+07', location: 'Sampleton' },
+      { primaryEventDescription: 'LABEL CREATED', date: '2026-07-11', time: '10:35:00', timeZone: 'XT', location: 'Sampleton' },
+    ];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events).toEqual([
+      expect.objectContaining({ time: '2026-07-14T13:20:00.000Z', stage: 'out_for_delivery' }),
+      expect.objectContaining({ time: '2026-07-14T04:45:00.000Z' }),
+      expect.objectContaining({ time: '2026-07-14T01:05:00.000Z' }),
+      expect.objectContaining({ time: '2026-07-13T18:15:00.000Z' }),
+      expect.objectContaining({ time: '2026-07-13T09:40:00.000Z' }),
+      expect.objectContaining({ time: '2026-07-13T00:25:00.000Z' }),
+      expect.objectContaining({ time: '2026-07-12T07:50:00.000Z' }),
+      expect.objectContaining({ local_time: '2026-07-11T10:35:00', stage: 'registered' }),
+    ]);
+  });
+
+  it('reads the state from other place formats, a shared code as the state the label fits, and a hub on its own clock', () => {
+    const scan = (time: string, timeZone: string, location: string) => ({ primaryEventDescription: 'PROCESSED', date: '2026-07-13', time, timeZone, location });
+    const payload = webtrack(); payload.packages[0]!.events = [
+      scan('11:15:00', 'MT', 'Sampleton, AZ 00000, US'), scan('10:15:00', 'MT', 'Sampleton AZ US'),
+      scan('09:15:00', 'MT', 'Sampleton, AZ'), scan('08:15:00', 'MST', 'Sampleton, AZ 00000'),
+      scan('07:40:00', 'PT', 'Sampleton, HI, USA'), scan('06:30:00', 'ET', 'Sampleton, DE'),
+      scan('05:45:00', 'PDT', 'Sampleton, CA'), scan('04:45:00', 'CT', 'Hebron, KY, US'),
+    ];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((event) => event.time)).toEqual([
+      '2026-07-13T18:15:00.000Z', '2026-07-13T17:40:00.000Z', '2026-07-13T17:15:00.000Z', '2026-07-13T16:15:00.000Z',
+      '2026-07-13T15:15:00.000Z', '2026-07-13T12:45:00.000Z', '2026-07-13T10:30:00.000Z', '2026-07-13T08:45:00.000Z',
+    ]);
+  });
+
+  it('reads a scan abroad on the clock of its place, whatever US label it carries', () => {
+    const scan = (time: string, timeZone: string, location: string) => ({ primaryEventDescription: 'PROCESSED', date: '2026-07-10', time, timeZone, location });
+    const payload = webtrack(); payload.packages[0]!.events = [
+      scan('12:30:00', 'PDT', ''), scan('16:30:00', 'CT', 'Sampleton, CN'), scan('15:30:00', 'ET', 'Sampleton, CN'),
+      scan('14:30:00', 'CST', 'Sampleton, CN'), scan('12:30:00', 'PT', 'Sampleton, TH'),
+      scan('11:30:00', 'EST', 'Sampleton, TH'), scan('05:00:00', 'CT', 'Sampleton, DE'),
+      scan('03:00:00', 'ET', 'Germany'), scan('04:00:00', 'CST', 'CHINA'),
+    ];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((event) => event.time)).toEqual([
+      '2026-07-10T19:30:00.000Z', '2026-07-10T08:30:00.000Z', '2026-07-10T07:30:00.000Z', '2026-07-10T06:30:00.000Z',
+      '2026-07-10T05:30:00.000Z', '2026-07-10T04:30:00.000Z', '2026-07-10T03:00:00.000Z', '2026-07-10T01:00:00.000Z',
+      '2026-07-09T20:00:00.000Z',
+    ]);
+  });
+
+  it('settles a repeated hour by its abbreviation', () => {
+    const scan = (timeZone: string) => ({ primaryEventDescription: 'PROCESSED', date: '2026-11-01', time: '01:30:00', timeZone, location: 'Sampleton, IL, US' });
+    const payload = webtrack(); payload.packages[0]!.events = [scan('CST'), scan('CDT')];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((event) => event.time))
+      .toEqual(['2026-11-01T07:30:00.000Z', '2026-11-01T06:30:00.000Z']);
+  });
+
+  it('keeps a clock local when its label does not fit the place or names no single instant', () => {
+    const scan = (date: string, time: string, timeZone: string, location: string) => ({ primaryEventDescription: 'PROCESSED', date, time, timeZone, location });
+    const payload = webtrack(); payload.packages[0]!.events = [
+      scan('2026-07-10', '09:30:00', 'ET', 'Sampleton, TX, US'),
+      scan('2026-07-10', '10:00:00', 'EST', 'Sampleton, NY, US'),
+      // Arizona has no daylight time.
+      scan('2026-07-10', '08:00:00', 'MDT', 'Sampleton, AZ, US'),
+      scan('2026-07-10', '07:00:00', 'EDT', 'Sampleton, CA'),
+      scan('2026-07-10', '06:00:00', 'CT', 'Sampleton, SK, CA'),
+      scan('2026-07-10', '05:00:00', 'CT', 'Sampleton, MX'),
+      scan('2026-03-08', '02:30:00', 'ET', 'Sampleton, NY, US'),
+      scan('2026-03-08', '02:30:00', 'EDT', 'Sampleton, NY, US'),
+      scan('2026-11-01', '01:30:00', 'CT', 'Sampleton, IL, US'),
+    ];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((scan) => scan.time ?? scan.local_time)).toEqual([
+      '2026-07-10T09:30:00', '2026-07-10T10:00:00', '2026-07-10T08:00:00', '2026-07-10T07:00:00', '2026-07-10T06:00:00',
+      '2026-07-10T05:00:00', '2026-03-08T02:30:00', '2026-03-08T02:30:00', '2026-11-01T01:30:00',
+    ]);
+  });
+
+  it('orders scans by instant only when every scan has one', () => {
+    const scan = (time: string, timeZone = 'ET') => ({ primaryEventDescription: 'PROCESSED', date: '2026-07-09', time, timeZone, location: 'Sampleton, NY, US' });
+    const payload = webtrack(); payload.packages[0]!.events = [scan('10:00:00'), scan('12:00:00')];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((event) => event.time))
+      .toEqual(['2026-07-09T16:00:00.000Z', '2026-07-09T14:00:00.000Z']);
+    payload.packages[0]!.events = [scan('10:00:00'), scan('11:00:00', 'XT'), scan('12:00:00')];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((event) => event.time ?? event.local_time))
+      .toEqual(['2026-07-09T14:00:00.000Z', '2026-07-09T11:00:00', '2026-07-09T16:00:00.000Z']);
+  });
+
+  it('stages the handover to the last-mile partner and skips the en-route echo', () => {
+    const payload = webtrack(); payload.packages[0]!.events = [
+      { primaryEventDescription: 'EN ROUTE', date: '2026-07-16', time: '04:12:09', timeZone: 'ET', location: '' },
+      { primaryEventDescription: 'SHIPMENT ACCEPTED BY USPS', date: '2026-07-15', time: '16:40:00', timeZone: 'CT', location: 'Sampleton, IL, US' },
+      { primaryEventDescription: 'TENDERED TO DELIVERY SERVICE PROVIDER, ALLOW 1-3 DAYS FOR UPDATES FOR PACKAGES WITHIN THE US', date: '2026-07-15', time: '11:25:30', timeZone: 'CT', location: 'Sampleton, IL, US' },
+    ];
+    const result = parseDHLEcommerceWebtrackResponse(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-07-15T21:40:00.000Z' });
+    expect(result.events).toEqual([
+      expect.objectContaining({ time: '2026-07-15T21:40:00.000Z', stage: 'in_transit' }),
+      expect.objectContaining({ time: '2026-07-15T16:25:30.000Z', stage: 'in_transit' }),
+    ]);
+  });
+
+  it('reads the service, weight and last-mile partner Webtrack declares', () => {
+    expect(parseDHLEcommerceWebtrackResponse(handedToUsps(), NUMBER)).toMatchObject({ service_name: 'DHL Parcel Ground',
+      weight_kg: 0.68, delivery_carrier: 'usps', delivery_tracking_number: '9261299999999999999999' });
+    // The partner's number is not repeated when it is the one asked for.
+    expect(parseDHLEcommerceWebtrackResponse(handedToUsps(), '9261299999999999999999')).toMatchObject({ delivery_carrier: 'usps' });
+    expect(parseDHLEcommerceWebtrackResponse(handedToUsps(), '9261299999999999999999')).not.toHaveProperty('delivery_tracking_number');
+    const own = webtrack();
+    Object.assign(own.packages[0]!, { weight: { value: 2, unitOfMeasure: 'OZT' }, dspName: 'MIRROR', deliveryConfirmationNumber: 'SYNTHETIC00001' });
+    const result = parseDHLEcommerceWebtrackResponse(own, NUMBER);
+    for (const field of ['service_name', 'weight_kg', 'delivery_carrier', 'delivery_tracking_number']) expect(result).not.toHaveProperty(field);
+  });
+
+  it('names the last-mile partner only once it has the parcel', () => {
+    const scan = (primaryEventDescription: string) => ({ primaryEventDescription, date: '2026-07-08', time: '09:00:00', timeZone: 'CT', location: 'Sampleton, IL, US' });
+    for (const description of ['LABEL CREATED', 'NOT ACCEPTED BY USPS']) {
+      const payload = handedToUsps(); payload.packages[0]!.events = [scan(description)];
+      const result = parseDHLEcommerceWebtrackResponse(payload, NUMBER);
+      expect(result, description).not.toHaveProperty('delivery_carrier');
+      expect(result, description).not.toHaveProperty('delivery_tracking_number');
+    }
+    const payload = handedToUsps(); payload.packages[0]!.events = [scan('SHIPMENT ACCEPTED BY USPS')];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER)).toMatchObject({ delivery_carrier: 'usps' });
   });
 
   it('cleans delivery signatures and excludes delivered estimates', () => {

@@ -93,6 +93,12 @@
     "reason": "One documentation example from Malaysia; the family is not established."
   },
   {
+    "carrier": "dhl-ecommerce",
+    "pattern": "^\\d{9}D$",
+    "kind": "by_design",
+    "reason": "Package references a shipper prints on its labels. Webtrack finds the parcel by them when DHL eCommerce is named, but nothing in the number points to this carrier."
+  },
+  {
     "carrier": "dhl-ecommerce-es",
     "pattern": "^CH\\d{9,10}DE$",
     "kind": "by_design",

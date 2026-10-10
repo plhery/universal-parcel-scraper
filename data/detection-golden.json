@@ -6303,6 +6303,20 @@
     ]
   },
   {
+    "input": "2071070246595155",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce",
+      "tnt",
+      "evri-uk"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "20810001690736",
     "carrier": "unknown",
     "confidence": "low",
@@ -6819,6 +6833,12 @@
     ]
   },
   {
+    "input": "272085497D",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "27295510143592",
     "carrier": "unknown",
     "confidence": "low",
@@ -6840,6 +6860,12 @@
       "brt",
       "relais-colis"
     ]
+  },
+  {
+    "input": "273551390D",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "2756993827780901TIM003AN",
@@ -12897,6 +12923,24 @@
     ]
   },
   {
+    "input": "7227062646824406",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce",
+      "correos-express",
+      "canada-post",
+      "tnt",
+      "evri-uk"
+    ],
+    "asked": [
+      "correos-express",
+      "canada-post",
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "72402550",
     "carrier": "unknown",
     "confidence": "low",
@@ -14839,6 +14883,24 @@
     ]
   },
   {
+    "input": "9261290357482657956985",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "dhl-ecommerce",
+      "austrian-post",
+      "estafeta"
+    ],
+    "preferred": [
+      "usps"
+    ],
+    "asked": [
+      "austrian-post",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "9261290376171504812868",
     "carrier": "unknown",
     "confidence": "low",
@@ -14858,6 +14920,24 @@
   },
   {
     "input": "9261290376171505101329",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "dhl-ecommerce",
+      "austrian-post",
+      "estafeta"
+    ],
+    "preferred": [
+      "usps"
+    ],
+    "asked": [
+      "austrian-post",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "9261290411503175907529",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
