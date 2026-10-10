@@ -14515,6 +14515,14 @@
     ]
   },
   {
+    "input": "D080000270000036322001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
     "input": "D10011345983010",
     "carrier": "ontrac",
     "confidence": "high",
@@ -14547,7 +14555,71 @@
     ]
   },
   {
+    "input": "D420007390000048510001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D420336590000041646001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D420352470001183379001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D421415750000094143001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D421528250000286942001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D431006310000018536003",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D431935110000140533001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
     "input": "D434031340000025200001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D466001180000002278001",
     "carrier": "canpar",
     "confidence": "high",
     "candidates": [
@@ -14564,6 +14636,30 @@
   },
   {
     "input": "D576002440000001718010",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D576003690000211565001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D576006270000005709001",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
+    "input": "D680002320000013475001",
     "carrier": "canpar",
     "confidence": "high",
     "candidates": [
