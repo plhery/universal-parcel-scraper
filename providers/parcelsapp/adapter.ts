@@ -249,9 +249,16 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   markReturnLeg(scans);
   latest.check();
   if (!events.length) {
-    const fields = payload.states.flatMap((raw: unknown): unknown[] => isRecord(raw) && Array.isArray(raw.require_fields) ? raw.require_fields : []);
-    if (fields.some((field: unknown) => isRecord(field) && field.name === 'zipcode')) {
-      throw new InputRequiredError(SOURCE, 'postcode', 'ParcelsApp requires a valid delivery postcode or further recipient information');
+    const gates = payload.states.filter((raw: unknown): raw is Record<string, unknown> => isRecord(raw)
+      && Array.isArray(raw.require_fields) && raw.require_fields.some((field: unknown) => isRecord(field) && field.name === 'zipcode'));
+    if (gates.length) {
+      // A gate names the carrier that asks for the postcode, as a scan does. It is
+      // given only when every gate names the same one and it maps to the catalog.
+      const [name, ...others] = gates.map((gate) => stateCarrierName(payload, gate));
+      const carrier = typeof name === 'string' && others.every((other) => other === name)
+        ? universalCarrierHints([name], number).discovered_carrier : undefined;
+      throw new InputRequiredError(SOURCE, 'postcode', 'ParcelsApp requires a valid delivery postcode or further recipient information',
+        carrier ? { carrier } : undefined);
     }
     // An empty history is the NO_DATA answer; states that don't parse are not an answer.
     if (!payload.states.length) throw new NoHistoryError(SOURCE, 'ParcelsApp has no usable shipment history');

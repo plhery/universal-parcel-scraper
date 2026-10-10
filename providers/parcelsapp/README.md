@@ -32,7 +32,9 @@ Other outcomes:
 - `NO_DATA`, `NO_TRACKER` and empty histories are inconclusive, not proof that the
   shipment does not exist. They end the lookup.
 - A reply that only asks for a postcode raises `input_required`. Browser recovery cannot
-  submit a postcode and never retries a known input gate.
+  submit a postcode and never retries a known input gate. A gate row names the carrier
+  asking, as a scan does (`states[].carrier`); when every gate names the same one and it
+  maps to a catalog carrier, the error's `carrier` gives that id.
 
 ## Request construction
 

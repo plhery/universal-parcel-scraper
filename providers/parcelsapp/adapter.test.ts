@@ -4,7 +4,7 @@ import timers from 'node:timers/promises';
 import { DateTime } from 'luxon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TrawlClient } from '../../core/transport/index.js';
-import { carrierErrorKind, IndeterminateError, NoHistoryError } from '../../core/errors/index.js';
+import { carrierErrorKind, IndeterminateError, InputRequiredError, NoHistoryError } from '../../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { ParcelsAppTracker, parseParcelsAppHtml, parseParcelsAppResponse } from './adapter.js';
 
@@ -743,8 +743,29 @@ describe('ParcelsApp direct lookup', () => {
     for (const postcode of [undefined, '99999']) {
       const error = await tracker.fetch(number, 10_000, postcode).catch((error: unknown) => error);
       expect(error).toMatchObject({ kind: 'input_required', field: 'postcode' });
+      // The gate names no carrier.
+      expect((error as InputRequiredError).carrier).toBeUndefined();
     }
     expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('names the carrier a postcode gate is for, when every gate names one that maps', async () => {
+    const gate = (carrier?: number) => ({ ...prompt.states[0], ...(carrier === undefined ? {} : { carrier }) });
+    const gated = async (data: unknown) => new ParcelsAppTracker({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(reply(data)) })
+      .fetch(number).catch((error: unknown) => error);
+    expect(await gated({ carriers: ['SEUR'], states: [gate(0)] }))
+      .toMatchObject({ name: 'InputRequiredError', kind: 'input_required', field: 'postcode', carrier: 'seur' });
+    expect(await gated({ carriers: ['bpost', 'bpost'], states: [gate(0), gate(1)] })).toMatchObject({ field: 'postcode', carrier: 'bpost' });
+    for (const data of [
+      { carriers: ['Example Courier'], states: [gate(0)] },
+      { carriers: ['SEUR', 'bpost'], states: [gate(0), gate(1)] },
+      { carriers: ['SEUR'], states: [gate(0), gate()] },
+      { carriers: ['SEUR'], states: [gate(3)] },
+    ]) {
+      const error = await gated(data);
+      expect(error).toMatchObject({ kind: 'input_required', field: 'postcode' });
+      expect((error as InputRequiredError).carrier).toBeUndefined();
+    }
   });
 
   it('returns the dated history of a reply with an undated state, without a browser retry', async () => {

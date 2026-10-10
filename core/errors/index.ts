@@ -122,11 +122,22 @@ export class SchemaError extends CarrierError {
 
 export class InputRequiredError extends CarrierError {
   readonly field: string;
+  /**
+   * The catalog id of the carrier that asks for the input, when the source names one: a universal
+   * provider relaying a carrier's postcode gate. Absent when the source names none, or none that maps.
+   */
+  readonly carrier?: string;
 
-  constructor(provider: string, field: string, message = `${provider} tracking requires ${field}`, options?: CarrierErrorOptions) {
+  constructor(
+    provider: string,
+    field: string,
+    message = `${provider} tracking requires ${field}`,
+    options?: CarrierErrorOptions & { carrier?: string },
+  ) {
     super('input_required', provider, message, options);
     this.name = 'InputRequiredError';
     this.field = field;
+    if (options?.carrier !== undefined) this.carrier = options.carrier;
   }
 }
 

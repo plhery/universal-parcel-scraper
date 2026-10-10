@@ -18,6 +18,10 @@ describe('carrier error taxonomy', () => {
     expect(new MaintenanceError('CTT')).toMatchObject({ kind: 'maintenance', status: 503 });
     expect(new SchemaError('DHL').status).toBeUndefined();
     expect(new InputRequiredError('Heppner', 'the delivery postcode')).toMatchObject({ kind: 'input_required', field: 'the delivery postcode' });
+    expect(new InputRequiredError('Heppner', 'postcode').carrier).toBeUndefined();
+    // A universal provider names the carrier whose gate it relays.
+    expect(new InputRequiredError('ParcelsApp', 'postcode', undefined, { carrier: 'seur' }))
+      .toMatchObject({ kind: 'input_required', field: 'postcode', carrier: 'seur', message: 'ParcelsApp tracking requires postcode' });
     expect(new InvalidInputError('La Poste')).toMatchObject({ name: 'InvalidInputError', kind: 'invalid_input', status: 400 });
     expect(new TransportError('DPD')).toMatchObject({ kind: 'transport' });
     expect(new BudgetExceededError('dhl', 5_000).message).toContain('5000 ms budget');
