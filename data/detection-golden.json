@@ -17154,6 +17154,38 @@
     ]
   },
   {
+    "input": "JJBEA650014000002759639",
+    "carrier": "bpost",
+    "confidence": "high",
+    "candidates": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "JJBEA650709100000945765",
+    "carrier": "bpost",
+    "confidence": "high",
+    "candidates": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "JJBEA660000000000089631",
+    "carrier": "bpost",
+    "confidence": "high",
+    "candidates": [
+      "bpost"
+    ]
+  },
+  {
+    "input": "JJBEA660000000000160259",
+    "carrier": "bpost",
+    "confidence": "high",
+    "candidates": [
+      "bpost"
+    ]
+  },
+  {
     "input": "JJD000030214008000129555645",
     "carrier": "dhl",
     "confidence": "high",

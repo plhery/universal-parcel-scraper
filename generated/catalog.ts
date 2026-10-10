@@ -2107,6 +2107,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^[A-Z]{2}\\d{9}BE$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^JJBE[A-Z]\\d{18}$",
+        "confidence": "high"
       }
     ]
   },
@@ -5739,7 +5743,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "evri": ["evri-1"],
   "inpost": ["inpost-1","inpost-2","inpost-3","inpost-4"],
   "an-post": ["an-post-1"],
-  "bpost": ["bpost-numeric-prefix","bpost-1","bpost-2","bpost-3"],
+  "bpost": ["bpost-numeric-prefix","bpost-1","bpost-2","bpost-3","bpost-jjbe"],
   "austrian-post": ["austrian-post-1","austrian-post-2"],
   "postnord": ["postnord-1","postnord-2","postnord-5","postnord-3"],
   "posti": ["posti-1","posti-2","posti-3"],

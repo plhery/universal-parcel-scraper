@@ -2105,6 +2105,10 @@
         "pattern": "^[A-Z]{2}\\d{9}BE$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^JJBE[A-Z]\\d{18}$",
+        "confidence": "high"
       }
     ]
   },

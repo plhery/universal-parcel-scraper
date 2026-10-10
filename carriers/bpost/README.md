@@ -19,6 +19,10 @@ inconclusive. The same cheap lookup lets carrier recognition resolve ambiguous
 numeric barcodes; only the batch service's explicit absence reply is negative.
 The [documented parcel prefixes](https://www.bpost.be/en/faq/what-does-barcode-look-and-where-can-i-find-it)
 prioritize recognition while retaining numeric ambiguity.
+bpost's licence plate, `JJBE`, a letter and eighteen digits, as on a
+registered letter, selects bpost: every JJBE plate found so far, in bpost
+tracking lookups archived by the Wayback Machine, was answered by bpost's
+tracker, and no other carrier is known to issue the prefix.
 
 The receiver's country code becomes `destination_country`. The sender's
 barcode becomes `international_tracking_number` only when it is a valid S10

@@ -303,6 +303,87 @@
         ]
       },
       "note": "A bpost tracking lookup for this number listed in the Wayback Machine's capture index. bpost's tracking returned a parcel redirected between pickup points and collected there."
+    },
+    {
+      "number": "JJBEA660000000000160259",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://track.bpost.cloud/track/items?itemIdentifier=JJBEA660000000000160259",
+        "date": "2026-07-31",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "registered letter",
+        "reportedRole": "licence plate",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "bpost",
+        "confidence": "high"
+      },
+      "note": "A bpost tracking lookup for this number listed in the Wayback Machine's capture index. bpost's tracking returned a domestic registered letter delivered at home."
+    },
+    {
+      "number": "JJBEA650014000002759639",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260416074000/https://track.bpost.cloud/track/items?itemIdentifier=JJBEA650014000002759639",
+        "date": "2026-04-16",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "licence plate"
+      },
+      "expect": {
+        "carrier": "bpost",
+        "confidence": "high"
+      },
+      "note": "A bpost tracking lookup archived by the Wayback Machine; the capture is bpost's reply for this domestic plate, with its sorting scans. bpost's tracker no longer returns it."
+    },
+    {
+      "number": "JJBEA660000000000089631",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://track.bpost.cloud/track/items?itemIdentifier=JJBEA660000000000089631",
+        "date": "2026-01-26",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "licence plate"
+      },
+      "expect": {
+        "carrier": "bpost",
+        "confidence": "high"
+      },
+      "note": "A bpost tracking lookup listed in the Wayback Machine's capture index; the capture is bpost's reply for this domestic plate, with its pre-advice. bpost's tracker no longer returns it."
+    },
+    {
+      "number": "JJBEA650709100000945765",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://track.bpost.cloud/track/items?itemIdentifier=JJBEA650709100000945765",
+        "date": "2025-04-11",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "licence plate"
+      },
+      "expect": {
+        "carrier": "bpost",
+        "confidence": "high"
+      },
+      "note": "A bpost tracking lookup listed in the Wayback Machine's capture index; the capture is bpost's reply naming this domestic plate, without scans. bpost's tracker no longer returns it."
     }
   ]
 }

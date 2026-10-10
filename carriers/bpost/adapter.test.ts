@@ -212,6 +212,13 @@ describe('bpost anonymous batch request', () => {
     expect(normalizeBpostNumber('rr 000000005 be')).toBe('RR000000005BE');
   });
 
+  it('takes bpost\'s JJBE licence plate and no other licence plate', () => {
+    expect(normalizeBpostNumber('jjbe a99 0000000000000001')).toBe('JJBEA990000000000000001');
+    for (const other of ['JJBEA99000000000000001', 'JJBEAB90000000000000001', 'JJFI61234500000000001', 'JJD0000000000000000000']) {
+      expect(() => normalizeBpostNumber(other)).toThrow('bpost requires');
+    }
+  });
+
   it.each([[404, 'transport'], [410, 'transport'], [403, 'challenge'], [429, 'rate_limited'], [503, 'maintenance']])('keeps HTTP %s distinct from a parcel negative', async (status, kind) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('failure', { status: Number(status) }));
     await expect(new BpostTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind });

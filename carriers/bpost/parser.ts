@@ -7,9 +7,10 @@ import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyBpostStatus } from './status.js';
 
+/** Barcodes, postal S10 numbers, and bpost's `JJBE` licence plate, as on a registered letter. */
 export function normalizeBpostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^(?:\d{18}|\d{24}|\d{30})$/.test(number) && !isValidS10TrackingNumber(number)) {
+  if (!/^(?:\d{18}|\d{24}|\d{30}|JJBE[A-Z]\d{18})$/.test(number) && !isValidS10TrackingNumber(number)) {
     throw new InvalidInputError('bpost', 'bpost requires a parcel barcode or postal tracking number');
   }
   return number;
