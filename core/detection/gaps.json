@@ -341,6 +341,12 @@
     "reason": "A public experience table attributes this reference to Yanwen; no official source establishes the family."
   },
   {
+    "carrier": "yto",
+    "pattern": "^G\\d{11}$",
+    "kind": "open",
+    "reason": "An archived YTO tracking page gives G and eleven digits, a form YTO detection does not know. YTO's site did not answer here, and one sample does not establish the family."
+  },
+  {
     "carrier": "yunexpress",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

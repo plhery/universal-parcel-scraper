@@ -17783,6 +17783,17 @@
     ]
   },
   {
+    "input": "G10424204828",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
     "input": "GB0000000001",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -23252,6 +23263,14 @@
     "confidence": "high",
     "candidates": [
       "royal-mail"
+    ]
+  },
+  {
+    "input": "YT7601991621171",
+    "carrier": "yto",
+    "confidence": "high",
+    "candidates": [
+      "yto"
     ]
   },
   {
