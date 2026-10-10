@@ -4,7 +4,7 @@ import makeFetchCookie from 'fetch-cookie';
 import { DateTime } from 'luxon';
 import { CookieJar } from 'tough-cookie';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type EventPoint } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/index.js';
@@ -73,10 +73,10 @@ interface IndiaPostTrackerOptions {
 // number-tolerant `cleanScalar` is used throughout instead of `clean`.
 const clean = cleanScalar;
 
-/** The MySpeedPost session bootstrap ran into Cloudflare, not into a shipment answer. */
+/** MySpeedPost answered with a Cloudflare challenge or a Turnstile check, not with a shipment answer. */
 export class IndiaPostChallengeError extends ChallengeError {
-  constructor() {
-    super('India Post', 'India Post tracking returned a browser challenge');
+  constructor(message = 'India Post tracking returned a browser challenge') {
+    super('India Post', message);
     this.name = 'IndiaPostChallengeError';
   }
 }
@@ -227,19 +227,30 @@ interface Destination {
 }
 
 /**
- * The country on MySpeedPost's Destination card: a heading, then label and
- * value pairs, of which only "Country" is read. The card is absent when
- * MySpeedPost has no booking details.
+ * A value on one of MySpeedPost's booking cards: a heading, then label and
+ * value pairs. The cards are absent when MySpeedPost has no booking details.
+ * A longer value is dropped rather than cut.
  */
-function destinationOf($: CheerioAPI): Destination | null {
-  const heading = $('h3').filter((_, element) => clean($(element).text(), 40) === 'Destination').first();
-  for (const label of heading.closest('[x-data]').find('p').toArray()) {
-    if (clean($(label).text(), 40).toLowerCase() !== 'country') continue;
-    // A longer value is not a country name, and a cut one would be wrong.
-    const name = clean($(label).next('p').text(), 81);
-    return name.length <= 80 && /^\p{L}[\p{L} .,'()&-]*$/u.test(name) ? { code: countryCode(name), name } : null;
+function cardValue($: CheerioAPI, heading: string, label: string, max: number): string {
+  const card = $('h3').filter((_, element) => clean($(element).text(), 40) === heading).first().closest('[x-data]');
+  for (const element of card.find('p').toArray()) {
+    if (clean($(element).text(), 40).toLowerCase() !== label) continue;
+    const value = clean($(element).next('p').text(), max + 1);
+    return value.length <= max ? value : '';
   }
-  return null;
+  return '';
+}
+
+/** The country on the Destination card; only "Country" is read there. */
+function destinationOf($: CheerioAPI): Destination | null {
+  const name = cardValue($, 'Destination', 'country', 80);
+  return /^\p{L}[\p{L} .,'()&-]*$/u.test(name) ? { code: countryCode(name), name } : null;
+}
+
+/** The product India Post booked the item as, such as "Inland Speed Post". */
+function articleTypeOf($: CheerioAPI): string {
+  const value = cardValue($, 'Consignment Details', 'article type', 80);
+  return /^\p{L}[\p{L}\d .,'()&/-]*$/u.test(value) ? value : '';
 }
 
 // UPU's marks for a scan by the destination's post ("Item received at office
@@ -338,6 +349,7 @@ export function parseIndiaPostTrackingHtml(
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
   const destination = destinationOf($);
+  const service = articleTypeOf($);
   const rows = events.slice(0, 500);
   const abroad = scannedAbroad(rows, destination);
   const destinationZone = destination ? countryTimeZone(destination.code) : null;
@@ -404,6 +416,7 @@ export function parseIndiaPostTrackingHtml(
     ...(typeof latest.event.local_time === 'string' ? { last_update_local: latest.event.local_time } : {}),
     expected_delivery: null,
     timezone: INDIA_ZONE,
+    ...(service ? { service_name: service } : {}),
     // When MySpeedPost last asked India Post; an old value means stale history.
     ...(syncedAt ? { source_synced_at: syncedAt.iso } : {}),
     // Only the country: a S10 item goes on to that country's post, which the
@@ -419,10 +432,10 @@ function enumValue(value: unknown): string {
 }
 
 /**
- * A component state other than New, Processing or Completed. One lookup met
- * one in October 2026 without its name being recorded. It says nothing about
- * the shipment, so a completed history the HTML still carries is used, and
- * otherwise the lookup is inconclusive.
+ * A component state other than Processing or Completed, without a rate limit
+ * or Turnstile check to explain it. It says nothing about the shipment, so a
+ * completed history the HTML still carries is used, and otherwise the lookup
+ * is inconclusive.
  */
 function otherState(status: string, html: string, trackingNumber: string): CarrierResult {
   try {
@@ -491,6 +504,25 @@ function parseLivewireUpdate(payload: unknown, trackingNumber: string): Livewire
     component: parseTrackSnapshot(rawComponent.snapshot, trackingNumber),
     effects: isRecord(rawComponent.effects) ? rawComponent.effects : {},
   };
+}
+
+/** Names of the analytics events a reply logs, such as `tracking_rate_limited`. */
+function loggedEvents(effects: JsonObject): Set<string> {
+  if (!Array.isArray(effects.dispatches)) return new Set();
+  return new Set(
+    effects.dispatches
+      .filter(isRecord)
+      .filter((dispatch) => dispatch.name === 'log_event' && isRecord(dispatch.params))
+      .map((dispatch) => clean((dispatch.params as JsonObject).name, 100))
+      .filter(Boolean),
+  );
+}
+
+const TURNSTILE_REQUIRED = 'India Post tracking asks for a Turnstile check';
+
+/** Once it rate-limits a client, MySpeedPost puts a Turnstile widget on the form. */
+function turnstileRequired(html: string): boolean {
+  return load(html)('.cf-turnstile').length > 0;
 }
 
 function dispatchNames(effects: JsonObject): Set<string> {
@@ -633,6 +665,8 @@ export class IndiaPostTracker {
       const cached = parseIndiaPostTrackingHtml(page.html, normalized);
       const syncedAt = typeof cached.source_synced_at === 'string' ? Date.parse(cached.source_synced_at) : NaN;
       if (Number.isFinite(syncedAt) && this.now().getTime() - syncedAt < REFRESH_AFTER_MS) return cached;
+      // Without a Turnstile token, Refresh would only reset the widget.
+      if (turnstileRequired(page.html)) return cached;
       // What the page's Refresh button sends. A failed refresh still leaves
       // the cached history, which is better than no answer.
       try {
@@ -650,6 +684,8 @@ export class IndiaPostTracker {
       }
     }
     if (!['New', 'Processing'].includes(initial.status)) return otherState(initial.status, page.html, normalized);
+    // Submitting without a token only resets the widget.
+    if (initial.status === 'New' && turnstileRequired(page.html)) throw new IndiaPostChallengeError(TURNSTILE_REQUIRED);
 
     const token = csrfToken(page.html);
     return initial.status === 'Processing'
@@ -684,6 +720,8 @@ export class IndiaPostTracker {
     for (let attempt = 0; attempt <= this.maxPollAttempts; attempt += 1) {
       const names = dispatchNames(update.effects);
       if (names.has('consignment_not_found')) throw new NotFoundError('India Post');
+      if (loggedEvents(update.effects).has('tracking_rate_limited')) throw new RateLimitedError('India Post');
+      if (names.has('turnstile-reset')) throw new IndiaPostChallengeError(TURNSTILE_REQUIRED);
       const html = typeof update.effects.html === 'string' ? update.effects.html : '';
       if (update.component.status === 'Completed') {
         if (!html) throw new SchemaError('India Post', 'India Post returned an empty completed response');

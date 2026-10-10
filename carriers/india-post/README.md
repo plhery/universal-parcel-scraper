@@ -13,9 +13,9 @@ requests reliably.
    1. `GET /track?n={number}&sync=true`; read the `track-consignment` component's `wire:snapshot` and
       the CSRF token.
    2. If the component is already `Completed`, its `tracking-request` attribute holds MySpeedPost's
-      cached history. If `synced_at` is under 30 minutes old, return it. Otherwise dispatch
-      `refresh_consignment` (the page's Refresh button) and poll; if the refresh fails, return the
-      cached history.
+      cached history. If `synced_at` is under 30 minutes old, or the page carries a Turnstile
+      widget, return it. Otherwise dispatch `refresh_consignment` (the page's Refresh button) and
+      poll; if the refresh fails, return the cached history.
    3. Otherwise `POST /livewire/update`: `__dispatch(set_consignment_number)` + `submit` for a `New`
       component, `fetchStatus` for one already `Processing`.
    4. Poll `fetchStatus` (up to 10 × 750 ms) until `Completed`, then parse the returned HTML fragment.
@@ -27,14 +27,18 @@ Outcomes:
   `cf-chl-`, `_cf_chl_opt` in the body): `IndiaPostChallengeError`, retryable, never not-found.
 - Still `Processing` after the poll budget: `IndeterminateError`. The backend answered but proved
   nothing, so no not-found cooldown.
+- A `log_event` dispatch named `tracking_rate_limited`: `RateLimitedError`. The component stays
+  `New`, and from then on the form carries a Turnstile widget.
+- A `New` page with a Turnstile widget, or a `turnstile-reset` dispatch: `IndiaPostChallengeError`.
+  No token is sent, so the lookup stops before submitting.
 - Any other component state: the completed history the HTML still carries, else
-  `IndeterminateError` naming the state. One lookup met such a state in October 2026 without its
-  name being recorded.
+  `IndeterminateError` naming the state.
 
 ## Notes
 
 - Stale caches are refreshed because MySpeedPost serves its last sync until someone presses Refresh;
   `sync=true` does not renew it. A cached "Item Booked" can hide days of later scans.
+- MySpeedPost rate-limits after a handful of fresh lookups in a row.
 - Cloudflare's passive loader `/cdn-cgi/challenge-platform/scripts/jsd/main.js` appears on ordinary
   200 pages. Treating `challenge-platform` as a challenge marker once made every lookup fail.
 - Identity is bound twice: the snapshot's `consignment_number` and the fragment's
@@ -49,6 +53,8 @@ Outcomes:
   the item back: in transit, not returned to sender.
 - `tracked_at` without an offset is read as `Asia/Kolkata`. `synced_at` is returned as
   `source_synced_at`.
+- The Consignment Details card's Article Type ("Inland Speed Post", "Foreign Speed Post
+  Merchandise") becomes `service_name`.
 - The page's Destination card names the destination country. It becomes `destination_country`
   (or `destination_country_name` when the name has no ISO code), so the host can confirm the S10
   number with that country's post.

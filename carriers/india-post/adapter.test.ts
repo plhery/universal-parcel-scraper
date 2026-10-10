@@ -391,8 +391,11 @@ describe('India Post response normalization', () => {
   });
 
   it('produces every capability carrier.json declares', () => {
-    expect(CAPABILITIES).toEqual(['history', 'location', 'provider_code']);
-    const result = parseIndiaPostTrackingHtml(trackingHistoryHtml(), SAMPLE_NUMBER);
+    expect(CAPABILITIES).toEqual(['history', 'location', 'provider_code', 'service_name']);
+    const result = parseIndiaPostTrackingHtml(trackingHistoryHtml() + bookingCard('Consignment Details', {
+      'Consignment #': SAMPLE_NUMBER, 'Article Type': 'Inland Speed Post', Tariff: '55.00 INR',
+    }), SAMPLE_NUMBER);
+    expect(result.service_name).toBe('Inland Speed Post');
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.location)).toBe(true);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);
@@ -534,6 +537,15 @@ describe('India Post Livewire session', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
+  it('keeps the cached history without a refresh when the page asks for Turnstile', async () => {
+    const widget = '<div class="cf-turnstile" data-sitekey="synthetic"></div>';
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'Completed', trackingHistoryHtml() + widget)));
+
+    await expect(new IndiaPostTracker({ fetcher }).fetch(SAMPLE_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it('rejects without another poll when the caller cancels during a refresh', async () => {
     const fetcher = vi.fn<typeof fetch>()
       .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'Completed', trackingHistoryHtml())))
@@ -642,6 +654,33 @@ describe('India Post Livewire session', () => {
     const malformed = vi.fn<typeof fetch>().mockResolvedValue(new Response('<html>maintenance</html>'));
     await expect(new IndiaPostTracker({ fetcher: malformed }).fetch(SAMPLE_NUMBER))
       .rejects.toThrow('tracking component');
+  });
+
+  it('reports a rate limit and the Turnstile check that follows it, never not found', async () => {
+    const limited = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'New')))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'New', {
+        dispatches: [
+          { name: 'set_consignment_number', params: { consignment_number: SAMPLE_NUMBER } },
+          { name: 'log_event', params: { name: 'tracking_rate_limited' } },
+        ],
+      }));
+    const error: unknown = await new IndiaPostTracker({ fetcher: limited, pollIntervalMs: 0 }).fetch(SAMPLE_NUMBER)
+      .catch((caught: unknown) => caught);
+    expect(carrierErrorKind(error)).toBe('rate_limited');
+    expect(limited).toHaveBeenCalledTimes(2);
+
+    const widget = '<div class="cf-turnstile" data-sitekey="synthetic"></div>';
+    const gated = vi.fn<typeof fetch>().mockResolvedValue(new Response(pageHtml(SAMPLE_NUMBER, 'New', widget)));
+    await expect(new IndiaPostTracker({ fetcher: gated }).fetch(SAMPLE_NUMBER))
+      .rejects.toBeInstanceOf(IndiaPostChallengeError);
+    expect(gated).toHaveBeenCalledTimes(1);
+
+    const reset = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'New')))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'New', { dispatches: [{ name: 'turnstile-reset', params: [] }] }));
+    await expect(new IndiaPostTracker({ fetcher: reset, pollIntervalMs: 0 }).fetch(SAMPLE_NUMBER))
+      .rejects.toBeInstanceOf(IndiaPostChallengeError);
   });
 
   it('reads an ordinary page carrying Cloudflare\'s passive detection loader', async () => {

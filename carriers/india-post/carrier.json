@@ -26,7 +26,8 @@
   "capabilities": [
     "history",
     "location",
-    "provider_code"
+    "provider_code",
+    "service_name"
   ],
   "portal": {
     "url": "https://myspeedpost.com/track?n={trackingNumber}&sync=true",
@@ -36,6 +37,8 @@
       "status",
       "history",
       "location",
+      "service_name",
+      "destination_country",
       "recipient_name",
       "recipient_address",
       "signature"
@@ -44,7 +47,9 @@
       "status",
       "history",
       "location",
-      "provider_code"
+      "provider_code",
+      "service_name",
+      "destination_country"
     ],
     "discarded": [
       "recipient_name",

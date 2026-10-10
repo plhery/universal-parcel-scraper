@@ -15931,6 +15931,14 @@
     ]
   },
   {
+    "input": "CD728348979IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "CE273792195CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -16179,11 +16187,27 @@
     ]
   },
   {
+    "input": "CK496867745IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "CL105844885JP",
     "carrier": "japan-post",
     "confidence": "high",
     "candidates": [
       "japan-post"
+    ]
+  },
+  {
+    "input": "CM473272924IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
     ]
   },
   {
@@ -16468,6 +16492,14 @@
     ]
   },
   {
+    "input": "CQ356063945IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "CR010720791546",
     "carrier": "unknown",
     "confidence": "low",
@@ -16489,6 +16521,14 @@
     "confidence": "high",
     "candidates": [
       "bring-posten"
+    ]
+  },
+  {
+    "input": "CR253610415IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
     ]
   },
   {
@@ -16516,6 +16556,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "CV176951644IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
     ]
   },
   {
@@ -16920,6 +16968,14 @@
     ]
   },
   {
+    "input": "ED307210090IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "ED415656540IN",
     "carrier": "india-post",
     "confidence": "high",
@@ -17018,6 +17074,14 @@
     ]
   },
   {
+    "input": "EG586297304IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "EH013600697NL",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -17098,6 +17162,14 @@
     ]
   },
   {
+    "input": "EL700388315IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "EM100047250023CA",
     "carrier": "unknown",
     "confidence": "low",
@@ -17150,6 +17222,14 @@
     ]
   },
   {
+    "input": "EM817545437IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "EN157656352JP",
     "carrier": "japan-post",
     "confidence": "high",
@@ -17166,6 +17246,14 @@
     ]
   },
   {
+    "input": "EN844273821IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "EP318770974NZ",
     "carrier": "nz-post",
     "confidence": "high",
@@ -17179,6 +17267,14 @@
     "confidence": "high",
     "candidates": [
       "nz-post"
+    ]
+  },
+  {
+    "input": "EP953410483IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
     ]
   },
   {
@@ -17242,11 +17338,27 @@
     "candidates": []
   },
   {
+    "input": "EU046061955IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "EW000000005FR",
     "carrier": "la-poste",
     "confidence": "high",
     "candidates": [
       "la-poste"
+    ]
+  },
+  {
+    "input": "EW325552073IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
     ]
   },
   {
@@ -18061,6 +18173,14 @@
     ]
   },
   {
+    "input": "JB052358840IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
     "input": "JD0002123456789012",
     "carrier": "unknown",
     "confidence": "low",
@@ -18188,6 +18308,14 @@
     "confidence": "high",
     "candidates": [
       "purolator"
+    ]
+  },
+  {
+    "input": "JG282924107IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
     ]
   },
   {
@@ -18391,6 +18519,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "JL056759260IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
   },
   {
     "input": "JM218901045IN",
@@ -20676,6 +20812,14 @@
   },
   {
     "input": "RM419394835IN",
+    "carrier": "india-post",
+    "confidence": "high",
+    "candidates": [
+      "india-post"
+    ]
+  },
+  {
+    "input": "RN166688486IN",
     "carrier": "india-post",
     "confidence": "high",
     "candidates": [
