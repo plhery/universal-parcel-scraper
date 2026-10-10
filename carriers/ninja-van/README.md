@@ -29,8 +29,14 @@ The page hides internal routing and bookkeeping events. Its oldest-first feed
 is reversed after those rows are checked and removed. Explicit scan offsets
 are preserved; unresolved clocks retain provider text. An explicit return scan
 starts the return leg, and a return-marked delivery scan completes it. Bounded
-history is marked incomplete. Stale delivery windows, merchant information,
-recipient details and delivery proof are excluded.
+history is marked incomplete. Merchant information, recipient details and
+delivery proof are excluded.
+
+The delivery window is read as the public page reads it: days in the route's
+country, only while the order is moving towards the recipient and has a
+timeslot. The server moves an overdue window's start up to the day of the
+lookup, so a start after the end gives no estimate, and a window that ended
+before the newest scan is dropped as stale. The timeslot itself is not read.
 
 ## Live test
 

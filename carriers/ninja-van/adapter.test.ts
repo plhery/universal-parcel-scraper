@@ -54,6 +54,53 @@ describe('Ninja Van parser', () => {
     expect(result.events?.[0]?.provider_leg).toBeUndefined();
   });
 
+  it('reads the delivery window while the order moves, as the public page shows it', () => {
+    const moving = (window: Record<string, unknown>) => {
+      const payload: Record<string, unknown> = { ...clone(), status: 'Transit', granular_status: 'Arrived at Sorting Hub',
+        delivery_timeslot: '09 AM to 10 PM', ...window };
+      payload.events = clone().events.slice(1, 6);
+      return normalizeCarrierResult(parseNinjaVan(payload, NUMBER));
+    };
+    expect(moving({})).toMatchObject({ expected_delivery: '2026-04-04', expected_delivery_from: '2026-04-02' });
+    const oneDay = moving({ delivery_start_date: '2026-04-03', delivery_end_date: '2026-04-03' });
+    expect(oneDay.expected_delivery).toBe('2026-04-03');
+    expect(oneDay.expected_delivery_from).toBeUndefined();
+    // The server moves an overdue window's start up to the lookup day, so a start after the end is no estimate.
+    for (const window of [{ delivery_timeslot: '' }, { status: 'Pending' }, { status: 'On Hold' },
+      { delivery_start_date: '2026-04-05', delivery_end_date: '2026-04-03' },
+      { delivery_start_date: '2026-03-30', delivery_end_date: '2026-04-01' }, { delivery_end_date: '2026-02-30' }, { delivery_start_date: null }]) {
+      expect(moving(window).expected_delivery).toBeNull();
+      expect(moving(window).expected_delivery_from).toBeUndefined();
+    }
+    const delivered = clone();
+    delivered.events = delivered.events.slice(1, 7);
+    delivered.events.at(-1)!.data = { is_rts: false };
+    expect(parseNinjaVan({ ...delivered, status: 'Transit', delivery_timeslot: '09 AM to 10 PM' }, NUMBER).expected_delivery).toBeNull();
+  });
+
+  it('drops the delivery window once the parcel heads back to the sender', () => {
+    const payload: Record<string, unknown> = { ...clone(), status: 'Transit', granular_status: 'En Route to Sorting Hub',
+      delivery_timeslot: '09 AM to 10 PM', delivery_start_date: '2026-04-02', delivery_end_date: '2026-04-04' };
+    payload.events = clone().events.slice(0, 6);
+    const result = normalizeCarrierResult(parseNinjaVan(payload, NUMBER));
+    expect(result.events?.[0]?.provider_leg).toBe('return');
+    expect(result.expected_delivery).toBeNull();
+    expect(result.expected_delivery_from).toBeUndefined();
+  });
+
+  it('dates the delivery window in the route country', () => {
+    const late = (number: string) => {
+      const payload: Record<string, unknown> = { ...clone(), tracking_id: number, status: 'Transit', delivery_timeslot: '09 AM to 10 PM',
+        delivery_start_date: '2026-03-31', delivery_end_date: '2026-04-01' };
+      const events = clone().events.slice(1, 3);
+      events.at(-1)!.time = '2026-04-01T16:30:00Z';
+      payload.events = events;
+      return parseNinjaVan(payload, number).expected_delivery;
+    };
+    expect(late(NUMBER)).toBeNull();
+    expect(late('NLVNA00000000')).toBe('2026-04-01');
+  });
+
   it('does not call ambiguous return delivery a recipient delivery', () => {
     const payload = clone();
     delete (payload.events.at(-2)!.data as { is_rts?: boolean }).is_rts;

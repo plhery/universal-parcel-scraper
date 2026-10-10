@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { ninjaVanCountry } from '../../core/detection/ninjaVan.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
@@ -10,6 +11,10 @@ import { HIDDEN_NINJA_EVENTS, ninjaVanStatus } from './status.js';
 const PROVIDER = 'Ninja Van';
 const MAX_SCANS = 500;
 const MAX_EVENTS = 100;
+// Each route's country clock, in which the page's delivery days are read.
+const ZONES = { sg: 'Asia/Singapore', my: 'Asia/Kuala_Lumpur', id: 'Asia/Jakarta', ph: 'Asia/Manila', th: 'Asia/Bangkok', vn: 'Asia/Ho_Chi_Minh' } as const;
+// Order states for which the public page shows no delivery window.
+const NO_WINDOW = new Set(['cancelled', 'completed', 'on hold', 'pending', 'pickup fail', 'staging']);
 
 export function normalizeNinjaVanNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -39,6 +44,30 @@ function scanClock(raw: unknown): { time?: string; provider_time_text?: string }
     if (parsed) return { time: parsed.iso };
   }
   return { provider_time_text: label };
+}
+
+function day(raw: unknown): string | null {
+  if (typeof raw !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
+  return DateTime.fromISO(raw, { zone: 'UTC' }).isValid ? raw : null;
+}
+
+/**
+ * The delivery window, as the public page shows it: days in the route's
+ * country, only while the order moves towards the recipient and only with a
+ * timeslot. The server moves an overdue window's start up to the day of the
+ * lookup, so a start after the end is no estimate. A window that ended before
+ * the newest scan's day is stale.
+ */
+function estimate(payload: Record<string, unknown>, latest: CarrierEvent, zone: string): Pick<CarrierResult, 'expected_delivery_from'> & { expected_delivery: string | null } {
+  const none = { expected_delivery: null };
+  if (NO_WINDOW.has(clean(payload.status, 40).toLowerCase()) || !clean(payload.delivery_timeslot, 80)) return none;
+  if (latest.stage === 'delivered' || latest.stage === 'returned' || latest.provider_leg === 'return') return none;
+  const start = day(payload.delivery_start_date);
+  const end = day(payload.delivery_end_date);
+  if (!start || !end || start > end) return none;
+  const after = latest.time ? DateTime.fromISO(latest.time, { setZone: true }).setZone(zone).toISODate() : null;
+  if (after && end < after) return none;
+  return { expected_delivery: end, ...(start < end ? { expected_delivery_from: start } : {}) };
 }
 
 export function parseNinjaVan(payload: unknown, rawNumber: string): CarrierResult {
@@ -85,7 +114,7 @@ export function parseNinjaVan(payload: unknown, rawNumber: string): CarrierResul
   const status = returned ? 'exception' : currentStage === 'exception' ? 'exception' : mapped?.status ?? 'unknown';
   return { status, ...(currentStage ? { current_stage: currentStage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: returned ? 'Returned to sender' : latest.description,
-    last_update: latest.time ?? null, expected_delivery: null,
+    last_update: latest.time ?? null, ...estimate(payload, latest, ZONES[ninjaVanCountry(number)!]),
     ...(currentStage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}), events: events.slice(0, MAX_EVENTS) };
 }
