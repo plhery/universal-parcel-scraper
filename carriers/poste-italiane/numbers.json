@@ -269,6 +269,47 @@
         "confidence": "high"
       },
       "note": "A Trustpilot review of Poste Italiane gives this code. Poste Italiane's tracker returns its history."
+    },
+    {
+      "number": "3UW1QQ8057252",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/pacco-spedito-ma-non-di-trova/30759adbc926d4ad33",
+        "access": "full_page",
+        "date": "2025-12-04",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "reportedRole": "shipment_code"
+      },
+      "expect": {
+        "carrier": "poste-italiane",
+        "confidence": "high"
+      },
+      "note": "Shipment code a complaint against Poste Italiane quotes; the tracker no longer finds it."
+    },
+    {
+      "number": "3uw1c2s049701",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/pacco-in-transito-da-5-giorni/6ceed06acfa1ff1271",
+        "access": "full_page",
+        "date": "2024-12-13",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SDA",
+        "reportedRole": "tracking_code"
+      },
+      "expect": {
+        "carrier": "poste-italiane",
+        "confidence": "high"
+      },
+      "note": "Tracking code a complaint against SDA quotes in lower case; the tracker no longer finds it."
     }
   ]
 }

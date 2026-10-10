@@ -8969,6 +8969,22 @@
     ]
   },
   {
+    "input": "3UW1QQ8057252",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "3uw1c2s049701",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
     "input": "4002847016405018",
     "carrier": "unknown",
     "confidence": "low",
