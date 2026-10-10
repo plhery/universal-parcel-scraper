@@ -46,7 +46,7 @@ export function parseEcoscooting(payload: unknown, rawNumber: string): CarrierRe
     const time = row.opTimestamp == null ? null : epochMillisTime(row.opTimestamp);
     if (row.opTimestamp != null && !time) throw new SchemaError('Ecoscooting', 'Ecoscooting returned an invalid scan timestamp');
     const display = clean(row.datetime, 64);
-    const mapped = ecoscootingStatus(code);
+    const mapped = ecoscootingStatus(code, description);
     // Either code family may come with or without completion flags. A delivery
     // or a collection needs its exact code and both affirmative labels, and
     // flags, when present, must both affirm it.
@@ -60,7 +60,7 @@ export function parseEcoscooting(payload: unknown, rawNumber: string): CarrierRe
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   const latest = events[0]!;
-  const current = ecoscootingStatus(String(latest.provider_code));
+  const current = ecoscootingStatus(String(latest.provider_code), latest.description);
   const dims = isRecord(payload.packageParam.dimWeight) ? payload.packageParam.dimWeight : {};
   const grams = typeof dims.weight === 'string' && /^\d+(?:\.\d+)?$/.test(dims.weight) ? Number(dims.weight) : Number.NaN;
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
@@ -78,6 +78,9 @@ export function parseEcoscooting(payload: unknown, rawNumber: string): CarrierRe
 function pickupPoint(station: unknown, events: CarrierEvent[], stage: string | undefined): { pickup_point?: string } {
   if (!isRecord(station) || stage === 'returned' || !events.some(event => PICKUP_POINT_CODES.has(String(event.provider_code)))) return {};
   if (stage === 'delivered' && !COLLECTION_CODES.has(String(events[0]?.provider_code))) return {};
-  const lines = [...new Set([clean(station.stationName, 160), clean(station.detailAddress, 300)].filter(Boolean))];
+  // The address joins its parts with commas and spells an empty one "NaN".
+  const address = clean(station.detailAddress, 300).split(',').map(part => part.trim())
+    .filter(part => part && !/^(?:NaN|null|undefined)$/i.test(part)).join(', ');
+  const lines = [...new Set([clean(station.stationName, 160), address].filter(Boolean))];
   return lines.length ? { pickup_point: lines.join('\n') } : {};
 }

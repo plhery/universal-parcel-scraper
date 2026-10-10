@@ -290,6 +290,141 @@
       "language": "en",
       "stage": "registered",
       "confirmedBy": "live"
+    },
+    {
+      "code": "COMMON_INTRANSIT",
+      "wording": "Parcel is on the way",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GTMS_ACCEPT",
+      "wording": "Your shipment has been accepted by delivery carrier",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GTMS_ACCEPT",
+      "wording": "accepted by delivery partner",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GTMS_DEL_FAILURE",
+      "wording": "Delivery attempt failure, Not at home",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GTMS_DEL_FAILURE",
+      "wording": "Package stolen",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "Its status name reads \"Delivery Attempt Failure\"."
+    },
+    {
+      "code": "GTMS_DEL_FAILURE",
+      "wording": "Your shipment delivery attempt failed [Recipient not at home]",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GTMS_DEL_FAILURE",
+      "wording": "Your shipment has encountered an exception at last mile station [Parcel lost]",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The last-mile family's exception wording, also given as its status name; no attempt is reported."
+    },
+    {
+      "code": "GTMS_DO_DEPART",
+      "wording": "Your shipment is out for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GTMS_STA_SIGNED",
+      "wording": "Your package has been processed by the courier. We will notify you when it is ready for pickup at the point.",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "LM_DELIVERY_FAILURE",
+      "wording": "Your shipment delivery attempt failed [Parcel cannot be delivered outside business hours]",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "LM_DELIVERY_FAILURE",
+      "wording": "Your shipment delivery attempt failed [Recipient not at home]",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "LM_DELIVERY_FAILURE",
+      "wording": "Your shipment delivery attempt failed [Recipient requested to change delivery date/time]",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "PUDO_DELIVERY",
+      "wording": "Your package has been processed by the courier. We will notify you when it is ready for pickup at the point.",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RT_DO_ARRIVE",
+      "wording": "Unreachable return inbound at last mile station",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RT_DO_DEPART",
+      "wording": "Unreachable return outbound from last mile station",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "TD_TRANSWH_OUTBOUND",
+      "wording": "Your shipment has been processed at sorting center and ready for shipping",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "TD_TRANSWH_OUTBOUND",
+      "wording": "arrive at cainiao SC",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "TD_TRANS_ARRIVE_C",
+      "wording": "Your shipment has arrived at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "TD_TRANS_ARRIVE_C",
+      "wording": "parcel arrives at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
     }
   ]
 }

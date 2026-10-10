@@ -24,6 +24,7 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['TD_TRANSWH_OUTBOUND', { status: 'in_transit', stage: 'in_transit' }],
   ['TD_TRANS_ARRIVE_C', { status: 'in_transit', stage: 'in_transit' }],
   ['In_transit', { status: 'in_transit', stage: 'in_transit' }],
+  ['COMMON_INTRANSIT', { status: 'in_transit', stage: 'in_transit' }],
   ['Partner_outbound', { status: 'in_transit', stage: 'in_transit' }],
   ['create', { status: 'pending', stage: 'registered' }],
   ['Label_created', { status: 'pending', stage: 'registered' }],
@@ -51,4 +52,15 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['CREATE_ORDER_CES', { status: 'pending', stage: 'registered' }],
 ]);
 
-export function ecoscootingStatus(code: string): ClassifiedStatus | undefined { return CODES.get(code); }
+const PROBLEM: ClassifiedStatus = { status: 'exception', stage: 'exception' };
+
+/**
+ * The stage of a scan's code. `GTMS_DEL_FAILURE` also carries the last-mile
+ * family's exception wording ("encountered an exception at last mile station
+ * [Parcel lost]"), which names that wording as its status too and reports no
+ * attempt; `LM_PARCEL_EXCEPTION` reads it as a problem.
+ */
+export function ecoscootingStatus(code: string, description = ''): ClassifiedStatus | undefined {
+  if (code === 'GTMS_DEL_FAILURE' && /encountered an exception/i.test(description)) return PROBLEM;
+  return CODES.get(code);
+}

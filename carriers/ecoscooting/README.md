@@ -19,7 +19,9 @@ comes from the latest scan. Numeric references use one of two code families:
 reference (Portuguese `CNPRT`, older Spanish `CNESP`) uses. Either may come
 with or without completion flags. A delivery or a collection at a pickup point
 needs its exact code and both affirmative labels, and flags, when present, must
-both affirm it; anything else stays inconclusive. Arrival at a pickup point and
+both affirm it; anything else stays inconclusive. `GTMS_DEL_FAILURE` also carries the last-mile
+family's exception wording ("[Parcel lost]"), which reads as a problem rather than a
+failed attempt. Arrival at a pickup point and
 the pickup point's own signature ("Delivered to PUDO") read as ready for
 pickup. A parcel left at a pickup point past its deadline, and its whole
 journey back to the sender, read as returned. The web client names the GTMS
@@ -28,7 +30,8 @@ code for that deadline (`GTMS_PUDO_OVERDUE`); only the last-mile one
 published `CNESP` references.
 The labelled gram weight is converted to kilograms. Once a scan places the
 parcel at a pickup point, the shop's name and address become `pickup_point`.
-They stay after collection so the parcel still shows where it was collected. A
+They stay after collection so the parcel still shows where it was collected. An
+address part the reply spells `NaN` is left out. A
 parcel the courier delivers instead (`GTMS_SIGNED`, `LM_SIGN_SUCCESS`) has none,
 and neither has a returned one, which no longer waits there.
 The pickup PIN, the shop's phone, opening hours and station id are never read.

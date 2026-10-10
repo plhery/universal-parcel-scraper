@@ -29,7 +29,7 @@ describe('Ecoscooting parcel history', () => {
     // Sorting scans carry another local offset than last-mile scans; epochs keep them in order.
     expect(result.events?.slice(2, 4).map(event => event.time)).toEqual(['2026-01-08T12:00:00Z', '2026-01-07T12:00:00Z']);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|imgUrl|opCode|Latitude|Longitude|outOrder|toZip|feature|cainiaoId|solution/);
-    for (const entry of statuses.entries) expect(ecoscootingStatus(entry.code)?.stage, entry.code).toBe(entry.stage);
+    for (const entry of statuses.entries) expect(ecoscootingStatus(entry.code, entry.wording)?.stage, entry.code).toBe(entry.stage);
     const wrong = referenceFixture(number.replace(/1$/, '2'));
     expect(() => parseEcoscooting(wrong, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
     const wrongScan = referenceFixture(number); wrongScan.statuses[1].mailNo = NUMBER;
@@ -79,6 +79,8 @@ describe('Ecoscooting parcel history', () => {
     expect(parseEcoscooting(beforeArrival, NUMBER)).not.toHaveProperty('pickup_point');
     const nameOnly = pickupFixture(); nameOnly.popStationParam.detailAddress = ' ';
     expect(parseEcoscooting(nameOnly, NUMBER).pickup_point).toBe('Example Parcel Shop');
+    const emptyPart = pickupFixture(); emptyPart.popStationParam.detailAddress = 'Calle Ejemplo 1, NaN, Ejemplo';
+    expect(parseEcoscooting(emptyPart, NUMBER).pickup_point).toBe('Example Parcel Shop\nCalle Ejemplo 1, Ejemplo');
     const unnamed = pickupFixture(); unnamed.popStationParam = { pinCode: 'PRIVATE_SYNTHETIC_PICKUP_PIN' };
     expect(parseEcoscooting(unnamed, NUMBER)).not.toHaveProperty('pickup_point');
   });
@@ -130,6 +132,18 @@ describe('Ecoscooting parcel history', () => {
     const numeric = fixture(); numeric.statuses.unshift({ ...numeric.statuses[1], actionCode: 'RT_SIGNIN_SUCCESS', statusName: 'Return Success',
       description: 'Parcel has been returned back to the sender', opTimestamp: '1767900000000' });
     expect(parseEcoscooting(numeric, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'returned' });
+  });
+  it('reads the exception wording under the GTMS failure code as a problem', () => {
+    const value = fixture();
+    value.statuses.unshift({ ...value.statuses[1], actionCode: 'GTMS_DEL_FAILURE', statusName: 'Delivery Failure',
+      description: 'Your shipment has encountered an exception at last mile station [Parcel lost]', opTimestamp: '1767900000000' });
+    expect(parseEcoscooting(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    // The carrier labels a stolen parcel a failed attempt.
+    value.statuses[0].description = 'Package stolen';
+    expect(parseEcoscooting(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    value.statuses[0].description = 'Delivery attempt failure, Not at home';
+    expect(parseEcoscooting(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    expect(parseEcoscooting(value, NUMBER).events?.[0]?.stage).toBe('failed_attempt');
   });
   it('reads the first-mile order scans as registered rather than in transit', () => {
     const value = pickupFixture(); value.statuses = value.statuses.slice(-2);

@@ -9246,6 +9246,18 @@
     ]
   },
   {
+    "input": "419400000112555834",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bpost",
+      "ecoscooting"
+    ],
+    "asked": [
+      "bpost"
+    ]
+  },
+  {
     "input": "4201002334249200190132607600833457",
     "carrier": "usps",
     "confidence": "high",
@@ -16068,6 +16080,14 @@
   },
   {
     "input": "CNPRT19501971234009605248",
+    "carrier": "ecoscooting",
+    "confidence": "high",
+    "candidates": [
+      "ecoscooting"
+    ]
+  },
+  {
+    "input": "CNPRT35107751234009918228",
     "carrier": "ecoscooting",
     "confidence": "high",
     "candidates": [
