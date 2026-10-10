@@ -141,6 +141,12 @@
     "reason": "A calling card number, which the portal reads only with the delivery postcode."
   },
   {
+    "carrier": "dhl-express",
+    "pattern": "^JD\\d{18}$",
+    "kind": "open",
+    "reason": "Express piece identifiers resolve to their waybill on DHL's global tracking page, but the mobile API takes waybills only and DHL Paket's rule claims the shape."
+  },
+  {
     "carrier": "four-px",
     "pattern": "^MS\\d{8}XSG$",
     "kind": "open",

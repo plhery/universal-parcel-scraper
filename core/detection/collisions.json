@@ -1857,5 +1857,13 @@
       "spring-gds"
     ],
     "reason": "PostNL and DHL Parcel both print 3S barcodes, and the customer code only mostly tells them apart: about one in twenty DHL Parcel barcodes archived from its tracker has four letters and selects PostNL, and about one in a hundred PostNL ones has three letters and selects DHL Parcel. Two-letter codes, which PostNL's barcode documentation shows, stay suggestions for both, but recognition only asks DHL Parcel: PostNL's tracker calls these barcodes incorrect, so it cannot tell a known one from an unknown one."
+  },
+  {
+    "shape": "JJD, nine digits, 000 and six digits",
+    "carriers": [
+      "australia-post",
+      "dhl"
+    ],
+    "reason": "A DHL JJD licence plate can carry 000 where Australia Post's article layout has it after a three-character code, so both high-confidence rules match and the number stays a suggestion, DHL first."
   }
 ]

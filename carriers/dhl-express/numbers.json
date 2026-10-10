@@ -32,6 +32,9 @@
         "url": "https://www.trustpilot.com/reviews/6a901943246975fa82db1390",
         "date": "2026-08-28"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -45,7 +48,7 @@
           "dhl-ecommerce-es"
         ]
       },
-      "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
+      "note": "Publicly reported DHL Express waybill. DHL Express's mobile tracking returned its delivered history from the United Kingdom to the United States."
     },
     {
       "number": "5126149092",
@@ -79,6 +82,9 @@
         "url": "https://www.trustpilot.com/reviews/6aaaf40b0ae5ece3b117fe62",
         "date": "2026-09-16"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -92,7 +98,7 @@
           "dhl-ecommerce-es"
         ]
       },
-      "note": "Publicly reported DHL Express waybill. Its shape overlaps other carriers; live recognition must confirm the shipment."
+      "note": "Publicly reported DHL Express waybill. DHL Express's mobile tracking returned its delivered history from the United States to Canada, with three failed attempts."
     },
     {
       "number": "1234577890",
@@ -186,6 +192,345 @@
         ]
       },
       "note": "Posted in a review of DHL Freight Sweden, a network without an adapter. The ten digits are also the DHL Express shape."
+    },
+    {
+      "number": "4559662063",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261009025051/https://www.dhl.com/us-en/home/tracking.html?tracking-id=4559662063&submit=1",
+        "date": "2026-10-09",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS WORLDWIDE",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment from Finland to the United States, with only its shipment information received."
+    },
+    {
+      "number": "2598242905",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261008005803/https://www.dhl.com/ca-en/home/tracking.html?tracking-id=2598242905&submit=1",
+        "date": "2026-10-08",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS WORLDWIDE",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from the United States to Canada."
+    },
+    {
+      "number": "5010846945",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261007070856/https://www.dhl.com/de-de/home/tracking.html?submit=1&tracking-id=5010846945&tid=expresstracking-de-privatkunden",
+        "date": "2026-10-07",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS WORLDWIDE ECX",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Estonia to Germany."
+    },
+    {
+      "number": "2008345953",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261005141719/https://www.dhl.com/gb-en/home/tracking.html?submit=1&tracking-ID=2008345953&tracking-id=2008345953",
+        "date": "2026-10-05",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS BREAKBULK",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Germany to the United Kingdom."
+    },
+    {
+      "number": "5085910406",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261003035559/https://www.dhl.com/us-en/home/tracking.html?tracking-id=5085910406&submit=1",
+        "date": "2026-10-03",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS WORLDWIDE",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Finland to the United States."
+    },
+    {
+      "number": "4080222672",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261002055048/https://www.dhl.com/nl-nl/home/tracking.html?submit=1&tracking-id=4080222672",
+        "date": "2026-10-02",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS BREAKBULK",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Taiwan to the Netherlands after a long customs hold."
+    },
+    {
+      "number": "7807677684",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261001151628/https://www.dhl.com/de-de/home/tracking.html?submit=1&tracking-id=7807677684&tid=expresstracking-de-privatkunden",
+        "date": "2026-10-01",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS DOMESTIC",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered within Germany."
+    },
+    {
+      "number": "6356523471",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260930235022/https://www.dhl.com/ca-en/home/tracking.html?submit=1&tracking-id=6356523471",
+        "date": "2026-09-30",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS WORLDWIDE",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from the United States to Canada."
+    },
+    {
+      "number": "7347159514",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928165149/https://www.dhl.com/it-it/home/tracking.html?locale=true&submit=1&tracking-id=7347159514",
+        "date": "2026-09-28",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS EASY XED",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Italy to Belgium."
+    },
+    {
+      "number": "1908510074",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260927122548/https://www.dhl.com/de-de/home/tracking.html?submit=1&tracking-id=1908510074",
+        "date": "2026-09-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS WORLDWIDE ECX",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Estonia to Germany."
+    },
+    {
+      "number": "1999473803",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261003100505/https://www.dhl.com/gb-en/home/tracking.html?tracking-id=1999473803&submit=1",
+        "date": "2026-10-03",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "EXPRESS 12:00",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "dhl-ecommerce-es"
+        ]
+      },
+      "note": "A waybill typed into DHL's tracking page, archived by the Wayback Machine. DHL's tracking returned an Express shipment delivered from Turkey to Spain."
+    },
+    {
+      "number": "JD014600012865745359",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261007130007/https://www.dhl.com/de-de/home/tracking.html?submit=1&tracking-id=JD014600012865745359&tid=expresstracking-de-privatkunden",
+        "date": "2026-10-07",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "reportedRole": "piece identifier",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "An Express piece identifier typed into DHL's tracking page, archived by the Wayback Machine. DHL's global tracking resolves it to the waybill of the Express shipment it belongs to; DHL Paket's page sends it there. The mobile API this adapter uses takes waybills only."
     }
   ]
 }

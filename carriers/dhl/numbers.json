@@ -75,11 +75,14 @@
         "url": "https://fr.trustpilot.com/review/www.dhl.fr",
         "date": "2026-08-31"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "dhl",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. DHL's recipient page returned its delivery in France and linked La Poste's tracking."
     },
     {
       "number": "CY123456785DE",
@@ -177,11 +180,14 @@
         "url": "https://de.trustpilot.com/review/www.dhl.de",
         "date": "2026-09-11"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "dhl",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. DHL's recipient page returned its history up to collection from a retail outlet."
     },
     {
       "number": "CQ347708400DE",
@@ -254,7 +260,7 @@
         "dateKind": "forum_post"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -275,7 +281,205 @@
           "sagawa"
         ]
       },
-      "note": "Twelve-digit DHL parcel number given by a Paketda editor. Its last digit is the Identcode check (weights 4 and 9 from the left)."
+      "note": "Twelve-digit DHL parcel number given by a Paketda editor. Its last digit is the Identcode check (weights 4 and 9 from the left, mod 10), and DHL's recipient page returned its delivery to a business customer."
+    },
+    {
+      "number": "00340434785831328966",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260904135023/https://www.dhl.com/us-en/home/tracking.html?tracking-id=00340434785831328966&submit=1",
+        "date": "2026-09-04",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Paket",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its domestic delivered history."
+    },
+    {
+      "number": "00340434410806640353",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260731104442/https://www.dhl.com/de-de/home/tracking.html?tracking-id=00340434410806640353&submit=1&tid=expresstracking-de-11",
+        "date": "2026-07-31",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Paket",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its domestic delivered history."
+    },
+    {
+      "number": "JJD149150000000340699",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260921150547/https://www.dhl.com/nl-nl/home/tracking.html?submit=1&tracking-id=JJD149150000000340699",
+        "date": "2026-09-21",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Paket International",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "australia-post"
+        ]
+      },
+      "note": "JJD and eighteen digits, typed into DHL's tracking page and archived by the Wayback Machine. DHL's recipient page returned a parcel delivered in the Netherlands."
+    },
+    {
+      "number": "JJD149990200058761652",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260902111837/https://www.dhl.com/gb-en/home/tracking.html?tracking-id=JJD149990200058761652&submit=1",
+        "date": "2026-09-02",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "DHL Paket International",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "JJD and eighteen digits, typed into DHL's tracking page and archived by the Wayback Machine. DHL's recipient page returned a parcel delivered in the Netherlands."
+    },
+    {
+      "number": "LY960813580DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260924041646/https://www.dhl.com/de-en/home/tracking.html?locale=true&submit=1&tracking-id=LY960813580DE",
+        "date": "2026-09-24",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A German postal parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its delivery in Austria and linked Austrian Post's tracking."
+    },
+    {
+      "number": "CY736520673DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260927011551/https://www.dhl.com/de-en/home/tracking.html?tracking-id=CY736520673DE",
+        "date": "2026-09-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A German postal parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its delivery in the United Kingdom and linked Royal Mail's tracking."
+    },
+    {
+      "number": "CQ300833475DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260904034700/https://www.dhl.com/us-en/home/tracking.html?tracking-id=CQ300833475DE",
+        "date": "2026-09-04",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A German postal parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its delivery in Ireland and linked An Post's tracking."
+    },
+    {
+      "number": "CG446160469DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928135851/https://www.dhl.com/us-en/home/tracking.html?tracking-id=CG446160469DE",
+        "date": "2026-09-28",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A German postal parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its delivery in France and linked La Poste's tracking."
+    },
+    {
+      "number": "CB401480383DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260901203841/https://www.dhl.com/de-en/home/tracking.html?tracking-id=CB401480383DE&submit=1",
+        "date": "2026-09-01",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A German postal parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its delivery in Greece and linked DHL's Greek tracking."
+    },
+    {
+      "number": "CJ202722474DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260924150808/https://www.dhl.com/nl-nl/home/tracking.html?tracking-id=CJ202722474DE",
+        "date": "2026-09-24",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A German postal parcel number typed into DHL's tracking page, archived by the Wayback Machine. DHL's recipient page returned its delivery in the Netherlands and linked DHL eCommerce Netherlands' tracking."
     }
   ]
 }
