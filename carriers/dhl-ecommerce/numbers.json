@@ -170,26 +170,6 @@
       "note": "DHL eCommerce example on the Malaysian tracking page, not a real shipment. No rule offers this carrier for fourteen digits."
     },
     {
-      "number": "420127019261290376171425385106",
-      "role": "shipment",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://webtrack.dhlglobalmail.com/?trackingnumber=420127019261290376171425385106"
-      },
-      "context": {
-        "assessment": "confirmed"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps",
-          "dhl-ecommerce"
-        ]
-      },
-      "note": "Public tracking link; the tracking page returned the history."
-    },
-    {
       "number": "9261290316844317469885",
       "role": "shipment",
       "evidence": "public_shipment_report",

@@ -185,8 +185,8 @@
       "note": "Tracking number quoted in a public court record. The source attributes it to USPS; its PIC structure and check digit select USPS."
     },
     {
-      "number": "4201002334249200190132607600833457",
-      "role": "full_barcode",
+      "number": "9200190132607600833457",
+      "role": "shipment",
       "evidence": "open_source_example",
       "source": {
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
@@ -195,56 +195,11 @@
         "carrier": "usps",
         "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
+      "note": "Open-source project example, not a real shipment. The source prints it behind the 420 routing code and a ZIP code, which stay out of the corpus; the number passes the USPS check."
     },
     {
-      "number": "4201028200009261290113185417468510",
-      "role": "full_barcode",
-      "evidence": "open_source_example",
-      "source": {
-        "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
-      },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
-    },
-    {
-      "number": "420221539101026837331000039521",
-      "role": "full_barcode",
-      "evidence": "open_source_example",
-      "source": {
-        "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
-      },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The legacy 91 tracking number after the ZIP passes the USPS check."
-    },
-    {
-      "number": "420787459400111206206406260787",
-      "role": "full_barcode",
-      "evidence": "open_source_example",
-      "source": {
-        "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
-      },
-      "expect": {
-        "carrier": "usps",
-        "confidence": "high"
-      },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
-    },
-    {
-      "number": "420902459261290336128704042634",
-      "role": "full_barcode",
+      "number": "9261290113185417468510",
+      "role": "shipment",
       "evidence": "open_source_example",
       "source": {
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
@@ -254,10 +209,30 @@
         "confidence": "low",
         "candidates": [
           "usps",
-          "dhl-ecommerce"
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
         ]
       },
-      "note": "Open-source project example, not a real shipment. Full label barcode rather than the number a user types. The source attributes it to USPS; the tracking number after the routing code and ZIP passes the USPS check."
+      "note": "Open-source project example, not a real shipment. The source prints it behind the 420 routing code and a ZIP code, which stay out of the corpus; the number passes the USPS check."
+    },
+    {
+      "number": "9101026837331000039521",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/usps.json"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "austrian-post",
+          "estafeta"
+        ]
+      },
+      "note": "Open-source project example, not a real shipment. The source prints it behind the 420 routing code and a ZIP code, which stay out of the corpus; the number passes the USPS check."
     },
     {
       "number": "CH056695198US",
@@ -405,8 +380,8 @@
       "note": "Public sandbox example; not evidence of a consumer shipment."
     },
     {
-      "number": "420117419361289691090029427113",
-      "role": "full_barcode",
+      "number": "9361289691090029427113",
+      "role": "shipment",
       "evidence": "open_source_example",
       "source": {
         "url": "https://github.com/USPS/api-examples/issues/34",
@@ -421,14 +396,16 @@
         "confidence": "low",
         "candidates": [
           "usps",
-          "dhl-ecommerce"
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
         ]
       },
-      "note": "Public sandbox example; not evidence of a consumer shipment."
+      "note": "Public sandbox example; not evidence of a consumer shipment. The source prints it behind the 420 routing code and a ZIP code, which stay out of the corpus."
     },
     {
-      "number": "4203278000009205596900893430673167",
-      "role": "full_barcode",
+      "number": "9205596900893430673167",
+      "role": "shipment",
       "evidence": "open_source_example",
       "source": {
         "url": "https://github.com/USPS/api-examples/issues/34",
@@ -442,7 +419,7 @@
         "carrier": "usps",
         "confidence": "high"
       },
-      "note": "Public sandbox example; not evidence of a consumer shipment."
+      "note": "Public sandbox example; not evidence of a consumer shipment. The source prints it behind the 420 routing code and a ZIP code, which stay out of the corpus."
     },
     {
       "number": "9261290278831107521763",
@@ -948,6 +925,46 @@
         "confidence": "high"
       },
       "note": "A USPS package number published with spaces in an archived USPS tracking link."
+    },
+    {
+      "number": "420000009400111206206406260787",
+      "role": "full_barcode",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-10",
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Invented routing barcode: the 420 routing code and the placeholder ZIP code 00000 in front of a published example package number."
+    },
+    {
+      "number": "4200000000009205596900893430673167",
+      "role": "full_barcode",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-10",
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Invented routing barcode: the 420 routing code and the placeholder ZIP+4 code 00000-0000 in front of a published example package number."
+    },
+    {
+      "number": "420000009361289691090029427113",
+      "role": "full_barcode",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-10-10",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce"
+        ]
+      },
+      "note": "Invented routing barcode: the 420 routing code and the placeholder ZIP code 00000 in front of a published example package number."
     }
   ]
 }
