@@ -2,6 +2,7 @@
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import {
@@ -109,17 +110,21 @@ export class GLSGermanyTracker {
     }
   }
 
+  /**
+   * A request that fails to reach GLS, or hangs, is sent once more: the first gets at most half of
+   * what is left, so the second fits in the rest.
+   */
   private async request(url: string, budget: LookupBudget): Promise<unknown> {
-    const { response, bytes } = await fetchBounded(url, {
+    const { response, bytes } = await withNetworkRetry(budget, (timeoutMs) => fetchBounded(url, {
       signal: budget.signal,
       headers: { Accept: 'application/json', Referer: 'https://gls-group.eu/EU/en/parcel-tracking', 'User-Agent': this.#userAgent },
     }, {
       provider: PROVIDER,
-      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
+      timeoutMs: Math.min(this.timeoutMs, timeoutMs),
       maxBytes: 1_000_000,
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
-    });
+    }));
     // A challenge, invalid postcode, rate limit or outage must not become "not found".
     if (response.status === 404) {
       const payload = parseJsonBytes(bytes, PROVIDER);

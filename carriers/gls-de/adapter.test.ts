@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { delayedFetcher, useRequestClock } from '../../core/testing/hang.js';
 import type { JsonObject } from '../../core/types.js';
 import { GLSGermanyTracker } from './adapter.js';
 
@@ -138,8 +139,28 @@ describe('GLS Germany', () => {
   });
 
   it('recognizes the official expired-number response', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ lastError: 'E000' }), { status: 404 }));
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ lastError: 'E000' }), { status: 404 }));
     await expect(new GLSGermanyTracker().fetch(NUMBER, '10115')).rejects.toMatchObject({ name: 'GLSGermanyTrackingError', status: 404 });
+    // An answer is never sent again.
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('sends a request that hangs once more, inside the budget', async () => {
+    useRequestClock();
+    try {
+      const { fetcher, ended } = delayedFetcher([
+        { afterMs: Infinity },
+        { afterMs: 300, reply: () => Response.json({ tuStatus: [parcel()] }) },
+        { afterMs: 200, reply: () => Response.json(parcel()) },
+      ]);
+      const lookup = new GLSGermanyTracker({ fetcher }).fetch(NUMBER, '10115');
+      await vi.advanceTimersByTimeAsync(15_500);
+      await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
+      // Half of the 30-second default budget, then the retry and the detail request within the rest.
+      expect(ended).toEqual([15_000, 15_300, 15_500]);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it.each([403, 429, 503])('keeps HTTP %i visible as an upstream error', async (status) => {

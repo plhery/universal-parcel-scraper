@@ -15,6 +15,7 @@ import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type 
 import { isValidGlsParcelNumber } from '../../core/detection/index.js';
 import { InvalidInputError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { EXPLICIT_OFFSET_PATTERN, type ParsedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
@@ -330,7 +331,8 @@ export class GLSFranceTracker {
   async fetch(trackingNumber: string, context: TrackingContext = {}, { pickupPoint = true } = {}): Promise<CarrierResult> {
     const normalized = normalizeGLSFranceTrackingNumber(trackingNumber);
     const printed = printedNumber(trackingNumber);
-    const budget = lookupBudget(context, this.timeoutMs);
+    // Room for a request and its retry.
+    const budget = lookupBudget(context, 2 * this.timeoutMs);
     let parsed: ParsedTracking;
     try {
       parsed = await this.lookup(normalized, normalized, budget);
@@ -390,16 +392,18 @@ export class GLSFranceTracker {
   }
 
   private async lookup(code: string, normalized: string, budget: LookupBudget): Promise<ParsedTracking> {
-    const { response, bytes } = await fetchBounded(`${TRACKING_API}/${encodeURIComponent(code)}`, {
+    // A request that fails to reach GLS, or hangs, is sent once more: the first
+    // gets at most half of what is left, so the second fits in the rest.
+    const { response, bytes } = await withNetworkRetry(budget, (timeoutMs) => fetchBounded(`${TRACKING_API}/${encodeURIComponent(code)}`, {
       signal: budget.signal,
       headers: this.#headers(),
     }, {
       provider: 'GLS France tracking',
-      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
+      timeoutMs: Math.min(this.timeoutMs, timeoutMs),
       maxBytes: MAX_RESPONSE_BYTES,
       fetcher: this.#fetcher,
       allowHttpStatuses: [404, 410],
-    });
+    }));
     budget.signal.throwIfAborted();
     if ([404, 410].includes(response.status)) {
       // The native negative names the complete submitted code. An absent API

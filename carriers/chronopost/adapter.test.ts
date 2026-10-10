@@ -7,6 +7,7 @@ import { NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { delayedFetcher, useRequestClock } from '../../core/testing/hang.js';
 import { createTracker } from '../../facade/index.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { adapter, ChronopostTracker } from './adapter.js';
@@ -385,6 +386,28 @@ describe('Chronopost direct tracking', () => {
       ? envelope('<s:Fault/>') : '<html>Unavailable</html>', { status, headers: { 'Retry-After': '30' } }));
     await expect(new ChronopostTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: status === 429 ? 'rate_limited' : 'indeterminate' });
     expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('retries a request that hangs once, inside the budget, but not a not-found', async () => {
+    useRequestClock();
+    try {
+      const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: 300, reply: () => new Response(fixture) }]);
+      const steps: Array<[string, string]> = [];
+      const lookup = new ChronopostTracker({ fetcher, recorder: { step: step => { steps.push([step.step, step.outcome]); }, lookup() {} } })
+        .fetch(number);
+      await vi.advanceTimersByTimeAsync(7_800);
+      await expect(lookup).resolves.toMatchObject({ status: expect.any(String) });
+      expect(ended).toEqual([7_500, 7_800]);
+      expect(steps).toEqual([['direct', 'transport'], ['retry', 'ok']]);
+      const missing = delayedFetcher([{ afterMs: 10, reply: () => new Response(empty) }]);
+      const unknown = expect(new ChronopostTracker({ fetcher: missing.fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'not_found' });
+      await vi.advanceTimersByTimeAsync(10);
+      await unknown;
+      expect(missing.fetcher).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+      vi.restoreAllMocks();
+    }
   });
 
   it('does not accept an empty success-shaped body on HTTP 500 as not-found', async () => {

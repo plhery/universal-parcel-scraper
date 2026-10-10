@@ -9,7 +9,10 @@ in [`dpd`](../dpd/README.md).
 1. `direct`: one GET of `https://trace.dpd.fr/fr/trace/{number}` with a
    browser-like `User-Agent`, 20 s timeout. A 403 with
    `cf-mitigated: challenge` or a "Just a moment" page is a Cloudflare challenge.
-2. `trawl`: the browser service's `scrape` API (`skipHttp`, `maxTier: 3`), only
+2. `retry`: the same GET once more after a network failure or timeout. Until
+   then `direct` gets at most half of the time left, so a GET that hangs
+   leaves time for it.
+3. `trawl`: the browser service's `scrape` API (`skipHttp`, `maxTier: 3`), only
    after a challenge. The step is disabled when `FLARESOLVERR_URL` is unset;
    the `direct` challenge then says "configure FLARESOLVERR_URL" itself, so
    telemetry shows one step and the operator still gets the hint.

@@ -72,7 +72,9 @@ working directory.
 An adapter declares its steps, for example `direct` then `trawl`.
 [runSteps](core/runner/index.ts) runs them in order under one time budget. A later step runs
 after a challenge, a transport failure or an inconclusive answer, and never after a definite
-one.
+one. An adapter whose own read fails to reach the carrier or hangs can send it once more
+through [networkRetry](core/runner/networkRetry.ts): the first try gets at most half of the
+time left, so the retry fits in the budget. An HTTP status or a reply is never sent again.
 
 ## A lookup
 

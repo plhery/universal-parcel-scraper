@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { LookupBudget } from '../../core/adapter/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
+import { delayedFetcher, useRequestClock } from '../../core/testing/hang.js';
 import type { JsonObject } from '../../core/types.js';
 import { parseSwissPostShipment, swissPostPickupPoint, SwissPostTracker } from './adapter.js';
 import { EVENT_STAGE_BY_CODE, swissPostEventStage } from './status.js';
@@ -474,5 +475,33 @@ describe('Swiss Post no-data response', () => {
     mockSearchResult([{ identity: 'private-summary-id', globalStatus: 'REGISTERED' }]);
     await expect(new SwissPostTracker().fetch(WRONG_SWISS_POST_NUMBER))
       .rejects.toThrow('Swiss Post did not return a shipment identifier');
+  });
+});
+
+describe('Swiss Post network failure recovery', () => {
+  it('sends a call that hangs once more, inside the budget', async () => {
+    useRequestClock();
+    try {
+      const { shipment, events, translations } = outForDelivery();
+      const search = delayedFetcher([{ afterMs: Infinity }, { afterMs: 300, reply: () => Response.json({ hash: 'unit-test-hash' }) }]);
+      const fetcher: typeof fetch = async (input, init) => {
+        const url = String(input);
+        if (url.endsWith('/user')) {
+          return new Response(JSON.stringify({ userIdentifier: 'unit-test-user' }), { headers: { 'x-csrf-token': 'unit-test-csrf' } });
+        }
+        if (url.includes('/history?')) return search.fetcher(input, init);
+        if (url.includes('/history/not-included/')) return new Response(JSON.stringify([shipment]));
+        if (url.endsWith('/events')) return new Response(JSON.stringify(events));
+        return new Response(JSON.stringify({ 'shipment-text--': translations }));
+      };
+      const lookup = new SwissPostTracker({ fetcher }).fetch('993412345612345678', { budgetMs: 12_000 });
+      await vi.advanceTimersByTimeAsync(6_300);
+      await expect(lookup).resolves.toMatchObject({ status: 'out_for_delivery' });
+      // Half of the 12-second budget, then the retry within the rest.
+      expect(search.ended).toEqual([6_000, 6_300]);
+      expect(search.fetcher).toHaveBeenCalledTimes(2);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

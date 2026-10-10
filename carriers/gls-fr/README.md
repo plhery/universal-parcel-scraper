@@ -11,6 +11,9 @@ with the portal's `Origin` and `Referer`. No session or token; 12 s timeout,
 750 kB cap. An unknown valid-shaped number returns HTTP 404 with a "no command
 found" body naming the complete requested code, which is a definite not-found.
 A generic 404 or 410 means the endpoint is unavailable and stays a failure.
+A request that fails to reach GLS, or hangs, is sent once more: until then a
+request gets at most half of the time left, so the retry fits in the rest, and
+the default budget holds two requests.
 
 The parser:
 

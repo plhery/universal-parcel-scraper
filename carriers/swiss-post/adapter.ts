@@ -6,6 +6,7 @@ import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import type { Stage } from '../../generated/catalog.js';
 import { countryCode } from '../../core/time/index.js';
+import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
@@ -293,13 +294,23 @@ export class SwissPostTracker {
     url: string,
     init: RequestInit = {},
     budget?: LookupBudget,
+    timeoutMs = REQUEST_TIMEOUT_MS,
   ): Promise<unknown> {
     const { bytes } = await fetchBounded(url, budget ? { ...init, signal: budget.signal } : init, {
       provider: 'Swiss Post tracking',
-      timeoutMs: Math.min(REQUEST_TIMEOUT_MS, budget?.remainingMs() ?? REQUEST_TIMEOUT_MS),
+      timeoutMs: Math.min(REQUEST_TIMEOUT_MS, timeoutMs, budget?.remainingMs() ?? REQUEST_TIMEOUT_MS),
       fetcher,
     });
     return parseJsonBytes(bytes, PROVIDER);
+  }
+
+  /**
+   * A call of the lookup's chain, sent once more if it fails to reach Swiss Post or hangs: the
+   * first gets at most half of what is left, so the second fits in the rest. The search's POST
+   * only files the number under the throwaway user, so it is sent again like a read.
+   */
+  #readRetrying(fetcher: typeof fetch, url: string, init: RequestInit, budget: LookupBudget): Promise<unknown> {
+    return withNetworkRetry(budget, (timeoutMs) => this.readJson(fetcher, url, init, budget, timeoutMs));
   }
 
   /** Cached for the process: the table is large, static, and shared by every lookup. */
@@ -329,11 +340,11 @@ export class SwissPostTracker {
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const budget = lookupBudget(context, DEFAULT_BUDGET_MS);
     const fetcher = makeFetchCookie(this.#fetcher ?? fetch, new CookieJar());
-    const userResult = await fetchBounded(`${API_BASE}/user`, { headers: HEADERS, signal: budget.signal }, {
+    const userResult = await withNetworkRetry(budget, (timeoutMs) => fetchBounded(`${API_BASE}/user`, { headers: HEADERS, signal: budget.signal }, {
       provider: 'Swiss Post tracking',
-      timeoutMs: Math.min(REQUEST_TIMEOUT_MS, budget.remainingMs()),
+      timeoutMs: Math.min(REQUEST_TIMEOUT_MS, timeoutMs),
       fetcher,
-    });
+    }));
     const userPayload = parseJsonBytes(userResult.bytes, PROVIDER);
     if (!isRecord(userPayload)) throw new SchemaError(PROVIDER, 'Swiss Post returned an invalid anonymous user response');
     const userId = text(userPayload.userIdentifier);
@@ -341,14 +352,14 @@ export class SwissPostTracker {
     const csrf = userResult.response.headers.get('x-csrf-token') ?? '';
     const headers = { ...HEADERS, 'x-csrf-token': csrf };
     const query = new URLSearchParams({ userId });
-    const historyPayload = await this.readJson(fetcher, `${API_BASE}/history?${query}`, {
+    const historyPayload = await this.#readRetrying(fetcher, `${API_BASE}/history?${query}`, {
       method: 'POST',
       headers: { ...headers, 'Content-Type': 'application/json' },
       body: JSON.stringify({ searchQuery: trackingNumber }),
     }, budget);
     const hash = isRecord(historyPayload) ? text(historyPayload.hash) : '';
     if (!hash) throw new SchemaError(PROVIDER, 'Swiss Post did not return a shipment search identifier');
-    const items = await this.readJson(
+    const items = await this.#readRetrying(
       fetcher,
       `${API_BASE}/history/not-included/${encodeURIComponent(hash)}?${query}`,
       { headers },
@@ -377,7 +388,7 @@ export class SwissPostTracker {
     let events: unknown[] = [];
     if (identity) {
       try {
-        const payload = await this.readJson(
+        const payload = await this.#readRetrying(
           fetcher,
           `${API_BASE}/shipment/id/${encodeURIComponent(identity)}/events`,
           { headers },

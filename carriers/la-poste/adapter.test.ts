@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { UpstreamHttpError } from '../../core/errors/index.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
+import { delayedFetcher, useRequestClock } from '../../core/testing/hang.js';
 import {
   LaPosteTracker,
   adapter,
@@ -345,8 +346,42 @@ describe('La Poste transient 403 recovery', () => {
 
     expect(fetcher).toHaveBeenCalledTimes(2);
     // Each attempt bounds twice: once for the runner's remaining budget and
-    // once for the request itself, both from the same original deadline.
-    expect(timeout.mock.calls.map(([ms]) => ms)).toEqual([1_000, 1_000, 399, 399]);
+    // once for the request itself, both from the same original deadline. While
+    // the network retry remains, the request gets half of what is left.
+    expect(timeout.mock.calls.map(([ms]) => ms)).toEqual([1_000, 500, 399, 199]);
+  });
+});
+
+describe('La Poste network failure recovery', () => {
+  afterEach(() => vi.useRealTimers());
+
+  it('retries a request that hangs once, inside the original budget', async () => {
+    useRequestClock();
+    const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: 400, reply: () => Response.json(deliveredFixture()) }]);
+    const { recorder, steps } = recordingRecorder();
+    const lookup = new LaPosteTracker({ fetcher, recorder }).fetch(TRACKING_NUMBER);
+    await vi.advanceTimersByTimeAsync(7_900);
+    await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
+    // The hung request gets half of the 15-second budget; the retry answers well within the rest.
+    expect(ended).toEqual([7_500, 7_900]);
+    expect(steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'transport'], ['retry', 'ok']]);
+  });
+
+  it('retries a network failure once, then leaves it to the router', async () => {
+    useRequestClock();
+    const { fetcher } = delayedFetcher([
+      { afterMs: 10, failure: new TypeError('fetch failed') }, { afterMs: 10, failure: new TypeError('fetch failed') },
+    ]);
+    const failure = expect(new LaPosteTracker({ fetcher }).fetch(TRACKING_NUMBER)).rejects.toMatchObject({ name: 'UpstreamNetworkError' });
+    await vi.advanceTimersByTimeAsync(20);
+    await failure;
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not retry a not-found', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json([{ returnCode: 104, returnMessage: 'Unknown' }]));
+    await expect(new LaPosteTracker({ fetcher }).fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
+    expect(fetcher).toHaveBeenCalledOnce();
   });
 });
 

@@ -9,7 +9,9 @@ One direct HTTP POST calls `trackSkybillV2` on the
 The operation requires only the language and whole tracking number, with no
 account credentials or browser. The returned `skybillNumber` must match.
 An identity-bound, successful empty event list is not-found; service errors,
-SOAP faults, blocked pages and malformed replies stay failures.
+SOAP faults, blocked pages and malformed replies stay failures. A request that
+fails to reach the service, or hangs, is sent once more as the `retry` step:
+the first gets half of the budget, so the second fits in the rest.
 
 The service includes international scans and the partner reference that
 [La Poste's unified feed](../la-poste/README.md) can omit. That feed has no

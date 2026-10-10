@@ -10,7 +10,8 @@ handling. This folder only adds what differs.
 `direct`, always two requests, because the postcode is required here: the
 `rstt029` overview, then `rstt028` with the parcel number, postcode and
 `REQUEST` owner code. The overview's identity is validated before the postcode
-is sent, so a wrong or expired number never transmits it.
+is sent, so a wrong or expired number never transmits it. A request that fails
+to reach GLS, or hangs, is sent once more, as in gls-ch.
 
 ## Notes
 

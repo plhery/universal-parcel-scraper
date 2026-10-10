@@ -10,7 +10,9 @@ track-and-trace to [postlogistics](../postlogistics/README.md).
 ## How it works
 
 `direct`: four or five calls on one cookie jar under `https://service.post.ch/ekp-web/api`,
-each bounded at 10 s.
+each bounded at 10 s. The first four are sent once more if they fail to reach
+Swiss Post or hang: until then a call gets at most half of the time left, so
+the retry fits in the rest.
 
 1. `GET /user` creates a throwaway anonymous user and returns an `x-csrf-token` header.
 2. `POST /history?userId=…` with `{ searchQuery }` returns a search `hash`.

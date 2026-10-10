@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
+import { delayedFetcher, useRequestClock } from '../../core/testing/hang.js';
 import {
   DPDFranceChallengeError,
   DPDFranceTracker,
@@ -424,6 +425,28 @@ describe('DPD France transport tiers', () => {
     expect(JSON.parse(String(fetcher.mock.calls[1]![1]?.body)).maxTimeout).toBeLessThanOrEqual(30_000);
   });
 
+  it('retries a GET that hangs once, inside the budget, but not an unknown parcel', async () => {
+    useRequestClock();
+    try {
+      const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: 300, reply: () => new Response(trackingFixture()) }]);
+      const { recorder, steps } = recordingRecorder();
+      const lookup = new DPDFranceTracker({ fetcher, trawl: null, recorder }).fetch(TEST_TRACKING_NUMBER, { budgetMs: 30_000 });
+      await vi.advanceTimersByTimeAsync(15_300);
+      await expect(lookup).resolves.toMatchObject({ status: 'exception' });
+      expect(ended).toEqual([15_000, 15_300]);
+      expect(steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'transport'], ['retry', 'ok']]);
+      const unknown = delayedFetcher([{ afterMs: 10,
+        reply: () => new Response('<p>Nous ne sommes pas en mesure de retrouver le numéro de colis recherché.</p>') }]);
+      const missing = expect(new DPDFranceTracker({ fetcher: unknown.fetcher, trawl: null }).fetch(TEST_TRACKING_NUMBER))
+        .rejects.toBeInstanceOf(DPDFranceTrackingError);
+      await vi.advanceTimersByTimeAsync(10);
+      await missing;
+      expect(unknown.fetcher).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('surfaces an actionable error when no browser solver is configured', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(
       '<title>Just a moment...</title>',
@@ -445,7 +468,7 @@ describe('DPD France adapter factory', () => {
     const instance = adapter({ trawl: null, browserExecutablePath: null, recorder, env: {} });
 
     expect(instance.id).toBe('dpd-fr');
-    expect(instance.steps).toEqual(['direct', 'trawl']);
+    expect(instance.steps).toEqual(['direct', 'retry', 'trawl']);
     await expect(instance.track({ number: TEST_TRACKING_NUMBER }))
       .resolves.toMatchObject({ status: 'exception' });
   });

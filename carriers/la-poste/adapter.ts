@@ -5,6 +5,7 @@ import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { CarrierError, InvalidInputError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
+import { firstAttemptMs, isNetworkFailure } from '../../core/runner/networkRetry.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { isoTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
@@ -24,6 +25,9 @@ import { eventStage, eventStatus } from './status.js';
 // - Production HTTP 403s carried La Poste's "Site indisponible - Incident en
 //   cours" page and immediately following checks succeeded, so a 403 is
 //   retried up to three times inside the original deadline (see README.md).
+// - A request that hangs would otherwise take the whole budget, so a network
+//   failure or timeout is retried once too, and an attempt gets at most half
+//   of what is left while that retry remains.
 // - The tracking page links the point holding a parcel to La Poste's locator,
 //   `localiser.laposte.fr/{idPoint}`, which redirects to the point's page. That
 //   page carries the point's record, address included, as JSON in
@@ -302,7 +306,7 @@ export class LaPosteTracker {
     const normalized = normalizeLaPosteTrackingNumber(trackingNumber);
     const budgetMs = context.budgetMs ?? this.timeoutMs;
     const deadline = performance.now() + budgetMs;
-    const request = async (remainingMs: number, signal: AbortSignal): Promise<CarrierResult> => {
+    const request = async (timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> => {
       const { bytes } = await fetchBounded(laPosteTrackingApiUrl(normalized), {
         signal,
         headers: {
@@ -313,7 +317,7 @@ export class LaPosteTracker {
         },
       }, {
         provider: 'La Poste tracking',
-        timeoutMs: Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))),
+        timeoutMs: Math.max(1, Math.floor(Math.min(this.timeoutMs, timeoutMs))),
         maxBytes: MAX_RESPONSE_BYTES,
         fetcher: this.fetcher,
       });
@@ -330,21 +334,27 @@ export class LaPosteTracker {
     // later, is answered normally. It is a hiccup of that one request, not
     // maintenance, so the page is retried like any other 403: three immediate
     // retries sharing the original deadline. A real incident still fails every
-    // attempt within seconds and reaches the router. Do not retry other HTTP or
-    // parsing failures. Once the deadline is spent the retry is refused, so the
-    // caller still sees the provider's own rejection rather than a budget error.
-    const retriable = (error: unknown): boolean => error instanceof UpstreamHttpError
-      && error.status === 403
-      && deadline - performance.now() >= 1;
+    // attempt within seconds and reaches the router. A request that fails to
+    // reach La Poste, or hangs until its timeout, gets one retry as well. Until
+    // that retry is spent, an attempt gets at most half of what is left, so a
+    // hang leaves it time. Do not retry other HTTP or parsing failures, nor a
+    // not-found. Once the deadline is spent the retry is refused, so the caller
+    // still sees the provider's own rejection rather than a budget error.
+    let networkRetried = false;
+    const retriable = (error: unknown): boolean => deadline - performance.now() >= 1
+      && ((error instanceof UpstreamHttpError && error.status === 403) || (!networkRetried && isNetworkFailure(error)));
     const retry: StepSpec<CarrierResult> = {
       id: 'retry',
       recovers: retriable,
-      run: ({ remainingMs, signal }) => request(remainingMs, signal),
+      run: ({ remainingMs, signal, previousError }) => {
+        if (isNetworkFailure(previousError)) networkRetried = true;
+        return request(networkRetried ? remainingMs : firstAttemptMs(remainingMs), signal);
+      },
     };
     return await runSteps<CarrierResult>({
       carrier: 'la-poste', budgetMs, signal: context.signal, recorder: this.recorder,
     }, [
-      { id: 'direct', run: ({ remainingMs, signal }) => request(remainingMs, signal) },
+      { id: 'direct', run: ({ remainingMs, signal }) => request(firstAttemptMs(remainingMs), signal) },
       retry,
       { ...retry },
       { ...retry },
@@ -395,7 +405,8 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'la-poste',
     // One keyless request, then up to three immediate retries of the same
-    // request after a transient HTTP 403, inside the original deadline.
+    // request after a transient HTTP 403, and one after a network failure or
+    // timeout, inside the original deadline.
     steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeLaPosteTrackingNumber(number))),

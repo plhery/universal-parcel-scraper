@@ -5,6 +5,7 @@ import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingCont
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyDescription, GLS_STATUSES, statusCode } from './status.js';
@@ -458,17 +459,21 @@ export class GLSSwitzerlandTracker {
     }
   }
 
+  /**
+   * A request that fails to reach GLS, or hangs, is sent once more: the first gets at most half of
+   * what is left, so the second fits in the rest.
+   */
   private async request(url: string, budget: LookupBudget): Promise<unknown> {
-    const { response, bytes } = await fetchBounded(url, {
+    const { response, bytes } = await withNetworkRetry(budget, (timeoutMs) => fetchBounded(url, {
       signal: budget.signal,
       headers: pageHeaders(this.#userAgent),
     }, {
       provider: 'GLS Switzerland tracking',
-      timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
+      timeoutMs: Math.min(this.timeoutMs, timeoutMs),
       maxBytes: MAX_RESPONSE_BYTES,
       allowHttpError: true,
       ...(this.#fetcher ? { fetcher: this.#fetcher } : {}),
-    });
+    }));
     if ([400, 403, 404].includes(response.status)) throw new GLSSwitzerlandTrackingError();
     if (!response.ok) throw new UpstreamHttpError('GLS Switzerland tracking', response.status);
     return parseJsonBytes(bytes, PROVIDER);

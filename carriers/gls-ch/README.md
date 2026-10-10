@@ -10,6 +10,8 @@ endpoint. `gls-group.eu` links are routed by country path (see each `carrier.jso
 
 `direct`, up to two GETs under `https://gls-group.eu/app/service/open/rest/GROUP/en`
 (15 s timeout, 1 MB cap), with the frontend's `caller=witt002` and `millis` params.
+A request that fails to reach GLS, or hangs, is sent once more: until then a
+request gets at most half of the time left, so the retry fits in the rest.
 
 1. `rstt029?match={number}`: anonymous overview. Progress bar, status and
    delivery owner, no history. It also translates a Track ID into the numeric

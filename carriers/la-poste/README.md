@@ -26,9 +26,11 @@ describes their use; a suffix alone does not identify the carrier.
 1. `direct`: one keyless GET of
    `https://www.laposte.fr/ssu/sun/back/suivi-unifie/{number}?lang=fr`, the feed
    the public tracker calls, with the tracker page as `Referer`.
-2. `retry`: the same request, up to three times, only after an HTTP 403 and only
-   while the original 15-second deadline has time left. Each attempt gets the
-   remaining time, so retries never extend the lookup.
+2. `retry`: the same request, up to three times after an HTTP 403, and once
+   after a network failure or timeout, only while the original 15-second
+   deadline has time left. Until that network retry is spent, an attempt gets
+   at most half of the time left, so a request that hangs leaves time for it;
+   the retries share the rest, so they never extend the lookup.
 
 While the parcel waits at a post office, relay or locker, the step that read the
 feed then asks La Poste's locator for that point,
@@ -50,8 +52,9 @@ universal provider.
   period. Treating it as maintenance and skipping retries sent roughly ten
   times more lookups to the router, each benching the adapter for an hour. A real
   incident still fails all four attempts within seconds.
-- Only 403 is retried. A 429 or a malformed payload won't be fixed by an
-  instant repeat.
+- Only a 403 and a failure to reach La Poste are retried. A 429, a not-found or
+  a malformed payload won't be fixed by an instant repeat. A hang gets one more
+  try rather than the whole budget.
 - The retries are three separate runner steps with the id `retry`, not a loop,
   so each rejection keeps its own diagnostics and the `attempts` label on
   `carrier_lookup_total` shows which retry served the lookup. `steps` lists

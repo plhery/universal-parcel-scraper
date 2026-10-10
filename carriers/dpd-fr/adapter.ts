@@ -5,6 +5,7 @@ import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { TrawlClient, clean, decodeText, fetchBounded } from '../../core/transport/index.js';
@@ -278,24 +279,25 @@ export class DPDFranceTracker {
     const number = normalizeDPDFranceTrackingNumber(rawTrackingNumber);
     const url = dpdFranceTrackingUrl(number);
     const trawl = this.browserService();
+    const direct = async (timeoutMs: number, signal: AbortSignal): Promise<string> => {
+      try {
+        return await this.directGet(url, capped(this.directTimeoutMs, timeoutMs), signal);
+      } catch (error) {
+        // Without a browser service there is no second tier, so the
+        // challenge has to carry the operator's next step itself.
+        if (trawl || !(error instanceof DPDFranceChallengeError)) throw error;
+        throw new DPDFranceChallengeError(
+          'DPD France requires a browser challenge solver; configure FLARESOLVERR_URL',
+        );
+      }
+    };
     const html = await runSteps<string>({
       carrier: 'dpd-fr', budgetMs: context.budgetMs ?? this.budgetMs, signal: context.signal, recorder: this.recorder,
     }, [
-      {
-        id: 'direct',
-        run: async ({ remainingMs, signal }) => {
-          try {
-            return await this.directGet(url, capped(this.directTimeoutMs, remainingMs), signal);
-          } catch (error) {
-            // Without a browser service there is no second tier, so the
-            // challenge has to carry the operator's next step itself.
-            if (trawl || !(error instanceof DPDFranceChallengeError)) throw error;
-            throw new DPDFranceChallengeError(
-              'DPD France requires a browser challenge solver; configure FLARESOLVERR_URL',
-            );
-          }
-        },
-      },
+      // A GET that fails to reach DPD, or hangs, is sent once more: the first
+      // gets at most half of what is left, so the second fits in the rest.
+      { id: 'direct', run: ({ remainingMs, signal }) => direct(firstAttemptMs(remainingMs), signal) },
+      networkRetryStep(({ remainingMs, signal }) => direct(remainingMs, signal)),
       {
         id: 'trawl',
         enabled: trawl !== null,
@@ -360,7 +362,7 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'dpd-fr',
     // One direct HTML GET, then the browser service's native scrape API when
     // Cloudflare challenges it.
-    steps: ['direct', 'trawl'],
+    steps: ['direct', 'retry', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
   };
 };
