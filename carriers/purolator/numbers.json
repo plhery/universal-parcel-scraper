@@ -204,6 +204,165 @@
         ]
       },
       "note": "Twelve-digit PIN in a public bug report about Purolator's shipping site. Purolator's tracker returns a label-only shipment."
+    },
+    {
+      "number": "335927325977",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260912235850/https://www.purolator.com/en/shipping/tracker?pin=335927325977",
+        "date": "2026-09-12",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "A twelve-digit Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns its history, with delays in its own network."
+    },
+    {
+      "number": "520711906575",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260823082130/https://www.purolator.com/en/shipping/tracker?pin=520711906575",
+        "date": "2026-08-23",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "A twelve-digit Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns its history."
+    },
+    {
+      "number": "LWI000282061",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260813161246/https://www.purolator.com/en/shipping/tracker?pin=LWI000282061",
+        "date": "2026-08-13",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "purolator",
+        "confidence": "high"
+      },
+      "note": "A Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns a parcel from the United States that cleared customs and was collected from a counter."
+    },
+    {
+      "number": "XAO050055268",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260423191849/https://www.purolator.com/en/shipping/tracker?pin=XAO050055268",
+        "date": "2026-04-23",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "purolator",
+        "confidence": "high"
+      },
+      "note": "A lettered Purolator PIN without the usual zeroes after its letters, whose tracking page the Wayback Machine archived. Purolator's tracker returns its history."
+    },
+    {
+      "number": "HEZ000654921",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260319043753/https://www.purolator.com/en/shipping/tracker?pin=HEZ000654921",
+        "date": "2026-03-19",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "purolator",
+        "confidence": "high"
+      },
+      "note": "A Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns its history."
+    },
+    {
+      "number": "KGZ000453699",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260521184817/https://www.purolator.com/en/shipping/tracker?pins=KGZ000453699",
+        "date": "2026-05-21",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "purolator",
+        "confidence": "high"
+      },
+      "note": "A Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns its history."
+    },
+    {
+      "number": "VVD002126656",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260510204630/https://www.purolator.com/en/shipping/tracker?pin=VVD002126656",
+        "date": "2026-05-10",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "purolator",
+        "confidence": "high"
+      },
+      "note": "A Purolator PIN whose tracking page the Wayback Machine archived. Purolator's tracker returns its history."
     }
   ]
 }

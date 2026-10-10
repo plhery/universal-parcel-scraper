@@ -7144,6 +7144,34 @@
     ]
   },
   {
+    "input": "335927325977",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "purolator",
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
+    ]
+  },
+  {
     "input": "338 0000 318",
     "carrier": "unknown",
     "confidence": "low",
@@ -9482,6 +9510,34 @@
       "gls-de",
       "postlogistics",
       "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "520711906575",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "purolator",
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
     ]
   },
   {
@@ -15708,6 +15764,14 @@
     ]
   },
   {
+    "input": "HEZ000654921",
+    "carrier": "purolator",
+    "confidence": "high",
+    "candidates": [
+      "purolator"
+    ]
+  },
+  {
     "input": "HI004785627GB",
     "carrier": "royal-mail",
     "confidence": "high",
@@ -16361,6 +16425,14 @@
     "confidence": "low",
     "candidates": [
       "ups"
+    ]
+  },
+  {
+    "input": "KGZ000453699",
+    "carrier": "purolator",
+    "confidence": "high",
+    "candidates": [
+      "purolator"
     ]
   },
   {
@@ -17125,6 +17197,14 @@
     "confidence": "high",
     "candidates": [
       "swiss-post"
+    ]
+  },
+  {
+    "input": "LWI000282061",
+    "carrier": "purolator",
+    "confidence": "high",
+    "candidates": [
+      "purolator"
     ]
   },
   {
@@ -19718,6 +19798,14 @@
     ]
   },
   {
+    "input": "VVD002126656",
+    "carrier": "purolator",
+    "confidence": "high",
+    "candidates": [
+      "purolator"
+    ]
+  },
+  {
     "input": "WB371672691TH",
     "carrier": "thailand-post",
     "confidence": "high",
@@ -19742,6 +19830,14 @@
     "confidence": "high",
     "candidates": [
       "la-poste"
+    ]
+  },
+  {
+    "input": "XAO050055268",
+    "carrier": "purolator",
+    "confidence": "high",
+    "candidates": [
+      "purolator"
     ]
   },
   {
