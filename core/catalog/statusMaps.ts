@@ -20,6 +20,7 @@ import { statusMap as dpd } from '../../carriers/dpd/status.js';
 import { statusMap as dpdDe } from '../../carriers/dpd-de/status.js';
 import { statusMap as dpdFr } from '../../carriers/dpd-fr/status.js';
 import { statusMap as dpdPl } from '../../carriers/dpd-pl/status.js';
+import { statusMap as emile } from '../../carriers/emile/status.js';
 import { statusMap as jAndT } from '../../carriers/j-and-t/status.js';
 import { statusMap as laPoste } from '../../carriers/la-poste/status.js';
 import { statusMap as oldDominion } from '../../carriers/old-dominion/status.js';
@@ -40,7 +41,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   aliexpress, 'an-post': anPost, 'china-post': chinaPost, chronopost, 'correos-spain': correosSpain, 'dhl-express': dhlExpress,
-  dpd, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-pl': dpdPl, 'j-and-t': jAndT, 'la-poste': laPoste, 'old-dominion': oldDominion,
+  dpd, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-pl': dpdPl, emile, 'j-and-t': jAndT, 'la-poste': laPoste, 'old-dominion': oldDominion,
   postlogistics, sagawa, speedx, sto, 'swiss-post': swissPost, 'thailand-post': thailandPost, tnt, ups, yunexpress,
 };
 

@@ -13,8 +13,9 @@ async function track(states: ReadonlyArray<readonly [status: string, carrier?: n
     states: states.map(([status, carrier = 1], index) => ({
       location: 'Example Hub', date: `2026-01-0${9 - index}T12:00:00Z`, carrier, status })),
   };
-  const fetcher = vi.fn<typeof fetch>().mockImplementation(async () =>
-    new Response(JSON.stringify(reply), { headers: { 'Content-Type': 'application/json' } }));
+  const fetcher = vi.fn<typeof fetch>().mockImplementation(async url => String(url) === 'https://www.emileps.com/emile/track'
+    ? new Response(`<root><status>0</status><tracks error_message="Order [${number}] not found trackingevent."/></root>`)
+    : new Response(JSON.stringify(reply), { headers: { 'Content-Type': 'application/json' } }));
   return (await createTracker({ providers: ['ParcelsApp'], fetcher }).track({ number, carrier: 'emile' })).result;
 }
 

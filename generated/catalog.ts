@@ -5020,7 +5020,9 @@ export const CARRIER_CATALOG = {
     "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "emile",
+      "recognitionRank": 4,
+      "localClocks": true
     },
     "canaryUrl": "https://www.emileps.com/",
     "trackingUrlTemplate": "https://www.emileps.com/tracking?tracking={trackingNumber}",

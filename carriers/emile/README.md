@@ -1,60 +1,46 @@
 # Emile
 
-Canadian last-mile courier for parcels that consolidators such as 4PX, Yanwen and YunExpress
-bring in from China. A number filed under Emile is tracked through the
-[universal providers](../../providers/README.md) the consumer enables; provider evidence
-belongs in [COVERAGE.md](../../providers/COVERAGE.md). The tracking page link stays
-available.
+Tracks Emile's Canadian parcel history through its anonymous XML service.
 
-## Retrieval
+## How it works
 
-There is no direct adapter. Emile's tracking page sends each lookup to its tracking API with
-a Cloudflare Turnstile token, so a lookup needs a visitor's browser to pass that check first.
-Solving or leaving out the check is out of scope, as for
-[Asendia](../asendia/README.md#rejected-approaches). The site's other leads give no way
-around it:
+One POST to `https://www.emileps.com/emile/track` submits the barcode and requests
+English scans. The official OMS client's [request builder](https://web.archive.org/web/20251026222133id_/https://oms.emileps.com/js/642.e9f3ffa8.js)
+and [tracking form](https://web.archive.org/web/20251026222133id_/https://oms.emileps.com/js/806.87f63109.js)
+define this flow. No account, credential or browser is needed. The newer
+[public page](https://www.emileps.com/tracking) uses a separate `/api/track`
+JSON wrapper that requires a fresh Turnstile token; the XML route does not.
 
-- The API host behind the site asks for a merchant sign-in.
-- The merchant portal some aggregators link to no longer resolves.
-- The support chat asks for a name, email and phone number and opens a conversation with
-  Emile's staff; it is not a lookup.
-- Emile publishes staff and driver apps only.
-- The tracking page of the earlier site is gone.
-
-ParcelsApp returns the history the consolidator relays, Emile's scans included. Universal
-providers remain opt-in; detecting the number does not enable one.
+The reply must identify exactly one matching Canadian parcel. Absence requires
+the service's explicit error naming the requested barcode. Empty histories,
+unrelated errors and blocked pages retain their own failure kinds. HTTP
+recognition uses the same lookup; the number's shape alone remains a suggestion.
 
 ## Notes
 
-- Numbers are `EM`, twelve digits and `CA`. The support chat on Emile's site asks for a
-  tracking number that starts with `EM` and ends with `CA`, and consolidators' feeds and
-  tracking aggregators use the shape for Emile, so detection suggests Emile. It never selects
-  it: nothing in the number can be checked. A number the consumer files under Emile goes to
-  the providers as Emile's; one left unknown goes to them too.
-- Canada Post's EMS items share the prefix and the suffix but carry nine digits, the
-  international postal layout, and stay Canada Post's.
-- A consolidator's adapter whose feed names Emile as the last-mile carrier reports Emile and
-  its number as the delivery carrier and number. That proposes no hand-off lookup: the feed
-  already relays Emile's scans, and a provider lookup of Emile's number would return the same
-  relay.
-- A pasted `emileps.com` tracking link names the carrier and carries the number.
-- Scans ParcelsApp files under Emile's name take their stage from the status texts in
-  `statuses.json`, in any case, as Emile's page reads them, and keep the wording relayed. A
-  text with no stage there, such as a fee, leaves the parcel at the stage it had. ParcelsApp
-  files most of Emile's scans under the consolidator's name instead, a name that also carries
-  the consolidator's own scans, so those go through the shared wording rules.
+Each scan's `GMT` offset determines its instant. Missing or malformed offsets
+retain local clocks without assigning a Canadian zone. The official clients
+reverse the oldest-first feed, including equal-time scans. The operation code
+is retained; the history's sequential row number is not a status code.
+Driver assignment stays in transit until the delivery-round scan. Completed
+returns remain distinct from delivery. Notification and billing entries leave
+the preceding milestone in place.
+
+The same vocabulary stages scans a universal provider files under Emile's name.
+Scans filed under the consolidator's name use the provider's shared wording rules.
+Provider fallbacks remain opt-in; their coverage evidence is in
+[COVERAGE.md](../../providers/COVERAGE.md). A consolidator naming Emile and its
+whole tracking number can now propose a direct handoff confirmation.
 
 ## Limitations
 
-The catalog supplies no assumed scan timezone, because Emile delivers across several Canadian
-zones. ParcelsApp gives Emile's local clocks as UTC, so Emile's scans come out hours early, and
-nothing it relays settles their zone: it files most of them under the consolidator's name,
-whose other scans keep other clocks, its copies under Emile's name give only the country, and
-only the delivery names a province. Delivered scans relayed by the providers can carry the
-recipient's postcode. Emile's page shows a delivery photo behind the recipient's postal code;
-no provider relays it.
+Remarks, event details, postcodes, phone numbers, upstream references and proof
+images are excluded. Locations use only the feed's city and province. Histories
+beyond the output limit are marked partial. The retired OMS hostname is needed
+only as source evidence, not during retrieval.
 
-## Testing
+## Live test
 
-`npm run test:carriers:live -- carriers/emile` needs `EMILE_TRACKING_NUMBER` and checks
-retrieval through ParcelsApp. Offline tests use synthetic history.
+Set `EMILE_TRACKING_NUMBER` outside the repository and run
+`npm run test:carriers:live -- carriers/emile/adapter.live.test.ts`.
+Optionally set `EMILE_UNKNOWN_NUMBER` to check an absent parcel.

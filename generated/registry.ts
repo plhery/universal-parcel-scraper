@@ -44,6 +44,7 @@ import { adapter as dpdUk } from '../carriers/dpd-uk/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ekart } from '../carriers/ekart/adapter.js';
+import { adapter as emile } from '../carriers/emile/adapter.js';
 import { adapter as ems } from '../carriers/ems/adapter.js';
 import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as evri } from '../carriers/evri/adapter.js';
@@ -162,6 +163,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": dtdc,
     "ecoscooting": ecoscooting,
     "ekart": ekart,
+    "emile": emile,
     "ems": ems,
     "estafeta": estafeta,
     "evri": evri,
@@ -281,7 +283,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": "dtdc",
     "ecoscooting": "ecoscooting",
     "ekart": "ekart",
-    "emile": "universal",
+    "emile": "emile",
     "ems": "ems",
     "estafeta": "estafeta",
     "evri": "evri",

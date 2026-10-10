@@ -12,7 +12,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -21,7 +21,7 @@
           "emile"
         ]
       },
-      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed returns the parcel's history and names Emile as its last-mile provider."
+      "note": "A lookup on 4PX's tracker archived by the Wayback Machine. 4PX's feed returns the parcel's history and names Emile as its last-mile provider. Emile's anonymous XML service confirms the whole barcode and Canadian delivery history."
     },
     {
       "number": "EM100048497916CA",
@@ -79,7 +79,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -88,7 +88,7 @@
           "emile"
         ]
       },
-      "note": "The number ParcelPanel's Emile tracking page offered to try, archived by the Wayback Machine. The page rotates its example."
+      "note": "The number ParcelPanel's Emile tracking page offered to try, archived by the Wayback Machine. The page rotates its example. Emile's anonymous XML service confirms the whole barcode and Canadian delivery history."
     }
   ]
 }

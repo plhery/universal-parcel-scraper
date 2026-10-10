@@ -5,7 +5,8 @@
       "wording": "WAYBILL GENERATED",
       "language": "en",
       "stage": "registered",
-      "confirmedBy": "bundle"
+      "confirmedBy": "live",
+      "code": "10"
     },
     {
       "wording": "PREALERT",
@@ -109,7 +110,8 @@
       "wording": "ARRIVE TRANSITHUB",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "bundle"
+      "confirmedBy": "live",
+      "code": "20"
     },
     {
       "wording": "ARRIVE AT THE WAREHOUSE",
@@ -121,14 +123,16 @@
       "wording": "ORDER SORTED",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "bundle"
+      "confirmedBy": "live",
+      "code": "22"
     },
     {
       "wording": "TASK ASSIGNED",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "bundle",
-      "note": "A delivery task is assigned; the parcel has not left the warehouse."
+      "confirmedBy": "live",
+      "note": "A delivery task is assigned; the parcel has not left the warehouse.",
+      "code": "21"
     },
     {
       "wording": "ASSIGN DRIVER",
@@ -154,14 +158,16 @@
       "wording": "OUTBOUND SCANNED",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "bundle",
-      "note": "The parcel leaves an Emile facility. Emile's page files it as in transit."
+      "confirmedBy": "live",
+      "note": "The parcel leaves an Emile facility. Emile's page files it as in transit.",
+      "code": "30"
     },
     {
       "wording": "OUT FOR DELIVERY",
       "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "bundle"
+      "confirmedBy": "live",
+      "code": "31"
     },
     {
       "wording": "RE-DELIVERY ATTEMPT",
@@ -174,7 +180,8 @@
       "wording": "DELIVERED",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "bundle"
+      "confirmedBy": "live",
+      "code": "40"
     },
     {
       "wording": "RETURNED TO SENDER",
