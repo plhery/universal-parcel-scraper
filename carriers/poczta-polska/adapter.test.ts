@@ -105,6 +105,7 @@ describe('Poczta Polska identity-bound scans', () => {
     const result = parsePocztaPolska(value, NUMBER);
     expect(result).toMatchObject({ last_update: null, last_update_local: '2026-01-06T12:00:00' });
     expect(result.events?.[0]).not.toHaveProperty('time');
+    expect(result).not.toHaveProperty('delivered_at');
   });
 
   it("keeps the provider's order when every scan is dated", () => {

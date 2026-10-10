@@ -31,6 +31,11 @@
       "source": {
         "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2377100"
       },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -47,7 +52,7 @@
           "nova-poshta"
         ]
       },
-      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+      "note": "Domestic two-piece waybill; the official tracker returned its branch-to-branch history."
     },
     {
       "number": "20710517491331",
@@ -55,6 +60,11 @@
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2376836"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
       },
       "expect": {
         "carrier": "unknown",
@@ -73,7 +83,7 @@
           "nova-poshta"
         ]
       },
-      "note": "Publicly reported shipment number; its attribution is source evidence, not a permanent live-status oracle."
+      "note": "Inbound parcel from China; the official tracker returned its air, customs and redirected locker history."
     },
     {
       "number": "20451277260031",
@@ -106,7 +116,7 @@
           "nova-poshta"
         ]
       },
-      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+      "note": "Public report names this carrier; the official tracker no longer knows the waybill, which can reflect expired records."
     },
     {
       "number": "20451513915086",
@@ -119,7 +129,7 @@
         "dateKind": "publication"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "Nova Poshta",
         "reportedRole": "shipment_tracking"
       },
@@ -140,7 +150,595 @@
           "nova-poshta"
         ]
       },
-      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+      "note": "Domestic waybill booked at a pickup point; the official tracker returned its history."
+    },
+    {
+      "number": "20451543921118",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2380724",
+        "access": "full_page",
+        "date": "2026-09-28",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Address delivery the recipient redirected to a branch; the official tracker returned its history."
+    },
+    {
+      "number": "59001785350654",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2380724",
+        "access": "full_page",
+        "date": "2026-09-28",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "redirected_waybill"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "New waybill the review says the redirection to a branch created; the official tracker returned its own history."
+    },
+    {
+      "number": "59001768135183",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2379918",
+        "access": "full_page",
+        "date": "2026-09-25",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Domestic courier delivery to the door; the official tracker returned its history."
+    },
+    {
+      "number": "59001758245347",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2380058",
+        "access": "full_page",
+        "date": "2026-09-25",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Documents waiting in a parcel locker; the official tracker returned its history."
+    },
+    {
+      "number": "20710521704342",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2379632",
+        "access": "full_page",
+        "date": "2026-09-24",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Inbound parcel published beside its Nova Post Global reference; the official tracker returned its customs and redirection history."
+    },
+    {
+      "number": "20451543464081",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2379501",
+        "access": "full_page",
+        "date": "2026-09-24",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Domestic waybill; the official tracker returned its history."
+    },
+    {
+      "number": "20710516709451",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2374092",
+        "access": "full_page",
+        "date": "2026-09-05",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Inbound parcel from China; the official tracker returned its air and customs history."
+    },
+    {
+      "number": "20710510690144",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2373616",
+        "access": "full_page",
+        "date": "2026-09-03",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Inbound parcel from China; the official tracker returned its air and customs history."
+    },
+    {
+      "number": "59001768747529",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2376564",
+        "access": "full_page",
+        "date": "2026-09-14",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Domestic waybill; the official tracker returned its history."
+    },
+    {
+      "number": "59001794719843",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2382360",
+        "access": "full_page",
+        "date": "2026-10-05",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Domestic waybill; the official tracker returned its history."
+    },
+    {
+      "number": "20400552155012",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2381966",
+        "access": "full_page",
+        "date": "2026-10-02",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Waybill of the 2040 family; the official tracker returned its history."
+    },
+    {
+      "number": "20400539905058",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2378396",
+        "access": "full_page",
+        "date": "2026-09-20",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Heavy cargo waybill of the 2040 family delivered to the door; the official tracker returned its history."
+    },
+    {
+      "number": "20810001690736",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2378185",
+        "access": "full_page",
+        "date": "2026-09-19",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Waybill of the 208 family for a parcel sent from a Polish branch; the official tracker returned its customs and redirection history."
+    },
+    {
+      "number": "20700717592877",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2376670",
+        "access": "full_page",
+        "date": "2026-09-14",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Multi-piece waybill of the 2070 family sent from Poland; the official tracker returned its customs history."
+    },
+    {
+      "number": "59500007408570",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2377984",
+        "access": "full_page",
+        "date": "2026-09-18",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta international",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Export waybill of the 595 family to a Nova Post branch in Germany; the official tracker returned its customs history."
+    },
+    {
+      "number": "59500007236768",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2373495",
+        "access": "full_page",
+        "date": "2026-09-03",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta international",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Export waybill handed to UPS abroad and returned to the sending branch; the official tracker returned its history."
+    },
+    {
+      "number": "59500007235170",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2383002",
+        "access": "full_page",
+        "date": "2026-10-06",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Nova Poshta international",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "relais-colis",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-de",
+          "dpd-uk",
+          "nova-poshta"
+        ]
+      },
+      "note": "Export waybill to the United States handed to GoFo Express for delivery; the official tracker returned its history."
+    },
+    {
+      "number": "TE1000000010936808NGUS",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.vidhuk.ua/uk/novaya-pochta-nova-poshta/review-2379632",
+        "access": "full_page",
+        "date": "2026-09-24",
+        "dateKind": "publication"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "scope_review",
+        "service": "Nova Post Global",
+        "reportedRole": "international_reference"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Nova Post Global reference published beside a Nova Poshta waybill; that portal is outside this adapter's scope."
     }
   ]
 }

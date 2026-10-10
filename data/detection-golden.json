@@ -5710,6 +5710,54 @@
     ]
   },
   {
+    "input": "20400539905058",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "20400552155012",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
     "input": "2044000269501958223001",
     "carrier": "unknown",
     "confidence": "low",
@@ -5772,6 +5820,130 @@
     ]
   },
   {
+    "input": "20451543464081",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "20451543921118",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "hermes-de",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
+    "input": "20700717592877",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "hermes-de",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
+    "input": "20710510690144",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "hermes-de",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
+    "input": "20710516709451",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "hermes-de",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
     "input": "20710517491331",
     "carrier": "unknown",
     "confidence": "low",
@@ -5794,6 +5966,55 @@
       "dpd-de",
       "seur",
       "brt"
+    ]
+  },
+  {
+    "input": "20710521704342",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "hermes-de",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "hermes-de",
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt"
+    ]
+  },
+  {
+    "input": "20810001690736",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
     ]
   },
   {
@@ -10522,7 +10743,199 @@
     ]
   },
   {
+    "input": "59001758245347",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
     "input": "59001766134310",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59001768135183",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59001768747529",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59001785350654",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59001794719843",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59500007235170",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59500007236768",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd",
+      "relais-colis",
+      "ciblex",
+      "seur",
+      "brt",
+      "delhivery",
+      "dhl-ecommerce-uk",
+      "dpd-de",
+      "dpd-uk",
+      "nova-poshta"
+    ],
+    "asked": [
+      "dpd",
+      "dpd-de",
+      "seur",
+      "brt",
+      "relais-colis"
+    ]
+  },
+  {
+    "input": "59500007408570",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -20460,6 +20873,12 @@
     "candidates": [
       "amazon-logistics"
     ]
+  },
+  {
+    "input": "TE1000000010936808NGUS",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "TELP1000004829",
