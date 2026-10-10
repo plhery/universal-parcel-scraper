@@ -9,9 +9,13 @@ references and arbitrary customer-defined aliases are outside this adapter's sco
 One bounded GET uses the provider identity resolved by the
 [official portal](https://portal.thecourierguy.co.za/track). The response must name
 The Courier Guy and the exact shipment reference, or explicitly bind the printed
-product reference to one canonical shipment. The product separator is required by
-the native API and restored after generic input normalization. Only the endpoint's
-explicit, reference-bound absence reply proves a missing shipment.
+product reference (`DD-`, `LD-` or the locker-to-locker `LL-`) to one canonical
+shipment. The product separator is required by the native API and restored after
+generic input normalization. Only the endpoint's explicit, reference-bound absence
+reply proves a missing shipment.
+
+Enter `DD`, `LD` and `LL` references without the dash. The shared input check
+rejects a dashed reference made only of letters before the adapter sees it.
 
 ## Notes
 

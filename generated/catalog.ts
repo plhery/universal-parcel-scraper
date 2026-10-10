@@ -4476,6 +4476,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^(?:DD|LD)[A-Z0-9]{6}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^LL[A-Z0-9]{6}$",
+        "confidence": "low"
       }
     ]
   },
@@ -5802,7 +5806,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tnt": ["tnt-1","tnt-2"],
   "correos-spain": ["correos-spain-1","correos-spain-2","correos-spain-3","correos-spain-4"],
   "yanwen": ["yanwen-1","yanwen-2","yanwen-3"],
-  "the-courier-guy": ["the-courier-guy-1"],
+  "the-courier-guy": ["the-courier-guy-1","the-courier-guy-2"],
   "j-and-t": ["j-and-t-1","j-and-t-2","j-and-t-3","j-and-t-4","j-and-t-5","j-and-t-6"],
   "ems": [],
   "cne": ["cne-1"],

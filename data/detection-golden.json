@@ -19332,6 +19332,17 @@
     ]
   },
   {
+    "input": "LL-KRGABB",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "the-courier-guy"
+    ],
+    "asked": [
+      "the-courier-guy"
+    ]
+  },
+  {
     "input": "LL016042860FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -19934,6 +19945,12 @@
     "asked": [
       "chronopost"
     ]
+  },
+  {
+    "input": "MLC6ZG",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "MS02712561XSG",

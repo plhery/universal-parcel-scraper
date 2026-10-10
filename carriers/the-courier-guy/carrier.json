@@ -71,6 +71,11 @@
       "id": "the-courier-guy-1",
       "pattern": "^(?:DD|LD)[A-Z0-9]{6}$",
       "confidence": "low"
+    },
+    {
+      "id": "the-courier-guy-2",
+      "pattern": "^LL[A-Z0-9]{6}$",
+      "confidence": "low"
     }
   ]
 }

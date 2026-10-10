@@ -9,11 +9,14 @@
         "url": "https://www.hellopeter.com/the-courier-guy/reviews/this-company-has-lost-its-way-i-am-done-6589583",
         "date": "2026-09-09"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to The Courier Guy; no rule matches this shape."
+      "note": "Waybill from a review of The Courier Guy. The Courier Guy's tracker returns its history."
     },
     {
       "number": "DD-KBA6JL",
@@ -23,6 +26,9 @@
         "url": "https://www.hellopeter.com/the-courier-guy/reviews/no-collection-no-call-refusing-refund-dd-kba6jl-6597318",
         "date": "2026-09-14"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -33,7 +39,7 @@
           "the-courier-guy"
         ]
       },
-      "note": "Publicly reported cancelled collection reference with identity-bound history in the official anonymous feed."
+      "note": "Door-to-door product reference from a review of The Courier Guy; its booking was cancelled after failed collections. The Courier Guy's tracker returns its history."
     },
     {
       "number": "LD-2C7WLM",
@@ -43,6 +49,9 @@
         "url": "https://www.hellopeter.com/the-courier-guy/reviews/courier-guy-is-the-worst-service-provider-6590204",
         "date": "2026-09-10"
       },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -53,7 +62,7 @@
           "the-courier-guy"
         ]
       },
-      "note": "Publicly reported Pudo locker-to-door reference with identity-bound history in the official anonymous feed."
+      "note": "Locker-to-door product reference from a review of The Courier Guy. The Courier Guy's tracker returns its history."
     },
     {
       "number": "QGB8C",
@@ -71,6 +80,47 @@
         "confidence": "none"
       },
       "note": "Five-character waybill from a public delivery complaint. The Courier Guy's tracking returns its history. No rule matches this shape."
+    },
+    {
+      "number": "MLC6ZG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a79885b6c407571eec7845a",
+        "date": "2026-08-10",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Waybill from a review of The Courier Guy. The Courier Guy's tracker returns its history."
+    },
+    {
+      "number": "LL-KRGABB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/696772fdee16c8ff2066c33f",
+        "date": "2026-01-14",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "the-courier-guy"
+        ]
+      },
+      "note": "Locker-to-locker product reference from a review of The Courier Guy. The Courier Guy's tracker returns its history."
     }
   ]
 }

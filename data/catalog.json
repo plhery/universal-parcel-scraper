@@ -4474,6 +4474,10 @@
       {
         "pattern": "^(?:DD|LD)[A-Z0-9]{6}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^LL[A-Z0-9]{6}$",
+        "confidence": "low"
       }
     ]
   },

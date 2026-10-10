@@ -15,14 +15,15 @@ const productPayload = (name = 'pudo-delivered') => JSON.parse(readFileSync(new 
 describe('The Courier Guy native product references', () => {
   it('restores only the confirmed product separator after generic host normalization', () => {
     for (const [input, expected] of [['ld-000001', 'LD-000001'], ['LD000001', 'LD-000001'],
-      [' d d - 0 0 0 0 0 1 ', 'DD-000001'], ['DD000001', 'DD-000001'], ['TESTA1', 'TESTA1']] as const) {
+      [' d d - 0 0 0 0 0 1 ', 'DD-000001'], ['DD000001', 'DD-000001'], ['ll-abcdef', 'LL-ABCDEF'], ['TESTA1', 'TESTA1']] as const) {
       expect(normalizeCourierGuyNumber(input)).toBe(expected);
     }
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    const rule = new RegExp(declared.detection[0].pattern);
-    expect(declared.detection[0].confidence).toBe('low');
-    for (const number of ['LD000001', 'DD000001']) expect(rule.test(number)).toBe(true);
-    for (const number of ['LD00001', 'LD0000001', 'DL000001', 'LD000001A', 'XLD000001', 'LD00000!']) {
+    const rules = declared.detection.map((entry: { pattern: string }) => new RegExp(entry.pattern));
+    const rule = { test: (value: string) => rules.some((pattern: RegExp) => pattern.test(value)) };
+    for (const entry of declared.detection) expect(entry.confidence).toBe('low');
+    for (const number of ['LD000001', 'DD000001', 'LLABCDEF']) expect(rule.test(number)).toBe(true);
+    for (const number of ['LD00001', 'LD0000001', 'DL000001', 'LD000001A', 'XLD000001', 'LD00000!', 'LL00001']) {
       expect(rule.test(number), number).toBe(false);
       expect(() => normalizeCourierGuyRecognitionNumber(number), number).toThrow(InvalidInputError);
     }

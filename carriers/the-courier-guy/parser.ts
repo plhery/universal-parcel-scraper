@@ -33,7 +33,7 @@ export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierRes
   if (!isRecord(shipment) || shipment.provider_id !== 7
     || typeof shipment.short_tracking_reference !== 'string' || !/^[A-Z0-9]{5,40}$/.test(shipment.short_tracking_reference)
     || (shipment.short_tracking_reference !== number
-      && (!/^(?:DD|LD)-[A-Z0-9]{6}$/.test(number) || shipment.custom_tracking_reference !== number))) {
+      && (!/^(?:DD|LD|LL)-[A-Z0-9]{6}$/.test(number) || shipment.custom_tracking_reference !== number))) {
     throw new SchemaError('The Courier Guy', 'Different carrier or shipment reference');
   }
   if (typeof shipment.status !== 'string' || !/^[a-z0-9-]{1,64}$/.test(shipment.status)
