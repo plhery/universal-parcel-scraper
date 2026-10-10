@@ -11,6 +11,17 @@
     { "code": "PAR/16", "wording": "Objeto recebido pelos Correios do Brasil", "language": "pt", "stage": "accepted", "confirmedBy": "live" },
     { "code": "PO/01", "wording": "Objeto postado", "language": "pt", "stage": "accepted", "confirmedBy": "live" },
     { "code": "PAR/07", "wording": "Análise concluída - importação autorizada", "language": "pt", "stage": "in_transit", "confirmedBy": "live" },
-    { "code": "PAR/21", "wording": "Informações enviadas para análise da autoridade aduaneira/órgãos anuentes", "language": "pt", "stage": "customs", "confirmedBy": "live" }
+    { "code": "PAR/21", "wording": "Informações enviadas para análise da autoridade aduaneira/órgãos anuentes", "language": "pt", "stage": "customs", "confirmedBy": "live" },
+    { "code": "BDI/01", "wording": "Objeto entregue ao destinatário", "language": "pt", "stage": "delivered", "confirmedBy": "live" },
+    { "code": "BDE/10", "wording": "Objeto não entregue - cliente mudou-se", "language": "pt", "stage": "failed_attempt", "confirmedBy": "live" },
+    { "code": "BDE/20", "wording": "Objeto não entregue - carteiro não atendido", "language": "pt", "stage": "failed_attempt", "confirmedBy": "live" },
+    { "code": "BDE/23", "wording": "Objeto entregue ao remetente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Delivered back to the sender." },
+    { "code": "BDI/40", "wording": "Importação não autorizada", "language": "pt", "stage": "exception", "confirmedBy": "live", "note": "Customs refused the import." },
+    { "code": "BDR/83", "wording": "Prazo de regularização encerrado", "language": "pt", "stage": "exception", "confirmedBy": "live", "note": "The time to settle the import with customs ran out." },
+    { "code": "OEC/09", "wording": "Objeto saiu para entrega ao remetente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Out for delivery back to the sender, not to the recipient." },
+    { "code": "LDI/02", "wording": "Objeto aguardando retirada na Caixa Postal", "language": "pt", "stage": "ready_for_pickup", "confirmedBy": "live" },
+    { "code": "FC/82", "wording": "Etiqueta emitida", "language": "pt", "stage": "registered", "confirmedBy": "live", "note": "A label was issued; Correios does not have the parcel yet." },
+    { "code": "PO/09", "wording": "Objeto postado após o horário limite da unidade", "language": "pt", "stage": "accepted", "confirmedBy": "live", "note": "Posted after the counter's cut-off time." },
+    { "code": "PAR/24", "wording": "Devolução determinada pela autoridade competente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Customs ordered the parcel back to its sender." }
   ]
 }

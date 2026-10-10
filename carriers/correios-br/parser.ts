@@ -3,7 +3,7 @@ import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
-import { isRecord } from '../../core/types.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyCorreiosStatus } from './status.js';
 
 export function normalizeCorreiosNumber(raw: string): string {
@@ -36,6 +36,15 @@ function scanClock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
   return { time: zoned.toISO({ suppressMilliseconds: true }) };
 }
 
+// The portal shows its delivery forecast only for an object in transit
+// (situacao T) that it does not mark as late.
+function expectedDay(payload: JsonObject, stage: string | undefined): string | null {
+  if (payload.situacao !== 'T' || payload.atrasado === true) return null;
+  if (stage && ['delivered', 'returned', 'ready_for_pickup'].includes(stage)) return null;
+  const day = DateTime.fromFormat(clean(payload.dtPrevista, 16), 'dd/MM/yyyy', { zone: 'UTC' });
+  return day.isValid ? day.toISODate() : null;
+}
+
 export function parseCorreios(payload: unknown, number: string): CarrierResult {
   const requested = normalizeCorreiosNumber(number);
   if (!isRecord(payload)) throw new SchemaError('Correios');
@@ -66,8 +75,9 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
   // The single-object response is newest first. Keep unresolved clocks there.
   const latest = events[0]!;
   const mapped = classifyCorreiosStatus(latest.provider_code ?? '');
+  const service = isRecord(payload.tipoPostal) ? clean(payload.tipoPostal.categoria, 80) : '';
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
-    expected_delivery: null, ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    events: events.slice(0, 100) };
+    expected_delivery: expectedDay(payload, mapped?.stage), ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...(service ? { service_name: service } : {}), events: events.slice(0, 100) };
 }

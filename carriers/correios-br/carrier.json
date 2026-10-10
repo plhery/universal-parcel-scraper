@@ -22,7 +22,9 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "eta",
+    "service_name"
   ],
   "portal": {
     "url": "https://rastreamento.correios.com.br/app/index.php?objetos={trackingNumber}",
@@ -32,16 +34,17 @@
       "status",
       "history",
       "location",
-      "estimated_delivery"
+      "estimated_delivery",
+      "service_name"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "estimated_delivery",
+      "service_name"
     ],
-    "discarded": [
-      "estimated_delivery"
-    ],
+    "discarded": [],
     "unavailable": []
   },
   "links": [

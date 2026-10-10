@@ -81,6 +81,35 @@ describe('Correios parser', () => {
     }
   });
 
+  it('reads returns to the sender, collection points, labels and the other delivery units', () => {
+    const clock = { date: '2026-01-07 10:00:00.000000', timezone_type: 3, timezone: 'America/Sao_Paulo' };
+    for (const [code, kind, description, status, stage] of [
+      ['BDE', '23', 'Objeto entregue ao remetente', 'exception', 'returned'],
+      ['OEC', '09', 'Objeto saiu para entrega ao remetente', 'exception', 'returned'],
+      ['PAR', '24', 'Devolução determinada pela autoridade competente', 'exception', 'returned'],
+      ['BDE', '20', 'Objeto não entregue - carteiro não atendido', 'exception', 'failed_attempt'],
+      ['LDI', '02', 'Objeto aguardando retirada na Caixa Postal', 'in_transit', 'ready_for_pickup'],
+      ['BDI', '01', 'Objeto entregue ao destinatário', 'delivered', 'delivered'],
+      ['BDI', '40', 'Importação não autorizada', 'exception', 'exception'],
+      ['FC', '82', 'Etiqueta emitida', 'pending', 'registered'],
+    ] as const) {
+      const result = parseCorreios({ ...fixture, eventos: [scan(code, kind, description, clock), ...fixture.eventos] }, NUMBER);
+      expect(result).toMatchObject({ status, current_stage: stage });
+    }
+  });
+
+  it('reads the service and shows the delivery forecast only where the portal does', () => {
+    const transit = { ...clone(), situacao: 'T', dtPrevista: '08/01/2026', tipoPostal: { sigla: 'AA', descricao: 'ETIQUETA EXEMPLO', categoria: 'SEDEX', tipo: 'N' } };
+    transit.eventos = transit.eventos.slice(4);
+    expect(parseCorreios(transit, NUMBER)).toMatchObject({ status: 'in_transit', expected_delivery: '2026-01-08', service_name: 'SEDEX' });
+    for (const change of [{ atrasado: true }, { situacao: 'E' }, { dtPrevista: '' }, { dtPrevista: '31/02/2026' }, { dtPrevista: '2026-01-08' }]) {
+      expect(parseCorreios({ ...transit, ...change }, NUMBER).expected_delivery).toBeNull();
+    }
+    const waiting = { ...transit, eventos: [scan('LDI', '02', 'Objeto aguardando retirada na Caixa Postal', null), ...transit.eventos] };
+    expect(parseCorreios(waiting, NUMBER).expected_delivery).toBeNull();
+    expect(parseCorreios(fixture, NUMBER)).not.toHaveProperty('service_name');
+  });
+
   it('deduplicates projected scans and bounds text without promoting delivery-related failures', () => {
     const duplicate = clone();
     duplicate.eventos.push(structuredClone(duplicate.eventos[0]!));
