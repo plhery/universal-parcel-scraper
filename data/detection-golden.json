@@ -6467,6 +6467,20 @@
     ]
   },
   {
+    "input": "284243058",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt"
+    ]
+  },
+  {
     "input": "28449670056095",
     "carrier": "unknown",
     "confidence": "low",
@@ -9809,6 +9823,20 @@
     "confidence": "high",
     "candidates": [
       "estafeta"
+    ]
+  },
+  {
+    "input": "505650117",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt"
     ]
   },
   {

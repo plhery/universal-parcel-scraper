@@ -148,6 +148,50 @@
         ]
       },
       "note": "Official Appendix I checksum example, not a real shipment."
+    },
+    {
+      "number": "505650117",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260920180029/https://www.tnt.com/api/v3/shipment?con=505650117&locale=de_CH&searchType=CON&channel=OPENTRACK",
+        "date": "2026-09-20",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "A TNT consignment number looked up on tnt.com and listed in the Wayback Machine's capture index. TNT's tracking returned its express delivery from China to Switzerland."
+    },
+    {
+      "number": "284243058",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260820074800/https://www.tnt.com/api/v3/shipment?con=284243058&locale=en_GB&searchType=CON&channel=OPENTRACK",
+        "date": "2026-08-20",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "A TNT consignment number looked up on tnt.com and listed in the Wayback Machine's capture index. TNT's tracking returned its delivered history."
     }
   ]
 }
