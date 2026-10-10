@@ -265,6 +265,7 @@ describe('GLS France response normalization', () => {
       last_update: '2026-08-29T11:42:00+02:00',
       expected_delivery: null,
       sender_name: 'Example Shop',
+      delivered_at: '2026-08-29T11:42:00+02:00',
       timezone: 'Europe/Paris',
     });
     expect(result.events).toEqual([{
@@ -293,6 +294,10 @@ describe('GLS France response normalization', () => {
     }
   });
 
+  it('dates the delivery only once the parcel is delivered', () => {
+    expect(parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER)).not.toHaveProperty('delivered_at');
+  });
+
   it('keeps the planned day only while the parcel is still on its way', () => {
     expect(parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER)).toMatchObject({
       status: 'out_for_delivery',
@@ -309,6 +314,7 @@ describe('GLS France response normalization', () => {
 
   it('returns every capability declared in carrier.json', async () => {
     const result = parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER);
+    const delivered = parseGLSFranceTrackingResponse(deliveredFixture(), TRACKING_NUMBER);
     const waiting = await pickupLookup(waitingFixture()).tracker.fetch(TRACKING_NUMBER);
     const checks: Record<string, () => boolean> = {
       history: () => (result.events?.length ?? 0) > 0,
@@ -317,6 +323,7 @@ describe('GLS France response normalization', () => {
       sender_name: () => result.sender_name != null,
       pickup_point: () => Boolean(waiting.pickup_point),
       provider_code: () => (result.events ?? []).some((event) => Boolean(event.provider_code)),
+      delivered_at: () => Boolean(delivered.delivered_at),
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
     for (const capability of CAPABILITIES) {

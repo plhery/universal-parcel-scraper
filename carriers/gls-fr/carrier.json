@@ -34,7 +34,8 @@
     "eta",
     "pickup_point",
     "sender_name",
-    "provider_code"
+    "provider_code",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://moncolis.gls-france.com/fr/{trackingNumber}",
@@ -47,6 +48,7 @@
       "eta",
       "pickup_point",
       "sender_name",
+      "delivered_at",
       "recipient_name",
       "recipient_address",
       "recipient_contact",
@@ -59,7 +61,8 @@
       "location",
       "eta",
       "pickup_point",
-      "sender_name"
+      "sender_name",
+      "delivered_at"
     ],
     "discarded": [
       "recipient_name",

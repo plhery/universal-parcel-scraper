@@ -288,6 +288,7 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
   const settled = status === 'delivered' || status === 'exception' || stage === 'ready_for_pickup';
   // The portal shows this label as the sender.
   const sender = clean(parcel.libelleExpediteur, 200);
+  const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
   return {
     result: {
       status,
@@ -297,6 +298,7 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
       last_update: latestEvent?.time ?? fallbackUpdate?.iso ?? null,
       expected_delivery: settled ? null : expectedDelivery(parcel.dateTheoriqueLivraison),
       ...(sender ? { sender_name: sender } : {}),
+      ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
       timezone: TIMEZONE,
       events,
     },

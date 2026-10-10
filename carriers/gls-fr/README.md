@@ -52,6 +52,7 @@ this confirmation before they can identify the French network.
   shows the scan's own day. When `deliveryDateReliability` is `0` the portal presents
   the same day as a latest date.
 - The sender is `libelleExpediteur`, the label the portal shows as the sender.
+- A delivered parcel's delivery time is its newest delivered scan's.
 - While the parcel's status says it waits at a shop or locker (`LIP`, `LTP`, `LIK`,
   `LTK`), the pickup point is the record of the point its own `relaisGlsColis`
   names: its name, then its street and its postcode and town on their own lines, as
