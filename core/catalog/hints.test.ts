@@ -26,9 +26,9 @@ describe('national postal lookup candidates', () => {
   ])('suggests one operator for destination %s', (country, expected) => {
     expect(nationalPostCandidate(country)).toBe(expected);
   });
-  // The posts of Italy, India, Malaysia and Portugal look up only numbers of their own, and
-  // Ukraine's would need a browser session for mail from abroad, so these destinations have no
-  // candidate.
+  // The posts of Italy, India and Portugal look up only numbers of their own, Pos Malaysia's
+  // tracker answers any S10 number but leaves the scans of mail from abroad undated, and Ukraine's
+  // would need a browser session for mail from abroad, so these destinations have no candidate.
   it.each(['XX', 'LI', 'IT', 'Italy', 'IN', 'MY', 'PT', 'UA', 'Ukraine', 'unknown', 'Arrived in Switzerland', 'constructor', '', null, 123])(
     'leaves unavailable or ambiguous destinations alone: %s', (country) => {
       expect(nationalPostCandidate(country)).toBeUndefined();

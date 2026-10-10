@@ -12,6 +12,12 @@
     { "wording": "Your parcel is being transported to the next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-28" },
     { "wording": "Your parcel has arrived at destination facility for Processing", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-28" },
     { "wording": "Your parcel is being transported to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-28" },
-    { "wording": "Your parcel has arrived at our facility for sorting", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-28" }
+    { "wording": "Your parcel has arrived at our facility for sorting", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-28" },
+    { "wording": "Arrived at International Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10" },
+    { "wording": "Your parcel has been presented to the Customs Authority for inspection", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-10" },
+    { "wording": "Your parcel has been cleared by the Customs Authority", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "Customs released the item; transit resumes." },
+    { "wording": "Your item is being sorted in destination facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10" },
+    { "wording": "Your parcel is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-10" },
+    { "wording": "Destination station has delivered your parcel. Thank you!", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-10" }
   ]
 }

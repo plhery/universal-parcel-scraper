@@ -24,6 +24,13 @@ const SUMMARY_STATUS: Record<string, ClassifiedStatus> = {
   'Your parcel has arrived at destination facility for Processing': { status: 'in_transit', stage: 'in_transit' },
   'Your parcel is being transported to destination country': { status: 'in_transit', stage: 'in_transit' },
   'Your parcel has arrived at our facility for sorting': { status: 'in_transit', stage: 'in_transit' },
+  // Live summaries of international items; a cleared item resumes transit.
+  'Arrived at International Hub': { status: 'in_transit', stage: 'in_transit' },
+  'Your parcel has been presented to the Customs Authority for inspection': { status: 'in_transit', stage: 'customs' },
+  'Your parcel has been cleared by the Customs Authority': { status: 'in_transit', stage: 'in_transit' },
+  'Your item is being sorted in destination facility': { status: 'in_transit', stage: 'in_transit' },
+  'Your parcel is out for delivery': { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  'Destination station has delivered your parcel. Thank you!': { status: 'delivered', stage: 'delivered' },
 };
 
 /** Only explicit summaries establish a stage. */

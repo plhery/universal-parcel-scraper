@@ -2,6 +2,8 @@
 
 Tracks Pos Malaysia and Pos Laju items through the anonymous API used by the official tracking app.
 
+Besides MYPM barcodes and MY postal items, it takes Pos Laju consignments, three letters, nine digits and MY, whose ninth digit is an S10 check digit, and inbound postal items under their origin's S10 number, which the tracker follows to delivery in Malaysia.
+
 ## How it works
 
 One bounded JSON request supplies the number and a fresh request identifier. No browser, account or cookie is needed. The response must contain exactly one matching consignment.
@@ -10,7 +12,7 @@ One bounded JSON request supplies the number and a fresh request identifier. No 
 
 Null or empty history is inconclusive: unavailable history does not prove shipment absence. Error rows and malformed scans cannot silently expose an older scan as current.
 
-The delivered summary is authoritative. If the latest scan does not establish delivery, an undated summary snapshot preserves that evidence without borrowing an older scan's time. Unknown scan summaries remain visible without an inferred stage.
+The delivered summary is authoritative. If the latest scan does not establish delivery, an undated summary snapshot preserves that evidence without borrowing an older scan's time. Unknown scan summaries remain visible without an inferred stage. An office reading "In Transit" is a status, not a place, and is dropped.
 
 Offsetless clocks receive Malaysian time only when both route countries explicitly identify a domestic Malaysian journey. International or unlocated clocks and invalid dates remain provider text with no instant. The source supplies current scans first; that order is preserved whenever any clock is unresolved.
 

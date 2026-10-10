@@ -11,6 +11,7 @@ import {
 } from './adapter.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { classifyPosMalaysiaStatus, isMappedPosMalaysiaSummary } from './status.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 
 // All identifiers, timestamps, offices and names below are synthetic. Event
 // wordings and process summaries reuse the vendor's fixed English texts found
@@ -49,10 +50,13 @@ function response(value: unknown, status = 200) {
 afterEach(() => vi.restoreAllMocks());
 
 describe('Pos Malaysia tracking normalization', () => {
-  it('accepts MYPM barcodes and MY S10 identifiers and rejects the rest', () => {
+  it('accepts MYPM barcodes, Pos Laju consignments and S10 identifiers and rejects the rest', () => {
     expect(normalizePosMalaysiaTrackingNumber('mypm00000000015')).toBe(TRACKING_NUMBER);
     expect(normalizePosMalaysiaTrackingNumber('RR157638464MY')).toBe('RR157638464MY');
-    for (const raw of ['12345', 'Z8328162951', 'MYPM000000001', '']) {
+    expect(normalizePosMalaysiaTrackingNumber('ehe 000000005 my')).toBe('EHE000000005MY');
+    // Inbound postal items keep their origin's number; its check digit must pass.
+    expect(normalizePosMalaysiaTrackingNumber('RR000000005BN')).toBe('RR000000005BN');
+    for (const raw of ['12345', 'Z8328162951', 'MYPM000000001', '', 'RR000000006BN', 'EHEE00000005MY']) {
       expect(() => normalizePosMalaysiaTrackingNumber(raw)).toThrow(InvalidInputError);
     }
     expect(posMalaysiaTrackingUrl(TRACKING_NUMBER)).toBe('https://tracking.pos.com.my/tracking/MYPM00000000015');
@@ -218,6 +222,33 @@ describe('Pos Malaysia response parsing', () => {
     expect(result.events).toHaveLength(5);
     expect(result.events?.map(event => event.provider_code)).toEqual(['EMG', 'TN035', 'TN030', 'TN008', 'TN001']);
     expect(result.events?.every(event => !event.time && event.provider_time_text)).toBe(true);
+  });
+
+  it('reads an inbound item through customs to its delivery scan without a summary snapshot', () => {
+    const result = parsePosMalaysiaTrackingResponse(payload([item({ connote_id: 'RR000000005BN',
+      sender_data: { sender_country: 'BN' }, recipient_data: { receipient_country: 'MY' }, process_status: 'DELIVERED', tracking_data: [
+        detail('Destination station has delivered your parcel. Thank you!', 'Delivery completed', '12 Feb 2026, 02:07:41 PM', 'TN037', ''),
+        detail('Your parcel is out for delivery', 'Out for delivery', '12 Feb 2026, 09:46:05 AM', 'EDG', ''),
+        detail('Your parcel has been cleared by the Customs Authority', 'Customs released', '08 Feb 2026, 03:12:27 PM', 'EDC', ''),
+        detail('Your parcel has been presented to the Customs Authority for inspection', 'Customs inspection', '08 Feb 2026, 10:05:52 AM', 'EDB', ''),
+        detail('Arrived at International Hub', '', '04 Feb 2026, 11:35:00 AM', 'TN003', ''),
+        detail('Your parcel has arrived at our facility for sorting', 'Sorting in progress', '03 Feb 2026, 08:47:00 AM', '01', 'In Transit'),
+      ] })]), 'RR000000005BN');
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivery completed', last_update: null });
+    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'customs', 'in_transit', 'in_transit']);
+    expect(result.events?.some(event => event.summary_snapshot)).toBe(false);
+    expect(result.events?.[4]).toMatchObject({ description: 'Arrived at International Hub', provider_code: 'TN003' });
+    expect(result.events?.[5]?.location).toBe('');
+  });
+
+  it('lets a scan stored with the "In Transit" office lose it in place', () => {
+    expect(sameInstantIdentityPolicy('pos-malaysia')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('pos-malaysia', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['pos-malaysia'], requireProviderCode: false, matchEachScan: true });
+    const stored = { stage: 'in_transit', description: 'Sorting in progress', location: 'In Transit', providerCode: '01' };
+    expect(policy?.matches?.({ ...stored, location: '' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'Test Hub Shah Alam' })).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: 'Test Hub Shah Alam' }, stored)).toBe(false);
   });
 
   it('does not date a delivered summary from an older movement scan', () => {

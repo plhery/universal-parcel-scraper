@@ -27,8 +27,10 @@ const CATALOG_NAMES = new Set([
 
 // Postal lookup candidates, not proof of which operator delivers a shipment.
 // Only operators whose dedicated adapter looks up mail from abroad by its S10
-// number are useful here: India Post's, Pos Malaysia's, CTT's and Poste
-// Italiane's take only numbers of their own. Poczta Polska dates scans at its
+// number are useful here: India Post's, CTT's and Poste Italiane's take only
+// numbers of their own. Pos Malaysia's tracker answers any S10 number, but it
+// leaves the scans of mail from abroad undated, so it is not the hand-off for
+// mail to Malaysia. Poczta Polska dates scans at its
 // delivery office, and other inward scans when they name a Polish office; those
 // relayed from the origin keep its wall clock. Ukrposhta now dates its scans in
 // Ukraine, but its status API can miss mail from abroad, and its portal then

@@ -74,6 +74,11 @@
       "pattern": "^[A-Z]{2}\\d{9}MY$",
       "confidence": "high",
       "checksum": "s10"
+    },
+    {
+      "id": "pos-malaysia-3",
+      "pattern": "^[A-Z]{3}\\d{9}MY$",
+      "confidence": "high"
     }
   ]
 }

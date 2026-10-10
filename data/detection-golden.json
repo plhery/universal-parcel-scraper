@@ -17198,6 +17198,14 @@
     ]
   },
   {
+    "input": "EE058765722MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
     "input": "EE123456789PL",
     "carrier": "unknown",
     "confidence": "low",
@@ -17317,6 +17325,22 @@
     "confidence": "high",
     "candidates": [
       "parcelforce"
+    ]
+  },
+  {
+    "input": "EHE231870308MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
+    "input": "EHE261499378MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
     ]
   },
   {
@@ -17468,6 +17492,14 @@
     ]
   },
   {
+    "input": "ENE158239622MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
     "input": "EP318770974NZ",
     "carrier": "nz-post",
     "confidence": "high",
@@ -17500,6 +17532,30 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "ERA907538712MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
+    "input": "ERC553813172MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
+    "input": "ERD181345333MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
     ]
   },
   {
@@ -19285,6 +19341,17 @@
     ]
   },
   {
+    "input": "LF260010425BN",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "LG132270470IE",
     "carrier": "an-post",
     "confidence": "high",
@@ -19574,6 +19641,14 @@
   },
   {
     "input": "LP661177776MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
+    "input": "LP667927946MY",
     "carrier": "pos-malaysia",
     "confidence": "high",
     "candidates": [
@@ -19991,6 +20066,14 @@
     "confidence": "high",
     "candidates": [
       "postnord"
+    ]
+  },
+  {
+    "input": "LY864730070DE",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
     ]
   },
   {
@@ -20648,6 +20731,12 @@
     "candidates": []
   },
   {
+    "input": "PL770916548048",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "PP023977837SG",
     "carrier": "singapore-post",
     "confidence": "high",
@@ -20962,6 +21051,14 @@
     "candidates": []
   },
   {
+    "input": "REL000022726MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
     "input": "RF038017031BE",
     "carrier": "bpost",
     "confidence": "high",
@@ -21195,6 +21292,17 @@
     "confidence": "high",
     "candidates": [
       "india-post"
+    ]
+  },
+  {
+    "input": "RR000810326BN",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {

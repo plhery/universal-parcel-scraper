@@ -1,6 +1,7 @@
 
 import { randomUUID } from 'node:crypto';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
@@ -9,6 +10,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { zonedTime } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { isPosMalaysiaStatusOffice } from './identity.js';
 import { classifyPosMalaysiaStatus } from './status.js';
 
 // Protocol provenance:
@@ -33,10 +35,12 @@ function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
   return zonedTime(value, 'dd MMM yyyy, hh:mm:ss a', 'Asia/Kuala_Lumpur', { locale: 'en-US' });
 }
 
+// Pos Laju prints domestic consignments with a three-letter prefix; inbound
+// postal items keep their origin's S10 number.
 export function normalizePosMalaysiaTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^(?:MYPM\d{11}|[A-Z]{2}\d{9}MY)$/.test(value)) {
-    throw new InvalidInputError('Pos Malaysia', 'Pos Malaysia tracking requires an MYPM barcode or MY S10 identifier');
+  if (!/^(?:MYPM\d{11}|[A-Z]{2,3}\d{9}MY)$/.test(value) && !isValidS10TrackingNumber(value)) {
+    throw new InvalidInputError('Pos Malaysia', 'Pos Malaysia tracking requires an MYPM barcode, a Pos Laju consignment or an S10 identifier');
   }
   return value;
 }
@@ -83,7 +87,8 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
     const clock = clean(rawEvent.date, 100);
     const time = domestic ? parsedTime(clock) : null;
     const eventType = clean(rawEvent.event_type, 32);
-    const location = clean(rawEvent.office, 160);
+    const office = clean(rawEvent.office, 160);
+    const location = isPosMalaysiaStatusOffice(office) ? '' : office;
     const identity = JSON.stringify([time?.iso ?? clock, summary, description, eventType, location]);
     if (seen.has(identity)) return;
     seen.add(identity);

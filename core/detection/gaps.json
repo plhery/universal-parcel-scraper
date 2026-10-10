@@ -265,6 +265,12 @@
     "reason": "A Planzer lookup needs the access key of its shared link."
   },
   {
+    "carrier": "pos-malaysia",
+    "pattern": "^PL\\d{12}$",
+    "kind": "open",
+    "reason": "A complaint about Pos Malaysia gives PL and twelve digits as a Pos Laju tracking number. Pos Malaysia's tracker echoes it with no history, and one sample does not establish the family."
+  },
+  {
     "carrier": "postnord",
     "pattern": "^\\d{14}$",
     "kind": "by_design",
