@@ -70,12 +70,6 @@
     "reason": "The printed composite carries the postcode after its dashes and is entered with the carrier chosen."
   },
   {
-    "carrier": "correos-spain",
-    "pattern": "^L[A-Z0-9]{22}$",
-    "kind": "open",
-    "reason": "A public report uses a checksum-valid L reference, but the service and complete family remain unconfirmed."
-  },
-  {
     "carrier": "dachser",
     "kind": "by_design",
     "reason": "Dachser tracking needs its capability link; the numbers alone are generic numeric shapes."
