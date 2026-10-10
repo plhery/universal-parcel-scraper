@@ -1,12 +1,16 @@
-import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
+import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { countryCode, epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { speedpakStatus } from './status.js';
+import { speedpakScanStatus } from './status.js';
+import { withoutRoutingPrefix } from './wording.js';
 
 const PROVIDER = 'SpeedPAK';
+// Written in English or Chinese, with a full- or half-width colon.
+const HANDOFF = /^(?:LM Carrier|尾程供应商)\s*[:：]\s*\[([^\]]+)\]\s*,\s*(?:LM tracking No[.．]?|尾程跟踪号)\s*[:：]\s*\[([A-Z0-9]{4,40})\]$/;
 
 export function normalizeSpeedpakNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -32,24 +36,26 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
   if (!Array.isArray(shipment.traces) || shipment.traces.length > 1000) throw new SchemaError(PROVIDER, 'SpeedPAK returned an invalid history');
   if (!shipment.traces.length) throw new IndeterminateError(PROVIDER, 'SpeedPAK returned no shipment activity');
   const events: CarrierEvent[] = [];
-  const handoffs = new Set<string>();
+  const handoffs = new Map<string, string>();
   for (const row of shipment.traces) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'SpeedPAK returned an invalid history row');
-    const description = clean(row.eventDesc);
+    const description = withoutRoutingPrefix(clean(row.eventDesc));
     if (!description) throw new SchemaError(PROVIDER, 'SpeedPAK returned an empty scan description');
     const time = epochMillisTime(row.oprTimestamp);
-    const mapped = speedpakStatus(description);
+    const mapped = speedpakScanStatus(description, clean(row.eventDescCn));
     const location = [clean(row.oprCity), clean(row.oprCountry)].filter(Boolean).join(', ');
-    const handoff = /^LM Carrier:\s*\[([^\]]+)\]\s*,\s*LM tracking No[.．]?\s*[:：]\s*\[([A-Z0-9]{4,40})\]$/.exec(description);
-    if (handoff) handoffs.add(`${handoff[1]!.trim().toLowerCase()}|${handoff[2]}`);
+    for (const text of [description, withoutRoutingPrefix(clean(row.eventDescCn))]) {
+      const handoff = HANDOFF.exec(text);
+      if (handoff) handoffs.set(handoff[2]!, handoff[1]!.trim());
+    }
     const event: CarrierEvent = { description, ...(time ? { time: time.iso } : { provider_time_text: clean(row.oprTime) || undefined }),
       ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
     if (!events.some(previous => JSON.stringify(previous) === JSON.stringify(event))) events.push(event);
   }
   // The website's trace array is already newest first. Keep undated scans in
   // that order rather than borrowing an older timestamp for the summary.
-  const wording = clean(shipment.lastStatus) || events[0]!.description!;
-  const mapped = speedpakStatus(wording);
+  const wording = withoutRoutingPrefix(clean(shipment.lastStatus)) || events[0]!.description!;
+  const mapped = speedpakScanStatus(wording, clean(shipment.lastStatusCn));
   const latest = events[0]!;
   const output: CarrierResult = { status: mapped?.status ?? 'unknown', last_status_text: wording, last_update: latest.time ?? null,
     ...(mapped ? { current_stage: mapped.stage, current_stage_source: 'carrier_map' } : {}),
@@ -58,9 +64,13 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
   const country = countryCode(shipment.consigneeCountryCode);
   if (country) output.destination_country = country;
   if (handoffs.size === 1) {
-    const [name, reference] = [...handoffs][0]!.split('|');
-    if (name === 'uni uni' || name === 'uniuni') output.delivery_carrier = 'uniuni';
-    output.delivery_tracking_number = reference!;
+    const [reference, name] = [...handoffs][0]!;
+    // Named only when the catalog knows the carrier and its detection offers the reference.
+    const partner = carrierIdFromPartner(name);
+    if (partner && partner !== 'speedpak' && (detectCarrierMatch(reference).candidates as string[]).includes(partner)) {
+      output.delivery_carrier = partner;
+    }
+    output.delivery_tracking_number = reference;
   }
   return output;
 }

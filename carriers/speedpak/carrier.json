@@ -25,7 +25,9 @@
   "capabilities": [
     "history",
     "location",
-    "delivery_partner"
+    "delivered_at",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://www.orangeconnex.com/tracking",
@@ -35,13 +37,15 @@
       "status",
       "history",
       "location",
-      "delivery_partner"
+      "delivery_partner",
+      "delivered_at"
     ],
     "scraped": [
       "status",
       "history",
       "location",
-      "delivery_partner"
+      "delivery_partner",
+      "delivered_at"
     ],
     "discarded": [
       "postcodes"

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, SpeedpakTracker } from './adapter.js';
 import { normalizeSpeedpakNumber, parseSpeedpak } from './parser.js';
@@ -52,6 +53,24 @@ describe('SpeedPAK response projection', () => {
     expect(parseSpeedpak(payload, NUMBER).delivery_tracking_number).toBeUndefined();
   });
 
+  it('classifies a last-mile carrier\'s wording by SpeedPAK\'s own Chinese label', () => {
+    const payload = JSON.parse(readFileSync(new URL('./fixtures/last-mile.json', import.meta.url), 'utf8'));
+    const result = parseSpeedpak(payload, 'EE0000000000000UN00000000G0N');
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-10-03T14:42:25Z',
+      delivery_carrier: 'usps', delivery_tracking_number: '9214490000000000000003' });
+    expect(result.events?.map(event => event.stage)).toEqual([
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'registered',
+    ]);
+  });
+
+  it('names a partner only when its detection offers the reference', () => {
+    const payload = fixture();
+    payload.result.waybills[0].traces[2].eventDesc = 'LM Carrier: [USPS] , LM tracking No.: [UUS00T0000000000000]';
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result.delivery_tracking_number).toBe('UUS00T0000000000000');
+    expect(result.delivery_carrier).toBeUndefined();
+  });
+
   it('rejects malformed scans and bounds history', () => {
     for (const row of [null, {}, { eventDesc: [] }]) {
       const payload = fixture(); payload.result.waybills[0].traces.unshift(row);
@@ -92,5 +111,41 @@ describe('SpeedPAK retrieval', () => {
     expect(fetcher).not.toHaveBeenCalled();
     fetcher.mockResolvedValue(new Response('x'.repeat(1_000_001)));
     await expect(new SpeedpakTracker({ fetcher }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');
+  });
+});
+
+describe('SpeedPAK hand-off wording', () => {
+  const routed = 'LM Carrier: [DHL eCommerce] , LM tracking No.: [420000009214490000000000000003]';
+  const trimmed = 'LM Carrier: [DHL eCommerce] , LM tracking No.: [9214490000000000000003]';
+
+  it('drops the ZIP code a USPS routing barcode opens with', () => {
+    const payload = fixture();
+    payload.result.waybills[0].traces[2] = { eventDesc: routed, eventDescCn: '尾程供应商:[DHL eCommerce] , 尾程跟踪号：[420000009214490000000000000003]', oprTimestamp: 1767362400000 };
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result.events?.[2]?.description).toBe(trimmed);
+    // DHL eCommerce's detection does not offer the bare USPS number, so no partner is named.
+    expect(result.delivery_tracking_number).toBe('9214490000000000000003');
+    expect(result.delivery_carrier).toBeUndefined();
+    expect(JSON.stringify(result)).not.toContain('42000000');
+  });
+
+  it('drops the ZIP code from the summary when the hand-off line is the newest scan', () => {
+    const payload = fixture();
+    payload.result.waybills[0].lastStatus = routed;
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result.last_status_text).toBe(trimmed);
+    expect(JSON.stringify(result)).not.toContain('42000000');
+  });
+
+  it('lets a hand-off line stored with the routing barcode take the trimmed wording', () => {
+    const policy = sameInstantIdentityPolicy('speedpak', { supportsScanMatching: true });
+    expect(sameInstantIdentityPolicy('speedpak')).toBeUndefined();
+    const stored = { stage: '', description: routed, location: '', providerCode: '' };
+    const incoming = { ...stored, description: trimmed };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    // Nothing else: an unchanged scan, another place or another reference.
+    expect(policy?.matches?.(incoming, incoming)).toBe(false);
+    expect(policy?.matches?.(incoming, { ...stored, location: 'Example Hub, US' })).toBe(false);
+    expect(policy?.matches?.({ ...incoming, description: trimmed.replace('0003]', '0004]') }, stored)).toBe(false);
   });
 });

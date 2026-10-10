@@ -17206,6 +17206,14 @@
     ]
   },
   {
+    "input": "EE1013086932978UN06010905G0N",
+    "carrier": "speedpak",
+    "confidence": "high",
+    "candidates": [
+      "speedpak"
+    ]
+  },
+  {
     "input": "EE123456789PL",
     "carrier": "unknown",
     "confidence": "low",
@@ -17578,7 +17586,31 @@
     ]
   },
   {
+    "input": "ES1002881326484000100000000N",
+    "carrier": "speedpak",
+    "confidence": "high",
+    "candidates": [
+      "speedpak"
+    ]
+  },
+  {
     "input": "ES1003113494686UN0101240600N",
+    "carrier": "speedpak",
+    "confidence": "high",
+    "candidates": [
+      "speedpak"
+    ]
+  },
+  {
+    "input": "ES10032617546444X0101242300N",
+    "carrier": "speedpak",
+    "confidence": "high",
+    "candidates": [
+      "speedpak"
+    ]
+  },
+  {
+    "input": "ES1003278992201DC0101061900N",
     "carrier": "speedpak",
     "confidence": "high",
     "candidates": [
