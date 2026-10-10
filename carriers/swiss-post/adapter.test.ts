@@ -392,6 +392,34 @@ describe('Swiss Post translation table', () => {
     await expect(tracker.loadTranslations(fetcher, spent)).rejects.toThrow('unreachable');
     await expect(tracker.loadTranslations(fetcher)).resolves.toEqual(translations);
   });
+
+  it('is requested again ten minutes after a load that failed or came back empty', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      const { translations } = outForDelivery();
+      const fetcher = vi.fn<typeof fetch>()
+        .mockRejectedValueOnce(new TypeError('fetch failed'))
+        .mockResolvedValueOnce(new Response(JSON.stringify({ unexpected: true })))
+        .mockResolvedValueOnce(new Response(JSON.stringify({ 'shipment-text--': translations })));
+      const tracker = new SwissPostTracker();
+
+      await expect(tracker.loadTranslations(fetcher)).resolves.toEqual({});
+      vi.advanceTimersByTime(9 * 60_000);
+      await expect(tracker.loadTranslations(fetcher)).resolves.toEqual({});
+      expect(fetcher).toHaveBeenCalledTimes(1);
+
+      vi.advanceTimersByTime(60_000);
+      await expect(tracker.loadTranslations(fetcher)).resolves.toEqual({});
+      expect(fetcher).toHaveBeenCalledTimes(2);
+
+      vi.advanceTimersByTime(10 * 60_000);
+      await expect(tracker.loadTranslations(fetcher)).resolves.toEqual(translations);
+      await expect(tracker.loadTranslations(fetcher)).resolves.toEqual(translations);
+      expect(fetcher).toHaveBeenCalledTimes(3);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
 
 describe('Swiss Post no-data response', () => {

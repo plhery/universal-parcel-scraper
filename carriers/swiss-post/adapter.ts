@@ -20,6 +20,8 @@ const API_BASE = 'https://service.post.ch/ekp-web/api';
 const TRANSLATIONS_URL = 'https://service.post.ch/ekp-web/core/rest/translations/en/shipment-text-messages';
 const PROVIDER = 'Swiss Post';
 const REQUEST_TIMEOUT_MS = 10_000;
+/** A translation table that failed to load, or came back empty, is asked for again after this. */
+const TRANSLATION_RETRY_MS = 10 * 60_000;
 /** The user, search, result, event, translation and pickup office calls, each at its own bound. */
 const DEFAULT_BUDGET_MS = 6 * REQUEST_TIMEOUT_MS;
 /** A request's own timer can fire a few milliseconds before the budget's clock runs out. */
@@ -282,7 +284,8 @@ export function parseSwissPostShipment(
 
 export class SwissPostTracker {
   #translations: Record<string, string> | null = null;
-  #translationAttempted = false;
+  /** When the table may be asked for again: while one load runs, and for a while after one fails. */
+  #translationRetryAt = 0;
   readonly #fetcher: typeof fetch | undefined;
 
   constructor(options: SwissPostOptions = {}) {
@@ -313,28 +316,38 @@ export class SwissPostTracker {
     return withNetworkRetry(budget, (timeoutMs) => this.readJson(fetcher, url, init, budget, timeoutMs));
   }
 
-  /** Cached for the process: the table is large, static, and shared by every lookup. */
+  /**
+   * Cached for the process: the table is large, static, and shared by every lookup. Lookups
+   * that come while it loads, or within ten minutes of a failed or empty load, go without it
+   * and fall back to the event's own wording; the first after that asks again.
+   */
   async loadTranslations(fetcher: typeof fetch, budget?: LookupBudget): Promise<Record<string, string>> {
     if (this.#translations) return this.#translations;
-    if (this.#translationAttempted) return {};
-    this.#translationAttempted = true;
+    if (Date.now() < this.#translationRetryAt) return {};
+    this.#translationRetryAt = Infinity;
     try {
       const payload = await this.readJson(fetcher, TRANSLATIONS_URL, { headers: HEADERS }, budget);
       const raw = isRecord(payload) && isRecord(payload['shipment-text--'])
         ? payload['shipment-text--']
         : {};
-      this.#translations = Object.fromEntries(
+      const translations = Object.fromEntries(
         Object.entries(raw).filter((entry): entry is [string, string] => typeof entry[1] === 'string'),
       );
+      if (Object.keys(translations).length === 0) {
+        this.#translationRetryAt = Date.now() + TRANSLATION_RETRY_MS;
+        return {};
+      }
+      this.#translations = translations;
+      return translations;
     } catch (error) {
       // A lookup that ended says nothing about the table: the next one asks again.
       if (budget && ended(budget)) {
-        this.#translationAttempted = false;
+        this.#translationRetryAt = 0;
         throw error;
       }
+      this.#translationRetryAt = Date.now() + TRANSLATION_RETRY_MS;
       return {};
     }
-    return this.#translations;
   }
 
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {

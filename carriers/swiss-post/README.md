@@ -25,7 +25,9 @@ the retry fits in the rest.
    if it fails, the parcel has no pickup point.
 
 Event wording comes from `core/rest/translations/en/shipment-text-messages`,
-fetched once per process and only when there are events. Keys are dotted
+fetched once per process and only when there are events. A load that fails
+or comes back empty is tried again ten minutes later; until then events fall
+back to their own wording, then to the built-in labels. Keys are dotted
 patterns with `*` wildcards; the most specific match of the same length wins,
 and the `INLAND`/`IMPORT`/`EXPORT` segment comes from the shipment's own flags.
 
