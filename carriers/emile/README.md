@@ -38,6 +38,11 @@ providers remain opt-in; detecting the number does not enable one.
   already relays Emile's scans, and a provider lookup of Emile's number would return the same
   relay.
 - A pasted `emileps.com` tracking link names the carrier and carries the number.
+- Scans ParcelsApp files under Emile's name take their stage from the status texts in
+  `statuses.json`, in any case, as Emile's page reads them, and keep the wording relayed. A
+  text with no stage there, such as a fee, leaves the parcel at the stage it had. ParcelsApp
+  files most of Emile's scans under the consolidator's name instead, a name that also carries
+  the consolidator's own scans, so those go through the shared wording rules.
 
 ## Limitations
 
