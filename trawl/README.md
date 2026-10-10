@@ -1,7 +1,7 @@
 # Optional TRAWL browser service
 
 Some carriers and universal providers only answer a full browser session. This image extends
-[TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, Royal Mail,
+[TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, Royal Mail,
 Australia Post, YunExpress, 17TRACK and SF Express. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
@@ -19,6 +19,8 @@ DHL Express and SF Express use fresh contexts. DHL Express waits for the public
 page to complete verification and repeat tracking after an intermediate HTTP 428.
 17TRACK submits a supplied postcode through the site's form and binds the capture to
 the number and postcode in its outgoing request.
+UPS binds the browser POST to one tracking ID and retains the latest bounded
+response sequence, including refusals after the body extraction budget is spent.
 
 Redis is optional. It stores cookies and user agents with a TTL, not tracking history, and a
 cached session that fails falls back to a fresh browser. Do not expose Redis.

@@ -24,6 +24,7 @@ import { statusMap as emile } from '../../carriers/emile/status.js';
 import { statusMap as gofoFr } from '../../carriers/gofo-fr/status.js';
 import { statusMap as gofoIt } from '../../carriers/gofo-it/status.js';
 import { statusMap as jAndT } from '../../carriers/j-and-t/status.js';
+import { statusMap as jntCargo } from '../../carriers/j-and-t-cargo/status.js';
 import { statusMap as laPoste } from '../../carriers/la-poste/status.js';
 import { statusMap as oldDominion } from '../../carriers/old-dominion/status.js';
 import { statusMap as omgo } from '../../carriers/omgo/status.js';
@@ -45,7 +46,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   aliexpress, 'an-post': anPost, 'china-post': chinaPost, chronopost, 'correos-spain': correosSpain, 'dhl-express': dhlExpress,
   dpd, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-pl': dpdPl, emile, 'gofo-fr': gofoFr, 'gofo-it': gofoIt,
-  'j-and-t': jAndT, 'la-poste': laPoste, 'old-dominion': oldDominion, omgo,
+  'j-and-t': jAndT, 'j-and-t-cargo': jntCargo, 'la-poste': laPoste, 'old-dominion': oldDominion, omgo,
   postlogistics, sagawa, speedx, sto, 'swiss-post': swissPost, 'thailand-post': thailandPost, tnt, ups, yunexpress,
 };
 

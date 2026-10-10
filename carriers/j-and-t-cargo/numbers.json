@@ -444,7 +444,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "jt cargo multi piece 44",
         "reportedRole": "master_consignment"
       },
@@ -477,7 +477,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "jt cargo multi piece",
         "reportedRole": "child_consignment"
       },
@@ -486,7 +486,8 @@
         "confidence": "low",
         "candidates": [
           "brt",
-          "yunda"
+          "yunda",
+          "j-and-t-cargo"
         ]
       },
       "note": "J&T Cargo's public reply identifies this piece of the linked consignment.",
@@ -514,7 +515,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate",
+        "assessment": "confirmed",
         "service": "jt cargo insured fragile",
         "reportedRole": "reported_shipment"
       },

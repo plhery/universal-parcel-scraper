@@ -9,6 +9,13 @@ const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: P
 const now = new Date('2026-09-10T12:00:00Z');
 
 describe('recognition candidates', () => {
+  it.each(['200000000001', '200000000001034'])('asks J&T Cargo over HTTP for an ambiguous supported identifier: %s', number => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(recognitionCandidates(number)).toContainEqual({ carrier: 'j-and-t-cargo', needsInput: null, preferred: false });
+    expect(recognitionAskedCarriers(number)).toContain('j-and-t-cargo');
+    expect(recognitionCandidates(number, { phase: 'browser' }).map(({ carrier }) => carrier)).not.toContain('j-and-t-cargo');
+  });
+
   it('orders eligible candidates by region without claiming ownership or changing detection', () => {
     const number = '12345678901231';
     const detected = detectCarrierMatch(number);

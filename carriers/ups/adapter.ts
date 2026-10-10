@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { isValidUpsTrackingNumber } from '../../core/detection/ups.js';
 import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
@@ -25,7 +25,7 @@ const DEFAULT_TIMEOUT_MS = 90_000;
 const DEFAULT_DIRECT_TIMEOUT_MS = 20_000;
 // How long the browser may wait for the page's own status call after the page settles.
 const SETTLE_TIMEOUT_MS = 15_000;
-// Captured replies beyond this many are noise, never the answer.
+// Retain the latest bounded sequence of matching replies.
 const MAX_CAPTURED = 20;
 // Provider strings are short; the rendered page's whole text is not, and the
 // identity check reads all of it, so it passes its own limit to `clean`.
@@ -40,7 +40,7 @@ export function upsTrackingUrl(trackingNumber: string): string {
 }
 
 /**
- * Akamai rejected the session (HTTP 401/403/419/429, or a page that carries no
+ * Akamai rejected the session (HTTP 401/403/419, or a page that carries no
  * XSRF token). It stays a distinct class because the adapter reacts to it: the
  * cached session is refreshed once, then dropped, before the browser tier runs.
  */
@@ -158,15 +158,26 @@ class UPSHttpSession {
     description: string,
     bounds: RequestBounds,
   ): Promise<Uint8Array> {
-    const result = await fetchBounded(url, { ...init, signal: bounds.signal }, {
-      provider: description,
-      timeoutMs: Math.max(1, Math.floor(Math.min(this.timeoutMs, bounds.deadline - performance.now()))),
-      maxBytes: MAX_BYTES,
-      redirect: 'follow',
-      fetcher: this.#fetcher,
-      allowHttpError: true,
-    });
-    if ([401, 403, 419, 429].includes(result.response.status)) {
+    let result: Awaited<ReturnType<typeof fetchBounded>>;
+    try {
+      result = await fetchBounded(url, { ...init, signal: bounds.signal }, {
+        provider: description,
+        timeoutMs: Math.max(1, Math.floor(Math.min(this.timeoutMs, bounds.deadline - performance.now()))),
+        maxBytes: MAX_BYTES,
+        redirect: 'follow',
+        fetcher: this.#fetcher,
+        allowHttpStatuses: [401, 403, 419],
+      });
+    } catch (error) {
+      // A throttle keeps the transport's status and Retry-After and never
+      // refreshes the session. Other HTTP failures retain UPS's inconclusive
+      // classification: even a 404 says nothing about the shipment.
+      if (error instanceof UpstreamHttpError && error.status !== 429) {
+        throw new IndeterminateError('UPS', `${description} returned HTTP ${error.status}`);
+      }
+      throw error;
+    }
+    if ([401, 403, 419].includes(result.response.status)) {
       throw new UPSSessionRejected(`${description} returned HTTP ${result.response.status}`);
     }
     // Any other rejected status proves nothing about the shipment, so the
@@ -180,7 +191,20 @@ class UPSHttpSession {
 
 /** An answer no other tier or rendered page may replace. */
 function isFinalAnswer(error: unknown): boolean {
-  return error instanceof InvalidInputError || error instanceof NotFoundError || error instanceof UPSUnavailableError;
+  return error instanceof InvalidInputError || error instanceof NotFoundError || error instanceof UPSUnavailableError
+    || carrierErrorKind(error) === 'rate_limited';
+}
+
+/** Headers from a captured response are case-insensitive, like HTTP headers. */
+function capturedHttpError(status: number, headers: Record<string, string>): Error {
+  if (status === 404 || status === 410) {
+    return new IndeterminateError('UPS', `UPS status API returned HTTP ${status}`);
+  }
+  if (status === 419) return new ChallengeError('UPS', 'UPS rejected the browser session', { status });
+  const retryHeader = Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1];
+  const delay = retryHeader === undefined ? NaN : /^\d+$/.test(retryHeader.trim())
+    ? Number(retryHeader) * 1_000 : Date.parse(retryHeader) - Date.now();
+  return new UpstreamHttpError('UPS', status, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
 }
 
 function withoutIcons(value: string): string {
@@ -578,23 +602,28 @@ export class UPSTracker {
       maxBytes: MAX_BYTES,
       fetcher: this.#fetcher,
       signal,
+      captureWindow: 'last',
     });
-    let captureError: Error | undefined;
-    // Newest first: a later reply is the page's final answer.
-    for (const entry of page.capturedResponses.slice(0, MAX_CAPTURED).reverse()) {
-      if (entry.url !== STATUS_API || entry.status !== 200 || entry.truncated || entry.body === null) continue;
-      try {
-        return this.#structuredResult(number, JSON.parse(entry.body));
-      } catch (error) {
-        if (isFinalAnswer(error)) throw error;
-        // An unreadable or unrelated reply; the rendered page may still answer.
-        captureError = error instanceof Error ? error : new SchemaError('UPS', 'UPS returned invalid tracking data', { cause: error });
+    // The last matching response is authoritative. An earlier success cannot
+    // answer after the page's retry was refused or returned invalid data.
+    const entry = page.capturedResponses.filter((capture) => capture.url === STATUS_API).slice(-MAX_CAPTURED).at(-1);
+    // UPS's 428 verification flow can still leave a valid rendered answer.
+    if (entry && entry.status !== 428) {
+      if (entry.status >= 400) throw capturedHttpError(entry.status, entry.headers);
+      if (entry.status !== 200 || entry.truncated || entry.body === null || entry.base64Encoded || entry.error) {
+        throw new SchemaError('UPS', 'UPS returned an unreadable status response');
       }
+      let payload: unknown;
+      try {
+        payload = JSON.parse(entry.body);
+      } catch {
+        throw new SchemaError('UPS', 'UPS returned invalid tracking JSON');
+      }
+      return this.#structuredResult(number, payload);
     }
     try {
       return this.#renderedResult(page.html, number);
     } catch (error) {
-      if (captureError) throw captureError;
       throw new TransportError('UPS', 'TRAWL did not capture the UPS status response', { cause: error });
     }
   }

@@ -60,6 +60,8 @@ export interface TrawlCallOptions {
   signal?: AbortSignal;
   /** Require a solved browser tier (2 or 3) with HTTP 200. Default true. */
   requireSolved?: boolean;
+  /** Which bounded capture window to retain. Defaults to the first 50 responses. */
+  captureWindow?: 'first' | 'last';
 }
 
 export class TrawlError extends CarrierError {
@@ -116,9 +118,10 @@ export function trawlEndpoint(configured: string): URL {
   return endpoint;
 }
 
-function captured(value: unknown): TrawlCapturedResponse[] {
+function captured(value: unknown, window: 'first' | 'last' = 'first'): TrawlCapturedResponse[] {
   if (!Array.isArray(value)) return [];
-  return value.filter(isRecord).slice(0, 50).map((entry) => ({
+  const records = value.filter(isRecord);
+  return (window === 'last' ? records.slice(-50) : records.slice(0, 50)).map((entry) => ({
     url: typeof entry.url === 'string' ? entry.url : '',
     status: Number.isInteger(entry.status) ? Number(entry.status) : 0,
     headers: isRecord(entry.headers)
@@ -278,7 +281,7 @@ export class TrawlClient {
       userAgent: typeof value.userAgent === 'string' ? value.userAgent : null,
       tier,
       statusCode,
-      capturedResponses: captured(value.capturedResponses),
+      capturedResponses: captured(value.capturedResponses, options.captureWindow),
       raw: value,
     };
   }

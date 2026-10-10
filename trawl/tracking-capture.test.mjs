@@ -22,8 +22,8 @@ async function fixture(url = `https://t.17track.net/en#nums=${number}`, endpoint
   const page = { addInitScript: async () => {}, context: () => ({addCookies: async () => {}}), on: (event, fn) => { handlers[event] = fn; },
     off: event => { detached = true; detachedEvents.push(event); } };
   const capture = await attachTrackingCapture(page, url, { captureResponses: [endpoint, ...additional] });
-  const respond = (body, { url = endpoint, headers = {}, status = 200, method = endpoint === api ? 'POST' : 'GET', read,
-    requestBody = endpoint === api ? { data: [{ num: number }] } : undefined } = {}) => handlers.response({
+  const respond = (body, { url = endpoint, headers = {}, status = 200, method = endpoint === api || endpoint === upsApi ? 'POST' : 'GET', read,
+    requestBody = endpoint === api ? { data: [{ num: number }] } : endpoint === upsApi ? { TrackingNumber: [upsNumber.toLowerCase()] } : undefined } = {}) => handlers.response({
     url: () => url, status: () => status, request: () => ({url: () => url, method: () => method, postDataJSON: () => requestBody}),
     headers: () => ({ 'content-type': 'application/json', 'content-length': String(body.length), 'content-encoding': 'gzip', ...headers }),
     body: read ?? (async () => Buffer.from(body)),
@@ -532,6 +532,134 @@ test('finishes on a rejected UPS status envelope and only serves one valid numbe
   ]) {
     assert.equal(await attachTrackingCapture({}, url, { captureResponses: [endpoint] }), undefined);
   }
+});
+
+test('UPS keeps the latest twenty replies and a twenty-first refusal without reading private bodies', async () => {
+  const { capture, respond } = await fixture(upsUrl, upsApi);
+  for (let i = 0; i < 20; i += 1) await respond(upsReply());
+  for (const status of [428, 429]) {
+    await respond('PRIVATE REFUSAL', { status, headers: { 'retry-after': '60', 'set-cookie': 'PRIVATE COOKIE', authorization: 'PRIVATE TOKEN' },
+      read: () => { throw new Error('private refusal body must not be read'); } });
+  }
+  const rows = (await capture.drain()).capturedResponses;
+  assert.equal(rows.length, 20);
+  assert.deepEqual(rows.slice(-2).map(row => row.status), [428, 429]);
+  assert.deepEqual(rows.at(-1), { url: upsApi, status: 429, body: null, headers: { 'retry-after': '60' }, truncated: false, base64Encoded: false });
+  assert.equal(JSON.stringify(rows).includes('PRIVATE'), false);
+});
+
+test('UPS observes only the exact POST for one whole requested identifier and detaches all handlers', async () => {
+  const { capture, respond, handlers, detachedEvents } = await fixture(upsUrl, upsApi);
+  for (const [method, requestBody, url] of [
+    ['GET', { TrackingNumber: [upsNumber] }, upsApi],
+    ['OPTIONS', { TrackingNumber: [upsNumber] }, upsApi],
+    ['POST', null, upsApi],
+    ['POST', { TrackingNumber: upsNumber }, upsApi],
+    ['POST', { TrackingNumber: [1234567890] }, upsApi],
+    ['POST', { TrackingNumber: ['1Z000AA10000000000'] }, upsApi],
+    ['POST', { TrackingNumber: [upsNumber, '1Z000AA10000000000'] }, upsApi],
+    ['POST', { TrackingNumber: [upsNumber + 'EXTRA'] }, upsApi],
+    ['POST', { TrackingNumber: [upsNumber] }, upsApi + '&unrelated=true'],
+  ]) {
+    // More than twenty unrelated attempts must not consume the real capture.
+    for (let i = 0; i < 3; i += 1) {
+      const request = { url: () => url, method: () => method, postDataJSON: () => requestBody,
+        failure: () => ({ errorText: 'PRIVATE FAILURE' }) };
+      handlers.request(request);
+      handlers.requestfailed(request);
+      await respond('', { method, requestBody, url, status: 429, read: () => { throw new Error('wrong request body must not be read'); } });
+    }
+  }
+  const malformed = { url: () => upsApi, method: () => 'POST', postDataJSON: () => { throw new Error('PRIVATE JSON'); } };
+  handlers.request(malformed);
+  assert.equal(capture.hasTrackingRequest(), false);
+  assert.equal(capture.hasResponse(), false);
+  const valid = { url: () => upsApi, method: () => 'POST', postDataJSON: () => ({ TrackingNumber: [upsNumber.toLowerCase()] }) };
+  handlers.request(valid);
+  assert.equal(capture.hasTrackingRequest(), true);
+  await respond(upsReply());
+  const rows = (await capture.drain()).capturedResponses;
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].body, upsReply());
+  assert.deepEqual(detachedEvents.sort(), ['request', 'requestfailed', 'response']);
+});
+
+test('UPS keeps refusal metadata after the cumulative body budget without resetting it when rows roll', async () => {
+  const { capture, respond } = await fixture(upsUrl, upsApi);
+  const large = JSON.stringify({ statusCode: '200', trackDetails: [{ trackingNumber: upsNumber }], padding: 'x'.repeat(1_500_000) });
+  for (let i = 0; i < 3; i += 1) await respond(large);
+  for (let i = 0; i < 25; i += 1) {
+    await respond(upsReply(), { read: () => { throw new Error('spent body budget must not be read'); } });
+  }
+  await respond('PRIVATE', { status: 429, headers: { 'retry-after': '120', cookie: 'PRIVATE' },
+    read: () => { throw new Error('refusal body must not be read'); } });
+  const rows = (await capture.drain()).capturedResponses;
+  assert.equal(rows.length, 20);
+  assert.equal(rows.at(-1).status, 429);
+  assert.deepEqual(rows.at(-1).headers, { 'retry-after': '120' });
+  assert.ok(rows.every(row => row.body === null));
+  assert.ok(rows.slice(0, -1).every(row => row.error));
+  assert.equal(JSON.stringify(rows).includes('PRIVATE'), false);
+});
+
+test('UPS bounds successful body extraction while retaining later unreadable or refused rows', async () => {
+  const { capture, respond } = await fixture(upsUrl, upsApi);
+  let reads = 0;
+  for (let i = 0; i < 25; i += 1) await respond(upsReply(), { read: async () => { reads += 1; return Buffer.from(upsReply()); } });
+  await respond('', { status: 403, headers: { 'retry-after': '30' } });
+  const rows = (await capture.drain()).capturedResponses;
+  assert.equal(reads, 20);
+  assert.equal(rows.length, 20);
+  assert.ok(rows.at(-2).error);
+  assert.equal(rows.at(-2).body, null);
+  assert.equal(rows.at(-1).status, 403);
+});
+
+test('UPS preserves asynchronous response arrival order and ignores body completion after cleanup', async () => {
+  const { capture, respond } = await fixture(upsUrl, upsApi);
+  let release;
+  const first = respond(upsReply(), { read: () => new Promise(resolve => { release = resolve; }) });
+  await respond('', { status: 429, headers: { 'retry-after': '90' } });
+  const snapshot = await capture.drain();
+  release(Buffer.from(upsReply()));
+  await first;
+  assert.deepEqual(snapshot.capturedResponses.map(row => row.status), [200, 429]);
+  assert.equal(snapshot.capturedResponses[0].body, null);
+  assert.deepEqual(snapshot.capturedResponses[1].headers, { 'retry-after': '90' });
+});
+
+test('UPS sanitizes a bound request failure without retaining request bodies or private failure details', async () => {
+  const { capture, handlers } = await fixture(upsUrl, upsApi);
+  const request = { url: () => upsApi, method: () => 'POST', postDataJSON: () => ({ TrackingNumber: [upsNumber] }),
+    failure: () => ({ errorText: 'PRIVATE REQUEST FAILURE' }) };
+  handlers.request(request);
+  handlers.requestfailed(request);
+  await assert.rejects(capture.drain(), { message: 'UPS tracking request failed: network failure' });
+});
+
+test('UPS does not conceal a newer request failure behind old history but accepts a later matching recovery', async () => {
+  for (const recovered of [false, true]) {
+    const { capture, handlers, respond } = await fixture(upsUrl, upsApi);
+    await respond(upsReply());
+    handlers.requestfailed({ url: () => upsApi, method: () => 'POST', postDataJSON: () => ({ TrackingNumber: [upsNumber] }),
+      failure: () => ({ errorText: 'net::ERR_CONNECTION_RESET' }) });
+    if (!recovered) {
+      await assert.rejects(capture.drain(), { message: 'UPS tracking request failed: net::ERR_CONNECTION_RESET' });
+    } else {
+      await respond('', { status: 429, headers: { 'retry-after': '30' } });
+      const rows = (await capture.drain()).capturedResponses;
+      assert.deepEqual(rows.map(row => row.status), [200, 429]);
+    }
+  }
+});
+
+test('other collectors keep their original first twenty response bound', async () => {
+  const { capture, respond } = await fixture();
+  for (let i = 0; i < 20; i += 1) await respond(reply(200));
+  await respond('', { status: 429, headers: { 'retry-after': '60' } });
+  const rows = (await capture.drain()).capturedResponses;
+  assert.equal(rows.length, 20);
+  assert.ok(rows.every(row => row.status === 200));
 });
 
 test('reads the decoded FedEx tracking reply and finishes on its envelope', async () => {

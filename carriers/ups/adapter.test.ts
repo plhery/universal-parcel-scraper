@@ -54,6 +54,13 @@ function fixture(): Record<string, unknown> {
   return structuredClone(OUT_FOR_DELIVERY);
 }
 
+/** A synthetic page that establishes the direct session's test cookie. */
+function directPage(url: string): Response {
+  const page = new Response(RENDERED_PAGE, { headers: { 'Set-Cookie': 'X-XSRF-TOKEN-ST=token; Domain=ups.com; Path=/' } });
+  Object.defineProperty(page, 'url', { value: url });
+  return page;
+}
+
 /** One synthetic scan; `utc` is the UTC pair UPS sends as `gmtDate` / `gmtTime`. */
 function scan(actCode: string, activityScan: string, utc: string | null, location = 'EXAMPLE CITY, DE'): Record<string, unknown> {
   return {
@@ -455,9 +462,7 @@ describe('UPS lookup steps', () => {
         html: RENDERED_PAGE,
         cookies: [],
         userAgent: 'Mozilla/5.0 (test browser)',
-        capturedResponses: [
-          { url: STATUS_API, status: 200, headers: {}, body: 'not json', truncated: false, base64Encoded: false, error: null },
-        ],
+        capturedResponses: [],
       }), { headers: { 'Content-Type': 'application/json' } }));
     const { recorder, records } = stepRecorder();
 
@@ -559,6 +564,170 @@ describe('UPS lookup steps', () => {
     await expect(lookup).rejects.toThrow('UPS tracking numbers must start with 1Z');
     await expect(lookup).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+});
+
+describe('UPS rate limits', () => {
+  const now = Date.parse('2026-08-04T06:00:00Z');
+  const retryCases = [
+    ['seconds', '60', 60_000],
+    ['HTTP date', 'Tue, 04 Aug 2026 06:01:00 GMT', 60_000],
+    ['past HTTP date', 'Tue, 04 Aug 2026 05:59:00 GMT', 0],
+    ['absent hint', undefined, undefined],
+    ['invalid hint', 'not a retry window', undefined],
+  ] as const;
+
+  it.each(retryCases)('preserves a direct page rate limit with %s', async (_name, hint, retryAfterMs) => {
+    vi.spyOn(Date, 'now').mockReturnValue(now);
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('<html>throttled</html>', {
+      status: 429, headers: hint === undefined ? {} : { 'Retry-After': hint },
+    }));
+    const { recorder, records } = stepRecorder();
+    await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'rate_limited', status: 429, retryAfterMs });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(records).toEqual(['direct:rate_limited', 'lookup:direct:rate_limited']);
+  });
+
+  it.each(retryCases)('preserves a direct API rate limit with %s instead of reading the page', async (_name, hint, retryAfterMs) => {
+    vi.spyOn(Date, 'now').mockReturnValue(now);
+    const fetcher = vi.fn<typeof fetch>(async (url) => String(url) === STATUS_API
+      ? new Response('', { status: 429, headers: hint === undefined ? {} : { 'Retry-After': hint } })
+      : directPage(String(url)));
+    const { recorder, records } = stepRecorder();
+    await expect(new UPSTracker({ trawl: null, fetcher, recorder }).fetch(TRACKING_NUMBER))
+      .rejects.toMatchObject({ kind: 'rate_limited', status: 429, retryAfterMs });
+    expect(fetcher.mock.calls.map(([url]) => String(url) === STATUS_API)).toEqual([false, true]);
+    expect(records).toEqual(['direct:rate_limited', 'lookup:direct:rate_limited']);
+  });
+
+  it.each(['cached API', 'refresh page', 'refreshed API'] as const)('does not retry or discard a throttled %s session', async (phase) => {
+    let lookup = 'warm';
+    let apiCalls = 0;
+    const fetcher = vi.fn<typeof fetch>(async (url) => {
+      if (String(url) !== STATUS_API) {
+        return lookup === 'throttle' && phase === 'refresh page'
+          ? new Response('', { status: 429, headers: { 'Retry-After': '60' } })
+          : directPage(String(url));
+      }
+      apiCalls += 1;
+      if (lookup === 'throttle') {
+        if (phase !== 'cached API' && apiCalls === 2) return new Response('', { status: 401 });
+        return new Response('', { status: 429, headers: { 'Retry-After': '60' } });
+      }
+      return Response.json(fixture());
+    });
+    const { recorder, records } = stepRecorder();
+    const tracker = new UPSTracker({ trawl: null, fetcher, recorder });
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'structured-web-response' });
+    lookup = 'throttle';
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', status: 429, retryAfterMs: 60_000 });
+    const expected = phase === 'cached API' ? [false, true, true]
+      : phase === 'refresh page' ? [false, true, true, false] : [false, true, true, false, true];
+    expect(fetcher.mock.calls.map(([url]) => String(url) === STATUS_API)).toEqual(expected);
+    // The caller decides when to check again. A throttle does not reject the jar.
+    lookup = 'recovered';
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'structured-web-response' });
+    expect(fetcher.mock.calls.map(([url]) => String(url) === STATUS_API)).toEqual([...expected, true]);
+    expect(records).toEqual([
+      'direct:ok', 'lookup:direct:ok', 'direct:rate_limited', 'lookup:direct:rate_limited', 'direct:ok', 'lookup:direct:ok',
+    ]);
+  });
+});
+
+describe('UPS captured response sequence', () => {
+  function capture(status = 200, body: string | null = JSON.stringify(fixture()), overrides = {}) {
+    return { url: STATUS_API, status, headers: {}, body, truncated: false, base64Encoded: false, error: null, ...overrides };
+  }
+
+  function browser(capturedResponses: unknown[], extra = {}) {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({
+      tier: 3, statusCode: 200, html: RENDERED_PAGE, cookies: [], capturedResponses, ...extra,
+    }));
+    const { recorder, records } = stepRecorder();
+    return { fetcher, records, tracker: new UPSTracker({ trawlUrl: TRAWL_URL, fetcher, recorder }) };
+  }
+
+  it.each([
+    [401, 'challenge'], [403, 'challenge'], [419, 'challenge'], [429, 'rate_limited'],
+    [404, 'indeterminate'], [410, 'indeterminate'], [500, 'indeterminate'], [503, 'maintenance'],
+  ] as const)('keeps a newer HTTP %i refusal ahead of older JSON and rendered success', async (status, kind) => {
+    const { tracker, fetcher, records } = browser([
+      capture(), capture(status, null, { truncated: true, headers: { 'Retry-After': '60' } }),
+    ]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(records).toEqual([`trawl:${kind}`, `lookup:trawl:${kind}`]);
+  });
+
+  it.each([
+    ['seconds', '60', 60_000],
+    ['HTTP date', 'Tue, 04 Aug 2026 06:01:00 GMT', 60_000],
+    ['invalid hint', 'not a retry window', undefined],
+  ] as const)('retains a captured rate-limit retry hint from %s', async (_name, hint, retryAfterMs) => {
+    vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-08-04T06:00:00Z'));
+    const { tracker } = browser([capture(), capture(429, null, { headers: { 'rEtRy-AfTeR': hint } })]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', status: 429, retryAfterMs });
+  });
+
+  it('reads the latest sequence past the earlier capture bound', async () => {
+    const { tracker } = browser([
+      capture(), ...Array.from({ length: 20 }, () => capture(428, '')),
+      capture(429, '', { headers: { 'retry-after': '120' } }),
+    ]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 120_000 });
+  });
+
+  it('retains the newest refusal through the browser client capture bound', async () => {
+    const { tracker, fetcher } = browser([
+      ...Array.from({ length: 50 }, () => capture()),
+      capture(429, '', { headers: { 'retry-after': '60' } }),
+    ]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', status: 429, retryAfterMs: 60_000 });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('accepts a successful verification retry after an earlier refusal', async () => {
+    const { tracker } = browser([capture(429, ''), capture()]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'structured-web-response' });
+  });
+
+  it('ignores refusals outside the exact status endpoint', async () => {
+    const { tracker } = browser([capture(), capture(429, '', { url: `${STATUS_API}&unrelated=true` })]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ tracking_source: 'structured-web-response' });
+  });
+
+  it('uses the rendered page for a latest 428 instead of an older history', async () => {
+    const { tracker } = browser([capture(), capture(428, '')]);
+    await expect(tracker.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ status: 'delivered', tracking_source: 'rendered-page' });
+  });
+
+  it.each([
+    ['malformed JSON', capture(200, 'PRIVATE MALFORMED BODY')],
+    ['invalid schema', capture(200, '[]')],
+    ['wrong identity', capture(200, JSON.stringify(withScans([], { trackingNumber: BAD_CHECK_DIGIT })))],
+    ['truncated body', capture(200, JSON.stringify(fixture()), { truncated: true })],
+    ['missing body', capture(200, null)],
+    ['encoded body', capture(200, JSON.stringify(fixture()), { base64Encoded: true })],
+    ['body read failure', capture(200, null, { error: 'PRIVATE READ FAILURE' })],
+  ])('retains the latest %s as schema failure instead of using old JSON or HTML', async (_name, latest) => {
+    const { tracker, records } = browser([capture(), latest]);
+    const error: unknown = await tracker.fetch(TRACKING_NUMBER).catch((failure: unknown) => failure);
+    expect(error).toMatchObject({ kind: 'schema' });
+    expect(String(error)).not.toContain('PRIVATE');
+    expect(records).toEqual(['trawl:schema', 'lookup:trawl:schema']);
+  });
+
+  it.each(['60', 'Tue, 04 Aug 2026 06:01:00 GMT'])('preserves an outer-page 429 with Retry-After %s', async (hint) => {
+    vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-08-04T06:00:00Z'));
+    const { tracker, records } = browser([capture()], { statusCode: 429, responseHeaders: { 'Retry-After': hint } });
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', status: 429, retryAfterMs: 60_000 });
+    expect(records).toEqual(['trawl:rate_limited', 'lookup:trawl:rate_limited']);
+  });
+
+  it.each([401, 403])('preserves an outer-page HTTP %i challenge', async (statusCode) => {
+    const { tracker } = browser([capture()], { statusCode });
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'challenge', status: statusCode });
   });
 });
 

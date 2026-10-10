@@ -40,6 +40,24 @@ describe('TrawlClient.scrape', () => {
     expect(JSON.parse(String(init.body))).toMatchObject({ url: 'https://example.test/track', skipHttp: true, maxTier: 3 });
   });
 
+  it('can retain the latest bounded capture sequence without changing the default window or service request', async () => {
+    const captures = Array.from({ length: 60 }, (_, index) => ({ url: 'https://example.test/api', status: index === 59 ? 429 : 200,
+      headers: index === 59 ? { 'retry-after': '60' } : {}, body: String(index) }));
+    const fetcher = jsonFetcher({ html: '<html/>', tier: 3, statusCode: 200, capturedResponses: captures });
+    const client = new TrawlClient('http://trawl:8191', fetcher);
+    const first = await client.scrape({ url: 'https://example.test/track' }, options);
+    const last = await client.scrape({ url: 'https://example.test/track' }, { ...options, captureWindow: 'last' });
+    expect(first.capturedResponses).toHaveLength(50);
+    expect(first.capturedResponses[0]?.body).toBe('0');
+    expect(first.capturedResponses.at(-1)?.body).toBe('49');
+    expect(last.capturedResponses).toHaveLength(50);
+    expect(last.capturedResponses[0]?.body).toBe('10');
+    expect(last.capturedResponses.at(-1)).toMatchObject({ status: 429, headers: { 'retry-after': '60' }, body: '59' });
+    const calls = (fetcher as unknown as { mock: { calls: [URL, RequestInit][] } }).mock.calls;
+    expect(calls.map(([, init]) => JSON.parse(String(init.body))))
+      .toEqual([{ url: 'https://example.test/track' }, { url: 'https://example.test/track' }]);
+  });
+
   it('turns service errors and unsolved tiers into transport errors, and page statuses into HTTP errors', async () => {
     const client = (payload: unknown) => new TrawlClient('http://trawl:8191', jsonFetcher(payload));
     await expect(client({ error: 'browser crashed' }).scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({ name: 'TrawlError', kind: 'transport', message: 'browser crashed' });

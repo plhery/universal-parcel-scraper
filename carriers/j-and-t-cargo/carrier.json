@@ -16,25 +16,26 @@
   "selectable": true,
   "timezone": "UTC",
   "tracking": {
-    "mode": "link-only",
-    "adapter": null,
-    "steps": []
+    "mode": "automatic",
+    "adapter": "j-and-t-cargo",
+    "steps": ["direct"],
+    "recognition": { "rank": 47 },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": ["history", "location", "provider_code", "service_name"],
   "portal": {
     "url": "https://www.jtcargo.id/networkQuery?waybillNo={trackingNumber}&type=0",
     "searchUrl": "https://www.jtcargo.id/networkQuery",
     "canaryUrl": "https://www.jtcargo.id/",
     "shows": [
       "status",
-      "history"
+      "history",
+      "location",
+      "service_name"
     ],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": [
-      "status",
-      "history"
-    ]
+    "scraped": ["status", "history", "location", "provider_code", "service_name"],
+    "discarded": ["customer_messages", "recipient_details", "staff_details", "proof_images", "consignment_totals", "progress_rail"],
+    "unavailable": []
   },
   "links": [
     {
@@ -50,6 +51,11 @@
     {
       "id": "j-and-t-cargo-1",
       "pattern": "^20\\d{10}$",
+      "confidence": "low"
+    },
+    {
+      "id": "j-and-t-cargo-2",
+      "pattern": "^20\\d{13}$",
       "confidence": "low"
     }
   ]

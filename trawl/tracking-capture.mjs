@@ -208,13 +208,24 @@ const SITES = [
     },
   },
   {
-    // UPS answers once. Akamai accepts this call only from the session the
-    // page established, which is why the reply is read here and never replayed.
+    // Akamai accepts UPS tracking only from the session the page established,
+    // which is why replies are read here and never replayed.
     api: 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US',
+    provider: 'UPS',
+    requestMethod: 'POST',
+    keepLatestCaptures: true,
     number(page) {
       if (page.origin !== 'https://www.ups.com' || page.pathname !== '/track') return null;
       const number = (page.searchParams.get('tracknum') ?? '').toUpperCase();
       return /^1Z[A-Z0-9]{16}$/.test(number) ? number : null;
+    },
+    requestMatches(request, number) {
+      try {
+        const body = request.postDataJSON();
+        const values = body?.TrackingNumber;
+        return Array.isArray(values) && values.length === 1 && typeof values[0] === 'string'
+          && /^1Z[A-Z0-9]{16}$/i.test(values[0]) && values[0].toUpperCase() === number;
+      } catch { return false; }
     },
     settled(data, number) {
       const details = Array.isArray(data.trackDetails) ? data.trackDetails : [];
@@ -300,6 +311,7 @@ export async function attachTrackingCapture(page, url, options) {
   let networkError;
   let accepting = true;
   let count = 0;
+  let bodyReads = 0;
   let bytes = 0;
   let finish;
   const restart = () => {
@@ -330,13 +342,20 @@ export async function attachTrackingCapture(page, url, options) {
     if (!accepting || (response.url() !== api && response.url() !== site.checkApi)
       || (site.requestMethod && !matchesRequest(response.request()))
       || (site.checkApi && response.request().method() !== 'POST')
-      || ((site.perNumber || site.queryNumber) && response.request().method() !== 'GET') || ++count > 20) return;
+      || ((site.perNumber || site.queryNumber) && response.request().method() !== 'GET')) return;
+    if (!site.keepLatestCaptures && ++count > 20) return;
+    // A later matching response can recover a failed UPS request. Until then,
+    // drain must not let an older successful response conceal that failure.
+    if (site.keepLatestCaptures) networkError = undefined;
     const headers = response.headers();
     const entry = { url: response.url(), status: response.status(), body: null,
       headers: headers['retry-after'] ? { 'retry-after': headers['retry-after'].slice(0, 100) } : {},
       truncated: false, base64Encoded: false };
     if (site.postcodeSubmitted?.(response.request(), target)) entry.postcodeSubmitted = true;
     entries.push(entry);
+    // UPS retries can arrive after the old capture limit. Keep their arrival
+    // order and latest metadata, including refusals whose bodies are private.
+    if (site.keepLatestCaptures && entries.length > 20) entries.shift();
     if (entry.status !== 200 && !site.perNumber) { finish(); return; }
     const type = headers['content-type'] ?? '';
     const length = headers['content-length'] === undefined ? 0 : Number(headers['content-length']);
@@ -346,7 +365,13 @@ export async function attachTrackingCapture(page, url, options) {
       || length < 0 || length > 2_000_000 || bytes >= 4_000_000) {
       entry.error = 'unsupported or oversized tracking response'; finish(); return;
     }
+    // Rolling metadata must not create unbounded body reads during a burst.
+    // An unreadable latest 200 stays explicit; later HTTP refusals still win.
+    if (site.keepLatestCaptures && bodyReads >= 20) {
+      entry.error = 'tracking response extraction limit exceeded'; finish(); return;
+    }
     try {
+      if (site.keepLatestCaptures) bodyReads += 1;
       const body = await response.body();
       if (!accepting) return;
       bytes += body.length;
@@ -464,7 +489,7 @@ export async function attachTrackingCapture(page, url, options) {
       }
       // A loaded app shell is not a successful tracking session. Let the
       // orchestrator invalidate cached cookies and try its fresh browser tier.
-      if (observesRequests && entries.length === 0) {
+      if (observesRequests && (entries.length === 0 || site.keepLatestCaptures && networkError)) {
         const provider = site.provider ?? (site.queryNumber ? 'Australia Post' : 'Royal Mail');
         if (networkError) throw new Error(`${provider} tracking request failed: ${networkError}`);
         throw new Error(`${provider} produced no tracking response after submission`);

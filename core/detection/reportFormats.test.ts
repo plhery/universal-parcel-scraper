@@ -144,6 +144,17 @@ describe('evidence-backed tracking formats', () => {
       .toMatchObject({ trackingNumber: '200123456789', carrier: 'j-and-t-cargo', source: 'link' });
   });
 
+  it('keeps a J&T Cargo piece identifier whole through detection and pasted links', () => {
+    const piece = '200000000001034';
+    expect(detectCarrierMatch(piece)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch(piece).candidates).toContain('j-and-t-cargo');
+    expect(parseTrackingInput(`https://www.jtcargo.id/networkQuery?waybillNo=${piece}&type=0`))
+      .toMatchObject({ trackingNumber: piece, carrier: 'j-and-t-cargo', source: 'link' });
+    for (const number of ['210000000001034', '20000000000134', '2000000000010345']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('j-and-t-cargo');
+    }
+  });
+
   it('suggests Emile for its sixteen-character EM…CA numbers and reads its link', () => {
     expect(detectCarrierMatch('EM000000000001CA')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['emile'] });
     expect(parseTrackingInput('Tracking: EM000000000001CA')).toMatchObject({ trackingNumber: 'EM000000000001CA', confidence: 'low' });

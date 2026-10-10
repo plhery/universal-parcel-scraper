@@ -14,17 +14,19 @@ from the left); a mismatch stays a suggestion.
 1. `trawl` (whenever a browser service is configured): loads
    `https://www.ups.com/track?loc=en_US&tracknum=…&requester=ST/trackdetails` with
    `captureResponses` on `POST https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US`
-   and parses the reply the page itself received. If nothing readable was captured, it parses
-   the rendered page instead: current status and, once delivered, where, with no history.
+   and parses the latest matching reply the page itself received. A refusal or malformed
+   final reply overrides older successful replies. With no matching capture, or a final
+   HTTP 428 verification response, it parses the rendered page instead: current status
+   and, once delivered, where, with no history.
    Its ship-to town is the recipient's, never the banner's place.
 2. `direct` (only without a browser service): plain HTTP with an in-memory cookie jar.
    - Fetch the tracking page, check it set the `X-XSRF-TOKEN-ST` cookie, then POST
      `GetStatus` with that value as the `X-XSRF-TOKEN` header. Cache the session.
    - A cached session that gets rejected fetches the page once and retries; a second
      rejection drops it.
-   - If the API call fails, the fetched page is parsed as a rendered page. Otherwise it fails
+   - If the API call fails recoverably, the fetched page is parsed as a rendered page. Otherwise it fails
      with `ChallengeError('UPS challenged direct tracking; configure FLARESOLVERR_URL for
-     browser fallback')`.
+     browser fallback')`. Rate limits retain their own error and retry hint.
 
 In practice Akamai holds `GetStatus` open until the timeout (20 s direct) for any session a
 browser did not establish. A deployment without a browser service therefore gets only the
@@ -34,10 +36,13 @@ rendered status, after that wait.
 
 - Lookups are serialized per adapter instance: the jar and XSRF token are shared, and two
   concurrent refreshes produce a session that belongs to neither.
-- HTTP 401/403/419/429, or a page with no token, raise `UPSSessionRejected` (a
+- Direct HTTP 401/403/419, or a page with no token, raise `UPSSessionRejected` (a
   `ChallengeError`), which the refresh-once logic reacts to. Any other HTTP error, including
-  404, is indeterminate: it proves nothing about the parcel and must not start a not-found
+  404 but excluding 429, is indeterminate: it proves nothing about the parcel and must not start a not-found
   cooldown.
+- HTTP 429 from a direct request, captured status call or browser page stays rate limited.
+  Numeric and HTTP-date `Retry-After` hints are retained. A throttled session is neither
+  refreshed nor discarded, and rendered HTML cannot hide the throttle.
 - `direct` is disabled whenever a browser exists, with no cooldown probe: every probe costs
   the full direct timeout and hits the same block.
 - Each scan's `actCode` is kept as `provider_code` and mapped to a stage

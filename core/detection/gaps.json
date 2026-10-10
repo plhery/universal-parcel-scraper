@@ -243,12 +243,6 @@
     "reason": "One reported waybill starts 57; the rule covers the 20 prefix of every other report."
   },
   {
-    "carrier": "j-and-t-cargo",
-    "pattern": "^\\d{15}$",
-    "kind": "open",
-    "reason": "A piece number of a multi-piece consignment. One sample does not establish the family."
-  },
-  {
     "carrier": "landmark-global",
     "pattern": "^(?:PS\\d{6}[A-Z]\\d{10}|LDLBUS\\d{9})$",
     "kind": "by_design",

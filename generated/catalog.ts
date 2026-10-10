@@ -5281,8 +5281,10 @@ export const CARRIER_CATALOG = {
     "selectable": true,
     "timezone": "UTC",
     "tracking": {
-      "mode": "link-only",
-      "adapter": null
+      "mode": "automatic",
+      "adapter": "j-and-t-cargo",
+      "recognitionRank": 47,
+      "localClocks": true
     },
     "canaryUrl": "https://www.jtcargo.id/",
     "trackingUrlTemplate": "https://www.jtcargo.id/networkQuery?waybillNo={trackingNumber}&type=0",
@@ -5300,6 +5302,10 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^20\\d{10}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^20\\d{13}$",
         "confidence": "low"
       }
     ]
@@ -5841,7 +5847,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gofo-fr": ["gofo-fr-1","gofo-fr-2"],
   "gofo-it": ["gofo-it-1"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
-  "j-and-t-cargo": ["j-and-t-cargo-1"],
+  "j-and-t-cargo": ["j-and-t-cargo-1","j-and-t-cargo-2"],
   "lbc-express": ["lbc-domestic"],
   "nova-poshta": ["nova-poshta-domestic"],
   "omgo": ["omgo-1"],

@@ -5279,8 +5279,10 @@
     "selectable": true,
     "timezone": "UTC",
     "tracking": {
-      "mode": "link-only",
-      "adapter": null
+      "mode": "automatic",
+      "adapter": "j-and-t-cargo",
+      "recognitionRank": 47,
+      "localClocks": true
     },
     "canaryUrl": "https://www.jtcargo.id/",
     "trackingUrlTemplate": "https://www.jtcargo.id/networkQuery?waybillNo={trackingNumber}&type=0",
@@ -5298,6 +5300,10 @@
     "detectionRules": [
       {
         "pattern": "^20\\d{10}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^20\\d{13}$",
         "confidence": "low"
       }
     ]

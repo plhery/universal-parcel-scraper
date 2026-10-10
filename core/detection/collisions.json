@@ -1899,5 +1899,14 @@
       "dhl-ecommerce-uk"
     ],
     "reason": "Hermes Germany parcel numbers share this numeric length with the DPD networks and these carriers, so number shape alone cannot identify a carrier."
+  },
+  {
+    "shape": "Fifteen digits starting with 20",
+    "carriers": [
+      "brt",
+      "j-and-t-cargo",
+      "yunda"
+    ],
+    "reason": "J&T Cargo piece identifiers overlap the broad BRT and Yunda formats. Direct tracking must confirm the carrier."
   }
 ]

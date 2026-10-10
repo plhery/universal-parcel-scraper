@@ -5556,6 +5556,7 @@
       "sf-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5583,6 +5584,7 @@
       "fedex"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5606,6 +5608,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5630,6 +5633,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5653,6 +5657,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5678,10 +5683,10 @@
     ],
     "asked": [
       "purolator",
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
-      "sto",
-      "j-and-t"
+      "sto"
     ]
   },
   {
@@ -5701,6 +5706,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5724,6 +5730,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5770,6 +5777,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5794,6 +5802,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5820,6 +5829,7 @@
       "sagawa"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5861,6 +5871,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5884,6 +5895,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -5896,9 +5908,11 @@
     "confidence": "low",
     "candidates": [
       "brt",
-      "yunda"
+      "yunda",
+      "j-and-t-cargo"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt"
     ]
   },
@@ -5956,6 +5970,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
@@ -6001,6 +6016,7 @@
       "lbc-express"
     ],
     "asked": [
+      "j-and-t-cargo",
       "brt",
       "colis-prive",
       "sto",
