@@ -120,7 +120,8 @@
         "dateKind": "capture"
       },
       "context": {
-        "assessment": "candidate"
+        "service": "Terrestre",
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -131,7 +132,7 @@
           "estafeta"
         ]
       },
-      "note": "Archived Estafeta tracking page for an all-digit full guide. Estafeta's tracker still shows a delivered summary for it, but its history has expired, so the adapter stays inconclusive."
+      "note": "Archived Estafeta tracking page for an all-digit full guide. Estafeta's tracker returns a page bound to this guide, showing it delivered and its service. Its scans are no longer available, so the adapter stays inconclusive."
     }
   ]
 }
