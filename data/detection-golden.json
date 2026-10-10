@@ -13509,6 +13509,14 @@
     ]
   },
   {
+    "input": "AD961794895BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
+    ]
+  },
+  {
     "input": "AECA00000001313353",
     "carrier": "unknown",
     "confidence": "none",
@@ -13536,6 +13544,14 @@
     "confidence": "high",
     "candidates": [
       "ekart"
+    ]
+  },
+  {
+    "input": "AN983249169BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
     ]
   },
   {
@@ -13586,6 +13602,14 @@
     "confidence": "high",
     "candidates": [
       "amazon-logistics"
+    ]
+  },
+  {
+    "input": "AV080071581BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
     ]
   },
   {
@@ -17496,6 +17520,14 @@
     ]
   },
   {
+    "input": "ND707083499BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
+    ]
+  },
+  {
     "input": "NJVTT80134490007",
     "carrier": "ninja-van",
     "confidence": "high",
@@ -17597,6 +17629,14 @@
     "confidence": "high",
     "candidates": [
       "ninja-van"
+    ]
+  },
+  {
+    "input": "NN272353612BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
     ]
   },
   {
@@ -18254,6 +18294,14 @@
     "confidence": "high",
     "candidates": [
       "hongkong-post"
+    ]
+  },
+  {
+    "input": "RE228885072BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
     ]
   },
   {
@@ -19970,6 +20018,14 @@
     ]
   },
   {
+    "input": "YD292005015BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
+    ]
+  },
+  {
     "input": "YJF0019250",
     "carrier": "unknown",
     "confidence": "low",
@@ -20165,6 +20221,14 @@
     "confidence": "high",
     "candidates": [
       "yanwen"
+    ]
+  },
+  {
+    "input": "YZ125824615BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
     ]
   },
   {
