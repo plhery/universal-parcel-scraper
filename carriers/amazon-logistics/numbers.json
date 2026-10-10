@@ -391,6 +391,177 @@
         "confidence": "high"
       },
       "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it, so it is not an Amazon Shipping parcel today."
+    },
+    {
+      "number": "FR3160944777",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260810133715/https://track.amazon.com/tracking/FR3160944777",
+        "date": "2026-08-10",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "tba329379118495",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260316144938/https://track.amazon.com/tracking/tba329379118495",
+        "date": "2026-03-16",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "UK3597369972",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251201055443/https://track.amazon.com/tracking/UK3597369972",
+        "date": "2025-12-01",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "UK3291368265",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250920151551/https://track.amazon.co.uk/tracking/UK3291368265",
+        "date": "2025-09-20",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "UK2552179527",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250324015757/https://track.amazon.co.uk/tracking/UK2552179527",
+        "date": "2025-03-24",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "IT3025916508",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250913190438/https://track.amazon.it/tracking/IT3025916508",
+        "date": "2025-09-13",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "IT2802143648",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250118024413/https://track.amazon.it/tracking/IT2802143648",
+        "date": "2025-01-18",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "TBC004142757009",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260830140950/https://track.amazon.com/tracking/TBC004142757009?trackingId=TBC004142757009",
+        "date": "2026-08-30",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
+    },
+    {
+      "number": "ES2414474381",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260104121841/https://track.amazon.es/tracking/ES2414474381",
+        "date": "2026-01-04",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's European trackers answer it with their web page instead of data, and the US tracker does not know it."
     }
   ]
 }

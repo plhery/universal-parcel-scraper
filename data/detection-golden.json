@@ -14956,6 +14956,24 @@
     ]
   },
   {
+    "input": "9361289768768383078043",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "dhl-ecommerce",
+      "austrian-post",
+      "estafeta"
+    ],
+    "preferred": [
+      "usps"
+    ],
+    "asked": [
+      "austrian-post",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "9374889692090679280873",
     "carrier": "usps",
     "confidence": "high",
@@ -18151,6 +18169,14 @@
     ]
   },
   {
+    "input": "ES2414474381",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "ES401809342KR",
     "carrier": "korea-post",
     "confidence": "high",
@@ -18295,6 +18321,14 @@
   },
   {
     "input": "FR2926265395",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "FR3160944777",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [
@@ -19011,6 +19045,22 @@
   },
   {
     "input": "IT0000000001",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "IT2802143648",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "IT3025916508",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [
@@ -22667,6 +22717,12 @@
     ]
   },
   {
+    "input": "SWAP2P003014186",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SX446838689IE",
     "carrier": "an-post",
     "confidence": "high",
@@ -22847,6 +22903,22 @@
     ]
   },
   {
+    "input": "TBA334352074688",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "TBA334537439236",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "TBA334610324555",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -22871,6 +22943,14 @@
     ]
   },
   {
+    "input": "TBA335250058574",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "TBAONT500361196",
     "carrier": "unknown",
     "confidence": "none",
@@ -22878,6 +22958,14 @@
   },
   {
     "input": "TBC 000000000000",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "TBC004142757009",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [
@@ -23087,7 +23175,31 @@
     ]
   },
   {
+    "input": "UK2552179527",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "UK3000000001",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "UK3291368265",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
+    "input": "UK3597369972",
     "carrier": "amazon-logistics",
     "confidence": "high",
     "candidates": [
@@ -24267,6 +24379,14 @@
     "confidence": "low",
     "candidates": [
       "spx-ph"
+    ]
+  },
+  {
+    "input": "tba329379118495",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
     ]
   },
   {
