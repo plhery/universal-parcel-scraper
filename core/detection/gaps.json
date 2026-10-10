@@ -165,6 +165,12 @@
     "reason": "Reviews of DTDC cite Z waybills with ten digits, the shape of Packeta's Z barcodes, whose high-confidence rule takes them."
   },
   {
+    "carrier": "fedex",
+    "pattern": "^(?:612|748)9\\d{16}$",
+    "kind": "open",
+    "reason": "FedEx Ground Economy numbers are USPS package numbers without their 92 channel, and FedEx's tracker files them under SmartPost. Detection, the adapter and the browser service's FedEx route accept only 12 or 15 digits."
+  },
+  {
     "carrier": "four-px",
     "pattern": "^MS\\d{8}XSG$",
     "kind": "open",

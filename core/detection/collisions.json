@@ -1374,6 +1374,23 @@
     "reason": "Passing check digits add FedEx, GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits that pass the FedEx and Identcode checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto"
+    ],
+    "reason": "Passing check digits add FedEx and DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "9{13} starting with 2 to 6, outside 250, that fails the Ukrposhta check",
     "carriers": [
       "correos-chile",

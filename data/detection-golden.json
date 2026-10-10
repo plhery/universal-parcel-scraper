@@ -281,6 +281,23 @@
     ]
   },
   {
+    "input": "002550961151924",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dpd-fr",
+      "brt",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
     "input": "00264300487130023858",
     "carrier": "unknown",
     "confidence": "low",
@@ -3248,6 +3265,33 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "121585746108",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
+    ]
   },
   {
     "input": "1224555672638984",
@@ -9034,6 +9078,33 @@
     ]
   },
   {
+    "input": "396557764681",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "dhl",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
+    ]
+  },
+  {
     "input": "39981025502486",
     "carrier": "unknown",
     "confidence": "low",
@@ -9702,6 +9773,32 @@
       "zto",
       "j-and-t",
       "lbc-express"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
+    ]
+  },
+  {
+    "input": "4249 0852 2182",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
     ],
     "asked": [
       "brt",
@@ -11189,6 +11286,32 @@
     ]
   },
   {
+    "input": "543070066728",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
+    ]
+  },
+  {
     "input": "54499091",
     "carrier": "unknown",
     "confidence": "low",
@@ -11219,6 +11342,32 @@
       "seur",
       "brt",
       "relais-colis"
+    ]
+  },
+  {
+    "input": "553324223330",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
     ]
   },
   {
@@ -12013,6 +12162,18 @@
       "mondial-relay",
       "colisweb",
       "heppner"
+    ]
+  },
+  {
+    "input": "61299994738840303974",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
     ]
   },
   {
@@ -12845,6 +13006,18 @@
     ]
   },
   {
+    "input": "74890983300058417827",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "7490/11263764",
     "carrier": "nacex",
     "confidence": "high",
@@ -13377,6 +13550,32 @@
     ]
   },
   {
+    "input": "8010 8389 6838",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
+    ]
+  },
+  {
     "input": "802269919937015457",
     "carrier": "unknown",
     "confidence": "low",
@@ -13482,6 +13681,32 @@
       "gls-de",
       "postlogistics",
       "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "818819882348",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
     ]
   },
   {
@@ -13798,6 +14023,36 @@
     ]
   },
   {
+    "input": "873970594430",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "gls-ch",
+      "mondial-relay",
+      "gls-fr",
+      "colis-prive",
+      "gls-de",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "87473631",
     "carrier": "unknown",
     "confidence": "low",
@@ -13920,6 +14175,32 @@
       "dpd-de",
       "seur",
       "brt"
+    ]
+  },
+  {
+    "input": "881171022565",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
     ]
   },
   {
@@ -14882,6 +15163,22 @@
     ]
   },
   {
+    "input": "949856944754758",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "brt",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
     "input": "9500113562366007585132",
     "carrier": "usps",
     "confidence": "high",
@@ -15080,6 +15377,23 @@
     ]
   },
   {
+    "input": "9612804169230236160243",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "austrian-post",
+      "usps",
+      "estafeta"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "austrian-post"
+    ]
+  },
+  {
     "input": "9612804882227378545377",
     "carrier": "unknown",
     "confidence": "low",
@@ -15094,6 +15408,22 @@
     ],
     "asked": [
       "austrian-post"
+    ]
+  },
+  {
+    "input": "961879871514044",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "brt",
+      "yunda"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt"
     ]
   },
   {
