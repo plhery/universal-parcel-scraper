@@ -4542,6 +4542,17 @@
     ]
   },
   {
+    "input": "1842852",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ],
+    "asked": [
+      "seur"
+    ]
+  },
+  {
     "input": "1880000220",
     "carrier": "unknown",
     "confidence": "low",
@@ -11757,6 +11768,17 @@
     ]
   },
   {
+    "input": "6404650",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ],
+    "asked": [
+      "seur"
+    ]
+  },
+  {
     "input": "642600027844200234823732",
     "carrier": "unknown",
     "confidence": "low",
@@ -12328,6 +12350,17 @@
     "asked": [
       "la-poste",
       "delhivery"
+    ]
+  },
+  {
+    "input": "7472385",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ],
+    "asked": [
+      "seur"
     ]
   },
   {
@@ -13400,6 +13433,17 @@
       "mondial-relay",
       "colisweb",
       "heppner"
+    ]
+  },
+  {
+    "input": "8830834",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ],
+    "asked": [
+      "seur"
     ]
   },
   {

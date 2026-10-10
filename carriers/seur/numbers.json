@@ -489,6 +489,102 @@
         ]
       },
       "note": "Tracking number in a complaint about an undelivered parcel; SEUR's tracker had no usable history for it when checked."
+    },
+    {
+      "number": "1842852",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/reviews/6ac78de6d299c33be74fad61",
+        "access": "full_page",
+        "date": "2026-10-08",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "SEUR",
+        "reportedRole": "order_number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Seven-digit reference a review gives as its order; SEUR's simplified lookup returned the shipment's history."
+    },
+    {
+      "number": "6404650",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/reviews/6ac7a6e8a32f09b704f5fe77",
+        "access": "full_page",
+        "date": "2026-10-08",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SEUR",
+        "reportedRole": "shipment_identifier"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Seven-digit shipment identifier a review quotes; SEUR's simplified lookup answered with an error code other than its usual no-history one."
+    },
+    {
+      "number": "7472385",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/reclamaci-C3-B3n-urgente-por-falsa-/e14502ef83e9bfcb82",
+        "access": "full_page",
+        "date": "2026-10-06",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SEUR",
+        "reportedRole": "shipment_tracking"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Seven-digit tracking number a recent complaint quotes; SEUR's simplified lookup did not locate it."
+    },
+    {
+      "number": "8830834",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/no-se-proporciona-informaci-C3-B3n-/753d36e9160c328c22",
+        "access": "full_page",
+        "date": "2026-10-05",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "SEUR",
+        "reportedRole": "expedition_number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Seven-digit expedition number from the subject line of SEUR's incident e-mail; the simplified lookup did not locate it."
     }
   ]
 }
