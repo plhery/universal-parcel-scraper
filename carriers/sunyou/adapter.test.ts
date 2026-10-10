@@ -3,6 +3,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { CarrierResult } from '../../core/result/index.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
+import { isValidS10TrackingNumber } from '../../core/detection/index.js';
 import { fetchSunYou, parseSunYouTrackingResponse, SunYouTracker } from './adapter.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
@@ -168,6 +171,7 @@ describe('SunYou event timezones', () => {
 
 describe('SunYou declared capabilities and privacy', () => {
   const delivered = parseSunYouTrackingResponse(fixture('delivered.json'), 'SYAE100000001');
+  const coded = parseSunYouTrackingResponse(fixture('coded.json'), 'SYGB000000001');
   const checks: Record<string, (result: CarrierResult) => boolean> = {
     history: (result) => (result.events?.length ?? 0) > 0,
     location: (result) => (result.events ?? []).some((event) => Boolean(event.location)),
@@ -179,6 +183,8 @@ describe('SunYou declared capabilities and privacy', () => {
     dimensions: (result) => Boolean(result.dimensions_text),
     delivered_at: (result) => Boolean(result.delivered_at),
     provider_code: (result) => (result.events ?? []).some((event) => Boolean(event.provider_code)),
+    delivery_partner: (result) => Boolean(result.delivery_carrier),
+    delivery_tracking_number: (result) => Boolean(result.delivery_tracking_number),
   };
 
   it('merges both legs into one journey ordered by absolute instant', () => {
@@ -204,13 +210,129 @@ describe('SunYou declared capabilities and privacy', () => {
   it.each(carrier.capabilities)('declares %s and a fixture proves it', (capability) => {
     const check = checks[capability];
     expect(check, `unknown capability ${capability}`).toBeTypeOf('function');
-    expect(check!(delivered)).toBe(true);
+    expect(check!(coded)).toBe(true);
   });
 
   it('drops the recipient and the signature', () => {
-    const projected = JSON.stringify(delivered);
+    const projected = JSON.stringify([delivered, coded]);
     for (const value of ['Made Up Recipient', 'Example Street 1', 'proof-of-delivery']) {
       expect(projected).not.toContain(value);
     }
+  });
+});
+
+describe('SunYou scan codes and last-mile handoff', () => {
+  const coded = fixture('coded.json') as { data: [Record<string, unknown>] };
+  const withItem = (changes: Record<string, unknown>) => ({ data: [{ ...coded.data[0], ...changes }] });
+  const scan = (eventCode: string, content: string) => ({
+    result: { origin: { items: [{ createTime: '2026-08-15 22:41:52', timeZone: '+01:00', eventCode, content }] } },
+  });
+
+  it('stages every scan by its own code and keeps the code', () => {
+    const result = parseSunYouTrackingResponse(coded, 'SYGB000000001');
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['Delivered_Doorstep', 'delivered'],
+      ['OutForDelivery', 'out_for_delivery'],
+      ['ClearanceSuccessed', 'in_transit'],
+      ['ClearanceProcess', 'customs'],
+      ['Dispatch', 'in_transit'],
+      ['InboundScan', 'accepted'],
+      ['PreAlert', 'registered'],
+    ]);
+    expect(result).toMatchObject({
+      status: 'delivered',
+      current_stage: 'delivered',
+      delivered_at: '2026-08-19T12:26:09+01:00',
+      destination_country: 'GB',
+      delivery_carrier: 'royal-mail',
+      delivery_tracking_number: 'ZZ000000005GB',
+    });
+  });
+
+  it('lets the newest scan code refine the generic in-transit display status', () => {
+    const result = parseSunYouTrackingResponse(
+      withItem({ displayStatus: '1', ...scan('ClearanceProcess', 'Customs Clearance In Process') }),
+      'SYGB000000001',
+    );
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'customs', events: [{ stage: 'customs' }] });
+    expect(result.delivered_at).toBeUndefined();
+  });
+
+  it('falls back to the display status for a code it does not know', () => {
+    const result = parseSunYouTrackingResponse(
+      withItem({ displayStatus: '3', ...scan('SomethingNew', 'Delivery attempt failed') }),
+      'SYGB000000001',
+    );
+    expect(result).toMatchObject({
+      status: 'exception',
+      current_stage: 'failed_attempt',
+      events: [{ provider_code: 'SomethingNew', stage: 'failed_attempt' }],
+    });
+  });
+
+  it('names no export post: the hand-off goes by destination', () => {
+    // SunYou names China Post, with its own postal number, for a parcel to Japan.
+    const reference = 'LP000000005CN';
+    expect(isValidS10TrackingNumber(reference)).toBe(true);
+    const result = parseSunYouTrackingResponse(withItem({
+      dstCountry: 'JP', carrierName: 'China Post', carrierWebsite: 'https://www.ems.com.cn/', trackingNumber: reference,
+    }), 'SYGB000000001');
+    expect(result).toMatchObject({ destination_country: 'JP', delivery_tracking_number: reference });
+    expect(result.delivery_carrier).toBeUndefined();
+    expect(deliveryHandoff('sunyou', 'SYGB000000001', result)).toEqual({ carrier: 'japan-post', number: reference, basis: 'destination' });
+    // With no national post for the destination, the number's issuer takes it.
+    const elsewhere = parseSunYouTrackingResponse(withItem({
+      dstCountry: 'BG', carrierName: 'China Post', carrierWebsite: 'https://www.ems.com.cn/', trackingNumber: reference,
+    }), 'SYGB000000001');
+    expect(elsewhere.delivery_carrier).toBeUndefined();
+    expect(deliveryHandoff('sunyou', 'SYGB000000001', elsewhere)).toEqual({ carrier: 'china-post', number: reference, basis: 'reference' });
+  });
+
+  it('names no carrier that does not serve the destination', () => {
+    const result = parseSunYouTrackingResponse(withItem({ dstCountry: 'FR' }), 'SYGB000000001');
+    expect(result.delivery_tracking_number).toBe('ZZ000000005GB');
+    expect(result.delivery_carrier).toBeUndefined();
+    const usps = { carrierName: 'USPS', carrierWebsite: 'https://www.usps.com/', trackingNumber: '9214490000000000000003' };
+    const domestic = parseSunYouTrackingResponse(withItem({ dstCountry: 'US', ...usps }), 'SYGB000000001');
+    expect(domestic.delivery_carrier).toBe('usps');
+    // Not a postal number, so only the countries USPS serves keep it out of Canada.
+    const abroad = parseSunYouTrackingResponse(withItem({ dstCountry: 'CA', ...usps }), 'SYGB000000001');
+    expect(abroad).toMatchObject({ destination_country: 'CA', delivery_tracking_number: '9214490000000000000003' });
+    expect(abroad.delivery_carrier).toBeUndefined();
+    const unknown = parseSunYouTrackingResponse(withItem({ dstCountry: undefined }), 'SYGB000000001');
+    expect(unknown.delivery_carrier).toBeUndefined();
+  });
+
+  it('keeps the reference but names no carrier whose detection does not offer it', () => {
+    const result = parseSunYouTrackingResponse(withItem({ trackingNumber: 'AB12' }), 'SYGB000000001');
+    expect(result.delivery_tracking_number).toBe('AB12');
+    expect(result.delivery_carrier).toBeUndefined();
+  });
+
+  it('reports no handoff when the reference is the shipment itself', () => {
+    const result = parseSunYouTrackingResponse(withItem({ trackingNumber: 'sygb000000001' }), 'SYGB000000001');
+    expect(result.delivery_tracking_number).toBeUndefined();
+    expect(result.delivery_carrier).toBeUndefined();
+  });
+});
+
+describe('SunYou stored scans', () => {
+  const policy = sameInstantIdentityPolicy('sunyou', { supportsScanMatching: true });
+  const stored = { stage: 'in_transit', description: 'Acceptance, Sent To Example Land', location: '', providerCode: '' };
+  const incoming = { ...stored, stage: 'accepted', providerCode: 'InboundScan' };
+
+  it('lets a scan stored before its code was kept take the code and its stage', () => {
+    expect(sameInstantIdentityPolicy('sunyou')).toBeUndefined();
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    expect(policy?.matches?.(incoming, { ...stored, providerCode: 'InboundScan', stage: 'accepted' })).toBe(true);
+  });
+
+  it('keeps other scans apart', () => {
+    for (const different of [
+      { ...stored, providerCode: 'PreAlert' },
+      { ...stored, description: 'Pre-Shipment Info Sent To Example Land' },
+      { ...stored, location: 'Example City' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    expect(policy?.matches?.({ ...incoming, providerCode: '' }, stored)).toBe(false);
   });
 });

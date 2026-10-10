@@ -273,6 +273,10 @@
       {
         "pattern": "^SYAE\\d{9}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^SY[A-Z]{2}\\d{9}$",
+        "confidence": "high"
       }
     ]
   },

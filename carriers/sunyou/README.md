@@ -22,13 +22,26 @@ for the last mile. This folder covers the journey up to that handoff.
 - A scan without a usable offset keeps the provider's raw text. No zone is guessed (not even
   Asia/Shanghai). `core/time`'s `explicitOffsetTime` is not used because it drops values it can't
   resolve.
-- `displayStatus` is shipment-level, so only the newest scan gets its stage.
-- Scan descriptions are free text in several languages and are classified by the sync's shared
-  wording rules, not here.
+- Each scan's `eventCode` is kept as its provider code and gives its stage (`status.ts`).
+  `displayStatus` is shipment-level, so only the newest scan falls back to it, and only when its
+  code is unknown. The newest scan's code also refines the generic in-transit `displayStatus`, for
+  example to customs.
+- Scans with an unknown code are classified by the sync's shared wording rules.
+- `trackingNumber`, when it differs from the requested number, is the last-mile reference. The
+  carrier named beside it (`carrierName`, `carrierWebsite`) is reported only when the catalog knows
+  it, its detection offers the reference and it serves the destination (`dstCountry`). For postal
+  items SunYou names the post it exports through, such as China Post for a parcel to Japan, so no
+  carrier is named for a postal number issued in another country than the destination; the
+  hand-off then goes by the destination's national post where the catalog has one, else by the
+  number's issuer.
+- `delivered_at` is the time of the newest scan when that scan is a delivery.
+- Numbers are `SY` and eleven digits, or `SY`, two letters and nine digits (`SYUS`, `SYGB`, `SYRM`,
+  `SYAE` and others). `SYMY` numbers seen in archives answer not found.
 
 ## Limitations
 
-- No scan locations or ETA: the endpoint has neither. At most 20 scans are kept.
+- Scan locations are not read, and the endpoint has no ETA. At most 20 scans are kept.
+- Recent replies put every scan in the origin leg, the last-mile ones included.
 - The recipient block and signature image are never read.
 
 ## Testing

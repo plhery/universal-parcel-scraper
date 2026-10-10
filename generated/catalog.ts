@@ -275,6 +275,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^SYAE\\d{9}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^SY[A-Z]{2}\\d{9}$",
+        "confidence": "high"
       }
     ]
   },
@@ -5717,7 +5721,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "quickpac": ["quickpac-1"],
   "planzer": ["planzer-1","planzer-2"],
   "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-lp-reference","aliexpress-ty"],
-  "sunyou": ["sunyou-1","sunyou-2"],
+  "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": [],
   "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3"],
   "postlogistics": ["postlogistics-dashed-reference","postlogistics-compact-reference"],

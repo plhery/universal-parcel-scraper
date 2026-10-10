@@ -21980,6 +21980,14 @@
     ]
   },
   {
+    "input": "SY15077455811",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
     "input": "SYAE006809461",
     "carrier": "sunyou",
     "confidence": "high",
@@ -21989,6 +21997,78 @@
   },
   {
     "input": "SYAE100000001",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYCA007156427",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYDE008705604",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYGB015534278",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYMY109473709",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYRM157579317",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYRM163479157",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYUS019503044",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYUS024587570",
+    "carrier": "sunyou",
+    "confidence": "high",
+    "candidates": [
+      "sunyou"
+    ]
+  },
+  {
+    "input": "SYZZ021784298",
     "carrier": "sunyou",
     "confidence": "high",
     "candidates": [

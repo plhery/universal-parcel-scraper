@@ -1,14 +1,14 @@
 /**
  * SunYou status vocabulary.
  *
- * The tracking endpoint returns one numeric `displayStatus` per shipment; the
- * scan texts themselves carry no code. `0` is not in the map: it is SunYou's
+ * The tracking endpoint returns one numeric `displayStatus` per shipment and
+ * an `eventCode` on each scan. `0` is not in the display map: it is SunYou's
  * explicit "no such shipment" and the adapter turns it into a not-found before
  * classification.
  *
- * Only the newest scan inherits this stage. Older scans are returned without
- * one, because the shipment-level status says nothing about where the parcel
- * was three days ago.
+ * A scan's own `eventCode` gives its stage. `displayStatus` says nothing about
+ * where the parcel was three days ago, so only the newest scan falls back to
+ * it, and only when its code is not listed here.
  */
 import type { ClassifiedStatus } from '../../core/status/index.js';
 
@@ -21,9 +21,42 @@ const DISPLAY_STATUS = new Map<string, ClassifiedStatus>([
   ['6', { status: 'exception', stage: 'failed_attempt' }],
 ]);
 
-export { DISPLAY_STATUS as SUNYOU_STATUS };
+const MOVING: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };
+const IN_CUSTOMS: ClassifiedStatus = { status: 'in_transit', stage: 'customs' };
+const DELIVERED: ClassifiedStatus = { status: 'delivered', stage: 'delivered' };
+
+const EVENT_CODE = new Map<string, ClassifiedStatus>([
+  ['PreAlert', { status: 'pending', stage: 'registered' }],
+  ['InboundScan', { status: 'in_transit', stage: 'accepted' }],
+  ['Dispatch', MOVING],
+  // Export clearance done at origin; the parcel moves on to the port.
+  ['ClearanceSuccessed_Export', MOVING],
+  ['PortArrival', MOVING],
+  ['PortDeparture', MOVING],
+  ['TransitCountryArrival', MOVING],
+  ['TransitCountryDeparted', MOVING],
+  ['DestinationAirPortArrival', MOVING],
+  ['ClearanceProcess', IN_CUSTOMS],
+  ['ClearanceInspect', IN_CUSTOMS],
+  ['ClearanceSuccessed', MOVING],
+  ['HandoverLastMile', MOVING],
+  ['LastmileCenterArrival', MOVING],
+  ['DeliveryStationArrival', MOVING],
+  ['DeliveryStationDepart', MOVING],
+  ['OutForDelivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['Delivered', DELIVERED],
+  ['Delivered_Mailbox', DELIVERED],
+  ['Delivered_Doorstep', DELIVERED],
+]);
+
+export { DISPLAY_STATUS as SUNYOU_STATUS, EVENT_CODE as SUNYOU_EVENT_CODES };
 
 /** The status and stage for one `displayStatus`, or undefined when unmapped. */
 export function sunYouStatus(displayStatus: string): ClassifiedStatus | undefined {
   return DISPLAY_STATUS.get(displayStatus);
+}
+
+/** The status and stage for one scan's `eventCode`, or undefined when unmapped. */
+export function sunYouEventStatus(eventCode: string): ClassifiedStatus | undefined {
+  return EVENT_CODE.get(eventCode);
 }

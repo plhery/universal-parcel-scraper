@@ -18,7 +18,11 @@ import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { cleanScalar, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { sunYouStatus } from './status.js';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
+import { detectCarrierMatch, isValidS10TrackingNumber } from '../../core/detection/index.js';
+import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
+import type { CarrierId } from '../../generated/catalog.js';
+import { sunYouEventStatus, sunYouStatus } from './status.js';
 
 const PROVIDER = 'SunYou';
 const UPSTREAM = 'SunYou tracking';
@@ -115,21 +119,55 @@ export function parseSunYouTrackingResponse(value: unknown, trackingNumber: stri
     ...recordArray(record(result.origin).items),
     ...recordArray(record(result.destination).items),
   ].sort((left, right) => sunYouEventInstant(right) - sunYouEventInstant(left));
-  const classified = sunYouStatus(displayStatus);
-  const events = allEvents.slice(0, MAX_EVENTS_TO_RETURN).map((event, index): CarrierEvent => ({
-    time: sunYouEventTime(event),
-    location: '',
-    description: text(event.content),
-    ...(index === 0 && classified ? { stage: classified.stage } : {}),
-  }));
+  const displayed = sunYouStatus(displayStatus);
+  const events = allEvents.slice(0, MAX_EVENTS_TO_RETURN).map((event, index): CarrierEvent => {
+    const code = cleanScalar(event.eventCode, 64);
+    const classified = sunYouEventStatus(code) ?? (index === 0 ? displayed : undefined);
+    return {
+      time: sunYouEventTime(event),
+      location: '',
+      description: text(event.content),
+      ...(code ? { provider_code: code } : {}),
+      ...(classified ? { stage: classified.stage } : {}),
+    };
+  });
+  const newest = events[0];
+  const classified = (newest ? sunYouEventStatus(newest.provider_code ?? '') : undefined) ?? displayed;
+  const handoff = comparableIdentifier(item.trackingNumber);
+  const delivery = handoff && handoff !== requested && handoff.length <= 40 ? handoff : '';
+  const country = cleanScalar(item.dstCountry, 8).toUpperCase();
+  const destination = /^[A-Z]{2}$/.test(country) ? country : '';
+  const partner = delivery ? lastMile(item, delivery, destination) : undefined;
   return {
     status: classified?.status ?? 'in_transit',
     ...(classified ? { current_stage: classified.stage } : {}),
-    last_status_text: text(item.lastContent) || events[0]?.description || '',
-    last_update: text(item.lastUpdate) || events[0]?.time || null,
+    last_status_text: text(item.lastContent) || newest?.description || '',
+    last_update: text(item.lastUpdate) || newest?.time || null,
     expected_delivery: null,
+    ...(classified?.stage === 'delivered' && newest?.stage === 'delivered' && EXPLICIT_OFFSET.test(newest.time ?? '')
+      ? { delivered_at: newest.time } : {}),
+    ...(delivery ? { delivery_tracking_number: delivery, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
+    ...(destination ? { destination_country: destination } : {}),
     events,
   };
+}
+
+/**
+ * The last-mile carrier SunYou names beside its reference. The catalog must
+ * know the name or site, and that carrier's own detection must offer the
+ * reference. For postal items SunYou names the post it exports through, such
+ * as China Post for a parcel to Japan: a carrier is named only when it serves
+ * the destination, and never for a postal number issued in another country.
+ * The hand-off then goes by the destination's national post where the catalog
+ * has one, else by the number's issuer.
+ */
+function lastMile(item: JsonObject, reference: string, destination: string): string | undefined {
+  if (!destination) return undefined;
+  if (isValidS10TrackingNumber(reference) && reference.slice(-2) !== destination) return undefined;
+  const carrier = carrierIdFromPartner(cleanScalar(item.carrierName, 80), cleanScalar(item.carrierWebsite, 200));
+  if (!carrier || carrier === 'sunyou' || !(detectCarrierMatch(reference).candidates as string[]).includes(carrier)) return undefined;
+  const countries: readonly string[] = CARRIER_DEFINITIONS[carrier as CarrierId]?.countries ?? [];
+  return countries.includes(destination) ? carrier : undefined;
 }
 
 export class SunYouTracker {

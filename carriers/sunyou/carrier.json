@@ -22,7 +22,11 @@
     ]
   },
   "capabilities": [
-    "history"
+    "history",
+    "provider_code",
+    "delivered_at",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://sypost.net/search?orderNo={trackingNumber}",
@@ -30,11 +34,13 @@
     "canaryUrl": "https://sypost.net/",
     "shows": [
       "status",
-      "history"
+      "history",
+      "delivery_partner"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "delivery_partner"
     ],
     "discarded": [],
     "unavailable": []
@@ -59,6 +65,11 @@
     {
       "id": "sunyou-2",
       "pattern": "^SYAE\\d{9}$",
+      "confidence": "high"
+    },
+    {
+      "id": "sunyou-3",
+      "pattern": "^SY[A-Z]{2}\\d{9}$",
       "confidence": "high"
     }
   ]
