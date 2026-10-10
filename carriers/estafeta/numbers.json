@@ -21,7 +21,10 @@
           "dhl-ecommerce-es"
         ]
       },
-      "note": "Publicly reported short tracking code; the native single-parcel response pairs it with its full guide. The shape remains ambiguous pending a matching lookup."
+      "note": "Publicly reported short tracking code. Estafeta's tracker pairs it with the reported full guide and with another guide, so the short code alone stays inconclusive.",
+      "context": {
+        "assessment": "candidate"
+      }
     },
     {
       "number": "2806075762",
@@ -56,7 +59,10 @@
         "carrier": "estafeta",
         "confidence": "high"
       },
-      "note": "Publicly reported full guide with a letter in the 13th place; the native single-parcel response pairs it with its short tracking code."
+      "note": "Publicly reported full guide with a letter in the 13th place. Estafeta's tracker returns its history and pairs it with its short tracking code.",
+      "context": {
+        "assessment": "confirmed"
+      }
     },
     {
       "number": "805590979741C700931121",

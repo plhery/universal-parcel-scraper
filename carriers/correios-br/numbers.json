@@ -13,7 +13,10 @@
         "carrier": "correios-br",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Publicly reported shipment number. Correios' tracker returns its history.",
+      "context": {
+        "assessment": "confirmed"
+      }
     },
     {
       "number": "ES446391025BR",

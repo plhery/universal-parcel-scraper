@@ -13,7 +13,10 @@
         "carrier": "canpar",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified."
+      "note": "Public review of a Canpar parcel. Canpar's tracker returns its history.",
+      "context": {
+        "assessment": "confirmed"
+      }
     },
     {
       "number": "D576002440000001428004",
@@ -26,7 +29,10 @@
         "carrier": "canpar",
         "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment."
+      "note": "Open-source project example. Canpar's tracker returns its history, so it is a real parcel barcode.",
+      "context": {
+        "assessment": "confirmed"
+      }
     },
     {
       "number": "D576002440000001718010",
