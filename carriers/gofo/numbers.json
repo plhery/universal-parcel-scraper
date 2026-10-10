@@ -245,6 +245,63 @@
         ]
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker no longer lists it as a US parcel."
+    },
+    {
+      "number": "GFUS01076031012483",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261007232159/https://www.gofo.com/us/track?searchID=GFUS01076031012483",
+        "date": "2026-10-07",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo",
+        "confidence": "high"
+      },
+      "note": "GOFO's tracking returned this parcel's history, from an archived GOFO tracking link."
+    },
+    {
+      "number": "YT2640221437529826",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260922140807/https://www.gofo.com/us/track?searchID=YT2640221437529826",
+        "date": "2026-09-22",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yunexpress",
+        "confidence": "high"
+      },
+      "note": "A YunExpress number archived from a GOFO tracking link. GOFO's tracking returned the parcel's US history under this same number, with GOFO's own service name."
+    },
+    {
+      "number": "YT2609972337000933",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260409185757/https://www.gofo.com/us/track?searchID=YT2609972337000933",
+        "date": "2026-04-09",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yunexpress",
+        "confidence": "high"
+      },
+      "note": "A YunExpress number archived from a GOFO tracking link. GOFO's tracking returned the parcel's US history under this same number, with GOFO's own service name."
     }
   ]
 }

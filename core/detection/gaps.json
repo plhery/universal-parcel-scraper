@@ -189,6 +189,12 @@
     "reason": "An Emile number on a parcel 4PX handed over to Emile. The shape is Emile's; 4PX's feed also knows the parcels it hands over."
   },
   {
+    "carrier": "gofo",
+    "pattern": "^YT\\d{16}$",
+    "kind": "by_design",
+    "reason": "YunExpress numbers that GOFO delivers in the US under the same number. GOFO's tracker answers for them, but they are YunExpress's own, so detection reads them as YunExpress and the GOFO adapter accepts only GOFO waybills."
+  },
+  {
     "carrier": "hermes",
     "pattern": "^\\d{17}$",
     "kind": "by_design",

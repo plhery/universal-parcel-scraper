@@ -18619,6 +18619,14 @@
     ]
   },
   {
+    "input": "GFUS01076031012483",
+    "carrier": "gofo",
+    "confidence": "high",
+    "candidates": [
+      "gofo"
+    ]
+  },
+  {
     "input": "GH205472665JB",
     "carrier": "chronopost",
     "confidence": "high",
@@ -24050,6 +24058,14 @@
     ]
   },
   {
+    "input": "YT2609972337000933",
+    "carrier": "yunexpress",
+    "confidence": "high",
+    "candidates": [
+      "yunexpress"
+    ]
+  },
+  {
     "input": "YT2610584462000287",
     "carrier": "yunexpress",
     "confidence": "high",
@@ -24123,6 +24139,14 @@
   },
   {
     "input": "YT2627000702170639",
+    "carrier": "yunexpress",
+    "confidence": "high",
+    "candidates": [
+      "yunexpress"
+    ]
+  },
+  {
+    "input": "YT2640221437529826",
     "carrier": "yunexpress",
     "confidence": "high",
     "candidates": [
