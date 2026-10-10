@@ -20,7 +20,9 @@ Scan clocks have no timezone. They remain local rather than being assigned one
 zone across Mexico. The host archives these clocks and asks providers for dated
 progress. Missing history stays inconclusive; a terminal summary does not
 fabricate a scan. The generic unavailable-information page omits the requested
-reference and does not prove absence.
+reference and does not prove absence. A guide whose label exists but whose
+parcel Estafeta has not yet received has no scans; its notice is read as
+registered without a history request. The service name is kept.
 
 Recipient names, postcodes, signatures, proof images and report actions are
 excluded. Scheduled-date controls retain dates after delivery and are omitted.

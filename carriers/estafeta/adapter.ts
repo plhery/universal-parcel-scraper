@@ -3,7 +3,7 @@ import { BudgetExceededError, TransportError, UpstreamHttpError } from '../../co
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
+import { estafetaRegistered, normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
 
 const ORIGIN = 'https://cs.estafeta.com';
 
@@ -26,6 +26,7 @@ export class EstafetaTracker {
           const first = await fetchBounded(`${ORIGIN}/es/Tracking/searchByGet?${params}`, { signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent) } },
             { provider: 'Estafeta', timeoutMs: timeout(), maxBytes: 1_000_000, fetcher: this.options.fetcher });
           const lookup = parseEstafetaLookup(decodeText(first.bytes), number);
+          if (lookup.registered) return estafetaRegistered(lookup);
           // Only the identity-bound canonical guide controls this read-only
           // history request. No account, issued session or report API is used.
           const history = await fetchBounded(`${ORIGIN}/es/Tracking/GetTrackingItemHistory`, { method: 'POST', signal,

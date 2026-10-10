@@ -56,7 +56,7 @@ describe('Estafeta bound history', () => {
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|scheduledDate|signature|proof|generateReport/);
     const full = parseEstafetaHistory(historyHtml(), parseEstafetaLookup(lookupHtml(), GUIDE)); expect(full).not.toHaveProperty('canonical_tracking_number');
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    const evidence: Record<string, boolean> = { history: !!result.events?.length, location: !!result.events?.some(event => event.location) };
+    const evidence: Record<string, boolean> = { history: !!result.events?.length, location: !!result.events?.some(event => event.location), service_name: result.service_name === 'Terrestre' };
     for (const capability of metadata.capabilities) expect(evidence[capability], capability).toBe(true);
   });
   it('rejects wrong or duplicate structured identities and history targets', () => {
@@ -158,6 +158,20 @@ describe('Estafeta direct retrieval', () => {
       else { expect(url.origin + url.pathname).toBe('https://cs.estafeta.com/es/Tracking/GetTrackingItemHistory'); expect(init?.method).toBe('POST'); expect(Object.fromEntries(new URLSearchParams(String(init?.body)))).toEqual({ waybill: GUIDE }); }
     }
     expect(normalizeEstafetaNumber('90000-00001')).toBe(NUMBER);
+  });
+  it('reports a guide Estafeta has not yet received as registered without requesting history', async () => {
+    const $ = load(lookupHtml());
+    $('.stateDescription.fontColorCurrentProcess').removeClass('fontColorCurrentProcess').addClass('fontColorPending');
+    $('.fontColorCurrentProcessMessage').remove();
+    $('.shipmentInfoDiv').append('<div class="fontBold" id="i09">La guía ha sido generada sin embargo el envío aún no es depositado en Estafeta</div>');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response($.html()));
+    const result = normalizeCarrierResult(await new EstafetaTracker({ fetcher }).fetch(NUMBER));
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered', service_name: 'Terrestre', canonical_tracking_number: GUIDE, summary_only: true, events: [], expected_delivery: null });
+    expect(result.last_status_text).toMatch(/aún no es depositado/);
+    const other = load($.html()); other('#i09').text('Aviso desconocido');
+    const twice = load($.html()); twice('.shipmentInfoDiv').append('<div id="i09">Otro aviso</div>');
+    for (const html of [other.html(), twice.html()]) expect(() => parseEstafetaLookup(html, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
   it('stops after one request for collision, piece and generic unknown responses', async () => {
     const pieces = `${lookupHtml()}<ul class="multiplesWaybillList"></ul>`;

@@ -22,7 +22,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "service_name"
   ],
   "portal": {
     "url": "https://cs.estafeta.com/es/Tracking/searchByGet?wayBill={trackingNumber}&isShipmentDetail=True",
@@ -32,12 +33,14 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "service_name"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "service_name"
     ],
     "discarded": [
       "recipient_names",

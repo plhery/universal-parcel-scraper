@@ -4,7 +4,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
-import { estafetaStatus } from './status.js';
+import { estafetaStatus, estafetaWording } from './status.js';
 
 export interface EstafetaLookup {
   number: string;
@@ -12,7 +12,12 @@ export interface EstafetaLookup {
   latestDate: string;
   latestClock: string;
   state: string;
+  service?: string;
+  // Set when the guide exists but Estafeta has not yet received the parcel.
+  registered?: string;
 }
+
+const LABEL_ONLY = 'la guia ha sido generada sin embargo el envio aun no es depositado en estafeta';
 
 // A letter can take the 13th or 14th place (two-day guides carry a D in the 14th).
 const FULL_GUIDE = /^(?:\d{22}|\d{12}(?:[A-Z]\d|\d[A-Z])\d{8}|\d{15}[A-Z0-9]{7})$/;
@@ -56,11 +61,23 @@ export function parseEstafetaLookup(html: string, rawNumber: string): EstafetaLo
   }
   const controls = cards.find('.showHistory');
   if (controls.length !== 1 || controls.attr('data-shipment-index') !== guide) throw new SchemaError('Estafeta', 'Estafeta returned a different history target');
+  const services = cards.find('.shipmentInfoSeparator').filter((_, node) => clean($(node).children('.fontRoman').text()) === 'Servicio:');
+  const service = services.length === 1 ? clean(services.children('.fontBold').text(), 80) : '';
   const state = cards.find('.stateDescription.fontColorCurrentProcess');
   const messages = cards.find('.fontColorCurrentProcessMessage');
+  const notice = cards.find('#i09');
+  if (!state.length && !messages.length && notice.length === 1 && estafetaWording(notice.text()) === LABEL_ONLY) {
+    return { number, guide, state: '', latestClock: '', latestDate: '', registered: clean(notice.text(), 200), ...(service ? { service } : {}) };
+  }
   const parts = messages.contents().filter((_, node) => node.nodeType === 3).map((_, node) => clean($(node).text(), 100)).get().filter(Boolean);
   if (state.length !== 1 || messages.length !== 1 || parts.length < 2) throw new SchemaError('Estafeta', 'Estafeta returned incomplete latest activity');
-  return { number, guide, state: clean(state.text(), 200), latestClock: parts[0]!, latestDate: parts[1]! };
+  return { number, guide, state: clean(state.text(), 200), latestClock: parts[0]!, latestDate: parts[1]!, ...(service ? { service } : {}) };
+}
+
+// A label-only guide has no scans yet, so the notice stands alone as its status.
+export function estafetaRegistered(lookup: EstafetaLookup): CarrierResult {
+  return { status: 'pending', current_stage: 'registered', last_status_text: lookup.registered ?? null, last_update: null, last_update_local: null, expected_delivery: null,
+    ...(lookup.service ? { service_name: lookup.service } : {}), ...(lookup.number !== lookup.guide ? { canonical_tracking_number: lookup.guide } : {}), summary_only: true, events: [] };
 }
 
 function clockText(raw: string): string { return raw.replace(/\s+hrs\.$/i, '').trim(); }
@@ -114,5 +131,5 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
   if ((current?.stage === 'delivered' || summary?.stage === 'delivered') && current?.stage !== summary?.stage) throw new IndeterminateError('Estafeta', 'Estafeta returned inconsistent delivery evidence');
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null, expected_delivery: null,
-    ...(lookup.number !== lookup.guide ? { canonical_tracking_number: lookup.guide } : {}), events: events.slice(0, 100) };
+    ...(lookup.service ? { service_name: lookup.service } : {}), ...(lookup.number !== lookup.guide ? { canonical_tracking_number: lookup.guide } : {}), events: events.slice(0, 100) };
 }

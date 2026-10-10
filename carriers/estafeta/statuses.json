@@ -42,6 +42,12 @@
       "language": "es",
       "stage": "in_transit",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "La guía ha sido generada sin embargo el envío aún no es depositado en Estafeta",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
     }
   ]
 }

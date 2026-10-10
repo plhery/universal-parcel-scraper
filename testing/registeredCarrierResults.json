@@ -1813,6 +1813,7 @@
       "last_update": null,
       "last_update_local": "2026-01-04T12:00:00",
       "expected_delivery": null,
+      "service_name": "Terrestre",
       "canonical_tracking_number": "100000000000000A00TEST",
       "events": [
         {
@@ -2471,6 +2472,7 @@
       "last_update": null,
       "last_update_local": "2026-01-04T12:00:00",
       "expected_delivery": null,
+      "service_name": "Terrestre",
       "events": [
         {
           "local_time": "2026-01-04T12:00:00",
