@@ -351,6 +351,86 @@
         ]
       },
       "note": "Customer identifies the Ninja Xpress tracking ID separately from the purchase and describes delivery attempts and a return."
+    },
+    {
+      "number": "SEDMY1481550430953689088",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/69ca462e1a19229eb888be9c",
+        "date": "2026-03-30",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Malaysian marketplace parcel",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer's review of Ninja Van gives this as the parcel. Ninja Van's Malaysian tracker returns its history, returned to the sender. A shipper prefix and nineteen digits; the adapter does not take this form."
+    },
+    {
+      "number": "NLMYA69895779",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/693a35c35ab76398994f4a40",
+        "date": "2025-12-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "ninja-van",
+        "confidence": "high"
+      },
+      "note": "A customer's review of Ninja Van names this Malaysian parcel. Ninja Van's tracker knows the order but no longer details it."
+    },
+    {
+      "number": "NJVMY1481164193125306368",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260518131623/https://www.ninjavan.co/en-my/tracking?id=NJVMY1481164193125306368",
+        "date": "2026-05-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Ninja Van Malaysia tracking link archived by the Wayback Machine, one of hundreds in this form. Ninja Van's tracker knows the order but no longer details it."
+    },
+    {
+      "number": "NVMYNINJA002255132",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260517182746/https://www.ninjavan.co/en-my/tracking?id=NVMYNINJA002255132",
+        "date": "2026-05-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ninja-van"
+        ]
+      },
+      "note": "A Ninja Van Malaysia tracking link archived by the Wayback Machine, one of hundreds in this form. Ninja Van's tracker knows the order but no longer details it."
     }
   ]
 }

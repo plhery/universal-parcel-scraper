@@ -20277,6 +20277,12 @@
     ]
   },
   {
+    "input": "NJVMY1481164193125306368",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "NJVTT80134490007",
     "carrier": "ninja-van",
     "confidence": "high",
@@ -20373,6 +20379,14 @@
     ]
   },
   {
+    "input": "NLMYA69895779",
+    "carrier": "ninja-van",
+    "confidence": "high",
+    "candidates": [
+      "ninja-van"
+    ]
+  },
+  {
     "input": "NLMYA71943214",
     "carrier": "ninja-van",
     "confidence": "high",
@@ -20425,6 +20439,17 @@
   },
   {
     "input": "NVIDNXPID016833280",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ninja-van"
+    ],
+    "asked": [
+      "ninja-van"
+    ]
+  },
+  {
+    "input": "NVMYNINJA002255132",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -21586,6 +21611,12 @@
     "asked": [
       "colis-prive"
     ]
+  },
+  {
+    "input": "SEDMY1481550430953689088",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "SF6042542297687",

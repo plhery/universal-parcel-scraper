@@ -237,6 +237,12 @@
     "reason": "A documentation example of a merchant-prefixed ID; the adapter takes Malaysian NLMY parcel IDs only."
   },
   {
+    "carrier": "ninja-van",
+    "pattern": "^(?:NJV|SED)MY\\d{19}$",
+    "kind": "open",
+    "reason": "Ninja Van's Malaysian tracker answers these shipper-prefixed IDs and hundreds of archived NJVMY links use the form, but only one has a history to read and the adapter does not take the form."
+  },
+  {
     "carrier": "old-dominion",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
