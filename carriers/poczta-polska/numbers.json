@@ -248,6 +248,72 @@
         "confidence": "high"
       },
       "note": "Mail from France whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its journey, from posting abroad to delivery in Poland, under the sending post's number."
+    },
+    {
+      "number": "EL597416197JP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250206170716/https://emonitoring.poczta-polska.pl/?numer=EL597416197JP",
+        "access": "full_page",
+        "date": "2025-02-06",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "EMS from Japan"
+      },
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "EMS item from Japan whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its history through the inward office of exchange and customs to its collection at a post office, then a customs settlement days later."
+    },
+    {
+      "number": "LK031498395FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251031105324/https://emonitoring.poczta-polska.pl/?numer=LK031498395FR",
+        "access": "full_page",
+        "date": "2025-10-31",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "GLOBAL Expres from France"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "Item from France whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its history through the inward office of exchange and customs to its collection at a post office, then a customs settlement days later."
+    },
+    {
+      "number": "00759007734752893152",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260913143551/https://emonitoring.poczta-polska.pl/?lang=X1&numer=00759007734752893152",
+        "access": "full_page",
+        "date": "2026-09-13",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "registered business letter"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poczta-polska",
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "Barcode whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its history: two failed deliveries, the return, and the sender's collection at a post office."
     }
   ]
 }

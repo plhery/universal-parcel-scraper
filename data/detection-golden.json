@@ -628,6 +628,25 @@
     ]
   },
   {
+    "input": "00759007734752893152",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "poczta-polska",
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "preferred": [
+      "poczta-polska"
+    ],
+    "asked": [
+      "poczta-polska",
+      "swiss-post-cargo",
+      "nz-post"
+    ]
+  },
+  {
     "input": "007643439072779",
     "carrier": "unknown",
     "confidence": "low",
@@ -16872,6 +16891,14 @@
     ]
   },
   {
+    "input": "EL597416197JP",
+    "carrier": "japan-post",
+    "confidence": "high",
+    "candidates": [
+      "japan-post"
+    ]
+  },
+  {
     "input": "EM100047250023CA",
     "carrier": "unknown",
     "confidence": "low",
@@ -18776,6 +18803,14 @@
     "confidence": "high",
     "candidates": [
       "an-post"
+    ]
+  },
+  {
+    "input": "LK031498395FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {
