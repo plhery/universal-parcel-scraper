@@ -24,6 +24,7 @@
     "history",
     "location",
     "eta",
+    "destination_country",
     "provider_code"
   ],
   "portal": {
@@ -35,6 +36,7 @@
       "history",
       "location",
       "eta",
+      "destination_country",
       "customer_reference",
       "signature"
     ],
@@ -43,6 +45,7 @@
       "history",
       "location",
       "eta",
+      "destination_country",
       "provider_code"
     ],
     "discarded": [

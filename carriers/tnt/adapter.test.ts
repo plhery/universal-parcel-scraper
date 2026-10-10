@@ -90,7 +90,7 @@ describe('TNT international public tracking', () => {
     const result = parseTntExpressResponse(express(), EXPRESS_NUMBER);
     expect(result).toMatchObject({
       status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Shipment in transit',
-      last_update: '2026-03-27T09:40:00+08:00', expected_delivery: '2026-04-02',
+      last_update: '2026-03-27T09:40:00+08:00', expected_delivery: '2026-04-02', destination_country: 'CH',
     });
     expect(result.events).toEqual([
       { time: '2026-03-27T09:40:00+08:00', description: 'Shipment in transit', location: 'Synthetic Hub, China', provider_code: 'OS', stage: 'in_transit' },
@@ -99,6 +99,23 @@ describe('TNT international public tracking', () => {
     ]);
     // References, signatures and addresses stay with TNT.
     expect(JSON.stringify(result)).not.toMatch(/SYNTHETIC-REFERENCE|SYNTHETIC SIGNATORY|Destination|Earlier|Other/);
+  });
+
+  it('reads the destination country alone, by its code or else its name', () => {
+    const destination = (address: unknown) => {
+      const payload = express();
+      for (const consignment of payload['tracker.output'].consignment) consignment.destinationAddress = address;
+      return parseTntExpressResponse(payload, EXPRESS_NUMBER);
+    };
+    expect(destination({ city: 'Synthetic Destination', country: 'Switzerland', countryCode: 'CH' })).toMatchObject({ destination_country: 'CH' });
+    expect(destination({ city: 'Synthetic Destination', country: 'Switzerland' })).toMatchObject({ destination_country: 'CH' });
+    expect(destination({ country: 'Example Federation', countryCode: '' })).toMatchObject({ destination_country_name: 'Example Federation' });
+    for (const address of [undefined, {}, { city: 'Synthetic Destination' }]) {
+      const result = destination(address);
+      expect(result).not.toHaveProperty('destination_country');
+      expect(result).not.toHaveProperty('destination_country_name');
+      expect(JSON.stringify(result)).not.toContain('Synthetic Destination');
+    }
   });
 
   it('never reads another number and separates not-found from other replies', () => {

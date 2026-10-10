@@ -4,7 +4,7 @@ import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { explicitOffsetTime, zonedTime } from '../../core/time/index.js';
+import { countryCode, explicitOffsetTime, zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { tntExpressStatus, tntFranceStatus } from './status.js';
@@ -120,6 +120,14 @@ function tntExpressHistory(consignment: Record<string, unknown>): Array<{ event:
   return parsed.sort((a, b) => b.timestamp - a.timestamp || a.index - b.index);
 }
 
+/** The destination's country, by its code or else its name; never its city or the rest of the address. */
+function expressDestination(consignment: Record<string, unknown>): Pick<CarrierResult, 'destination_country' | 'destination_country_name'> {
+  const address = isRecord(consignment.destinationAddress) ? consignment.destinationAddress : {};
+  const name = clean(address.country, 60);
+  const code = countryCode(clean(address.countryCode, 8)) ?? countryCode(name);
+  return code ? { destination_country: code } : name ? { destination_country_name: name } : {};
+}
+
 export function parseTntExpressResponse(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeTntExpressNumber(rawNumber);
   const output = isRecord(payload) ? payload['tracker.output'] : undefined;
@@ -154,6 +162,7 @@ export function parseTntExpressResponse(payload: unknown, rawNumber: string): Ca
   return {
     status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: events[0]!.description!, last_update: events[0]!.time!, expected_delivery: expected, events,
+    ...expressDestination(consignment),
   };
 }
 

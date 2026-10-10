@@ -22,7 +22,9 @@ postcode or account is required.
   international checks do not apply to French national references.
 - tnt.com lists every consignment that carried the number, since numbers are reused.
   Only consignments whose own number matches are read, and the one with the most recent
-  scan is the parcel. References, signatories and addresses are not kept.
+  scan is the parcel. References, signatories and addresses are not kept, except the
+  destination's country: its `countryCode`, or else its name, becomes
+  `destination_country` (or `destination_country_name` for a name without an ISO code).
 - tnt.com scan times carry offsets. Scan codes (`legacyCode`) set the stage, because the
   wording is prose: "partially delivered" is not a delivery, and a residential delivery
   (`RES`) reads like `OK`. The estimate is kept as a calendar day until delivery.
