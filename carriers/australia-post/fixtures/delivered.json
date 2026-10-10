@@ -23,6 +23,7 @@
               "articleId": "7T0000000001000000001",
               "consignmentId": "7T00000000",
               "articleType": "Parcel Post",
+              "productSubType": "Parcel Post Small Satchel",
               "sender": "PRIVATE SENDER",
               "address": {
                 "addressee": "PRIVATE RECIPIENT",

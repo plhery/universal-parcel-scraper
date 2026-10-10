@@ -17,8 +17,9 @@ const capabilities = (JSON.parse(readFileSync(new URL('./carrier.json', import.m
 describe('Australia Post parser', () => {
   it('projects all capabilities without retaining private details or modification times', () => {
     const result = parse(fixture(), NUMBER);
-    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'delivered_at', 'pickup_point']);
+    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'delivered_at', 'pickup_point', 'service_name']);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',
+      service_name: 'Parcel Post Small Satchel',
       last_update: '2026-06-08T14:10:00+10:00', delivered_at: '2026-06-08T14:10:00+10:00', expected_delivery: null });
     expect(result.events).toHaveLength(12);
     expect(result.events?.[0]).toEqual({ time: '2026-06-08T14:10:00+10:00', description: 'Delivered',
@@ -26,6 +27,12 @@ describe('Australia Post parser', () => {
     expect(result.events?.[1]?.stage).toBe('out_for_delivery');
     expect(result.events?.[8]?.stage).toBe('accepted');
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|example\.invalid|7T0000000001000000001|14:10:5[78]/);
+  });
+
+  it('names no service when the reply gives no product', () => {
+    const payload = fixture();
+    delete payload[0].shipment.articles[0].details[0].productSubType;
+    expect(parse(payload, NUMBER).service_name).toBeUndefined();
   });
 
   it('sorts by absolute instant, deduplicates scans and preserves their explicit offsets', () => {

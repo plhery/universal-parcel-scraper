@@ -28,7 +28,8 @@
     "location",
     "provider_code",
     "delivered_at",
-    "pickup_point"
+    "pickup_point",
+    "service_name"
   ],
   "portal": {
     "url": "https://auspost.com.au/mypost/track/details/{trackingNumber}",
@@ -40,6 +41,7 @@
       "location",
       "provider_code",
       "delivered_at",
+      "service_name",
       "destination_country",
       "pickup_point",
       "recipient_name",
@@ -53,7 +55,8 @@
       "provider_code",
       "delivered_at",
       "pickup_point",
-      "destination_country"
+      "destination_country",
+      "service_name"
     ],
     "discarded": [
       "recipient_name",

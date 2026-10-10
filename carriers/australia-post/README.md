@@ -97,6 +97,8 @@ cache headers of the `no-store` mode. The app also sends an
 - `statusModificationDateTime` and summary milestone timestamps are not scan times (they can be hours
   off the delivery scan). `last_update` and `delivered_at` come from events.
 - Delivered wording is replaced with `Delivered` so signature or safe-place text can't leak a name.
+- `service_name` is the article's product (`productSubType`, such as a satchel size); its family
+  (`articleType`) is not read.
 
 ## Limitations
 

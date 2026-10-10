@@ -122,6 +122,8 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   // Australia Post's own scans carry their offset. Those it relays from the post
   // abroad carry that office's wall clock labelled as UTC.
   const destination = country(details.address);
+  // The product as the page names it ("Parcel Post Large Satchel"); its family alone names no service.
+  const service = clean(details.productSubType, 80);
   const crossings = [...new Set([destination, country(details.fromAddress)].filter((code) => code && code !== 'AU'))];
   const abroad = crossings.length === 1 ? crossings[0]! : null;
   const events: Array<{ event: CarrierEvent; timestamp: number; classified?: ClassifiedStatus }> = [];
@@ -177,7 +179,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     last_status_text: status?.status === 'delivered' ? 'Delivered' : summary,
     last_update: latest.event.time ?? null,
     ...(typeof latest.event.local_time === 'string' ? { last_update_local: latest.event.local_time } : {}),
-    expected_delivery: null, ...(pickup ? { pickup_point: pickup } : {}),
+    expected_delivery: null, ...(service ? { service_name: service } : {}), ...(pickup ? { pickup_point: pickup } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(destination ? { destination_country: destination } : {}),
     events: events.slice(0, 100).map(({ event }) => event),
   };
