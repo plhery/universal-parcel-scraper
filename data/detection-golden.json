@@ -273,6 +273,14 @@
     ]
   },
   {
+    "input": "00226F129066",
+    "carrier": "mrw",
+    "confidence": "high",
+    "candidates": [
+      "mrw"
+    ]
+  },
+  {
     "input": "00264300487130023858",
     "carrier": "unknown",
     "confidence": "low",
@@ -533,6 +541,32 @@
       "postnord",
       "swiss-post-cargo",
       "nz-post"
+    ]
+  },
+  {
+    "input": "006071578588",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "sf-express",
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express"
+    ],
+    "preferred": [
+      "sf-express"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "sto",
+      "j-and-t"
     ]
   },
   {
@@ -1480,7 +1514,23 @@
     ]
   },
   {
+    "input": "02680I638686",
+    "carrier": "mrw",
+    "confidence": "high",
+    "candidates": [
+      "mrw"
+    ]
+  },
+  {
     "input": "02692M027981",
+    "carrier": "mrw",
+    "confidence": "high",
+    "candidates": [
+      "mrw"
+    ]
+  },
+  {
+    "input": "02692R131639",
     "carrier": "mrw",
     "confidence": "high",
     "candidates": [

@@ -296,6 +296,95 @@
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
+    },
+    {
+      "number": "006071578588",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.trustpilot.com/reviews/6ac53fa9a1e5fbdbfd193a33",
+        "access": "full_page",
+        "date": "2026-10-06",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "shipment_number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express",
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "Twelve-digit shipment number a review quotes; MRW's tracker returned its history, with a breakdown of each parcel's scans under some rows."
+    },
+    {
+      "number": "02692R131639",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260401151658/https://www.mrw.es/seguimiento/track.asp?envio=02692R131639",
+        "access": "full_page",
+        "date": "2026-04-01",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on the carrier's tracking link; MRW's tracker returned its current status without a history."
+    },
+    {
+      "number": "02680I638686",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260113190009/https://www.mrw.es/seguimiento/track.asp?envio=02680I638686",
+        "access": "full_page",
+        "date": "2026-01-13",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on the carrier's tracking link; MRW's tracker returned its current status without a history."
+    },
+    {
+      "number": "00226F129066",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251026064159/https://www.mrw.es/seguimiento/track.asp?envio=00226F129066",
+        "access": "full_page",
+        "date": "2025-10-26",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "mrw",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on the carrier's tracking link, which showed it delivered; the tracker no longer answers for it."
     }
   ]
 }
