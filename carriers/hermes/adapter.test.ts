@@ -97,6 +97,17 @@ describe('Hermes no-data response', () => {
       .toThrow('Hermes returned a different shipment');
   });
 
+  it('reads the order myhes.de returns for one of its pieces', () => {
+    const result = parseHermesTrackingResponse(delivered(), '00 0123456 0000000001 2');
+    expect(result).toMatchObject({ status: 'delivered', canonical_tracking_number: DELIVERED_NUMBER });
+    expect(parseHermesTrackingResponse(delivered(), DELIVERED_NUMBER)).not.toHaveProperty('canonical_tracking_number');
+  });
+
+  it('rejects an order for a twenty-digit number that is not a valid SSCC', () => {
+    expect(() => parseHermesTrackingResponse(delivered(), '00012345600000000013'))
+      .toThrow('Hermes returned a different shipment');
+  });
+
   it('normalizes the public Hermes status IDs', () => {
     expect([
       [40, 'pending'],

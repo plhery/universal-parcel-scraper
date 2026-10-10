@@ -179,6 +179,20 @@
     ]
   },
   {
+    "input": "00140700610007065252",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "swiss-post-cargo",
+      "nz-post"
+    ]
+  },
+  {
     "input": "0015900773312345678",
     "carrier": "unknown",
     "confidence": "low",

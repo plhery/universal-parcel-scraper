@@ -58,6 +58,31 @@
         ]
       },
       "note": "A Hermes Einrichtungs-Service delivery-note number looked up on myhes.de and listed in the Wayback Machine's capture index. myhes.de returned its delivered order."
+    },
+    {
+      "number": "00140700610007065252",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928131424/https://myhes.de/de/tracking/00140700610007065252",
+        "date": "2026-09-28",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "SSCC"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "A piece's SSCC looked up on myhes.de and listed in the Wayback Machine's capture index. myhes.de returned the delivered order the piece belongs to, under a different delivery-note number."
     }
   ]
 }

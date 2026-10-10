@@ -1,4 +1,5 @@
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { isValidSscc } from '../../core/detection/numericChecksums.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { clean, cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
@@ -60,11 +61,14 @@ export function parseHermesTrackingResponse(
     throw new SchemaError(PROVIDER, 'Hermes returned an invalid tracking response');
   }
   const order = body.auftragsdaten;
-  if (
-    !order.lieferscheinnummer
-    || normalizeHermesTrackingNumber(order.lieferscheinnummer)
-      !== normalizeHermesTrackingNumber(trackingNumber)
-  ) throw new SchemaError(PROVIDER, 'Hermes returned a different shipment');
+  const requested = normalizeHermesTrackingNumber(trackingNumber);
+  const deliveryNote = order.lieferscheinnummer ? normalizeHermesTrackingNumber(order.lieferscheinnummer) : '';
+  // myhes.de also takes a piece's SSCC (its Kollinummer) and answers with the
+  // whole order, which echoes only the delivery note.
+  const byPiece = isValidSscc(requested);
+  if (!deliveryNote || (deliveryNote !== requested && !byPiece)) {
+    throw new SchemaError(PROVIDER, 'Hermes returned a different shipment');
+  }
   const journey = isRecord(order.statusjourneyDto) ? order.statusjourneyDto : {};
   if (journey.auftragstatusdaten !== undefined && !Array.isArray(journey.auftragstatusdaten)) {
     throw new SchemaError(PROVIDER, 'Hermes returned invalid tracking history');
@@ -112,6 +116,7 @@ export function parseHermesTrackingResponse(
     expected_delivery: status === 'delivered' ? null : estimateOf(order),
     ...(sender ? { sender_name: sender } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
+    ...(deliveryNote !== requested ? { canonical_tracking_number: deliveryNote } : {}),
     timezone: 'Europe/Berlin',
     events,
   };

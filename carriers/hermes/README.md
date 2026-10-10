@@ -3,7 +3,8 @@
 Two-man delivery of furniture and white goods into the home by appointment, in Germany. A
 different company and tracking system from Hermes Germany's parcel network
 ([`hermes-de`](../hermes-de/)). No detection rule: the Lieferschein number shape is too
-generic, so the user picks the carrier by hand.
+generic, so the user picks the carrier by hand. A piece's SSCC tracks too, but no rule claims
+it either.
 
 ## How it works
 
@@ -11,6 +12,11 @@ generic, so the user picks the carrier by hand.
    keyed on the Lieferschein (delivery-note) number.
    - The echoed `lieferscheinnummer` must match (spaces, dots and dashes stripped, uppercased),
      so a neighbouring order is never shown under the wrong parcel.
+   - The lookup also takes a piece's 20-digit SSCC (`kollinummer`), as myhes.de's own page does.
+     The reply then echoes only the order's delivery note, so a valid SSCC is the one number
+     accepted without an echo. `canonical_tracking_number` is then the order's delivery note,
+     an identifier different from the piece's SSCC, not a normalized form of it. An SSCC the
+     service rejects comes back as HTTP 400.
    - A valid but unknown number returns HTTP 200 with a synthetic order whose `auftragId`,
      `auftragsart` and `statusjourneyDto` are all `null`. That is not-found; accepting it
      would create a parcel stuck at pending forever.

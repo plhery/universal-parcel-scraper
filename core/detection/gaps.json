@@ -189,6 +189,12 @@
     "reason": "The nineteen-digit delivery-note number is too generic for a rule; the carrier is picked by hand."
   },
   {
+    "carrier": "hermes",
+    "pattern": "^00\\d{18}$",
+    "kind": "by_design",
+    "reason": "A piece's SSCC carries the shipper's GS1 company prefix, not the carrier's, so no rule can tell a Hermes Einrichtungs-Service piece from any other SSCC."
+  },
+  {
     "carrier": "hermes-de",
     "pattern": "^00\\d{13}$",
     "kind": "open",
