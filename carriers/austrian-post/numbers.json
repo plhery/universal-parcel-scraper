@@ -191,6 +191,30 @@
         ]
       },
       "note": "Posted under Austrian Post on the German consumer forum, but its S10 check digit does not validate, so it is not an item number as printed."
+    },
+    {
+      "number": "1044860547245344525223",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=1044860547245344525223",
+        "date": "2026-10-09",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "An Austrian Post parcel number from a public Paketda question. Austrian Post's tracking returned its history with the parcel's weight and size."
     }
   ]
 }

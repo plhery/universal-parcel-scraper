@@ -387,6 +387,269 @@
       },
       "note": "Reported national GLS service is outside the German adapter scope; the shared number shape does not establish German ownership.",
       "quarantine": true
+    },
+    {
+      "number": "10141751403",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=10141751403",
+        "date": "2026-10-09",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "68208468807",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=68208468807",
+        "date": "2026-09-20",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "89421928792",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=89421928792",
+        "date": "2026-09-14",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "39644492615",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=39644492615",
+        "date": "2026-09-04",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "79303179001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=79303179001",
+        "date": "2026-09-02",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "93844196684",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=93844196684",
+        "date": "2026-08-29",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "87568684918",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=87568684918",
+        "date": "2026-08-26",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "54281129156",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=54281129156",
+        "date": "2026-08-21",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "37264694469",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=37264694469",
+        "date": "2026-08-21",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
+    },
+    {
+      "number": "Z0OA641Z",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.paketda.de/fragen-antworten.php?suche=Z0OA641Z",
+        "date": "2026-09-30",
+        "access": "full_page",
+        "dateKind": "forum_post"
+      },
+      "context": {
+        "reportedRole": "Track ID",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de"
+        ]
+      },
+      "note": "A GLS Track ID from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
     }
   ]
 }
