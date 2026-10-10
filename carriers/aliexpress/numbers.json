@@ -447,6 +447,29 @@
         ]
       },
       "note": "A Cainiao tracking link archived by the Wayback Machine; Cainiao's tracker returns its history, an AliExpress parcel to the Czech Republic. The MI suffix names no country."
+    },
+    {
+      "number": "SU020860180MI",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240312132641/https://parcelsapp.com/en/tracking/SU020860180MI",
+        "date": "2024-03-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "Archived ParcelsApp lookup. ParcelsApp does not attribute a carrier, so this number ending in MI is not shown to be Cainiao's. Cainiao's tracker does not find it."
     }
   ]
 }

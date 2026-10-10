@@ -378,6 +378,262 @@
         "confidence": "high"
       },
       "note": "A lookup on Cainiao's global tracker archived by the Wayback Machine. The DO suffix names the postal operator of the Dominican Republic, which has no adapter here."
+    },
+    {
+      "number": "CC085829728EN",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250730114106/https://parcelsapp.com/en/tracking/CC085829728EN",
+        "date": "2025-07-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. ParcelsApp does not attribute a carrier, and the EN suffix names no country, so the issuing post is not known."
+    },
+    {
+      "number": "RL803613962MD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260509211115/https://parcelsapp.com/en/tracking/RL803613962MD",
+        "date": "2026-05-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Registered small packet to or from Moldova. No universal provider was checked."
+    },
+    {
+      "number": "RU550396716JO",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250712213216/https://parcelsapp.com/en/tracking/RU550396716JO",
+        "date": "2025-07-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Jordanian item. No universal provider was checked."
+    },
+    {
+      "number": "RR000810533BN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260123135415/https://parcelsapp.com/en/tracking/RR000810533BN",
+        "date": "2026-01-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Registered item from Brunei. No universal provider was checked."
+    },
+    {
+      "number": "RW056328980KZ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250921062010/https://parcelsapp.com/en/tracking/RW056328980KZ",
+        "date": "2025-09-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Kazakh item. No universal provider was checked."
+    },
+    {
+      "number": "RR580125558UY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250402060407/https://parcelsapp.com/en/tracking/RR580125558UY",
+        "date": "2025-04-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Registered item from Uruguay. No universal provider was checked."
+    },
+    {
+      "number": "PA001273079CO",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250508205540/https://parcelsapp.com/en/tracking/PA001273079CO",
+        "date": "2025-05-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "Archived ParcelsApp lookup. ParcelsApp does not attribute a carrier, and the S10 check digit fails, so it is not established that the Colombian post issued it."
+    },
+    {
+      "number": "RB109494650PK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250225153610/https://parcelsapp.com/en/tracking/RB109494650PK",
+        "date": "2025-02-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Pakistani item. No universal provider was checked."
+    },
+    {
+      "number": "RR314584512RS",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251021064418/https://parcelsapp.com/en/tracking/RR314584512RS",
+        "date": "2025-10-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Registered item from Serbia. No universal provider was checked."
+    },
+    {
+      "number": "RI310758456BG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260503100945/https://parcelsapp.com/en/tracking/RI310758456BG",
+        "date": "2026-05-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Bulgarian item. No universal provider was checked."
+    },
+    {
+      "number": "VV175837515HR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260329131335/https://parcelsapp.com/en/tracking/VV175837515HR",
+        "date": "2026-03-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Croatian item. No universal provider was checked."
+    },
+    {
+      "number": "LS022720358RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261006123001/https://parcelsapp.com/en/tracking/LS022720358RU",
+        "date": "2026-10-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Archived ParcelsApp lookup. Russian item. No universal provider was checked."
+    },
+    {
+      "number": "PE300009327MG",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260807001935/https://parcelsapp.com/en/tracking/PE300009327MG",
+        "date": "2026-08-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ]
+      },
+      "note": "Archived ParcelsApp lookup. ParcelsApp does not attribute a carrier, and the S10 check digit fails, so it is not established that the Malagasy post issued it."
     }
   ]
 }

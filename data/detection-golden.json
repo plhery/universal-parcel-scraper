@@ -15962,6 +15962,17 @@
     ]
   },
   {
+    "input": "CC085829728EN",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "CC109000006501",
     "carrier": "relais-colis",
     "confidence": "high",
@@ -19526,6 +19537,17 @@
     ]
   },
   {
+    "input": "LS022720358RU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "LS232735825CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -20283,6 +20305,17 @@
     ]
   },
   {
+    "input": "PA001273079CO",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "PBFC5968003001",
     "carrier": "parcelforce",
     "confidence": "high",
@@ -20304,6 +20337,17 @@
     "confidence": "high",
     "candidates": [
       "parcelforce"
+    ]
+  },
+  {
+    "input": "PE300009327MG",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -20701,6 +20745,17 @@
     ]
   },
   {
+    "input": "RB109494650PK",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RC034998210EE",
     "carrier": "intl-post",
     "confidence": "high",
@@ -20855,6 +20910,17 @@
     ]
   },
   {
+    "input": "RI310758456BG",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RI543495045NL",
     "carrier": "unknown",
     "confidence": "low",
@@ -20946,6 +21012,17 @@
     ]
   },
   {
+    "input": "RL803613962MD",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RL904818378CH",
     "carrier": "swiss-post",
     "confidence": "high",
@@ -21002,6 +21079,17 @@
     "confidence": "high",
     "candidates": [
       "india-post"
+    ]
+  },
+  {
+    "input": "RR000810533BN",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -21113,6 +21201,17 @@
     ]
   },
   {
+    "input": "RR314584512RS",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR400244295CL",
     "carrier": "correos-chile",
     "confidence": "high",
@@ -21126,6 +21225,17 @@
     "confidence": "high",
     "candidates": [
       "correos-chile"
+    ]
+  },
+  {
+    "input": "RR580125558UY",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -21161,11 +21271,33 @@
     ]
   },
   {
+    "input": "RU550396716JO",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RU658372378NL",
     "carrier": "spring-gds",
     "confidence": "high",
     "candidates": [
       "spring-gds"
+    ]
+  },
+  {
+    "input": "RW056328980KZ",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -21536,6 +21668,17 @@
     "confidence": "high",
     "candidates": [
       "australia-post"
+    ]
+  },
+  {
+    "input": "SU020860180MI",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -22357,6 +22500,17 @@
     "confidence": "low",
     "candidates": [
       "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "VV175837515HR",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
     ],
     "asked": [
       "chronopost"
