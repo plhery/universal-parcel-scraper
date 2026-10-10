@@ -13522,6 +13522,14 @@
     ]
   },
   {
+    "input": "AD794706068BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
+    ]
+  },
+  {
     "input": "AD803652820BR",
     "carrier": "correios-br",
     "confidence": "high",

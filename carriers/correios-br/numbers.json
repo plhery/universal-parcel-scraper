@@ -230,6 +230,26 @@
         "confidence": "high"
       },
       "note": "An imported Packet Standard item whose Correios tracking page the Wayback Machine archived. Correios' tracker returns its refusal by customs and return."
+    },
+    {
+      "number": "AD794706068BR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260814132312/https://rastreamento.correios.com.br/app/index.php?acao=track&btnPesq=Buscar&objetos=AD794706068BR",
+        "date": "2026-08-14",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "SEDEX",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "correios-br",
+        "confidence": "high"
+      },
+      "note": "A SEDEX parcel whose Correios tracking page the Wayback Machine archived. Correios' tracker returns its history."
     }
   ]
 }
