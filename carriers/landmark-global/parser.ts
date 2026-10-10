@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
+import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { classifyWording, languageStageStatus, type ClassifiedStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { landmarkStatus } from './status.js';
 
@@ -39,7 +41,11 @@ export function parseLandmark(html: string, rawNumber: string): CarrierResult {
   if (rows.length > 500) throw new SchemaError('Landmark Global', 'Landmark returned excessive parcel history');
   const firstCells = rows.first().children('td');
   const summary = $('.current-status');
-  if (summary.length !== 1 || clean(summary.find('h3').text()) !== clean(firstCells.eq(0).text())
+  // Before a scan has a wording, and after a return, the summary shows no scan wording: only
+  // the stage, or a link to the return's own tracking.
+  const heading = summary.find('h3');
+  const headline = heading.find('a').length ? '' : clean(heading.text());
+  if (summary.length !== 1 || (headline && headline !== clean(firstCells.eq(0).text()))
     || summary.find('.time').attr('data-time') !== firstCells.eq(1).attr('data-time')) throw new IndeterminateError('Landmark Global', 'Landmark latest summary does not match its first scan');
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
@@ -56,14 +62,32 @@ export function parseLandmark(html: string, rawNumber: string): CarrierResult {
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   const latest = events[0]!;
-  const current = landmarkStatus(clean(firstCells.eq(0).text(), 500));
+  // A parcel sent back travels under a new reference; its own history stops before that.
+  const returned = heading.find('a').length > 0 && clean(summary.find('h2').text()) === 'Returned';
+  const current = returned ? { status: 'exception' as const, stage: 'returned' as const } : currentStatus(clean(firstCells.eq(0).text(), 500));
+  // The partner's page link carries its number, or a form field does.
   const partner = $('.delivery-details-col h6').filter((_, node) => clean($(node).text()) === 'Delivery Partner').next('div');
+  const links = partner.find('a.track');
   const inputs = partner.find('input[name="id"]');
-  const partnerNumber = partner.length === 1 && inputs.length === 1 ? clean(inputs.val(), 64).toUpperCase() : '';
+  const partnerNumber = partner.length !== 1 ? '' : clean(links.length === 1 ? links.text() : inputs.length === 1 ? inputs.val() : '', 64).toUpperCase();
   const partnerName = clean(partner.clone().find('form').remove().end().text(), 100);
-  return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
+  const partnerCarrier = carrierIdFromPartner(partnerName, clean(partner.find('form').attr('action'), 500));
+  // Only the country of the ship-to place is read; the town is the recipient's.
+  const shipTo = clean($('.shipping-details h6').filter((_, node) => clean($(node).text()) === 'Shipping To').first().next('p').text(), 200);
+  const destination = /,\s*([A-Z]{2})$/.exec(shipTo)?.[1];
+  return { status: current.status, ...(current.stage ? { current_stage: current.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null, expected_delivery: null,
     ...(number !== canonical ? { canonical_tracking_number: canonical } : {}),
-    ...(/^[A-Z0-9]{4,40}$/.test(partnerNumber) ? { delivery_tracking_number: partnerNumber,
-      ...(partnerName === 'Australia Post' ? { delivery_carrier: 'australia-post' } : {}) } : {}), events: events.slice(0, 100) };
+    ...(destination ? { destination_country: destination } : {}),
+    ...(/^[A-Z0-9]{4,40}$/.test(partnerNumber) && partnerNumber !== number && partnerNumber !== canonical ? { delivery_tracking_number: partnerNumber,
+      ...(partnerCarrier && partnerCarrier !== 'landmark-global' ? { delivery_carrier: partnerCarrier } : {}) } : {}), events: events.slice(0, 100) };
+}
+
+/** The newest scan's stage: Landmark's own wording first, then the shared wording rules that
+ * stage the scan itself. Partners' wording reaches the page as they wrote it. */
+function currentStatus(wording: string): { status: ClassifiedStatus['status']; stage?: ClassifiedStatus['stage'] } {
+  const mapped = landmarkStatus(wording);
+  if (mapped) return mapped;
+  const classified = classifyWording(wording);
+  return classified.source === 'none' ? { status: 'unknown' } : { status: languageStageStatus(classified.stage), stage: classified.stage };
 }

@@ -36,7 +36,8 @@ describe('Landmark Global history', () => {
     expect(result).not.toHaveProperty('delivered_at'); expect(result.events?.some(event => event.time)).toBe(false);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|utc_server_offset|Australia"/);
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
-    const evidence: Record<string, boolean> = { history: !!result.events?.length, location: !!result.events?.some(event => event.location) };
+    const evidence: Record<string, boolean> = { history: !!result.events?.length, location: !!result.events?.some(event => event.location),
+      delivery_partner: !!result.delivery_carrier, delivery_tracking_number: !!result.delivery_tracking_number };
     for (const capability of metadata.capabilities) expect(evidence[capability], capability).toBe(true);
   });
   it.each(['-360', '-300', '0', '330', 'INVALID'])('does not turn a current server offset %s into a historical instant', offset => {
@@ -79,8 +80,9 @@ describe('Landmark Global history', () => {
     expect(parseLandmark($.html(), NUMBER).events?.[0]).not.toHaveProperty('local_time');
   });
   it('uses only the actual newest wording, preserving unknown stages and completed delivery without summary coercion', () => {
-    const $ = load(fixture()); const first = $('tbody tr').first(); first.find('td').first().text('Not delivered'); $('.current-status h3').text('Not delivered');
-    expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'Not delivered' });
+    const $ = load(fixture()); const first = $('tbody tr').first(); first.find('td').first().text('Tendered to Example Gateway'); $('.current-status h3').text('Tendered to Example Gateway');
+    expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'unknown', last_status_text: 'Tendered to Example Gateway' });
+    expect(parseLandmark($.html(), NUMBER)).not.toHaveProperty('current_stage');
     expect(landmarkStatus('__proto__')).toBeUndefined();
     first.remove(); $('.current-status h3').text('Onboard for delivery'); $('.current-status .time').attr('data-time', $('tbody tr').first().find('.time').attr('data-time'));
     expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'out_for_delivery' });
@@ -94,6 +96,45 @@ describe('Landmark Global history', () => {
     expect(result.events?.[0]).toMatchObject({ description: 'Delivered', stage: 'delivered', local_time: '2026-01-04T12:00:00' });
     expect(result).not.toHaveProperty('delivered_at');
     expect(landmarkStatus('One-time recipient permission for deposit')).toBeUndefined();
+  });
+  it('stages a newest scan in a partner\'s wording by the shared rules', () => {
+    const cases: [string, string, string][] = [['Item delivered', 'delivered', 'delivered'], ['Parcel delivered', 'delivered', 'delivered'],
+      ['Not Delivered - Addressee not present- Message left', 'exception', 'failed_attempt'],
+      ['The item was successfully returned to the sender.', 'exception', 'returned'],
+      ['Item arrival at collection point for pick-up', 'out_for_delivery', 'ready_for_pickup'],
+      ['Received at Hermes hub', 'in_transit', 'in_transit'], ['Out For Delivery To Courier', 'in_transit', 'in_transit']];
+    for (const [wording, status, stage] of cases) {
+      const $ = load(fixture()); $('tbody tr:first-child td').first().text(wording); $('.current-status h3').text(wording);
+      expect(parseLandmark($.html(), NUMBER), wording).toMatchObject({ status, current_stage: stage, last_status_text: wording });
+    }
+  });
+  it('reads a summary without scan wording: before the first scan has one, and after a return', () => {
+    const $ = load(fixture()); $('tbody tr').slice(0, 3).remove(); $('.current-status h2').text('Data Received'); $('.current-status h3').remove();
+    $('.current-status .time').attr('data-time', '2026-01-01 12:00:00');
+    expect(parseLandmark($.html(), NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    const back = load(fixture()); back('tbody tr').slice(0, 2).remove(); back('.current-status h2').text('Returned');
+    back('.current-status h3').html('<a href="/?search=LTN00000002">See return tracking status</a>');
+    back('.current-status .time').attr('data-time', '2026-01-03 10:00:00');
+    const returned = parseLandmark(back.html(), NUMBER);
+    expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Customs cleared' });
+    expect(JSON.stringify(returned)).not.toContain('LTN00000002');
+    back('.current-status h2').text('Complete');
+    expect(parseLandmark(back.html(), NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+  it('reads the delivery partner\'s link and the destination country, never the ship-to town', () => {
+    const page = (name: string, action: string, number: string) => {
+      const $ = load(fixture());
+      $('.delivery-details-col h6').first().next('div').html(`${name} <form class="d-inline" method="GET" action="${action}"><span class="script_allowed"><a href="javascript:;" class="track"> ${number} </a></span><noscript><input type="submit" value="${number}"></noscript></form>`);
+      $('.current-status').before('<div class="shipping-details"><h6>Shipping To</h6><p class="light">Exampletown, DE</p><p class="light">Exampletown, DE</p></div>');
+      return $.html();
+    };
+    const hermes = parseLandmark(page('Hermes Parcel', 'https://www.myhermes.de/empfangen/sendungsverfolgung/sendungsinformation/#H0000000000000000001', 'H0000000000000000001'), NUMBER);
+    expect(hermes).toMatchObject({ delivery_carrier: 'hermes-de', delivery_tracking_number: 'H0000000000000000001', destination_country: 'DE' });
+    expect(JSON.stringify(hermes)).not.toContain('Exampletown');
+    const postal = parseLandmark(page('Postal Carrier', 'https://track.bpost.cloud/btr/web/#/lmg/search?lang=en&itemCodes=AA000000005BE', 'AA000000005BE'), NUMBER);
+    expect(postal).toMatchObject({ delivery_tracking_number: 'AA000000005BE' }); expect(postal).not.toHaveProperty('delivery_carrier');
+    const own = parseLandmark(page('Final Mile Carrier', 'https://www.example.eu/index.php', 'LTN00000001N1_1234567'), NUMBER);
+    expect(own).not.toHaveProperty('delivery_tracking_number'); expect(own).not.toHaveProperty('delivery_carrier');
   });
   it('deduplicates repeated scans and excludes ambiguous delivery partner references', () => {
     const $ = load(fixture()); $('tbody').append($('tbody tr').first().clone());

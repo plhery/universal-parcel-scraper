@@ -132,6 +132,34 @@
       "language": "en",
       "stage": "out_for_delivery",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "Item arrival at collection point for pick-up",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "A destination post's UPU wording for a parcel waiting at its counter."
+    },
+    {
+      "wording": "Parcel received at HUB",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A delivery partner's hub after Landmark exported the parcel, not its acceptance."
+    },
+    {
+      "wording": "Received at Hermes hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Evri's hub after Landmark exported the parcel, not its acceptance."
+    },
+    {
+      "wording": "Out For Delivery To Courier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Evri's depot hands the parcel to its courier, who confirms receipt before the delivery round."
     }
   ]
 }

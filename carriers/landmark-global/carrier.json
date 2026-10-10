@@ -20,7 +20,9 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "url": "https://track.landmarkglobal.com/?search={trackingNumber}",
@@ -29,12 +31,16 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner",
+      "destination_country"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivery_partner",
+      "destination_country"
     ],
     "discarded": [
       "order_references",
