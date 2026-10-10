@@ -9,6 +9,9 @@
         "url": "https://www.trustpilot.com/reviews/6ab70eab4f8ac906897c270d",
         "date": "2026-09-26"
       },
+      "context": {
+        "assessment": "candidate"
+      },
       "expect": {
         "carrier": "dtdc",
         "confidence": "high"
@@ -23,6 +26,9 @@
         "url": "https://gist.github.com/zxp/e83a4a1b7294a5ed6207",
         "date": "2015-08-29"
       },
+      "context": {
+        "assessment": "candidate"
+      },
       "expect": {
         "carrier": "dtdc",
         "confidence": "high"
@@ -36,6 +42,9 @@
       "source": {
         "url": "https://www.trustpilot.com/reviews/6a9d03a2531e78ca983c377f",
         "date": "2026-09-06"
+      },
+      "context": {
+        "assessment": "candidate"
       },
       "expect": {
         "carrier": "unknown",
@@ -54,6 +63,9 @@
         "url": "https://www.trustpilot.com/review/www.dtdc.com?page=9",
         "date": "2016-12-24"
       },
+      "context": {
+        "assessment": "candidate"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -71,11 +83,260 @@
         "url": "https://www.trustpilot.com/review/www.dtdc.com",
         "date": "2023-05-30"
       },
+      "context": {
+        "assessment": "candidate"
+      },
       "expect": {
         "carrier": "dtdc",
         "confidence": "high"
       },
       "note": "Publicly reported shipment number; carrier attribution was not independently verified. The review excerpt labels it as the DTDC AWB and separately mentions a FedEx partner number."
+    },
+    {
+      "number": "7D135709646",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a8bd661f67c48c99087ff6b",
+        "date": "2026-08-24",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "dtdc",
+        "confidence": "high"
+      },
+      "note": "Tracking ID from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "7X117947645",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a849cd11d873b42e09c5d3e",
+        "date": "2026-08-18",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "dtdc",
+        "confidence": "high"
+      },
+      "note": "Waybill from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "B5001412134",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a955b0c6dc07718e3b5361c",
+        "date": "2026-08-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "Domestic consignment number from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "D3009327142",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a8c18b78cd9cfed09d59e61",
+        "date": "2026-08-24",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "Waybill from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "H5002649686",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a931a99191c286f8fcece9c",
+        "date": "2026-08-29",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ups",
+          "dtdc"
+        ]
+      },
+      "note": "Consignment number from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "V1002277851",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6ac64a7876debc23c7a3c22b",
+        "date": "2026-10-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ups",
+          "dtdc"
+        ]
+      },
+      "note": "Tracking number from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "Z5001186697",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a9f96f064a487c6b8247911",
+        "date": "2026-09-08",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "packeta",
+        "confidence": "high"
+      },
+      "note": "Z waybill from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "Z1003896203",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a874a3c86e96375895e13c3",
+        "date": "2026-08-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "packeta",
+        "confidence": "high"
+      },
+      "note": "Z consignment number from a review of DTDC. Not confirmed live: DTDC's feed answered every lookup with a generic failure."
+    },
+    {
+      "number": "W17514447",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260420064654/https://www.dtdc.com/track-your-shipment/?awb=W17514447",
+        "date": "2026-04-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Archived DTDC tracking link with a W reference. A tracking link holds whatever was entered, so it does not show that DTDC issued the number, and detection does not know the shape."
+    },
+    {
+      "number": "Z73449105",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260106173409/https://www.dtdc.com/track-your-shipment/?awb=Z73449105",
+        "date": "2026-01-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Archived DTDC tracking link with a Z reference of eight digits. A tracking link holds whatever was entered, so it does not show that DTDC issued the number, and detection does not know the shape."
+    },
+    {
+      "number": "F32864330",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251105042828/https://www.dtdc.com/track-your-shipment/?awb=F32864330",
+        "date": "2025-11-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Archived DTDC tracking link with an F reference. A tracking link holds whatever was entered, so it does not show that DTDC issued the number, and detection does not know the shape."
+    },
+    {
+      "number": "USIN59020704001",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251015174103/https://www.dtdc.com/track-your-shipment/?awb=USIN59020704001",
+        "date": "2025-10-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Archived DTDC tracking link with a US-to-India reference. A tracking link holds whatever was entered, so it does not show that DTDC issued the number, and detection does not know the shape."
     }
   ]
 }

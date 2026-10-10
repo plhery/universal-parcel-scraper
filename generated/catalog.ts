@@ -3883,7 +3883,8 @@ export const CARRIER_CATALOG = {
           "dtdc.com"
         ],
         "params": [
-          "trackingId"
+          "trackingId",
+          "awb"
         ]
       }
     ],

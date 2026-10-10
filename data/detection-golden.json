@@ -13148,6 +13148,14 @@
     ]
   },
   {
+    "input": "7D135709646",
+    "carrier": "dtdc",
+    "confidence": "high",
+    "candidates": [
+      "dtdc"
+    ]
+  },
+  {
     "input": "7J00826492034",
     "carrier": "la-poste",
     "confidence": "high",
@@ -13161,6 +13169,14 @@
     "confidence": "high",
     "candidates": [
       "australia-post"
+    ]
+  },
+  {
+    "input": "7X117947645",
+    "carrier": "dtdc",
+    "confidence": "high",
+    "candidates": [
+      "dtdc"
     ]
   },
   {
@@ -15593,6 +15609,14 @@
     ]
   },
   {
+    "input": "B5001412134",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dtdc"
+    ]
+  },
+  {
     "input": "BAINT000290023984465",
     "carrier": "unknown",
     "confidence": "none",
@@ -16663,6 +16687,14 @@
     ]
   },
   {
+    "input": "D3009327142",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dtdc"
+    ]
+  },
+  {
     "input": "D420007390000048510001",
     "carrier": "canpar",
     "confidence": "high",
@@ -17405,6 +17437,12 @@
     ]
   },
   {
+    "input": "F32864330",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "FGRC45BKLM",
     "carrier": "c-chez-vous",
     "confidence": "high",
@@ -18016,6 +18054,15 @@
     "confidence": "high",
     "candidates": [
       "hermes-de"
+    ]
+  },
+  {
+    "input": "H5002649686",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ups",
+      "dtdc"
     ]
   },
   {
@@ -22012,6 +22059,12 @@
     "candidates": []
   },
   {
+    "input": "USIN59020704001",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "UT168665911TY",
     "carrier": "unknown",
     "confidence": "low",
@@ -22157,6 +22210,15 @@
     ]
   },
   {
+    "input": "V1002277851",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ups",
+      "dtdc"
+    ]
+  },
+  {
     "input": "VD2090015682",
     "carrier": "unknown",
     "confidence": "low",
@@ -22211,6 +22273,12 @@
     "candidates": [
       "purolator"
     ]
+  },
+  {
+    "input": "W17514447",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "WB371672691TH",
@@ -22614,6 +22682,14 @@
     ]
   },
   {
+    "input": "Z1003896203",
+    "carrier": "packeta",
+    "confidence": "high",
+    "candidates": [
+      "packeta"
+    ]
+  },
+  {
     "input": "Z1234567890",
     "carrier": "packeta",
     "confidence": "high",
@@ -22654,6 +22730,14 @@
     ]
   },
   {
+    "input": "Z5001186697",
+    "carrier": "packeta",
+    "confidence": "high",
+    "candidates": [
+      "packeta"
+    ]
+  },
+  {
     "input": "Z6E5E29R",
     "carrier": "unknown",
     "confidence": "low",
@@ -22682,6 +22766,12 @@
       "gls-ch",
       "gls-de"
     ]
+  },
+  {
+    "input": "Z73449105",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "Z8328162946",

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { parseTrackingInput } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, DtdcTracker } from './adapter.js';
@@ -202,5 +203,12 @@ describe('DTDC retrieval', () => {
     await expect(new DtdcTracker({ fetcher: slow }).fetch(NUMBER, { budgetMs: 20.5 })).rejects.toThrow();
     const oversized = vi.fn<typeof fetch>().mockResolvedValue(new Response('x'.repeat(1_000_001)));
     await expect(new DtdcTracker({ fetcher: oversized }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');
+  });
+});
+
+describe('DTDC links', () => {
+  it.each(['trackingId', 'awb'])('reads the number out of a pasted DTDC link with %s', param => {
+    expect(parseTrackingInput(`https://www.dtdc.com/track-your-shipment/?${param}=W00000000`))
+      .toMatchObject({ trackingNumber: 'W00000000', carrier: 'dtdc', source: 'link' });
   });
 });

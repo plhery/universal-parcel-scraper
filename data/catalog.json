@@ -3881,7 +3881,8 @@
           "dtdc.com"
         ],
         "params": [
-          "trackingId"
+          "trackingId",
+          "awb"
         ]
       }
     ],

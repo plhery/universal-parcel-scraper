@@ -153,6 +153,12 @@
     "reason": "Express piece identifiers resolve to their waybill on DHL's global tracking page, but the mobile API takes waybills only and DHL Paket's rule claims the shape."
   },
   {
+    "carrier": "dtdc",
+    "pattern": "^Z\\d{10}$",
+    "kind": "collision",
+    "reason": "Reviews of DTDC cite Z waybills with ten digits, the shape of Packeta's Z barcodes, whose high-confidence rule takes them."
+  },
+  {
     "carrier": "four-px",
     "pattern": "^MS\\d{8}XSG$",
     "kind": "open",
