@@ -16255,6 +16255,18 @@
     ]
   },
   {
+    "input": "AD956914100",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "AD959842696",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "AD961794895BR",
     "carrier": "correios-br",
     "confidence": "high",
@@ -17479,6 +17491,22 @@
   },
   {
     "input": "D10011354453707",
+    "carrier": "ontrac",
+    "confidence": "high",
+    "candidates": [
+      "ontrac"
+    ]
+  },
+  {
+    "input": "D10017439844978",
+    "carrier": "ontrac",
+    "confidence": "high",
+    "candidates": [
+      "ontrac"
+    ]
+  },
+  {
+    "input": "D10017497221639",
     "carrier": "ontrac",
     "confidence": "high",
     "candidates": [

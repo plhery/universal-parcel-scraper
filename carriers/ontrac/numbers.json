@@ -361,6 +361,82 @@
         "confidence": "high"
       },
       "note": "An OnTrac tracking link archived by the Wayback Machine. OnTrac's tracker returns its history."
+    },
+    {
+      "number": "D10017439844978",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260613211252/https://www.fedex.com/fedextrack/no-results-found?trknbr=D10017439844978",
+        "date": "2026-06-13",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "Archived from a FedEx tracking link that found nothing. OnTrac's tracking returned this parcel's history."
+    },
+    {
+      "number": "D10017497221639",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260627122136/https://www.fedex.com/fedextrack/no-results-found?trknbr=D10017497221639",
+        "date": "2026-06-27",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ontrac",
+        "confidence": "high"
+      },
+      "note": "Archived from a FedEx tracking link that found nothing. OnTrac's tracking returned this parcel's history."
+    },
+    {
+      "number": "AD959842696",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260708001520/https://www.ontrac.com/tracking/?number=AD959842696",
+        "date": "2026-07-08",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A shipper reference archived from an OnTrac tracking link. OnTrac's tracker resolved it to the parcel and returned its history under the parcel's own number."
+    },
+    {
+      "number": "AD956914100",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260508143815/https://www.ontrac.com/tracking/?number=AD956914100",
+        "date": "2026-05-08",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A shipper reference archived from an OnTrac tracking link. OnTrac's tracker resolved it to the parcel and returned its history under the parcel's own number."
     }
   ]
 }
