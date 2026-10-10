@@ -18,6 +18,8 @@ const EXACT: ReadonlyMap<string, Stage> = new Map([
 
 const PREFIXES: ReadonlyArray<readonly [string, Stage]> = [
   ['delivery attempted', 'failed_attempt'],
+  // A completed clearance puts the parcel back in transit; one still running stays in customs.
+  ['clearance processing complete', 'in_transit'],
   ['clearance processing', 'customs'],
   ['customs clearance', 'customs'],
   ['processed at ', 'in_transit'],

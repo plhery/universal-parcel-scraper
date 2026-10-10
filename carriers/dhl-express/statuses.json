@@ -81,6 +81,22 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-05",
       "note": "Followed by the facility; matched on its start."
+    },
+    {
+      "wording": "Clearance processing complete at",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Followed by the facility. A completed clearance puts the parcel back in transit."
+    },
+    {
+      "wording": "Customs clearance status updated. Note - The Customs clearance process",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Matched on its start; the clearance is still under way."
     }
   ]
 }

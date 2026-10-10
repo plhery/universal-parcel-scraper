@@ -66,6 +66,9 @@ every waybill and device for a while; the settings read keeps answering.
 Checkpoint stages come from [status.ts](status.ts). DHL's fixed sentences match
 whole, and those that end with the facility ("Processed at CITY - COUNTRY")
 match on their start. Other wording goes to the shared classifier.
+"Clearance processing complete at …" puts the parcel back in transit; a
+clearance still under way stays in customs. Only the stage changes, so stored
+scans keep their identity.
 
 ## Limits
 

@@ -62,9 +62,11 @@ describe('DHL Express projection', () => {
     ].map(dhlExpressStage)).toEqual([
       { stage: 'registered', source: 'carrier_map' }, { stage: 'in_transit', source: 'carrier_map' },
       { stage: 'in_transit', source: 'carrier_map' }, { stage: 'in_transit', source: 'carrier_map' },
-      { stage: 'in_transit', source: 'carrier_map' }, { stage: 'customs', source: 'carrier_map' },
+      { stage: 'in_transit', source: 'carrier_map' }, { stage: 'in_transit', source: 'carrier_map' },
     ]);
     expect(dhlExpressStage('Processed for clearance at EXAMPLE CITY - FRANCE').source).not.toBe('carrier_map');
+    expect(dhlExpressStage('Customs clearance status updated. Note - The Customs clearance process is under way.'))
+      .toEqual({ stage: 'customs', source: 'carrier_map' });
   });
   it('dates a scan where its location settles the facility zone', () => {
     const clock = (location: string, date = 'Monday, October 05, 2026') => {
