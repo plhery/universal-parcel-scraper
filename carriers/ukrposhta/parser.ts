@@ -109,7 +109,9 @@ function project(rows: ScanRow[]): CarrierResult {
   const status = stage === 'returned' || stage === 'exception' ? 'exception' : ukrposhtaStatus(latest.code)?.status ?? 'unknown';
   const seen = new Set<string>();
   const deduplicated = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
-  return { status, ...(stage ? { current_stage: stage } : {}), last_status_text: latest.label, last_update: current.time ?? null, events: deduplicated.slice(0, 100) };
+  // A delivery scan in Ukraine has an instant to date the delivery; a foreign one keeps its wall clock.
+  return { status, ...(stage ? { current_stage: stage } : {}), last_status_text: latest.label, last_update: current.time ?? null,
+    ...(stage === 'delivered' && current.time ? { delivered_at: current.time } : {}), events: deduplicated.slice(0, 100) };
 }
 
 /**

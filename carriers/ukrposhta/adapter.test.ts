@@ -186,6 +186,18 @@ describe('Ukrposhta status API projection', () => {
       .map(event => [event.time, event.description, event.location, event.provider_code]);
     expect(portal.last_update).toBe(api.last_update);
     expect(dated(portal)).toEqual(dated(api));
+    // The delivery back to the sender dates no delivery.
+    expect(api).toMatchObject({ current_stage: 'returned' });
+    expect(api.delivered_at).toBeUndefined();
+  });
+
+  it('dates a delivery in Ukraine, but not one abroad', () => {
+    const rows = statuses().slice(0, 2);
+    Object.assign(rows[1], { event: '41000', eventName: 'Delivered to Recipient', country: 'UKRAINE', date: '2026-03-29T16:03:37' });
+    expect(parseUkrposhtaStatuses(rows, NUMBER)).toMatchObject({ current_stage: 'delivered',
+      last_update: '2026-03-29T16:03:00+03:00', delivered_at: '2026-03-29T16:03:00+03:00' });
+    rows[1].country = 'EXAMPLE COUNTRY';
+    expect(parseUkrposhtaStatuses(rows, NUMBER)).not.toHaveProperty('delivered_at');
   });
 
   it.each(['2026-03-29T03:30:12', '2026-10-25T03:30:12'])('keeps a Kyiv wall clock the clocks skip or repeat local: %s', date => {

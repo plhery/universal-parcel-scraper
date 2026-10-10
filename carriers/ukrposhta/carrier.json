@@ -26,7 +26,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "delivered_at"
   ],
   "portal": {
     "url": "https://track.ukrposhta.ua/en/?barcode={trackingNumber}",
@@ -40,7 +41,8 @@
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "delivered_at"
     ],
     "discarded": [
       "postcodes",
@@ -49,8 +51,7 @@
       "delivery_date"
     ],
     "unavailable": [
-      "eta",
-      "delivered_at"
+      "eta"
     ]
   },
   "links": [

@@ -65,7 +65,8 @@ The fallback needs `TRACKING_CHROMIUM_PATH`. Neither
 not-found reply names the barcode, so tracking reports neither as parcel absence. On the
 portal, multiple-piece shipments, count changes between requests and conflicting
 current scans are inconclusive. Delivery and estimate dates are not inferred from
-local scan clocks or the query time. The portal can refuse the browser's automatic
+local scan clocks or the query time; only a delivery scan dated on Kyiv time dates
+the delivery. The portal can refuse the browser's automatic
 verification. The lookup then fails as a challenge and routing falls back to the
 universal providers.
 
