@@ -177,7 +177,10 @@
           "local_time": "2026-01-03T08:00:00",
           "stage": "out_for_delivery"
         }
-      ]
+      ],
+      "destination_country": "KW",
+      "service_name": "E-commerce Parcel Express",
+      "weight_kg": 0.227
     }
   },
   "four-px/delivered.json/": {

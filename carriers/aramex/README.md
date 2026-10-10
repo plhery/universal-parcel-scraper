@@ -21,7 +21,11 @@ redirect requests.
 
 ## Notes
 
-The parser reads actual history rows, excluding the progress rail and recipient details.
+The parser reads the history rows and the shipment type, but no recipient details. It
+reads the weight in kilograms, to the gram, only when the shipment has a single item.
+From the progress rail it takes only a single destination country, kept by name when it
+has no known code. Contact notes, payments, checks and network notices stage nothing,
+so the status comes from the newest other row.
 Cross-border dates have no offsets, so they remain local wall times. Invalid dates retain
 their text, and incomplete scan rows fail the lookup. The app archives this
 direct evidence and asks providers for a timestamped timeline before using it as a fallback.

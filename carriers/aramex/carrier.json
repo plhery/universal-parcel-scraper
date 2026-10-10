@@ -24,7 +24,9 @@
     "localClocks": true
   },
   "capabilities": [
-    "history"
+    "history",
+    "service_name",
+    "weight"
   ],
   "portal": {
     "url": "https://www.aramex.com/us/en/track/shipments?ShipmentNumber={trackingNumber}",
@@ -32,11 +34,18 @@
     "canaryUrl": "https://www.aramex.com/us/en/track/shipments",
     "shows": [
       "status",
-      "history"
+      "history",
+      "service_name",
+      "weight",
+      "parcel_count",
+      "destination_country"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "service_name",
+      "weight",
+      "destination_country"
     ],
     "discarded": [
       "recipient"

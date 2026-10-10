@@ -6222,6 +6222,29 @@
     ]
   },
   {
+    "input": "2347442134",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-express",
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "estafeta",
+      "dhl-ecommerce-es"
+    ],
+    "preferred": [
+      "dhl-express"
+    ],
+    "asked": [
+      "dhl-express",
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
+    ]
+  },
+  {
     "input": "23715034066787",
     "carrier": "unknown",
     "confidence": "low",
@@ -7739,6 +7762,28 @@
     ]
   },
   {
+    "input": "32440341065",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
     "input": "3283000810648760",
     "carrier": "unknown",
     "confidence": "low",
@@ -8114,7 +8159,51 @@
     ]
   },
   {
+    "input": "34913932244",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
     "input": "34913932303",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
+    "input": "35684143633",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -8527,6 +8616,28 @@
     ]
   },
   {
+    "input": "37313343535",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
     "input": "373165001923888066",
     "carrier": "unknown",
     "confidence": "low",
@@ -8556,6 +8667,28 @@
     ],
     "asked": [
       "bpost"
+    ]
+  },
+  {
+    "input": "37340183786",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
     ]
   },
   {
@@ -8640,6 +8773,28 @@
     ],
     "asked": [
       "bpost"
+    ]
+  },
+  {
+    "input": "38270579701",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
     ]
   },
   {
@@ -10325,6 +10480,28 @@
     ]
   },
   {
+    "input": "50926038413",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "dhl-ecommerce-pl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "postlogistics",
+      "dhl-ecommerce-pl"
+    ]
+  },
+  {
     "input": "509466710003247",
     "carrier": "unknown",
     "confidence": "low",
@@ -10431,6 +10608,24 @@
       "colis-prive",
       "sto",
       "j-and-t"
+    ]
+  },
+  {
+    "input": "5142440871",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "estafeta",
+      "dhl-ecommerce-es"
+    ],
+    "asked": [
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
     ]
   },
   {
@@ -13930,6 +14125,29 @@
     ]
   },
   {
+    "input": "9228956181",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-express",
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "estafeta",
+      "dhl-ecommerce-es"
+    ],
+    "preferred": [
+      "dhl-express"
+    ],
+    "asked": [
+      "dhl-express",
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
+    ]
+  },
+  {
     "input": "9261269903500013618305",
     "carrier": "unknown",
     "confidence": "low",
@@ -14655,6 +14873,29 @@
       "gls-de",
       "brt",
       "colis-prive"
+    ]
+  },
+  {
+    "input": "9688053130",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-express",
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "tipsa",
+      "estafeta",
+      "dhl-ecommerce-es"
+    ],
+    "preferred": [
+      "dhl-express"
+    ],
+    "asked": [
+      "dhl-express",
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es"
     ]
   },
   {

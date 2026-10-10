@@ -2,8 +2,10 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { classifyWording, languageStageStatus, type ClassifiedStatus } from '../../core/status/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
-import { classifyAramexStatus } from './status.js';
+import { classifyAramexStatus, isAramexNote } from './status.js';
 
 export function normalizeAramexNumber(raw: string): string {
   const number = raw.replace(/[\s.-]/g, '');
@@ -71,8 +73,44 @@ export function parseAramex(html: string, number: string): CarrierResult {
   });
   if (!events.length) throw new IndeterminateError('Aramex', 'Aramex returned no shipment history');
   const latest = events[0]!;
-  const mapped = classifyAramexStatus(latest.description ?? '');
+  // Contact notes, payments and checks stage nothing; the newest other scan
+  // gives the status.
+  const mapped = currentStatus(events.find((event) => !isAramexNote(event.description ?? ''))?.description ?? '');
+  const service = detail($, 'Shipment Type');
+  // The weight covers the whole shipment, so it is read only for a single item.
+  const weight = detail($, 'Number of Items') === '1' ? weightKg(detail($, 'Weight')) : null;
+  // The progress rail names the destination's country and city; only the country is kept.
+  const destinations = $('.dest-info .country');
+  const destination = destinations.length === 1 ? clean(destinations.text(), 80) : '';
+  const code = destination ? countryCode(destination) : null;
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null,
-    expected_delivery: null, events: events.slice(0, 100) };
+    expected_delivery: null,
+    ...(service ? { service_name: service } : {}),
+    ...(weight !== null ? { weight_kg: weight } : {}),
+    ...(code ? { destination_country: code } : destination ? { destination_country_name: destination } : {}),
+    events: events.slice(0, 100) };
+}
+
+function currentStatus(description: string): ClassifiedStatus | undefined {
+  const mapped = classifyAramexStatus(description);
+  if (mapped) return mapped;
+  const worded = classifyWording(description);
+  return worded.source === 'none' ? undefined : { status: languageStageStatus(worded.stage), stage: worded.stage };
+}
+
+/** The value beside one of the page's labelled shipment details, such as "Shipment Type". */
+function detail($: ReturnType<typeof load>, title: string): string {
+  const values = $('.shipment-details-title').filter((_, element) => clean($(element).text(), 40) === title)
+    .map((_, element) => clean($(element).siblings('.shipment-details-data').first().text(), 80)).get();
+  return values.length === 1 ? values[0]! : '';
+}
+
+/** "0.5 KG" or "0.15 LB" in kilograms, to the gram; anything else is not read. */
+function weightKg(value: string): number | null {
+  const match = /^(\d+(?:\.\d+)?)\s*(KG|LB)$/i.exec(value);
+  const amount = match ? Number(match[1]) : Number.NaN;
+  if (!match || !Number.isFinite(amount) || amount <= 0) return null;
+  const grams = Math.round((match[2]!.toUpperCase() === 'LB' ? amount * 0.45359237 : amount) * 1000);
+  return grams > 0 ? grams / 1000 : null;
 }

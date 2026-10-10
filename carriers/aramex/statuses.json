@@ -36,6 +36,66 @@
       "language": "en",
       "stage": "accepted",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "The shipment has arrived at the Aramex office at the destination and is being prepared for customer pickup/delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment is on its way to the final destination's sorting facility and will be updated once ready for collection/delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The shipment has left the Aramex transit office and is now on its way to the final destination country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The shipment has reached Aramex transit office and is on its way to the final destination office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The shipment is being processed and on its way to the next destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The delivery has to be rescheduled for the following business day",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The delivery address has been updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "We've attempted to deliver the shipment, but the customer was not available at the time. Not to worry, the delivery has been rescheduled",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment Confiscated by Customs Authorities",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "An issue was encountered which prevented the processing of this shipment This is the last update, for further information, please contact your local Aramex office",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live"
     }
   ]
 }

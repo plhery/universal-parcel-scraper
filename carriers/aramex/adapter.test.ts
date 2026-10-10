@@ -14,7 +14,33 @@ describe('Aramex direct tracking', () => {
     expect(result.events?.map(e => e.stage)).toEqual(['delivered', 'out_for_delivery']);
     expect(result.events?.[0]).not.toHaveProperty('time');
     expect(JSON.stringify(result)).not.toMatch(/Private Recipient|Example Address|progress-rail/);
-    expect(JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities).toEqual(['history']);
+    expect(JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')).capabilities).toEqual(['history', 'service_name', 'weight']);
+  });
+  it('takes the status from the newest scan past contact and payment notes', () => {
+    const row = (text: string) => `<tr><th class="track-check"></th><td><div class="date-time"><span class="date">03 Jan 26</span><span class="time">15:00</span></div></td><td><div class="addr"><span class="city">Example City</span><span class="country">Example Country</span></div></td><td class="activity">${text}</td></tr>`;
+    const withNote = (text: string) => html.replace('</th></tr>\n', `</th></tr>\n${row(text)}`);
+    expect(parseAramex(withNote('Shipment charges paid'), NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Shipment charges paid' });
+    expect(parseAramex(withNote('Shipment Confiscated by Customs Authorities'), NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    const later = parseAramex(withNote("Shipment is on its way to the final destination's sorting facility and will be updated once ready for collection/delivery"), NUMBER);
+    expect(later).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(later.events?.[0]?.stage).toBe('in_transit');
+    const readdressed = html.replace('</th></tr>\n', `</th></tr>\n${row('The delivery address has been updated')}${row('Updated delivery address required from customer')}`);
+    expect(parseAramex(readdressed, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+  it('reads the service, weight and destination country from the shipment details', () => {
+    const result = parseAramex(html, NUMBER);
+    expect(result).toMatchObject({ service_name: 'E-commerce Parcel Express', destination_country: 'KW' });
+    expect(result.weight_kg).toBe(0.227);
+    expect(JSON.stringify(result)).not.toMatch(/Example Destination Town|Example Origin/);
+    const kilos = parseAramex(html.replace('0.5 <sup>LB</sup>', '0.5 <sup>KG</sup>'), NUMBER);
+    expect(kilos.weight_kg).toBe(0.5);
+    const unknown = parseAramex(html.replace('0.5 <sup>LB</sup>', 'n/a').replace('>Kuwait<', '>Atlantis<'), NUMBER);
+    expect(unknown).not.toHaveProperty('weight_kg');
+    expect(unknown).not.toHaveProperty('destination_country');
+    expect(unknown.destination_country_name).toBe('Atlantis');
+    const several = parseAramex(html.replace('<span class="shipment-details-data">1</span>', '<span class="shipment-details-data">2</span>'), NUMBER);
+    expect(several).not.toHaveProperty('weight_kg');
+    expect(several.service_name).toBe('E-commerce Parcel Express');
   });
   it('requires the requested identity in overview and detail and restricts the detail destination', () => {
     expect(aramexDetailUrl(overview(), NUMBER)).toBe('https://www.aramex.com/track/details?q=synthetic');
