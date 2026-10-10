@@ -311,6 +311,18 @@
     "reason": "UniUni's tracker serves these Canadian parcels, one sample per shape; no family is established."
   },
   {
+    "carrier": "xpressbees",
+    "pattern": "^15\\d{13}$",
+    "kind": "open",
+    "reason": "Reviews of Xpressbees cite fifteen-digit waybills starting 15. Its public tracker needs reCAPTCHA, so the family is not established."
+  },
+  {
+    "carrier": "xpressbees",
+    "pattern": "^2\\d{13}$",
+    "kind": "open",
+    "reason": "One reverse pickup waybill in a review starts with 2; one sample does not establish the family."
+  },
+  {
     "carrier": "yanwen",
     "pattern": "^S\\d{14}$",
     "kind": "open",
