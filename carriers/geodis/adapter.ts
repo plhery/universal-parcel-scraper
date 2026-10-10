@@ -5,7 +5,7 @@
  * whole consignment: sender and recipient blocks, addresses, per-scan
  * "complementary information" and links to delivery documents. `parse()` builds
  * its result from an allowlist of status, timeline, operational-location, sender
- * name and weight fields, so nothing else reaches the result or the logs.
+ * name, service and weight fields, so nothing else reaches the result or the logs.
  */
 
 import { createHash } from 'node:crypto';
@@ -162,6 +162,11 @@ function senderName(content: JsonObject): string {
   return isRecord(content.expediteur) ? clean(content.expediteur.nom, 120) : '';
 }
 
+/** The service the page prints after "Prestation". */
+function serviceName(content: JsonObject): string {
+  return isRecord(content.prestationCommerciale) ? clean(content.prestationCommerciale.libelle, 80) : '';
+}
+
 /** The consignment weight, which the page prints in kilograms. */
 function weightKg(value: unknown): number | null {
   return typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= MAX_WEIGHT_KG ? value : null;
@@ -271,6 +276,7 @@ export function parseGeodisTrackingResponse(
     || content.finDeVie === true;
   const sender = senderName(content);
   const weight = weightKg(content.poids);
+  const service = serviceName(content);
 
   return {
     status,
@@ -282,6 +288,7 @@ export function parseGeodisTrackingResponse(
       : expectedDelivery(content.dateLivraisonPrevue)
         ?? expectedDelivery(content.dateLivraisonSouhaitee),
     ...(sender ? { sender_name: sender } : {}),
+    ...(service ? { service_name: service } : {}),
     ...(weight !== null ? { weight_kg: weight } : {}),
     timezone: TIMEZONE,
     events,

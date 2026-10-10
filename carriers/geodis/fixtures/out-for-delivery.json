@@ -44,5 +44,6 @@
   "listImagesBordereauxLivr": [{ "url": "https://private.example/document" }],
   "dateLivraisonPrevue": "30/08/2026",
   "nbColis": 2,
-  "poids": 12.5
+  "poids": 12.5,
+  "prestationCommerciale": { "code": "EX", "libelle": "Example Express Service" }
 }

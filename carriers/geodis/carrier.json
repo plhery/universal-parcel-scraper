@@ -24,6 +24,7 @@
     "location",
     "eta",
     "sender_name",
+    "service_name",
     "weight"
   ],
   "portal": {
@@ -36,6 +37,7 @@
       "location",
       "eta",
       "sender_name",
+      "service_name",
       "weight",
       "parcel_count",
       "recipient_name",
@@ -49,6 +51,7 @@
       "location",
       "eta",
       "sender_name",
+      "service_name",
       "weight"
     ],
     "discarded": [

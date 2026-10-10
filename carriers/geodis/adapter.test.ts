@@ -109,6 +109,7 @@ describe('GEODIS response normalization', () => {
       last_update: '29/08/2026 09:30:00',
       expected_delivery: '2026-08-30',
       sender_name: 'EXAMPLE SENDER',
+      service_name: 'Example Express Service',
       weight_kg: 12.5,
       timezone: 'Europe/Paris',
     });
@@ -139,6 +140,7 @@ describe('GEODIS response normalization', () => {
       location: () => (result.events ?? []).some((event) => Boolean(event.location)),
       eta: () => result.expected_delivery != null,
       sender_name: () => Boolean(result.sender_name),
+      service_name: () => Boolean(result.service_name),
       weight: () => result.weight_kg != null,
     };
     expect(CAPABILITIES.length).toBeGreaterThan(0);
@@ -156,6 +158,8 @@ describe('GEODIS response normalization', () => {
     expect(result).not.toHaveProperty('sender_name');
     expect(result).not.toHaveProperty('weight_kg');
     expect(JSON.stringify(result)).not.toContain('PRIVATE CONTACT');
+    expect(parseGeodisTrackingResponse(successPayload({ prestationCommerciale: { libelle: ' ' } }), OFFICIAL_SYNTHETIC_NUMBER))
+      .not.toHaveProperty('service_name');
     for (const poids of [-1, '12.5', Number.NaN, 1e9, null]) {
       expect(parseGeodisTrackingResponse(successPayload({ poids }), OFFICIAL_SYNTHETIC_NUMBER))
         .not.toHaveProperty('weight_kg');

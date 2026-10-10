@@ -38,8 +38,9 @@ scope.
 - Times are display strings (`DD/MM/YYYY HH:mm:ss`) kept verbatim: the endpoint sends no
   offset, so no instant is invented. A UTC-based number is used only as a sort key.
 - Read: status, timeline, `libelleCentre` (location), the planned date, the sender's name
-  (`expediteur.nom`, which the page prints after "Envoyé par") and the weight (`poids`, which
-  the page prints in kilograms). When the name is empty the page shows the sender's contact
+  (`expediteur.nom`, which the page prints after "Envoyé par"), the weight (`poids`, which
+  the page prints in kilograms) and the service (`prestationCommerciale.libelle`, which the
+  page prints after "Prestation"). When the name is empty the page shows the sender's contact
   person instead; that is a person, so it is not read. The rest of the sender block, the
   recipient block, `listInformationsComplementaires` (free-text access instructions) and
   delivery documents are never retained; a test asserts it.
