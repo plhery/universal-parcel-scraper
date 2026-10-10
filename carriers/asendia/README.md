@@ -41,10 +41,12 @@ providers in the same check (see [routing](https://github.com/plhery/delivery-tr
   references its summary reports (carrier original, customer, vendor).
 - Scan codes mean different things per `eventSource` (USPS reuses `10` and `B1`, Broadreach
   uses `B8`), so codes are read only for Asendia's own sources:
-  - `A1 … Data` sources: A1 codes (`1` registered, `2` accepted, `2.1`/`2.2` in transit).
+  - `A1 … Data` sources: A1 codes (`1` to `1.2` registered, `2` accepted, `2.1` to `2.3` in
+    transit).
   - `FullTrack API`: Asendia's harmonized codes from a published list (linked in
     [status.ts](status.ts)). Consumer-return `RET*` and inquiry `CLAIM*` codes are unmapped.
-  - Partners (`USPS TrackV2 API`, `BROADREACH API`, …): exact wording, else the shared rules.
+  - Partners (`USPS TrackV2 API`, `BROADREACH API`, `DAI API`, …): exact wording, else the
+    shared rules.
 - The declared final-mile link becomes `delivery_carrier` only through catalog link rules; the
   vendor reference becomes `delivery_tracking_number`, so the host can propose one
   confirmation lookup with that operator.

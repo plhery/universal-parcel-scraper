@@ -872,6 +872,46 @@
       "confirmedBy": "live",
       "firstSeen": "2026-09-22",
       "note": "A1 partner scan wording (Broadreach B8), matched exactly; the shared rules would read it as customs."
+    },
+    {
+      "code": "1.2",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "A1 Manifested to Asendia Data: Manifest to Asendia created, before Asendia processes the parcel."
+    },
+    {
+      "code": "2.3",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "A1 Shipment Manifested Data: Shipment Dispatched by Asendia."
+    },
+    {
+      "wording": "pre shipment usps awaiting item",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "A1 partner scan wording (USPS MA, date only), matched exactly."
+    },
+    {
+      "wording": "your parcel is ready for pick up",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "A1 partner scan wording (DAI FD21, Australia), matched exactly."
+    },
+    {
+      "wording": "it s happening your parcel will be delivered today get ready",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "A1 partner scan wording (DAI FP05, Australia), matched exactly; the shared rules read the delivery to come as no scan."
     }
   ]
 }

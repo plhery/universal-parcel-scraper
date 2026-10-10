@@ -121,9 +121,11 @@ const DELIVERED: ClassifiedAsendiaStatus = { status: 'delivered', stage: 'delive
 const A1_CODES: Readonly<Record<string, ClassifiedAsendiaStatus>> = {
   '1': REGISTERED,
   '1.1': REGISTERED,
+  '1.2': REGISTERED,
   '2': ACCEPTED,
   '2.1': IN_TRANSIT,
   '2.2': IN_TRANSIT,
+  '2.3': IN_TRANSIT,
 };
 
 /**
@@ -161,6 +163,11 @@ const PARTNER_WORDING: Readonly<Record<string, ClassifiedAsendiaStatus>> = {
   delivered: DELIVERED,
   'out for delivery': OUT_FOR_DELIVERY,
   'customs released': IN_TRANSIT,
+  // USPS before it holds the item: a label, not a scan.
+  'pre shipment usps awaiting item': REGISTERED,
+  // DAI Post, Aramex's partner for Australia.
+  'your parcel is ready for pick up': READY_FOR_PICKUP,
+  'it s happening your parcel will be delivered today get ready': OUT_FOR_DELIVERY,
 };
 
 /**
