@@ -183,6 +183,12 @@
     "reason": "The delivery-note number is too generic for a rule; the carrier is picked by hand."
   },
   {
+    "carrier": "hermes",
+    "pattern": "^\\d{19}$",
+    "kind": "by_design",
+    "reason": "The nineteen-digit delivery-note number is too generic for a rule; the carrier is picked by hand."
+  },
+  {
     "carrier": "hermes-de",
     "pattern": "^00\\d{13}$",
     "kind": "open",

@@ -14,6 +14,50 @@
         ]
       },
       "note": "A real delivered order that the live test checks. Filed under Hermes Einrichtungs-Service, which no rule claims."
+    },
+    {
+      "number": "6268200378000044960",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260928131428/https://myhes.de/api/request/banner?parcelNumber=6268200378000044960",
+        "date": "2026-09-28",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "poczta-polska"
+        ]
+      },
+      "note": "A Hermes Einrichtungs-Service delivery-note number looked up on myhes.de and listed in the Wayback Machine's capture index. myhes.de returned its delivered order."
+    },
+    {
+      "number": "62442180060000591",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260904044944/https://myhes.de/de/tracking/62442180060000591",
+        "date": "2026-09-04",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce"
+        ]
+      },
+      "note": "A Hermes Einrichtungs-Service delivery-note number looked up on myhes.de and listed in the Wayback Machine's capture index. myhes.de returned its delivered order."
     }
   ]
 }
