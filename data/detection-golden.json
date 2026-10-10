@@ -14322,23 +14322,17 @@
   },
   {
     "input": "92055902360629000000339661",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "usps",
+    "confidence": "high",
     "candidates": [
-      "usps"
-    ],
-    "preferred": [
       "usps"
     ]
   },
   {
     "input": "92108901755477000015642562",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "usps",
+    "confidence": "high",
     "candidates": [
-      "usps"
-    ],
-    "preferred": [
       "usps"
     ]
   },

@@ -846,11 +846,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
       "note": "A 26-digit USPS package number archived from a USPS tracking link."
     },
@@ -890,11 +887,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "usps"
-        ]
+        "carrier": "usps",
+        "confidence": "high"
       },
       "note": "A 26-digit USPS package number archived from a USPS tracking link."
     },

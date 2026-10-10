@@ -2711,6 +2711,11 @@
         "checksum": "usps"
       },
       {
+        "pattern": "^(?!9[23]61)(?:92\\d{3}9\\d{20}|93\\d{3}[0-8]\\d{20})$",
+        "confidence": "high",
+        "checksum": "usps"
+      },
+      {
         "pattern": "^9[1-5]\\d{20}(?:\\d{4})?$",
         "confidence": "low",
         "checksum": "usps",
