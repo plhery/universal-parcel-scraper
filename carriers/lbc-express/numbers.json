@@ -193,6 +193,95 @@
         ]
       },
       "note": "An LBC tracking page archived by the Wayback Machine shows its history: a box sent from the United States."
+    },
+    {
+      "number": "174223955525",
+      "source": {
+        "url": "https://www.complaintsboard.com/lbc-express-b119786",
+        "access": "indexed_excerpt"
+      },
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The source attributes this identifier to LBC; the public page echoes it without usable scans. Carrier confirmation remains unresolved."
+    },
+    {
+      "number": "81208398627",
+      "source": {
+        "url": "https://ecs.doh.gov.ph/images/BAC_RESOLUTIONS/2026/BAC_Resolution_No_2026-03-236_Panamed_Request_Granted_compressed.pdf",
+        "access": "indexed_excerpt"
+      },
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "shipment_tracking_screenshot"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "dhl-ecommerce-pl"
+        ]
+      },
+      "note": "The source attributes this identifier to LBC; the public page echoes it without usable scans. Carrier confirmation remains unresolved."
+    },
+    {
+      "number": "362452353241",
+      "source": {
+        "url": "https://www.reddit.com/r/lbcexpress/comments/1x1hszp/failed_delivery_attempt/",
+        "date": "2026-10-09",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express"
+        ]
+      },
+      "note": "The source attributes this identifier to LBC; the public page echoes it without usable scans. Carrier confirmation remains unresolved."
     }
   ]
 }

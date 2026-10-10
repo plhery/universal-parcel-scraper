@@ -90,6 +90,18 @@ function browserSeam() {
 }
 
 describe('LBC bounded anonymous browser transport', () => {
+  it('recovers from an explicit mobile origin failure and preserves transport provenance', async () => {
+    const seam = browserSeam(), recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const fetcher: typeof fetch = async () => new Response(
+      '<html><title>DNS points to prohibited IP | tracking.example | Cloudflare</title><h1>Error 1000</h1></html>', { status: 403 });
+    const instance = adapter({ browserExecutablePath: '/synthetic/chromium', trawl: null, recorder, fetcher, env: {} });
+    await expect(instance.track({ number: NUMBER }, { budgetMs: 5000 })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(recorder.step.mock.calls.map(call => call[0])).toEqual([
+      expect.objectContaining({ step: 'direct', outcome: 'transport' }),
+      expect.objectContaining({ step: 'browser', outcome: 'ok', fallbackFrom: 'direct', fallbackReason: 'transport' }),
+    ]);
+    expect(seam.browser.close).toHaveBeenCalledOnce();
+  });
   it('recovers from a refused mobile key with browser history and records the refusal', async () => {
     const seam = browserSeam(), recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
     const fetcher: typeof fetch = async () => new Response('', { status: 401 });

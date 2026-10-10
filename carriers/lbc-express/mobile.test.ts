@@ -132,6 +132,15 @@ describe('LBC direct transport', () => {
     await expect(instance(async () => new Response('<html>Cloudflare challenge</html>')).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
     await expect(instance(async () => new Response('x'.repeat(1_000_001))).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'indeterminate' });
   });
+  it.each([200, 403])('classifies an explicit Cloudflare origin error under HTTP %s without blaming the key', async status => {
+    const html = '<html><title>DNS points to prohibited IP | tracking.example | Cloudflare</title>'
+      + '<h1>Error 1000</h1><p>PRIVATE SYNTHETIC DIAGNOSTICS</p></html>';
+    const error: unknown = await instance(async () => new Response(html, { status })).track({ number: NUMBER }).catch(caught => caught);
+    expect(error).toMatchObject({ kind: 'transport' });
+    expect((error as { status?: number }).status).toBe(status >= 400 ? status : undefined);
+    expect((error as Error).cause).toBeUndefined();
+    expect(JSON.stringify(error)).not.toMatch(/PRIVATE|tracking\.example/);
+  });
   it.each(['network', 'rate limit', 'body read'])('sanitizes %s failure data while retaining its classification', async mode => {
     const key = 'SYNTHETIC_TRACKING_KEY';
     const privateData = `PRIVATE RECIPIENT ${NUMBER} ${key}`;

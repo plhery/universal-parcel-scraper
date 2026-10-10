@@ -129,9 +129,14 @@ export async function readLbcMobile(number: string, options: {
       provider: 'lbc-express', maxBytes: MAX_BYTES, timeoutMs: options.timeoutMs, fetcher: options.fetcher,
       allowHttpStatuses: [401, 403, 404, 410],
     });
+    const xml = decodeText(bytes);
+    if (/<(?:html|!doctype html)\b/i.test(xml) && /DNS points to prohibited IP/i.test(xml) && /\bCloudflare\b/i.test(xml)) {
+      throw new TransportError('lbc-express', 'LBC tracking API origin is unavailable', {
+        status: response.status >= 400 ? response.status : undefined,
+      });
+    }
     if ([401, 403].includes(response.status)) throw new ChallengeError('lbc-express', 'LBC refused the tracking API credential');
     if ([404, 410].includes(response.status)) throw new TransportError('lbc-express', 'LBC tracking API is unavailable', { status: response.status });
-    const xml = decodeText(bytes);
     if (/<(?:html|!doctype html)\b/i.test(xml) && /captcha|cloudflare|access denied|challenge/i.test(xml)) throw new ChallengeError('lbc-express');
     if (response.status !== 200) throw new UpstreamHttpError('lbc-express', response.status);
     return parseLbcMobile(xml, normalized);
