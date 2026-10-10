@@ -1,29 +1,26 @@
 # J&T Cargo
 
 J&T's Indonesian freight network for large consignments, a separate company and tracking
-system from [J&T Express](../j-and-t/README.md). Link only: the app recognizes the number
-and opens J&T Cargo's tracking page.
+system from [J&T Express](../j-and-t/README.md). The integration is link only: it opens
+J&T Cargo's tracking page. Automatic history retrieval would be an upgrade.
 
-## Why there is no automatic tracking
+## Retrieval
 
-The tracking page asks for the last four digits of the sender's or recipient's phone
-number before it looks a waybill up. A number alone returns nothing, there and through
-the universal providers.
+The [official page](https://www.jtcargo.id/networkQuery) asks for the last four digits
+of the sender's or recipient's phone number before loading history. Its client calls
+`trackingIsNotEmpty`, submits those digits through `trackingValidate`, resolves pieces
+with `getMainSubBillCode`, then reads scans through `trackingCustomerByWaybillNo`.
 
-## Notes
+The [history endpoint](https://office.jtcargo.co.id/official/waybill/trackingCustomerByWaybillNo)
+also accepts anonymous `POST` requests with the waybill, language and search mode.
+These reads require no phone digits, account token, cookies or preceding verification
+call. The phone prompt belongs to the website flow rather than this history route.
 
-The [official page](https://www.jtcargo.id/networkQuery) publishes its tracking
-requests under `https://office.jtcargo.co.id/official/waybill/`.
-`trackingIsNotEmpty` opens verification; `trackingValidate` submits the
-waybill and the supplied four digits as `validateCode`. The page then resolves
-pieces with `getMainSubBillCode` and reads scans through
-`trackingCustomerByWaybillNo`. Its client permits an empty account token.
-An adapter still needs the user's phone digits, verified lookup state and an
-exact identity for the requested master or piece; it cannot infer them from
-the waybill.
+## Identity
 
-- Waybills are twelve digits. Every public report but one starts with `20`, so that prefix
-  suggests J&T Cargo among the carriers sharing twelve digits. It never selects it.
-- A consignment of several pieces has one master waybill; a piece adds three digits to it.
-  Only the master is suggested.
-- A pasted `jtcargo.id` tracking link names the carrier and carries the waybill.
+A history's `keyword` and every scan's `billCode` must match the whole requested
+identifier. Master and piece histories can differ and must remain separate.
+The [mapping endpoint](https://office.jtcargo.co.id/official/waybill/getMainSubBillCode)
+lists `mainBillCode`, `subBillCodes` and `count`; when queried with a piece, it can retain
+that piece as `mainBillCode`. Resolve published identifiers without inventing piece
+suffixes or replacing a requested piece with its master.

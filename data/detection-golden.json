@@ -17384,6 +17384,28 @@
     ]
   },
   {
+    "input": "NVIDARKZO000000884",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ninja-van"
+    ],
+    "asked": [
+      "ninja-van"
+    ]
+  },
+  {
+    "input": "NVIDNXPID016833280",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ninja-van"
+    ],
+    "asked": [
+      "ninja-van"
+    ]
+  },
+  {
     "input": "NVSGBEDBP03784ADPL",
     "carrier": "unknown",
     "confidence": "low",

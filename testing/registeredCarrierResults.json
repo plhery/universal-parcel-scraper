@@ -1358,6 +1358,7 @@
     "result": {
       "status": "exception",
       "current_stage": "returned",
+      "current_stage_source": "carrier_map",
       "last_status_text": "Returned to sender",
       "last_update": null,
       "expected_delivery": null,
@@ -1367,6 +1368,7 @@
           "description": "delivery success",
           "provider_time_text": "2026-02-30T09:00:00Z",
           "stage": "returned",
+          "stage_source": "carrier_map",
           "provider_leg": "return"
         },
         {
@@ -1375,6 +1377,7 @@
           "time": "2026-04-02T08:00:00Z",
           "location": "Example Station",
           "stage": "in_transit",
+          "stage_source": "carrier_map",
           "provider_leg": "return"
         },
         {
@@ -1383,6 +1386,7 @@
           "time": "2026-04-01T11:00:00Z",
           "location": "Example Sorting Centre",
           "stage": "in_transit",
+          "stage_source": "carrier_map",
           "provider_leg": "return"
         },
         {
@@ -1391,6 +1395,7 @@
           "time": "2026-04-01T10:30:00Z",
           "location": "Example Hub",
           "stage": "in_transit",
+          "stage_source": "carrier_map",
           "provider_leg": "return"
         },
         {
@@ -1398,6 +1403,7 @@
           "description": "rts",
           "time": "2026-04-01T08:15:00Z",
           "stage": "exception",
+          "stage_source": "carrier_map",
           "provider_leg": "return"
         }
       ]

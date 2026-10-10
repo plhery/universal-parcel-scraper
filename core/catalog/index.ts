@@ -12,6 +12,7 @@ import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js'
 import type { CarrierId } from '../../generated/catalog.js';
 import { regionalGofoRequestNumber } from '../detection/gofo.js';
 import { isValidMondialRelayBarcode } from '../detection/mondialRelay.js';
+import { ninjaVanTrackingUrl } from '../detection/ninjaVan.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { amazonOrdersUrl, amazonShippingUrl } from './amazon.js';
 import { CARRIER_DEFINITIONS } from './definitions.js';
@@ -43,6 +44,7 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
 export function trackingLink(carrierId: CarrierId, template: string | undefined) {
   if (carrierId === 'amazon-logistics') return amazonOrdersUrl;
   if (carrierId === 'amazon-shipping') return amazonShippingUrl;
+  if (carrierId === 'ninja-van') return ninjaVanTrackingUrl;
   if (!template) return undefined;
   return (trackingNumber: string) =>
     template.replace(

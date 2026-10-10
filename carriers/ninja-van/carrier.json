@@ -1,7 +1,9 @@
 {
   "id": "ninja-van",
   "displayName": "Ninja Van",
-  "aliases": [],
+  "aliases": [
+    "Ninja Xpress"
+  ],
   "region": {
     "countries": [
       "SG",
@@ -58,7 +60,8 @@
   "links": [
     {
       "domains": [
-        "ninjavan.co"
+        "ninjavan.co",
+        "ninjaxpress.co"
       ],
       "params": [
         "id"
@@ -73,7 +76,7 @@
     },
     {
       "id": "ninja-van-2",
-      "pattern": "^NV(?:SG|MY|PH|ID|TH|VN)[A-Z0-9]{8,20}$",
+      "pattern": "^NV(?:SG|MY|PH|ID|TH|VN)(?!STAMP[A-Z0-9]{9}$)[A-Z0-9]{8,20}$",
       "confidence": "low"
     },
     {

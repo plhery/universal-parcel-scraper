@@ -4024,6 +4024,9 @@ export const CARRIER_CATALOG = {
   "ninja-van": {
     "displayName": "Ninja Van",
     "color": "#ed2d26",
+    "aliases": [
+      "Ninja Xpress"
+    ],
     "countries": [
       "SG",
       "MY",
@@ -4046,7 +4049,8 @@ export const CARRIER_CATALOG = {
     "linkRules": [
       {
         "domains": [
-          "ninjavan.co"
+          "ninjavan.co",
+          "ninjaxpress.co"
         ],
         "params": [
           "id"
@@ -4059,7 +4063,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^NV(?:SG|MY|PH|ID|TH|VN)[A-Z0-9]{8,20}$",
+        "pattern": "^NV(?:SG|MY|PH|ID|TH|VN)(?!STAMP[A-Z0-9]{9}$)[A-Z0-9]{8,20}$",
         "confidence": "low"
       },
       {

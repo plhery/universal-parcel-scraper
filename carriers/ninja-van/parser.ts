@@ -1,4 +1,6 @@
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ninjaVanCountry } from '../../core/detection/ninjaVan.js';
+import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -9,10 +11,9 @@ const PROVIDER = 'Ninja Van';
 const MAX_SCANS = 500;
 const MAX_EVENTS = 100;
 
-/** The MY public order endpoint is the only country route with a live positive. */
 export function normalizeNinjaVanNumber(raw: string): string {
-  const number = raw.trim().toUpperCase().replace(/[\s-]/g, '');
-  if (!/^NLMY[A-Z]{1,2}\d{8,10}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Ninja Van direct tracking requires an NLMY parcel ID');
+  const number = normalizeTrackingNumber(raw);
+  if (!ninjaVanCountry(number)) throw new InvalidInputError(PROVIDER, 'Ninja Van direct tracking requires a supported country-bearing parcel ID');
   return number;
 }
 
@@ -72,7 +73,7 @@ export function parseNinjaVan(payload: unknown, rawNumber: string): CarrierResul
     const stage = completedReturn ? 'returned' : ambiguousReturnDelivery ? 'exception' : mapped?.stage;
     const location = clean(row.data.hub_name, 160);
     events.push({ provider_code: row.type, description: row.type.replaceAll('_', ' ').toLowerCase(), ...clock,
-      ...(location ? { location } : {}), ...(stage ? { stage } : {}), ...(returning ? { provider_leg: 'return' } : {}),
+      ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}), ...(returning ? { provider_leg: 'return' } : {}),
     });
   }
   events.reverse();
@@ -82,9 +83,9 @@ export function parseNinjaVan(payload: unknown, rawNumber: string): CarrierResul
   const mapped = ninjaVanStatus(latest.provider_code ?? '');
   const currentStage = latest.stage;
   const status = returned ? 'exception' : currentStage === 'exception' ? 'exception' : mapped?.status ?? 'unknown';
-  return { status, ...(currentStage ? { current_stage: currentStage } : {}),
+  return { status, ...(currentStage ? { current_stage: currentStage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: returned ? 'Returned to sender' : latest.description,
     last_update: latest.time ?? null, expected_delivery: null,
     ...(currentStage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
-    events: events.slice(0, MAX_EVENTS) };
+    ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}), events: events.slice(0, MAX_EVENTS) };
 }

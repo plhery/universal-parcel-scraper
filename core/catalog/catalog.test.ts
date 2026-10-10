@@ -59,6 +59,19 @@ describe('the derived CARRIERS record', () => {
     expect(CARRIERS['gofo-fr'].trackingUrl?.('PK00000000000000000001'))
       .toBe('https://www.gofo.com/fr/tracking-results/?id=PK-0000000000000000000-1');
   });
+
+  it('routes Ninja Van portal links to the identifier\'s national network', () => {
+    for (const country of ['sg', 'my', 'id', 'ph', 'th', 'vn']) {
+      const number = `NL${country.toUpperCase()}A00000000`;
+      const host = country === 'id' ? 'www.ninjaxpress.co' : 'www.ninjavan.co';
+      expect(CARRIERS['ninja-van'].trackingUrl?.(number))
+        .toBe(`https://${host}/en-${country}/tracking?id=${number}`);
+    }
+    expect(CARRIERS['ninja-van'].trackingUrl?.('njvtt 00000000000'))
+      .toBe('https://www.ninjaxpress.co/en-id/tracking?id=NJVTT00000000000');
+    expect(CARRIERS['ninja-van'].trackingUrl?.('UNSCOPED00000000'))
+      .toBe('https://www.ninjavan.co/en-my/tracking?id=UNSCOPED00000000');
+  });
 });
 
 describe('the catalog lookups the server reads', () => {

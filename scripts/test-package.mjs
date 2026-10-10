@@ -21,6 +21,7 @@ try {
     JSON.parse(readFileSync(path.join(root, `carriers/gofo-${region}/fixtures/delivered.json`), 'utf8'))]));
   const omgoReplies = Object.fromEntries(['tracking-page.html', 'tracking.json'].map(file => [file,
     readFileSync(path.join(root, 'carriers/omgo/fixtures', file), 'utf8')]));
+  const ninjaReply = JSON.parse(readFileSync(path.join(root, 'carriers/ninja-van/fixtures/delivered.json'), 'utf8'));
   writeFileSync(path.join(scratch,'smoke.mjs'), `
     import assert from 'node:assert/strict';
     import { readFileSync, existsSync } from 'node:fs';
@@ -91,6 +92,24 @@ try {
     assert.equal(omgo.source, 'omgo');
     assert.equal(omgo.result.status, 'in_transit');
     assert.equal(omgoRequests, 2);
+    const ninjaReply = ${JSON.stringify(ninjaReply)};
+    for (const country of ['sg', 'my', 'id', 'ph', 'th', 'vn']) {
+      const number = 'NL' + country.toUpperCase() + 'A00000000';
+      const answer = await createTracker({ providers: [], fetcher: async (url, init) => {
+        const request = new URL(url);
+        assert.equal(request.origin, 'https://walrus.ninjavan.co');
+        assert.equal(request.pathname, '/' + country + '/dash/1.2/public/orders');
+        assert.equal(request.searchParams.get('tracking_id'), number);
+        assert(init.signal instanceof AbortSignal);
+        return Response.json({ ...ninjaReply, tracking_id: number });
+      } }).track({ number, carrier: 'ninja-van' });
+      assert.equal(answer.source, 'ninja-van');
+      assert.equal(answer.result.status, 'delivered');
+      assert.equal(answer.result.events.length, ninjaReply.events.length);
+      const portal = new URL(tracking.CARRIERS['ninja-van'].trackingUrl(number));
+      assert.equal(portal.pathname, '/en-' + country + '/tracking');
+      assert.equal(portal.searchParams.get('id'), number);
+    }
     assert.deepEqual(catalog, CARRIER_CATALOG);
     assert(stages.includes('delivered') && golden.length > 0 && checksumVectors.vectors.ups.length > 0 && schema.type === 'object');
     assert.equal(locatePlace('Paris, FR').country, 'FR');

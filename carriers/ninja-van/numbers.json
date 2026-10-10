@@ -45,7 +45,12 @@
         "carrier": "ninja-van",
         "confidence": "high"
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. Malaysian parcel."
+      "note": "The Malaysian public endpoint has supplied an identity-bound return history; it can retain the order while no longer exposing its details.",
+      "context": {
+        "assessment": "confirmed",
+        "service": "malaysia domestic",
+        "reportedRole": "reported_shipment"
+      }
     },
     {
       "number": "NVSGBEDBP03784ADPL",
@@ -124,7 +129,7 @@
         "carrier": "ninja-van",
         "confidence": "high"
       },
-      "note": "Another customer posts their own shipment number in comments. Ninja Van's Indonesian endpoint answers it as an order it can no longer detail, unlike an unknown ID."
+      "note": "Customer posts their own shipment number in comments. The Indonesian endpoint has returned retained-order/no-detail; this is not usable scan history."
     },
     {
       "number": "NLIDAP1370713802",
@@ -298,6 +303,54 @@
         ]
       },
       "note": "The carrier response calls this a waybill, while the original complaint calls it a Lazada order number. Identifier role remains disputed. The original complaint is https://mediakonsumen.com/2023/09/02/surat-pembaca/selisih-ongkir-yang-gak-ngotak."
+    },
+    {
+      "number": "NVIDNXPID016833280",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2020/08/20/surat-pembaca/paket-dikirimkan-dengan-ninja-xpress-tapi-tidak-jelas",
+        "date": "2020-08-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ninja-van"
+        ]
+      },
+      "note": "Customer publishes the replacement waybill given by Ninja Xpress separately from the earlier Oriflame reference."
+    },
+    {
+      "number": "NVIDARKZO000000884",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2023/07/08/surat-pembaca/retur-paket-tanpa-konfirmasi-yang-dilakukan-oleh-ekspedisi-ninja",
+        "date": "2023-07-08",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate",
+        "service": "indonesia domestic",
+        "reportedRole": "reported_shipment"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ninja-van"
+        ]
+      },
+      "note": "Customer identifies the Ninja Xpress tracking ID separately from the purchase and describes delivery attempts and a return."
     }
   ]
 }
