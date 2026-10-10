@@ -88,6 +88,50 @@
         "confidence": "high"
       },
       "note": "Made-up two-day guide with the service letter D in the 14th place, as on older Estafeta result pages."
+    },
+    {
+      "number": "130588970990E700123136",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260408012927/https://cs.estafeta.com/es/Tracking/searchByGet?wayBillType=1&wayBill=130588970990E700123136",
+        "date": "2026-04-08",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "Terrestre",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "estafeta",
+        "confidence": "high"
+      },
+      "note": "Archived Estafeta tracking page for a full guide with a letter in the 13th place. Estafeta's tracker returns it as a label whose parcel it has not yet received, with no scans."
+    },
+    {
+      "number": "4055906722751700096567",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250715195914/https://cs.estafeta.com/es/Tracking/searchByGet?wayBillType=1&wayBill=4055906722751700096567",
+        "date": "2025-07-15",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Archived Estafeta tracking page for an all-digit full guide. Estafeta's tracker still shows a delivered summary for it, but its history has expired, so the adapter stays inconclusive."
     }
   ]
 }

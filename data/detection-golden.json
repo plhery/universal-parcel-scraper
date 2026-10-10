@@ -3219,6 +3219,14 @@
     ]
   },
   {
+    "input": "130588970990E700123136",
+    "carrier": "estafeta",
+    "confidence": "high",
+    "candidates": [
+      "estafeta"
+    ]
+  },
+  {
     "input": "131-12-38385-2",
     "carrier": "unknown",
     "confidence": "low",
@@ -8205,6 +8213,19 @@
     ],
     "asked": [
       "tnt"
+    ]
+  },
+  {
+    "input": "4055906722751700096567",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "austrian-post",
+      "usps",
+      "estafeta"
+    ],
+    "asked": [
+      "austrian-post"
     ]
   },
   {
