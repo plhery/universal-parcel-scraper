@@ -5,12 +5,17 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { isNzPostPlaceholderLocation } from './identity.js';
 import { classifyNzPostStatus } from './status.js';
+
+// Courier labels add a three-letter depot, three digits and a two-letter suffix
+// to sixteen digits. The tracker answers the whole label, not the digits alone.
+const LABEL = /^\d{16}[A-Z]{3}\d{3}[A-Z]{2}$/;
 
 export function normalizeNzPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/\s/g, '');
-  if (!/^\d{20}$/.test(number) && !isValidS10TrackingNumber(number)) {
-    throw new InvalidInputError('nz-post', 'NZ Post requires a domestic parcel barcode or valid postal tracking number');
+  if (!/^\d{20}$/.test(number) && !LABEL.test(number) && !isValidS10TrackingNumber(number)) {
+    throw new InvalidInputError('nz-post', 'NZ Post requires a domestic parcel barcode, courier label or valid postal tracking number');
   }
   return number;
 }
@@ -57,7 +62,8 @@ export function parseNzPost(payload: unknown, number: string): CarrierResult {
     const description = clean(raw.status, 300);
     const code = clean(raw.edifact_code, 40);
     if (!description || !code) throw new SchemaError('nz-post', 'NZ Post returned an incomplete scan');
-    const location = clean(raw.depot_name, 160);
+    const depot = clean(raw.depot_name, 160);
+    const location = isNzPostPlaceholderLocation(depot) ? '' : depot;
     const mapped = classifyNzPostStatus(code);
     // Long descriptions embed signatures and other recipient details. The
     // short status and depot name carry the tracking evidence independently.

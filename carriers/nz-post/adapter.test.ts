@@ -5,6 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { adapter, NzPostTracker } from './adapter.js';
 import { normalizeNzPostNumber, parseNzPost } from './parser.js';
 import { classifyNzPostStatus } from './status.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = '00000000000000000001';
@@ -96,6 +97,53 @@ describe('NZ Post exact-reference projection', () => {
     expect(parseNzPost(value, NUMBER).events?.[0]!.description).toBe('Synthetic scan 100');
     value.results[0].tracking_events = Array(501).fill(value.results[0].tracking_events[0]);
     expect(() => parseNzPost(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+});
+
+describe('NZ Post courier labels and international mail', () => {
+  const LABEL = '0000000000000001ABC001XY';
+  const international = () => ({ success: true, status_code: 1, results: [{ tracking_reference: LABEL, tracking_events: [
+    { date_time: '2026-01-04T08:00:00Z', status: 'Label created', edifact_code: '5303', depot_name: '(Location Not Available)' },
+    { date_time: '2026-01-04T09:00:00Z', status: 'Picked up/Collected', edifact_code: '5000', depot_name: 'Example Post Shop' },
+    { date_time: '2026-01-05T09:00:00Z', status: 'International departure', edifact_code: '5007', depot_name: 'EXAMPLE GATEWAY' },
+    { date_time: '2026-01-06T09:00:00Z', status: 'In transit with airline', edifact_code: '5283' },
+    { date_time: '2026-01-07T09:00:00Z', status: 'With border agency', edifact_code: '5016', depot_name: 'EXAMPLE EMS' },
+    { date_time: '2026-01-08T09:00:00Z', status: 'Held for clearance', edifact_code: '5019' },
+  ] }] });
+
+  it('tracks the whole courier label, not its digits alone', () => {
+    expect(normalizeNzPostNumber(` ${LABEL.toLowerCase()} `)).toBe(LABEL);
+    for (const number of [LABEL.slice(0, 16), `${LABEL}1`, '0000000000000001AB1001XY']) {
+      expect(() => normalizeNzPostNumber(number)).toThrow(InvalidInputError);
+    }
+  });
+
+  it('classifies international codes and keeps a held item in customs', () => {
+    const result = parseNzPost(international(), LABEL);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Held for clearance' });
+    expect(result.events?.map(event => event.stage)).toEqual(['customs', 'customs', 'in_transit', 'in_transit', 'accepted', 'registered']);
+    expect(result.events?.at(-1)).not.toHaveProperty('location');
+    expect(result.events?.at(-2)).toMatchObject({ location: 'Example Post Shop' });
+    expect(classifyNzPostStatus('5023')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(classifyNzPostStatus('6908')).toEqual({ status: 'pending', stage: 'registered' });
+    // A carded parcel handed over to an outlet is not yet ready for collection.
+    expect(classifyNzPostStatus('144')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+  });
+
+  it('lets a stored scan take its code\'s stage and lose the placeholder depot in place', () => {
+    expect(sameInstantIdentityPolicy('nz-post')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('nz-post', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['nz-post'], requireProviderCode: true, matchEachScan: true });
+    const stored = { stage: 'in_transit', description: 'With border agency', location: 'EXAMPLE EMS', providerCode: '5016' };
+    const incoming = { ...stored, stage: 'customs', description: ' with border agency ' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    const placeholder = { stage: 'registered', description: 'Label created', location: '(Location Not Available)', providerCode: '5303' };
+    expect(policy?.matches?.({ ...placeholder, location: '' }, placeholder)).toBe(true);
+    for (const different of [{ ...stored, location: 'ANOTHER DEPOT' }, { ...stored, providerCode: '5019' },
+      { ...stored, description: 'Held for clearance' }, { ...stored, location: '' }]) {
+      expect(policy?.matches?.(incoming, different)).toBe(false);
+    }
+    expect(policy?.matches?.({ ...incoming, providerCode: '' }, { ...stored, providerCode: '' })).toBe(false);
   });
 });
 

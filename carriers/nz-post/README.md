@@ -1,7 +1,7 @@
 # NZ Post
 
-Tracks domestic parcel barcodes and postal references through the anonymous
-consumer service used by NZ Post's tracking page.
+Tracks domestic parcel barcodes, courier labels and postal references through
+the anonymous consumer service used by NZ Post's tracking page.
 
 ## How it works
 
@@ -11,7 +11,14 @@ is accepted; consignments that expand into several parcels are inconclusive.
 
 ## Notes
 
-The short status and depot name provide the timeline. Longer descriptions,
+A courier label is sixteen digits followed by a depot code, three digits and a
+two-letter suffix. The tracker answers only the whole label, so detection claims
+that shape and the adapter sends it unchanged.
+
+The short status and depot name provide the timeline. International mail scans
+carry their own EDIFACT codes; the border agency's hold is customs and its
+release resumes transit. The depot placeholder for a scan with no place is
+dropped. Longer descriptions,
 signatures and delivery assets contain recipient data and are excluded.
 Pickup requests remain pre-advice until a collection scan occurs. Empty history
 is inconclusive; only the service's specific absence response is negative.

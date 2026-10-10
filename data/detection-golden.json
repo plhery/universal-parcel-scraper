@@ -726,6 +726,34 @@
     ]
   },
   {
+    "input": "00793535000019932011",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "swiss-post-cargo",
+      "nz-post"
+    ]
+  },
+  {
+    "input": "00794210392909912519",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "swiss-post-cargo",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "swiss-post-cargo",
+      "nz-post"
+    ]
+  },
+  {
     "input": "00802A058845",
     "carrier": "mrw",
     "confidence": "high",
@@ -6183,6 +6211,14 @@
     ]
   },
   {
+    "input": "2130900025704001IVC001BS",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "222010431454",
     "carrier": "unknown",
     "confidence": "low",
@@ -6493,6 +6529,14 @@
     ]
   },
   {
+    "input": "2541300764830001PLN025JS",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "25631818",
     "carrier": "unknown",
     "confidence": "low",
@@ -6649,6 +6693,22 @@
       "seur",
       "brt",
       "relais-colis"
+    ]
+  },
+  {
+    "input": "2756993827780901TIM003AN",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
+    ]
+  },
+  {
+    "input": "2756993861391201WRE001JN",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
     ]
   },
   {
@@ -7104,6 +7164,22 @@
       "relais-colis",
       "tipsa",
       "dhl-ecommerce-es"
+    ]
+  },
+  {
+    "input": "2986680530749201AKL002AS",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
+    ]
+  },
+  {
+    "input": "2986680554343601PLN002AS",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
     ]
   },
   {
@@ -9618,6 +9694,14 @@
       "colis-prive",
       "sto",
       "j-and-t"
+    ]
+  },
+  {
+    "input": "4253940000185101HAM001ON",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
     ]
   },
   {
@@ -16013,6 +16097,14 @@
     ]
   },
   {
+    "input": "CC560526764NZ",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "CC999999999901",
     "carrier": "relais-colis",
     "confidence": "high",
@@ -19784,6 +19876,14 @@
     "confidence": "high",
     "candidates": [
       "spring-gds"
+    ]
+  },
+  {
+    "input": "LX070771598NZ",
+    "carrier": "nz-post",
+    "confidence": "high",
+    "candidates": [
+      "nz-post"
     ]
   },
   {
