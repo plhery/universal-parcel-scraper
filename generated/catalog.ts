@@ -27963,6 +27963,48 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "stone3pl": {
+    "displayName": "Stone3PL",
+    "color": "#0066b3",
+    "aliases": [
+      "STONE3PL.COM",
+      "Stone 3PL",
+      "STONELINE"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "stone3pl",
+      "recognitionRank": 859,
+      "recognitionPattern": "^S\\d{18}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://stone3pl.com/",
+    "trackingUrlTemplate": "https://stone3pl.com/?route=services/track&nums={trackingNumber}",
+    "trackingSearchUrl": "https://stone3pl.com/?route=services/track",
+    "linkRules": [
+      {
+        "domains": [
+          "stone3pl.com",
+          "www.stone3pl.com"
+        ],
+        "pathPattern": "^/(?:index\\.php)?$",
+        "params": [
+          "nums"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^S\\d{18}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "straightship": {
     "displayName": "Straightship",
     "color": "#6aae66",
@@ -32037,6 +32079,7 @@ export const CARRIER_IDS = [
   "starken",
   "starlinks",
   "steadfast",
+  "stone3pl",
   "straightship",
   "sundarban-courier",
   "surat-kargo",
@@ -32820,6 +32863,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "starken": [],
   "starlinks": ["starlinks-1"],
   "steadfast": ["steadfast-1"],
+  "stone3pl": ["stone3pl-s18"],
   "straightship": ["straightship-1"],
   "sundarban-courier": [],
   "surat-kargo": [],

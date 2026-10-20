@@ -1,0 +1,35 @@
+{
+  "carrier": "stone3pl",
+  "entries": [
+    {
+      "wording": "facility - Outbound",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Processing information input",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Pickup Scan",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Order Submited.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}
