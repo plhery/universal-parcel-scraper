@@ -524,6 +524,7 @@ import { adapter as stallionExpress } from '../carriers/stallion-express/adapter
 import { adapter as starexAz } from '../carriers/starex-az/adapter.js';
 import { adapter as starken } from '../carriers/starken/adapter.js';
 import { adapter as sto } from '../carriers/sto/adapter.js';
+import { adapter as stone3pl } from '../carriers/stone3pl/adapter.js';
 import { adapter as straightship } from '../carriers/straightship/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
@@ -1132,6 +1133,7 @@ export const REGISTRY: RegistryDefinition = {
     "starex-az": starexAz,
     "starken": starken,
     "sto": sto,
+    "stone3pl": stone3pl,
     "straightship": straightship,
     "sundarban-courier": sundarbanCourier,
     "sunyou": sunyou,
@@ -1886,6 +1888,7 @@ export const REGISTRY: RegistryDefinition = {
     "starlinks": "universal",
     "steadfast": "universal",
     "sto": "sto",
+    "stone3pl": "stone3pl",
     "straightship": "straightship",
     "sundarban-courier": "sundarban-courier",
     "sunyou": "sunyou",
