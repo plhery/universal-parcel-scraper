@@ -5,6 +5,8 @@
   { "country": "GB", "names": ["Langley", "Langley HWDC"], "town": "Langley", "latitude": 51.497, "longitude": -0.532, "source": "https://www.openstreetmap.org/way/23294692" },
   { "country": "GB", "names": ["South Midlands"], "town": "Northampton", "site": "South Midlands Mail Centre", "latitude": 52.216, "longitude": -0.953, "source": "https://www.openstreetmap.org/way/197941572" },
   { "country": "GB", "names": ["Princess Royal"], "town": "London", "site": "Princess Royal Distribution Centre", "latitude": 51.541, "longitude": -0.269, "source": "https://www.openstreetmap.org/way/235281286" },
+  { "country": "GB", "names": ["North West Super"], "town": "Warrington", "site": "North West Super Hub", "latitude": 53.409, "longitude": -2.666, "source": "https://www.openstreetmap.org/way/691307577" },
+  { "country": "GB", "names": ["Midlands Super"], "town": "Daventry", "site": "Midlands Super Hub", "latitude": 52.371, "longitude": -1.172, "source": "https://www.openstreetmap.org/way/992030779" },
   { "country": "PL", "names": ["Sękocin Stary"], "town": "Sękocin Stary", "latitude": 52.108, "longitude": 20.88, "source": "https://download.geonames.org/export/zip/PL.zip" },
   { "country": "CN", "names": ["Fenggang Town"], "town": "Fenggang", "latitude": 22.757, "longitude": 114.149, "source": "https://www.geonames.org/1916217" },
   { "country": "CN", "names": ["Shatian Town"], "town": "Shatian", "latitude": 22.923, "longitude": 113.613, "source": "https://www.openstreetmap.org/relation/5664242" },

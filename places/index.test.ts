@@ -115,6 +115,9 @@ describe('locatePlace', () => {
     // Royal Mail's mail centres named after an area, and Cainiao's warehouse in Shatian, Dongguan.
     expect(place('South Midlands MC')).toEqual({ precision: 'city', country: 'GB', name: 'Northampton', site: 'South Midlands Mail Centre', latitude: 52.216, longitude: -0.953 });
     expect(place('Princess Royal Parcel Hub')).toMatchObject({ country: 'GB', name: 'London', site: 'Princess Royal Distribution Centre', latitude: 51.541 });
+    // Its parcel super hubs, by Warrington and Daventry.
+    expect(place('North West Super Hub')).toEqual({ precision: 'city', country: 'GB', name: 'Warrington', site: 'North West Super Hub', latitude: 53.409, longitude: -2.666 });
+    expect(place('MIDLANDS SUPER HUB')).toEqual({ precision: 'city', country: 'GB', name: 'Daventry', site: 'Midlands Super Hub', latitude: 52.371, longitude: -1.172 });
     expect(place('Shatian Town')).toEqual({ precision: 'city', country: 'CN', name: 'Shatian Town', latitude: 22.923, longitude: 113.613 });
     // A longer name that contains a hub's is that place.
     expect(place('Terrasson-Lavilledieu', ['FR'])).toMatchObject({ country: 'FR', name: 'Terrasson-Lavilledieu' });
