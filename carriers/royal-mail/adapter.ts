@@ -18,6 +18,8 @@ const SETTLE_TIMEOUT_MS = 15_000;
 // A healthy lookup needs a fraction of this. A browser that is down fails every
 // parcel the same way, and each failure must not hold a consumer's run for a minute.
 const BROWSER_TIMEOUT_MS = 30_000;
+// A fresh consent flow and the separate history request need time to complete.
+const BROWSER_RETRY_MIN_MS = 15_000;
 const MAX_CAPTURED = 20;
 
 export interface RoyalMailTrackerOptions {
@@ -63,10 +65,19 @@ export class RoyalMailTracker {
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeRoyalMailNumber(trackingNumber);
     if (this.#browserWsEndpoint || this.#executablePath) {
-      return runSteps<CarrierResult>({ carrier: 'royal-mail', budgetMs: context.budgetMs ?? this.timeoutMs,
-        signal: context.signal, recorder: this.#recorder }, [{ id: 'browser', run: ({ remainingMs, signal }) =>
-        fetchRoyalMailInBrowser(number, this.#executablePath ?? '', signal, Math.min(BROWSER_TIMEOUT_MS, remainingMs), this.#fullHistory,
-          this.#browserProxy, this.#browserWsEndpoint) }]);
+      const budgetMs = Math.min(BROWSER_TIMEOUT_MS, context.budgetMs ?? this.timeoutMs);
+      const started = performance.now();
+      const run = ({ remainingMs, signal }: { remainingMs: number; signal: AbortSignal }) =>
+        fetchRoyalMailInBrowser(number, this.#executablePath ?? '', signal, remainingMs, this.#fullHistory,
+          this.#browserProxy, this.#browserWsEndpoint);
+      return runSteps<CarrierResult>({ carrier: 'royal-mail', budgetMs,
+        signal: context.signal, recorder: this.#recorder }, [
+        { id: 'browser', run },
+        // Each call disposes its context before returning. A fresh session can
+        // recover an intermittent edge refusal without retaining issued tokens.
+        { id: 'retry', run, recovers: error => error instanceof ChallengeError
+          && budgetMs - (performance.now() - started) >= BROWSER_RETRY_MIN_MS },
+      ]);
     }
     // The legacy service remains available through explicit tracker instances.
     const trawl = this.#trawl;
@@ -191,7 +202,7 @@ export const adapter: AdapterFactory = environment => {
   const tracker = new RoyalMailTracker({ executablePath: environment.browserExecutablePath,
     browserWsEndpoint: endpoint, browserProxy: environment.env.ROYAL_MAIL_BROWSER_PROXY, recorder: environment.recorder, fullHistory: true });
   return {
-    id: 'royal-mail', recordsSteps: true, steps: ['browser'],
+    id: 'royal-mail', recordsSteps: true, steps: ['browser', 'retry'],
     track: (input, context) => {
       normalizeRoyalMailNumber(input.number);
       if (!endpoint && !environment.browserExecutablePath) throw new ChallengeError('Royal Mail', 'Royal Mail requires TRACKING_CHROMIUM_PATH or ROYAL_MAIL_BROWSER_WS_ENDPOINT');

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   parseRoyalMailTrackingHtml,
@@ -499,7 +500,7 @@ describe('Royal Mail lookup steps', () => {
   it('requires local Chromium for normal routing even when a browser service exists', () => {
     const fetcher = vi.fn();
     const instance = adapter({ trawl: new TrawlClient(TRAWL_URL, fetcher), browserExecutablePath: null, recorder: NOOP_RECORDER, env: {}, fetcher });
-    expect(instance.steps).toEqual(['browser']);
+    expect(instance.steps).toEqual(['browser', 'retry']);
     expect(() => instance.track({ number: DELIVERED_NUMBER })).toThrow('TRACKING_CHROMIUM_PATH');
     expect(fetcher).not.toHaveBeenCalled();
   });
@@ -529,9 +530,75 @@ describe('Royal Mail lookup steps', () => {
       env: { ROYAL_MAIL_BROWSER_WS_ENDPOINT: endpoint } });
     await instance.track({ number: DELIVERED_NUMBER });
     await instance.recognizeWithBrowser!(DELIVERED_NUMBER);
-    expect(instance.steps).toEqual(['browser']);
+    expect(instance.steps).toEqual(['browser', 'retry']);
     expect(fetchRoyalMailInBrowser).toHaveBeenCalledTimes(2);
     expect(fetchRoyalMailInBrowser).toHaveBeenCalledWith(DELIVERED_NUMBER, '', expect.any(AbortSignal), expect.any(Number), true, null, endpoint);
+  });
+
+  it('recovers a challenge with fresh full-history retrieval inside the original deadline', async () => {
+    let now = 0;
+    vi.spyOn(performance, 'now').mockImplementation(() => now);
+    const challenge = new ChallengeError('Royal Mail');
+    const result = parseRoyalMailTrackingResponse(DELIVERED, DELIVERED_NUMBER);
+    const step = vi.fn();
+    const lookup = vi.fn();
+    vi.mocked(fetchRoyalMailInBrowser).mockImplementationOnce(async () => {
+      now = 11_000;
+      throw challenge;
+    }).mockResolvedValueOnce(result);
+    const tracker = new RoyalMailTracker({ browserWsEndpoint: 'ws://browser.invalid/synthetic-capability',
+      fullHistory: true, recorder: { step, lookup } });
+    await expect(tracker.fetch(DELIVERED_NUMBER, { budgetMs: 60_000 })).resolves.toBe(result);
+    const calls = vi.mocked(fetchRoyalMailInBrowser).mock.calls;
+    expect(calls).toHaveLength(2);
+    expect(calls[0]?.[3]).toBe(30_000);
+    expect(calls[1]?.[3]).toBe(19_000);
+    expect(calls[1]?.[4]).toBe(true);
+    expect(calls[1]?.[6]).toBe(calls[0]?.[6]);
+    expect(step).toHaveBeenNthCalledWith(1, expect.objectContaining({ step: 'browser', outcome: 'challenge' }));
+    expect(step).toHaveBeenNthCalledWith(2, expect.objectContaining({ step: 'retry', outcome: 'ok',
+      fallbackFrom: 'browser', fallbackReason: 'challenge', fallbackError: challenge }));
+    expect(lookup).toHaveBeenCalledWith(expect.objectContaining({ finalStep: 'retry', outcome: 'ok', attempts: 2 }));
+  });
+
+  it('keeps a second challenge as a failure without a third session', async () => {
+    const challenge = new ChallengeError('Royal Mail');
+    vi.mocked(fetchRoyalMailInBrowser).mockRejectedValue(challenge);
+    const { recorder, records } = stepRecorder();
+    await expect(new RoyalMailTracker({ executablePath: '/test/chromium', recorder }).fetch(DELIVERED_NUMBER))
+      .rejects.toBe(challenge);
+    expect(fetchRoyalMailInBrowser).toHaveBeenCalledTimes(2);
+    expect(records).toEqual(['browser:challenge', 'retry:challenge', 'lookup:retry:challenge']);
+  });
+
+  it.each([new RateLimitedError('Royal Mail'), new SchemaError('Royal Mail'), new NotFoundError('Royal Mail'),
+    new IndeterminateError('Royal Mail'), new TransportError('Royal Mail')])('does not retry $name', async error => {
+    vi.mocked(fetchRoyalMailInBrowser).mockRejectedValueOnce(error);
+    await expect(new RoyalMailTracker({ executablePath: '/test/chromium' }).fetch(DELIVERED_NUMBER)).rejects.toBe(error);
+    expect(fetchRoyalMailInBrowser).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([[30_000, 16_000], [20_000, 6_000], [10_000, 0]])(
+    'keeps the challenge when budget %i has spent %i and cannot finish a fresh flow', async (budgetMs, spentMs) => {
+      let now = 0;
+      vi.spyOn(performance, 'now').mockImplementation(() => now);
+      const challenge = new ChallengeError('Royal Mail');
+      vi.mocked(fetchRoyalMailInBrowser).mockImplementationOnce(async () => { now = spentMs; throw challenge; });
+      const { recorder, records } = stepRecorder();
+      await expect(new RoyalMailTracker({ executablePath: '/test/chromium', recorder }).fetch(DELIVERED_NUMBER, { budgetMs }))
+        .rejects.toBe(challenge);
+      expect(fetchRoyalMailInBrowser).toHaveBeenCalledTimes(1);
+      expect(records).toEqual(['browser:challenge', 'lookup:browser:challenge']);
+    },
+  );
+
+  it('does not open a recovery session after caller cancellation', async () => {
+    const controller = new AbortController();
+    const challenge = new ChallengeError('Royal Mail');
+    vi.mocked(fetchRoyalMailInBrowser).mockImplementationOnce(async () => { controller.abort(); throw challenge; });
+    await expect(new RoyalMailTracker({ executablePath: '/test/chromium' })
+      .fetch(DELIVERED_NUMBER, { signal: controller.signal })).rejects.toBe(challenge);
+    expect(fetchRoyalMailInBrowser).toHaveBeenCalledTimes(1);
   });
 
   it.each([404, 410])('keeps an unrecognized HTTP %s outside parcel absence', async status => {

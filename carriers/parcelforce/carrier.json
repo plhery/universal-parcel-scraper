@@ -18,7 +18,8 @@
     "mode": "automatic",
     "adapter": "royal-mail",
     "steps": [
-      "browser"
+      "browser",
+      "retry"
     ],
     "browser": true
   },

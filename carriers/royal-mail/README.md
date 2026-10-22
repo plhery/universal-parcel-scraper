@@ -19,7 +19,7 @@ the adapter follows its validated destination in the same context.
 The page obtains its own CAPTCHA token for the microsummary, then `Get more
 details` uses the issued API session for history. When hCaptcha shows its
 visible challenge instead, the page sends no request until a person solves
-it, so the lookup ends at once as a challenge. The application can refresh
+it, so that context ends at once as a challenge. The application can refresh
 an expired session itself. Tokens and cookies stay inside the browser. Opt-in browser recognition uses
 the same lookup, requires dated activity and returns the history for reuse.
 The carrier's launch settings and installed-version User-Agent are scoped to
@@ -29,8 +29,11 @@ Both replies must identify the requested `mailPieceId`. Missing or failed
 details cannot become a history result; a valid empty events feed is marked
 `summary_only`. Browser launch, queueing and retrieval share the caller's
 deadline and cancellation signal, and the browser closes after each lookup.
-A lookup takes at most 30 seconds of that deadline: an unavailable browser
-fails every parcel alike, so it should fail fast.
+A lookup takes at most 30 seconds of that deadline. An edge refusal or
+interactive CAPTCHA can trigger one retry in a fresh context when at least
+15 seconds remain. The retry requests the same history and records the first
+challenge as its recovery reason. Rate limits, schema errors and confirmed
+answers are not retried. An unavailable browser fails fast.
 
 ## Notes
 
