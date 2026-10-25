@@ -17,7 +17,7 @@ describe('tracking places', () => {
 
   it.each([
     ['France', 'FR'], ['DE', 'DE'], ['CH ', 'CH'], ['THE NETHERLANDS', 'NL'], ['Czech Republic', 'CZ'], ['Hong Kong', 'HK'],
-    ['DHL Netherlands', 'NL'], ['КИТАЙ', 'CN'], ['Україна', 'UA'],
+    ['DHL Netherlands', 'NL'], ['КИТАЙ', 'CN'], ['Україна', 'UA'], ['日本', 'JP'], ['美國', 'US'],
   ])('leaves no place when %s is only a country', (location, country) => {
     expect(trackingPlace(location)).toEqual({ country, place: '' });
   });

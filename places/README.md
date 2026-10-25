@@ -54,6 +54,7 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   "新城") names no town. Latin letters next to such script are a word: "Changsha市".
 - A larger town of a country written in Cyrillic also matches by its names in Cyrillic
   ("Тюмень").
+- A country also goes by its Chinese or Japanese name ("日本").
 - A smaller town in the same region that ends the part of the text a city begins, within
   30 km of the city, is the carrier's site there: "TORINO MONCALIERI (999)" is in Moncalieri.
   An airport the text names there comes first ("PARIS ORLY"). A hyphen makes the two one name,
@@ -251,7 +252,8 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   MRW's "Meres (Plataforma)" is its platform in Meres, Asturias, not the town in Turkey.
   Royal Mail's mail centres named after an area ("Thames Valley MC", in Swindon, not Valley
   on Anglesey) count on Royal Mail and Parcelforce parcels, and on any parcel with MC after
-  the name.
+  the name. China Post's exchange offices go by the initials of their Chinese names
+  ("BJGJHHJ" is Beijing's 国际互换局, its international exchange office), placed at their city.
 - A carrier's own coordinates, supplied through the `points` option, move a scan
   to the facility when they are within 30 km of the town its text names. Scans with the same
   text share a point, so a carrier that places some scans of an office keeps them together.

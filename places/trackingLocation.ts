@@ -30,8 +30,8 @@ const displayNames = new Map<string, Intl.DisplayNames>();
 function namedCountry(name: string, display: boolean): string | null {
   if (!countryNames) {
     countryNames = new Map([['usa', 'US'], ['uk', 'GB']]);
-    // Ukrposhta names countries in Ukrainian ("КИТАЙ", "Україна").
-    for (const language of ['en', 'de', 'fr', 'it', 'es', 'pt', 'pl', 'uk']) {
+    // Ukrposhta names countries in Ukrainian ("КИТАЙ", "Україна"), Chinese posts in Chinese ("日本").
+    for (const language of ['en', 'de', 'fr', 'it', 'es', 'pt', 'pl', 'uk', 'zh', 'zh-Hant', 'ja']) {
       const names = new Intl.DisplayNames([language], { type: 'region' });
       for (const code of regionCodes) {
         const name = names.of(code) ?? code;

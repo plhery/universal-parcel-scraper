@@ -334,6 +334,10 @@ describe('locatePlace', () => {
     // SPX's sorting centre in Shiyan, Shenzhen, not the city of Shiyan in Hubei.
     expect(locatePlace('ShiYan', { carriers: ['spx-br'] })).toMatchObject({ country: 'CN', latitude: 22.686, longitude: 113.932 });
     expect(locatePlace('ShiYan')).toMatchObject({ country: 'CN', latitude: 32.648 });
+    // Austrian Post's centre for Lower Austria is in Hagenbrunn; the region alone is no town.
+    expect(locatePlace('Logistikzentrum Niederösterreich', { carriers: ['austrian-post'] })).toMatchObject({ country: 'AT', name: 'Hagenbrunn' });
+    // China Post's international exchange offices by the initials of their Chinese names, on any parcel.
+    expect(locatePlace('GZSGJHHJ')).toMatchObject({ country: 'CN', name: 'Guangzhou', site: 'Guangzhou International Exchange Office' });
     // Royal Mail's mail centres named after an area, not a town: Valley is on Anglesey, East London in South Africa.
     const royalMail = { carriers: ['royal-mail'], countries: ['GB'] };
     for (const [location, name, site] of [['Home Counties North MC', 'Hemel Hempstead', 'Home Counties North Mail Centre'],
