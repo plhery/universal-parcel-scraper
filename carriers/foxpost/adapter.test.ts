@@ -130,9 +130,10 @@ describe('Foxpost direct tracking', () => {
     expect(back.events?.map(event => event.stage)).toEqual(['returned', 'returned', 'returned', 'returned', 'ready_for_pickup']);
     expect(back.pickup_point).toBeUndefined();
     const reasons = parseFoxpost(history(
+      ['2026.07.06 10:00', 'Automatában', 'Csomagodat az automata telítettsége / műszaki hibája miatt személyesen veheted át munkatársunktól. 2026.07.07 16:00-18:00'],
       ['2026.07.05 10:00', 'Úton', 'Csomagodat az automata telítettsége / műszaki hibája miatt átírányítottuk egy másik csomagautomatába: FOXPOST Z-BOX Minta tér'],
       ['2026.07.04 10:00', 'Úton', 'Csomagod a házhozszállítás során nem lett átvéve, kézbesítése egyelőre sikertelen. Oka: címzett nem volt otthon']), NUMBER);
-    expect(reasons.events?.map(event => event.stage)).toEqual(['in_transit', 'failed_attempt']);
+    expect(reasons.events?.map(event => event.stage)).toEqual(['ready_for_pickup', 'in_transit', 'failed_attempt']);
   });
 
   it('keeps new wording unstaged, and orders and dedupes the scans', () => {

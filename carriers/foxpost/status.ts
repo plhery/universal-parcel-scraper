@@ -7,7 +7,9 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
  * the sender dropped in a locker and one waiting in the recipient's, and
  * "Raktárban" covers a return as well as a parcel on its way. Each sentence is
  * the long text of one status of Foxpost's API. A link after the sentence is
- * not part of it.
+ * not part of it. No source gives the sentences of RETURN, SLOTCHANGE,
+ * OVERTIMED, MPSIN, HDINTRANSIT, WBXREDIRECT, HDHUBIN and PREREDIRECT, so a
+ * scan with one keeps no stage.
  */
 export const FOXPOST_SCANS: Readonly<Record<string, Stage>> = {
   // CREATE: the sender registered the parcel.
@@ -57,12 +59,15 @@ export const FOXPOST_SCANS: Readonly<Record<string, Stage>> = {
  * Sentences that go on with a reason or the new locker's name: the start is
  * mapped. HDUNDELIVERABLE and HDRETURN are a home delivery that failed, the
  * second with the parcel back in Foxpost's warehouse; REDIRECT sends the
- * parcel to another locker because its own is full or broken.
+ * parcel to another locker because its own is full or broken, and
+ * PREPAREDFORPD has a member of staff hand it over in person instead, on the
+ * date that follows.
  */
 export const FOXPOST_SCAN_OPENINGS: Readonly<Record<string, Stage>> = {
   'Csomagod a házhozszállítás során nem lett átvéve, kézbesítése egyelőre sikertelen': 'failed_attempt',
   'Csomagodat a címzett a házhozszállítás során nem vette át': 'failed_attempt',
   'Csomagodat az automata telítettsége / műszaki hibája miatt átírányítottuk egy másik csomagautomatába': 'in_transit',
+  'Csomagodat az automata telítettsége / műszaki hibája miatt személyesen veheted át munkatársunktól': 'ready_for_pickup',
 };
 
 const SCANS = new Map(Object.entries(FOXPOST_SCANS).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));

@@ -59,6 +59,7 @@ page.
 ## Limitations
 
 - No delivery estimate, scan location or weight.
+- No source gives the sentences of eight statuses of Foxpost's API; a scan with one keeps no stage.
 - The length of home-delivery numbers is unconfirmed.
 
 ## Testing
