@@ -13,7 +13,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
-import { isYunExpressNotice, withoutMarkup, yunExpressCodeStatus, yunExpressStatus } from './status.js';
+import { chinaPostOffice, isYunExpressNotice, withoutMarkup, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
 const MAX_BYTES = 1_000_000;
@@ -85,6 +85,18 @@ function dateDestinationLeg(events: CarrierEvent[], offset: string | undefined, 
   if (events.slice(0, end).some((event) => event.location)) return events;
   return events.map((event, at) => at >= end || event.time || !event.local_time ? event
     : { ...event, time: eventClock(event.local_time, offset).time, time_zone: zone.name, time_zone_basis: 'neighbour' });
+}
+
+/**
+ * China Post's arrivals and departures, relayed after the hand-over to it, name
+ * their office in the wording; the office becomes the scan's place, in place
+ * of the city the feed gives. Clocks are dated first, on the feed's places.
+ */
+function officesAsPlaces(events: CarrierEvent[]): CarrierEvent[] {
+  return events.map((event) => {
+    const scan = chinaPostOffice(event.description ?? '');
+    return scan ? { ...event, description: scan.wording, location: scan.office } : event;
+  });
 }
 
 /** The one reference the relayed rows' contact links carry, as a partner's markup gives it. */
@@ -197,7 +209,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const country = clean(info.DestinationCountryCode, 8).toUpperCase();
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
-  const dated = dateDestinationLeg(dateOriginLeg(events), lastOffset, domestic);
+  const dated = officesAsPlaces(dateDestinationLeg(dateOriginLeg(events), lastOffset, domestic));
   const latest = dated[0]!;
   const classified = current;
   const deliveryNumber = clean(info.TrackingNumber, 64).toUpperCase();

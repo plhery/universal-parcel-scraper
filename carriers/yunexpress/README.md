@@ -63,6 +63,13 @@ delivery. A relayed notice, such as a reminder that failed to send, gets no
 stage, and the scan before it gives the status. "Handed over to the courier"
 follows DHL Parcel Netherlands, which files it as out for delivery.
 
+After YunExpress hands a parcel to China Post, the feed relays China Post's
+scans in Chinese. An arrival or a departure names its office in 【】 right
+after the verb (`邮件到达【…】`, `邮件离开【…】，正在发往下一站`): the office
+becomes the scan's place, in place of the city the feed gives, and leaves the
+wording. Clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
+lets such a row take over the one stored with the office in its wording.
+
 Run `npm run test:carriers:live -- carriers/yunexpress` with a
 configured browser. Set `YUNEXPRESS_TRACKING_NUMBER` outside the repository to
 check a real parcel.

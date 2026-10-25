@@ -88,6 +88,18 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Unsuccessful delivery - failed delivery card left', FAILED_ATTEMPT],
   // GLS keeps the parcel at its depot after the parcel box it was due in was full.
   ['The parcel is being stored in the GLS parcel center. It could not be delivered as the parcel box was occupied.', FAILED_ATTEMPT],
+  // GOFO's line haul between its facilities, relayed without the next one.
+  ['In Transit', { status: 'in_transit', stage: 'in_transit' }],
+  // China Post's scans in Chinese after YunExpress hands a parcel to it: its receipt is that
+  // hand-over, and the presentation to export customs holds the parcel there until its release.
+  ['中国邮政已收取邮件', { status: 'in_transit', stage: 'in_transit' }],
+  ['送交出口海关', { status: 'in_transit', stage: 'customs' }],
+  ['出口海关/放行', { status: 'in_transit', stage: 'in_transit' }],
+  ['已交承运商运输', { status: 'in_transit', stage: 'in_transit' }],
+  ['航空公司接收', { status: 'in_transit', stage: 'in_transit' }],
+  ['航空公司启运', { status: 'in_transit', stage: 'in_transit' }],
+  ['飞机进港', { status: 'in_transit', stage: 'in_transit' }],
+  ['到达寄达地', { status: 'in_transit', stage: 'in_transit' }],
 ];
 
 /**
@@ -103,7 +115,29 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^your item has been accepted in \S.* depot$/, { status: 'in_transit', stage: 'in_transit' }],
   [/^\d+ items? (?:has|have) been transferred to \S.* card left$/, FAILED_ATTEMPT],
   [/^\d+ items? (?:has|have) been transferred to run \S+ depot collection$/, { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
+  // China Post's offices and flights, named in 【】: an arrival or a departure, whether its office
+  // is still in the wording or has become the scan's place, a sorting, a flight between two
+  // cities and the closing of an export dispatch.
+  [/^邮件(?:到达|离开)(?:$|[【，])/, { status: 'in_transit', stage: 'in_transit' }],
+  [/^邮件已在【[^【】]+】完成分拣，准备发出$/, { status: 'in_transit', stage: 'in_transit' }],
+  [/^邮件已乘机由【[^【】]+】飞往【[^【】]+】$/, { status: 'in_transit', stage: 'in_transit' }],
+  [/^【[^【】]+】已出口直封$/, { status: 'in_transit', stage: 'in_transit' }],
 ];
+
+// China Post's arrival at an office or departure from one names the office in 【】 right after
+// the verb: "邮件到达【office】", "邮件离开【office】，正在发往下一站".
+const OFFICE_SCAN = /^(邮件(?:到达|离开))【([^【】]+)】(?=$|，)/;
+
+/**
+ * A China Post arrival or departure with its office taken out of the wording,
+ * as the scan's place: "邮件离开，正在发往下一站" at the office. Other
+ * wording, and an office the feed left empty, give undefined.
+ */
+export function chinaPostOffice(wording: string): { wording: string; office: string } | undefined {
+  const match = OFFICE_SCAN.exec(wording.trim());
+  const office = match?.[2]!.trim();
+  return match && office ? { wording: `${match[1]}${wording.trim().slice(match[0].length)}`, office } : undefined;
+}
 
 // A partner's line can carry its tracking page's markup, such as a link holding the parcel's
 // number around "CARD LEFT". The scan keeps the link's text, never the tag or its address.

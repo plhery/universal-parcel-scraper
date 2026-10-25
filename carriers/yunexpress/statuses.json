@@ -595,6 +595,126 @@
       "note": "Relayed from Ecoscooting, with the reason in brackets; matched on its fixed words. A wrong address seen there goes on to another round."
     },
     {
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from GOFO: its line haul between facilities, without the next one."
+    },
+    {
+      "wording": "中国邮政已收取邮件",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: its receipt of the parcel YunExpress handed to it, a hand-over between carriers."
+    },
+    {
+      "wording": "邮件到达【示例市国际互换局】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: arrived at an office; any office name, which becomes the scan's place."
+    },
+    {
+      "wording": "邮件离开【示例市国际互换局】，正在发往下一站",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: left an office for the next, which can be named; any office name, which becomes the scan's place."
+    },
+    {
+      "wording": "邮件到达【示例市】，准备发往【示例航空中心】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: arrived in a city on the way to an office; the city becomes the scan's place."
+    },
+    {
+      "wording": "邮件已在【示例揽投部】完成分拣，准备发出",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: sorted at an office; any office name."
+    },
+    {
+      "wording": "邮件已乘机由【示例市】飞往【示例市】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: a domestic flight between two cities."
+    },
+    {
+      "wording": "【示例市国际互换局】已出口直封",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: closed into an export dispatch at an exchange office."
+    },
+    {
+      "wording": "送交出口海关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: presented to export customs, until the release."
+    },
+    {
+      "wording": "出口海关/放行",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: released by export customs."
+    },
+    {
+      "wording": "已交承运商运输",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: handed to the carrier that flies the dispatch."
+    },
+    {
+      "wording": "航空公司接收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: received by the airline."
+    },
+    {
+      "wording": "航空公司启运",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: the airline's departure."
+    },
+    {
+      "wording": "飞机进港",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: the flight has landed."
+    },
+    {
+      "wording": "到达寄达地",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Relayed from China Post: arrived in the destination country."
+    },
+    {
       "code": "10",
       "confirmedBy": "bundle",
       "firstSeen": "2026-10-08",
