@@ -20,7 +20,8 @@ HTTP errors and malformed replies keep their own failure kinds. Recognition uses
 Omniva tracks UPU S10 items, its own ending `EE` and those of other posts sent to the Baltics,
 and its parcel ids: `JJEE` and seventeen digits, or `JJEE`, three letters and eleven digits. Its
 Lithuanian tracker also answered `ZA` and eight digits with a history, a layout Omniva does not
-document. The adapter takes these and treats anything else as invalid without a request.
+document. The adapter takes these and treats anything else as invalid without a request. An
+S10 item from abroad bound for Estonia is handed to Omniva under the sending post's number.
 
 `omniva-1` and `omniva-2` claim the parcel ids. Detection names Omniva for the parcels, EMS,
 registered and tracked-letter items it issues: `C`, `E`, `L` or `R` first, `EE` last and a passing

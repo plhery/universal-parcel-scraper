@@ -93,6 +93,7 @@ describe('general delivery handoff candidates', () => {
     expect(deliveryHandoff('lietuvos-pastas', 'UA123456785LT', { status: 'in_transit' }, 'TW')).toBeNull();
     // A reported destination or partner comes first, even one no post answers for.
     expect(deliveryHandoff('an-post', 'LX123456785IE', { destination_country: 'SE' }, 'FI')?.carrier).toBe('postnord');
+    expect(deliveryHandoff('an-post', 'LX123456785IE', { destination_country: 'Estonia' })?.carrier).toBe('omniva');
     expect(deliveryHandoff('an-post', 'LX123456785IE', { destination_country: 'IN' }, 'FI')).toBeNull();
     expect(deliveryHandoff('an-post', 'LX123456785IE', { delivery_carrier: 'usps' }, 'FI')?.carrier).toBe('usps');
     // Not from the issuer's own country, a country no post answers for, a name, or no hint.

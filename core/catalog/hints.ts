@@ -64,13 +64,14 @@ const CATALOG_NAMES = new Set([
 // from France, and dates its own scans on Taiwan time. Pošta Srbije, Pošta
 // Slovenije, Cyprus Post, MaltaPost, POST Luxembourg and Magyar Posta follow mail
 // from abroad under the sending post's number; Magyar Posta's lookup opens a
-// browser. The host also checks adapter availability and required inputs before
+// browser. Omniva's tracker carries the scans in Estonia of mail from abroad,
+// on UTC clocks. The host also checks adapter availability and required inputs before
 // making a request.
 const NATIONAL_POSTS: ReadonlyMap<string, CarrierId> = new Map([
   ['AM', 'haypost'], ['AR', 'correo-argentino'], ['AT', 'austrian-post'], ['AU', 'australia-post'], ['BD', 'bangladesh-post'],
   ['BE', 'bpost'], ['BG', 'bulgarian-posts'], ['BR', 'correios-br'], ['BY', 'belpost'], ['CA', 'canada-post'],
   ['CH', 'swiss-post'], ['CU', 'correos-cuba'], ['CY', 'cyprus-post'], ['CZ', 'ceska-posta'], ['DE', 'dhl'], ['DK', 'postnord'], ['DZ', 'algerie-poste'],
-  ['EG', 'egypt-post'], ['ES', 'correos-spain'], ['FI', 'posti'], ['FO', 'posta-faroe'], ['FR', 'la-poste'],
+  ['EE', 'omniva'], ['EG', 'egypt-post'], ['ES', 'correos-spain'], ['FI', 'posti'], ['FO', 'posta-faroe'], ['FR', 'la-poste'],
   ['GB', 'royal-mail'], ['GR', 'elta'], ['HR', 'hrvatska-posta'], ['HU', 'magyar-posta'], ['IE', 'an-post'], ['IS', 'posturinn'],
   ['IT', 'poste-italiane'], ['JO', 'jordan-post'], ['JP', 'japan-post'], ['KE', 'posta-kenya'], ['LT', 'lietuvos-pastas'],
   ['LU', 'post-luxembourg'], ['LV', 'latvijas-pasts'], ['MA', 'barid-al-maghrib'], ['MK', 'posta-north-macedonia'], ['MT', 'maltapost'],
