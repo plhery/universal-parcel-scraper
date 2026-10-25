@@ -36,7 +36,7 @@ describe('placeTimeZone', () => {
 });
 
 describe('dateLocalClocks', () => {
-  it('dates scans by their place, else by the nearest scan with one, the earlier on a tie', () => {
+  it('dates scans by their place, else by the leg the parcel was on', () => {
     const result = dateLocalClocks('china-post', { status: 'delivered', last_update_local: '2026-10-20T09:00:00', events: [
       { local_time: '2026-10-20T09:00:00', description: 'Delivered', stage: 'delivered' },
       { local_time: '2026-10-19T18:00:00', description: 'Out for delivery', location: 'Madrid' },
@@ -60,6 +60,42 @@ describe('dateLocalClocks', () => {
       { local_time: '2026-10-20T09:00:00', description: 'Sorted' },
     ] });
     expect(result.events!.map((event) => event.time_zone)).toEqual(['Asia/Shanghai', 'Europe/Madrid', 'Europe/Madrid']);
+  });
+
+  it('keeps a scan on the clock of the leg it was on, whatever scans follow', () => {
+    const scans: CarrierEvent[] = [
+      { local_time: '2026-10-21T09:00:00', description: 'Arrived at facility', location: 'Dallas TX' },
+      { local_time: '2026-10-20T02:41:00', description: 'In Transit, Arriving On Time' },
+      { local_time: '2026-10-19T08:40:00', description: 'In Transit to Next Facility' },
+      { local_time: '2026-10-19T03:00:00', description: 'Departed facility', location: 'Fresno, CA' },
+    ];
+    const zones = (events: CarrierEvent[]) => dateLocalClocks('usps', { status: 'in_transit', events }).events!.map((event) => event.time_zone);
+    expect(zones(scans)).toEqual(['America/Chicago', 'America/Los_Angeles', 'America/Los_Angeles', 'America/Los_Angeles']);
+    expect(zones(scans.slice(1))).toEqual(['America/Los_Angeles', 'America/Los_Angeles', 'America/Los_Angeles']);
+  });
+
+  it('takes the next place once a scan on the leg says the parcel landed', () => {
+    const result = dateLocalClocks('yunexpress', { status: 'in_transit', destination_country: 'ES', events: [
+      { local_time: '2026-10-15T10:00:00', description: 'Accepted', location: 'Hanoi' },
+      { local_time: '2026-10-16T09:00:00', description: 'Export customs cleared', location: 'Vietnam' },
+      { local_time: '2026-10-16T13:00:00', description: 'Handed over to the airline' },
+      { local_time: '2026-10-16T23:30:00', description: 'Flight departed' },
+      { local_time: '2026-10-17T06:10:00', description: 'Flight landed' },
+      { local_time: '2026-10-17T11:00:00', description: 'Arrived at sort facility', location: 'Zaragoza' },
+    ] });
+    expect(result.events!.map((event) => [event.time_zone, event.time_zone_basis])).toEqual([
+      ['Asia/Ho_Chi_Minh', 'place'], ['Asia/Ho_Chi_Minh', 'place'], ['Asia/Ho_Chi_Minh', 'neighbour'],
+      ['Asia/Ho_Chi_Minh', 'neighbour'], ['Europe/Madrid', 'neighbour'], ['Europe/Madrid', 'place'],
+    ]);
+  });
+
+  it('borrows the clock of an airport its code alone names', () => {
+    const result = dateLocalClocks('yunexpress', { status: 'in_transit', events: [
+      { local_time: '2026-10-15T10:00:00', description: 'Accepted', location: 'Hanoi' },
+      { local_time: '2026-10-16T07:00:00', description: 'Arrived at the airport', location: 'LHR' },
+      { local_time: '2026-10-16T09:00:00', description: 'Cargo tally in progress' },
+    ] });
+    expect(dated(result.events![2])).toEqual(['2026-10-16T09:00:00+01:00', 'Europe/London', 'neighbour']);
   });
 
   it('dates a scan at an airport its code and an airport word name on that airport’s clock, not its neighbour’s', () => {

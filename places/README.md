@@ -183,10 +183,12 @@ bare code the parcel's way does not bear out places nothing, but it tells a forw
 
 `dateLocalClocks(carrier, result)` dates the scans a carrier gives on a wall clock in no stated
 zone (`local_time`). The zone comes from the scan's place, read with the scans around it; else
-from the nearest scan that has a place; else from the parcel's destination, when the carrier
-delivers there; else from the carrier's home clock: its catalog zone, or with UTC there, its
-first country's. The scan keeps `local_time` and gains `time`, `time_zone` and
-`time_zone_basis` (`place`, `neighbour`, `destination` or `carrier`). Node lookups through
+from the leg the parcel was on: the last scan before it with a zone of its own (a town, a state,
+a country of one clock or an airport), or once a scan since says the parcel landed or reached its
+destination, the next one after, so later scans do not move it; else from the parcel's
+destination, when the carrier delivers there; else from the carrier's home clock: its catalog
+zone, or with UTC there, its first country's. The scan keeps `local_time` and gains `time`,
+`time_zone` and `time_zone_basis` (`place`, `neighbour`, `destination` or `carrier`). Node lookups through
 `trackCarrier()` and `createTracker()` apply it to a carrier's own answer. Scans dated by their
 day alone keep it; `carrierHomeZone(carrier, result)` gives the home clock a host can start
 such a day on.

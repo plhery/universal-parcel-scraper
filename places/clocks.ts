@@ -8,11 +8,11 @@ import { CARRIER_DEFINITIONS } from '../core/catalog/definitions.js';
 import type { CarrierEvent, CarrierResult } from '../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, firstOccurrence } from '../core/time/index.js';
 import { airportTimeZone, placesForEvents, placeTimeZone, type EventPlace } from './index.js';
-import { mainZone } from './zones.js';
+import { hasSeveralClocks, mainZone } from './zones.js';
 
 /**
- * How a deduced zone was chosen: the scan's own place; the place of the
- * nearest scan that has one; the parcel's destination, where the carrier
+ * How a deduced zone was chosen: the scan's own place; the place of a scan
+ * on the leg the parcel was on; the parcel's destination, where the carrier
  * delivers; the carrier's home clock.
  */
 export type ZoneBasis = 'place' | 'neighbour' | 'destination' | 'carrier';
@@ -20,6 +20,14 @@ export type ZoneBasis = 'place' | 'neighbour' | 'destination' | 'carrier';
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 
 const text = (value: unknown): string => typeof value === 'string' ? value.trim() : '';
+// Wording that says the parcel came off a crossing: it landed, reached its destination or
+// an import office, or arrived in the country. Not a forecast, nor the country of origin.
+const LANDED = /\b(?:landed|landing|import(?:ed)?|inward)\b|\bflight\b.*\barriv|\barriv(?:e|ed|es|al)\b.*\b(?:destination|clearance port|discharge port|in country)\b|到达境外|寄达|目的地|目的国|进口|落地/i;
+const NOT_LANDED = /\b(?:estimated|expected|scheduled|planned|eta|will arrive|origin|export)\b|预计|出口|始发/i;
+const landed = (event: CarrierEvent): boolean => {
+  const description = text(event.description);
+  return LANDED.test(description) && !NOT_LANDED.test(description);
+};
 
 function instant(value: unknown): number | null {
   const raw = text(value);
@@ -56,10 +64,13 @@ function destinationZone(carrier: string, country: string): string | null {
 /**
  * Dates each scan that has a wall clock and no instant. The zone comes
  * from the scan's place, read with the scans around it, or an airport its
- * code alone names; else from the nearest scan that has a place; else from the destination, if the carrier
+ * code alone names; else from the leg the parcel was on: the last scan before
+ * it with a zone of its own, or, once a scan since says the parcel landed or
+ * reached its destination, the next one after; else from the destination, if the carrier
  * delivers there; else from the carrier's home clock. A place that names only
  * a country with several zones, and none of its states, borrows the zone of a
- * town in that country from the nearest scan that names one. The scan keeps `local_time` and gains
+ * town in that country the same way. The zone of a scan does not depend on
+ * the scans that follow its leg. The scan keeps `local_time` and gains
  * `time`, `time_zone` and `time_zone_basis`. `last_update_local` gives a
  * missing `last_update` the same way. Scans dated by their day alone and
  * offset-less `time` values are left as they are.
@@ -82,30 +93,32 @@ export function dateLocalClocks(carrier: string, result: CarrierResult): Carrier
     stages: scans.map((event) => text(event.stage) || null),
     times: scans.map((event) => instant(event.time) === null ? null : text(event.time)),
   });
-  const placed = places.map((place) => place && (place.precision === 'city' || place.region) ? placeTimeZone(place) : null);
-  // The nearest scan with a zone of its own, the earlier one on a tie.
-  const nearest = (at: number, fits: (place: EventPlace) => boolean): string | null => {
-    for (let step = 1; step < scans.length; step += 1) {
-      for (const other of [at - step, at + step]) {
-        const place = places[other];
-        if (place && placed[other] && fits(place)) return placed[other];
-      }
-    }
-    return null;
+  // A scan's own zone: its town's or state's, its country's where that keeps one, or an airport's its code alone names.
+  const own = places.map((place, at) => place
+    ? place.precision === 'city' || place.region || !hasSeveralClocks(place.country) ? placeTimeZone(place) : null
+    : airportTimeZone(text(scans[at]!.location)));
+  // The zone of the leg the parcel was on: the last scan before with a zone of its own,
+  // or once a scan since says the parcel landed, the next one after.
+  const leg = (at: number, fits: (place: EventPlace | null) => boolean): string | null => {
+    const zoned = (other: number) => own[other] && fits(places[other] ?? null);
+    let before = at - 1;
+    while (before >= 0 && !zoned(before)) before -= 1;
+    let after = at + 1;
+    while (after < scans.length && !zoned(after)) after += 1;
+    const [first, second] = scans.slice(before + 1, at + 1).some(landed) ? [after, before] : [before, after];
+    return own[first] ?? own[second] ?? null;
   };
   const destination = destinationZone(carrier, text(result.destination_country).toUpperCase());
   const home = carrierHomeZone(carrier, result);
   const zoneAt = (at: number): { zone: string; basis: ZoneBasis } | null => {
     const place = places[at];
-    if (placed[at]) return { zone: placed[at], basis: 'place' };
+    if (own[at]) return { zone: own[at], basis: 'place' };
     if (place) {
-      const town = nearest(at, (other) => other.country === place.country);
+      const town = leg(at, (other) => other?.country === place.country);
       const zone = town ?? placeTimeZone(place);
       if (zone) return { zone, basis: town ? 'neighbour' : 'place' };
     }
-    const airport = airportTimeZone(text(scans[at]!.location));
-    if (airport) return { zone: airport, basis: 'place' };
-    const borrowed = nearest(at, () => true);
+    const borrowed = leg(at, () => true);
     if (borrowed) return { zone: borrowed, basis: 'neighbour' };
     if (destination) return { zone: destination, basis: 'destination' };
     return home ? { zone: home, basis: 'carrier' } : null;

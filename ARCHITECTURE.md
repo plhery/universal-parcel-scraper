@@ -365,7 +365,7 @@ its first occurrence in every season: Luxon would pick by the season the code ru
 parser reads a wall clock in a zone through `firstOccurrence()`, which lint enforces, unless
 it keeps that hour in `local_time`. Node lookups (`trackCarrier()`, `createTracker()`) then
 date such a scan on a deduced zone with `dateLocalClocks()` ([places](places/README.md#clocks)):
-its place, the nearest scan with a place, the destination the carrier delivers in, else the
+its place, the leg the parcel was on, the destination the carrier delivers in, else the
 carrier's home clock. The scan keeps `local_time` and gains `time_zone` and
 `time_zone_basis`, so a consumer can tell a deduced instant from one the carrier stated. A
 scan dated by its day alone keeps that day. A universal provider's result lists it above the
