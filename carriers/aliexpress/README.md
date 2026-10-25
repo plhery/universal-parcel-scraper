@@ -130,6 +130,7 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
 ## Testing
 
 `npm run test:carriers:live -- carriers/aliexpress` needs no env vars. It checks
-not-found with a synthetic number and handoff extraction on the public example in `numbers.json`.
+not-found with a synthetic number, and handoff extraction on two public examples in `numbers.json`:
+one keeps the partner's number, the other names no partner for a number of Cainiao's own.
 `CAINIAO_TRACKING_NUMBER` adds a private shipment lookup through automatic detection, and
 `CAINIAO_EXPRESS_TRACKING_NUMBER` a home-delivery number a partner handed to Cainiao Express.

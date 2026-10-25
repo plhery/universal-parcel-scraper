@@ -37,11 +37,21 @@ describe('Cainiao live handoff evidence', () => {
     expect(answer.result.events.length).toBeGreaterThan(0);
   });
 
-  it('retains the independent reference from the public corpus example through normalization', async () => {
-    // Public shipment report already recorded with provenance in numbers.json.
-    const result = normalizeCarrierResult(await fetchCainiao('CNG00798678939847'));
+  // Public shipment reports already recorded with provenance in numbers.json.
+  it('retains the partner reference from a public corpus example through normalization', async () => {
+    // Cainiao names the partner number it handed this parcel over with.
+    const result = normalizeCarrierResult(await fetchCainiao('AP00821064969338'));
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.delivery_tracking_number).toMatch(/^[A-Z0-9]{8,30}$/);
+    expect(result.delivery_tracking_number).not.toBe('AP00821064969338');
+    expect(result.destination_country_name).toBeTypeOf('string');
+  });
+
+  it('names no partner for the public corpus example Cainiao renumbers under a number of its own', async () => {
+    // Its latest number is another CNG number, which names no partner.
+    const result = normalizeCarrierResult(await fetchCainiao('CNG00798678939847'));
+    expect(result.events?.length).toBeGreaterThan(0);
+    expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(result.destination_country_name).toBeTypeOf('string');
   });
 });
