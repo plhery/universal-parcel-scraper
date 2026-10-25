@@ -12,14 +12,16 @@ rejects anything else before any request, except a scanned label barcode, which 
 the number it carries: a 22-digit `96` Ground barcode by its last 15 digits, a 34-digit
 barcode by its last 12 behind two zeros. Detection prefers FedEx for a 12-digit number whose
 last digit matches (weights 3, 1, 7 from the left, sum mod 11, then mod 10), for a 15-digit
-Ground number whose last digit is its GS1 mod 10 check, and for a label barcode whose
-embedded number passes its check; it drops FedEx otherwise. It selects FedEx for a 20-digit
-Ground Economy number (formerly SmartPost) starting `6129` or `7489`: a USPS package number
-without its `92` channel, whose check digit passes with the `92` in front. The adapter does
-not enforce that check, so a number someone insists on still reaches FedEx. Every shape stays shared: any
-22 digits fit Austrian Post, Estafeta and USPS, and a USPS `420` barcode can carry zeros
-where the 34-digit layout expects them; it still selects USPS when its package identifier
-would. Without API keys or a browser service it fails at once with
+Ground number whose last digit is its GS1 mod 10 check, and for a 22-digit `96` barcode whose
+embedded number passes its check; it drops FedEx otherwise. It selects FedEx for a 34-digit
+barcode whose embedded number passes its check: no other carrier issues that length but USPS,
+whose `420` barcodes can carry zeros where the layout expects them, so behind `420` FedEx is
+only suggested, and USPS is selected when its package identifier would be. It also selects
+FedEx for a 20-digit Ground Economy number (formerly SmartPost) starting `6129` or `7489`: a
+USPS package number without its `92` channel, whose check digit passes with the `92` in front.
+The adapter does not enforce that check, so a number someone insists on still reaches FedEx.
+The other shapes stay shared: any 22 digits fit Austrian Post, Estafeta and USPS. Without API
+keys or a browser service it fails at once with
 `ChallengeError('FedEx challenged direct tracking; configure FLARESOLVERR_URL for browser
 fallback')`.
 

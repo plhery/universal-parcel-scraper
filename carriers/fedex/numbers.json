@@ -228,13 +228,10 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/fedex.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex"
-        ]
+        "carrier": "fedex",
+        "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. Full 34-digit FedEx Ground label barcode: its twelve-digit tracking number follows two zeros in positions 21–34 and passes its check, so detection prefers FedEx."
+      "note": "Open-source project example, not a real shipment. Full 34-digit FedEx Ground label barcode: its twelve-digit tracking number follows two zeros in positions 21–34 and passes its check, so detection selects FedEx."
     },
     {
       "number": "271272514871",
@@ -466,13 +463,10 @@
         "url": "https://web.archive.org/web/20200215061536/http://www.fedex.com/us/gsn/barcode_guide.pdf"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex"
-        ]
+        "carrier": "fedex",
+        "confidence": "high"
       },
-      "note": "Sample 34-digit barcode from FedEx Ground's barcode modifications chart, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+      "note": "Sample 34-digit barcode from FedEx Ground's barcode modifications chart, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection selects FedEx."
     },
     {
       "number": "9632001560123456789900794808390594",
@@ -482,13 +476,10 @@
         "url": "https://web.archive.org/web/20200215061536/http://www.fedex.com/us/gsn/barcode_guide.pdf"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex"
-        ]
+        "carrier": "fedex",
+        "confidence": "high"
       },
-      "note": "Sample 34-digit barcode from FedEx Ground's barcode modifications chart, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+      "note": "Sample 34-digit barcode from FedEx Ground's barcode modifications chart, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection selects FedEx."
     },
     {
       "number": "9632001960123456789400152152152158",
@@ -498,13 +489,10 @@
         "url": "https://web.archive.org/web/20161020202345/http://www.fedex.com/us/gsn/sample_barcodes.pdf"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex"
-        ]
+        "carrier": "fedex",
+        "confidence": "high"
       },
-      "note": "Sample 34-digit barcode from FedEx Ground's sample labels, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+      "note": "Sample 34-digit barcode from FedEx Ground's sample labels, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection selects FedEx."
     },
     {
       "number": "9632080400123456789400152152152158",
@@ -514,13 +502,10 @@
         "url": "https://web.archive.org/web/20161020202345/http://www.fedex.com/us/gsn/sample_barcodes.pdf"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex"
-        ]
+        "carrier": "fedex",
+        "confidence": "high"
       },
-      "note": "Sample 34-digit barcode from FedEx Ground's sample labels, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection prefers FedEx."
+      "note": "Sample 34-digit barcode from FedEx Ground's sample labels, not a real shipment. The label prints positions 23–34 as its tracking number; that number passes its check, so detection selects FedEx."
     },
     {
       "number": "9611020987654312345673",
@@ -556,6 +541,21 @@
         ]
       },
       "note": "A sample 34-digit FedEx barcode with its check digit changed, so FedEx is not suggested."
+    },
+    {
+      "number": "4200000000000000000000700000000021",
+      "role": "full_barcode",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-25",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex"
+        ]
+      },
+      "note": "The 34-digit layout behind USPS's 420 routing prefix, with digits USPS's layout does not fit, so FedEx stays a suggestion."
     },
     {
       "number": "449044304137821",
@@ -1346,13 +1346,10 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/fedex.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex"
-        ]
+        "carrier": "fedex",
+        "confidence": "high"
       },
-      "note": "Open-source project example, not a real shipment. Full 34-digit label barcode: its twelve-digit tracking number follows two zeros in positions 21–34 and passes its check, so detection prefers FedEx."
+      "note": "Open-source project example, not a real shipment. Full 34-digit label barcode: its twelve-digit tracking number follows two zeros in positions 21–34 and passes its check, so detection selects FedEx."
     },
     {
       "number": "32971514560102447849175802862014",
