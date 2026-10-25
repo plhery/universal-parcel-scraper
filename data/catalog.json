@@ -24155,6 +24155,31 @@
     ],
     "detectionRules": []
   },
+  "pengyou": {
+    "displayName": "Pengyou",
+    "color": "#043a82",
+    "aliases": [
+      "捧友",
+      "深圳市捧友供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{3}\\d{9}PY$",
+        "confidence": "low"
+      }
+    ]
+  },
   "peqasus-az": {
     "displayName": "Peqasus",
     "color": "#3665b5",

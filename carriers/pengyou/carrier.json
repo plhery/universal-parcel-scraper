@@ -1,0 +1,39 @@
+{
+  "id": "pengyou",
+  "displayName": "Pengyou",
+  "aliases": [
+    "捧友",
+    "深圳市捧友供应链有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#043a82"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "pengyou-1",
+      "pattern": "^[A-Z]{3}\\d{9}PY$",
+      "confidence": "low"
+    }
+  ]
+}

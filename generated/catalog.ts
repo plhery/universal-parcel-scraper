@@ -24157,6 +24157,31 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "pengyou": {
+    "displayName": "Pengyou",
+    "color": "#043a82",
+    "aliases": [
+      "捧友",
+      "深圳市捧友供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{3}\\d{9}PY$",
+        "confidence": "low"
+      }
+    ]
+  },
   "peqasus-az": {
     "displayName": "Peqasus",
     "color": "#3665b5",
@@ -33441,6 +33466,7 @@ export const CARRIER_IDS = [
   "pecom",
   "peddler",
   "pelican-express",
+  "pengyou",
   "peqasus-az",
   "pfc-express",
   "phlpost",
@@ -34247,6 +34273,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pecom": [],
   "peddler": ["peddler-1","peddler-2"],
   "pelican-express": [],
+  "pengyou": ["pengyou-1"],
   "peqasus-az": [],
   "pfc-express": ["pfc-express-1"],
   "phlpost": ["phlpost-s10"],

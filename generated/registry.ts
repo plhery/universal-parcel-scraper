@@ -1801,6 +1801,7 @@ export const REGISTRY: RegistryDefinition = {
     "pecom": "pecom",
     "peddler": "universal",
     "pelican-express": "universal",
+    "pengyou": "universal",
     "peqasus-az": "universal",
     "pfc-express": "pfc-express",
     "phlpost": "phlpost",

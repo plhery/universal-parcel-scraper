@@ -324,4 +324,13 @@ describe('Chinese fulfilment warehouse numbers', () => {
       expect(detectCarrierMatch(number).candidates, number).not.toContain('z-leading');
     }
   });
+
+  it('suggests Pengyou for three letters, nine digits and PY, and only that layout', () => {
+    for (const number of ['ZZZ000000017PY', 'zzz 000 000 017 py']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pengyou'] });
+    }
+    for (const number of ['ZZZ00000017PY', 'ZZZ0000000017PY', 'ZZ000000017PY', 'ZZZ000000017PX', 'ZZ0000000017PY']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('pengyou');
+    }
+  });
 });
