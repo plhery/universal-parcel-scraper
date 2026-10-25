@@ -49,7 +49,7 @@ const CHINESE_PROVINCES = {
 // Taiwan's towns are its districts and townships.
 const DIVISIONS = {
   AT: ['ADM3'], CH: ['ADM3'], DE: ['ADM4'], ES: ['ADM3'], FR: ['ADM4'], IT: ['ADM3'], NL: ['ADM2'], PL: ['ADM3'],
-  PT: ['ADM3', 'ADM3H'], TW: ['ADM3'],
+  NO: ['ADM2'], PT: ['ADM3', 'ADM3H'], TW: ['ADM3'],
 };
 const DIVISION_FROM = 1_000;
 // Towns (镇) and townships (乡) by their seats, in the Chinese provinces most cross-border parcels

@@ -79,7 +79,7 @@ const FACILITY_WORDS = new Set(`
   gateway hub import international intl livraison local location logistics logistik mail oddzial office oficina
   operations operativo origin paketzentrum briefzentrum verteilzentrum sortierzentrum zustellbasis zustellstelle
   parcel parcels plateforme platform point postal postfiliale postfach poste pz bz return service services site
-  smistamento sort sorting station terminal tratamento tri unidade ufficio warehouse zentrum zoll zollamt
+  smistamento sort sorter sorting station terminal tratamento tri unidade ufficio warehouse zentrum zoll zollamt
   dhl ups fedex gls dpd tnt usps colissimo chronopost postnl bpost evri hermes cainiao yanwen parcelforce posti
   planzer quickpac amazon express post home house address recipient sender neighbourhood neighborhood unknown
   courrier courier exchange foreign network processing transit worldwide isc ndc idc piac pic pfc ppdc cdis ctc
@@ -100,6 +100,8 @@ const AIRPORT_NAME_WORDS = new Set(`
 // Region names too vague to place a scan in their country on their own.
 const VAGUE_REGIONS = new Set('central capital north south east west centre center islands national federal'.split(' '));
 const LEADING_WORDS = new Set(['de', 'du', 'des', 'di', 'da', 'del', 'della', 'von', 'of']);
+// Articles, which go with a facility word they come before: "EL AEROPUERTO DEL PRAT" is the airport of El Prat.
+const ARTICLES = new Set(['el', 'la', 'l', 'le', 'les', 'los', 'las', 'il', 'lo', 'the']);
 // Words that join a town's name to the river, region or city it is told apart by: "Weil am Rhein",
 // "Bernau bei Berlin", "Boulogne-sur-Mer", "Ústí nad Labem".
 const LINKING_WORDS = new Set(['am', 'im', 'der', 'bei', 'upon', 'sur', 'nad', 'pod']);
@@ -426,6 +428,12 @@ function tokens(text: string): Token[] {
   return [...text.matchAll(/(?:(?![\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}])[\p{L}\p{N}])+/gu)].flatMap((match) => {
     // "BARCELONA2": a depot number glued to the town.
     const word = /\p{L}/u.test(match[0]) ? match[0].replace(/\d+$/u, '') : match[0];
+    // "TrondheimSorter": a facility word joined to its town.
+    const [, town, facility] = /^(.*\p{Ll})(\p{Lu}\p{Ll}+)$/u.exec(word) ?? [];
+    if (town && FACILITY_WORDS.has(nameKey(facility!))) {
+      const end = match.index + town.length;
+      return [{ key: nameKey(town), start: match.index, end }, { key: nameKey(facility!), start: end, end: end + facility!.length }];
+    }
     const key = nameKey(word);
     return key ? [{ key, start: match.index, end: match.index + word.length }] : [];
   });
@@ -510,9 +518,14 @@ function phrases(field: string): Phrase[] {
   for (const all of spelledOut(field, tokens(field).filter((token) => !/^\d+$/.test(token.key))).flatMap(withSaints)) {
     // Facility words alone ("Hub", "Terminal") are no town, whatever GeoNames says.
     if (all.some((token) => !FACILITY_WORDS.has(token.key))) add(all, 0, true);
-    let words = all.filter((token) => !FACILITY_WORDS.has(token.key));
-    while (words.length && LEADING_WORDS.has(words[0]!.key)) words = words.slice(1);
+    let words = all.filter((token, index) => !FACILITY_WORDS.has(token.key)
+      && !(ARTICLES.has(token.key) && FACILITY_WORDS.has(all[index + 1]?.key ?? '')));
+    const lead = words.findIndex((token) => !LEADING_WORDS.has(token.key));
+    const contracted = lead > 0 && words[lead - 1]!.key === 'del' ? words[lead - 1] : undefined;
+    words = lead < 0 ? [] : words.slice(lead);
     spans(words, 0);
+    // Spanish and Catalan write "de el" as "del": "AEROPUERTO DEL PRAT" is El Prat's.
+    if (contracted) spans([{ ...contracted, key: 'el' }, ...words], 0);
     // "Zhejiang Province Jinhua City": the town without its administrative words.
     const bare = words.filter((token) => !DIVISION_WORDS.has(token.key));
     if (bare.length < words.length) spans(bare, 1);

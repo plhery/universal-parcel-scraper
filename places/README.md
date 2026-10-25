@@ -14,7 +14,9 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
 ## How a place is chosen
 
 - The text is split into fields and phrases, and facility words ("hub", "Paketzentrum",
-  "sort centre") are dropped. What is left is matched against town names, and translations
+  "sort centre") are dropped, with an article before one ("EL AEROPUERTO"), also when one is
+  joined to its town ("TrondheimSorter"). Spanish and Catalan "del" is also read as "de el":
+  "AEROPUERTO DEL PRAT" is El Prat's. What is left is matched against town names, and translations
   for larger towns ("Genf", "Cologne"). A translation of three Latin letters is left out: it
   is a code or a stray transliteration more often than a name ("Lon" for Lognes). So is
   GeoNames' transliteration of a name in another script ("Noman" is Norman in Japanese), but

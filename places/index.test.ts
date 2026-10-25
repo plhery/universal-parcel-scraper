@@ -117,6 +117,8 @@ describe('locatePlace', () => {
     expect(place('LONDON-HEATHROW - UK')).toMatchObject({ country: 'GB', name: 'London', site: 'London Heathrow Airport', latitude: 51.471, longitude: -0.46 });
     expect(place('HELSINKI-VANTAAN LENTOASEMA')).toMatchObject({ country: 'FI', name: 'Helsinki', site: 'Helsinki Vantaa Airport' });
     expect(place('LIEGE AIRPORT')).toMatchObject({ country: 'BE', name: 'Liège', site: 'Liège Airport' });
+    // "Del" is "de el": the airport of El Prat.
+    expect(place('EL AEROPUERTO DEL PRAT', ['ES'])).toMatchObject({ country: 'ES', site: 'Josep Tarradellas Barcelona-El Prat Airport' });
     // An airport of a city that has several, by the words of its own name.
     expect(place('Chicago O Hare Airport')).toMatchObject({ country: 'US', name: 'Chicago', site: "Chicago O'Hare International Airport", latitude: 41.979 });
     expect(place('Chicago Midway Airport')).toMatchObject({ country: 'US', site: 'Chicago Midway International Airport' });
@@ -315,6 +317,7 @@ describe('locatePlace', () => {
   it('knows municipalities and districts that no town of the gazetteer is named after', () => {
     expectPlace('Am Mellensee, DE', { country: 'DE', name: 'Am Mellensee', latitude: 52.15, longitude: 13.38 });
     expectPlace('ABIUL - PORTUGAL', { country: 'PT', name: 'Abiul', latitude: 39.87, longitude: -8.51 });
+    expectPlace('AREMARK', { country: 'NO', name: 'Aremark', latitude: 59.22, longitude: 11.7 }, ['NO']);
     // A Taiwanese district by its Chinese name, without the word for district.
     expectPlace('五股郵局', { country: 'TW', name: 'Wugu', latitude: 25.1, longitude: 121.43 }, ['TW']);
     // A US post office's town, though no town of 1,000 people: not Jaffa, once called Joppa.
@@ -445,6 +448,7 @@ describe('locatePlace', () => {
     expectPlace('AGENCE PARIS', { country: 'FR', name: 'Paris', latitude: 48.85, longitude: 2.35 });
     expectPlace('Zürich-Mülligen', { country: 'CH', name: 'Zürich', latitude: 47.37, longitude: 8.55 });
     expect(place('Centre de tri DPD de Le Coudray (175)', ['FR'])).toMatchObject({ country: 'FR', name: 'Le Coudray' });
+    expect(place('TrondheimSorter', ['NO'])).toMatchObject({ country: 'NO', name: 'Trondheim' });
   });
 
   it('puts Swiss Post sorting centres on their own site', () => {
