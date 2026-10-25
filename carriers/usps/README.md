@@ -82,6 +82,12 @@ Parsing, in order:
   order is kept rather than re-sorted. A step USPS dates by its day alone, as it does
   pre-shipment info, keeps that day as `local_time`.
 - Delivered lines are rewritten to "Delivered" because USPS names the signatory.
+- USPS rewords scans it already shows: an out-for-delivery scan's delivery window changes,
+  and the newest place-less step's "In Transit, Arriving On Time" reads "In Transit to Next
+  Facility" once a later step comes. The identity policy lets such a scan take over the row
+  stored in its earlier wording at its instant and place, and a place-less scan the row
+  showing its wall clock under another deduced zone. A step reworded and re-zoned between
+  two reads matches neither way.
 - "Available for Pickup" and a hold at the post office are stage `ready_for_pickup` but result
   status `out_for_delivery`. "Arrived at Post Office" is the delivering office's arrival before
   the delivery round, so it stays `in_transit`.

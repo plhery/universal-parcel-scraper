@@ -642,6 +642,23 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...page, stage: 'delivered', description: 'Delivered' }, page)).toBe(false);
   });
 
+  it('lets a USPS scan whose delivery window or transit forecast USPS rewrote take over its row, and a place-less one by wall clock', () => {
+    expect(sameInstantIdentityPolicy('usps')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('usps', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['usps'], matchEachScan: true, matchWallClock: true });
+    const round = { stage: 'out_for_delivery', description: 'Out for Delivery, Expected Delivery by 9:00pm', location: 'EXAMPLE CITY, CA 00000', providerCode: '' };
+    for (const description of ['Out for Delivery, Expected Delivery Between 1:15pm and 4:15pm', 'Out for Delivery']) {
+      expect(policy?.matches?.({ ...round, description }, round)).toBe(true);
+    }
+    expect(policy?.matches?.({ ...round, location: 'OTHER CITY, CA 00000' }, round)).toBe(false);
+    const step = { stage: 'in_transit', description: 'In Transit, Arriving On Time', location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...step, description: 'In Transit to Next Facility' }, step)).toBe(true);
+    expect(policy?.matches?.({ ...step, description: 'In Transit, Arriving Late' }, step)).toBe(true);
+    for (const description of ['Arrived at USPS Regional Facility', 'Departed USPS Facility', '']) {
+      expect(policy?.matches?.({ ...step, description }, step)).toBe(false);
+    }
+  });
+
   it('keeps UPS disabled for apps that cannot check scan evidence', () => {
     expect(sameInstantIdentityPolicy('ups')).toBeUndefined();
     expect(sameInstantIdentityPolicy('ups', { supportsScanMatching: false })).toBeUndefined();
