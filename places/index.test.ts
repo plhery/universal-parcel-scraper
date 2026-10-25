@@ -209,6 +209,10 @@ describe('locatePlace', () => {
     expectPlace('DEFRAA', { country: 'DE', name: 'Frankfurt am Main', latitude: 50.12, longitude: 8.68 });
     expectPlace('SCSEZA', { country: 'SC', name: 'Victoria', latitude: -4.62, longitude: 55.45 });
     expect(place('PLWAWA, PL')).toMatchObject({ precision: 'city', country: 'PL', name: 'Warsaw' });
+    // bpost writes the country's name after the code.
+    expect(place('BEBRUA Belgium BE, BE')).toMatchObject({ precision: 'city', country: 'BE', name: 'Zaventem' });
+    expect(place('PTLISL Portugal PT, PT')).toMatchObject({ precision: 'city', country: 'PT', name: 'Lisbon' });
+    expect(place('PTLISL Spain PT, PT')).toMatchObject({ precision: 'country', country: 'PT' });
     expect(place('DEFRAA')?.site).toBeUndefined();
     // An airport of another country, and towns of six letters.
     expect(place('GBLALA')).toBeNull();

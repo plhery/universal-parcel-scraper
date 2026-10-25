@@ -1117,10 +1117,11 @@ function atAirport(airport: Airport, carriers: readonly string[]): Located | nul
  * The town of a UPU office of exchange, by its code: its country, the code of its town's
  * airport and a letter for the office ("SCSEZA" is the Seychelles' office by Mahé airport).
  * The airport has to be in that country. Text that is a town comes first: "ARUSHA" is no
- * Argentinian office.
+ * Argentinian office. bpost follows the code with that country's name: "BEBRUA Belgium".
  */
 function officePlace(data: Gazetteer, text: string, carriers: readonly string[]): Located | null {
-  const [, country, code] = /^([A-Z]{2})([A-Z]{3})[A-Z0-9]$/.exec(text) ?? [];
+  const [, country, code, named] = /^([A-Z]{2})([A-Z]{3})[A-Z0-9](?:\s+(\S.*?)(?:\s+\1)?)?$/.exec(text) ?? [];
+  if (named && nameKey(named) !== nameKey(data.countries.get(country!)?.name ?? '')) return null;
   const airport = airportCode(data, code ?? '');
   const town = airport && airport.country === country ? airportTown(airport, carriers) : null;
   return town && { ...town, text: true };
