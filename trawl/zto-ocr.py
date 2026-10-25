@@ -30,31 +30,32 @@ from rapidocr_onnxruntime import RapidOCR
 
 
 def solve(data):
+    """Points in order, with how sure the match is, or the fixed label of what could not be read."""
     targets = data["targets"]
     if not isinstance(targets, str) or not re.fullmatch(r"[\u3400-\u9fff]{2,4}", targets):
-        return None
+        return {"failure": "targets"}
     image_bytes = base64.b64decode(data["image"], validate=True)
     if len(image_bytes) > 1_000_000:
-        return None
+        return {"failure": "image"}
     image = Image.open(io.BytesIO(image_bytes))
     if image.width > 600 or image.height > 400:
-        return None
+        return {"failure": "image"}
     image = image.convert("RGB")
     region = data["region"]
     x, y, w, h = [float(region[key]) for key in ("x", "y", "width", "height")]
     if not (0 <= x < x + w <= image.width + 1 and 0 <= y < y + h <= image.height + 1):
-        return None
+        return {"failure": "region"}
     detector = ddddocr.DdddOcr(det=True, ocr=False, show_ad=False)
     boxes = [b for b in detector.detection(image_bytes)
              if x <= b[0] < b[2] <= x + w and y <= b[1] < b[3] <= y + h]
     if not len(targets) <= len(boxes) <= 7:
-        return None
+        return {"failure": "boxes", "boxes": len(boxes)}
     ocr = ddddocr.DdddOcr(show_ad=False, beta=True)
     rapid = RapidOCR(intra_op_num_threads=1, inter_op_num_threads=1)
     engine = ocr.ocr_engine
     charset = engine.charset_manager.get_charset()
     if any(c not in charset for c in targets):
-        return None
+        return {"failure": "charset", "boxes": len(boxes)}
     indices = [charset.index(c) for c in targets]
     input_name = engine.session.get_inputs()[0].name
     all_scores = []
@@ -91,14 +92,20 @@ def solve(data):
         all_scores.append(scores)
     # Relative likelihood across different positions matters more than absolute
     # OCR confidence for rotated, outlined glyphs. The server verifies the order.
-    order = max(itertools.permutations(range(len(boxes)), len(targets)),
-                key=lambda p: sum(np.log(max(all_scores[i][c], 1e-9)) for i, c in zip(p, targets)))
-    return [{"x": (boxes[i][0] + boxes[i][2]) / 2, "y": (boxes[i][1] + boxes[i][3]) / 2} for i in order]
+    ranked = sorted(((sum(np.log(max(all_scores[i][c], 1e-9)) for i, c in zip(p, targets)), p)
+                     for p in itertools.permutations(range(len(boxes)), len(targets))),
+                    key=lambda pair: pair[0], reverse=True)
+    (best, order), runner_up = ranked[0], ranked[1][0]
+    # Per character: the geometric mean probability of the chosen order, and how far
+    # the next best order trails it. Logged beside the server's verdict to tune a threshold.
+    return {"points": [{"x": (boxes[i][0] + boxes[i][2]) / 2, "y": (boxes[i][1] + boxes[i][3]) / 2} for i in order],
+            "boxes": len(boxes), "confidence": round(float(np.exp(best / len(targets))), 3),
+            "margin": round(float((best - runner_up) / len(targets)), 3)}
 
 
 try:
     raw = sys.stdin.buffer.read(1_500_001)
-    result = solve(json.loads(raw)) if len(raw) <= 1_500_000 else None
+    result = solve(json.loads(raw)) if len(raw) <= 1_500_000 else {"failure": "image"}
     print(json.dumps(result, separators=(",", ":")))
 except Exception:
-    print("null")
+    print(json.dumps({"failure": "exception"}))

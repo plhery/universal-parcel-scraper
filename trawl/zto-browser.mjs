@@ -4,6 +4,18 @@ import { solveZtoCharacters } from './zto-ocr.mjs';
 
 const API = 'https://hdgateway.zto.com/batchGetTrace';
 const MAX_BODY = 1_000_000;
+// Puzzles answered, and those swapped unanswered for another.
+const MAX_ANSWERS = 4, MAX_REPLACEMENTS = 2;
+// What the OCR worker could not read, as opposed to a worker that failed.
+const UNREADABLE = new Set(['targets', 'image', 'region', 'boxes', 'charset']);
+const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'zto.verification', ...fields }));
+const round = value => Math.round(value * 100) / 100;
+
+/** Dingxiang's check of an answer. Only its success flag is read; the token stays in the page. */
+function isVerification(rawUrl) {
+  try { const url = new URL(rawUrl); return /^cap(?:-\d{1,3})?\.dingxiang-inc\.com$/.test(url.host) && url.pathname === '/api/v1'; }
+  catch { return false; }
+}
 
 export function ztoBrowserNumber(rawUrl, capture = {}) {
   let url;
@@ -54,17 +66,42 @@ function widgetState() {
   return null;
 }
 
+// Dingxiang's own refresh control fetches another puzzle in place.
+function requestReplacement() {
+  const root = [...document.querySelectorAll('.dx_captcha')].find(e => e.getBoundingClientRect().width);
+  const button = [...(root?.querySelectorAll('[id*="btn-refresh"]') ?? [])].find(e => e.getBoundingClientRect().width);
+  button?.click();
+  return !!button;
+}
+
+/** What the tracking reply says, as the verification log names it. */
+function replyKind(entry, payload) {
+  if (entry.status === 429 || payload?.message === 'rate limit') return 'rate_limited';
+  if (entry.status !== 200 || !payload) return 'failed';
+  if (payload.status === true) return 'verified';
+  return ['10201', '10202'].includes(payload.statusCode) ? 'challenge' : 'failed';
+}
+
 export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, installPolicy, signal,
-  solveCharacters = solveZtoCharacters }) {
+  solveCharacters = solveZtoCharacters, report = reportVerification }) {
   const number = ztoBrowserNumber(url, capture);
   if (!number) return undefined;
   const start = Date.now(), abort = new AbortController();
   const combined = signal ? AbortSignal.any([signal, abort.signal]) : abort.signal;
   let context, page, onResponse, timer, terminal = false, accepting = true, statusCode = 0, bytesRead = 0;
-  const entries = [], attempted = new Set();
+  let reply = null, firstCode = null, firstPuzzleMs = null, replacements = 0, stop = null;
+  const entries = [], attempted = new Set(), puzzles = [];
   const remaining = () => Math.max(1, Math.floor(maxTimeout - (Date.now() - start)));
+  // Fixed labels for why the page did or did not verify. The adapter reads the same outcome.
+  const outcome = () => {
+    if (terminal) return reply === 'verified' || reply === 'rate_limited' ? reply : 'reply_failed';
+    if (['unsolved', 'solver_unavailable', 'error'].includes(stop)) return stop;
+    if (puzzles.some(puzzle => puzzle.verdict === 'refused')) return 'refused';
+    return puzzles.length ? 'deadline' : 'no_puzzle';
+  };
   const result = () => ({ tier, status: 'success', durationMs: Date.now() - start, effectiveUrl: url,
-    html: '', body: new Uint8Array(), statusCode, cookies: [], capturedResponses: entries });
+    html: '', body: new Uint8Array(), statusCode, cookies: [], capturedResponses: entries,
+    ...(outcome() === 'verified' ? {} : { reason: `zto-${outcome()}` }) });
   const close = async target => {
     let closed = false, cleanup;
     try { await Promise.race([
@@ -92,42 +129,70 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
       // before the tracking client starts. Keep this filter local to ZTO.
       await page.route(/^https:\/\/(?:hm|dlswbr)\.baidu\.com\//, route => route.abort('blockedbyclient'));
       onResponse = response => {
-        if (!accepting || response.url() !== API || response.request().method() !== 'POST') return;
+        if (!accepting) return;
+        if (isVerification(response.url()) && response.request().method() === 'POST') {
+          const puzzle = puzzles.findLast(row => row.verdict === 'answered');
+          if (puzzle) void response.body().then(body => {
+            const success = body.length <= 10_000 ? JSON.parse(body.toString('utf8'))?.success : undefined;
+            if (accepting && typeof success === 'boolean' && puzzle.verdict === 'answered') puzzle.verdict = success ? 'accepted' : 'refused';
+          }).catch(() => {});
+          return;
+        }
+        if (response.url() !== API || response.request().method() !== 'POST') return;
         let request;
         try { request = response.request().postDataJSON(); } catch { return; }
         if (request?.items?.length !== 1 || request.items[0]?.billCode !== number) return;
-        if (entries.length >= 10) { entries.at(-1).error = 'ZTO response limit exceeded'; terminal = true; return; }
+        if (entries.length >= 10) { entries.at(-1).error = 'ZTO response limit exceeded'; reply = 'failed'; terminal = true; return; }
         const headers = response.headers();
         const entry = { url: API, trackingNumberSubmitted: number, status: response.status(), body: null,
           headers: Object.fromEntries(['content-type', 'retry-after'].filter(key => headers[key]).map(key => [key, headers[key].slice(0, 100)])),
           truncated: false, base64Encoded: false, error: null };
         entries.push(entry);
-        if (entry.status !== 200) { terminal = true; return; }
+        if (entry.status !== 200) { reply = replyKind(entry); terminal = true; return; }
         const length = Number(headers['content-length'] ?? 0);
         if (!Number.isSafeInteger(length) || length < 0 || length > MAX_BODY || bytesRead >= MAX_BODY * 3) {
-          entry.truncated = true; terminal = true; return;
+          entry.truncated = true; reply = 'failed'; terminal = true; return;
         }
         void response.body().then(body => {
           if (!accepting) return;
           bytesRead += body.length;
-          if (body.length > MAX_BODY || bytesRead > MAX_BODY * 3) { entry.truncated = true; terminal = true; return; }
+          if (body.length > MAX_BODY || bytesRead > MAX_BODY * 3) { entry.truncated = true; reply = 'failed'; terminal = true; return; }
           const payload = projectZtoReply(JSON.parse(body.toString('utf8')), number);
           entry.body = JSON.stringify(payload);
+          reply = replyKind(entry, payload);
+          if (entry === entries[0]) firstCode = payload.statusCode ?? null;
           // Keep the initial challenge through escalation and automatic retries.
-          if (payload.status !== false || !['10201', '10202'].includes(payload.statusCode)) terminal = true;
-        }).catch(() => { if (accepting) { entry.error = 'ZTO response could not be read'; terminal = true; } });
+          if (reply !== 'challenge') terminal = true;
+        }).catch(() => { if (accepting) { entry.error = 'ZTO response could not be read'; reply = 'failed'; terminal = true; } });
       };
       page.on('response', onResponse);
       const navigation = await page.goto(url, { waitUntil: 'commit', timeout: Math.min(15000, remaining()) });
       statusCode = navigation?.status() ?? 0;
-      for (let actions = 0; !terminal && !combined.aborted && remaining() > 1500;) {
+      for (;;) {
+        if (terminal) { stop = 'reply'; break; }
+        if (combined.aborted || remaining() <= 1500) { stop = 'deadline'; break; }
         const state = await page.evaluate(widgetState);
         if (!state || attempted.has(state.key)) { await delay(200, undefined, { signal: combined }); continue; }
-        if (++actions > 4) break;
+        if (puzzles.length - replacements >= MAX_ANSWERS) { stop = 'puzzle_limit'; break; }
         attempted.add(state.key);
+        firstPuzzleMs ??= Date.now() - start;
+        const puzzle = { type: state.type, verdict: 'unanswered' };
+        puzzles.push(puzzle);
+        // A puzzle the solver cannot read is swapped for another while time allows.
+        const replaced = async failure => {
+          puzzle.failure = failure;
+          if (replacements >= MAX_REPLACEMENTS || remaining() < 5000 || !await page.evaluate(requestReplacement)) return false;
+          replacements++; puzzle.verdict = 'replaced';
+          return true;
+        };
         if (state.type === 'slider') {
           const solution = await page.evaluate(solveSlider);
-          if (solution.error || solution.score < 0.5 || !Number.isFinite(solution.distance) || solution.distance <= 0) break;
+          if (Number.isFinite(solution.score)) Object.assign(puzzle, { score: round(solution.score), method: solution.method === 'outline' ? 'outline' : 'fill' });
+          if (solution.error || solution.score < 0.5 || !Number.isFinite(solution.distance) || solution.distance <= 0) {
+            if (await replaced(solution.error === 'unexpected-image' ? 'unexpected_image' : solution.error ? 'missing' : 'unmatched')) continue;
+            stop = 'unsolved'; break;
+          }
+          puzzle.verdict = 'answered';
           await page.evaluate(async s => {
             const element = document.querySelector('.dx_captcha_basic_slider');
             if (!element) return;
@@ -142,16 +207,32 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
             emit('mouseup', x + s.distance, y);
           }, solution);
         } else {
-          if (remaining() < 5000 || state.box.width > 600 || state.box.height > 400) break;
+          puzzle.targets = [...state.targets].length;
+          if (state.box.width > 600 || state.box.height > 400) { puzzle.failure = 'widget_size'; stop = 'unsolved'; break; }
+          if (remaining() < 5000) { stop = 'deadline'; break; }
           const image = await page.locator('.dx_captcha_clickword:visible').screenshot({ timeout: Math.min(2000, remaining()), scale: 'css' });
-          if (image.length > MAX_BODY) break;
-          const points = await solveCharacters({ image: image.toString('base64'), targets: state.targets, region: state.region }, combined, remaining() - 2000);
-          if (!Array.isArray(points) || points.length !== [...state.targets].length || combined.aborted) break;
+          if (image.length > MAX_BODY) { if (await replaced('image_size')) continue; stop = 'unsolved'; break; }
+          const answer = await solveCharacters({ image: image.toString('base64'), targets: state.targets, region: state.region }, combined, remaining() - 2000);
+          for (const key of ['boxes', 'confidence', 'margin']) if (Number.isFinite(answer?.[key])) puzzle[key] = round(answer[key]);
+          if (Number.isFinite(answer?.ms)) puzzle.ocrMs = answer.ms;
+          if (answer?.waitMs > 0) puzzle.waitMs = answer.waitMs;
+          if (combined.aborted) { stop = 'deadline'; break; }
+          const points = answer?.points;
+          if (!Array.isArray(points) || points.length !== puzzle.targets) {
+            const failure = typeof answer?.failure === 'string' ? answer.failure : 'points';
+            if (failure === 'budget') { puzzle.failure = failure; stop = 'deadline'; break; }
+            if ((UNREADABLE.has(failure) || failure === 'points') && await replaced(failure)) continue;
+            stop = UNREADABLE.has(failure) || failure === 'points' ? 'unsolved' : 'solver_unavailable';
+            puzzle.failure = failure; break;
+          }
           const current = await page.evaluate(widgetState);
-          if (current?.key !== state.key) continue;
+          if (current?.key !== state.key) { puzzle.verdict = 'expired'; continue; }
           for (const point of points) {
             if (!Number.isFinite(point.x) || !Number.isFinite(point.y) || point.x < state.region.x || point.y < state.region.y
               || point.x > state.region.x + state.region.width || point.y > state.region.y + state.region.height) throw new Error('Invalid character position');
+          }
+          puzzle.verdict = 'answered';
+          for (const point of points) {
             combined.throwIfAborted();
             await page.evaluate(({ x, y }) => {
               const element = document.elementFromPoint(x, y);
@@ -167,6 +248,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
       return result();
     })()]);
   } catch {
+    stop = terminal ? 'reply' : combined.aborted ? 'deadline' : 'error';
     if (entries.length) return result();
     return { tier, status: 'error', durationMs: Date.now() - start,
       reason: combined.aborted ? 'ZTO browser budget exhausted' : 'ZTO browser retrieval failed' };
@@ -175,5 +257,10 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
     combined.removeEventListener('abort', rejectAbort); abort.abort();
     if (page && onResponse) page.off('response', onResponse);
     if (context) await close(context);
+    // Fixed labels, scores and counts only: no number, image, answer, token or reply text.
+    try {
+      report({ host: 'www.zto.com', outcome: outcome(), stop, durationMs: Date.now() - start, replies: entries.length,
+        firstCode, firstPuzzleMs, replacements, puzzles });
+    } catch { /* Diagnostics cannot affect cleanup or tracking. */ }
   }
 }

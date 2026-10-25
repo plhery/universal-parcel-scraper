@@ -24,7 +24,13 @@ DHL Express, SF Express, WanbExpress, XPO, Asendia, DHL Poland, Magyar Posta and
 SF Express solves GeeTest's slider locally and asks for at most two other puzzles when it
 cannot read one.
 ZTO solves Dingxiang's slider and ordered-character challenge locally, with at most two
-concurrent offline OCR workers. Each worker ends with its request and retains no images.
+concurrent offline OCR workers; a request waits for a free worker within its deadline. Each
+worker ends with its request and retains no images. A puzzle the helper cannot read is
+swapped for another through Dingxiang's refresh control, at most twice per lookup.
+The `zto.verification` warning records how each run ended. For each puzzle it gives the
+kind, the slider's match score or the OCR's confidence, boxes and time, and whether
+Dingxiang accepted the answer. It has no images, answers, tokens or tracking numbers, and
+the adapter reports the same outcome as its challenge reason.
 Verification failures and the public tracker's incomplete history still need enabled providers.
 SwiftX emits a `swiftx.verification` warning for an observed image challenge or
 an unresolved prepared page, using fixed puzzle types, outcome labels and counts.

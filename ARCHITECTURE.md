@@ -195,7 +195,11 @@ does not wrap its telemetry a second time. `CarrierError.reason` separates expec
 such as Amazon Shipping's expired history, from transport failures. An inconclusive error
 for the carrier's own answer that it holds no history under the number, an empty result or
 not-found notice, carries `portal_not_found`, so a consumer can tell that answer from an
-outage; it does not make the parcel absent.
+outage; it does not make the parcel absent. A challenge names the stage that stopped it when
+the adapter can tell: `api_denied` when the carrier refused the request outright,
+`puzzle_missing` when no puzzle appeared, `puzzle_unsolved` or `solver_unavailable` when the
+solver gave no answer, `verification_refused` when the answer was refused, and
+`verification_unfinished` when time ran out before verification and tracking finished.
 
 USPS barcode validation shares the carrier adapter's whole-identifier checks. A routing
 barcode is `420`, the recipient's five- or nine-digit ZIP code and a 22- or 26-digit package

@@ -83,4 +83,21 @@ describe('ZTO', () => {
     await expect(adapter(env).track({ number }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
     expect(env.fetcher).not.toHaveBeenCalled();
   });
+  it('says why the browser page stayed challenged, as the service helper labels it', async () => {
+    const lookup = (captures: unknown[], reason?: string) => adapter({ ...environment(), trawl: new TrawlClient('http://browser.test',
+      async () => reply({ tier: 3, statusCode: 200, html: '', capturedResponses: captures, timings: [{ tier: 3, status: 'success', durationMs: 1, reason }] })),
+    }).track({ number }, { budgetMs: 8000 });
+    for (const [outcome, reason] of [['unsolved', 'puzzle_unsolved'], ['solver_unavailable', 'solver_unavailable'],
+      ['refused', 'verification_refused'], ['deadline', 'verification_unfinished'], ['no_puzzle', 'puzzle_missing']]) {
+      await expect(lookup([capture(challenge)], `zto-${outcome}`)).rejects.toMatchObject({ kind: 'challenge', reason });
+    }
+    await expect(lookup([], 'zto-no_puzzle')).rejects.toMatchObject({ kind: 'challenge', reason: 'puzzle_missing' });
+    await expect(lookup([capture(found(), 403)], 'zto-reply_failed')).rejects.toMatchObject({ kind: 'challenge', reason: 'api_denied', status: 403 });
+    for (const reason of [undefined, 'zto-constructor', 'ZTO browser retrieval failed']) {
+      const error = await lookup([capture(challenge)], reason).catch((caught: unknown) => caught);
+      expect(error).toMatchObject({ kind: 'challenge' });
+      expect((error as { reason?: string }).reason).toBeUndefined();
+    }
+    await expect(lookup([capture({ ...challenge, message: '访问频繁' })], 'zto-rate_limited')).rejects.toMatchObject({ kind: 'rate_limited' });
+  });
 });

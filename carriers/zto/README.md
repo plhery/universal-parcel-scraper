@@ -8,11 +8,14 @@ Its waybills, 771 and eleven digits, are tracked as [ZTO International](../zto-i
 The adapter first posts to `hdgateway.zto.com/batchGetTrace`. A verification response
 can fall back to the bundled TRAWL image. The page obtains a Dingxiang challenge
 from `mapi.zto.com/captcha/image2`, solves a slider and, when requested, clicks
-Chinese characters in order using local OCR. The page submits its own verification
+Chinese characters in order using local OCR. It asks for another puzzle when it cannot
+read one, at most twice. The page submits its own verification
 token and repeats tracking in the same context. Tokens and recipient details stay
 inside that context.
 
-Verification can fail or exceed the lookup budget. Enabled universal providers
+Verification can fail or exceed the lookup budget. The challenge reason says where it
+stopped, from the [shared set](../../ARCHITECTURE.md), and the service's `zto.verification`
+warning has each puzzle's detail. Enabled universal providers
 remain available for those failures and for fuller history: the public PC tracker
 suppresses earlier traces even after verification. The adapter marks its history
 as incomplete and keeps the carrier's epoch scan clocks.

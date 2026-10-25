@@ -3,7 +3,19 @@ import { BudgetExceededError, ChallengeError, RateLimitedError, SchemaError, Tra
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import type { TrawlScrapeResponse } from '../../core/transport/trawl.js';
+import { isRecord } from '../../core/types.js';
 import { API, MAX_BYTES, normalizeZtoNumber, PAGE, parseZto, PROVIDER } from './parser.js';
+
+/** The challenge reason for each way the service's ZTO helper says the page stayed unverified. */
+const VERIFICATION_REASONS = new Map([['unsolved', 'puzzle_unsolved'], ['solver_unavailable', 'solver_unavailable'],
+  ['refused', 'verification_refused'], ['deadline', 'verification_unfinished'], ['no_puzzle', 'puzzle_missing']]);
+
+function verificationReason(page: TrawlScrapeResponse): string | undefined {
+  const last: unknown = Array.isArray(page.raw.timings) ? page.raw.timings.at(-1) : undefined;
+  const outcome = isRecord(last) && typeof last.reason === 'string' ? /^zto-([a-z_]{1,40})$/.exec(last.reason)?.[1] : undefined;
+  return outcome ? VERIFICATION_REASONS.get(outcome) : undefined;
+}
 
 export class ZtoTracker {
   constructor(private readonly environment: AdapterEnvironment) {}
@@ -36,14 +48,17 @@ export class ZtoTracker {
       try { const url = new URL(row.url); return url.origin + url.pathname === API && !url.username && !url.password
         && !url.search && !url.hash && row.trackingNumberSubmitted === number; } catch { return false; }
     });
-    const response = matching.at(-1);
-    if (!response || matching.length > 10) throw new ChallengeError(PROVIDER, 'ZTO returned no matching tracking response');
+    const response = matching.at(-1), reason = verificationReason(page);
+    if (!response || matching.length > 10) throw new ChallengeError(PROVIDER, 'ZTO returned no matching tracking response', { reason });
     if (response.status === 429) throw new RateLimitedError(PROVIDER);
-    if ([401, 403, 428].includes(response.status)) throw new ChallengeError(PROVIDER);
+    if ([401, 403, 428].includes(response.status)) throw new ChallengeError(PROVIDER, 'ZTO refused the browser tracking request', { status: response.status, reason: 'api_denied' });
     if (response.status >= 400) throw new UpstreamHttpError(PROVIDER, response.status);
     if (response.error || response.truncated || response.base64Encoded || response.body === null) throw new TransportError(PROVIDER, 'ZTO returned an incomplete browser response');
     if (response.status !== 200 || Buffer.byteLength(response.body) > MAX_BYTES) throw new SchemaError(PROVIDER, 'ZTO returned invalid browser data');
-    return this.parse(response.body, number);
+    try { return this.parse(response.body, number); } catch (error) {
+      if (!(error instanceof ChallengeError) || !reason) throw error;
+      throw new ChallengeError(PROVIDER, 'ZTO verification did not complete', { reason, cause: error });
+    }
   }
 
   fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
