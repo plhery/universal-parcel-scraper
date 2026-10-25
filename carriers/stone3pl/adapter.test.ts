@@ -7,6 +7,7 @@ import { recognitionCandidates } from '../../core/recognition/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, STONE3PL_API, Stone3plTracker } from './adapter.js';
 import { normalizeStone3plNumber, parseStone3pl, stone3plWording } from './parser.js';
+import { stone3plStage } from './status.js';
 
 const NUMBER = 'S900000000000000001';
 const MISSING = 'S900000000000000002';
@@ -122,6 +123,12 @@ describe('Stone3PL', () => {
     expect(stone3plWording('Delivered, signed by Synthetic Recipient')).toBe('Delivered');
     expect(stone3plWording('Call +61 400 000 000')).not.toContain('400');
     expect(statusMapAnswer({ carrier: 'stone3pl', providerCode: '1', description: 'Pickup Scan' })).toMatchObject({ kind: 'mapped', stage: 'accepted' });
+  });
+
+  it("moves the parcel on through the ports, both clearances and the hand-over to the last-mile carrier", () => {
+    expect(['Arrived at domestic terminal station', 'Port of departure', 'International shipment release - Export', 'Port of departure - Departure',
+      'Port of destination - Arrival', 'International shipment release - Import', 'Pick up by local carrier at destination port']
+      .map(stone3plStage)).toEqual(Array(7).fill('in_transit'));
   });
 
   it('works through the public tracker with universal providers disabled', async () => {
