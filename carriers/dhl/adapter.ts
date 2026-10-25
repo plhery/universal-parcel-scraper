@@ -18,6 +18,7 @@
  */
 
 import makeFetchCookie from 'fetch-cookie';
+import { DateTime } from 'luxon';
 import { Cookie, CookieJar } from 'tough-cookie';
 import {
   lookupBudget, recognizeFromLookup,
@@ -85,6 +86,20 @@ function date(value: unknown): string {
 
 function millis(value: unknown): number {
   return isoTime(value, TIMEZONE)?.timestamp ?? 0;
+}
+
+/**
+ * A scan DHL places in another country, its own or a partner post's, shows
+ * that country's wall clock under Germany's offset: Cargus, Canada Post and
+ * CTT give the same scans the same wall clocks in their own zones. It keeps the
+ * wall clock alone, for the country to date it. An offset that is not
+ * Germany's stays as DHL states it.
+ */
+function clock(time: string, location: string): Pick<CarrierEvent, 'time' | 'local_time'> {
+  const country = countryCode(location);
+  const stated = /T.*[+-]\d{2}:\d{2}$/.test(time) ? DateTime.fromISO(time, { setZone: true }) : null;
+  if (!country || country === 'DE' || !stated?.isValid || stated.offset !== stated.setZone(TIMEZONE).offset) return { time };
+  return { local_time: stated.toFormat("yyyy-MM-dd'T'HH:mm:ss") };
 }
 
 /** The destination country DHL names in `zielland`, never more of the address. */
@@ -175,7 +190,8 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
     const description = withoutPartnerLink(clean(event.status));
     if (!description) return [];
     return [{ time: date(event.datum), location: clean(event.ort, 160), description, stage: stageForText(description) }];
-  }).sort((left, right) => millis(right.time) - millis(left.time)).slice(0, 100);
+  }).sort((left, right) => millis(right.time) - millis(left.time)).slice(0, 100)
+    .map(({ time, ...event }) => ({ ...event, ...clock(time, event.location) }));
   const summary = withoutPartnerLink(clean(timeline.status));
   if (!events.length && !summary && details.istZugestellt !== true) {
     if (Object.values(missing).some((flag) => flag === true)) return noData();
@@ -188,10 +204,16 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
     : stageForText(currentText, fallback);
   const delivery = isRecord(details.zustellung) ? details.zustellung : {};
   const expected = date(delivery.zustellzeitfensterVon) || date(delivery.zustellzeitfensterBis);
+  const stated = date(timeline.datumAktuellerStatus);
+  const newest = events[0];
+  // The status DHL dates as its newest scan abroad keeps that scan's wall clock.
+  const local = newest?.local_time && (!stated || clock(stated, newest.location ?? '').local_time === newest.local_time)
+    ? newest.local_time : undefined;
   return {
     status: statusForStage(stage), current_stage: stage,
     last_status_text: currentText,
-    last_update: date(timeline.datumAktuellerStatus) || events[0]?.time || null,
+    last_update: local ? null : stated || newest?.time || null,
+    ...(local ? { last_update_local: local } : {}),
     expected_delivery: ['delivered', 'returned'].includes(stage) ? null : expected.slice(0, 10) || null,
     timezone: TIMEZONE, events,
     ...(deliveryCarrier ? { delivery_carrier: deliveryCarrier } : {}),

@@ -100,8 +100,12 @@ how a consumer learns that DHL holds one behind a postcode.
   posts' copies of the scan read it so.
 - `fortschritt` is only the fallback for unmapped wording (`<= 1` means the
   parcel is still announced); the wording explains progress better.
-- Timestamps carry DHL's own offset and are kept verbatim; `core/time` only
-  validates them. The delivery window is a calendar day.
+- Timestamps carry an offset and are kept verbatim, except on scans DHL places
+  in another country, its own or a partner post's. Those show that country's
+  wall clock under Germany's offset, as the partners' copies of the same scans
+  show, so they keep the wall clock alone and the country's zone dates them
+  (`tracking.localClocks`). An offset other than Germany's stays as stated.
+  The delivery window is a calendar day.
 - A single unambiguous link to a known carrier portal in an arrival event (such
   as Swiss Post) becomes `delivery_carrier`; the host confirms the shipment
   through that carrier before switching. Lookalike hosts and userinfo URLs are

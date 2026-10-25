@@ -41,6 +41,7 @@
       "rank": 999,
       "pattern": "^\\d{12}$"
     },
+    "localClocks": true,
     "browser": true
   },
   "capabilities": [

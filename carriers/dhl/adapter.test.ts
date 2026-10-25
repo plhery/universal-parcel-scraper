@@ -5,6 +5,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter, DHLSessionError, DHLTracker, dhlTrackingUrl, normalizeDHLTrackingNumber, parseDHLTrackingResponse } from './adapter.js';
 
 const NUMBER = 'LF123456785DE';
@@ -96,6 +97,34 @@ describe('DHL public tracking normalization', () => {
     });
     expect(JSON.stringify(result)).not.toContain('Private');
     expect(JSON.stringify(result)).not.toContain(NUMBER);
+  });
+
+  it('reads a scan abroad on its country’s clock, where DHL puts Germany’s offset on it', () => {
+    const payload = shipment();
+    const timeline = payload.sendungen[0]!.sendungsdetails.sendungsverlauf;
+    timeline.datumAktuellerStatus = '2026-10-21T11:38:00+02:00';
+    timeline.events.push(
+      { datum: '2026-10-21T01:17:00+02:00', ort: 'Romania', status: 'The shipment has arrived in the destination country/destination area.' },
+      { datum: '2026-10-21T03:00:00-04:00', ort: 'Canada', status: 'The shipment has arrived at the parcel center' },
+      { datum: '2026-10-21T11:38:00+02:00', ort: 'Bulgaria', status: 'The shipment has been loaded onto the delivery vehicle' },
+    );
+    const parsed = parseDHLTrackingResponse(payload, NUMBER);
+    expect(parsed).toMatchObject({ last_update: null, last_update_local: '2026-10-21T11:38:00' });
+    expect(parsed.events?.slice(0, 3)).toEqual([
+      expect.objectContaining({ location: 'Bulgaria', local_time: '2026-10-21T11:38:00' }),
+      // An offset that is not Germany's is DHL's own.
+      expect.objectContaining({ location: 'Canada', time: '2026-10-21T03:00:00-04:00' }),
+      expect.objectContaining({ location: 'Romania', local_time: '2026-10-21T01:17:00' }),
+    ]);
+    expect(parsed.events?.[0]).not.toHaveProperty('time');
+    const dated = dateLocalClocks('dhl', parsed);
+    expect(dated.last_update).toBe('2026-10-21T11:38:00+03:00');
+    expect(dated.events?.slice(0, 4)).toEqual([
+      expect.objectContaining({ time: '2026-10-21T11:38:00+03:00', time_zone: 'Europe/Sofia' }),
+      expect.objectContaining({ time: '2026-10-21T03:00:00-04:00' }),
+      expect.objectContaining({ time: '2026-10-21T01:17:00+03:00', time_zone: 'Europe/Bucharest' }),
+      expect.objectContaining({ location: 'Germany', time: '2026-08-10T18:30:00+02:00' }),
+    ]);
   });
 
   it('produces every capability declared in carrier.json', () => {

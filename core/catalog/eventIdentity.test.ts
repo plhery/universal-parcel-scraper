@@ -369,7 +369,8 @@ describe('same-instant identity policies', () => {
   it('lets a DHL arrival notice shown without its partner link take over the row stored with it', () => {
     expect(sameInstantIdentityPolicy('dhl')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('dhl', { supportsScanMatching: true });
-    expect(policy).toMatchObject({ storedSources: ['dhl'], requireProviderCode: false, matchEachScan: true });
+    // A scan abroad, now on its country's clock, takes over the row stored under Germany's offset.
+    expect(policy).toMatchObject({ storedSources: ['dhl'], requireProviderCode: false, matchEachScan: true, matchWallClock: true });
     const notice = 'The shipment has arrived in the destination country and will be handed over to the delivery company.';
     const incoming = { stage: 'in_transit', description: notice, location: 'Example Country', providerCode: '' };
     for (const link of ['https://www.example.com/', '']) {

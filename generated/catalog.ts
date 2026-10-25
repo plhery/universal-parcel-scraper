@@ -579,6 +579,7 @@ export const CARRIER_CATALOG = {
       ],
       "recognitionRank": 999,
       "recognitionPattern": "^\\d{12}$",
+      "localClocks": true,
       "browser": true
     },
     "canaryUrl": "https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html",
