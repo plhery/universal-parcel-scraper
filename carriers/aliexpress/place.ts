@@ -17,33 +17,43 @@ export function placeName(value: string, carriers: ReadonlySet<string>): string 
   return place;
 }
 
-/**
- * The town of a bracket that names its country first, "[USA,Example City]" or
- * "[ES,Example Town 00000]", followed by that country, or ''. After a country
- * a town in capitals counts too, with five letters or more or several words.
- */
-function countryFirst(value: string, carriers: ReadonlySet<string>): string {
-  const [, head = '', rest = ''] = /^([^,]+),([^,]+)$/u.exec(value) ?? [];
-  const { country, place } = trackingPlace(head);
+/** The country a name or code alone names, with a code a state shares ("CA") written out, or ''. */
+function countryLabel(value: string): string {
+  const { country, place } = trackingPlace(value);
   if (!country || place) return '';
-  const [, town = '', postcode] = /^(.*?)(?:\s+(\d{4,5}))?$/u.exec(rest.trim())!;
-  const letters = town.match(/\p{L}/gu)?.length ?? 0;
-  const capitals = /^\p{Lu}[\p{Lu}\p{M} .'’-]*$/u.test(town) && (letters >= 5 || (letters >= 3 && /\s/u.test(town)))
-    && !carriers.has(town.toLocaleLowerCase('en-US'));
-  const name = capitals ? town : placeName(town, carriers);
-  // A code a state shares ("CA") is written out, so the location keeps its country.
-  const label = ambiguousAddressCodes.has(head.trim()) ? countryName(country, 'en') : head.trim();
-  return name && `${postcode ? `${name} ${postcode}` : name}, ${label}`;
+  return ambiguousAddressCodes.has(value.trim()) ? countryName(country, 'en') : value.trim();
+}
+
+/**
+ * The place of a bracket, or ''. A town can follow its country, "[USA,Example City]",
+ * and keeps a trailing postcode, "[Example Town 00000]"; after a country a town in
+ * capitals counts too, with five letters or more or several words. A country alone
+ * is the place too, "[ES]" or "[Spain 00000]", with the postcode put first so the
+ * country stays last.
+ */
+function bracketPlace(value: string, carriers: ReadonlySet<string>): string {
+  const [, head = '', rest] = /^([^,]+)(?:,([^,]+))?$/u.exec(value) ?? [];
+  const country = rest === undefined ? '' : countryLabel(head);
+  if (rest !== undefined && !country) return '';
+  const [, name = '', postcode] = /^(.*?)(?:\s+(\d{4,5}))?$/u.exec((rest ?? head).trim())!;
+  const alone = country ? '' : countryLabel(name);
+  if (alone) return postcode ? `${postcode}, ${alone}` : alone;
+  const letters = name.match(/\p{L}/gu)?.length ?? 0;
+  const capitals = Boolean(country) && /^\p{Lu}[\p{Lu}\p{M} .'’-]*$/u.test(name)
+    && (letters >= 5 || (letters >= 3 && /\s/u.test(name))) && !carriers.has(name.toLocaleLowerCase('en-US'));
+  const town = capitals ? name : placeName(name, carriers);
+  const place = town && postcode ? `${town} ${postcode}` : town;
+  return place && country ? `${place}, ${country}` : place;
 }
 
 /**
  * Cainiao's global feed has no place field: it writes a scan's town in front
  * of its standard wording, "[Bordeaux] Out for delivery", in every language,
- * sometimes after its country, "[USA,Example City]". A bracket that reads as a place
- * becomes the location and the wording keeps the rest.
+ * sometimes after its country, "[USA,Example City]", or its country alone, "[ES]".
+ * A bracket that reads as a place becomes the location and the wording keeps the rest.
  */
 export function placedWording(wording: string, carriers: ReadonlySet<string>): { description: string; location: string } {
   const match = /^\s*\[([^[\]]{1,80})\]\s*(\S[\s\S]*)$/.exec(wording);
-  const place = match ? countryFirst(match[1]!, carriers) || placeName(match[1]!, carriers) : '';
+  const place = match ? bracketPlace(match[1]!, carriers) : '';
   return place ? { description: match![2]!.trim(), location: place } : { description: wording, location: '' };
 }

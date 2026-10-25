@@ -103,14 +103,16 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   theirs.
 - The global feed has no place field. It writes a scan's town in brackets before the standard
   wording, `[Town] Out for delivery`, in every language. That town becomes the location and the
-  wording keeps the rest. A bracket holding digits, capitals only, fewer than three letters or a
-  carrier the module names stays in the text. Explicit numbered arrondissements of Paris, Lyon and
-  Marseille are accepted even in uppercase. Cainiao Express's tracker puts a town or a country code
-  in `location`; the same rule reads it when the wording has no bracket. A bracket can name the
-  country first, `[USA,Example City]` or `[ES,Town 00000]`: the location is then the town, with
-  a trailing postcode, followed by that country, and a town in capitals counts when it has five
-  letters or several words. A country code a state shares is written out ("Canada"). Otherwise
-  the location is the town alone.
+  wording keeps the rest. A bracket holding other digits than a trailing postcode, capitals only,
+  fewer than three letters or a carrier the module names stays in the text, unless it names a
+  country. Explicit numbered arrondissements of Paris, Lyon and Marseille are accepted even in
+  uppercase. Cainiao Express's tracker puts a town or a country code in `location`; the town rule
+  reads it when the wording has no bracket. A bracket can name the country first,
+  `[USA,Example City]` or `[ES,Town 00000]`: the location is then the town, with a trailing
+  postcode, followed by that country, and a town in capitals counts when it has five letters or
+  several words. A bracket can also name a country alone, `[ES]` or `[Spain 00000]`, which puts
+  the postcode first so the country stays last. A country code a state shares is written out
+  ("Canada"). Otherwise the location is the town alone.
 - In the United States a scan's offset follows its site, so the place lookup can tell
   same-named towns apart by it.
 - Some steps, the transit sorting centers' scans and the last-mile forecast among them, have the

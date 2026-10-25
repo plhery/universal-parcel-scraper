@@ -284,10 +284,16 @@ describe('Cainiao projection', () => {
       .toMatchObject({ location: 'Exampleville 99999, ES', description: 'Received by local delivery company' });
     // A code a state shares is written out: CA is Canada there, not California.
     expect(scan('[CA,Exampleville] Arrived').events?.[0]).toMatchObject({ location: 'Exampleville, Canada', description: 'Arrived' });
-    // Codes, abbreviations, carrier names and a bracket alone are no place.
-    for (const wording of ['[FR] Arrived', '[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
-      '[Hub 12] Arrived', '[Exampleville]', 'Arrived [Exampleville]', '[USA,GOFO] Arrived', '[USA,Example Post] Arrived',
-      '[Exampleville,Example City] Arrived']) {
+    // A town keeps its postcode, and a country alone is the place, its postcode put first.
+    expect(scan('[Exampleville 99999] Package delivered').events?.[0]).toMatchObject({ location: 'Exampleville 99999', description: 'Package delivered' });
+    expect(scan('[ES] Out for delivery').events?.[0]).toMatchObject({ location: 'ES', description: 'Out for delivery' });
+    expect(scan('[FR] Arrived').events?.[0]).toMatchObject({ location: 'France', description: 'Arrived' });
+    expect(scan('[Spain 99999] Arrived at pick-up point').events?.[0])
+      .toMatchObject({ location: '99999, Spain', description: 'Arrived at pick-up point' });
+    // Other codes, abbreviations, carrier names, numbers and a bracket alone are no place.
+    for (const wording of ['[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
+      '[Hub 12] Arrived', '[Hub 123456] Arrived', '[EXAMPLEVILLE 99999] Arrived', '[Exampleville]', 'Arrived [Exampleville]',
+      '[USA,GOFO] Arrived', '[USA,Example Post] Arrived', '[Exampleville,Example City] Arrived']) {
       expect(scan(wording).events?.[0]).toMatchObject({ location: '', description: wording });
       expect(scan(wording).last_status_text).toBe(wording);
     }
