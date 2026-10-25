@@ -66,7 +66,8 @@ function destinationZone(carrier: string, country: string): string | null {
  * from the scan's place, read with the scans around it, or an airport its
  * code alone names; else from the leg the parcel was on: the last scan before
  * it with a zone of its own, or, once a scan since says the parcel landed or
- * reached its destination, the next one after; else from the destination, if the carrier
+ * reached its destination, the next one after, or with none before, the next
+ * one unless the parcel lands on the way there; else from the destination, if the carrier
  * delivers there; else from the carrier's home clock. A place that names only
  * a country with several zones, and none of its states, borrows the zone of a
  * town in that country the same way. The zone of a scan does not depend on
@@ -98,15 +99,16 @@ export function dateLocalClocks(carrier: string, result: CarrierResult): Carrier
     ? place.precision === 'city' || place.region || !hasSeveralClocks(place.country) ? placeTimeZone(place) : null
     : airportTimeZone(text(scans[at]!.location)));
   // The zone of the leg the parcel was on: the last scan before with a zone of its own,
-  // or once a scan since says the parcel landed, the next one after.
+  // or once a scan since says the parcel landed, the next one after. With none before,
+  // the next one, unless the parcel lands on the way there.
   const leg = (at: number, fits: (place: EventPlace | null) => boolean): string | null => {
     const zoned = (other: number) => own[other] && fits(places[other] ?? null);
     let before = at - 1;
     while (before >= 0 && !zoned(before)) before -= 1;
     let after = at + 1;
     while (after < scans.length && !zoned(after)) after += 1;
-    const [first, second] = scans.slice(before + 1, at + 1).some(landed) ? [after, before] : [before, after];
-    return own[first] ?? own[second] ?? null;
+    if (scans.slice(before + 1, at + 1).some(landed)) return own[after] ?? own[before] ?? null;
+    return own[before] ?? (scans.slice(at + 1, after).some(landed) ? null : own[after] ?? null);
   };
   const destination = destinationZone(carrier, text(result.destination_country).toUpperCase());
   const home = carrierHomeZone(carrier, result);

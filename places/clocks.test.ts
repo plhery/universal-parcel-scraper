@@ -87,6 +87,15 @@ describe('dateLocalClocks', () => {
       ['Asia/Ho_Chi_Minh', 'place'], ['Asia/Ho_Chi_Minh', 'place'], ['Asia/Ho_Chi_Minh', 'neighbour'],
       ['Asia/Ho_Chi_Minh', 'neighbour'], ['Europe/Madrid', 'neighbour'], ['Europe/Madrid', 'place'],
     ]);
+    // With no place before, a scan the parcel lands after is not on the next place's clock.
+    const unplaced = dateLocalClocks('yunexpress', { status: 'in_transit', destination_country: 'ES', events: [
+      { local_time: '2026-10-16T13:00:00', description: 'Handed over to the airline' },
+      { local_time: '2026-10-17T06:10:00', description: 'Flight landed' },
+      { local_time: '2026-10-17T11:00:00', description: 'Arrived at sort facility', location: 'Zaragoza' },
+    ] });
+    expect(unplaced.events!.map((event) => [event.time_zone, event.time_zone_basis])).toEqual([
+      ['Asia/Shanghai', 'carrier'], ['Europe/Madrid', 'neighbour'], ['Europe/Madrid', 'place'],
+    ]);
   });
 
   it('borrows the clock of an airport its code alone names', () => {
