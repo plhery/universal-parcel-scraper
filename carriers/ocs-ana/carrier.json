@@ -38,8 +38,8 @@
     "delivery_tracking_number"
   ],
   "portal": {
-    "url": "https://www2.ocsworldwide.net/ExpTracking/cwbCheck.php?cwbno={trackingNumber}",
-    "searchUrl": "https://www2.ocsworldwide.net/ExpTracking/cwbCheck.html",
+    "url": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do?cwbno={trackingNumber}",
+    "searchUrl": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do",
     "canaryUrl": "https://www2.ocsworldwide.net/ExpTracking/cwbCheck.html",
     "shows": [
       "status",

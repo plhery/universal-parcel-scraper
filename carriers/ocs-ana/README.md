@@ -63,6 +63,11 @@ in an airline-style check digit (the leading digits modulo 7), as the numbers of
 Yamato and Sagawa do. Neither length points to OCS alone, so no rule claims them. The samples
 and their sources are in [`numbers.json`](numbers.json).
 
+## Links
+
+The link opens OCS's history page for one waybill, the page the tracking link on OCS's home
+page opens. It shows the history of a waybill a delivery company holds too.
+
 ## Testing
 
 `npm run test:carriers:live -- carriers/ocs-ana`, with `OCS_ANA_TRACKING_NUMBER` and

@@ -1787,7 +1787,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'domain-logistics', number: '000000000000',
     route: /^https:\/\/domainlogistics\.ca\/tracking\/\?tracking=000000000000$/,
     marker: /Invalid Tracking Code|Please enter your tracking number as received upon confirmation of shipment/ },
-  // The lookup refreshes to the history page, which fills its search field in with the number and answers for it.
+  // The history page fills its search field in with the number and answers for it.
   { carrier: 'ocs-ana', number: '100000000015',
     route: /^https:\/\/webcsw\.ocs\.co\.jp\/csw\/ECSWG0201R00003P\.do\?cwbno=100000000015$/,
     marker: /Air Waybill(?: No\.|番号)/ },

@@ -22552,8 +22552,8 @@ export const CARRIER_CATALOG = {
       "localClocks": true
     },
     "canaryUrl": "https://www2.ocsworldwide.net/ExpTracking/cwbCheck.html",
-    "trackingUrlTemplate": "https://www2.ocsworldwide.net/ExpTracking/cwbCheck.php?cwbno={trackingNumber}",
-    "trackingSearchUrl": "https://www2.ocsworldwide.net/ExpTracking/cwbCheck.html",
+    "trackingUrlTemplate": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do?cwbno={trackingNumber}",
+    "trackingSearchUrl": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do",
     "linkRules": [
       {
         "domains": [
