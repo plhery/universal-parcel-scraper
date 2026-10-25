@@ -1338,6 +1338,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.maersk\.com\/tracking\/parcel\/1MEXAMPLE0000000001$/,
     marker: /We couldn't find any parcels with that tracking number/i,
     forwarding: { notFound: /We couldn't find any parcels with that tracking number/i } },
+  // The tracker heads its answer with the number, its no-record answer too.
+  { carrier: 'fedex-international-connect', number: 'ZZZ0000GB00000000017',
+    route: /^https:\/\/fictracking\.fedex\.com\/\?MyFICNumber=ZZZ0000GB00000000017$/,
+    marker: /Sorry we have no record of your reference on file at this time/i },
   { carrier: 'mainfreight', number: 'S00000000',
     route: /^https:\/\/www\.mainfreight\.com\/tracking\?trackingnumber=S00000000$/,
     marker: /Tracking Results for|No results found for the provided tracking number/i },

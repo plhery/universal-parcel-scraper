@@ -14288,10 +14288,11 @@ export const CARRIER_CATALOG = {
       "GB"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fedex-international-connect",
+      "localClocks": true
     },
     "canaryUrl": "https://fictracking.fedex.com/",
     "trackingUrlTemplate": "https://fictracking.fedex.com/?MyFICNumber={trackingNumber}",

@@ -13,21 +13,65 @@
     "color": "#4d148c"
   },
   "selectable": true,
-  "timezone": "UTC",
+  "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fedex-international-connect",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://fictracking.fedex.com/?MyFICNumber={trackingNumber}",
     "searchUrl": "https://fictracking.fedex.com/",
     "canaryUrl": "https://fictracking.fedex.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "weight",
+      "destination",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "destination_country"
+    ],
+    "discarded": [
+      "customer_reference",
+      "delivery_partner_reference",
+      "piece_count"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "signature",
+      "eta"
+    ]
   },
   "links": [
     {

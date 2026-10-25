@@ -223,6 +223,7 @@ import { statusMap as fastdrop } from '../../carriers/fastdrop/status.js';
 import { statusMap as fastfrate } from '../../carriers/fastfrate/status.js';
 import { statusMap as fedex } from '../../carriers/fedex/status.js';
 import { statusMap as fedexFreight } from '../../carriers/fedex-freight/status.js';
+import { statusMap as fedexInternationalConnect } from '../../carriers/fedex-international-connect/status.js';
 import { statusMap as fedexPl } from '../../carriers/fedex-pl/status.js';
 import { statusMap as fermopoint } from '../../carriers/fermopoint/status.js';
 import { statusMap as fgDelivery } from '../../carriers/fg-delivery/status.js';
@@ -669,7 +670,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, eurodis, 'euroexpress-ba': euroexpressBa,
   'evdemo-lojistik': evdemoLojistik, evri, 'evri-uk': evriUk, evropat, ewe, exelot,
   'exline-kz': exlineKz, exmate, 'express-one': expressOne, 'fan-courier': fanCourier, 'far-international': farInternational, 'fargo-courier': fargoCourier, 'fargo-uz': fargoUz, fastdrop,
-  fastfrate, fedex, 'fedex-freight': fedexFreight, 'fedex-pl': fedexPl, fermopoint, 'fg-delivery': fgDelivery, 'first-line': firstLine,
+  fastfrate, fedex, 'fedex-freight': fedexFreight, 'fedex-international-connect': fedexInternationalConnect, 'fedex-pl': fedexPl, fermopoint, 'fg-delivery': fgDelivery, 'first-line': firstLine,
   'flash-express': flashExpress,
   'flash-express-ph': flashExpressPh,
   fleetex, fleetoptics, flippost, followmont, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, gati, gdex,
