@@ -208,6 +208,15 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, description: 'Your parcel is out for delivery.' }, stored)).toBe(false);
   });
 
+  it('lets a NACEX platform scan whose town lost its "PLAT" take over its stored row', () => {
+    const policy = sameInstantIdentityPolicy('nacex', { supportsScanMatching: true });
+    const stored = { stage: 'in_transit', description: 'En tránsito', location: 'PLATTESTVILLE', providerCode: '' };
+    expect(policy?.matches?.({ ...stored, location: 'TESTVILLE' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: 'OTHERVILLE' }, stored)).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: 'TESTVILLE', description: 'En reparto' }, stored)).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: 'TESTVILLE' }, { ...stored, location: 'TESTVILLE' })).toBe(false);
+  });
+
   it('lets a Vinted Go scan whose town lost a space before its comma take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('vinted-go', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'At sorting center in Example Town , FR', location: 'Example Town , FR', providerCode: 'delivery/in_transit' };

@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NacexTracker, adapter } from './adapter.js';
+import { nacexPlace } from './identity.js';
 import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser.js';
 import { classifyNacexStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -128,6 +129,18 @@ describe('NACEX direct tracking', () => {
         + '<tr><td class="sg_hist_desc"><font class="fuente_titulo_green">Disponible en punto NACEX</font><a href="#">990001</a><br>9901 - TEST LOCALITY</td></tr>');
     });
     expect(parseNacex(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', last_status_text: 'Disponible en punto NACEX' });
+  });
+
+  it("reads a platform's town without the \"PLAT\" before it", () => {
+    const transit = (locality: string) => parseNacex(edit($ => {
+      $('#tabla_estado tr').eq(1).children('td').last().text('En tránsito');
+      $('#table_historico').html('<tr><td class="sg_hist_fecha" colspan="2">15 January 2026</td></tr>'
+        + `<tr><td class="sg_hist_desc"><b>En tránsito</b><br>9900-12 - ${locality}</td></tr>`);
+    }), NUMBER).events?.[0]?.location;
+    expect(transit('PLATTESTVILLE')).toBe('TESTVILLE');
+    expect(transit('PLAT TEST TOWN')).toBe('TEST TOWN');
+    expect(transit('PLATJA D ARO')).toBe('PLATJA D ARO');
+    expect(nacexPlace('PLATJAEN')).toBe('JAEN');
   });
 
   it('registers a shipment booked through the web channel until its first movement', () => {

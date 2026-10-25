@@ -4,6 +4,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
+import { nacexPlace } from './identity.js';
 import { classifyNacexStatus, isNacexMovement, isNacexNotice } from './status.js';
 
 // Headings name the month in the request's language: English without one, Spanish with `es`.
@@ -121,7 +122,7 @@ export function parseNacex(html: string, raw: string): CarrierResult {
     const locality = !booked && isNacexMovement(label) && /^\d{4}(?:-\d{1,3})?\s*-\s*([\p{L}][\p{L}\s.()-]{1,99})$/u.exec(trailing)?.[1];
     scans.push({ mapped, notice: isNacexNotice(label), event: { description: mapped?.status === 'delivered' ? 'Delivered' : label,
       provider_status: label, ...(day ? { local_time: day } : dayText ? { provider_time_text: dayText } : {}),
-      ...(locality ? { location: locality } : {}) } });
+      ...(locality ? { location: nacexPlace(locality) } : {}) } });
   }
   // Rows run newest first. A notice keeps the stage of the scan before it.
   let previous: ClassifiedStatus | undefined;

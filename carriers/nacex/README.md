@@ -30,7 +30,10 @@ redirects resume delivery; requests to contact the agency and incidents closed
 without success are problems. A parenthetical agency or pickup point code after
 a label is dropped.
 
-Only status labels and depot localities of movement scans are retained.
+Only status labels and depot localities of movement scans are retained. A
+platform's locality is its town after "PLAT", cut to twelve letters
+("PLATMADRID"); the location leaves "PLAT" out, and a scan stored with it keeps
+its row.
 Delivery recipient text, signatures and free-form instructions are excluded.
 A negative requires the portal's explicit no-shipment result after submission;
 empty pages, generic HTTP errors and missing histories remain inconclusive.
