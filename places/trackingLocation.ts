@@ -97,15 +97,28 @@ export function trackingPlace(location: string): TrackingPlace {
   const dashedCountry = dashed ? dashCountry(dashed[2]!) : null;
   if (dashedCountry) return { country: dashedCountry, place: dashed![1]! };
   const fields = [...text.matchAll(/[^,;|()]+/g)].filter((match) => match[0].trim());
+  // A code alone between empty fields is alone (",,,DE"). One a state or canton shares is the
+  // country another field names, which stays the place: "HOLLAND, NL" is not in Newfoundland,
+  // and "Luxembourg, LU" is the city.
+  const alone = fields.length === 1 ? fields[0]![0].trim() : text;
+  const named = new Set(fields.map((field) => field[0].trim()).filter((field) => !regionCodes.has(field))
+    .map((field) => namedCountry(field, true)));
   let country: string | null = null;
   let kept = fields.length;
   while (kept > 0) {
-    const code = fieldCountry(fields[kept - 1]![0].trim(), text, true);
+    const field = fields[kept - 1]![0].trim();
+    const own = fieldCountry(field, alone, true);
+    const code = own ?? (regionCodes.has(field) && named.has(field) ? field : null);
     if (!code || (country && code !== country)) break;
     country = code;
     kept -= 1;
+    if (!own) break;
   }
   if (country) return { country, place: kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|(]+$/u, '') : '' };
+  // A partner's depot abroad, by its country and number, as BRT writes one: "SPAIN (12)".
+  const depot = /^([^,;|()]+?)\s*\(\d+\)$/u.exec(text);
+  const depotCountry = depot ? namedCountry(depot[1]!, true) : null;
+  if (depotCountry) return { country: depotCountry, place: '' };
   if (fields.length === 1 && text === fields[0]![0]) {
     // Aggregators can name a DHL country operation instead of a town.
     const operation = /^DHL\s+(.+)$/i.exec(text);

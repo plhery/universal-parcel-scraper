@@ -15,9 +15,18 @@ describe('tracking places', () => {
     expect(trackingPlace(location)).toEqual({ country, place });
   });
 
+  it('reads a code a state or canton shares as the country another field names', () => {
+    expect(trackingPlace('HOLLAND, NL')).toEqual({ country: 'NL', place: 'HOLLAND' });
+    expect(trackingPlace('Example Town, HOLLAND, NL')).toEqual({ country: 'NL', place: 'Example Town, HOLLAND' });
+    expect(trackingPlace('Luxembourg, LU')).toEqual({ country: 'LU', place: 'Luxembourg' });
+    expect(trackingPlace("St. John's, NL")).toEqual({ country: null, place: "St. John's, NL" });
+  });
+
   it.each([
     ['France', 'FR'], ['DE', 'DE'], ['CH ', 'CH'], ['THE NETHERLANDS', 'NL'], ['Czech Republic', 'CZ'], ['Hong Kong', 'HK'],
     ['DHL Netherlands', 'NL'], ['КИТАЙ', 'CN'], ['Україна', 'UA'], ['日本', 'JP'], ['美國', 'US'],
+    // Between empty fields, and a partner's depot abroad by its number.
+    [',,,DE', 'DE'], ['FR,', 'FR'], ['SPAIN (12)', 'ES'],
   ])('leaves no place when %s is only a country', (location, country) => {
     expect(trackingPlace(location)).toEqual({ country, place: '' });
   });

@@ -93,7 +93,10 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   (depot 0001)"). The town's own province settles it, then a town of that name where the
   parcel is, then, for a code no comma or bracket sets apart, any town of that name. A code
   that is also a US state or a Swiss canton only favours its country's towns, after a comma
-  or in brackets alike ("Bad Bevensen, DE", "Bad Bevensen (DE)"). With no town at all, a
+  or in brackets alike ("Bad Bevensen, DE", "Bad Bevensen (DE)"), unless the text also names
+  that country or a region of it in words: "Example Town, HOLLAND, NL" is in the Netherlands,
+  not Holland in Michigan, and "Luxembourg, LU" is the city. Alone, between empty fields
+  (",,,DE"), the code is the country. With no town at all, a
   code in brackets or after a space is no country on a parcel known to be elsewhere, and the
   scan gets no place. MC and DO after a name that is no town of Monaco or
   the Dominican Republic are Royal Mail's, on any carrier's parcel: its mail centre or a
@@ -101,7 +104,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   ("Mid Wales MC"), else no place.
 - A field with only facility words and a country's name ("DPD GERMANY DE"), or its "-ian"
   word ("Latvian sorting center"), places that country, when the text's code or the parcel
-  puts the parcel there.
+  puts the parcel there. A country's name with a depot's number in brackets, as BRT names a
+  partner's depot abroad ("SPAIN (12)"), is that country.
 - A US military post office ("Fpo, AE", "APO AP 96001") names a region of the US armed
   forces, not a country: AE there is not the Emirates, and the base can be anywhere in the
   region. The scan gets no place, and `trackingPlace` and `trackingLocationCountry` give it

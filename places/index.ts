@@ -973,8 +973,12 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   // there, may be no country at all: Royal Mail ends its mail centres with MC and its
   // delivery offices with DO, India's states are written like countries. A town the text
   // names where the parcel is settles it; so does any town, for a code no comma or bracket
-  // sets apart. A code of that kind with no town at all is then no place either.
-  if (rest && (looseCountry || coded) && !context.includes(country!)) {
+  // sets apart. A code of that kind with no town at all is then no place either. One the
+  // text also names in words, the country or a region of it, is that country:
+  // "Example Town, HOLLAND, NL" is not in Holland, Michigan.
+  const worded = outer.some((region) => region.country === country)
+    || fields.some((field) => { const named = trackingPlace(field); return named.country === country && !named.place; });
+  if (rest && (looseCountry || coded) && !context.includes(country!) && !worded) {
     // Carriers Royal Mail hands parcels to write its sites its way: "Thames Valley MC" is its
     // centre in Swindon whatever the carrier, and "Mid Wales MC" somewhere in Wales.
     const royalMail = looseCountry && (country === 'MC' || country === 'DO');

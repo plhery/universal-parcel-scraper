@@ -21,6 +21,14 @@ describe('locatePlace', () => {
     expect(place('Latvian sorting center', ['EE', 'LV'])).toMatchObject({ country: 'LV', precision: 'country' });
     expect(place('Latvian sorting center', ['EE'])).toBeNull();
     expect(place('DE0001', ['DE'])).toBeNull();
+    // A code the text also names in words is that country, wherever the parcel was: NL is
+    // also Newfoundland, and a Holland is in Michigan.
+    expect(place('Example Town, HOLLAND, NL', ['US'])).toMatchObject({ country: 'NL', precision: 'country' });
+    expect(place('Example Town, NORTH HOLLAND, NL', ['US'])).toMatchObject({ country: 'NL', precision: 'country' });
+    expect(place('Luxembourg, LU', ['US'])).toMatchObject({ country: 'LU', precision: 'city', name: 'Luxembourg' });
+    // Between empty fields, and a partner's depot abroad by its number.
+    expect(place(',,,DE', ['DE'])).toMatchObject({ country: 'DE', precision: 'country' });
+    expect(place('SPAIN (12)', ['IT'])).toMatchObject({ country: 'ES', precision: 'country' });
   });
 
   it('reads the formats carriers print, with or without a country', () => {
