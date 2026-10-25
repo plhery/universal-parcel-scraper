@@ -5,7 +5,6 @@ import { amazonShippingOrigin, amazonShippingUrl } from '../../core/catalog/inde
 import { isAmazonTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { firstOccurrence } from '../../core/time/index.js';
 import { cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyStatus, statusKey, type ClassifiedStatus } from './status.js';
@@ -84,43 +83,28 @@ function eventDescription(key: string, classified: ClassifiedStatus): string {
 }
 
 /**
- * Local time policy, deliberately not one of `core/time`'s helpers: the tracker
- * mixes ISO-8601, RFC 2822 and US long-form dates, and when `zone` is null (a
- * `TBA` number, which identifies no country) an offset-free value must be
- * rejected rather than stamped with a guess.
+ * Clock policy, deliberately not one of `core/time`'s helpers: the tracker
+ * mixes ISO-8601, RFC 2822 and US long-form dates. A value without an offset
+ * is UTC on every host: the tracker promises US deliveries for 3 AM, the
+ * evening before in every US zone.
  */
-function parseDate(value: unknown, zone: string | null): ParsedDate | null {
+function parseDate(value: unknown): ParsedDate | null {
   const raw = cleanScalar(value, 100);
   if (!raw) return null;
-  const isoHasZone = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(raw);
-  if (!zone && !isoHasZone && !/[+-][0-9]{4}$|GMT|UTC/i.test(raw)) return null;
   const candidates = [
-    firstOccurrence(DateTime.fromISO(raw, { setZone: isoHasZone, zone: zone ?? 'UTC' })),
+    DateTime.fromISO(raw, { setZone: true, zone: 'UTC' }),
     DateTime.fromRFC2822(raw, { setZone: true }),
     ...[
       'LLL d, yyyy, h:mm:ss a',
       'LLL d, yyyy, h:mm a',
       'LLLL d, yyyy, h:mm:ss a',
       'LLLL d, yyyy, h:mm a',
-    ].map((format) => firstOccurrence(DateTime.fromFormat(raw, format, {
-      locale: 'en-US',
-      zone: zone ?? 'UTC',
-    }))),
+    ].map((format) => DateTime.fromFormat(raw, format, { locale: 'en-US', zone: 'UTC' })),
   ];
   const parsed = candidates.find((candidate) => candidate.isValid);
   if (!parsed) return null;
   const iso = parsed.toISO({ suppressMilliseconds: true });
   return iso ? { iso, timestamp: parsed.toMillis() } : null;
-}
-
-/**
- * The wall-clock reading of an offset-free value when no zone can place it,
- * as for a `TBA` number. The digits are validated without choosing an offset.
- */
-function parseLocalDate(value: unknown): string | null {
-  const raw = cleanScalar(value, 100);
-  if (!raw || /(?:Z|[+-]\d{2}:?\d{2})$|GMT|UTC/i.test(raw)) return null;
-  return parseDate(raw, 'UTC')?.iso.replace(/Z$/, '') ?? null;
 }
 
 function parseSerializedRecord(value: unknown, field: string): JsonObject {
@@ -173,28 +157,26 @@ function eventRecords(value: JsonObject | null): JsonObject[] {
   return Array.isArray(events) ? events.filter(isRecord) : [];
 }
 
-function parseEvent(raw: JsonObject, sourceIndex: number, zone: string | null): ParsedEvent | null {
+function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
   const summary = isRecord(raw.statusSummary) ? raw.statusSummary : {};
   const classified = classifyStatus(
     summary.localisedStringId,
     raw.eventCode,
     raw.subReasonCode,
   );
-  const time = parseDate(raw.eventTime, zone);
-  const local = time || zone ? null : parseLocalDate(raw.eventTime);
-  const clockText = time || local ? '' : cleanScalar(raw.eventTime, 100);
+  const time = parseDate(raw.eventTime);
+  const clockText = time ? '' : cleanScalar(raw.eventTime, 100);
   const code = providerCode(raw.eventCode);
   if (!time && !code && classified.status === 'unknown') return null;
   const eventLocation = location(raw.location);
   const key = eventKey(raw);
   return {
     classified,
-    // Local readings keep the tracker's order: their zones are unknown and can differ.
     timestamp: time?.timestamp ?? Number.NEGATIVE_INFINITY,
     sourceIndex,
     departure: classified.stage === 'in_transit' && key.includes('departed'),
     event: {
-      ...(time ? { time: time.iso } : local ? { local_time: local } : clockText ? { provider_time_text: clockText } : {}),
+      ...(time ? { time: time.iso } : clockText ? { provider_time_text: clockText } : {}),
       ...(eventLocation ? { location: eventLocation } : {}),
       description: eventDescription(key, classified),
       stage: classified.stage,
@@ -206,11 +188,9 @@ function parseEvent(raw: JsonObject, sourceIndex: number, zone: string | null): 
 /** How soon after the out-for-delivery scan a departure from its station is the van leaving. */
 const VAN_DEPARTURE_MS = 3_600_000;
 
-/** Milliseconds from one scan to the next, on clocks of the same kind, or NaN. */
+/** Milliseconds from one scan to the next, or NaN. */
 function scanGapMs(from: CarrierEvent, to: CarrierEvent): number {
-  if (from.time && to.time) return Date.parse(to.time) - Date.parse(from.time);
-  const [start, end] = [from.local_time, to.local_time];
-  return typeof start === 'string' && typeof end === 'string' ? Date.parse(`${end}Z`) - Date.parse(`${start}Z`) : Number.NaN;
+  return from.time && to.time ? Date.parse(to.time) - Date.parse(from.time) : Number.NaN;
 }
 
 /**
@@ -282,10 +262,10 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   const seen = new Set<string>();
   const parsedEvents: ParsedEvent[] = [];
   eventRecords(history).slice(0, MAX_EVENTS_TO_INSPECT).forEach((raw, index) => {
-    const parsed = parseEvent(raw, index, zone);
+    const parsed = parseEvent(raw, index);
     if (!parsed) return;
     const identity = JSON.stringify([
-      parsed.event.time ?? parsed.event.local_time ?? parsed.event.provider_time_text ?? '',
+      parsed.event.time ?? parsed.event.provider_time_text ?? '',
       parsed.event.location ?? '',
       parsed.event.provider_code ?? '',
       parsed.event.description ?? '',
@@ -326,11 +306,11 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
     'deliveryDate',
     'pickupEventDate',
     'creationDate',
-  ].map((field) => parseDate(metadataValue(metadata, field), zone)).find(Boolean) ?? null;
+  ].map((field) => parseDate(metadataValue(metadata, field))).find(Boolean) ?? null;
   const expected = parseDate(
     progress.expectedDeliveryDate
       ?? metadataValue(metadata, 'expectedDeliveryDate')
-      ?? metadataValue(metadata, 'promisedDeliveryDate'), zone,
+      ?? metadataValue(metadata, 'promisedDeliveryDate'),
   );
   const delivered = active.stage === 'delivered';
   const delivery = delivered
@@ -341,8 +321,8 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
     current_stage: active.stage,
     last_status_text: active.description,
     last_update: events[0]?.time ?? fallbackUpdate?.iso ?? null,
-    ...(!events[0]?.time && events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),
-    expected_delivery: delivered ? null : expected?.iso.slice(0, 10) ?? null,
+    // The promise's day is the recipient's, which a US number does not place.
+    expected_delivery: delivered || !expected || !zone ? null : DateTime.fromMillis(expected.timestamp, { zone }).toISODate(),
     ...(delivery ? { delivered_at: delivery } : {}),
     ...(zone ? { timezone: zone } : {}),
     events,

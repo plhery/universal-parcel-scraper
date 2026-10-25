@@ -49,8 +49,9 @@ describe('same-instant identity policies', () => {
   });
 
   it('requires Amazon Shipping scans to retain their event code', () => {
+    // A scan stored on a local clock shows the same wall clock under +00:00.
     expect(sameInstantIdentityPolicy('amazon-shipping')).toEqual({
-      sourceCarrierId: 'amazon-shipping', storedSources: ['amazon-shipping'], requireProviderCode: true,
+      sourceCarrierId: 'amazon-shipping', storedSources: ['amazon-shipping'], requireProviderCode: true, matchWallClock: true,
     });
   });
 

@@ -113,23 +113,23 @@ describe('Amazon Shipping France response normalization', () => {
       status: 'delivered',
       current_stage: 'delivered',
       last_status_text: 'Delivered',
-      last_update: '2026-08-11T16:31:56+02:00',
+      last_update: '2026-08-11T16:31:56Z',
       expected_delivery: null,
-      delivered_at: '2026-08-11T16:31:56+02:00',
+      delivered_at: '2026-08-11T16:31:56Z',
       timezone: 'Europe/Paris',
       events: [{
-        time: '2026-08-11T16:31:56+02:00',
+        time: '2026-08-11T16:31:56Z',
         description: 'Delivered',
         stage: 'delivered',
         provider_code: 'Delivered',
       }, {
-        time: '2026-08-10T22:10:16+02:00',
+        time: '2026-08-10T22:10:16Z',
         location: 'Paris, Île-de-France, FR',
         description: 'Departed facility',
         stage: 'in_transit',
         provider_code: 'Departed',
       }, {
-        time: '2026-08-07T23:51:15+02:00',
+        time: '2026-08-07T23:51:15Z',
         description: 'Shipment information received',
         stage: 'registered',
         provider_code: 'CreationConfirmed',
@@ -165,7 +165,7 @@ describe('Amazon Shipping France response normalization', () => {
       expected_delivery: '2026-08-11',
     });
     expect(result.events?.[0]).toEqual({
-      time: '2026-08-11T08:05:00+02:00',
+      time: '2026-08-11T08:05:00Z',
       location: 'Paris, Île-de-France, FR',
       description: 'Out for delivery',
       stage: 'out_for_delivery',
@@ -188,7 +188,7 @@ describe('Amazon Shipping France response normalization', () => {
     history.eventHistory[2] = scan('Received', 'swa_rex_arrived_at_final_hub', 'Aug 11, 2026, 5:48:16 AM');
     hub.eventHistory = JSON.stringify(history);
     expect(parseAmazonShippingTrackingResponse(hub).events?.[0]).toEqual({
-      time: '2026-08-11T05:48:16+02:00', location: 'Paris, Île-de-France, FR',
+      time: '2026-08-11T05:48:16Z', location: 'Paris, Île-de-France, FR',
       description: 'Arrived at delivery center', stage: 'in_transit', provider_code: 'Received',
     });
   });
@@ -210,21 +210,21 @@ describe('Amazon Shipping France response normalization', () => {
     const result = parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, departed));
     expect(result).toMatchObject({
       status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for delivery',
-      last_update: '2026-08-11T08:05:04+02:00',
+      last_update: '2026-08-11T08:05:04Z',
     });
     expect(result.events?.slice(0, 2)).toEqual([
       {
-        time: '2026-08-11T08:05:04+02:00', location: 'Paris, Île-de-France, FR',
+        time: '2026-08-11T08:05:04Z', location: 'Paris, Île-de-France, FR',
         description: 'Departed facility', stage: 'out_for_delivery', provider_code: 'Departed',
       },
       {
-        time: '2026-08-11T08:05:00+02:00', location: 'Paris, Île-de-France, FR',
+        time: '2026-08-11T08:05:00Z', location: 'Paris, Île-de-France, FR',
         description: 'Out for delivery', stage: 'out_for_delivery', provider_code: 'OutForDelivery',
       },
     ]);
-    // Wall clocks keep the tracker's order, and the same reading.
+    // A US number's scans read the same clock.
     expect(parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, departed), null).events?.[0])
-      .toMatchObject({ local_time: '2026-08-11T08:05:04', stage: 'out_for_delivery' });
+      .toMatchObject({ time: '2026-08-11T08:05:04Z', stage: 'out_for_delivery' });
     // A summary whose only signal repeats the departure's code defers to the scan.
     expect(parseAmazonShippingTrackingResponse(outForDeliveryWith({ status: 'Departed', metadata: {} }, departed)))
       .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for delivery' });
@@ -257,12 +257,12 @@ describe('Amazon Shipping France response normalization', () => {
     const departed = scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 9:40:00 PM');
     const received = scan('Received', 'swa_rex_arrived_at_sort_center', 'Aug 11, 2026, 6:10:00 PM');
     const result = parseAmazonShippingTrackingResponse(outForDeliveryWith(summary, received, departed));
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-08-11T21:40:00+02:00' });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-08-11T21:40:00Z' });
     expect(result).not.toHaveProperty('delivered_at');
     // The delivery scan settles it, and a summary with no scans to weigh it against stands.
     expect(parseAmazonShippingTrackingResponse(outForDeliveryWith(summary,
       scan('Delivered', 'swa_rex_detail_delivered', 'Aug 11, 2026, 11:20:00 AM'))))
-      .toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-11T11:20:00+02:00' });
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-11T11:20:00Z' });
     const scanless = outForDeliveryFixture();
     scanless.eventHistory = JSON.stringify({ eventHistory: [] });
     const progress = JSON.parse(String(scanless.progressTracker)) as Record<string, unknown>;
@@ -415,17 +415,16 @@ describe('Amazon Shipping discovery boundaries', () => {
     expect(parseAmazonShippingTrackingResponse({ ...deliveredFixture(), trackingId: 'FR0000000001' }, 'Europe/Paris', 'FR0000000001').status)
       .toBe('delivered');
   });
-  it('uses the UK timezone and does not invent US timezones', () => {
+  it('reads the tracker clock as UTC on every host, and the estimate on the day of the number country', () => {
     const uk = parseAmazonShippingTrackingResponse(deliveredFixture(), 'Europe/London');
-    expect(uk.events?.[0]?.time).toContain('+01:00');
+    expect(uk).toMatchObject({ last_update: '2026-08-11T16:31:56Z', timezone: 'Europe/London' });
+    expect(parseAmazonShippingTrackingResponse(outForDeliveryFixture(), 'Europe/London').expected_delivery).toBe('2026-08-11');
     const us = parseAmazonShippingTrackingResponse(deliveredFixture(), null);
-    expect(us.events?.every((event) => event.time === undefined)).toBe(true);
-    expect(us.last_update).toBeNull();
+    expect(us.events?.map((event) => event.time)).toEqual(['2026-08-11T16:31:56Z', '2026-08-10T22:10:16Z', '2026-08-07T23:51:15Z']);
+    expect(us).toMatchObject({ last_update: '2026-08-11T16:31:56Z', delivered_at: '2026-08-11T16:31:56Z' });
     expect(us.timezone).toBeUndefined();
-    expect(us).not.toHaveProperty('delivered_at');
-    // The page's wall clocks stay, unplaced and in the tracker's order.
-    expect(us.events?.map((event) => event.local_time)).toEqual(['2026-08-11T16:31:56', '2026-08-10T22:10:16', '2026-08-07T23:51:15']);
-    expect(us.last_update_local).toBe('2026-08-11T16:31:56');
+    // A US promise for 3 AM is the evening before, in the recipient's zone.
+    expect(parseAmazonShippingTrackingResponse(outForDeliveryFixture(), null).expected_delivery).toBeNull();
     const unreadable = deliveredFixture();
     type Row = Record<string, unknown>;
     const history = JSON.parse(String(unreadable.eventHistory)) as { eventHistory: [Row, Row, ...Row[]] };
@@ -434,6 +433,6 @@ describe('Amazon Shipping discovery boundaries', () => {
     unreadable.eventHistory = JSON.stringify(history);
     const mixed = parseAmazonShippingTrackingResponse(unreadable, null);
     expect(mixed.events?.find((event) => event.provider_code === 'Departed')).toMatchObject({ provider_time_text: 'sometime in August' });
-    expect(mixed.events?.find((event) => event.provider_code === 'CreationConfirmed')).not.toHaveProperty('local_time');
+    expect(mixed.events?.find((event) => event.provider_code === 'CreationConfirmed')).toMatchObject({ provider_time_text: 'Aug 7, 2026, 23:51:15 +0200' });
   });
 });

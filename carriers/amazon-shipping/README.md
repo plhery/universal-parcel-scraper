@@ -42,17 +42,19 @@ Checks, before any history is read:
   `AmazonShippingHistoryExpiredError` extends `IndeterminateError`, not `NotFoundError`: the
   host's `isUnannouncedTrackingError()` treats any 404 as "not announced yet", the opposite
   of what expiry means.
-- Timezone comes from the prefix (default `Europe/Paris`). `TBA`, `TBC` and `TBM` numbers
-  identify no time zone, so offset-free event times stay wall-clock `local_time` readings in
-  the tracker's order and the result has no `timezone`: stamping UTC would shift every event
-  by hours. A clock that cannot be read keeps its text.
-- `delivered_at` is the newest delivery scan's time, when that time has a zone. A delivered
-  parcel has no `expected_delivery`.
+- The tracker gives clocks without an offset in UTC, on every host: it promises US deliveries
+  for 3 AM, the evening before in every US zone. The number's prefix gives the `timezone`
+  (default `Europe/Paris`) and the day of `expected_delivery`. `TBA`, `TBC` and `TBM` numbers
+  identify no zone and have neither, since a promise's day is the recipient's. A clock that
+  cannot be read keeps its text.
+- `delivered_at` is the newest delivery scan's time. A delivered parcel has no
+  `expected_delivery`.
 - A scan's wording follows its event code. Out-for-delivery scans carry the string id of the
   delivery centre's arrival, so only in-transit scans take the arrival, sorting and departure
   wording. The final hub, "the final hub/delivery station" on Amazon's tracker, reads
   "Arrived at delivery center". The app identity policy requires the same instant and event
-  code before updating a reworded or restaged stored scan.
+  code before updating a reworded or restaged stored scan. A scan an earlier release read on a
+  local clock shows its stored row's wall clock under +00:00 and takes that row over.
 - A departure scanned right after the out-for-delivery scan, within the hour and at the same
   station, is the van leaving with the parcel. It keeps the "Departed facility" wording but
   stays out for delivery, so the newest scan does not step back to in transit.
