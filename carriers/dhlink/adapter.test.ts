@@ -71,13 +71,17 @@ describe('DHLink HTTP adapter', () => {
     expect(deliveryHandoff('dhlink', WAREHOUSE, result)).toEqual({ carrier: 'swiftx', number: 'SWX990000000000000001', basis: 'partner' });
   });
 
-  it('reads a line’s order or a partner’s label after DHLink took the parcel as no step back', () => {
+  it('reads a line’s order or a partner’s label after DHLink took the parcel as no step back', async () => {
     const row = (trackTime: string, info: string) => ({ trackTime, createDate: null, place: null, info, nodeCode: null, nodeName: null });
-    const result = parseDhlink(changed('swiftx-at-warehouse', (parcel) => {
+    const envelope = changed('swiftx-at-warehouse', (parcel) => {
       parcel.trackinfoList.push(row('2026-03-01 09:00:00', '货物电子信息已经收到'), row('2026-03-02 14:10:00', 'Shipping Label Created'),
         row('2026-03-02 16:40:00', '货物电子信息已经收到'), row('2026-03-02 18:00:00', '国内清关完成'));
-    }), WAREHOUSE, LATER);
-    expect(result.events!.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
+    });
+    // The parser keeps the carrier's reading; the shared one reads the rows after the warehouse's scan.
+    expect(parseDhlink(envelope, WAREHOUSE, LATER).events!.filter((event) => event.stage === 'registered')).toHaveLength(3);
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(envelope));
+    const { result } = await createTracker({ fetcher, providers: [], env: {} }).track({ number: WAREHOUSE, carrier: 'dhlink' }, { budgetMs: 3000 });
+    expect(result.events.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
       ['国内清关完成', 'in_transit', 'carrier_map'],
       ['货物电子信息已经收到', 'in_transit', 'carrier_map'],
       ['Package departed from the warehouse', 'in_transit', 'carrier_map'],

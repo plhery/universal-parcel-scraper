@@ -45,8 +45,8 @@ page makes.
   DHLink's delivered count makes the parcel delivered when the last row says less.
 - A line on the Hualei platform writes an order row (`货物电子信息已经收到`) when the parcel's data
   reaches it, and a partner a label. Before any scan they are registered; written after DHLink
-  took the parcel they are no step back, accepted while it is at the warehouse and in transit once
-  it has left.
+  took the parcel they are no step back, as for every carrier
+  ([ARCHITECTURE.md](../../ARCHITECTURE.md#status-model)).
 - Clocks have no offset. DHLink records each row on Beijing time (`createDate`), seconds after
   the clock of a row scanned in China. A scan with a place in China is read on Beijing time.
   So is every scan of a parcel whose last leg is GOFO or SwiftX: DHLink relays their scans on

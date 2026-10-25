@@ -191,21 +191,6 @@ function outranks(left: readonly number[], right: readonly number[]): boolean {
   return index >= 0 && left[index]! > right[index]!;
 }
 
-/**
- * Newest first. A line's order or a partner's label written after DHLink took
- * the parcel, such as the order row after the warehouse's departure, is no step
- * back: it is accepted while the parcel is at DHLink's warehouse and in transit
- * once it has moved on.
- */
-function noStepBack(events: CarrierEvent[]): CarrierEvent[] {
-  let reached: string | undefined;
-  return events.reverse().map((event) => {
-    if (event.stage === 'registered' && reached) return { ...event, stage: reached === 'accepted' ? 'accepted' : 'in_transit', stage_source: 'carrier_map' };
-    if (event.stage && event.stage !== 'registered') reached = event.stage;
-    return event;
-  }).reverse();
-}
-
 /** The last leg, when its number's whole layout is one the table maps. */
 function lastLeg(entry: Record<string, unknown>): { leg: (typeof DHLINK_LAST_LEGS)[number]; number: string } | null {
   const number = normalizeTrackingNumber(text(entry, 'lastTurnNo', 64));
@@ -264,12 +249,12 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
   const destination = text(entry, 'destCountryCode', 8).toUpperCase();
   const last = lastLeg(entry);
   // Newest first, as the tracking page lists them; the clocks sort as written.
-  const events = noStepBack([...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
+  const events = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
     .map((scan): CarrierEvent => {
       const zone = scanZone(scan, destination, last?.leg.beijingClock === true);
       const time = zone ? isoTime(scan.stamp, zone)?.iso : undefined;
       return { ...(time ? { time } : { local_time: scan.stamp }), ...scan.event };
-    }));
+    });
   if (!events.length) throw new IndeterminateError(PROVIDER, 'DHLink has no scans for the parcel yet');
 
   const newest = events[0]!;

@@ -2551,18 +2551,18 @@
       "status": "delivered",
       "current_stage": "delivered",
       "last_status_text": "Delivered",
-      "last_update": "2026-01-04T12:00:00-05:00",
-      "last_update_local": "2026-01-04T12:00:00",
+      "last_update": "2026-01-20T15:00:00-05:00",
+      "last_update_local": "2026-01-20T15:00:00",
       "expected_delivery": null,
       "destination_country": "US",
       "events": [
         {
-          "local_time": "2026-01-04T12:00:00",
+          "local_time": "2026-01-20T15:00:00",
           "description": "Delivered",
           "provider_code": "205",
           "location": "Example City, EX",
           "stage": "delivered",
-          "time": "2026-01-04T12:00:00-05:00",
+          "time": "2026-01-20T15:00:00-05:00",
           "time_zone": "America/New_York",
           "time_zone_basis": "destination"
         },

@@ -22,6 +22,7 @@ import { isPlaceholderNumber } from '../core/detection/placeholder.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../core/detection/usps.js';
 import { BudgetExceededError, IndeterminateError, InvalidInputError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
+import { readLateRegistrations } from '../core/result/registration.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
 import { adapter as parcelsAppAdapter } from './parcelsapp/adapter.js';
@@ -154,7 +155,7 @@ export class UniversalTracker {
     if (source !== 'UPU' && result.events?.length && !result.events.some((event) => event.time)) {
       throw new IndeterminateError(source, 'No dated tracking events', { reason: 'undated_history' });
     }
-    return result;
+    return readLateRegistrations(result);
   }
 
   /** One provider adapter, built from this tracker's environment. */

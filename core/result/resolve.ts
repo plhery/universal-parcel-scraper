@@ -2,6 +2,7 @@ import { STAGES, type Stage } from '../../generated/catalog.js';
 import { classifyWording } from '../status/index.js';
 import { explicitOffsetTime } from '../time/index.js';
 import { normalizeCarrierResult, type CarrierEvent, type CarrierResult } from './index.js';
+import { readLateRegistrations } from './registration.js';
 
 const stages = new Set<string>(STAGES);
 
@@ -70,7 +71,7 @@ export interface ResolvedResult extends CarrierResult {
 
 /** Classify wording and expose verified instants while retaining the feed's clocks. */
 export function resolveResult(input: unknown): ResolvedResult {
-  const result = normalizeCarrierResult(input);
+  const result = readLateRegistrations(normalizeCarrierResult(input));
   const current = resultStage(result);
   const events = (result.events ?? []).map((event): ResolvedEvent => {
     const declared = stages.has(event.stage ?? '') ? event.stage as Stage : undefined;

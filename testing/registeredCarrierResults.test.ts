@@ -122,9 +122,11 @@ function setup(entry: typeof cases[number], transform = (body: string) => body) 
     body = JSON.stringify(value);
   }
   if (entry.carrier === 'gofo') {
+    // The newest scan without its offset, on its own wall clock.
     const value = JSON.parse(body);
-    value.data.success[0].trackEventList[0].processDate = '2026-01-04T12:00:00.000';
-    value.data.success[0].lastTrackEvent.processDate = '2026-01-04T12:00:00.000';
+    const newest = entry.fixture === 'public-counter.json' ? '2026-01-20T15:00:00.000' : '2026-01-04T12:00:00.000';
+    value.data.success[0].trackEventList[0].processDate = newest;
+    value.data.success[0].lastTrackEvent.processDate = newest;
     body = JSON.stringify(value);
   }
   if (entry.carrier === 'ecoscooting') {
