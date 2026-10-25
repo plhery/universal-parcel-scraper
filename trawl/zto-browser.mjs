@@ -13,11 +13,14 @@ const round = value => Math.round(value * 100) / 100;
 
 /**
  * Dingxiang's check of an answer: `/api/v1` for the slider, `/api/v2` for the characters.
- * Only its success flag is read; the token stays in the page.
+ * Read its verdict and secondary-verification marker; the token stays in the page.
  */
-function isVerification(rawUrl) {
-  try { const url = new URL(rawUrl); return /^cap(?:-\d{1,3})?\.dingxiang-inc\.com$/.test(url.host) && /^\/api\/v[12]$/.test(url.pathname); }
-  catch { return false; }
+function verificationType(rawUrl) {
+  try {
+    const url = new URL(rawUrl);
+    if (url.protocol !== 'https:' || !/^cap(?:-\d{1,3})?\.dingxiang-inc\.com$/.test(url.host)) return null;
+    return url.pathname === '/api/v1' ? 'slider' : url.pathname === '/api/v2' ? 'characters' : null;
+  } catch { return null; }
 }
 
 export function ztoBrowserNumber(rawUrl, capture = {}) {
@@ -51,19 +54,29 @@ export function projectZtoReply(payload, number) {
   return result;
 }
 
-function widgetState() {
+export function widgetState() {
   const root = [...document.querySelectorAll('.dx_captcha')].find(e => e.getBoundingClientRect().width);
   if (!root) return null;
+  // Replacement widgets can have geometry while their contents are still fading in.
+  const rendered = element => {
+    for (let node = element; node && node !== root.parentElement; node = node.parentElement) {
+      const style = getComputedStyle(node);
+      if (style.display === 'none' || style.visibility !== 'visible' || Number(style.opacity) < 0.95) return false;
+    }
+    return !!element;
+  };
+  if (!rendered(root)) return null;
   const rect = root.getBoundingClientRect();
   const pic = root.querySelector('.dx_captcha_clickword_pic');
   const p = pic?.getBoundingClientRect();
   const targets = root.querySelector('.dx_captcha_clickword_hint-cnt')?.textContent?.trim();
-  if (p?.width && /^[\u3400-\u9fff]{2,4}$/.test(targets ?? '')) return { type: 'characters', targets,
+  if (p?.width && rendered(pic) && /^[\u3400-\u9fff]{2,4}$/.test(targets ?? '')) return { type: 'characters', targets,
     key: 'characters:' + targets + ':' + pic.getAttribute('style'),
     box: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
     region: { x: p.x - rect.x, y: p.y - rect.y, width: p.width, height: p.height } };
   const image = root.querySelector('.dx_captcha_basic_sub-slider img');
-  if (root.querySelector('.dx_captcha_basic_bg canvas')?.width && image?.naturalWidth) {
+  const background = root.querySelector('.dx_captcha_basic_bg canvas');
+  if (background?.width && image?.naturalWidth && rendered(background) && rendered(image)) {
     return { type: 'slider', key: 'slider:' + image.src };
   }
   return null;
@@ -91,15 +104,17 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
   if (!number) return undefined;
   const start = Date.now(), abort = new AbortController();
   const combined = signal ? AbortSignal.any([signal, abort.signal]) : abort.signal;
-  let context, page, onResponse, timer, terminal = false, accepting = true, statusCode = 0, bytesRead = 0;
+  let context, page, onRequest, onResponse, timer, terminal = false, accepting = true, statusCode = 0, bytesRead = 0;
   let reply = null, firstCode = null, firstPuzzleMs = null, replacements = 0, stop = null;
   const entries = [], attempted = new Set(), puzzles = [];
+  const verifications = new WeakMap();
   const remaining = () => Math.max(1, Math.floor(maxTimeout - (Date.now() - start)));
   // Fixed labels for why the page did or did not verify. The adapter reads the same outcome.
   const outcome = () => {
     if (terminal) return reply === 'verified' || reply === 'rate_limited' ? reply : 'reply_failed';
     if (['unsolved', 'solver_unavailable', 'error'].includes(stop)) return stop;
-    if (puzzles.some(puzzle => puzzle.verdict === 'refused')) return 'refused';
+    // A previous refusal must not hide an unfinished later challenge or tracking read.
+    if (puzzles.at(-1)?.verdict === 'refused') return 'refused';
     return puzzles.length ? 'deadline' : 'no_puzzle';
   };
   const result = () => ({ tier, status: 'success', durationMs: Date.now() - start, effectiveUrl: url,
@@ -131,13 +146,24 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
       // Synchronous Baidu telemetry can hold the document parser in <head>,
       // before the tracking client starts. Keep this filter local to ZTO.
       await page.route(/^https:\/\/(?:hm|dlswbr)\.baidu\.com\//, route => route.abort('blockedbyclient'));
+      onRequest = request => {
+        if (!accepting || request.method() !== 'POST') return;
+        const type = verificationType(request.url());
+        const puzzle = type && puzzles.findLast(row => row.type === type && row.verdict === 'answered');
+        if (puzzle) verifications.set(request, { puzzle, start: Date.now() });
+      };
       onResponse = response => {
         if (!accepting) return;
-        if (isVerification(response.url()) && response.request().method() === 'POST') {
-          const puzzle = puzzles.findLast(row => row.verdict === 'answered');
-          if (puzzle) void response.body().then(body => {
-            const success = body.length <= 10_000 ? JSON.parse(body.toString('utf8'))?.success : undefined;
-            if (accepting && typeof success === 'boolean' && puzzle.verdict === 'answered') puzzle.verdict = success ? 'accepted' : 'refused';
+        if (verificationType(response.url()) && response.request().method() === 'POST') {
+          const verification = verifications.get(response.request());
+          if (verification) void response.body().then(body => {
+            const payload = body.length <= 10_000 ? JSON.parse(body.toString('utf8')) : null;
+            const { puzzle } = verification;
+            if (accepting && typeof payload?.success === 'boolean' && puzzle.verdict === 'answered') {
+              // Dingxiang uses success:false when it requires a second challenge, too.
+              puzzle.verdict = payload.success ? 'accepted' : payload.msg === '二次验证' ? 'escalated' : 'refused';
+              puzzle.verificationMs = Date.now() - verification.start;
+            }
           }).catch(() => {});
           return;
         }
@@ -168,6 +194,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
           if (reply !== 'challenge') terminal = true;
         }).catch(() => { if (accepting) { entry.error = 'ZTO response could not be read'; reply = 'failed'; terminal = true; } });
       };
+      page.on('request', onRequest);
       page.on('response', onResponse);
       const navigation = await page.goto(url, { waitUntil: 'commit', timeout: Math.min(15000, remaining()) });
       statusCode = navigation?.status() ?? 0;
@@ -179,7 +206,8 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
         if (puzzles.length - replacements >= MAX_ANSWERS) { stop = 'puzzle_limit'; break; }
         attempted.add(state.key);
         firstPuzzleMs ??= Date.now() - start;
-        const puzzle = { type: state.type, verdict: 'unanswered' };
+        const puzzle = { type: state.type, verdict: 'unanswered', readyMs: Date.now() - start };
+        const solving = Date.now();
         puzzles.push(puzzle);
         // A puzzle the solver cannot read is swapped for another while time allows.
         const replaced = async failure => {
@@ -190,12 +218,19 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
         };
         if (state.type === 'slider') {
           const solution = await page.evaluate(solveSlider);
+          combined.throwIfAborted();
+          puzzle.solveMs = Date.now() - solving;
           if (Number.isFinite(solution.score)) Object.assign(puzzle, { score: round(solution.score), method: solution.method === 'outline' ? 'outline' : 'fill' });
           if (solution.error || solution.score < 0.5 || !Number.isFinite(solution.distance) || solution.distance <= 0) {
             if (await replaced(solution.error === 'unexpected-image' ? 'unexpected_image' : solution.error ? 'missing' : 'unmatched')) continue;
             stop = 'unsolved'; break;
           }
+          // Decoding the piece is asynchronous; a refresh invalidates its coordinates.
+          const current = await page.evaluate(widgetState);
+          combined.throwIfAborted();
+          if (current?.key !== state.key) { puzzle.verdict = 'expired'; continue; }
           puzzle.verdict = 'answered';
+          const inputStarted = Date.now();
           await page.evaluate(async s => {
             const element = document.querySelector('.dx_captcha_basic_slider');
             if (!element) return;
@@ -209,6 +244,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
             }
             emit('mouseup', x + s.distance, y);
           }, solution);
+          puzzle.inputMs = Date.now() - inputStarted;
         } else {
           puzzle.targets = [...state.targets].length;
           if (state.box.width > 600 || state.box.height > 400) { puzzle.failure = 'widget_size'; stop = 'unsolved'; break; }
@@ -216,6 +252,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
           const image = await page.locator('.dx_captcha_clickword:visible').screenshot({ timeout: Math.min(2000, remaining()), scale: 'css' });
           if (image.length > MAX_BODY) { if (await replaced('image_size')) continue; stop = 'unsolved'; break; }
           const answer = await solveCharacters({ image: image.toString('base64'), targets: state.targets, region: state.region }, combined, remaining() - 2000);
+          puzzle.solveMs = Date.now() - solving;
           for (const key of ['boxes', 'confidence', 'margin']) if (Number.isFinite(answer?.[key])) puzzle[key] = round(answer[key]);
           if (Number.isFinite(answer?.ms)) puzzle.ocrMs = answer.ms;
           if (answer?.waitMs > 0) puzzle.waitMs = answer.waitMs;
@@ -235,6 +272,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
               || point.x > state.region.x + state.region.width || point.y > state.region.y + state.region.height) throw new Error('Invalid character position');
           }
           puzzle.verdict = 'answered';
+          const inputStarted = Date.now();
           for (const point of points) {
             combined.throwIfAborted();
             await page.evaluate(({ x, y }) => {
@@ -245,6 +283,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
             }, { x: current.box.x + point.x, y: current.box.y + point.y });
             await delay(250, undefined, { signal: combined });
           }
+          puzzle.inputMs = Date.now() - inputStarted;
         }
         await delay(600, undefined, { signal: combined });
       }
@@ -259,6 +298,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
     accepting = false; clearTimeout(timer);
     combined.removeEventListener('abort', rejectAbort); abort.abort();
     if (page && onResponse) page.off('response', onResponse);
+    if (page && onRequest) page.off('request', onRequest);
     if (context) await close(context);
     // Fixed labels, scores and counts only: no number, image, answer, token or reply text.
     try {

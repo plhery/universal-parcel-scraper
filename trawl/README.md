@@ -29,7 +29,11 @@ worker ends with its request and retains no images. A puzzle the helper cannot r
 swapped for another through Dingxiang's refresh control, at most twice per lookup.
 The `zto.verification` warning records how each run ended. For each puzzle it gives the
 kind, the slider's match score or the OCR's confidence, boxes and time, and whether
-Dingxiang accepted the answer. It has no images, answers, tokens or tracking numbers, and
+Dingxiang accepted, refused or escalated the answer to secondary verification.
+Puzzle readiness, analysis, input and verification have separate timings. Each verdict
+stays bound to its submitting request, and an unfinished later challenge keeps its timeout.
+Fading puzzles wait until visible, and coordinates are discarded if the puzzle changes
+during analysis. The warning has no images, answers, tokens or tracking numbers, and
 the adapter reports the same outcome as its challenge reason.
 Verification failures and the public tracker's incomplete history still need enabled providers.
 SwiftX emits a `swiftx.verification` warning for an observed image challenge or

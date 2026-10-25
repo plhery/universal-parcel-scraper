@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { projectZtoReply, runZtoBrowser, ztoBrowserNumber } from './zto-browser.mjs';
+import { projectZtoReply, runZtoBrowser, widgetState, ztoBrowserNumber } from './zto-browser.mjs';
 
 const number = '79990000000001', api = 'https://hdgateway.zto.com/batchGetTrace';
 const url = `https://www.zto.com/check/detail?waybills=${number}`, capture = { captureResponses: [api] };
@@ -88,8 +88,16 @@ test('retains the challenge on deadline or cancellation and closes late contexts
   assert.equal(late.state.closed, 1); assert.equal(late.state.navigated, 0);
 });
 
-const verdict = (success, path = '/api/v1') => ({ url: () => `https://cap-8.dingxiang-inc.com${path}`, request: () => ({ method: () => 'POST' }),
-  body: async () => Buffer.from(JSON.stringify({ success, token: 'PRIVATE' })) });
+const verdict = (success, path = '/api/v1', msg) => {
+  const request = { method: () => 'POST', url: () => `https://cap-8.dingxiang-inc.com${path}` };
+  return { url: request.url, request: () => request,
+    body: async () => Buffer.from(JSON.stringify({ success, msg, token: 'PRIVATE' })) };
+};
+const verification = (f, success, path, msg) => {
+  const r = verdict(success, path, msg);
+  f.handlers.request(r.request()); f.handlers.response(r);
+};
+const withoutTimings = puzzles => puzzles.map(puzzle => Object.fromEntries(Object.entries(puzzle).filter(([key]) => !['readyMs', 'solveMs', 'inputMs', 'verificationMs'].includes(key))));
 const slider = key => ({ type: 'slider', key: `slider:${key}` });
 const characters = key => ({ type: 'characters', targets: '中通快', key: `characters:${key}`,
   box: { x: 0, y: 0, width: 330, height: 300 }, region: { x: 0, y: 40, width: 330, height: 200 } });
@@ -119,17 +127,17 @@ test('names a challenge without a puzzle, and one the verification refused', asy
   assert.equal((await runZtoBrowser({ ...f.options, maxTimeout: 1700 })).reason, 'zto-no_puzzle');
   assert.equal(f.state.reports[0].firstCode, '10201');
   const refused = fixture();
-  puzzlePage(refused, [slider('a')], () => refused.handlers.response(verdict(false)));
+  puzzlePage(refused, [slider('a')], () => verification(refused, false));
   const result = await runZtoBrowser({ ...refused.options, maxTimeout: 2400 });
   assert.equal(result.reason, 'zto-refused');
   const [event] = refused.state.reports;
   assert.equal(event.outcome, 'refused'); assert.equal(event.stop, 'deadline');
-  assert.deepEqual(event.puzzles, [{ type: 'slider', verdict: 'refused', score: 0.83, method: 'fill' }]);
+  assert.deepEqual(withoutTimings(event.puzzles), [{ type: 'slider', verdict: 'refused', score: 0.83, method: 'fill' }]);
   assert.equal(JSON.stringify(event).includes('PRIVATE') || JSON.stringify(event).includes(number), false);
 });
 test('records an accepted answer before the tracking reply it unlocks', async () => {
   const f = fixture();
-  puzzlePage(f, [slider('a')], () => { f.handlers.response(verdict(true)); f.handlers.response(response()); });
+  puzzlePage(f, [slider('a')], () => { verification(f, true); f.handlers.response(response()); });
   const result = await runZtoBrowser({ ...f.options, maxTimeout: 5000 });
   assert.equal(result.reason, undefined);
   assert.equal(JSON.parse(result.capturedResponses.at(-1).body).statusCode, 'E0000');
@@ -144,16 +152,95 @@ test('replaces an unreadable puzzle and names a busy solver', async () => {
   assert.equal(result.reason, 'zto-solver_unavailable');
   const [event] = f.state.reports;
   assert.equal(event.replacements, 1);
-  assert.deepEqual(event.puzzles, [
+  assert.deepEqual(withoutTimings(event.puzzles), [
     { type: 'characters', verdict: 'replaced', targets: 3, boxes: 9, ocrMs: 900, failure: 'boxes' },
     { type: 'characters', verdict: 'unanswered', targets: 3, ocrMs: 8000, waitMs: 8000, failure: 'busy' },
   ]);
 });
 test('answers characters in the OCR order and keeps its confidence', async () => {
   const f = fixture(), clicks = [];
-  puzzlePage(f, [characters('a')], (_, next) => { clicks.push(true); if (clicks.length === 3) { f.handlers.response(verdict(true, '/api/v2')); f.handlers.response(response()); next(); } });
+  puzzlePage(f, [characters('a')], (_, next) => { clicks.push(true); if (clicks.length === 3) { verification(f, true, '/api/v2'); f.handlers.response(response()); next(); } });
   const points = [{ x: 10, y: 50 }, { x: 100, y: 60 }, { x: 200, y: 70 }];
   await runZtoBrowser({ ...f.options, maxTimeout: 12000, solveCharacters: async () => ({ points, boxes: 4, confidence: 0.4213, margin: 1.5, ms: 3100, waitMs: 0 }) });
   assert.equal(clicks.length, 3);
-  assert.deepEqual(f.state.reports[0].puzzles, [{ type: 'characters', verdict: 'accepted', targets: 3, boxes: 4, confidence: 0.42, margin: 1.5, ocrMs: 3100 }]);
+  assert.deepEqual(withoutTimings(f.state.reports[0].puzzles), [{ type: 'characters', verdict: 'accepted', targets: 3, boxes: 4, confidence: 0.42, margin: 1.5, ocrMs: 3100 }]);
+});
+
+test('secondary verification is escalation, and its unfinished follow-up is a deadline', async () => {
+  const f = fixture();
+  puzzlePage(f, [slider('a')], () => verification(f, false, '/api/v1', '二次验证'));
+  const result = await runZtoBrowser({ ...f.options, maxTimeout: 2400 });
+  assert.equal(result.reason, 'zto-deadline');
+  const puzzle = f.state.reports[0].puzzles[0];
+  assert.equal(puzzle.verdict, 'escalated');
+  for (const key of ['readyMs', 'solveMs', 'inputMs', 'verificationMs']) assert.ok(Number.isFinite(puzzle[key]) && puzzle[key] >= 0, key);
+  assert.equal(JSON.stringify(f.state.reports[0]).includes('二次验证'), false);
+});
+
+test('late verification replies stay with their submitted puzzle', async () => {
+  const f = fixture();
+  let release, clicks = 0;
+  puzzlePage(f, [slider('a'), characters('b')], (state, next) => {
+    if (state.type === 'slider') {
+      const r = verdict(false, '/api/v1', '二次验证');
+      release = () => f.handlers.response(r);
+      f.handlers.request(r.request()); next();
+    } else if (++clicks === 3) {
+      release(); verification(f, true, '/api/v2'); f.handlers.response(response());
+    }
+  });
+  const points = [{ x: 10, y: 50 }, { x: 100, y: 60 }, { x: 200, y: 70 }];
+  const result = await runZtoBrowser({ ...f.options, maxTimeout: 10000, solveCharacters: async () => ({ points }) });
+  assert.equal(result.reason, undefined);
+  assert.deepEqual(f.state.reports[0].puzzles.map(p => p.verdict), ['escalated', 'accepted']);
+});
+
+test('an earlier refusal does not hide a later unfinished verification', async () => {
+  const f = fixture();
+  puzzlePage(f, [slider('a'), slider('b')], (state, next) => {
+    if (state.key === 'slider:a') { verification(f, false); next(); }
+  });
+  const result = await runZtoBrowser({ ...f.options, maxTimeout: 3000 });
+  assert.equal(result.reason, 'zto-deadline');
+  assert.deepEqual(f.state.reports[0].puzzles.map(p => p.verdict), ['refused', 'answered']);
+});
+
+test('does not drag coordinates from a replaced slider or after cancellation', async () => {
+  for (const cancelled of [false, true]) {
+    const f = fixture(), controller = new AbortController();
+    let current = slider('old'), drags = 0;
+    f.page.goto = async () => { f.handlers.response(response(challenge)); };
+    f.page.evaluate = async fn => {
+      if (fn.name === 'widgetState') return current;
+      if (fn.name === 'solveSlider') {
+        current = null;
+        if (cancelled) controller.abort();
+        return { score: 0.9, distance: 100, start: { x: 0, y: 0 } };
+      }
+      drags++;
+    };
+    await runZtoBrowser({ ...f.options, maxTimeout: 1800, signal: controller.signal });
+    assert.equal(drags, 0);
+    assert.equal(f.state.closed, 1);
+    if (!cancelled) assert.equal(f.state.reports[0].puzzles[0].verdict, 'expired');
+  }
+});
+
+test('a fading puzzle is not ready merely because it has a bounding box', () => {
+  const previous = { document: globalThis.document, getComputedStyle: globalThis.getComputedStyle };
+  const root = { parentElement: null, getBoundingClientRect: () => ({ x: 0, y: 0, width: 330, height: 300 }) };
+  const pic = { parentElement: root, getBoundingClientRect: () => ({ x: 0, y: 40, width: 330, height: 200 }), getAttribute: () => 'synthetic' };
+  root.querySelector = selector => ({ '.dx_captcha_clickword_pic': pic, '.dx_captcha_clickword_hint-cnt': { textContent: '中通快' } })[selector];
+  let opacity = '0';
+  globalThis.document = { querySelectorAll: () => [root] };
+  globalThis.getComputedStyle = node => ({ opacity: node === pic ? opacity : '1', visibility: 'visible', display: 'block' });
+  try {
+    assert.equal(widgetState(), null);
+    opacity = '0.5'; assert.equal(widgetState(), null);
+    opacity = '1'; assert.equal(widgetState().type, 'characters');
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete globalThis[key]; else globalThis[key] = value;
+    }
+  }
 });
