@@ -388,6 +388,14 @@ describe('locatePlace', () => {
     expect(place('St Albans', ['GB'])).toMatchObject({ country: 'GB', name: 'St Albans' });
   });
 
+  it('reads a saint\'s title that more words follow as the start of a longer name, not as a town of its own', () => {
+    // San in Mali, on a Spanish depot written "San Fernando de Henares" in short.
+    expect(place('SAN FDO. DE H.', ['ES'])).toBeNull();
+    expect(place('SAN', ['ML'])).toMatchObject({ country: 'ML', name: 'San' });
+    expect(place('SAO PAULO')).toMatchObject({ country: 'BR' });
+    expect(place('Sankt Gallen')).toMatchObject({ country: 'CH' });
+  });
+
   it('takes a region for its country, not for a town that shares a word of its name', () => {
     expect(place('Guangdong Province')).toMatchObject({ precision: 'country', country: 'CN' });
     expect(place('Cabo Delgado Province')).toMatchObject({ precision: 'country', country: 'MZ' });

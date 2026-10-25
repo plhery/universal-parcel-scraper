@@ -28,6 +28,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   letter and a full stop after the first word are read as the linking words they abbreviate:
   "Frankfurt a.d. Oder" is Frankfurt an der Oder, "Weil a. Rhein" Weil am Rhein. "St" and
   "Ste" are also read as Saint and Sainte: "ST QUENTIN FALLAVIER" is Saint-Quentin-Fallavier.
+  A saint's title other words follow is not a town of its own: "SAN FDO. DE H." is no San in
+  Mali.
 - A longer place name is the place it names, not a town that shares a word of it, when it
   is a town where the text or the parcel is, or a city and the shorter name names no town
   there: "Cartagena de Indias" is in Colombia, "San Jose de Costa Rica" in Costa Rica, but

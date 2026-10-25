@@ -461,6 +461,14 @@ function spelledOut(field: string, list: Token[]): Token[][] {
 // French carriers shorten Saint and Sainte: "ST QUENTIN FALLAVIER" is Saint-Quentin-Fallavier.
 const SAINTS: Readonly<Record<string, string>> = { st: 'saint', ste: 'sainte' };
 
+// Titles that begin a saint's name in a town's: San Fernando, Santa Cruz, São Paulo, Sankt Gallen.
+const SAINT_TITLES = new Set(['san', 'santa', 'santo', 'sao', 'sant', 'saint', 'sainte', 'sankt']);
+
+/** A word that says more of a name than a facility's or a division's word, a digit or a letter alone. */
+function namesMore(token: Token): boolean {
+  return token.key.length > 1 && /\p{L}/u.test(token.key) && !FACILITY_WORDS.has(token.key) && !DIVISION_WORDS.has(token.key);
+}
+
 /** The words as printed, then with Saint and Sainte written out where they are shortened. */
 function withSaints(list: Token[]): Token[][] {
   const written = list.map((token) => Object.hasOwn(SAINTS, token.key) ? { ...token, key: SAINTS[token.key]! } : token);
@@ -788,6 +796,8 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
         // it: "Queen Elizabeth Olympic Park" is not in Elizabeth, New Jersey.
         if (phrase.middle && !place.hub && !place.own && !adminMatch && !postcodeMatch
           && !((inCountry || hint >= 0) && place.thousands >= NAMESAKE_THOUSANDS)) continue;
+        // A saint's title begins a longer name: "SAN FDO. DE H." is San Fernando de Henares, not San in Mali.
+        if (SAINT_TITLES.has(phrase.key) && fieldTokens[fieldIndex]!.some((token) => token.start >= phrase.end && namesMore(token))) continue;
         // A name a division's word follows is that division's, not a town GeoNames counts no
         // people in: "Houjie District" is no town of Houjie.
         if (place.thousands === 0 && !place.hub && DIVISION_WORDS.has(fieldTokens[fieldIndex]!.find((token) => token.start >= phrase.end)?.key ?? '')) continue;
