@@ -200,6 +200,34 @@ describe('FedEx structured response', () => {
     expect(result.last_update).toBe('2026-09-10T05:00:00-10:00');
   });
 
+  it('puts a scan FedEx labels with the offset its place took after it back on that place\'s clock', () => {
+    const payload = inTransitFixture();
+    const shipment = (payload.output as { packages: Record<string, unknown>[] }).packages[0]!;
+    const scan = (date: string, time: string, gmtOffset: string, scanLocation: string, status: string, statusCD: string) =>
+      ({ date, time, gmtOffset, scanLocation, status, statusCD, scanDetails: '' });
+    // Live shape: scans FedEx recorded after Paris went back to +01:00 came
+    // labelled +01:00, those it had recorded before as +02:00.
+    shipment.scanEventList = [
+      // The repeated hour may be its second occurrence.
+      scan('2026-10-25', '02:30:00', '+01:00', 'EXAMPLE CITY FR', 'On the way', 'IT'),
+      scan('2026-10-25', '01:33:00', '+01:00', 'EXAMPLE CITY FR', 'On the way', 'IT'),
+      scan('2026-10-24', '20:00:00', '+01:00', 'EXAMPLE CITY FR', 'Departed FedEx hub', 'DP'),
+      scan('2026-10-24', '18:36:00', '+02:00', 'EXAMPLE CITY FR', 'On the way', 'IT'),
+      // Spain's islands keep their own clock.
+      scan('2026-10-23', '10:00:00', '+01:00', 'EXAMPLE CITY ES', 'On the way', 'IT'),
+    ];
+    const read = (at: string) => parseFedExTrackingResponse(payload, IN_TRANSIT_NUMBER, Date.parse(at)).events?.map((event) => event.time);
+    expect(read('2026-10-25T18:32:00Z')).toEqual([
+      '2026-10-25T02:30:00+01:00', '2026-10-25T01:33:00+02:00', '2026-10-24T20:00:00+02:00',
+      '2026-10-24T18:36:00+02:00', '2026-10-23T10:00:00+01:00',
+    ]);
+    // Read before the change, no label is the place's offset since.
+    expect(read('2026-10-24T12:00:00Z')).toEqual([
+      '2026-10-25T02:30:00+01:00', '2026-10-25T01:33:00+01:00', '2026-10-24T20:00:00+01:00',
+      '2026-10-24T18:36:00+02:00', '2026-10-23T10:00:00+01:00',
+    ]);
+  });
+
   it('keeps the day of a scan FedEx dates without a time, in its place, instead of a midnight', () => {
     const payload = inTransitFixture();
     const shipment = (payload.output as { packages: Record<string, unknown>[] }).packages[0]!;

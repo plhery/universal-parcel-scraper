@@ -1,5 +1,6 @@
 
 import { load } from 'cheerio';
+import { DateTime } from 'luxon';
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { fillPartialAnswer } from '../../core/result/partial.js';
 import { fedexBarcodeTrackingNumber, fedexGroundEconomyUspsNumber } from '../../core/detection/fedex.js';
@@ -16,7 +17,14 @@ import {
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
+import {
+  calendarDay,
+  canadaProvinceTimeZone,
+  countryTimeZone,
+  explicitOffsetTime,
+  firstOccurrence,
+  usStateTimeZone,
+} from '../../core/time/index.js';
 import { clean, cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { FedExApiClient, fedexApiCredentials, type FedExApiCredentials } from './api.js';
@@ -96,6 +104,51 @@ function scanClock(scan: JsonObject): Pick<CarrierEvent, 'time'> & { local_time?
   const local = !offset && /^00:00(?::00)?$/.test(time)
     ? calendarDay(Number(day[1]), Number(day[2]), Number(day[3])) : null;
   return local ? { local_time: local } : {};
+}
+
+// US states and Canadian provinces with places on more than one clock, and the
+// countries whose islands keep another clock than the mainland zone they are given.
+const SEVERAL_CLOCKS = new Set(['AK', 'FL', 'ID', 'IN', 'KS', 'KY', 'MI', 'ND', 'NE', 'NV', 'OR', 'SD', 'TN', 'TX',
+  'BC', 'NL', 'NU', 'ON', 'QC', 'ES', 'PT']);
+
+/** The zone of a place that keeps one clock: its country's, or its US state's or Canadian province's. */
+function placeZone(country: string, region: string): string | null {
+  if (country === 'US') return SEVERAL_CLOCKS.has(region) ? null : usStateTimeZone(region);
+  if (country === 'CA') return SEVERAL_CLOCKS.has(region) ? null : canadaProvinceTimeZone(region);
+  return SEVERAL_CLOCKS.has(country) ? null : countryTimeZone(country);
+}
+
+/** The page names a US or Canadian scan's state ("MEMPHIS, TN") and any other scan's country ("BOLOGNA IT"). */
+function pageZone(location: string): string | null {
+  const [, comma, code] = /(,?) ([A-Z]{2})$/.exec(location) ?? [];
+  if (!code) return null;
+  if (comma && usStateTimeZone(code)) return placeZone('US', code);
+  if (comma && canadaProvinceTimeZone(code)) return placeZone('CA', code);
+  return placeZone(code, '');
+}
+
+function apiZone(value: unknown): string | null {
+  if (!isRecord(value)) return null;
+  return placeZone(cleanScalar(value.countryCode).toUpperCase(), cleanScalar(value.stateOrProvinceCode).toUpperCase());
+}
+
+/**
+ * FedEx labels a scan it records after a clock change with the offset its
+ * place has kept since, even when the scan came before: a hub's departure the
+ * evening before October's change came as +01:00 among scans it had recorded
+ * in time as +02:00. A label that is the place's offset at `readAt` but not at
+ * the scan's wall clock is put back on the place's clock. A wall clock the
+ * place repeats or skips keeps its label.
+ */
+function placeClock<Clock extends { time?: string }>(clock: Clock, zone: string | null, readAt: number): Clock {
+  const shown = clock.time && zone ? DateTime.fromISO(clock.time, { setZone: true }) : null;
+  if (!zone || !shown?.isValid || DateTime.fromMillis(readAt, { zone }).offset !== shown.offset) return clock;
+  const { year, month, day, hour, minute, second } = shown;
+  const own = firstOccurrence(DateTime.fromObject({ year, month, day, hour, minute, second }, { zone }));
+  if (!own.isValid || own.hour !== hour || own.minute !== minute) return clock;
+  if (own.getPossibleOffsets().some((possible) => possible.offset === shown.offset)) return clock;
+  const time = own.toISO({ suppressMilliseconds: true });
+  return time ? { ...clock, time } : clock;
 }
 
 interface ListedScan {
@@ -309,7 +362,7 @@ function shipmentResult(shipment: FedExShipment, number: string): CarrierResult 
 }
 
 /** The structured answer of the tracking page's own API call. */
-export function parseFedExTrackingResponse(payload: unknown, trackingNumber: string): CarrierResult {
+export function parseFedExTrackingResponse(payload: unknown, trackingNumber: string, readAt = Date.now()): CarrierResult {
   const number = normalizeFedExTrackingNumber(trackingNumber);
   if (!isRecord(payload) || !isRecord(payload.output)) {
     throw new SchemaError('FedEx', 'FedEx returned an invalid tracking response');
@@ -354,7 +407,7 @@ export function parseFedExTrackingResponse(payload: unknown, trackingNumber: str
       description: scanDescription(clean(raw.status), clean(raw.scanDetails)),
       wording: `${clean(raw.status)} ${clean(raw.scanDetails)}`,
       code: cleanScalar(raw.statusCD).toLocaleUpperCase('en-US'),
-      clock: scanClock(raw),
+      clock: placeClock(scanClock(raw), pageZone(clean(raw.scanLocation)), readAt),
       location: clean(raw.scanLocation),
     })),
     statusText: keyStatus,
@@ -381,7 +434,7 @@ function apiDate(result: JsonObject, ...types: string[]): unknown {
  * the scans, the latest status, the delivery dates and the hold location; the
  * recipient, shipper, signatory, package and service blocks are never read.
  */
-export function parseFedExApiResponse(payload: unknown, trackingNumber: string): CarrierResult {
+export function parseFedExApiResponse(payload: unknown, trackingNumber: string, readAt = Date.now()): CarrierResult {
   const number = normalizeFedExTrackingNumber(trackingNumber);
   const complete = isRecord(payload) && isRecord(payload.output) && Array.isArray(payload.output.completeTrackResults)
     ? payload.output.completeTrackResults.filter(isRecord) : null;
@@ -419,7 +472,7 @@ export function parseFedExApiResponse(payload: unknown, trackingNumber: string):
       description: scanDescription(clean(raw.eventDescription), clean(raw.exceptionDescription)),
       wording: `${clean(raw.eventDescription)} ${clean(raw.exceptionDescription)}`,
       code: cleanScalar(raw.eventType).toLocaleUpperCase('en-US'),
-      clock: apiClock(raw.date),
+      clock: placeClock(apiClock(raw.date), apiZone(raw.scanLocation), readAt),
       location: apiPlace(raw.scanLocation),
     })),
     statusText,

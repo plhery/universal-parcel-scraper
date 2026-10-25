@@ -110,6 +110,18 @@ describe('FedEx official API reply', () => {
     expect(result.events?.map((event) => event.location ?? '')).toEqual(['MEMPHIS, TN', '']);
   });
 
+  it('puts a scan labelled with the offset its state took after it back on the state\'s clock', () => {
+    const result = parseFedExApiResponse(apiFixture((shipment) => {
+      shipment.latestStatusDetail = { code: 'AR', description: 'Arrived at FedEx location' };
+      shipment.scanEvents = [
+        { date: '2026-10-31T23:30:00-06:00', eventType: 'AR', eventDescription: 'Arrived at FedEx location', scanLocation: { city: 'EXAMPLE CITY', stateOrProvinceCode: 'TX', countryCode: 'US' } },
+        { date: '2026-10-31T23:00:00-05:00', eventType: 'DP', eventDescription: 'Departed FedEx location', scanLocation: { city: 'EXAMPLE CITY', stateOrProvinceCode: 'NC', countryCode: 'US' } },
+      ];
+    }), DELIVERED_NUMBER, Date.parse('2026-11-01T18:00:00Z'));
+    // Texas keeps two clocks, so its label stands.
+    expect(result.events?.map((event) => event.time)).toEqual(['2026-10-31T23:30:00-06:00', '2026-10-31T23:00:00-04:00']);
+  });
+
   it('takes the estimated delivery window when FedEx gives no estimated date', () => {
     const result = parseFedExApiResponse(apiFixture((shipment) => {
       shipment.latestStatusDetail = { code: 'OD', description: 'On FedEx vehicle for delivery' };

@@ -654,10 +654,10 @@ describe('same-instant identity policies', () => {
     }
     expect(policy?.matches?.({ ...incoming, description: 'NEW LABEL' }, stored)).toBe(false);
   });
-  it('lets a FedEx scan from the API or the tracking page take over the row the other stored at its instant, by stage', () => {
+  it('lets a FedEx scan from the API or the tracking page take over the row the other stored at its instant, by stage, or by wall clock', () => {
     expect(sameInstantIdentityPolicy('fedex')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('fedex', { supportsScanMatching: true });
-    expect(policy?.storedSources).toEqual(['fedex']);
+    expect(policy).toMatchObject({ storedSources: ['fedex'], matchWallClock: true });
     const page = { stage: 'in_transit', description: 'Departed FedEx location', location: 'KOELN, DE', providerCode: '' };
     expect(policy?.matches?.({ ...page, description: 'Left FedEx origin facility', location: 'KOELN, DE, DE' }, page)).toBe(true);
     expect(policy?.matches?.({ ...page, stage: 'delivered', description: 'Delivered' }, page)).toBe(false);
