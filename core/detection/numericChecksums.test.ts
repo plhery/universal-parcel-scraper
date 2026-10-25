@@ -3,7 +3,7 @@ import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/reco
 import { isValidFedEx1DBarcode, isValidFedExGround96Barcode } from './fedex.js';
 import { isValidDhlIdentcode } from './identcode.js';
 import { dhlExpressPieceId } from './dhlExpress.js';
-import { detectCarrierMatch, isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './index.js';
+import { checksumRejections, detectCarrierMatch, isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './index.js';
 
 describe('numeric checksum candidates', () => {
   it('reads a DHL Express piece with its (J) on either side or without it', () => {
@@ -78,7 +78,7 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('9611020987654312345672').candidates).toEqual(expect.arrayContaining(['austrian-post', 'usps']));
     // GSN chart example: a 12-digit Express number behind two zeros.
     expect(isValidFedEx1DBarcode('9622001560001234567100794808390594')).toBe(true);
-    expect(detectCarrierMatch('9622 0015 6000 1234 5671 0079 4808 3905 94')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fedex'] });
+    expect(detectCarrierMatch('9622 0015 6000 1234 5671 0079 4808 3905 94')).toMatchObject({ carrier: 'fedex', confidence: 'high', candidates: ['fedex'] });
     for (const number of [
       '9611020987654312345673', // wrong check digit
       '9511020987654312345672', // not a 96 barcode
@@ -89,6 +89,23 @@ describe('numeric checksum candidates', () => {
       expect(isValidFedExGround96Barcode(number) || isValidFedEx1DBarcode(number)).toBe(false);
       expect(detectCarrierMatch(number).candidates).not.toContain('fedex');
     }
+  });
+
+  it('selects FedEx for a 34-digit barcode outside USPS 420 routing when its embedded number passes', () => {
+    const barcode = `14${'0'.repeat(20)}700000000021`;
+    expect(isValidFedEx1DBarcode(barcode)).toBe(true);
+    expect(detectCarrierMatch(barcode)).toMatchObject({ carrier: 'fedex', confidence: 'high', candidates: ['fedex'] });
+    expect(detectCarrierMatch('1400 0000 0000 0000 0000 0070 0000 0000 21').carrier).toBe('fedex');
+    // Behind 420 the digits could be USPS routing, so FedEx stays a suggestion.
+    expect(detectCarrierMatch(`420${barcode.slice(3)}`)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['fedex'] });
+    for (const number of [
+      `${barcode.slice(0, -1)}2`, // wrong check digit
+      `14${'0'.repeat(18)}10700000000021`, // no zeros before the number
+      `${barcode}0`, // 35 digits
+    ]) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('fedex');
+    }
+    expect(checksumRejections(`${barcode.slice(0, -1)}2`)).toEqual([{ carrier: 'fedex', rule: 'fedex-label-barcode', checksum: 'fedex-1d' }]);
   });
 
   it('checks full Polish barcodes while preserving aliases without a check digit', () => {

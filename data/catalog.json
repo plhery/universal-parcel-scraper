@@ -960,7 +960,12 @@
         "preferred": true
       },
       {
-        "pattern": "^\\d{20}00\\d{12}$",
+        "pattern": "^(?!420)\\d{20}00\\d{12}$",
+        "confidence": "high",
+        "checksum": "fedex-1d"
+      },
+      {
+        "pattern": "^420\\d{17}00\\d{12}$",
         "confidence": "low",
         "checksum": "fedex-1d",
         "preferred": true

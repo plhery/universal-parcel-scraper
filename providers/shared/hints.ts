@@ -51,7 +51,7 @@ export function courierZone(name: string, number: string, wall: string): string 
 export const ADAPTER_CHECKED_RULES: ReadonlySet<string> = new Set([
   'dhl-express-waybill', 'gls-fr-4', 'mondial-relay-1',
   // FedEx label barcodes, tracked by the number they carry.
-  'fedex-3', 'fedex-4',
+  'fedex-3', 'fedex-label-barcode', 'fedex-4',
   // S10 postal items.
   'an-post-1', 'austrian-post-2', 'bpost-3', 'bring-posten-1', 'canada-post-2', 'china-post-1', 'correios-br-1',
   'correos-chile-2', 'ctt-1', 'hongkong-post-1', 'india-post-1', 'japan-post-1', 'nz-post-1', 'poczta-polska-s10', 'postnord-2',
