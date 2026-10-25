@@ -88,7 +88,7 @@ test('retains the challenge on deadline or cancellation and closes late contexts
   assert.equal(late.state.closed, 1); assert.equal(late.state.navigated, 0);
 });
 
-const verdict = success => ({ url: () => 'https://cap-8.dingxiang-inc.com/api/v1', request: () => ({ method: () => 'POST' }),
+const verdict = (success, path = '/api/v1') => ({ url: () => `https://cap-8.dingxiang-inc.com${path}`, request: () => ({ method: () => 'POST' }),
   body: async () => Buffer.from(JSON.stringify({ success, token: 'PRIVATE' })) });
 const slider = key => ({ type: 'slider', key: `slider:${key}` });
 const characters = key => ({ type: 'characters', targets: '中通快', key: `characters:${key}`,
@@ -151,7 +151,7 @@ test('replaces an unreadable puzzle and names a busy solver', async () => {
 });
 test('answers characters in the OCR order and keeps its confidence', async () => {
   const f = fixture(), clicks = [];
-  puzzlePage(f, [characters('a')], (_, next) => { clicks.push(true); if (clicks.length === 3) { f.handlers.response(verdict(true)); f.handlers.response(response()); next(); } });
+  puzzlePage(f, [characters('a')], (_, next) => { clicks.push(true); if (clicks.length === 3) { f.handlers.response(verdict(true, '/api/v2')); f.handlers.response(response()); next(); } });
   const points = [{ x: 10, y: 50 }, { x: 100, y: 60 }, { x: 200, y: 70 }];
   await runZtoBrowser({ ...f.options, maxTimeout: 12000, solveCharacters: async () => ({ points, boxes: 4, confidence: 0.4213, margin: 1.5, ms: 3100, waitMs: 0 }) });
   assert.equal(clicks.length, 3);

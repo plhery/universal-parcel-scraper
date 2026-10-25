@@ -11,9 +11,12 @@ const UNREADABLE = new Set(['targets', 'image', 'region', 'boxes', 'charset']);
 const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'zto.verification', ...fields }));
 const round = value => Math.round(value * 100) / 100;
 
-/** Dingxiang's check of an answer. Only its success flag is read; the token stays in the page. */
+/**
+ * Dingxiang's check of an answer: `/api/v1` for the slider, `/api/v2` for the characters.
+ * Only its success flag is read; the token stays in the page.
+ */
 function isVerification(rawUrl) {
-  try { const url = new URL(rawUrl); return /^cap(?:-\d{1,3})?\.dingxiang-inc\.com$/.test(url.host) && url.pathname === '/api/v1'; }
+  try { const url = new URL(rawUrl); return /^cap(?:-\d{1,3})?\.dingxiang-inc\.com$/.test(url.host) && /^\/api\/v[12]$/.test(url.pathname); }
   catch { return false; }
 }
 
