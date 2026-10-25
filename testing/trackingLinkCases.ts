@@ -1839,10 +1839,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'pullman-cargo', number: '00000000000',
     route: /^https:\/\/pullmancargo\.cl\/seguimiento\/00000000000$/,
     marker: /ODT no encontrada|Historial de Movimientos/ },
-  // The server renders the lookup; its answer to an unknown number heads the card with the number.
-  { carrier: 'nim-express', number: '0000000000000',
-    route: /^https:\/\/www\.nimexpress\.com\/web\/p\/tracking\?h_i=0000000000000$/,
-    marker: /Tracking no\. ไม่ถูกต้อง/ },
   // The server renders the lookup for the guía in the address, repeats it in the history's
   // heading and answers an unknown one with a notice.
   { carrier: 'aex-paraguay', number: 'A000000000',
@@ -1954,6 +1950,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   logistiq: 'the gecko.logistiq.io tracker is a Flutter page drawn on a canvas, which exposes no visible body text until accessibility is enabled, so number forwarding cannot be verified',
   'm-one': 'm-one.rs sends its certificate without the intermediate one, which headless Chromium and Node do not fetch, so the page cannot be opened',
   'magyar-posta': 'www.posta.hu fills the number into its tracker frame, which the rendered-page check does not read, and the tracker asks for a reCAPTCHA checkbox before each lookup',
+  'nim-express': 'www.nimexpress.com drops connections from the daily check\'s network while other networks in the United States get its page, so number forwarding cannot be verified daily; the page looks up the number in its address and names it above its not-found notice',
   noest: 'the page answers a number it does not hold with its empty search form, without the number or a notice, so only a real parcel verifies the link',
   oca: 'the parcel page asks for a reCAPTCHA checkbox before it shows the history, so number forwarding cannot be verified',
   ocasa: 'the tracking link opens a reCAPTCHA checkbox, with the number in a hidden field, before it shows the shipment, so number forwarding cannot be verified',
