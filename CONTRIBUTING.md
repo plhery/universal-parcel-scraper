@@ -67,7 +67,11 @@ The script writes the folder. From there:
    [statusMaps.ts](core/catalog/statusMaps.ts).
 5. Add synthetic fixtures with offline tests.
 6. Write the README.
-7. Run `npm run generate` to rebuild the catalog and the registry.
+7. Add a case for the tracking link to `testing/trackingLinkCases.ts`, with the address the
+   page ends on and wording only the carrier's tracker shows, both read from the rendered
+   page. A link no case can open gets its reason in `uncheckedTrackingLinks` instead.
+   `npm run test:tracking-links -- -t <id>` opens it.
+8. Run `npm run generate` to rebuild the catalog and the registry.
 
 Every adapter follows these rules:
 
@@ -77,7 +81,9 @@ Every adapter follows these rules:
 - A number the carrier does not issue is an `InvalidInputError`.
 - It declares recognition only when a cheap anonymous HTTP lookup can positively tell a known
   parcel from an unknown one. When its rules offer numbers that lookup cannot bind as a whole,
-  `tracking.recognition.pattern` names the ones it can.
+  `tracking.recognition.pattern` names the ones it can. `tracking.recognition.rank` orders the
+  carriers asked about one number, highest first, and no two carriers share one: when yours
+  collides, `npm run generate` names the free ranks nearby.
 - Its carriers set `tracking.browser` when a lookup can open a browser through the environment's
   `trawl` or `browserExecutablePath`, or a remote one. `testing/adapterBrowserSource.test.ts`
   reads that from the adapter's code, and checks that exactly those carriers list a browser
@@ -85,6 +91,20 @@ Every adapter follows these rules:
 
 [CORPUS.md](CORPUS.md) describes the sample numbers and status records, and
 [ARCHITECTURE.md](ARCHITECTURE.md) the rest of what an adapter lives by.
+
+## Pull requests
+
+The checks on a first pull request wait until a maintainer approves them. Run the commands
+under [Setup](#setup) in the meantime.
+
+`main` moves several times a day, so generated files conflict on most rebases. Take main's
+side for `generated/`, `data/catalog.json`, `data/coverage-summary.json`,
+`data/detection-golden.json`, `docs/assets/` and the README's counts, then run
+`npm run generate` and `npm run generate:golden` again instead of merging them by hand.
+
+Leave the version alone; it is raised after the merge. [Peek](https://github.com/plhery/peek-delivery-tracker),
+the app built on this package, needs a database migration for a release that adds a carrier
+id or input. The maintainers write it when they merge, so a carrier needs no pull request there.
 
 ## Keep parcels private
 

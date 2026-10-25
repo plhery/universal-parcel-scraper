@@ -76,6 +76,15 @@ const generated = lines.join('\n');
 
 // Ranks are unique: the iOS catalog has no carrier order, so a tie could sort
 // differently there than on the server, which asks and names them in rank order.
+// A collision names the nearest ranks nobody holds, so a rebased branch can pick one.
+const freeRanksNear = (rank, taken) => {
+  const free = [];
+  for (let step = 1; free.length < 4 && step <= rank + 1000; step++) {
+    for (const candidate of [rank - step, rank + step]) if (candidate > 0 && !taken.has(candidate) && free.length < 4) free.push(candidate);
+  }
+  return free.sort((left, right) => left - right).join(', ');
+};
+const recognitionRanks = new Set([...definitions].map(([, definition]) => definition.tracking?.recognition?.rank));
 const rankOwners = new Map();
 const ranks = [...definitions].filter(([, definition]) => definition.tracking?.recognition)
   .map(([id, definition]) => {
@@ -83,16 +92,21 @@ const ranks = [...definitions].filter(([, definition]) => definition.tracking?.r
       throw new Error(`${id} declares recognition but has no dedicated adapter`);
     }
     const { rank } = definition.tracking.recognition;
-    if (rankOwners.has(rank)) throw new Error(`${id} and ${rankOwners.get(rank)} share recognition rank ${rank}; ranks must be unique`);
+    if (rankOwners.has(rank)) {
+      throw new Error(`${id} and ${rankOwners.get(rank)} share recognition rank ${rank}; ranks must be unique. Free ranks nearby: ${freeRanksNear(rank, recognitionRanks)}`);
+    }
     rankOwners.set(rank, id);
     return `  ${JSON.stringify(id)}: ${rank},`;
   });
 // Browser recognition has an order of its own, unique the same way.
+const browserRanks = new Set([...definitions].map(([, definition]) => definition.tracking?.browserRecognition?.rank));
 const browserRankOwners = new Map();
 for (const [id, definition] of definitions) {
   const rank = definition.tracking?.browserRecognition?.rank;
   if (rank === undefined) continue;
-  if (browserRankOwners.has(rank)) throw new Error(`${id} and ${browserRankOwners.get(rank)} share browser recognition rank ${rank}; ranks must be unique`);
+  if (browserRankOwners.has(rank)) {
+    throw new Error(`${id} and ${browserRankOwners.get(rank)} share browser recognition rank ${rank}; ranks must be unique. Free ranks nearby: ${freeRanksNear(rank, browserRanks)}`);
+  }
   browserRankOwners.set(rank, id);
 }
 const generatedRecognition = [

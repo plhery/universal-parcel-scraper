@@ -144,8 +144,9 @@ function checklist(options) {
     `  3. Add evidence-tagged sample numbers to ${folder}/numbers.json, drop its "gap" line, and run the detection sweep.`,
     `  4. Record observed status wordings in ${folder}/statuses.json.`,
     `  5. Describe how it works, gotchas and limitations in ${folder}/README.md.`,
-    `  6. Run npm run generate, npm run generate:expectations -- ${options.id} if its rules join shared shapes, and npm run generate:golden once the detection sweep shows only the changes you meant.`,
-    '  7. Run npm run test:generated and the carrier tests.',
+    `  6. Add a case for its tracking link to testing/trackingLinkCases.ts, or the reason none can open it to uncheckedTrackingLinks, and check it with npm run test:tracking-links -- -t ${options.id}.`,
+    `  7. Run npm run generate, npm run generate:expectations -- ${options.id} if its rules join shared shapes, and npm run generate:golden once the detection sweep shows only the changes you meant.`,
+    '  8. Run npm run test:generated and the carrier tests.',
     '',
   ].join('\n');
 }
