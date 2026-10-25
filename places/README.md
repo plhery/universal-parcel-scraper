@@ -16,7 +16,9 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
 - The text is split into fields and phrases, and facility words ("hub", "Paketzentrum",
   "sort centre") are dropped. What is left is matched against town names, and translations
   for larger towns ("Genf", "Cologne"). A translation of three Latin letters is left out: it
-  is a code or a stray transliteration more often than a name ("Lon" for Lognes). Translations
+  is a code or a stray transliteration more often than a name ("Lon" for Lognes). So is
+  GeoNames' transliteration of a name in another script ("Noman" is Norman in Japanese), but
+  not the Chinese reading of a Chinese town's own name ("Shen Zhen"). Translations
   include old names, so nothing confirming it, only a city's of 100,000 people places a town
   (Trenton was "Mill Hill"). A town found by a translation keeps the carrier's words for its own
   name: "Asuncion del Paraguay" is "Asuncion". Each half of a bilingual name counts
@@ -243,7 +245,8 @@ or more and first-level regions (by the local name in a country's dump where it 
 "Catalunya"), the postal localities of Switzerland, Liechtenstein, their
 neighbours, the Benelux and the United States, the Canadian municipalities postal areas are named after (Canada
 Post still addresses Scarborough and North York, now part of Toronto), the municipalities of
-some European countries and Taiwan that no town is named after, the town seats of Guangdong and
+some European countries and Taiwan that no town is named after (with the older romanizations of
+Taiwan's: "Ta-yuan" is Dayuan), the town seats of Guangdong and
 Zhejiang, Swiss and
 Liechtenstein postcodes, OurAirports airports with
 scheduled service, and the Natural Earth country label points in `countries.json`.

@@ -32,6 +32,7 @@ const BILINGUAL_FROM = 10_000;
 const MULTILINGUAL = new Set(['CH', 'LI', 'AT', 'DE', 'FR', 'IT', 'BE', 'LU', 'NL']);
 // Chinese, Japanese and Korean carriers print towns in their own script ("深圳市").
 const CJK_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW', 'JP', 'KR']);
+const CHINESE_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW']);
 const SKIPPED_FEATURES = new Set(['PPLH', 'PPLQ', 'PPLW', 'PPLCH']);
 // Chinese carriers lead with the province ("广东省深圳市"); GeoNames names them only in English.
 const CHINESE_PROVINCES = {
@@ -81,6 +82,25 @@ const lines = (text) => text.split('\n').filter(Boolean).map((line) => line.spli
 const round = (value) => Math.round(Number(value) * 1e3) / 1e3;
 const latin = (name) => /^[\p{Script=Latin} '’.\-()]{3,40}$/u.test(name) && !/^[A-Z]{2,5}$/.test(name);
 const cjk = (name) => /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]{2,12}$/u.test(name);
+
+/**
+ * A town's other names, as keys its own names lack. GeoNames adds a lower-case transliteration
+ * of each name in another script, read in Chinese for Chinese characters. That is how Chinese
+ * carriers spell their own towns ("shen zhen"), but no name elsewhere: "noman" is Norman in
+ * Japanese, "yuan" Ichihara's last character.
+ */
+function alternateKeys(alternates, country, population, primary) {
+  const keys = new Set();
+  if (Number(population) < (MULTILINGUAL.has(country) ? BILINGUAL_FROM : ALTERNATES_FROM)) return keys;
+  for (const other of alternates.split(',')) {
+    if (latin(other) ? other === other.toLowerCase() && !CHINESE_COUNTRIES.has(country) : !(CJK_COUNTRIES.has(country) && cjk(other))) continue;
+    // Three Latin letters are a code or a stray transliteration more often
+    // than a name ("lon" for Lognes, "chi" for Jizhou), and carriers print
+    // them for other towns.
+    for (const key of nameKeys(other)) if (!primary.has(key) && (key.length > 3 || cjk(key))) keys.add(key);
+  }
+  return keys;
+}
 
 function distanceKm([lat1, lon1], [lat2, lon2]) {
   const radians = Math.PI / 180;
@@ -133,16 +153,7 @@ function remember(place) {
 for (const [, name, ascii, alternates, lat, lon, featureClass, feature, country, , admin1, admin2, , , population] of lines(cities)) {
   if (featureClass !== 'P' || SKIPPED_FEATURES.has(feature)) continue;
   const primary = new Set([...nameKeys(name), ...nameKeys(ascii)]);
-  const alternate = new Set();
-  if (Number(population) >= (MULTILINGUAL.has(country) ? BILINGUAL_FROM : ALTERNATES_FROM)) {
-    for (const other of alternates.split(',')) {
-      if (!latin(other) && !(CJK_COUNTRIES.has(country) && cjk(other))) continue;
-      // Three Latin letters are a code or a stray transliteration more often
-      // than a name ("lon" for Lognes, "chi" for Jizhou), and carriers print
-      // them for other towns.
-      for (const key of nameKeys(other)) if (!primary.has(key) && (key.length > 3 || cjk(key))) alternate.add(key);
-    }
-  }
+  const alternate = alternateKeys(alternates, country, population, primary);
   remember({
     name, ascii, country, admin1, admin2: country === 'FR' || country === 'IT' ? admin2 : '', lat: round(lat), lon: round(lon),
     population: Number(population) || 0, primary: [...primary], alternate: [...alternate],
@@ -247,17 +258,20 @@ for (const country of [...new Set([...Object.keys(DIVISIONS), ...Object.keys(TOW
     const name = division ? divisionName(rawName) : rawName;
     if (!name || !latin(name)) continue;
     const point = [round(lat), round(lon)];
-    const names = CJK_COUNTRIES.has(country) ? cjkNames(alternates) : new Set();
+    const plain = division ? divisionName(ascii) ?? name : ascii;
+    const primary = new Set([...nameKeys(name), ...nameKeys(plain)]);
+    // Its Chinese name, which a town too small for translations lacks, and the other names of a
+    // division with as many people as a town that has them: Taiwan's are older romanizations
+    // ("Ta-yuan" is Dayuan).
+    const names = new Set([...CJK_COUNTRIES.has(country) ? cjkNames(alternates) : [], ...alternateKeys(alternates, country, population, primary)]);
     const town = knownPlace(country, name, point, seat ? 5 : 15, division ? { admin1, population: Number(population) } : undefined);
     if (town) {
-      // Its Chinese name, which a town too small for translations lacks.
       for (const other of names) if (!town.primary.includes(other) && !town.alternate.includes(other)) town.alternate.push(other);
       continue;
     }
-    const plain = division ? divisionName(ascii) ?? name : ascii;
     const place = {
       name, ascii: plain, country, admin1, admin2: country === 'FR' || country === 'IT' ? admin2 : '', lat: point[0], lon: point[1],
-      population: Number(population) || 0, primary: [...new Set([...nameKeys(name), ...nameKeys(plain)])], alternate: [...names],
+      population: Number(population) || 0, primary: [...primary], alternate: [...names],
     };
     remember(place);
     addNames(place);

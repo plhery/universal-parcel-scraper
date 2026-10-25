@@ -520,6 +520,14 @@ describe('locatePlace', () => {
     // A town's own three-letter name still places it.
     expect(place('ATH')).toMatchObject({ country: 'BE', name: 'Ath' });
   });
+
+  it("reads no town from GeoNames' transliteration of a name in another script", () => {
+    // "noman" is Norman in Japanese, "yuan" Ichihara's last character read in Chinese.
+    expect(place('Noman Example Store', ['GB'])).toBeNull();
+    expect(place('TA YUAN DISTRICT TW')).toMatchObject({ country: 'TW', name: 'Dayuan' });
+    // Chinese carriers spell their own towns so.
+    expect(place('SHEN ZHEN', ['CN'])).toMatchObject({ country: 'CN', name: 'Shenzhen' });
+  });
 });
 
 describe('placesForEvents', () => {
