@@ -26,7 +26,9 @@ digits, the form the public samples show, when that check passes. Exact
 `(time, parcelStatus)` duplicates are dropped, and rows are sorted newest first.
 Timestamps are read with their own offset (falling back to `Europe/Berlin`) and
 stored as UTC. Hermes's own scans carry UTC to the millisecond: a summer scan
-at 14:00 German time reads `12:00:00.123Z`.
+at 14:00 German time reads `12:00:00.123Z`. A partner's scans abroad come in
+whole seconds or minutes (`12:00:00.000Z`) and are read as UTC too, as the
+tracking page shows them in the visitor's zone like Hermes's own.
 
 ## Notes
 
