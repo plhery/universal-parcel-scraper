@@ -315,4 +315,13 @@ describe('Chinese fulfilment warehouse numbers', () => {
       expect(detectCarrierMatch(number).carrier, number).not.toBe('dayone');
     }
   });
+
+  it('suggests Z-Leading for ZL, two letters and nine digits, and only that layout', () => {
+    for (const number of ['ZLXX000000017', 'zlab 000 000 001']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['z-leading'] });
+    }
+    for (const number of ['ZLXX00000001', 'ZLXX0000000017', 'ZLX0000000017', 'ZL0X000000017', 'ZMXX000000017', 'XLXX000000017']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('z-leading');
+    }
+  });
 });

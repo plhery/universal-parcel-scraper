@@ -30,5 +30,11 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "z-leading-1",
+      "pattern": "^ZL[A-Z]{2}\\d{9}$",
+      "confidence": "low"
+    }
+  ]
 }

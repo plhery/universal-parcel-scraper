@@ -8,9 +8,11 @@ Zhongling, as its own logo file does.
 
 ## Numbers
 
-No public source shows a whole Z-Leading number, so the corpus is empty and no rule claims a
-layout. A parcel a universal provider files under Zhongling opens with ZL and two more letters
-before nine digits; one provider is the only source for that layout.
+No public source shows a whole Z-Leading number. Parcels two universal providers file under
+Zhongling open with ZL and two more letters before nine digits, so a low rule suggests Z-Leading
+for that layout; the corpus holds a made-up number in that shape. The layout is a provider's
+filing rather than Z-Leading's own word, and Z-Leading has no tracker to confirm it, so the rule
+stays low.
 
 ## Links
 

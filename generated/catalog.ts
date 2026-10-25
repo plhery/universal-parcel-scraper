@@ -32533,7 +32533,12 @@ export const CARRIER_CATALOG = {
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^ZL[A-Z]{2}\\d{9}$",
+        "confidence": "low"
+      }
+    ]
   },
   "zajil": {
     "displayName": "Zajil Express",
@@ -34373,7 +34378,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yurtici-kargo": [],
   "ywe": ["ywe-1"],
   "yypost": ["yypost-1"],
-  "z-leading": [],
+  "z-leading": ["z-leading-1"],
   "zajil": [],
   "zeleris": ["zeleris-1"],
   "zheldor": [],
