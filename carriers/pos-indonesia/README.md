@@ -26,7 +26,8 @@ which `pos-indonesia-1` suggests, so preflight asks the service about them. Olde
 barcodes are eleven digits, which other carriers print too and no rule claims. International
 items carry UPU S10 numbers; the service also tracks items from abroad once Pos Indonesia handles
 them. Postal detection keeps S10 numbers with the generic postal carrier; one ending `ID` only
-suggests Pos Indonesia, which recognition asks first. The adapter takes all three, an S10 number only with a
+suggests Pos Indonesia, which recognition asks first. An S10 item from abroad bound for Indonesia
+is handed to Pos Indonesia under the sending post's number. The adapter takes all three, an S10 number only with a
 valid check digit, and treats anything else as invalid without a request.
 
 ## Notes

@@ -56,8 +56,8 @@ Serpost, Peru's national post, tracks items by their UPU S10 number: two letters
 and two letters. Items posted in Peru end in `PE`. The issuer of an S10 code does not establish
 who delivers it, so detection keeps such codes with the generic postal carrier. `serpost-s10`, at
 low confidence, makes preflight ask Serpost about them. Mail from abroad keeps the suffix of the
-post that issued it and reaches Serpost when a caller names it. The samples and their sources
-are in [`numbers.json`](numbers.json).
+post that issued it and reaches Serpost when a caller names it, or as the hand-off for an S10 item
+from abroad bound for Peru. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

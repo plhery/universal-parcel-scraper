@@ -46,9 +46,9 @@ tracking page makes.
 
 Kyrgyz Post handles UPU S10 numbers; items it sends end in `KG`. Its tracking page gives an
 inbound Singapore Post item as its example. Generic postal detection keeps S10 numbers, and a
-code ending `KG` only suggests Kyrgyz Post, which recognition asks first. The samples and their
-sources are in
-[`numbers.json`](numbers.json).
+code ending `KG` only suggests Kyrgyz Post, which recognition asks first. An S10 item from abroad
+bound for Kyrgyzstan is handed to Kyrgyz Post under the sending post's number. The samples and
+their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

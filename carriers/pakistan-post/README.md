@@ -52,7 +52,8 @@ and domestic article numbers of three letters for the service, such as `RGL`, `U
 eight digits. Anything else is invalid without a request.
 
 S10 numbers stay with generic postal detection: the issuer of an S10 code does not establish who
-delivers it. A code ending `PK` only suggests Pakistan Post, which recognition asks first. Domestic registered letters and parcels quoted by customers are `RGL` or `PAR`
+delivers it. A code ending `PK` only suggests Pakistan Post, which recognition asks first. An S10
+item from abroad bound for Pakistan is handed to Pakistan Post under the sending post's number. Domestic registered letters and parcels quoted by customers are `RGL` or `PAR`
 followed by eight digits; a low-confidence rule makes preflight ask Pakistan Post about them.
 The samples and their sources are in [`numbers.json`](numbers.json).
 
