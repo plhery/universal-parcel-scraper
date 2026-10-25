@@ -889,6 +889,9 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
       && !VAGUE_REGIONS.has(phrase.key)).map((phrase) => {
       const all = new Set((data.regions.get(phrase.key) ?? []).map((region) => region.country));
       const local = new Set([...all].filter((code) => hinted.includes(code)));
+      // A region named by points of the compass alone is one where the parcel is: Royal Mail's
+      // "South West Parcel Hub" is not in Cameroon.
+      if (phrase.key.split(' ').every((word) => VAGUE_REGIONS.has(word) || word === 'far')) return local;
       return all.size > 1 && local.size ? local : all;
     }));
     country = named.find((set) => set.size === 1)?.values().next().value ?? null;

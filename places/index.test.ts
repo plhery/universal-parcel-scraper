@@ -393,6 +393,10 @@ describe('locatePlace', () => {
     expect(place('Distrito Federal', ['MX'])).toMatchObject({ precision: 'country', country: 'MX' });
     expect(place('Distrito Federal', ['BR'])).toMatchObject({ precision: 'country', country: 'BR' });
     expect(place('Distrito Federal')).toBeNull();
+    // A region named by points of the compass alone, only where the parcel is.
+    expect(place('South West Parcel Hub', ['GB'])).toBeNull();
+    expect(place('Far North Depot', ['AU'])).toBeNull();
+    expect(place('North West', ['ZA'])).toMatchObject({ precision: 'country', country: 'ZA' });
     // Nor for a small town of its country outside it: no Wales in Yorkshire, and no Monaco either.
     expect(locatePlace('Mid Wales MC', { carriers: ['royal-mail'], countries: ['GB'] })).toMatchObject({ precision: 'country', country: 'GB' });
     expect(place('North Wales MC')).toMatchObject({ precision: 'country', country: 'GB' });
