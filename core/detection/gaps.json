@@ -2524,7 +2524,7 @@
     "carrier": "norsk-global",
     "pattern": "^NOR\\d{4}[A-Z]{2}\\d{11}$",
     "kind": "by_design",
-    "reason": "A single archived lookup is the only sample of this reference, too few to fix its layout."
+    "reason": "A single archived lookup is the only sample, in FedEx International Connect's layout, and Norsk's tracker also finds a parcel by its partner's number."
   },
   {
     "carrier": "northline",

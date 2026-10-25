@@ -232,6 +232,14 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('La Poste du Senegal')).toBe('la-poste-senegal');
   });
 
+  it('reads FedEx International Connect by its name and abbreviation, never its Plus service or the old Cross Border name', () => {
+    expect(carrierIdFromName('FedEx® International Connect (FIC)')).toBe('fedex-international-connect');
+    expect(carrierIdFromName('FedEx International Connect')).toBe('fedex-international-connect');
+    for (const name of ['FedEx International Connect Plus', 'FedEx® Cross Border (UK)', 'FIC']) {
+      expect(carrierIdFromName(name), name).not.toBe('fedex-international-connect');
+    }
+  });
+
   it('reads a name in another script by its own letters, never by its Latin part alone', () => {
     expect(carrierIdFromName('中领国际')).toBe('z-leading');
     expect(carrierIdFromName('中華郵政')).toBe('chunghwa-post');

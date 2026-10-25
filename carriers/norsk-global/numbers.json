@@ -15,10 +15,10 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "fedex-international-connect",
+        "confidence": "high"
       },
-      "note": "An archived lookup on Norsk's own tracker; the capture was opened but shows only the page shell, so the history is not visible."
+      "note": "An archived lookup on Norsk's own tracker; the capture was opened but shows only the page shell, so the history is not visible. The number has FedEx International Connect's layout, and Norsk's tracker also finds a parcel by its partner's number."
     },
     {
       "number": "PKG700534051001",

@@ -83424,9 +83424,11 @@
   },
   {
     "input": "NOR0012GB00002606001",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "fedex-international-connect",
+    "confidence": "high",
+    "candidates": [
+      "fedex-international-connect"
+    ]
   },
   {
     "input": "NP00000001885813NPG",
@@ -84321,6 +84323,14 @@
     "confidence": "high",
     "candidates": [
       "pargo"
+    ]
+  },
+  {
+    "input": "PAR3450DK74052034501",
+    "carrier": "fedex-international-connect",
+    "confidence": "high",
+    "candidates": [
+      "fedex-international-connect"
     ]
   },
   {
@@ -95252,6 +95262,14 @@
     "asked": [
       "tnt-it",
       "gls-it"
+    ]
+  },
+  {
+    "input": "ZZZ0000GB00000000017",
+    "carrier": "fedex-international-connect",
+    "confidence": "high",
+    "candidates": [
+      "fedex-international-connect"
     ]
   },
   {

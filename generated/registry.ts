@@ -1518,6 +1518,7 @@ export const REGISTRY: RegistryDefinition = {
     "fastfrate": "fastfrate",
     "fedex": "fedex",
     "fedex-freight": "fedex-freight",
+    "fedex-international-connect": "universal",
     "fedex-pl": "fedex-pl",
     "fercam": "universal",
     "fermopoint": "fermopoint",

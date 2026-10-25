@@ -14278,6 +14278,41 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "fedex-international-connect": {
+    "displayName": "FedEx International Connect",
+    "color": "#4d148c",
+    "aliases": [
+      "FedEx International Connect (FIC)"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://fictracking.fedex.com/",
+    "trackingUrlTemplate": "https://fictracking.fedex.com/?MyFICNumber={trackingNumber}",
+    "trackingSearchUrl": "https://fictracking.fedex.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "fictracking.fedex.com"
+        ],
+        "params": [
+          "MyFICNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{3}\\d{4}[A-Z]{2}\\d{11}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "fedex-pl": {
     "displayName": "FedEx Poland",
     "color": "#4d148c",
@@ -33152,6 +33187,7 @@ export const CARRIER_IDS = [
   "fastdrop",
   "fastfrate",
   "fedex-freight",
+  "fedex-international-connect",
   "fedex-pl",
   "fercam",
   "fermopoint",
@@ -33957,6 +33993,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fastdrop": [],
   "fastfrate": [],
   "fedex-freight": [],
+  "fedex-international-connect": ["fedex-international-connect-1"],
   "fedex-pl": ["fedex-pl-1"],
   "fercam": ["fercam-1"],
   "fermopoint": ["fermopoint-1"],
