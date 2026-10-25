@@ -125,6 +125,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "dpd-at": 878,
   "dpd-be": 983,
   "dpd-de": 970,
+  "dpd-hu": 804,
   "dpd-ie": 960,
   "dpd-nl": 972,
   "dpd-pl": 520,

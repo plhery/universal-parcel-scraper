@@ -11958,6 +11958,30 @@
       }
     ]
   },
+  "dpd-hu": {
+    "displayName": "DPD Hungary",
+    "color": "#dc0032",
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-hu",
+      "recognitionRank": 804
+    },
+    "canaryUrl": "https://www.dpd.com/hu/hu/",
+    "trackingUrlTemplate": "https://www.dpdgroup.com/hu/mydpd/my-parcels/search?lang=en&parcelNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.dpd.com/hu/hu/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "dpd-ie": {
     "displayName": "DPD Ireland",
     "color": "#dc0032",

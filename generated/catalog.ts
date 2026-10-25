@@ -11960,6 +11960,30 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "dpd-hu": {
+    "displayName": "DPD Hungary",
+    "color": "#dc0032",
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-hu",
+      "recognitionRank": 804
+    },
+    "canaryUrl": "https://www.dpd.com/hu/hu/",
+    "trackingUrlTemplate": "https://www.dpdgroup.com/hu/mydpd/my-parcels/search?lang=en&parcelNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.dpd.com/hu/hu/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "dpd-ie": {
     "displayName": "DPD Ireland",
     "color": "#dc0032",
@@ -33068,6 +33092,7 @@ export const CARRIER_IDS = [
   "dpd-at",
   "dpd-be",
   "dpd-de",
+  "dpd-hu",
   "dpd-ie",
   "dpd-nl",
   "dpd-pl",
@@ -33872,6 +33897,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
   "dpd-de": ["dpd-de-3","dpd-de-4","dpd-de-1","dpd-de-2"],
+  "dpd-hu": ["dpd-hu-1"],
   "dpd-ie": [],
   "dpd-nl": ["dpd-nl-1"],
   "dpd-pl": ["dpd-pl-1","dpd-pl-2","dpd-pl-3"],

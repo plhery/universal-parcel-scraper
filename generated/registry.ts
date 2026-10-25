@@ -157,6 +157,7 @@ import { adapter as dpdAt } from '../carriers/dpd-at/adapter.js';
 import { adapter as dpdBe } from '../carriers/dpd-be/adapter.js';
 import { adapter as dpdDe } from '../carriers/dpd-de/adapter.js';
 import { adapter as dpdFr } from '../carriers/dpd-fr/adapter.js';
+import { adapter as dpdHu } from '../carriers/dpd-hu/adapter.js';
 import { adapter as dpdIe } from '../carriers/dpd-ie/adapter.js';
 import { adapter as dpdNl } from '../carriers/dpd-nl/adapter.js';
 import { adapter as dpdPl } from '../carriers/dpd-pl/adapter.js';
@@ -785,6 +786,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-be": dpdBe,
     "dpd-de": dpdDe,
     "dpd-fr": dpdFr,
+    "dpd-hu": dpdHu,
     "dpd-ie": dpdIe,
     "dpd-nl": dpdNl,
     "dpd-pl": dpdPl,
@@ -1455,6 +1457,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-be": "dpd-be",
     "dpd-de": "dpd-de",
     "dpd-fr": "dpd-fr",
+    "dpd-hu": "dpd-hu",
     "dpd-ie": "dpd-ie",
     "dpd-nl": "dpd-nl",
     "dpd-pl": "dpd-pl",

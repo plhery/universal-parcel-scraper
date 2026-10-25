@@ -76,6 +76,7 @@ const HTTP_NUMBERS: Readonly<Record<string, RegExp>> = { 'mondial-relay': /^FV\d
 const corpus = new Map(loadNumberCorpusFiles().map((file) => [file.carrier, file.records]));
 /** Synthetic numbers in the format of a carrier whose corpus has no public number yet. */
 const UNSAMPLED: Readonly<Record<string, readonly string[]>> = {
+  'dpd-hu': ['16400000000001'],
   homexpress: ['TMS00000000000'],
   'mongol-infinity-post': ['1000000'],
   'speed-and-safe': ['00000000'],

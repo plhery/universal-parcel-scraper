@@ -366,7 +366,7 @@ describe('the detection engine', () => {
     // DPD Switzerland, 10xx DPD France. Other 14-digit carriers stay candidates.
     expect(detectCarrierMatch('06080000000002')).toMatchObject({
       carrier: 'unknown', confidence: 'low', preferred: ['dpd'],
-      candidates: ['dpd', 'dpd-fr', 'ciblex', 'seur', 'brt', 'dhl-ecommerce-uk', 'dpd-be', 'dpd-de', 'dpd-nl', 'dpd-pt', 'dpd-uk'],
+      candidates: ['dpd', 'dpd-fr', 'ciblex', 'seur', 'brt', 'dhl-ecommerce-uk', 'dpd-be', 'dpd-de', 'dpd-hu', 'dpd-nl', 'dpd-pt', 'dpd-uk'],
     });
     // DPD Switzerland's forms ask for numbers starting with 060.
     for (const number of ['06000000000003', '06030000000002', '06190000000001']) {
