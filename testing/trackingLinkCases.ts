@@ -1373,9 +1373,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.delnext\.com\/PT\/track_your_parcel\?tracking_code=ZZ0000(?:&reloaded=PT)?$/,
     marker: /Acompanhe a entrega da sua encomenda/,
     forwarding: { notFound: /Acompanhe a entrega da sua encomenda/ } },
-  // The app looks the number up and lists an unknown one as not found, under its address's packages.
+  // The app looks the number up on its preview route and, once the lookup finds nothing, moves to its
+  // search route with the same address.
   { carrier: 'fedex-pl', number: '6230000000005',
-    route: /^https:\/\/fds2tracking\.emea\.fedex\.com\/#\/(?:preview|tracking\/list)\?packages=6230000000005(?:&|$)/,
+    route: /^https:\/\/fds2tracking\.emea\.fedex\.com\/#\/(?:preview|tracking(?:\/list)?)\?packages=6230000000005(?:&|$)/,
     marker: /Monitorowanie przesyłek krajowych|Track (?:your )?domestic shipment/ },
   // The IPS page answers a code it holds nothing for with a notice that does not repeat the code.
   { carrier: 'jordan-post', number: 'ZZ000000014JO',
