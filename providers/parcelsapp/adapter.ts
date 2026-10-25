@@ -16,6 +16,7 @@ import { carrierDefinition, carrierTimezone } from '../../core/catalog/index.js'
 import {
   brandCarrierIds, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone, isCarrierFeedName, isKnownCarrierName,
 } from '../../core/catalog/hints.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -1264,6 +1265,32 @@ function statedDestination(payload: Record<string, unknown>): string | null {
   return countryCode(payload.destinationCode) ?? countryCode(payload.destination);
 }
 
+/**
+ * The carrier ParcelsApp follows the parcel to and its number: a number it
+ * names next (`next_tracking_ids`) that the own rule of the newest scan's
+ * carrier claims, as DPD's number for a line's parcel DPD now carries. Only
+ * one such pair names the partner. A number of a carrier with no later scan,
+ * an earlier leg's for one, names none.
+ */
+function nextPartner(payload: Record<string, unknown>, events: readonly CarrierEvent[], names: ReadonlyMap<CarrierEvent, unknown>,
+  number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> {
+  const next = Array.isArray(payload.next_tracking_ids) ? payload.next_tracking_ids : [];
+  const ids = next.filter((id): id is string => typeof id === 'string' && /^[A-Z0-9]{4,40}$/.test(id) && id !== number).slice(0, 10);
+  const newest = events[0];
+  if (!ids.length || !newest) return {};
+  const pairs = new Map<string, { carrier: string; id: string }>();
+  for (const event of events.filter((scan) => scan.time === newest.time && scan.local_time === newest.local_time)) {
+    const name = names.get(event);
+    if (typeof name !== 'string') continue;
+    for (const id of ids) {
+      const carrier = carrierIdFromName(name) ?? brandCarrierForNumber(name, id);
+      if (carrier && (detectCarrierMatch(id).candidates as readonly string[]).includes(carrier)) pairs.set(`${carrier} ${id}`, { carrier, id });
+    }
+  }
+  const [partner, ...others] = pairs.values();
+  return partner && !others.length ? { delivery_carrier: partner.carrier, delivery_tracking_number: partner.id } : {};
+}
+
 /** The country the parcel comes from, as the reply names it, else the post that issued an S10 number. */
 function replyOrigin(payload: Record<string, unknown>, number: string): string | null {
   return countryCode(payload.originCode) ?? countryCode(payload.origin) ?? countryCode(/^[A-Z]{2}\d{9}([A-Z]{2})$/.exec(number)?.[1]);
@@ -1341,6 +1368,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   const carried: { event: CarrierEvent; carrier: string }[] = [];
   const scans: { event: CarrierEvent; scan: CarrierScan }[] = [];
   const scanCarriers = new Set<unknown>();
+  const names = new Map<CarrierEvent, unknown>();
   let undated = 0;
   // The reply is in North America when a scan certainly is, or when a scan
   // names a state or province ("Atlanta, GA") and none names another country.
@@ -1433,6 +1461,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       events.push(parsed);
       carried.push({ event: parsed, carrier: nameKey(name) });
       scanCarriers.add(name);
+      names.set(parsed, name);
       if (step) steps.add(parsed);
     }
     if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage, stage_source: 'carrier_map' }), scan });
@@ -1472,8 +1501,10 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   const discovered = hints.discovered_carrier
     ?? (scanCarriers.size === 1 ? universalCarrierHints([...scanCarriers], number).discovered_carrier : undefined);
   const stated = statedDestination(payload);
-  return { ...result(events, SOURCE), ...(undated ? { undated_event_count: undated } : {}),
-    ...hints, ...(discovered ? { discovered_carrier: discovered } : {}), ...(stated ? { destination_country: stated } : {}) };
+  const answer = result(events, SOURCE);
+  return { ...answer, ...(undated ? { undated_event_count: undated } : {}),
+    ...hints, ...(discovered ? { discovered_carrier: discovered } : {}), ...(stated ? { destination_country: stated } : {}),
+    ...nextPartner(payload, answer.events ?? [], names, number) };
 }
 
 /** Whether a direct request failed by reaching its own cap rather than by a network failure. */

@@ -2190,6 +2190,33 @@ describe('ParcelsApp result parsing', () => {
       .toBe('2026-07-02T09:37:00.000Z');
   });
 
+  it('names the carrier of the newest scan as the partner when its own rule claims a number ParcelsApp names next', () => {
+    // Live shape: a forwarder's sea freight that DPD Poland carries on abroad, with DPD Poland's waybill next.
+    const waybill = '1000000000017U';
+    const read = (reply: Record<string, unknown>) => parseParcelsAppResponse({
+      carriers: ['Example Line', 'DPD Poland', 'DPD Group'], originCode: 'CN', destinationCode: 'ES', next_tracking_ids: [waybill],
+      states: [
+        { date: '2030-01-12T06:34:09Z', status: 'Parcel out for delivery', carrier: 2 },
+        { date: '2030-01-12T06:34:09Z', status: 'Release for delivery abroad', carrier: 1 },
+        { date: '2030-01-08T09:06:29Z', status: 'Receipt of the package at the DPD branch', carrier: 1 },
+        { date: '2030-01-02T02:15:35Z', status: 'Goods received', carrier: 0 },
+      ], ...reply,
+    }, number, identity());
+    const partner = (reply: Record<string, unknown>) => {
+      const { delivery_carrier, delivery_tracking_number } = read(reply);
+      return [delivery_carrier, delivery_tracking_number];
+    };
+    expect(partner({})).toEqual(['dpd-pl', waybill]);
+    // The number asked, a number no rule of the newest scan's carrier claims, or none, names no partner.
+    for (const next of [[number], ['1Z0000000000000000'], ['ZZ1'], undefined]) expect(partner({ next_tracking_ids: next })).toEqual([undefined, undefined]);
+    // Nor does a partner with no scan yet, or one whose scans another carrier's follow.
+    expect(partner({ states: [{ date: '2030-01-02T02:15:35Z', status: 'Goods received', carrier: 0 }] })).toEqual([undefined, undefined]);
+    expect(partner({ states: [{ date: '2030-01-13T08:00:00Z', status: 'Goods received', carrier: 0 },
+      { date: '2030-01-12T06:34:09Z', status: 'Release for delivery abroad', carrier: 1 }] })).toEqual([undefined, undefined]);
+    // Two numbers its rules claim leave the partner unnamed.
+    expect(partner({ next_tracking_ids: [waybill, '1000000000025U'] })).toEqual([undefined, undefined]);
+  });
+
   it('reads a scan on its known clock before the zone routing passes for the parcel', () => {
     // Filed under Speedaf, the parcel gets Lagos from routing; Cainiao's own feed dates
     // these scans on China time and on the destination's.

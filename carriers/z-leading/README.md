@@ -1,6 +1,10 @@
 # Z-Leading
 
-Z-Leading parcels use enabled universal providers. There is no dedicated adapter.
+Z-Leading parcels use enabled universal providers. There is no dedicated adapter: neither
+its site nor the providers that list it name a tracker, and its FAQ says customers get the
+number and website of the carrier that takes the shipment on. When ParcelsApp names that
+carrier's number, as DPD Poland's, the carrier's own adapter tracks the last leg
+([ParcelsApp](../../providers/parcelsapp/README.md)).
 
 Z-Leading is Shenzhen Z-leading International Logistics (中领国际), a Shenzhen forwarder with
 express, DDP and warehousing lines, whose site is z-leading.com. Universal providers name it

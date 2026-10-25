@@ -568,6 +568,14 @@ step exists for future protocol changes.
   France); routing then confirms it with that carrier's adapter. The rendered page's
   per-scan carrier names give the same hints. The carrier and service ParcelsApp names
   "url", its link to another tracker, are left out.
+- A number ParcelsApp names next for the parcel (`next_tracking_ids`, "Next tracking
+  numbers" on its page) becomes `delivery_tracking_number`, with its carrier as
+  `delivery_carrier`, when the carrier of the newest scan is a catalog carrier whose own
+  rule claims it, a bare brand resolved by that number: a line's parcel that DPD Poland
+  carries on names DPD Poland's waybill next. The tracker then asks that carrier's own
+  adapter, which keeps the parcel's last leg direct when no tracker serves the line. A
+  number of a carrier with no later scan, such as an earlier leg's, or two such numbers,
+  name no partner.
 - The destination country the reply names (`destinationCode`, else a `destination` that
   is a country name) becomes `destination_country`, which routing uses to propose the
   destination's post for a postal number. A country only read off a reference ("CNPRT")

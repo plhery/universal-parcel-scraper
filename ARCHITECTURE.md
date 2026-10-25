@@ -143,9 +143,11 @@ repeating at once.
 
 When a result names a delivery partner, the tracker also asks that partner's adapter. Its
 answer comes back separately, checked against the number on its own. Adopting it is the
-consumer's choice. A checksum-valid S10 item with no partner named proposes the post of the
-destination country its answer reports, or for a DHL Paket parcel the partner DHL names there,
-if that partner looks up DHL's number. When none is reported, a consumer may give
+consumer's choice. A provider's answer names one only by a number that the own rule of its
+newest scan's carrier claims, as ParcelsApp's next number for the parcel. A checksum-valid
+S10 item with no partner named proposes the post of the destination country its answer
+reports, or for a DHL Paket parcel the partner DHL names there, if that partner looks up
+DHL's number. When none is reported, a consumer may give
 `deliveryHandoff` the country the parcel is looked up from, which stands in unless it issued
 the item. AliExpress follows some parcels under the delivery carrier's own number and
 names no partner for them. The partner is then the carrier that delivers in the destination
