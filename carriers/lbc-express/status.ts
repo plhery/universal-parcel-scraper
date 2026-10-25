@@ -38,8 +38,8 @@ export function classifyLbcScan(code: string, description: string): ClassifiedSt
 const STORED_WORDINGS = WORDINGS.map(([pattern, status]) => [new RegExp(pattern.source, 'i'), status] as const);
 
 /**
- * What the map says about one scan: the app's code, or for a web scan, which has none, its
- * wording, as the adapter reads them.
+ * What the map says about one scan: its code, or for a scan stored from the old website,
+ * which has none, its wording, as the adapter reads them.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code !== null && code !== '0' ? classifyLbcScan(code, '')

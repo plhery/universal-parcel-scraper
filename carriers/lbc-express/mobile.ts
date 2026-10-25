@@ -1,10 +1,8 @@
-import { DateTime } from 'luxon';
 import { CarrierError, ChallengeError, IndeterminateError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
-import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
-import { normalizeLbcNumber, withoutRepresentative } from './parser.js';
-import { classifyLbcScan } from './status.js';
+import { lbcHistory, normalizeLbcNumber } from './parser.js';
 
 export const LBC_MOBILE_API = 'https://lbcapigateway.lbcapps.com/lbctrackingapi2/v2';
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
@@ -35,15 +33,6 @@ function scalar(node: XmlNode, name: string, required = true, max = 1000): strin
   return value;
 }
 
-function scanClock(day: string, time: string): string | null {
-  if (!time) return null;
-  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(day) || !/^\d{1,2}:\d{2}:\d{2} [AP]M$/.test(time)) invalidXml();
-  const parsed = DateTime.fromFormat(`${day} ${time}`, 'M/d/yyyy h:mm:ss a', { locale: 'en', zone: 'UTC' });
-  if (!parsed.isValid) invalidXml();
-  // UTC only validates calendar digits; the provider gives no offset.
-  return parsed.toFormat("yyyy-MM-dd'T'HH:mm:ss");
-}
-
 export function parseLbcMobile(xml: string, raw: string): CarrierResult {
   const number = normalizeLbcNumber(raw);
   const root = xmlDocument(xml, MAX_BYTES) ?? invalidXml();
@@ -60,42 +49,11 @@ export function parseLbcMobile(xml: string, raw: string): CarrierResult {
   if (scalar(details, 'TrackingNo', true, 40) !== number) {
     throw new SchemaError('lbc-express', 'LBC returned a different shipment');
   }
-  const rows = children(one(status, 'TrackingHistory'), 'TrackingHistory');
-  if (!rows.length) throw new IndeterminateError('lbc-express', 'LBC returned no shipment scans');
-  if (rows.length > 500) invalidXml();
-  const events: CarrierEvent[] = [];
-  const seen = new Set<string>();
-  for (const row of rows) {
-    const code = scalar(row, 'StatusId', true, 32);
-    const wording = scalar(row, 'StatusandLocation');
-    const description = code === '1' ? 'Delivered' : /^Delivered to\b/i.test(wording) ? 'Delivery update' : withoutRepresentative(wording);
-    const mapped = classifyLbcScan(code, description);
-    const day = scalar(row, 'DatePosted', true, 64);
-    const time = scalar(row, 'DatePostedTime', false, 64);
-    const local = scanClock(day, time);
-    // The town and province of the scanning branch. A forwarding scan carries its
-    // destination's instead, so it gets none.
-    const forwarding = code === '8820' || /^Shipment is en route to\b|\bon its way to\b/i.test(wording);
-    const location = forwarding ? '' : [scalar(row, 'CityName', false, 120), scalar(row, 'ProvinceName', false, 120)].filter(Boolean).join(', ');
-    const event: CarrierEvent = { description, ...(location ? { location } : {}), provider_code: code,
-      provider_time_text: `${day}${time ? ` ${time}` : ''}`,
-      ...(local ? { local_time: local } : {}), ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
-    // Branch, remarks, coordinates, internal wording and recipient/sender fields are not projected.
-    const identity = JSON.stringify(event);
-    if (seen.has(identity)) continue;
-    seen.add(identity);
-    events.push(event);
-  }
-  // The mobile service supplies oldest-first scans; valid local clocks can sort them.
-  events.reverse();
-  if (events.every(event => typeof event.local_time === 'string')) {
-    events.sort((a, b) => String(b.local_time).localeCompare(String(a.local_time)));
-  }
-  const current = events[0]!;
-  const mapped = classifyLbcScan(String(current.provider_code), current.description!);
-  return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage, current_stage_source: 'carrier_map' } : {}),
-    last_status_text: current.description, last_update: null, ...(current.local_time ? { last_update_local: current.local_time } : {}),
-    timezone: 'Asia/Manila', events: events.slice(0, 100) };
+  return lbcHistory(children(one(status, 'TrackingHistory'), 'TrackingHistory').map(row => ({
+    code: scalar(row, 'StatusId', true, 32), wording: scalar(row, 'StatusandLocation'),
+    day: scalar(row, 'DatePosted', true, 64), time: scalar(row, 'DatePostedTime', false, 64),
+    town: scalar(row, 'CityName', false, 120), province: scalar(row, 'ProvinceName', false, 120),
+  })));
 }
 
 export async function readLbcMobile(number: string, options: {

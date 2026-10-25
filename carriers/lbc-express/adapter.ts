@@ -1,26 +1,16 @@
-import type { Page, Response as BrowserResponse } from 'playwright-core';
+import type { Page, Request as BrowserRequest, Response as BrowserResponse } from 'playwright-core';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { carrierErrorKind, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
-import { isRecord } from '../../core/types.js';
-import { normalizeLbcNumber, parseLbc } from './parser.js';
+import { normalizeLbcNumber, parseLbcWebsite } from './parser.js';
 import { readLbcMobile } from './mobile.js';
 
 const ORIGIN = 'https://www.lbcexpress.com';
 const MAX_BYTES = 1_000_000;
-export const LBC_SEARCH = `${ORIGIN}/AMisc/searchRedirect`;
-
-export function lbcRedirectUrl(payload: unknown): string {
-  // This is the opaque handle returned by the current official form, not an
-  // encoding of the input. Restrict it to one same-origin path component.
-  if (!isRecord(payload) || payload.page_slug !== 'track' || typeof payload.hash !== 'string'
-    || !/^[A-Za-z0-9=+_-]{8,256}$/.test(payload.hash)) {
-    throw new SchemaError('lbc-express', 'LBC returned an invalid tracking redirect');
-  }
-  return `${ORIGIN}/track/${payload.hash}`;
-}
+export const LBC_TRACK_PAGE = `${ORIGIN}/track/`;
+export const LBC_TRACK_REQUEST = `${ORIGIN}/wp-admin/admin-ajax.php`;
 
 function httpFailure(status: number): Error {
   if ([401, 403].includes(status)) return new ChallengeError('lbc-express');
@@ -29,33 +19,11 @@ function httpFailure(status: number): Error {
     : new UpstreamHttpError('lbc-express', status);
 }
 
-async function openReady(page: Page, url: string, selector: string, signal: AbortSignal, remainingMs: () => number): Promise<void> {
-  signal.throwIfAborted();
-  const expected = new URL(url);
-  const timeout = Math.min(15_000, remainingMs());
-  const ready = page.waitForResponse((response: BrowserResponse) => {
-    const target = new URL(response.url());
-    return response.request().isNavigationRequest() && response.request().frame() === page.mainFrame()
-      && target.origin === ORIGIN && target.pathname === expected.pathname && response.status() === 200;
-  }, { timeout });
-  void ready.catch(() => {});
-  const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
-  signal.throwIfAborted();
-  if (!response) throw new TransportError('lbc-express', 'LBC tracking page is unavailable');
-  if (![200, 403].includes(response.status())) throw httpFailure(response.status());
-  try {
-    // Azure WAF can initially return 403, execute its own JavaScript, and
-    // reload the same document successfully. Wait for that native completion.
-    if (response.status() === 403) await ready;
-    await page.locator(selector).first().waitFor({ state: 'visible', timeout: Math.min(15_000, remainingMs()) });
-  } catch {
-    signal.throwIfAborted();
-    if (response.status() === 403) throw new ChallengeError('lbc-express');
-    throw new TransportError('lbc-express', 'LBC tracking page did not become ready');
-  }
-  signal.throwIfAborted();
-  const settled = new URL(page.url());
-  if (settled.origin !== ORIGIN || settled.pathname !== expected.pathname) throw new SchemaError('lbc-express', 'LBC redirected away from the requested tracking page');
+/** The tracking page's own `track_package` request for the whole number. */
+function isLbcTrackRequest(request: BrowserRequest, page: Page, number: string): boolean {
+  if (request.method() !== 'POST' || request.url() !== LBC_TRACK_REQUEST || request.frame() !== page.mainFrame()) return false;
+  const form = new URLSearchParams(request.postData() ?? '');
+  return form.get('action') === 'track_package' && form.get('trackingNumber') === number;
 }
 
 function localBrowser(number: string, executablePath: string, signal: AbortSignal, timeoutMs: number) {
@@ -66,47 +34,46 @@ function localBrowser(number: string, executablePath: string, signal: AbortSigna
       session.throwIfAborted();
       const page = await context.newPage();
       session.throwIfAborted();
-      await openReady(page, `${ORIGIN}/`, 'body', session, remainingMs);
-      await openReady(page, `${ORIGIN}/track/`, '#inputTrackingSearchForm', session, remainingMs);
-      // Mirror the current delegated jQuery form handler. Submitting in the
-      // page keeps the anonymous browser session without requiring hydration.
-      const reply = await page.evaluate(async ({ number, timeout, maxBytes, endpoint }) => {
-        const response = await fetch(endpoint, { method: 'POST', signal: AbortSignal.timeout(timeout),
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'X-Requested-With': 'XMLHttpRequest',
-            Accept: 'application/json, text/javascript, */*; q=0.01' }, body: new URLSearchParams({ keyword: number }).toString() });
-        if (Number(response.headers.get('content-length')) > maxBytes) return { status: response.status, oversized: true, body: '' };
-        const reader = response.body?.getReader();
-        if (!reader) return { status: response.status, oversized: false, body: '' };
-        const chunks: Uint8Array[] = [];
-        let size = 0;
-        for (;;) {
-          const chunk = await reader.read();
-          if (chunk.done) break;
-          size += chunk.value.byteLength;
-          if (size > maxBytes) { await reader.cancel(); return { status: response.status, oversized: true, body: '' }; }
-          chunks.push(chunk.value);
-        }
-        const bytes = new Uint8Array(size);
-        let position = 0;
-        for (const chunk of chunks) { bytes.set(chunk, position); position += chunk.byteLength; }
-        return { status: response.status, oversized: false, body: new TextDecoder().decode(bytes) };
-      }, { number, timeout: Math.min(15_000, remainingMs()), maxBytes: MAX_BYTES, endpoint: LBC_SEARCH });
+      // The page's script sends its tracking request for the number in its
+      // link. Observe before navigating, so the reply cannot be missed.
+      const answered = page.waitForResponse((response: BrowserResponse) => isLbcTrackRequest(response.request(), page, number),
+        { timeout: Math.min(30_000, remainingMs()) });
+      void answered.catch(() => {});
+      const document = await page.goto(`${LBC_TRACK_PAGE}?${new URLSearchParams({ 'tracking-number': number })}`,
+        { waitUntil: 'domcontentloaded', timeout: Math.min(15_000, remainingMs()) });
       session.throwIfAborted();
-      if (reply.status !== 200) throw httpFailure(reply.status);
-      if (reply.oversized) throw new SchemaError('lbc-express', 'LBC returned excessive redirect data');
-      let redirect: unknown;
-      try { redirect = JSON.parse(reply.body); }
-      catch { throw new SchemaError('lbc-express', 'LBC returned invalid redirect JSON'); }
-      const url = lbcRedirectUrl(redirect);
-      await openReady(page, url, '#inputTrackingSearchForm', session, remainingMs);
-      const html = await page.content();
+      if (!document) throw new TransportError('lbc-express', 'LBC tracking page is unavailable');
+      if (![200, 403].includes(document.status())) throw httpFailure(document.status());
+      let reply: BrowserResponse;
+      try {
+        // Azure WAF can initially return 403, execute its own JavaScript, and
+        // reload the same document, whose script then sends the request.
+        reply = await answered;
+      } catch {
+        session.throwIfAborted();
+        if (document.status() === 403) throw new ChallengeError('lbc-express');
+        throw new TransportError('lbc-express', 'LBC tracking page sent no tracking request');
+      }
       session.throwIfAborted();
-      return parseLbc(html, number);
+      const settled = new URL(page.url());
+      if (settled.origin !== ORIGIN || settled.pathname !== new URL(LBC_TRACK_PAGE).pathname) {
+        throw new SchemaError('lbc-express', 'LBC redirected away from the tracking page');
+      }
+      if (reply.status() !== 200) throw httpFailure(reply.status());
+      if (Number(reply.headers()['content-length']) > MAX_BYTES) throw new SchemaError('lbc-express', 'LBC returned excessive tracking data');
+      const bytes = await reply.body();
+      session.throwIfAborted();
+      if (bytes.byteLength > MAX_BYTES) throw new SchemaError('lbc-express', 'LBC returned excessive tracking data');
+      let payload: unknown;
+      try { payload = JSON.parse(new TextDecoder().decode(bytes)); }
+      catch { throw new SchemaError('lbc-express', 'LBC returned invalid tracking JSON'); }
+      return parseLbcWebsite(payload, number);
     } catch (error) {
       session.throwIfAborted();
       if (carrierErrorKind(error)) throw error;
-      // Playwright errors can contain the opaque capability URL. Do not retain
-      // those messages or causes in errors exposed to callers or telemetry.
+      // Playwright errors can contain the requested number and the page's
+      // request. Do not retain those messages or causes in errors exposed to
+      // callers or telemetry.
       throw new TransportError('lbc-express', 'LBC browser tracking failed');
     }
   });

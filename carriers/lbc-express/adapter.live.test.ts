@@ -23,10 +23,10 @@ describe('LBC mobile API live', () => {
 });
 
 describe('LBC anonymous browser live', () => {
-  it.skipIf(!executablePath || !process.env.LBC_TRACKING_NUMBER)('returns matching date-only history', async () => {
+  it.skipIf(!executablePath || !process.env.LBC_TRACKING_NUMBER)('returns matching history with local scan clocks from the website', async () => {
     const result = normalizeCarrierResult(await instance().track({ number: process.env.LBC_TRACKING_NUMBER! }));
     expect(result.events?.length).toBeGreaterThan(0);
-    expect(result.events?.every(event => event.provider_time_text && !event.time)).toBe(true);
+    expect(result.events?.every(event => event.local_time && !event.time)).toBe(true);
     expect(result.last_update).toBeNull();
     expect(result.delivered_at).toBeUndefined();
   });
