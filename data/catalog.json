@@ -20543,6 +20543,42 @@
     ],
     "detectionRules": []
   },
+  "maersk-ecommerce": {
+    "displayName": "Maersk eCommerce",
+    "color": "#42b0d5",
+    "aliases": [
+      "Maersk Logistics And Services USA Inc",
+      "Maersk Parcel"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "maersk-ecommerce",
+      "recognitionRank": 501,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.maersk.com/tracking/parcel",
+    "trackingUrlTemplate": "https://www.maersk.com/tracking/parcel/{trackingNumber}",
+    "trackingSearchUrl": "https://www.maersk.com/tracking/parcel",
+    "linkRules": [
+      {
+        "domains": [
+          "maersk.com"
+        ],
+        "path": "^/tracking/parcel/([A-Za-z0-9]{19})/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^1M(?=[A-Z0-9]{0,6}[A-Z])[A-Z0-9]{7}\\d{10}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "magyar-posta": {
     "displayName": "Magyar Posta",
     "color": "#346631",

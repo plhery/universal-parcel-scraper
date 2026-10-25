@@ -4596,6 +4596,14 @@
     "reason": "GOFO delivers AliExpress parcels in the United States under its own GFUS waybills, and Cainiao's tracker follows them from China while GOFO shows only the label. Other senders' GOFO parcels are GOFO's alone. Both rules are low confidence; the one that knows the number confirms it, and once both know it, it is filed under AliExpress, which proposes GOFO as the delivery carrier."
   },
   {
+    "shape": "1MCAINIXX followed by ten digits",
+    "carriers": [
+      "aliexpress",
+      "maersk-ecommerce"
+    ],
+    "reason": "Maersk eCommerce numbers AliExpress parcels it delivers in the United States with its code for Cainiao, and Cainiao's tracker follows them from China through Maersk's leg. AliExpress's high rule names them; Maersk's tracker knows them too, so a Maersk link still files one under Maersk eCommerce."
+  },
+  {
     "shape": "Two digits, LP and thirteen digits ending in a French postcode range",
     "carriers": [
       "colis-prive",

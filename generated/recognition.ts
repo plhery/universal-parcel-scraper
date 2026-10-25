@@ -265,6 +265,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "loomis-express": 285,
   "m-and-p": 746,
   "m-one": 825,
+  "maersk-ecommerce": 501,
   "mailamericas": 985,
   "mailplus-au": 699,
   "mainfreight": 923,

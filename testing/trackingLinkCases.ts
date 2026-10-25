@@ -1334,6 +1334,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/go\.shipblu\.com\/en\/1000000000000$/,
     marker: /We have an eye on your shipment|Not found!/i },
   // The page looks the number up on the server and heads its results with it.
+  { carrier: 'maersk-ecommerce', number: '1MEXAMPLE0000000001',
+    route: /^https:\/\/www\.maersk\.com\/tracking\/parcel\/1MEXAMPLE0000000001$/,
+    marker: /We couldn't find any parcels with that tracking number/i,
+    forwarding: { notFound: /We couldn't find any parcels with that tracking number/i } },
   { carrier: 'mainfreight', number: 'S00000000',
     route: /^https:\/\/www\.mainfreight\.com\/tracking\?trackingnumber=S00000000$/,
     marker: /Tracking Results for|No results found for the provided tracking number/i },

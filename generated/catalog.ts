@@ -20545,6 +20545,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "maersk-ecommerce": {
+    "displayName": "Maersk eCommerce",
+    "color": "#42b0d5",
+    "aliases": [
+      "Maersk Logistics And Services USA Inc",
+      "Maersk Parcel"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "maersk-ecommerce",
+      "recognitionRank": 501,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.maersk.com/tracking/parcel",
+    "trackingUrlTemplate": "https://www.maersk.com/tracking/parcel/{trackingNumber}",
+    "trackingSearchUrl": "https://www.maersk.com/tracking/parcel",
+    "linkRules": [
+      {
+        "domains": [
+          "maersk.com"
+        ],
+        "path": "^/tracking/parcel/([A-Za-z0-9]{19})/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^1M(?=[A-Z0-9]{0,6}[A-Z])[A-Z0-9]{7}\\d{10}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "magyar-posta": {
     "displayName": "Magyar Posta",
     "color": "#346631",
@@ -33231,6 +33267,7 @@ export const CARRIER_IDS = [
   "m-and-p",
   "m-one",
   "madhur-courier",
+  "maersk-ecommerce",
   "magyar-posta",
   "mailamericas",
   "mailplus-au",
@@ -34034,6 +34071,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "m-and-p": [],
   "m-one": ["m-one-s10"],
   "madhur-courier": [],
+  "maersk-ecommerce": ["maersk-ecommerce-1"],
   "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic"],
   "mailamericas": ["mailamericas-ml","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
   "mailplus-au": ["mailplus-au-1"],

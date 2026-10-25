@@ -2275,6 +2275,12 @@
     "reason": "A P and nine digits is one complaint's C-Note layout and also matches Australia Post's consignment layout, so it is too thin to claim."
   },
   {
+    "carrier": "maersk-ecommerce",
+    "pattern": "^1MCAINIXX\\d{10}$",
+    "kind": "collision",
+    "reason": "Maersk eCommerce's numbers for Cainiao's parcels are tracked under AliExpress, whose high rule hides Maersk's suggestion: Cainiao's tracker holds the journey from China as well."
+  },
+  {
     "carrier": "mailamericas",
     "pattern": "^[A-Z]{2}\\d{9}(?:MH|MU)$",
     "kind": "by_design",
