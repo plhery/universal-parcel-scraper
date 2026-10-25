@@ -313,7 +313,8 @@
       "locatePlace",
       "placeTimeZone",
       "placesForEvents",
-      "preloadPlaces"
+      "preloadPlaces",
+      "restoreLostLetters"
     ],
     "types": [
       "EventPlace",

@@ -2,7 +2,8 @@
 import { readFileSync } from 'node:fs';
 import { brotliDecompressSync } from 'node:zlib';
 import { CARRIER_DEFINITIONS } from '../core/catalog/definitions.js';
-import { timeZoneCountry } from '../core/time/index.js';
+import type { CarrierResult } from '../core/result/index.js';
+import { countryCode, timeZoneCountry } from '../core/time/index.js';
 import { ambiguousAddressCodes, militaryPostOffice, trackingPlace } from './trackingLocation.js';
 import facilityList from './facilities.json' with { type: 'json' };
 import hubList from './hubs.json' with { type: 'json' };
@@ -611,6 +612,65 @@ export function locatePlace(location: string | null | undefined, hints: PlaceHin
   const found = locate(location, hints);
   // Alone, a name two towns of a country share alike says neither.
   return found && !found.twins ? found.place : null;
+}
+
+const LOST = '\uFFFD';
+
+/**
+ * A town's name with the letters a carrier lost on the way, each a replacement
+ * character, filled from the one spelling of a town of `country` that fits:
+ * "SAINT-\uFFFDTIENNE" is Saint-Étienne's. A letter inside a word takes the
+ * case of the letters beside it, one starting a word the town's own. Null when
+ * no letter is lost or no single spelling fits.
+ */
+function restoredTownName(town: string, country: string): string | null {
+  if (!town.includes(LOST)) return null;
+  const chars = [...town];
+  const source = chars.map((char) => char === LOST ? '(\\p{L})' : /[\s-]/u.test(char) ? '[\\s-]'
+    : char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('');
+  const pattern = new RegExp(`^${source}$`, 'iu');
+  const data = gazetteer();
+  const fills = new Set<string>();
+  for (const index of countryPlaces(country)) {
+    const match = pattern.exec(data.names[index]!);
+    if (match) fills.add(match.slice(1).join(' '));
+  }
+  if (new Set([...fills].map((fill) => fill.toLowerCase())).size !== 1) return null;
+  const letters = [...fills][0]!.split(' ');
+  const letter = (char: string | undefined) => char !== undefined && char !== LOST && /\p{L}/u.test(char);
+  return chars.map((char, at) => {
+    if (char !== LOST) return char;
+    const filled = letters.shift()!;
+    if (!letter(chars[at - 1])) return filled;
+    const beside = [chars[at - 1], chars[at + 1]].filter(letter);
+    return beside.every((other) => other === other!.toUpperCase()) ? filled.toUpperCase() : filled.toLowerCase();
+  }).join('');
+}
+
+/**
+ * The result with the letters its scans' "Town, Country" places lost restored
+ * (`restoredTownName`), in the place and wherever the wording names it.
+ */
+export function restoreLostLetters(result: CarrierResult): CarrierResult {
+  if (!result.events?.some((event) => event.location?.includes(LOST))) return result;
+  const restored = new Map<string, string>();
+  for (const event of result.events) {
+    const [, town, country] = /^(.+), ([^,]+)$/.exec(event.location ?? '') ?? [];
+    const code = country ? countryCode(country) : null;
+    const name = town && code && !restored.has(town) ? restoredTownName(town, code) : null;
+    if (name) restored.set(town!, name);
+  }
+  if (!restored.size) return result;
+  const spell = (text: string) => [...restored].reduce((spelled, [lost, name]) => spelled.replaceAll(lost, name), text);
+  return {
+    ...result,
+    ...(result.last_status_text ? { last_status_text: spell(result.last_status_text) } : {}),
+    events: result.events.map((event) => ({
+      ...event,
+      ...(event.location ? { location: spell(event.location) } : {}),
+      ...(event.description ? { description: spell(event.description) } : {}),
+    })),
+  };
 }
 
 /** `split` reads a country the text names apart from its town; without it the whole text is the town's. */

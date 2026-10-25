@@ -177,6 +177,15 @@ A deduced zone can be wrong near a border between zones, or for a carrier that k
 everywhere. A zone the carrier states, or one learned by comparing its clocks with copies that
 carry an instant, belongs in its adapter, which then dates the scan itself.
 
+## Lost letters
+
+A carrier can relay a town with an accented letter lost to the replacement character (U+FFFD),
+as Hermes does for some of its French partner's depots. `restoreLostLetters(result)` fills each
+lost letter in a scan's "Town, Country" place, and wherever the wording repeats that town, from
+the one spelling of a town of that country that fits: inside a word in the case of the letters
+beside it, starting one in the town's own. A gap two spellings fit (Münster and Munster) stays.
+Node lookups through `trackCarrier()` and `createTracker()` apply it to a carrier's own answer.
+
 ## Facilities
 
 Some carriers say exactly where a scan happened, and the town's centre can be kilometres off:

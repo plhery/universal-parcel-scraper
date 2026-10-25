@@ -4,6 +4,7 @@ import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import { runSteps } from '../runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
+import { restoreLostLetters } from '../../places/index.js';
 import type { UniversalTracker } from '../../providers/universal.js';
 import type { AdapterRegistry, TrackingContext, TrackingInput } from './index.js';
 
@@ -30,7 +31,7 @@ export async function trackCarrier(carrier: string, typed: TrackingInput, option
         : await runSteps({ carrier, budgetMs: options.budgetMs ?? 120_000, signal: options.signal,
           recorder: options.recorder ?? NOOP_RECORDER }, [{ id: registered.steps[0] ?? 'direct',
           run: ({ signal, remainingMs }) => registered.track(input, ...(options.signal || options.budgetMs !== undefined ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs) }] as const : [])) }]);
-      return dateLocalClocks(carrier, normalizeCarrierResult(result));
+      return dateLocalClocks(carrier, restoreLostLetters(normalizeCarrierResult(result)));
     } catch (error) {
       // A caller's cancellation is the caller's reason, not a carrier failure.
       if (options.signal?.aborted) throw options.signal.reason;

@@ -86,7 +86,7 @@ const DEPOT_PLACES = [
 ];
 const COUNTRY_PLACES = [
   /\barrived in the destination country (.+?)(?: and is prepared\b|\.?$)/i,
-  /\bprepared for further shipping \(([^()]+)\)/i,
+  /\bfor further shipping \(([^()]+)\)/i,
 ];
 // The town after the postcode closing a ParcelShop's address, before the
 // collection deadline the ready-for-pickup wording appends.
@@ -94,18 +94,20 @@ const SHOP_TOWN = /,\s*\d{5}\s+([^\d,]+?)(?:\s+max\.\s.*|\s+abgegeben)?\.?\s*$/;
 
 /**
  * Where a row's wording puts the parcel. Hermes's own depots and ParcelShops
- * are in Germany; a country abroad is named alone.
+ * are in Germany. A partner's scan (`INTERNATIONAL_…`) names the country after
+ * its depot, "prepared in EXEMPLEVILLE for further shipping (France)",
+ * or the country alone.
  */
 function wordedPlace(text: string, code: string): string | null {
   const place = (pattern: RegExp) => clean(pattern.exec(text)?.[1], 120);
+  const country = COUNTRY_PLACES.map(place).find(Boolean) ?? '';
+  const partner = code.startsWith('INTERNATIONAL_');
   for (const pattern of DEPOT_PLACES) {
     const depot = place(pattern);
+    if (depot && partner) return country ? `${depot}, ${country}` : depot;
     if (depot) return `${depot}, Germany`;
   }
-  for (const pattern of COUNTRY_PLACES) {
-    const country = place(pattern);
-    if (country) return country;
-  }
+  if (country) return country;
   const town = code.startsWith('PARCELSHOP_') ? place(SHOP_TOWN) : '';
   return town ? `${town}, Germany` : null;
 }

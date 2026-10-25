@@ -79,11 +79,13 @@ describe('Hermes Germany', () => {
         { parcelStatus: 'PARCELSHOP_READY_FOR_COLLECTION', timestamp: at(7),
           historyText: 'The shipment is ready for pick up in the Hermes parcel shop Example Kiosk, Beispielweg 2, 54321 Bad Beispiel-Ost max. 7 working days.' },
         { parcelStatus: 'DELIVERY_TOUR_STARTED', timestamp: at(8), historyText: 'The shipment was loaded into the delivery vehicle and is expected to be delivered today.' },
+        // A partner's depot is in the country it names.
+        { parcelStatus: 'INTERNATIONAL_SORTED', timestamp: at(9), historyText: 'The shipment was prepared in EXEMPLEVILLE for further shipping (France).' },
       ],
     }], NUMBER);
     expect(result.events?.map((event) => event.location ?? null).reverse()).toEqual([
       'Musterhausen, Germany', 'Beispieldorf (Musterstadt), Germany', 'Neu-Beispielburg, Germany', 'Musterstadt, Germany',
-      'Spain', 'Spain', 'Bad Beispiel-Ost, Germany', null,
+      'Spain', 'Spain', 'Bad Beispiel-Ost, Germany', null, 'EXEMPLEVILLE, France',
     ]);
     const german = parseHermesGermanyResponse([{
       barcode: NUMBER,

@@ -25,7 +25,8 @@ its check digit. `hermes-de-padded` offers Hermes for two zeros and thirteen
 digits, the form the public samples show, when that check passes. Exact
 `(time, parcelStatus)` duplicates are dropped, and rows are sorted newest first.
 Timestamps are read with their own offset (falling back to `Europe/Berlin`) and
-stored as UTC.
+stored as UTC. Hermes's own scans carry UTC to the millisecond: a summer scan
+at 14:00 German time reads `12:00:00.123Z`.
 
 ## Notes
 
@@ -49,6 +50,9 @@ stored as UTC.
 - Stages come from the `parcelStatus` enum, no carrier wording rules. The enum
   is stable, and wording would only add a chance to be wrong. The enum was read
   from the carrier's public bundle `gcp-prd.my-deliveries.de/tnt/bundle/tnt-bundle-v2.js`.
+- Hermes's depots and ParcelShops are placed in Germany. A partner abroad
+  (`INTERNATIONAL_…` codes) names its depot and then its country, "prepared in
+  EXEMPLEVILLE for further shipping (France)", so its depot is placed there.
 - The sender's drop-off at a ParcelShop (`PARCELSHOP_DROP_OFF`) reads as accepted,
   like a drop-off at another network's parcel shop: the shop takes the parcel in
   for Hermes. The driver's collection from the shop follows it.

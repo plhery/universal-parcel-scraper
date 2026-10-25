@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { locatePlace, placesForEvents } from './index.js';
+import { locatePlace, placesForEvents, restoreLostLetters } from './index.js';
 
 vi.setConfig({ testTimeout: 30_000 });
 
@@ -710,5 +710,28 @@ describe('placesForEvents', () => {
       ['DE', 'registered', '2026-01-06T06:05:00Z']])).toEqual(['Shenzhen, CN', 'Guangzhou, CN', null]);
     expect(scans([['Frankfurt', 'in_transit', '2026-01-05T10:00:00Z'], ['DE', 'registered', '2026-01-05T12:00:00Z']]))
       .toEqual(['Frankfurt, DE', 'Germany, DE']);
+  });
+});
+
+describe('restoreLostLetters', () => {
+  const lost = (location: string, description = '') => restoreLostLetters({
+    status: 'in_transit', last_status_text: description, last_update: '2026-10-24T11:00:00Z', expected_delivery: null,
+    events: [{ time: '2026-10-24T11:00:00Z', location, description }],
+  });
+
+  it('fills a letter a carrier lost from the one town of its country it fits', () => {
+    expect(lost('SAINT-\uFFFDTIENNE, France').events?.[0]?.location).toBe('SAINT-ÉTIENNE, France');
+    expect(lost('Saint \uFFFDtienne, France').events?.[0]?.location).toBe('Saint Étienne, France');
+    expect(lost('B\uFFFDziers, France').events?.[0]?.location).toBe('Béziers, France');
+    // Münster and Munster are both German towns.
+    expect(lost('M\uFFFDNSTER, Germany').events?.[0]?.location).toBe('M\uFFFDNSTER, Germany');
+    expect(lost('SAINT-\uFFFDTIENNE, Germany').events?.[0]?.location).toBe('SAINT-\uFFFDTIENNE, Germany');
+    expect(lost('SAINT-\uFFFDTIENNE').events?.[0]?.location).toBe('SAINT-\uFFFDTIENNE');
+  });
+
+  it('restores the place and the wording that names it', () => {
+    const result = lost('SAINT-\uFFFDTIENNE, France', 'The shipment was prepared in SAINT-\uFFFDTIENNE for further shipping (France).');
+    expect(result.last_status_text).toBe('The shipment was prepared in SAINT-ÉTIENNE for further shipping (France).');
+    expect(result.events?.[0]).toMatchObject({ location: 'SAINT-ÉTIENNE, France', description: result.last_status_text });
   });
 });
