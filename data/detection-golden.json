@@ -78104,6 +78104,17 @@
     ]
   },
   {
+    "input": "JJH30AAAAAPL00000001",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "magyar-posta"
+    ],
+    "preferred": [
+      "magyar-posta"
+    ]
+  },
+  {
     "input": "JJITA8UW1A2B345678",
     "carrier": "poste-italiane",
     "confidence": "high",
@@ -87138,6 +87149,17 @@
     "asked": [
       "nipost",
       "chronopost"
+    ]
+  },
+  {
+    "input": "RL15050014358643",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "magyar-posta"
+    ],
+    "preferred": [
+      "magyar-posta"
     ]
   },
   {

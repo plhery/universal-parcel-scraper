@@ -20625,6 +20625,16 @@
         "confidence": "low",
         "checksum": "magyar-posta",
         "preferred": true
+      },
+      {
+        "pattern": "^RL\\d{14}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^JJH[A-Z0-9]{17}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },

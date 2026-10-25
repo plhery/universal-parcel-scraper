@@ -193,6 +193,19 @@ describe('Magyar Posta numbers', () => {
     expect(detectCarrierMatch('PB00000000014').candidates).toEqual(['la-poste']);
   });
 
+  it('suggests Magyar Posta for its sixteen-character domestic letters and its MPL Europe Standard numbers', () => {
+    for (const number of ['RL00000000000013', 'rl 0000 000 000 001 2', 'JJH30ZZZZZPL00000001', 'JJH12A1B2C3D4E5F6G7H']) {
+      expect(detectCarrierMatch(number), number).toEqual({
+        carrier: 'unknown', confidence: 'low', candidates: ['magyar-posta'], preferred: ['magyar-posta'],
+      });
+      expect(recognitionAskedCarriers(number), number).not.toContain('magyar-posta');
+      expect(recognitionCandidates(number, { phase: 'browser' }).map(({ carrier }) => carrier), number).toEqual(['magyar-posta']);
+    }
+    for (const number of ['RL0000000000001', 'RL000000000000013', 'RX00000000000013', 'RL0000000000001A', 'JJH30ZZZZZPL0000001', 'JJH30ZZZZZPL000000012', 'JJD30ZZZZZPL00000001']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('magyar-posta');
+    }
+  });
+
   it('keeps a Hungarian S10 number in international mail and asks Magyar Posta, whose tracker needs a solved checkbox, in the browser phase only', () => {
     expect(detectCarrierMatch('RR123456785HU')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     for (const number of ['RR123456785HU', 'PNZZZ00000013', 'PB00000000013']) {

@@ -20627,6 +20627,16 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "magyar-posta",
         "preferred": true
+      },
+      {
+        "pattern": "^RL\\d{14}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^JJH[A-Z0-9]{17}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },
@@ -34077,7 +34087,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "m-one": ["m-one-s10"],
   "madhur-courier": [],
   "maersk-ecommerce": ["maersk-ecommerce-1"],
-  "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic"],
+  "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic","magyar-posta-letter","magyar-posta-europe-standard"],
   "mailamericas": ["mailamericas-ml","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
   "mailplus-au": ["mailplus-au-1"],
   "mainfreight": ["mainfreight-1"],

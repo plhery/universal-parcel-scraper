@@ -14,6 +14,14 @@ suggestion led by Magyar Posta; one with a numeric customer code also fits La Po
 two-characters-and-eleven-digits rule. S10 items ending in `HU` stay with the generic postal
 carrier, which lists Magyar Posta first among the direct carriers.
 
+The tracker names two more series. Domestic registered letters are `RL` and fourteen digits.
+The guide for identified letters' barcodes gives their `KA` sibling a four-digit customer code,
+a nine-digit serial and a check digit over the serial, but nothing documents that check for
+`RL`, so the rule takes any digits. MPL Europe Standard parcels, which DHL carries within the
+EU, are `JJH` and seventeen letters or digits; the tracker's only example is a
+placeholder, so the rule fixes nothing past the length. Both rules suggest Magyar Posta at low
+confidence.
+
 ## How it works
 
 1. `app`: a number added before is read again from the app's guest API under

@@ -106,6 +106,18 @@
       "confidence": "low",
       "preferred": true,
       "checksum": "magyar-posta"
+    },
+    {
+      "id": "magyar-posta-letter",
+      "pattern": "^RL\\d{14}$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
+      "id": "magyar-posta-europe-standard",
+      "pattern": "^JJH[A-Z0-9]{17}$",
+      "confidence": "low",
+      "preferred": true
     }
   ]
 }

@@ -269,6 +269,50 @@
         ]
       },
       "note": "Magyar Posta's tracking API guide lists it in an example reply; it is not described as a live shipment."
+    },
+    {
+      "number": "RL15050014358643",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220727091109/https://www.posta.hu/nyomkovetes/nyitooldal?searchvalue=RL15050014358643",
+        "date": "2022-07-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "domestic registered letter",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Looked up on Magyar Posta's tracker, as an archived address shows; the capture holds only the search form. The tracker names the RL series as its domestic letters, sixteen characters long."
+    },
+    {
+      "number": "JJH30AAAAAPL00000001",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/ikrnyomkovproxy/",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL Europe Standard",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's tracker gives it as the example of an MPL Europe Standard (DHL) parcel number; it is not described as a live shipment."
     }
   ]
 }
