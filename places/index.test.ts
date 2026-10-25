@@ -30,6 +30,11 @@ describe('locatePlace', () => {
     expectPlace('Zurich, CH', { ...zurich, name: 'Zurich' });
     expectPlace('Switzerland Zurich', { ...zurich, name: 'Zurich' });
     expectPlace('Urdorf, CH', { country: 'CH', name: 'Urdorf', latitude: 47.39, longitude: 8.43 });
+    // Small letters alone are no spelling either.
+    expectPlace('zurich, ch', zurich);
+    // A Chinese city with the word for city joined to it, unless a city has that name.
+    expectPlace('shenzhenshi', { country: 'CN', name: 'Shenzhen', latitude: 22.55, longitude: 114.07 });
+    expectPlace('huangshi', { country: 'CN', name: 'Huangshi', latitude: 30.25, longitude: 115.05 });
     expectPlace('KOELN, DE', { country: 'DE', name: 'Köln', latitude: 50.93, longitude: 6.95 });
     expectPlace('SEOUL, KR', { country: 'KR', name: 'Seoul', latitude: 37.57, longitude: 126.98 });
     expectPlace('Paris, Île-de-France, FR', { country: 'FR', name: 'Paris', latitude: 48.85, longitude: 2.35 });
@@ -288,6 +293,9 @@ describe('locatePlace', () => {
     expect(place('TORINO MONCALIERI (999)', ['IT'])).toMatchObject({ country: 'IT', name: 'Moncalieri', latitude: 44.999 });
     expect(place('LYON CORBAS 2', ['FR'])).toMatchObject({ country: 'FR', name: 'Corbas' });
     expect(place('LONDON CROYDON')).toMatchObject({ country: 'GB', name: 'Croydon' });
+    // Or before the city in brackets; a river in brackets is no city.
+    expect(place('Kerpen (Köln), Germany')).toMatchObject({ country: 'DE', name: 'Kerpen' });
+    expect(place('HITZACKER (ELBE), DE')).toMatchObject({ country: 'DE', name: 'Hitzacker' });
     // Not a word that is no town there, a quarter a hyphen or a regional border joins to the city,
     // nor before an airport the text names.
     expect(place('TORINO NORD')).toMatchObject({ country: 'IT', name: 'Turin' });
@@ -318,6 +326,10 @@ describe('locatePlace', () => {
     expectPlace('Am Mellensee, DE', { country: 'DE', name: 'Am Mellensee', latitude: 52.15, longitude: 13.38 });
     expectPlace('ABIUL - PORTUGAL', { country: 'PT', name: 'Abiul', latitude: 39.87, longitude: -8.51 });
     expectPlace('AREMARK', { country: 'NO', name: 'Aremark', latitude: 59.22, longitude: 11.7 }, ['NO']);
+    // A Mexican municipality at its seat when the two are named apart: El Marqués is La Cañada's,
+    // Zapotlán el Grande Ciudad Guzmán's, not Zapotlán by Mexico City.
+    expectPlace('EL MARQUES QRO MX', { country: 'MX', name: 'La Cañada', latitude: 20.61, longitude: -100.33 });
+    expectPlace('Zapotlán el Grande, JAL, MX', { country: 'MX', name: 'Zapotlán el Grande', latitude: 19.7, longitude: -103.46 });
     // A Taiwanese district by its Chinese name, without the word for district.
     expectPlace('五股郵局', { country: 'TW', name: 'Wugu', latitude: 25.1, longitude: 121.43 }, ['TW']);
     // A US post office's town, though no town of 1,000 people: not Jaffa, once called Joppa.

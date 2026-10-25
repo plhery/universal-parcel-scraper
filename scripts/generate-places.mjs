@@ -295,6 +295,50 @@ for (const country of [...new Set([...Object.keys(DIVISIONS), ...Object.keys(TOW
   }
 }
 
+// Mexican carriers print a municipality's name for its seat when the two differ: "Cajeme" is
+// Ciudad Obregón's, "Corregidora" El Pueblito's. A name another place or municipality has names
+// none ("Benito Juárez", "Tlaxcala").
+const SEAT_COUNTRIES = ['MX'];
+for (const country of SEAT_COUNTRIES) {
+  const municipalities = new Map();
+  const seats = new Map();
+  const dump = unzip(await download(`dump-${country}.zip`, `https://download.geonames.org/export/dump/${country}.zip`), `${country}.txt`);
+  for (const [, rawName, ascii, , lat, lon, featureClass, feature, , , admin1, admin2] of lines(dump)) {
+    const code = `${admin1}.${admin2}`;
+    if (featureClass === 'A' && feature === 'ADM2') municipalities.set(code, [rawName, ascii]);
+    else if (featureClass === 'P' && feature === 'PPLA2') seats.set(code, [rawName, [round(lat), round(lon)]]);
+  }
+  const named = new Map();
+  for (const [code, names] of municipalities) {
+    const keys = new Set(names.flatMap((name) => nameKeys(name.replace(/\s+municipality$/iu, '').replace(/\s*-Dto\..*$/u, ''))));
+    municipalities.set(code, keys);
+    for (const key of keys) named.set(key, (named.get(key) ?? 0) + 1);
+  }
+  for (const [code, keys] of municipalities) {
+    const seat = seats.get(code);
+    const town = seat && knownPlace(country, seat[0], seat[1], 5);
+    if (!town) continue;
+    for (const key of keys) {
+      if (named.get(key) !== 1 || byName.has(`${country}:${key}`)) continue;
+      town.alternate.push(key);
+      byName.set(`${country}:${key}`, [town]);
+    }
+  }
+}
+
+// Chinese cities by their pinyin name with the word for city (市, "shi") joined to it, as SpeedPAK
+// prints them: "shenzhenshi". Not a name another place has: Huangshi and Shishi are cities of their own.
+const CITY_SUFFIX_FROM = 100_000;
+for (const place of places) {
+  if (place.country !== 'CN' || place.population < CITY_SUFFIX_FROM) continue;
+  for (const key of place.primary) {
+    const joined = `${key}shi`;
+    if (key.includes(' ') || byName.has(`CN:${joined}`)) continue;
+    place.alternate.push(joined);
+    byName.set(`CN:${joined}`, [place]);
+  }
+}
+
 const admin1Codes = lines(await readFile(await download('admin1CodesASCII.txt', 'https://download.geonames.org/export/dump/admin1CodesASCII.txt'), 'utf8'));
 
 // Canada Post still addresses mail to the cities Toronto absorbed ("SCARBOROUGH -

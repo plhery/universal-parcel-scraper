@@ -22,10 +22,13 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   GeoNames' transliteration of a name in another script ("Noman" is Norman in Japanese), but
   not the Chinese reading of a Chinese town's own name ("Shen Zhen"). A Spanish town also goes
   by its name without the article it begins with ("BORGES DEL CAMP"), and a Greek one with χ
-  written "ch", as Greek carriers do, where GeoNames writes "kh" ("VRACHATI"). Translations
+  written "ch", as Greek carriers do, where GeoNames writes "kh" ("VRACHATI"), and a Chinese
+  city of 100,000 people by its pinyin name with "shi" (city) joined to it ("shenzhenshi"),
+  unless a town has that name (Huangshi). Translations
   include old names, so nothing confirming it, only a city's of 100,000 people places a town
   (Trenton was "Mill Hill"). A town found by a translation keeps the carrier's words for its own
-  name: "Asuncion del Paraguay" is "Asuncion". Each half of a bilingual name counts
+  name: "Asuncion del Paraguay" is "Asuncion". Words in capitals or small letters alone give
+  the town's own name instead ("KOELN" is Köln). Each half of a bilingual name counts
   ("Biel/Bienne"), but not a direction that halves a district's ("Neustadt/Süd").
 - A town is looked up at the start or the end of a name, and between other words when it is
   a city of 100,000 people where the parcel is ("Example Reading Station Lockers"), or
@@ -57,6 +60,7 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
 - A country also goes by its Chinese or Japanese name ("日本").
 - A smaller town in the same region that ends the part of the text a city begins, within
   30 km of the city, is the carrier's site there: "TORINO MONCALIERI (999)" is in Moncalieri.
+  So is one the city follows alone in brackets: "Kerpen (Köln)" is in Kerpen.
   An airport the text names there comes first ("PARIS ORLY"). A hyphen makes the two one name,
   a quarter of the city ("Zürich-Mülligen"), and so does a regional border between them.
 - Bigger towns win, and context breaks ties: a country written in the text, a state,
@@ -267,7 +271,8 @@ neighbours, the Benelux and the United States, the Canadian municipalities posta
 Post still addresses Scarborough and North York, now part of Toronto), the municipalities of
 some European countries and Taiwan that no town is named after (with the older romanizations of
 Taiwan's: "Ta-yuan" is Dayuan), the town seats of Guangdong and
-Zhejiang, Swiss and
+Zhejiang, Mexican municipalities named unlike their seats, as alternate names of the seats
+("Cajeme" is Ciudad Obregón), Swiss and
 Liechtenstein postcodes, OurAirports airports with
 scheduled service, and the Natural Earth country label points in `countries.json`.
 Decisions about what to include are commented in the script.

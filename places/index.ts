@@ -901,17 +901,27 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
     // comes first. A hyphen makes the two one name, a quarter of the city: "Zürich-Mülligen" is in
     // Zürich, and so is "ZUERICH MUELLIGEN", as Mülligen the town lies across a regional border.
     const first = fieldTokens[best.field]![0];
-    const suburb = county || atFound || found.place.hub || best.start !== first?.start ? undefined : scored
-      .filter((other) => other.field === best.field && other.start >= best.end && other.place.country === best.place.country
-        && other.place.admin1 === best.place.admin1 && !fields[best.field]!.slice(best.end, other.start).includes('-')
-        && !other.place.hub && other.place.thousands < best.place.thousands
-        && fieldTokens[best.field]!.every((token) => token.end <= other.end || !/\p{L}/u.test(token.key))
-        && distanceKm(best.place.latitude, best.place.longitude, other.place.latitude, other.place.longitude) <= SUBURB_MAX_KM)
-      .sort((a, b) => b.score - a.score)[0];
+    const nearby = (other: (typeof scored)[number]) => other.place.country === best.place.country
+      && other.place.admin1 === best.place.admin1 && !other.place.hub && other.place.thousands < best.place.thousands
+      && distanceKm(best.place.latitude, best.place.longitude, other.place.latitude, other.place.longitude) <= SUBURB_MAX_KM;
+    // So is a smaller town that a city alone in brackets follows: "Kerpen (Köln)" is in Kerpen.
+    const whole = (field: number, from: number, to: number) => fieldTokens[field]!
+      .every((token) => (token.start >= from && token.end <= to) || !/\p{L}/u.test(token.key));
+    const literal = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    const bracketed = best.field > 0 && whole(best.field, best.start, best.end)
+      && new RegExp(`${literal(fields[best.field - 1]!)}\\s*\\(\\s*${literal(fields[best.field]!)}\\s*\\)`, 'u').test(rest);
+    const suburb = county || atFound || found.place.hub ? undefined : best.start === first?.start ? scored
+      .filter((other) => other.field === best.field && other.start >= best.end && nearby(other)
+        && !fields[best.field]!.slice(best.end, other.start).includes('-')
+        && fieldTokens[best.field]!.every((token) => token.end <= other.end || !/\p{L}/u.test(token.key)))
+      .sort((a, b) => b.score - a.score)[0] ?? (bracketed ? scored
+      .filter((other) => other.field === best.field - 1 && whole(other.field, other.start, other.end) && nearby(other))
+      .sort((a, b) => b.score - a.score)[0] : undefined) : undefined;
     const { place, text: carrierWords } = suburb ?? found;
     const airport = suburb ? null : atFound;
-    // Keep the carrier's spelling unless it is shouting: "La Crau", but "Köln" for "KOELN".
-    const name = (town: Candidate) => !town.named && /\p{Ll}/u.test(carrierWords) ? carrierWords : town.name;
+    // Keep the carrier's spelling unless it is shouting or all in small letters: "La Crau", but "Köln"
+    // for "KOELN" and "Shenzhen" for "shenzhenshi".
+    const name = (town: Candidate) => !town.named && /\p{Ll}/u.test(carrierWords) && /\p{Lu}/u.test(carrierWords) ? carrierWords : town.name;
     const twins = county || suburb || place.hub ? [] : scored.filter((other) => other.key === best.key && other.place.country === place.country
       && !other.place.hub && other.place.alternate === place.alternate && best.score - other.score < TWIN_SCORE
       && distanceKm(place.latitude, place.longitude, other.place.latitude, other.place.longitude) > PART_OF_NAME_KM);
