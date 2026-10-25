@@ -337,6 +337,15 @@
       "note": "Out for delivery abroad"
     },
     {
+      "code": "INTERNATIONAL_DELIVERY_FAILED",
+      "wording": "The shipment could not be delivered.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Delivery abroad failed, without its reason"
+    },
+    {
       "code": "INTERNATIONAL_DELIVERY_FAILED_ADDRESS",
       "wording": "The shipment could not be delivered because the address was not found.",
       "language": "en",

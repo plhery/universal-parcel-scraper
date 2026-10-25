@@ -589,7 +589,13 @@ describe('classifyWording', () => {
       ['Handover To Last Mile', 'in_transit'], ['Received by Last Mile Provider', 'in_transit'],
       ['Package picked up', 'accepted'],
       ['Picked up by the carrier', 'accepted'],
+      // Colis Privé's English as ParcelsApp relays it: its takeover, its depot with the driver's round to come, and a pickup point.
+      ['Your package is taken care of by Colis Privé. It will be shipped to our regional distribution center.', 'in_transit'],
+      ['Your package has arrived at our regional distribution agency, it will be handed over to your delivery driver.', 'in_transit'],
+      ['Your package is waiting for you at the collection point.', 'ready_for_pickup'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    // A hand-over to come to the carrier is still a registration.
+    expect(classifyWording('Your package is being prepared by the sender. It will be handed over to us soon.', 'pending').stage).toBe('registered');
     expect(wordingStage('Not yet picked up by the last-mile carrier')).not.toBe('in_transit');
     expect(wordingStage('Not yet received by last mile provider')).not.toBe('in_transit');
     // Only the day's delivery is Royal Mail's round; a later day is still a forecast.

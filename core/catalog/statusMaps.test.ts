@@ -1713,6 +1713,9 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'EN DEMORA - EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA.')).toEqual(gap);
     expect(answer('unknown', null, 'Last-mile delivery forecast')).toEqual(gap);
     expect(answer('unknown', null, 'Forecast of last-mile delivery by carrier')).toEqual(gap);
+    // Colis Privé's notices as ParcelsApp relays them.
+    expect(answer('unknown', null, 'Consignee notified: by email')).toEqual(gap);
+    expect(answer('unknown', null, 'Your package will be delivered to another pickup point. You will be informed of the address and hours by email.')).toEqual(gap);
     for (const wording of ['Shipment parameters updated', 'Tax ID. Form received', 'Keine weiteren Details erforderlich', 'Filiale / Agentur',
       'Benachrichtigt', 'In progress', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Received.', 'Shipped', 'Driver assigned',
       'Parcel is with the driver', 'Not received from retailer', 'Pickup document attached', 'Delivery branch. Rescheduling',
