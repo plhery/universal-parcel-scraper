@@ -36,7 +36,8 @@ SwiftX emits a `swiftx.verification` warning for an observed image challenge or
 an unresolved prepared page, using fixed puzzle types, outcome labels and counts.
 Analysis labels distinguish worker limits from an uncertain image match.
 It retains no images, answers, tracking identifiers or verification tokens.
-China Post reads its ordered-character prompt offline, submits the anonymous preview form
+China Post reads its ordered-character prompt offline and takes click positions from the
+shared character worker; a worker failure stays unreadable. It submits the anonymous preview form
 and retains only scan state labels and local clocks. If the entry form fails to load,
 it reloads the official page once before sending any tracking request. An identified
 unsolved verification on an HTTP 200 page reaches the adapter as a challenge,

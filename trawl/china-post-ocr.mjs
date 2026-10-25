@@ -39,6 +39,7 @@ export async function solveChinaPostCharacters(challenge, signal, timeoutMs, rep
   const targets = await readTargets(template, signal, timeoutMs);
   if (typeof targets !== 'string' || !/^[\u3400-\u9fff]{2,4}$/.test(targets)) return null;
   report?.('positions');
-  return solveZtoCharacters({ targets, image, region: { x: 0, y: 0, width, height } }, signal,
+  const result = await solveZtoCharacters({ targets, image, region: { x: 0, y: 0, width, height } }, signal,
     Math.max(0, timeoutMs - (Date.now() - started)));
+  return Array.isArray(result.points) ? result.points : null;
 }
