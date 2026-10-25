@@ -27,7 +27,7 @@ import {
 } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { militaryPostOffice } from '../../places/trackingLocation.js';
+import { countryName, militaryPostOffice } from '../../places/trackingLocation.js';
 import { hasSeveralClocks, mainZone } from '../../places/zones.js';
 import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
@@ -651,6 +651,23 @@ function inChina(location: string): boolean {
   return /\p{Script=Han}/u.test(location) || CHINESE_PROVINCES.has(place) || (!location.includes(',') && CHINESE_CITIES.has(place));
 }
 
+// China Post's office abroad that hands it the destination post's scans.
+const CHINA_POST_OFFICE_ABROAD = /境外经转局/u;
+
+/**
+ * Whether a China Post scan is the destination post's: its place or wording
+ * names the destination by the start of its Chinese name ("哥伦" for 哥伦比亚,
+ * Colombia), or its office abroad ("Departed from 境外经转局"). China Post
+ * copies those scans with the destination post's digits: UPU's copies of them
+ * at the destination's office of exchange have the same, to the minute.
+ */
+function chinaPostAbroad(location: string, status: string, destination: string | null): boolean {
+  if (CHINA_POST_OFFICE_ABROAD.test(status)) return true;
+  if (!destination || destination === 'CN') return false;
+  const country = countryName(destination, 'zh');
+  return [location, status].some((text) => (text.match(/\p{Script=Han}{2,}/gu) ?? []).some((run) => country.startsWith(run)));
+}
+
 /**
  * A scan's location as the zone steps read it. 4PX writes the country, state
  * and town in fixed fields ("US  NY  EXAMPLE CITY 12345", "US    EXAMPLE CITY
@@ -878,6 +895,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
     || ownOffset(name, state.date, scanLocation(name, state.location))) return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
   if (carrier === 'imile') return countryTimeZone(destination);
+  if (carrier === 'china-post' && chinaPostAbroad(scanLocation(name, state.location), status, destination)) return countryTimeZone(destination);
   // Cainiao's copies of Speedaf's scans keep Speedaf's digits, its arrival at the linehaul office too.
   if (carrier === 'speedaf' || (key === 'cainiao' && speedafDeparture(payload))) return speedafZone(payload, state.date, destination);
   // A SwiftX label keeps its own clock, and a listed SwiftX site dates its scans (`siteZone`).
@@ -1030,14 +1048,15 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const own = relay?.zone ?? (pitneyBowes ? pitneyBowes.zone : carrierClock(payload, raw, number, status, destination));
   // iMile's page writes every scan on the recipient country's clock, wherever it happened, and
   // ParcelsApp has its digits; read on iMile's catalog zone they came out early. A destination
-  // of one zone places them, and without one they keep their wall clock. So does Croatia Post's
+  // of one zone places them, and without one they keep their wall clock. So do China Post's
+  // copies of the destination post's scans (`chinaPostAbroad`), Croatia Post's
   // scan at a facility abroad whose office code names no single clock, Correos's and Correo
   // Uruguayo's copies of an origin post's scan from a country of several clocks, a scan of a
   // line on its place's clock that its place does not date (`PLACE_CLOCK_LINES`), and Pitney
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
-    || ['imile', 'hrvatska-posta', 'correos-spain', 'correo-uruguayo'].includes(ownCarrier) || PLACE_CLOCK_LINES.has(ownCarrier));
+    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'correo-uruguayo'].includes(ownCarrier) || PLACE_CLOCK_LINES.has(ownCarrier));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
   const placed = own !== undefined ? own : sited;
   // A posting that only its office's capital places borrows first (`postingOffice`).

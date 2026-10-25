@@ -1802,6 +1802,20 @@ describe('ParcelsApp result parsing', () => {
     ] }, number, identity()).events?.map((scan) => scan.time)).toEqual(['2026-07-04T08:12:12.000Z']);
   });
 
+  it('reads China Post\'s copies of the destination post\'s scans on the destination\'s clock', () => {
+    // UPU's copies at the destination's office of exchange have the same digits.
+    const states = [
+      { date: '2026-08-26T16:19:00Z', status: 'Successfully delivered', carrier: 0, location: '哥伦' },
+      { date: '2026-08-25T13:26:00Z', status: 'Departed from 境外经转局', carrier: 0 },
+      { date: '2026-08-25T12:44:00Z', status: 'Arrive at the place of destination', carrier: 0 },
+    ];
+    const parse = (destinationCode: string) => parseParcelsAppResponse({ carriers: ['China Post'], originCode: 'CN', destinationCode, states },
+      number, identity()).events?.map((scan) => scan.time ?? `wall ${scan.local_time}`);
+    expect(parse('CO')).toEqual(['2026-08-26T21:19:00.000Z', '2026-08-25T18:26:00.000Z', '2026-08-25T04:44:00.000Z']);
+    // Australia has several clocks: its scans keep their wall clock, and "哥伦" names no other destination.
+    expect(parse('AU')).toEqual(['2026-08-26T08:19:00.000Z', 'wall 2026-08-25T13:26:00.000', '2026-08-25T04:44:00.000Z']);
+  });
+
   it('reads CTT\'s copies on the clock of each side of the border, which its offices of exchange tell', () => {
     // CTT's own tracker and Royal Mail's offsets give the same scans these digits, on each place's clock.
     const times = (originCode: string, destinationCode: string, states: Record<string, unknown>[]) => parseParcelsAppResponse({

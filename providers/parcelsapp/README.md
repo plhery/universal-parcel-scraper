@@ -397,7 +397,11 @@ step exists for future protocol changes.
   17TRACK's "+08:00" copies of the same scans are. Its other scans go through the steps
   like any, and one that no step places, with no place or one they cannot tell ("Example
   Town ENG GB AB1"), is read on China time too: 17TRACK's "+08:00" copies of its airline
-  handovers and of its scans at such places have the same digits. Its UPU and EMS scans come under those names, their place a
+  handovers and of its scans at such places have the same digits. Its copies of the
+  destination post's scans, placed by the start of the destination's Chinese name ("哥伦"
+  for Colombia) or sent from its office abroad ("境外经转局"), have that post's digits, as
+  UPU's copies at the destination's office of exchange show: they are read on the
+  destination's single clock, else kept as wall clocks. Its UPU and EMS scans come under those names, their place a
   code or a postcode ("GZSGJHHJ", Guangzhou's office of exchange). Theirs from posting to
   departure from the office of exchange are read on the origin's clock, the reply's
   `originCode` or the country of an S10 number: they share their digits with China Post's
