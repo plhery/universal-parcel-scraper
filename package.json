@@ -60,7 +60,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "test": "vitest run",
-    "test:scripts": "node --test trawl/*.test.mjs scripts/*.test.mjs",
+    "test:scripts": "node --test --test-concurrency=4 trawl/*.test.mjs scripts/*.test.mjs",
     "generate": "node scripts/generate-catalog.mjs && node scripts/generate-registry.mjs --strict && node scripts/generate-region-towns.mjs && node scripts/benchmark.mjs routing && node scripts/coverage-tables.mjs && node scripts/generate-readme.mjs",
     "generate:golden": "node scripts/detection-golden.mjs",
     "generate:expectations": "node scripts/detection-expectations.mjs",

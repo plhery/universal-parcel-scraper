@@ -28,6 +28,7 @@ npm run test:package     # packs the tarball, installs it and imports every entr
 
 `npm test` runs at most four test files at once (`maxWorkers` in `vitest.config.ts`), whatever
 the machine, so several checkouts can test side by side. `--maxWorkers` changes it for one run.
+`npm run test:scripts` keeps to four files too (`--test-concurrency`).
 
 ## Fix a carrier
 
