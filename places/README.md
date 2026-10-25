@@ -26,7 +26,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   something else in the text confirms it. Nothing after a linking word such as "am", "bei",
   "sur" or "nad" is looked up as a town on its own: "Bernau bei Berlin" is not in Berlin. A
   letter and a full stop after the first word are read as the linking words they abbreviate:
-  "Frankfurt a.d. Oder" is Frankfurt an der Oder, "Weil a. Rhein" Weil am Rhein.
+  "Frankfurt a.d. Oder" is Frankfurt an der Oder, "Weil a. Rhein" Weil am Rhein. "St" and
+  "Ste" are also read as Saint and Sainte: "ST QUENTIN FALLAVIER" is Saint-Quentin-Fallavier.
 - A longer place name is the place it names, not a town that shares a word of it, when it
   is a town where the text or the parcel is, or a city and the shorter name names no town
   there: "Cartagena de Indias" is in Colombia, "San Jose de Costa Rica" in Costa Rica, but
@@ -90,7 +91,9 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   not "Delgado" in El Salvador, nor is a region's name a small town of its country outside
   it ("Mid Wales MC" is not Wales in Yorkshire). A region the parcel's countries have wins over
   a namesake abroad. Carriers still print some regions' former names: "Distrito Federal" is
-  Mexico City's on a Mexican parcel and Brasília's on a Brazilian one.
+  Mexico City's on a Mexican parcel and Brasília's on a Brazilian one. A region named by points
+  of the compass alone places its country only where the parcel is: Royal Mail's "South West
+  Parcel Hub" is not in Cameroon.
 - A town nothing confirms needs 15,000 people. Otherwise the scan gets no place: a wrong
   dot is worse than none. Postcodes only confirm a name, never stand in for one. A name a
   division's word follows ("Houjie District") is no town GeoNames counts no people in.

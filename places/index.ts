@@ -458,6 +458,15 @@ function spelledOut(field: string, list: Token[]): Token[][] {
   return printed.some((token) => token.link) ? [printed, ...variants] : [list];
 }
 
+// French carriers shorten Saint and Sainte: "ST QUENTIN FALLAVIER" is Saint-Quentin-Fallavier.
+const SAINTS: Readonly<Record<string, string>> = { st: 'saint', ste: 'sainte' };
+
+/** The words as printed, then with Saint and Sainte written out where they are shortened. */
+function withSaints(list: Token[]): Token[][] {
+  const written = list.map((token) => Object.hasOwn(SAINTS, token.key) ? { ...token, key: SAINTS[token.key]! } : token);
+  return written.some((token, index) => token !== list[index]) ? [list, written] : [list];
+}
+
 /** Phrases worth looking up, most specific first: "zurich mulligen", then "zurich". */
 function phrases(field: string): Phrase[] {
   const found: Phrase[] = [];
@@ -488,7 +497,7 @@ function phrases(field: string): Phrase[] {
       }
     }
   };
-  for (const all of spelledOut(field, tokens(field).filter((token) => !/^\d+$/.test(token.key)))) {
+  for (const all of spelledOut(field, tokens(field).filter((token) => !/^\d+$/.test(token.key))).flatMap(withSaints)) {
     // Facility words alone ("Hub", "Terminal") are no town, whatever GeoNames says.
     if (all.some((token) => !FACILITY_WORDS.has(token.key))) add(all, 0, true);
     let words = all.filter((token) => !FACILITY_WORDS.has(token.key));

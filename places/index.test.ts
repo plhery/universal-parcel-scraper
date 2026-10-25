@@ -381,6 +381,13 @@ describe('locatePlace', () => {
     expect(place('Example Wells Station Lockers', ['GB'])).toBeNull();
   });
 
+  it('reads Saint and Sainte where a carrier shortens them', () => {
+    expect(place('ST QUENTIN FALLAVIER', ['FR'])).toMatchObject({ country: 'FR', name: 'Saint-Quentin-Fallavier' });
+    expect(place('STE GENEVIEVE DES BOIS', ['FR'])).toMatchObject({ country: 'FR', name: 'Sainte-Geneviève-des-Bois' });
+    // A name GeoNames gives shortened keeps it.
+    expect(place('St Albans', ['GB'])).toMatchObject({ country: 'GB', name: 'St Albans' });
+  });
+
   it('takes a region for its country, not for a town that shares a word of its name', () => {
     expect(place('Guangdong Province')).toMatchObject({ precision: 'country', country: 'CN' });
     expect(place('Cabo Delgado Province')).toMatchObject({ precision: 'country', country: 'MZ' });
