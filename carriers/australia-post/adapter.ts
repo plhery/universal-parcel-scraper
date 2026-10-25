@@ -3,6 +3,7 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
+import { furtherAlong } from '../../core/status/progress.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTime, epochMillisTime, isoTime,
@@ -201,9 +202,13 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   const summary = clean(selected.trackStatusOfArticle)
     || (isRecord(selected.status) ? clean(selected.status.statusAttributeValue) : '');
   if (!summary) throw new SchemaError(PROVIDER, 'Australia Post returned no article status');
-  // A summary the map does not know ("Despatched" abroad) takes the newest scan's stage.
+  // A summary the map does not know ("Despatched" abroad) takes the newest scan's stage. A summary
+  // label groups several scans ("In transit" covers customs on the way in): the newest scan's event
+  // code places the parcel further along when the map lists it.
   const latest = events[0]!;
-  const status = australiaPostStatus(summary) ?? latest.classified;
+  const labelled = australiaPostStatus(summary);
+  const coded = australiaPostStatus('', australiaPostCodeParts(String(latest.event.provider_code ?? '')).code);
+  const status = labelled && coded && furtherAlong(labelled.stage, coded.stage) ? coded : labelled ?? latest.classified;
   const deliveredAt = status?.status === 'delivered' ? events.find(({ event }) => event.stage === 'delivered')?.event.time : null;
   // The reply names the point but gives no address for it.
   const pickup = collectionPoint(status?.stage, events.map(({ event }) => event));

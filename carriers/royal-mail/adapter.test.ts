@@ -255,6 +255,23 @@ describe('Royal Mail structured response', () => {
     expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
   });
 
+  it("takes the stage of the day's round over the summary category that repeats it", () => {
+    const piece = (code: string, lastEventCode = code) => parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'Ready for Delivery', statusDescription: '**Ready for Delivery**', lastEventCode,
+        lastEventDateTime: '2026-01-07T07:44:13+00:00' },
+      events: [
+        { eventCode: code, eventName: '**Due to be delivered today by**', eventDateTime: '2026-01-07T07:44:13+00:00', locationName: 'Example DO' },
+        { eventCode: 'EVDAV', eventName: '**Item Received**', eventDateTime: '2026-01-06T09:54:07+00:00', locationName: 'Example MC' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(piece('EVGPD')).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Ready for Delivery' });
+    // The summary's own time names the scan it repeats when its code is another.
+    expect(piece('EVGPD', 'EVOTHER').current_stage).toBe('out_for_delivery');
+    // A scan the map does not stage by its code leaves the summary's stage.
+    expect(piece('EVUNMAPPED').current_stage).toBe('in_transit');
+  });
+
   it('reads a mail centre receipt without an earlier acceptance as the acceptance', () => {
     const piece = (code: string, category: string) => parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: IN_TRANSIT_NUMBER,

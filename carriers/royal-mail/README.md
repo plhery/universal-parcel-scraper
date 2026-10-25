@@ -44,6 +44,10 @@ answers are not retried. An unavailable browser fails fast.
   none, so that first receipt is its acceptance, as the summary's "We've got
   it" says. A
   first receipt elsewhere keeps its in-transit stage, as the summary does.
+  A category groups several scans: "Ready for Delivery" covers the delivery
+  office's receipt and the day's round. When the summary repeats the newest
+  scan and that scan's code places the parcel further along than transit (the
+  round, customs), the code's stage stands. Receipts stay under "We've got it".
 - An item leaving a Customer Service Point ("Collected and Signed at",
   "Collected From Your Customer Service Point") gets no stage: these scans came
   just before a booked redelivery's round, and they could as well be the

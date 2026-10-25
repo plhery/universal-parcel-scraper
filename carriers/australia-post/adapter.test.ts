@@ -238,6 +238,17 @@ describe('Australia Post status codes and places', () => {
     });
   });
 
+  it("takes the newest scan's coded stage when it is further along than the summary label", () => {
+    const customs = scan('INT-0031', 'Item received into Customs for clearance', 'EXAMPLE PORT (US), UNITED STATES OF AMERICA',
+      '2026-06-09T11:14:00-07:00');
+    const departed = scan('INT-0008', 'Cleared and awaiting international departure', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00');
+    expect(journey('US', [customs, departed], 'In transit'))
+      .toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'In transit' });
+    // A scan in transit, or a summary already further along, leaves the summary's stage.
+    expect(journey('US', [departed], 'In transit')).toMatchObject({ current_stage: 'in_transit' });
+    expect(journey('US', [customs, departed], 'Out for delivery')).toMatchObject({ current_stage: 'out_for_delivery' });
+  });
+
   it('names the collection point and follows the newest scan when the summary is unknown', () => {
     const waiting = journey('AU', [
       scan('DD-ER4', 'Awaiting collection at Example Post Office', 'EXAMPLE VIC', '2026-06-12T12:02:24+10:00', 'Awaiting collection'),

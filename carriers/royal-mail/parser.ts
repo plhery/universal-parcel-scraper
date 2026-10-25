@@ -7,6 +7,7 @@ import { countryCode, countryTimeZone, explicitOffsetTime, isoTime } from '../..
 import { isRecord } from '../../core/types.js';
 import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
+import { furtherAlong } from '../../core/status/progress.js';
 import { royalMailEventStage, royalMailScanStage, royalMailSummaryStage, statusForStage } from './status.js';
 
 /** Read the response produced by Royal Mail's form and hCaptcha callback. */
@@ -207,12 +208,20 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   const summaryCategory = cleanScalar(summary.statusCategory);
   const statusText = summaryText || summaryCategory || trimmed[0]?.description;
   if (!statusText) throw new SchemaError('Royal Mail', 'Royal Mail returned no usable tracking status');
-  const stage = royalMailSummaryStage(summaryCategory, statusText) ?? undefined;
-  const delivered = stage === 'delivered';
   // The summary repeats the newest scan's label, which a scan abroad corrects.
   const lastText = cleanScalar(summary.lastEventDateTime, 64);
   const lastClock = abroad.get(lastText);
   const lastTime = lastClock ? ('time' in lastClock ? lastClock.time : null) : eventTime(lastText);
+  // A summary category groups several scans: "Ready for Delivery" covers the delivery office's
+  // receipt and the day's round. When it repeats the newest scan, a round or customs scan's code
+  // places the parcel further along. Receipts stay under "We've got it", the acceptance.
+  const summaryStage = royalMailSummaryStage(summaryCategory, statusText) ?? undefined;
+  const newest = trimmed[0];
+  const repeated = newest?.stage_source === 'carrier_map' && newest.stage !== 'in_transit'
+    && (Boolean(lastTime) && lastTime === newest.time
+      || events.every(event => event.time) && cleanScalar(summary.lastEventCode, 64) === newest.provider_code);
+  const stage = repeated && furtherAlong(summaryStage, newest.stage) ? newest.stage : summaryStage;
+  const delivered = stage === 'delivered';
   const deliveredAt = !delivered ? null : trimmed.find(event => event.stage === 'delivered' && event.time)?.time
     ?? (royalMailEventStage(cleanScalar(summary.lastEventCode, 64)) === 'delivered' ? lastTime : null);
   return {

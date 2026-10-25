@@ -87,7 +87,9 @@ every outgoing request unless the consumer sets `tracePropagationTargets: []`. T
   the codes. A milestone groups several scans, so codes win: an item awaiting collection abroad is
   filed under `Delivered`, a failed attempt abroad under `It's on its way`. Awaiting collection,
   attempted delivery and returns are not delivery. An article summary the map does not know takes
-  the newest scan's stage.
+  the newest scan's stage. A summary label groups several scans too: when the newest scan's code
+  places the parcel further along the way (customs on the way in under `In transit`), the code's
+  stage stands.
 - A scan keeps both as its `provider_code`: the event code, a slash and the milestone label
   (`TTP-ER81/It's on its way`), or the code alone without a label. The parcel app's review asks
   the same map (`statusMap`) by that code, so it stages a scan as the adapter does. A scan stored
