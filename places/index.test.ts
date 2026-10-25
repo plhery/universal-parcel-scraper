@@ -175,6 +175,9 @@ describe('locatePlace', () => {
     expect(place('MIDLANDS SUPER HUB')).toEqual({ precision: 'city', country: 'GB', name: 'Daventry', site: 'Midlands Super Hub', latitude: 52.371, longitude: -1.172 });
     expect(place('Shatian Town')).toEqual({ precision: 'city', country: 'CN', name: 'Shatian Town', latitude: 22.923, longitude: 113.613 });
     expect(place('Mayong Town', ['FR'])).toMatchObject({ country: 'CN', name: 'Mayong Town', latitude: 23.057 });
+    // Shenzhen's port district, whose seat GeoNames gives no population; not the village of Fujian.
+    expect(place('YANTIAN', ['NL'])).toMatchObject({ country: 'CN', name: 'Yantian', latitude: 22.56 });
+    expect(place('YANTIAN, CN')).toMatchObject({ country: 'CN', latitude: 22.56 });
     // A longer name that contains a hub's is that place.
     expect(place('Terrasson-Lavilledieu', ['FR'])).toMatchObject({ country: 'FR', name: 'Terrasson-Lavilledieu' });
     expect(place('Terrasson-Lavilledieu', ['FR'])!.longitude).toBeCloseTo(1.3, 2);
@@ -633,9 +636,9 @@ describe('placesForEvents', () => {
   });
 
   it('places the towns Cainiao writes in brackets', () => {
-    const places = placesForEvents(['Fenggang Town', 'Xiaoshan District', 'Compans', 'Bordeaux', 'Camblanes-et-meynac']);
+    const places = placesForEvents(['Fenggang Town', 'Xiaoshan District', 'Mitry-Mory', 'Bordeaux', 'Saint-médard-en-jalles']);
     expect(places.map((found) => found && `${found.name}, ${found.country}`)).toEqual([
-      'Fenggang Town, CN', 'Xiaoshan, CN', 'Compans, FR', 'Bordeaux, FR', 'Camblanes-et-meynac, FR',
+      'Fenggang Town, CN', 'Xiaoshan, CN', 'Mitry-Mory, FR', 'Bordeaux, FR', 'Saint-médard-en-jalles, FR',
     ]);
     expect(places[0]).toMatchObject({ latitude: 22.757, longitude: 114.149 });
   });

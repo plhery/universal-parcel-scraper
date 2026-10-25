@@ -16,6 +16,7 @@
   { "country": "CN", "carriers": ["spx-br"], "names": ["ShiYan"], "town": "Shiyan", "latitude": 22.686, "longitude": 113.932, "source": "https://www.openstreetmap.org/relation/6661698" },
   { "country": "CN", "names": ["Shatian Town"], "town": "Shatian", "latitude": 22.923, "longitude": 113.613, "source": "https://www.openstreetmap.org/relation/5664242" },
   { "country": "CN", "names": ["Mayong Town"], "town": "Mayong", "latitude": 23.057, "longitude": 113.568, "source": "https://www.geonames.org/1800928" },
+  { "country": "CN", "names": ["Yantian"], "town": "Yantian", "latitude": 22.56, "longitude": 114.235, "source": "https://www.geonames.org/1787075" },
   { "country": "FR", "names": ["Terrasson"], "town": "Terrasson-Lavilledieu", "latitude": 45.129, "longitude": 1.32, "source": "https://www.openstreetmap.org/relation/19894168" },
   { "country": "US", "admin1": "MO", "names": ["Earth City"], "town": "Earth City", "latitude": 38.769, "longitude": -90.468, "source": "https://www.openstreetmap.org/node/151874554" },
   { "country": "DE", "carriers": ["dhl", "dhl-ecommerce", "dhl-express"], "names": ["Staufenberg"], "town": "Staufenberg", "latitude": 51.372, "longitude": 9.634, "source": "https://www.openstreetmap.org/way/35537407" },
