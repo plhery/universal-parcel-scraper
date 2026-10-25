@@ -6,13 +6,15 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import {
-  CARRIER, normalizeOcsNumber, OCS_HISTORY, OCS_LOOKUP, OCS_LOOKUP_MAX_BYTES, OCS_MAX_BYTES, ocsRoute, parseOcs, PROVIDER,
+  CARRIER, normalizeOcsNumber, OCS_HISTORY, OCS_LOOKUP, OCS_LOOKUP_MAX_BYTES, OCS_MAX_BYTES, ocsRoute, parseOcs, PROVIDER, type OcsHandoff,
 } from './parser.js';
 
 const REDIRECTS = [301, 302, 303, 307, 308];
 const DEFAULT_BUDGET_MS = 20_000;
+// The lookup's reply is one line. It only names the delivery company, so it never holds up the history for long.
+const LOOKUP_MS = 3_000;
 
-/** The lookup's address for one waybill, as the tracking form on OCS's site opens it. */
+/** The lookup's address for one waybill, as the tracking form on OCS's site opened it. */
 export function ocsLookupUrl(number: string): string {
   return `${OCS_LOOKUP}?cwbno=${encodeURIComponent(number)}`;
 }
@@ -37,12 +39,28 @@ export class OcsTracker {
     return decodeText(bytes);
   }
 
+  /** The delivery company the lookup hands the waybill to. A lookup that fails or does not answer in time names none. */
+  private async handoff(number: string, signal: AbortSignal, timeoutMs: number): Promise<OcsHandoff> {
+    try {
+      return ocsRoute(await this.page(ocsLookupUrl(number), signal, timeoutMs, OCS_LOOKUP_MAX_BYTES), number);
+    } catch {
+      return {};
+    }
+  }
+
   private async read(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
-    const deadline = Date.now() + timeoutMs;
-    // The lookup names the delivery company it hands a waybill to; OCS's page holds the history either way.
-    const handoff = ocsRoute(await this.page(ocsLookupUrl(number), signal, timeoutMs, OCS_LOOKUP_MAX_BYTES), number);
-    const html = await this.page(ocsHistoryUrl(number), signal, Math.max(1, deadline - Date.now()), OCS_MAX_BYTES);
-    return parseOcs(html, number, handoff);
+    // OCS's page holds the history, a delivery company's scans included; the lookup, asked at the same time, only names
+    // the company. OCS took its tracking form off the lookup after a vulnerability notice, and its host stopped answering.
+    const lookup = new AbortController();
+    const handoff = this.handoff(number, AbortSignal.any([signal, lookup.signal]), Math.min(LOOKUP_MS, timeoutMs));
+    try {
+      const html = await this.page(ocsHistoryUrl(number), signal, timeoutMs, OCS_MAX_BYTES);
+      const named = await handoff;
+      signal.throwIfAborted();
+      return parseOcs(html, number, named);
+    } finally {
+      lookup.abort();
+    }
   }
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {

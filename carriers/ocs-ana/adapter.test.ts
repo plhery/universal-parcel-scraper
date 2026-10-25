@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { adapter, ocsHistoryUrl, ocsLookupUrl, OcsTracker } from './adapter.js';
 import { normalizeOcsNumber, OCS_LOOKUP, ocsRoute, ocsWording, parseOcs } from './parser.js';
 import { ocsStage, statusMap } from './status.js';
@@ -27,12 +28,12 @@ const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_REC
 const rows = (result: ReturnType<typeof parseOcs>) => result.events!.map((event) => [event.local_time, event.stage, event.location, event.description]);
 
 describe('OCS HTTP adapter', () => {
-  it('asks the lookup where the waybill is tracked, then reads the English history page, through the supplied transport', async () => {
+  it('reads the English history page and asks the lookup at the same time, through the supplied transport', async () => {
     const fetcher = site(() => html(toHistory(DELIVERED)), () => html(fixture('delivered')));
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
     await expect(new OcsTracker({ fetcher, recorder, userAgent: 'SyntheticHost/1.0' }).fetch(' 1000-0000-0004 ', { budgetMs: 1000.5 }))
       .resolves.toMatchObject({ current_stage: 'delivered' });
-    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([ocsLookupUrl(DELIVERED), ocsHistoryUrl(DELIVERED)]);
+    expect(fetcher.mock.calls.map(([url]) => String(url)).sort()).toEqual([ocsHistoryUrl(DELIVERED), ocsLookupUrl(DELIVERED)].sort());
     expect(ocsLookupUrl(DELIVERED)).toBe('https://www2.ocsworldwide.net/ExpTracking/cwbCheck.php?cwbno=100000000004');
     expect(ocsHistoryUrl(DELIVERED)).toBe('https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do?cwbno=100000000004');
     for (const [, init] of fetcher.mock.calls) {
@@ -129,33 +130,61 @@ describe('OCS HTTP adapter', () => {
       handoff: { carrier: 'sagawa', number: DELIVERED, confirmed: false } });
   });
 
-  it('keeps an unknown waybill, a refused or changed lookup, a browser check and a broken page apart', async () => {
-    const lookup = (route: () => Response, history: () => Response = () => html(fixture('not-found'))) =>
-      carrier(site(route, history)).track({ number: UNKNOWN });
-    await expect(lookup(() => html(toHistory(UNKNOWN)))).rejects.toMatchObject({ kind: 'not_found' });
-    await expect(lookup(() => html(toHistory(UNKNOWN)), () => html(changed('not-found', (page) => page
+  it('keeps an unknown waybill, a browser check and a broken page apart', async () => {
+    const lookup = (history: () => Response) => carrier(site(() => html(toHistory(UNKNOWN)), history)).track({ number: UNKNOWN });
+    await expect(lookup(() => html(fixture('not-found')))).rejects.toMatchObject({ kind: 'not_found' });
+    await expect(lookup(() => html(changed('not-found', (page) => page
       .replace('No items were found for the search condition.', '条件に一致する情報がありません。'))))).rejects.toMatchObject({ kind: 'not_found' });
-    await expect(lookup(() => html(toHistory(UNKNOWN)), () => html(changed('not-found', (page) => page
+    await expect(lookup(() => html(changed('not-found', (page) => page
       .replace('No items were found for the search condition.', 'The system is busy. Please try again later.'))))).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(lookup(() => html('', { status: 404 }))).rejects.toMatchObject({ kind: 'transport' });
     await expect(lookup(() => html('', { status: 302, headers: { Location: 'https://www.ocs.co.jp/' } }))).rejects.toMatchObject({ kind: 'transport' });
-    await expect(lookup(() => html(toHistory(UNKNOWN)), () => html('', { status: 404 }))).rejects.toMatchObject({ kind: 'transport' });
     const check = '<html><head><title>Just a moment...</title></head><body><script>window._cf_chl_opt={}</script></body></html>';
     await expect(lookup(() => html(check))).rejects.toMatchObject({ kind: 'challenge' });
-    await expect(lookup(() => html(toHistory(UNKNOWN)), () => html(check))).rejects.toMatchObject({ kind: 'challenge' });
     await expect(lookup(() => html('<html><body>OCS</body></html>'))).rejects.toMatchObject({ kind: 'schema' });
-    await expect(lookup(() => html(toHistory(UNKNOWN)), () => html('<html><body>OCS</body></html>'))).rejects.toMatchObject({ kind: 'schema' });
+  });
+
+  it('leaves the history page’s answer without a delivery company when the lookup fails', async () => {
+    const check = '<html><head><title>Just a moment...</title></head><body><script>window._cf_chl_opt={}</script></body></html>';
+    for (const failed of [
+      () => html('', { status: 404 }),
+      () => html('', { status: 302, headers: { Location: 'https://www.ocs.co.jp/' } }),
+      () => html('', { status: 503 }),
+      () => html(check),
+      () => html('<html><body>OCS</body></html>'),
+      // A refresh for another waybill names no company for this one.
+      () => html(toHistory('100000000011')),
+      () => html(toYamatoIntro('100000000011')),
+      () => { throw new TypeError('fetch failed'); },
+    ]) {
+      const result = await carrier(site(failed, () => html(fixture('delivered')))).track({ number: DELIVERED });
+      expect(result).toMatchObject({ current_stage: 'delivered' });
+      expect(result).not.toHaveProperty('delivery_carrier');
+      await expect(carrier(site(failed, () => html(fixture('not-found')))).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
+    }
+  });
+
+  it('waits for the lookup three seconds at most', async () => {
+    const clock = fakeBudgetClock();
+    const ended: Record<string, number> = {};
+    const fetcher = vi.fn<typeof fetch>().mockImplementation((url, init) => new Promise<Response>((resolve, reject) => {
+      const page = String(url).startsWith(OCS_LOOKUP) ? 'lookup' : 'history';
+      init!.signal!.addEventListener('abort', () => { ended[page] = performance.now(); reject(init!.signal!.reason as Error); }, { once: true });
+      // The lookup hangs; the history page answers after half a second.
+      if (page === 'history') setTimeout(() => { ended[page] = performance.now(); resolve(html(fixture('delivered'))); }, 500);
+    }));
+    const started = performance.now();
+    const result = await clock.settle(carrier(fetcher).track({ number: DELIVERED }));
+    expect(result).toMatchObject({ current_stage: 'delivered' });
+    expect(result).not.toHaveProperty('delivery_carrier');
+    expect({ history: ended.history! - started, lookup: ended.lookup! - started }).toEqual({ history: 500, lookup: 3000 });
   });
 
   it.each([[403, 'challenge'], [429, 'rate_limited'], [500, 'indeterminate'], [503, 'maintenance']] as const)(
-    'preserves HTTP %s as %s from either page, during retrieval and recognition', async (status, kind) => {
-      for (const fetcher of [
-        site(() => new Response('', { status }), () => html(fixture('delivered'))),
-        site(() => html(toHistory(DELIVERED)), () => new Response('', { status })),
-      ]) {
-        await expect(carrier(fetcher).track({ number: DELIVERED })).rejects.toMatchObject({ kind });
-        await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind });
-      }
+    'preserves HTTP %s as %s from the history page, during retrieval and recognition', async (status, kind) => {
+      const fetcher = site(() => html(toHistory(DELIVERED)), () => new Response('', { status }));
+      await expect(carrier(fetcher).track({ number: DELIVERED })).rejects.toMatchObject({ kind });
+      await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind });
     });
 
   it('counts a page only when it is about the waybill asked', async () => {
@@ -204,10 +233,13 @@ describe('OCS HTTP adapter', () => {
   });
 
   it('sends a read that failed to reach OCS once more, and never a reply', async () => {
-    const fetcher = site(() => html(toHistory(DELIVERED)), () => html(fixture('delivered')));
-    fetcher.mockRejectedValueOnce(new TypeError('fetch failed'));
+    let failures = 1;
+    const fetcher = site(() => html(toHistory(DELIVERED)), () => {
+      if (failures-- > 0) throw new TypeError('fetch failed');
+      return html(fixture('delivered'));
+    });
     await expect(carrier(fetcher).track({ number: DELIVERED })).resolves.toMatchObject({ current_stage: 'delivered' });
-    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher).toHaveBeenCalledTimes(4);
     const answered = site(() => html(toHistory(UNKNOWN)), () => html(fixture('not-found')));
     await expect(carrier(answered).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     expect(answered).toHaveBeenCalledTimes(2);

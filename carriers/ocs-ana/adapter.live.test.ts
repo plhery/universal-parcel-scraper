@@ -11,8 +11,8 @@ describe('OCS live retrieval', () => {
     expect(answer).toMatchObject({ carrier: 'ocs-ana', source: 'ocs-ana' });
     expect(answer.attempts[0]).toMatchObject({ source: 'ocs-ana', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every scan keeps its wall clock, without an offset: a history spans the origin country and Japan.
-    expect(answer.result.events.every((event) => event.description && !event.time
+    // Every scan keeps its wall clock: a history spans the origin country and Japan, so an instant is one deduced for its zone.
+    expect(answer.result.events.every((event) => event.description && (!event.time || event.time_zone_basis)
       && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00$/.test(String(event.local_time)))).toBe(true);
     expect(answer.result.events.some((event) => event.stage)).toBe(true);
     expect(answer.result.events.some((event) => event.location)).toBe(true);
