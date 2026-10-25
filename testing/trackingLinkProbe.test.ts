@@ -42,6 +42,13 @@ describe('tracking link page validation', () => {
       text: 'Click the button below to continue shopping\nContinue shopping\nConditions of Use\nPrivacy Policy' };
     expect(trackingPageVerdict(check, signIn, /Sign in|Your Orders/i)).toBe('blocked');
   });
+  it('reports LogoiX\'s bot check, served on the tracker\'s address, as blocked', () => {
+    const check = { status: 200, url: 'https://www.logoix.com/cgi-bin/tnt.pl?q=LIX9000000003',
+      title: 'LogoiX - deutsche Lieferadresse, Paketversand und Weiterleitung EU-weit, Lager und Versandservice',
+      text: 'Track & Trace von LIX9000000003\nBitte bestätigen Sie, dass Sie kein Bot sind: :)' };
+    expect(trackingPageVerdict(check, /^https:\/\/www\.logoix\.com\/cgi-bin\/tnt\.pl\?q=LIX9000000003$/,
+      /Verlauf der Sendung LIX9000000003|unbekannte Sendungsnummer/)).toBe('blocked');
+  });
 });
 
 describe('search page validation', () => {
