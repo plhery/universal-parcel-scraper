@@ -14904,6 +14904,11 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^CLFOX\\d{15}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^66639\\d{5,15}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },
@@ -33938,7 +33943,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "followmont": [],
   "forward-air": [],
   "forza-delivery": ["forza-delivery-1"],
-  "foxpost": ["foxpost-1"],
+  "foxpost": ["foxpost-1","foxpost-home-delivery"],
   "franch-express": [],
   "fukuyama": [],
   "gaash": [],

@@ -40,9 +40,14 @@ The Hungarian parcel-locker network. Tracked through its public tracking page.
 Foxpost's tracker asks for the parcel ID from the shipping email. Its pages say that locker and
 pickup-point parcels carry an ID starting `CLFOX` or `Z` and home deliveries a number starting
 `66639`. The adapter takes `CLFOX` and fifteen digits, which `foxpost-1` claims, `Z` and ten
-digits, and ten digits starting `66`, which the tracker answers for locker parcels too.
-`Z` and ten digits is the layout of Packeta, which is merging its Hungarian lockers into
-Foxpost, and stays with Packeta's rule. No rule claims the `66` numbers.
+digits, ten digits starting `66`, which the tracker answers for locker parcels too, and `66639`
+with five to fifteen more digits. `Z` and ten digits is the layout of Packeta, which is merging
+its Hungarian lockers into Foxpost, and stays with Packeta's rule.
+
+No source gives the length of a home-delivery number, and Foxpost's API caps a parcel's barcode
+at twenty characters, so `foxpost-home-delivery` suggests Foxpost first for `66639` and five to
+fifteen digits. Other carriers print such digits too, so the rule is low and recognition asks
+Foxpost. No rule claims the other `66` numbers.
 
 ## Links
 
@@ -54,7 +59,7 @@ page.
 ## Limitations
 
 - No delivery estimate, scan location or weight.
-- The length of home-delivery numbers is unconfirmed; the adapter takes ten digits.
+- The length of home-delivery numbers is unconfirmed.
 
 ## Testing
 

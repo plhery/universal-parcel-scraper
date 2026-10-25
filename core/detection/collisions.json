@@ -6134,5 +6134,17 @@
       "tnt-it"
     ],
     "reason": "TNT Italy's waybill code takes any two letters and eight digits; InPost Spain's FV numbers are offered to Mondial Relay at low confidence and recognition asks both trackers."
+  },
+  {
+    "shape": "Foxpost home-delivery numbers: 66639 and digits, thirteen in all",
+    "carriers": [
+      "correos-chile",
+      "delhivery",
+      "foxpost",
+      "korea-post",
+      "la-poste",
+      "yunda"
+    ],
+    "reason": "Foxpost gives its home deliveries numbers starting 66639 without saying how long they are; the other carriers take thirteen digits of any kind. Foxpost leads, and direct tracking must confirm the carrier."
   }
 ]

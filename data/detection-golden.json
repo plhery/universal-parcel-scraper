@@ -50474,6 +50474,27 @@
     ]
   },
   {
+    "input": "6663900000001",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "foxpost",
+      "la-poste",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post"
+    ],
+    "preferred": [
+      "foxpost"
+    ],
+    "asked": [
+      "foxpost",
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "6679804342",
     "carrier": "unknown",
     "confidence": "low",

@@ -80,6 +80,12 @@
       "id": "foxpost-1",
       "pattern": "^CLFOX\\d{15}$",
       "confidence": "high"
+    },
+    {
+      "id": "foxpost-home-delivery",
+      "pattern": "^66639\\d{5,15}$",
+      "confidence": "low",
+      "preferred": true
     }
   ]
 }

@@ -14902,6 +14902,11 @@
       {
         "pattern": "^CLFOX\\d{15}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^66639\\d{5,15}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },

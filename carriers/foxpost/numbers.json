@@ -228,6 +228,26 @@
         "confidence": "high"
       },
       "note": "Looked up on Foxpost's own tracker, as an archived address shows; the capture was not opened."
+    },
+    {
+      "number": "6663900000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-25",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "foxpost",
+          "la-poste",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post"
+        ]
+      },
+      "note": "Made-up number with the prefix Foxpost's tracking page and help give its home deliveries. No source gives their length; Foxpost's API caps a parcel's barcode at twenty characters."
     }
   ]
 }

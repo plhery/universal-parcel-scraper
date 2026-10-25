@@ -12,9 +12,10 @@ import { foxpostScanStage } from './status.js';
 
 export const PROVIDER = 'Foxpost';
 
-// A Foxpost parcel ID, a Packeta number the tracker also answers for, and the
-// ten-digit IDs starting 66 it issues as well.
-const NUMBER = /^(?:CLFOX\d{15}|Z\d{10}|66\d{8})$/;
+// A Foxpost parcel ID, a Packeta number the tracker also answers for, the
+// ten-digit IDs starting 66 it issues as well, and its home deliveries' numbers
+// starting 66639, of up to the twenty characters its API allows a barcode.
+const NUMBER = /^(?:CLFOX\d{15}|Z\d{10}|66\d{8}|66639\d{5,15})$/;
 // The page's answer for a number it does not know.
 const ABSENT = /^A megadott csomag azonosító nem található a rendszerünkben\b/;
 const CLOCK = /^(\d{4})\.(\d{2})\.(\d{2}) (\d{2}):(\d{2})$/;
@@ -26,11 +27,11 @@ const MAX_EVENTS = 100;
 
 type Selection = ReturnType<CheerioAPI>;
 
-/** A CLFOX parcel ID, a Z number or a ten-digit number starting 66, as Foxpost's tracker takes them. */
+/** A CLFOX parcel ID, a Z number, a ten-digit number starting 66 or a home delivery's 66639 number, as Foxpost's tracker takes them. */
 export function normalizeFoxpostNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!NUMBER.test(number)) {
-    throw new InvalidInputError(PROVIDER, 'Foxpost tracks CLFOX parcel IDs, Z numbers and ten-digit numbers starting 66');
+    throw new InvalidInputError(PROVIDER, 'Foxpost tracks CLFOX parcel IDs, Z numbers, ten-digit numbers starting 66 and home deliveries\' numbers starting 66639');
   }
   return number;
 }
