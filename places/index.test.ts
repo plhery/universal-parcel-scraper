@@ -277,6 +277,11 @@ describe('locatePlace', () => {
     expectPlace('Changsha市 00000001', { country: 'CN', name: 'Changsha', latitude: 28.2, longitude: 112.97 });
   });
 
+  it('reads a town of a country written in Cyrillic by its Cyrillic name', () => {
+    expect(place('Тюмень', ['RU'])).toMatchObject({ country: 'RU', latitude: 57.152, longitude: 65.527 });
+    expect(place('Київ')).toMatchObject({ country: 'UA', latitude: 50.455, longitude: 30.524 });
+  });
+
   it('reads a town a carrier names after the city it serves as that town', () => {
     expect(place('TORINO MONCALIERI (999)', ['IT'])).toMatchObject({ country: 'IT', name: 'Moncalieri', latitude: 44.999 });
     expect(place('LYON CORBAS 2', ['FR'])).toMatchObject({ country: 'FR', name: 'Corbas' });

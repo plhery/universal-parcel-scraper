@@ -50,6 +50,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   (镇, 乡) after its city. A town's name can
   start a facility's ("义乌转运中心"); a word for a facility or a part of town ("中心",
   "新城") names no town. Latin letters next to such script are a word: "Changsha市".
+- A larger town of a country written in Cyrillic also matches by its names in Cyrillic
+  ("Тюмень").
 - A smaller town in the same region that ends the part of the text a city begins, within
   30 km of the city, is the carrier's site there: "TORINO MONCALIERI (999)" is in Moncalieri.
   An airport the text names there comes first ("PARIS ORLY"). A hyphen makes the two one name,

@@ -33,6 +33,8 @@ const MULTILINGUAL = new Set(['CH', 'LI', 'AT', 'DE', 'FR', 'IT', 'BE', 'LU', 'N
 // Chinese, Japanese and Korean carriers print towns in their own script ("深圳市").
 const CJK_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW', 'JP', 'KR']);
 const CHINESE_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW']);
+// So do carriers in countries written in Cyrillic ("Тюмень").
+const CYRILLIC_COUNTRIES = new Set(['RU', 'BY', 'UA', 'KZ', 'KG', 'TJ', 'MN', 'BG', 'RS', 'MK']);
 const SKIPPED_FEATURES = new Set(['PPLH', 'PPLQ', 'PPLW', 'PPLCH']);
 // Chinese carriers lead with the province ("广东省深圳市"); GeoNames names them only in English.
 const CHINESE_PROVINCES = {
@@ -82,6 +84,7 @@ const lines = (text) => text.split('\n').filter(Boolean).map((line) => line.spli
 const round = (value) => Math.round(Number(value) * 1e3) / 1e3;
 const latin = (name) => /^[\p{Script=Latin} '’.\-()]{3,40}$/u.test(name) && !/^[A-Z]{2,5}$/.test(name);
 const cjk = (name) => /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]{2,12}$/u.test(name);
+const cyrillic = (name) => /^[\p{Script=Cyrillic} '’.\-()]{3,40}$/u.test(name);
 
 /**
  * A town's other names, as keys its own names lack. GeoNames adds a lower-case transliteration
@@ -93,11 +96,12 @@ function alternateKeys(alternates, country, population, primary) {
   const keys = new Set();
   if (Number(population) < (MULTILINGUAL.has(country) ? BILINGUAL_FROM : ALTERNATES_FROM)) return keys;
   for (const other of alternates.split(',')) {
-    if (latin(other) ? other === other.toLowerCase() && !CHINESE_COUNTRIES.has(country) : !(CJK_COUNTRIES.has(country) && cjk(other))) continue;
+    if (latin(other) ? other === other.toLowerCase() && !CHINESE_COUNTRIES.has(country)
+      : !(CJK_COUNTRIES.has(country) && cjk(other) || CYRILLIC_COUNTRIES.has(country) && cyrillic(other))) continue;
     // Three Latin letters are a code or a stray transliteration more often
     // than a name ("lon" for Lognes, "chi" for Jizhou), and carriers print
     // them for other towns.
-    for (const key of nameKeys(other)) if (!primary.has(key) && (key.length > 3 || cjk(key))) keys.add(key);
+    for (const key of nameKeys(other)) if (!primary.has(key) && (key.length > 3 || cjk(key) || cyrillic(key))) keys.add(key);
   }
   return keys;
 }

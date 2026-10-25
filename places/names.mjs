@@ -10,7 +10,7 @@ const directions = new Set(['nord', 'sud', 'ost', 'west', 'north', 'south', 'eas
 /**
  * Lower case, no accents, words separated by single spaces:
  * "Zürich" and "ZURICH" both become "zurich", "St. Gallen" becomes "st gallen".
- * Chinese, Japanese and Korean script stays as written: "深圳".
+ * Chinese, Japanese, Korean and Cyrillic script stays as written: "深圳", "тюмень".
  * @param {string} name
  * @returns {string}
  */
@@ -22,7 +22,7 @@ export function nameKey(name) {
     .replace(/(?![\u3099\u309a])\p{Mn}/gu, '')
     .normalize('NFC')
     .toLowerCase()
-    .replace(/[^a-z0-9\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]+/gu, ' ')
+    .replace(/[^a-z0-9\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Cyrillic}]+/gu, ' ')
     .trim();
 }
 
