@@ -237,9 +237,15 @@ const DAI_POST = 100790;
  */
 const USPS = 21051;
 const USPS_UNPLACED = /^(?:|US|USA|United States)$/i;
+/**
+ * BRT's page gives its "FOR DELIVERY" round a date and no time, and 17TRACK's carrier 199997
+ * shows it at midnight with an offset of its own: it keeps its day, as ParcelsApp's copy does.
+ */
+const BRT = 199997;
+const BRT_ROUND = /^for\s+delivery$/i;
 
-/** The day of a USPS row 17TRACK shows at midnight, or without a clock, under an offset of its own. */
-function uspsDay(raw: Record<string, unknown>): string | null {
+/** The day of a row 17TRACK shows at midnight, or without a clock, under an offset of its own. */
+function dayAlone(raw: Record<string, unknown>): string | null {
   const clock = isRecord(raw.time_raw) ? raw.time_raw : null;
   if (!clock || clock.timezone !== null || typeof clock.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(clock.date)) return null;
   return clock.time == null || clock.time === '00:00:00' ? clock.date : null;
@@ -465,6 +471,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const hywl = reported.key === HYWL;
     const daiPost = reported.key === DAI_POST;
     const usps = reported.key === USPS;
+    const brt = reported.key === BRT;
     const chile = reported.key === CORREOS_CHILE;
     const correos = reported.key === CORREOS_SPAIN;
     const poland = reported.key === POLAND_POST;
@@ -504,7 +511,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // staged as the Chinese was, with the place left to the location.
       const english = reported.key === CHINA_POST && parsed.description ? chinaPostEnglish(parsed.description) : undefined;
       if (english) parsed.description = english;
-      const day = usps ? uspsDay(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null) : null;
+      const day = usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
+        : brt && BRT_ROUND.test(text(raw.description).trim()) ? dayAlone(raw) : null;
       if (day) {
         const local: CarrierEvent = { ...parsed, local_time: day };
         delete local.time;

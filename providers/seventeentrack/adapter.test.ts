@@ -316,8 +316,8 @@ describe('17TRACK result parsing', () => {
       return { time_iso: at.toISO({ suppressMilliseconds: true }), time_utc: at.toUTC().toISO({ suppressMilliseconds: true }),
         time_raw: { date, time, timezone: null }, description, location, stage: null, sub_status: 'InTransit_Other' };
     };
-    const reply = (key: number, events: unknown[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
-      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name: 'USPS', country: 'US' }, events }] } } }] });
+    const reply = (key: number, events: unknown[], name = 'USPS', country = 'US'): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name, country }, events }] } } }] });
     const indiana = row('2026-05-07', '20:16:00', '-05:00', 'EXAMPLE CITY IN DISTRIBUTION CENTER');
     const parsed = parse17TrackResponse(reply(21051, [
       row('2026-05-08', '09:00:00', '-05:00', null, 'In Transit to Next Facility'),
@@ -358,6 +358,10 @@ describe('17TRACK result parsing', () => {
     }
     // Another feed's midnight is its own.
     expect(parse17TrackResponse(reply(100999, [printed]), number).events?.[0]?.time).toBe('2026-05-06T04:00:00.000Z');
+    // BRT's delivery round, which its page dates by its day alone, keeps its day; its other scans their clock.
+    const round = row('2026-10-22', '00:00:00', '+02:00', 'EXAMPLE CITY (000)', 'FOR DELIVERY');
+    const brt = parse17TrackResponse(reply(199997, [round, row('2026-10-22', '00:00:00', '+02:00', 'EXAMPLE CITY (000)', 'DEPARTED')], 'BRT (IT)', 'IT'), number);
+    expect(brt.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-10-22', '2026-10-21T22:00:00.000Z']);
   });
 
   it('reads Correos de Chile\'s scans on Santiago\'s clock, in summer time too', () => {
