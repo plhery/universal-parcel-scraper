@@ -1,6 +1,7 @@
 
 import { readFileSync } from 'node:fs';
 import { brotliDecompressSync } from 'node:zlib';
+import { DateTime } from 'luxon';
 import { CARRIER_DEFINITIONS } from '../core/catalog/definitions.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { countryCode, timeZoneCountry } from '../core/time/index.js';
@@ -8,7 +9,7 @@ import { ambiguousAddressCodes, militaryPostOffice, trackingPlace } from './trac
 import facilityList from './facilities.json' with { type: 'json' };
 import hubList from './hubs.json' with { type: 'json' };
 import { nameKey, nameKeys } from './names.mjs';
-import { mainZone, pointZone, regionZone } from './zones.js';
+import { mainZone, otherRegionZones, pointZone, regionZone } from './zones.js';
 
 export { carrierHomeZone, dateLocalClocks, type ZoneBasis } from './clocks.js';
 
@@ -343,6 +344,18 @@ export function airportTimeZone(location: string): string | null {
 
 const ZONED_REGIONS = new Set(['US', 'CA', 'AU', 'BR']);
 const zoneCache = new Map<string, string | null>();
+const regionCache = new Map<string, string | null>();
+
+/** The state or province of a town in a country whose zones follow them, cached. */
+function townRegion(place: EventPlace): string | null {
+  if (place.region || place.precision !== 'city') return place.region ?? null;
+  const key = `${place.country}|${place.latitude.toFixed(2)}|${place.longitude.toFixed(2)}`;
+  if (regionCache.has(key)) return regionCache.get(key)!;
+  const region = regionNear(place.country, place.latitude, place.longitude);
+  if (regionCache.size >= CACHE_SIZE) regionCache.clear();
+  regionCache.set(key, region);
+  return region;
+}
 
 /**
  * The zone a scan at this place keeps its clock on: its country's, or where a
@@ -360,6 +373,18 @@ export function placeTimeZone(place: EventPlace): string | null {
   if (zoneCache.size >= CACHE_SIZE) zoneCache.clear();
   zoneCache.set(key, zone);
   return zone;
+}
+
+/** The instant a time stands for and the offset it states, in minutes; none for UTC, which says no place's clock. */
+function statedClock(time: string | null | undefined): { at: number; offset: number } | null {
+  const raw = time?.trim() ?? '';
+  if (!/[+-]\d\d:?\d\d$/u.test(raw)) return null;
+  const parsed = DateTime.fromISO(raw, { setZone: true });
+  return parsed.isValid && parsed.offset !== 0 ? { at: parsed.toMillis(), offset: parsed.offset } : null;
+}
+
+function zoneOffset(zone: string | null, at: number): number | null {
+  return zone ? DateTime.fromMillis(at, { zone }).offset : null;
 }
 
 /** The instant an ISO 8601 time stands for, when it gives its offset. */
@@ -1491,9 +1516,39 @@ export function placesForEvents(
     const [place] = [found.place, ...found.twins].sort((left, right) => way(left) - way(right));
     return { ...found, place: place!, twins: undefined };
   });
-  const dropped = namesakes(told);
+  // A carrier that states each scan's own offset tells a country's towns of one name apart by it:
+  // "Lincoln" at -04:00 is not the city in Nebraska. It does when another of the parcel's towns
+  // in that country keeps its own, different offset; one stating a single offset everywhere does not.
+  // Where a country's zones follow its states, a town keeps any clock of its state.
+  const clocks = times.map(statedClock);
+  const keepsClock = (place: EventPlace, clock: { at: number; offset: number }) => {
+    const region = townRegion(place);
+    return [placeTimeZone(place), ...region ? otherRegionZones(place.country, region) : []]
+      .some((zone) => zoneOffset(zone, clock.at) === clock.offset);
+  };
+  const keeps = (found: Located | null, at: number) => found !== null && found.place.precision === 'city'
+    && ZONED_REGIONS.has(found.place.country) && clocks[at] !== null && keepsClock(found.place, clocks[at]!);
+  const clocked = told.map((found, index) => {
+    const clock = clocks[index];
+    if (!found || !clock || found.place.precision !== 'city' || found.place.site || !ZONED_REGIONS.has(found.place.country)
+      || keeps(found, index) || !told.some((other, at) => other?.place.country === found.place.country && keeps(other, at)
+        && clocks[at]!.offset !== clock.offset)) return found;
+    const fits = candidates(data, nameKey(found.place.name), carriers).filter((town) => !town.hub && town.country === found.place.country
+      && keepsClock({ ...town, precision: 'city' }, clock));
+    const other = (entry: Located | null, at: number) => entry?.place.precision === 'city' && locations[at]?.trim() !== locations[index]?.trim();
+    const around = [nearest(told, index, -1, other)?.place, nearest(told, index, 1, other)?.place]
+      .filter((place): place is EventPlace => Boolean(place));
+    const way = (town: Candidate) => around.length
+      ? around.reduce((sum, place) => sum + distanceKm(town.latitude, town.longitude, place.latitude, place.longitude), 0) : -town.thousands;
+    const [town] = fits.sort((left, right) => way(left) - way(right));
+    if (!town) return found;
+    const name = /\p{Ll}/u.test(found.place.name) ? found.place.name : town.name;
+    return { ...found, thousands: town.thousands, twins: undefined,
+      place: { latitude: round(town.latitude), longitude: round(town.longitude), precision: 'city' as const, country: town.country, name } };
+  });
+  const dropped = namesakes(clocked);
   const places = locations.map((location, index) => {
-    const found = told[index];
+    const found = clocked[index];
     if (!found || !location || dropped.has(index)) return null;
     return atPoint(found.place, points[index] ?? pointAt.get(location.trim()));
   });

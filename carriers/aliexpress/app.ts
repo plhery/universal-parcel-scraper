@@ -1,4 +1,5 @@
 import type { SameInstantIdentityPolicy, SameInstantScan } from '../../core/catalog/eventIdentity.js';
+import { placedWording } from './place.js';
 import { cainiaoActionCode, cainiaoActionStage } from './status.js';
 
 const normalized = (value: string) => value.replace(/\s+/g, ' ').trim().toLocaleLowerCase('en-US');
@@ -16,16 +17,19 @@ export function replacesCainiaoPlaceholder(incoming: SameInstantScan, stored: Sa
 }
 
 // A scan stored while its town was still part of the wording, "[Bordeaux] Out for
-// delivery" without a location, is the same scan as "Out for delivery" in Bordeaux,
-// and one stored with the placeholder is the same scan worded as its step.
+// delivery" or "[USA,Example City] Arrived" without a location, is the same scan as
+// "Out for delivery" in Bordeaux or "Arrived" at "Example City, USA", and one stored
+// with the placeholder is the same scan worded as its step.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'aliexpress', storedSources: ['aliexpress'], requireProviderCode: false,
   matchEachScan: true,
   matches(incoming, stored) {
     const wording = normalized(incoming.description);
     const location = normalized(incoming.location);
+    const moved = placedWording(stored.description, new Set());
     const movedLocation = Boolean(location) && !normalized(stored.location)
-      && normalized(stored.description) === `[${location}] ${wording}`;
+      && (normalized(stored.description) === `[${location}] ${wording}`
+        || (normalized(moved.location) === location && normalized(moved.description) === wording));
     if (replacesCainiaoPlaceholder(incoming, stored)) return true;
     if (!wording || ['', 'unknown'].includes(incoming.stage)) return false;
     if (incoming.stage === stored.stage) return movedLocation;

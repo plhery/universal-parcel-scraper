@@ -106,8 +106,13 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   wording keeps the rest. A bracket holding digits, capitals only, fewer than three letters or a
   carrier the module names stays in the text. Explicit numbered arrondissements of Paris, Lyon and
   Marseille are accepted even in uppercase. Cainiao Express's tracker puts a town or a country code
-  in `location`; the same rule reads it when the wording has no bracket. No scan states its
-  country, so the location is the town alone.
+  in `location`; the same rule reads it when the wording has no bracket. A bracket can name the
+  country first, `[USA,Example City]` or `[ES,Town 00000]`: the location is then the town, with
+  a trailing postcode, followed by that country, and a town in capitals counts when it has five
+  letters or several words. A country code a state shares is written out ("Canada"). Otherwise
+  the location is the town alone.
+- In the United States a scan's offset follows its site, so the place lookup can tell
+  same-named towns apart by it.
 - Some steps, the transit sorting centers' scans and the last-mile forecast among them, have the
   placeholder "Carrier update" as their standard wording. Their own wording (`desc`) is shown
   instead when they have one.

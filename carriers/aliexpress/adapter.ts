@@ -36,6 +36,7 @@ import {
   cainiaoActionStage,
   cainiaoStageByStatus,
 } from './status.js';
+import { placedWording, placeName } from './place.js';
 
 const PROVIDER = 'Cainiao';
 const UPSTREAM = 'Cainiao tracking';
@@ -147,35 +148,6 @@ function carrierNames(trackingModule: JsonObject, scans: readonly JsonObject[]):
   const named = [trackingModule.destCpInfo, ...[trackingModule.latestTrace, trackingModule.globalCombinedLogisticsTraceDTO, ...scans]
     .map((scan) => record(scan).currentStatusCpInfo)];
   return new Set(named.map((info) => text(record(info).cpName).trim().toLocaleLowerCase('en-US')).filter(Boolean));
-}
-
-/**
- * A name that reads as a place, or ''. Codes, ambiguous capitals-only names
- * and the module's carrier names are none.
- */
-function placeName(value: string, carriers: ReadonlySet<string>): string {
-  const place = value.trim();
-  // An explicit numbered city district is a place even in uppercase. Keep
-  // arbitrary numbers and facility codes excluded from the general rule.
-  const arrondissement = /^(?:Paris (?:[1-9]|1\d|20)|Lyon [1-9]|Marseille (?:[1-9]|1[0-6]))(?:er|e|eme|ème) arrondissement$/i.test(place);
-  const letters = place.match(/\p{L}/gu)?.length ?? 0;
-  if (letters < 3 || (!arrondissement && (!/^\p{L}[\p{L}\p{M} .'’-]*$/u.test(place)
-    || (/\p{Lu}/u.test(place) && !/\p{Ll}/u.test(place)))) || carriers.has(place.toLocaleLowerCase('en-US'))) {
-    return '';
-  }
-  return place;
-}
-
-/**
- * Cainiao's global feed has no place field: it writes a scan's town in front
- * of its standard wording, "[Bordeaux] Out for delivery", in every language. A
- * bracket that reads as a place name becomes the location and the wording
- * keeps the rest.
- */
-function placedWording(wording: string, carriers: ReadonlySet<string>): { description: string; location: string } {
-  const match = /^\s*\[([^[\]]{1,80})\]\s*(\S[\s\S]*)$/.exec(wording);
-  const place = match ? placeName(match[1]!, carriers) : '';
-  return place ? { description: match![2]!.trim(), location: place } : { description: wording, location: '' };
 }
 
 /**

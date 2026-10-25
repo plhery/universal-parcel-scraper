@@ -77,6 +77,11 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
 - Towns of one name in one country, more than 50 km apart and neither twice the other's size,
   are told apart by the scans around them: Royal Mail's "Kennington DO" between London's
   scans is in London, by Ashford in Kent. Alone, the scan gets no place.
+- In the United States, Canada, Australia and Brazil, a scan's stated offset tells towns of
+  one name apart, when another of the parcel's towns there keeps its own, different offset:
+  "Lincoln" at -04:00 after Boston is not in Nebraska. The town whose state keeps that offset
+  nearest the scans around it wins. A state split between zones keeps either, so Florida's
+  Panhandle keeps Central time; a carrier that states one offset everywhere tells nothing.
 - Context does not outweigh a city of a million people, or a town of 100,000 ten times the
   size of the namesake context picks, when it lies nearer the way between the scans around
   it: "Warsaw" between Lviv and New York is in Poland.

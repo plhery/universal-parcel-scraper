@@ -277,9 +277,17 @@ describe('Cainiao projection', () => {
       last_status_text: 'Received by local delivery company',
       events: [{ location: "Saint-Étienne-d'Exemple", description: 'Received by local delivery company' }],
     });
+    // A bracket can name the country first. The town follows with it, and there a town in capitals counts.
+    expect(scan('[USA,EXAMPLE CITY] Arrived at local delivery center').events?.[0])
+      .toMatchObject({ location: 'EXAMPLE CITY, USA', description: 'Arrived at local delivery center' });
+    expect(scan('[ES,Exampleville 99999] Received by local delivery company').events?.[0])
+      .toMatchObject({ location: 'Exampleville 99999, ES', description: 'Received by local delivery company' });
+    // A code a state shares is written out: CA is Canada there, not California.
+    expect(scan('[CA,Exampleville] Arrived').events?.[0]).toMatchObject({ location: 'Exampleville, Canada', description: 'Arrived' });
     // Codes, abbreviations, carrier names and a bracket alone are no place.
     for (const wording of ['[FR] Arrived', '[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
-      '[Hub 12] Arrived', '[Exampleville]', 'Arrived [Exampleville]']) {
+      '[Hub 12] Arrived', '[Exampleville]', 'Arrived [Exampleville]', '[USA,GOFO] Arrived', '[USA,Example Post] Arrived',
+      '[Exampleville,Example City] Arrived']) {
       expect(scan(wording).events?.[0]).toMatchObject({ location: '', description: wording });
       expect(scan(wording).last_status_text).toBe(wording);
     }

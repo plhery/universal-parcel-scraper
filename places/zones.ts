@@ -128,6 +128,27 @@ export function regionZone(country: string, region: string): string | null {
   return null;
 }
 
+// States and provinces part of which keeps another clock than the one most of their people do.
+const SPLIT_REGIONS: Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> = {
+  US: {
+    AK: ['America/Adak'], AZ: ['America/Denver'], FL: ['America/Chicago'], ID: ['America/Los_Angeles'],
+    IN: ['America/Chicago'], KS: ['America/Denver'], KY: ['America/Chicago'], MI: ['America/Chicago'],
+    ND: ['America/Denver'], NE: ['America/Denver'], OR: ['America/Boise'], SD: ['America/Denver'],
+    TN: ['America/New_York'], TX: ['America/Denver'],
+  },
+  CA: {
+    BC: ['America/Edmonton', 'America/Creston'], NL: ['America/Goose_Bay'], NU: ['America/Winnipeg', 'America/Edmonton'],
+    ON: ['America/Winnipeg'], QC: ['America/Halifax', 'America/Blanc-Sablon'], SK: ['America/Edmonton'],
+  },
+  AU: { NSW: ['Australia/Broken_Hill'] },
+  BR: { AM: ['America/Rio_Branco'] },
+};
+
+/** The clocks of a state or province besides its main one, where part of it keeps another. */
+export function otherRegionZones(country: string, region: string): readonly string[] {
+  return SPLIT_REGIONS[country]?.[region] ?? [];
+}
+
 /** Whether a country keeps several zones, among which a scan's place must choose. */
 export function hasSeveralClocks(country: string): boolean {
   return Object.hasOwn(COUNTRY_CLOCKS, country);

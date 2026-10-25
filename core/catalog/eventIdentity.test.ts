@@ -270,6 +270,11 @@ describe('same-instant identity policies', () => {
     for (const stage of ['', 'unknown']) {
       expect(policy?.matches?.({ ...incoming, stage }, { ...stored, stage })).toBe(false);
     }
+    // A town written after its country, "[USA,EXAMPLE CITY]", left the wording as "EXAMPLE CITY, USA".
+    const countryFirst = { ...stored, stage: 'in_transit', description: '[USA,EXAMPLE CITY] Arrived at local delivery center' };
+    const moved = { ...countryFirst, description: 'Arrived at local delivery center', location: 'EXAMPLE CITY, USA' };
+    expect(policy?.matches?.(moved, countryFirst)).toBe(true);
+    expect(policy?.matches?.({ ...moved, location: 'ANOTHER CITY, USA' }, countryFirst)).toBe(false);
   });
 
   it('lets an LBC scan gain its town and drop a representative\'s name with its provider code', () => {

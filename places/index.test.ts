@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { locatePlace, placesForEvents, restoreLostLetters } from './index.js';
+import { locatePlace, placesForEvents, placeTimeZone, restoreLostLetters } from './index.js';
 
 vi.setConfig({ testTimeout: 30_000 });
 
@@ -705,6 +705,22 @@ describe('placesForEvents', () => {
     expect(route(['Lausanne', 'Chavannes', 'Daillens Centre Colis'])).toEqual(['Lausanne, CH', 'Chavannes, CH', 'Daillens, CH']);
     expect(route(['CH', 'Chavannes', 'Daillens Centre Colis', 'CH'], { destinationCountry: 'CH', carriers: ['swiss-post'] }))
       .toEqual(['Switzerland, CH', 'Chavannes, CH', 'Daillens, CH', 'Switzerland, CH']);
+  });
+
+  it('tells a country\'s towns of one name apart by the offset the carrier states for each scan', () => {
+    const towns = (locations: string[], offsets: string[]) => placesForEvents(locations, {
+      destinationCountry: 'US', times: offsets.map((offset, day) => `2026-10-2${day}T08:00:00${offset}`),
+    }).map((place) => place && [placeTimeZone(place), Math.round(place.longitude)]);
+    // A Lincoln at -04:00 after Boston is not Nebraska's, when the parcel's other towns keep their own offsets.
+    expect(towns(['Omaha, USA', 'Boston, USA', 'Lincoln, USA'], ['-05:00', '-04:00', '-04:00'])?.[2])
+      .toEqual(['America/New_York', -71]);
+    // A carrier stating one offset everywhere tells nothing.
+    expect(towns(['Omaha, USA', 'Boston, USA', 'Lincoln, USA'], ['-04:00', '-04:00', '-04:00'])?.[2])
+      .toEqual(['America/Chicago', -97]);
+    // Part of Florida keeps Central time, so a town there keeps either offset.
+    for (const offset of ['-05:00', '-04:00']) {
+      expect(towns(['Boston, USA', 'Mobile, USA', 'Marianna, USA'], ['-04:00', '-05:00', offset])?.[2]).toEqual(['America/New_York', -85]);
+    }
   });
 
   it('gives paperwork filed away from the parcel no place', () => {
