@@ -22,7 +22,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   GeoNames' transliteration of a name in another script ("Noman" is Norman in Japanese), but
   not the Chinese reading of a Chinese town's own name ("Shen Zhen"). A Spanish town also goes
   by its name without the article it begins with ("BORGES DEL CAMP"), and a Greek one with χ
-  written "ch", as Greek carriers do, where GeoNames writes "kh" ("VRACHATI"), and a Chinese
+  written "ch", as Greek carriers do, where GeoNames writes "kh" ("VRACHATI"), a German one
+  without the kind of municipality GeoNames ends its name with ("Freiburg (Elbe) Flecken"), and a Chinese
   city of 100,000 people by its pinyin name with "shi" (city) joined to it ("shenzhenshi"),
   unless a town has that name (Huangshi). Translations
   include old names, so nothing confirming it, only a city's of 100,000 people places a town
@@ -60,7 +61,11 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
 - A country also goes by its Chinese or Japanese name ("日本").
 - A smaller town in the same region that ends the part of the text a city begins, within
   30 km of the city, is the carrier's site there: "TORINO MONCALIERI (999)" is in Moncalieri.
-  So is one the city follows alone in brackets: "Kerpen (Köln)" is in Kerpen.
+  So is one the city follows alone in brackets, within 100 km: "Kerpen (Köln)" is in Kerpen.
+- A town named whole with what follows it in brackets is that town, in a country the text
+  names, however small: "Frankfurt (Oder)", and "Neustadt (Holstein)" for Neustadt in
+  Holstein, with a linking word between the two ("in", "an der", "am", "bei"). Neither part
+  then names another town ("Essen (Oldenburg)" is not Essen).
   An airport the text names there comes first ("PARIS ORLY"). A hyphen makes the two one name,
   a quarter of the city ("Zürich-Mülligen"), and so does a regional border between them.
 - Bigger towns win, and context breaks ties: a country written in the text, a state,

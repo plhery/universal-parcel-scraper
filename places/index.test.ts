@@ -296,6 +296,8 @@ describe('locatePlace', () => {
     // Or before the city in brackets; a river in brackets is no city.
     expect(place('Kerpen (Köln), Germany')).toMatchObject({ country: 'DE', name: 'Kerpen' });
     expect(place('HITZACKER (ELBE), DE')).toMatchObject({ country: 'DE', name: 'Hitzacker' });
+    // Farther off than a suburb too.
+    expect(place('CLOPPENBURG (OLDENBURG), DE')).toMatchObject({ country: 'DE', name: 'Cloppenburg' });
     // Not a word that is no town there, a quarter a hyphen or a regional border joins to the city,
     // nor before an airport the text names.
     expect(place('TORINO NORD')).toMatchObject({ country: 'IT', name: 'Turin' });
@@ -457,6 +459,11 @@ describe('locatePlace', () => {
     // A town named like the region it lies in is still that town.
     expect(place('Example, Moscow')).toMatchObject({ precision: 'city', country: 'RU', name: 'Moscow' });
     expectPlace('Frankfurt (Oder)', { country: 'DE', name: 'Frankfurt (Oder)', latitude: 52.35, longitude: 14.55 });
+    // Or whose name joins what the brackets hold, however small and whatever else either part names.
+    expectPlace('NEUSTADT (HOLSTEIN), DE', { country: 'DE', name: 'Neustadt in Holstein', latitude: 54.11, longitude: 10.82 });
+    expectPlace('NEUSTADT (WEINSTRASSE), DE', { country: 'DE', name: 'Neustadt an der Weinstraße', latitude: 49.35, longitude: 8.14 });
+    expectPlace('Essen (Oldenburg), DE', { country: 'DE', name: 'Essen (Oldenburg)', latitude: 52.7, longitude: 7.92 });
+    expectPlace('Freiburg (Elbe), DE', { country: 'DE', name: 'Freiburg (Elbe)', latitude: 53.83, longitude: 9.29 });
   });
 
   it('looks past facility words to the town', () => {

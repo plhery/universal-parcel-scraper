@@ -150,11 +150,13 @@ const byKey = new Map();
 const SPANISH_ARTICLE = /^(?:el|la|los|las|els|les|l|sa|ses|es|s) (.{4,})$/;
 /**
  * Other spellings of a town's own name that carriers use: Greek ones write χ as "ch" ("VRACHATI"),
- * GeoNames "kh".
+ * GeoNames "kh", and German ones leave out the kind of municipality GeoNames can end a name with
+ * ("Freiburg (Elbe) Flecken").
  */
 function spellings(place) {
   if (place.country === 'ES') return place.primary.flatMap((key) => SPANISH_ARTICLE.exec(key)?.[1] ?? []);
   if (place.country === 'GR') return place.primary.filter((key) => key.includes('kh')).map((key) => key.replaceAll('kh', 'ch'));
+  if (place.country === 'DE') return place.primary.flatMap((key) => /^(.+) flecken$/.exec(key)?.[1] ?? []);
   return [];
 }
 function remember(place) {

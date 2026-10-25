@@ -111,6 +111,9 @@ const ABBREVIATED_LINKS: Readonly<Record<string, readonly (readonly string[])[]>
   a: [['am'], ['an']], 'a d': [['an', 'der']], b: [['bei']], i: [['im'], ['in']], 'i d': [['in', 'der']],
   n: [['nad']], o: [['ob']], 'o d': [['ob', 'der']], p: [['pod']],
 };
+// The words a town's full name can put before what brackets after its name hold: "Neustadt (Holstein)"
+// is Neustadt in Holstein, "Neustadt (Weinstrasse)" Neustadt an der Weinstraße.
+const QUALIFIER_LINKS = ['in', 'an der', 'am', 'an', 'im', 'in der', 'bei', 'ob der', 'nad', 'pod', 'sur', 'upon'];
 // Carriers print provinces the way the post does; GeoNames numbers them.
 const ADMIN_CODES: Record<string, Record<string, string>> = {
   CA: { AB: '01', BC: '02', MB: '03', NB: '04', NL: '05', NS: '07', ON: '08', PE: '09', QC: '10', SK: '11', YT: '12', NT: '13', NU: '14' },
@@ -162,6 +165,8 @@ const CLOCK_SLACK_HOURS = 2;
 const COUNTY_MAX_KM = 150;
 // A town a carrier names after the city it serves is this close to it.
 const SUBURB_MAX_KM = 30;
+// One the carrier tells apart by a city in brackets, this close: "Cloppenburg (Oldenburg)".
+const BRACKETED_MAX_KM = 100;
 // An airport only its bare code names is on the parcel's way when it takes it no further off than this:
 // a hub such as Doha between China and Europe.
 const AIRPORT_DETOUR_KM = 3000;
@@ -486,6 +491,13 @@ function withSaints(list: Token[]): Token[][] {
 }
 
 /** Phrases worth looking up, most specific first: "zurich mulligen", then "zurich". */
+/** The key of the town text with brackets names as a whole, or ''. */
+function qualifiedKey(data: Gazetteer, text: string): string {
+  const parts = /^([^()]+)\(([^()]+)\)$/u.exec(text.trim());
+  const keys = [nameKey(text), ...parts ? QUALIFIER_LINKS.map((link) => `${nameKey(parts[1]!)} ${link} ${nameKey(parts[2]!)}`) : []];
+  return keys.find((key) => key && data.keys.has(key)) ?? '';
+}
+
 function phrases(field: string): Phrase[] {
   const found: Phrase[] = [];
   const add = (list: Token[], rank: number, whole = false, middle = false) => {
@@ -777,12 +789,14 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   const atOwnAirport = ownAirport ? atAirport(ownAirport, carriers) : null;
   if (atOwnAirport) return atOwnAirport;
   const fieldTokens = fields.map((field) => tokens(field));
-  const fieldPhrases = fields.map((field, index) => {
-    const list = phrases(field);
-    // "Frankfurt (Oder)": a town whose name has brackets of its own.
-    const whole = index === 0 && rest.includes('(') ? nameKey(rest) : '';
-    return whole && data.keys.has(whole) ? [{ key: whole, text: rest, rank: 0, start: 0, end: rest.length, whole: true }, ...list] : list;
-  });
+  // "Frankfurt (Oder)": a town whose name has brackets of its own, or whose name joins what the brackets
+  // tell it apart by: "Neustadt (Holstein)" is Neustadt in Holstein. In a country the text names, it
+  // is that town however small, and no part of its name is another: "Essen (Oldenburg)" is not Essen.
+  const qualified = rest.includes('(') ? qualifiedKey(data, rest) : '';
+  const wholeName: Phrase[] = qualified ? [{ key: qualified, text: rest, rank: 0, start: 0, end: rest.length, whole: true }] : [];
+  const fullName = qualified !== '' && candidates(data, qualified, carriers).some((place) => countries.includes(place.country));
+  const fieldPhrases = fields.map((field, index) => fullName ? (index === 0 ? wholeName : [])
+    : index === 0 ? [...wholeName, ...phrases(field)] : phrases(field));
   // Regions named elsewhere in the text ("STERLING - Virginia - USA", "广东省深圳市") tell towns of one name apart.
   const regions = fieldPhrases.flatMap((list, field) => list.flatMap((phrase) =>
     (data.regions.get(phrase.key) ?? []).map((region) => ({ ...region, field, start: phrase.start, end: phrase.end }))));
@@ -901,10 +915,11 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
     // comes first. A hyphen makes the two one name, a quarter of the city: "Zürich-Mülligen" is in
     // Zürich, and so is "ZUERICH MUELLIGEN", as Mülligen the town lies across a regional border.
     const first = fieldTokens[best.field]![0];
-    const nearby = (other: (typeof scored)[number]) => other.place.country === best.place.country
+    const nearby = (other: (typeof scored)[number], km = SUBURB_MAX_KM) => other.place.country === best.place.country
       && other.place.admin1 === best.place.admin1 && !other.place.hub && other.place.thousands < best.place.thousands
-      && distanceKm(best.place.latitude, best.place.longitude, other.place.latitude, other.place.longitude) <= SUBURB_MAX_KM;
-    // So is a smaller town that a city alone in brackets follows: "Kerpen (Köln)" is in Kerpen.
+      && distanceKm(best.place.latitude, best.place.longitude, other.place.latitude, other.place.longitude) <= km;
+    // So is a smaller town that a city alone in brackets follows, a little farther off: "Kerpen (Köln)"
+    // is in Kerpen.
     const whole = (field: number, from: number, to: number) => fieldTokens[field]!
       .every((token) => (token.start >= from && token.end <= to) || !/\p{L}/u.test(token.key));
     const literal = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
@@ -915,7 +930,7 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
         && !fields[best.field]!.slice(best.end, other.start).includes('-')
         && fieldTokens[best.field]!.every((token) => token.end <= other.end || !/\p{L}/u.test(token.key)))
       .sort((a, b) => b.score - a.score)[0] ?? (bracketed ? scored
-      .filter((other) => other.field === best.field - 1 && whole(other.field, other.start, other.end) && nearby(other))
+      .filter((other) => other.field === best.field - 1 && whole(other.field, other.start, other.end) && nearby(other, BRACKETED_MAX_KM))
       .sort((a, b) => b.score - a.score)[0] : undefined) : undefined;
     const { place, text: carrierWords } = suburb ?? found;
     const airport = suburb ? null : atFound;
