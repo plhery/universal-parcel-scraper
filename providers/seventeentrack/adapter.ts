@@ -295,6 +295,26 @@ function polishPartnerZone(shipment: Record<string, unknown>): string | null {
   return country && !['PL', 'ES', 'PT'].includes(country) ? countryTimeZone(country) : null;
 }
 
+/**
+ * 17TRACK's carrier 100222, FedEx International Connect, shows FIC's own scans at its British hubs
+ * and, from "RECEIVED BY PARTNER CARRIER" on, the scans of the carrier that delivers in the
+ * recipient's country, without a place and on that carrier's clock. 17TRACK labels them all with
+ * London's offset: a Dutch post's scans came on the post's summer time under London's, an hour after
+ * the post's own times. A row from the handover on that is not placed in Britain is read in the
+ * recipient country's zone where 17TRACK names a country on one clock, and otherwise keeps
+ * 17TRACK's reading.
+ */
+const FIC = 100222;
+const FIC_HANDOVER = /^received by partner carrier$/i;
+
+/** The wall clock of the first handover to the partner carrier on FIC's leg, or '' without one. */
+function ficHandover(events: unknown[]): string {
+  return events.reduce<string>((first, raw) => {
+    const clock = isRecord(raw) && FIC_HANDOVER.test(text(raw.description).trim()) ? rawClock(raw) ?? '' : '';
+    return clock && (!first || clock < first) ? clock : first;
+  }, '');
+}
+
 /** 17TRACK's carrier 14061, NZ Post. */
 const NZ_POST = 14061;
 const NZ_DEPARTURE = /^international departure\b/i;
@@ -477,6 +497,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const poland = reported.key === POLAND_POST;
     const departed = poland ? polishDeparture(provider.events) : '';
     const partner = poland ? polishPartnerZone(shipment) : null;
+    const handedOver = reported.key === FIC ? ficHandover(provider.events) : '';
+    const delivering = handedOver ? countryTimeZone(recipientCountry(shipment)) : null;
     const labelled = labelZone(reported);
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
@@ -492,13 +514,15 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const sent = correos ? correosOriginZone(number, { wording: text(raw.description) }) : undefined;
       // Poland Post's scan on Warsaw's clock, or a partner's after the departure from Poland on the recipient's.
       const polish = !poland ? null : departed && (rawClock(raw) ?? '') > departed ? partner : 'Europe/Warsaw';
-      // A facility's clock, A1's UTC, NZ Post's, Poland Post's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
-      const read = facility || relaysFacilityClock(name) || utc || nz || polish || exchange || own || chile || shiprocket || daiPost || sent !== undefined;
+      // FIC's partner's scan from the handover on, unless placed in Britain, on the recipient's clock.
+      const handed = delivering && (rawClock(raw) ?? '') >= handedOver && locationCountry(raw.location) !== 'GB' ? delivering : null;
+      // A facility's clock, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
+      const read = facility || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || own || chile || shiprocket || daiPost || sent !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland ? null : seasonZone(raw, labelled, now);
       const wall = relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null;
       const zone = !wall ? null : season ?? (hywl ? relayed : relayed ?? facility ?? own ?? (sent !== undefined ? sent : abroad.has(index) ? abroad.get(index) ?? null
-        : exchange ? origin : utc ? 'UTC' : polish ? polish
+        : exchange ? origin : utc ? 'UTC' : polish ? polish : handed ? handed
         : nz ? 'Pacific/Auckland' : chile ? facilityZone(text(raw.location)) ?? 'America/Santiago'
         : shiprocket ? (placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null)
         : daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location))));

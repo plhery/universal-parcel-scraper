@@ -402,6 +402,30 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply(100999, 'JP'), number).events?.[0]?.time).toBe('2026-07-20T12:25:00.000Z');
   });
 
+  it('reads the scans FIC relays from its partner carrier on the recipient\'s clock, and its own in Britain on London\'s', () => {
+    vi.useFakeTimers({ toFake: ['Date'], now: new Date('2026-10-26T09:00:00Z') });
+    onTestFinished(() => { vi.useRealTimers(); });
+    // Public shape: wall clocks in time_raw with no zone, under London's offset on the day 17TRACK looks.
+    const row = (time: string, description: string, location: string | null = null) => ({ time_iso: `2026-10-22T${time}+00:00`,
+      time_utc: null, time_raw: { date: '2026-10-22', time, timezone: null }, description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, country?: string): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' }, ...(country ? { shipping_info: { recipient_address: { country } } } : {}),
+      tracking: { providers: [{ provider: { key, name: 'FedEx International Connect', country: 'GB' }, events: [
+        row('07:30:41', 'DEPARTED SITE', 'READING, GB'),
+        row('06:12:00', 'IN TRANSIT'),
+        row('06:10:00', 'RECEIVED BY PARTNER CARRIER'),
+        row('02:05:12', 'SHIPMENT MANIFESTED FOR DEPARTURE'),
+      ] }] } } }] });
+    // A partner in Hungary keeps Central European summer time; FIC's own scans keep London's.
+    expect(parse17TrackResponse(reply(100222, 'HU'), number).events?.map((event) => event.time)).toEqual(['2026-10-22T06:30:41.000Z',
+      '2026-10-22T04:12:00.000Z', '2026-10-22T04:10:00.000Z', '2026-10-22T01:05:12.000Z']);
+    // With no recipient country, or one on several clocks, the partner's scans keep 17TRACK's reading, and so does another feed.
+    for (const [key, country] of [[100222, undefined], [100222, 'US'], [100999, 'HU']] as const) {
+      expect(parse17TrackResponse(reply(key, country), number).events?.map((event) => event.time)).toEqual(['2026-10-22T06:30:41.000Z',
+        '2026-10-22T05:12:00.000Z', '2026-10-22T05:10:00.000Z', '2026-10-22T01:05:12.000Z']);
+    }
+  });
+
   it('reads a clock 17TRACK labelled with its zone\'s offset on the day it looks at the scan\'s own date', () => {
     vi.useFakeTimers({ toFake: ['Date'], now: new Date('2026-10-25T09:00:00Z') });
     onTestFinished(() => { vi.useRealTimers(); });

@@ -169,6 +169,12 @@ carrier.
   clock: it is read in the recipient country's zone when the reply names one on a single
   clock, as [Poczta Polska](../../carriers/poczta-polska/README.md)'s adapter reads it, and
   otherwise keeps 17TRACK's reading.
+- FedEx International Connect's leg (carrier key 100222) shows FIC's own scans at its British
+  hubs and, from `RECEIVED BY PARTNER CARRIER` on, the scans of the carrier that delivers in the
+  recipient's country, without a place and on that carrier's clock. 17TRACK labels them all with
+  London's offset, so a Dutch post's scans came an hour after the post's own times. A row from the
+  handover on that is not placed in Britain is read in the recipient country's zone when 17TRACK
+  names a country on one clock, and otherwise keeps 17TRACK's reading.
 - China Post's leg mirrors the origin post's outward exchange scans (`到达境外出口互换局`,
   `离开境外出口互换局`) on that post's wall clock, and 17TRACK labels them `+08:00`: an NZ
   Post arrival at 06:09 Auckland time showed four hours late (checked 2026-10-10). On an
