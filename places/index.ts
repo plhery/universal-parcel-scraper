@@ -1113,18 +1113,28 @@ function atAirport(airport: Airport, carriers: readonly string[]): Located | nul
   };
 }
 
+// UPU offices of exchange whose code names a UN/LOCODE location that no airport of their country
+// has, by that location's name: "FRROIC" is the export office at Roissy-en-France, "DEROUA"
+// Rodgau's parcel centre.
+const OFFICE_LOCATIONS = new Map([
+  ['FRROI', 'Roissy-en-France'], ['DEROU', 'Rodgau'], ['GBLAL', 'Langley'], ['PTRDM', 'Rio de Mouro'],
+]);
+
 /**
  * The town of a UPU office of exchange, by its code: its country, the code of its town's
- * airport and a letter for the office ("SCSEZA" is the Seychelles' office by Mahé airport).
- * The airport has to be in that country. Text that is a town comes first: "ARUSHA" is no
- * Argentinian office. bpost follows the code with that country's name: "BEBRUA Belgium".
+ * airport or another UN/LOCODE location, and a letter for the office ("SCSEZA" is the
+ * Seychelles' office by Mahé airport). The airport has to be in that country. Text that is a
+ * town comes first: "ARUSHA" is no Argentinian office. bpost follows the code with that
+ * country's name: "BEBRUA Belgium".
  */
 function officePlace(data: Gazetteer, text: string, carriers: readonly string[]): Located | null {
   const [, country, code, named] = /^([A-Z]{2})([A-Z]{3})[A-Z0-9](?:\s+(\S.*?)(?:\s+\1)?)?$/.exec(text) ?? [];
-  if (named && nameKey(named) !== nameKey(data.countries.get(country!)?.name ?? '')) return null;
+  if (!country || (named && nameKey(named) !== nameKey(data.countries.get(country)?.name ?? ''))) return null;
   const airport = airportCode(data, code ?? '');
-  const town = airport && airport.country === country ? airportTown(airport, carriers) : null;
-  return town && { ...town, text: true };
+  const location = OFFICE_LOCATIONS.get(`${country}${code}`);
+  const town = airport && airport.country === country ? airportTown(airport, carriers)
+    : location ? locate(location, { countries: [country], carriers }, false) : null;
+  return town && town.place.country === country ? { ...town, text: true } : null;
 }
 
 // ISO 3166-1 alpha-3 country codes, which some carriers write for a country: "CAN" is Canada as

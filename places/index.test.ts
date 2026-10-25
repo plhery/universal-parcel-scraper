@@ -205,7 +205,7 @@ describe('locatePlace', () => {
     expect(place('MUC(DE-POST), DE')).toMatchObject({ country: 'DE', site: 'Munich Airport' });
   });
 
-  it('puts a UPU office of exchange in the town of the airport its code names', () => {
+  it('puts a UPU office of exchange in the town of the airport or location its code names', () => {
     expectPlace('DEFRAA', { country: 'DE', name: 'Frankfurt am Main', latitude: 50.12, longitude: 8.68 });
     expectPlace('SCSEZA', { country: 'SC', name: 'Victoria', latitude: -4.62, longitude: 55.45 });
     expect(place('PLWAWA, PL')).toMatchObject({ precision: 'city', country: 'PL', name: 'Warsaw' });
@@ -214,8 +214,12 @@ describe('locatePlace', () => {
     expect(place('PTLISL Portugal PT, PT')).toMatchObject({ precision: 'city', country: 'PT', name: 'Lisbon' });
     expect(place('PTLISL Spain PT, PT')).toMatchObject({ precision: 'country', country: 'PT' });
     expect(place('DEFRAA')?.site).toBeUndefined();
+    // A UN/LOCODE location no airport of the country has.
+    expect(place('FRROIC, FR')).toMatchObject({ precision: 'city', country: 'FR', name: 'Roissy-en-France' });
+    expect(place('DEROUA')).toMatchObject({ precision: 'city', country: 'DE', name: 'Rodgau' });
+    expectPlace('GBLALA', { country: 'GB', name: 'Langley', latitude: 51.497, longitude: -0.532 });
     // An airport of another country, and towns of six letters.
-    expect(place('GBLALA')).toBeNull();
+    expect(place('GBJFKA')).toBeNull();
     expect(place('ARUSHA')).toMatchObject({ country: 'TZ', name: 'Arusha' });
     expect(place('TRNAVA')).toMatchObject({ country: 'SK', name: 'Trnava' });
   });
