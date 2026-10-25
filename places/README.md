@@ -18,7 +18,9 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   for larger towns ("Genf", "Cologne"). A translation of three Latin letters is left out: it
   is a code or a stray transliteration more often than a name ("Lon" for Lognes). So is
   GeoNames' transliteration of a name in another script ("Noman" is Norman in Japanese), but
-  not the Chinese reading of a Chinese town's own name ("Shen Zhen"). Translations
+  not the Chinese reading of a Chinese town's own name ("Shen Zhen"). A Spanish town also goes
+  by its name without the article it begins with ("BORGES DEL CAMP"), and a Greek one with χ
+  written "ch", as Greek carriers do, where GeoNames writes "kh" ("VRACHATI"). Translations
   include old names, so nothing confirming it, only a city's of 100,000 people places a town
   (Trenton was "Mill Hill"). A town found by a translation keeps the carrier's words for its own
   name: "Asuncion del Paraguay" is "Asuncion". Each half of a bilingual name counts
@@ -28,7 +30,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   something else in the text confirms it. Nothing after a linking word such as "am", "bei",
   "sur" or "nad" is looked up as a town on its own: "Bernau bei Berlin" is not in Berlin. A
   letter and a full stop after the first word are read as the linking words they abbreviate:
-  "Frankfurt a.d. Oder" is Frankfurt an der Oder, "Weil a. Rhein" Weil am Rhein. "St" and
+  "Frankfurt a.d. Oder" is Frankfurt an der Oder, "Weil a. Rhein" Weil am Rhein, but the
+  letters of an initialism are not: "C.O. RIO DE MOURO" is in Rio de Mouro. "St" and
   "Ste" are also read as Saint and Sainte: "ST QUENTIN FALLAVIER" is Saint-Quentin-Fallavier.
   A saint's title other words follow is not a town of its own: "SAN FDO. DE H." is no San in
   Mali.

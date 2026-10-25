@@ -159,6 +159,7 @@ describe('locatePlace', () => {
     expect(place('North West Super Hub')).toEqual({ precision: 'city', country: 'GB', name: 'Warrington', site: 'North West Super Hub', latitude: 53.409, longitude: -2.666 });
     expect(place('MIDLANDS SUPER HUB')).toEqual({ precision: 'city', country: 'GB', name: 'Daventry', site: 'Midlands Super Hub', latitude: 52.371, longitude: -1.172 });
     expect(place('Shatian Town')).toEqual({ precision: 'city', country: 'CN', name: 'Shatian Town', latitude: 22.923, longitude: 113.613 });
+    expect(place('Mayong Town', ['FR'])).toMatchObject({ country: 'CN', name: 'Mayong Town', latitude: 23.057 });
     // A longer name that contains a hub's is that place.
     expect(place('Terrasson-Lavilledieu', ['FR'])).toMatchObject({ country: 'FR', name: 'Terrasson-Lavilledieu' });
     expect(place('Terrasson-Lavilledieu', ['FR'])!.longitude).toBeCloseTo(1.3, 2);
@@ -339,6 +340,10 @@ describe('locatePlace', () => {
     expect(place('Thames Valley MC', ['GB'])).toMatchObject({ country: 'GB', name: 'Swindon' });
     // MRW's platform in Meres, Asturias, a village too small for the gazetteer, not Meres in Turkey.
     expect(locatePlace('00099 Meres (Plataforma)', { carriers: ['mrw'], countries: ['ES'] })).toMatchObject({ country: 'ES', name: 'Meres', latitude: 43.376 });
+    // InPost's sorting centres in villages, by Wrocław, Poznań and Siedlce, and Amazon's station in Bobes, Asturias.
+    expect(locatePlace('MOKRONOS DOLNY (PL)', { carriers: ['inpost'], countries: ['PL'] })).toMatchObject({ country: 'PL', name: 'Mokronos Dolny', latitude: 51.071 });
+    expect(locatePlace('SZYMANÓW (PL)', { carriers: ['inpost'], countries: ['PL'] })).toMatchObject({ country: 'PL', name: 'Szymanów', latitude: 50.999 });
+    expect(locatePlace('Bobes, Asturias, ES', { carriers: ['amazon-shipping'], countries: ['ES'] })).toMatchObject({ country: 'ES', name: 'Bobes', latitude: 43.396 });
   });
 
   it('takes a longer place name for the place it names, not for a town that shares a word of it', () => {
@@ -372,6 +377,8 @@ describe('locatePlace', () => {
     expectPlace('Weil a. Rhein', { country: 'DE', name: 'Weil a. Rhein', latitude: 47.59, longitude: 7.62 }, ['DE']);
     expectPlace('Landsberg a. Lech', { country: 'DE', name: 'Landsberg a. Lech', latitude: 48.05, longitude: 10.88 }, ['DE']);
     expectPlace('Neustadt a. d. Weinstraße', { country: 'DE', name: 'Neustadt a. d. Weinstraße', latitude: 49.35, longitude: 8.14 }, ['DE']);
+    // An initialism's letters link nothing.
+    expect(place('C.O. RIO DE MOURO', ['PT'])).toMatchObject({ country: 'PT', name: 'Rio de Mouro' });
     expectPlace('Bernau b. Berlin', { country: 'DE', name: 'Bernau b. Berlin', latitude: 52.68, longitude: 13.59 }, ['DE']);
     expectPlace('Ústí n. Labem', { country: 'CZ', name: 'Ústí n. Labem', latitude: 50.66, longitude: 14.03 }, ['CZ']);
     // What follows it is no town on its own either, and a name GeoNames prints abbreviated is still found.
@@ -531,6 +538,12 @@ describe('locatePlace', () => {
     expect(place('TA YUAN DISTRICT TW')).toMatchObject({ country: 'TW', name: 'Dayuan' });
     // Chinese carriers spell their own towns so.
     expect(place('SHEN ZHEN', ['CN'])).toMatchObject({ country: 'CN', name: 'Shenzhen' });
+  });
+
+  it('reads a Spanish town without its article and a Greek one spelt as Greek carriers do', () => {
+    expect(place('BORGES DEL CAMP', ['ES'])).toMatchObject({ country: 'ES', name: 'les Borges del Camp' });
+    expect(place('00669 Garriga,La', ['ES'])).toMatchObject({ country: 'ES', latitude: 41.683 });
+    expect(place('VRACHATI', ['GR'])).toMatchObject({ country: 'GR', name: 'Vrakháti' });
   });
 });
 

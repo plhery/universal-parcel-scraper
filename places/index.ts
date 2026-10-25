@@ -432,7 +432,8 @@ function tokens(text: string): Token[] {
 
 /**
  * The field's words as printed, then with each abbreviated linking word written out: "Weil a. Rhein"
- * is also "Weil am Rhein" and "Weil an Rhein".
+ * is also "Weil am Rhein" and "Weil an Rhein". A letter after another is an initialism's: CTT's
+ * "C.O. RIO DE MOURO" is its operations centre in Rio de Mouro.
  */
 function spelledOut(field: string, list: Token[]): Token[][] {
   const dotted = (token: Token | undefined) => token?.key.length === 1 && field[token.end] === '.';
@@ -443,7 +444,7 @@ function spelledOut(field: string, list: Token[]): Token[][] {
     const next = list[index + 1];
     const paired = index > 0 && dotted(token) && dotted(next) && !field.slice(token.end + 1, next!.start).trim()
       ? ABBREVIATED_LINKS[`${token.key} ${next!.key}`] : undefined;
-    const words = paired ?? (index > 0 && dotted(token) ? ABBREVIATED_LINKS[token.key] : undefined);
+    const words = paired ?? (index > 0 && dotted(token) && !dotted(list[index - 1]) ? ABBREVIATED_LINKS[token.key] : undefined);
     if (!words) {
       printed.push(token);
       variants = variants.map((variant) => [...variant, token]);

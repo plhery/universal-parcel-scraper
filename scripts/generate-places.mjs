@@ -141,7 +141,20 @@ function csv(text) {
 const cities = unzip(await download('cities1000.zip', 'https://download.geonames.org/export/dump/cities1000.zip'), 'cities1000.txt');
 const places = [];
 const byKey = new Map();
+// Spanish carriers leave out the article a town's name begins with: "BORGES DEL CAMP" is les
+// Borges del Camp, "Garriga,La" La Garriga.
+const SPANISH_ARTICLE = /^(?:el|la|los|las|els|les|l|sa|ses|es|s) (.{4,})$/;
+/**
+ * Other spellings of a town's own name that carriers use: Greek ones write χ as "ch" ("VRACHATI"),
+ * GeoNames "kh".
+ */
+function spellings(place) {
+  if (place.country === 'ES') return place.primary.flatMap((key) => SPANISH_ARTICLE.exec(key)?.[1] ?? []);
+  if (place.country === 'GR') return place.primary.filter((key) => key.includes('kh')).map((key) => key.replaceAll('kh', 'ch'));
+  return [];
+}
 function remember(place) {
+  for (const key of spellings(place)) if (!place.primary.includes(key) && !place.alternate.includes(key)) place.alternate.push(key);
   places.push(place);
   for (const key of place.primary) {
     const list = byKey.get(`${place.country}:${key}`) ?? [];
