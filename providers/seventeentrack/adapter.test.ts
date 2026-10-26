@@ -190,6 +190,11 @@ describe('17TRACK result parsing', () => {
     expect(shown('InTransit_Other', '启运【示例】')).toMatchObject({ description: 'Departure', location: '示例', stage: 'in_transit' });
     expect(shown('InTransit_Other', '启运【Example Hub】', 'EXH')).toMatchObject({ description: 'Departure', location: 'EXH' });
     expect(shown('InTransit_Other', '启运【目的国】')).not.toHaveProperty('location');
+    // A partner's scan abroad at a location that names no place is in the country its label gives before its English.
+    expect(shown('InTransit_Other', '邮件离开处理中心【FR Departure from Proc】', 'Departure from Processing Center【99/999】'))
+      .toMatchObject({ description: 'Departure from processing center', location: 'FR' });
+    expect(shown('InTransit_Other', '邮件离开处理中心【ZZ Departure from Proc】', 'Departure from Processing Center【99/999】'))
+      .not.toHaveProperty('location');
     // A label without known English keeps China Post's wording.
     expect(shown('InTransit_Other', '邮件运输中')).toMatchObject({ description: '邮件运输中', stage: 'in_transit' });
     // Another carrier's leg keeps its own wording.

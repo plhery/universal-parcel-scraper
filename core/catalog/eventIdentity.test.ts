@@ -287,6 +287,11 @@ describe('same-instant identity policies', () => {
     const departure = { stage: 'in_transit', description: '启运【示例】', location: '', providerCode: 'InTransit_Other' };
     expect(policy?.matches?.({ ...departure, description: 'Departure', location: '示例' }, departure)).toBe(true);
     expect(policy?.matches?.({ ...departure, description: 'Departure', location: '其他' }, departure)).toBe(false);
+    // A partner's scan abroad stored at a location that names no place, its country code from the label now the location.
+    const abroad = { stage: 'in_transit', description: '邮件离开处理中心【FR Departure from Proc】',
+      location: 'Departure from Processing Center【99/999】', providerCode: 'InTransit_Other' };
+    expect(policy?.matches?.({ ...abroad, description: 'Departure from processing center', location: 'FR' }, abroad)).toBe(true);
+    expect(policy?.matches?.({ ...abroad, description: 'Departure from processing center', location: 'DE' }, abroad)).toBe(false);
     // A forwarder's wording stored with its place in brackets after it, the place now the location.
     const received = { stage: 'in_transit', description: 'Airline received【Example Port】', location: '', providerCode: '' };
     expect(policy?.matches?.({ ...received, description: 'Airline received', location: 'Example Port' }, received)).toBe(true);

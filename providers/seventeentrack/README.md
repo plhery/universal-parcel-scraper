@@ -207,7 +207,9 @@ carrier.
   Post's leg, and JHGJ's, which relays China Post's labels, show a label in the English the
   [China Post adapter](../../carriers/china-post/README.md) shows, its places left to the location,
   and a copy stored in Chinese takes the English in place. A label that names its place only in 【】
-  ("启运【Example】") with no location gives it that place. Pengyou's leg writes its place in
+  ("启运【Example】") with no location gives it that place; a partner's scan abroad gives its
+  country's code there before its English cut short ("【ZZ Arriyal at Processin】"), and that
+  code is its place. Pengyou's leg writes its place in
   brackets after its English wording ("Airline received【Example】"); with no location, that place
   becomes the location, and a copy stored with the brackets takes the new form in place.
 - Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details or

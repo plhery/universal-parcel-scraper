@@ -8,13 +8,13 @@ const normalized = (value: string) => value.replace(/\s+/g, ' ').trim().toLocale
 /**
  * A China Post label stored in Chinese before 17TRACK's copy showed its
  * English: the English of the stored label, at the location stored or as
- * the provider now reads it, or at the name the label gave in 【】 where none
- * was stored, with provider codes that agree.
+ * the provider now reads it, or at the name the label gave in 【】 where that
+ * reads as none, with provider codes that agree.
  */
 function matchesChinaPostEnglish(incoming: SameInstantScan, stored: SameInstantScan): boolean {
   const english = chinaPostEnglish(stored.description);
   const location = normalized(incoming.location);
-  const named = stored.location.trim() ? '' : place(chinaPostLabelPlace(stored.description) ?? '');
+  const named = place(stored.location) ? '' : place(chinaPostLabelPlace(stored.description) ?? '');
   return english !== undefined && normalized(english) === normalized(incoming.description)
     && (location === normalized(stored.location) || location === normalized(place(stored.location)) || (named !== '' && location === normalized(named)))
     && (!incoming.providerCode || !stored.providerCode || incoming.providerCode === stored.providerCode);

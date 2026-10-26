@@ -193,10 +193,14 @@ export function chinaPostEnglish(wording: string): string | undefined {
 
 /**
  * The name a label gives in its only 【】, "启运【香港】", which its English
- * leaves out; undefined when it brackets anything but a name.
+ * leaves out, or the country code a partner's scan abroad gives before its
+ * English cut short, "【ZZ Arriyal at Processin】"; undefined when it brackets
+ * anything else.
  */
 export function chinaPostLabelPlace(wording: string): string | undefined {
   const named = /^[^【】]*【([^【】]+)】[^【】]*$/u.exec(wording.trim())?.[1]?.trim();
+  const abroad = named && /^([A-Z]{2}) \p{L}/u.exec(named)?.[1];
+  if (abroad) return isCountry(abroad) ? abroad : undefined;
   return named && /^\p{L}[\p{L}\p{M} .'·-]{0,39}$/u.test(named) ? named : undefined;
 }
 
@@ -215,11 +219,17 @@ export const statusMap: CarrierStatusMap = {
 const CHINESE_REGIONS = new Intl.DisplayNames(['zh-Hans'], { type: 'region' });
 const ENGLISH_REGIONS = new Intl.DisplayNames(['en'], { type: 'region' });
 const NOT_COUNTRIES = new Set(['EU', 'EZ', 'QO', 'UN', 'ZZ']);
+
+/** Whether a code is a current ISO country, not a grouping, the unknown region or a private-use code. */
+function isCountry(code: string): boolean {
+  return countryCode(code) === code && !NOT_COUNTRIES.has(code) && !code.startsWith('X');
+}
+
 // Current ISO regions by their Simplified Chinese name, plus the short forms
 // of the special administrative regions.
 const COUNTRY_BY_NAME: ReadonlyMap<string, string> = new Map([
   ...Array.from({ length: 26 * 26 }, (_, index) => String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)))
-    .filter((code) => countryCode(code) === code && !NOT_COUNTRIES.has(code) && !code.startsWith('X'))
+    .filter(isCountry)
     .map((code) => [CHINESE_REGIONS.of(code) ?? code, code] as const)
     .filter(([name, code]) => name !== code),
   ['香港', 'HK'], ['中国香港', 'HK'], ['澳门', 'MO'], ['中国澳门', 'MO'], ['中国台湾', 'TW'],
