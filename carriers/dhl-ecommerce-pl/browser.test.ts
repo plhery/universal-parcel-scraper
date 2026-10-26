@@ -39,6 +39,14 @@ describe('DHL Poland browser history', () => {
     expect(() => parseDhlPolandHistory({ challenge: true }, WAYBILL)).toThrowError(expect.objectContaining({ kind: 'challenge' }));
     expect(() => parseDhlPolandHistory({ number: WAYBILL, events: [] }, WAYBILL)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
+  it("reads the courier's delivery hours and a terminal's planned delivery day", () => {
+    const payload = history();
+    payload.events[1]!.description = 'With delivery courier. Expected delivery hours: 08:00-12:00.';
+    payload.events[2]!.description = 'The shipment has reached DHL terminal in . Planned date of delivery to: 04-03-2026.';
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.slice(1).map(event => event.stage)).toEqual(['out_for_delivery', 'in_transit']);
+    payload.events[2]!.description = 'The shipment has reached DHL terminal in Example. Planned date of delivery to: 04-03-2026.';
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[2]?.stage).toBe('in_transit');
+  });
   it('keeps unknown and informational wording without guessing a stage', () => {
     const payload = history(); payload.events[0]!.description = 'The recipient was informed about the date of delivery.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).not.toHaveProperty('stage');

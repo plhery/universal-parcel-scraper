@@ -52,13 +52,15 @@ export function statusForStage(stage: Stage): CarrierStatus {
 // The history page's scan wording, in English or Polish, with the stage each names.
 const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^(?:Delivered to customer\.|Przesyłka doręczona do Odbiorcy\.)$/i, 'delivered'],
-  [/^(?:With delivery courier|Przesyłka przekazana kurierowi do doręczenia)\.?$/i, 'out_for_delivery'],
+  [/^(?:With delivery courier|Przesyłka przekazana kurierowi do doręczenia)\.?(?: Expected delivery hours: \d{2}:\d{2}-\d{2}:\d{2}\.)?$/i, 'out_for_delivery'],
   [/^(?:The shipment is in transit to the delivery depot\.|Przesyłka w transporcie do oddziału doręczającego\.)$/i, 'in_transit'],
   [/^(?:The shipment has arrives at sorting center\.|Przesyłka została przyjęta w centrum sortowania\.)$/i, 'in_transit'],
   [/^(?:The shipment is processed at depot of origin country\.|Przesyłka jest obsługiwana w oddziale nadającym\.)$/i, 'in_transit'],
   [/^(?:The shipment has been dropped off at depot by the sender\.|Przesyłka została nadana przez nadawcę w oddziale DHL\.)$/i, 'accepted'],
   [/^(?:The shipment is handled in Sorting Center|Przesyłka jest obsługiwana w Centrum Sortowania)\.?$/i, 'in_transit'],
   [/^(?:The shipment has reached DHL terminal\.|Przesyłka dotarła do oddziału nadawczego DHL Parcel\.)$/i, 'accepted'],
+  // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan.
+  [/^The shipment has reached DHL terminal in [^.]{0,80}\. Planned date of delivery to: \d{2}-\d{2}-\d{4}\.$/i, 'in_transit'],
 ];
 
 /** The stage of one history scan's wording, once the recipient's acknowledgement is cut off. */
