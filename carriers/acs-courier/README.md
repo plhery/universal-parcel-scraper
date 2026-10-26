@@ -28,8 +28,10 @@ ACS numbers are ten digits, as Trustpilot reviews and an aggregator page show, s
 are invalid without a request. On every number seen, the last digit is the first
 nine modulo 7, as on DHL Express waybills and Geniki Taxydromiki vouchers; the adapter does not
 enforce it. Ten digits are shared with several carriers, so `acs-courier-1` only suggests ACS
-for ten plain digits whose check holds, and recognition asks it first for a lookup from Greece or
-Cyprus.
+for ten plain digits whose check holds. DHL Express's waybills carry the same check, so for a
+lookup from Greece or Cyprus recognition asks ACS right after DHL Express, and a number both
+know stays a choice: the check digit backs neither. Speedy and DPD Romania name ACS and its
+number when they hand it the receiving leg, as for parcels to Cyprus.
 
 ## Notes
 
@@ -49,15 +51,16 @@ moves and the day has not passed. The pickup point is the SmartPoint's name, onc
 waits there or was collected from it.
 
 The reply's notes hold the recipient's name, and each scan's information can hold a masked
-signatory or sender name or a delivery problem's reason. The adapter reads none of them, nor the
-recipient, sender, address or branch phone fields, the progress rail or the summary delivery
-date.
+signatory or sender name or a delivery problem's reason. The adapter reads the information only
+on a failed delivery, as its reason after the scan's wording, and drops any that holds an
+asterisk, a digit or an at sign, as a masked name, a phone or an address does. It reads none of
+the notes, the recipient, sender, address or branch phone fields, the progress rail or the
+summary delivery date.
 
 ## Limitations
 
-A delivery problem's reason is only in the scan's information, which the adapter drops with
-the names it can hold. The scan map comes from parcels within Greece: a scan it does not know,
-such as one only Cypriot parcels get, keeps its wording without a stage.
+The scan map comes from parcels within Greece: a scan it does not know, such as one only
+Cypriot parcels get, keeps its wording without a stage.
 
 ## Live test
 

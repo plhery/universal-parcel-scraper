@@ -67,6 +67,18 @@ describe('DPD Romania HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/00000000000000|example\.com|99-/);
   });
 
+  it('names ACS and its number when DPD Romania hands it the receiving leg, as for a parcel to Cyprus', () => {
+    const payload = fixture('abroad') as { externalCarriermappings: Record<string, unknown>[] };
+    payload.externalCarriermappings = [{ barcode: '9900000001', externalCarrierId: 3, externalCarrier: 'ACS', mappingFor: 'RECEIVER',
+      trackURL: 'https://www.acscourier.net/en/track-and-trace?trackingNumber=9900000001' }];
+    expect(parseDpdRo(payload, ABROAD)).toMatchObject({ delivery_carrier: 'acs-courier', delivery_tracking_number: '9900000001' });
+    // The sender's leg, and a partner that cannot be asked, name none.
+    payload.externalCarriermappings[0]!.mappingFor = 'SENDER';
+    expect(parseDpdRo(payload, ABROAD).delivery_carrier).toBeUndefined();
+    Object.assign(payload.externalCarriermappings[0]!, { mappingFor: 'RECEIVER', externalCarrier: 'Example Network' });
+    expect(parseDpdRo(payload, ABROAD).delivery_carrier).toBeUndefined();
+  });
+
   it('reads a cancelled waybill as an exception without an estimate', () => {
     expect(parseDpdRo(fixture('cancelled'), CANCELLED)).toMatchObject({ status: 'exception', current_stage: 'exception',
       last_status_text: 'Canceled', last_update: '2026-08-03T15:08:23+03:00', expected_delivery: null,

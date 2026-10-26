@@ -45,13 +45,14 @@ shipments, so each carrier asks its own host.
 
 The estimate is the expected delivery day on the shipment-data scan, kept while the shipment is
 on its way. Scan comments, which can hold the receiver's name, a proof-of-delivery link or the
-return waybill, are dropped.
+return waybill, are dropped. When DPD Romania hands the receiving leg to ACS, as for parcels to
+Cyprus, the adapter names ACS and its number, as Speedy's does, so the partner can be asked.
 
 ## Limitations
 
-The partner network's number the tracker shows for a parcel handed abroad is not kept, and
-pickup points are not named. A delivery postponed to a later day and the contents-check scans
-have no stage. A route MyDPD removed would answer the same 404 page as an unknown waybill.
+Partner networks other than ACS and their numbers are not kept, and pickup points are not
+named. A delivery postponed to a later day and the contents-check scans have no stage. A route
+MyDPD removed would answer the same 404 page as an unknown waybill.
 
 ## Live test
 

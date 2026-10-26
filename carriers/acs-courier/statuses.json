@@ -11,7 +11,7 @@
     {"wording": "Arrival to", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrival at the destination branch, which is the scan's place."},
     {"wording": "On delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The branch handed the parcel to a courier for delivery."},
     {"wording": "Shipment placed in SmartPoint", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Its place names the SmartPoint locker or partner point that holds the parcel."},
-    {"wording": "Not delivered", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The reason is in the scan's info, which the adapter does not read: it can hold a name."},
+    {"wording": "Not delivered", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The reason is in the scan's info, read after the wording unless it holds an asterisk, a digit or an at sign, as a name, phone or address does."},
     {"wording": "Delivery to consignee", "stage": "delivered", "language": "en", "confirmedBy": "live"},
     {"wording": "Delivery via SmartPoint", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Recorded with the delivery to consignee when the recipient collects from a SmartPoint."},
     {"wording": "SENT NOTIFICATION", "language": "en", "confirmedBy": "live", "note": "A message to the recipient: the parcel keeps the stage of the scan before it."},

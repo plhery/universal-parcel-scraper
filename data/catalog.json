@@ -1175,7 +1175,8 @@
       "BE",
       "ES",
       "LU",
-      "PT"
+      "PT",
+      "NL"
     ],
     "selectable": true,
     "timezone": "Europe/Paris",
@@ -1206,13 +1207,17 @@
     "linkRules": [
       {
         "domains": [
-          "mondialrelay.fr"
+          "mondialrelay.fr",
+          "mondialrelay.be",
+          "mondialrelay.nl",
+          "mondialrelay.com"
         ],
         "params": [
           "shipment",
           "numeroExpedition",
           "numero",
-          "trackingNumber"
+          "trackingNumber",
+          "exp"
         ]
       }
     ],
@@ -8614,6 +8619,7 @@
       "mode": "automatic",
       "adapter": "cargus",
       "recognitionRank": 270,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.cargus.ro/personal/urmareste-coletul/",
@@ -8639,7 +8645,16 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^1\\d{9}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^8[56]\\d{7}$",
+        "confidence": "low"
+      }
+    ]
   },
   "castle-parcels": {
     "displayName": "Castle Parcels",

@@ -116,15 +116,25 @@ describe('ACS Courier HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/J\*\*\*|D\*\*|Recipient|EXAMPLE SHOP|S\*\*\*|2100000000|2600000000|EX-\d|PICK UP/);
   });
 
-  it('keeps a failed attempt current through the notice after it, and drops its reason', () => {
+  it('keeps a failed attempt current through the notice after it, with its reason', () => {
     const result = parseAcs(fixture('failed-attempt'), ATTEMPTED);
-    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Not delivered',
-      last_update_local: '2030-03-05T15:21:00', expected_delivery: null });
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt',
+      last_status_text: 'Not delivered (DIFFICULT TO ACCESS AREA)', last_update_local: '2030-03-05T15:21:00', expected_delivery: null });
     expect(result.events![0]).toEqual({ local_time: '2030-03-05T15:21:00', description: 'SENT NOTIFICATION', location: 'SAMPLEVILLE',
       stage: 'failed_attempt', stage_source: 'none' });
-    expect(result.events![1]).toMatchObject({ local_time: '2030-03-05T15:20:10', stage: 'failed_attempt' });
+    expect(result.events![1]).toMatchObject({ local_time: '2030-03-05T15:20:10', description: 'Not delivered (DIFFICULT TO ACCESS AREA)',
+      stage: 'failed_attempt', stage_source: 'carrier_map' });
     expect(result.pickup_point).toBeUndefined();
-    expect(JSON.stringify(result)).not.toMatch(/DIFFICULT|J\*\*\*/);
+    // The sender's name on the pickup scan and the masked recipient stay out.
+    expect(JSON.stringify(result)).not.toMatch(/EXAMPLE SHOP|J\*\*\*/);
+  });
+
+  it('reads no masked name, phone or address as a failed delivery\'s reason', () => {
+    for (const info of ['J*** D**', 'CALL 6900000000', 'example@example.com', '-', '']) {
+      const payload = fixture('failed-attempt');
+      payload.items[0]!.statusHistory[5]!.info = info;
+      expect(parseAcs(payload, ATTEMPTED).events![1], info).toMatchObject({ description: 'Not delivered', stage: 'failed_attempt' });
+    }
   });
 
   it('keeps the estimated day only while the parcel moves and the day is still ahead', () => {

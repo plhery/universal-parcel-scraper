@@ -25,7 +25,7 @@ const MISSING_PAGE = /Заявеният ресурс не съществува/
 // The managed challenge www.speedy.bg answers with; MySpeedy's own pages only load Cloudflare's passive script.
 const CHALLENGE_PAGE = /<title>\s*Just a moment|_cf_chl_opt|cf-turnstile/i;
 
-// Delivery partners Speedy names for a receiving leg, by its name for them.
+// Delivery partners Speedy and DPD Romania name for a receiving leg, by their name for them.
 const PARTNERS: Readonly<Record<string, string>> = { ACS: 'acs-courier' };
 
 // An estimate is kept while the parcel is still on its way to the recipient.
@@ -68,7 +68,8 @@ function officeOf(row: Record<string, unknown>): string {
   return office ? clean(office.text, 160) : '';
 }
 
-function partnerOf(mappings: unknown, number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> {
+/** The partner a reply's `externalCarriermappings` names for the receiving leg, with its number, when it is one that can be asked. */
+export function speedyDeliveryPartner(mappings: unknown, number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> {
   if (!Array.isArray(mappings)) return {};
   for (const mapping of mappings.slice(0, 10)) {
     if (!isRecord(mapping) || mapping.mappingFor !== 'RECEIVER') continue;
@@ -132,7 +133,7 @@ export function parseSpeedy(payload: unknown, rawNumber: string): CarrierResult 
     expected_delivery: estimate,
     ...(delivered ? { delivered_at: delivered.time } : {}),
     ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
-    ...partnerOf(payload.externalCarriermappings, number),
+    ...speedyDeliveryPartner(payload.externalCarriermappings, number),
     events: events.slice(0, 100),
     ...(events.length > 100 ? { history_truncated: true } : {}),
   };

@@ -48,8 +48,18 @@ interface Scan {
  * wording as `description`. A shortened history (the Greek site's) puts its
  * milestone wording in `controlPoint` with a `controlPid` and no description,
  * and lists the milestones still to come without a date; those are skipped.
- * `info` holds a signatory's or sender's name on some rows and is never read.
+ * `info` holds a signatory's or sender's name on some rows, so it is read only
+ * as the reason on a failed delivery.
  */
+/**
+ * Why a delivery failed, as ACS words it on the scan ("DIFFICULT TO ACCESS AREA").
+ * A masked name, a phone or an address carries an asterisk, a digit or an at sign, and is dropped.
+ */
+function failureReason(info: unknown): string {
+  const reason = clean(info, 80);
+  return reason.length > 1 && !/[*@\d]/.test(reason) ? reason : '';
+}
+
 function scansOf(rows: readonly unknown[]): Scan[] {
   const scans: Scan[] = [];
   const seen = new Set<string>();
@@ -65,7 +75,8 @@ function scansOf(rows: readonly unknown[]): Scan[] {
     const location = description ? point : '';
     const milestone = !description && Number.isInteger(row.controlPid) ? row.controlPid as number : undefined;
     const stage = milestone === undefined ? acsScanStage(wording) : acsMilestoneStage(milestone);
-    const event: CarrierEvent = { local_time: local, description: wording, ...(location ? { location } : {}),
+    const reason = stage === 'failed_attempt' && description ? failureReason(row.info) : '';
+    const event: CarrierEvent = { local_time: local, description: reason ? `${wording} (${reason})` : wording, ...(location ? { location } : {}),
       ...(milestone === undefined ? {} : { provider_code: String(milestone) }), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);
     if (seen.has(key)) continue;

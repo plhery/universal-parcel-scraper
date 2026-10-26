@@ -1177,7 +1177,8 @@ export const CARRIER_CATALOG = {
       "BE",
       "ES",
       "LU",
-      "PT"
+      "PT",
+      "NL"
     ],
     "selectable": true,
     "timezone": "Europe/Paris",
@@ -1208,13 +1209,17 @@ export const CARRIER_CATALOG = {
     "linkRules": [
       {
         "domains": [
-          "mondialrelay.fr"
+          "mondialrelay.fr",
+          "mondialrelay.be",
+          "mondialrelay.nl",
+          "mondialrelay.com"
         ],
         "params": [
           "shipment",
           "numeroExpedition",
           "numero",
-          "trackingNumber"
+          "trackingNumber",
+          "exp"
         ]
       }
     ],
@@ -8616,6 +8621,7 @@ export const CARRIER_CATALOG = {
       "mode": "automatic",
       "adapter": "cargus",
       "recognitionRank": 270,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.cargus.ro/personal/urmareste-coletul/",
@@ -8641,7 +8647,16 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^1\\d{9}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^8[56]\\d{7}$",
+        "confidence": "low"
+      }
+    ]
   },
   "castle-parcels": {
     "displayName": "Castle Parcels",
@@ -33881,7 +33896,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c3x": [],
   "cacesa": [],
   "campost": [],
-  "cargus": [],
+  "cargus": ["cargus-1","cargus-2"],
   "castle-parcels": [],
   "castores": [],
   "cbl-logistica": [],

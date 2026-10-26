@@ -5,6 +5,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { speedyDeliveryPartner } from '../speedy/parser.js';
 import { dpdRoOperation, dpdRoPhase } from './status.js';
 
 export const PROVIDER = 'DPD Romania';
@@ -96,6 +97,8 @@ export function parseDpdRo(payload: unknown, rawNumber: string): CarrierResult {
     last_update: events[0]?.time ?? null,
     expected_delivery: estimate,
     ...(delivered ? { delivered_at: delivered.time } : {}),
+    // Parcels for Cyprus, Shein's and Temu's among them, go on to ACS under its own number.
+    ...speedyDeliveryPartner(payload.externalCarriermappings, number),
     events: events.slice(0, 100),
     ...(events.length > 100 ? { history_truncated: true } : {}),
   };
