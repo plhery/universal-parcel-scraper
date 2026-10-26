@@ -24,9 +24,12 @@ no history.
 
 The latest summary must match the first scan. The client renders the list in
 its returned order; equal and unresolved clocks keep that order. Explicit
-offsets are preserved, and offset-free clocks remain local. A larger event
-counter or the output cap marks history incomplete so enabled providers can
-complete it.
+offsets are preserved, and offset-free clocks remain local. A hub named by its
+code, the department's number and its own (`75-LED`) or `GOFO-` and its area's
+letters, is no town, nor is the country alone, so such a scan has no place. Some
+scans write the town in capitals; it takes the case the other scans use. A
+larger event counter or the output cap marks history incomplete so enabled
+providers can complete it.
 
 Stages follow operation codes, with explicit failed-delivery wording refining
 the alert category to a failed attempt. Delivery requires affirmative wording.

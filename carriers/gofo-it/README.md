@@ -23,7 +23,8 @@ reference leaves the waybill to bind its record.
 The latest summary must match the first scan. The client renders the list in
 its returned order; equal and unresolved clocks keep that order. Explicit
 offsets are preserved, and offset-free clocks remain local. A hub named by its code, its
-province's two letters and its own (`FI-ARS`), is no town, so such a scan has no place. A larger event
+province's two letters and its own (`FI-ARS`) or `GOFO-` and the province's (`GOFO-NA`), is no
+town, nor is the country alone, so such a scan has no place. A larger event
 counter or the output cap marks history incomplete so enabled providers can
 complete it.
 

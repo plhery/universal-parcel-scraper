@@ -58,11 +58,27 @@ function scanClock(value: unknown, provider: string): Pick<CarrierEvent, 'time'>
 }
 
 const DELIVERED: Record<GofoRegion, string> = { FR: 'Livré', IT: 'Consegnato', NL: 'Bezorgd' };
-// GOFO Italy can name a hub by a code, its province's two letters and the hub's own
-// ("FI-ARS" in Florence's), which is no town: such a scan has no place.
-const ITALIAN_HUB = /^[A-Z]{2}-[A-Z0-9]{2,4}$/;
-/** Whether a GOFO Italy location is a hub's code rather than a town. */
-export const isGofoItalyHubCode = (location: string) => ITALIAN_HUB.test(location.trim());
+// GOFO can name a hub by a code rather than a town: "GOFO-" and its province's letters
+// ("GOFO-NA" near Naples), or in Italy the province's letters and the hub's own ("FI-ARS"
+// in Florence's) and in France the department's number and the hub's ("75-LED"). A French
+// town can be written alike ("ST-LO"). Such a code, or the country alone, is no place.
+const HUB_CODES: Record<GofoRegion, RegExp> = {
+  FR: /^(?:GOFO|\d{2})-[A-Z0-9]{2,4}$/, IT: /^(?:GOFO|[A-Z]{2})-[A-Z0-9]{2,4}$/, NL: /^GOFO-[A-Z0-9]{2,4}$/,
+};
+// Lowercase between the words of a French town's name: "Champagne-sur-Seine", "L'Isle-d'Abeau".
+const FRENCH_PARTICLES = new Set(['au', 'aux', 'd', 'de', 'des', 'du', 'en', 'et', 'l', 'la', 'le', 'les', 'lès', 'lez', 'sous', 'sur']);
+
+/**
+ * A GOFO scan's place as the adapter gives it: none for a hub's code or the country alone, and a
+ * French town some scans write in capitals ("MARSEILLE") in the case its other scans use.
+ */
+export function gofoPlace(location: string, region: GofoRegion): string {
+  const place = location.trim();
+  if (place === region || HUB_CODES[region].test(place)) return '';
+  if (region !== 'FR' || /\p{Ll}/u.test(place)) return place;
+  return place.toLocaleLowerCase('fr-FR').replace(/\p{L}+/gu, (word: string, offset: number, lower: string) => (
+    FRENCH_PARTICLES.has(word) && !/(?:^|,)\s*$/.test(lower.slice(0, offset)) ? word : word[0]!.toLocaleUpperCase('fr-FR') + word.slice(1)));
+}
 
 export function parseRegionalGofo(payload: unknown, rawNumber: string, region: GofoRegion,
   stageOf: (code: string, description: string) => Stage | undefined): CarrierResult {
@@ -113,8 +129,7 @@ export function parseRegionalGofo(payload: unknown, rawNumber: string, region: G
     // Delivery prose can embed recipient details. Keep its milestone alone;
     // subContent, notices, POD data and unrelated references are not projected.
     const description = code === '205' ? DELIVERED[region] : wording;
-    const written = clean(row.processLocation, 160);
-    const location = region === 'IT' && isGofoItalyHubCode(written) ? '' : written;
+    const location = gofoPlace(clean(row.processLocation, 160), region);
     const event: CarrierEvent = { ...scanClock(row.processDate, provider), description, provider_code: code,
       ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);

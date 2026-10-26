@@ -32,9 +32,10 @@ export function matchesDroppedLocation(
 
 /**
  * A scan whose adapter now writes the location it once stored another way, a
- * country no longer repeated or a label dropped, must keep its wording and
- * known stage. `reread` gives a stored location in the new way; only a stored
- * location it changes matches, and only the location it gives.
+ * country no longer repeated, a label dropped or a town recased, must keep its
+ * wording and known stage. `reread` gives a stored location in the new way;
+ * only a stored location it changes, if only in case, matches, and only the
+ * location it gives.
  */
 export function matchesRereadLocation(
   incoming: SameInstantScan,
@@ -42,7 +43,7 @@ export function matchesRereadLocation(
   reread: (location: string) => string,
 ): boolean {
   const savedLocation = stored.location.trim();
-  const location = normalized(reread(savedLocation));
-  return Boolean(savedLocation) && location !== normalized(savedLocation)
-    && location === normalized(incoming.location) && sameScan(incoming, stored);
+  const location = reread(savedLocation).trim();
+  return Boolean(savedLocation) && location !== savedLocation
+    && normalized(location) === normalized(incoming.location) && sameScan(incoming, stored);
 }

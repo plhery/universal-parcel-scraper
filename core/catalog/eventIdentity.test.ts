@@ -78,6 +78,18 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: '' }, stored)).toBe(true);
     expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'EXAMPLE TOWN' })).toBe(false);
     expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, description: 'Preparazione alla consegna' })).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'GOFO-NA' })).toBe(true);
+  });
+
+  it('lets a GOFO France scan whose town lost its capitals or whose hub lost its code take over its stored row', () => {
+    const policy = sameInstantIdentityPolicy('gofo-fr', { supportsScanMatching: true });
+    const stored = { stage: 'out_for_delivery', description: 'En cours de livraison', location: 'SAINT-MICHEL-SUR-ORGE', providerCode: '203' };
+    expect(policy?.matches?.({ ...stored, location: 'Saint-Michel-sur-Orge' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: '75-LED' })).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'FR' })).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: 'Example Town' }, stored)).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: '' }, stored)).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: 'Saint-Michel-sur-Orge' }, { ...stored, description: 'Livré' })).toBe(false);
   });
 
   it.each([

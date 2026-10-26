@@ -6,7 +6,7 @@ import { normalizeGofoItalyNumber, parseGofoItaly } from '../gofo-it/parser.js';
 import { gofoItalyStage } from '../gofo-it/status.js';
 import { normalizeGofoNetherlandsNumber, parseGofoNetherlands } from '../gofo-nl/parser.js';
 import { gofoNetherlandsStage } from '../gofo-nl/status.js';
-import { normalizeGofoFranceNumber, parseGofoFrance, regionalGofoRequestNumber } from './parser.js';
+import { gofoPlace, normalizeGofoFranceNumber, parseGofoFrance, regionalGofoRequestNumber } from './parser.js';
 import { gofoFranceStage } from './status.js';
 
 const cases = [
@@ -128,11 +128,23 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
   });
 });
 
-it("leaves no place for a GOFO Italy hub's code, and keeps a French town written alike", () => {
-  const hub = fixture('it'); item(hub).trackEventList[0].processLocation = 'FI-ARS'; bind(hub);
-  expect(parseGofoItaly(hub, 'GFIT00000000000001').events?.[0]).not.toHaveProperty('location');
-  const town = fixture('fr'); item(town).trackEventList[0].processLocation = 'ST-LO'; bind(town);
-  expect(parseGofoFrance(town, 'GFFR00000000000001').events?.[0]).toMatchObject({ location: 'ST-LO' });
+it("leaves no place for a GOFO hub's code or the country alone, and keeps a French town written alike", () => {
+  const placeOf = (region: 'fr' | 'it', written: string) => {
+    const reply = fixture(region); item(reply).trackEventList[0].processLocation = written; bind(reply);
+    return region === 'it' ? parseGofoItaly(reply, 'GFIT00000000000001').events?.[0]?.location
+      : parseGofoFrance(reply, 'GFFR00000000000001').events?.[0]?.location;
+  };
+  for (const hub of ['FI-ARS', 'GOFO-NA']) expect(placeOf('it', hub)).toBeUndefined();
+  for (const hub of ['75-LED', 'FR']) expect(placeOf('fr', hub)).toBeUndefined();
+  expect(placeOf('fr', 'ST-LO')).toBe('St-Lo');
+});
+
+it('writes a French town given in capitals in the case its other scans use', () => {
+  for (const [written, place] of [['MARSEILLE', 'Marseille'], ['SAINT-MICHEL-SUR-ORGE', 'Saint-Michel-sur-Orge'],
+    ["L'ISLE-D'ABEAU", "L'Isle-d'Abeau"], ['LA SEYNE-SUR-MER,VAR', 'La Seyne-sur-Mer,Var'], ['La seyne-sur-mer', 'La seyne-sur-mer']]) {
+    expect(gofoPlace(written!, 'FR')).toBe(place);
+  }
+  expect(gofoPlace('MILANO', 'IT')).toBe('MILANO');
 });
 
 it('reconstructs the French shipper reference and binds it to the national waybill in the same reply', () => {
