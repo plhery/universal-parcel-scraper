@@ -50,10 +50,15 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
   const coded = subStatusStage(code, parsed.stage as Stage, parsed.description);
   // A stage the code gives comes from 17TRACK's map, even where its stage name was not one the wording rules read.
   if (coded) Object.assign(parsed, { stage: coded, stage_source: 'carrier_map' });
-  // 17TRACK's generic transit bucket loses Swiss Post's delivery-round scan.
-  // Refine only that operator's precise native label; keep its original code.
-  if (code === 'InTransit_Other' && operator.reporting_carrier === 'Swiss Post'
-    && text(raw.description).toLowerCase() === 'loading into delivery vehicle') parsed.stage = 'out_for_delivery';
+  // 17TRACK's generic transit bucket loses Swiss Post's delivery-round scan, and
+  // its "Registered", the sender's data before Swiss Post has the item, as its
+  // own REGISTERED status reads. Refine only that operator's precise native
+  // labels; keep their original code.
+  if (code === 'InTransit_Other' && operator.reporting_carrier === 'Swiss Post') {
+    const label = text(raw.description).toLowerCase();
+    if (label === 'loading into delivery vehicle') parsed.stage = 'out_for_delivery';
+    else if (label === 'registered') parsed.stage = 'registered';
+  }
   if (parsed.stage === 'delivered') parsed.description = 'Delivered';
   const timeRaw = isRecord(raw.time_raw) ? raw.time_raw : null;
   // `address` is never read: it can be the recipient's street.

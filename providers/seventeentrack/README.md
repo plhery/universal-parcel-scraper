@@ -47,7 +47,9 @@ captured bodies instead.
 ## Provider codes
 
 Swiss Post's exact vehicle-loading label refines 17TRACK's generic transit bucket into
-out-for-delivery. The reported provider code is preserved.
+out-for-delivery, and its "Registered", the sender's data before Swiss Post has the item,
+into registered. Other operators' "Registered" can be an acceptance, so it stays with the
+shared rules. The reported provider code is preserved.
 
 Codes -11, -13 and -14 mean interactive verification. Shipment code 100 means polling.
 A matching code-400/null-shipment reply means no history, unless its parameter metadata

@@ -67,6 +67,15 @@ describe('17TRACK result parsing', () => {
     shipment.tracking.providers[0]!.events = [postalScan('InTransit_Other', 'Will be loaded into delivery vehicle')];
     expect(parse17TrackResponse(payload, number).current_stage).toBe('in_transit');
   });
+  it("reads Swiss Post's Registered as the sender's data, and leaves other operators' to the shared rules", () => {
+    const payload = postalHistory([postalScan('InTransit_Other', 'Registered')]);
+    const shipment = payload.shipments[0]!.shipment as { tracking: { providers: Array<{ provider: { name: string }; events: unknown[] }> } };
+    shipment.tracking.providers[0]!.provider = { name: 'Swiss Post' };
+    expect(parse17TrackResponse(payload, number)).toMatchObject({ current_stage: 'registered',
+      events: [{ stage: 'registered', provider_code: 'InTransit_Other' }] });
+    shipment.tracking.providers[0]!.provider = { name: 'Ukrposhta' };
+    expect(parse17TrackResponse(payload, number).current_stage).toBe('in_transit');
+  });
 
   it('reads an order ready for the courier to collect as registered, not ready for the recipient', () => {
     const description = 'Order information has been received and ready for pickup';
