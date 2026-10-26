@@ -190,8 +190,9 @@ names, alone ("AMS"), with an airport word ("JFK Airport") or with its country (
 bare code the parcel's way does not bear out places nothing, but it tells a forwarder's clock.
 
 `dateLocalClocks(carrier, result)` dates the scans a carrier gives on a wall clock in no stated
-zone (`local_time`). The zone comes from the scan's place, read with the scans around it; else
-from the leg the parcel was on: the last scan before it with a zone of its own (a town, a state,
+zone (`local_time`). The zone comes from the scan's place, read with the scans around it; a scan
+filed away from the parcel is on the clock of the office that filed it, which it lends to no other
+scan; else from the leg the parcel was on: the last scan before it with a zone of its own (a town, a state,
 a country of one clock or an airport), or once a scan since says the parcel landed or reached its
 destination, the next one after, so later scans do not move it. With none before, it is the next
 one, unless the parcel lands on the way there; else from the parcel's

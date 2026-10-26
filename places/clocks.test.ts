@@ -98,6 +98,22 @@ describe('dateLocalClocks', () => {
     ]);
   });
 
+  it('dates a scan filed where the parcel was not on the clock of the office that filed it, and lends that clock to no other', () => {
+    // The label registered in the United States before the parcel leaves China, newest first.
+    const result = dateLocalClocks('jcex', { status: 'in_transit', destination_country: 'US', events: [
+      { local_time: '2026-10-20T05:19:21', description: 'Arrived at destination hub', location: 'New York NY', stage: 'in_transit' },
+      { local_time: '2026-10-18T06:31:21', description: 'Departed from sort facility', location: 'Shenzhen', stage: 'in_transit' },
+      { local_time: '2026-10-17T09:59:03', description: 'Shipment information received', stage: 'registered' },
+      { local_time: '2026-10-16T21:59:04', description: 'Shipping label created', location: 'Linden, NJ', stage: 'registered' },
+    ] });
+    expect(result.events!.map(dated)).toEqual([
+      ['2026-10-20T05:19:21-04:00', 'America/New_York', 'place'],
+      ['2026-10-18T06:31:21+08:00', 'Asia/Shanghai', 'place'],
+      ['2026-10-17T09:59:03+08:00', 'Asia/Shanghai', 'neighbour'],
+      ['2026-10-16T21:59:04-04:00', 'America/New_York', 'place'],
+    ]);
+  });
+
   it('borrows the clock of an airport its code alone names', () => {
     const result = dateLocalClocks('yunexpress', { status: 'in_transit', events: [
       { local_time: '2026-10-15T10:00:00', description: 'Accepted', location: 'Hanoi' },

@@ -64,7 +64,8 @@ function destinationZone(carrier: string, country: string): string | null {
 /**
  * Dates each scan that has a wall clock and no instant. The zone comes
  * from the scan's place, read with the scans around it, or an airport its
- * code alone names; else from the leg the parcel was on: the last scan before
+ * code alone names; a scan filed away from the parcel takes the clock of the
+ * office that filed it and lends it to no other; else from the leg the parcel was on: the last scan before
  * it with a zone of its own, or, once a scan since says the parcel landed or
  * reached its destination, the next one after, or with none before, the next
  * one unless the parcel lands on the way there; else from the destination, if the carrier
@@ -87,17 +88,22 @@ export function dateLocalClocks(carrier: string, result: CarrierResult): Carrier
   const newestFirst = dated.length > 1 && dated[0]! > dated[dated.length - 1]!;
   const order = events.map((_, index) => newestFirst ? events.length - 1 - index : index);
   const scans = order.map((index) => events[index]!);
-  const places = placesForEvents(scans.map((event) => text(event.location) || null), {
+  const locations = scans.map((event) => text(event.location) || null);
+  const reading = {
     destinationCountry: text(result.destination_country).toUpperCase() || null,
     carriers: [carrier],
     points: scans.map((event) => event.point),
-    stages: scans.map((event) => text(event.stage) || null),
     times: scans.map((event) => instant(event.time) === null ? null : text(event.time)),
-  });
-  // A scan's own zone: its town's or state's, its country's where that keeps one, or an airport's its code alone names.
-  const own = places.map((place, at) => place
-    ? place.precision === 'city' || place.region || !hasSeveralClocks(place.country) ? placeTimeZone(place) : null
-    : airportTimeZone(text(scans[at]!.location)));
+  };
+  const places = placesForEvents(locations, { ...reading, stages: scans.map((event) => text(event.stage) || null) });
+  // A scan filed where the parcel was not, such as a registration by the office that delivers it, has
+  // no place on the parcel's way, but it is on the clock of the office that filed it.
+  const filed = places.some((place, at) => !place && locations[at]) ? placesForEvents(locations, reading) : places;
+  // A place's own zone: its town's or state's, or its country's where that keeps one.
+  const zoneOf = (place: EventPlace) => place.precision === 'city' || place.region || !hasSeveralClocks(place.country)
+    ? placeTimeZone(place) : null;
+  // A scan's own zone: its place's, or an airport's its code alone names.
+  const own = places.map((place, at) => place ? zoneOf(place) : airportTimeZone(text(scans[at]!.location)));
   // The zone of the leg the parcel was on: the last scan before with a zone of its own,
   // or once a scan since says the parcel landed, the next one after. With none before,
   // the next one, unless the parcel lands on the way there.
@@ -115,6 +121,9 @@ export function dateLocalClocks(carrier: string, result: CarrierResult): Carrier
   const zoneAt = (at: number): { zone: string; basis: ZoneBasis } | null => {
     const place = places[at];
     if (own[at]) return { zone: own[at], basis: 'place' };
+    // It lends that clock to no other scan.
+    const office = !place && filed[at] ? zoneOf(filed[at]) : null;
+    if (office) return { zone: office, basis: 'place' };
     if (place) {
       const town = leg(at, (other) => other?.country === place.country);
       const zone = town ?? placeTimeZone(place);
