@@ -94,6 +94,9 @@ const LABELS: ReadonlyArray<readonly [label: string, english: string]> = [
   // China Post's own English.
   ['邮件到达处理中心…', 'Arrival at processing center'],
   ['邮件离开处理中心…', 'Departure from processing center'],
+  // The same for an express item (快件), as a forwarder's feed relays them.
+  ['快件到达处理中心…', 'Arrival at processing center'],
+  ['快件离开处理中心…', 'Departure from processing center'],
   ['出口清关完成…', 'Export customs clearance completed'],
   ['目的国清关完成…', 'Import customs clearance completed'],
   ['出门投递…', 'Out for delivery'],
@@ -118,6 +121,7 @@ const LABELS: ReadonlyArray<readonly [label: string, english: string]> = [
   ['邮件离开…，正在发往…', 'Departed for the next office'],
   ['邮件离开…，正在发往航站准备安检', "Departed for the airport's security check"],
   ['邮件已在…完成分拣，准备发出', 'Sorted and ready to leave'],
+  ['邮件已完成分拣，准备发出', 'Sorted and ready to leave'],
   ['邮件到达…，准备发往…', 'Arrived, to leave for the next office'],
   ['邮件已乘机由…飞往…', 'Left on a flight'],
   ['您的邮件正途经…', 'Passing through'],
@@ -157,13 +161,16 @@ export function chinaPostLabel(wording: string): string {
 }
 
 const ENGLISH: ReadonlyMap<string, string> = new Map(LABELS);
+// The acceptance a forwarder's feed relays with the office out of its 【】: "示例处理中心已收寄".
+const OFFICE_ACCEPTED = /^\p{Script=Han}{2,30}(?:中心|局|部|站|所|厅)已收寄$/u;
 
 /** The English shown for one China Post label, its places aside, or undefined when none is known. */
 export function chinaPostEnglish(wording: string): string | undefined {
   const label = chinaPostLabel(wording);
   const bare = label.replace(/…$/, '');
   return ENGLISH.get(label) ?? ENGLISH.get(bare) ?? ENGLISH.get(`${label}…`)
-    ?? WORDINGS.english(normalizeStatusWording(label)) ?? WORDINGS.english(normalizeStatusWording(bare));
+    ?? WORDINGS.english(normalizeStatusWording(label)) ?? WORDINGS.english(normalizeStatusWording(bare))
+    ?? (OFFICE_ACCEPTED.test(bare) ? 'Accepted' : undefined);
 }
 
 /**

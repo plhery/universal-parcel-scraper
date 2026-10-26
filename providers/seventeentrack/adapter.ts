@@ -382,6 +382,8 @@ function nzPostDestination(shipment: Record<string, unknown>, providers: unknown
 
 /** 17TRACK's carrier 3011, China Post. */
 const CHINA_POST = 3011;
+/** China Post's leg and those of forwarders that relay its labels: JHGJ (九好国际, 192049 in 17TRACK's carrier list). */
+const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049]);
 /** China Post's mirror of the origin post's outward exchange office: "arrived at" or "left the exchange office abroad". */
 const ORIGIN_EXCHANGE = /^(?:到达|离开)境外出口互换局/;
 
@@ -531,9 +533,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       try { parsed = seventeenTrackEvent(raw, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed) continue;
-      // China Post words its labels in Chinese only: they show in English where it is known,
-      // staged as the Chinese was, with the place left to the location, or taken from the label's 【】 where none is given.
-      const english = reported.key === CHINA_POST && parsed.description ? chinaPostEnglish(parsed.description) : undefined;
+      // China Post words its labels in Chinese only, on its own leg and on a forwarder's that relays them: they
+      // show in English where it is known, staged as the Chinese was, with the place left to the location, or
+      // taken from the label's 【】 where none is given.
+      const english = CHINA_POST_LABELS.has(reported.key) && parsed.description ? chinaPostEnglish(parsed.description) : undefined;
       if (english) {
         const named = parsed.location ? '' : place(chinaPostLabelPlace(parsed.description ?? '') ?? '');
         parsed.description = english;

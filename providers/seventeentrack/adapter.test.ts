@@ -182,6 +182,19 @@ describe('17TRACK result parsing', () => {
       tracking: { providers: [{ provider: { key: 190000, name: 'Example Forwarder' }, events: [postalScan('InTransit_Other', '承运商接收')] }] },
     } }] }, number);
     expect(other.events?.[0]?.description).toBe('承运商接收');
+    // JHGJ's leg relays China Post's labels, its place after them in 【】 and an express item's (快件) wording.
+    const relayed = parse17TrackResponse({ ...postalHistory([]), shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key: 192049, name: 'JHGJ' }, events: [
+        postalScan('InTransit_Other', '启运【Example Airport】'), postalScan('InTransit_Other', '快件到达处理中心【Example City】'),
+        postalScan('InTransit_Other', '邮件已完成分拣，准备发出【示例市】'), postalScan('InTransit_PickedUp', '示例处理中心已收寄【示例市】'),
+        postalScan('InTransit_Other', '邮件运输中【示例市】'),
+      ] }] },
+    } }] }, number);
+    expect(relayed.events?.map((event) => [event.description, event.location])).toEqual([
+      ['Departure', 'Example Airport'], ['Arrival at processing center', 'Example City'], ['Sorted and ready to leave', '示例市'],
+      ['Accepted', '示例市'], ['邮件运输中【示例市】', undefined],
+    ]);
   });
 
   it('does not convert stale tracking or unknown codes into shipment progress', () => {

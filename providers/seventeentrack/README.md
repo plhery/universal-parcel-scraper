@@ -203,9 +203,10 @@ carrier.
   `undated_event_count` instead of dated. The scans before one still describe the parcel,
   so the reply stays conclusive. India Post's own adapter places take-offs.
 - Original scan text is kept: the English interface does not translate descriptions. China
-  Post's leg shows a label in the English the [China Post adapter](../../carriers/china-post/README.md)
-  shows, its places left to the location, and a copy stored in Chinese takes the English in place.
-  A label that names its place only in 【】 ("启运【Example】") with no location gives it that place.
+  Post's leg, and JHGJ's, which relays China Post's labels, show a label in the English the
+  [China Post adapter](../../carriers/china-post/README.md) shows, its places left to the location,
+  and a copy stored in Chinese takes the English in place. A label that names its place only in 【】
+  ("启运【Example】") with no location gives it that place.
 - Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details or
   is Posti's "ULKOMAILLA" ("abroad") or the "目的国" ("destination country") China Post's feed
   gives an airline's arrival in place of a country's code: neither names a place. China
