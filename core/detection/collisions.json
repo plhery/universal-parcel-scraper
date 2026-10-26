@@ -1942,6 +1942,26 @@
     "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "hermes-de",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "russian-post"
+    ],
+    "reason": "Fourteen digits starting with 80 whose GS1 check digit passes fit Russian Post's preferred low rule, as well as DPD's low rules and those of BRT, SEUR, Ciblex, Delhivery, DHL eCommerce UK and Hermes Germany. Russian Post comes first, but the number stays a low-confidence suggestion, and recognition asks the others because Russian Post has no adapter."
+  },
+  {
     "shape": "14 digits, ending 7, 8 or 9",
     "carriers": [
       "brt",

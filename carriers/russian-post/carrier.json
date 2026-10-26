@@ -30,5 +30,13 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "russian-post-1",
+      "pattern": "^80\\d{12}$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "gs1"
+    }
+  ]
 }

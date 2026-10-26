@@ -394,7 +394,8 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "Spring GDS",
       "Mailing Technology",
-      "PostNL - Netherlands Post"
+      "PostNL - Netherlands Post",
+      "Spring Global Mail"
     ],
     "countries": [
       "NL"
@@ -3921,6 +3922,8 @@ export const CARRIER_CATALOG = {
     "tracking": {
       "mode": "automatic",
       "adapter": "blue-dart",
+      "recognitionRank": 599,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.bluedart.com/trackdartresultthirdparty",
@@ -26544,7 +26547,14 @@ export const CARRIER_CATALOG = {
     },
     "canaryUrl": "https://www.pochta.ru/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^80\\d{12}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      }
+    ]
   },
   "saee": {
     "displayName": "Saee",
@@ -34358,7 +34368,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rpx-hk": ["rpx-hk-1"],
   "rpx-indonesia": [],
   "rr-express-sg": [],
-  "russian-post": [],
+  "russian-post": ["russian-post-1"],
   "saee": ["saee-1"],
   "sagawa": ["sagawa-waybill"],
   "sagawa-global": [],

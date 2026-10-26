@@ -2,9 +2,10 @@
 
 Dutch S10 numbers ending in `NL` and PostNL's `3S…` barcodes, tracked through the keyless
 API behind `postnl.post`, and for a `3S` parcel sent within the Netherlands through PostNL's
-domestic tracker with its delivery postcode. The folder id stays `spring-gds` (PostNL's international
-subsidiary) because stored parcels, the detection corpus, the published contract and the
-native catalog all carry it; everything user-facing says PostNL.
+domestic tracker with its delivery postcode. The folder id stays `spring-gds` (PostNL's
+international subsidiary, formerly Spring Global Mail, a name providers still give it) because
+stored parcels, the detection corpus, the published contract and the native catalog all carry
+it; everything user-facing says PostNL.
 
 ## How it works
 

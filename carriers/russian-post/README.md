@@ -4,8 +4,13 @@ Russian Post items use enabled universal providers. There is no dedicated adapte
 
 ## Numbers
 
-Domestic Russian Post numbers are fourteen digits, as users quote them on gdeposylka.
-Fourteen digits are shared with several carriers, so no rule claims them. International items use the UPU S10 layout and stay with the generic postal carrier.
+Domestic Russian Post numbers are fourteen digits, as users quote them on gdeposylka: the
+accepting office's six-digit postcode, seven digits and a GS1 check digit. Fourteen digits are
+shared with several carriers. Russian postcodes never start with 8, yet the numbers starting with
+80 that users and providers report are Russian Post's, so `russian-post-1` puts Russian Post
+first for those when the check digit passes. It stays a suggestion: the other carriers' numbers of
+that length are not ruled out. International items use the UPU S10 layout and stay with the
+generic postal carrier.
 
 ## Why there is no adapter
 

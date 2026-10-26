@@ -374,3 +374,16 @@ describe('ePost Global shipments under a USPS code', () => {
     }
   });
 });
+
+describe('Russian Post domestic numbers', () => {
+  // Synthetic numbers; none is a real shipment.
+  it('puts Russian Post first for fourteen digits starting with 80 whose GS1 check digit passes', () => {
+    const match = detectCarrierMatch('80123456789018');
+    expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(match.candidates?.[0]).toBe('russian-post');
+    expect(match.candidates).toContain('dpd');
+    for (const number of ['80123456789017', '40123456789010', '8012345678901', '801234567890180']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('russian-post');
+    }
+  });
+});

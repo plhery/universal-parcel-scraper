@@ -392,7 +392,8 @@
     "aliases": [
       "Spring GDS",
       "Mailing Technology",
-      "PostNL - Netherlands Post"
+      "PostNL - Netherlands Post",
+      "Spring Global Mail"
     ],
     "countries": [
       "NL"
@@ -3919,6 +3920,8 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "blue-dart",
+      "recognitionRank": 599,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.bluedart.com/trackdartresultthirdparty",
@@ -26542,7 +26545,14 @@
     },
     "canaryUrl": "https://www.pochta.ru/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^80\\d{12}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      }
+    ]
   },
   "saee": {
     "displayName": "Saee",

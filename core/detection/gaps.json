@@ -3128,7 +3128,7 @@
     "carrier": "russian-post",
     "pattern": "^\\d{14}$",
     "kind": "by_design",
-    "reason": "Fourteen digits are shared by several carriers and nothing in the number points to Russian Post."
+    "reason": "Fourteen digits outside the 80 range are shared by several carriers, and nothing in the number points to Russian Post."
   },
   {
     "carrier": "sagawa-global",

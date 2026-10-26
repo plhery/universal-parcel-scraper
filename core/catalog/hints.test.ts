@@ -189,7 +189,7 @@ describe('carrier names reported by universal providers', () => {
     // Names providers give these carriers' own parcels.
     ['Poland Post', 'poczta-polska'], ['Pocztex', 'poczta-polska'], ['New Zealand Post', 'nz-post'],
     ['Norway Post', 'bring-posten'], ['Amazon Swiship', 'amazon-shipping'], ['PostNord Denmark', 'postnord'],
-    ['DHL Freight Active Tracing', 'dhl-freight'],
+    ['DHL Freight Active Tracing', 'dhl-freight'], ['Spring Global Mail', 'spring-gds'],
     // Brands their network's tracker answers for.
     ['StarTrack', 'australia-post'], ['Star Track Express', 'australia-post'], ['Homerr', 'vinted-go'],
     ['InPost Spain', 'mondial-relay'], ['InPost España', 'mondial-relay'], ['InPost (ES)', 'mondial-relay'],

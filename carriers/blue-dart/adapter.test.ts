@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { BlueDartTracker } from './adapter.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
+import { BlueDartTracker, adapter } from './adapter.js';
 import { parseBlueDart } from './parser.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { classifyBlueDartStatus } from './status.js';
@@ -84,5 +86,31 @@ describe('Blue Dart direct tracking', () => {
     await new BlueDartTracker({ fetcher }).fetch(NUMBER, { budgetMs: 1000 });
     expect(fetcher.mock.calls[0]?.[0]).toBe(`https://www.bluedart.com/trackdartresultthirdparty?trackFor=0&trackNo=${NUMBER}`);
     expect(fetcher.mock.calls[0]?.[1]?.signal).toBeInstanceOf(AbortSignal);
+  });
+});
+
+describe('Blue Dart recognition', () => {
+  const carrier = (fetcher: typeof fetch) => adapter({ fetcher } as Parameters<typeof adapter>[0]);
+  it('recognizes a dated waybill and not one the no-information panel answers', async () => {
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(new Response(html))).recognize!(NUMBER))
+      .resolves.toMatchObject({ known: true });
+    const reasons = '<div id="reasons" style="display:none"><h4>There is no information on the Waybill/Reference Number/Order Number currently.</h4></div><script>$("#reasons").show();</script>';
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(new Response(reasons))).recognize!(NUMBER))
+      .resolves.toEqual({ known: false });
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(new Response('<html>Unavailable</html>'))).recognize!(NUMBER))
+      .rejects.toMatchObject({ kind: 'schema' });
+    await expect(carrier(vi.fn<typeof fetch>()).recognize!('A0000000001')).resolves.toEqual({ known: false });
+  });
+});
+
+describe('Blue Dart numbers', () => {
+  it('is asked about eleven digits passing its check only for a lookup in India', () => {
+    const number = '12345678903';
+    expect(detectCarrierMatch(number).candidates).toContain('blue-dart');
+    expect(recognitionAskedCarriers(number, { countryHint: 'IN' })[0]).toBe('blue-dart');
+    for (const countryHint of [undefined, 'DE', 'FR', 'CH', 'AE', 'NZ']) {
+      expect(recognitionAskedCarriers(number, { countryHint }), `${countryHint}`).not.toContain('blue-dart');
+    }
+    expect(recognitionAskedCarriers('12345678904', { countryHint: 'IN' })).not.toContain('blue-dart');
   });
 });
