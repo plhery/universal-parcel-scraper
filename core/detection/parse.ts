@@ -19,6 +19,24 @@ function trimPastedUrl(raw: string): string {
   return raw.replace(/^[\s<'"(\x5b]+/, '').replace(/[\s>'")\],;.!?]+$/, '');
 }
 
+/**
+ * Links printed without their scheme, as text messages and labels give them
+ * ("spx.com.br/track?…"), read as https links, but only on a host a tracking
+ * link rule names: any other dotted word with a slash stays text.
+ */
+function bareTrackingLinks(input: string): string[] {
+  return (input.match(/(?<![\w@./:%-])(?:[a-z0-9-]+\.)+[a-z]{2,}\/[^\s<>"']*/gi) ?? [])
+    .map((link) => `https://${link}`)
+    .filter((link) => {
+      try {
+        const host = new URL(trimPastedUrl(link)).hostname.toLowerCase();
+        return TRACKING_LINK_RULES.some((rule) => rule.domains.some((domain) => matchesDomain(host, domain)));
+      } catch {
+        return false;
+      }
+    });
+}
+
 function cleanLinkTrackingNumber(raw: string): string {
   return raw.split(/[,|]/, 1)[0]!.trim();
 }
@@ -119,7 +137,7 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
     };
   }
 
-  const pastedUrls = input.match(/https?:\/\/[^\s<>"']+/gi) ?? [];
+  const pastedUrls = [...input.match(/https?:\/\/[^\s<>"']+/gi) ?? [], ...bareTrackingLinks(input)];
   for (const pastedUrl of pastedUrls) {
     const trackingUrl = trimPastedUrl(pastedUrl);
     try {

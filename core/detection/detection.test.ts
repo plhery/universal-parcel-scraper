@@ -417,6 +417,15 @@ describe('the detection engine', () => {
     },
   );
 
+  it('reads a link printed without its scheme only on a host a link rule names', () => {
+    expect(parseTrackingInput('(spx.ph/track?PH407182635901)')).toMatchObject({
+      trackingNumber: 'PH407182635901', carrier: 'spx-ph', source: 'link',
+    });
+    for (const text of ['example.com/track?PH407182635901', 'a@spx.ph/track?PH407182635901', 'spx.ph.example.com/track?PH407182635901']) {
+      expect(parseTrackingInput(text).source, text).not.toBe('link');
+    }
+  });
+
   it('decodes an SPX bare query without admitting another path, host or query syntax', () => {
     expect(parseTrackingInput('https://spx.ph/track?%50%48000000000001')).toMatchObject({
       trackingNumber: 'PH000000000001', carrier: 'spx-ph', source: 'link',
