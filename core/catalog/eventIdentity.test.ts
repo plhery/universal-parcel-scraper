@@ -611,6 +611,21 @@ describe('same-instant identity policies', () => {
     ]) expect(policy?.matches?.(incoming, different)).toBe(false);
   });
 
+  it('lets a China Post scan YunExpress relays in English take over the row stored in Chinese', () => {
+    const policy = sameInstantIdentityPolicy('yunexpress', { supportsScanMatching: true });
+    const incoming = { stage: 'in_transit', description: 'Departed for the next stop', location: '示例市国际互换局', providerCode: '' };
+    // Stored with its office as its place, or in the wording.
+    expect(policy?.matches?.(incoming, { ...incoming, description: '邮件离开，正在发往下一站' })).toBe(true);
+    expect(policy?.matches?.(incoming, { ...incoming, description: '邮件离开【示例市国际互换局】，正在发往下一站', location: '示例省示例市' })).toBe(true);
+    const sorted = { ...incoming, description: 'Sorted and ready to leave', location: '示例市' };
+    expect(policy?.matches?.(sorted, { ...sorted, description: '邮件已在【示例揽投部】完成分拣，准备发出' })).toBe(true);
+    for (const different of [
+      { ...incoming, description: '邮件到达' },
+      { ...incoming, description: '邮件离开，正在发往下一站', location: '示例航空中心' },
+      { ...sorted, description: '邮件已在【示例揽投部】完成分拣，准备发出' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+  });
+
   it('lets a ZTO International scan read on Shanghai’s clock take over the row stored on another zone, by wall clock, place, wording and code', () => {
     expect(sameInstantIdentityPolicy('zto-international')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('zto-international', { supportsScanMatching: true });

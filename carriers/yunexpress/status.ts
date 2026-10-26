@@ -1,6 +1,8 @@
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { chinaPostEnglish } from '../china-post/status.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const FAILED_ATTEMPT: ClassifiedStatus = { status: 'exception', stage: 'failed_attempt' };
 
@@ -139,6 +141,18 @@ export function chinaPostOffice(wording: string): { wording: string; office: str
   return match && office ? { wording: `${match[1]}${wording.trim().slice(match[0].length)}`, office } : undefined;
 }
 
+/**
+ * The English China Post's adapter shows for one of its scans relayed in
+ * Chinese, read with the office an arrival or a departure names, or with the
+ * place that office became. A partner's line, with kana or hangul, and wording
+ * China Post's labels do not know give undefined.
+ */
+export function chinaPostRelayEnglish(wording: string, place = ''): string | undefined {
+  const text = wording.trim();
+  if (!/\p{Script=Han}/u.test(text) || /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(text)) return undefined;
+  return chinaPostEnglish(text.replace(/^(邮件(?:到达|离开))(?=$|，)/u, `$1【${place.trim()}】`));
+}
+
 // A partner's line can carry its tracking page's markup, such as a link holding the parcel's
 // number around "CARD LEFT". The scan keeps the link's text, never the tag or its address.
 const MARKUP = /<\/?(?:a|b|i|u|em|strong|span|font|br|p|div)\b[^<>]{0,1000}>/gi;
@@ -160,6 +174,15 @@ export function isYunExpressNotice(description: string): boolean {
 
 /** Yuntrack's scan wording, compared without case or repeated spaces. */
 const WORDING = new Map(ENTRIES.map(([text, status]) => [normalizeStatusWording(text), status]));
+const worded = (wording: string): ClassifiedStatus | undefined =>
+  WORDING.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1];
+
+// China Post's relayed scans show in English, which stages as their Chinese.
+const RELAYED = new Map(statuses.entries.flatMap(({ wording }) => {
+  const english = wording ? chinaPostRelayEnglish(wording) : undefined;
+  const status = english && wording ? worded(normalizeStatusWording(wording)) : undefined;
+  return english && status ? [[normalizeStatusWording(english), status] as const] : [];
+}));
 
 // The page labels these latest-event codes Processing and Transit. They give
 // the parcel's status when its newest wording is new, never a scan's stage.
@@ -170,7 +193,7 @@ export function yunExpressStatus(description: string, code?: unknown): Classifie
   // containing variable delivery notes. It is never inherited by older scans.
   if (code === 50) return { status: 'delivered', stage: 'delivered' };
   const wording = normalizeStatusWording(description);
-  return WORDING.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1];
+  return worded(wording) ?? RELAYED.get(wording);
 }
 
 /** The status the latest event's own code states, for wording the map does not know. */

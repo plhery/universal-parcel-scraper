@@ -133,7 +133,7 @@ describe('YunExpress captured response projection', () => {
     expect(result.events?.some((event) => !event.description)).toBe(false);
   });
 
-  it("stages China Post's relayed scans and moves the office of an arrival or departure into its place", () => {
+  it("stages China Post's relayed scans, moves the office of an arrival or departure into its place and shows them in English", () => {
     const payload = fixture();
     const item = payload.ResultList[0];
     const rows = item.TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
@@ -151,21 +151,26 @@ describe('YunExpress captured response projection', () => {
     rows[0].ProcessContent = '邮件离开【示例市国际互换局】，正在发往【示例航空中心】----示例省示例市';
     Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: '邮件离开【示例市国际互换局】，正在发往【示例航空中心】', ProcessLocation: '示例省示例市', GmtProcessTimezone: 'GMT+08:00' });
     const result = parse(payload, NUMBER);
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: '邮件离开，正在发往【示例航空中心】' });
-    expect(result.events?.[0]).toMatchObject({ description: '邮件离开，正在发往【示例航空中心】', location: '示例市国际互换局', time: '2026-03-20T13:39:00+08:00' });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Departed for the next office' });
+    expect(result.events?.[0]).toMatchObject({ description: 'Departed for the next office', location: '示例市国际互换局', time: '2026-03-20T13:39:00+08:00' });
     expect(result.events?.slice(4, 12).map(({ description, location, stage }) => ({ description, location, stage }))).toEqual([
-      { description: '邮件到达', location: '示例市国际互换局', stage: 'in_transit' },
-      { description: '已交承运商运输', location: '示例市', stage: 'in_transit' },
-      { description: '送交出口海关', location: '', stage: 'customs' },
-      { description: '【示例市国际互换局】已出口直封', location: '示例省示例市', stage: 'in_transit' },
-      { description: '邮件到达，准备发往【示例航空中心】', location: '示例市', stage: 'in_transit' },
-      { description: '邮件离开，正在发往下一站', location: '示例揽投部', stage: 'in_transit' },
-      { description: '邮件已在【示例揽投部】完成分拣，准备发出', location: '示例市', stage: 'in_transit' },
-      { description: '中国邮政已收取邮件', location: '示例市', stage: 'in_transit' },
+      { description: 'Arrival', location: '示例市国际互换局', stage: 'in_transit' },
+      { description: 'Handed to the carrier for transport', location: '示例市', stage: 'in_transit' },
+      { description: 'Presented to export customs', location: '', stage: 'customs' },
+      { description: 'Closed into an export dispatch', location: '示例省示例市', stage: 'in_transit' },
+      { description: 'Arrived, to leave for the next office', location: '示例市', stage: 'in_transit' },
+      { description: 'Departed for the next stop', location: '示例揽投部', stage: 'in_transit' },
+      { description: 'Sorted and ready to leave', location: '示例市', stage: 'in_transit' },
+      { description: 'China Post has received the mail', location: '示例市', stage: 'in_transit' },
     ]);
-    // An office the feed left empty is no place, and the wording stays whole.
+    // The map stages the English as it does the Chinese.
+    for (const event of result.events!.slice(4, 12)) expect(statusMap.stage('', event.description!), event.description).toBe(event.stage);
+    // An office the feed left empty is no place.
     rows[4].ProcessContent = '邮件到达【】----示例市';
-    expect(parse(payload, NUMBER).events?.[4]).toMatchObject({ description: '邮件到达【】', location: '示例市', stage: 'in_transit' });
+    expect(parse(payload, NUMBER).events?.[4]).toMatchObject({ description: 'Arrival', location: '示例市', stage: 'in_transit' });
+    // A partner's line in Japanese keeps its wording.
+    rows[4].ProcessContent = '到着しました----Sample Town';
+    expect(parse(payload, NUMBER).events?.[4]).toMatchObject({ description: '到着しました' });
   });
 
   // Rows newest first: 4 the flight's arrival, 5 its departure, 6 the export clearance,
