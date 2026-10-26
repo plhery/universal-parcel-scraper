@@ -13,7 +13,8 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
-import { chinaPostAirline } from '../china-post/status.js';
+import { hasSeveralClocks, mainZone } from '../../places/zones.js';
+import { chinaPostAirline, chinaPostDestinationScan } from '../china-post/status.js';
 import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressNotice, withoutMarkup, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
@@ -77,11 +78,21 @@ function dateOriginLeg(events: CarrierEvent[]): CarrierEvent[] {
  * Dates China Post's scans, which the feed relays in Chinese, on China's clock
  * wherever they happen: China Post dates its own scans abroad on Beijing time,
  * and the feed states +08:00 for its arrival at the destination (到达寄达地).
+ * The destination post's own scans, which China Post copies on that post's wall
+ * clock, take the destination's where it keeps one, else wait for the scans
+ * around them.
  */
-function dateChinaPostScans(events: CarrierEvent[]): CarrierEvent[] {
-  return events.map((event) => event.time || !event.local_time || !/\p{Script=Han}/u.test(event.description ?? '')
-    || /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(event.description ?? '') ? event
-    : { ...event, time: eventClock(event.local_time, '+08:00').time, time_zone: ORIGIN_ZONE, time_zone_basis: 'carrier' });
+function dateChinaPostScans(events: CarrierEvent[], destination: string): CarrierEvent[] {
+  const zone = /^[A-Z]{2}$/.test(destination) && !hasSeveralClocks(destination) ? mainZone(destination) : null;
+  return events.map((event) => {
+    if (event.time || !event.local_time || !/\p{Script=Han}/u.test(event.description ?? '')
+      || /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(event.description ?? '')) return event;
+    if (!chinaPostDestinationScan(event.description ?? '')) {
+      return { ...event, time: eventClock(event.local_time, '+08:00').time, time_zone: ORIGIN_ZONE, time_zone_basis: 'carrier' };
+    }
+    const time = zone && firstOccurrence(DateTime.fromISO(event.local_time, { zone })).toISO({ suppressMilliseconds: true });
+    return zone && time ? { ...event, time, time_zone: zone, time_zone_basis: 'destination' } : event;
+  });
 }
 
 /**
@@ -231,7 +242,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const country = clean(info.DestinationCountryCode, 8).toUpperCase();
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
-  const dated = officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(events)), lastOffset, domestic));
+  const dated = officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(events), country), lastOffset, domestic));
   const latest = dated[0]!;
   const classified = current;
   const deliveryNumber = clean(info.TrackingNumber, 64).toUpperCase();

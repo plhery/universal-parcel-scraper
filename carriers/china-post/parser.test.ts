@@ -277,7 +277,7 @@ describe('China Post trace projection', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Delivered', last_update_local: '2026-09-03T14:13:00', destination_country: 'CO', history_truncated: true });
     expect(result.events?.slice(0, 3)).toEqual([
-      { ...china('2026-09-03T14:13:00'), description: 'Arrival at processing center in the destination country', location: 'Colombia', provider_code: '459', stage: 'in_transit', stage_source: 'carrier_map' },
+      { local_time: '2026-09-03T14:13:00', description: 'Arrival at processing center in the destination country', location: 'Colombia', provider_code: '459', stage: 'in_transit', stage_source: 'carrier_map' },
       { local_time: '2026-08-26T16:19:00', description: 'Delivered', location: 'Colombia', provider_code: '463', stage: 'delivered', stage_source: 'carrier_map' },
       { local_time: '2026-08-26T08:04:00', description: 'Out for delivery', location: 'Colombia', provider_code: '462', stage: 'out_for_delivery', stage_source: 'carrier_map' },
     ]);
@@ -312,24 +312,33 @@ describe('China Post trace projection', () => {
     const result = dateLocalClocks('china-post', parseChinaPostTraces(edit('delivered', (mail) => {
       mail.receiverCountryName = '日本';
       mail.mailInfoCount = 5;
-      // Oldest first: the landing, the arrival at the destination, its processing centre, its round and its delivery.
+      // Oldest first: the landing, the arrival at the destination, its processing centre, its import customs, its round and its delivery.
       const base = scan(mail, 0);
       mail.mailInfos = [
         { ...base, operationCode: '505', operation: '飞机进港', stateDesc: '运送中', orgCode: '', orgName: '', time: '2026-09-01 05:00:00' },
         { ...base, operationCode: '516', operation: '到达寄达地', stateDesc: '到达境外目的地', orgCode: 'JP', orgName: '日本', time: '2026-09-01 07:55:00' },
         { ...base, operationCode: '459', operation: '到达寄达地处理中心', stateDesc: '到达境外目的地', orgCode: 'JP', orgName: '日本', time: '2026-09-01 23:04:00' },
-        { ...base, operationCode: '462', operation: '【日本】安排投递', stateDesc: '派送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 08:30:00' },
-        { ...base, operationCode: '463', operation: '【日本】已妥投', stateDesc: '已签收', orgCode: 'JP', orgName: '日本', time: '2026-09-02 13:10:00' },
+        { ...base, operationCode: '486', operation: '送交境外进口海关', stateDesc: '清关中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 08:59:00' },
+        { ...base, operationCode: '493', operation: '境外进口海关留存待验(等待提交给边境机构/安全部门)', stateDesc: '清关中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 09:00:00' },
+        { ...base, operationCode: '487', operation: '寄达地海关允许进口', stateDesc: '运送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 17:03:00' },
+        { ...base, operationCode: '460', operation: '离开【日本】处理中心', stateDesc: '运送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 17:04:00' },
+        { ...base, operationCode: '462', operation: '【日本】安排投递', stateDesc: '派送中', orgCode: 'JP', orgName: '日本', time: '2026-09-03 08:30:00' },
+        { ...base, operationCode: '463', operation: '【日本】已妥投', stateDesc: '已签收', orgCode: 'JP', orgName: '日本', time: '2026-09-03 13:10:00' },
       ];
     }), NUMBER));
+    // The destination post's processing and customs scans match its own record to the minute.
     expect(result.events?.map((event) => [event.provider_code, event.time, event.time_zone_basis])).toEqual([
-      ['463', '2026-09-02T13:10:00+09:00', 'place'],
-      ['462', '2026-09-02T08:30:00+09:00', 'place'],
-      ['459', '2026-09-01T23:04:00+08:00', 'carrier'],
+      ['463', '2026-09-03T13:10:00+09:00', 'place'],
+      ['462', '2026-09-03T08:30:00+09:00', 'place'],
+      ['460', '2026-09-02T17:04:00+09:00', 'place'],
+      ['487', '2026-09-02T17:03:00+09:00', 'place'],
+      ['493', '2026-09-02T09:00:00+09:00', 'place'],
+      ['486', '2026-09-02T08:59:00+09:00', 'place'],
+      ['459', '2026-09-01T23:04:00+09:00', 'place'],
       ['516', '2026-09-01T07:55:00+08:00', 'carrier'],
       ['505', '2026-09-01T05:00:00+08:00', 'carrier'],
     ]);
-    expect(result.last_update).toBe('2026-09-02T13:10:00+09:00');
+    expect(result.last_update).toBe('2026-09-03T13:10:00+09:00');
   });
 
   it('keeps the receiver country label when it has no ISO code', () => {

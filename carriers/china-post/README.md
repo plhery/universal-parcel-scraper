@@ -135,12 +135,13 @@ Post dates its own scans on China's clock, abroad too, and they gain that
 instant (`time_zone_basis: carrier`): read on the destination's clock, a landing
 would come an hour after the flight left China, and YunExpress states +08:00 for
 the same arrival at the destination. The app copies the destination post's
-departures from its processing centre, arrivals at the delivery office, rounds,
-deliveries and departures from a transit office (codes 460 to 463 and 489) on
-that post's wall clock, to the minute of the post's own or UPU's. Those keep the
-wall clock alone, which the shared clock step dates by the destination it names.
-The arrival at the destination's processing centre (459) has shown no other
-clock and stays on China's. The web preview dates the destination post's scans
+own scans on that post's wall clock, to the minute of the post's own record or
+UPU's: arrival at and departure from its processing centre, import customs'
+presentation, hold and release, arrivals at the delivery office, rounds,
+deliveries and departures from a transit office (codes 459 to 463, 486, 487, 489
+and 493). Those keep the wall clock alone, which the shared clock step dates by
+the destination it names. The arrival in the destination country (516) stays on
+China's. The web preview dates the destination post's scans
 on China's clock too: on that post's own, a delivery or a round would fall after
 the preview showed it. Because one history mixes these clocks, the catalog
 timezone stays UTC with local clocks, and `last_update` is set only when the

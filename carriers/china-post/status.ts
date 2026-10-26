@@ -191,6 +191,22 @@ export function chinaPostEnglish(wording: string): string | undefined {
     ?? (OFFICE_ACCEPTED.test(bare) ? 'Accepted' : undefined);
 }
 
+// The destination post's own scans, which China Post copies on that post's wall
+// clock (its parser reads them by code): the arrival at its processing centre and
+// import customs' presentation, hold and release. Those that bracket a place
+// count when it is a country: the departure from the processing centre, the
+// arrival at the delivery office, the round and the delivery.
+const DESTINATION_LABELS = new Set(['到达寄达地处理中心', '送交境外进口海关', '境外进口海关留存待验', '寄达地海关允许进口']);
+const DESTINATION_PLACED_LABELS = new Set(['离开…处理中心', '已到达…投递局', '…安排投递', '…已妥投']);
+
+/** Whether a label, as a forwarder's feed relays it, is one of the destination post's own scans. */
+export function chinaPostDestinationScan(wording: string): boolean {
+  const label = chinaPostLabel(wording);
+  if (DESTINATION_LABELS.has(label)) return true;
+  const place = chinaPostLabelPlace(wording);
+  return DESTINATION_PLACED_LABELS.has(label) && place !== undefined && chinaPostCountry(place) !== undefined;
+}
+
 /**
  * The name a label gives in its only 【】, "启运【香港】", which its English
  * leaves out, or the country code a partner's scan abroad gives before its

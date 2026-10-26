@@ -271,9 +271,9 @@ describe('YunExpress captured response projection', () => {
   it("dates China Post's relayed scans on China's clock, abroad too", () => {
     const payload = fixture();
     const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
-    rows[1].ProcessContent = '到达寄达地处理中心----日本';
-    rows[2].ProcessContent = '到达寄达地';
-    rows[3].ProcessContent = '飞机进港----邮政航空';
+    rows[1].ProcessContent = '到达寄达地----日本';
+    rows[2].ProcessContent = '飞机进港----邮政航空';
+    rows[3].ProcessContent = '航空公司启运';
     const result = parse(payload, NUMBER);
     for (const [at, time] of [[1, '2026-03-19T13:39:00+08:00'], [2, '2026-03-18T13:39:00+08:00'], [3, '2026-03-17T13:39:00+08:00']] as const) {
       expect(result.events?.[at]).toMatchObject({ time, local_time: time.slice(0, 19), time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' });
@@ -281,6 +281,30 @@ describe('YunExpress captured response projection', () => {
     // A partner's row keeps its wall clock, in Japanese too.
     rows[1].ProcessContent = 'お届け済み----Sample Town';
     expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
+  });
+
+  it("dates the destination post's own scans China Post relays on the destination's clock", () => {
+    const payload = fixture();
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    ['离开【日本】处理中心----', '寄达地海关允许进口----', '境外进口海关留存待验(等待提交给边境机构/安全部门)----', '送交境外进口海关----', '到达寄达地处理中心----', '到达寄达地----日本']
+      .forEach((content, at) => { rows[at + 1].ProcessContent = content; });
+    const read = () => parse(payload, NUMBER).events!.slice(1, 7).map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis]);
+    payload.ResultList[0].TrackInfo.DestinationCountryCode = 'JP';
+    expect(read()).toEqual([
+      ['2026-03-19T13:39:00+09:00', 'Asia/Tokyo', 'destination'],
+      ['2026-03-18T13:39:00+09:00', 'Asia/Tokyo', 'destination'],
+      ['2026-03-17T13:39:00+09:00', 'Asia/Tokyo', 'destination'],
+      ['2026-03-16T13:39:00+09:00', 'Asia/Tokyo', 'destination'],
+      ['2026-03-15T13:39:00+09:00', 'Asia/Tokyo', 'destination'],
+      // China Post's own arrival in the country stays on China's clock.
+      ['2026-03-14T13:39:00+08:00', 'Asia/Shanghai', 'carrier'],
+    ]);
+    // A destination with several clocks leaves them to the scans around them.
+    payload.ResultList[0].TrackInfo.DestinationCountryCode = 'US';
+    expect(read().slice(0, 5).every(([time]) => time === undefined)).toBe(true);
+    // A departure from a processing centre in China is China Post's own.
+    rows[1].ProcessContent = '离开【示例处理中心】处理中心----';
+    expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+08:00', time_zone_basis: 'carrier' });
   });
 
   it('dates a parcel sent within its destination country as one leg', () => {

@@ -74,8 +74,11 @@ wording. An airline the feed gives as a place (邮政航空) is none, as in Chin
 Post's own adapter. The scans show the English China Post's adapter gives its labels, and
 stage as their Chinese. These scans are dated on China's clock wherever they happen: China Post
 dates its own scans abroad on Beijing time, and the feed states +08:00 for its
-arrival at the destination (到达寄达地). A line with kana or hangul is a
-partner's. Other clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
+arrival at the destination (到达寄达地). The destination post's own scans, from
+its processing centre's arrival through import customs to the delivery, carry
+that post's wall clock, as in China Post's adapter: they take the destination's
+clock where it keeps one, else the scans around them date them. A line with kana
+or hangul is a partner's. Other clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
 lets such a row take over the one stored with the office in its wording, in
 Chinese or at the airline.
 
