@@ -2,6 +2,7 @@
   "carrier": "ecms-express",
   "entries": [
     {"code": "EVENT_101", "wording": "Virtual Manifest has been received by carrier", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The sender's manifest reached ECMS before the parcel; the tracker API sends it as EVENT_101 or EVENT_104."},
+    {"code": "EVENT_104", "wording": "Virtual Manifest has been received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Wording of the newer oms page for the manifest, before the parcel reaches ECMS."},
     {"code": "S07N700", "wording": "Shipment info confirmed", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "Seen in the tracker API reply."},
     {"code": "EVENT_227", "wording": "Documents and information required for clearance have been received by the carrier.", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The consignee supplied the clearance documents; the consignee page appends a line about shipping within days of receiving the parcel and ID."},
     {"wording": "ID information has been reviewed and verified", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The consignee's ID for import clearance was checked, before the parcel reached ECMS."},

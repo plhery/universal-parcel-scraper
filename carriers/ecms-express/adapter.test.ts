@@ -57,6 +57,15 @@ describe('ECMS history', () => {
     expect(() => parseEcmsExpress(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('registers the parcel on the manifest in the newer page\'s wording', () => {
+    const data = fixture();
+    const manifest = { ...row(), eventCode: 'EVENT_104', eventDescription: 'Virtual Manifest has been received', operatorTime: Date.UTC(2026, 6, 1, 9), timeZone: 8 };
+    data.orderInfo[0]!.baseInfo = manifest;
+    data.orderInfo[0]!.infoList = [manifest];
+    expect(parseEcmsExpress(data, NUMBER)).toMatchObject({ current_stage: 'registered',
+      events: [{ provider_code: 'EVENT_104', stage: 'registered', stage_source: 'carrier_map' }] });
+  });
+
   it('does not mislabel new wording or invent an unambiguous partner reference', () => {
     const data = fixture();
     data.orderInfo[0]!.baseInfo = { ...row(), eventCode: 'NEW', eventDescription: 'Unmapped milestone' };
