@@ -855,6 +855,8 @@ describe('status map answers', () => {
     expect(answer('correios-br', 'BDE/01', 'Objeto entregue ao destinatário')).toEqual(mapped('delivered'));
     expect(answer('correios-br', 'OEC/01', 'Objeto saiu para entrega ao destinatário')).toEqual(mapped('out_for_delivery'));
     expect(answer('correios-br', 'BDE/20', 'Carteiro não atendido')).toEqual(mapped('failed_attempt'));
+    expect(answer('correios-br', 'FC/16', 'Necessidade de informar CPF/CNPJ do destinatário')).toEqual(mapped('customs'));
+    expect(answer('correios-br', 'PAR/18', 'Objeto recebido na unidade de exportação no país de origem')).toEqual(mapped('in_transit'));
     expect(answer('correios-br', 'XX/99', 'Objeto em trânsito')).toEqual(unknown);
     expect(answer('correios-br', null, 'Objeto entregue ao destinatário')).toEqual(unknown);
   });
