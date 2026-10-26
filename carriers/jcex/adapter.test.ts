@@ -78,9 +78,7 @@ describe('JCEX HTTP adapter', () => {
       ['2026-04-16T13:19:52', 'InTransit_CustomsProcessing', 'customs', 'US'],
       // The Hong Kong hub's rows carry the destination's offset, which Hong Kong does not keep.
       ['2026-04-15T13:47:40', null, 'in_transit', 'HK'],
-      ['2026-04-11T21:00:21', 'InTransit_Other', 'in_transit', 'HK'],
-      ['2026-04-11T09:00:21+08:00', 'InTransit_Other', 'in_transit', 'CN'],
-      ['2026-04-11T05:00:21+08:00', 'InTransit_Other', 'in_transit', 'CN'],
+      // The timeline JCEX wrote after the receipt, on :21 every time, is set aside.
       // The origin warehouse's receipt, which the shared rules would read as a parcel waiting for collection; it comes twice.
       ['2026-04-11T01:09:38+08:00', 'InTransit_Other', 'in_transit', 'CN'],
       ['2026-04-08T12:01:25', 'InfoReceived', 'registered', null],
@@ -126,12 +124,13 @@ describe('JCEX HTTP adapter', () => {
   it('keeps a wall clock whose offset its place does not have then', () => {
     const result = parseJcex(changed('delivered', (content) => {
       content.trackDetails[3]!.timeZone = '-06:00';
-      content.trackDetails[10]!.timeZone = '-05:00';
+      content.trackDetails[12]!.timeZone = '-05:00';
+      content.trackDetails[13]!.timeZone = '-05:00';
       content.trackDetails[0]!.timeZone = '+05:00';
     }), NUMBER, READ);
     expect(result).toMatchObject({ current_stage: 'delivered', last_update: null, last_update_local: '2026-04-20T10:05:00' });
     expect(result.delivered_at).toBeUndefined();
-    expect([0, 3, 10].map((index) => result.events![index]!.local_time)).toEqual(['2026-04-20T10:05:00', '2026-04-18T13:07:00', '2026-04-11T09:00:21']);
+    expect([0, 3, 9].map((index) => result.events![index]!.local_time)).toEqual(['2026-04-20T10:05:00', '2026-04-18T13:07:00', '2026-04-11T01:09:38']);
   });
 
   it('reads a place that opens with its country code on that country\'s clock, whatever the row\'s country', () => {
@@ -149,7 +148,38 @@ describe('JCEX HTTP adapter', () => {
   it('holds back rows written ahead of their time', () => {
     const result = parseJcex(fixture('delivered'), NUMBER, Date.parse('2026-04-19T00:00:00Z'));
     expect(result).toMatchObject({ current_stage: 'in_transit', last_update: '2026-04-18T13:07:00-05:00' });
-    expect(result.events).toHaveLength(11);
+    expect(result.events).toHaveLength(8);
+  });
+
+  it('sets aside the timeline JCEX writes once it takes a parcel in, and names it when nothing else is left', () => {
+    // Seconds after the receipt, two rows at once, then rows a whole number of six minutes apart on the same second.
+    const written: [string, string, string][] = [
+      ['2026-04-11 01:09:45', 'Departed from sort facility', 'InTransit_Other'],
+      ['2026-04-11 01:09:45', 'Picked up by shipping partner', 'InTransit_Other'],
+      ['2026-04-11 13:45:45', 'Hand over to airline', 'InTransit_Other'],
+      ['2026-04-12 03:15:45', 'Departed from origin country', 'InTransit_Departure'],
+    ];
+    const rows = (content: Content) => written.map(([eventTime, eventDetailEn, platformEventCode]) =>
+      ({ ...content.trackDetails[12]!, eventTime, eventDetailEn, platformEventCode }));
+    const result = parseJcex(changed('delivered', (content) => {
+      content.trackDetails.splice(9, 3, ...rows(content));
+    }), NUMBER, Date.parse('2026-04-13T00:00:00Z'));
+    expect(result).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Arrive at the delivery point', last_update: '2026-04-11T01:09:38+08:00' });
+    // Two such rows, or rows whose spacing breaks the six minutes, stay.
+    const kept = parseJcex(changed('delivered', (content) => {
+      content.trackDetails.splice(9, 3, ...rows(content).slice(1, 3), { ...rows(content)[3]!, eventTime: '2026-04-12 03:16:45' });
+    }), NUMBER, Date.parse('2026-04-13T00:00:00Z'));
+    expect(kept.events!.slice(0, 3).map((event) => event.description)).toEqual(['Departed from origin country', 'Hand over to airline', 'Picked up by shipping partner']);
+    let error: unknown;
+    try {
+      parseJcex(changed('delivered', (content) => {
+        content.trackDetails.splice(0, content.trackDetails.length, ...rows(content));
+      }), NUMBER, Date.parse('2026-04-13T00:00:00Z'));
+    } catch (caught) {
+      error = caught;
+    }
+    expect(error).toMatchObject({ name: 'NoHistoryError', reason: 'written_ahead',
+      writtenAhead: ['2026-04-11T01:09:45+08:00', '2026-04-11T13:45:45+08:00', '2026-04-12T03:15:45+08:00'] });
   });
 
   it('reads a row without a code by its wording, and one with a code the map lacks by the shared rules', () => {

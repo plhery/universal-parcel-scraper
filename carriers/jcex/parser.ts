@@ -16,13 +16,17 @@ export const JCEX_MAX_BYTES = 512 * 1024;
 const NUMBER = /^JCZ\d{10}DH$/;
 const WALL_CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
-// JCEX works on Hangzhou's clock; a row kept as a wall clock is read in it only to hold back future ones.
+// JCEX works on Hangzhou's clock; a row kept as a wall clock is read in it only to set aside future rows and its timeline.
 const HOME_ZONE = 'Asia/Shanghai';
 // A US place as USPS writes it: "TOWN, ST 00000", or a facility naming its state before its kind.
 const US_STATE = /,\s*([A-Z]{2})\b/;
 const US_FACILITY_STATE = /\s([A-Z]{2})\s*(?:\(USPS\)|(?:(?:NETWORK|REGIONAL|INTERNATIONAL)\s+)?DISTRIBUTION\s+CENTER)$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
+// Once JCEX takes a parcel in, it writes a timeline up to the delivering partner: rows on one
+// second of the minute, each a whole number of six minutes after the one before.
+const TIMELINE_STEP_MS = 6 * 60_000;
+const TIMELINE_ROWS = 3;
 
 /** A JCEX waybill number; anything else is a number its tracker is not asked for. */
 export function normalizeJcexNumber(raw: string): string {
@@ -102,15 +106,13 @@ function stageOf(code: string, description: string): { stage: Stage; source: str
   return worded.source === 'none' ? undefined : { stage: worded.stage, source: worded.source };
 }
 
-function projectRow(row: unknown, readAt: number): { key: string; local: string; event: CarrierEvent } | null {
+function projectRow(row: unknown): { key: string; local: string; at: number; event: CarrierEvent } | null {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'JCEX returned an invalid scan');
   const description = text(row, 'eventDetailEn') || text(row, 'eventDetailCn');
   if (!description) return null;
   const location = placeOf(text(row, 'location', 200));
   const country = text(row, 'countryCode', 8).toUpperCase();
   const { clock, local, at } = clockOf(row, location, country);
-  // A row dated after the read is not a scan yet.
-  if (at > readAt) return null;
   const code = text(row, 'platformEventCode', 64);
   const staged = stageOf(code, description);
   const event: CarrierEvent = {
@@ -120,7 +122,29 @@ function projectRow(row: unknown, readAt: number): { key: string; local: string;
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { key: JSON.stringify([local, text(row, 'timeZone', 16), code, description, location]), local, event };
+  return { key: JSON.stringify([local, text(row, 'timeZone', 16), code, description, location]), local, at, event };
+}
+
+/**
+ * The instants of the timeline JCEX writes: three or more successive instants
+ * on one second of the minute other than :00, each a whole number of six
+ * minutes after the one before.
+ */
+function timeline(instants: readonly number[]): Set<number> {
+  const written = new Set<number>();
+  let run: number[] = [];
+  const close = () => { if (run.length >= TIMELINE_ROWS) run.forEach((at) => written.add(at)); };
+  for (const at of [...new Set(instants)].sort((a, b) => a - b)) {
+    const last = run.at(-1);
+    if (last !== undefined && (at - last) % TIMELINE_STEP_MS === 0) {
+      run.push(at);
+      continue;
+    }
+    close();
+    run = at % 60_000 ? [at] : [];
+  }
+  close();
+  return written;
 }
 
 /** The one shipment of a reply that is for the number asked. */
@@ -158,18 +182,26 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   if (!own.includes(number)) throw new IndeterminateError(PROVIDER, 'JCEX answered for another shipment');
 
   const seen = new Set<string>();
-  const scans: { local: string; index: number; event: CarrierEvent }[] = [];
+  const projected: { local: string; at: number; index: number; event: CarrierEvent }[] = [];
   rows.forEach((row, index) => {
-    const scan = projectRow(row, readAt);
+    const scan = projectRow(row);
     if (!scan || seen.has(scan.key)) return;
     seen.add(scan.key);
-    scans.push({ local: scan.local, index, event: scan.event });
+    projected.push({ local: scan.local, at: scan.at, index, event: scan.event });
   });
+  // Neither a row dated after the read nor a row of the timeline JCEX writes is a scan.
+  const written = timeline(projected.map(({ at }) => at));
+  const ahead = projected.filter(({ at }) => at > readAt || written.has(at));
   // Rows come newest first, but JCEX puts its own milestone, such as the
   // handover to the delivering partner, on top: the rows are ordered by their
   // places' wall clocks, and rows on one clock keep the reply's order.
-  const events = scans.sort((a, b) => (a.local === b.local ? a.index - b.index : a.local < b.local ? 1 : -1)).map(({ event }) => event);
-  if (!events.length) throw new NoHistoryError(PROVIDER, 'JCEX has no scans for the waybill yet');
+  const events = projected.filter((scan) => !ahead.includes(scan))
+    .sort((a, b) => (a.local === b.local ? a.index - b.index : a.local < b.local ? 1 : -1)).map(({ event }) => event);
+  // The rows written ahead are named, so that a provider's copies of them are not taken for scans.
+  if (!events.length) {
+    throw new NoHistoryError(PROVIDER, 'JCEX has no scans for the waybill yet', ahead.length
+      ? { reason: 'written_ahead', writtenAhead: [...new Set(ahead.map(({ event }) => event.time ?? event.local_time!))] } : undefined);
+  }
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
