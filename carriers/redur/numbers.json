@@ -119,7 +119,7 @@
           "colis-prive"
         ]
       },
-      "note": "A Spanish review on Redur's Trustpilot page gives it as the customer's shipment number; seventeen digits, the only one of that length."
+      "note": "A Spanish review on Redur's Trustpilot page gives it as the customer's shipment number; seventeen digits, the only one of that length. Its digits fall in Amazon's three, seven and seven order layout with a European marketplace prefix, so it may be the Amazon order rather than Redur's number."
     },
     {
       "number": "59115500488736",
