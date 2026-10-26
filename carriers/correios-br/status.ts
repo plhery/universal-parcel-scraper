@@ -25,7 +25,8 @@ const codes: Record<string, ClassifiedStatus> = {
   'PAR/10': { status: 'in_transit', stage: 'in_transit' },
   // The sending post's office of exchange, before the flight to Brazil.
   'PAR/18': { status: 'in_transit', stage: 'in_transit' },
-  'PAR/16': { status: 'in_transit', stage: 'accepted' },
+  // An item from abroad arriving in Brazil, after the sending post has accepted and dispatched it.
+  'PAR/16': { status: 'in_transit', stage: 'in_transit' },
   'PO/01': { status: 'in_transit', stage: 'accepted' },
   'PO/09': { status: 'in_transit', stage: 'accepted' },
   'PAR/07': { status: 'in_transit', stage: 'in_transit' },

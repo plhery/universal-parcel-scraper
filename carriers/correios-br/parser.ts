@@ -46,6 +46,23 @@ function expectedDay(payload: JsonObject, stage: string | undefined): string | n
   return day.isValid ? day.toISODate() : null;
 }
 
+const POSTINGS = new Set(['PO/01', 'PO/09']);
+
+/**
+ * Mail from abroad can list the sending post's posting twice, the second time
+ * when that post dispatched the item: a later posting is the item moving on,
+ * not a second acceptance. Events are newest first.
+ */
+function laterPostingsInTransit(events: CarrierEvent[]): void {
+  let posted = false;
+  for (let index = events.length - 1; index >= 0; index--) {
+    const event = events[index]!;
+    if (!POSTINGS.has(event.provider_code ?? '')) continue;
+    if (posted) events[index] = { ...event, stage: 'in_transit' };
+    posted = true;
+  }
+}
+
 export function parseCorreios(payload: unknown, number: string): CarrierResult {
   const requested = normalizeCorreiosNumber(number);
   if (!isRecord(payload)) throw new SchemaError('Correios');
@@ -73,12 +90,13 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
     events.push({ description, provider_code: providerCode, ...clock, ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) });
   }
   if (!events.length) throw new IndeterminateError('Correios', 'Correios returned no tracking scans');
+  laterPostingsInTransit(events);
   // The single-object response is newest first. Keep unresolved clocks there.
   const latest = events[0]!;
   const mapped = classifyCorreiosStatus(latest.provider_code ?? '');
   const service = isRecord(payload.tipoPostal) ? clean(payload.tipoPostal.categoria, 80) : '';
-  return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
+  return { status: mapped?.status ?? 'unknown', ...(latest.stage ? { current_stage: latest.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
-    expected_delivery: expectedDay(payload, mapped?.stage), ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    expected_delivery: expectedDay(payload, latest.stage), ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(service ? { service_name: service } : {}), events: events.slice(0, 100) };
 }

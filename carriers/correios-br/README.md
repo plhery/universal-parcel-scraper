@@ -25,7 +25,8 @@ and tokens are excluded.
 Mail from abroad keeps the S10 number of the post that sent it, and the portal tracks it
 from its arrival in Brazil, with each row's zone. It reaches Correios Brazil when a caller
 names it, a provider names it (some write "Brazil Post"), or a result gives Brazil as the
-destination of an S10 item.
+destination of an S10 item. The arrival in Brazil reads as transit, and so does a posting
+the sending post lists again when it dispatches the item.
 
 ## Testing
 

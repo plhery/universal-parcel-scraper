@@ -93,10 +93,25 @@ describe('Correios parser', () => {
       ['BDI', '40', 'Importação não autorizada', 'exception', 'exception'],
       ['FC', '82', 'Etiqueta emitida', 'pending', 'registered'],
       ['FC', '03', 'Objeto em correção de rota', 'in_transit', 'in_transit'],
+      ['PAR', '16', 'Objeto recebido pelos Correios do Brasil', 'in_transit', 'in_transit'],
+      ['FC', '16', 'Necessidade de informar CPF/CNPJ do destinatário', 'in_transit', 'customs'],
     ] as const) {
       const result = parseCorreios({ ...fixture, eventos: [scan(code, kind, description, clock), ...fixture.eventos] }, NUMBER);
       expect(result).toMatchObject({ status, current_stage: stage });
     }
+  });
+
+  it("reads the sending post's posting listed again at its dispatch as transit", () => {
+    const at = (time: string) => ({ date: `2026-01-0${time}.000000`, timezone_type: 3, timezone: 'America/Santiago' });
+    const result = parseCorreios({ ...fixture, eventos: [
+      scan('PAR', '18', 'Objeto recebido na unidade de exportação no país de origem', at('4 08:00:00')),
+      scan('PO', '01', 'Objeto postado', at('2 21:12:00')),
+      scan('PO', '01', 'Objeto postado', at('2 10:43:00')),
+    ] }, NUMBER);
+    expect(result.events!.map(({ provider_code: code, stage }) => [code, stage])).toEqual([
+      ['PAR/18', 'in_transit'], ['PO/01', 'in_transit'], ['PO/01', 'accepted']]);
+    const once = parseCorreios({ ...fixture, eventos: [scan('PO', '01', 'Objeto postado', at('2 10:43:00'))] }, NUMBER);
+    expect(once).toMatchObject({ current_stage: 'accepted', events: [{ stage: 'accepted' }] });
   });
 
   it('reads the service and shows the delivery forecast only where the portal does', () => {

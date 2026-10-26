@@ -9,7 +9,7 @@
     { "code": "RO/01", "wording": "Objeto em transferência - por favor aguarde", "language": "pt", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "PAR/10", "wording": "Saída do Centro Internacional", "language": "pt", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "PAR/18", "wording": "Objeto recebido na unidade de exportação no país de origem", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "The sending post's office of exchange, before the flight to Brazil." },
-    { "code": "PAR/16", "wording": "Objeto recebido pelos Correios do Brasil", "language": "pt", "stage": "accepted", "confirmedBy": "live" },
+    { "code": "PAR/16", "wording": "Objeto recebido pelos Correios do Brasil", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "An item from abroad arriving in Brazil, after the sending post has accepted and dispatched it." },
     { "code": "PO/01", "wording": "Objeto postado", "language": "pt", "stage": "accepted", "confirmedBy": "live" },
     { "code": "PAR/07", "wording": "Análise concluída - importação autorizada", "language": "pt", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "PAR/21", "wording": "Informações enviadas para análise da autoridade aduaneira/órgãos anuentes", "language": "pt", "stage": "customs", "confirmedBy": "live" },
