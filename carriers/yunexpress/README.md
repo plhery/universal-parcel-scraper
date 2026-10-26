@@ -25,7 +25,10 @@ older one first, is in China: a departure given as the latest scan carries
 soon. The destination's leg, after the flight in or the whole history of a
 parcel sent within its destination country, is dated on the latest scan's
 stated offset when none of its rows names a place: one partner relays it,
-and the carrier's home clock would be China's. Some partners state their
+and the carrier's home clock would be China's. With no flight in listed, the
+leg follows the hand-over to the last-mile carrier ("Shipment is in transit
+to carrier"): GOFO's own scans give the instants of the "In Transit" rows
+after it on GOFO's wall clocks, half a day after China's reading. Some partners state their
 zone's standard offset in summer too, and the leg then shares the latest
 scan's error. Reading such a leg on the destination's zone, when the
 destination has one zone and the stated offset is its standard one in summer

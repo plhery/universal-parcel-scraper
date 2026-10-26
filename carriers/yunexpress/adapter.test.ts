@@ -221,6 +221,21 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).events?.slice(1).filter((event) => event.time)).toHaveLength(0);
   });
 
+  it("dates what follows the hand-over to the last-mile carrier on the stated offset when no flight in is listed", () => {
+    // GOFO's scans relayed as "In Transit" have GOFO's wall clocks and no place;
+    // on China's clock they came half a day early.
+    const payload = placing({ 0: '', 1: '', 2: '', 3: '', 4: '' });
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    Object.assign(payload.ResultList[0].TrackInfo.LastTrackEvent, { ProcessLocation: '', GmtProcessTimezone: 'GMT-05:00' });
+    rows[3].ProcessContent = 'Shipment is in transit to carrier';
+    rows[4].ProcessContent = 'Arrived at sort facility';
+    expect(parse(payload, NUMBER).events?.slice(0, 5).map((event) => event.time)).toEqual(['2026-03-20T13:39:00-05:00',
+      '2026-03-19T13:39:00-05:00', '2026-03-18T13:39:00-05:00', undefined, undefined]);
+    // From abroad, without the hand-over, no leg is named.
+    rows[3].ProcessContent = 'Start Customs Clearence';
+    expect(parse(payload, NUMBER).events?.filter((event) => event.time)).toHaveLength(1);
+  });
+
   it("dates China Post's relayed scans on China's clock, abroad too", () => {
     const payload = fixture();
     const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
