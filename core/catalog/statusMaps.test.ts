@@ -1547,6 +1547,8 @@ describe("universal providers' answers", () => {
       ['Example Processing Center has received it [Example City]', 'accepted'],
       ['parcel leaves processing center [Example]', 'in_transit'], ['The shipment leaves the processing center [Example]', 'in_transit'],
       ['Airline received【Example】', 'in_transit'], ['Airline received', 'in_transit'],
+      // Helthjem sending a home delivery on to a pickup point, as Ship24 relays it.
+      ['Pakken din behandles for sending til hentested.', 'in_transit'], ['Pakken sorteres på nytt før den sendes til et hentested.', 'in_transit'],
       ['Instruction data transmitted to DPD', 'registered'], ['Order confirmed.', 'registered'], ['Order received successfully', 'registered'],
       ['Package finished', 'registered'],
       ['Created. Parcel created by Example Shop at EXA', 'registered'], ['create. Shipment order created', 'registered'],

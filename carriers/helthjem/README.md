@@ -11,10 +11,13 @@ no token. The adapter sends one query, which asks only for the parcel's numbers,
 the shop's name and the pickup point's name; a request that fails to reach Helthjem is sent once
 more within the budget.
 
-The reply must name the requested number as the parcel's SSCC or shipment number. A number the
-service does not know, or no longer keeps, comes back as a null parcel, so it is not found. A
-query the service rejects is a schema change. Block pages, HTTP errors, GraphQL errors outside the
-parcel and malformed replies keep their own failure kinds. Recognition uses the same lookup.
+The reply must name the requested number as the parcel's SSCC or shipment number. A home delivery
+sent on to a pickup point is relabelled, and the reply then names the new label; it is read when it
+echoes the requested number as the parcel's reference and shows the parcel on its way to a pickup
+point, by a state or a scan's wording. A number the service does not know, or no longer keeps,
+comes back as a null parcel, so it is not found. A query the service rejects is a schema change.
+Block pages, HTTP errors, GraphQL errors outside the parcel and malformed replies keep their own
+failure kinds. Recognition uses the same lookup.
 
 ## Numbers
 

@@ -16,6 +16,8 @@ const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 const EVENT_CODE = /^\d{1,4}$/;
 const IDENTIFIER = /^\d{17,20}$/;
+// The states of a home delivery sent on to a pickup point.
+const TO_POINT: ReadonlySet<string> = new Set(['CONVERTED_TO_STORE', 'DELIVERING_TO_STORE', 'READY_FOR_PICKUP', 'PICKED_UP']);
 
 /** The number as Helthjem's search takes it, and the identifier the reply names. */
 export interface HelthjemNumber {
@@ -105,11 +107,14 @@ function deliveredAt(events: readonly CarrierEvent[]): string | undefined {
  * know, or no longer keeps, comes back as null.
  */
 export function parseHelthjem(payload: unknown, rawNumber: string): CarrierResult {
-  const { identifier } = normalizeHelthjemNumber(rawNumber);
+  const { reference, identifier } = normalizeHelthjemNumber(rawNumber);
   const parcel = parcelOf(payload);
   if (!parcel) throw new NotFoundError(PROVIDER);
   const named = [parcel.trackingNumber, parcel.shipmentNumber].map(value => withoutSsccPrefix(clean(value, 40)));
-  if (!named.includes(identifier)) throw new SchemaError(PROVIDER, 'Helthjem answered for a different parcel');
+  // A home delivery sent on to a pickup point is relabelled: the reply names the new label, while
+  // the number asked still finds the parcel and comes back as its reference.
+  const relabelled = !named.includes(identifier);
+  if (relabelled && clean(parcel.parcelReference, 40) !== reference) throw new SchemaError(PROVIDER, 'Helthjem answered for a different parcel');
 
   const rows = parcel.events ?? [];
   if (!Array.isArray(rows) || rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Helthjem returned an invalid parcel history');
@@ -137,6 +142,9 @@ export function parseHelthjem(payload: unknown, rawNumber: string): CarrierResul
     seen.add(identity);
     scans.push({ event, state: rowState, at: at.timestamp, index });
   });
+  if (relabelled && !TO_POINT.has(state) && !scans.some(scan => TO_POINT.has(scan.state) || /\bhentested\b/i.test(scan.event.description ?? ''))) {
+    throw new SchemaError(PROVIDER, 'Helthjem answered for a different parcel');
+  }
   // Newest first; scans at the same instant keep the reply's order.
   scans.sort((left, right) => right.at - left.at || left.index - right.index);
   const events = scans.map(scan => scan.event);

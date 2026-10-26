@@ -201,6 +201,23 @@ describe('Helthjem tracking adapter', () => {
     expect(parseHelthjem(JSON.parse(text('delivered')), '70724763999000012')).toMatchObject({ current_stage: 'delivered' });
     expect(parseHelthjem(JSON.parse(text('pickup')), `401${PICKUP}`)).toMatchObject({ current_stage: 'ready_for_pickup' });
     expect(() => parseHelthjem(JSON.parse(text('delivered')), '370724769990000021')).toThrow(expect.objectContaining({ kind: 'schema' }));
+    // A home delivery sent on to a pickup point is relabelled; the reply names the new label and echoes the number asked.
+    const relabelled = (parcel: Parcel) => {
+      parcel.trackingNumber = '370724769990000069';
+      parcel.shipmentNumber = '70724763999000067';
+      parcel.status = 'IN_TRANSIT';
+      parcel.events = [{ apiKey: '003', status: 'IN_TRANSIT', createdAt: '2026-03-12T00:15:53+01:00', location: null,
+        message: { content: 'Pakken sorteres på nytt før den sendes til et hentested.' } }, ...parcel.events.slice(2)];
+    };
+    expect(parseHelthjem(edited('delivered', relabelled), DELIVERED)).toMatchObject({ current_stage: 'in_transit',
+      last_status_text: 'Pakken sorteres på nytt før den sendes til et hentested.' });
+    expect(parseHelthjem(edited('pickup', parcel => { parcel.trackingNumber = '370724769990000069'; parcel.shipmentNumber = '70724763999000067'; }), PICKUP))
+      .toMatchObject({ current_stage: 'ready_for_pickup' });
+    // Without a scan on the way to a pickup point, or with another number echoed, it is another parcel.
+    for (const change of [
+      (parcel: Parcel) => { relabelled(parcel); parcel.events = parcel.events.slice(1); },
+      (parcel: Parcel) => { relabelled(parcel); parcel.parcelReference = '370724769990000069'; },
+    ]) expect(() => parseHelthjem(edited('delivered', change), DELIVERED)).toThrow(expect.objectContaining({ kind: 'schema' }));
     for (const change of [
       (parcel: Parcel) => { delete parcel.trackingNumber; delete parcel.shipmentNumber; },
       (parcel: Parcel) => { parcel.events[0]!.createdAt = '2026-03-12T03:41:20'; },
