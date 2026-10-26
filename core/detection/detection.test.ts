@@ -295,6 +295,17 @@ describe('normalization', () => {
     expect(normalizeTrackingNumber('CIO00000001NL')).toBe('CIO00000001NL');
   });
 
+  it('reads a letter O typed after JD as the zero of a DHL Express piece', () => {
+    for (const typed of ['jdo 146 12345678901234', 'JJDO14612345678901234', 'JDO14612345678901234J']) {
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'dhl-express', confidence: 'high' });
+    }
+    expect(normalizeTrackingNumber('jdo 146 12345678901234')).toBe('JD014612345678901234');
+    // Only the piece's own length and range: anything else stays as typed.
+    for (const typed of ['JDO24612345678901234', 'JDO1461234567890123', 'JDOA4612345678901234']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+    }
+  });
+
   it('accepts one underscore inside a number, as Better Trucks writes its BTS_ numbers', () => {
     expect(normalizeTrackingNumber(' bts_0123smpl002 ')).toBe('BTS_0123SMPL002');
     expect(validTrackingNumber(' bts_0123smpl002 ')).toBe(true);

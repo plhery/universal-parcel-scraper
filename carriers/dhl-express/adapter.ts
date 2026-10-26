@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { accepted, lookupBudget, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type AdapterEnvironment, type TrackingContext } from '../../core/adapter/index.js';
 import { dhlExpressPieceId } from '../../core/detection/dhlExpress.js';
+import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { isValidDhlExpressWaybill } from '../../core/detection/numericChecksums.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
@@ -30,13 +31,13 @@ export function normalizeNumber(raw: string): string {
 
 /** An Express piece identifier as DHL lists it. */
 export function normalizePieceId(raw: string): string {
-  const piece = dhlExpressPieceId(raw.toUpperCase().replace(/[\s.-]/g, ''));
+  const piece = dhlExpressPieceId(normalizeTrackingNumber(raw));
   if (!piece) throw new InvalidInputError(PROVIDER, 'DHL Express piece identifiers are JD01 and 16 digits');
   return piece;
 }
 
 function isPieceId(raw: string): boolean {
-  return dhlExpressPieceId(raw.toUpperCase().replace(/[\s.-]/g, '')) !== null;
+  return dhlExpressPieceId(normalizeTrackingNumber(raw)) !== null;
 }
 
 export function trackingUrl(raw: string): string {

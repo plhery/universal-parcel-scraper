@@ -16,11 +16,15 @@ import { hasS10CheckDigit } from './s10CheckDigit.js';
  * 678901234 7", and carriers track it as the twenty digits without brackets.
  * Other bracketed identifiers stay as typed: (420), for one, carries a ZIP.
  * An S10 serial holds only digits, so a letter O in it ("CIO…NL") is a zero
- * typed as a letter when the check digit then holds.
+ * typed as a letter when the check digit then holds. No carrier issues "JDO1"
+ * and sixteen digits either: it is a DHL Express piece, JD01, with its zero
+ * typed as a letter.
  */
 export function normalizeTrackingNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (/^\(00\)\d{18}$/.test(value)) return `00${value.slice(4)}`;
+  const piece = /^(J?JD)O(1\d{16}J?)$/.exec(value);
+  if (piece) return `${piece[1]}0${piece[2]}`;
   const serial = /^([A-Z]{2})([\dO]{9})([A-Z]{2})$/.exec(value);
   if (!serial?.[2]!.includes('O')) return value;
   const digits = serial[2]!.replace(/O/g, '0');
