@@ -37,6 +37,9 @@ export async function solveChinaPostCharacters(challenge, signal, timeoutMs, rep
     || !Number.isInteger(width) || !Number.isInteger(height) || width < 1 || width > 600 || height < 1 || height > 400) return null;
   report?.('prompt');
   const targets = await readTargets(template, signal, timeoutMs);
+  // Only a completed model read can request another prompt. Busy, timed-out,
+  // malformed and crashed workers still return null and stop this lookup.
+  if (targets?.failure === 'unreadable') report?.('prompt-unreadable');
   if (typeof targets !== 'string' || !/^[\u3400-\u9fff]{2,4}$/.test(targets)) return null;
   report?.('positions');
   const result = await solveZtoCharacters({ targets, image, region: { x: 0, y: 0, width, height } }, signal,

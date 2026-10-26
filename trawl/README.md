@@ -42,7 +42,12 @@ Analysis labels distinguish worker limits from an uncertain image match.
 It retains no images, answers, tracking identifiers or verification tokens.
 China Post reads its ordered-character prompt offline and takes click positions from the
 shared character worker; a worker failure stays unreadable. It submits the anonymous preview form
-and retains only scan state labels and local clocks. If the entry form fails to load,
+and can refresh a completed but unreadable prompt once through the official widget,
+within the same two-puzzle limit and deadline. Worker errors, cancellation and timeouts
+do not trigger that refresh. The replacement must have a new identifier and background,
+and its image must be displayed before solving it. A `china-post.prompt-refresh` warning
+records the recovery's bound scan count without puzzle content. The helper
+retains only scan state labels and local clocks. If the entry form fails to load,
 it reloads the official page once before sending any tracking request. An identified
 unsolved verification on an HTTP 200 page reaches the adapter as a challenge,
 with its phase retained in a `china-post.verification` warning.

@@ -51,6 +51,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
   const operationSignal = signal ? AbortSignal.any([signal, stopped.signal]) : stopped.signal;
   let context, page, observer, requestObserver, timer, abort, accepting = true, expired = false, statusCode = 0, totalBytes = 0, verificationStatus = 0, phase = 'setup';
   let formReloaded = false, formReadyAfterReload = false, unreadableChallenge = false, trackingStarted = false;
+  let promptRefreshed = false, previousPrompt;
   let finish;
   const trackingWait = () => new Promise(resolve => { finish = resolve; });
   let completed = trackingWait();
@@ -173,15 +174,35 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
           if (imageBody.length > MAX_BODY) throw new Error('China Post image response too large');
           const challenge = JSON.parse(imageBody.toString('utf8'))?.data;
           await page.locator('.text-verify').waitFor({ timeout: remaining(5000) });
+          if (promptRefreshed) {
+            // A refresh invalidates the old puzzle. Wait for the official widget
+            // to display the new response before interpreting or clicking it.
+            if (!challenge?.id || challenge.id === previousPrompt?.id
+              || !challenge.backgroundImage || challenge.backgroundImage === previousPrompt?.backgroundImage) return result();
+            await page.waitForFunction(image => {
+              const element = document.querySelector('.text-verify');
+              return element && getComputedStyle(element).backgroundImage.includes(image);
+            }, challenge.backgroundImage, { timeout: remaining(3000) });
+          }
           phase = 'characters';
+          let promptUnreadable = false;
           const points = await solveCharacters(challenge, operationSignal, remaining(24000), stage => {
             if (stage === 'prompt' || stage === 'positions') phase = `characters-${stage}`;
+            if (stage === 'prompt-unreadable' && phase === 'characters-prompt') promptUnreadable = true;
           });
           if (!points?.length || points.length > 4 || points.some(point => !Number.isFinite(point?.x) || !Number.isFinite(point?.y)
             || point.x < 0 || point.y < 0 || point.x >= challenge.backgroundImageWidth || point.y >= challenge.backgroundImageHeight)) {
             unreadableChallenge = true;
+            if (!attempt && promptUnreadable && !operationSignal.aborted && !trackingStarted && !entries.length && remaining() >= 12000) {
+              picture = nextPicture();
+              previousPrompt = challenge;
+              promptRefreshed = true;
+              await page.getByRole('button', { name: '刷新', exact: true }).evaluate(element => element.click(), undefined, { timeout: remaining(3000) });
+              continue;
+            }
             return result();
           }
+          unreadableChallenge = false;
           phase = 'submit';
           await page.locator('.text-verify').evaluate((element, positions) => {
             const rect = element.getBoundingClientRect();
@@ -217,7 +238,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
     const failureCause = unreadableChallenge ? 'unreadable' : 'firewall', failurePageStatus = statusCode, failureVerificationStatus = verificationStatus;
     const reloadedFormReady = formReadyAfterReload;
     let reloadScans = 0;
-    if (formReloaded) {
+    if (formReloaded || promptRefreshed) {
       try {
         const last = entries.at(-1), payload = JSON.parse(last?.body ?? 'null');
         if (last?.url === API && last.status === 200 && payload?.success === true && payload.match === true && Array.isArray(payload.scans)) reloadScans = payload.scans.length;
@@ -235,6 +256,10 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
     if (formReloaded) {
       try { console.warn(JSON.stringify({ level: 'warn', event: 'china-post.form-reload', host: 'www.ems.com.cn',
         formReady: reloadedFormReady, scans: reloadScans })); } catch { /* Diagnostics cannot change tracking or cleanup. */ }
+    }
+    if (promptRefreshed) {
+      try { console.warn(JSON.stringify({ level: 'warn', event: 'china-post.prompt-refresh', host: 'www.ems.com.cn',
+        scans: reloadScans })); } catch { /* Diagnostics cannot change tracking or cleanup. */ }
     }
   }
 }

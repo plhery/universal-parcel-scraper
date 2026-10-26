@@ -34,6 +34,97 @@ function fixture() {
     handle: { browser: { newContext: async () => context }, noteTemporaryContext: () => { state.counted++; } } } };
 }
 
+test('refreshes only a completed unreadable prompt, observes the new picture and binds its history', async t => {
+  const logs = []; t.mock.method(console, 'warn', text => logs.push(JSON.parse(text)));
+  const f = fixture(); let pictures = 0, solves = 0, refreshes = 0, verifies = 0, displayed;
+  f.page.waitForResponse = async () => ({ status: () => 200, body: async () => Buffer.from(JSON.stringify({ data: {
+    id: ++pictures, backgroundImage: `synthetic-${pictures}`, backgroundImageWidth: 100, backgroundImageHeight: 100,
+  } })) });
+  f.page.waitForFunction = async (_predicate, image) => { displayed = image; };
+  f.options.solveCharacters = async (_challenge, _signal, _budget, report) => {
+    if (++solves === 1) { report('prompt'); report('prompt-unreadable'); return null; }
+    assert.equal(displayed, 'synthetic-2');
+    return [{ x: 20, y: 20 }, { x: 40, y: 40 }];
+  };
+  f.page.getByRole = (_role, { name }) => ({ evaluate: async () => {
+    if (name === '刷新') { assert.equal(pictures, 1); refreshes++; }
+    if (name === '验证') { verifies++; f.handlers.response(response()); }
+  } });
+  const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 14000 });
+  assert.equal(pictures, 2); assert.equal(solves, 2); assert.equal(refreshes, 1); assert.equal(verifies, 1);
+  assert.equal(JSON.parse(result.capturedResponses[0].body).match, true);
+  assert.equal(f.state.closed, 1);
+  assert.deepEqual(logs, [{ level: 'warn', event: 'china-post.prompt-refresh', host: 'www.ems.com.cn', scans: 1 }]);
+});
+
+test('prompt refresh cannot extend the two-puzzle limit or retry an unchanged picture', async t => {
+  t.mock.method(console, 'warn', () => {});
+  for (const mode of ['unreadable', 'same-picture', 'same-background', 'not-displayed', 'refused']) {
+    const f = fixture(); let pictures = 0, solves = 0, refreshes = 0, verifies = 0;
+    f.page.waitForResponse = async () => ({ status: () => 200, body: async () => {
+      pictures++;
+      return Buffer.from(JSON.stringify({ data: { id: mode === 'same-picture' ? 1 : pictures,
+        backgroundImage: `synthetic-${mode === 'same-background' ? 1 : pictures}`, backgroundImageWidth: 100, backgroundImageHeight: 100 } }));
+    } });
+    f.page.waitForFunction = async () => { if (mode === 'not-displayed') throw new Error('Display timeout'); };
+    f.options.solveCharacters = async (_challenge, _signal, _budget, report) => {
+      solves++; report('prompt');
+      if (solves === 1 || mode === 'unreadable') { report('prompt-unreadable'); return null; }
+      return [{ x: 20, y: 20 }, { x: 40, y: 40 }];
+    };
+    f.page.getByRole = (_role, { name }) => ({ evaluate: async () => {
+      if (name === '刷新') refreshes++;
+      if (name === '验证') { verifies++; f.handlers.response(response({ success: false, message: '验证失败' })); }
+    } });
+    const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 14000 });
+    assert.equal(refreshes, 1); assert.equal(pictures, 2);
+    assert.equal(solves, ['same-picture', 'same-background', 'not-displayed'].includes(mode) ? 1 : 2);
+    assert.equal(verifies, mode === 'refused' ? 1 : 0);
+    assert.equal(result.capturedResponses.length, mode === 'refused' ? 1 : 0);
+    assert.equal(f.state.closed, 1);
+  }
+});
+
+test('does not refresh a worker failure, after tracking starts, cancellation or a short budget', async t => {
+  t.mock.method(console, 'warn', () => {});
+  for (const mode of ['worker', 'positions', 'tracking', 'cancel', 'short']) {
+    const f = fixture(), control = new AbortController(); let refreshes = 0;
+    f.options.solveCharacters = async (_challenge, _signal, _budget, report) => {
+      report(mode === 'positions' ? 'positions' : 'prompt');
+      if (!['worker', 'positions'].includes(mode)) report('prompt-unreadable');
+      if (mode === 'tracking') f.handlers.request(response().request());
+      if (mode === 'cancel') control.abort();
+      return null;
+    };
+    f.page.getByRole = (_role, { name }) => ({ evaluate: async () => { if (name === '刷新') refreshes++; } });
+    await runChinaPostBrowser({ ...f.options, signal: control.signal, maxTimeout: mode === 'short' ? 200 : 14000 });
+    assert.equal(refreshes, 0); assert.equal(f.state.closed, 1);
+  }
+});
+
+test('a recovered prompt does not misclassify stalled tracking as an unreadable challenge', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const logs = []; t.mock.method(console, 'warn', text => logs.push(JSON.parse(text)));
+  const f = fixture(); let pictures = 0, solves = 0;
+  f.page.waitForResponse = async () => ({ status: () => 200, body: async () => Buffer.from(JSON.stringify({ data: {
+    id: ++pictures, backgroundImage: `synthetic-${pictures}`, backgroundImageWidth: 100, backgroundImageHeight: 100,
+  } })) });
+  f.page.waitForFunction = async () => {};
+  f.options.solveCharacters = async (_challenge, _signal, _budget, report) => {
+    if (++solves === 1) { report('prompt'); report('prompt-unreadable'); return null; }
+    return [{ x: 20, y: 20 }, { x: 40, y: 40 }];
+  };
+  f.page.getByRole = () => ({ evaluate: async () => {} });
+  const pending = runChinaPostBrowser({ ...f.options, maxTimeout: 14000 });
+  await new Promise(resolve => setImmediate(resolve));
+  t.mock.timers.tick(14000);
+  const result = await pending;
+  assert.equal(result.reason, 'china-post-history');
+  assert.equal(result.status, 'error');
+  assert.equal(f.state.closed, 1);
+  assert.deepEqual(logs, [{ level: 'warn', event: 'china-post.prompt-refresh', host: 'www.ems.com.cn', scans: 0 }]);
+});
+
 test('scopes the helper to the exact China Post page, number and endpoints', () => {
   assert.equal(chinaPostBrowserNumber(url, capture), number);
   for (const raw of [url + '#x', url + '&extra=1', url.replace('www.ems.com.cn', 'example.test'),

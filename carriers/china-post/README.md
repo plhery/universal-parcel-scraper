@@ -45,6 +45,10 @@ The character prompt is read one glyph at a time after removing coloured
 interference lines; a whole-line read can omit required clicks. Other prompt
 layouts retain the whole-line reader. The background matcher stays separate,
 and the carrier must accept the ordered clicks before any preview is used.
+A completed but unreadable prompt can use the widget's refresh once, consuming
+the remaining puzzle in the existing two-puzzle limit. The helper waits for a
+different puzzle to be displayed; worker failures and timeouts do not trigger
+this recovery. The lookup keeps its original deadline.
 Verification warnings distinguish unreadable prompts from unmatched positions
 without retaining puzzle images, text or tokens.
 

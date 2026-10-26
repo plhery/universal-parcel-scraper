@@ -79,6 +79,7 @@ try:
     raw = sys.stdin.buffer.read(100_001)
     if len(raw) > 100_000:
         raise ValueError("Prompt too large")
-    print(json.dumps(read_targets(json.loads(raw))))
+    targets = read_targets(json.loads(raw))
+    print(json.dumps(targets if targets is not None else {"failure": "unreadable"}))
 except Exception:
     print("null")
