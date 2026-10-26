@@ -58,6 +58,14 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "wording": "Custom Clearance in process - Import",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-25",
+      "note": "Import clearance at the destination port, before its release."
+    },
+    {
       "wording": "International shipment release - Import",
       "language": "en",
       "stage": "in_transit",

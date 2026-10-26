@@ -11,6 +11,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Received.', { status: 'in_transit', stage: 'in_transit' }],
   ['Batch delivery to carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Pick up by local carrier at destination port', { status: 'in_transit', stage: 'in_transit' }],
+  ['Custom Clearance in process - Import', { status: 'in_transit', stage: 'customs' }],
   ['International shipment release - Import', { status: 'in_transit', stage: 'in_transit' }],
   ['International shipment release - Export', { status: 'in_transit', stage: 'in_transit' }],
   ['Port of destination - Arrival', { status: 'in_transit', stage: 'in_transit' }],
