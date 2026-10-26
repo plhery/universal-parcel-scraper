@@ -363,6 +363,22 @@ describe('Chronopost direct tracking', () => {
       { provider_code: 'TA', stage: 'out_for_delivery', stage_source: 'carrier_map' }]);
   });
 
+  it('shows the arrival at the pickup point once when Chronopost writes it again under another code', () => {
+    const arrival = (code: string, at: string) => scan(code, at, 'Colis mis à disposition au point de retrait', relay);
+    const result = parseChronopostTrackingXml(history(prepared, arrival('SD', '2026-06-27T07:56:46+02:00'),
+      arrival('MD', '2026-06-27T07:57:46+02:00')), number);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', current_stage_source: 'carrier_map',
+      last_update: '2026-06-27T07:56:46+02:00', pickup_point: 'EXAMPLE RELAY\n1 EXAMPLE STREET\n00000 EXAMPLE CITY' });
+    expect(result.events?.map(event => event.provider_code)).toEqual(['SD', 'DC']);
+    // A later arrival, or one in other words, is another scan.
+    const later = parseChronopostTrackingXml(history(prepared, arrival('SD', '2026-06-27T07:56:46+02:00'),
+      arrival('AB', '2026-06-27T09:12:00+02:00')), number);
+    expect(later.events?.map(event => event.provider_code)).toEqual(['AB', 'SD', 'DC']);
+    const sorted = parseChronopostTrackingXml(history(prepared, scan('SD', '2026-06-27T07:56:46+02:00', "Tri effectué dans l'agence de distribution"),
+      scan('SD', '2026-06-27T07:57:06+02:00', "Tri effectué dans l'agence de distribution")), number);
+    expect(sorted.events).toHaveLength(3);
+  });
+
   it('preserves local and invalid clocks without inventing instants', () => {
     const xml = fixture.replaceAll('+01:00', '').replace('2026-01-04T18:38:28', '2026-02-30T18:38:28+99:00');
     const result = resolveResult(parseChronopostTrackingXml(xml, number));
