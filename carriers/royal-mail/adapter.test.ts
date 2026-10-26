@@ -255,6 +255,28 @@ describe('Royal Mail structured response', () => {
     expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
   });
 
+  it('joins the place to a scan that ends where the page shows it', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit' },
+      events: [
+        { eventCode: 'EVGPD', eventName: '**Due to be delivered today by**', eventDateTime: '2026-01-07T07:44:13+00:00', locationName: 'Example DO' },
+        { eventCode: 'EVORC', eventName: 'Arrived at', eventDateTime: '2026-01-07T02:29:00+00:00', locationName: 'Example MC' },
+        { eventCode: 'EVOAC', eventName: 'Item received at', eventDateTime: '2026-01-06T15:28:00+00:00', locationName: 'Sample MC' },
+        { eventCode: 'EVORC', eventName: 'Arrived at', eventDateTime: '2026-01-06T09:00:00+00:00' },
+        { eventCode: 'EVGPD', eventName: '**Due to be delivered today by**', eventDateTime: '2026-01-05T07:00:00+00:00', locationName: '99999' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => [event.description, event.location ?? null])).toEqual([
+      ['Due to be delivered today by Example DO', 'Example DO'],
+      ['Arrived at Example MC', 'Example MC'],
+      ['Item received at Sample MC', 'Sample MC'],
+      ['Arrived at a Royal Mail office', null],
+      // A place given by its postcode alone is left out, and the sentence ends without it.
+      ['Due to be delivered today', null],
+    ]);
+  });
+
   it("takes the stage of the day's round over the summary category that repeats it", () => {
     const piece = (code: string, lastEventCode = code) => parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: IN_TRANSIT_NUMBER,

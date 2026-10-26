@@ -74,7 +74,10 @@ answers are not retried. An unavailable browser fails fast.
   label, and the reverse, by provider code and location, for Royal Mail's
   parcels and Parcelforce's alike.
 - Markdown emphasis is removed from summary and scan wording. Delivered wording
-  is reduced to `Delivered`. Recipient, signature, photo, address, GPS and
+  is reduced to `Delivered`. A scan that ends where the page shows its place ("Arrived
+  at", "Due to be delivered today by") takes the place; without one, "at" names a Royal
+  Mail office and "by" is dropped. The identity policy lets the reworded scan take over
+  its stored row by instant and provider code. Recipient, signature, photo, address, GPS and
   issued credentials are discarded.
 - Royal Mail's unable-to-confirm answer (E1142), its reply for a reference it cannot locate,
   remains inconclusive and carries `portal_not_found`: an item can be unknown until its first

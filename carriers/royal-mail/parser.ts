@@ -101,6 +101,22 @@ function placeName(value: unknown): string {
   return POSTCODE.test(text) ? '' : text;
 }
 
+// Royal Mail ends some scans where its page shows the place: "Arrived at", "Item received at",
+// "Due to be delivered today by".
+const PLACE_FOLLOWS = /\s(at|by)$/i;
+
+/**
+ * A scan's wording as a whole sentence. One that ends where Royal Mail's page
+ * shows the place takes it; without one, "at" names a Royal Mail office and
+ * "by" is dropped.
+ */
+function sentence(description: string, location: string): string {
+  const ending = PLACE_FOLLOWS.exec(description)?.[1]!.toLowerCase();
+  if (!ending) return description;
+  if (location) return `${description} ${location}`;
+  return ending === 'at' ? `${description} a Royal Mail office` : description.replace(PLACE_FOLLOWS, '');
+}
+
 /** A delivery estimate reduced to its calendar day. */
 function expectedDelivery(value: unknown): string | null {
   const raw = cleanScalar(value, 64);
@@ -183,7 +199,7 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
       ...(clock ?? (time ? { time } : {})),
       ...(!time && !clock && timeText ? { provider_time_text: timeText } : {}),
       ...(location ? { location } : {}),
-      description: stage === 'delivered' ? 'Delivered' : description,
+      description: stage === 'delivered' ? 'Delivered' : sentence(description, location),
       ...(stage ? { stage } : {}),
       ...(mapped ? { stage_source: 'carrier_map' } : {}),
       ...(/^[A-Za-z0-9_-]+$/.test(code) ? { provider_code: code } : {}),
