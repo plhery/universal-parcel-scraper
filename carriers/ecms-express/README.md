@@ -19,8 +19,11 @@ are discarded.
 
 `operatorTime` encodes a facility wall clock as UTC components. Every scan retains
 that wall clock; nonzero `timeZone` offsets remain exactly as supplied, including
-fixed standard offsets in summer. Zero is also used on unzoned partner scans,
-so it does not establish UTC. The API's ingestion clock is not a scan timestamp.
+fixed standard offsets in summer. ECMS writes its own scans' wall clocks from their
+instant with the station's offset, so read at that offset they land on the second the
+API records them, also where the offset is not the place's civil one. Zero is also
+used on unzoned partner scans, so it does not establish UTC. The API's ingestion clock
+is not a scan timestamp.
 
 The former consignee and OMS trackers no longer supply guest history. The ESE
 customer event API requires login, and freight tracking uses different references.
