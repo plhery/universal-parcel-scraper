@@ -1817,6 +1817,29 @@ describe('ParcelsApp result parsing', () => {
     expect(parse('AU')).toEqual(['2026-08-26T08:19:00.000Z', 'wall 2026-08-25T13:26:00.000', '2026-08-25T04:44:00.000Z']);
   });
 
+  it("reads China Post's English copies of the destination post's scans by their place or their twin", () => {
+    // UPU dates its scan at a US ZIP Code on that office's clock, and China Post's copy has its digits.
+    const times = (destinationCode: string, carriers: string[], states: Record<string, unknown>[]) => parseParcelsAppResponse(
+      { carriers, originCode: 'CN', destinationCode, states }, number, identity()).events?.map((scan) => scan.time ?? `wall ${scan.local_time}`);
+    expect(times('US', ['China Post', 'Universal Postal Union'], [
+      { date: '2026-09-17T11:25:00Z', status: 'Delivered', carrier: 0, location: 'Delivered' },
+      { date: '2026-09-17T11:25:00Z', status: 'Final delivery', carrier: 1, location: '12345' },
+      { date: '2026-09-17T06:10:00Z', status: 'Out for Delivery', carrier: 0, location: 'EXAMPLE CITY, NY 12345' },
+      { date: '2026-09-15T04:44:00Z', status: 'Arrive at the place of destination', carrier: 0 },
+    ])).toEqual(['2026-09-17T15:25:00.000Z', 'wall 2026-09-17T06:10:00.000', '2026-09-14T20:44:00.000Z']);
+    // New Zealand Post's own delivery has the minute of China Post's copy at its own code.
+    expect(times('NZ', ['China Post', 'New Zealand Post'], [
+      { date: '2026-10-14T12:50:32Z', status: 'Your item has been delivered', carrier: 1 },
+      { date: '2026-10-14T12:50:00Z', status: 'Final delivery', carrier: 0, location: 'XYZ' },
+      { date: '2026-10-12T10:00:00Z', status: 'Arrive at the place of destination', carrier: 0, location: 'XYZ' },
+    ])).toEqual(['2026-10-13T23:50:32.000Z', '2026-10-13T23:50:00.000Z', '2026-10-12T02:00:00.000Z']);
+    // Elsewhere a ZIP Code is no US office's, and China Post's copy keeps China's clock.
+    expect(times('DE', ['China Post', 'Universal Postal Union'], [
+      { date: '2026-09-17T11:25:00Z', status: 'Delivered', carrier: 0, location: 'Delivered' },
+      { date: '2026-09-17T11:25:00Z', status: 'Final delivery', carrier: 1, location: '12345' },
+    ])?.at(-1)).toBe('2026-09-17T03:25:00.000Z');
+  });
+
   it("dates UPU's scans at an office the destination's code names by the office's place", () => {
     // 4-72 dates the delivery UPU copies at such an office at the same digits, as China Post's copy has them.
     const parse = (destinationCode: string, location: string) => dateLocalClocks('parcelsapp', parseParcelsAppResponse({

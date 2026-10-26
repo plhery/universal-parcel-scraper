@@ -401,14 +401,20 @@ step exists for future protocol changes.
   destination post's scans, placed by the start of the destination's Chinese name ("哥伦"
   for Colombia) or sent from its office abroad ("境外经转局"), have that post's digits, as
   UPU's copies at the destination's office of exchange show: they are read on the
-  destination's single clock, else kept as wall clocks. Its UPU and EMS scans come under those names, their place a
-  code or a postcode ("GZSGJHHJ", Guangzhou's office of exchange). Theirs from posting to
+  destination's single clock, else kept as wall clocks. So are its English copies whose
+  place is in the destination, by the country's name or, on an item to the US or Canada, a
+  state or province. A copy at a place of China Post's own ("Final delivery" at a code)
+  takes the zone of another network's scan at the same minute in the destination, the
+  post's own or UPU's: on an item to New Zealand, its delivery had the minute of New Zealand
+  Post's, and read on China's clock came five hours later. Its UPU and EMS scans come under
+  those names, their place a code or a postcode ("GZSGJHHJ", Guangzhou's office of
+  exchange). Theirs from posting to
   departure from the office of exchange are read on the origin's clock, the reply's
   `originCode` or the country of an S10 number: they share their digits with China Post's
   scans in China, and read as UTC export customs came after the release. UPU's scans placed
   only by the code of an office in the destination keep their wall clock for the places step
   to date: they have the destination post's digits, and a town's name ("MADRID") is read
-  first. Australia has several clocks, so an Australian origin's scans take the state or
+  first. On an item to the US, one placed by a ZIP Code alone is on that state's clock. Australia has several clocks, so an Australian origin's scans take the state or
   state capital their place names, as Australia Post's own offsets do; one naming neither
   stays a guess. A posting names its office, which can be in another state than the scan:
   UPU's "BRISBANE" posting of an item Australia Post received in New South Wales has the

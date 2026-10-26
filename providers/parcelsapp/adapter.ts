@@ -23,12 +23,12 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   canadaProvinceTimeZone, countryCode, countryTimeZone, mislabeledLocalTime, mislabeledWallTime, regionHasTown, sharedClockZone,
-  timeZoneCountry, usStateTimeZone,
+  timeZoneCountry, usStateTimeZone, usZipState,
 } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { countryName, militaryPostOffice } from '../../places/trackingLocation.js';
-import { hasSeveralClocks, mainZone } from '../../places/zones.js';
+import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
@@ -651,21 +651,26 @@ function inChina(location: string): boolean {
   return /\p{Script=Han}/u.test(location) || CHINESE_PROVINCES.has(place) || (!location.includes(',') && CHINESE_CITIES.has(place));
 }
 
+// China Post's own clock, Beijing's.
+const CHINA_POST_ZONE = 'Asia/Shanghai';
 // China Post's office abroad that hands it the destination post's scans.
 const CHINA_POST_OFFICE_ABROAD = /境外经转局/u;
 
 /**
  * Whether a China Post scan is the destination post's: its place or wording
  * names the destination by the start of its Chinese name ("哥伦" for 哥伦比亚,
- * Colombia), or its office abroad ("Departed from 境外经转局"). China Post
- * copies those scans with the destination post's digits: UPU's copies of them
- * at the destination's office of exchange have the same, to the minute.
+ * Colombia), or its office abroad ("Departed from 境外经转局"), or its place is
+ * in the destination: the country by name, or a state or province on an item
+ * bound for the US or Canada ("EXAMPLE CITY, NV 12345"). China Post copies
+ * those scans with the destination post's digits: UPU's copies of them at the
+ * destination's office of exchange have the same, to the minute.
  */
 function chinaPostAbroad(location: string, status: string, destination: string | null): boolean {
   if (CHINA_POST_OFFICE_ABROAD.test(status)) return true;
   if (!destination || destination === 'CN') return false;
   const country = countryName(destination, 'zh');
-  return [location, status].some((text) => (text.match(/\p{Script=Han}{2,}/gu) ?? []).some((run) => country.startsWith(run)));
+  return [location, status].some((text) => (text.match(/\p{Script=Han}{2,}/gu) ?? []).some((run) => country.startsWith(run)))
+    || countryCode(lastPlace(location)) === destination || ((destination === 'US' || destination === 'CA') && regionClock(location) !== null);
 }
 
 /**
@@ -975,7 +980,7 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   if (carrier === 'swiftx') return swiftxSiteZone(location) ?? undefined;
   // A facility's clock, whatever the label: no other step applies to it.
   if (relaysFacilityClock(name)) return facilityZone(location);
-  if (carrier === 'china-post' && inChina(location)) return 'Asia/Shanghai';
+  if (carrier === 'china-post' && inChina(location)) return CHINA_POST_ZONE;
   const place = lastPlace(location);
   // A state or province the town confirms beats the country its code also
   // names ("Chicago, IL"); a merely possible one comes after ("Koeln, DE").
@@ -995,7 +1000,12 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
     const origin = replyOrigin(payload, number);
     return countryTimeZone(origin) ?? (origin === 'AU' ? australianZone(location, capitals) : null) ?? undefined;
   }
-  return carrier === 'china-post' ? 'Asia/Shanghai' : undefined;
+  // A ZIP Code alone, on an item bound for the US, is the delivery office's, and UPU
+  // dates its scans there on that office's clock: China Post's copy of the delivery
+  // has the digits of UPU's, on the clock its place in the US gives it.
+  const zip = POSTAL_FEEDS.has(key) && destination === 'US' ? usStateTimeZone(usZipState(location)) : null;
+  if (zip) return zip;
+  return carrier === 'china-post' ? CHINA_POST_ZONE : undefined;
 }
 
 /**
@@ -1191,6 +1201,33 @@ function placeCopies(items: readonly { name: unknown; date: unknown; location: s
     const zones = new Set(copies.filter(([network]) => network !== nameKey(item.name)).map(([, zone]) => zone));
     const [zone] = zones.size === 1 ? [...zones] : [];
     return zone ? fitsPlace(zone, item.location, true) : null;
+  });
+}
+
+/**
+ * The zone of China Post's copy of the destination post's scan that neither
+ * its place nor its wording tells ("Final delivery" at a code of China Post's
+ * own): that of another network's scan at the same minute whose zone is the
+ * destination's, the post's own or UPU's copy of it. China Post's delivery on
+ * an item to New Zealand had the minute of New Zealand Post's own delivery;
+ * read on China's clock it came five hours later. China Post's own scans
+ * abroad have no such twin and stay on China's clock.
+ */
+function chinaPostTwinZones(items: readonly { name: unknown; date: unknown; location: string }[], zones: readonly (string | null)[],
+  destination: string | null): (string | null)[] {
+  const minute = (date: unknown) => mislabeledWallTime(date)?.slice(0, 16) ?? '';
+  const chinaPost = (name: unknown) => typeof name === 'string' && carrierIdFromName(name) === 'china-post';
+  const twins = new Map<string, Set<string>>();
+  items.forEach(({ name, date }, index) => {
+    const zone = zones[index];
+    const key = minute(date);
+    if (destination && destination !== 'CN' && key && zone && !chinaPost(name) && keepsZone(destination, zone)) {
+      twins.set(key, (twins.get(key) ?? new Set()).add(zone));
+    }
+  });
+  return items.map(({ name, date, location }, index) => {
+    const found = chinaPost(name) && zones[index] === CHINA_POST_ZONE && !inChina(location) ? twins.get(minute(date)) : undefined;
+    return found?.size === 1 ? [...found][0]! : null;
   });
 }
 
@@ -1461,6 +1498,8 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   placeCopies(entries).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
   copiedNetworkZones(entries.map((entry, index) => ({ name: entry.name, key: copyKey(entry), zone: zones[index]!.zone,
     fixed: Boolean(entry.offset) || relaysFacilityClock(entry.name), location: entry.location })))
+    .forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
+  chinaPostTwinZones(entries, zones.map(({ zone }) => zone), destination)
     .forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
   const dayOnly = dayOnlyNetworks(entries);
   const steps = new Set<CarrierEvent>();

@@ -154,6 +154,12 @@ export function hasSeveralClocks(country: string): boolean {
   return Object.hasOwn(COUNTRY_CLOCKS, country);
 }
 
+/** Whether a country keeps this zone, as its one clock or as one of its several. */
+export function keepsZone(country: string, zone: string): boolean {
+  const clocks = COUNTRY_CLOCKS[country];
+  return clocks ? clocks.some(([clock]) => clock === zone) : (SINGLE_CLOCKS[country] ?? countryTimeZone(country)) === zone;
+}
+
 /** The zone of a country that keeps one, or the one most of its people live on; null for an unknown code. */
 export function mainZone(country: string): string | null {
   return MAIN_CLOCKS[country] ?? SINGLE_CLOCKS[country] ?? countryTimeZone(country);
