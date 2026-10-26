@@ -24187,7 +24187,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "pengyou",
+      "recognitionRank": 67
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],

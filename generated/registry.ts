@@ -430,6 +430,7 @@ import { adapter as pcsLogisticsVn } from '../carriers/pcs-logistics-vn/adapter.
 import { adapter as pdnExpress } from '../carriers/pdn-express/adapter.js';
 import { adapter as pdqChile } from '../carriers/pdq-chile/adapter.js';
 import { adapter as pecom } from '../carriers/pecom/adapter.js';
+import { adapter as pengyou } from '../carriers/pengyou/adapter.js';
 import { adapter as pfcExpress } from '../carriers/pfc-express/adapter.js';
 import { adapter as phlpost } from '../carriers/phlpost/adapter.js';
 import { adapter as pilotFreight } from '../carriers/pilot-freight/adapter.js';
@@ -1060,6 +1061,7 @@ export const REGISTRY: RegistryDefinition = {
     "pdn-express": pdnExpress,
     "pdq-chile": pdqChile,
     "pecom": pecom,
+    "pengyou": pengyou,
     "pfc-express": pfcExpress,
     "phlpost": phlpost,
     "pilot-freight": pilotFreight,
@@ -1803,7 +1805,7 @@ export const REGISTRY: RegistryDefinition = {
     "pecom": "pecom",
     "peddler": "universal",
     "pelican-express": "universal",
-    "pengyou": "universal",
+    "pengyou": "pengyou",
     "peqasus-az": "universal",
     "pfc-express": "pfc-express",
     "phlpost": "phlpost",
