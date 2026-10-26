@@ -25,9 +25,11 @@ Connect, so that name is not an alias. The adapter reads FIC's tracker.
 - The map stages each event code with the wordings recorded in [statuses.json](statuses.json).
   Code 218 is the shipper's side and names the shipper: "EXPECTED FROM" it is a label, "DEPARTED"
   it is FedEx collecting the parcel.
-- Scans give a wall clock and no zone. FIC's own scans are on the clock of the hub that made them,
-  and once the partner has the parcel its scans, often without a place, are on the partner's. They
-  stay in `local_time`, and Node lookups date them on the zone of their place or leg.
+- Scans give a wall clock and no zone. FIC's own scans are on the clock of the hub that made them.
+  They stay in `local_time`, and Node lookups date them on the zone of their place or leg.
+- From `RECEIVED BY PARTNER CARRIER` on, the scans without a place are the partner's, on its clock.
+  The British hub's London time put a Dutch post's scans for Hungary an hour late, so they are read
+  in the destination's zone when it keeps one clock, and otherwise stay local.
 - The "View More Tracking" button opens the partner's tracker for the number the page gives as the
   parcel's tracking number. When the catalog lists that site as the partner's own, as Royal Mail's
   or USPS's, the two become `delivery_carrier` and `delivery_tracking_number`. A button to

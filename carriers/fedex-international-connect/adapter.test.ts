@@ -65,6 +65,28 @@ describe('FedEx International Connect HTTP adapter', () => {
     ]);
   });
 
+  it('reads the partner\'s scans without a place on the destination\'s clock, and FIC\'s own on their place\'s', () => {
+    const handover = "<tr  valign=top>\n\t<td>27th Feb 2026 12:20:00</td>\n\t<td><span class='description'>RECEIVED BY PARTNER CARRIER</span></td>\n"
+      + '\t<td>212</td>\n\t<td></td>\n</tr>\n';
+    const value = (destination: string) => page('delivered').replaceAll('<td nowrap>UNITED KINGDOM</td>', `<td nowrap>${destination}</td>`)
+      .replace('<tr  valign=top>\n\t<td>27th Feb 2026 09:31:45</td>', `${handover}<tr  valign=top>\n\t<td>27th Feb 2026 09:31:45</td>`);
+    const result = parseFic(value('HUNGARY'), DELIVERED);
+    expect(result.last_update).toBe('2026-03-03T13:05:00+01:00');
+    expect(dateLocalClocks('fedex-international-connect', result).events!.map((event) => [event.time, event.time_zone_basis])).toEqual([
+      ['2026-03-03T13:05:00+01:00', 'destination'],
+      ['2026-03-03T07:40:00+01:00', 'destination'],
+      ['2026-03-02T21:15:00+01:00', 'destination'],
+      ['2026-02-27T18:02:11+00:00', 'place'],
+      ['2026-02-27T12:20:00+01:00', 'destination'],
+      ['2026-02-27T09:31:45+00:00', 'place'],
+      ['2026-02-26T23:10:02+00:00', 'place'],
+      ['2026-02-26T16:00:00+00:00', 'neighbour'],
+      ['2026-02-25T10:12:30+00:00', 'neighbour'],
+    ]);
+    // A destination on several clocks leaves them to the scans around them.
+    expect(parseFic(value('UNITED STATES'), DELIVERED).events!.every((event) => !('time' in event))).toBe(true);
+  });
+
   it('names no partner for a button to another site or another number', () => {
     const result = parseFic(page('in-transit'), TRANSIT);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'customs', destination_country: 'KR', weight_kg: 0.4 });

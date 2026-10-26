@@ -1,11 +1,12 @@
 import { load, type Cheerio, type CheerioAPI } from 'cheerio';
 import type { AnyNode } from 'domhandler';
+import { DateTime } from 'luxon';
 import { carrierLinkRules, matchesDomain } from '../../core/catalog/linkRules.js';
 import { normalizeTrackingNumber, parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { calendarDay, countryCode } from '../../core/time/index.js';
+import { calendarDay, countryCode, countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { ficStage } from './status.js';
 
@@ -21,6 +22,7 @@ const MAX_EVENTS = 100;
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 // "22nd Nov 2025 15:10:00", on the clock of the place that scanned it.
 const CLOCK = /^(\d{1,2})(?:st|nd|rd|th) ([A-Za-z]{3}) (\d{4}) ([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+const HANDOVER = /^RECEIVED BY PARTNER CARRIER$/i;
 
 /** An FIC tracking number; the tracker's other keys, a partner's number or a shipper's reference, are not asked. */
 export function normalizeFicNumber(raw: string): string {
@@ -37,6 +39,25 @@ function wallClock(value: string): string {
   const day = match && month ? calendarDay(Number(match[3]), month, Number(match[1])) : null;
   if (!day) throw new SchemaError(PROVIDER, 'FedEx International Connect returned an invalid scan clock');
   return `${day}T${match![4]}:${match![5]}:${match![6]}`;
+}
+
+/**
+ * From "RECEIVED BY PARTNER CARRIER" on, the scans without a place are the
+ * partner's, on its clock, and the destination's zone stands in for it: a
+ * Dutch post's scans for Hungary came on Central European summer time, and the
+ * London time of FIC's British hub before them put them an hour late. They are
+ * read in the destination's zone when it keeps one clock, and otherwise stay
+ * local.
+ */
+function partnerClocks(events: CarrierEvent[], destination: string | null): CarrierEvent[] {
+  const zone = countryTimeZone(destination);
+  const handover = events.filter((event) => HANDOVER.test(event.description!)).map((event) => event.local_time!).sort()[0];
+  if (!zone || !handover) return events;
+  return events.map((event) => {
+    if (event.location || event.local_time! < handover) return event;
+    const time = firstOccurrence(DateTime.fromISO(event.local_time!, { zone })).toISO({ suppressMilliseconds: true });
+    return time ? { ...event, time, time_zone: zone, time_zone_basis: 'destination' } : event;
+  });
 }
 
 /** The label and value pairs of the parcel's details table. */
@@ -99,7 +120,7 @@ export function parseFic(html: string, raw: string): CarrierResult {
   if (histories.length > 1) throw new SchemaError(PROVIDER, 'FedEx International Connect returned ambiguous histories');
   const rows = histories.find('tr').filter((_, row) => $(row).children('td').length > 0);
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'FedEx International Connect returned an oversized history');
-  const events: CarrierEvent[] = [];
+  const parsed: CarrierEvent[] = [];
   const seen = new Set<string>();
   rows.each((_, row) => {
     const cells = $(row).children('td');
@@ -114,20 +135,21 @@ export function parseFic(html: string, raw: string): CarrierResult {
     if (seen.has(key)) return;
     seen.add(key);
     const stage = ficStage(code || null, description);
-    events.push({ local_time: local, description, ...(location ? { location } : {}), ...(code ? { provider_code: code } : {}),
+    parsed.push({ local_time: local, description, ...(location ? { location } : {}), ...(code ? { provider_code: code } : {}),
       ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) });
   });
-  if (!events.length) throw new NoHistoryError(PROVIDER);
+  if (!parsed.length) throw new NoHistoryError(PROVIDER);
+  const country = countryCode(clean(fields.get('Destination')?.text() ?? '', 60));
+  const events = partnerClocks(parsed, country);
   const newest = events[0]!;
   const staged = events.find((event) => event.stage);
   const service = clean(fields.get('Service')?.text() ?? '', 80);
-  const country = countryCode(clean(fields.get('Destination')?.text() ?? '', 60));
   const weight = /^(\d{1,4}(?:\.\d{1,3})?) kg$/i.exec(clean(fields.get('Weight')?.text() ?? '', 20))?.[1];
   return {
     status: staged ? languageStageStatus(staged.stage as Stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.stage_source } : {}),
     last_status_text: newest.description!,
-    last_update: null,
+    last_update: newest.time ?? null,
     last_update_local: newest.local_time!,
     expected_delivery: null,
     ...(service ? { service_name: service } : {}),
