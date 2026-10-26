@@ -8,6 +8,16 @@ const CODES = new Map<string, Stage>([['PACKED', 'accepted'], ['RECEIVED', 'acce
   ['DISPATCHING', 'out_for_delivery'], ['ARRIVED', 'ready_for_pickup'], ['SIGNED', 'delivered'],
   ['ABNORMAL', 'exception'], ['EXCEPTION', 'exception']]);
 
+// The English shown for a trace type's label in Chinese, which the client words more or less fully ("签收", "已签收").
+const ENGLISH = new Map<string, string>([['PACKED', 'Collected'], ['RECEIVED', 'Received'], ['TRANSITING', 'In transit'],
+  ['DISPATCHING', 'Out for delivery'], ['ARRIVED', 'Held at a collection point for the recipient'], ['SIGNED', 'Signed for'],
+  ['ABNORMAL', 'Exception notice'], ['EXCEPTION', 'Exception notice']]);
+
+/** The English shown for a trace's label in Chinese, by its type; undefined for other wording. */
+export function ztoEnglish(code: string, wording: string): string | undefined {
+  return /\p{Script=Han}/u.test(wording) ? ENGLISH.get(code) : undefined;
+}
+
 export function ztoStage(code: string, wording: string): ClassifiedWording | null {
   const stage = CODES.get(code);
   if (stage) return { stage, source: 'carrier_map' };

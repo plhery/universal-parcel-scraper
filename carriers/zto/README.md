@@ -18,7 +18,8 @@ stopped, from the [shared set](../../ARCHITECTURE.md), and the service's `zto.ve
 warning has each puzzle's detail. Enabled universal providers
 remain available for those failures and for fuller history: the public PC tracker
 suppresses earlier traces even after verification. The adapter marks its history
-as incomplete and keeps the carrier's epoch scan clocks.
+as incomplete and keeps the carrier's epoch scan clocks. A trace's label in Chinese shows
+the English of its type, and takes over the row stored in Chinese.
 
 ZTO takes no part in recognition. Its gateway challenges a server's probes, the page's
 verification is not solved within a probe's budget, and most twelve-digit numbers it would

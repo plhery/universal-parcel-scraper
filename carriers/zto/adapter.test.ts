@@ -43,6 +43,11 @@ describe('ZTO', () => {
       moving.result.items[0]!.traces[0]!.traceTypeCode = code;
       expect(parseZto(moving, number)).toMatchObject({ current_stage: stage, current_stage_source: 'carrier_map' });
     }
+    // A trace type's label in Chinese shows in English; a type the map does not know keeps its label.
+    expect(result).toMatchObject({ last_status_text: 'Signed for', events: [{ description: 'Signed for' }, { description: 'Out for delivery' }] });
+    moving.result.items[0]!.traces[0]!.traceTypeCode = 'RETURNING';
+    moving.result.items[0]!.traces[0]!.traceTypeDesc = '退回件';
+    expect(parseZto(moving, number).events).toMatchObject([{ description: '退回件' }]);
     const clock = found(); clock.result.items[0]!.traces[0]!.traceTime = NaN;
     expect(() => parseZto(clock, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

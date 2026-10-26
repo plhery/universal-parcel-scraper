@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import { ztoStage } from './status.js';
+import { ztoEnglish, ztoStage } from './status.js';
 
 export const API = 'https://hdgateway.zto.com/batchGetTrace';
 export const PAGE = 'https://www.zto.com/check/detail';
@@ -49,7 +49,7 @@ export function parseZto(payload: unknown, raw: string): CarrierResult {
     if (!description) throw new SchemaError(PROVIDER);
     const location = text(row.traceSiteName, 200);
     const classified = ztoStage(code, description);
-    return { time: new Date(row.traceTime).toISOString().replace('.000Z', 'Z'), description,
+    return { time: new Date(row.traceTime).toISOString().replace('.000Z', 'Z'), description: ztoEnglish(code, description) ?? description,
       provider_code: code, ...(location ? { location } : {}),
       ...(classified ? { stage: classified.stage, stage_source: classified.source } : {}) };
   });

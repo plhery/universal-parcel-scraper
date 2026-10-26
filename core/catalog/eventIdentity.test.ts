@@ -194,6 +194,18 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: 'Other Post Office' }, stored)).toBe(false);
   });
 
+  it('lets a ZTO trace shown in English take over the row stored in its Chinese label, by type and place', () => {
+    const policy = sameInstantIdentityPolicy('zto', { supportsScanMatching: true });
+    const stored = { stage: 'delivered', description: '已签收', location: 'Example depot', providerCode: 'SIGNED' };
+    const incoming = { ...stored, description: 'Signed for' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    for (const different of [
+      { ...stored, providerCode: 'DISPATCHING' },
+      { ...stored, location: 'Other depot' },
+      { ...stored, description: 'Signed for by a neighbour' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+  });
+
   it("lets a universal copy that lost a China Post office's code take over its stored row", () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Departure from processing center', location: '示例市 99999999', providerCode: 'InTransit_Other' };
