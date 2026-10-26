@@ -105,6 +105,19 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "A handover to the destination's delivery carrier, not to the recipient."
+    },
+    {
+      "wording": "First parcel scan along Poste Italiane’s logistic network",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Poste Italiane's first scan after the handover to it as the local courier; the parcel is already on its way."
+    },
+    {
+      "wording": "In transit along Poste Italiane’s logistic network",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
     }
   ]
 }
