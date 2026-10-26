@@ -1,9 +1,8 @@
 import type { SameInstantIdentityPolicy, SameInstantScan } from '../../core/catalog/eventIdentity.js';
 import { matchesRereadLocation } from '../../core/catalog/locationIdentity.js';
 import { translatedScanPolicy } from '../../core/status/english.js';
-import { speedpakPlace } from './parser.js';
 import { speedpakEnglish } from './status.js';
-import { withoutRoutingPrefix } from './wording.js';
+import { speedpakPlace, withoutRoutingPrefix } from './wording.js';
 
 const normalized = (value: string) => value.replace(/\s+/g, ' ').trim().toLocaleLowerCase('en-US');
 

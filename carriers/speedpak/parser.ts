@@ -6,7 +6,7 @@ import { countryCode, epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { HANDOFF, speedpakEnglish, speedpakScanStatus } from './status.js';
-import { withoutRoutingPrefix } from './wording.js';
+import { speedpakPlace, withoutRoutingPrefix } from './wording.js';
 
 const PROVIDER = 'SpeedPAK';
 
@@ -14,16 +14,6 @@ export function normalizeSpeedpakNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!/^E[ES][A-Z0-9]{26}$/.test(number)) throw new InvalidInputError(PROVIDER, 'SpeedPAK requires a 28-character EE or ES tracking number');
   return number;
-}
-
-/**
- * A scan's place from its city and country fields. A partner's scan can give a country's
- * code as its city and the destination as its country, before the parcel leaves for it
- * (bpost's "PARCEL IS HANDLED" in Belgium, for France): the code is where the scan happened.
- */
-export function speedpakPlace(city: string, country: string): string {
-  if (/^[A-Z]{2}$/.test(city) && countryCode(city) === city) return city;
-  return [city, country].filter(Boolean).join(', ');
 }
 
 export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResult {
