@@ -21,7 +21,7 @@ import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
-import { chinaPostEnglish } from '../../carriers/china-post/status.js';
+import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
 import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
@@ -31,7 +31,7 @@ import { uspsScanZone } from '../../carriers/usps/clock.js';
 import { universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
-import { numberOf, result, text, type UniversalSource } from '../shared/result.js';
+import { numberOf, place, result, text, type UniversalSource } from '../shared/result.js';
 import { seventeenTrackCarrierKeys } from './carriers.js';
 import { seventeenTrackEvent, undatedScan } from './events.js';
 
@@ -532,9 +532,13 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed) continue;
       // China Post words its labels in Chinese only: they show in English where it is known,
-      // staged as the Chinese was, with the place left to the location.
+      // staged as the Chinese was, with the place left to the location, or taken from the label's 【】 where none is given.
       const english = reported.key === CHINA_POST && parsed.description ? chinaPostEnglish(parsed.description) : undefined;
-      if (english) parsed.description = english;
+      if (english) {
+        const named = parsed.location ? '' : place(chinaPostLabelPlace(parsed.description ?? '') ?? '');
+        parsed.description = english;
+        if (named) parsed.location = named;
+      }
       const day = usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
         : brt && BRT_ROUND.test(text(raw.description).trim()) ? dayAlone(raw) : null;
       if (day) {

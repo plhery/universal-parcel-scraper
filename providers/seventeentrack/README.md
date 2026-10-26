@@ -205,12 +205,13 @@ carrier.
 - Original scan text is kept: the English interface does not translate descriptions. China
   Post's leg shows a label in the English the [China Post adapter](../../carriers/china-post/README.md)
   shows, its places left to the location, and a copy stored in Chinese takes the English in place.
+  A label that names its place only in 【】 ("启运【Example】") with no location gives it that place.
 - Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details or
   is Posti's "ULKOMAILLA" ("abroad") or the "目的国" ("destination country") China Post's feed
   gives an airline's arrival in place of a country's code: neither names a place. China
   Post's feed can also give the scan's status there, at times with the place after it in 【】
-  ("Departure from【Example】"); the scan keeps only that place, without a full Canadian or
-  British postcode, or none.
+  ("Departure from【Example】") or before its airport ("Arrival at Example Airport"); the scan
+  keeps only that place, without a full Canadian or British postcode, or none.
 - At most 20 carrier legs and 1000 events. Per-event `address` is never read, and of
   `shipping_info` only the recipient's country, for an NZ Post, Poland Post or Swiss Post leg: the
   address can be the recipient's street.

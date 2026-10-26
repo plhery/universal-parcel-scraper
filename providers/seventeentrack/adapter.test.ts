@@ -148,10 +148,11 @@ describe('17TRACK result parsing', () => {
     expect(located('Arriyal at Processing Center【Example City 99999】')).toBe('Example City 99999');
     expect(located('Dispatching【Example City X9X9X9】')).toBe('Example City');
     expect(located('Arrival at【US】')).toBe('US');
+    expect(located('Arrival at Example Land Airport')).toBe('Example Land');
     // "Destination country", given an arrival in place of a country's code, names no place.
     for (const status of ['Departure from Airport', 'Arrival at Destination Airport', 'Export Customs Clearance Completed',
       'Out For Delivery', 'In Transit', '99999 DELIVERED', '9999 PA DELIVERED', 'Delivered【99/999】', 'Departure from Processing Center【Example Ci',
-      '目的国', 'Arrival at【目的国】']) {
+      '目的国', 'Arrival at【目的国】', '--']) {
       expect(located(status), status).toBeUndefined();
     }
     for (const location of ['Example Transit Hub', 'Arrival Hall, Example City', 'EXAMPLE CITY, CA 99999']) expect(located(location)).toBe(location);
@@ -169,6 +170,10 @@ describe('17TRACK result parsing', () => {
     expect(shown('InTransit_CustomsReleased', '出口清关完成【Customs Clearance Completed【示例市】】', 'Customs Clearance Completed【示例市】'))
       .toMatchObject({ description: 'Export customs clearance completed', location: '示例市', stage: 'in_transit' });
     expect(shown('InTransit_Other', '承运商接收')).toMatchObject({ description: 'Received by carrier', stage: 'in_transit' });
+    // A state label with a name in 【】 and no location: the name becomes the location, unless it names no place.
+    expect(shown('InTransit_Other', '启运【示例】')).toMatchObject({ description: 'Departure', location: '示例', stage: 'in_transit' });
+    expect(shown('InTransit_Other', '启运【Example Hub】', 'EXH')).toMatchObject({ description: 'Departure', location: 'EXH' });
+    expect(shown('InTransit_Other', '启运【目的国】')).not.toHaveProperty('location');
     // A label without known English keeps China Post's wording.
     expect(shown('InTransit_Other', '邮件运输中')).toMatchObject({ description: '邮件运输中', stage: 'in_transit' });
     // Another carrier's leg keeps its own wording.

@@ -95,7 +95,8 @@ export function rtb56Wording(row: Record<string, unknown>, provider: string): { 
   const wording = rtb56Text(row, 'track_description_en', provider) || rtb56Text(row, 'track_description', provider);
   const description = clean(/^delivered\b/i.test(wording) ? wording.replace(RECEIVER, '') : wording, 300);
   const location = clean(rtb56Text(row, 'track_location', provider, 120).replace(POSTCODE_RUN, '$1'), 120).replace(/^[\s,;:]+|[\s,;:]+$/g, '');
-  return { description, location };
+  // A placeholder such as "--" names no place.
+  return { description, location: /[\p{L}\p{N}]/u.test(location) ? location : '' };
 }
 
 /**

@@ -161,8 +161,18 @@ const ENGLISH: ReadonlyMap<string, string> = new Map(LABELS);
 /** The English shown for one China Post label, its places aside, or undefined when none is known. */
 export function chinaPostEnglish(wording: string): string | undefined {
   const label = chinaPostLabel(wording);
-  return ENGLISH.get(label) ?? ENGLISH.get(label.replace(/…$/, '')) ?? ENGLISH.get(`${label}…`)
-    ?? WORDINGS.english(normalizeStatusWording(label));
+  const bare = label.replace(/…$/, '');
+  return ENGLISH.get(label) ?? ENGLISH.get(bare) ?? ENGLISH.get(`${label}…`)
+    ?? WORDINGS.english(normalizeStatusWording(label)) ?? WORDINGS.english(normalizeStatusWording(bare));
+}
+
+/**
+ * The name a label gives in its only 【】, "启运【香港】", which its English
+ * leaves out; undefined when it brackets anything but a name.
+ */
+export function chinaPostLabelPlace(wording: string): string | undefined {
+  const named = /^[^【】]*【([^【】]+)】[^【】]*$/u.exec(wording.trim())?.[1]?.trim();
+  return named && /^\p{L}[\p{L}\p{M} .'·-]{0,39}$/u.test(named) ? named : undefined;
 }
 
 /**

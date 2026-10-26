@@ -234,6 +234,8 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: 'Other City' }, stored)).toBe(false);
     const status = { ...stored, location: 'Out For Delivery' };
     expect(policy?.matches?.({ ...status, location: '' }, status)).toBe(true);
+    const airport = { ...stored, location: 'Arrival at Example Land Airport' };
+    expect(policy?.matches?.({ ...airport, location: 'Example Land' }, airport)).toBe(true);
   });
 
   it('lets a universal copy that shows a China Post label in English take over the row stored in Chinese', () => {
@@ -246,6 +248,10 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...incoming, location: 'Example City' }, { ...stored, location: 'Example City' })).toBe(true);
     const label = { stage: 'in_transit', description: '飞机进港', location: '', providerCode: 'InTransit_Other' };
     expect(policy?.matches?.({ ...label, description: 'Plane has landed' }, label)).toBe(true);
+    // A label stored without a location, its place in 【】 now the location.
+    const departure = { stage: 'in_transit', description: '启运【示例】', location: '', providerCode: 'InTransit_Other' };
+    expect(policy?.matches?.({ ...departure, description: 'Departure', location: '示例' }, departure)).toBe(true);
+    expect(policy?.matches?.({ ...departure, description: 'Departure', location: '其他' }, departure)).toBe(false);
     for (const different of [
       { ...stored, description: '邮件到达处理中心【ZZ Arriyal at Processin】' },
       { ...stored, location: 'Dispatching【Other City X9X9X9】' },

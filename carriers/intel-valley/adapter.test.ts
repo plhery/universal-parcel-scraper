@@ -96,6 +96,9 @@ describe('Intel-Valley HTTP adapter', () => {
       item.details = [scan('2026-07-02 08:00:00', 'Shipment information received'), scan('2026-07-01 10:50:31', 'During transportation')];
     }), PARCEL);
     expect(ordered).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Shipment information received' });
+    // A placeholder in the place names none.
+    const placeholder = parseIntelValley(changed((item) => { item.details = [scan('2026-07-01 10:50:31', 'During transportation', '--')]; }), PARCEL);
+    expect(placeholder.events![0]).not.toHaveProperty('location');
     const unstaged = parseIntelValley(changed((item) => { item.details = [scan('2026-07-07 07:00:00', 'Sample Status Note')]; }), PARCEL);
     expect(unstaged).toMatchObject({ status: 'unknown' });
     expect(unstaged).not.toHaveProperty('current_stage');
