@@ -13,7 +13,7 @@ import { trackingLanguageStage } from '../../core/status/index.js';
 import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import { IndeterminateError, InvalidInputError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
 import { PROGRESS } from '../../core/result/partial.js';
 import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
 import { anPostWordingStage } from '../../carriers/an-post/status.js';
@@ -439,6 +439,40 @@ function sellerStep(value: CarrierEvent, now: number): CarrierEvent {
   return undated;
 }
 
+// A timeline written to a schedule rather than scanned: rows a fixed time apart, each to within a
+// second of the one before, four or more. The step is an hour or more and not a whole number of
+// hours, which a copy of one scan read on other clocks, or a row written at one time each day,
+// would be. Rows on whole minutes alone are not counted.
+const SCHEDULE_ROWS = 4;
+const HOUR_MS = 3_600_000;
+const SCHEDULE_SLACK_MS = 1_000;
+
+function instantOf(value: CarrierEvent): number | null {
+  const clock = value.time ?? (typeof value.local_time === 'string' && value.local_time.length > 10 ? `${value.local_time}Z` : '');
+  const at = clock ? Date.parse(clock) : NaN;
+  return Number.isFinite(at) ? at : null;
+}
+
+/** The instants of the rows a timeline written to a schedule holds, other rows between them or not. */
+function scheduled(events: readonly CarrierEvent[]): Set<number> {
+  const instants = [...new Set(events.map(instantOf).filter((at): at is number => at !== null))].sort((a, b) => a - b);
+  const bySecond = new Map(instants.map((at) => [Math.round(at / 1_000), at]));
+  const near = (target: number) => [0, -1, 1].map((shift) => bySecond.get(Math.round(target / 1_000) + shift))
+    .find((at) => at !== undefined && Math.abs(at - target) <= SCHEDULE_SLACK_MS);
+  const written = new Set<number>();
+  instants.forEach((first, index) => {
+    for (const second of instants.slice(index + 1)) {
+      const step = second - first;
+      const offHour = step % HOUR_MS;
+      if (step < HOUR_MS || offHour <= SCHEDULE_SLACK_MS || HOUR_MS - offHour <= SCHEDULE_SLACK_MS) continue;
+      const chain = [first, second];
+      for (let next = near(second + step); next !== undefined; next = near(next + step)) chain.push(next);
+      if (chain.length >= SCHEDULE_ROWS && chain.some((at) => at % 60_000)) chain.forEach((at) => written.add(at));
+    }
+  });
+  return written;
+}
+
 function moment(value: CarrierEvent): string {
   return value.time ?? (typeof value.local_time === 'string' ? value.local_time : '');
 }
@@ -478,7 +512,12 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
     // A carrier's copy can lack the place another copy of the same scan reported.
     scans.set(key, !event.location && earlier?.location ? { ...event, location: earlier.location } : event);
   }
-  const unique = (preserveOrder ? [...scans.values()] : newestFirst([...scans.values()])).slice(0, 100);
+  const written = scheduled([...scans.values()]);
+  const kept = [...scans.values()].filter((event) => !written.has(instantOf(event) ?? NaN));
+  const unique = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
+  if (!unique.length && written.size) {
+    throw new NoHistoryError(source, `${source} relays only a timeline written to a schedule`, { reason: 'written_ahead' });
+  }
   // A well-formed reply with no scan left after notices and private details proves nothing about the parcel.
   if (!unique.length) throw new IndeterminateError(source, 'No usable tracking events');
   const currentEvent = unique.find((e) => e.stage && e.stage !== 'pending');

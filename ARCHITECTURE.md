@@ -422,6 +422,12 @@ default. `universalPlan()` picks and orders the eligible providers from recorded
 [providers/COMPARISON.md](providers/COMPARISON.md) explains the order and
 [providers/COVERAGE.md](providers/COVERAGE.md) holds the evidence.
 
+A provider can relay a timeline a carrier wrote to a schedule. Rows a fixed time apart, each
+within a second of the one before, four or more, are no scans and are dropped. The step is an
+hour or more and not a whole number of hours, which one scan read on several clocks, or a row
+written at the same time each day, would be. Rows all on whole minutes stay. A provider left
+with nothing has no history, with the reason `written_ahead`.
+
 ## HTTP server
 
 The server adds bounded in-memory caching, duplicate-request sharing, provider spacing,

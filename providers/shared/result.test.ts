@@ -18,6 +18,24 @@ describe('shared provider result', () => {
     expect(() => result([notice], 'ParcelsApp')).toThrow('No usable tracking events');
   });
 
+  it('sets aside a timeline written to a schedule, rows a fixed time apart to the second', () => {
+    const day = Date.parse('2026-03-02T10:03:26Z');
+    const clock = (ms: number) => new Date(ms).toISOString();
+    const scan = event('2026-03-01T08:12:47Z', 'Shenzhen Processing Center has received it')!;
+    // 47 hours 21 minutes apart, the seconds stepping by one now and then.
+    const steps = [0, 170_460, 340_921, 511_382, 681_842].map((offset) => event(clock(day + offset * 1_000), 'In transit')!);
+    const relayed = result([scan, ...steps], '17TRACK');
+    expect(relayed.events!.map(({ time }) => time)).toEqual(['2026-03-01T08:12:47.000Z']);
+    expect(relayed).toMatchObject({ current_stage: 'accepted', last_status_text: 'Shenzhen Processing Center has received it' });
+    expect(() => result(steps, '17TRACK')).toThrow(expect.objectContaining({ name: 'NoHistoryError', reason: 'written_ahead' }));
+    // Three such rows, rows whose spacing drifts, and rows dated on whole minutes stay.
+    expect(result([scan, ...steps.slice(0, 3)], '17TRACK').events).toHaveLength(4);
+    const drifting = [0, 170_460, 340_925, 511_390].map((offset) => event(clock(day + offset * 1_000), 'In transit')!);
+    expect(result([scan, ...drifting], '17TRACK').events).toHaveLength(5);
+    const daily = [1, 2, 3, 4, 5].map((date) => event(`2026-03-0${date}T09:00:00Z`, 'In transit')!);
+    expect(result(daily, '17TRACK').events).toHaveLength(5);
+  });
+
   it("keeps no time for the seller's step when it is dated after the lookup", () => {
     const now = Date.now();
     const at = (offset: number) => new Date(now + offset).toISOString();
