@@ -117,11 +117,21 @@ const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
   ['a disposición del destinatario', 'G01L020V'],
 ]);
 
+/**
+ * Scans in no stage of their own, which keep the stage of the scan before them.
+ * H01C120V is worded "In delivery" like the delivery round, but comes while the
+ * parcel waits at the destination's post office for collection; Correos' code
+ * list calls the H01 codes "En curso".
+ */
+export const NOTICE_CODES: ReadonlySet<string> = new Set(['H01C120V']);
+
 /** What the map says about one scan, by its `codEvento`. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     const key = code ? code.toLocaleUpperCase('en-US') : UNCODED_SCANS.get(wording);
     return key ? classifyCorreosSpainStatus(key)?.stage : undefined;
   },
-  gaps: [],
+  gaps: [
+    { code: 'H01C120V', note: 'Worded like the delivery round, but seen while the parcel waits at a post office for collection: the parcel keeps the stage it had.' },
+  ],
 };

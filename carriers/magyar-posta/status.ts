@@ -61,6 +61,8 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['a küldemény nem kézbesíthető (kézbesítés akadályozott)', 'returned'],
   ['telefonos egyeztetés címzettel', 'out_for_delivery'],
   ['másnapi kézbesítésre előkészítve (címzett kérésére)', 'in_transit'],
+  // Assigned to a courier at the delivery office, before the courier has the item.
+  ['kézbesítőhöz rendelve', 'in_transit'],
   ['a küldemény a kézbesítőnél van', 'out_for_delivery'],
   ['sikertelen kézbesítés', 'failed_attempt'],
   // A PostaPont announces the time it can hand the item over.

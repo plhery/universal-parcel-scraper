@@ -47,6 +47,7 @@
     { "code": "3", "wording": "A küldemény nem kézbesíthető (kézbesítés akadályozott)", "language": "hu", "stage": "returned", "confirmedBy": "documentation", "note": "Undeliverable; the official list files it as on its way back to the sender." },
     { "code": "4", "wording": "Telefonos egyeztetés címzettel", "language": "hu", "stage": "out_for_delivery", "confirmedBy": "documentation", "note": "The courier calls the recipient." },
     { "code": "4", "wording": "Másnapi kézbesítésre előkészítve (címzett kérésére)", "language": "hu", "stage": "in_transit", "confirmedBy": "documentation", "note": "Held for delivery the next day at the recipient's request." },
+    { "code": "4", "wording": "Kézbesítőhöz rendelve", "language": "hu", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "Assigned to a courier at the delivery office, before the courier has the item." },
     { "code": "4", "wording": "A küldemény a kézbesítőnél van", "language": "hu", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-14", "note": "The courier has the parcel." },
     { "code": "4", "wording": "Sikertelen kézbesítés", "language": "hu", "stage": "failed_attempt", "confirmedBy": "documentation" },
     { "code": "4", "wording": "A küldemény PostaPonton 14:00 után átvehető", "language": "hu", "stage": "in_transit", "confirmedBy": "documentation", "note": "A PostaPont announces when it can hand the parcel over; the parcel is not there yet." },

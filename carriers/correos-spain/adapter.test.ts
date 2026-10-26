@@ -130,6 +130,27 @@ describe('Correos Spain response parsing', () => {
     expect(unknown.events?.[0]?.stage).toBeUndefined();
   });
 
+  it('keeps the stage of the scan before an "In delivery" notice while the parcel waits for collection', () => {
+    const result = parseCorreosSpainTrackingResponse([envelope({
+      nom_codired: 'OFICINA EXAMPLE',
+      eventos: [
+        event('G200000V', '20/10/2026', '06:15:00', 'Registration in the delivery unit'),
+        event('H01C120V', '20/10/2026', '06:20:00', 'In delivery'),
+        event('H01I350V', '20/10/2026', '10:53:00', 'At recipient’s disposal'),
+        event('H01C120V', '20/10/2026', '13:12:00', 'In delivery'),
+      ],
+    })], TRACKING_NUMBER);
+    expect(result.events?.map((item) => [item.provider_code, item.stage, item.stage_source])).toEqual([
+      ['H01C120V', 'ready_for_pickup', 'none'],
+      ['H01I350V', 'ready_for_pickup', undefined],
+      ['H01C120V', 'in_transit', 'none'],
+      ['G200000V', 'in_transit', undefined],
+    ]);
+    // The notice is no summary: the parcel still waits at the office.
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
+      last_status_text: 'At recipient’s disposal', pickup_point: 'OFICINA EXAMPLE' });
+  });
+
   it('rewords a scan stored in Spanish in place, matched by its instant and code', () => {
     // The localizador's Spanish and English replies carry the same codes and clocks.
     expect(sameInstantIdentityPolicy('correos-spain', { supportsScanMatching: true }))

@@ -92,6 +92,11 @@ describe('Magyar Posta result page', () => {
       $('div.more_details_container').append(rowFor('2', '5', 'Sikeresen kézbesítve', '2026. 04. 14. 10:31', 'Példaváros 1 posta|Példaváros'));
     });
     expect(parseMagyarPosta(collected, LETTER)).toMatchObject({ current_stage: 'delivered', pickup_point: 'Példaváros 1 posta, Példaváros' });
+    // The same scan listed again without its office is one.
+    const twice = edit(fixture('pickup'), $ => {
+      $('div.more_details_container').append(rowFor('2', '4', 'A küldemény postán átvehető (értesítőn szereplő dátumtól)', '2026. 04. 11. 09:00', ''));
+    });
+    expect(parseMagyarPosta(twice, LETTER)).toMatchObject({ pickup_point: 'Példaváros 1 posta, Példaváros', events: result.events });
   });
 
   it('holds back a row dated after the lookup on Budapest time until it is due', () => {
@@ -184,6 +189,22 @@ describe('Magyar Posta app reply', () => {
       last_status_text: 'A küldemény postán átvehető', service_name: 'Levél', last_update: '2026-04-11T07:00:00Z' });
     expect(result.events!.map(event => [event.provider_code, event.stage])).toEqual([
       ['4', 'ready_for_pickup'], ['3', 'in_transit'], ['2', 'in_transit'], ['2', 'in_transit'], ['1', 'accepted']]);
+  });
+
+  it('reads a scan listed again a second later without its office as one, and a courier assigned as in transit', () => {
+    const item = (appFixture('app-pickup').data as Record<string, unknown>[])[0]!;
+    const events = item.events as Record<string, unknown>[];
+    const waiting = events.at(-1)!;
+    const assigned = { alias: 'Kézbesítőhöz rendelve', status: 'Kézbesítés', message: 'Kézbesítőhöz rendelve', code: '4',
+      location: '', date: '2026-04-11T05:02:05.000000Z' };
+    const twin = { ...waiting, location: '', date: '2026-04-11T07:00:01.000000Z' };
+    const result = parseMagyarPostaApp({ data: [{ ...item, events: [...events.slice(0, -1), assigned, waiting, twin] }] }, LETTER)!;
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Példaváros 1 posta, Példaváros', last_update: '2026-04-11T07:00:00Z' });
+    expect(result.events!.slice(0, 2).map(event => [event.description, event.stage, event.location ?? null])).toEqual([
+      ['A küldemény postán átvehető', 'ready_for_pickup', 'Példaváros 1 posta, Példaváros'], ['Kézbesítőhöz rendelve', 'in_transit', null]]);
+    // A placeless scan a minute or more from the placed one is a scan of its own.
+    const later = { ...twin, date: '2026-04-11T07:01:00.000000Z' };
+    expect(parseMagyarPostaApp({ data: [{ ...item, events: [...events, later] }] }, LETTER)!.events![0]).toMatchObject({ time: '2026-04-11T07:01:00Z' });
   });
 
   it('holds back the planned leg of a dispatch from abroad until it is due, then keeps its instant', () => {

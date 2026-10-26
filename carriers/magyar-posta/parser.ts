@@ -146,7 +146,7 @@ export function parseMagyarPosta(html: string, raw: string, readAt = Date.now())
   // The log is oldest first. Newest first; on equal clocks, the later row first.
   scans.sort((left, right) => right.event.local_time! > left.event.local_time! ? 1
     : right.event.local_time! < left.event.local_time! ? -1 : right.index - left.index);
-  const events = scans.map(({ event }) => event);
+  const events = withoutPlacelessTwins(scans, (scan) => Date.parse(`${scan.event.local_time!}Z`)).map(({ event }) => event);
   stageScans(events);
 
   const current = clean(item.children('div.data_2').text(), 300);
@@ -163,6 +163,17 @@ export function parseMagyarPosta(html: string, raw: string, readAt = Date.now())
   const service = opened.find('div.details_item').filter((_, node) =>
     clean($(node).children('div.details_label').text(), 60).replace(/\s*:$/, '') === SERVICE).children('div.details_data');
   return history(events, current, service.length === 1 ? clean(service.text(), 100) : '', { last_update: null, last_update_local: latest.local_time! });
+}
+
+/**
+ * The scans without a placeless copy of one the log also lists with its place: the same
+ * category and wording under a minute apart. The log can list a scan twice, a second apart,
+ * the second time without the office the item waits at.
+ */
+function withoutPlacelessTwins<T extends { event: CarrierEvent }>(scans: readonly T[], at: (scan: T) => number): T[] {
+  return scans.filter((scan) => scan.event.location || !scans.some((other) => other.event.location
+    && other.event.provider_code === scan.event.provider_code && other.event.description === scan.event.description
+    && Math.abs(at(other) - at(scan)) < 60_000));
 }
 
 /** Stages scans, newest first. Oldest first: once the item is going back, a delivery reaches its sender. */
@@ -239,7 +250,7 @@ export function parseMagyarPostaApp(payload: unknown, raw: string, readAt = Date
   });
   // Newest first; on equal clocks, the later row first.
   scans.sort((left, right) => right.timestamp - left.timestamp || right.index - left.index);
-  const events = scans.map(({ event }) => event);
+  const events = withoutPlacelessTwins(scans, (scan) => scan.timestamp).map(({ event }) => event);
   stageScans(events);
 
   const details = isRecord(item.delivery_info) ? item.delivery_info : {};

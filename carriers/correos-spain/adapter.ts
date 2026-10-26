@@ -3,13 +3,13 @@ import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../c
 import { isCorreosSpainExpeditionCode } from '../../core/detection/correosSpain.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import type { ClassifiedStatus } from '../../core/status/index.js';
+import { classifyWording, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { isCorreosExpressCode } from '../correos-express/status.js';
 import { CORREOS_HOME_ZONE, correosOriginZone } from './clock.js';
-import { classifyCorreosSpainStatus, correosSpainEnglishSummary } from './status.js';
+import { classifyCorreosSpainStatus, correosSpainEnglishSummary, NOTICE_CODES } from './status.js';
 
 // Protocol provenance:
 // - Prior art (structure + vocabulary, verified independently below, MIT):
@@ -189,8 +189,15 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   }
   // The localizador lists oldest first; the parcel state is the latest entry.
   parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  // Oldest first, a notice keeps the stage of the scan before it, read as the sync reads
+  // that scan. It never becomes the summary.
+  let previous: Stage = 'registered';
+  for (const { event } of [...parsed].reverse()) {
+    if (NOTICE_CODES.has(event.provider_code ?? '')) Object.assign(event, { stage: previous, stage_source: 'none' });
+    else previous = (event.stage as Stage | undefined) ?? classifyWording(event.description ?? '').stage;
+  }
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
-  const latest = parsed[0];
+  const latest = parsed.find(({ event }) => !NOTICE_CODES.has(event.provider_code ?? '')) ?? parsed[0];
   // Office name (nom_codired), weight (peso grams) and dimensions travel on
   // the envelope. The office is only a pickup signal when the parcel is
   // actually awaiting collection; weight/dims are operational parcel data.

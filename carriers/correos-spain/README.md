@@ -57,7 +57,9 @@ Correos de Chile (`correos-chile`) are separate carriers.
 - The localizador words its scans in Spanish whatever `Accept-Language` says, unless `codIdioma`
   is `EN`, so the adapter asks for English. Codes and clocks are the same in both. A scan stored in
   Spanish takes the English wording in place: at its instant, its code identifies it. In English
-  the failed attempt `H06P010V` reads "In delivery", like the out-for-delivery codes.
+  the failed attempt `H06P010V` reads "In delivery", like the out-for-delivery codes. So does
+  `H01C120V`, seen while the parcel waits at a post office for collection: it keeps the stage of
+  the scan before it and never becomes the summary.
   The collection from a pickup request's address, `HI10002V`, has no English summary, so the
   adapter words it from the Spanish one.
 - `A090000V` ("Pre-registered") is the sender's pre-registration and stays `registered`;

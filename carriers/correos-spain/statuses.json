@@ -29,6 +29,7 @@
     { "code": "X120000V", "language": "es", "stage": "delivered", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Community-integration reconstruction, not re-observed since." },
     { "code": "H010930R", "wording": "Delivery has been attempted", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-08-24", "note": "Failed delivery attempt." },
     { "code": "H06P010V", "wording": "In delivery", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Worded like the out-for-delivery codes in English; the Spanish reads En proceso de entrega." },
+    { "code": "H01C120V", "wording": "In delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "Worded like the delivery round, but seen while the parcel waited at the destination's post office for collection; Correos' code list calls the H01 codes En curso. It keeps the stage of the scan before it." },
     { "code": "X090100R", "language": "es", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },
     { "code": "X090060R", "language": "es", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },
     { "code": "X130000R", "language": "es", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },

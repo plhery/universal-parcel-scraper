@@ -70,7 +70,8 @@ opening a browser.
   an item announced by its sender is registered, an undeliverable item on its way back is
   returned, and a delivery after a return is the return's end. Category 4 has no stage of its own.
 - Cash-on-delivery settlements with the sender come after the delivery and move nothing, so they
-  are left out. Repeated delivery rows count once.
+  are left out. Repeated delivery rows count once, and so does a scan listed again under a minute
+  later without its place.
 - The app's scans carry UTC instants, which events keep in `time`. The tracker shows Budapest
   wall clocks without an offset; its events get `local_time` and the result `last_update_local`.
 - An item from abroad can list its next leg at the time it is planned, a day ahead. A row more
