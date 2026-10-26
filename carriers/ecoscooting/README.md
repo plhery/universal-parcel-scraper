@@ -32,7 +32,9 @@ family's exception wording ("[Parcel lost]"), which reads as a problem rather th
 failed attempt. Arrival at a pickup point and
 the pickup point's own signature ("Delivered to PUDO") read as ready for
 pickup. A parcel left at a pickup point past its deadline, and its whole
-journey back to the sender, read as returned. The web client names the GTMS
+journey back to the sender, read as returned. The last-mile station lists its
+exception or failed attempt first and the return it decides at the same
+second; the return then leads the history. The web client names the GTMS
 code for that deadline (`GTMS_PUDO_OVERDUE`); only the last-mile one
 (`PUDO_OVERDUE`) has been seen in a reply. The gateway no longer answers the
 published `CNESP` references.

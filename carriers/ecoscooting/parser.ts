@@ -69,6 +69,13 @@ export function parseEcoscooting(payload: unknown, rawNumber: string): CarrierRe
     const key = JSON.stringify(event);
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
+  // The last-mile station lists its exception or failed attempt first and the
+  // return it decides at the same second: the parcel goes back, so the return leads.
+  const returning = events.findIndex(event => event.stage === 'returned');
+  if (returning > 0 && events[0]!.time && events.slice(0, returning + 1).every(event => event.time === events[0]!.time
+    && (event.stage === 'exception' || event.stage === 'failed_attempt' || event.stage === 'returned'))) {
+    events.unshift(...events.splice(returning, 1));
+  }
   const latest = events[0]!;
   const current = ecoscootingStatus(String(latest.provider_code), latest.description);
   const dims = isRecord(payload.packageParam.dimWeight) ? payload.packageParam.dimWeight : {};

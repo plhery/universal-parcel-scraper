@@ -157,6 +157,21 @@ describe('Ecoscooting parcel history', () => {
     expect(parseEcoscooting(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
     expect(parseEcoscooting(value, NUMBER).events?.[0]?.stage).toBe('failed_attempt');
   });
+  it('puts the return ahead of the station exception listed first at the same second', () => {
+    const value = fixture(); value.statuses.shift();
+    const at = (opTimestamp: string, actionCode: string, statusName: string, description: string) =>
+      ({ ...value.statuses[0], actionCode, statusName, description, opTimestamp });
+    const exception = at('1768100000000', 'LM_PARCEL_EXCEPTION', 'Your shipment has encountered an exception at last mile station',
+      'Your shipment has encountered an exception at last mile station');
+    const back = at('1768100000000', 'LM_UNREACHABLE_RETURN', 'Return to Origin', 'Your shipment will be returned to its origin');
+    value.statuses.unshift(exception, back);
+    const result = parseEcoscooting(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Your shipment will be returned to its origin' });
+    expect(result.events?.slice(0, 2).map(event => event.provider_code)).toEqual(['LM_UNREACHABLE_RETURN', 'LM_PARCEL_EXCEPTION']);
+    // An exception after the return, a second later, stays the newest scan.
+    value.statuses[0] = { ...exception, opTimestamp: '1768100001000' };
+    expect(parseEcoscooting(value, NUMBER)).toMatchObject({ current_stage: 'exception' });
+  });
   it('reads the first-mile order scans as registered rather than in transit', () => {
     const value = pickupFixture(); value.statuses = value.statuses.slice(-2);
     expect(parseEcoscooting(value, NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Shipment order created' });
