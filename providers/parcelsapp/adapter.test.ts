@@ -1561,6 +1561,19 @@ describe('ParcelsApp result parsing', () => {
       .toEqual(['2026-07-16T03:11:00.000Z', '2026-07-14T04:25:00.000Z']);
   });
 
+  it('reads a scan at a labelled country or a posting postcode on that country\'s clock', () => {
+    // La Poste's own tracker dates these scans at 13:34 and 09:12 UTC.
+    const polish = 'LX123456785PL';
+    const payload = { carriers: ['Poland Post'], destinationCode: 'FR', states: [
+      { date: '2026-10-23T11:12:00Z', status: 'Your shipment is ready to leave the foreign territory.', carrier: 0, location: 'Country: Poland' },
+      { date: '2026-10-22T15:34:32+02:00', status: 'Posting/collection', carrier: 0, location: 'Placówka Pocztowa Example 1' },
+      { date: '2026-10-22T15:34:00Z', status: 'Your shipment has been deposited by the sender with postal partner.', carrier: 0, location: 'PL99999' },
+    ] };
+    expect(parseParcelsAppResponse(payload, polish, identity(polish)).events?.map((scan) => [scan.time, scan.location])).toEqual([
+      ['2026-10-23T09:12:00.000Z', 'Poland'], ['2026-10-22T13:34:32.000Z', 'Placówka Pocztowa Example 1'], ['2026-10-22T13:34:00.000Z', 'Poland'],
+    ]);
+  });
+
   it('reads Poland Post\'s relays of a partner post\'s scans as written, on that post\'s clock', () => {
     // A Latvian item to Poland: the relays carry Riga's wall clock under Poland's offset.
     const latvian = 'RR123456785LV';

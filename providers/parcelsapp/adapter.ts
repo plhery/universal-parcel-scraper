@@ -676,10 +676,16 @@ function chinaPostAbroad(location: string, status: string, destination: string |
 /**
  * A scan's location as the zone steps read it. 4PX writes the country, state
  * and town in fixed fields ("US  NY  EXAMPLE CITY 12345", "US    EXAMPLE CITY
- * NY DISTRIBUTION CENTER"), read here as "EXAMPLE CITY 12345, NY, US".
+ * NY DISTRIBUTION CENTER"), read here as "EXAMPLE CITY 12345, NY, US". A
+ * country of one clock that the scan reports only once its label or posting
+ * postcode is read (`reportedPlace`: "Country: Poland", "PL99999") is read as
+ * that country, so the clock agrees with the place the scan shows: read as no
+ * place, La Poste's scans in Poland kept ParcelsApp's UTC label, two hours late.
  */
 function scanLocation(name: unknown, location: unknown): string {
   const text = typeof location === 'string' ? location.trim() : '';
+  const reported = reportedPlace(text);
+  if (!countryCode(lastPlace(text)) && countryTimeZone(reported)) return reported;
   if (nameKey(name) !== '4pxexpress' || !/^[A-Z]{2}(?:\s{2}|$)/.test(text)) return text;
   const [country, ...fields] = text.split(/\s{2}/).map((field) => field.trim());
   return [...fields.reverse(), country].filter(Boolean).join(', ');
