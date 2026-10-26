@@ -97,7 +97,8 @@ function countryMatchScore(outcome: RecognitionOutcome): number {
 /**
  * The carrier the answers settle on: the only recent one, else the one that
  * follows parcels under its delivery carrier's number, else the only one
- * number evidence backs, else, when every answer comes from one brand's
+ * number evidence backs, unless that evidence is a check digit another
+ * answer's number passes too, else, when every answer comes from one brand's
  * networks, one that tracks without the user's input, then the one serving the
  * caller's country (its home country first), then the most popular. The
  * caller's country is only a guess at where the parcel goes, so it never
@@ -118,7 +119,11 @@ export function settleRecognition(outcomes: readonly RecognitionOutcome[], now =
   const origins = known.filter((outcome) => followsPartnerNumbers(outcome.carrier));
   if (origins.length === 1) return { carrier: origins[0]!.carrier, choices: [] };
   const backed = known.filter((outcome) => outcome.preferred);
-  if (backed.length === 1) return { carrier: backed[0]!.carrier, choices: [] };
+  // A check digit alone backs no answer over one whose own check digit passes:
+  // DHL Express's waybills and ACS's vouchers share theirs.
+  const shared = backed.length === 1
+    && known.some((outcome) => backed[0]!.checkDigitPeers?.includes(outcome.carrier));
+  if (backed.length === 1 && !shared) return { carrier: backed[0]!.carrier, choices: [] };
   const brands = new Set(known.map((outcome) => carrierBrand(outcome.carrier) ?? outcome.carrier));
   if (brands.size === 1) {
     const [best] = [...known].sort((left, right) => Number(!right.needsInput) - Number(!left.needsInput)

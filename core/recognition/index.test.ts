@@ -70,6 +70,27 @@ describe('recognition candidates', () => {
     }
   });
 
+  it('leaves a ten-digit number DHL Express and ACS both know to the user, since the check digit backs neither', () => {
+    // Synthetic: ACS's vouchers carry DHL Express's check digit, the first nine digits modulo 7.
+    const number = '2718281823';
+    const candidates = recognitionCandidates(number, { countryHint: 'GR' });
+    expect(candidates.find(({ carrier }) => carrier === 'dhl-express')?.checkDigitPeers)
+      .toEqual(expect.arrayContaining(['acs-courier', 'geniki-taxydromiki']));
+    expect(candidates.find(({ carrier }) => carrier === 'dhl-express')?.checkDigitPeers).not.toContain('box-now');
+    expect(candidates.find(({ carrier }) => carrier === 'acs-courier')).not.toHaveProperty('checkDigitPeers');
+    expect(recognitionAskedCarriers(number, { countryHint: 'GR' })).toEqual(expect.arrayContaining(['dhl-express', 'acs-courier']));
+    const dhlExpress = outcome('dhl-express', 'known', { preferred: true, checkDigitPeers: ['acs-courier', 'geniki-taxydromiki'] });
+    const acs = outcome('acs-courier', 'known', { countryMatch: 'home' });
+    expect(settleRecognition([dhlExpress, acs], now)).toEqual({ choices: ['dhl-express', 'acs-courier'] });
+    expect(settleRecognition([dhlExpress, { ...acs, status: 'unknown' }], now)).toEqual({ carrier: 'dhl-express', choices: [] });
+    expect(settleRecognition([{ ...dhlExpress, status: 'unknown' }, acs], now)).toEqual({ carrier: 'acs-courier', choices: [] });
+    // Against a carrier whose number passes no check of its own, the check digit still settles.
+    expect(settleRecognition([dhlExpress, outcome('box-now', 'known', { countryMatch: 'home' })], now))
+      .toEqual({ carrier: 'dhl-express', choices: [] });
+    // A number that fails the check is not offered to ACS.
+    expect(recognitionCandidates('2718281824', { countryHint: 'GR' }).map(({ carrier }) => carrier)).not.toContain('acs-courier');
+  });
+
   it('keeps direct hints and number evidence ahead of weak ordering hints', () => {
     expect(recognitionCandidates('06080000000002', { countryHint: 'GB', priorities: { 'dpd-uk': 1e6 } })[0]?.carrier).toBe('dpd');
     expect(recognitionCandidates('06080000000002', { hint: 'seur', countryHint: 'GB' })[0]?.carrier).toBe('seur');

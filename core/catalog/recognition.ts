@@ -27,6 +27,11 @@ export interface RecognitionCandidate {
   /** A preferred detection rule backs it with number evidence. */
   preferred: boolean;
   /**
+   * When its preference rests on a check digit alone, its rule taking any run
+   * of digits of its length: the other candidates whose own check digit passes.
+   */
+  checkDigitPeers?: string[];
+  /**
    * The caller's country hint is the carrier's home country, or one it also
    * serves. Absent without a hint or a match.
    */
@@ -54,12 +59,16 @@ export function recognitionNumberShape(number: string): string | undefined {
     .map((run) => `${/^[0-9]/.test(run) ? 'D' : 'A'}${run.length}`).join('');
 }
 
-/** Whether the rule that offered a carrier for this number passed a check digit. */
-function checked(carrier: string, normalized: string, printed: string): boolean {
+/** A rule whose pattern is a bare run of digits: only its check digit points to its carrier. */
+const BARE_DIGITS = /^\^(?:\\d|\[0-9\])\{\d+\}\$$/;
+
+/** Whether the rule that offered a carrier for this number passed a check digit, and backs it with nothing more. */
+function checkDigit(carrier: string, normalized: string, printed: string): 'passes' | 'backs' | undefined {
   const rule = CARRIER_DEFINITIONS[carrier as CarrierId]?.detectionRules.find((candidate) =>
     ruleFits(candidate, normalized, printed)
     && (!candidate.checksum || CHECKSUMS[candidate.checksum](normalized)));
-  return rule?.checksum !== undefined;
+  if (rule?.checksum === undefined) return undefined;
+  return rule.preferred && BARE_DIGITS.test(rule.pattern) ? 'backs' : 'passes';
 }
 
 const BROWSER_RECOGNITION_RANKS: Readonly<Record<string, number | undefined>> = Object.fromEntries(
@@ -128,17 +137,21 @@ export function recognitionCandidates(
     if (tracking?.recognitionServedCountriesOnly && countryScore(carrier) === 0) return false;
     return RECOGNITION_PATTERNS.get(carrier)?.test(normalized) ?? true;
   };
+  const asked = candidates.filter((carrier) => ranks[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)
+    && carrierAdapter(carrier) !== 'universal' && answers(carrier) && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier));
+  const checks = new Map(asked.map((carrier) => [carrier, checkDigit(carrier, normalized, printed)]));
+  // A check digit other candidates' numbers pass too tells them apart from the rest, not from each other.
+  const peers = (carrier: string) => checks.get(carrier) === 'backs'
+    ? asked.filter((other) => other !== carrier && checks.get(other)) : [];
   const score = (carrier: string) => [
     carrier === options.hint ? 1 : 0,
     preferred.includes(carrier) ? 1 : 0,
     countryScore(carrier),
     priorityScore(carrier),
-    checked(carrier, normalized, printed) ? 1 : 0,
+    checks.get(carrier) ? 1 : 0,
     ranks[carrier] ?? 0,
   ];
-  return candidates
-    .filter((carrier) => ranks[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)
-      && carrierAdapter(carrier) !== 'universal' && answers(carrier) && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier))
+  return asked
     .map((carrier) => ({ carrier, score: score(carrier) }))
     // Array#sort is stable: equal scores keep the catalog order.
     .sort((left, right) => {
@@ -148,12 +161,16 @@ export function recognitionCandidates(
       }
       return 0;
     })
-    .map(({ carrier, score: [, , match] }): RecognitionCandidate => ({
-      carrier,
-      needsInput: requiredRequirements(carrier, number)[0]?.field ?? null,
-      preferred: preferred.includes(carrier),
-      ...(match ? { countryMatch: match === 2 ? 'home' : 'served' } : {}),
-    })).filter((candidate) => options.phase !== 'browser' || !candidate.needsInput);
+    .map(({ carrier, score: [, , match] }): RecognitionCandidate => {
+      const shared = peers(carrier);
+      return {
+        carrier,
+        needsInput: requiredRequirements(carrier, number)[0]?.field ?? null,
+        preferred: preferred.includes(carrier),
+        ...(shared.length ? { checkDigitPeers: shared } : {}),
+        ...(match ? { countryMatch: match === 2 ? 'home' : 'served' } : {}),
+      };
+    }).filter((candidate) => options.phase !== 'browser' || !candidate.needsInput);
 }
 
 /** The carriers the detect route asks about a number, best first; empty when none can answer. */

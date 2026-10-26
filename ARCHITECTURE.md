@@ -264,8 +264,10 @@ reused the number. An answer without an instant is dated by its local clock
 (`lastActivityLocal`); one without any clock counts only when no dated answer is recent.
 It takes the only carrier that knows the number. When AliExpress and a
 delivery carrier both know it, the number is the delivery carrier's and AliExpress started
-the journey, so it takes AliExpress. Otherwise it takes the only one number evidence backs.
-When all that know it are one brand's networks, it takes one that tracks without the user's
+the journey, so it takes AliExpress. Otherwise it takes the only one number evidence backs,
+unless that evidence is a check digit alone, its rule a bare run of digits, and another
+carrier that knows the number passes a check digit of its own (the candidate lists them as
+`checkDigitPeers`): DHL Express's waybills and ACS's vouchers share theirs. When all that know it are one brand's networks, it takes one that tracks without the user's
 input, then the one serving the country hint (each candidate carries the match as
 `countryMatch`), then the highest rank. Other unrelated carriers stay a choice.
 `recognitionNumberShape` retains only character classes and run lengths for private
