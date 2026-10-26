@@ -334,6 +334,117 @@
       "note": "Relayed from Nova Poshta: the parcel reached the branch where the recipient collects it."
     },
     {
+      "wording": "HK.He left the airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The flight out of Hong Kong, before the leg to the destination."
+    },
+    {
+      "wording": "An order for delivery to the destination country has been issued",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The onward order to the destination country, beside the departure from the port."
+    },
+    {
+      "wording": "HU.The consignment arrived in the destination country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The arrival at the hub the destination leg starts from."
+    },
+    {
+      "wording": "Shipment is in transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Between the arrival at the destination port and the batch handover to the carrier."
+    },
+    {
+      "wording": "UA.Delivered to customs terminal",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta: the parcel reached customs at the border, which holds it until the clearance. No delivery."
+    },
+    {
+      "wording": "UA.Customs clearance is complete",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta: customs released the parcel."
+    },
+    {
+      "wording": "Left the customs terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta, a minute after the clearance."
+    },
+    {
+      "wording": "UA.The shipment goes to the recipient",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta: on its way to the recipient's town."
+    },
+    {
+      "wording": "At the terminal of the destination city",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta: at the destination town's terminal, before the branch."
+    },
+    {
+      "wording": "UA.Sent to storage",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta when the branch's hold ends uncollected, beside the unclaimed notice."
+    },
+    {
+      "wording": "Unsolicited shipment",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta: the parcel was not collected, Yanwen's rendering of an unclaimed item."
+    },
+    {
+      "wording": "Delivery is not possible",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta a second after the unclaimed notice; Yanwen then files the parcel as Undelivered."
+    },
+    {
+      "wording": "Parcel accepted in the unclaimed cargo area",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from Nova Poshta: the unclaimed parcel taken into its unclaimed cargo area, not an acceptance."
+    },
+    {
+      "wording": "UA.",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "A partner's scan in Ukraine relayed as its country's code alone. It names no stage."
+    },
+    {
       "code": "LM40",
       "stage": "delivered",
       "confirmedBy": "live",

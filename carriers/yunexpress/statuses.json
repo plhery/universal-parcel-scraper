@@ -739,6 +739,22 @@
       "note": "Relayed from China Post: held by import customs abroad for inspection, waiting to be passed to the border or security agency."
     },
     {
+      "wording": "寄达地海关允许进口",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from China Post: import customs released the item."
+    },
+    {
+      "wording": "离开【示例国】处理中心",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Relayed from China Post: left a processing centre abroad, its country in brackets."
+    },
+    {
       "code": "10",
       "confirmedBy": "bundle",
       "firstSeen": "2026-10-08",

@@ -24,6 +24,13 @@ partners' legs, and a delivery still needs a delivered scan.
 Information input and a label created in the seconds after Yanwen's pickup scan
 are its intake, so they read as accepted rather than as an announcement.
 
+Partner scans can start with their country's code, as in "UA.In the New Post
+Office"; the map reads the words after it. A scan of the code alone names no
+stage. On Nova Poshta's leg, "Delivered to customs terminal" is customs holding
+the parcel, and the branch's hold ending uncollected, through storage to the
+unclaimed cargo area, is an exception; its "Delivery is not possible" is the
+failed attempt Yanwen's Undelivered category names.
+
 Some relayed histories come twice: once on the local wall clock and once on
 the UTC wall clock under the same offset, so their US scans read hours late. A
 scan repeated with the same wording, icon and offset exactly that offset away,

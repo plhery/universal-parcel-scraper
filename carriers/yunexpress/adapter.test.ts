@@ -176,10 +176,12 @@ describe('YunExpress captured response projection', () => {
   it("stages China Post's relayed scans in the destination country, its import customs holding the item until the release", () => {
     const payload = fixture();
     const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
-    ['境外进口海关留存待验(等待提交给边境机构/安全部门)----', '送交境外进口海关----', '到达寄达地处理中心----']
+    ['离开【示例国】处理中心----', '寄达地海关允许进口----', '境外进口海关留存待验(等待提交给边境机构/安全部门)----', '送交境外进口海关----', '到达寄达地处理中心----']
       .forEach((content, at) => { rows[at + 4].ProcessContent = content; });
-    const events = parse(payload, NUMBER).events!.slice(4, 7);
+    const events = parse(payload, NUMBER).events!.slice(4, 9);
     expect(events.map(({ description, stage }) => ({ description, stage }))).toEqual([
+      { description: 'Departure from processing center', stage: 'in_transit' },
+      { description: 'Import allowed by destination customs', stage: 'in_transit' },
       { description: 'Held by import customs abroad for inspection', stage: 'customs' },
       { description: 'Presented to import customs abroad', stage: 'customs' },
       { description: 'Arrival at processing center in the destination country', stage: 'in_transit' },

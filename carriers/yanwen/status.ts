@@ -55,7 +55,26 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Your shipment has been processed at sorting center and ready for shipping', { status: 'in_transit', stage: 'in_transit' }],
   ['Parcel dispatched to be delivered', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Your shipment is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
-  ['UA.In the New Post Office', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
+  // Nova Poshta's leg in Ukraine, from the flight out of Hong Kong through customs at the border
+  // to its branch, relayed in Yanwen's English. Customs holds the parcel at its terminal until the
+  // clearance.
+  ['He left the airport', { status: 'in_transit', stage: 'in_transit' }],
+  ['An order for delivery to the destination country has been issued', { status: 'in_transit', stage: 'in_transit' }],
+  ['The consignment arrived in the destination country', { status: 'in_transit', stage: 'in_transit' }],
+  ['Shipment is in transit', { status: 'in_transit', stage: 'in_transit' }],
+  ['Delivered to customs terminal', { status: 'in_transit', stage: 'customs' }],
+  ['Customs clearance is complete', { status: 'in_transit', stage: 'in_transit' }],
+  ['Left the customs terminal', { status: 'in_transit', stage: 'in_transit' }],
+  ['The shipment goes to the recipient', { status: 'in_transit', stage: 'in_transit' }],
+  ['At the terminal of the destination city', { status: 'in_transit', stage: 'in_transit' }],
+  ['In the New Post Office', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
+  // The branch's hold ending uncollected: the parcel goes to storage, unclaimed, then to the
+  // unclaimed cargo area. Its "Delivery is not possible" is the attempt Yanwen's Undelivered
+  // category names.
+  ['Sent to storage', { status: 'exception', stage: 'exception' }],
+  ['Unsolicited shipment', { status: 'exception', stage: 'exception' }],
+  ['Delivery is not possible', { status: 'exception', stage: 'failed_attempt' }],
+  ['Parcel accepted in the unclaimed cargo area', { status: 'exception', stage: 'exception' }],
 ]);
 
 // Yanwen files each parcel under a category its status filter names:
@@ -79,21 +98,23 @@ const CATEGORY = new Map<string, { status: CarrierStatus; stage?: Stage }>([
 // wording the last-mile carrier used for it.
 const DELIVERY_ICON = 'LM40';
 
-// Partner wording can prefix its facility in full-width brackets. Removing
-// that observed prefix makes the remaining exact wording reusable.
-const withoutFacility = (description: string) => description.replace(/^【[^】]*】\s*/, '').trim();
+// Partner wording can prefix its facility in full-width brackets, or its
+// country's code and a dot: "UA.In the New Post Office". Removing those
+// observed prefixes makes the remaining exact wording reusable. A scan that is
+// only the code keeps it.
+const withoutPrefix = (description: string) => description.replace(/^【[^】]*】\s*/, '').replace(/^[a-z]{2}\.(?=\S)/i, '').trim();
 
 export function yanwenStatus(description: string, code?: string): ClassifiedStatus | undefined {
   if (code === DELIVERY_ICON) return { status: 'delivered', stage: 'delivered' };
-  return WORDING.get(withoutFacility(description));
+  return WORDING.get(withoutPrefix(description));
 }
 
 const STAGE_BY_WORDING = new Map([...WORDING].map(([wording, { stage }]) => [normalizeStatusWording(wording), stage]));
 
 /** What the map says about one scan by its milestone icon, the only code it keeps, else its wording. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(withoutFacility(wording))),
-  gaps: [],
+  stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(withoutPrefix(wording))),
+  gaps: [{ wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." }],
 };
 
 /** The parcel's status from the category on its identity field, for scans the map does not know. */

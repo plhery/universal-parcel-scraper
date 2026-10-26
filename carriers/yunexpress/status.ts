@@ -93,7 +93,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // GOFO's line haul between its facilities, relayed without the next one.
   ['In Transit', { status: 'in_transit', stage: 'in_transit' }],
   // China Post's scans in Chinese after YunExpress hands a parcel to it: its receipt is that
-  // hand-over, and a presentation to export or import customs holds the parcel there until its release.
+  // hand-over, and a presentation to export or import customs holds the parcel there until its release,
+  // which puts it back in transit.
   ['中国邮政已收取邮件', { status: 'in_transit', stage: 'in_transit' }],
   ['送交出口海关', { status: 'in_transit', stage: 'customs' }],
   ['出口海关/放行', { status: 'in_transit', stage: 'in_transit' }],
@@ -104,6 +105,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['到达寄达地', { status: 'in_transit', stage: 'in_transit' }],
   ['到达寄达地处理中心', { status: 'in_transit', stage: 'in_transit' }],
   ['送交境外进口海关', { status: 'in_transit', stage: 'customs' }],
+  ['寄达地海关允许进口', { status: 'in_transit', stage: 'in_transit' }],
 ];
 
 /**
@@ -128,6 +130,8 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^【[^【】]+】已出口直封$/, { status: 'in_transit', stage: 'in_transit' }],
   // Import customs abroad holding the item for inspection, with what it waits for in brackets.
   [/^境外进口海关留存待验(?:[（(][^（）()]{1,60}[）)])?$/, { status: 'in_transit', stage: 'customs' }],
+  // The departure from a processing centre abroad, its country in 【】.
+  [/^离开【[^【】]+】处理中心$/, { status: 'in_transit', stage: 'in_transit' }],
 ];
 
 // China Post's arrival at an office or departure from one names the office in 【】 right after
