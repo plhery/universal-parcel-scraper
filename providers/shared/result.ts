@@ -336,6 +336,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // Sending's collection and its departure on the national route, in ParcelsApp's English, as Sending's own map reads them.
   if (/^reception in the delegation[.!]?$/i.test(value)) return 'accepted';
   if (/^out in national route[.!]?$/i.test(value)) return 'in_transit';
+  // Cainiao's origin sorting centre marking a parcel that holds a battery, between its inbound and outbound
+  // scans, as ParcelsApp relays it: the parcel goes on.
+  if (/^restricted item - battery item[.!]?$/i.test(value)) return 'in_transit';
   // FedEx's customs release, which its own map reads as a completed clearance.
   if (/^international shipment release - (?:import|export)[.!]?$/i.test(value)) return 'in_transit';
   // Straightship's shipper data, then its first scan in Canada and its stations, the town and province in brackets.

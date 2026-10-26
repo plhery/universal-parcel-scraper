@@ -1647,6 +1647,7 @@ describe("universal providers' answers", () => {
       ['The shipment has been received at the SEUR facilities of origin', 'accepted'],
       ['Parcel was dropped off at the locker', 'accepted'], ['Parcel was dropped off at the parcel shop', 'accepted'],
       ['International shipment release - Import', 'in_transit'], ['International shipment release - Export', 'in_transit'],
+      ['Restricted item - Battery item', 'in_transit'],
       ['Package information is created in the system', 'registered'],
       ['Package Received with Origin Scan warehouse (Exampleton, ON)', 'accepted'],
       ['Package is received at a Straightship station (Exampleton, ON)', 'in_transit'],
