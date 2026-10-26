@@ -13,12 +13,12 @@ const page = (...capturedResponses: TrawlCapturedResponse[]): TrawlScrapeRespons
 });
 
 describe('China Post public web preview', () => {
-  it('keeps the carrier order, limited history and local clocks', () => {
+  it("keeps the carrier order and limited history, on China's clock", () => {
     const result = parseChinaPostWebPreview(page(entry({ success: true, match: true,
       scans: [{ ...scan, time: '2030-01-01 23:00:00' }, scan] })), number);
-    expect(result).toMatchObject({ current_stage: 'in_transit', history_truncated: true, last_update: null,
-      last_update_local: '2030-01-02T12:30:00', events: [{ local_time: '2030-01-02T12:30:00' }, { local_time: '2030-01-01T23:00:00' }] });
-    expect(result.events!.every(row => !row.time)).toBe(true);
+    expect(result).toMatchObject({ current_stage: 'in_transit', history_truncated: true, last_update: '2030-01-02T12:30:00+08:00',
+      last_update_local: '2030-01-02T12:30:00', events: [{ local_time: '2030-01-02T12:30:00', time: '2030-01-02T12:30:00+08:00' },
+        { local_time: '2030-01-01T23:00:00', time: '2030-01-01T23:00:00+08:00', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' }] });
   });
 
   it('shows the state label in English, staged by the label', () => {

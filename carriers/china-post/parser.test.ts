@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { chinaPostCountry, chinaPostDescription, checkChinaPostGate, normalizeChinaPostNumber, parseChinaPostTraces } from './parser.js';
 import { statusMap } from './status.js';
 
@@ -11,6 +12,8 @@ interface Payload { code: string; msg: string; info: { mail: Mail } }
 const fixture = (name: string) => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8')) as Payload;
 const scans = (mail: Mail) => mail.mailInfos as Record<string, unknown>[];
 const scan = (mail: Mail, index: number) => scans(mail)[index]!;
+// A wall clock with its instant on China's clock.
+const china = (local: string) => ({ local_time: local, time: `${local}+08:00`, time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' });
 const edit = (name: string, change: (mail: Mail) => void) => {
   const payload = fixture(name);
   change(payload.info.mail);
@@ -31,7 +34,7 @@ describe('China Post number scope', () => {
 });
 
 describe('China Post trace projection', () => {
-  it('returns the newest scans first on local clocks, dates the acceptance and flags the truncated history', () => {
+  it("returns the newest scans first, the destination post's on its wall clock, dates the acceptance and flags the truncated history", () => {
     const result = normalizeCarrierResult(parseChinaPostTraces(fixture('delivered'), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Delivered', last_update: null, last_update_local: '2026-09-01T15:25:00',
@@ -40,9 +43,8 @@ describe('China Post trace projection', () => {
       { local_time: '2026-09-01T15:25:00', description: 'Delivered', location: '美国', provider_code: '463', stage: 'delivered', stage_source: 'carrier_map' },
       { local_time: '2026-09-01T10:10:00', description: 'Out for delivery', location: '美国', provider_code: '462', stage: 'out_for_delivery', stage_source: 'carrier_map' },
       { local_time: '2026-09-01T08:10:00', description: 'Arrived at the delivery office', location: '美国', provider_code: '461', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-08-14T16:13:38', description: 'Accepted', location: '示例市揽投部', stage: 'accepted', stage_source: 'carrier_map' },
+      { ...china('2026-08-14T16:13:38'), description: 'Accepted', location: '示例市揽投部', stage: 'accepted', stage_source: 'carrier_map' },
     ]);
-    expect(result.events?.every((event) => event.time === undefined)).toBe(true);
     expect(result.timezone).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
   });
@@ -69,7 +71,7 @@ describe('China Post trace projection', () => {
       expect(text).not.toMatch(/PRIVATE|10000000000|11183|0\.00000|example\.invalid|电话|快递员|签收【/);
       expect(Object.keys(result).sort()).toEqual(expect.arrayContaining(['events', 'last_status_text', 'status']));
       for (const event of result.events ?? []) {
-        expect(Object.keys(event).every((key) => ['local_time', 'description', 'location', 'provider_code', 'stage', 'stage_source'].includes(key))).toBe(true);
+        expect(Object.keys(event).every((key) => ['local_time', 'time', 'time_zone', 'time_zone_basis', 'description', 'location', 'provider_code', 'stage', 'stage_source'].includes(key))).toBe(true);
       }
     }
   });
@@ -149,10 +151,10 @@ describe('China Post trace projection', () => {
       change(mail.collector as Record<string, unknown>);
     }), NUMBER).events?.slice(3);
     expect(accepted(() => undefined)).toEqual([
-      { local_time: '2026-08-14T16:13:38', description: 'Accepted', location: '示例市揽投部', stage: 'accepted', stage_source: 'carrier_map' },
+      { ...china('2026-08-14T16:13:38'), description: 'Accepted', location: '示例市揽投部', stage: 'accepted', stage_source: 'carrier_map' },
     ]);
     expect(accepted((collector) => { collector.orgName = '示例市揽投部电话10000000000'; })).toEqual([
-      { local_time: '2026-08-14T16:13:38', description: 'Accepted', stage: 'accepted', stage_source: 'carrier_map' },
+      { ...china('2026-08-14T16:13:38'), description: 'Accepted', stage: 'accepted', stage_source: 'carrier_map' },
     ]);
     for (const change of [
       (collector: Record<string, unknown>) => { collector.opTime = '2026-09-01 08:10:00'; },
@@ -179,8 +181,8 @@ describe('China Post trace projection', () => {
     }), NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Arrival' });
     expect(result.events?.slice(0, 2)).toEqual([
-      { local_time: '2026-09-03T10:06:42', description: 'Arrival', location: '示例航空中心', provider_code: '912', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-09-03T09:38:32', description: 'Left on a flight', location: '示例航站包件车间', provider_code: '911', stage: 'in_transit', stage_source: 'carrier_map' },
+      { ...china('2026-09-03T10:06:42'), description: 'Arrival', location: '示例航空中心', provider_code: '912', stage: 'in_transit', stage_source: 'carrier_map' },
+      { ...china('2026-09-03T09:38:32'), description: 'Left on a flight', location: '示例航站包件车间', provider_code: '911', stage: 'in_transit', stage_source: 'carrier_map' },
     ]);
   });
 
@@ -242,7 +244,7 @@ describe('China Post trace projection', () => {
       Object.assign(scan(mail, 2), { operationCode: '500', operation: '航空公司接收', stateDesc: '运送中', orgCode, orgName });
       mail.receiverCountryName = receiverCountryName;
     }), NUMBER).events?.[0];
-    expect(placed('CF', '邮政航空')).toEqual({ local_time: '2026-09-03T10:06:42', description: 'Received by airline', provider_code: '500', stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(placed('CF', '邮政航空')).toEqual({ ...china('2026-09-03T10:06:42'), description: 'Received by airline', provider_code: '500', stage: 'in_transit', stage_source: 'carrier_map' });
     expect(placed('CF', '示例航空公司')).not.toHaveProperty('location');
     // Not even when the airline's code is also the destination's country code.
     expect(placed('CF', '邮政航空', '中非共和国')).not.toHaveProperty('location');
@@ -265,7 +267,7 @@ describe('China Post trace projection', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Delivered', last_update_local: '2026-09-03T14:13:00', destination_country: 'CO', history_truncated: true });
     expect(result.events?.slice(0, 3)).toEqual([
-      { local_time: '2026-09-03T14:13:00', description: 'Arrival at processing center in the destination country', location: '哥伦比亚', provider_code: '459', stage: 'in_transit', stage_source: 'carrier_map' },
+      { ...china('2026-09-03T14:13:00'), description: 'Arrival at processing center in the destination country', location: '哥伦比亚', provider_code: '459', stage: 'in_transit', stage_source: 'carrier_map' },
       { local_time: '2026-08-26T16:19:00', description: 'Delivered', location: '哥伦比亚', provider_code: '463', stage: 'delivered', stage_source: 'carrier_map' },
       { local_time: '2026-08-26T08:04:00', description: 'Out for delivery', location: '哥伦比亚', provider_code: '462', stage: 'out_for_delivery', stage_source: 'carrier_map' },
     ]);
@@ -294,6 +296,30 @@ describe('China Post trace projection', () => {
       expect(parseChinaPostTraces(late(newer), NUMBER), JSON.stringify(newer)).toMatchObject({ status, current_stage: stage });
     }
     expect(parseChinaPostTraces(late({ operationCode: '999', operation: '邮件状态变更', stateDesc: '未知状态' }), NUMBER).last_status_text).toBe('邮件状态变更');
+  });
+
+  it("dates China Post's own scans abroad on China's clock and the destination post's by their place", () => {
+    const result = dateLocalClocks('china-post', parseChinaPostTraces(edit('delivered', (mail) => {
+      mail.receiverCountryName = '日本';
+      mail.mailInfoCount = 5;
+      // Oldest first: the landing, the arrival at the destination, its processing centre, its round and its delivery.
+      const base = scan(mail, 0);
+      mail.mailInfos = [
+        { ...base, operationCode: '505', operation: '飞机进港', stateDesc: '运送中', orgCode: '', orgName: '', time: '2026-09-01 05:00:00' },
+        { ...base, operationCode: '516', operation: '到达寄达地', stateDesc: '到达境外目的地', orgCode: 'JP', orgName: '日本', time: '2026-09-01 07:55:00' },
+        { ...base, operationCode: '459', operation: '到达寄达地处理中心', stateDesc: '到达境外目的地', orgCode: 'JP', orgName: '日本', time: '2026-09-01 23:04:00' },
+        { ...base, operationCode: '462', operation: '【日本】安排投递', stateDesc: '派送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 08:30:00' },
+        { ...base, operationCode: '463', operation: '【日本】已妥投', stateDesc: '已签收', orgCode: 'JP', orgName: '日本', time: '2026-09-02 13:10:00' },
+      ];
+    }), NUMBER));
+    expect(result.events?.map((event) => [event.provider_code, event.time, event.time_zone_basis])).toEqual([
+      ['463', '2026-09-02T13:10:00+09:00', 'place'],
+      ['462', '2026-09-02T08:30:00+09:00', 'place'],
+      ['459', '2026-09-01T23:04:00+08:00', 'carrier'],
+      ['516', '2026-09-01T07:55:00+08:00', 'carrier'],
+      ['505', '2026-09-01T05:00:00+08:00', 'carrier'],
+    ]);
+    expect(result.last_update).toBe('2026-09-02T13:10:00+09:00');
   });
 
   it('keeps the receiver country label when it has no ISO code', () => {

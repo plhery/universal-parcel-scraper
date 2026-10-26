@@ -67,7 +67,10 @@ After YunExpress hands a parcel to China Post, the feed relays China Post's
 scans in Chinese. An arrival or a departure names its office in 【】 right
 after the verb (`邮件到达【…】`, `邮件离开【…】，正在发往下一站`): the office
 becomes the scan's place, in place of the city the feed gives, and leaves the
-wording. Clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
+wording. These scans are dated on China's clock wherever they happen: China Post
+dates its own scans abroad on Beijing time, and the feed states +08:00 for its
+arrival at the destination (到达寄达地). A line with kana or hangul is a
+partner's. Other clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
 lets such a row take over the one stored with the office in its wording.
 
 Run `npm run test:carriers:live -- carriers/yunexpress` with a

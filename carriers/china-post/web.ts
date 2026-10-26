@@ -3,7 +3,7 @@ import { ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError,
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { TrawlScrapeResponse } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { chinaPostDescription, PROVIDER } from './parser.js';
+import { chinaClock, chinaPostDescription, PROVIDER } from './parser.js';
 import { chinaPostEnglish, chinaPostStatus } from './status.js';
 
 export const CHINA_POST_WEB = 'https://www.ems.com.cn/queryList';
@@ -58,11 +58,13 @@ export function parseChinaPostWebPreview(page: TrawlScrapeResponse, number: stri
     if (!date.isValid || !description) throw new SchemaError(PROVIDER, 'China Post returned an unreadable guest scan');
     const stage = chinaPostStatus(scan.code, description)?.stage;
     labels.push(description);
-    events.push({ local_time: date.toFormat("yyyy-MM-dd'T'HH:mm:ss"), description: chinaPostEnglish(description) ?? description,
+    // The preview dates the destination post's scans on China's clock too: on its own,
+    // a delivery or a round out for delivery would fall after the preview showed it.
+    events.push({ ...chinaClock(date.toFormat("yyyy-MM-dd'T'HH:mm:ss")), description: chinaPostEnglish(description) ?? description,
       ...(scan.code ? { provider_code: scan.code } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) });
   }
   const current = chinaPostStatus(events[0]!.provider_code ?? '', labels[0]!);
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
-    last_status_text: events[0]!.description, last_update: null, last_update_local: events[0]!.local_time,
+    last_status_text: events[0]!.description, last_update: events[0]!.time ?? null, last_update_local: events[0]!.local_time,
     history_truncated: true, events };
 }

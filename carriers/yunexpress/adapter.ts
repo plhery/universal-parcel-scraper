@@ -71,6 +71,17 @@ function dateOriginLeg(events: CarrierEvent[]): CarrierEvent[] {
 }
 
 /**
+ * Dates China Post's scans, which the feed relays in Chinese, on China's clock
+ * wherever they happen: China Post dates its own scans abroad on Beijing time,
+ * and the feed states +08:00 for its arrival at the destination (到达寄达地).
+ */
+function dateChinaPostScans(events: CarrierEvent[]): CarrierEvent[] {
+  return events.map((event) => event.time || !event.local_time || !/\p{Script=Han}/u.test(event.description ?? '')
+    || /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(event.description ?? '') ? event
+    : { ...event, time: eventClock(event.local_time, '+08:00').time, time_zone: ORIGIN_ZONE, time_zone_basis: 'carrier' });
+}
+
+/**
  * Dates the destination leg's rows on the offset the latest-scan record
  * states, when no row of that leg names a place: one partner relays the leg,
  * and with no place the facade would read it on China's clock. The leg is
@@ -209,7 +220,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const country = clean(info.DestinationCountryCode, 8).toUpperCase();
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
-  const dated = officesAsPlaces(dateDestinationLeg(dateOriginLeg(events), lastOffset, domestic));
+  const dated = officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(events)), lastOffset, domestic));
   const latest = dated[0]!;
   const classified = current;
   const deliveryNumber = clean(info.TrackingNumber, 64).toUpperCase();

@@ -221,6 +221,21 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).events?.slice(1).filter((event) => event.time)).toHaveLength(0);
   });
 
+  it("dates China Post's relayed scans on China's clock, abroad too", () => {
+    const payload = fixture();
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    rows[1].ProcessContent = '到达寄达地处理中心----日本';
+    rows[2].ProcessContent = '到达寄达地';
+    rows[3].ProcessContent = '飞机进港----邮政航空';
+    const result = parse(payload, NUMBER);
+    for (const [at, time] of [[1, '2026-03-19T13:39:00+08:00'], [2, '2026-03-18T13:39:00+08:00'], [3, '2026-03-17T13:39:00+08:00']] as const) {
+      expect(result.events?.[at]).toMatchObject({ time, local_time: time.slice(0, 19), time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' });
+    }
+    // A partner's row keeps its wall clock, in Japanese too.
+    rows[1].ProcessContent = 'お届け済み----Sample Town';
+    expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
+  });
+
   it('dates a parcel sent within its destination country as one leg', () => {
     const payload = placing(Object.fromEntries(Array.from({ length: 14 }, (_, at) => [at, ''])));
     const item = payload.ResultList[0];

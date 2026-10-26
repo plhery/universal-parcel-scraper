@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, SchemaError, type CarrierError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { countryCode } from '../../core/time/index.js';
+import { countryCode, firstOccurrence } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
@@ -121,10 +121,28 @@ export function chinaPostDescription(operation: unknown, state: unknown): string
 function wallClock(value: unknown): string | undefined {
   const raw = clean(value, 32);
   const parsed = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(raw) ? DateTime.fromFormat(raw, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' }) : null;
-  // UTC only validates the calendar. Chinese offices scan on China time and
-  // foreign posts on their own; the service supplies no offset for either.
+  // UTC only validates the calendar; the service supplies no offset.
   return parsed?.isValid ? parsed.toFormat("yyyy-MM-dd'T'HH:mm:ss") : undefined;
 }
+
+const CHINA_ZONE = 'Asia/Shanghai';
+
+/**
+ * A scan's wall clock and its instant on China's clock, on which China Post
+ * dates its own scans abroad too: read on the destination's clock, a landing
+ * would come an hour after the flight left China, and YunExpress states
+ * +08:00 for the same arrival at the destination.
+ */
+export function chinaClock(local: string): Pick<CarrierEvent, 'local_time' | 'time' | 'time_zone' | 'time_zone_basis'> {
+  const time = firstOccurrence(DateTime.fromISO(local, { zone: CHINA_ZONE })).toISO({ suppressMilliseconds: true })!;
+  return { local_time: local, time, time_zone: CHINA_ZONE, time_zone_basis: 'carrier' };
+}
+
+// The destination post's scans the app copies on that post's wall clock, to the
+// minute of the post's or UPU's own: departure from its processing centre (460),
+// arrival at the delivery office (461), out for delivery (462), delivery (463)
+// and departure from a transit office (489).
+const DESTINATION_CLOCK = new Set(['460', '461', '462', '463', '489']);
 
 function scanTime(value: unknown): string {
   const time = wallClock(value);
@@ -206,7 +224,7 @@ function acceptanceScan(collector: unknown, oldest: CarrierEvent): CarrierEvent 
   // Acceptance precedes every later scan; an equal or later clock is not one.
   if (!time || !oldest.local_time || time >= oldest.local_time) return undefined;
   const location = scanLocation(collector.orgName);
-  return { local_time: time, description: chinaPostEnglish(ACCEPTED)!, ...(location ? { location } : {}), stage: 'accepted', stage_source: 'carrier_map' };
+  return { ...chinaClock(time), description: chinaPostEnglish(ACCEPTED)!, ...(location ? { location } : {}), stage: 'accepted', stage_source: 'carrier_map' };
 }
 
 /**
@@ -247,8 +265,11 @@ export function parseChinaPostTraces(payload: unknown, raw: string): CarrierResu
     const local = atDestination(scan, destination);
     const location = placeOfScan(scan, local ? country : undefined);
     const status = chinaPostStatus(code, state);
+    // The destination post's own scan keeps its wall clock alone, for its place to date.
+    const time = scanTime(scan.time);
+    const clock = local && DESTINATION_CLOCK.has(code) ? { local_time: time } : chinaClock(time);
     // The label shows in English where one is known; the code and state label stage it.
-    const event: CarrierEvent = { local_time: scanTime(scan.time), description: chinaPostEnglish(description) ?? description, ...(location ? { location } : {}),
+    const event: CarrierEvent = { ...clock, description: chinaPostEnglish(description) ?? description, ...(location ? { location } : {}),
       ...(code ? { provider_code: code } : {}), ...(status ? { stage: status.stage, stage_source: 'carrier_map' } : {}) };
     const identity = JSON.stringify(event);
     if (seen.has(identity)) continue;
@@ -271,7 +292,7 @@ export function parseChinaPostTraces(payload: unknown, raw: string): CarrierResu
     status: current?.status ?? 'unknown',
     ...(current ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: establishing.event.description,
-    last_update: null,
+    last_update: latest.time ?? null,
     last_update_local: latest.local_time,
     ...(destination ? { destination_country: destination } : country ? { destination_country_name: country } : {}),
     ...(truncated ? { history_truncated: true } : {}),
