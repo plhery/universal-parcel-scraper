@@ -173,6 +173,20 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).events?.[4]).toMatchObject({ description: '到着しました' });
   });
 
+  it("stages China Post's relayed scans in the destination country, its import customs holding the item until the release", () => {
+    const payload = fixture();
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    ['境外进口海关留存待验(等待提交给边境机构/安全部门)----', '送交境外进口海关----', '到达寄达地处理中心----']
+      .forEach((content, at) => { rows[at + 4].ProcessContent = content; });
+    const events = parse(payload, NUMBER).events!.slice(4, 7);
+    expect(events.map(({ description, stage }) => ({ description, stage }))).toEqual([
+      { description: 'Held by import customs abroad for inspection', stage: 'customs' },
+      { description: 'Presented to import customs abroad', stage: 'customs' },
+      { description: 'Arrival at processing center in the destination country', stage: 'in_transit' },
+    ]);
+    for (const event of events) expect(statusMap.stage('', event.description!), event.description).toBe(event.stage);
+  });
+
   // Rows newest first: 4 the flight's arrival, 5 its departure, 6 the export clearance,
   // 7 to 12 the origin leg's facilities, 13 the order data.
   const placing = (places: Record<number, string>) => {

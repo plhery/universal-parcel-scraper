@@ -130,6 +130,7 @@ const LABELS: ReadonlyArray<readonly [label: string, english: string]> = [
   ['送交出口海关', 'Presented to export customs'],
   ['出口海关/留存待验', 'Held by export customs for inspection'],
   ['送交境外进口海关', 'Presented to import customs abroad'],
+  ['境外进口海关留存待验', 'Held by import customs abroad for inspection'],
   ['寄达地海关允许进口', 'Import allowed by destination customs'],
   ['到达寄达地处理中心', 'Arrival at processing center in the destination country'],
   ['离开…处理中心', 'Departure from processing center'],
