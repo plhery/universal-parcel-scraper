@@ -167,6 +167,8 @@ export function parseHelthjem(payload: unknown, rawNumber: string): CarrierResul
   // The page sends a PostNord parcel's recipient to PostNord's tracker with the shipment number.
   const shipment = clean(parcel.shipmentNumber, 40);
   const postnord = parcel.isPostnordProduct === true && IDENTIFIER.test(shipment);
+  // The new label a relabelled parcel is tracked as, its SSCC, else its shipment number.
+  const label = relabelled ? named.find(value => /^\d{17,18}$/.test(value) && hasGs1CheckDigit(value)) : undefined;
 
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
@@ -179,6 +181,7 @@ export function parseHelthjem(payload: unknown, rawNumber: string): CarrierResul
     ...(point ? { pickup_point: point } : {}),
     ...(shop ? { sender_name: shop } : {}),
     ...(postnord ? { delivery_carrier: 'postnord', delivery_tracking_number: shipment } : {}),
+    ...(label ? { canonical_tracking_number: label } : {}),
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };

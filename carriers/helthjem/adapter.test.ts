@@ -210,7 +210,12 @@ describe('Helthjem tracking adapter', () => {
         message: { content: 'Pakken sorteres på nytt før den sendes til et hentested.' } }, ...parcel.events.slice(2)];
     };
     expect(parseHelthjem(edited('delivered', relabelled), DELIVERED)).toMatchObject({ current_stage: 'in_transit',
-      last_status_text: 'Pakken sorteres på nytt før den sendes til et hentested.' });
+      last_status_text: 'Pakken sorteres på nytt før den sendes til et hentested.', canonical_tracking_number: '370724769990000069' });
+    expect(parseHelthjem(edited('delivered', parcel => { relabelled(parcel); parcel.trackingNumber = '00370724769990000069'; }), DELIVERED))
+      .toMatchObject({ canonical_tracking_number: '370724769990000069' });
+    expect(parseHelthjem(edited('delivered', parcel => { relabelled(parcel); parcel.trackingNumber = null; }), DELIVERED))
+      .toMatchObject({ canonical_tracking_number: '70724763999000067' });
+    expect(parseHelthjem(JSON.parse(text('delivered')), DELIVERED)).not.toHaveProperty('canonical_tracking_number');
     expect(parseHelthjem(edited('pickup', parcel => { parcel.trackingNumber = '370724769990000069'; parcel.shipmentNumber = '70724763999000067'; }), PICKUP))
       .toMatchObject({ current_stage: 'ready_for_pickup' });
     // Without a scan on the way to a pickup point, or with another number echoed, it is another parcel.
