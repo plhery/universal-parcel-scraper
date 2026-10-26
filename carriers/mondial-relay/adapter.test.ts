@@ -1,5 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
+import { parseTrackingInput } from '../../core/detection/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import {
@@ -150,6 +152,21 @@ describe('Mondial Relay tracking input', () => {
       expect(() => normalizeMondialRelayCredential(shipment, postcode))
         .toThrow(expect.objectContaining({ kind }));
     }
+  });
+
+  it('reads pasted links from the French, Belgian, Dutch and international trackers, and serves the Netherlands', () => {
+    for (const link of [
+      `${TRACKING_PAGE}?numeroExpedition=${OFFICIAL_PDF_SHIPMENT}`,
+      `https://www.mondialrelay.be/fr-be/suivi-de-colis/?numeroExpedition=${OFFICIAL_PDF_SHIPMENT}`,
+      `https://www.mondialrelay.be/nl-be/mijn-mondial-relay-pakje-opvolgen/?numeroExpedition=${OFFICIAL_PDF_SHIPMENT}`,
+      `https://www.mondialrelay.nl/mijn-mondial-relay-pakket-volgen/?numeroExpedition=${OFFICIAL_PDF_SHIPMENT}`,
+      `https://www.mondialrelay.com/en-gb/parcel-tracking/?exp=${OFFICIAL_PDF_SHIPMENT}&ens=EXAMPLE1&country=NL`,
+    ]) {
+      expect(parseTrackingInput(link), link)
+        .toMatchObject({ trackingNumber: OFFICIAL_PDF_SHIPMENT, carrier: 'mondial-relay', source: 'link' });
+    }
+    expect(parseTrackingInput('https://widget.mondialrelay.com/parcelshop-picker/version').source).toBe('none');
+    expect(CARRIER_DEFINITIONS['mondial-relay'].countries).toEqual(expect.arrayContaining(['FR', 'BE', 'LU', 'NL']));
   });
 
   it('rejects a number Mondial Relay does not issue before any request', async () => {

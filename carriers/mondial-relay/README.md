@@ -1,6 +1,6 @@
 # Mondial Relay
 
-French parcel-shop network (last mile in FR, BE, ES, LU, PT). Tracked through
+French parcel-shop network (last mile in FR, BE, ES, LU, PT, NL). Tracked through
 the consumer app's backend when an InPost account is configured, else through
 the French recipient website in a real browser, because Cloudflare blocks
 direct requests to that flow.
@@ -82,6 +82,9 @@ for another shipment → `SchemaError`.
   they are put back before the identity check.
 - The postcode is part of the credential: kept out of logs, links and fixtures.
   The tracking link carries `numeroExpedition` only.
+- Pasted links are read from the French, Belgian, Dutch and international sites. The Belgian
+  and Dutch trackers take `numeroExpedition` as the French one does, and the international
+  tracker on `mondialrelay.com` takes the shipment as `exp`.
 - Status comes from the `SuiviContextuel` headline, then events, then the
   highest reached milestone (its label, then its number). The deciding stage is
   set as `current_stage`, because the status vocabulary has no pickup value and

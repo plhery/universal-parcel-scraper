@@ -12,7 +12,8 @@
       "BE",
       "ES",
       "LU",
-      "PT"
+      "PT",
+      "NL"
     ]
   },
   "brand": {
@@ -89,13 +90,17 @@
   "links": [
     {
       "domains": [
-        "mondialrelay.fr"
+        "mondialrelay.fr",
+        "mondialrelay.be",
+        "mondialrelay.nl",
+        "mondialrelay.com"
       ],
       "params": [
         "shipment",
         "numeroExpedition",
         "numero",
-        "trackingNumber"
+        "trackingNumber",
+        "exp"
       ]
     }
   ],
