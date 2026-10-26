@@ -392,7 +392,7 @@ describe('locatePlace', () => {
 
   it('takes a longer place name for the place it names, not for a town that shares a word of it', () => {
     expect(place('Cartagena de Indias')).toMatchObject({ country: 'CO', latitude: 10.398 });
-    expect(place('San Jose de Costa Rica')).toMatchObject({ country: 'CR' });
+    expect(place('Santiago de Compostela')).toMatchObject({ country: 'ES' });
     // A country code the text writes settles which: Atena is a name of Athens.
     expect(place('Atena Lucana - IT (depot 0001)')).toMatchObject({ country: 'IT', name: 'Atena Lucana' });
     // A town named after its country is named after itself: Asunción, not Paraguay.
@@ -588,6 +588,16 @@ describe('locatePlace', () => {
     expect(place('TA YUAN DISTRICT TW')).toMatchObject({ country: 'TW', name: 'Dayuan' });
     // Chinese carriers spell their own towns so.
     expect(place('SHEN ZHEN', ['CN'])).toMatchObject({ country: 'CN', name: 'Shenzhen' });
+    // "Membris" is Mömbris in Russian.
+    expect(place('Membris')).toBeNull();
+  });
+
+  it('reads translations in the languages carriers print', () => {
+    expect(place('FRANCOFORTE')).toMatchObject({ country: 'DE', name: 'Frankfurt am Main' });
+    expect(place('Londres')).toMatchObject({ country: 'GB' });
+    expect(place('HCM CITY')).toMatchObject({ country: 'VN', name: 'Ho Chi Minh City' });
+    // "Pastas" is Pasto in Lithuanian, and paštas the Lithuanian for post.
+    expect(place('Pavyzdžio paštas')).toBeNull();
   });
 
   it('reads a Spanish town without its article and a Greek one spelt as Greek carriers do', () => {

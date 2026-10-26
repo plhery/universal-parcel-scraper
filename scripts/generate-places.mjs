@@ -2,15 +2,16 @@
 // free-text locations carriers print into map places.
 //
 // Sources, downloaded into a cache directory on the first run:
-// - GeoNames cities1000, first-level regions, postal codes and some countries' full dumps
-//   for their municipalities, CC BY 4.0: https://www.geonames.org
+// - GeoNames cities1000, first-level regions, postal codes, some countries' full dumps
+//   for their municipalities, and names by language, CC BY 4.0: https://www.geonames.org
 // - OurAirports airports, public domain: https://ourairports.com/data/
 // - Country label points from places/countries.json (Natural Earth, public domain)
 //
 // Run: node scripts/generate-places.mjs [cache directory]. Needs `unzip`.
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
+import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import { brotliCompressSync, constants } from 'node:zlib';
 import { nameKey, nameKeys } from '../places/names.mjs';
@@ -86,18 +87,21 @@ const latin = (name) => /^[\p{Script=Latin} '’.\-()]{3,40}$/u.test(name) && !/
 const cjk = (name) => /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]{2,12}$/u.test(name);
 const cyrillic = (name) => /^[\p{Script=Cyrillic} '’.\-()]{3,40}$/u.test(name);
 
+const alternatesFrom = (country) => (MULTILINGUAL.has(country) ? BILINGUAL_FROM : ALTERNATES_FROM);
+
 /**
- * A town's other names, as keys its own names lack. GeoNames adds a lower-case transliteration
- * of each name in another script, read in Chinese for Chinese characters. That is how Chinese
- * carriers spell their own towns ("shen zhen"), but no name elsewhere: "noman" is Norman in
- * Japanese, "yuan" Ichihara's last character.
+ * A town's other names, as keys its own names lack: those GeoNames gives it in a language carriers
+ * print. GeoNames also spells each name in another script in Latin letters, in lower case when it
+ * reads Chinese characters in Chinese. That is how Chinese carriers spell their own towns ("shen
+ * zhen"), but no name elsewhere: "Membris" is Mömbris in Russian, "noman" Norman in Japanese.
  */
-function alternateKeys(alternates, country, population, primary) {
+function alternateKeys(id, alternates, country, population, primary) {
   const keys = new Set();
-  if (Number(population) < (MULTILINGUAL.has(country) ? BILINGUAL_FROM : ALTERNATES_FROM)) return keys;
+  if (Number(population) < alternatesFrom(country)) return keys;
+  const printed = printedNames.get(id);
   for (const other of alternates.split(',')) {
-    if (latin(other) ? other === other.toLowerCase() && !CHINESE_COUNTRIES.has(country)
-      : !(CJK_COUNTRIES.has(country) && cjk(other) || CYRILLIC_COUNTRIES.has(country) && cyrillic(other))) continue;
+    if (latin(other) && other === other.toLowerCase() ? !CHINESE_COUNTRIES.has(country)
+      : !printed?.has(other) || !(latin(other) || CJK_COUNTRIES.has(country) && cjk(other) || CYRILLIC_COUNTRIES.has(country) && cyrillic(other))) continue;
     // Three Latin letters are a code or a stray transliteration more often
     // than a name ("lon" for Lognes, "chi" for Jizhou), and carriers print
     // them for other towns.
@@ -142,7 +146,38 @@ function csv(text) {
   return body.map((values) => Object.fromEntries(header.map((name, index) => [name, values[index] ?? ''])));
 }
 
-const cities = unzip(await download('cities1000.zip', 'https://download.geonames.org/export/dump/cities1000.zip'), 'cities1000.txt');
+const cities = lines(unzip(await download('cities1000.zip', 'https://download.geonames.org/export/dump/cities1000.zip'), 'cities1000.txt'));
+// The rows of the full dumps the gazetteer reads: regions, divisions and township seats.
+const dumps = new Map();
+for (const country of [...new Set([...Object.keys(DIVISIONS), ...Object.keys(TOWNSHIPS)])].sort()) {
+  const levels = new Set(DIVISIONS[country] ?? []);
+  const townships = new Set(TOWNSHIPS[country] ?? []);
+  const dump = unzip(await download(`dump-${country}.zip`, `https://download.geonames.org/export/dump/${country}.zip`), `${country}.txt`);
+  dumps.set(country, lines(dump).filter(([, , , , , , featureClass, feature, , , admin1]) => featureClass === 'A' && (feature === 'ADM1' || levels.has(feature))
+    || featureClass === 'P' && feature === 'PPLA4' && townships.has(admin1)));
+}
+
+// Carriers print a town in its country's languages, in English or by its local abbreviation
+// ("HCM City"), and carriers of the largest markets a foreign one in their own ("Londres",
+// "Francoforte"). GeoNames names large towns in every language an encyclopedia has, and those
+// names can be another language's word: "Pastas", Pasto in Lithuanian, is the Lithuanian for post.
+// Names without a language are local, historic or older romanizations ("Ta-yuan").
+const PRINTED_LANGUAGES = ['', 'en', 'abbr', 'de', 'es', 'fr', 'it', 'nl', 'pl', 'pt'];
+const countryLanguages = new Map(lines(await readFile(await download('countryInfo.txt', 'https://download.geonames.org/export/dump/countryInfo.txt'), 'utf8'))
+  .filter(([code]) => !code.startsWith('#'))
+  .map(([code, , , , , , , , , , , , , , , languages]) => [code, new Set([...PRINTED_LANGUAGES, ...languages.split(',').map((language) => language.split('-')[0])])]));
+// The languages carriers print, for each place large enough for other names.
+const printedLanguages = new Map([...cities, ...[...dumps.values()].flat()]
+  .filter(([, , , , , , , , country, , , , , , population]) => Number(population) >= alternatesFrom(country))
+  .map(([id, , , , , , , , country]) => [id, countryLanguages.get(country) ?? new Set(PRINTED_LANGUAGES)]));
+const printedNames = new Map();
+const alternateNames = spawn('unzip', ['-p', await download('alternateNamesV2.zip', 'https://download.geonames.org/export/dump/alternateNamesV2.zip'), 'alternateNamesV2.txt']);
+for await (const line of createInterface({ input: alternateNames.stdout, crlfDelay: Infinity })) {
+  const [, id, language, name] = line.split('\t');
+  if (!printedLanguages.get(id)?.has(language.split('-')[0])) continue;
+  printedNames.set(id, (printedNames.get(id) ?? new Set()).add(name));
+}
+
 const places = [];
 const byKey = new Map();
 // Spanish carriers leave out the article a town's name begins with: "BORGES DEL CAMP" is les
@@ -169,10 +204,10 @@ function remember(place) {
   }
 }
 
-for (const [, name, ascii, alternates, lat, lon, featureClass, feature, country, , admin1, admin2, , , population] of lines(cities)) {
+for (const [id, name, ascii, alternates, lat, lon, featureClass, feature, country, , admin1, admin2, , , population] of cities) {
   if (featureClass !== 'P' || SKIPPED_FEATURES.has(feature)) continue;
   const primary = new Set([...nameKeys(name), ...nameKeys(ascii)]);
-  const alternate = alternateKeys(alternates, country, population, primary);
+  const alternate = alternateKeys(id, alternates, country, population, primary);
   remember({
     name, ascii, country, admin1, admin2: country === 'FR' || country === 'IT' ? admin2 : '', lat: round(lat), lon: round(lon),
     population: Number(population) || 0, primary: [...primary], alternate: [...alternate],
@@ -265,11 +300,10 @@ function knownPlace(country, name, point, km, division) {
 // First-level regions by the name GeoNames gives them in their country's dump, which is often
 // the local one carriers print: "Catalunya", "Lombardia", "Steiermark".
 const regionLocalNames = new Map();
-for (const country of [...new Set([...Object.keys(DIVISIONS), ...Object.keys(TOWNSHIPS)])].sort()) {
+for (const [country, rows] of dumps) {
   const levels = new Set(DIVISIONS[country] ?? []);
   const townships = new Set(TOWNSHIPS[country] ?? []);
-  const dump = unzip(await download(`dump-${country}.zip`, `https://download.geonames.org/export/dump/${country}.zip`), `${country}.txt`);
-  for (const [, rawName, ascii, alternates, lat, lon, featureClass, feature, , , admin1, admin2, , , population] of lines(dump)) {
+  for (const [id, rawName, ascii, alternates, lat, lon, featureClass, feature, , , admin1, admin2, , , population] of rows) {
     if (featureClass === 'A' && feature === 'ADM1') regionLocalNames.set(`${country}.${admin1}`, [rawName, ascii]);
     const division = featureClass === 'A' && levels.has(feature) && Number(population) >= DIVISION_FROM;
     const seat = townships.has(admin1) && featureClass === 'P' && feature === 'PPLA4';
@@ -282,7 +316,7 @@ for (const country of [...new Set([...Object.keys(DIVISIONS), ...Object.keys(TOW
     // Its Chinese name, which a town too small for translations lacks, and the other names of a
     // division with as many people as a town that has them: Taiwan's are older romanizations
     // ("Ta-yuan" is Dayuan).
-    const names = new Set([...CJK_COUNTRIES.has(country) ? cjkNames(alternates) : [], ...alternateKeys(alternates, country, population, primary)]);
+    const names = new Set([...CJK_COUNTRIES.has(country) ? cjkNames(alternates) : [], ...alternateKeys(id, alternates, country, population, primary)]);
     const town = knownPlace(country, name, point, seat ? 5 : 15, division ? { admin1, population: Number(population) } : undefined);
     if (town) {
       for (const other of names) if (!town.primary.includes(other) && !town.alternate.includes(other)) town.alternate.push(other);

@@ -17,7 +17,10 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   "sort centre") are dropped, with an article before one ("EL AEROPUERTO"), also when one is
   joined to its town ("TrondheimSorter"). Spanish and Catalan "del" is also read as "de el":
   "AEROPUERTO DEL PRAT" is El Prat's. What is left is matched against town names, and translations
-  for larger towns ("Genf", "Cologne"). A translation of three Latin letters is left out: it
+  for larger towns ("Genf", "Cologne"). Translations are those in the town's own languages, in
+  English, or in the languages of the largest carrier markets ("Londres"): another language's
+  name for a town can be a word carriers print ("Pastas", Pasto in Lithuanian, is the Lithuanian
+  for post). A translation of three Latin letters is left out: it
   is a code or a stray transliteration more often than a name ("Lon" for Lognes). So is
   GeoNames' transliteration of a name in another script ("Noman" is Norman in Japanese), but
   not the Chinese reading of a Chinese town's own name ("Shen Zhen"). A Spanish town also goes
@@ -43,7 +46,7 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   Mali.
 - A longer place name is the place it names, not a town that shares a word of it, when it
   is a town where the text or the parcel is, or a city and the shorter name names no town
-  there: "Cartagena de Indias" is in Colombia, "San Jose de Costa Rica" in Costa Rica, but
+  there: "Cartagena de Indias" is in Colombia, "Santiago de Compostela" in Spain, but
   "East London MC" on a British parcel is in London. A town within 50 km of the longer name
   may still be the one meant ("NEW DELHI"). Elsewhere, a town nothing but a country confirms
   is no word of a longer name some town has, unless it is a city of 100,000 people where the

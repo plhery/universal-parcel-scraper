@@ -509,6 +509,11 @@ function namesMore(token: Token): boolean {
   return token.key.length > 1 && /\p{L}/u.test(token.key) && !FACILITY_WORDS.has(token.key) && !DIVISION_WORDS.has(token.key);
 }
 
+/** A key with Saint and Sainte written out: "st albans" is "saint albans". */
+function saintsWritten(key: string): string {
+  return key.split(' ').map((word) => (Object.hasOwn(SAINTS, word) ? SAINTS[word]! : word)).join(' ');
+}
+
 /** The words as printed, then with Saint and Sainte written out where they are shortened. */
 function withSaints(list: Token[]): Token[][] {
   const written = list.map((token) => Object.hasOwn(SAINTS, token.key) ? { ...token, key: SAINTS[token.key]! } : token);
@@ -853,12 +858,13 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
       const named = phrase.whole ? own.filter((region) => (!country || region.country === country)
         && (fieldIndex > 0 || region.country === country || hinted.includes(region.country))) : [];
       // A hub's name inside a longer place name is part of that name: "Beauregard-de-Terrasson"
-      // is a village, not the agency at Terrasson, and "Roissy-en-Brie" is no airport.
+      // is a village, not the agency at Terrasson, and "Roissy-en-Brie" is no airport. Saint
+      // written out makes no longer name: "St Albans" is Saint Albans too.
       const longer = list.filter((other) => other.start <= phrase.start && other.end >= phrase.end
-        && other.key.length > phrase.key.length && data.keys.has(other.key));
+        && other.key.length > phrase.key.length && data.keys.has(other.key) && saintsWritten(other.key) !== saintsWritten(phrase.key));
       // So is a town's, when the longer name is a town where the text or the parcel is, or a city
-      // and the shorter name no town there: "Cartagena de Indias" is in Colombia, "San Jose de
-      // Costa Rica" in Costa Rica, but "East London MC" on a British parcel is in London.
+      // and the shorter name no town there: "Cartagena de Indias" is in Colombia, "Santiago de
+      // Compostela" in Spain, but "East London MC" on a British parcel is in London.
       const all = candidates(data, phrase.key, carriers);
       const here = (place: Candidate) => place.country === country || hinted.includes(place.country) || admin.includes(place.country);
       const anyHere = all.some((place) => !place.hub && here(place));
