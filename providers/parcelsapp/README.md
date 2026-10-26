@@ -405,12 +405,14 @@ step exists for future protocol changes.
   code or a postcode ("GZSGJHHJ", Guangzhou's office of exchange). Theirs from posting to
   departure from the office of exchange are read on the origin's clock, the reply's
   `originCode` or the country of an S10 number: they share their digits with China Post's
-  scans in China, and read as UTC export customs came after the release. Australia has
-  several clocks, so an Australian origin's scans take the state or state capital their
-  place names, as Australia Post's own offsets do; one naming neither stays a guess. A
-  posting names its office, which can be in another state than the scan: UPU's "BRISBANE"
-  posting of an item Australia Post received in New South Wales has the digits of Australia
-  Post's "+11:00", as does EMS's copy under the office's code. A posting that only its
+  scans in China, and read as UTC export customs came after the release. UPU's scans placed
+  only by the code of an office in the destination keep their wall clock for the places step
+  to date: they have the destination post's digits, and a town's name ("MADRID") is read
+  first. Australia has several clocks, so an Australian origin's scans take the state or
+  state capital their place names, as Australia Post's own offsets do; one naming neither
+  stays a guess. A posting names its office, which can be in another state than the scan:
+  UPU's "BRISBANE" posting of an item Australia Post received in New South Wales has the
+  digits of Australia Post's "+11:00", as does EMS's copy under the office's code. A posting that only its
   office's capital places therefore borrows the clock of its feed's other scans, as a wall
   clock does (step 3 of Wall clocks), and takes the capital's only when there is none.
   A UPU or EMS scan whose place puts it only in another country of several clocks

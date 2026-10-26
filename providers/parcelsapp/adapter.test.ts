@@ -7,6 +7,7 @@ import { TrawlClient } from '../../core/transport/index.js';
 import { carrierErrorKind, IndeterminateError, InputRequiredError, NoHistoryError } from '../../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { ParcelsAppTracker, parseParcelsAppHtml, parseParcelsAppResponse } from './adapter.js';
 
 const number = 'ZZ12345678900';
@@ -1814,6 +1815,20 @@ describe('ParcelsApp result parsing', () => {
     expect(parse('CO')).toEqual(['2026-08-26T21:19:00.000Z', '2026-08-25T18:26:00.000Z', '2026-08-25T04:44:00.000Z']);
     // Australia has several clocks: its scans keep their wall clock, and "哥伦" names no other destination.
     expect(parse('AU')).toEqual(['2026-08-26T08:19:00.000Z', 'wall 2026-08-25T13:26:00.000', '2026-08-25T04:44:00.000Z']);
+  });
+
+  it("dates UPU's scans at an office the destination's code names by the office's place", () => {
+    // 4-72 dates the delivery UPU copies at such an office at the same digits, as China Post's copy has them.
+    const parse = (destinationCode: string, location: string) => dateLocalClocks('parcelsapp', parseParcelsAppResponse({
+      carriers: ['China Post', 'Universal Postal Union'], originCode: 'CN', destinationCode, states: [
+        { date: '2026-08-26T16:19:00Z', status: 'Successfully delivered', carrier: 0, location: '哥伦' },
+        { date: '2026-08-26T16:19:00Z', status: 'Entrega final', carrier: 1, location },
+      ] }, number, identity())).events?.find((scan) => scan.description === 'Entrega final')?.time;
+    expect(parse('CO', 'COQQQA')).toBe('2026-08-26T16:19:00-05:00');
+    // A town's name is no office: "MADRID" on a parcel to Morocco is in Madrid.
+    expect(parse('MA', 'MADRID')).toBe('2026-08-26T16:19:00+02:00');
+    // Elsewhere the code keeps ParcelsApp's label.
+    expect(parse('ES', 'COQQQA')).toBe('2026-08-26T16:19:00.000Z');
   });
 
   it('reads CTT\'s copies on the clock of each side of the border, which its offices of exchange tell', () => {

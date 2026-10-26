@@ -241,6 +241,13 @@ describe('locatePlace', () => {
     expect(place('GBJFKA')).toBeNull();
     expect(place('ARUSHA')).toMatchObject({ country: 'TZ', name: 'Arusha' });
     expect(place('TRNAVA')).toMatchObject({ country: 'SK', name: 'Trnava' });
+    // A code of no known location, or of another country's airport, is its country where the parcel is.
+    expect(place('COQQQA', ['CO'])).toMatchObject({ precision: 'country', country: 'CO' });
+    expect(place('GBJFKA', ['GB'])).toMatchObject({ precision: 'country', country: 'GB' });
+    expect(place('COQQQA', ['ES'])).toBeNull();
+    // A town of those letters comes first, a small one too.
+    expect(place('MADRID', ['MA'])).toMatchObject({ country: 'ES', name: 'Madrid' });
+    expect(place('BEDALE', ['BE'])).toBeNull();
   });
 
   it("reads a country's three-letter code as that country where the parcel is", () => {

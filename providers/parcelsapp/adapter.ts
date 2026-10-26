@@ -942,6 +942,22 @@ function postalCountryZone(name: unknown, location: string): string | null {
     ? mainZone(country) : null;
 }
 
+// A UPU office code (IMPC): two letters for its country, three for its place and one more.
+const POSTAL_OFFICE = /^([A-Z]{2})[A-Z]{3}[A-Z0-9]$/;
+
+/**
+ * Whether a postal feed's scan is placed only by the code of an office in the
+ * destination. UPU's copies there have the destination post's digits under a
+ * UTC label: 4-72 dates the delivery UPU copies at such an office at the same
+ * digits, and read as UTC they came hours off China Post's copies of the same
+ * scans. They keep their wall clock for the places step to date, which reads
+ * a town's name first: "MADRID" is no Moroccan office. EMS's are wall clocks
+ * already (`knownClock`).
+ */
+function destinationOffice(name: unknown, location: string, destination: string | null): boolean {
+  return POSTAL_FEEDS.has(nameKey(name)) && destination !== null && POSTAL_OFFICE.exec(location)?.[1] === destination;
+}
+
 /**
  * The zone a scan's place gives it: null for a DHL Express facility the rule
  * cannot place, and undefined for a scan only a guess can place (`guessedZone`).
@@ -1061,7 +1077,9 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const placed = own !== undefined ? own : sited;
   // A posting that only its office's capital places borrows first (`postingOffice`).
   const office = placed === undefined ? postingOffice(name, status, location, replyOrigin(payload, number)) : null;
-  const zone = placed !== undefined ? placed : wallClock || office ? null : guessedZone(payload, raw, fallback, number, destination, origin);
+  const destinationCode = placed === undefined && !wallClock && destinationOffice(name, location, destination);
+  const zone = placed !== undefined ? placed
+    : wallClock || office || destinationCode ? null : guessedZone(payload, raw, fallback, number, destination, origin);
   const known = wallClock ? knownClock(name, status, destination, origin) : null;
   // A local clock that nothing places, in the US or Canada alone ("US 12345").
   const country = countryCode(lastPlace(location));
@@ -1071,7 +1089,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
     local: zone !== null && zone === regionScanZone(name, location, inNorthAmerica)?.zone,
     fallback: wallClock || office ? fitsPlace(fallback, location) : null, known: known?.zone ?? null, arrival: known?.country ?? null,
     // With no zone, a scan whose label nothing vouches for keeps its wall clock.
-    wallOnly: unplacedWall || unknownNetwork(name) || localClockBrand(name) || militaryPostOffice(location) };
+    wallOnly: unplacedWall || destinationCode || unknownNetwork(name) || localClockBrand(name) || militaryPostOffice(location) };
 }
 
 type ZoneStep = 'carrier' | 'place' | 'copy' | 'borrowed' | 'routing' | 'known' | 'labeled';
@@ -1455,9 +1473,10 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     // nothing places. A scan at a US military post office, of a network no
     // table knows (`unknownNetwork`), of a bare brand on local clocks
     // (`localClockBrand`), of iMile for a destination of several zones, of
-    // Croatia Post at an office abroad that its code does not place or of a
-    // line on its place's clock that its place does not date
-    // (`PLACE_CLOCK_LINES`) keeps its wall clock as its local time. Any other
+    // Croatia Post at an office abroad that its code does not place, of UPU at
+    // an office in the destination (`destinationOffice`) or of a line on its
+    // place's clock that its place does not date (`PLACE_CLOCK_LINES`) keeps
+    // its wall clock as its local time. Any other
     // scan with no zone keeps ParcelsApp's label.
     const facility = !zone && relaysFacilityClock(name);
     const unplaced = facility || (!zone && !entry.location && UNLOCATED_LOCAL_CLOCKS.has(nameKey(name)));

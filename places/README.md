@@ -252,7 +252,9 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   letter) is in the town of the airport its code names, when the airport is in that
   country. The country's name can follow the code, as bpost writes it ("BEBRUA Belgium").
   Some codes name a UN/LOCODE location no airport of the country has; the offices seen in
-  scans are listed by that location's name ("FRROIC" is at Roissy-en-France).
+  scans are listed by that location's name ("FRROIC" is at Roissy-en-France). A code no list
+  holds, or whose letters another country's airport has, is in its country when the parcel is
+  known to be there and no town has its letters for a name.
 - A station named by an airport's code and a number, as iMile names its Italian ones ("BLQ
   01"), is in that airport's town, when the parcel is in the airport's country. Elsewhere the
   code places nothing.
