@@ -49,6 +49,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['SD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
   ['MD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
   ['D', 'Livraison effectuée', 'delivered'],
+  // The recipient collects the parcel at the pickup point it waited at.
+  ['RI', 'Colis remis au destinataire au point de retrait', 'delivered'],
   ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
   ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
   // A damaged parcel or one packed too poorly to travel is held until Chronopost deals with it.

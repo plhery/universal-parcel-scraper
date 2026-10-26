@@ -338,6 +338,15 @@
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. After R, the delivery reaches the sender and is staged returned.",
       "wording": "Livraison effectuée",
       "language": "fr"
+    },
+    {
+      "code": "RI",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The recipient collects the parcel at the pickup point, after its arrival there (AB, SD or MD).",
+      "wording": "Colis remis au destinataire au point de retrait",
+      "language": "fr"
     }
   ]
 }

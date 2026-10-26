@@ -234,6 +234,7 @@ describe('Chronopost direct tracking', () => {
     ['SD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
     ['MD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
     ['D', 'Livraison effectuée', 'delivered'],
+    ['RI', 'Colis remis au destinataire au point de retrait', 'delivered'],
     ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
     ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
     ['S', 'Colis bloqué : colis endommagé ou emballage insuffisant', 'exception'],
@@ -333,6 +334,10 @@ describe('Chronopost direct tracking', () => {
     const delivered = parseChronopostTrackingXml(history(prepared, arrived, collected, notified), number);
     expect(delivered).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-06-27T16:04:28+02:00', expected_delivery: null });
     expect(delivered.pickup_point).toBeUndefined();
+    // So does the recipient's collection at the pickup point.
+    const handedOver = scan('RI', '2026-06-27T16:04:28+02:00', 'Colis remis au destinataire au point de retrait', relay);
+    expect(parseChronopostTrackingXml(history(prepared, arrived, notified, handedOver), number)).toMatchObject({
+      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-06-27T16:04:28+02:00', expected_delivery: null });
     // The pickup point can be named as such, without a collection type. An
     // address in another layout leaves the name alone.
     const named = (point: string) => parseChronopostTrackingXml(history(prepared, scan('AB', '2026-06-27T11:07:04+02:00',
