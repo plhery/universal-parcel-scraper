@@ -17,8 +17,8 @@
     "mode": "automatic",
     "adapter": "dhl-express",
     "steps": [
-      "api",
       "direct",
+      "api",
       "trawl"
     ],
     "recognition": {

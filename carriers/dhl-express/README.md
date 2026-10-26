@@ -1,6 +1,6 @@
 # DHL Express
 
-DHL Express waybills through DHL's tracking API, its mobile guest API and public tracking
+DHL Express waybills through its mobile guest API, DHL's tracking API and public tracking
 portal, separate from the German DHL Paket adapter.
 
 Detection shares the [MyDHL+ tracking page](https://mydhl.express.dhl/gb/en/tracking.html)'s
@@ -28,19 +28,6 @@ it about another carrier's number.
 
 ## Retrieval
 
-With `DHL_API_KEY` set, `api` asks DHL's
-[Shipment Tracking Unified API](https://developer.dhl.com/api-reference/shipment-tracking)
-first, under the consumer's own key. Its reply is the global page's, with each event's offset,
-and it resolves a piece identifier without a browser. DHL allows a key one call every five
-seconds: calls through a key take turns, and a lookup whose turn would come more than ten
-seconds later, or too late for its budget, skips the API. A rate limit pauses the key for
-DHL's retry window, or an hour without one, and a refused key (HTTP 401 or 403) for an hour;
-the lookups meanwhile go to `direct`. DHL's not-found ends the lookup there; any other failure
-leaves the number to the next step. Recognition never asks the API, so unknown numbers spend
-none of the key's daily calls. DHL's terms for the key bind the consumer: they ask for the
-line "Delivered by Deutsche Post DHL Group" beside the data, its deletion 30 days after
-delivery, and no use with advertising.
-
 `direct` asks the mobile guest API for one waybill. Before it reads an empty
 shipment list as a missing shipment, it checks the application's
 waybill-encryption setting, so a configuration or authentication failure cannot
@@ -52,18 +39,33 @@ other than a shipment list discards the setting; a request that got no reply
 keeps it. The
 shared application bearer is included; consumers need no DHL account or key
 setup.
-After an HTTP challenge or transport failure, `trawl` loads DHL's global tracking
+
+With `DHL_API_KEY` set, `api` asks DHL's
+[Shipment Tracking Unified API](https://developer.dhl.com/api-reference/shipment-tracking)
+under the consumer's own key when `direct` cannot answer: after a CAPTCHA, a rate limit, a
+transport failure or an inconclusive reply, or while the mobile API rests. DHL's first level
+gives a key 250 calls a day, so they go to the lookups that would otherwise need a browser,
+and recognition never asks the API. Its reply is the global page's, with each event's offset,
+and it resolves a piece identifier without a browser. DHL allows a key one call every five
+seconds: calls through a key take turns, and a lookup whose turn would come more than ten
+seconds later, or too late for its budget, skips the API. A rate limit pauses the key for
+DHL's retry window, or an hour without one, and a refused key (HTTP 401 or 403) for an hour.
+DHL's not-found ends the lookup there; any other failure leaves the number to `trawl`. DHL's
+terms for the key bind the consumer: they ask for the line "Delivered by Deutsche Post DHL
+Group" beside the data, its deletion 30 days after delivery, and no use with advertising.
+
+When the HTTP steps meet a challenge or a transport failure, `trawl` loads DHL's global tracking
 page in a fresh context and captures its matching `utapi` response. The browser
 lets the page complete its verification and repeat tracking after an HTTP 428;
 the intermediate challenge is not a shipment answer. HTTP recognition never
 launches a browser; browser recognition is a separate opt-in phase and retains
 its history.
 
-A piece identifier goes straight to the global page, because the mobile API
-tracks waybills. The page resolves the piece to its shipment: the reply must
+A piece identifier goes to the tracking API and then the global page, because the
+mobile API tracks waybills. Both resolve the piece to its shipment: the reply must
 list the piece among the shipment's pieces and name an Express waybill, which
-becomes `canonical_tracking_number`. Without the browser service a piece cannot
-be tracked, and HTTP recognition leaves it inconclusive.
+becomes `canonical_tracking_number`. Without the key or the browser service a piece
+cannot be tracked, and HTTP recognition leaves it inconclusive.
 
 The global portal's SEC-CPT flow runs its own JavaScript proof of work before
 retrying `utapi`. Observe that exchange in the scoped browser helper before
@@ -110,10 +112,10 @@ hour, and for twice as long each time the first request after a pause draws it
 again, up to four hours; an answered request ends the doubling. A waybill
 checked every ten minutes drew no code for hours, while twelve checks an hour
 drew it within the hour, so a transport also sends at most six requests in an
-hour, the settings read included. With a browser service, lookups skip `direct`
-during a pause or once the hour's requests are spent and go straight to
-`trawl`, so only the request that drew the code records a challenge. Without
-one, `direct` answers at once with the challenge, or with a rate limit whose
+hour, the settings read included. With the key or a browser service, lookups skip
+`direct` during a pause or once the hour's requests are spent and go straight to
+the next step, so only the request that drew the code records a challenge. Without
+either, `direct` answers at once with the challenge, or with a rate limit whose
 retry delay is when the next request may go; browser recognition still runs
 after that rate limit. A restart forgets all of this, so a host that restarts
 often asks again each time and can keep the code on.

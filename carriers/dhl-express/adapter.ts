@@ -207,7 +207,7 @@ export class DhlExpressTracker {
   }
 
   get steps(): string[] {
-    return [...(this.api.configured ? ['api'] : []), 'direct', 'trawl'];
+    return ['direct', ...(this.api.configured ? ['api'] : []), 'trawl'];
   }
 
   /** DHL's tracking API answers like the global page, without a browser, for a waybill or a piece. */
@@ -290,12 +290,15 @@ export class DhlExpressTracker {
           run: ({ signal, remainingMs }) => this.browserPiece(piece, { signal, budgetMs: remainingMs }) }]);
     }
     const number = normalizeNumber(raw);
+    // While a CAPTCHA holds or the hour's requests are spent, the app's API would fail without a request,
+    // so the next step that sends one is asked at once.
+    const mobileWithheld = this.mobile.withheld() && (trawl || (this.api.configured && !this.api.paused()));
     return runSteps(run, [
-      api(number, false),
-      // While a CAPTCHA holds or the hour's requests are spent, the app's API would fail without a request,
-      // so a browser service is asked at once.
-      { id: 'direct', enabled: !(trawl && this.mobile.withheld()), recovers: afterApi,
+      { id: 'direct', enabled: !mobileWithheld,
         run: ({ signal, remainingMs }) => this.direct(number, { signal, budgetMs: Math.min(remainingMs, 10_000) }) },
+      // The key's daily calls go to the lookups the mobile API cannot answer, before a browser.
+      // The mobile API's rate limit is not the key's, so the key is asked after one too.
+      { ...api(number, false), recovers: (error: unknown) => recoverableByDefault(error) || carrierErrorKind(error) === 'rate_limited' },
       { id: 'trawl', enabled: trawl, recovers: afterApi, run: ({ signal, remainingMs }) => this.browser(number, { signal, budgetMs: remainingMs }) },
     ]);
   }
