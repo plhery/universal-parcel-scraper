@@ -482,6 +482,26 @@ describe('La Poste response normalization', () => {
     expect(withPreAdvice(false, 'ACHNAT')).toMatchObject({ status: 'pending', current_stage: 'registered' });
   });
 
+  it("keeps the day of a sender's announcement La Poste dates at midnight", () => {
+    const announced = (group: string, date: string) => {
+      const fixture = deliveredFixture();
+      fixture[0]!.shipment.isFinal = false;
+      fixture[0]!.shipment.timeline = [];
+      fixture[0]!.shipment.event = [{
+        group, code: 'DR1', label: 'Votre Colissimo va bientôt nous être confié !', date, country: 'FR', order: 1,
+      }];
+      return parseLaPosteTrackingResponse(fixture, TRACKING_NUMBER);
+    };
+    const result = announced('EXPANN', '2026-01-08T00:00:00+01:00');
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered', last_update: null, last_update_local: '2026-01-08' });
+    expect(result.events?.[0]).toMatchObject({ local_time: '2026-01-08', provider_code: 'EXPANN/DR1', stage: 'registered' });
+    expect(result.events?.[0]).not.toHaveProperty('time');
+    // A time of day, or another group's DR1, keeps its instant.
+    expect(announced('EXPANN', '2026-01-08T00:00:01+01:00').events?.[0]).toMatchObject({ time: '2026-01-08T00:00:01+01:00' });
+    expect(announced('EXPANN', '2026-01-08T00:00:00+00:00').events?.[0]).toMatchObject({ time: '2026-01-08T00:00:00+00:00' });
+    expect(announced('DISINS', '2026-01-08T00:00:00+01:00').events?.[0]).toMatchObject({ time: '2026-01-08T00:00:00+01:00' });
+  });
+
   it('uses timeline data when an announced parcel has no event history', () => {
     const fixture = deliveredFixture();
     fixture[0]!.shipment.isFinal = false;

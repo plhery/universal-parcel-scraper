@@ -97,6 +97,9 @@ recognition reads it as unknown rather than as a transport failure.
   country has several. Other products keep the feed's instant until their partner
   scans are compared with the partner's own. The app's identity policy lets a corrected Colissimo scan
   take over the row stored under the Paris label.
+- A sender's announcement (`EXPANN`, `DR1`) that some senders date by its day alone comes at
+  midnight on Paris's clock, where the others carry their time of day. It keeps that day in
+  `local_time` instead of a midnight nobody scanned.
 - Colissimo enters some transport scans at their planned time, before they happen. A scan
   dated more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - `contextData.partner` names the foreign carrier after export; it becomes

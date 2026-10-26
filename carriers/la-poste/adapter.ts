@@ -117,6 +117,18 @@ function partnerClock(raw: string, country: string, product: string, exportedLet
   return placed ? { time: placed.iso } : { time: '', local_time: wall };
 }
 
+/**
+ * The sender's announcement (group EXPANN, code DR1), which some senders date
+ * by its day alone: La Poste then gives it midnight on Paris's clock, where the
+ * others carry their time of day. It keeps that day rather than a midnight
+ * nobody scanned.
+ */
+function announcedDay(group: string, code: string, time: string): string | null {
+  if (group !== 'EXPANN' || code !== 'DR1' || !explicitOffsetTime(time)) return null;
+  const paris = DateTime.fromISO(time, { setZone: true }).setZone(TIMEZONE);
+  return paris.isValid && paris.toFormat('HH:mm:ss.SSS') === '00:00:00.000' ? paris.toISODate() : null;
+}
+
 function expectedDate(value: unknown): string | null {
   const text = safeDate(value);
   return /^\d{4}-\d{2}-\d{2}/.exec(text)?.[0] ?? null;
@@ -265,9 +277,9 @@ function parseShipment(payload: unknown, trackingNumber: string): { result: Carr
     const code = clean(event.code, 40).toLocaleUpperCase('en-US');
     const time = safeDate(event.date);
     const location = clean(event.country, 80);
+    const day = announcedDay(group, code, time);
     return {
-      time,
-      ...partnerClock(time, countryCode(location), product, EXPORTED_LETTER.test(requested)),
+      ...(day ? { local_time: day } : { time, ...partnerClock(time, countryCode(location), product, EXPORTED_LETTER.test(requested)) }),
       location,
       description: description || 'Tracking update',
       stage: eventStage(group, code, description),
