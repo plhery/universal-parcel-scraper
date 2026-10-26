@@ -74,6 +74,15 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00Z', 'Keine weiteren Details erforderlich, Entladung')).not.toBeNull();
   });
 
+  it("leaves out 17FEIA's estimated departure, written before the flight, so it cannot undo a customs step", () => {
+    expect(event('2026-01-07T09:16:18Z', 'Estimated departure date: 2026-01-08 17:16:18')).toBeNull();
+    expect(event('2026-01-07T09:16:18Z', 'Estimated departure date: 2026-01-08 17:16:18, OTHER', 'InTransit')).toBeNull();
+    expect(localEvent('2026-01-07T09:16:18', 'Estimated departure date: 2026-01-08 17:16:18')).toBeNull();
+    const customs = event('2026-01-07T08:20:00Z', 'Export declaration in progress.')!;
+    expect(result([event('2026-01-07T09:16:18Z', 'Estimated departure date: 2026-01-08 17:16:18'), customs]
+      .filter((scan) => scan !== null), 'ParcelsApp')).toMatchObject({ current_stage: 'customs' });
+  });
+
   it("reads Interpost's import clearance by its caption, without the status code ParcelsApp heads it with", () => {
     expect(event('2026-01-07T12:45:00+01:00', 'B2C Clearance 4. Customs Import cleared'))
       .toMatchObject({ description: 'Customs Import cleared', stage: 'in_transit' });

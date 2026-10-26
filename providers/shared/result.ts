@@ -19,6 +19,7 @@ import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
 import { anPostWordingStage } from '../../carriers/an-post/status.js';
 import { CHRONOPOST_NOTIFICATION } from '../../carriers/chronopost/status.js';
 import { sunYouWording } from '../../carriers/sunyou/identity.js';
+import { ESTIMATE as FLIGHT_ESTIMATE } from '../../carriers/tsjy/status.js';
 
 export type UniversalSource = '17TRACK' | 'ParcelsApp' | 'Postal Ninja' | 'Ship24' | 'UPU';
 const STAGES: Record<string, Stage> = {
@@ -369,7 +370,8 @@ const LOCAL_WALL_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 function describe(description: unknown, stage?: unknown): { description: string; stage: Stage; stage_source: string } | null {
   // A copy of SunYou's departure drops the last-mile number, as SunYou's own result does.
   const label = sunYouWording(relayedNotice(text(description)).replace(CLEARANCE_STATUS, ''));
-  if (!label || isNotice(label)) return null;
+  // 17FEIA's estimated departure is written before the flight: no scan, as its own trackers drop it.
+  if (!label || isNotice(label) || FLIGHT_ESTIMATE.test(label)) return null;
   const declared = typeof stage === 'string' && Object.hasOwn(STAGES, stage) ? STAGES[stage] : undefined;
   // Established source semantics (e.g. handoff/negation) remain first. A real
   // provider stage outranks the new intuitive translation fallback.
