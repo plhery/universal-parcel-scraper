@@ -108,6 +108,14 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "wording": "Order submitted",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The sender's order reaching YunExpress, before the parcel does."
+    },
+    {
       "wording": "Arrived at sorting center",
       "stage": "in_transit",
       "language": "en",
