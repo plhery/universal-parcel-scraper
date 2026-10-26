@@ -117,19 +117,25 @@ export function normalizeJdNumber(raw: string): string {
   return number;
 }
 
+/**
+ * JD's own answer that its international feed holds nothing under the number, as for its
+ * domestic waybills: no outage, and no proof the parcel does not exist.
+ */
+const noHistory = () => new IndeterminateError(PROVIDER, 'JD Logistics returned no international history', { reason: 'portal_not_found' });
+
 /** The international website returns one parent reference with its constituent waybills. */
 export function parseJdLogistics(payload: unknown, raw: string): CarrierResult {
   const number = normalizeJdNumber(raw);
   if (!isRecord(payload) || payload.code !== 1 || !Array.isArray(payload.data) || payload.data.length > 100) {
     throw new SchemaError(PROVIDER, 'JD Logistics returned an invalid tracking response');
   }
-  if (!payload.data.length) throw new IndeterminateError(PROVIDER, 'JD Logistics returned no international history');
+  if (!payload.data.length) throw noHistory();
   if (payload.data.length !== 1 || !isRecord(payload.data[0])
     || returnedTrackingNumber(payload.data[0].waybillNo) !== number) {
     throw new SchemaError(PROVIDER, 'JD Logistics returned a different or ambiguous shipment');
   }
   const item = payload.data[0];
-  if (item.waybillNum === 0) throw new IndeterminateError(PROVIDER, 'JD Logistics returned no international history');
+  if (item.waybillNum === 0) throw noHistory();
   if ((item.waybillNum !== undefined && item.waybillNum !== 1)
     || !Array.isArray(item.wayBillTrackItemDtoList) || item.wayBillTrackItemDtoList.length !== 1
     || !isRecord(item.wayBillTrackItemDtoList[0])) {
@@ -139,7 +145,7 @@ export function parseJdLogistics(payload: unknown, raw: string): CarrierResult {
   if (!clean(waybill.waybillNo, 64) || !Array.isArray(waybill.trackNodeList) || waybill.trackNodeList.length > 1000) {
     throw new SchemaError(PROVIDER, 'JD Logistics returned an invalid waybill history');
   }
-  if (!waybill.trackNodeList.length) throw new IndeterminateError(PROVIDER, 'JD Logistics returned no international history');
+  if (!waybill.trackNodeList.length) throw noHistory();
   const events: CarrierEvent[] = waybill.trackNodeList.map(node => {
     if (!isRecord(node)) throw new SchemaError(PROVIDER);
     // Never keep the courier's name and phone.

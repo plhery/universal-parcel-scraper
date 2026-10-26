@@ -36,10 +36,13 @@ describe('JD Logistics international projection', () => {
     expect(parseJdLogistics(reply, NUMBER).events).toHaveLength(2);
   });
 
-  it('keeps missing international history inconclusive', () => {
-    expect(() => parseJdLogistics({ code: 1, data: [] }, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+  it('keeps missing international history inconclusive, as JD\'s own answer rather than an outage', () => {
+    const answer = expect.objectContaining({ kind: 'indeterminate', reason: 'portal_not_found' });
+    expect(() => parseJdLogistics({ code: 1, data: [] }, NUMBER)).toThrow(answer);
+    const unlisted = history(); unlisted.data[0]!.waybillNum = 0;
+    expect(() => parseJdLogistics(unlisted, NUMBER)).toThrow(answer);
     const empty = history(); empty.data[0]!.wayBillTrackItemDtoList[0]!.trackNodeList = [];
-    expect(() => parseJdLogistics(empty, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseJdLogistics(empty, NUMBER)).toThrow(answer);
     expect(() => parseJdLogistics({ code: 0, data: [] }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 

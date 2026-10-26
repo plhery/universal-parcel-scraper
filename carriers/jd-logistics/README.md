@@ -41,9 +41,12 @@ in JD's order; any local clock keeps JD's order, newest first.
 
 ## Limitations
 
-An empty answer is inconclusive outside the international service. A scan without an epoch is
-not dated from its declared zone alone. Proof-of-delivery images and recipient verification are
-excluded. Chinese domestic waybills answer an empty list here.
+Chinese domestic waybills, such as the JDAZ series, answer an empty list here. An empty answer
+is inconclusive with the reason `portal_not_found`: JD's own answer, not an outage, and no proof
+that the parcel does not exist. Domestic tracking on jdl.com (`api.jdl.com`,
+`waybillQuery/needVerify` then `waybillQuery/trackWaybill`) shows JD's click captcha before any
+history. A scan without an epoch is not dated from its declared zone alone. Proof-of-delivery
+images and recipient verification are excluded.
 
 ## Testing
 
