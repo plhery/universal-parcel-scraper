@@ -57,6 +57,9 @@ const EVENT_STAGES = new Map<string, Stage>([
   // A delivery office's own delivery, to a business or a box that collects there: the summary
   // turns delivered with this scan as the last event.
   ['EVNFS', 'delivered'],
+  // The recipient's own collection from the Customer Service Point, worded as EVNCE is: the
+  // summary turns delivered with this scan as the last event.
+  ['EVNOC', 'delivered'],
   ['EVCAD', 'accepted'],
   ['EVPPA', 'accepted'],
   ['LOPPA', 'accepted'],

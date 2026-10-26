@@ -51,7 +51,8 @@ answers are not retried. An unavailable browser fails fast.
 - An item leaving a Customer Service Point ("Collected and Signed at",
   "Collected From Your Customer Service Point") gets no stage: these scans came
   just before a booked redelivery's round, and they could as well be the
-  recipient's own collection.
+  recipient's own collection. The same wording under the code the summary
+  turns delivered with is the recipient's collection, and so the delivery.
 - A delivery's scan time becomes `delivered_at`. The details reply's
   destination country becomes `destination_country`.
 - Scan places lose the postcode Royal Mail appends to a Post Office branch,

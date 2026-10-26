@@ -210,6 +210,21 @@ describe('Royal Mail structured response', () => {
     expect(result.delivered_at).toBe('2026-01-20T06:43:15Z');
   });
 
+  it('dates the recipient\'s collection from the Customer Service Point as the delivery', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER,
+      summary: { statusCategory: 'Delivered', statusDescription: 'Delivered', lastEventCode: 'EVNOC', lastEventDateTime: '2026-01-20T09:21:57+00:00' },
+      events: [
+        { eventCode: 'EVNOC', eventName: '**Collected From Your Customer Service Point**', eventDateTime: '2026-01-20T09:21:57+00:00', locationName: 'Example CSP' },
+        { eventCode: 'EVIAV', eventName: '**Item Received**', eventDateTime: '2026-01-17T20:14:46+00:00', locationName: 'Example MC' },
+      ],
+    } }, DELIVERED_NUMBER);
+    expect(result.events?.map(event => [event.stage, event.stage_source])).toEqual([
+      ['delivered', 'carrier_map'], ['in_transit', 'carrier_map'],
+    ]);
+    expect(result.delivered_at).toBe('2026-01-20T09:21:57Z');
+  });
+
   it('places an international journey by its codes and names the destination', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: DELIVERED_NUMBER,

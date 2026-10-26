@@ -374,6 +374,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-22",
       "note": "Recorded at a delivery office; the summary turns delivered with this scan as its last event."
+    },
+    {
+      "code": "EVNOC",
+      "wording": "Collected From Your Customer Service Point",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The recipient's collection, worded as EVNCE is; the summary turns delivered with this scan as its last event."
     }
   ]
 }
