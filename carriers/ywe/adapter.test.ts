@@ -84,6 +84,9 @@ describe('YWE HTTP adapter', () => {
     expect(yweStage('Parcel delivery abnormal [Business Closed].Parcel will be returned to the warehouse.'))
       .toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     expect(yweStage('Parcel has been delivered.(Sample Place)')).toEqual({ stage: 'delivered', source: 'carrier_map' });
+    for (const wording of ['Parcel received by transit facility.', 'In processing at transit facility.', 'In transit to next facility.']) {
+      expect(yweStage(wording)).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    }
     // The place a delivery was left stays in its wording.
     const left = parseYwe(changed((entry) => {
       entry.events = [scan('Parcel has been delivered.(Sample Place)', { timestamp: Date.UTC(2026, 4, 16, 16), category: 'Deliverd', operationTip: '07' })];

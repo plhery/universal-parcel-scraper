@@ -358,6 +358,9 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^parcel shipped[.!]?$|^(?:airline|flight) delay(?:ed)?[.!]?$/i.test(value)) return 'in_transit';
   // Quantium Solutions' hub steps, which aggregators relay for SingPost's cross-border parcels, as its own map reads them.
   if (/^shipment (?:under processing at origin hub|despatched to (?:transshipment hub|overseas)|received at (?:transshipment hub|delivery branch))[.!]?$/i.test(value)) return 'in_transit';
+  // DHL eCommerce's US label awaiting the parcel, and the parcel handed to the last-mile partner, as its own map reads them.
+  if (/^dhl ecommerce currently awaiting shipment\b/i.test(value)) return 'registered';
+  if (/^tendered to (?:the )?delivery service provider\b/i.test(value)) return 'in_transit';
   // A bare "parcel handed" is a hand-over to a carrier, which 17TRACK files as a pickup.
   if (/^parcel handed[.!]?$/i.test(value)) return 'accepted';
   // A Chinese post's scans as a forwarder's English copies them, the place in brackets: a processing centre

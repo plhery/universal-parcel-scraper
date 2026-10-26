@@ -1627,6 +1627,8 @@ describe("universal providers' answers", () => {
       ['The shipment has been posted by the sender at the retail outlet', 'accepted'], ['Label correction applied', 'in_transit'],
       ['Domestic allocation has begun', 'in_transit'], ['Under domestic allocation', 'in_transit'],
       ['Delivery to local courier', 'in_transit'],
+      ['DHL eCommerce currently awaiting shipment and tracking will be updated when received', 'registered'],
+      ['Tendered to delivery service provider, allow 1-3 days for updates for packages within the US', 'in_transit'],
       ['Shipment manifest received', 'registered'], ['Parcel received by Maersk', 'in_transit'], ['Package relabeled', 'in_transit'],
       ['Reception in the delegation', 'accepted'], ['OUT IN NATIONAL ROUTE', 'in_transit'],
       ['Item received at exchange office', 'in_transit'], ['Your delivery is in EXAMPLE TOWN, POST OFFICE', 'ready_for_pickup'],

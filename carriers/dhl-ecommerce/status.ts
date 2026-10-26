@@ -45,7 +45,7 @@ export function stageFor(event: JsonObject): string {
     return /customs.*(?:cleared|released)|clearance completed/.test(text)
       || trackingLanguageStage(typeof event.description === 'string' ? event.description : '') === 'in_transit' ? 'in_transit' : 'customs';
   }
-  if (/label created|manifest data received|en route to dhl ecommerce or awaiting processing|electronic|information received/.test(text)) return 'registered';
+  if (/label created|manifest data received|en route to dhl ecommerce or awaiting processing|currently awaiting shipment|electronic|information received/.test(text)) return 'registered';
   // USPS taking the parcel after DHL's handover is a step in transit, not its acceptance.
   if (USPS_ACCEPTANCE.test(text)) return 'in_transit';
   if (/package received at dhl|picked up|accepted/.test(text)) return 'accepted';

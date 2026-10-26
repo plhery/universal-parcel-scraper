@@ -20,6 +20,7 @@
     { "wording": "la spedizione è in consegna", "language": "it", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Exact match." },
     { "wording": "la spedizione sarà disponibile per il ritiro presso l'Ufficio Postale a partire dal…", "language": "it", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Prefix match: registered mail held at a post office from the date the line gives." },
     { "wording": "disponibile per il ritiro dal giorno lavorativo successivo alla data indicata", "language": "it", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Exact match." },
+    { "wording": "disponibile per il ritiro entro i termini indicati su SMS/email", "language": "it", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-10-26", "note": "Exact match: a parcel left at a PuntoPoste or locker, to collect within the time the notice gives." },
     { "wording": "la spedizione è stata consegnata", "language": "it", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Exact match." },
     { "wording": "la spedizione e' stata consegnata", "language": "it", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-09-11", "note": "ASCII-apostrophe variant observed live on a delivered parcel." },
     { "wording": "con successo in data", "language": "it", "stage": "delivered", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match on a truncated delivery line." },

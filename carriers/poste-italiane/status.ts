@@ -99,6 +99,8 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
     case 'sono in corso delle verifiche sulla spedizione. contatta assistenza':
       return { status: 'exception', stage: 'failed_attempt' };
     case 'disponibile per il ritiro dal giorno lavorativo successivo alla data indicata':
+    // A parcel left at a PuntoPoste or locker, to collect within the time the notice gives.
+    case 'disponibile per il ritiro entro i termini indicati su sms/email':
       return { status: 'out_for_delivery', stage: 'ready_for_pickup' };
     default:
       return undefined;

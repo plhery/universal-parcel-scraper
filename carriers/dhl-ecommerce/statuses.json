@@ -24,6 +24,7 @@
     { "wording": "DEPARTURE ORIGIN DHL ECOMMERCE FACILITY", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "" },
     { "wording": "ARRIVAL DESTINATION DHL ECOMMERCE FACILITY", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "" },
     { "wording": "TENDERED TO DELIVERY SERVICE PROVIDER, ALLOW 1-3 DAYS FOR UPDATES FOR PACKAGES WITHIN THE US", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "Handed to the last-mile partner, usually USPS. No rule matched it before, so it read as pending." },
+    { "wording": "DHL eCommerce currently awaiting shipment and tracking will be updated when received", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-26", "note": "The label exists and DHL eCommerce has not received the parcel yet, as Ship24 relays it." },
     { "wording": "SHIPMENT ACCEPTED BY USPS", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "USPS taking the parcel after DHL's handover. It read as accepted before, a step back." },
     { "wording": "PROCESSED THROUGH USPS SORT FACILITY", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "A USPS scan relayed by Webtrack." },
     { "wording": "ARRIVAL AT POST OFFICE", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "A USPS scan relayed by Webtrack." },
