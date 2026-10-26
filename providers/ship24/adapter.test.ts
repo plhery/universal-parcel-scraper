@@ -253,6 +253,13 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(feed('amazon-uk-tracking', 'Amazon UK', [['2026-09-28T17:35:52Z', undefined]])).toEqual(['2026-09-28T16:35:52.000Z']);
   });
 
+  it('keeps the UTC of PostNL\'s label creation and processing record, which name no country', () => {
+    expect(feed('postnl-tracking', 'PostNL', [['2026-10-19T13:09:00Z', 'THE NETHERLANDS'],
+      ['2026-10-14T20:11:00Z', undefined, 'The item is pre-advised to PostNL'], ['2026-10-12T01:07:00Z', undefined, 'The item is being processed'],
+      ['2026-10-08T08:27:00Z', undefined, 'The shipping label has been created']]))
+      .toEqual(['2026-10-19T11:09:00.000Z', '2026-10-14T18:11:00.000Z', '2026-10-12T01:07:00.000Z', '2026-10-08T08:27:00.000Z']);
+  });
+
   it('reads CTT\'s Z as the clock of its Portuguese sites, which an unlocated scan abroad borrows', () => {
     expect(feed('portugal-ctt-tracking', 'Portugal CTT', [['2026-08-31T20:53:13Z', 'PTEXAA - (OUTRO) EXAMPLE'],
       ['2026-08-29T11:46:23Z', 'Centro operacional Example'], ['2026-08-28T10:13:58Z', undefined]],

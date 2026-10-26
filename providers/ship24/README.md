@@ -82,7 +82,8 @@ No account, cookie, fingerprint or issued token is used.
   - `uniuni-tracking` says `Z` on the depot's clock, as UniUni's own `pathTime` does;
   - `gofo-express-tracking` puts GOFO's `-07:00` on the clock GOFO gives the scan
     (`processTimeZone`), and names the station (`processLocation`) without its state;
-  - `postnl-tracking` says `Z` on postnl.post's `datetime_local`;
+  - `postnl-tracking` says `Z` on postnl.post's `datetime_local`, except on the label's
+    creation and the processing record without a place, which keep UTC as PostNL's own do;
   - `amazon-uk-tracking` says `Z` on the marketplace's clock, which Amazon shows with
     none;
   - `portugal-ctt-tracking` says `Z`, as CTT's own tracker does (see CTT's README);

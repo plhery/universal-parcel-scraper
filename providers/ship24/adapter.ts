@@ -192,13 +192,16 @@ interface Feed {
   home?: (location: string) => string | null;
   /** The last guess for a scan nothing else places: Ship24's own label, Pacific time, for GOFO's. */
   own?: string;
+  /** The feed's scans whose offset is real after all, by their wording and an empty location. */
+  stated?: (status: string) => boolean;
 }
 
 const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
   'canada-post-tracking': {},
   'uniuni-tracking': {},
   'gofo-express-tracking': { country: 'US', place: (location, _journey, status) => gofoScanZone(location, status), own: 'America/Los_Angeles' },
-  'postnl-tracking': {},
+  // PostNL's label creation and processing record name no country and keep UTC (carriers/spring-gds).
+  'postnl-tracking': { stated: (status) => /^(?:The shipping label has been created|The item is being processed)$/i.test(status.trim()) },
   'amazon-uk-tracking': { home: () => 'Europe/London' },
   'portugal-ctt-tracking': { place: (location, journey) => cttSiteZone(location, [journey.origin, journey.destination]), home: portugalZone },
   '4px-tracking': { shift: 'Asia/Shanghai' },
@@ -251,8 +254,9 @@ function planned(scan: Record<string, unknown>, event: CarrierEvent, now: number
 }
 
 /** A relabelling feed's timestamp as the scan's wall clock; any other is left as Ship24 sent it. */
-function feedClock(timestamp: unknown, feed: Feed | null): unknown {
+function feedClock(timestamp: unknown, feed: Feed | null, scan: Record<string, unknown>): unknown {
   if (!feed || typeof timestamp !== 'string' || !EXPLICIT_OFFSET_PATTERN.test(timestamp)) return timestamp;
+  if (feed.stated && !place(scan.location) && typeof scan.status === 'string' && feed.stated(scan.status)) return timestamp;
   if (!feed.shift) return timestamp.replace(EXPLICIT_OFFSET_PATTERN, '');
   const shifted = DateTime.fromISO(timestamp, { setZone: true }).setZone(feed.shift);
   return shifted.isValid ? shifted.toISO({ includeOffset: false, suppressMilliseconds: true }) : timestamp;
@@ -413,7 +417,7 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     // Swiss Post's relays.
     const feed = feedOf(raw);
     const relayed = swissPostRelayZone(raw, journey);
-    const clock = relayed && typeof raw.timestamp === 'string' ? raw.timestamp.replace(EXPLICIT_OFFSET_PATTERN, '') : feedClock(utcClock(raw), feed);
+    const clock = relayed && typeof raw.timestamp === 'string' ? raw.timestamp.replace(EXPLICIT_OFFSET_PATTERN, '') : feedClock(utcClock(raw), feed, raw);
     const parsed = localEvent(clock, raw.status, raw.dispatch_code_id === 7 ? 'Delivered' : undefined);
     if (!parsed || planned(raw, parsed, now)) continue;
     const location = place(raw.location);
