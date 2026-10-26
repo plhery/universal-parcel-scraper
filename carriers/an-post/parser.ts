@@ -18,9 +18,11 @@ const ZONE = 'Europe/Dublin';
  */
 const ABROAD = new Set([5, 40, 49, 67, 68]);
 
-/** The item's identity and current status from GetItemSummary. Names and references are never kept. */
+/** The item's identity and current status from GetItemSummary or GetCustItemSummary. Names and references are never kept. */
 export interface AnPostSummary {
   number: string;
+  /** The sender's reference the item was found by, when it was not asked by its own number. */
+  reference?: string;
   /** The current status as the website shows it: the summary's own, else a delivery attempt worded from its reason. */
   status: string;
   /** The summary's own status wording, empty when it gave none. */
@@ -28,13 +30,26 @@ export interface AnPostSummary {
   date: string | null;
 }
 
-/** S10 numbers with a valid check digit: An Post's own items, and those other posts send to Ireland. */
+const S10 = /^[A-Z]{2}\d{9}[A-Z]{2}$/;
+// The sender's reference from the postage label, as the website takes it: letters and digits, at most 35.
+const REFERENCE = /^(?=[A-Z]*\d)[A-Z\d]{6,35}$/;
+
+/**
+ * S10 numbers with a valid check digit, An Post's own items and those other
+ * posts send to Ireland, or a sender's reference. An S10 number that fails its
+ * check digit is refused rather than asked as a reference.
+ */
 export function normalizeAnPostNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!isValidS10TrackingNumber(number)) {
-    throw new InvalidInputError(AN_POST, 'An Post requires an S10 postal tracking number');
+  if (S10.test(number) ? !isValidS10TrackingNumber(number) : !REFERENCE.test(number)) {
+    throw new InvalidInputError(AN_POST, 'An Post requires an S10 postal tracking number or a sender reference');
   }
   return number;
+}
+
+/** Whether the number is an item's own S10 number rather than a sender's reference. */
+export function isAnPostItemNumber(number: string): boolean {
+  return S10.test(number);
 }
 
 function invalid(message = 'An Post returned an invalid tracking response'): never {
@@ -87,9 +102,33 @@ export function parseAnPostSummary(payload: unknown, raw: string): AnPostSummary
     ? item.anPostNo.toUpperCase().replace(/\s+/g, '') : invalid()));
   if (identities.some(identity => identity !== number)) invalid('An Post returned a different item');
   if (items.length !== 1) throw new IndeterminateError(AN_POST, 'An Post returned several items for the number');
+  return summaryOf(items[0] as Record<string, unknown>, number);
+}
+
+/**
+ * The item a sender's reference opens, from GetCustItemSummary, which the
+ * website asks when GetItemSummary knows no item by that number. Each item
+ * repeats the reference as `senderNo`; its own S10 number asks the history.
+ */
+export function parseAnPostReference(payload: unknown, raw: string): AnPostSummary {
+  const reference = normalizeAnPostNumber(raw);
+  const items = isRecord(payload) && isRecord(payload.getCustItemSummaryResponse)
+    ? payload.getCustItemSummaryResponse.GetCustItemSummaryResult : undefined;
+  if (!Array.isArray(items) || items.length > MAX_ITEMS) invalid();
+  if (!items.length) throw new NotFoundError(AN_POST, 'An Post has no current record of the item');
+  const references = items.map(item => (isRecord(item) && typeof item.senderNo === 'string'
+    ? normalizeTrackingNumber(item.senderNo) : invalid()));
+  if (references.some(value => value !== reference)) invalid('An Post returned a different item');
+  if (items.length !== 1) throw new IndeterminateError(AN_POST, 'An Post returned several items for the reference');
   const item = items[0] as Record<string, unknown>;
+  const number = typeof item.anPostNo === 'string' ? normalizeTrackingNumber(item.anPostNo) : '';
+  if (!isValidS10TrackingNumber(number)) invalid('An Post returned an invalid item number');
+  return { ...summaryOf(item, number), reference };
+}
+
+function summaryOf(item: Record<string, unknown>, number: string): AnPostSummary {
   // receiverName and geisDeliveryName name people; senderNo is the sender's
-  // order reference, which opens the same item. None of them is read.
+  // reference, read only to bind a lookup by it. None of them is kept.
   const date = text(item.date, 32);
   const reported = text(item.status, 300);
   const status = reported || attemptOutcome(text(item.reason, 300)) || '';
@@ -193,5 +232,6 @@ export function parseAnPostEvents(payload: unknown, summary: AnPostSummary): Car
   return { status: current.stage ? languageStageStatus(current.stage.stage) : 'unknown',
     ...(current.stage ? { current_stage: current.stage.stage, current_stage_source: current.stage.source } : {}),
     last_status_text: current.text, last_update: time ?? null, last_update_local: current.local,
-    ...(pickup ? { pickup_point: pickup } : {}), expected_delivery: null, events: scans.slice(0, 100).map(({ event }) => event) };
+    ...(pickup ? { pickup_point: pickup } : {}), expected_delivery: null,
+    ...(summary.reference ? { canonical_tracking_number: summary.number } : {}), events: scans.slice(0, 100).map(({ event }) => event) };
 }

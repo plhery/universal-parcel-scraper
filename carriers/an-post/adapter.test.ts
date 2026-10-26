@@ -14,6 +14,7 @@ import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'CP000000005IE';
 const OTHER = 'CP000000014IE';
+const REFERENCE = 'PSS00000001';
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
 const json = (name: string): unknown => JSON.parse(fixture(name));
 const PRIVATE = /SYNTHETIC (?:RECIPIENT|SIGNATORY|OFFICE|SUMMARY REASON|SCAN REASON)|PSS000000SYNTHETIC|IRELAND/;
@@ -37,10 +38,13 @@ const summaryFor = (row: Record<string, unknown>, status = row.activity) => pars
 const scan = (traceCode: number, activity: string, date: string) => ({ activity, date, location: '', reason: '', traceCode });
 
 describe('An Post numbers', () => {
-  it('takes S10 numbers with a valid check digit, its own and those of mail from abroad', () => {
+  it('takes S10 numbers with a valid check digit, its own and those of mail from abroad, and senders\' references', () => {
     expect(normalizeAnPostNumber(' cp 000 000 005 ie ')).toBe(NUMBER);
     expect(normalizeAnPostNumber('CP000000005GB')).toBe('CP000000005GB');
-    for (const number of ['CP000000006IE', 'CP000000006GB', 'CP0000005IE', '000000005IE', 'CP000000005I"E', 'CP000000005']) {
+    expect(normalizeAnPostNumber(' pss 0000 0001 ')).toBe(REFERENCE);
+    expect(normalizeAnPostNumber('000000005IE')).toBe('000000005IE');
+    // An S10 number that fails its check digit is no reference.
+    for (const number of ['CP000000006IE', 'CP000000006GB', 'CP000000005I"E', 'PSSABCDEFGH', 'PSS01', `PSS${'0'.repeat(33)}`]) {
       expect(() => normalizeAnPostNumber(number)).toThrowError(expect.objectContaining({ kind: 'invalid_input' }));
     }
   });
@@ -103,6 +107,54 @@ describe('An Post guest history', () => {
     const fetcher = service(() => reply(fixture('unknown.json')));
     await expect(instance(fetcher).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
     expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  /** The service asked by a sender's reference: no item by that number, then the item the reference opens. */
+  const byReference = (items: () => unknown = () => json('reference-summary.json')) => vi.fn<typeof fetch>(async (input) => {
+    const operation = String(input).split('/').pop();
+    return reply(operation === 'GetItemSummary' ? json('unknown.json') : operation === 'GetCustItemSummary' ? items() : json('events.json'));
+  });
+  const referenceOf = (items: unknown[]) => ({ getCustItemSummaryResponse: { GetCustItemSummaryResult: items } });
+  const referenceItem = () => (json('reference-summary.json') as ReturnType<typeof referenceOf>)
+    .getCustItemSummaryResponse.GetCustItemSummaryResult[0] as Record<string, unknown>;
+
+  it("finds the item a sender's reference opens, as the website does, and names its own number", async () => {
+    const fetcher = byReference();
+    const result = normalizeCarrierResult(await instance(fetcher).track({ number: ' pss 0000 0001 ' }));
+    expect(fetcher.mock.calls.map(([input, init]) => [String(input).slice(AN_POST_APP_API.length), JSON.parse(String(init?.body))])).toEqual([
+      ['/GetItemSummary', { getItemSummary: { trackingItems: [REFERENCE] } }],
+      ['/GetCustItemSummary', { getCustItemSummary: { customerNumbers: [REFERENCE] } }],
+      ['/GetEvents', { getEvents: { barcodeItem: NUMBER } }],
+    ]);
+    expect(result).toMatchObject({ canonical_tracking_number: NUMBER, current_stage: 'ready_for_pickup',
+      last_status_text: 'Your item is now available for collection' });
+    expect(JSON.stringify(result)).not.toMatch(PRIVATE);
+    expect(JSON.stringify(result)).not.toContain(REFERENCE);
+    // Asked by its own number, the item names no other.
+    expect(normalizeCarrierResult(await instance(service()).track({ number: NUMBER }))).not.toHaveProperty('canonical_tracking_number');
+  });
+
+  it("asks an S10 number only as an item, and a reference no item has as not found", async () => {
+    const fetcher = byReference();
+    fetcher.mockImplementationOnce(async () => reply(json('unknown.json')));
+    await expect(instance(fetcher).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    const unknown = byReference(() => referenceOf([]));
+    await expect(instance(unknown).track({ number: REFERENCE })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(unknown).toHaveBeenCalledTimes(2);
+  });
+
+  it.each([
+    ['another reference', () => referenceOf([{ ...referenceItem(), senderNo: 'PSS00000002' }]), 'schema'],
+    ['no reference', () => referenceOf([{ ...referenceItem(), senderNo: undefined }]), 'schema'],
+    ['an item number that fails its check digit', () => referenceOf([{ ...referenceItem(), anPostNo: 'CP000000006IE' }]), 'schema'],
+    ['no item number', () => referenceOf([{ ...referenceItem(), anPostNo: undefined }]), 'schema'],
+    ['a wrong envelope', () => ({ getItemSummaryResponse: { GetItemSummaryResult: [] } }), 'schema'],
+    ['two items', () => referenceOf([referenceItem(), { ...referenceItem(), anPostNo: OTHER }]), 'indeterminate'],
+  ])("refuses a reference's summary with %s before reading a history", async (_, items, kind) => {
+    const fetcher = byReference(items);
+    await expect(instance(fetcher).track({ number: REFERENCE })).rejects.toMatchObject({ kind });
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
   it.each([

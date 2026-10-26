@@ -1,8 +1,8 @@
-import { BudgetExceededError, CarrierError, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
+import { BudgetExceededError, CarrierError, ChallengeError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { AN_POST, normalizeAnPostNumber, parseAnPostEvents, parseAnPostSummary } from './parser.js';
+import { AN_POST, isAnPostItemNumber, normalizeAnPostNumber, parseAnPostEvents, parseAnPostReference, parseAnPostSummary, type AnPostSummary } from './parser.js';
 
 /** The guest tracking service of the An Post app (ie.anpost.app), behind Azure API Management. */
 export const AN_POST_APP_API = 'https://apim-anpost-anpostmobileapp.anpost.com/TTServicePublic';
@@ -15,7 +15,7 @@ export async function readAnPostApp(raw: string, options: {
 }): Promise<CarrierResult> {
   const number = normalizeAnPostNumber(raw);
   const deadline = performance.now() + options.timeoutMs;
-  const post = async (operation: 'GetItemSummary' | 'GetEvents', body: unknown): Promise<unknown> => {
+  const post = async (operation: 'GetItemSummary' | 'GetCustItemSummary' | 'GetEvents', body: unknown): Promise<unknown> => {
     const left = Math.floor(deadline - performance.now());
     if (left < 1) throw new BudgetExceededError(AN_POST, options.timeoutMs);
     const { response, bytes } = await fetchBounded(`${AN_POST_APP_API}/${operation}`, {
@@ -37,8 +37,16 @@ export async function readAnPostApp(raw: string, options: {
     if (page) throw new ChallengeError(AN_POST, 'An Post answered with a web page');
     try { return JSON.parse(text) as unknown; } catch { throw new SchemaError(AN_POST, 'An Post returned invalid tracking JSON'); }
   };
+  // Like the website, a number no item has is then asked as a sender's reference; an S10 number is an item's own.
+  const summarize = async (): Promise<AnPostSummary> => {
+    const asked = await post('GetItemSummary', { getItemSummary: { trackingItems: [number] } });
+    try { return parseAnPostSummary(asked, number); } catch (error) {
+      if (!(error instanceof NotFoundError) || isAnPostItemNumber(number)) throw error;
+    }
+    return parseAnPostReference(await post('GetCustItemSummary', { getCustItemSummary: { customerNumbers: [number] } }), number);
+  };
   try {
-    const summary = parseAnPostSummary(await post('GetItemSummary', { getItemSummary: { trackingItems: [number] } }), number);
+    const summary = await summarize();
     // The history echoes no identity, and answers only the canonical number.
     return parseAnPostEvents(await post('GetEvents', { getEvents: { barcodeItem: summary.number } }), summary);
   } catch (error) {

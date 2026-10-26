@@ -24,7 +24,8 @@
     "history",
     "location",
     "provider_code",
-    "pickup_point"
+    "pickup_point",
+    "canonical_tracking_number"
   ],
   "portal": {
     "url": "https://www.anpost.com/Post-Parcels/Track/History?item={trackingNumber}",
@@ -43,7 +44,8 @@
       "history",
       "location",
       "pickup_point",
-      "provider_code"
+      "provider_code",
+      "canonical_tracking_number"
     ],
     "discarded": [
       "recipient_name",

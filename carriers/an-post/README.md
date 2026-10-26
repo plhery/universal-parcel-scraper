@@ -2,9 +2,11 @@
 
 Tracks S10 numbers (two letters, nine digits with a valid check digit, the issuer's country)
 through the guest tracking API of the An Post Android app, `ie.anpost.app`: An Post's own,
-ending `IE`, and those of mail other posts send to Ireland. No account, cookie, browser or
-device registration is needed. Mail from abroad reaches An Post when a caller names it, a
-provider names it, or a result gives Ireland as the destination of an S10 item.
+ending `IE`, and those of mail other posts send to Ireland. It also takes the sender's
+reference from the postage label, six to 35 letters and digits, which the website accepts
+in the same field. No account, cookie, browser or device registration is needed. Mail from
+abroad reaches An Post when a caller names it, a provider names it, or a result gives
+Ireland as the destination of an S10 item.
 
 ## How it works
 
@@ -14,6 +16,10 @@ provider names it, or a result gives Ireland as the destination of an S10 item.
    - `GetItemSummary` with `{"getItemSummary":{"trackingItems":["<number>"]}}` answers the
      item's identity (`anPostNo`), its current wording and the time of that status. An
      empty list is not found, after one request.
+   - Like the website, a number that is not an S10 number and that `GetItemSummary` does not
+     know is asked as a sender's reference: `GetCustItemSummary` with
+     `{"getCustItemSummary":{"customerNumbers":["<reference>"]}}` answers the same summary for
+     the item it opens, which repeats the reference as `senderNo`. An empty list is not found.
    - `GetEvents` with `{"getEvents":{"barcodeItem":"<anPostNo>"}}` answers the history,
      newest first: activity wording, an offset-less clock, a location and a numeric
      `traceCode`. An empty history beside a bound summary is inconclusive: the summary
@@ -31,7 +37,9 @@ guest tracking client. It is included with the maintainer's approval.
 - Identity: the summary must hold exactly one item, and its `anPostNo` must be the
   requested number. Another number or a repeated item ends the lookup before the history
   is asked for. The history echoes no number, so it is only ever asked for the bound
-  `anPostNo`.
+  `anPostNo`. Asked by a reference, the item's `senderNo` must be that reference and its
+  `anPostNo` a valid S10 number, which the result gives as `canonical_tracking_number`;
+  a reference that opens several items is inconclusive.
 - Times: every clock is a wall time without an offset, kept in `local_time`. An Post's own
   scans, which carry seconds, are also dated on `Europe/Dublin`: the universal providers'
   copies of them show the same instants. After an outbound item's dispatch abroad (code 5,
@@ -70,7 +78,8 @@ guest tracking client. It is included with the maintainer's approval.
   listed scan current. Exact duplicate scans are removed; provider order is kept, and at
   most the first 100 scans are returned.
 - The summary's recipient name, signatory, delivery office (`geisDeliveryOffice`), sender
-  reference and origin country, and every scan's reason, are never projected.
+  reference and origin country, and every scan's reason, are never projected. The sender
+  reference is read only to bind a lookup by it.
 - A refused key is a JSON 401 and the gateway firewall answers an HTML 403; both are
   challenges, as is any web page in place of JSON. API Management answers a spent call
   quota with a JSON 403 and `Retry-After`, which is a rate limit with that window. A 404 or
@@ -80,7 +89,8 @@ guest tracking client. It is included with the maintainer's approval.
 
 - An expired item and an unknown number get the same empty summary, so both are not
   found.
-- Retailer references (`GetCustItemSummary`) are out of scope.
+- Detection does not offer An Post for a sender's reference; it is asked when a caller or
+  a provider names An Post.
 - Neither answer names an outbound item's destination, and the partner's relayed scans have
   no location, so the result reports no destination country.
 - The website, `www.anpost.com/Post-Parcels/Track/History`, is behind Radware Bot Manager
@@ -92,4 +102,4 @@ guest tracking client. It is included with the maintainer's approval.
 `npm run test:carriers:live -- carriers/an-post` sends a well-formed unknown number and
 reads the confirmed public records in `numbers.json`, at least one of which must still
 return a history; a malformed request would also get the empty list. Set
-`AN_POST_TRACKING_NUMBER` to read a private number as well.
+`AN_POST_TRACKING_NUMBER` to read a private number, or a sender's reference, as well.
