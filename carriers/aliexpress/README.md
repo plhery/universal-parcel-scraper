@@ -123,9 +123,9 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   placeholder "Carrier update" as their standard wording. Their own wording (`desc`) is shown
   instead when they have one.
 - The app scan-identity policy reconciles extracted towns, a placeholder's replacement and
-  corrected milestones at the same instant. A replacement requires the same action code, stage and
-  place, and stage corrections a matching action code, wording and place. The consumer requires
-  unique matches to update the stored scan.
+  corrected milestones at the same instant. A replacement requires the same action code and place,
+  whatever the stage, and stage corrections a matching action code, wording and place. The
+  consumer requires unique matches to update the stored scan.
 
 ## Limitations
 
