@@ -60,6 +60,8 @@ const NOT_PLACES = /^(?:(?:[A-Z]{2}, )?system(?:, system)*|(?:uni )?data cent(?:
 const DEPOT_PREFIX = /^(?:dalla sede operativa di|from the operational headquarters in)\s+/i;
 // Royal Mail appends a Post Office branch's postcode in brackets ("Example Post Office [ZZ9 9ZZ]"), which providers copy.
 const BRACKETED_POSTCODE = /\s*\[\s*[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}\s*\]$/i;
+// China Post follows a town with its office's eight-digit code ("示例市 99999999"), which providers copy.
+const OFFICE_CODE = /(?<=\p{Script=Han})\s+\d{8}$/u;
 // Correios Brazil labels a unit abroad with "País", which providers translate: "Country, CHILE".
 const COUNTRY_LABEL = /^(?:country|pa[ií]s)\s*[,:-]\s*/i;
 // China Post's feed, which providers relay, can give a scan's status where its place belongs,
@@ -87,7 +89,7 @@ function statusPlace(location: string): string | undefined {
  * details or is Posti's "abroad" label.
  */
 export function place(value: unknown): string {
-  const read = text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(COUNTRY_LABEL, '');
+  const read = text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, '');
   const location = statusPlace(read) ?? read;
   return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !hasPrivateDeliveryDetails(location) && !isPostiAbroadLabel(location)
     ? location : '';

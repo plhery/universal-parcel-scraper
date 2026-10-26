@@ -194,6 +194,13 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: 'Other Post Office' }, stored)).toBe(false);
   });
 
+  it("lets a universal copy that lost a China Post office's code take over its stored row", () => {
+    const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
+    const stored = { stage: 'in_transit', description: 'Departure from processing center', location: '示例市 99999999', providerCode: 'InTransit_Other' };
+    expect(policy?.matches?.({ ...stored, location: '示例市' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '其他市' }, stored)).toBe(false);
+  });
+
   it('lets a universal copy that lost a "Country" label take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item in transfer - please wait', location: 'Country, EXAMPLELAND', providerCode: '' };

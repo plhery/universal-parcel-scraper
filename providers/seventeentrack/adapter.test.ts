@@ -166,7 +166,9 @@ describe('17TRACK result parsing', () => {
       '目的国', 'Arrival at【目的国】', '--']) {
       expect(located(status), status).toBeUndefined();
     }
-    for (const location of ['Example Transit Hub', 'Arrival Hall, Example City', 'EXAMPLE CITY, CA 99999']) expect(located(location)).toBe(location);
+    for (const location of ['Example Transit Hub', 'Arrival Hall, Example City', 'EXAMPLE CITY, CA 99999', 'Example City 99999999']) expect(located(location)).toBe(location);
+    // China Post's office code after a town goes.
+    expect(located('示例市 99999999')).toBe('示例市');
   });
 
   it("shows China Post's labels in English, a partner's scan abroad too, with the place as the location", () => {
@@ -177,13 +179,13 @@ describe('17TRACK result parsing', () => {
     expect(shown('InTransit_Other', '邮件到达处理中心【ZZ Arriyal at Processin】', 'Arriyal at Processing Center【Example City】'))
       .toMatchObject({ description: 'Arrival at processing center', location: 'Example City', stage: 'in_transit' });
     expect(shown('InTransit_Other', '邮件离开【示例市国际营业部】，正在发往【示例中心】', '示例市 00000000'))
-      .toMatchObject({ description: 'Departed for the next office', location: '示例市 00000000', stage: 'in_transit' });
+      .toMatchObject({ description: 'Departed for the next office', location: '示例市', stage: 'in_transit' });
     expect(shown('InTransit_CustomsReleased', '出口清关完成【Customs Clearance Completed【示例市】】', 'Customs Clearance Completed【示例市】'))
       .toMatchObject({ description: 'Export customs clearance completed', location: '示例市', stage: 'in_transit' });
     expect(shown('InTransit_Other', '承运商接收')).toMatchObject({ description: 'Received by carrier', stage: 'in_transit' });
     // The estimate of the next arrival keeps its date, and the place it is at.
     expect(shown('InTransit_Other', '预计【01月02日】到达【示例市】，两地距离1000km，将在【01月02日上午】更新邮件状态，请您放心。', '示例市 00000000'))
-      .toMatchObject({ description: 'Expected to arrive at the next stop on January 2', location: '示例市 00000000', stage: 'in_transit' });
+      .toMatchObject({ description: 'Expected to arrive at the next stop on January 2', location: '示例市', stage: 'in_transit' });
     // A state label with a name in 【】 and no location: the name becomes the location, unless it names no place.
     expect(shown('InTransit_Other', '启运【示例】')).toMatchObject({ description: 'Departure', location: '示例', stage: 'in_transit' });
     expect(shown('InTransit_Other', '启运【Example Hub】', 'EXH')).toMatchObject({ description: 'Departure', location: 'EXH' });

@@ -215,7 +215,9 @@ carrier.
   gives an airline's arrival in place of a country's code: neither names a place. China
   Post's feed can also give the scan's status there, at times with the place after it in 【】
   ("Departure from【Example】") or before its airport ("Arrival at Example Airport"); the scan
-  keeps only that place, without a full Canadian or British postcode, or none.
+  keeps only that place, without a full Canadian or British postcode, or none. A town loses the
+  eight-digit code of the China Post office that follows it, and a copy stored with the code
+  takes the new form in place.
 - At most 20 carrier legs and 1000 events. Per-event `address` is never read, and of
   `shipping_info` only the recipient's country, for an NZ Post, Poland Post or Swiss Post leg: the
   address can be the recipient's street.
