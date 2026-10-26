@@ -10,6 +10,7 @@
     {"code": "198", "wording": "ACCEPTED AT FEDEX PROCESSING CENTRE", "language": "en", "stage": "accepted", "confirmedBy": "portal"},
     {"code": "198", "wording": "FEDEX PROCESS CENTRE", "language": "en", "stage": "accepted", "confirmedBy": "portal"},
     {"code": "102", "wording": "ARRIVED AT FEDEX PROCESS CENTRE", "language": "en", "stage": "in_transit", "confirmedBy": "portal"},
+    {"code": "106", "wording": "IN TRANSIT", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Between two scans at the international freight depot."},
     {"code": "200", "wording": "SHIPMENT MANIFESTED FOR DEPARTURE", "language": "en", "stage": "in_transit", "confirmedBy": "portal"},
     {"code": "200", "wording": "OUTBOUND EXPORT CUSTOMS CLEARED", "language": "en", "stage": "in_transit", "confirmedBy": "portal"},
     {"code": "201", "wording": "ARRIVED AT DELIVERY DEPOT", "language": "en", "stage": "in_transit", "confirmedBy": "portal"},
