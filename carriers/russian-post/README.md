@@ -29,8 +29,10 @@ is unavailable. The server's `application.settings` turn anonymous tracking off,
 available for anonymous users", until the install signs in with a Pochta ID account.
 
 The documented SOAP tracking service at `tracking.russianpost.ru/rtm34` answers from abroad but
-needs the login and password of a registered account. No route reads a number anonymously from
-outside Russia, so Russian Post stays on universal providers.
+needs the login and password of a registered account. Older open-source clients called its
+account-free predecessor at `voh.russianpost.ru:8080/niips-operationhistory-web/OperationHistory`,
+which no longer accepts connections, from inside Russia either. No route reads a number
+anonymously from outside Russia, so Russian Post stays on universal providers.
 
 ## Testing
 
