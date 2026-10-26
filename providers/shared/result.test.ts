@@ -108,6 +108,15 @@ describe('shared provider result', () => {
       .toMatchObject({ stage: 'exception', stage_source: 'wording:provider' });
   });
 
+  it("reads Russian Post's hand-over to the addressee or the sender, as ParcelsApp relays it and Postal Ninja translates it", () => {
+    for (const wording of ['Вручение адресату', 'Вручение адресату почтальоном', 'Вручено 22 октября', 'Handed over. Delivery to the addressee by the postman']) {
+      expect(event('2026-01-07T12:45:00+03:00', wording)).toMatchObject({ stage: 'delivered', stage_source: 'wording:provider' });
+    }
+    for (const wording of ['Вручение отправителю', 'Handed over. Delivery to the sender']) {
+      expect(event('2026-01-07T12:45:00+03:00', wording)).toMatchObject({ stage: 'returned', stage_source: 'wording:provider' });
+    }
+  });
+
   it("reads Interpost's import clearance by its caption, without the status code ParcelsApp heads it with", () => {
     expect(event('2026-01-07T12:45:00+01:00', 'B2C Clearance 4. Customs Import cleared'))
       .toMatchObject({ description: 'Customs Import cleared', stage: 'in_transit' });

@@ -206,6 +206,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // which stops the parcel.
   if (/^скоро ще вземем пратката ви от подателя[.!]?$/iu.test(value)) return 'registered';
   if (/^подателят не предаде пратката[.!]?$/iu.test(value)) return 'exception';
+  // Russian Post's hand-over, as ParcelsApp relays it and Postal Ninja translates it: to the addressee, by any
+  // means, delivers the parcel, and to the sender ends its return.
+  if (/^вручение адресату(?: [\p{L} ]+)?[.!]?$|^вручено \d{1,2} \p{L}+[.!]?$|^handed over\. delivery to the addressee(?: [a-z ]+)?[.!]?$/iu.test(value)) return 'delivered';
+  if (/^вручение отправителю(?: [\p{L} ]+)?[.!]?$|^handed over\. delivery to the sender(?: [a-z ]+)?[.!]?$/iu.test(value)) return 'returned';
   // MRW's delivery address lacking details, as its own map reads it: the wording names no attempt.
   if (/^direccion entrega incompleta[.!]?$/i.test(value)) return 'exception';
   // A return on its way back to the sender, as other unfinished returns.
