@@ -128,6 +128,13 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
   });
 });
 
+it("leaves no place for a GOFO Italy hub's code, and keeps a French town written alike", () => {
+  const hub = fixture('it'); item(hub).trackEventList[0].processLocation = 'FI-ARS'; bind(hub);
+  expect(parseGofoItaly(hub, 'GFIT00000000000001').events?.[0]).not.toHaveProperty('location');
+  const town = fixture('fr'); item(town).trackEventList[0].processLocation = 'ST-LO'; bind(town);
+  expect(parseGofoFrance(town, 'GFFR00000000000001').events?.[0]).toMatchObject({ location: 'ST-LO' });
+});
+
 it('reconstructs the French shipper reference and binds it to the national waybill in the same reply', () => {
   const raw = 'PK-0000000000000000001-0', number = normalizeGofoFranceNumber(raw);
   expect(regionalGofoRequestNumber(number)).toBe(raw);

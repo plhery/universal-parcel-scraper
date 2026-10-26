@@ -58,6 +58,11 @@ function scanClock(value: unknown, provider: string): Pick<CarrierEvent, 'time'>
 }
 
 const DELIVERED: Record<GofoRegion, string> = { FR: 'Livré', IT: 'Consegnato', NL: 'Bezorgd' };
+// GOFO Italy can name a hub by a code, its province's two letters and the hub's own
+// ("FI-ARS" in Florence's), which is no town: such a scan has no place.
+const ITALIAN_HUB = /^[A-Z]{2}-[A-Z0-9]{2,4}$/;
+/** Whether a GOFO Italy location is a hub's code rather than a town. */
+export const isGofoItalyHubCode = (location: string) => ITALIAN_HUB.test(location.trim());
 
 export function parseRegionalGofo(payload: unknown, rawNumber: string, region: GofoRegion,
   stageOf: (code: string, description: string) => Stage | undefined): CarrierResult {
@@ -108,7 +113,8 @@ export function parseRegionalGofo(payload: unknown, rawNumber: string, region: G
     // Delivery prose can embed recipient details. Keep its milestone alone;
     // subContent, notices, POD data and unrelated references are not projected.
     const description = code === '205' ? DELIVERED[region] : wording;
-    const location = clean(row.processLocation, 160);
+    const written = clean(row.processLocation, 160);
+    const location = region === 'IT' && isGofoItalyHubCode(written) ? '' : written;
     const event: CarrierEvent = { ...scanClock(row.processDate, provider), description, provider_code: code,
       ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);

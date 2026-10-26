@@ -72,6 +72,14 @@ describe('same-instant identity policies', () => {
     expect(sameInstantIdentityPolicy(source, { supportsScanMatching: true })).toBeUndefined();
   });
 
+  it("lets a GOFO Italy scan that lost its hub's code take over its stored row", () => {
+    const policy = sameInstantIdentityPolicy('gofo-it', { supportsScanMatching: true });
+    const stored = { stage: 'in_transit', description: 'Arrivato alla struttura di destinazione regionale GOFO', location: 'FI-ARS', providerCode: '201' };
+    expect(policy?.matches?.({ ...stored, location: '' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'EXAMPLE TOWN' })).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, description: 'Preparazione alla consegna' })).toBe(false);
+  });
+
   it.each([
     ['austrian-post', 'in_transit', 'Sendung von Postbetreiber Zielland übernommen', 'PLZ DE', 'Synthetic exchange office'],
     ['austrian-post', 'out_for_delivery', 'Sendung in Zustellung', 'PLZ FR 1', 'Zustellbasis Beispielort'],
