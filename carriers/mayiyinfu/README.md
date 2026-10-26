@@ -37,6 +37,8 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   rows abroad could be on either clock, so they keep their wall clocks in `local_time`. The newest
   row's instant, when it has one, is the last update, and the delivery's when it is the newest
   row. A row dated after the lookup on Beijing time is held back.
+- The forwarder's rows can give Shenzhen as `SZ`, which as a code is Eswatini. A row whose place
+  is only `SZ` has no place, so its neighbours date it rather than Eswatini's clock.
 - The record's product name is the service name.
 - Records name no channel, but carry the delivering carrier's number as the channel's transfer
   number. Into Europe that is a Deutsche Post DHL parcel number, and DHL's tracker follows the

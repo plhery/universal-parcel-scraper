@@ -8,8 +8,10 @@ export const MAYIYINFU_ORIGIN = 'http://www.mayiyinfu.com.cn:8082';
 // Rows keep their wall clocks; `dateMayiyinfuScans` dates those whose zone the
 // record settles. Records name no channel; into Europe the transfer number is
 // Deutsche Post DHL's, whose tracker follows the parcel to its delivery abroad.
+// The forwarder's rows can give Shenzhen as "SZ", which as a code is Eswatini's: no place.
+const splitMayiyinfuRow = (content: string, location: string) => ({ content, location: /^\s*SZ\s*$/i.test(location) ? '' : location });
 export const MAYIYINFU: HualeiTenant = { carrier: 'mayiyinfu', provider: PROVIDER, origin: MAYIYINFU_ORIGIN, stage: mayiyinfuStage,
-  wallClocks: true, unlabelledPartners: ['dhl'] };
+  split: splitMayiyinfuRow, wallClocks: true, unlabelledPartners: ['dhl'] };
 
 // Mayi Yinfu's own rows carry Chinese; the rows it copies from DHL are English only.
 const HAN = /\p{Script=Han}/u;

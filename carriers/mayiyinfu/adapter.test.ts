@@ -50,12 +50,13 @@ describe('Mayi Yinfu tracking adapter', () => {
     ]);
     // DHL's rows with a country, and the rows in China, are on Beijing time. The forwarder's rows
     // abroad, its scripted and warehouse rows and the rows without a place keep their wall clocks.
+    // Shenzhen's "SZ", Eswatini's code, is no place.
     expect(result.events!.map((event) => [event.time ?? event.local_time, event.location ?? null])).toEqual([
       ['2026-03-20T10:30:00+08:00', 'ES'], ['2026-03-18T14:12:00+08:00', 'DE'], ['2026-03-17T11:47:00+08:00', 'DE'],
       ['2026-03-17T01:05:41', 'AMS'], ['2026-03-16T18:40:12', 'AMS'], ['2026-03-14T08:25:37', 'AMS'],
       ['2026-03-13T22:58:03+08:00', 'CN'], ['2026-03-13T10:21:54+08:00', 'CN'], ['2026-03-12T17:33:18+08:00', 'CN'], ['2026-03-11T14:09:46+08:00', 'CN'],
-      ['2026-03-10T09:15:27', 'DH'], ['2026-03-09T19:42:27', 'DH'], ['2026-03-09T06:31:27', 'SZ'],
-      ['2026-03-08T22:17:09+08:00', 'CN'], ['2026-03-08T18:04:51+08:00', 'CN'], ['2026-03-08T11:36:22', 'SZ'], ['2026-03-07T15:28:13', 'SZ'],
+      ['2026-03-10T09:15:27', 'DH'], ['2026-03-09T19:42:27', 'DH'], ['2026-03-09T06:31:27', null],
+      ['2026-03-08T22:17:09+08:00', 'CN'], ['2026-03-08T18:04:51+08:00', 'CN'], ['2026-03-08T11:36:22', null], ['2026-03-07T15:28:13', null],
       ['2026-03-05T16:44:08', 'SAMPLECITY'], ['2026-03-04T22:51:19', 'SAMPLECITY'],
       ['2026-03-04T19:10:00', null], ['2026-03-04T17:26:45', null], ['2026-03-04T13:20:00', null],
     ]);
