@@ -417,6 +417,19 @@ describe('the detection engine', () => {
     },
   );
 
+  it('names SPX Express Brazil for BR and thirteen characters, from a number or its tracker links', () => {
+    for (const number of ['BR250471826359A', 'BR2504718263591']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'spx-br', confidence: 'high' });
+    }
+    for (const number of ['BR25047182635', 'BR250471826359AB', 'RB250471826359A']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('spx-br');
+    }
+    for (const link of ['https://spx.com.br/track?BR250471826359A', 'spx.com.br/track?BR250471826359A',
+      'Seu pedido: www.spx.com.br/detail/BR250471826359A.']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: 'BR250471826359A', carrier: 'spx-br', source: 'link' });
+    }
+  });
+
   it('reads a link printed without its scheme only on a host a link rule names', () => {
     expect(parseTrackingInput('(spx.ph/track?PH407182635901)')).toMatchObject({
       trackingNumber: 'PH407182635901', carrier: 'spx-ph', source: 'link',

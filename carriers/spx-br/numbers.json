@@ -12,16 +12,13 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "spx-br"
-        ]
+        "carrier": "spx-br",
+        "confidence": "high"
       },
-      "note": "An archived lookup on SPX Express Brazil's own tracker address; the capture was not opened for history, which the page loads by script, so the history was not visible."
+      "note": "An archived lookup on SPX Express Brazil's own tracker address; SPX's tracker returns its history, with a delivery exception."
     },
     {
       "number": "BR2667105260570",
@@ -34,16 +31,13 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "spx-br"
-        ]
+        "carrier": "spx-br",
+        "confidence": "high"
       },
-      "note": "An archived lookup on SPX Express Brazil's own tracker address; the capture was not opened for history, which the page loads by script, so the history was not visible."
+      "note": "An archived lookup on SPX Express Brazil's own tracker address; SPX's tracker returns its history, through to delivery."
     },
     {
       "number": "BR2671352786030",
@@ -56,16 +50,13 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "spx-br"
-        ]
+        "carrier": "spx-br",
+        "confidence": "high"
       },
-      "note": "An archived lookup on SPX Express Brazil's own tracker address; the capture was not opened for history, which the page loads by script, so the history was not visible."
+      "note": "An archived lookup on SPX Express Brazil's own tracker address; SPX's tracker returns its history, through to its return to the seller."
     },
     {
       "number": "BR2694748525524",
@@ -78,16 +69,13 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "spx-br"
-        ]
+        "carrier": "spx-br",
+        "confidence": "high"
       },
-      "note": "An archived lookup on SPX Express Brazil's own tracker address; the capture was not opened for history, which the page loads by script, so the history was not visible."
+      "note": "An archived lookup on SPX Express Brazil's own tracker address; SPX's tracker returns its history, through to delivery."
     },
     {
       "number": "BR261973651109L",
@@ -103,11 +91,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "spx-br"
-        ]
+        "carrier": "spx-br",
+        "confidence": "high"
       },
       "note": "An archived lookup on SPX Express Brazil's own tracker address; the capture was not opened for history, which the page loads by script, so the history was not visible."
     }

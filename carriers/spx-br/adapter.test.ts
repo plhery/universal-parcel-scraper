@@ -270,9 +270,9 @@ describe('SPX Express Brazil HTTP adapter', () => {
 });
 
 describe('SPX Express Brazil numbers', () => {
-  it('only suggests SPX Brazil for its layout, for recognition to settle', () => {
+  it('names SPX Brazil for its layout', () => {
     for (const number of [DELIVERED, IN_TRANSIT]) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['spx-br'] });
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'spx-br', confidence: 'high', candidates: ['spx-br'] });
     }
   });
 });

@@ -28677,7 +28677,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^BR\\d{12}[0-9A-Z]$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },

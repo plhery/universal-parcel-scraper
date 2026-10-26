@@ -50,8 +50,8 @@ numbers carry a PH prefix.
 ## Numbers
 
 Archived lookups on the tracker show BR followed by thirteen characters: twelve digits and a
-final digit or letter. The low-confidence rule suggests SPX Express Brazil for that layout; the
-BR prefix alone does not rule out other senders, and recognition confirms the parcel.
+final digit or letter, and the tracker still answers them. No other network issues that
+layout, so the rule names SPX Express Brazil for it.
 
 ## Links
 
