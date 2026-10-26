@@ -1726,6 +1726,30 @@ describe('ParcelsApp result parsing', () => {
       carrierRow('12 Jan 2026', '03:42', 'Shipping Label Created', 'SwiftX')}</ul>`), swx).events?.[0]?.time).toBe('2026-01-12T10:42:00.000Z');
   });
 
+  it("dates SwiftX's New Jersey warehouse and the deliveries it sends out on Eastern time", () => {
+    // Live shape: SwiftX's own tracker gives these scans -04:00, to the second.
+    const swx = 'SWX000000000000000001';
+    const times = (states: Record<string, unknown>[]) =>
+      parseParcelsAppResponse({ carriers: ['SwiftX'], states }, swx, identity(swx)).events?.map(({ time, description }) => [time, description]);
+    expect(times([
+      { date: '2026-10-26T07:13:03Z', status: 'Out for Delivery', carrier: 0, location: 'US, EXAMPLE TOWN, EWR_NJ Warehouse' },
+      { date: '2026-10-23T11:12:29Z', status: 'Delivery failed', carrier: 0, location: 'US, Example Village' },
+      { date: '2026-10-23T06:39:42Z', status: 'Out for Delivery', carrier: 0, location: 'US, EXAMPLE TOWN, EWR_NJ Warehouse' },
+      { date: '2026-10-23T02:45:41Z', status: 'Arrived At Warehouse', carrier: 0, location: 'US, EXAMPLE TOWN, EWR_NJ Warehouse' },
+      { date: '2026-10-23T02:44:16Z', status: 'Departed Destination Hub', carrier: 0, location: 'US, EXAMPLE TOWN, EWR HUB' },
+      { date: '2026-10-19T10:22:17Z', status: 'Shipping Label Created', carrier: 0, location: 'US, SYSTEM, SYSTEM' },
+    ])).toEqual([
+      ['2026-10-26T11:13:03.000Z', 'Out for Delivery'], ['2026-10-23T15:12:29.000Z', 'Delivery failed'],
+      ['2026-10-23T10:39:42.000Z', 'Out for Delivery'], ['2026-10-23T06:45:41.000Z', 'Arrived At Warehouse'],
+      ['2026-10-23T06:44:16.000Z', 'Departed Destination Hub'], ['2026-10-19T17:22:17.000Z', 'Shipping Label Created'],
+    ]);
+    // A delivery with no listed site before it keeps SwiftX's Pacific time.
+    expect(times([
+      { date: '2026-10-23T11:12:29Z', status: 'Delivered', carrier: 0, location: 'US, Example Village' },
+      { date: '2026-10-23T06:39:42Z', status: 'Out for Delivery', carrier: 0, location: 'US, EXAMPLE CITY, ABC Warehouse' },
+    ])?.map(([time]) => time)).toEqual(['2026-10-23T18:12:29.000Z', '2026-10-23T13:39:42.000Z']);
+  });
+
   it('reads the networks ParcelsApp names its own way on their home clock', () => {
     const times = (carriers: string[], states: Record<string, unknown>[], trackingNumber = number) =>
       parseParcelsAppResponse({ carriers, states }, trackingNumber, identity(trackingNumber)).events?.map((scan) => scan.time);

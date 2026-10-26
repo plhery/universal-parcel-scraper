@@ -403,17 +403,35 @@ function speedafZone(payload: Record<string, unknown>, date: unknown, destinatio
  * country and town, with no state ("US, EXAMPLE TOWN, EWR HUB"). SwiftX names
  * its sites by airport code, and a site listed here gives its zone: its EWR
  * hub's digits, read on Eastern time, have to the second the instants of
- * DHLink's copies of the same scans, which DHLink dates on China's clock.
+ * DHLink's copies of the same scans, which DHLink dates on China's clock, and
+ * its New Jersey warehouse's those SwiftX's own tracker gives. A delivery or
+ * failed delivery names the recipient's town and no site ("US, EXAMPLE TOWN"):
+ * SwiftX's tracker gives it the offset of the warehouse that sent the parcel
+ * out, so it takes the zone of the newest listed site scanned before it.
  * Other sites keep SwiftX's catalog zone, Pacific. Its labels ("Shipping Label
  * Created", at "US, SYSTEM, SYSTEM") carry GMT-07:00 in every season in its
  * own tracker, and keep that clock wherever they are.
  */
-const SWIFTX_SITES: ReadonlyMap<string, string> = new Map([['EWR HUB', 'America/New_York']]);
+const SWIFTX_SITES: ReadonlyMap<string, string> = new Map([['EWR HUB', 'America/New_York'], ['EWR_NJ WAREHOUSE', 'America/New_York']]);
 const SWIFTX_LABEL = /^shipping label created$/i;
 const SWIFTX_LABEL_CLOCK = 'UTC-7';
-function swiftxSiteZone(location: string): string | null {
+function swiftxListedZone(location: string): string | null {
   const site = location.split(',').at(-1)?.trim().replace(/\s+/g, ' ').toUpperCase();
   return (site && SWIFTX_SITES.get(site)) || null;
+}
+function swiftxSiteZone(payload: Record<string, unknown>, state: Record<string, unknown>, location: string): string | null {
+  const listed = swiftxListedZone(location);
+  if (listed || location.split(',').length !== 2) return listed;
+  const at = Date.parse(String(state.date));
+  let newest: { at: number; zone: string } | null = null;
+  for (const raw of Array.isArray(payload.states) ? payload.states : []) {
+    if (!isRecord(raw) || raw === state) continue;
+    const name = stateCarrierName(payload, raw);
+    const zone = typeof name === 'string' && carrierIdFromName(name) === 'swiftx' ? swiftxListedZone(scanLocation(name, raw.location)) : null;
+    const scanned = Date.parse(String(raw.date));
+    if (zone && scanned <= at && (!newest || scanned > newest.at)) newest = { at: scanned, zone };
+  }
+  return newest?.zone ?? null;
 }
 // A UPU office of exchange in Portugal leading a CTT location: "PTLISB - (OUTRO) LISBON PROV".
 const CTT_HOME_OFFICE = /^PT[A-Z0-9]{4}\s+-\s/;
@@ -913,7 +931,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (carrier === 'speedaf' || (key === 'cainiao' && speedafDeparture(payload))) return speedafZone(payload, state.date, destination);
   // A SwiftX label keeps its own clock, and a listed SwiftX site dates its scans (`siteZone`).
   if (carrier === 'swiftx' && SWIFTX_LABEL.test(status.trim())) return SWIFTX_LABEL_CLOCK;
-  if (carrier === 'swiftx' && swiftxSiteZone(scanLocation(name, state.location))) return undefined;
+  if (carrier === 'swiftx' && swiftxSiteZone(payload, state, scanLocation(name, state.location))) return undefined;
   if (ROYAL_MAIL_NAMES.has(key) && royalMailRelay(scanLocation(name, state.location), status, destination)) return ROYAL_MAIL_RELAY_CLOCK;
   if (key === '1st') {
     const location = scanLocation(name, state.location);
@@ -985,7 +1003,7 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
   const location = scanLocation(name, state.location);
   if (carrier === 'ctt') return cttZone(payload, location, state.date, number, destination);
-  if (carrier === 'swiftx') return swiftxSiteZone(location) ?? undefined;
+  if (carrier === 'swiftx') return swiftxSiteZone(payload, state, location) ?? undefined;
   // A facility's clock, whatever the label: no other step applies to it.
   if (relaysFacilityClock(name)) return facilityZone(location);
   if (carrier === 'china-post' && inChina(location)) return CHINA_POST_ZONE;
