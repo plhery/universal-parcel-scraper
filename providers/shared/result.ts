@@ -193,7 +193,7 @@ function providerWordingStage(description: string): Stage | undefined {
     .replace(/\.,\s*(?:other|\p{Script=Han}[\p{Script=Han}\s]*)$/iu, '.');
   // BRT's English status for a parcel on its delivery round reads "FOR DELIVERY" alone.
   if (/^for delivery[.!]?$|^delivery in progress, (?:first|second|third|\d+(?:st|nd|rd|th)) attempt\b|scanned for delivery[;,] ?the courier is\b|^delivery branch\. in the hands of the mailman[.!]?$|^przesyłka wydana do doreczenia kurierowi \w{2,20}[.!]?$|派送员派送途中/i.test(value)) return 'out_for_delivery';
-  if (/^order confirmed[.!]?$|^order received(?: successfully)?[.!]?$|^creat(?:e|ed)\. (?:parcel|shipment(?: order)?) created\b|^pre-shipment info sent to\b|^the order has information pending customer confirmation[.!]?$|^waiting for (?:the )?carrier to collect the order[.!]?$|^registered in the system[.!]?$|^your order has been received[.!]?$/i.test(value)) return 'registered';
+  if (/^order confirmed[.!]?$|^order received(?: successfully)?[.!]?$|^creat(?:e|ed)\. (?:parcel|shipment(?: order)?) created\b|^pre-shipment info sent to\b|^the order has information pending customer confirmation[.!]?$|^waiting for (?:the )?carrier to collect the order[.!]?$|^registered in the system[.!]?$|^your order has been received[.!]?$|^tracking number assigned[.!]?$/i.test(value)) return 'registered';
   // Cainiao's warehouse packing the order, between the order it received and the parcel leaving it.
   if (/^package finished[.!]?$/i.test(value)) return 'registered';
   if (/^export declaration in progress[.!]?$/i.test(value)) return 'customs';

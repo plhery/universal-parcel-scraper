@@ -115,6 +115,8 @@ describe('shared provider result', () => {
     for (const wording of ['Вручение отправителю', 'Handed over. Delivery to the sender']) {
       expect(event('2026-01-07T12:45:00+03:00', wording)).toMatchObject({ stage: 'returned', stage_source: 'wording:provider' });
     }
+    // The label the sender made, before the post office has the parcel.
+    expect(event('2026-01-07T12:45:00+03:00', 'Tracking number assigned')).toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
   });
 
   it("reads Interpost's import clearance by its caption, without the status code ParcelsApp heads it with", () => {
