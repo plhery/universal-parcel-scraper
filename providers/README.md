@@ -70,7 +70,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   chain moves on. UPU is exempt, because its local clocks are by design.
 - Privacy: a non-delivered event that mentions a PIN, access code, door number or
   signature is dropped, and a delivered event's text becomes `Delivered`. Recipient
-  fields are never read.
+  fields are never read. A place leaves out a branch's postcode, and a postcode given
+  alone as a place, as UPU posting scans relay it, becomes the country its code names
+  or no place.
 - One wording-to-stage vocabulary serves all providers. Unmatched wording stays
   `pending` and never inherits the shipment's stage. [status.ts](status.ts) declares it,
   with 17TRACK's sub-statuses, as the status map `statusMapAnswer()` asks for the scans the

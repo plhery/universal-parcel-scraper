@@ -221,6 +221,14 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: '其他市' }, stored)).toBe(false);
   });
 
+  it("lets a universal copy that names a posting office's country, not its postcode, take over its stored row", () => {
+    const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
+    const stored = { stage: 'accepted', description: 'Posting/Collection', location: 'PL99999', providerCode: '' };
+    expect(policy?.matches?.({ ...stored, location: 'Poland' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: '99999' })).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: 'Latvia' }, stored)).toBe(false);
+  });
+
   it('lets a universal copy that lost a "Country" label take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item in transfer - please wait', location: 'Country, EXAMPLELAND', providerCode: '' };

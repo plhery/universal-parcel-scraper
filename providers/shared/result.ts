@@ -10,6 +10,7 @@
  */
 import { DateTime } from 'luxon';
 import { trackingLanguageStage } from '../../core/status/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
@@ -75,6 +76,20 @@ const STATUS_PLACE = /^(?:arri[vy]al at|departure from|dispatching|received by c
 const AIRPORT_PLACE = /^(?:arri[vy]al at|departure from) (\p{L}[\p{L} .'-]{1,60}?) airport$/iu;
 // A full Canadian or British postcode after a town, which can narrow down a recipient's area.
 const FULL_POSTCODE = /\s+(?:[A-Z]\d[A-Z] ?\d[A-Z]\d|[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2})$/i;
+// A post's posting office given by its postcode alone, after its country's code or not ("PL99999", "99999"),
+// as providers relay UPU scans: a sender's area, which names the country at most.
+const POSTCODE_ONLY = /^(?:([A-Z]{2})[- ]?)?\d{4,6}$/;
+const ENGLISH_REGIONS = new Intl.DisplayNames(['en'], { type: 'region' });
+// Codes Intl names that are no country: the EU, the eurozone, the UN, Outlying Oceania, the unknown region and private use.
+const NOT_COUNTRIES = /^(?:EU|EZ|QO|UN|ZZ|X[A-Z])$/;
+
+/** The country a postcode given alone as a place names by its code, '' when none, or undefined for any other place. */
+function postcodeCountry(location: string): string | undefined {
+  const postcode = POSTCODE_ONLY.exec(location);
+  if (!postcode) return undefined;
+  const code = postcode[1] && countryCode(postcode[1]) === postcode[1] && !NOT_COUNTRIES.test(postcode[1]) ? postcode[1] : undefined;
+  return code ? ENGLISH_REGIONS.of(code) ?? '' : '';
+}
 
 /** The place a status given as a location names in 【】 or before its airport, '' when it names none, or undefined for any other location. */
 function statusPlace(location: string): string | undefined {
@@ -89,11 +104,12 @@ function statusPlace(location: string): string | undefined {
  * town, a branch's postcode, which can narrow down a sender's or recipient's
  * area, a "Country" label or a status given before the place, unless it is a
  * label or placeholder ("--") that names no place, holds private delivery
- * details or is Posti's "abroad" label.
+ * details or is Posti's "abroad" label. A postcode given alone is the country
+ * its code names, if any.
  */
 export function place(value: unknown): string {
   const read = text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, '');
-  const location = statusPlace(read) ?? read;
+  const location = statusPlace(read) ?? postcodeCountry(read) ?? read;
   return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !hasPrivateDeliveryDetails(location) && !isPostiAbroadLabel(location)
     ? location : '';
 }

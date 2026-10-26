@@ -32,6 +32,11 @@ it('keeps scan locations from the API while excluding a delivery-service label a
   // A Post Office branch's postcode, which Royal Mail appends in brackets, is left out; other brackets stay.
   expect(parse('Example Post Office [ZZ9 9ZZ]')?.location).toBe('Example Post Office');
   expect(parse('Example DO [Main]')?.location).toBe('Example DO [Main]');
+  // A posting office's postcode given alone names its country at most.
+  expect(parse('PL99999')?.location).toBe('Poland');
+  expect(parse('LV-9999')?.location).toBe('Latvia');
+  for (const location of ['99999', '999999', 'ZZ99999', 'EU9999']) expect(parse(location), location).not.toHaveProperty('location');
+  expect(parse('ZTO9999')?.location).toBe('ZTO9999');
   for (const location of [undefined, '', 'Type de livraison : Livraison Standard', 'ULKOMAILLA', ['France'], { city: 'Example City' }]) {
     expect(parse(location)).not.toHaveProperty('location');
   }
