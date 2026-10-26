@@ -42,21 +42,20 @@ describe('Mayi Yinfu tracking adapter', () => {
     expect(result.last_update_local).toBeUndefined();
     expect(result.delivered_at).toBeUndefined();
     expect(result.last_status_text).toMatch(/^The shipment has arrived in the destination country\/destination area\. \(Homepage/);
-    expect(result.events).toHaveLength(22);
+    expect(result.events).toHaveLength(17);
     expect(result.events!.every((event) => Boolean(event.local_time) !== Boolean(event.time) && event.stage)).toBe(true);
     expect(result.events!.slice(1, 3)).toEqual([
       { time: '2026-03-18T14:12:00+08:00', description: 'The international shipment has been processed in the export parcel center', location: 'DE', stage: 'in_transit', stage_source: 'carrier_map' },
       { time: '2026-03-17T11:47:00+08:00', description: 'The international shipment has been processed in the parcel center of origin', location: 'DE', stage: 'in_transit', stage_source: 'carrier_map' },
     ]);
     // DHL's rows with a country, and the rows in China, are on Beijing time. The forwarder's rows
-    // abroad, its scripted and warehouse rows and the rows without a place keep their wall clocks.
-    // Shenzhen's "SZ", Eswatini's code, is no place.
+    // abroad, its warehouse rows and the rows without a place keep their wall clocks. The scripted
+    // rows, coded CO_C_CR, are set aside.
     expect(result.events!.map((event) => [event.time ?? event.local_time, event.location ?? null])).toEqual([
       ['2026-03-20T10:30:00+08:00', 'ES'], ['2026-03-18T14:12:00+08:00', 'DE'], ['2026-03-17T11:47:00+08:00', 'DE'],
       ['2026-03-17T01:05:41', 'AMS'], ['2026-03-16T18:40:12', 'AMS'], ['2026-03-14T08:25:37', 'AMS'],
       ['2026-03-13T22:58:03+08:00', 'CN'], ['2026-03-13T10:21:54+08:00', 'CN'], ['2026-03-12T17:33:18+08:00', 'CN'], ['2026-03-11T14:09:46+08:00', 'CN'],
-      ['2026-03-10T09:15:27', 'DH'], ['2026-03-09T19:42:27', 'DH'], ['2026-03-09T06:31:27', null],
-      ['2026-03-08T22:17:09+08:00', 'CN'], ['2026-03-08T18:04:51+08:00', 'CN'], ['2026-03-08T11:36:22', null], ['2026-03-07T15:28:13', null],
+      ['2026-03-08T22:17:09+08:00', 'CN'], ['2026-03-08T18:04:51+08:00', 'CN'],
       ['2026-03-05T16:44:08', 'SAMPLECITY'], ['2026-03-04T22:51:19', 'SAMPLECITY'],
       ['2026-03-04T19:10:00', null], ['2026-03-04T17:26:45', null], ['2026-03-04T13:20:00', null],
     ]);
@@ -70,6 +69,9 @@ describe('Mayi Yinfu tracking adapter', () => {
     // The record names no channel: DHL takes the transfer number its own rule claims whole.
     expect(detectCarrierMatch('CJ000000005DE')).toMatchObject({ carrier: 'dhl', confidence: 'high' });
     expect(result).toMatchObject({ delivery_carrier: 'dhl', delivery_tracking_number: 'CJ000000005DE' });
+    // Shenzhen's "SZ", Eswatini's code, is no place.
+    const unscripted = parseMayiyinfuTrack(JSON.parse(JSON.stringify(fixture('track')).replaceAll('"CO_C_CR"', '""')), NUMBER, READ_AT)!;
+    expect(unscripted.events!.find((event) => event.local_time === '2026-03-09T06:31:27')).not.toHaveProperty('location');
     expect(deliveryHandoff('mayiyinfu', NUMBER, result)).toMatchObject({ carrier: 'dhl', number: 'CJ000000005DE' });
     // A failed check digit, or a number DHL's rules do not claim, hands nothing over.
     for (const transfer of ['CJ000000004DE', 'LX000000005CN']) {
@@ -126,7 +128,7 @@ describe('Mayi Yinfu tracking adapter', () => {
       ['2026-03-23 12:15:00', '', 'The shipment has been delivered'],
       ['2026-03-23 08:05:00', 'Madrid', 'The shipment has been loaded onto the delivery vehicle'],
       ['2026-03-22 18:00:00', 'AMS', '已转运transferred'],
-      ['2026-03-22 12:00:00', 'DH', '已到达目的国', 'CO_C_CR'],
+      ['2026-03-22 12:00:00', 'DH', '已到达目的国'],
       ['2026-03-21 12:00:00', 'MX', 'The international shipment has been processed in the export parcel center'],
     ]);
     expect(claimed).toMatchObject({ delivery_carrier: 'dhl', status: 'delivered', last_update: null, last_update_local: '2026-03-23T12:15:00' });

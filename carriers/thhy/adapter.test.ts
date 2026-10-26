@@ -10,7 +10,7 @@ import statuses from './statuses.json' with { type: 'json' };
 import carrier from './carrier.json' with { type: 'json' };
 
 const NUMBER = 'THTEST00000002';
-// Noon in Beijing on 6 March: the fixture's last row, dated the next evening, is still ahead.
+// Noon in Beijing on 6 March, before the fixture's last row.
 const READ_AT = Date.parse('2026-03-06T04:00:00Z');
 const fixture = (name: string): unknown => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
 const page = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');
@@ -29,25 +29,28 @@ describe('Tianhui Hengyuan tracking adapter', () => {
     expect(adapter(environment(fetcher))).toMatchObject({ id: 'thhy', recordsSteps: true, steps: ['direct', 'retry'] });
   });
 
-  it('reads the timeline its custom track product writes, holding back the rows still ahead', () => {
+  it('sets aside the timeline its custom track product writes, and names it when nothing else is left', () => {
     const result = parseThhyTrack(fixture('track'), NUMBER, READ_AT)!;
     expect(result).toMatchObject({
-      status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'On its way to the operation center',
-      last_update: '2026-03-05T16:30:57+08:00', service_name: 'Synthetic Track A', destination_country: 'CH',
+      status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Goods leave the operation center',
+      last_update: '2026-03-02T16:30:57+08:00', service_name: 'Synthetic Track A', destination_country: 'CH',
     });
     expect(result.canonical_tracking_number).toBeUndefined();
-    expect(result.events!.map((event) => event.time)).not.toContain('2026-03-07T20:48:57+08:00');
-    expect(result.events!.slice(0, 3)).toEqual([
-      { time: '2026-03-05T16:30:57+08:00', description: 'On its way to the operation center', location: '下一站', provider_code: 'CO_C_CR', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-05T10:54:57+08:00', description: 'Released by customs', location: '海关出口', provider_code: 'CO_C_CR', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-05T06:30:57+08:00', description: 'Presented to export customs', location: '海关', provider_code: 'CO_C_CR', stage: 'customs', stage_source: 'carrier_map' },
-    ]);
-    expect(result.events!.slice(-2)).toEqual([
+    expect(result.events).toEqual([
       // Its departure, worded only in Chinese, shows the English of the platform's other tenants.
       { time: '2026-03-02T16:30:57+08:00', description: 'Goods leave the operation center', location: 'GZ', provider_code: 'SHIPMENT', stage: 'in_transit', stage_source: 'carrier_map' },
       { time: '2026-03-02T16:15:01+08:00', description: 'Arrived at the receiving point', location: 'GZ', provider_code: 'ARRIVAL', stage: 'accepted', stage_source: 'carrier_map' },
     ]);
-    expect(result.events!.every((event) => event.stage)).toBe(true);
+    const custom = fixture('track') as [{ data: [{ trackDetails: { track_kind: string }[] }] }];
+    custom[0].data[0].trackDetails = custom[0].data[0].trackDetails.filter((row) => row.track_kind === 'CO_C_CR');
+    let error: unknown;
+    try {
+      parseThhyTrack(custom, NUMBER, READ_AT);
+    } catch (caught) {
+      error = caught;
+    }
+    expect(error).toMatchObject({ name: 'NoHistoryError', reason: 'written_ahead' });
+    expect((error as { writtenAhead: string[] }).writtenAhead.slice(0, 2)).toEqual(['2026-03-07T20:48:57+08:00', '2026-03-05T16:30:57+08:00']);
   });
 
   it('reads the page’s unknown-number answer as not found', async () => {

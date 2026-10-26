@@ -89,6 +89,9 @@ const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 // A row's clock can be its destination's, up to six hours ahead of Beijing's: one written more
 // than twelve hours before its own clock was written ahead.
 const WRITTEN_AHEAD_MS = 12 * 3_600_000;
+// The kind of the rows the platform's custom track product (轨迹定制) writes to a script: they
+// can have a parcel abroad before it reaches the airport.
+const CUSTOM_TRACK = 'CO_C_CR';
 // The service's answer when it holds no row for the number: an unknown number,
 // or an order whose rows the interface does not list. Only the page tells which.
 const NO_TRACK = '未查询到轨迹';
@@ -203,11 +206,12 @@ function stageOf(tenant: HualeiTenant, code: string, description: string): { sta
 /**
  * The rows as scans, newest first. Tenants write whole timelines ahead, from
  * the collection to the delivery: a row written well before its own clock is
- * a forecast, not a scan, and so is a row dated after the lookup on the
- * trackers' clock. Identical rows count once, and so do rows the tenant says
- * repeat another. A row the tenant has English for is staged and deduplicated
- * by its own wording, then shown in English. `ahead` lists the clocks of the
- * rows written ahead, as the tenant reads them.
+ * a forecast, not a scan, and so are a row of the custom track product and a
+ * row dated after the lookup on the trackers' clock. Identical rows count
+ * once, and so do rows the tenant says repeat another. A row the tenant has
+ * English for is staged and deduplicated by its own wording, then shown in
+ * English. `ahead` lists the clocks of the rows written ahead and of the
+ * custom track's, as the tenant reads them.
  */
 function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number): { events: CarrierEvent[]; truncated: boolean; ahead: string[] } {
   const seen = new Set<string>();
@@ -217,7 +221,7 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number)
     const local = wallClock(row.clock, tenant.provider);
     const placed = isoTime(local, HUALEI_ZONE)!;
     const reading = tenant.clock?.(row) ?? (tenant.wallClocks ? 'wall' : 'platform');
-    if (writtenAhead(row, local)) {
+    if (row.code === CUSTOM_TRACK || writtenAhead(row, local)) {
       ahead.add(reading === 'platform' ? placed.iso : local);
       return;
     }

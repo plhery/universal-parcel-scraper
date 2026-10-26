@@ -27,8 +27,8 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   `货物已交机场` is a hand-over to the airport and stays in transit, though its translation
   reads "delivered".
 - Rows coded `CO_C_CR` come from a scripted track: they can report the departure, the arrival
-  and the clearance before the forwarder's own rows have the parcel at the airport. They are what
-  the tracker shows and are kept.
+  and the clearance before the forwarder's own rows have the parcel at the airport. They are no
+  scans and are held back, as on every tenant ([GZYL](../gzyl/README.md)).
 - Scan times are wall clocks without an offset. The tracker writes the scans it copies from DHL
   on its own Beijing clock: DHL's own offset times for them are the same instants. Once DHL takes
   the record, a copied row whose place is a country code is read on Beijing time, wherever DHL

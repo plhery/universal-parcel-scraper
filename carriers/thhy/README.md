@@ -19,17 +19,17 @@ browser is needed, and no portal link is published.
 ## Notes
 
 - After the forwarder's own two scans, its custom track product (named 轨迹定制, a customised
-  track) shows rows that read like China Post's, all on the same second of the minute and coded
-  `CO_C_CR`. They are what the tracker shows and are kept, but a row dated after the lookup on
-  Beijing time is held back.
+  track) shows rows that read like China Post's, all on the same second of the minute, a whole
+  number of six minutes apart, and coded `CO_C_CR`. They are no scans and are held back, as on
+  every tenant ([GZYL](../gzyl/README.md)).
 - A row's kind code (`ARRIVAL`, `SHIPMENT`, `CO_C_CR`) is kept as the provider code; it groups
   many wordings, so the stage comes from the wording in [status.ts](status.ts).
 - The forwarder's departure and the platform's own row come only in Chinese. They show the
   English the platform's other tenants give them, the `english` of their entries in
   [statuses.json](statuses.json), and the map stages them by either wording. A row stored in
   Chinese is taken over by its English at the same instant and place ([identity.ts](identity.ts)).
-  The custom track product's Chinese rows show English too: ParcelsApp's for China Post's same
-  label where it has one, else a plain rendering. Their locations keep the product's wording.
+  The map keeps the custom track product's wordings and their English, for the copies a
+  provider relays.
 - Scan times are wall clocks without an offset, on the tracker's Beijing clock abroad too, as
   [GZYL's](../gzyl/README.md) are, and are read on it.
 
