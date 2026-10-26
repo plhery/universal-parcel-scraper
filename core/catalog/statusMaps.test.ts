@@ -1584,7 +1584,7 @@ describe("universal providers' answers", () => {
       ['邮件已乘机由Example City, Example Province飞往Sample City', 'in_transit'], ['您的邮件正途经Example City, Example Province', 'in_transit'],
       ['邮件到达Sample City，准备发往【示例航空中心】', 'in_transit'],
       ['预计【01月02日】到达Example City，两地距离1000km，将在【01月02日上午】更新邮件状态，请您放心。', 'in_transit'],
-      ['已出库,货物离开操作中心', 'in_transit'], ['已出库', 'in_transit'], ['已排航班', 'in_transit'],
+      ['已出库,货物离开操作中心', 'in_transit'], ['已出库', 'in_transit'],
       ['Delivery in progress, second attempt', 'out_for_delivery'],
       ['Site-ExampleScanned for delivery;the courier is Example', 'out_for_delivery'],
       ['交接成功-交出（派送员派送途中）', 'out_for_delivery'],

@@ -63,8 +63,14 @@ describe('Mayi Yinfu tracking adapter', () => {
       local_time: '2026-03-04T22:51:19', description: '已入库,到达收货点', location: 'SAMPLECITY', provider_code: 'ARRIVAL', stage: 'accepted', stage_source: 'carrier_map',
     });
     // The airport rows' translation reads "delivered"; the step they lead with is a hand-over to the airport.
-    const airport = result.events!.filter((event) => event.description!.startsWith('货物已交机场'));
+    const airport = result.events!.filter((event) => /^货物已交机场|^The goods have been delivered to the airport$/.test(event.description!));
     expect(airport.map((event) => [event.stage, event.stage_source])).toEqual([['in_transit', 'carrier_map'], ['in_transit', 'carrier_map']]);
+    // A flight row shows its step's English without the day it expects, which is still to come.
+    expect(result.events!.slice(6, 11).map((event) => event.description)).toEqual([
+      'The second leg has departed', 'The first leg has arrived', 'The first leg has departed', 'The flight has been delayed',
+      'The goods have been delivered to the airport',
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/预计/);
     expect(result.events!.at(-1)).toMatchObject({ stage: 'registered', stage_source: 'carrier_map' });
     // The record names no channel: DHL takes the transfer number its own rule claims whole.
     expect(detectCarrierMatch('CJ000000005DE')).toMatchObject({ carrier: 'dhl', confidence: 'high' });

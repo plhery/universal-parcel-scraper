@@ -102,7 +102,7 @@ function stageCode(row: Record<string, unknown>): string {
   return code;
 }
 
-function projectRow(row: Record<string, unknown>): { key: string; event: CarrierEvent } {
+function projectRow(row: Record<string, unknown>): { key: string; event: CarrierEvent } | null {
   const code = stageCode(row);
   const written = imileWording(text(row, 'content', 2_000)) || text(row, 'trackStageTx', 120);
   if (!written) throw new SchemaError(PROVIDER, 'iMile returned a scan without wording');
@@ -110,6 +110,8 @@ function projectRow(row: Record<string, unknown>): { key: string; event: Carrier
   const location = text(row, 'operateStationName', 120);
   const staged = imileStage(code, written);
   const description = imileDisplayWording(written, location);
+  // A row that only books a flight is still to come: no scan.
+  if (!description) return null;
   const event: CarrierEvent = {
     local_time: local,
     ...(location ? { location } : {}),
@@ -146,7 +148,7 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
   for (const row of rows) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'iMile returned an invalid scan');
     const scan = projectRow(row);
-    if (seen.has(scan.key)) continue;
+    if (!scan || seen.has(scan.key)) continue;
     seen.add(scan.key);
     events.push(scan.event);
   }

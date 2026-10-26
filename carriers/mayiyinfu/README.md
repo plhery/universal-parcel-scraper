@@ -23,7 +23,10 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   with the destination operator's tracking link in brackets; the map reads the wording before it.
 - Mayi Yinfu's own rows mix Chinese and an English translation. Flight rows lead with the step
   (`货物已交机场`, `头程起飞`, `航班延误`), then the day the next one is expected and the
-  translation; [status.ts](status.ts) reads the step when the whole row is not in the map.
+  translation; [status.ts](status.ts) reads the step when the whole row is not in the map. The
+  day is still to come, so such a row shows the English of its step alone, the `english` of its
+  entry in [statuses.json](statuses.json); a row stored with the day is taken over by it at the
+  same instant and place ([identity.ts](identity.ts)).
   `货物已交机场` is a hand-over to the airport and stays in transit, though its translation
   reads "delivered".
 - Rows coded `CO_C_CR` come from a scripted track: they can report the departure, the arrival

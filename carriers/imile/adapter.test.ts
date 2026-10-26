@@ -127,16 +127,20 @@ describe('iMile HTTP adapter', () => {
     expect(result.events!.map((event) => [event.time, event.provider_code ?? null, event.stage ?? null, event.location ?? null])).toEqual([
       ['2026-06-04T02:15:00-05:00', null, 'customs', null],
       ['2026-06-03T23:15:00-05:00', '1002', 'customs', null],
+      // The flight booked before it, still to come, is left out.
       ['2026-06-02T18:00:00-05:00', '1002', 'in_transit', null],
-      // A booked flight moves nothing.
-      ['2026-06-01T04:51:00-05:00', '1002', null, null],
       ['2026-05-31T12:02:11-05:00', '2005', 'accepted', 'Sample Origin Center'],
       ['2026-05-31T08:40:00-05:00', null, 'registered', null],
       ['2026-05-30T19:16:16-05:00', '1001', 'registered', null],
     ]);
     expect(result.events!.every((event) => event.local_time === undefined)).toBe(true);
-    // The booked flight's own clocks stay in its wording, without the page's brackets.
-    expect(result.events![3]!.description).toBe('Flight Schedule ETD HKG 2026-06-03 02:00:00, ETA SMP 2026-06-03 12:00:00.');
+    expect(JSON.stringify(result)).not.toMatch(/Flight Schedule/);
+    // A scan the booked flight follows keeps its own words.
+    const received = parseImile(changed('in-transit', (shipment) => {
+      shipment.trackInfos[3]!.content = 'Origin port warehouse receive，Flight Schedule ETD【HKG】<2026-06-03 02:00:00>, ETA【SMP】<2026-06-03 12:00:00>.';
+      shipment.trackInfos[3]!.trackStage = null;
+    }), IN_TRANSIT);
+    expect(received.events![3]).toMatchObject({ description: 'Origin port warehouse receive', stage: 'in_transit' });
     // The last-mile number names no courier, so there is no hand-off.
     expect(JSON.stringify(result)).not.toMatch(/SAMPLELM|delivery_tracking_number|Sample Origin Center"?,"dispatch/);
   });
@@ -146,7 +150,7 @@ describe('iMile HTTP adapter', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Your order has been delivered successfully.', last_update: '2026-05-20T15:42:10+03:00',
       destination_country: 'SA' });
-    expect(result.events).toHaveLength(16);
+    expect(result.events).toHaveLength(15);
     expect(result.events!.slice(0, 8).map((event) => [event.provider_code, event.stage ?? null, event.description])).toEqual([
       ['2060', 'delivered', 'Your order has been delivered successfully.'],
       ['1003', 'out_for_delivery', 'Our delivery associate is out for delivery.'],
@@ -159,14 +163,15 @@ describe('iMile HTTP adapter', () => {
       ['1003', 'in_transit', 'Your order has arrived at SMP DS01'],
     ]);
     // A name opening a scan is its centre, which the location shows, or else heads the sentence.
-    expect(result.events!.slice(9, 15).map((event) => [event.stage ?? null, event.description, event.location ?? null])).toEqual([
+    expect(result.events!.slice(9, 14).map((event) => [event.stage ?? null, event.description, event.location ?? null])).toEqual([
       ['in_transit', 'Your order has been received.', 'Sample Distribution Center'],
       ['in_transit', 'SMP: AirPlane clearance finish,ready to ship to Sample Distribution Center.', null],
       ['customs', 'Clearance Processing', null],
       ['customs', 'SMP: Flight Arrived - Waiting for customs clearance.', null],
       ['in_transit', 'HKG: The flight has taken off.', null],
-      [null, 'Flight Schedule ETD HKG 2026-05-17 11:40:00, ETA SMP 2026-05-17 16:15:00.', null],
     ]);
+    // The flight booked for the parcel is still to come: no scan.
+    expect(JSON.stringify(result)).not.toMatch(/Flight Schedule/);
     expect(result.events!.find((event) => event.description === 'Clearance Processing')).toMatchObject({ stage: 'customs' });
     expect(result.events!.find((event) => event.description === 'Clearance Processing')).not.toHaveProperty('provider_code');
     expect(JSON.stringify(result)).not.toMatch(/Self|Receiver|viewPic|example\.invalid|contact him|\+000|0500000001/);
@@ -239,7 +244,7 @@ describe('iMile HTTP adapter', () => {
     expect(() => parseImile(fixture('in-transit'), DELIVERED))
       .toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'iMile answered for another shipment' }));
     const reference = parseImile(changed('in-transit', (shipment) => { shipment.waybillNo = 'CNBR00000000001'; }), 'cnbr00000000001');
-    expect(reference.events).toHaveLength(7);
+    expect(reference.events).toHaveLength(6);
     expect(() => parseImile(changed('in-transit', (shipment) => { shipment.waybillNo = 'CNBR00000000001'; }), 'CNBR0000000000'))
       .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
@@ -433,7 +438,7 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     expect(merged.events!.filter((event) => !CAINIAO_CODE.test(String(event.provider_code ?? '')))).toEqual(own.events);
     // Cainiao's scans count up to iMile's flight; its relays of iMile's own scans, and of iMile's order, stay out.
     expect(codes(merged).slice(13)).toEqual(['1002', 'LH_DEPART', 'LH_HO_AIRLINE', 'CC_EX_SUCCESS', 'CC_EX_START', 'LH_HO_IN_SUCCESS',
-      '1002', '1001', 'SC_OUTBOUND_SUCCESS', 'SC_INBOUND_SUCCESS', 'PU_PICKUP_SUCCESS']);
+      '1001', 'SC_OUTBOUND_SUCCESS', 'SC_INBOUND_SUCCESS', 'PU_PICKUP_SUCCESS']);
     expect(merged.events).toHaveLength(own.events!.length + 8);
     const scan = (code: string) => merged.events!.find((event) => event.provider_code === code);
     expect(scan('SC_OUTBOUND_SUCCESS')).toEqual({ time: '2026-05-14T23:50:00+08:00', location: 'Sampletown',

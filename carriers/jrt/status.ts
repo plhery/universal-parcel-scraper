@@ -19,7 +19,11 @@ export function jrtStage(_code: string | null, wording: string): Stage | undefin
   return WORDINGS.stage(jrtScanKey(wording));
 }
 
-/** The English the adapter shows for a row JRT words only in Chinese, by its `normalizeStatusWording` wording. */
-export const jrtEnglish = (_code: string | null, wording: string): string | undefined => WORDINGS.english(wording);
+/**
+ * The English the adapter shows, by a row's `normalizeStatusWording` wording,
+ * for a row JRT words only in Chinese, and for the airport row without the
+ * flight it books, which is still to come.
+ */
+export const jrtEnglish = (_code: string | null, wording: string): string | undefined => WORDINGS.english(jrtScanKey(wording));
 
 export const statusMap: CarrierStatusMap = { stage: jrtStage, gaps: [] };

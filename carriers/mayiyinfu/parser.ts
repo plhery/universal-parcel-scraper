@@ -1,7 +1,7 @@
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { countryCode, isoTime } from '../../core/time/index.js';
 import { HUALEI_ZONE, normalizeHualeiNumber, parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
-import { mayiyinfuStage } from './status.js';
+import { mayiyinfuEnglish, mayiyinfuStage } from './status.js';
 
 export const PROVIDER = 'Mayi Yinfu';
 export const MAYIYINFU_ORIGIN = 'http://www.mayiyinfu.com.cn:8082';
@@ -11,7 +11,7 @@ export const MAYIYINFU_ORIGIN = 'http://www.mayiyinfu.com.cn:8082';
 // The forwarder's rows can give Shenzhen as "SZ", which as a code is Eswatini's: no place.
 const splitMayiyinfuRow = (content: string, location: string) => ({ content, location: /^\s*SZ\s*$/i.test(location) ? '' : location });
 export const MAYIYINFU: HualeiTenant = { carrier: 'mayiyinfu', provider: PROVIDER, origin: MAYIYINFU_ORIGIN, stage: mayiyinfuStage,
-  split: splitMayiyinfuRow, wallClocks: true, unlabelledPartners: ['dhl'] };
+  english: mayiyinfuEnglish, split: splitMayiyinfuRow, wallClocks: true, unlabelledPartners: ['dhl'] };
 
 // Mayi Yinfu's own rows carry Chinese; the rows it copies from DHL are English only.
 const HAN = /\p{Script=Han}/u;

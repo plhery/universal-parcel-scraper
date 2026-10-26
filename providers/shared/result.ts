@@ -20,6 +20,9 @@ import { anPostWordingStage } from '../../carriers/an-post/status.js';
 import { CHRONOPOST_NOTIFICATION } from '../../carriers/chronopost/status.js';
 import { sunYouWording } from '../../carriers/sunyou/identity.js';
 import { ESTIMATE as FLIGHT_ESTIMATE } from '../../carriers/tsjy/status.js';
+import { FLIGHT_BOOKED as DHLINK_FLIGHT } from '../../carriers/dhlink/status.js';
+import { flightBooked as intelValleyFlight } from '../../carriers/intel-valley/status.js';
+import { FLIGHT_BOOKED as MAYIYINFU_FLIGHT } from '../../carriers/mayiyinfu/status.js';
 
 export type UniversalSource = '17TRACK' | 'ParcelsApp' | 'Postal Ninja' | 'Ship24' | 'UPU';
 const STAGES: Record<string, Stage> = {
@@ -257,8 +260,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // and a line's scan leaving the named city's centre after import clearance.
   if (/^internationall?i?y package received at processing cent(?:er|re)[.!]?$|^leave the (?:e?mail|[a-z][a-z .'-]{1,30}?) processing cent(?:er|re)[.!]?$/i.test(value)
     && !/^leave the return\b/i.test(value)) return 'in_transit';
-  // Mayi Yinfu's parcel booked out of its operations centre, and the flight booked for it, as its own map reads them.
-  if (/^已出库(?:[,，]货物离开操作中心)?$|^已排航班$/u.test(value)) return 'in_transit';
+  // Mayi Yinfu's parcel booked out of its operations centre, as its own map reads it.
+  if (/^已出库(?:[,，]货物离开操作中心)?$/u.test(value)) return 'in_transit';
   // Hermes Germany's hub steps in an aggregator's English, and the aggregator's label for an inbound one.
   if (/^shipment added to loading unit[.!]?$|^received at hub: in motherbag[.!]?$|^shipment received[.!]?$|^the shipment (?:has been|was) prepared for (?:the )?further shipping\b/i.test(value)) return 'in_transit';
   // Hermes Germany's delivery to the safe place its recipient booked, which the aggregator pairs with its "Delivered".
@@ -381,11 +384,15 @@ const CLEARANCE_STATUS = /^B2C Clearance ?(?:Status ?)?\d{1,3}\. +(?=\S)/i;
 const EXPLICIT_OFFSET = /(?:Z|[+-]\d{2}:\d{2})$/;
 const LOCAL_WALL_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 
+// A flight written before it leaves is still to come: no scan, as the lines' own trackers drop it.
+// 17FEIA's estimated departure, and the flight DHLink, Intel-Valley and Mayi Yinfu book.
+const flightToCome = (label: string): boolean =>
+  FLIGHT_ESTIMATE.test(label) || DHLINK_FLIGHT.test(label) || intelValleyFlight(label) || MAYIYINFU_FLIGHT.test(label);
+
 function describe(description: unknown, stage?: unknown): { description: string; stage: Stage; stage_source: string } | null {
   // A copy of SunYou's departure drops the last-mile number, as SunYou's own result does.
   const label = sunYouWording(relayedNotice(text(description)).replace(CLEARANCE_STATUS, ''));
-  // 17FEIA's estimated departure is written before the flight: no scan, as its own trackers drop it.
-  if (!label || isNotice(label) || FLIGHT_ESTIMATE.test(label)) return null;
+  if (!label || isNotice(label) || flightToCome(label)) return null;
   const declared = typeof stage === 'string' && Object.hasOwn(STAGES, stage) ? STAGES[stage] : undefined;
   // Established source semantics (e.g. handoff/negation) remain first. A real
   // provider stage outranks the new intuitive translation fallback.

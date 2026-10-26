@@ -68,7 +68,8 @@ describe('JRT tracking adapter', () => {
       ['机场内等待提货，等待清关 Waiting for cargo pickup and customs clearance at the airport.', 'customs', 'carrier_map'],
       ['航班落地，拆板中 Flight landing, dismantling board in progress', 'in_transit', 'carrier_map'],
       ['航班起飞，以实际抵达为准 Flight departure subject to actual arrival time', 'in_transit', 'carrier_map'],
-      ['货物已交机场,预计9号的航班 Goods delivered to airport, scheduled on flight of the 9rd', 'in_transit', 'carrier_map'],
+      // The flight the airport row books is still to come.
+      ['Goods delivered to airport', 'in_transit', 'carrier_map'],
       ['货物已交机场,等待航班安排中 Cargo delivered to airport, pending flight arrangement', 'in_transit', 'carrier_map'],
       ['the instruction data for this shipment have been provided by the sender to dhl electronically', 'registered', 'carrier_map'],
       // The rows JRT words only in Chinese show the English of the platform's other tenants.

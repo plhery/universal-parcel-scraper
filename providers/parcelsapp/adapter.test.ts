@@ -177,6 +177,8 @@ describe('ParcelsApp YTO scans', () => {
     ]);
     expect(handOver).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
     expect(handOver.events?.[0]).toMatchObject({ description: 'The goods have been delivered to the airport', stage: 'in_transit', stage_source: 'carrier_map' });
+    // The flight booked for the parcel is still to come: no scan.
+    expect(handOver.events).toHaveLength(1);
     // The delivery the forwarder copies, and another carrier's bare "Delivered", stay deliveries.
     for (const state of [{ status: 'The shipment has been successfully delivered', carrier: 1, location: 'ES' },
       { status: 'Delivered', carrier: 1, location: 'Example City, Spain' }, { status: 'Delivered', carrier: 0, location: 'China' }]) {

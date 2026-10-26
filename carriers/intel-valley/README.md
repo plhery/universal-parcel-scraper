@@ -26,7 +26,8 @@ qhzhigu.com. The adapter reads its tracker's own lookup for numbers of IV and tw
   destination too, and this tenant's offsets have not been seen to follow the scan's place.
 - Scans are English wording from the warehouse in Shenzhen, the air line and the
   destination's clearance, staged by the wording recorded in [statuses.json](statuses.json),
-  then the shared rules. "Estimated", a month and a day, and "flights" is a booked flight.
+  then the shared rules. "Estimated", a month and a day, and "flights" is a flight booked
+  for that day, still to come, so it is left out.
 - `channel_hawbcode`, the onward network's number, becomes `delivery_tracking_number`.
 - The merchant's order reference, the signatory and the proof-of-delivery link are not read.
 

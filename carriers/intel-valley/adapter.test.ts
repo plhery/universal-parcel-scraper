@@ -11,7 +11,7 @@ import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, INTEL_VALLEY_API, INTEL_VALLEY_CALLBACK, INTEL_VALLEY_PAGE, intelValleyLookupUrl, IntelValleyTracker } from './adapter.js';
 import { normalizeIntelValleyNumber, parseIntelValley } from './parser.js';
-import { intelValleyStage, statusMap } from './status.js';
+import { flightBooked, intelValleyStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const PARCEL = 'IV123400000017';
@@ -68,8 +68,7 @@ describe('Intel-Valley HTTP adapter', () => {
     expect(result.events!.map((event) => [event.local_time, event.location, event.description, event.stage])).toEqual([
       ['2026-07-04T06:58:50', 'LHR', arrived, 'customs'],
       ['2026-07-03T20:05:00', 'HKG', 'The flight has departed', 'in_transit'],
-      // The row listed twice counts once.
-      ['2026-07-01T17:52:18', 'SHENZHEN', 'Estimated 07.03 flights', 'in_transit'],
+      // The booked flight is left out, and the row listed twice counts once.
       ['2026-07-01T10:50:31', 'SHENZHEN', 'During transportation', 'in_transit'],
       // The postcode in the place is dropped.
       ['2026-06-28T15:43:21', 'SHENZHEN', 'Shipment departed from facility', 'in_transit'],
@@ -104,11 +103,12 @@ describe('Intel-Valley HTTP adapter', () => {
     expect(unstaged).not.toHaveProperty('current_stage');
   });
 
-  it('reads only the tracker’s unknown-number answer as not found, a parcel without scans as no history, and rejects a changed reply', () => {
+  it('reads only the tracker’s unknown-number answer as not found, a parcel without scans or with only a booked flight as no history, and rejects a changed reply', () => {
     expect(() => parseIntelValley(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseIntelValley({ success: 0, cnmessage: '参数错误', enmessage: 'Parameter error' }, UNKNOWN)).toThrow(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseIntelValley({ success: 0, cnmessage: null, enmessage: 'Sample failure' }, UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseIntelValley(changed((item) => { item.details = []; }), PARCEL)).toThrow(NoHistoryError);
+    expect(() => parseIntelValley(changed((item) => { item.details = [scan('2026-07-07 07:00:00', 'Estimated 07.08 flights')]; }), PARCEL)).toThrow(NoHistoryError);
     for (const change of [
       (item: Item) => { item.server_hawbcode = UNKNOWN; },
       (item: Item, whole: Reply) => { whole.data.push({ ...item }); },
@@ -177,16 +177,15 @@ describe('Intel-Valley numbers', () => {
 });
 
 describe('Intel-Valley status vocabulary', () => {
-  it('maps every wording it recorded to the stage recorded for it, and a booked flight to in transit', () => {
+  it('maps every wording it recorded to the stage recorded for it, and tells a booked flight apart', () => {
     for (const entry of statuses.entries) {
       expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
       expect(statusMapAnswer({ carrier: 'intel-valley', providerCode: null, description: entry.wording }), entry.wording)
         .toEqual({ kind: 'mapped', stage: entry.stage });
       expect(intelValleyStage(entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
     }
-    for (const wording of ['Estimated 12.01 flights', 'estimated 1.5 flight']) {
-      expect(intelValleyStage(wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
-    }
+    for (const wording of ['Estimated 12.01 flights', 'estimated 1.5 flight']) expect(flightBooked(wording), wording).toBe(true);
+    for (const wording of ['Estimated flights', 'The flight has departed']) expect(flightBooked(wording), wording).toBe(false);
     expect(statusMapAnswer({ carrier: 'intel-valley', providerCode: null, description: 'Sample Status Note' })).toEqual({ kind: 'unknown' });
     for (const wording of ['constructor', 'toString', 'Sample Status Note', 'Estimated flights']) expect(intelValleyStage(wording), wording).toBeNull();
   });

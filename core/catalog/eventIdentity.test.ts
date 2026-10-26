@@ -516,6 +516,12 @@ describe('same-instant identity policies', () => {
     const away = { ...bracketed, description: '【<EXA>】 Clearance start.', location: '' };
     expect(policy?.matches?.({ ...away, description: 'EXA: Clearance start.' }, away)).toBe(true);
     expect(policy?.matches?.({ ...away, description: 'Clearance start.' }, away)).toBe(false);
+    // A row stored with the flight booked for the parcel keeps its row once worded without it.
+    const booked = { stage: 'in_transit', description: 'Origin port warehouse receive，Flight Schedule ETD【EXA】<2026-01-02 03:04:05>, ETA【EXB】<2026-01-02 06:07:08>.', location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...booked, description: 'Origin port warehouse receive' }, booked)).toBe(true);
+    // A row that only booked a flight has no scan to take it over.
+    const flight = { ...booked, description: 'Flight Schedule ETD【EXA】<2026-01-02 03:04:05>, ETA【EXB】<2026-01-02 06:07:08>.' };
+    expect(policy?.matches?.(flight, flight)).toBe(false);
   });
 
   it('lets a DHLink node stored with its row’s clock in its wording keep its row once worded without it', () => {
@@ -594,7 +600,11 @@ describe('same-instant identity policies', () => {
   it.each([
     ['jrt', 'accepted', '到达收货点', 'Arrived at the receiving point', 'ARRIVAL'],
     ['jrt', 'registered', '货物电子信息已经收到', 'The electronic cargo information has been received', ''],
+    // The airport row stored with the flight it books, still to come.
+    ['jrt', 'in_transit', '货物已交机场,预计18号的航班 Goods delivered to airport, scheduled on flight of the 18th', 'Goods delivered to airport', ''],
     ['js-express', 'ready_for_pickup', '到达待取', 'Arrived, awaiting collection', ''],
+    // A flight row stored with the day it expects, still to come.
+    ['mayiyinfu', 'in_transit', '头程落地，二程预计8号的航班The first leg has arrived. The second leg is expected to depart on the 8th.', 'The first leg has arrived', ''],
     ['thhy', 'in_transit', '货物离开操作中心', 'Goods leave the operation center', 'SHIPMENT'],
     ['thhy', 'customs', '送交出口', 'Presented to export customs', 'CO_C_CR'],
     ['yto', 'accepted', '业务员收件', 'Picked up', '310'],
@@ -605,8 +615,8 @@ describe('same-instant identity policies', () => {
     const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
     expect(policy).toEqual({
       sourceCarrierId: source, storedSources: [source], requireProviderCode: false, matchEachScan: true, matches: expect.any(Function),
-      // YTO, China Post and JS Express date local clocks, which adds the wall-clock pass.
-      ...(['yto', 'china-post', 'js-express'].includes(source) ? { matchWallClock: true } : {}),
+      // YTO, China Post, JS Express and Mayi Yinfu date local clocks, which adds the wall-clock pass.
+      ...(['yto', 'china-post', 'js-express', 'mayiyinfu'].includes(source) ? { matchWallClock: true } : {}),
     });
     const stored = { stage, description: chinese, location: 'Sample Town', providerCode: code };
     const incoming = { ...stored, description: ` ${english.toUpperCase()} `, location: 'Sample Town ' };

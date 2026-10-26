@@ -1,10 +1,10 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { InvalidInputError } from '../../core/errors/index.js';
+import { InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { RTB56_MAX_BYTES, rtb56Entry, rtb56Scans, rtb56Text } from '../yypost/rtb56.js';
-import { intelValleyStage } from './status.js';
+import { flightBooked, intelValleyStage } from './status.js';
 
 export const PROVIDER = 'Intel-Valley';
 export const INTEL_VALLEY_MAX_BYTES = RTB56_MAX_BYTES;
@@ -26,12 +26,14 @@ export function normalizeIntelValleyNumber(raw: string): string {
  * holds an entry per number, with the scans newest first, each a wall clock,
  * a place and English and Chinese wording. Only the entry whose
  * `server_hawbcode` is the whole number asked is read; the merchant's order
- * reference, the signatory and the proof of delivery are never read.
+ * reference, the signatory and the proof of delivery are never read. A
+ * flight booked for a day is left out: it is still to come.
  */
 export function parseIntelValley(payload: unknown, raw: string): CarrierResult {
   const number = normalizeIntelValleyNumber(raw);
   const { item, rows } = rtb56Entry(payload, number, PROVIDER);
-  const events = rtb56Scans(rows, PROVIDER, intelValleyStage, { offsets: false });
+  const events = rtb56Scans(rows, PROVIDER, intelValleyStage, { offsets: false }).filter((event) => !flightBooked(event.description!));
+  if (!events.length) throw new NoHistoryError(PROVIDER);
   const newest = events[0]!;
   // A shipment order the line records after the parcel has left the warehouse is no step back.
   const staged = events.find((event) => event.stage && event.stage !== 'registered') ?? events.find((event) => event.stage);

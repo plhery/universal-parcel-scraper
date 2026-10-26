@@ -14,9 +14,11 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.map((entry) => [nor
 // A flight booked for a day, given as its month and day.
 const FLIGHT_BOOKED = /^estimated \d{1,2}\.\d{1,2} flights?$/;
 
+/** A flight booked for a day: something still to come, not a scan. */
+export const flightBooked = (wording: string): boolean => FLIGHT_BOOKED.test(normalizeStatusWording(wording));
+
 function mappedStage(wording: string): Stage | undefined {
-  const normalized = normalizeStatusWording(wording);
-  return WORDINGS.get(normalized) ?? (FLIGHT_BOOKED.test(normalized) ? 'in_transit' : undefined);
+  return WORDINGS.get(normalizeStatusWording(wording));
 }
 
 /** A scan's stage: the map, else the shared wording rules, else nothing. */
