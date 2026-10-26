@@ -898,6 +898,8 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (typeof name === 'string' && ASENDIA_USA.test(name.trim())) return null;
   if (carrier === 'paack' || carrier === 'vinted-go' || carrier === 'austrian-post' || carrier === 'straightship'
     || ownOffset(name, state.date, scanLocation(name, state.location))) return null;
+  // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
+  if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
   if (carrier === 'imile') return countryTimeZone(destination);
   if (carrier === 'china-post' && chinaPostAbroad(scanLocation(name, state.location), status, destination)) return countryTimeZone(destination);

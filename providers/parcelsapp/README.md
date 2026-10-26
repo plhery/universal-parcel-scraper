@@ -476,6 +476,9 @@ step exists for future protocol changes.
 - So do Straightship's scans: its page writes every clock in UTC, and its own rows have
   ParcelsApp's UTC digits to the second. Read on its Vancouver clock, they came out seven
   hours late.
+- So do PostNL's scans in Britain. FedEx International Connect lists the same scans two hours
+  after ParcelsApp's digits, on Dutch summer time, so those digits are their UTC instants. Read
+  on PostNL's Amsterdam clock, they came out two hours early. PostNL's other scans keep it.
 - North American scans: the dates of UPS, FedEx, UniUni, EasyShip and DHL eCommerce are
   the scan's local clock, as UPS's own instants, FedEx's own page, UniUni's own feed,
   Ship24's offsets and DHL eCommerce's Webtrack, which names each scan's clock, show on US

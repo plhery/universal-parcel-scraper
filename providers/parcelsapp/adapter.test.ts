@@ -820,6 +820,16 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual(['2026-10-19T02:51:27.000Z', '2026-10-09T03:26:10.000Z']);
   });
 
+  it('keeps the UTC instants ParcelsApp gives PostNL\'s scans in Britain', () => {
+    // FIC lists the same scans two hours after ParcelsApp's digits, on Dutch summer
+    // time; read on PostNL's Amsterdam clock they came out two hours early.
+    const result = parseParcelsAppResponse({ carriers: ['PostNL'], states: [
+      { date: '2026-10-22T01:23:00Z', status: 'The item is on transport to the country of destination', carrier: 0, location: 'United Kingdom' },
+      { date: '2026-10-22T01:21:00Z', status: 'The item is received by PostNL', carrier: 0, location: 'United Kingdom' },
+    ] }, number, identity(), 'Europe/Budapest');
+    expect(result.events?.map((scan) => scan.time)).toEqual(['2026-10-22T01:23:00.000Z', '2026-10-22T01:21:00.000Z']);
+  });
+
   it('reads iMile\'s scans on the destination\'s clock, wherever they happened', () => {
     // iMile's page writes every scan on the recipient country's clock and ParcelsApp has its
     // digits; read on iMile's catalog zone they came out two hours early in Italy, and nine
