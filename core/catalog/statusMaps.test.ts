@@ -356,6 +356,12 @@ describe('status map answers', () => {
     expect(answer('nacex', null, 'Synthetic label')).toEqual(unknown);
   });
 
+  it("answers Austrian Post's arrival in the destination country by its code, with or without wording", () => {
+    expect(answer('austrian-post', 'IMP', 'Tracking update')).toEqual(mapped('in_transit'));
+    expect(answer('austrian-post', 'IMP', 'Sendung im Zielland angekommen')).toEqual(mapped('in_transit'));
+    expect(answer('austrian-post', 'EXP', 'Tracking update')).toEqual(unknown);
+  });
+
   it("answers Royal Mail's event codes, else its wording", () => {
     expect(answer('royal-mail', 'LOPPA', 'Sender advised item dropped off at parcel locker')).toEqual(mapped('accepted'));
     expect(answer('royal-mail', 'EVPPA', 'Accepted at Parcelshop')).toEqual(mapped('accepted'));
@@ -1661,6 +1667,8 @@ describe("universal providers' answers", () => {
       ['Objeto recebido pelos Correios do Brasil', 'in_transit'], ['Necessidade de informar CPF/CNPJ do destinatário', 'customs'],
       ['Received by carrier', 'in_transit'],
       ['Cambio disposizioni di consegna', 'in_transit'],
+      ['Shipment expected, but not yet arrived or processed at PostNL', 'registered'],
+      ['Parcel linked to packaging tool', 'in_transit'], ['Your parcel has crossed the border', 'in_transit'],
     ] as const) expect(answer('unknown', null, wording), wording).toEqual(mapped(stage));
     // Each is matched whole: the same words in another scan, and the report's open wording, stay unread.
     for (const wording of ['Sending the package to the sender', 'Item held at outward office of exchange for inspection', 'Virtual Manifest pending',
@@ -1730,7 +1738,7 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'Consignee notified: by email')).toEqual(gap);
     expect(answer('unknown', null, 'Your package will be delivered to another pickup point. You will be informed of the address and hours by email.')).toEqual(gap);
     for (const wording of ['Shipment parameters updated', 'Tax ID. Form received', 'Keine weiteren Details erforderlich', 'Filiale / Agentur',
-      'Benachrichtigt', 'In progress', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Received.', 'Shipped', 'Driver assigned',
+      'Benachrichtigt', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Received.', 'Shipped', 'Driver assigned',
       'Parcel is with the driver', 'Not received from retailer', 'Pickup document attached', 'Delivery branch. Rescheduling',
       'Parcel to be taken to a Yodel Store', 'The parcel has reached the ParcelShop', 'Barcode scanning', 'Packaged']) expect(answer('unknown', null, wording), wording).toEqual(gap);
     // Only the whole wording: a receipt that names its receiver, or another number, is not left out.

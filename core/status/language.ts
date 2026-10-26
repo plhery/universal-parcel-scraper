@@ -464,6 +464,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // them: the item prepared before its bulk handover, then PostNL's acceptance centre taking it in.
   if (/^(?:the )?item is ready for shipment$/.test(text)) return 'registered';
   if (/^consignment received at (?:the )?postnl acceptance cent(?:re|er)$/.test(text)) return 'accepted';
+  // PostNL's domestic labels as ParcelsApp relays them: the shipment announced but not yet at PostNL, then,
+  // after its sorting, the parcel linked to a packaging tool for the journey abroad and crossing the border.
+  if (/^shipment expected,? but not yet arrived or processed at postnl$/.test(text)) return 'registered';
+  if (/^parcel linked to (?:a |the )?packaging tool$|^(?:your |the )?(?:parcel|package|shipment|item) has crossed the border$/.test(text)) return 'in_transit';
   // UPS's scans as providers relay them without its activity codes, read as UPS's own map reads them: a delivery
   // change the receiver asked for, carried out, and a wrong company or receiver name holding the delivery.
   if (/^as requested, (?:the )?(?:ups my choice®? )?delivery change (?:was|has been) completed$|^(?:the )?(?:delivery )?address (?:was|has been) changed as (?:the )?(?:receiver|recipient) requested$/.test(text)) return 'in_transit';

@@ -34,6 +34,8 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['vereinfachte zustellung', 'A detail line naming a simplified delivery, beside loading and unloading scans: no step of its own.'],
   ['benachrichtigt', 'A German note that someone was notified, without saying of what: no step of its own.'],
   ['in progress', 'A heading that names no step.'],
+  ['delivery cannot be changed', "PostNL's note, as ParcelsApp relays it, that the delivery can no longer be changed: not a scan."],
+  ['pios notice', "PostNL's notice, as ParcelsApp relays it beside its receipt of the shipment, without its content: no step of its own."],
   ['update on your parcel', 'A heading that names no step.'],
   ['carrier update', "Cainiao's placeholder wording, which ParcelsApp relays for its notices and its transit sorting centers' scans alike: it names no movement."],
   ['110', "A bare code relayed in place of a scan's wording: it names no step."],
