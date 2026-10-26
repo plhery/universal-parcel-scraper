@@ -178,6 +178,19 @@ describe('SF Express public route parsing', () => {
     expect(events[2]?.location).toBe('Sample Point');
   });
 
+  it("keeps neither a courier's name and number nor a service point's address", () => {
+    const value = copy(); const routes = value.result[0]!.routes;
+    routes[2]!.remark = 'The shipment has arrived at【Sample Service Point，Address：样本区样本路1号A1-A9）】';
+    routes[3]!.remark = 'Arrived at 【样本营业点（Sample Point，Address：样本路2号）】';
+    routes[1]!.remark = 'The shipment has been handed over to and is being delivered by 样本人 (contact number: 00000000000. '
+      + 'Please answer the call at ease as your privacy is properly protected by "safety call"!)';
+    const events = parse(value, NUMBER).events!;
+    expect(events[3]).toMatchObject({ description: 'The shipment has arrived at【Sample Service Point】', location: 'Sample Service Point' });
+    expect(events[2]).toMatchObject({ description: 'Arrived at 【Sample Point】', location: 'Sample Point' });
+    expect(events[4]?.description).toBe('The shipment has been handed over to and is being delivered by the courier');
+    expect(JSON.stringify(events)).not.toMatch(/样本人|样本路|样本区|contact|00000/);
+  });
+
   it('names no place for a remark about a person, a number in brackets or a delivery', () => {
     const value = copy(); const routes = value.result[0]!.routes;
     routes[2]!.remark = 'Out for delivery by courier 【Synthetic Person】';

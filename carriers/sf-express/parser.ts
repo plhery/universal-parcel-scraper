@@ -53,6 +53,24 @@ function remarkText(raw: unknown): string {
 const BILINGUAL_SITE = /【([^【】（）()]*\p{Script=Han}[^【】（）()]*)[（(]([^【】（）()\p{Script=Han}]*\p{Script=Latin}[^【】（）()\p{Script=Han}]*)[）)]】/gu;
 const englishSites = (text: string): string => text.replace(BILINGUAL_SITE, (_, _chinese: string, english: string) => `【${english.trim()}】`);
 
+// A service point's brackets can hold its street address after its name: "【<name>，Address：<address>】".
+const ADDRESS = /\s*[，,]\s*(?:address|地址)\s*[:：]/iu;
+function withoutAddresses(text: string): string {
+  return text.replace(/【([^【】]*)】/gu, (whole, site: string) => {
+    const cut = ADDRESS.exec(site);
+    if (!cut) return whole;
+    const name = site.slice(0, cut.index);
+    // A Chinese name keeps the English one in its brackets: 【<Chinese>（<English>，Address：…）】.
+    return /[（(][^（(）)]*$/u.test(name) ? `【${name}）】` : `【${name}】`;
+  });
+}
+
+// A courier's remark names them and gives their number: "… is being delivered by <name> (contact
+// number: <number>. Please answer the call …)". The remark keeps neither.
+const CONTACT = /\s*[（(]\s*(?:contact (?:number|phone)|联系电话|聯繫電話)\s*[:：].*$/isu;
+const COURIER = /\s+by\s+[^()（）]{1,40}?(?=\s*[（(]\s*(?:contact (?:number|phone)|联系电话|聯繫電話)\s*[:：])/iu;
+const withoutContact = (text: string): string => CONTACT.test(text) ? text.replace(COURIER, ' by the courier').replace(CONTACT, '') : text;
+
 // A remark names the site of its scan in its first brackets: "The shipment has arrived at 【A】",
 // "Shipment loaded at 【A】, prepare to send to 【B】". A remark about a courier or whoever signed
 // may name a person there instead.
@@ -95,7 +113,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const reason = clean(raw.stayWhyCode, 64);
     if (!/^[A-Z0-9_-]{1,64}$/.test(code)) throw new SchemaError(PROVIDER, 'SF Express returned an invalid operation code');
     const status = sfExpressEventStatus(code, reason, text);
-    const description = status?.status === 'delivered' ? 'Delivered' : englishSites(text);
+    const description = status?.status === 'delivered' ? 'Delivered' : withoutContact(englishSites(withoutAddresses(text)));
     const site = status?.status === 'delivered' ? undefined : scanSite(description);
     const event: CarrierEvent = { time, provider_code: code, description,
       ...(site ? { location: site } : {}),
