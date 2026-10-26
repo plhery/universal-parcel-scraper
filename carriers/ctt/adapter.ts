@@ -187,13 +187,15 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
     const classified = classifyCttStatus(stateId);
     parsed.push({
       // Local mixes depot codes and point names (operational locations, kept
-      // coarse). Sender/recipient identity, contact and address blocks travel
-      // on the record but are deliberately never retained.
+      // coarse). A bare number, such as the Spanish post office code on the
+      // acceptance CTT relays from Correos, names no place. Sender/recipient
+      // identity, contact and address blocks travel on the record but are
+      // deliberately never retained.
       // An unmapped state keeps no stage: the sync classifies the wording and
       // records where the stage came from instead of assuming movement here.
       event: {
         ...(clock.time ? { time: clock.time } : { local_time: clock.local_time }),
-        location,
+        location: /^\d+$/.test(location) ? '' : location,
         description,
         ...(classified ? { stage: classified.stage } : {}),
         ...(Number.isSafeInteger(stateId) ? { provider_code: String(stateId) } : {}),

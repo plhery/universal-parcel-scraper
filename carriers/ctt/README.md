@@ -66,7 +66,8 @@ carrier.
   the row stored under CTT's `Z`, by wall clock, provider code and location, and its
   `matchWallClock` lets a scan read on another zone take over the row showing its wall clock.
 - Event `Local` mixes depot codes and point names. It is kept as a coarse location and never
-  refined into an address.
+  refined into an address. A bare number, such as the Spanish post office code on the
+  acceptance CTT relays from Correos, is no place and is dropped.
 - Sender and recipient names, contacts and addresses are on the record but never read; a
   test asserts it. Only the recipient's country is read, for the clocks above.
 - At most 20 events are returned, newest first.

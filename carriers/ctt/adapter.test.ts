@@ -191,6 +191,22 @@ describe('CTT response parsing', () => {
       expect(scanAt('2026-10-20T19:12:27Z', '0099999 - (CO) C.O. EXAMPLE')).toBe('2026-10-20T19:12:27+01:00');
     });
 
+    it('drops a bare office code as a place but keeps it for the clock', () => {
+      const number = 'LT000000005ES';
+      const result = parseCttTrackingResponse({ data: { ObjectEventsFromQuery: record({ ObjectCode: number, RecipientCountryCode: 'PT',
+        Events: { List: [
+          { DateTime: '2026-10-24T03:46:00Z', State: 'X', StateId: 11, Event: 'Forwarded', EventCode: 'EMC', Local: 'ESEXAA - (OUTRO) EXAMPLE AP' },
+          { DateTime: '2026-10-23T18:22:00Z', State: 'X', StateId: 2, Event: 'Accepted', EventCode: 'EMA', Local: '9999999' },
+          { DateTime: '2026-10-25T10:00:00Z', State: 'X', StateId: 11, Event: 'Arrived', EventCode: 'EMD', Local: '9500' },
+        ] } }) } }, number);
+      expect(result.events?.map((event) => [event.description, event.location, event.time])).toEqual([
+        // An Azores postcode still sets the clock.
+        ['Arrived', '', '2026-10-25T10:00:00-01:00'],
+        ['Forwarded', 'ESEXAA - (OUTRO) EXAMPLE AP', '2026-10-24T03:46:00+02:00'],
+        ['Accepted', '', '2026-10-23T18:22:00+02:00'],
+      ]);
+    });
+
     it('takes any other offset as sent and orders wall times among instants', () => {
       expect(scanAt('2026-08-01T10:00:00+02:00', '12345', 'EDG', 'US')).toBe('2026-08-01T10:00:00+02:00');
       const result = parseCttTrackingResponse({ data: { ObjectEventsFromQuery: record({ RecipientCountryCode: 'US',
