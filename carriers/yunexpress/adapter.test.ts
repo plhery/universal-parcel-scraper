@@ -266,6 +266,11 @@ describe('YunExpress captured response projection', () => {
     // From abroad, without the hand-over, no leg is named.
     rows[3].ProcessContent = 'Start Customs Clearence';
     expect(parse(payload, NUMBER).events?.filter((event) => event.time)).toHaveLength(1);
+    // Unless GOFO names its facility: the leg starts at the first one.
+    rows[2].ProcessContent = 'Arrived at GOFO Regional Hub';
+    rows[4].ProcessContent = 'Shipping Label Created';
+    expect(parse(payload, NUMBER).events?.slice(0, 5).map((event) => event.time)).toEqual(['2026-03-20T13:39:00-05:00',
+      '2026-03-19T13:39:00-05:00', '2026-03-18T13:39:00-05:00', undefined, undefined]);
   });
 
   it("dates China Post's relayed scans on China's clock, abroad too", () => {

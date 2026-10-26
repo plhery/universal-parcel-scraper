@@ -49,6 +49,8 @@ const ORIGIN_ZONE = 'Asia/Shanghai';
 const ARRIVAL = 'international flight has arrived';
 // A hand-over to the last-mile carrier, which relays what follows.
 const HANDOVER = /^shipment (?:is )?in transit to (?:carrier|dhl)$/;
+// GOFO names its own facilities on its scans after the flight in.
+const GOFO_FACILITY = /^arrived at gofo\b/;
 
 /**
  * Dates the rows without a place that China's leg holds, up to the flight
@@ -99,16 +101,18 @@ function dateChinaPostScans(events: CarrierEvent[], destination: string): Carrie
  * Dates the destination leg's rows on the offset the latest-scan record
  * states, when no row of that leg names a place: one partner relays the leg,
  * and with no place the facade would read it on China's clock. The leg is
- * what follows the flight in, else the hand-over to the last-mile carrier; a
- * parcel sent within its destination country is one leg. Events are newest
- * first, and the newest is the stated scan.
+ * what follows the flight in, else the hand-over to the last-mile carrier,
+ * else it starts at GOFO's first facility; a parcel sent within its
+ * destination country is one leg. Events are newest first, and the newest is
+ * the stated scan.
  */
 function dateDestinationLeg(events: CarrierEvent[], offset: string | undefined, domestic: boolean): CarrierEvent[] {
   const zone = offset ? FixedOffsetZone.parseSpecifier(`UTC${offset}`) : null;
   if (!offset || !zone) return events;
   const arrival = events.map(wording).indexOf(ARRIVAL);
   const handover = events.findIndex((event) => HANDOVER.test(wording(event)));
-  const end = arrival >= 0 ? arrival : domestic ? events.length : Math.max(handover, 0);
+  const facility = events.map((event) => GOFO_FACILITY.test(wording(event))).lastIndexOf(true);
+  const end = arrival >= 0 ? arrival : domestic ? events.length : handover >= 0 ? handover : facility + 1;
   if (events.slice(0, end).some((event) => event.location)) return events;
   return events.map((event, at) => at >= end || event.time || !event.local_time ? event
     : { ...event, time: eventClock(event.local_time, offset).time, time_zone: zone.name, time_zone_basis: 'neighbour' });
