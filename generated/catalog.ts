@@ -2847,6 +2847,9 @@ export const CARRIER_CATALOG = {
   "ctt-express": {
     "displayName": "CTT Express",
     "color": "#df0024",
+    "aliases": [
+      "CTT Express Tracking"
+    ],
     "countries": [
       "ES",
       "PT"

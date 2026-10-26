@@ -1,7 +1,9 @@
 {
   "id": "ctt-express",
   "displayName": "CTT Express",
-  "aliases": [],
+  "aliases": [
+    "CTT Express Tracking"
+  ],
   "region": {
     "countries": [
       "ES",
