@@ -15,6 +15,7 @@
     {"wording": "Shipment started customs clearance process.", "stage": "customs", "language": "en", "confirmedBy": "portal"},
     {"code": "EVENT_205", "wording": "Shipment completed customs clearance process.", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Import clearance finished; the parcel moves on."},
     {"code": "EVENT_203", "wording": "Shipment arrived at destination facility", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"code": "S06A616", "wording": "Parcel at destination facility, ready for next step", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Scanned after import clearance at the destination facility, before the hand-over to the last-mile carrier."},
     {"wording": "Parcel Weight", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Weighing scan at the destination facility."},
     {"code": "EVENT_311", "wording": "Shipment is tendering to third party carrier for final delivery.", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Hand-over to the last-mile carrier, whose own number may then appear."},
     {"code": "EVENT_10303", "wording": "Local carrier has accepted package for final delivery", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
