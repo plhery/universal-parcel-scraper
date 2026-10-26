@@ -26,6 +26,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['shipment ready for onward transportation to local delivery hub', 'in_transit'],
   ['released by customs', 'in_transit'],
   ['shipment handed over to local ground transport for delivery hub transfer', 'in_transit'],
+  // The hand-over to the courier that delivers it, in SFC's spelling.
+  ['transfered to local courier', 'in_transit'],
   // The partner's first scan of the parcel; the shared rules read nothing in it.
   ['local courier warehouse, received and ready for processing', 'in_transit'],
   ['in transit', 'in_transit'],

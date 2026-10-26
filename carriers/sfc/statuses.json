@@ -24,6 +24,7 @@
     {"wording": "Shipment ready for onward transportation to local delivery hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Released by customs", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "SFC repeats the wording in brackets after it."},
     {"wording": "Shipment handed over to local ground transport for delivery hub transfer", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Transfered to local courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "The hand-over to the courier that delivers the parcel in the destination country, in SFC's spelling."},
     {"wording": "Local courier warehouse, received and ready for processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering courier's first scan of the parcel."},
     {"wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "SFC's name for a scan relayed from the delivering courier."},
     {"wording": "Processing at facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "SFC's name for a scan relayed from the delivering courier."},
