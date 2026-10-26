@@ -211,6 +211,14 @@ describe('Austrian Post public tracking', () => {
       expect(silent.events?.some((event) => event.description || event.stage)).toBe(false);
     });
 
+    it('is in transit as the arrival in the destination country (IMP)', () => {
+      const payload = returned();
+      wordless(payload).status = 'IMP';
+      const result = parseAustrianPostResponse(payload, RETURNED);
+      expect(result.events?.[3]).toEqual({ time: '2026-03-03T03:10:45Z', stage: 'in_transit', provider_code: 'IMP' });
+      expect(result).toMatchObject({ current_stage: 'returned', last_status_text: 'Empfängeradresse ungenügend' });
+    });
+
     it('is skipped without a code', () => {
       const payload = returned();
       wordless(payload).status = '';

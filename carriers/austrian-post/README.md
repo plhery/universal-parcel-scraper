@@ -41,8 +41,10 @@ delivered.
 
 A scan can come without wording. The tracking page lists it under its date
 and time alone, with no label from its codes, so it keeps its code but gets
-no stage, and the status text comes from the newest scan with wording. A scan
-with neither wording nor a code is skipped.
+no stage, and the status text comes from the newest scan with wording. `IMP`
+is the exception: its code alone is the arrival in the destination country,
+so it is in transit with or without wording. A scan with neither wording nor
+a code is skipped.
 
 The query also asks for the measured size, in whole centimetres. It never
 asks for the shipper, which the public page shows only after sign-in, or

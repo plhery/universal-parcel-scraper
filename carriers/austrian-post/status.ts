@@ -78,12 +78,13 @@ function transitScan(code: string, text: string): boolean {
  * What the map says about one scan by its code and wording. Most scans take
  * their stage from the reason as well (an IZ scan with reason BH is a missed
  * delivery), so the map answers only scans the reason cannot change: a
- * delivery's wording, the transit scans and the wordings above.
+ * delivery's wording, the transit scans, the arrival in the destination
+ * country (IMP), with or without wording, and the wordings above.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     if (DELIVERED.test(wording)) return 'delivered';
-    if (code && transitScan(code, wording)) return 'in_transit';
+    if (code === 'IMP' || (code && transitScan(code, wording))) return 'in_transit';
     return byWording(wording)?.stage;
   },
   gaps: [],

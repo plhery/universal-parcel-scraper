@@ -62,6 +62,13 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "code": "IMP",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Seen without wording after the sending post's departure. The code alone is the arrival in the destination country, so it is in transit; the status text comes from the newest scan with wording."
+    },
+    {
       "code": "EXP",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",

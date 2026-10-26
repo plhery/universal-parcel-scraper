@@ -91,11 +91,13 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
     const code = clean(raw.status, 32);
     const providerCode = /^[A-Z0-9]{1,8}$/.test(code) ? code : '';
     // The tracking page lists a scan without wording under its date and time
-    // alone, with no label from its codes. It keeps its code but no stage; one
-    // without a code is skipped.
+    // alone, with no label from its codes. It keeps its code but no stage,
+    // except the arrival in the destination country (IMP), which its code
+    // names; one without a code is skipped.
     if (!description && !providerCode) return;
     const location = austrianPostPlace(clean(raw.eventPlaceName, 200));
-    const mapped = description ? austrianPostEventStatus(code, reason, description) : undefined;
+    const mapped = description ? austrianPostEventStatus(code, reason, description)
+      : code === 'IMP' ? austrianPostSummaryStatus('IV') : undefined;
     const key = JSON.stringify([time.iso, location, description, description ? '' : providerCode]);
     if (seen.has(key)) return;
     seen.add(key);
