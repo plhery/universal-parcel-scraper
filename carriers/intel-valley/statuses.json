@@ -42,6 +42,21 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "As a universal provider relays the tracker's scans."
+    },
+    {
+      "wording": "Cleared customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The destination's clearance is done and the parcel moves on."
+    },
+    {
+      "wording": "Customs clearance completed; package is now in transit.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26"
     }
   ]
 }
