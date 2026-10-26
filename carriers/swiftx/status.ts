@@ -9,6 +9,7 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
 const SCANS: Readonly<Record<string, Stage>> = {
   CREATED: 'registered',
   PICKUP_ARRIVAL_SCAN: 'accepted',
+  SORTING_CENTER_SIGNED_SCAN: 'accepted',
   SORTING_CENTER_INBOUND_SCAN: 'in_transit',
   ORIGIN_HUB_DEPARTURE: 'in_transit',
   DISPATCH_SCAN: 'in_transit',
