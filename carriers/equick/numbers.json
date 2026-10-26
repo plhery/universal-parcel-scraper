@@ -39,7 +39,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "cargus"
+        ]
       },
       "note": "An archived lookup on Equick's own tracker shows this tracking number with its history from Shanghai to delivery in Canada."
     },

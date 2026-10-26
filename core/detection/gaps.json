@@ -526,12 +526,6 @@
   },
   {
     "carrier": "cargus",
-    "pattern": "^\\d{10}$",
-    "kind": "by_design",
-    "reason": "Ten digits are shared by several carriers and nothing in the number points to Cargus."
-  },
-  {
-    "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Nine digits are shared by several carriers and nothing in the number points to Cargus."

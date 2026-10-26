@@ -25,6 +25,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]
@@ -57,6 +58,7 @@
           "packeta",
           "acs-courier",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "geniki-taxydromiki",
           "gls-es"
@@ -88,6 +90,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]
@@ -118,6 +121,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]
@@ -148,6 +152,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]
@@ -188,7 +193,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "cargus"
+        ]
       },
       "note": "Looked up on Cargus's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -207,7 +215,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "cargus"
+        ]
       },
       "note": "Looked up on Cargus's own tracker, as an archived address shows; the capture was not opened."
     },

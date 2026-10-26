@@ -41,7 +41,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "cargus"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -166,6 +167,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]
@@ -254,6 +256,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]
@@ -313,6 +316,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]

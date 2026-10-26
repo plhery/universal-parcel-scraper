@@ -5377,7 +5377,8 @@
       "packeta",
       "relais-colis",
       "tipsa",
-      "box-now"
+      "box-now",
+      "cargus"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept, and Packeta's packet ID is ten digits without its Z. Direct tracking must confirm the carrier."
   },
@@ -5395,7 +5396,8 @@
       "tipsa",
       "acs-courier",
       "geniki-taxydromiki",
-      "box-now"
+      "box-now",
+      "cargus"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept. A passing modulo-7 check prioritizes DHL Express, ACS Courier and Geniki Taxydromiki but does not establish any of them; direct tracking must confirm the carrier."
   },
@@ -5409,7 +5411,8 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "box-now"
+      "box-now",
+      "cargus"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept. Direct tracking must confirm the carrier."
   },
@@ -5424,9 +5427,18 @@
       "mondial-relay",
       "relais-colis",
       "tipsa",
-      "box-now"
+      "box-now",
+      "cargus"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept. A passing waybill check prioritizes DHL Express but does not establish it; direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Nine digits starting 85 or 86",
+    "carriers": [
+      "cargus",
+      "tnt"
+    ],
+    "reason": "Cargus's nine-digit air waybills come from one block starting 85 or 86, inside the nine digits TNT's consignment numbers take. Both rules are low-confidence, and recognition asks Cargus only for a lookup in Romania; direct tracking must confirm the carrier."
   },
   {
     "shape": "Seventeen digits in the Hermes Einrichtungs-Service delivery-note layout",

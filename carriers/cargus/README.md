@@ -44,11 +44,13 @@ maintainer's approval. A missing or wrong key gets a bare HTTP 400, which is a c
 
 ## Numbers
 
-Cargus's tracker takes the AWB number. Lookups archived from it show nine and ten digits, one
-rising series that reached ten digits in 2023; lookups through the former site's tracking
-script, from 2014 to 2016, show three letters, eight digits and a letter. Nine and ten digits
-are shared with several carriers and the letter layout has not been seen since 2016, so no rule
-claims them and the user picks Cargus. Detection therefore never offers Cargus to recognition.
+Cargus's tracker takes the AWB number. Lookups archived from it show ten digits starting with 1,
+a series that rose from 10 in 2023 to 12 in 2026, and, from 2023 to 2025, hundreds of nine-digit
+AWBs in one block starting with 85 or 86. Lookups through the former site's tracking script,
+from 2014 to 2016, show three letters, eight digits and a letter. Nine and ten digits are shared
+with several carriers and nothing in the number points to Cargus, so `cargus-1` and `cargus-2`
+only suggest it for those two layouts, and recognition asks Cargus only when the lookup's
+country is Romania. The letter layout has not been seen since 2016 and has no rule.
 
 ## Links
 

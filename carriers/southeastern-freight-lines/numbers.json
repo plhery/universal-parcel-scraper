@@ -83,7 +83,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "cargus"
+        ]
       },
       "note": "Ship24's Southeastern Freight Lines page gives it as an example tracking number."
     },

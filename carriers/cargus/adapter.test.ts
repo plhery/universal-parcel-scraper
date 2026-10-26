@@ -2,7 +2,9 @@
 import { createDecipheriv } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -29,6 +31,20 @@ describe('Cargus numbers', () => {
     expect(normalizeCargusNumber(' 1000 000 001 ')).toBe('1000000001');
     for (const number of ['', '1234567', '1000000001!', 'X'.repeat(21)]) {
       expect(() => normalizeCargusNumber(number), number).toThrowError(expect.objectContaining({ kind: 'invalid_input' }));
+    }
+  });
+
+  it('suggests the ten-digit series and the nine-digit 85 and 86 block, and is asked about them only for a lookup in Romania', () => {
+    for (const number of ['1000000001', '1200000000', '850000000', '869999999']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates, number).toContain('cargus');
+      expect(recognitionAskedCarriers(number, { countryHint: 'RO' })[0], number).toBe('cargus');
+      for (const countryHint of [undefined, 'BG', 'GR', 'DE', 'FR']) {
+        expect(recognitionAskedCarriers(number, { countryHint }), `${number} ${countryHint}`).not.toContain('cargus');
+      }
+    }
+    for (const other of ['2000000001', '0100000000', '840000000', '870000000', '10000000001', '85000000']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('cargus');
     }
   });
 });

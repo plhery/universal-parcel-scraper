@@ -76,7 +76,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "cargus"
+        ]
       },
       "note": "A complaint gives this as the number of a parcel that reached Bangalore but was not delivered."
     },
@@ -183,6 +186,7 @@
           "estafeta",
           "packeta",
           "box-now",
+          "cargus",
           "dhl-ecommerce-es",
           "gls-es"
         ]

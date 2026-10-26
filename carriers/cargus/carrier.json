@@ -24,7 +24,8 @@
     ],
     "localClocks": true,
     "recognition": {
-      "rank": 270
+      "rank": 270,
+      "servedCountriesOnly": true
     }
   },
   "capabilities": [
@@ -81,5 +82,16 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "cargus-1",
+      "pattern": "^1\\d{9}$",
+      "confidence": "low"
+    },
+    {
+      "id": "cargus-2",
+      "pattern": "^8[56]\\d{7}$",
+      "confidence": "low"
+    }
+  ]
 }
