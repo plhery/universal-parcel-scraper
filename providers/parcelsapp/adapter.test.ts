@@ -1588,6 +1588,23 @@ describe('ParcelsApp result parsing', () => {
     }
   });
 
+  it("leaves out ParcelsApp's summary of a Russian Post delivery, on the delivery office's wall clock", () => {
+    const domestic = '10000000000001';
+    // Russian Post's own states come on Moscow's clock; the summary on the office's, here seven hours ahead of UTC.
+    const delivery = { date: '2026-10-22T09:58:40+00:00', status: 'Вручение адресату почтальоном', carrier: 0, location: 'Example City, 000000' };
+    const summary = { date: '2026-10-22T13:58:40+00:00', status: 'Вручено 22 октября', location: 'Example Town' };
+    const reply = (...states: object[]) => parseParcelsAppResponse({ carriers: ['Russian Post'], states: [...states,
+      { date: '2026-10-16T11:30:40+00:00', status: 'Arrived at the Post office', carrier: 0, location: 'Example Town, 000000' }] },
+    domestic, identity(domestic)).events?.map(({ time, local_time, stage }) => [time ?? local_time, stage]);
+    const dated = [['2026-10-22T06:58:40.000Z', 'delivered'], ['2026-10-16T08:30:40.000Z', 'in_transit']];
+    // With no carrier, or Russian Post's, the summary repeats the delivery whole hours away.
+    expect(reply(summary, delivery)).toEqual(dated);
+    expect(reply({ ...summary, carrier: 0 }, delivery)).toEqual(dated);
+    // Alone, or minutes off a delivery, it stays.
+    expect(reply(summary)).toEqual([['2026-10-22T13:58:40.000', 'delivered'], dated[1]]);
+    expect(reply(summary, { ...delivery, date: '2026-10-22T09:28:40+00:00' })).toHaveLength(3);
+  });
+
   it('reads a network nothing places on its copies\' clock, and a later acceptance by another carrier as a hand-over', () => {
     // A line provider outside the catalog files DHLink's scans at the same
     // digits with no place; DPD takes the parcel once it is cleared.

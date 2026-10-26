@@ -1326,6 +1326,23 @@ function timedTwins(events: readonly CarrierEvent[], days: ReadonlySet<CarrierEv
     && other.stage_source !== 'none' && clockOf(other).slice(0, 10) === day.local_time));
 }
 
+// Russian Post's summary of a delivery, "Вручено 22 октября" (delivered on 22 October).
+const RUSSIAN_POST_SUMMARY = /^вручено \d{1,2} \p{L}+[.!]?$/iu;
+
+/**
+ * ParcelsApp lists beside a Russian Post delivery its summary ("Вручено 22 октября"), at the
+ * posting office, on the delivery office's wall clock with no carrier to place it: a delivery
+ * in Abakan at 13:58 local, 06:58 UTC, came as 13:58. A summary in the delivered stage whose
+ * clock is whole hours from a dated delivery's instant, to the second, from one to twelve as
+ * Russia's clocks are, repeats that delivery and is left out.
+ */
+function dropRussianPostSummaries(events: CarrierEvent[], summaries: ReadonlySet<CarrierEvent>): void {
+  const clock = (event: CarrierEvent) => Date.parse(event.time ?? (event.local_time ? `${event.local_time}Z` : ''));
+  const repeats = [...summaries].filter((summary) => summary.stage === 'delivered' && events.some((scan) => !summaries.has(scan)
+    && scan.stage === 'delivered' && scan.time && [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].includes(Math.abs(clock(summary) - clock(scan)) / 3_600_000)));
+  for (const summary of repeats) events.splice(events.indexOf(summary), 1);
+}
+
 /** Leaves out the passed deliveries and the timed steps' untimed twins. */
 function dropPassed(events: CarrierEvent[], steps: ReadonlySet<CarrierEvent>): void {
   const dropped = new Set([...passedDeliveries(events), ...timedTwins(events, steps)]);
@@ -1451,6 +1468,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   const scans: { event: CarrierEvent; scan: CarrierScan }[] = [];
   const scanCarriers = new Set<unknown>();
   const names = new Map<CarrierEvent, unknown>();
+  const summaries = new Set<CarrierEvent>();
   let undated = 0;
   // The reply is in North America when a scan certainly is, or when a scan
   // names a state or province ("Atlanta, GA") and none names another country.
@@ -1547,6 +1565,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       carried.push({ event: parsed, carrier: nameKey(name) });
       scanCarriers.add(name);
       names.set(parsed, name);
+      if (RUSSIAN_POST_SUMMARY.test(relayedLabel(raw.status))) summaries.add(parsed);
       if (step) steps.add(parsed);
     }
     if (parsed && scan) scans.push({ event: Object.assign(parsed, { stage: scan.stage, stage_source: 'carrier_map' }), scan });
@@ -1555,6 +1574,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   markLaterReceipts(scans);
   markHandovers(carried);
   dropPassed(events, steps);
+  dropRussianPostSummaries(events, summaries);
   latest.check();
   if (!events.length) {
     const gates = payload.states.filter((raw: unknown): raw is Record<string, unknown> => isRecord(raw)

@@ -564,6 +564,10 @@ step exists for future protocol changes.
   ParcelsApp words a leg's end so: a first carrier's on the day it hands the parcel to the
   next, and MailAmericas' "Delivered by Airline" before the destination's customs. The day
   covers the hours a reply's networks' clocks can stand apart.
+- Russian Post's summary of a delivery ("Вручено 22 октября") names no carrier and comes on the
+  delivery office's wall clock, while Russian Post's own scans have Moscow time's digits. A
+  summary in the delivered stage whole hours, from one to twelve, from a dated delivery
+  repeats it and is left out; read as UTC it put the delivery hours late.
 - MailAmericas' hand-overs in the destination country read as in transit in English and
   in Spanish ("Entregado por Aerolínea", "Entregado a Distribuidor"); only its finished
   process is the delivery.
