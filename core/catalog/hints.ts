@@ -25,6 +25,19 @@ const NAME_ALIASES: Readonly<Record<string, string>> = {
   portugalctt: 'ctt', portugalpostportugalctt: 'ctt',
   italypost: 'poste-italiane', italysda: 'poste-italiane', deutschepostdhlpaket: 'dhl', austriapost: 'austrian-post',
   evri: 'evri-uk', chilepost: 'correos-chile', chilecorreos: 'correos-chile', correoschilecorreoschile: 'correos-chile',
+  // La Poste's names for its delivery partners abroad, in French or as the postal union lists them.
+  posteitalienne: 'poste-italiane', posteirlandaise: 'an-post', postegb: 'royal-mail',
+  directiondespostesalgerie: 'algerie-poste', organismenationaldespostesegypt: 'egypt-post',
+  baridalmaghribmaroc: 'barid-al-maghrib', societenationalelapostesenegal: 'la-poste-senegal',
+  officenationaldesposteslapostetunisienne: 'la-poste-tunisienne',
+  entreprisefederaleunitairedetatpostederussie: 'russian-post', entreprisedetatpostamoldovei: 'posta-moldovei',
+  eurbelpochtabelarus: 'belpost', haypostcjsc: 'haypost', correooficialdelarepublicaargentinasa: 'correo-argentino',
+  empresabrasileiradecorreiosetelegrafos: 'correios-br', empresacorreosdechile: 'correos-chile',
+  jordanpostcompany: 'jordan-post', serpostsaperu: 'serpost', publicenterprisepostofserbia: 'posta-srbije',
+  publicjointstockcompanyukrposhta: 'ukrposhta', southafricapostofficelimited: 'south-african-post-office',
+  postur: 'posturinn', singaporepostlimited: 'singapore-post', malaysiapost: 'pos-malaysia',
+  departmentofpostsindia: 'india-post', israelpostalcompanyltd: 'israel-post', turkishpttcorporation: 'ptt',
+  cameronpostalservicescampost: 'campost', servicopostalmexicano: 'correos-de-mexico',
 };
 // The postal union's shared feed, which aggregators list among a parcel's carriers.
 const FEED_NAMES = ['upu', 'universalpostalunion'];

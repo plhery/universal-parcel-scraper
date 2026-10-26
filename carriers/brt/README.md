@@ -108,7 +108,9 @@ search reaches, so these exact replies stay inconclusive with the reason
 Empty replies, redirects and generic HTTP errors remain inconclusive.
 
 Links to the shipment pages (`/vas/sped_…`) and the root of vas.brt.it name
-BRT; its other pages, such as pickup orders and help, name none.
+BRT; its other pages, such as pickup orders and help, name none. Any link to
+mybrt.it, the consumer portal, names BRT: La Poste names its partner DPD with
+that link for parcels BRT delivers, under a BRTcode.
 
 ## Testing
 

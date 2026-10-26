@@ -103,7 +103,9 @@ recognition reads it as unknown rather than as a transport failure.
 - Colissimo enters some transport scans at their planned time, before they happen. A scan
   dated more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - `contextData.partner` names the foreign carrier after export; it becomes
-  `delivery_carrier` and `delivery_tracking_number`. An item whose `product` is
+  `delivery_carrier` and `delivery_tracking_number`. Its name can be French or the
+  postal union's company name. A brand with several networks, such as DPD, is
+  read from its link: DPD with myBRT's link is BRT. An item whose `product` is
   Chronopost names Chronopost instead, whose own tracking holds the scans and
   references this feed can omit, so the tracker asks it too.
 - `contextData.merchantName` is the sender the tracking page shows. While the

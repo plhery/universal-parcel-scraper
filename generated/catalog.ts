@@ -3028,6 +3028,11 @@ export const CARRIER_CATALOG = {
         "params": [
           "brtCode"
         ]
+      },
+      {
+        "domains": [
+          "mybrt.it"
+        ]
       }
     ],
     "detectionRules": [

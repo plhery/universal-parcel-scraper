@@ -134,6 +134,9 @@ describe('delivery partner evidence', () => {
     ['', 'https://vas.brt.it/vas/sped_det_show.hsm', 'brt'],
     ['', 'https://vas.brt.it/vas/faq.htm', undefined],
     ['', 'https://www.seur.com/', 'seur'],
+    // A brand with several networks is read from its link: La Poste names BRT's parcels DPD with myBRT's link.
+    ['DPD', 'https://www.mybrt.it/', 'brt'],
+    ['DPD', '', undefined],
     ['', 'https://www.seur.com/en/miseur/mis-envios/detalle', 'seur'],
     ['', 'https://www.seur.com/livetracking/', 'seur'],
     ['', 'https://www.seur.com/envio-online/', undefined],
@@ -164,6 +167,26 @@ describe('delivery partner evidence', () => {
     ['', 'https://www.fedex.com/fedextrack/?trknbr=6230000000005', 'fedex-pl'],
   ])('resolves name %s and URL %s without guessing', (name, url, expected) => {
     expect(carrierIdFromPartner(name, url)).toBe(expected);
+  });
+
+  it.each([
+    ['Poste italienne', 'poste-italiane'], ['POSTE IRLANDAISE', 'an-post'], ['Poste GB', 'royal-mail'],
+    ['Direction des Postes, Algerie', 'algerie-poste'], ['Organisme national des postes Egypt', 'egypt-post'],
+    ['BARID AL-MAGHRIB, Maroc', 'barid-al-maghrib'], ['Societe nationale La Poste, Senegal', 'la-poste-senegal'],
+    ['Office national des postes La Poste Tunisienne', 'la-poste-tunisienne'],
+    ["Entreprise federale unitaire d'Etat Poste de Russie", 'russian-post'],
+    ['Entreprise d\'Etat "Posta Moldovei"', 'posta-moldovei'], ['EUR BELPOCHTA, Belarus', 'belpost'],
+    ['Haypost CJSC', 'haypost'], ['Correo Oficial de la Republica Argentina SA', 'correo-argentino'],
+    ['Empresa Brasileira de Correios e Telegrafos', 'correios-br'], ['Empresa Correos de Chile', 'correos-chile'],
+    ['JORDAN POST COMPANY', 'jordan-post'], ['SERPOST S.A., Peru', 'serpost'],
+    ['Public Enterprise Post of Serbia', 'posta-srbije'], ['PUBLIC JOINT STOCK COMPANY "UKRPOSHTA"', 'ukrposhta'],
+    ['SOUTH AFRICA POST OFFICE LIMITED', 'south-african-post-office'], ['Postur', 'posturinn'],
+    ['SINGAPORE POST LIMITED', 'singapore-post'], ['Malaysia Post', 'pos-malaysia'],
+    ['Department of Posts (India)', 'india-post'], ['Israel Postal Company Ltd', 'israel-post'],
+    ['Turkish PTT Corporation', 'ptt'], ['Cameron Postal Services CAMPOST', 'campost'],
+    ['Servico Postal Mexicano', 'correos-de-mexico'],
+  ])('reads La Poste\'s partner name %s', (name, expected) => {
+    expect(carrierIdFromPartner(name)).toBe(expected);
   });
 
   it('does not pick one of multiple partner links, but ignores the origin’s own links', () => {
