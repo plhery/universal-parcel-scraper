@@ -74,6 +74,16 @@ describe('Vinted Go HTTP adapter', () => {
     for (const dropped of ['Example Street', '900001', '2026-09-30', 'Example question', 'Example answer']) expect(kept).not.toContain(dropped);
   });
 
+  it('holds back a scan dated after the lookup until it is due', () => {
+    // An hour before the sorting centre's scan, then just before it and after it.
+    const early = parseVintedGo(fixture('delivered'), DELIVERED, Date.parse('2026-09-22T20:05:12Z'));
+    expect(early).toMatchObject({ current_stage: 'in_transit', last_update: '2026-09-22T09:30:00Z' });
+    expect(early.events!.map((event) => event.time)).toEqual(['2026-09-22T09:30:00Z', '2026-09-21T18:45:00Z', '2026-09-21T08:20:00Z', '2026-09-20T17:00:00Z']);
+    for (const readAt of ['2026-09-22T21:01:00Z', '2026-09-22T22:00:00Z']) {
+      expect(parseVintedGo(fixture('delivered'), DELIVERED, Date.parse(readAt)).events![0]).toMatchObject({ time: '2026-09-22T21:05:12Z', location: 'Sampleville, FR' });
+    }
+  });
+
   it('names the point a parcel waits at only when its scans send it there', () => {
     expect(parseVintedGo(fixture('ready'), READY)).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
       last_status_text: 'Ready to collect at the parcel shop', pickup_point: 'Sample Bakery' });

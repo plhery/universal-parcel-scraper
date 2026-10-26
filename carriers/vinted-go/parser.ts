@@ -34,6 +34,8 @@ const READY_AT = /^Ready to collect at the (locker|parcel shop)$/;
 // The milestones whose scan can carry a new tracking code on another network.
 const HANDOVER = new Set(['redirected', 'left_our_network']);
 const MAX_ROWS = 500;
+// A sorting centre's scan can come dated up to hours after the lookup that shows it: not a scan yet.
+const CLOCK_SKEW_MS = 5 * 60_000;
 const MAX_EVENTS = 100;
 
 /** A Vinted Go parcel number; anything else is a number Vinted Go does not issue. */
@@ -127,7 +129,7 @@ function handover(scans: readonly Scan[], number: string): Pick<CarrierResult, '
  * point's address, its id, the pickup deadline, banners and questions in the
  * same reply are never read.
  */
-export function parseVintedGo(payload: unknown, raw: string): CarrierResult {
+export function parseVintedGo(payload: unknown, raw: string, readAt = Date.now()): CarrierResult {
   const number = normalizeVintedGoNumber(raw);
   if (!isRecord(payload) || !Array.isArray(payload.tracking_events)) throw new SchemaError(PROVIDER, 'Vinted Go returned an unexpected reply');
   const rows = payload.tracking_events as unknown[];
@@ -141,10 +143,12 @@ export function parseVintedGo(payload: unknown, raw: string): CarrierResult {
   rows.forEach((row, index) => {
     const { id, scan } = projectScan(row, index);
     const key = id || JSON.stringify(scan.event);
-    if (seen.has(key)) return;
+    // Held back until due, when it comes back with the same instant.
+    if (seen.has(key) || scan.at > readAt + CLOCK_SKEW_MS) return;
     seen.add(key);
     scans.push(scan);
   });
+  if (!scans.length) throw new SchemaError(PROVIDER, 'Vinted Go returned only scans dated after the lookup');
   // The reply lists scans newest first. Instants order them; equal ones keep its order.
   scans.sort((left, right) => right.at - left.at || left.index - right.index);
   const newest = scans[0]!.event;

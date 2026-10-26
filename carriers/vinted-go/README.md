@@ -30,7 +30,8 @@ Portugal and Finland. Tracked through the service its tracking page's search box
   know is left to the shared wording rules.
 - The service words scans in the language asked for, so English is asked: the stage map, the
   place rule and the pickup point read English wording.
-- Clocks are UTC instants.
+- Clocks are UTC instants. A sorting centre's scan can come dated up to hours after the lookup
+  that shows it; such a scan is held back until it is due.
 - A scan's location is the town of a sorting centre ("At sorting center in {town}, {country}").
   "In transit to" names where the parcel is going and is not a location. Some towns come with a
   space before the comma, which the location leaves out; a scan stored with it keeps its row.
