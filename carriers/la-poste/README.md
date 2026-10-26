@@ -97,6 +97,8 @@ recognition reads it as unknown rather than as a transport failure.
   country has several. Other products keep the feed's instant until their partner
   scans are compared with the partner's own. The app's identity policy lets a corrected Colissimo scan
   take over the row stored under the Paris label.
+- Colissimo enters some transport scans at their planned time, before they happen. A scan
+  dated more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - `contextData.partner` names the foreign carrier after export; it becomes
   `delivery_carrier` and `delivery_tracking_number`. An item whose `product` is
   Chronopost names Chronopost instead, whose own tracking holds the scans and

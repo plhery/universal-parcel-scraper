@@ -200,7 +200,7 @@ export const adapter: AdapterFactory = (environment) => {
   const lookup = (number: string, context?: TrackingContext) => /^\d{16}$/.test(normalizeTrackingNumber(number))
     ? france.fetch(number, context) : express.fetch(number, context);
   return {
-    id: 'tnt', steps: ['direct'], track: (input, context) => lookup(input.number, context),
+    id: 'tnt', plannedScans: true, steps: ['direct'], track: (input, context) => lookup(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => lookup(number, context),
       () => /^(?:\d{9}|\d{16}|GE\d{9}WW)$/.test(normalizeTrackingNumber(number))),
   };

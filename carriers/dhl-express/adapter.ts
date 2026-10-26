@@ -303,7 +303,7 @@ export class DhlExpressTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new DhlExpressTracker(environment);
-  return { id: 'dhl-express', recordsSteps: true, steps: tracker.steps, track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'dhl-express', recordsSteps: true, plannedScans: true, steps: tracker.steps, track: (input, context) => tracker.fetch(input.number, context),
     recognize: async (number, context) => {
       // Only the browser phase can resolve a piece; over HTTP it stays inconclusive.
       if (isPieceId(number)) throw new IndeterminateError(PROVIDER, 'DHL Express resolves piece identifiers on its browser page only');

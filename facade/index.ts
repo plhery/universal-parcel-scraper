@@ -7,7 +7,8 @@ import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validT
 import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
 import { failureHint, failureKind, type FailureHint } from '../core/errors/hint.js';
 import { MAX_RECOGNITIONS, recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from '../core/recognition/index.js';
-import { normalizeCarrierResult } from '../core/result/index.js';
+import { normalizeCarrierResult, type CarrierResult } from '../core/result/index.js';
+import { dueScans } from '../core/result/due.js';
 import { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from '../core/result/partial.js';
 import { resolveResult, resultHasUpdate, type ResolvedResult } from '../core/result/resolve.js';
 import { runSteps } from '../core/runner/index.js';
@@ -255,13 +256,15 @@ export function createTracker(options: TrackerOptions = {}) {
     const adapter = input.source ? undefined : registry.for(carrier);
     const directInput = { number, postcode: fields.postcode, trackingUrl: fields.trackingUrl, ...language };
     const directBudget = () => Math.min(remaining() + DEADLINE_SLACK_MS, 60_000);
-    let result = adapter ? await attempt(carrier, async () => dateLocalClocks(carrier, normalizeCarrierResult(
+    // A carrier that enters some scans at their planned time shows them once they are due.
+    const due = (answer: CarrierResult) => adapter?.plannedScans ? dueScans(answer, carrier) : answer;
+    let result = adapter ? await attempt(carrier, async () => dateLocalClocks(carrier, due(normalizeCarrierResult(
       await (adapter.recordsSteps || adapter.steps.length > 1
         ? adapter.track(directInput, { signal, budgetMs: directBudget() })
         : runSteps({ carrier, budgetMs: directBudget(), signal, recorder: environment.recorder }, [
           { id: adapter.steps[0] ?? 'direct', run: ({ signal: stepSignal, remainingMs }) => adapter.track(
             directInput, { signal: stepSignal, budgetMs: remainingMs }) },
-        ]))))) : null;
+        ])))))) : null;
     let source: string = carrier;
     // Rows the carrier holds back as written ahead of their clocks are no scans when a provider relays them.
     const ahead = result ? [] : writtenAheadClocks(lastError);

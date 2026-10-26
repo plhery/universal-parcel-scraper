@@ -132,6 +132,11 @@ export interface CarrierAdapter {
   readonly steps: readonly string[];
   /** The adapter records its own steps, including single-step protocols. */
   readonly recordsSteps?: boolean;
+  /**
+   * The carrier enters some scans at their planned time, before they happen, such as a departure
+   * at its schedule: a scan dated after the lookup is held back until it is due.
+   */
+  readonly plannedScans?: boolean;
   track(input: TrackingInput, context?: TrackingContext): Promise<CarrierResult>;
   /**
    * Required when carrier.json declares `tracking.recognition`: whether the
@@ -243,6 +248,7 @@ function refusingPlaceholders(adapter: CarrierAdapter): CarrierAdapter {
     id: adapter.id,
     steps: adapter.steps,
     ...(adapter.recordsSteps !== undefined && { recordsSteps: adapter.recordsSteps }),
+    ...(adapter.plannedScans !== undefined && { plannedScans: adapter.plannedScans }),
     track: async (...args) => {
       if (isPlaceholderNumber(args[0].number)) throw refusal();
       return adapter.track(...args);

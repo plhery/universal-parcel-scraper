@@ -76,6 +76,19 @@ describe('standalone tracker', () => {
     expect(lookup).toHaveBeenCalledTimes(2);
   });
 
+  it('holds back the scans an adapter enters at their planned time until they are due', async () => {
+    const soon = new Date(Date.now() + 2 * 3_600_000).toISOString();
+    const lookup = vi.fn().mockResolvedValue({ status: 'in_transit', events: [
+      { time: soon, description: 'Departed facility', stage: 'in_transit' },
+      { time: '2026-01-02T09:00:00Z', description: 'Arrived at facility', stage: 'in_transit' },
+    ] });
+    const planned = new AdapterRegistry({ factories: { ups: () => ({ id: 'ups', steps: ['direct'], plannedScans: true, track: lookup }) },
+      carriers: { ups: 'ups' } }, environment);
+    const answer = await createTracker({ registry: planned, providers: [] }).track({ number });
+    expect(answer.result).toMatchObject({ last_status_text: 'Arrived at facility', events: [{ description: 'Arrived at facility' }] });
+    expect(answer.result.events).toHaveLength(1);
+  });
+
   it('confirms the direct carrier for a generic postal number before tracking', async () => {
     const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [
       { time: new Date().toISOString(), description: 'Delivered', stage: 'delivered' },

@@ -20,6 +20,21 @@ describe('consumer dispatch', () => {
     expect(track).toHaveBeenCalledWith({ number: 'TEST0001', postcode: '00000' }, expect.objectContaining({ signal: expect.any(AbortSignal) }));
   });
 
+  it('holds back the scans an adapter enters at their planned time until they are due', async () => {
+    const soon = new Date(Date.now() + 2 * 3_600_000).toISOString();
+    const track = vi.fn().mockResolvedValue({ status: 'in_transit', last_update: soon, events: [
+      { time: soon, description: 'Departed facility', stage: 'in_transit' },
+      { time: '2026-01-02T09:00:00Z', description: 'Arrived at facility', stage: 'in_transit' },
+    ] });
+    const registry = (plannedScans: boolean) => new AdapterRegistry({ factories: { test: () => ({ id: 'test', steps: ['direct'], plannedScans, track }) },
+      carriers: { test: 'test' } }, environment);
+    const result = await trackCarrier('test', { number: 'TEST0001' }, { registry: registry(true), universal: {} as UniversalTracker });
+    expect(result).toMatchObject({ last_status_text: 'Arrived at facility', last_update: '2026-01-02T09:00:00Z', events: [{ description: 'Arrived at facility' }] });
+    expect(result.events).toHaveLength(1);
+    // Another carrier's scan dated ahead keeps its time, for the app to flag.
+    expect((await trackCarrier('test', { number: 'TEST0001' }, { registry: registry(false), universal: {} as UniversalTracker })).events).toHaveLength(2);
+  });
+
   it('gives the adapter and the universal chain the normalized number, as createTracker() does', async () => {
     // A letter O typed in an S10 serial is the zero its check digit asks for.
     const track = vi.fn().mockResolvedValue({ status: 'in_transit' });

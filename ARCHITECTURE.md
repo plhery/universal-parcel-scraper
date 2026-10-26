@@ -360,7 +360,10 @@ is no scan. The classifier reads only the rest of the sentence, so a notice alon
 caller's fallback with `none` and never steps a parcel back to registered. A row a tracker
 wrote well before its own clock, as forwarders that write a whole timeline when an order is
 created do, is a forecast too, and the adapter leaves it out, along with a fallback's copies
-of it when nothing else remains.
+of it when nothing else remains. A carrier that enters some scans at their planned time, such
+as a departure at its schedule, has an adapter with `plannedScans`: its scans dated more than
+five minutes after the lookup are held back until they are due. Other scans dated ahead keep
+their time for the host to flag.
 Customs that cleared or released a parcel puts it back in transit; holds, inspections,
 submissions and a clearance still to come or negated stay `customs`. A customs problem is an
 `exception`.

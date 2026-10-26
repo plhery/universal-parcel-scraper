@@ -464,7 +464,7 @@ export const adapter: AdapterFactory = (environment) => {
     userAgent: environment.userAgent,
   });
   return {
-    id: 'la-poste',
+    id: 'la-poste', plannedScans: true,
     // One keyless request, then up to three immediate retries of the same
     // request after a transient HTTP 403, and one after a network failure or
     // timeout, inside the original deadline.

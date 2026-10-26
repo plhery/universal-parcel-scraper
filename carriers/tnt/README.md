@@ -36,6 +36,8 @@ postcode or account is required.
   wording is prose: "partially delivered" is not a delivery, and a residential delivery
   (`RES`) reads like `OK`. The estimate is kept as a calendar day until delivery.
   Customs release returns to transit even when the wording still mentions customs.
+- tnt.com enters some transit scans at their planned time, before they happen. A scan dated
+  more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - A shipment either site lists without scans is a `NoHistoryError`: TNT knows the label
   but has not scanned it yet, which is an answer about the parcel, not an outage.
 - On tnt.fr, the returned detail header and item identity must match. History comes only

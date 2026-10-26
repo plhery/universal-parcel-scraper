@@ -152,6 +152,9 @@ identity policy in [identity.ts](identity.ts) (`matchWallClock`) lets a record f
 take over the row the other stored, by wall clock, location and wording, so the parcel keeps
 one row.
 
+DHL Express enters some processing scans at their planned time, before they happen. A scan
+dated more than five minutes after the lookup is held back until it is due (`plannedScans`).
+
 A scan whose location settles no zone keeps its clock as `local_time`: a country with
 several clocks and no region, or a country DHL writes in a form the rule does not know.
 The rule knows English country names, the forms on DHL's scans (`UK`, `USA`, `NETHERLANDS,

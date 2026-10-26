@@ -11,6 +11,7 @@ import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../time/index.js';
 import { eventTimestamp } from '../time/result.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult } from './index.js';
+import { withoutEvents } from './due.js';
 import { deliveredToDoor } from './pickup.js';
 import { resolveResult, type ResolvedEvent, type ResolvedResult } from './resolve.js';
 
@@ -201,17 +202,5 @@ function atClock(event: CarrierEvent, clock: string): boolean {
  * row goes, the status is read again from the rows left.
  */
 export function withoutWrittenAhead<T extends CarrierResult>(answer: T, clocks: readonly string[]): T | null {
-  const ahead = (event: CarrierEvent) => clocks.some(clock => atClock(event, clock));
-  const events = answer.events ?? [];
-  const kept = events.filter(event => !ahead(event));
-  const stale = typeof answer.last_update === 'string' && ahead({ time: answer.last_update });
-  if (kept.length === events.length && !stale) return answer;
-  if (!kept.length) return null;
-  if (!stale && kept[0] === events[0]) return { ...answer, events: kept };
-  const reread: CarrierResult = { ...answer, status: 'unknown', last_status_text: kept[0]!.description ?? null,
-    last_update: kept[0]!.time ?? null, events: kept };
-  delete reread.current_stage;
-  delete reread.current_stage_source;
-  delete reread.provider_code;
-  return reread as T;
+  return clocks.length ? withoutEvents(answer, event => clocks.some(clock => atClock(event, clock))) : answer;
 }

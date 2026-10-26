@@ -129,6 +129,9 @@ rendered status, after that wait.
   A local pair without an offset stays `local_time`, a scan dated by its day alone, as some
   drop-offs are, keeps that day as `local_time`, and other text stays `provider_time_text`;
   no zone is guessed. Some label scans come with no clock and get none.
+- UPS enters some departures and loadings on the delivery vehicle at their planned time,
+  before they happen. A scan dated more than five minutes after the lookup is held back until
+  it is due (`plannedScans`).
 - The scheduled delivery date has no year. The adapter picks the year that puts it within
   the last week or in the future.
 - The canary URL is a static PDF so the canary itself is not challenged.

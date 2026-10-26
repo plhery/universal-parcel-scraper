@@ -904,7 +904,7 @@ export const adapter: AdapterFactory = (environment) => {
     api,
   });
   return {
-    id: 'ups',
+    id: 'ups', plannedScans: true,
     // `api` is UPS's official Track API and runs only with a deployment's app
     // credentials. `direct` is plain HTTP and runs only without a browser
     // service. `trawl` is the browser, which also reads the page's own status call.

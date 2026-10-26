@@ -675,7 +675,7 @@ export const adapter: AdapterFactory = (environment) => {
     recorder: environment.recorder,
   });
   return {
-    id: 'fedex', recordsSteps: true,
+    id: 'fedex', recordsSteps: true, plannedScans: true,
     // FedEx's own API when the deployment has keys for it, then the browser;
     // universal recovery belongs to the caller.
     steps: [...(api ? ['api'] : []), 'trawl'],

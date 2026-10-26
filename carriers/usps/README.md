@@ -81,6 +81,8 @@ Parsing, in order:
   resolvable state the event keeps an offset-free `local_time`, and the page's newest-first
   order is kept rather than re-sorted. A step USPS dates by its day alone, as it does
   pre-shipment info, keeps that day as `local_time`.
+- USPS enters some departures at their scheduled time, before they happen. A scan dated more
+  than five minutes after the lookup is held back until it is due (`plannedScans`).
 - Delivered lines are rewritten to "Delivered" because USPS names the signatory.
 - USPS rewords scans it already shows: an out-for-delivery scan's delivery window changes,
   and the newest place-less step's "In Transit, Arriving On Time" reads "In Transit to Next

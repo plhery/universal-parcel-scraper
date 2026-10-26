@@ -123,6 +123,8 @@ fallback')`.
   span its day could cover, from UTC+14 to UTC−12, and in FedEx's own order where that span
   overlaps other scans. Any other scan without a usable triple keeps no time rather than a
   guessed zone.
+- FedEx enters some transit scans at their planned time, before they happen. A scan dated
+  more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - FedEx labels a scan it records after a clock change with the offset its place has kept since,
   even when the scan came before: a hub's departure the evening before October's change came
   as +01:00 beside the +02:00 of scans recorded in time. When a scan's place keeps one clock
