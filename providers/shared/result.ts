@@ -93,6 +93,13 @@ export function place(value: unknown): string {
     ? location : '';
 }
 
+/** A place written in brackets after the wording, "Airline received【Hong Kong】": the wording before it and the place. */
+export function trailingPlace(description: string): { wording: string; place: string } | undefined {
+  const match = /^(.*\S)\s*(?:\[([^[\]]{1,60})\]|【([^【】]{1,60})】)$/u.exec(description.trim());
+  const named = match ? place(match[2] ?? match[3]) : '';
+  return match && named ? { wording: match[1]!, place: named } : undefined;
+}
+
 function sourceEventStage(description: string, includeBroadMovement = true): Stage | undefined {
   // Public aggregators retain the carrier's French wording even in English.
   const french = description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');

@@ -31,7 +31,7 @@ import { uspsScanZone } from '../../carriers/usps/clock.js';
 import { universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
-import { numberOf, place, result, text, type UniversalSource } from '../shared/result.js';
+import { numberOf, place, result, text, trailingPlace, type UniversalSource } from '../shared/result.js';
 import { seventeenTrackCarrierKeys } from './carriers.js';
 import { seventeenTrackEvent, undatedScan } from './events.js';
 
@@ -384,6 +384,8 @@ function nzPostDestination(shipment: Record<string, unknown>, providers: unknown
 const CHINA_POST = 3011;
 /** China Post's leg and those of forwarders that relay its labels: JHGJ (九好国际, 192049 in 17TRACK's carrier list). */
 const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049]);
+/** Legs whose English wording ends with the place in brackets: Pengyou (捧友, 191878 in 17TRACK's carrier list). */
+const BRACKETED_PLACES: ReadonlySet<unknown> = new Set([191878]);
 /** China Post's mirror of the origin post's outward exchange office: "arrived at" or "left the exchange office abroad". */
 const ORIGIN_EXCHANGE = /^(?:到达|离开)境外出口互换局/;
 
@@ -542,6 +544,9 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         parsed.description = english;
         if (named) parsed.location = named;
       }
+      // The place such a leg writes after its wording is the location where 17TRACK gives none.
+      const trailing = !english && !parsed.location && BRACKETED_PLACES.has(reported.key) ? trailingPlace(parsed.description ?? '') : undefined;
+      if (trailing) Object.assign(parsed, { description: trailing.wording, location: trailing.place });
       const day = usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
         : brt && BRT_ROUND.test(text(raw.description).trim()) ? dayAlone(raw) : null;
       if (day) {

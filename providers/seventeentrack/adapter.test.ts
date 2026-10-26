@@ -208,6 +208,29 @@ describe('17TRACK result parsing', () => {
     ]);
   });
 
+  it('takes the place Pengyou writes in brackets after its wording for the location', () => {
+    const leg = (key: number, ...events: object[]) => parse17TrackResponse({ ...postalHistory([]), shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key, name: 'Example' }, events }] },
+    } }] }, number).events?.map((event) => [event.description, event.location]);
+    expect(leg(191878,
+      postalScan('InTransit_Other', 'Example Processing Center has received it [Example City]'),
+      postalScan('InTransit_Other', 'Export customs/release [Example City]'),
+      postalScan('InTransit_Other', 'Airline received【Example Port】'),
+      postalScan('InTransit_Other', 'Departure【Example International Airport】'),
+      postalScan('InTransit_Other', 'Arrive at Airport'),
+      postalScan('InTransit_Other', 'Arrive at Airport [--]'),
+      { ...postalScan('InTransit_Other', 'Departure【Example Port】'), location: 'EXP' },
+    )).toEqual([
+      ['Example Processing Center has received it', 'Example City'], ['Export customs/release', 'Example City'],
+      ['Airline received', 'Example Port'], ['Departure', 'Example International Airport'],
+      ['Arrive at Airport', undefined], ['Arrive at Airport [--]', undefined], ['Departure【Example Port】', 'EXP'],
+    ]);
+    // Another leg keeps its wording whole.
+    expect(leg(190000, postalScan('InTransit_Other', 'Airline received【Example Port】')))
+      .toEqual([['Airline received【Example Port】', undefined]]);
+  });
+
   it('does not convert stale tracking or unknown codes into shipment progress', () => {
     expect(parse17TrackResponse(postalHistory([postalScan('Future_Unknown')]), number).current_stage).toBe('pending');
     expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other')]), number).status).toBe('in_transit');
