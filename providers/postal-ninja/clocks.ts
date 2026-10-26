@@ -11,6 +11,7 @@
 import { CAINIAO_CHINA_ZONE, cainiaoInChina } from '../../carriers/aliexpress/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
+import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { canadaProvinceTimeZone, countryCode, countryTimeZone, sharedClockZone, usStateTimeZone } from '../../core/time/index.js';
 import { courierZone } from '../shared/hints.js';
@@ -33,11 +34,27 @@ const FIXED_CLOCKS: ReadonlyMap<string, string> = new Map([
  * they receive by EDI and mark outbound, at that office's wall clock, as
  * their own trackers do: Correos de El Salvador's arrival in San Salvador at
  * 21:30:17 is UPU's 15:30 local, and its copy of Swiss Post's departure from
- * Geneva keeps Geneva's 12:20 (checked 2026-10-11).
+ * Geneva keeps Geneva's 12:20.
  */
 const UTC_POSTS: ReadonlySet<string> = new Set(['Correos de El Salvador']);
 /** The origin post's scans, as Postal Ninja translates "(salida)" and "(recibido por EDI)". */
 const OUTBOUND = /\((?:outbound|output|departure|received by EDI)\)$/i;
+
+/**
+ * Carriers whose scans Postal Ninja writes with a UTC suffix on the scanning
+ * office's wall clock: Russian Post's acceptance and delivery came at the
+ * digits ParcelsApp dates at +03:00 and +07:00. Russia keeps several clocks
+ * and the reply names none of them, so the scans are read like those of a
+ * service whose clock is unknown.
+ */
+const SUFFIXED_WALL_CLOCKS: ReadonlySet<string> = new Set(['russian-post']);
+/** A UTC suffix on a `dt`. */
+const UTC_SUFFIX = /(?:Z|[+-]00:?00)$/i;
+
+/** A scan's `dt` without the UTC suffix Postal Ninja writes on its service's wall clock; the `dt` itself otherwise. */
+export function wallClock(service: string, dt: string): string {
+  return SUFFIXED_WALL_CLOCKS.has(carrierIdFromName(service) ?? '') ? dt.replace(UTC_SUFFIX, '') : dt;
+}
 
 /**
  * Cainiao, whose scans keep its feed's wall clock, each at its site's: its

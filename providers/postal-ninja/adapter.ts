@@ -23,7 +23,7 @@ import { isRecord } from '../../core/types.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { classifyEvent, event, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
-import { carrierHomeZone, originLeg, serviceZone } from './clocks.js';
+import { carrierHomeZone, originLeg, serviceZone, wallClock } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
 const GET_API = 'https://postal.ninja/track/get';
@@ -73,7 +73,8 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // only in a full history that service reports alone, and for a postal item
   // one that stays in its country: beside other services, a service can relay
   // their scans at their clocks or at none. Explicit offsets, when present,
-  // are persisted as they are.
+  // are persisted as they are, but for the UTC suffix Postal Ninja writes on
+  // some services' wall clocks (wallClock).
   const destination = text(payload.track.destCn) || null;
   const services = new Set((rawEvents as unknown[]).map((raw) => isRecord(raw) ? text(raw.ds) : ''));
   const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier),
@@ -86,16 +87,18 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     if (!description || isNotice(description) || DEADLINE.test(description)) continue;
     if (typeof raw.dt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?/.test(raw.dt)
       || !DateTime.fromISO(raw.dt, { zone: 'UTC' }).isValid) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event date');
-    if (/(?:Z|[+-]\d{2}:\d{2})$/.test(raw.dt)) {
-      const parsed = event(raw.dt, description);
-      if (parsed) scans.push({ wall: null, service: text(raw.ds), origin: false, zone: null, event: parsed });
+    const service = text(raw.ds);
+    const wall = wallClock(service, raw.dt);
+    if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
+      const parsed = event(wall, description);
+      if (parsed) scans.push({ wall: null, service, origin: false, zone: null, event: parsed });
     } else {
       const classified = classifyEvent(description);
       const { stage } = classified;
       if (stage !== 'delivered' && hasPrivateDeliveryDetails(description)) continue;
       // A scan's location (loc) is read only for its clock.
-      const scan = { service: text(raw.ds), description, wall: raw.dt, location: text(raw.loc), delivered: stage === 'delivered' };
-      scans.push({ wall: raw.dt, service: scan.service, origin: originLeg(scan), zone: serviceZone(scan, journey),
+      const scan = { service, description, wall, location: text(raw.loc), delivered: stage === 'delivered' };
+      scans.push({ wall, service, origin: originLeg(scan), zone: serviceZone(scan, journey),
         event: { description: stage === 'delivered' ? 'Delivered' : description, ...classified } });
     }
   }

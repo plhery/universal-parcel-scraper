@@ -68,11 +68,11 @@ numbers or handles cannot end the lookup.
   the state is `TRACKING`, `FINISHED`, `STOPPED` or `ARCHIVED`.
 - `dt` has no zone, and its clock depends on the service that reports the scan (`ds`),
   not on where the scan happened. [clocks.ts](clocks.ts) lists the clocks established
-  against the carriers' own instants on the benchmark's parcels (2026-10-10):
+  against the carriers' own instants on the benchmark's parcels:
 
   | Clock | Services | Evidence |
   |---|---|---|
-  | UTC | Austrian Post, Correos de El Salvador, Intelcom, OnTrac, Poste Italiane, Raben | Austrian Post 9/9 scans, which post.at shows two hours later in summer; Poste Italiane 9/9 against its epoch times; Raben 9/9 against its epoch times, in Germany and Italy; OnTrac 14/14 on two parcels its API dates at −07:00 and −04:00; Intelcom 5/5; Correos de El Salvador's own tracker gives the same digits in UTC, and its arrival in San Salvador at 21:30:17 is UPU's 15:30 local (checked 2026-10-11) |
+  | UTC | Austrian Post, Correos de El Salvador, Intelcom, OnTrac, Poste Italiane, Raben | Austrian Post 9/9 scans, which post.at shows two hours later in summer; Poste Italiane 9/9 against its epoch times; Raben 9/9 against its epoch times, in Germany and Italy; OnTrac 14/14 on two parcels its API dates at −07:00 and −04:00; Intelcom 5/5; Correos de El Salvador's own tracker gives the same digits in UTC, and its arrival in San Salvador at 21:30:17 is UPU's 15:30 local |
   | One zone, wherever the scan happened | Swiss Post (Zurich), Singapore Post (Singapore) | Swiss Post's own scans on two items, to El Salvador and China; Singapore Post 9/9 on an item to China, with its Chinese scans |
   | One zone per network, by destination | GOFO Express: US Los Angeles, FR Paris | 20/20 on two US parcels, with New Jersey and New York scans; 7/7 on a French parcel and the newest scan of a YunExpress parcel GOFO delivered in France |
   | The scanning office's | An Post Ireland, CTT Express, Correos de España, DHL Parcel Netherlands, DPD, DPD Poland, DPD UK, GLS, Hermes Germany, MRW, Nova Poshta, Packeta, Poczta Polska, PostNord, Posten Norge, UkrPoshta | Domestic parcels in their countries, `DPD` on the Polish, German and Spanish networks; UkrPoshta's Ukrainian scans of an item to China |
@@ -119,7 +119,10 @@ numbers or handles cannot end the lookup.
   names its newest US and Canadian scans without their state ("MARSHALL-USA"); Australia
   Post, Canada Post, USPS and Correios do Brasil keep the scan's clock in countries with
   several; New Zealand Post relays China Post's scans at Chinese time; 4PX gives Chinese
-  scans in UTC and US scans twelve hours early.
+  scans in UTC and US scans twelve hours early. Russian Post's scans come with a UTC
+  suffix on the office's wall clock: an acceptance and a delivery ParcelsApp dates at
+  +03:00 and +07:00 came at the same digits. The suffix is dropped, and the scans are read
+  as those of an unknown clock, so an office east of Moscow is read on Moscow's.
 - A scan without an established clock borrows a zone, so that a reply whose newest scan
   names no place still has a dated newest scan: that of the nearest earlier scan of the
   same service with an established clock, else of the nearest later one, else the zone

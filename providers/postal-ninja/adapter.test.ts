@@ -71,6 +71,21 @@ describe('Postal Ninja result parsing', () => {
     expect(parsePostalNinjaResponse(gofo(), number).last_update).toBeNull();
   });
 
+  it('reads the UTC suffix Postal Ninja writes on Russian Post\'s scans as no zone', () => {
+    const domestic = '10000000000001';
+    const scans = [
+      { ds: 'Russian Post', dt: '2026-10-16T11:30:40Z', dsc: 'Done. Accepted at the post office' },
+      { ds: 'Russian Post', dt: '2026-10-17T15:02:10Z', dsc: 'Arrived at the sorting center' },
+    ];
+    // The office's wall clock: a history Russian Post reports alone is read on its clock, Moscow's.
+    expect(times(parsePostalNinjaResponse(postal(domestic, 'RU', scans), domestic)))
+      .toEqual(['2026-10-17T12:02:10.000Z', '2026-10-16T08:30:40.000Z']);
+    // Beside another service, with no carrier zone to borrow, it keeps its wall clock.
+    const relayed = [{ ds: 'Example', dt: '2026-10-15T10:00:00Z', dsc: 'Order received' }, ...scans];
+    expect(times(parsePostalNinjaResponse(postal(domestic, 'RU', relayed), domestic)))
+      .toEqual(['local 2026-10-17T15:02:10', 'local 2026-10-16T11:30:40', '2026-10-15T10:00:00.000Z']);
+  });
+
   it('places a fixed clock\'s scans beside other services\', which borrow the carrier\'s zone or keep their wall times', () => {
     // Swiss Post keeps Zurich time for its own scans, and the destination post's
     // clock for those it relays from it; the other services relay the same scans
