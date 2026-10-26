@@ -90,7 +90,7 @@ row by provider code, instant and location, unless one of the two is revoked.
   delivery estimate is dropped once the shipment is delivered or returned.
 - Timestamps are kept exactly as sent and parsed only to sort (offset-less
   values read as UTC for that comparison), but for the destination post's events
-  and those of the origin offices [clock.ts](clock.ts) lists.
+  and those of the origin offices and the pre-advice [clock.ts](clock.ts) lists.
 - On a parcel Swiss Post sends abroad (`internationalExport`), the destination post's
   events (codes 901, 902, 909, 918–921, 923, 924, 926, 934, 938) come with no city,
   postcode or country, and carry that office's wall clock under Swiss Post's offset: an
@@ -113,6 +113,11 @@ row by provider code, instant and location, unless one of the two is revoked.
   [clock.ts](clock.ts) lists (London's, "LON" and a letter) are read on their own clock,
   and the stored rows move over by the identity policy above. The others keep Swiss Post's
   offset, right for a neighbour on its clock and an hour or more off elsewhere.
+- A letter's pre-advice (`859`, "will shortly be handed over") from a sender abroad
+  (`senderCountry` not `CH`) is the notice of a Chinese consolidator posting letters in
+  Switzerland through its European hub, on its system's Beijing wall clock under Swiss
+  Post's offset: one came at `18:12+01:00` in a reply given at 13:58 Swiss time. It is read
+  on Beijing's clock. A parcel's pre-advice (`600`) keeps Swiss Post's offset.
 - Wording is only trimmed, not whitespace-collapsed, so `core/transport`'s
   `clean()` is not used.
 - Scan locations keep the facility's name and number as sent ("Zürich

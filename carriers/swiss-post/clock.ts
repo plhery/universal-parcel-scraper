@@ -29,6 +29,17 @@ const DESTINATION_WORDING = new RegExp('^(?:arrival in destination country|custo
  */
 const ORIGIN_OFFICES: ReadonlyArray<readonly [RegExp, string]> = [[/^LON [A-Z]\b/, 'Europe/London']];
 
+/**
+ * The sender's electronic notice that a letter will shortly be handed over (859). It comes from
+ * a sender abroad, Chinese consolidators posting their letters in Switzerland through their
+ * European hubs, and carries the sending system's Beijing wall clock under Swiss Post's offset:
+ * Cainiao's notice on a letter from its Dutch hub read 18:12 +01:00 in a reply Swiss Post gave
+ * at 13:58 its own time, hours before it, and on Beijing's clock it is 11:12. Parcels give their
+ * notice another code (600), on Swiss Post's clock, half an hour after their arrival scan.
+ */
+export const PRE_ADVICE = '859';
+export const PRE_ADVICE_ZONE = 'Asia/Shanghai';
+
 /** The clock of an origin office of exchange Swiss Post names, or null when none is listed for it. */
 export function swissPostOriginZone(location: string): string | null {
   const name = location.trim().toUpperCase();

@@ -13,7 +13,7 @@ import {
   FALLBACK_EVENT_LABELS, GLOBAL_STATUS_STAGE, STAGE_STATUS, STATUS_MAP, SWISS_POST_LANGUAGES, swissPostEventStage,
   type SwissPostLanguage,
 } from './status.js';
-import { DESTINATION_EVENTS, swissPostOriginZone } from './clock.js';
+import { DESTINATION_EVENTS, PRE_ADVICE, PRE_ADVICE_ZONE, swissPostOriginZone } from './clock.js';
 
 // The public tracker signs an anonymous visitor in before it will search: it
 // creates a throwaway user, echoes a CSRF token, and keys the search result on
@@ -264,6 +264,14 @@ function originClock(event: JsonObject, time: string, imported: boolean): string
   return (zone && wall ? isoTime(wall, zone)?.iso : null) ?? time;
 }
 
+/** A sender abroad's notice that its letter will shortly be handed over, on its system's clock ([clock.ts](clock.ts)). */
+function preAdviceClock(event: JsonObject, time: string, sender: string): string {
+  const wall = WALL_CLOCK.exec(time)?.[1];
+  const abroad = /^[A-Z]{2}$/.test(sender) && sender !== 'CH';
+  if (!abroad || !wall || text(event.eventCode, 100).split('.').at(-1) !== PRE_ADVICE) return time;
+  return isoTime(wall, PRE_ADVICE_ZONE)?.iso ?? time;
+}
+
 /** Ready at a PickPost or My Post 24 point, and the point's own arrival scans. */
 const PICKUP_READY = new Set(['2101', '2102']);
 const PICKUP_ARRIVAL = new Set(['1001', '1100']);
@@ -297,6 +305,7 @@ export function parseSwissPostShipment(
   const destination = text(item.recipientCountry, 10).toUpperCase();
   const abroad = item.internationalExport === true && !item.internationalImport && /^[A-Z]{2}$/.test(destination)
     && destination !== 'CH' ? destination : null;
+  const sender = text(item.senderCountry, 10).toUpperCase();
   const events: CarrierEvent[] = [];
   for (const rawEvent of rawEvents.slice(0, 100)) {
     if (!isRecord(rawEvent)) continue;
@@ -304,7 +313,7 @@ export function parseSwissPostShipment(
     const eventCode = text(rawEvent.eventCode, 100);
     if (!time || !eventCode) continue;
     const event: CarrierEvent = {
-      time: originClock(rawEvent, destinationClock(rawEvent, time, abroad), item.internationalImport === true),
+      time: preAdviceClock(rawEvent, originClock(rawEvent, destinationClock(rawEvent, time, abroad), item.internationalImport === true), sender),
       location: eventLocation(rawEvent),
       description: eventDescription(rawEvent, translations, internationalType),
       provider_code: eventCode,
