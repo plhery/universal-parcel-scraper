@@ -39,7 +39,8 @@
           "swiss-post-cargo",
           "postnord",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "Example Posti tracking link quoted in an open-source plugin's issue, not a confirmed shipment. Its Finnish GS1 prefix lists Posti first among the twenty-digit candidates."
@@ -108,7 +109,8 @@
           "swiss-post-cargo",
           "postnord",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "A Posti tracking page for this number archived by the Wayback Machine. Posti's tracking returned the sender's pre-advice with the parcel's weight and size."

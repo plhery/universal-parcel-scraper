@@ -5,7 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { MATKAHUOLTO_MAX_BYTES, normalizeMatkahuoltoNumber, normalizeMatkahuoltoOwnNumber, parseMatkahuolto, PROVIDER } from './parser.js';
+import { MATKAHUOLTO_MAX_BYTES, normalizeMatkahuoltoNumber, normalizeMatkahuoltoRecognitionNumber, parseMatkahuolto, PROVIDER } from './parser.js';
 
 // The service the tracking page on matkahuolto.fi asks for a number.
 export const MATKAHUOLTO_ENDPOINT = 'https://wwwservice.matkahuolto.fi/search/trackingInfo';
@@ -67,6 +67,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'matkahuolto', recordsSteps: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeMatkahuoltoOwnNumber(number))),
+      () => accepted(() => normalizeMatkahuoltoRecognitionNumber(number))),
   };
 };

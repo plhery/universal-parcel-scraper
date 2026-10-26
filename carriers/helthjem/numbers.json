@@ -134,7 +134,8 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "Looked up on Helthjem's own tracker, as an archived address shows; the capture was not opened."
@@ -160,7 +161,8 @@
           "swiss-post-cargo",
           "postnord",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "Looked up on Helthjem's own tracker, as an archived address shows; the capture was not opened."

@@ -2329,18 +2329,6 @@
     "reason": "Maruti Air document numbers are plain runs of eight to ten digits, a shape many carriers share."
   },
   {
-    "carrier": "matkahuolto",
-    "pattern": "^00\\d{18}$",
-    "kind": "by_design",
-    "reason": "An SSCC carries the GS1 company prefix of whoever issued it, not the carrier, so no rule can name Matkahuolto from it."
-  },
-  {
-    "carrier": "matkahuolto",
-    "pattern": "^\\d{18}$",
-    "kind": "by_design",
-    "reason": "Without its 00 identifier the number is a bare SSCC. Helthjem's rules take its own GS1 company prefix; another prefix names whoever issued the SSCC rather than the carrier."
-  },
-  {
     "carrier": "mds-collivery",
     "pattern": "^\\d{7}$",
     "kind": "by_design",

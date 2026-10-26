@@ -14,6 +14,9 @@ const COLLECTED = 'MH000000014FI';
 const WAITING = 'MH000000028FI';
 const ABSENT = 'MH999999995FI';
 const SSCC = '300000000000000018';
+// SSCCs of Swedish and Finnish GS1 companies, the ones its tracker has answered.
+const NORDIC_SSCC = '373123456789012348';
+const FINNISH_SSCC = '064123456789012345';
 const text = (name: string) => readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8');
 const fixture = (name: string): unknown => JSON.parse(text(name));
 const reply = (body: string, status = 200, headers: Record<string, string> = {}) => new Response(body, { status,
@@ -171,9 +174,12 @@ describe('Matkahuolto tracking adapter', () => {
       await expect(carrier(fetcher).track({ number }), number).rejects.toMatchObject({ kind: 'invalid_input' });
       await expect(carrier(fetcher).recognize!(number), number).resolves.toEqual({ known: false });
     }
-    // Recognition asks about Matkahuolto's own numbers only.
-    for (const number of ['ZZ000000014EE', SSCC, `00${SSCC}`]) await expect(carrier(fetcher).recognize!(number)).resolves.toEqual({ known: false });
+    // Recognition asks about Matkahuolto's own numbers and SSCCs, not about a post's items.
+    await expect(carrier(fetcher).recognize!('ZZ000000014EE')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
+    const asked = vi.fn<typeof fetch>().mockImplementation(async () => reply(text('not-found')));
+    for (const number of [NORDIC_SSCC, `00${FINNISH_SSCC}`]) await expect(carrier(asked).recognize!(number), number).resolves.toEqual({ known: false });
+    expect(asked.mock.calls.map(([url]) => new URL(String(url)).searchParams.get('parcelNumber'))).toEqual([NORDIC_SSCC, `00${FINNISH_SSCC}`]);
     const any = vi.fn<typeof fetch>().mockImplementation(async () => reply(text('not-found')));
     for (const number of ['ZZ000000014EE', SSCC, `00${SSCC}`, 'MA0000000000000000001']) {
       await expect(carrier(any).track({ number }), number).rejects.toMatchObject({ kind: 'not_found' });
@@ -245,12 +251,36 @@ describe('Matkahuolto tracking adapter', () => {
     expect(detectCarrierMatch(COLLECTED)).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     expect(recognitionAskedCarriers(COLLECTED)).toEqual(expect.arrayContaining(['posti', 'matkahuolto']));
     expect(recognitionAskedCarriers('MA1234567890123456789')).toContain('matkahuolto');
-    for (const number of ['MH000000015FI', 'ZZ000000014FI', 'ZZ000000014EE', `00${SSCC}`]) {
+    for (const number of ['MH000000015FI', 'ZZ000000014FI', 'ZZ000000014EE', `00${SSCC}`, SSCC]) {
       expect(recognitionAskedCarriers(number), number).not.toContain('matkahuolto');
     }
     for (const path of ['seuranta', 'tracking', 'uppfoljning']) {
       expect(parseTrackingInput(`https://www.matkahuolto.fi/${path}?parcelNumber=${COLLECTED}`))
         .toMatchObject({ trackingNumber: COLLECTED, carrier: 'matkahuolto', source: 'link' });
+    }
+  });
+
+  it('is asked about an SSCC of a Swedish or Finnish company, with or without its 00, from Finland first', () => {
+    for (const number of [NORDIC_SSCC, `00${NORDIC_SSCC}`, FINNISH_SSCC, `00${FINNISH_SSCC}`]) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ confidence: 'low', candidates: expect.arrayContaining(['matkahuolto']) });
+      expect(recognitionAskedCarriers(number), number).toContain('matkahuolto');
+    }
+    // A Swedish company's SSCC stays first with Bring, which issues its own under that prefix.
+    expect(recognitionAskedCarriers(`00${NORDIC_SSCC}`, { countryHint: 'FI' }).slice(0, 2)).toEqual(['bring-posten', 'matkahuolto']);
+    // A failed check digit or another country's GS1 prefix is not Matkahuolto's.
+    for (const number of ['373123456789012340', '00373123456789012340', '376000000000000006', '00376000000000000006']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('matkahuolto');
+    }
+  });
+
+  it('leaves its MA numbers to recognition when they also fit an Australia Post article ID', () => {
+    // MA, ten digits, 000 and six digits: an article ID only if a merchant location ID began with MA.
+    const MA = 'MA1234567890000123456';
+    expect(detectCarrierMatch(MA)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['matkahuolto'] });
+    expect(recognitionAskedCarriers(MA, { countryHint: 'AU' })).toEqual(['matkahuolto']);
+    // Australia Post keeps its article IDs, those with a two-digit prefix included.
+    for (const article of ['MB1234567890000123456', '12MA1234567890000123456', 'AP7123456789000123456']) {
+      expect(detectCarrierMatch(article), article).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
     }
   });
 });

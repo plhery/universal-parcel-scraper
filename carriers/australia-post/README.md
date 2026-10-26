@@ -42,7 +42,9 @@ every outgoing request unless the consumer sets `tracePropagationTargets: []`. T
 ## Notes
 
 - Detection selects Australia Post for an article ID: an optional two-digit prefix, a
-  three-character merchant location ID, nine digits, `000` and six digits. It also selects it for
+  three-character merchant location ID, nine digits, `000` and six digits. Without the prefix,
+  `MA` and nineteen digits is Matkahuolto's own layout, which recognition asks Matkahuolto
+  about instead. It also selects it for
   the EMS, parcel and tracked-letter S10 items it issues: C, E or L first, AU last and a passing
   check digit, since its tracker reads them abroad too. It only suggests Australia Post for:
   - A consignment number: an optional two-digit prefix, a location ID with a letter, seven

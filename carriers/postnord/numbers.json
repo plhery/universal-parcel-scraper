@@ -19,7 +19,8 @@
           "postnord",
           "swiss-post-cargo",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "Public report attributed to PostNord, whose tracker returns its history. Twenty digits stay a suggestion; the Swedish GS1 prefix lists PostNord first."
@@ -112,7 +113,8 @@
           "postnord",
           "swiss-post-cargo",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay a suggestion; the Swedish GS1 prefix lists PostNord first."
@@ -162,7 +164,8 @@
           "postnord",
           "swiss-post-cargo",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "A PostNord tracking link archived by the Wayback Machine. PostNord's tracker returns its history. Twenty digits stay a suggestion; the Swedish GS1 prefix lists PostNord first."

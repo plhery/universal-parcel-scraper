@@ -88,6 +88,18 @@
       "confidence": "low",
       "preferred": true,
       "checksum": "s10"
+    },
+    {
+      "id": "matkahuolto-3",
+      "pattern": "^00\\d(?:64|73)\\d{15}$",
+      "confidence": "low",
+      "checksum": "sscc"
+    },
+    {
+      "id": "matkahuolto-4",
+      "pattern": "^\\d(?:64|73)\\d{15}$",
+      "confidence": "low",
+      "checksum": "gs1"
     }
   ]
 }

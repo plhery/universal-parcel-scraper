@@ -227,7 +227,8 @@
           "swiss-post-cargo",
           "postnord",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "Looked up on Matkahuolto's own tracker, as an archived address shows; the capture was not opened."
@@ -251,7 +252,8 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "Looked up on Matkahuolto's own tracker, as an archived address shows; the capture was not opened."
@@ -277,7 +279,8 @@
           "swiss-post-cargo",
           "postnord",
           "usps",
-          "nz-post"
+          "nz-post",
+          "matkahuolto"
         ]
       },
       "note": "Looked up on Matkahuolto's own tracker, as an archived address shows. Matkahuolto's tracker returns its history."
@@ -301,10 +304,38 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "Looked up on Matkahuolto's own tracker without the SSCC's 00, as an archived address shows. Matkahuolto's tracker returns its history under the number with the 00."
+    },
+    {
+      "number": "00064300432968820007",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250415202116/https://www.matkahuolto.fi/seuranta?parcelNumber=00064300432968820007",
+        "date": "2025-04-15",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "posti",
+          "swiss-post-cargo",
+          "postnord",
+          "usps",
+          "nz-post",
+          "matkahuolto"
+        ]
+      },
+      "note": "An SSCC with Finland's GS1 prefix, looked up on Matkahuolto's own tracker, as an archived address shows; the capture was not opened."
     }
   ]
 }

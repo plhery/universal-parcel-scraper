@@ -154,7 +154,8 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "Parcel number in an open-source Swedish parcel tracker's Bring tests. Bring's tracker returns its history."
@@ -220,7 +221,8 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "A Bring tracking link in a published shell configuration. Bring's tracker no longer returns it."
@@ -242,7 +244,8 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "A Bring tracking link in a published shell configuration. Bring's tracker no longer returns it."
@@ -396,7 +399,8 @@
         "candidates": [
           "bring-posten",
           "bpost",
-          "ecoscooting"
+          "ecoscooting",
+          "matkahuolto"
         ]
       },
       "note": "A Bring tracking link archived by the Wayback Machine. Bring's tracker returns its history, which ends back with the sender after the parcel was not collected."

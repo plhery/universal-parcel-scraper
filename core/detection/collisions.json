@@ -3295,15 +3295,27 @@
     "reason": "Nordic SSCCs fit PostNord's rule, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. A Danish or Swedish prefix lists PostNord first, and the number stays a low-confidence suggestion."
   },
   {
+    "shape": "9{20} SSCC with Sweden's GS1 prefix 73",
+    "carriers": [
+      "nz-post",
+      "postnord",
+      "swiss-post-cargo",
+      "usps",
+      "matkahuolto"
+    ],
+    "reason": "A Swedish company's SSCC fits PostNord's rule, Matkahuolto's, which is asked since its tracker answers such SSCCs for parcels it delivers in Finland, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. PostNord is listed first, and the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "9{20} SSCC with Finland's GS1 prefix 64",
     "carriers": [
       "nz-post",
       "posti",
       "postnord",
       "swiss-post-cargo",
-      "usps"
+      "usps",
+      "matkahuolto"
     ],
-    "reason": "A Finnish SSCC suggests Posti, which tracks them, and also fits PostNord's Nordic SSCC rule, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. The passing check lists Posti first; anonymous recognition must establish the carrier."
+    "reason": "A Finnish SSCC suggests Posti, which tracks them, and Matkahuolto, whose tracker answers SSCCs of the parcels it carries, and also fits PostNord's Nordic SSCC rule, Swiss Post Cargo's SSCC candidate and the broad NZ Post and USPS 20-digit candidates. The passing check lists Posti first; anonymous recognition must establish the carrier."
   },
   {
     "shape": "Twelve digits that pass the FedEx and Purolator checks",
@@ -3448,6 +3460,16 @@
     "reason": "Bring parcel SSCCs written without their 00 identifier fall in the 18-digit space bpost and Ecoscooting match broadly; Bring's rule lists it first and the number stays a low-confidence suggestion."
   },
   {
+    "shape": "9{18} starting with 373 that passes the GS1 check",
+    "carriers": [
+      "bpost",
+      "bring-posten",
+      "ecoscooting",
+      "matkahuolto"
+    ],
+    "reason": "Bring parcel SSCCs written without their 00 identifier fall in the 18-digit space bpost and Ecoscooting match broadly, and a Swedish prefix also fits Matkahuolto's rule, since its tracker answers SSCCs with or without their 00. Bring's rule lists it first and the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "9{18} starting with 37072476 that passes the GS1 check",
     "carriers": [
       "bpost",
@@ -3476,6 +3498,18 @@
       "usps"
     ],
     "reason": "A Bring parcel SSCC typed with its 00 identifier also fits PostNord's Nordic SSCC rule and the broad Swiss Post Cargo, NZ Post and USPS candidates; Bring's rule lists it first and the number stays a suggestion."
+  },
+  {
+    "shape": "9{20} starting with 00373 that passes the SSCC check",
+    "carriers": [
+      "bring-posten",
+      "nz-post",
+      "postnord",
+      "swiss-post-cargo",
+      "usps",
+      "matkahuolto"
+    ],
+    "reason": "A Bring parcel SSCC typed with its 00 identifier and a Swedish prefix also fits Matkahuolto's rule, since its tracker has answered such SSCCs, PostNord's Nordic SSCC rule and the broad Swiss Post Cargo, NZ Post and USPS candidates; Bring's rule lists it first and the number stays a suggestion."
   },
   {
     "shape": "9{20} starting with 0037072476 that passes the SSCC check",
@@ -3508,9 +3542,10 @@
       "nz-post",
       "postnord",
       "swiss-post-cargo",
-      "usps"
+      "usps",
+      "matkahuolto"
     ],
-    "reason": "Early Bird's own SSCCs typed with their 00 identifier and extension digit 3 also fit Bring's and PostNord's SSCC rules and the broad Swiss Post Cargo, NZ Post and USPS candidates. Bring and Early Bird are both listed first, and recognition asks Early Bird."
+    "reason": "Early Bird's own SSCCs typed with their 00 identifier and extension digit 3 also fit Bring's, PostNord's and Matkahuolto's SSCC rules and the broad Swiss Post Cargo, NZ Post and USPS candidates. Bring and Early Bird are both listed first, and recognition asks Early Bird."
   },
   {
     "shape": "9{20} starting with 00, another extension digit than 3 and 73402216, that passes the SSCC check",
@@ -3519,9 +3554,10 @@
       "nz-post",
       "postnord",
       "swiss-post-cargo",
-      "usps"
+      "usps",
+      "matkahuolto"
     ],
-    "reason": "Early Bird's own SSCCs with another extension digit fall outside Bring's rule but still fit PostNord's SSCC rule and the broad Swiss Post Cargo, NZ Post and USPS candidates. PostNord and Early Bird are both listed first, and recognition asks both."
+    "reason": "Early Bird's own SSCCs with another extension digit fall outside Bring's rule but still fit PostNord's and Matkahuolto's SSCC rules and the broad Swiss Post Cargo, NZ Post and USPS candidates. PostNord and Early Bird are both listed first, and recognition asks both."
   },
   {
     "shape": "9{20} starting with 0039358094 that passes the SSCC check",

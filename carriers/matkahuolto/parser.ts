@@ -50,10 +50,14 @@ export function normalizeMatkahuoltoNumber(raw: string): MatkahuoltoNumber {
   throw new InvalidInputError(PROVIDER, 'Matkahuolto tracks MH…FI and MA numbers, postal S10 items and SSCCs');
 }
 
-/** Only Matkahuolto's own numbers: knowing a postal item or an SSCC says less about whose parcel it is. */
-export function normalizeMatkahuoltoOwnNumber(raw: string): string {
+/**
+ * Matkahuolto's own numbers and SSCCs: a parcel its tracker knows by an SSCC
+ * is one it carries. Knowing a post's item says less, since it delivers some
+ * for other posts.
+ */
+export function normalizeMatkahuoltoRecognitionNumber(raw: string): string {
   const number = normalizeMatkahuoltoNumber(raw);
-  if (number.kind !== 'own') throw new InvalidInputError(PROVIDER, 'Matkahuolto recognizes its own MH…FI and MA numbers only');
+  if (number.kind === 'postal') throw new InvalidInputError(PROVIDER, 'Matkahuolto recognizes its own MH…FI and MA numbers and SSCCs only');
   return number.query;
 }
 

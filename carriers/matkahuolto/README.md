@@ -17,7 +17,8 @@ service its tracking page calls.
   with HTTP 200: `NotFoundError`. Any other `notFound` reply, or a parcel without scans, is
   inconclusive. HTTP errors, redirects, an AWS WAF challenge and malformed replies keep their
   own failure kinds.
-- Recognition makes the same request for Matkahuolto's own `MH` and `MA` numbers only.
+- Recognition makes the same request for Matkahuolto's own `MH` and `MA` numbers and for SSCCs,
+  not for a post's S10 items, which it delivers for other posts too.
 
 ## Notes
 
@@ -46,8 +47,14 @@ posts' S10 numbers, which the tracker shows; anything else is invalid without a 
 The `MH` numbers follow the UPU S10 layout with Finland's code and a valid check digit, so
 detection keeps them with the generic postal carrier. Posti's tracker does not know them and
 Matkahuolto's does, so `matkahuolto-2` makes preflight ask Matkahuolto first. `matkahuolto-1`
-offers the `MA` layout at low confidence, since Matkahuolto does not describe it. An SSCC
-names whoever issued it rather than the carrier, so no rule claims those.
+offers the `MA` layout at low confidence, since Matkahuolto does not describe it. When its
+digits eleven to thirteen are `000` it also fits an Australia Post article ID, but only if a
+merchant location ID began with `MA`, so Australia Post's rule leaves it to recognition.
+
+An SSCC names whoever issued it rather than the carrier. The SSCCs Matkahuolto's tracker has
+answered carry Swedish (73) or Finnish (64) GS1 company prefixes, so `matkahuolto-3` and
+`matkahuolto-4` suggest Matkahuolto for those, with and without the `00`, when the check digit
+passes. Other carriers share the shape, so recognition must confirm it.
 
 ## Links
 

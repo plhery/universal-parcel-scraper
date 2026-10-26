@@ -4539,7 +4539,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
+        "pattern": "^(?!MA\\d{19}$)(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
         "confidence": "high"
       },
       {
@@ -21145,6 +21145,16 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "s10",
         "preferred": true
+      },
+      {
+        "pattern": "^00\\d(?:64|73)\\d{15}$",
+        "confidence": "low",
+        "checksum": "sscc"
+      },
+      {
+        "pattern": "^\\d(?:64|73)\\d{15}$",
+        "confidence": "low",
+        "checksum": "gs1"
       }
     ]
   },
@@ -34213,7 +34223,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mandae": [],
   "maritime-ontario": [],
   "maruti-air": [],
-  "matkahuolto": ["matkahuolto-1","matkahuolto-2"],
+  "matkahuolto": ["matkahuolto-1","matkahuolto-2","matkahuolto-3","matkahuolto-4"],
   "mauritius-post": [],
   "mayiyinfu": ["mayiyinfu-1"],
   "mds-collivery": [],
