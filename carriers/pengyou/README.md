@@ -30,12 +30,13 @@ which files these parcels under Pengyou.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it.
 - The record's product name is the service name.
+- A row can name its city after its wording, in brackets ("[Shenzhen City]"). The status map
+  reads the wording without it, and the row keeps it as written.
 
 ## Limitations
 
 Rows the status map does not list are staged from their wording by the shared language rules. No
-public number has been found, so the reply's fields are known from the platform, not from a
-Pengyou parcel.
+public number has been found, so the reply's fields are known from the platform.
 
 ## Numbers
 

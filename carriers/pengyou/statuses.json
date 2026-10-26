@@ -1,4 +1,6 @@
 {
   "carrier": "pengyou",
-  "entries": []
+  "entries": [
+    {"wording": "Shenzhen Processing Center has received it", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in Pengyou's hands, with the city after it in brackets."}
+  ]
 }

@@ -73,6 +73,16 @@ describe('Pengyou tracking adapter', () => {
     expect(() => parsePengyouPage(page('page-unknown'), UNKNOWN, READ_AT)).toThrow('could not locate');
   });
 
+  it('stages a row by its wording without the place in brackets after it', () => {
+    const payload = structuredClone(fixture('track')) as [{ data: [{ trackDetails: { track_content: string }[] }] }];
+    const scan = 'Shenzhen Processing Center has received it [Shenzhen City]';
+    payload[0].data[0].trackDetails.find((row) => row.track_content === 'Shipment arrived at facility')!.track_content = scan;
+    expect(parsePengyouTrack(payload, NUMBER, READ_AT)).toMatchObject({
+      status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map', last_status_text: scan,
+    });
+    expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: scan })).toEqual({ kind: 'mapped', stage: 'accepted' });
+  });
+
   it('maps every wording it lists by wording alone, and the app reads the map', () => {
     for (const entry of ENTRIES) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
     expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
