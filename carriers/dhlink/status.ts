@@ -17,6 +17,8 @@ const NODE_CODES: ReadonlyMap<string, Stage> = new Map([
   ['EUBJ010', 'in_transit'],
   ['AD001', 'in_transit'],
   ['TQ001', 'in_transit'],
+  // A US line's rail, the same nodes with WC ahead.
+  ['WCTQ001', 'in_transit'],
   ['QG001', 'in_transit'],
   ['JH001', 'in_transit'],
   ['J013', 'out_for_delivery'],
@@ -72,6 +74,9 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['departed origin hub', 'in_transit'],
   ['arrived at destination hub', 'in_transit'],
   ['departed destination hub', 'in_transit'],
+  // Its last-mile warehouse, then the delivery round.
+  ['arrived at warehouse', 'in_transit'],
+  ['out for delivery', 'out_for_delivery'],
   // China Post hands the dispatch to the airline after taking the parcel.
   ['handed over to airlines', 'in_transit'],
   // DHLink's own nodes QG001 and JH001: export clearance, then the hand-over to the airline.
