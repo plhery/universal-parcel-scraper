@@ -204,11 +204,15 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   if (!summary) throw new SchemaError(PROVIDER, 'Australia Post returned no article status');
   // A summary the map does not know ("Despatched" abroad) takes the newest scan's stage. A summary
   // label groups several scans ("In transit" covers customs on the way in): the newest scan's event
-  // code places the parcel further along when the map lists it.
+  // code places the parcel further along when the map lists it. A summary that stages the parcel as
+  // that scan's own milestone does ("In transit" over an acceptance abroad filed under "It's on its
+  // way") says no more than the scan, so its code stands either way.
   const latest = events[0]!;
   const labelled = australiaPostStatus(summary);
-  const coded = australiaPostStatus('', australiaPostCodeParts(String(latest.event.provider_code ?? '')).code);
-  const status = labelled && coded && furtherAlong(labelled.stage, coded.stage) ? coded : labelled ?? latest.classified;
+  const { code: latestCode, milestone: latestMilestone } = australiaPostCodeParts(String(latest.event.provider_code ?? ''));
+  const coded = australiaPostStatus('', latestCode);
+  const echoed = labelled && latestMilestone !== undefined && australiaPostStatus(latestMilestone)?.stage === labelled.stage;
+  const status = labelled && coded && (echoed || furtherAlong(labelled.stage, coded.stage)) ? coded : labelled ?? latest.classified;
   const deliveredAt = status?.status === 'delivered' ? events.find(({ event }) => event.stage === 'delivered')?.event.time : null;
   // The reply names the point but gives no address for it.
   const pickup = collectionPoint(status?.stage, events.map(({ event }) => event));

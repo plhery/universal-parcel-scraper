@@ -238,6 +238,15 @@ describe('Australia Post status codes and places', () => {
     });
   });
 
+  it("takes the newest scan's coded stage when the summary label says no more than that scan's milestone", () => {
+    const received = (milestone?: string) => scan('INT-0001', 'Received item from Sender (Outbound)', 'EXAMPLE COUNTRY',
+      '2026-06-05T16:20:00+02:00', milestone);
+    expect(journey('AU', [received()], 'In transit'))
+      .toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'In transit' });
+    // A summary further along than the scan's own milestone keeps its stage.
+    expect(journey('AU', [received("We've got it")], 'In transit')).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it("takes the newest scan's coded stage when it is further along than the summary label", () => {
     const customs = scan('INT-0031', 'Item received into Customs for clearance', 'EXAMPLE PORT (US), UNITED STATES OF AMERICA',
       '2026-06-09T11:14:00-07:00');

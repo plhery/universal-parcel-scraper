@@ -91,7 +91,10 @@ every outgoing request unless the consumer sets `tracePropagationTargets: []`. T
   attempted delivery and returns are not delivery. An article summary the map does not know takes
   the newest scan's stage. A summary label groups several scans too: when the newest scan's code
   places the parcel further along the way (customs on the way in under `In transit`), the code's
-  stage stands.
+  stage stands. So does it when the summary stages the parcel as that scan's own milestone does:
+  `In transit` over an acceptance abroad filed under `It's on its way` says no more than the
+  acceptance, so the parcel is accepted, and a consumer does not record a transit step no scan
+  dates.
 - A scan keeps both as its `provider_code`: the event code, a slash and the milestone label
   (`TTP-ER81/It's on its way`), or the code alone without a label. The parcel app's review asks
   the same map (`statusMap`) by that code, so it stages a scan as the adapter does. A scan stored
