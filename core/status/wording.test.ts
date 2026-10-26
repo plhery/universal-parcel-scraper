@@ -358,6 +358,8 @@ describe('classifyWording', () => {
       'Left the customs terminal', 'Item returned from import customs', 'Released from customs hold',
       // A heading and its line, as MailAmericas words its release and providers relay it.
       'Destination customs: Released', 'Destination customs. Released',
+      // China Post's release label in English, as forwarders and providers relay it.
+      'Export customs release', 'Export customs/release [Example City]',
       'The package was released by the clearing agency.',
       'Problème douanier résolu, colis en cours d’acheminement', 'Colis dédouané', 'Dédouanement effectué', 'Sorti de la douane',
       'Verzollung abgeschlossen', 'Sendung verzollt', 'Zollfreigabe erfolgt', 'Die Sendung hat den Zoll verlassen',

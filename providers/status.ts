@@ -57,7 +57,7 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     const read = classifyEvent(wording);
-    return (code ? subStatusStage(code, read.stage) : undefined) ?? (read.stage_source === 'none' ? undefined : read.stage);
+    return (code ? subStatusStage(code, read.stage, wording) : undefined) ?? (read.stage_source === 'none' ? undefined : read.stage);
   },
   gaps: [{
     wording: normalizeStatusWording(CHRONOPOST_NOTIFICATION),

@@ -19,6 +19,9 @@ export const SUB_STAGES: Record<string, Stage> = {
   Exception_Destroyed: 'exception', Exception_Cancel: 'exception',
 };
 
+// Correios Brazil's export unit abroad receiving the item, which 17TRACK files as information received.
+const SCANNED = /^objeto recebido na unidade de exporta(?:ção|cao) no pa(?:í|i)s de origem\.?$/i;
+
 /**
  * The stage a scan's `sub_status` gives it over the stage its wording got
  * (`pending` when no rule read it), or undefined when the code does not
@@ -26,11 +29,13 @@ export const SUB_STAGES: Record<string, Stage> = {
  * wording cannot provide; the shared delivered, negation and handoff
  * safeguards are kept: generic transit yields to any reading of the wording,
  * a delivery code to wording that does not read as delivered, and a
- * delivery-round code to wording that reads as delivered.
+ * delivery-round code to wording that reads as delivered. Information
+ * received yields to a scan of the item that 17TRACK files under it.
  */
-export function subStatusStage(code: string, worded: Stage): Stage | undefined {
+export function subStatusStage(code: string, worded: Stage, description = ''): Stage | undefined {
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
   if (!mapped || (code === 'InTransit_Other' && worded !== 'pending')) return undefined;
+  if (code === 'InfoReceived' && SCANNED.test(description.trim())) return undefined;
   if (mapped === 'out_for_delivery' && worded === 'delivered') return undefined;
   return mapped !== 'delivered' || worded === 'delivered' ? mapped : undefined;
 }

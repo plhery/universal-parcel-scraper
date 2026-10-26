@@ -76,6 +76,16 @@ describe('17TRACK result parsing', () => {
       .toMatchObject({ current_stage: 'ready_for_pickup' });
   });
 
+  it('lets information received yield to a scan 17TRACK files under it', () => {
+    expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', 'Objeto recebido na unidade de exportação no país de origem')]), number))
+      .toMatchObject({ current_stage: 'in_transit', events: [{ stage: 'in_transit', provider_code: 'InfoReceived' }] });
+    // A notice keeps the code's stage, also where the shared rules read customs or movement in it.
+    for (const description of ['Shipment information received', 'Order processed', 'Pre-advice received, customs declaration generated']) {
+      expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', description)]), number))
+        .toMatchObject({ current_stage: 'registered', events: [{ stage: 'registered', provider_code: 'InfoReceived' }] });
+    }
+  });
+
   it('reads an exact voided label as a problem despite the generic transit code', () => {
     const label = { ...postalScan('InfoReceived', 'Shipping Label Created'),
       time_iso: '2026-09-19T12:22:00+08:00', time_utc: '2026-09-19T04:22:00Z' };
@@ -118,6 +128,7 @@ describe('17TRACK result parsing', () => {
     ['InTransit_PickedUp', '中国邮政已收取邮件', 'accepted', 'China Post has received the mail'],
     ['InTransit_CustomsProcessing', '送交出口海关', 'customs', 'Presented to export customs'],
     ['InTransit_CustomsReleased', '出口海关/放行', 'in_transit', 'Export customs release'],
+    ['InTransit_Other', 'Export customs/release [Example City]', 'in_transit', 'Export customs/release [Example City]'],
     ['InTransit_CustomsRequiringInformation', '等待清关资料', 'customs', '等待清关资料'],
     ['Exception_Delayed', '运输延误', 'exception', '运输延误'],
     ['Exception_Returning', '退回中', 'exception', '退回中'],
