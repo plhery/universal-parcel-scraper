@@ -101,6 +101,10 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   a stage; the sync classifies the wording and records it, with the code, for review. `statusMap`
   answers the review by code, and by wording for the four codes the queue held before events kept
   theirs.
+- Cainiao's notices have no stage: its advance notice to the courier that delivers the parcel
+  ("Last-mile delivery forecast", written after a scan and carrying no date), a changed order and
+  a transit sorting center's failed inbound. When one is the newest row, the parcel's status is
+  that of its newest scan with a stage, and the notice stays the last update.
 - The global feed has no place field. It writes a scan's town in brackets before the standard
   wording, `[Town] Out for delivery`, in every language. That town becomes the location and the
   wording keeps the rest. A bracket holding other digits than a trailing postcode, capitals only,
@@ -115,7 +119,7 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   ("Canada"). Otherwise the location is the town alone.
 - In the United States a scan's offset follows its site, so the place lookup can tell
   same-named towns apart by it.
-- Some steps, the transit sorting centers' scans and the last-mile forecast among them, have the
+- Some steps, the transit sorting centers' scans and the last-mile notice among them, have the
   placeholder "Carrier update" as their standard wording. Their own wording (`desc`) is shown
   instead when they have one.
 - The app scan-identity policy reconciles extracted towns, a placeholder's replacement and

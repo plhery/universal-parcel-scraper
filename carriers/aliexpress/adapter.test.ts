@@ -351,6 +351,28 @@ describe('Cainiao projection', () => {
     expect(time(scan('2026-06-10 07:40:16', 1781048416947, 'CET'))).toBe('2026-06-10 07:40:16');
   });
 
+  it("leaves Cainiao's notice to the last-mile courier without a stage, the parcel at its newest scan", () => {
+    const scan = (actionCode: string, timeStr: string, desc = '', standerdDesc = 'Carrier update') => ({ actionCode, timeStr, timeZone: 'GMT+8', desc, standerdDesc });
+    const departed = scan('SC_OUTBOUND_SUCCESS', '2026-06-10 07:39:39', '', 'Departed from sorting center');
+    const forecast = scan('LAST_MILE_ASN_NOTIFY', '2026-06-10 07:40:16', 'Last-mile delivery forecast');
+    const result = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
+      latestTrace: forecast, detailList: [forecast, departed],
+    }] }, 'LP00000000000001');
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Last-mile delivery forecast',
+      last_update: '2026-06-10T07:40:16+08:00' });
+    expect(result.events?.map((event) => [event.provider_code, event.description, event.stage])).toEqual([
+      ['LAST_MILE_ASN_NOTIFY', 'Last-mile delivery forecast', undefined],
+      ['SC_OUTBOUND_SUCCESS', 'Departed from sorting center', 'in_transit'],
+    ]);
+    // Worded only by the placeholder, after export customs started, it leaves the parcel in customs.
+    const placeholder = scan('LAST_MILE_ASN_NOTIFY', '2026-06-10 09:00:00');
+    const customs = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
+      latestTrace: placeholder, detailList: [placeholder, scan('CC_EX_START', '2026-06-10 08:00:00', '', 'Export customs clearance started'), departed],
+    }] }, 'LP00000000000001');
+    expect(customs).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Carrier update' });
+    expect(customs.events?.[0]).not.toHaveProperty('stage');
+  });
+
   it('keeps a flight out dated at midnight as its day', () => {
     const scan = (actionCode: string, timeStr: string) => ({ actionCode, timeStr, timeZone: 'GMT+8', time: 1781020800000 });
     const leaving = scan('LH_HO_AIRLINE', '2026-06-10 00:00:00');

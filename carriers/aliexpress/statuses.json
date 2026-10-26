@@ -412,19 +412,17 @@
       "code": "LAST_MILE_ASN_NOTIFY",
       "wording": "Last-mile delivery forecast",
       "language": "en",
-      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-25",
-      "note": "Cainiao's own wording; its standard wording is the placeholder \"Carrier update\"."
+      "note": "No stage: Cainiao's advance notice of the parcel to the courier that delivers it, written after a scan and carrying no date. Its standard wording is the placeholder \"Carrier update\"."
     },
     {
       "code": "LAST_MILE_ASN_NOTIFY",
       "wording": "Carrier update",
       "language": "en",
-      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "The placeholder alone, for a notice without wording of its own."
+      "note": "No stage: the same notice with the placeholder alone, without wording of its own."
     },
     {
       "code": "GTMS_DO_DEPART",

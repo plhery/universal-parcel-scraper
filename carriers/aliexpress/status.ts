@@ -104,7 +104,6 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['SC_ARRIVE', 'in_transit'],
   ['SC_DEPART', 'in_transit'],
   ['OE_DEPART', 'in_transit'],
-  ['LAST_MILE_ASN_NOTIFY', 'in_transit'],
   ['GTMS_DO_DEPART', 'out_for_delivery'],
   ['LM_DELIVERY_DEPART', 'out_for_delivery'],
   ['GSTA_INBOUND', 'out_for_delivery'],
@@ -170,14 +169,20 @@ const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
   ['departed from destination country/region sorting center', 'GTMS_SC_DEPART'],
 ]);
 
+/** Cainiao's records that move no parcel: it keeps the stage of its newest scan. */
+const NOTICES = [
+  { code: 'GTMS_ORDER_INFO_UPDATE', note: "The order's delivery details changed, which moves no parcel." },
+  { code: 'SC_TRANS_INBOUND_FAILURE', note: 'A transit sorting center\'s inbound that did not go through, worded only "Carrier update": it names no movement and no fault, so the parcel keeps its stage.' },
+  { code: 'LAST_MILE_ASN_NOTIFY', note: 'Cainiao\'s advance notice of the parcel to the courier that delivers it, worded "Last-mile delivery forecast" or only "Carrier update": a record with no date, written after a scan, so the parcel keeps its stage.' },
+];
+
+export const CAINIAO_NOTICE_ACTIONS: ReadonlySet<string> = new Set(NOTICES.map((notice) => notice.code));
+
 /** The review queue uses the same per-scan mapping as the adapter. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     const action = code ? cainiaoActionCode(code) : UNCODED_SCANS.get(wording.replace(/^\[[^\]]*\]\s*/, ''));
     return action ? cainiaoActionStage(action) : undefined;
   },
-  gaps: [
-    { code: 'GTMS_ORDER_INFO_UPDATE', note: "The order's delivery details changed, which moves no parcel." },
-    { code: 'SC_TRANS_INBOUND_FAILURE', note: 'A transit sorting center\'s inbound that did not go through, worded only "Carrier update": it names no movement and no fault, so the parcel keeps its stage.' },
-  ],
+  gaps: NOTICES,
 };

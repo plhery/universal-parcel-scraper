@@ -31,6 +31,7 @@ import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../cor
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   CAINIAO_ACTION_STATUS,
+  CAINIAO_NOTICE_ACTIONS,
   CAINIAO_STATUS,
   cainiaoActionCode,
   cainiaoActionStage,
@@ -236,12 +237,17 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   // A token the map does not know reads as moving only once Cainiao has a
   // scan; before one it states nothing.
   const scanned = details.length > 0 || Object.keys(latest).length > 0;
-  const status = cainiaoActionCode(latest.actionCode)
-    ? (CAINIAO_ACTION_STATUS.get(cainiaoActionCode(latest.actionCode)) ?? 'unknown')
+  // A notice moves nothing: the parcel stands at its newest scan that has a stage,
+  // while the notice stays the newest update.
+  const standing = CAINIAO_NOTICE_ACTIONS.has(cainiaoActionCode(latest.actionCode))
+    ? details.find((event) => cainiaoActionStage(cainiaoActionCode(event.actionCode))) ?? latest
+    : latest;
+  const standingAction = cainiaoActionCode(standing.actionCode);
+  const status = standingAction
+    ? (CAINIAO_ACTION_STATUS.get(standingAction) ?? 'unknown')
     : (CAINIAO_STATUS.get(rawStatus)
       ?? (rawStatus ? (scanned ? 'in_transit' : 'unknown') : details.length === 0 ? 'pending' : 'unknown'));
-  const latestAction = cainiaoActionCode(latest.actionCode);
-  const currentStage = cainiaoActionStage(latestAction) ?? cainiaoStageByStatus()[status];
+  const currentStage = cainiaoActionStage(standingAction) ?? cainiaoStageByStatus()[status];
   const carriers = carrierNames(trackingModule, details);
   const events = details.slice(0, MAX_EVENTS_TO_RETURN).map((event): CarrierEvent => {
     const code = cainiaoActionCode(event.actionCode);
@@ -271,7 +277,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   const handoff = cainiaoHandoffNumber(trackingModule);
   // Cainiao can follow the country with the recipient's town, "France,Town": only the country is read.
   const destination = text(trackingModule.destCountry).split(',')[0]!.trim().slice(0, 80);
-  const deliveredAt = status === 'delivered' ? scanTime(latest) || null : null;
+  const deliveredAt = status === 'delivered' ? scanTime(standing) || null : null;
   const latestClock = scanClock(latest);
   return {
     status,
