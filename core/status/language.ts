@@ -474,6 +474,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^(?:received in office|export to foreign provider)$/.test(text)) return 'in_transit';
   // Sent on to another country: "Sent abroad".
   if (/^(?:(?:the )?(?:shipment|parcel|package|item) )?(?:(?:has been|was) )?(?:sent|dispatched|forwarded) abroad$/.test(text)) return 'in_transit';
+  // A post's departure from its country, as ParcelsApp words Poczta Polska's:
+  // "Sending the package from Poland". Not a sender's drop-off at a point or shop.
+  if (/^sending (?:the )?(?:package|parcel|item|shipment) from (?!.*\b(?:point|locker|shop|sender|branch)\b)[a-z][a-z .'-]{1,40}$/.test(text)) return 'in_transit';
   if (/^(?:posting\/collection|posted|origin scan)$|received at (?:our |the )?(?:[a-z]+ )?origin (?:office|facility|hub)|dropped off (?:after|before) (?:the )?latest drop ?off time/.test(text)) return 'accepted';
   // Turned away rather than taken in: "Package not accepted by sorting center".
   if (/(?:\b(?:not|never)|n't)(?: (?:be|been|being))? accepted\b/.test(text)) return 'exception';

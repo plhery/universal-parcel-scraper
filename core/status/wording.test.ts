@@ -839,6 +839,8 @@ describe('classifyWording', () => {
       ['Csomagod elkészült. Csomagod létrejött a rendszerünkben, a feladó még nem adta át azt a FOXPOST részére.', 'registered'],
       ['The collection has been registered', 'registered'], ['The shipment has been deposited at a SEUR pickup point', 'accepted'],
       ['The collection has been carried out', 'accepted'], ['Order placed', 'registered'], ['Sent abroad', 'in_transit'],
+      // Poczta Polska's departure from Poland, as ParcelsApp words it.
+      ['Sending the package from Poland', 'in_transit'],
       ['Example Forwarding has received the goods, Example Town, CN.', 'accepted'],
       // DPD Poland's scans as ParcelsApp words them.
       ['Sending the package at the pickup point', 'accepted'], ['Handing over the package to the courier', 'accepted'],
