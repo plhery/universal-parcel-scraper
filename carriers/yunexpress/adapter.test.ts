@@ -187,6 +187,17 @@ describe('YunExpress captured response projection', () => {
     for (const event of events) expect(statusMap.stage('', event.description!), event.description).toBe(event.stage);
   });
 
+  it("gives no place to China Post's relayed landing that names the airline as one", () => {
+    const payload = fixture();
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    rows[4].ProcessContent = '飞机进港----邮政航空';
+    rows[5].ProcessContent = '飞机进港----示例航空中心';
+    expect(parse(payload, NUMBER).events!.slice(4, 6).map(({ description, location }) => ({ description, location }))).toEqual([
+      { description: 'Plane has landed', location: '' },
+      { description: 'Plane has landed', location: '示例航空中心' },
+    ]);
+  });
+
   // Rows newest first: 4 the flight's arrival, 5 its departure, 6 the export clearance,
   // 7 to 12 the origin leg's facilities, 13 the order data.
   const placing = (places: Record<number, string>) => {

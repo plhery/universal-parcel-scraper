@@ -83,7 +83,9 @@ airline as its office (邮政航空); an airline is no place, so that scan has n
 location. A destination office that names itself only by code (`orgCode`) is
 placed in the destination country when the code is the country's own or a UPU
 office of exchange code starting with it; airline handovers also use codes, so
-no other code becomes a place.
+no other code becomes a place. A country, as China Post names it in Chinese,
+shows in English, and [`identity.ts`](identity.ts) lets such a scan take over
+the row stored with the Chinese name.
 
 Guests receive only the three newest scans. When `mailInfoCount` is larger than
 the returned list, or is missing or unreadable while the list fills the guest
@@ -97,7 +99,9 @@ history.
 
 Stages come from the scan code. The coarse state label (`stateDesc`) is used
 only for codes without a mapping. A delivery attempt (542) keeps its own stage,
-even though its state label still reads "运送中". The encrypted `mailStateSign`
+even though its state label still reads "运送中". The presentation to import
+customs abroad (486) is customs, like YunExpress's relay of it, whatever its
+state label says. The encrypted `mailStateSign`
 is not decoded: `stateDesc` carries the same state as readable text.
 `statusMap` in [status.ts](status.ts) answers the app's review queue by scan
 code, and by wording only when the wording is a state label: one that replaced

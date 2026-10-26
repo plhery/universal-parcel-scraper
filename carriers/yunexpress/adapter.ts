@@ -13,6 +13,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
+import { chinaPostAirline } from '../china-post/status.js';
 import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressNotice, withoutMarkup, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
@@ -105,15 +106,17 @@ function dateDestinationLeg(events: CarrierEvent[], offset: string | undefined, 
 /**
  * China Post's arrivals and departures, relayed after the hand-over to it, name
  * their office in the wording; the office becomes the scan's place, in place
- * of the city the feed gives. China Post's scans show the English its adapter
- * gives them; their stage was read from the Chinese. Clocks are dated first,
- * on the feed's places.
+ * of the city the feed gives. An airline the feed gives as a place (邮政航空)
+ * is none, as in China Post's own adapter. China Post's scans show the English
+ * its adapter gives them; their stage was read from the Chinese. Clocks are
+ * dated first, on the feed's places.
  */
 function officesAsPlaces(events: CarrierEvent[]): CarrierEvent[] {
   return events.map((event) => {
     const scan = chinaPostOffice(event.description ?? '');
     const english = chinaPostRelayEnglish(event.description ?? '');
-    const placed = scan ? { ...event, description: scan.wording, location: scan.office } : event;
+    const placed = scan ? { ...event, description: scan.wording, location: scan.office }
+      : chinaPostAirline(event.location ?? '') ? { ...event, location: '' } : event;
     return english ? { ...placed, description: english } : placed;
   });
 }

@@ -58,6 +58,27 @@
       "note": "Scan code (operationCode). 飞机进港 (flight arrived)."
     },
     {
+      "code": "516",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Scan code (operationCode). 到达寄达地 (arrived in the destination country)."
+    },
+    {
+      "code": "486",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Scan code (operationCode). 送交境外进口海关 (presented to import customs abroad), which holds the item until its release."
+    },
+    {
+      "code": "493",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Scan code (operationCode). 境外进口海关留存待验 (held by import customs abroad for inspection)."
+    },
+    {
       "code": "489",
       "stage": "in_transit",
       "confirmedBy": "live",

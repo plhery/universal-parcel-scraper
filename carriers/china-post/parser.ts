@@ -2,11 +2,11 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, SchemaError, type CarrierError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { countryCode, firstOccurrence } from '../../core/time/index.js';
+import { firstOccurrence } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
-import { chinaPostEnglish, chinaPostStateStatus, chinaPostStatus } from './status.js';
+import { chinaPostAirline, chinaPostCountry, chinaPostEnglish, chinaPostPlace, chinaPostStateStatus, chinaPostStatus } from './status.js';
 
 export const PROVIDER = 'China Post';
 const SUCCESS = '000000';
@@ -77,22 +77,6 @@ export function checkChinaPostGate(payload: unknown): void {
   if (reply.info === 3) throw new NoHistoryError(PROVIDER, 'China Post has no tracking information for this number yet');
 }
 
-const CHINESE_REGIONS = new Intl.DisplayNames(['zh-Hans'], { type: 'region' });
-const NOT_COUNTRIES = new Set(['EU', 'EZ', 'QO', 'UN', 'ZZ']);
-// Current ISO regions by their Simplified Chinese name, plus the short forms
-// of the special administrative regions.
-const COUNTRY_BY_NAME: ReadonlyMap<string, string> = new Map([
-  ...Array.from({ length: 26 * 26 }, (_, index) => String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)))
-    .filter((code) => countryCode(code) === code && !NOT_COUNTRIES.has(code) && !code.startsWith('X'))
-    .map((code) => [CHINESE_REGIONS.of(code) ?? code, code] as const)
-    .filter(([name, code]) => name !== code),
-  ['香港', 'HK'], ['中国香港', 'HK'], ['澳门', 'MO'], ['中国澳门', 'MO'], ['中国台湾', 'TW'],
-]);
-
-export function chinaPostCountry(name: string): string | undefined {
-  return COUNTRY_BY_NAME.get(name.trim());
-}
-
 // Contact and signature prose: courier names and phones, signers, hotlines.
 const PERSONAL = /电话|手机|致电|联系|快递员|投递员|揽投员|揽收员|派送员|派件员|收派员|配送员|司机|签收|签字|收件人|寄件人|收货人|本人|代收|姓名|热线|\d{5,}|\d{3,4}-\d{3,}/;
 // Bracketed offices, workshops, exchanges, airports and the cities and
@@ -103,7 +87,7 @@ const OFFICE = /(?:局|部|中心|站|所|处|公司|仓|港|场|口岸|海关|�
 
 function safeText(value: string): boolean {
   if (!value || PERSONAL.test(value) || /[【】]/.test(value.replace(/【[^【】]*】/g, ''))) return false;
-  return [...value.matchAll(/【([^【】]*)】/g)].every(([, inner]) => OFFICE.test(inner!) || COUNTRY_BY_NAME.has(inner!));
+  return [...value.matchAll(/【([^【】]*)】/g)].every(([, inner]) => OFFICE.test(inner!) || chinaPostCountry(inner!) !== undefined);
 }
 
 /**
@@ -155,10 +139,6 @@ function scanLocation(value: unknown): string | undefined {
   return location && !PERSONAL.test(location) ? location : undefined;
 }
 
-// An airline handover can name the airline as its office (邮政航空, China
-// Postal Airlines), which is no place. Airports (机场) and the post's air mail
-// centres (航空中心) end otherwise.
-const AIRLINE = /航空(?:公司)?$/;
 
 /**
  * Whether one of the destination's own offices made the scan: its code is the
@@ -168,18 +148,19 @@ const AIRLINE = /航空(?:公司)?$/;
  */
 function atDestination(scan: Record<string, unknown>, destination: string | undefined): boolean {
   const office = clean(scan.orgName, 100);
-  if (!destination || AIRLINE.test(office)) return false;
+  if (!destination || chinaPostAirline(office)) return false;
   const code = cleanScalar(scan.orgCode, 8).toUpperCase();
   return code === destination || (/^[A-Z]{5}[A-Z0-9]$/.test(code) && code.startsWith(destination)) || chinaPostCountry(office) === destination;
 }
 
 /**
  * A scan's office, or the destination country when one of the destination's
- * offices names itself only by code (orgName "").
+ * offices names itself only by code (orgName ""). A country shows in English.
  */
 function placeOfScan(scan: Record<string, unknown>, country: string | undefined): string | undefined {
   const office = clean(scan.orgName, 100);
-  return AIRLINE.test(office) ? undefined : scanLocation(office) ?? country;
+  const place = chinaPostAirline(office) ? undefined : scanLocation(office) ?? country;
+  return place && chinaPostPlace(place);
 }
 
 interface Scan {

@@ -1,6 +1,7 @@
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { statusWordings, type WordedStatus } from '../../core/status/english.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { countryCode } from '../../core/time/index.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const IN_TRANSIT: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };
@@ -20,6 +21,11 @@ const CODES: Readonly<Record<string, ClassifiedStatus>> = {
   '500': IN_TRANSIT,
   '457': IN_TRANSIT,
   '505': IN_TRANSIT,
+  // Arrived in the destination country (到达寄达地).
+  '516': IN_TRANSIT,
+  // Presented to import customs abroad (送交境外进口海关), and held there for inspection (境外进口海关留存待验).
+  '486': CUSTOMS,
+  '493': CUSTOMS,
   // Closed into an export dispatch at an exchange office (已出口直封).
   '423': IN_TRANSIT,
   // Arrived at the destination's processing centre (到达寄达地处理中心).
@@ -205,3 +211,34 @@ export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => chinaPostCodeStatus(code ?? '')?.stage ?? WORDINGS.stage(wording),
   gaps: [],
 };
+
+const CHINESE_REGIONS = new Intl.DisplayNames(['zh-Hans'], { type: 'region' });
+const ENGLISH_REGIONS = new Intl.DisplayNames(['en'], { type: 'region' });
+const NOT_COUNTRIES = new Set(['EU', 'EZ', 'QO', 'UN', 'ZZ']);
+// Current ISO regions by their Simplified Chinese name, plus the short forms
+// of the special administrative regions.
+const COUNTRY_BY_NAME: ReadonlyMap<string, string> = new Map([
+  ...Array.from({ length: 26 * 26 }, (_, index) => String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)))
+    .filter((code) => countryCode(code) === code && !NOT_COUNTRIES.has(code) && !code.startsWith('X'))
+    .map((code) => [CHINESE_REGIONS.of(code) ?? code, code] as const)
+    .filter(([name, code]) => name !== code),
+  ['香港', 'HK'], ['中国香港', 'HK'], ['澳门', 'MO'], ['中国澳门', 'MO'], ['中国台湾', 'TW'],
+]);
+
+export function chinaPostCountry(name: string): string | undefined {
+  return COUNTRY_BY_NAME.get(name.trim());
+}
+
+/** A place, with a country China Post names in Chinese (日本) in English. */
+export function chinaPostPlace(place: string): string {
+  const country = chinaPostCountry(place);
+  return country ? ENGLISH_REGIONS.of(country) ?? place.trim() : place.trim();
+}
+
+// An airline handover can name the airline as its office (邮政航空, China
+// Postal Airlines), which is no place. Airports (机场) and the post's air mail
+// centres (航空中心) end otherwise.
+const AIRLINE = /航空(?:公司)?$/;
+
+/** Whether an office names an airline, which is no place. */
+export const chinaPostAirline = (office: string): boolean => AIRLINE.test(office.trim());

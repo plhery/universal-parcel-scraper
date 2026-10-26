@@ -1,12 +1,15 @@
 import type { SameInstantIdentityPolicy, SameInstantScan } from '../../core/catalog/eventIdentity.js';
+import { chinaPostAirline } from '../china-post/status.js';
 import { chinaPostOffice, chinaPostRelayEnglish } from './status.js';
 
 const normalized = (text: string) => text.replace(/\s+/g, ' ').trim().toLowerCase();
 const wording = (scan: SameInstantScan) => normalized(scan.description);
+/** A stored row's place: an airline stored as one (邮政航空) is none. */
+const place = (scan: SameInstantScan) => chinaPostAirline(scan.location) ? '' : scan.location.trim();
 
 /** One row, by its wording and place. Yuntrack's rows have no code. */
 function sameRow(incoming: SameInstantScan, stored: SameInstantScan): boolean {
-  return wording(incoming) !== '' && wording(incoming) === wording(stored) && incoming.location.trim() === stored.location.trim();
+  return wording(incoming) !== '' && wording(incoming) === wording(stored) && incoming.location.trim() === place(stored);
 }
 
 /** A China Post arrival or departure stored with its office in the wording, which is now its place. */
@@ -18,8 +21,8 @@ function sameOffice(incoming: SameInstantScan, stored: SameInstantScan): boolean
 /** A China Post scan stored in its Chinese, which now shows in English, at its office or the feed's place. */
 function sameInEnglish(incoming: SameInstantScan, stored: SameInstantScan): boolean {
   const english = chinaPostRelayEnglish(stored.description, stored.location);
-  const place = chinaPostOffice(stored.description)?.office ?? stored.location.trim();
-  return english !== undefined && normalized(english) === wording(incoming) && place === incoming.location.trim();
+  const office = chinaPostOffice(stored.description)?.office ?? place(stored);
+  return english !== undefined && normalized(english) === wording(incoming) && office === incoming.location.trim();
 }
 
 // Earlier releases dated the rows without a place on China's leg on the

@@ -70,13 +70,14 @@ After YunExpress hands a parcel to China Post, the feed relays China Post's
 scans in Chinese. An arrival or a departure names its office in 【】 right
 after the verb (`邮件到达【…】`, `邮件离开【…】，正在发往下一站`): the office
 becomes the scan's place, in place of the city the feed gives, and leaves the
-wording. The scans show the English China Post's adapter gives its labels, and
+wording. An airline the feed gives as a place (邮政航空) is none, as in China
+Post's own adapter. The scans show the English China Post's adapter gives its labels, and
 stage as their Chinese. These scans are dated on China's clock wherever they happen: China Post
 dates its own scans abroad on Beijing time, and the feed states +08:00 for its
 arrival at the destination (到达寄达地). A line with kana or hangul is a
 partner's. Other clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
-lets such a row take over the one stored with the office in its wording or in
-Chinese.
+lets such a row take over the one stored with the office in its wording, in
+Chinese or at the airline.
 
 Run `npm run test:carriers:live -- carriers/yunexpress` with a
 configured browser. Set `YUNEXPRESS_TRACKING_NUMBER` outside the repository to

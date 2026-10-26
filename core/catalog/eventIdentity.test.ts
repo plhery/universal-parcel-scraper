@@ -677,6 +677,32 @@ describe('same-instant identity policies', () => {
     ]) expect(policy?.matches?.(incoming, different)).toBe(false);
   });
 
+  it('lets a China Post scan YunExpress relays without the airline as its place take over the row stored with it', () => {
+    const policy = sameInstantIdentityPolicy('yunexpress', { supportsScanMatching: true });
+    const incoming = { stage: 'in_transit', description: 'Plane has landed', location: '', providerCode: '' };
+    expect(policy?.matches?.(incoming, { ...incoming, description: '飞机进港', location: '邮政航空' })).toBe(true);
+    expect(policy?.matches?.(incoming, { ...incoming, location: '示例航空公司' })).toBe(true);
+    for (const different of [
+      { ...incoming, description: '飞机进港', location: '示例航空中心' },
+      { ...incoming, description: '航空公司启运', location: '邮政航空' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+  });
+
+  it('lets a China Post scan placed in its country in English take over the row stored with the Chinese name', () => {
+    const policy = sameInstantIdentityPolicy('china-post', { supportsScanMatching: true });
+    const incoming = { stage: 'in_transit', description: 'Arrive at the place of destination', location: 'Japan', providerCode: '516' };
+    expect(policy?.matches?.(incoming, { ...incoming, location: '日本' })).toBe(true);
+    expect(policy?.matches?.(incoming, { ...incoming, location: '日本', providerCode: '' })).toBe(true);
+    const held = { stage: 'customs', description: 'Held by import customs abroad for inspection', location: 'Japan', providerCode: '493' };
+    expect(policy?.matches?.(held, { ...held, description: '境外进口海关留存待验(等待提交给边境机构/安全部门)', location: '日本' })).toBe(true);
+    for (const different of [
+      { ...incoming, location: '美国' },
+      { ...incoming, location: '日本', providerCode: '459' },
+      { ...incoming, location: '日本', description: 'Arrival at processing center in the destination country' },
+      { ...incoming, location: '示例市' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+  });
+
   it('lets a ZTO International scan read on Shanghai’s clock take over the row stored on another zone, by wall clock, place, wording and code', () => {
     expect(sameInstantIdentityPolicy('zto-international')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('zto-international', { supportsScanMatching: true });
