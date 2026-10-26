@@ -179,20 +179,25 @@ describe('SpeedPAK hand-off wording', () => {
     expect(policy?.matches?.({ ...incoming, description: trimmed.replace('0003]', '0004]') }, stored)).toBe(false);
   });
 
-  it("shows SpeedPAK's Chinese sent as the English wording in English, and a partner's scan in the country it names as its city", () => {
+  it("shows SpeedPAK's Chinese sent as the English wording in English, and a partner's scan in the country it names as its city, not where it departs for", () => {
     const payload = fixture();
     const traces = payload.result.waybills[0].traces;
     const later = traces[0].oprTimestamp;
     traces.splice(0, 0,
-      { eventDesc: '货物运输中', eventDescCn: '货物运输中', oprTimestamp: later + 2_000 },
+      { eventDesc: '货物运输中', eventDescCn: '货物运输中', oprTimestamp: later + 4_000 },
+      { eventDesc: 'DEPARTURE TO COUNTRY OF DESTINATION', eventDescCn: '', oprTimestamp: later + 3_000, oprCountry: 'FR' },
+      { eventDesc: 'DEPARTURE TO COUNTRY OF DESTINATION', eventDescCn: '', oprTimestamp: later + 2_000, oprCity: 'BE', oprCountry: 'FR' },
       { eventDesc: 'PARCEL IS HANDLED', eventDescCn: '', oprTimestamp: later + 1_000, oprCity: 'BE', oprCountry: 'FR' });
     payload.result.waybills[0].lastStatus = '货物运输中';
     const result = parseSpeedpak(payload, NUMBER);
     expect(result).toMatchObject({ last_status_text: 'In transit', current_stage: 'in_transit' });
     expect(result.events?.[0]).toMatchObject({ description: 'In transit', stage: 'in_transit', stage_source: 'carrier_map' });
-    expect(result.events?.[1]).toMatchObject({ description: 'PARCEL IS HANDLED', location: 'BE' });
+    // A departure for the destination country placed only in it has no place.
+    expect(result.events?.[1]).toEqual(expect.not.objectContaining({ location: expect.anything() }));
+    expect(result.events?.[2]).toMatchObject({ description: 'DEPARTURE TO COUNTRY OF DESTINATION', location: 'BE' });
+    expect(result.events?.[3]).toMatchObject({ description: 'PARCEL IS HANDLED', location: 'BE' });
     // A town keeps its country.
-    expect(result.events?.[2]).toMatchObject({ location: 'Example City, US' });
+    expect(result.events?.[4]).toMatchObject({ location: 'Example City, US' });
   });
 
   it('lets a row stored in Chinese, or with the destination after the code, take the English or the code alone', () => {

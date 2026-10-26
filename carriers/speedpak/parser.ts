@@ -9,6 +9,8 @@ import { HANDOFF, speedpakEnglish, speedpakScanStatus } from './status.js';
 import { speedpakPlace, withoutRoutingPrefix } from './wording.js';
 
 const PROVIDER = 'SpeedPAK';
+// A partner's departure for the destination country, which a scan with no city of its own places in that country.
+const DEPARTURE_TO_DESTINATION = /^departure to (?:the )?country of destination\b/i;
 
 export function normalizeSpeedpakNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -41,7 +43,9 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
     if (!description) throw new SchemaError(PROVIDER, 'SpeedPAK returned an empty scan description');
     const time = epochMillisTime(row.oprTimestamp);
     const mapped = speedpakScanStatus(description, clean(row.eventDescCn));
-    const location = speedpakPlace(clean(row.oprCity), clean(row.oprCountry));
+    const place = speedpakPlace(clean(row.oprCity), clean(row.oprCountry));
+    // That country is where the parcel goes, not where it was.
+    const location = DEPARTURE_TO_DESTINATION.test(description) && place === clean(row.oprCountry) ? '' : place;
     for (const text of [description, withoutRoutingPrefix(clean(row.eventDescCn))]) {
       const handoff = HANDOFF.exec(text);
       if (handoff) handoffs.set(handoff[2]!, handoff[1]!.trim());
