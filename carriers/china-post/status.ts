@@ -163,12 +163,23 @@ export function chinaPostLabel(wording: string): string {
 const ENGLISH: ReadonlyMap<string, string> = new Map(LABELS);
 // The acceptance a forwarder's feed relays with the office out of its 【】: "示例处理中心已收寄".
 const OFFICE_ACCEPTED = /^\p{Script=Han}{2,30}(?:中心|局|部|站|所|厅)已收寄$/u;
+// The estimate of the next arrival, "预计【10月16日】到达【…】，两地距离…km，将在【…】更新邮件状态，请您放心。".
+const ESTIMATE = /^预计【(\d{1,2})月(\d{1,2})日】到达/u;
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+/** The estimate's English, with its date and without its places and note. */
+function estimate(wording: string): string | undefined {
+  const match = ESTIMATE.exec(wording.replace(/\s+/g, ''));
+  const month = match ? MONTHS[Number(match[1]) - 1] : undefined;
+  const day = Number(match?.[2]);
+  return month && day >= 1 && day <= 31 ? `Expected to arrive at the next stop on ${month} ${day}` : undefined;
+}
 
 /** The English shown for one China Post label, its places aside, or undefined when none is known. */
 export function chinaPostEnglish(wording: string): string | undefined {
   const label = chinaPostLabel(wording);
   const bare = label.replace(/…$/, '');
-  return ENGLISH.get(label) ?? ENGLISH.get(bare) ?? ENGLISH.get(`${label}…`)
+  return estimate(wording) ?? ENGLISH.get(label) ?? ENGLISH.get(bare) ?? ENGLISH.get(`${label}…`)
     ?? WORDINGS.english(normalizeStatusWording(label)) ?? WORDINGS.english(normalizeStatusWording(bare))
     ?? (OFFICE_ACCEPTED.test(bare) ? 'Accepted' : undefined);
 }

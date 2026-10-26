@@ -107,7 +107,8 @@ China Post words its scans in Chinese only, so known labels are shown in English
 rows stored in Chinese take the English in place. A state label's English is its entry's
 in [statuses.json](statuses.json); a scan text's, its bracketed places aside, is in
 [status.ts](status.ts). The English is China Post's own where its relayed feed gives one,
-else ParcelsApp's translation of the label, else a plain rendering. The code and the
+else ParcelsApp's translation of the label, else a plain rendering. The estimate of the
+next arrival keeps its date. The code and the
 Chinese label still set the stage, and the map answers the English too. A label without
 known English keeps its Chinese.
 
