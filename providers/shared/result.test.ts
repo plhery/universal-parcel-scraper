@@ -101,6 +101,13 @@ describe('shared provider result', () => {
       .filter((scan) => scan !== null), 'ParcelsApp')).toMatchObject({ current_stage: 'customs' });
   });
 
+  it("reads Sameday's Bulgarian steps before it has the parcel, as ParcelsApp relays them", () => {
+    expect(event('2026-01-07T12:45:00+02:00', 'Скоро ще вземем пратката Ви от подателя.'))
+      .toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
+    expect(event('2026-01-21T12:45:00+02:00', 'Подателят не предаде пратката.'))
+      .toMatchObject({ stage: 'exception', stage_source: 'wording:provider' });
+  });
+
   it("reads Interpost's import clearance by its caption, without the status code ParcelsApp heads it with", () => {
     expect(event('2026-01-07T12:45:00+01:00', 'B2C Clearance 4. Customs Import cleared'))
       .toMatchObject({ description: 'Customs Import cleared', stage: 'in_transit' });

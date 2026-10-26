@@ -198,6 +198,11 @@ function providerWordingStage(description: string): Stage | undefined {
   // and for its pickup from the sender still to come, as MRW's own map reads them.
   if (/^depositado en punto mrw[.!]?$/i.test(value)) return 'ready_for_pickup';
   if (/^pendiente de recoger[.!]?$/i.test(value)) return 'registered';
+  // Sameday's Bulgarian network before it has the parcel, as ParcelsApp relays it: a courier will collect the
+  // parcel from the sender soon, as Sameday's own map reads its English, and the sender did not hand it over,
+  // which stops the parcel.
+  if (/^скоро ще вземем пратката ви от подателя[.!]?$/iu.test(value)) return 'registered';
+  if (/^подателят не предаде пратката[.!]?$/iu.test(value)) return 'exception';
   // MRW's delivery address lacking details, as its own map reads it: the wording names no attempt.
   if (/^direccion entrega incompleta[.!]?$/i.test(value)) return 'exception';
   // A return on its way back to the sender, as other unfinished returns.
