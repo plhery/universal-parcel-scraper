@@ -57,7 +57,7 @@
     {"wording": "出口海关/放行", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Released by export customs; transit resumes."},
     {"wording": "国内清关完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "China's export clearance done, before the flight; node QG001 says it in English."},
     {"wording": "Arriving at the airport - arranging flights/到达机场-安排航班中", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "At the airport while a flight is booked, in English and Chinese."},
-    {"wording": "预计配载航班1月2日,Expected flight on January 2nd", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "The flight the parcel is booked on, in Chinese and English; any date."},
+    {"wording": "预计配载航班1月2日,Expected flight on January 2nd", "unmapped": true, "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "The flight the parcel is booked on, in Chinese and English, any date, written before the flight: no scan, so the adapter drops the row."},
     {"wording": "到达寄达地", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Arrived in the destination country."},
     {"wording": "目的港已提货 Delivery has been made at the destination port", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Collected at the destination port after import clearance, before the destination's own scans; the English says a delivery, which it is not."},
     {"wording": "到达寄达地处理中心", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Arrived at the destination's processing centre."},

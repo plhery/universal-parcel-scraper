@@ -6,7 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryTimeZone, firstOccurrence, isoTime, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { dhlinkStage } from './status.js';
+import { dhlinkStage, FLIGHT_BOOKED } from './status.js';
 
 export const PROVIDER = 'DHLink';
 // A long history is a few dozen kilobytes.
@@ -166,7 +166,7 @@ function projectRow(row: unknown, readAt: number): Scan | 'ahead' | null {
   // DHLink's nodes can end their wording with the row's own clock ("Shipment has delivered at …").
   const said = wordingOf(info);
   const description = said.endsWith(` at ${stamp}`) ? said.slice(0, -` at ${stamp}`.length).trim() : said;
-  if (!description) return null;
+  if (!description || FLIGHT_BOOKED.test(description)) return null;
   const code = text(row, 'nodeCode', 32);
   const name = text(row, 'nodeName', 64);
   const place = text(row, 'place', 200);

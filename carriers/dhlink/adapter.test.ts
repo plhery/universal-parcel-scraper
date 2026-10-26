@@ -231,6 +231,15 @@ describe('DHLink HTTP adapter', () => {
     expect(() => parseDhlink(fixture('usps-relayed'), LINE, Date.parse('2026-01-03T00:00:00Z'))).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('drops the flight DHLink books the parcel on, which it writes before the flight', () => {
+    const whole = parseDhlink(fixture('usps-relayed'), LINE, LATER);
+    const booked = parseDhlink(changed('usps-relayed', (parcel) => {
+      for (const row of parcel.trackinfoList.slice(18, 20)) row.info = '预计配载航班1月13日,Expected flight on January 13th';
+    }), LINE, LATER);
+    expect(booked.events).toHaveLength(whole.events!.length - 1);
+    expect(booked.events!.some((event) => /预计配载航班|expected flight/i.test(event.description ?? ''))).toBe(false);
+  });
+
   it('reads DHLink’s delivered count when the last feed’s wording says less', () => {
     const result = parseDhlink(changed('usps-relayed', (parcel) => { parcel.trackinfoList.splice(0, 2); }), LINE, LATER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',

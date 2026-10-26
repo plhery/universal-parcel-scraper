@@ -103,9 +103,8 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^出口海关\/放行$/, 'in_transit'],
   // China's export clearance done ("domestic clearance"), as its QG001 node words it in English.
   [/^国内清关完成$/, 'in_transit'],
-  // At the airport waiting for a flight, then the flight it is booked on, in Chinese with DHLink's English.
+  // At the airport waiting for a flight, in Chinese with DHLink's English.
   [/^arriving at the airport - arranging flights\b|^到达机场-安排航班中$/, 'in_transit'],
-  [/^预计配载航班\d{1,2}月\d{1,2}日/, 'in_transit'],
   [/^到达寄达地(?:处理中心)?$/, 'in_transit'],
   // Collected at the destination port after import clearance, though its English says a delivery was made.
   [/^目的港已提货/, 'in_transit'],
@@ -121,6 +120,9 @@ function wordingStage(wording: string): Stage | undefined {
   const key = normalizeStatusWording(wording);
   return WORDINGS.get(key) ?? PATTERNS.find(([pattern]) => pattern.test(key))?.[1];
 }
+
+/** The flight DHLink books the parcel on, written before it: no scan, so the adapter drops the row. */
+export const FLIGHT_BOOKED = /^预计配载航班\d{1,2}月\d{1,2}日/;
 
 /**
  * A row's stage: its node, by code then by name, DHLink's map of the wording,
