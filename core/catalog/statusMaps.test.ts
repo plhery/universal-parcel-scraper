@@ -1698,7 +1698,7 @@ describe("universal providers' answers", () => {
       ["The company or receiver name is incorrect. This will delay delivery. We're attempting to update this information.", 'exception'],
       ['Shipment in Transit to the ePost Global Processing Center', 'registered'],
       ['The package was dropped off by the sender at the PaketShop Beispielkiosk, Musterstraße 1, 00000 Musterstadt.', 'accepted'],
-      ['Acceptance of the package at the delivery branch abroad', 'in_transit'],
+      ['Acceptance of the package at the delivery branch abroad', 'in_transit'], ['Acceptance of the package at the Pickup point', 'ready_for_pickup'],
       ["Package received & scanned at carrier's domestic warehouse.", 'accepted'], ['THE GOODS ARRIVE AT THE RECEIVING POINT', 'accepted'],
       ['TURMOIL', 'exception']] as const) {
       expect(answer('unknown', null, wording), wording).toEqual(mapped(stage));

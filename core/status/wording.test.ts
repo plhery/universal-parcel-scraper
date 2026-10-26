@@ -845,6 +845,7 @@ describe('classifyWording', () => {
       // DPD Poland's scans as ParcelsApp words them.
       ['Sending the package at the pickup point', 'accepted'], ['Handing over the package to the courier', 'accepted'],
       ['Acceptance of the package at the delivery branch abroad', 'in_transit'], ['Release for delivery abroad', 'out_for_delivery'],
+      ['Acceptance of the package at the Pickup point', 'ready_for_pickup'],
       // A forwarder's warehouse receipt, as 17TRACK relays it.
       ["Package received & scanned at carrier's domestic warehouse.", 'accepted'],
       // The forwarder's receiving point before that warehouse, 17TRACK's first scan of the parcel.

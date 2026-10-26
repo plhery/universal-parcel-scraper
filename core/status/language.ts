@@ -503,6 +503,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^sending the (?:package|parcel) at the pick ?up point$|^handing over the (?:package|parcel) to the courier$/.test(text)) return 'accepted';
   // Its arrival at the delivering branch of the DPD country it was sent to, after the sorting centre there.
   if (/^acceptance of the (?:package|parcel) at the delivery branch abroad$/.test(text)) return 'in_transit';
+  // The recipient's pickup point taking the parcel in, "Parcel collected by pickup point" on DPD Poland's own page.
+  if (/^acceptance of the (?:package|parcel) at the pick ?up point$/.test(text)) return 'ready_for_pickup';
   // A forwarder's receipt at its warehouse in the sending country, as 17TRACK relays it before the
   // parcel departs that warehouse.
   if (/^(?:package|parcel) received (?:&|and) scanned at (?:the )?carrier's domestic warehouse$/.test(text)) return 'accepted';
