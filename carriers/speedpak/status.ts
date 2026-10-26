@@ -11,6 +11,7 @@ const MAP: Readonly<Record<string, ClassifiedStatus>> = {
   'Arrived at Destination Hub': { status: 'in_transit', stage: 'in_transit' },
   'Import Customs Clearance Completed': { status: 'in_transit', stage: 'in_transit' },
   '货物运输中': { status: 'in_transit', stage: 'in_transit' },
+  'In transit': { status: 'in_transit', stage: 'in_transit' },
   'Arrival scan': { status: 'in_transit', stage: 'in_transit' },
   'The freight handler collected the shipment at the airport': { status: 'in_transit', stage: 'in_transit' },
   'The item is received by PostNL': { status: 'in_transit', stage: 'in_transit' },
@@ -56,6 +57,12 @@ const LABELS: Readonly<Record<string, ClassifiedStatus>> = {
 };
 
 const DELIVERED = /^Delivered(?:$|\. \()/;
+
+/** SpeedPAK's Chinese wordings that can come as the English one too, in English. */
+const ENGLISH: Readonly<Record<string, string>> = { 货物运输中: 'In transit' };
+
+/** The English shown for a wording SpeedPAK sends in Chinese, or undefined. */
+export const speedpakEnglish = (wording: string): string | undefined => (Object.hasOwn(ENGLISH, wording) ? ENGLISH[wording] : undefined);
 
 /**
  * The line naming the last-mile carrier and its reference, in English or

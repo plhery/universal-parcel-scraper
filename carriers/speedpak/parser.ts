@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { countryCode, epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { HANDOFF, speedpakScanStatus } from './status.js';
+import { HANDOFF, speedpakEnglish, speedpakScanStatus } from './status.js';
 import { withoutRoutingPrefix } from './wording.js';
 
 const PROVIDER = 'SpeedPAK';
@@ -14,6 +14,16 @@ export function normalizeSpeedpakNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   if (!/^E[ES][A-Z0-9]{26}$/.test(number)) throw new InvalidInputError(PROVIDER, 'SpeedPAK requires a 28-character EE or ES tracking number');
   return number;
+}
+
+/**
+ * A scan's place from its city and country fields. A partner's scan can give a country's
+ * code as its city and the destination as its country, before the parcel leaves for it
+ * (bpost's "PARCEL IS HANDLED" in Belgium, for France): the code is where the scan happened.
+ */
+export function speedpakPlace(city: string, country: string): string {
+  if (/^[A-Z]{2}$/.test(city) && countryCode(city) === city) return city;
+  return [city, country].filter(Boolean).join(', ');
 }
 
 export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResult {
@@ -41,18 +51,19 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
     if (!description) throw new SchemaError(PROVIDER, 'SpeedPAK returned an empty scan description');
     const time = epochMillisTime(row.oprTimestamp);
     const mapped = speedpakScanStatus(description, clean(row.eventDescCn));
-    const location = [clean(row.oprCity), clean(row.oprCountry)].filter(Boolean).join(', ');
+    const location = speedpakPlace(clean(row.oprCity), clean(row.oprCountry));
     for (const text of [description, withoutRoutingPrefix(clean(row.eventDescCn))]) {
       const handoff = HANDOFF.exec(text);
       if (handoff) handoffs.set(handoff[2]!, handoff[1]!.trim());
     }
-    const event: CarrierEvent = { description, ...(time ? { time: time.iso } : { provider_time_text: clean(row.oprTime) || undefined }),
+    const event: CarrierEvent = { description: speedpakEnglish(description) ?? description, ...(time ? { time: time.iso } : { provider_time_text: clean(row.oprTime) || undefined }),
       ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
     if (!events.some(previous => JSON.stringify(previous) === JSON.stringify(event))) events.push(event);
   }
   // The website's trace array is already newest first. Keep undated scans in
   // that order rather than borrowing an older timestamp for the summary.
-  const wording = withoutRoutingPrefix(clean(shipment.lastStatus)) || events[0]!.description!;
+  const summary = withoutRoutingPrefix(clean(shipment.lastStatus));
+  const wording = (summary && (speedpakEnglish(summary) ?? summary)) || events[0]!.description!;
   const mapped = speedpakScanStatus(wording, clean(shipment.lastStatusCn));
   const latest = events[0]!;
   const output: CarrierResult = { status: mapped?.status ?? 'unknown', last_status_text: wording, last_update: latest.time ?? null,

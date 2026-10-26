@@ -53,7 +53,9 @@
       "wording": "货物运输中",
       "language": "zh",
       "stage": "in_transit",
-      "confirmedBy": "live"
+      "english": "In transit",
+      "confirmedBy": "live",
+      "note": "SpeedPAK's own label, which it can send as the English wording too: the adapter shows its English."
     },
     {
       "wording": "Arrival scan",

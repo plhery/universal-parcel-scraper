@@ -178,4 +178,31 @@ describe('SpeedPAK hand-off wording', () => {
     expect(policy?.matches?.(incoming, { ...stored, location: 'Example Hub, US' })).toBe(false);
     expect(policy?.matches?.({ ...incoming, description: trimmed.replace('0003]', '0004]') }, stored)).toBe(false);
   });
+
+  it("shows SpeedPAK's Chinese sent as the English wording in English, and a partner's scan in the country it names as its city", () => {
+    const payload = fixture();
+    const traces = payload.result.waybills[0].traces;
+    const later = traces[0].oprTimestamp;
+    traces.splice(0, 0,
+      { eventDesc: '货物运输中', eventDescCn: '货物运输中', oprTimestamp: later + 2_000 },
+      { eventDesc: 'PARCEL IS HANDLED', eventDescCn: '', oprTimestamp: later + 1_000, oprCity: 'BE', oprCountry: 'FR' });
+    payload.result.waybills[0].lastStatus = '货物运输中';
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result).toMatchObject({ last_status_text: 'In transit', current_stage: 'in_transit' });
+    expect(result.events?.[0]).toMatchObject({ description: 'In transit', stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(result.events?.[1]).toMatchObject({ description: 'PARCEL IS HANDLED', location: 'BE' });
+    // A town keeps its country.
+    expect(result.events?.[2]).toMatchObject({ location: 'Example City, US' });
+  });
+
+  it('lets a row stored in Chinese, or with the destination after the code, take the English or the code alone', () => {
+    const policy = sameInstantIdentityPolicy('speedpak', { supportsScanMatching: true });
+    const chinese = { stage: 'in_transit', description: '货物运输中', location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...chinese, description: 'In transit' }, chinese)).toBe(true);
+    expect(policy?.matches?.({ ...chinese, description: 'Arrival scan' }, chinese)).toBe(false);
+    const placed = { stage: 'in_transit', description: 'PARCEL IS HANDLED', location: 'BE, FR', providerCode: '' };
+    expect(policy?.matches?.({ ...placed, location: 'BE' }, placed)).toBe(true);
+    expect(policy?.matches?.({ ...placed, location: 'FR' }, placed)).toBe(false);
+    expect(policy?.matches?.({ ...placed, location: 'Example City' }, { ...placed, location: 'Example City, US' })).toBe(false);
+  });
 });
