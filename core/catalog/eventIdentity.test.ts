@@ -175,7 +175,9 @@ describe('same-instant identity policies', () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'registered', description: 'Shipping Label Created', location: 'US, SYSTEM, SYSTEM', providerCode: '' };
     expect(policy?.matches?.({ ...stored, location: '' }, stored)).toBe(true);
-    const depot = { stage: 'delivered', description: 'Delivered', location: 'from the operational headquarters in EXAMPLE TOWN (Example Region)', providerCode: '' };
+    const arrival = { stage: 'in_transit', description: 'Arrival', location: '目的国', providerCode: 'InTransit_Other' };
+    expect(policy?.matches?.({ ...arrival, location: '' }, arrival)).toBe(true);
+    const depot ={ stage: 'delivered', description: 'Delivered', location: 'from the operational headquarters in EXAMPLE TOWN (Example Region)', providerCode: '' };
     expect(policy?.matches?.({ ...depot, location: 'EXAMPLE TOWN (Example Region)' }, depot)).toBe(true);
     for (const different of [
       { ...depot, location: 'OTHER TOWN (Example Region)' },

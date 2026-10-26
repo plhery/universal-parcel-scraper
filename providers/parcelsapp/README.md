@@ -71,8 +71,8 @@ step exists for future protocol changes.
 ## Parsing
 
 - API scans retain their reported location. Chronopost's delivery-service label in that
-  field is excluded because it names a service, not a place, and so is Posti's "ULKOMAILLA"
-  ("abroad"). A Post Office branch's postcode, which Royal Mail appends in brackets and
+  field is excluded because it names a service, not a place, and so are Posti's "ULKOMAILLA"
+  ("abroad") and China Post's "目的国" ("destination country"). A Post Office branch's postcode, which Royal Mail appends in brackets and
   ParcelsApp copies, is left out, as Royal Mail's own adapter does, and so is the "Country"
   label ParcelsApp translates from Correios Brazil's "País" before a unit abroad. A repeat
   without a place keeps the location another copy of the same scan reported.

@@ -36,7 +36,7 @@ it('keeps scan locations from the API while excluding a delivery-service label a
     expect(parse(location)).not.toHaveProperty('location');
   }
   // Labels that name no place, and the words before a depot's town.
-  for (const location of ['US, SYSTEM, SYSTEM', 'SYSTEM', 'UNI DATA CENTER', 'Linehaul Agent', 'Centro Di Smistamento - Hub']) {
+  for (const location of ['US, SYSTEM, SYSTEM', 'SYSTEM', 'UNI DATA CENTER', 'Linehaul Agent', 'Centro Di Smistamento - Hub', '目的国']) {
     expect(parse(location), location).not.toHaveProperty('location');
   }
   expect(parse('from the operational headquarters in EXAMPLE TOWN (Example Region)')?.location).toBe('EXAMPLE TOWN (Example Region)');

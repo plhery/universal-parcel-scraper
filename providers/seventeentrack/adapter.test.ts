@@ -148,8 +148,10 @@ describe('17TRACK result parsing', () => {
     expect(located('Arriyal at Processing Center【Example City 99999】')).toBe('Example City 99999');
     expect(located('Dispatching【Example City X9X9X9】')).toBe('Example City');
     expect(located('Arrival at【US】')).toBe('US');
+    // "Destination country", given an arrival in place of a country's code, names no place.
     for (const status of ['Departure from Airport', 'Arrival at Destination Airport', 'Export Customs Clearance Completed',
-      'Out For Delivery', 'In Transit', '99999 DELIVERED', '9999 PA DELIVERED', 'Delivered【99/999】', 'Departure from Processing Center【Example Ci']) {
+      'Out For Delivery', 'In Transit', '99999 DELIVERED', '9999 PA DELIVERED', 'Delivered【99/999】', 'Departure from Processing Center【Example Ci',
+      '目的国', 'Arrival at【目的国】']) {
       expect(located(status), status).toBeUndefined();
     }
     for (const location of ['Example Transit Hub', 'Arrival Hall, Example City', 'EXAMPLE CITY, CA 99999']) expect(located(location)).toBe(location);
