@@ -15,6 +15,7 @@
     {"wording": "Direccion incorrecta - faltan datos", "stage": "failed_attempt", "language": "es", "confirmedBy": "portal", "note": "The address lacks details; the parcel went out again."},
     {"wording": "Direccion corregida por el destinatario", "language": "es", "confirmedBy": "portal", "note": "The recipient corrected the address; it moves nothing, so the parcel keeps its stage."},
     {"wording": "El envio ha sido entregado", "stage": "delivered", "language": "es", "confirmedBy": "portal"},
+    {"wording": "Entregada PDA", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-10-26", "note": "A delivery the courier recorded on the handheld, after the delivery round; the progress rail's end phase reads \"Entregada\"."},
     {"wording": "Recibido", "language": "es", "confirmedBy": "portal", "note": "The receipt beside a delivery, followed by the name of whoever took the parcel; the adapter leaves the row out."},
     {"code": "RECO", "wording": "En preparación", "language": "es", "confirmedBy": "portal", "note": "The progress rail's first phase; the scans give the stage."},
     {"code": "TRANS", "wording": "Tránsito", "language": "es", "confirmedBy": "portal", "note": "A progress rail phase; the scans give the stage."},

@@ -19,6 +19,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['HAS SIDO AUSENTE', 'failed_attempt'], // The recipient was not in.
   ['DIRECCION INCORRECTA - FALTAN DATOS', 'failed_attempt'], // The address lacks details; the parcel goes out again.
   ['EL ENVIO HA SIDO ENTREGADO', 'delivered'],
+  ['ENTREGADA PDA', 'delivered'], // Recorded on the courier's handheld; the progress rail's end phase reads "Entregada".
 ]);
 
 // The recipient's own changes record an instruction, not a movement: the
