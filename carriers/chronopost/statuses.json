@@ -313,6 +313,24 @@
       "language": "fr"
     },
     {
+      "code": "SD",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The arrival at the pickup point AB also announces, under the delivery depot's code.",
+      "wording": "Colis mis à disposition au point de retrait",
+      "language": "fr"
+    },
+    {
+      "code": "MD",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The arrival at the pickup point AB also announces, written a minute after the same scan under SD.",
+      "wording": "Colis mis à disposition au point de retrait",
+      "language": "fr"
+    },
+    {
       "code": "D",
       "stage": "delivered",
       "confirmedBy": "live",

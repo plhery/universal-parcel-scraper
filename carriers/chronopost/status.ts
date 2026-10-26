@@ -45,6 +45,9 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['TA', 'Colis en cours de livraison par le livreur', 'out_for_delivery'],
   ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
   ['AB', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
+  // The same arrival at the pickup point, also written under SD and under MD.
+  ['SD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
+  ['MD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
   ['D', 'Livraison effectuée', 'delivered'],
   ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
   ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
