@@ -51,6 +51,10 @@ HTML, 403 and 429 replies and malformed JSON are never read as not found.
 - The site replaces the wording of some scans with its own text for the scan's reason. The
   adapter keeps the reply's wording and drops the reason, the next depot (`transitLocation`)
   and the creator field.
+- Pactic, a Hungarian shipping platform, books parcels on Sameday among other carriers and
+  shows them on its own tracker. Its anonymous JSON, `dashboard.pactic.com/api/Meta/tracking?waybill=`,
+  lists Pactic's status codes, its own hub steps among them, with dates on no stated clock, so
+  the adapter reads Sameday's history instead.
 
 ## Limitations
 

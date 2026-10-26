@@ -26816,6 +26816,7 @@ export const CARRIER_CATALOG = {
     "color": "#e92427",
     "aliases": [
       "Sameday Courier",
+      "Sameday Bulgaria",
       "easybox"
     ],
     "countries": [
