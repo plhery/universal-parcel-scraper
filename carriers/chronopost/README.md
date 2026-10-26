@@ -66,8 +66,9 @@ without changing the last established shipment stage, and neither does a
 courier's drop-off scan that follows the pickup point's arrival scan. Observed
 codes are used only when their wording agrees, because partner scans can reuse
 codes; a code can carry several wordings, each read on its own. Chronopost can write
-the arrival at a pickup point twice, under two of its codes: in the same words at the same
-place, less than two minutes apart, it is shown once.
+a scan twice, such as the arrival at a pickup point under two of its codes or a depot's
+sort under one: in the same words at the same place, less than two minutes apart, it is
+shown once.
 
 Once a scan sends the parcel back to the sender, it is an exception with no
 delivery estimate. The return's own scans keep their stages, and a delivery

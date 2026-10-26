@@ -121,7 +121,7 @@ const clockDay = (event: CarrierEvent) => {
 
 /** Stages on the way to a planned delivery. */
 const ONGOING = new Set<Stage>(['pending', 'registered', 'accepted', 'in_transit', 'customs', 'out_for_delivery']);
-/** How soon a pickup point's arrival written again is the same arrival. */
+/** How soon a scan written again is the same scan. */
 const REPEAT_MS = 2 * 60_000;
 
 /**
@@ -253,11 +253,12 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
       promised = null;
     }
   }
-  // Chronopost can write the arrival at the pickup point twice, under two of its codes, a
-  // minute apart: in the same words at the same place, it is one arrival.
+  // Chronopost can write a scan twice, under one code or two, seconds to a minute apart: the
+  // arrival at the pickup point, a sort at the depot, a notice. In the same words at the same
+  // place, it is one scan.
   const shown = projected.filter((scan, index) => {
     const before = projected[index - 1];
-    if (!before || scan.mapped.stage !== 'ready_for_pickup' || before.mapped.stage !== 'ready_for_pickup') return true;
+    if (!before) return true;
     const [earlier, later] = [explicitOffsetTime(before.event.time), explicitOffsetTime(scan.event.time)];
     return !earlier || !later || later.timestamp - earlier.timestamp >= REPEAT_MS || later.timestamp < earlier.timestamp
       || scan.event.description !== before.event.description || scan.event.location !== before.event.location;

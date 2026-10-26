@@ -126,7 +126,8 @@ describe('Chronopost direct tracking', () => {
     ), number);
     const scans = (result.events ?? []).map(event => ({ time: event.time ?? '', stage: event.stage ?? '',
       description: event.description ?? '', location: event.location ?? '', providerCode: event.provider_code ?? '' }));
-    expect(scans.map(scan => scan.providerCode)).toEqual(['D', 'SM', 'CL', 'TA', 'O', 'TS', 'TS', 'SC', 'DC']);
+    // The transit written again under O at the same office 35 s later is the same scan.
+    expect(scans.map(scan => scan.providerCode)).toEqual(['D', 'SM', 'CL', 'TA', 'TS', 'TS', 'SC', 'DC']);
     // La Poste's feed gave the same scans to the minute, under its codes and stages, with no office.
     const copy = (providerCode: string, time: string, description: string, stage: string) => ({ time, stage, description, location: '', providerCode });
     const stored = [
@@ -149,8 +150,8 @@ describe('Chronopost direct tracking', () => {
       const rows = stored.filter(row => near(scan, row));
       return rows.length === 1 && scans.filter(other => near(other, rows[0]!)).length === 1 ? stored.indexOf(rows[0]!) : null;
     });
-    // Both hub scans at 04:10 could be the row's, so neither takes it, and the notice is no copy.
-    expect(takenOver).toEqual([6, null, 5, 4, null, null, 2, 1, 0]);
+    // The notice is no copy.
+    expect(takenOver).toEqual([6, null, 5, 4, 3, 2, 1, 0]);
     expect(policy.matches!(scans[0]!, { ...stored[6]!, location: 'EXAMPLE TOWN' })).toBe(false);
     expect(policy.matches!(scans[0]!, { ...stored[6]!, description: 'Livraison effectuée en relais' })).toBe(false);
     expect(policy.matches!({ ...scans[0]!, providerCode: 'DI1' }, stored[6]!)).toBe(false);
@@ -363,7 +364,7 @@ describe('Chronopost direct tracking', () => {
       { provider_code: 'TA', stage: 'out_for_delivery', stage_source: 'carrier_map' }]);
   });
 
-  it('shows the arrival at the pickup point once when Chronopost writes it again under another code', () => {
+  it('shows a scan once when Chronopost writes it again, under another code or the same', () => {
     const arrival = (code: string, at: string) => scan(code, at, 'Colis mis à disposition au point de retrait', relay);
     const result = parseChronopostTrackingXml(history(prepared, arrival('SD', '2026-06-27T07:56:46+02:00'),
       arrival('MD', '2026-06-27T07:57:46+02:00')), number);
@@ -374,9 +375,10 @@ describe('Chronopost direct tracking', () => {
     const later = parseChronopostTrackingXml(history(prepared, arrival('SD', '2026-06-27T07:56:46+02:00'),
       arrival('AB', '2026-06-27T09:12:00+02:00')), number);
     expect(later.events?.map(event => event.provider_code)).toEqual(['AB', 'SD', 'DC']);
+    // So is a depot's sort written twice under one code.
     const sorted = parseChronopostTrackingXml(history(prepared, scan('SD', '2026-06-27T07:56:46+02:00', "Tri effectué dans l'agence de distribution"),
       scan('SD', '2026-06-27T07:57:06+02:00', "Tri effectué dans l'agence de distribution")), number);
-    expect(sorted.events).toHaveLength(3);
+    expect(sorted.events).toHaveLength(2);
   });
 
   it('preserves local and invalid clocks without inventing instants', () => {
