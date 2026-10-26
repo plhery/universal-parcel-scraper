@@ -31,7 +31,7 @@ which is the only missing parcel. A batch refused with `HUMAN_VERIFICATION_REQUI
 with the notice "Verification required.", is a challenge; a batch refused for another reason is
 indeterminate, and any other set of results is a schema failure. When the browser service answers HTTP 500 because its browser
 stopped at a challenge wall, or because the page never sent its query, the lookup fails as
-challenged too. Any other refusal, a reply naming another number, a GraphQL error, a challenge
+challenged too, also when the deadline ran out while the next tier was still trying. Any other refusal, a reply naming another number, a GraphQL error, a challenge
 page in place of the reply, rate limits and incomplete captures keep their own failure kinds.
 
 ## Notes

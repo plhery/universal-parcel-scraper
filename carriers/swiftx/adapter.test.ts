@@ -170,17 +170,24 @@ describe('SwiftX browser capture', () => {
       vi.fn(async () => new Response(body, { status, headers: { 'Content-Type': 'application/json' } })));
     const failed = (attempt: Record<string, unknown>) => JSON.stringify({ error: 'Max tier reached without success',
       timings: [{ tier: 2, status: 'error', durationMs: 900, reason: 'net::ERR_CONNECTION_RESET' }, { tier: 3, durationMs: 27_500, ...attempt }] });
+    // The deadline can run out while tier 3 is still trying; the reply then ends with tier 2.
+    const expired = (attempt: Record<string, unknown>) => JSON.stringify({ error: 'Scrape deadline exceeded',
+      timings: [{ tier: 2, durationMs: 16_000, ...attempt }] });
     for (const attempt of [
       { status: 'error', reason: 'SwiftX produced no tracking response after submission' },
       { status: 'blocked', reason: 'cloudflare-persistent' },
     ]) {
-      const error = await new SwiftxTracker({ trawl: service(failed(attempt)) }).fetch(DELIVERED, { budgetMs: 40_000 }).catch((caught: unknown) => caught);
-      expect(error, attempt.reason).toMatchObject({ kind: 'challenge', provider: 'SwiftX', cause: expect.objectContaining({ status: 500 }) });
+      for (const body of [failed(attempt), expired(attempt)]) {
+        const error = await new SwiftxTracker({ trawl: service(body) }).fetch(DELIVERED, { budgetMs: 40_000 }).catch((caught: unknown) => caught);
+        expect(error, body).toMatchObject({ kind: 'challenge', provider: 'SwiftX', cause: expect.objectContaining({ status: 500 }) });
+      }
     }
     for (const [body, status] of [
       [failed({ status: 'error', reason: 'Target page, context or browser has been closed' }), 500],
       [failed({ status: 'error', reason: 'SwiftX tracking request failed: net::ERR_FAILED' }), 500],
       [failed({ status: 'timeout', reason: 'deadline' }), 500],
+      [expired({ status: 'error', reason: 'net::ERR_CONNECTION_RESET' }), 500],
+      [JSON.stringify({ error: 'Scrape deadline exceeded', timings: [] }), 500],
       [JSON.stringify({ error: 'Max tier reached without success', timings: [{ tier: 1, status: 'blocked', statusCode: 403 }] }), 500],
       [JSON.stringify({ error: 'Internal error' }), 500],
       ['{"error":"Max tier', 500],

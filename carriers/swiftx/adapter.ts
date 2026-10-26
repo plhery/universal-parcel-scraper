@@ -18,14 +18,16 @@ const NO_QUERY = `${PROVIDER} produced no tracking response after submission`;
 /**
  * Whether the browser service's HTTP 500 says its last browser tier stood at
  * a check it could not pass: a challenge wall, or a page that never sent its
- * query because its Turnstile widget was not passed. Any other failure keeps
- * its own kind.
+ * query because its Turnstile widget or puzzle was not passed. The tiers ran
+ * out, or the deadline did while the next tier was still trying. Any other
+ * failure keeps its own kind.
  */
 function trawlChallenged(error: unknown): boolean {
   if (!(error instanceof UpstreamHttpError) || error.status !== 500) return false;
   let reply: unknown;
   try { reply = JSON.parse(error.diagnostics?.body_excerpt ?? ''); } catch { return false; }
-  if (!isRecord(reply) || reply.error !== 'Max tier reached without success' || !Array.isArray(reply.timings)) return false;
+  if (!isRecord(reply) || !Array.isArray(reply.timings)
+    || (reply.error !== 'Max tier reached without success' && reply.error !== 'Scrape deadline exceeded')) return false;
   const last: unknown = reply.timings.at(-1);
   return isRecord(last) && (last.tier === 2 || last.tier === 3)
     && (last.status === 'blocked' || (last.status === 'error' && last.reason === NO_QUERY));
