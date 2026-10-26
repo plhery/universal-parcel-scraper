@@ -2,7 +2,7 @@ export * from './core/catalog/index.js';
 export * from './core/detection/index.js';
 export * from './core/result/index.js';
 export * from './core/result/resolve.js';
-export { fillPartialAnswer, isPartialAnswer } from './core/result/partial.js';
+export { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from './core/result/partial.js';
 export * from './core/status/index.js';
 export * from './core/time/index.js';
 export * from './core/errors/index.js';

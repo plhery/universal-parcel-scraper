@@ -4,11 +4,11 @@ import { carrierDefinition, carrierTimezone } from '../core/catalog/index.js';
 import { carrierTakesPostcode, normalizeCarrierInputs, normalizeDeliveryPostcode } from '../core/catalog/inputs.js';
 import { deliveryHandoff, type DeliveryHandoff } from '../core/catalog/handoff.js';
 import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validTrackingNumber } from '../core/detection/index.js';
-import { BudgetExceededError, IndeterminateError, InputRequiredError, type CarrierErrorKind } from '../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
 import { failureHint, failureKind, type FailureHint } from '../core/errors/hint.js';
 import { MAX_RECOGNITIONS, recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from '../core/recognition/index.js';
 import { normalizeCarrierResult } from '../core/result/index.js';
-import { fillPartialAnswer, isPartialAnswer } from '../core/result/partial.js';
+import { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from '../core/result/partial.js';
 import { resolveResult, resultHasUpdate, type ResolvedResult } from '../core/result/resolve.js';
 import { runSteps } from '../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../core/telemetry/index.js';
@@ -263,6 +263,13 @@ export function createTracker(options: TrackerOptions = {}) {
             directInput, { signal: stepSignal, budgetMs: remainingMs }) },
         ]))))) : null;
     let source: string = carrier;
+    // Rows the carrier holds back as written ahead of their clocks are no scans when a provider relays them.
+    const ahead = result ? [] : writtenAheadClocks(lastError);
+    const scansOf = (candidate: UniversalSource, answer: ResolvedResult) => {
+      const kept = withoutWrittenAhead(answer, ahead);
+      if (!kept) throw new NoHistoryError(candidate, `${candidate} relays only rows the carrier wrote ahead`, { reason: 'written_ahead', writtenAhead: ahead });
+      return kept;
+    };
     // A partial direct answer stands unless an enabled provider holds a fuller history that is not behind it.
     const partial = result && isPartialAnswer(result) ? result : null;
     // The carrier's own evidence of a partner comes first, and the providers leave its lookup time to run.
@@ -277,8 +284,8 @@ export function createTracker(options: TrackerOptions = {}) {
         if (signal.aborted || left <= reserve) break;
         const share = left - reserve;
         const cut = reserve ? AbortSignal.any([signal, AbortSignal.timeout(share)]) : signal;
-        const answer = await attempt(candidate, () => provider(candidate, async () => resolveResult(await universal.fetchSource(candidate,
-          number, Math.min(share + DEADLINE_SLACK_MS, universalSourceBudget(candidate)), providerPostcode, zone, cut, input.countryHint, carrier)), cut), cut);
+        const answer = await attempt(candidate, () => provider(candidate, async () => scansOf(candidate, resolveResult(await universal.fetchSource(candidate,
+          number, Math.min(share + DEADLINE_SLACK_MS, universalSourceBudget(candidate)), providerPostcode, zone, cut, input.countryHint, carrier))), cut), cut);
         const filled = answer && partial ? fillPartialAnswer(carrier, number, partial, answer) : answer;
         if (answer && filled) {
           relayed = answer;

@@ -35,8 +35,9 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   before its own clock is a forecast, not a scan, and is held back on every tenant; the margin
   leaves room for a destination's clock, up to six hours ahead of Beijing's. The page shows no
   creation times, so a row dated after the lookup on Beijing time is held back too. An order
-  whose rows are all held back has no history yet. The record's own summary status is not read;
-  the stage comes from the rows kept.
+  whose rows are all held back has no history yet; one that holds rows written ahead names
+  their clocks, so that a universal provider's copies of them are set aside too. The record's
+  own summary status is not read; the stage comes from the rows kept.
 - Rows carry wall clocks without an offset, abroad too, on the trackers' Beijing clock: rows
   at the destination were shown up to seven hours before their clock read as UTC, earlier than
   the destination's own clock allows. Every row is read on Beijing time, as on the other tenants

@@ -23,7 +23,8 @@ which files these parcels under Pengyou.
   fixed spacing up to the delivery, and revealed as their clocks pass; universal providers
   relay those rows as scans. A row written more than twelve hours before its own clock is a
   forecast, not a scan, and is held back for good, as is a row dated after the lookup on Beijing
-  time. An order whose rows are all held back has no history yet. The record's own summary
+  time. An order whose rows are all held back has no history yet, and the rows written ahead are
+  named so that a universal provider's copies of them are set aside. The record's own summary
   status is not read.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it.

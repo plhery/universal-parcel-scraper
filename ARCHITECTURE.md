@@ -129,6 +129,11 @@ every reading, as when it relays the carrier's own. The winner takes the carrier
 it lacks, such as the estimate, destination or weight, and `direct` keeps the carrier's answer
 as it came. Otherwise, even when every fallback fails, the carrier's answer stands. Hosts that
 route lookups themselves apply the same rule with `isPartialAnswer` and `fillPartialAnswer`.
+A carrier whose only rows are ones it holds back as written ahead of their clocks answers
+without history, with the reason `written_ahead` and their clocks in `writtenAhead`. A
+fallback's rows at those clocks, the same instant within a minute or the same wall time, are
+copies of them and are set aside; a fallback left with nothing has no history either. Hosts
+apply `writtenAheadClocks` to the carrier's error and `withoutWrittenAhead` to each fallback.
 The `countryHint` input is still accepted but no longer affects a lookup.
 The `language` input, the reader's language as a BCP 47 tag, goes to the carrier's adapter
 (`readerLanguage`). An adapter whose tracker words its scans in that language asks in it, and
@@ -354,7 +359,8 @@ A delivery still to come (a forecast, a notice, an instruction or a duty-payment
 is no scan. The classifier reads only the rest of the sentence, so a notice alone takes the
 caller's fallback with `none` and never steps a parcel back to registered. A row a tracker
 wrote well before its own clock, as forwarders that write a whole timeline when an order is
-created do, is a forecast too, and the adapter leaves it out.
+created do, is a forecast too, and the adapter leaves it out, along with a fallback's copies
+of it when nothing else remains.
 Customs that cleared or released a parcel puts it back in transit; holds, inspections,
 submissions and a clearance still to come or negated stay `customs`. A customs problem is an
 `exception`.

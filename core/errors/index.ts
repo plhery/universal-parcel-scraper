@@ -86,9 +86,21 @@ export class IndeterminateError extends CarrierError {
  * announced, not handed over). An answer about the parcel, not an outage.
  */
 export class NoHistoryError extends IndeterminateError {
-  constructor(provider: string, message = `${provider} has no history for the shipment`, options?: CarrierErrorOptions) {
+  /**
+   * With the reason `written_ahead`, the clocks of the rows the carrier holds back as written
+   * ahead of them, which a provider relaying them shows as scans: an instant with its offset,
+   * or a wall clock when the carrier does not say in which zone.
+   */
+  readonly writtenAhead?: readonly string[];
+
+  constructor(
+    provider: string,
+    message = `${provider} has no history for the shipment`,
+    options?: CarrierErrorOptions & { writtenAhead?: readonly string[] },
+  ) {
     super(provider, message, options);
     this.name = 'NoHistoryError';
+    if (options?.writtenAhead?.length) this.writtenAhead = [...options.writtenAhead];
   }
 }
 
@@ -241,6 +253,18 @@ export function retryAfterMsOf(error: unknown): number | undefined {
     current = current.cause;
   }
   return undefined;
+}
+
+/** The clocks of rows a carrier wrote ahead of them, when any error in the chain lists some. */
+export function writtenAheadClocks(error: unknown): readonly string[] {
+  const seen = new Set<unknown>();
+  let current = error;
+  for (let depth = 0; depth < MAX_CAUSE_DEPTH && current instanceof Error && !seen.has(current); depth += 1) {
+    seen.add(current);
+    if (current instanceof NoHistoryError && current.writtenAhead) return current.writtenAhead;
+    current = current.cause;
+  }
+  return [];
 }
 
 /** A stable, low-cardinality name for an error, safe as a metric label. */

@@ -128,7 +128,9 @@
       "validateFreightwaysTrackingUrl",
       "validateInstaboxTrackingUrl",
       "validatePlanzerSharedUrl",
+      "withoutWrittenAhead",
       "wordingStage",
+      "writtenAheadClocks",
       "zonedTime"
     ],
     "types": [

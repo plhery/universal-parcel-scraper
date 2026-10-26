@@ -99,6 +99,13 @@ describe('Hualei track interface', () => {
     // A destination clock up to twelve hours ahead of the platform's is still a scan written as it happened.
     expect(parseHualeiTrack(script('2026-03-06 22:00:00'), NUMBER, GZYL, after)).toMatchObject({ current_stage: 'delivered' });
     expect(parseHualeiTrack(script('2026-03-02 10:00:00'), NUMBER, GZYL, after)).toMatchObject({ current_stage: 'registered' });
+    // An order whose every row was written ahead names their clocks, so that a provider's copies of them are no scans either.
+    const scripted = edited((record) => { for (const row of record.trackDetails) row.track_createdate = '2026-03-01 08:00:00'; });
+    expect(() => parseHualeiTrack(scripted, NUMBER, GZYL, after)).toThrow(expect.objectContaining({ name: 'NoHistoryError', reason: 'written_ahead',
+      writtenAhead: expect.arrayContaining(['2026-03-01T22:36:51+08:00', '2026-03-06T15:10:42+08:00']) }));
+    expect(() => parseHualeiTrack(scripted, NUMBER, { ...GZYL, wallClocks: true }, after)).toThrow(expect.objectContaining({
+      writtenAhead: expect.arrayContaining(['2026-03-01T22:36:51']) }));
+    expect(() => parseHualeiTrack(fixture('track'), NUMBER, GZYL, Date.parse('2026-03-01T12:00:00Z'))).toThrow(expect.objectContaining({ writtenAhead: undefined }));
     // A creation time it cannot read is no evidence either way.
     for (const unread of ['soon', 7, null]) {
       expect(parseHualeiTrack(edited((record) => { for (const row of record.trackDetails) row.track_createdate = unread; }), NUMBER, GZYL, after)?.events).toHaveLength(7);

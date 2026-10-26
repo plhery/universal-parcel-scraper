@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { CarrierResult } from './index.js';
-import { fillPartialAnswer, isPartialAnswer } from './partial.js';
+import { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from './partial.js';
 
 // Synthetic numbers, clocks and wording.
 const NUMBER = '1Z999AA10123456784';
@@ -55,5 +55,36 @@ describe('partial carrier answers', () => {
     expect(fillPartialAnswer('ups', NUMBER, delivered, after)).toMatchObject({ status: 'delivered', current_stage: 'delivered',
       last_status_text: 'Delivered' });
     expect(fillPartialAnswer('ups', NUMBER, delivered, after)).not.toHaveProperty('expected_delivery');
+  });
+});
+
+describe('rows a carrier wrote ahead', () => {
+  // A timeline on a Beijing clock: the provider relays two rows the carrier holds back, and one scan of its own.
+  const customs = { time: '2026-01-03T01:00:17Z', description: 'Customs clearance', stage: 'customs' };
+  const arrived = { time: '2026-01-02T18:00:00Z', description: 'Arrived at facility', stage: 'in_transit' };
+  const departed = { time: '2026-01-01T02:06:28Z', description: 'Departed facility', stage: 'in_transit' };
+  const relayed = {
+    status: 'in_transit', current_stage: 'customs', current_stage_source: 'carrier_map', last_status_text: 'Customs clearance',
+    last_update: customs.time, events: [customs, arrived, departed],
+  } satisfies CarrierResult;
+  const ahead = ['2026-01-03T09:00:17+08:00', '2026-01-01T10:06:28+08:00'];
+
+  it('are set aside from a provider\'s answer, at the same instant within a minute or the same wall time', () => {
+    expect(withoutWrittenAhead(relayed, ahead)).toMatchObject({ status: 'unknown', last_status_text: 'Arrived at facility',
+      last_update: arrived.time, events: [arrived] });
+    expect(withoutWrittenAhead(relayed, ahead)).not.toHaveProperty('current_stage');
+    // A provider that drops the seconds, or labels the carrier's wall clock as UTC.
+    expect(withoutWrittenAhead({ ...relayed, events: [arrived, { ...departed, time: '2026-01-01T02:06:00Z' }] }, ahead)?.events).toEqual([arrived]);
+    expect(withoutWrittenAhead({ ...relayed, events: [arrived, { ...departed, time: '2026-01-01T10:06:28Z' }] }, ahead)?.events).toEqual([arrived]);
+    // The newest row stays, and with it the provider's status.
+    expect(withoutWrittenAhead(relayed, ahead.slice(1))).toMatchObject({ current_stage: 'customs', events: [customs, arrived] });
+  });
+
+  it('leave nothing of an answer made only of them, and an answer without them as it came', () => {
+    expect(withoutWrittenAhead({ ...relayed, events: [departed], last_update: departed.time }, ahead)).toBeNull();
+    expect(withoutWrittenAhead({ ...summary, last_update: '2026-01-03T01:00:40Z' }, ahead)).toBeNull();
+    // A scan on the same wall minute with other seconds is another scan.
+    expect(withoutWrittenAhead(history, ahead)).toBe(history);
+    expect(withoutWrittenAhead(relayed, [])).toBe(relayed);
   });
 });

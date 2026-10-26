@@ -1,7 +1,8 @@
 /**
  * Whether a fallback's history should replace a carrier's partial answer, and what of the carrier's
- * own answer it keeps. The tracker applies this to every partial direct answer; hosts that route
- * lookups themselves apply the same rule.
+ * own answer it keeps, and which of a fallback's rows are the carrier's forecasts. The tracker
+ * applies this to every partial direct answer and every direct answer without history; hosts that
+ * route lookups themselves apply the same rules.
  */
 import { deliveryHandoff } from '../catalog/handoff.js';
 import { carrierBrand } from '../catalog/networks.js';
@@ -9,7 +10,7 @@ import { isValidS10TrackingNumber } from '../detection/index.js';
 import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../time/index.js';
 import { eventTimestamp } from '../time/result.js';
 import type { Stage } from '../../generated/catalog.js';
-import type { CarrierResult } from './index.js';
+import type { CarrierEvent, CarrierResult } from './index.js';
 import { deliveredToDoor } from './pickup.js';
 import { resolveResult, type ResolvedEvent, type ResolvedResult } from './resolve.js';
 
@@ -172,4 +173,45 @@ export function fillPartialAnswer<T extends CarrierResult>(carrier: string, numb
   const owners = isValidS10TrackingNumber(number) ? null
     : [carrier, ours.delivery_carrier, deliveryHandoff(carrier, number, ours)?.carrier].filter((id): id is string => typeof id === 'string');
   return fuller(theirs, ours, owners) ? withCarrierFacts(answer, theirs, ours) : null;
+}
+
+/** A clock's wall time, its minute and its seconds when it states them, or null without a date and a time of day. */
+function wallTime(value: unknown): { minute: string; seconds?: string } | null {
+  const match = typeof value === 'string' ? /^\s*(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})(?::(\d{2}))?/.exec(value) : null;
+  return match ? { minute: `${match[1]}T${match[2]}`, ...(match[3] ? { seconds: match[3] } : {}) } : null;
+}
+
+/**
+ * Whether an event is at `clock`: the same instant within a minute, or the same wall time, its
+ * seconds too when both state them, as when a provider puts the carrier's wall clock in another
+ * zone or labels it UTC.
+ */
+function atClock(event: CarrierEvent, clock: string): boolean {
+  const ahead = explicitOffsetTime(clock);
+  const instant = explicitOffsetTime(event.time);
+  if (ahead && instant && Math.abs(ahead.timestamp - instant.timestamp) < SAME_SCAN_MS) return true;
+  const wall = wallTime(clock);
+  return wall !== null && [event.time, event.local_time].map(wallTime).some(other => other?.minute === wall.minute
+    && (!other.seconds || !wall.seconds || other.seconds === wall.seconds));
+}
+
+/**
+ * A fallback's answer without its rows at `clocks`, those the carrier holds back as written ahead
+ * of them (`writtenAheadClocks` of its error), or null when nothing else remains. When the newest
+ * row goes, the status is read again from the rows left.
+ */
+export function withoutWrittenAhead<T extends CarrierResult>(answer: T, clocks: readonly string[]): T | null {
+  const ahead = (event: CarrierEvent) => clocks.some(clock => atClock(event, clock));
+  const events = answer.events ?? [];
+  const kept = events.filter(event => !ahead(event));
+  const stale = typeof answer.last_update === 'string' && ahead({ time: answer.last_update });
+  if (kept.length === events.length && !stale) return answer;
+  if (!kept.length) return null;
+  if (!stale && kept[0] === events[0]) return { ...answer, events: kept };
+  const reread: CarrierResult = { ...answer, status: 'unknown', last_status_text: kept[0]!.description ?? null,
+    last_update: kept[0]!.time ?? null, events: kept };
+  delete reread.current_stage;
+  delete reread.current_stage_source;
+  delete reread.provider_code;
+  return reread as T;
 }

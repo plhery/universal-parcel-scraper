@@ -206,15 +206,22 @@ function stageOf(tenant: HualeiTenant, code: string, description: string): { sta
  * a forecast, not a scan, and so is a row dated after the lookup on the
  * trackers' clock. Identical rows count once, and so do rows the tenant says
  * repeat another. A row the tenant has English for is staged and deduplicated
- * by its own wording, then shown in English.
+ * by its own wording, then shown in English. `ahead` lists the clocks of the
+ * rows written ahead, as the tenant reads them.
  */
-function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number): { events: CarrierEvent[]; truncated: boolean } {
+function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number): { events: CarrierEvent[]; truncated: boolean; ahead: string[] } {
   const seen = new Set<string>();
+  const ahead = new Set<string>();
   const kept: { clock: string; index: number; event: CarrierEvent; english?: string }[] = [];
   rows.forEach((row, index) => {
     const local = wallClock(row.clock, tenant.provider);
     const placed = isoTime(local, HUALEI_ZONE)!;
-    if (placed.timestamp > readAt || writtenAhead(row, local)) return;
+    const reading = tenant.clock?.(row) ?? (tenant.wallClocks ? 'wall' : 'platform');
+    if (writtenAhead(row, local)) {
+      ahead.add(reading === 'platform' ? placed.iso : local);
+      return;
+    }
+    if (placed.timestamp > readAt) return;
     const parts = tenant.split?.(row.content, row.location) ?? row;
     const place = hualeiScanText(parts.location, 200);
     const wording = hualeiScanText(parts.content);
@@ -225,7 +232,6 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number)
     if (seen.has(key)) return;
     seen.add(key);
     const staged = stageOf(tenant, row.code, description);
-    const reading = tenant.clock?.(row) ?? (tenant.wallClocks ? 'wall' : 'platform');
     const english = wording ? tenant.english?.(row.code || null, normalizeStatusWording(wording)) : undefined;
     kept.push({ clock: local, index, ...(english ? { english } : {}), event: {
       ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : local }), description,
@@ -241,7 +247,7 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number)
   // Rows come newest first; rows on one clock keep the reply's order.
   unique.sort((a, b) => (a.clock === b.clock ? a.index - b.index : a.clock < b.clock ? 1 : -1));
   const events = unique.map(({ event, english }) => (english ? { ...event, description: english } : event));
-  return { events: events.slice(0, MAX_EVENTS), truncated: events.length > MAX_EVENTS };
+  return { events: events.slice(0, MAX_EVENTS), truncated: events.length > MAX_EVENTS, ahead: [...ahead] };
 }
 
 interface Facts {
@@ -259,9 +265,13 @@ interface Facts {
  * of the rows held back.
  */
 function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, readAt: number): CarrierResult {
-  const { events, truncated } = scans(rows, tenant, readAt);
-  // The order exists, but nothing it holds is due yet.
-  if (!events.length) throw new NoHistoryError(tenant.provider, `${tenant.provider} has no scans for the shipment yet`);
+  const { events, truncated, ahead } = scans(rows, tenant, readAt);
+  // The order exists, but nothing it holds is due yet. Rows written ahead are named, so that
+  // a provider's copies of them are not taken for scans.
+  if (!events.length) {
+    throw new NoHistoryError(tenant.provider, `${tenant.provider} has no scans for the shipment yet`,
+      ahead.length ? { reason: 'written_ahead', writtenAhead: ahead } : undefined);
+  }
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;

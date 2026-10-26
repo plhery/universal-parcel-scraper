@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   BudgetExceededError, CarrierError, ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, MaintenanceError,
   NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError,
-  carrierErrorKind, errorTypeOf, retryAfterMsOf,
+  carrierErrorKind, errorTypeOf, retryAfterMsOf, writtenAheadClocks,
 } from './index.js';
 import { failureHint, failureKind } from './hint.js';
 
@@ -46,6 +46,10 @@ describe('carrier error taxonomy', () => {
     const rateLimited = new Error('outer', { cause: new RateLimitedError('Ship24', 12_000) });
     expect(retryAfterMsOf(rateLimited)).toBe(12_000);
     expect(retryAfterMsOf(new NotFoundError('CTT'))).toBeUndefined();
+    const ahead = new NoHistoryError('pengyou', undefined, { reason: 'written_ahead', writtenAhead: ['2026-03-02T10:00:00+08:00'] });
+    expect(writtenAheadClocks(new Error('outer', { cause: ahead }))).toEqual(['2026-03-02T10:00:00+08:00']);
+    expect(writtenAheadClocks(new NoHistoryError('pengyou'))).toEqual([]);
+    expect(new NoHistoryError('pengyou', undefined, { writtenAhead: [] }).writtenAhead).toBeUndefined();
   });
 
   it('labels failures outside the taxonomy by what a retry could change', () => {

@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { adapter as chinaPostAdapter } from '../carriers/china-post/adapter.js';
 import { CHINA_POST_CHECK_PATH } from '../carriers/china-post/app.js';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
-import { InvalidInputError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
+import { InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { resolveResult } from '../core/result/resolve.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
@@ -481,6 +481,19 @@ describe('standalone tracker', () => {
       expect(answer).toMatchObject({ source: 'Ship24', direct: { delivery_carrier: 'posti' },
         handoff: { carrier: 'posti', number: 'LOCAL12345', basis: 'partner', confirmed: true } });
       expect(partner.mock.calls[0]![0]).toEqual({ number: 'LOCAL12345' });
+    });
+
+    it('sets aside a provider\'s copies of the rows the carrier holds back as written ahead', async () => {
+      const ahead = new NoHistoryError('ups', undefined, { reason: 'written_ahead', writtenAhead: ['2026-01-01T17:00:00+08:00', '2026-01-02T17:00:00+08:00'] });
+      const tracker = (ship24: Scan[]) => createTracker({ registry: registry(vi.fn().mockRejectedValue(ahead)),
+        fetcher: providerReplies({ ship24 }), providers: ['Ship24'] });
+      const copies: Scan[] = [['2026-01-02T09:00:00Z', 'In transit'], ['2026-01-01T09:00:00Z', 'In transit']];
+      await expect(tracker(copies).track({ number })).rejects.toMatchObject({ hint: { kind: 'indeterminate' },
+        attempts: [{ source: 'ups', kind: 'indeterminate' }, { source: 'Ship24', kind: 'indeterminate' }] });
+      // A scan of the provider's own stays.
+      const answer = await tracker([['2026-01-03T09:00:00Z', 'Delivered'], ...copies]).track({ number });
+      expect(answer).toMatchObject({ source: 'Ship24', result: { current_stage: 'delivered' } });
+      expect(answer.result.events.map(event => event.instant)).toEqual(['2026-01-03T09:00:00Z']);
     });
 
     it('looks past a provider that does not improve on the direct answer', async () => {
