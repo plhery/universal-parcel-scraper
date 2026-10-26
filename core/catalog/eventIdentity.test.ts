@@ -506,6 +506,19 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...incoming, description: '' }, { ...stored, description: ' at 2026-01-02 03:04:05' })).toBe(false);
   });
 
+  it('lets a DHLink node shown in English take over the row stored in Chinese or in both languages', () => {
+    const policy = sameInstantIdentityPolicy('dhlink', { supportsScanMatching: true });
+    const cleared = { stage: 'in_transit', description: 'Customs export clearance completed', location: '', providerCode: '' };
+    expect(policy?.matches?.(cleared, { ...cleared, description: '国内清关完成' })).toBe(true);
+    const airport = { ...cleared, description: 'Arriving at the airport - arranging flights' };
+    expect(policy?.matches?.(airport, { ...airport, description: 'Arriving at the airport - arranging flights/到达机场-安排航班中' })).toBe(true);
+    for (const different of [
+      { ...cleared, description: '国内清关完成', location: 'Sample Town' },
+      { ...cleared, description: '到达机场-安排航班中' },
+      { ...cleared, description: 'Sample wording/国内清关完成' },
+    ]) expect(policy?.matches?.(cleared, different)).toBe(false);
+  });
+
   it('lets a LinHan row read on Beijing time take over the row stored on its town’s zone, by wall clock, town and wording', () => {
     expect(sameInstantIdentityPolicy('linhan')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('linhan', { supportsScanMatching: true });
@@ -554,6 +567,7 @@ describe('same-instant identity policies', () => {
   it.each([
     ['jrt', 'accepted', '到达收货点', 'Arrived at the receiving point', 'ARRIVAL'],
     ['jrt', 'registered', '货物电子信息已经收到', 'The electronic cargo information has been received', ''],
+    ['js-express', 'ready_for_pickup', '到达待取', 'Arrived, awaiting collection', ''],
     ['thhy', 'in_transit', '货物离开操作中心', 'Goods leave the operation center', 'SHIPMENT'],
     ['thhy', 'customs', '送交出口', 'Presented to export customs', 'CO_C_CR'],
     ['yto', 'accepted', '业务员收件', 'Picked up', '310'],
@@ -564,8 +578,8 @@ describe('same-instant identity policies', () => {
     const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
     expect(policy).toEqual({
       sourceCarrierId: source, storedSources: [source], requireProviderCode: false, matchEachScan: true, matches: expect.any(Function),
-      // YTO and China Post date local clocks, which adds the wall-clock pass.
-      ...(['yto', 'china-post'].includes(source) ? { matchWallClock: true } : {}),
+      // YTO, China Post and JS Express date local clocks, which adds the wall-clock pass.
+      ...(['yto', 'china-post', 'js-express'].includes(source) ? { matchWallClock: true } : {}),
     });
     const stored = { stage, description: chinese, location: 'Sample Town', providerCode: code };
     const incoming = { ...stored, description: ` ${english.toUpperCase()} `, location: 'Sample Town ' };

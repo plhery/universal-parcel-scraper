@@ -121,6 +121,22 @@ function wordingStage(wording: string): Stage | undefined {
   return WORDINGS.get(key) ?? PATTERNS.find(([pattern]) => pattern.test(key))?.[1];
 }
 
+// DHLink's own nodes in Chinese, in the English it words them in elsewhere: QG001 for China's export clearance.
+const ENGLISH: ReadonlyMap<string, string> = new Map([
+  ['国内清关完成', 'Customs export clearance completed'],
+  ['到达机场-安排航班中', 'Arriving at the airport - arranging flights'],
+]);
+
+/** The English shown for DHLink's own wording in Chinese, or for a wording in both languages, its English half. */
+export function dhlinkEnglish(wording: string): string | undefined {
+  const text = wording.replace(/\s+/g, ' ').trim();
+  const english = ENGLISH.get(text);
+  if (english) return english;
+  const split = text.lastIndexOf('/');
+  const half = split > 0 ? ENGLISH.get(text.slice(split + 1).trim()) : undefined;
+  return half && normalizeStatusWording(half) === normalizeStatusWording(text.slice(0, split)) ? text.slice(0, split).trim() : undefined;
+}
+
 /** The flight DHLink books the parcel on, written before it: no scan, so the adapter drops the row. */
 export const FLIGHT_BOOKED = /^预计配载航班\d{1,2}月\d{1,2}日/;
 

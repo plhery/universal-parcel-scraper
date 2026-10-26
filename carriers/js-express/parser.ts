@@ -9,7 +9,7 @@ import { canadaProvinceTimeZone, countryCode, isoTime } from '../../core/time/in
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { jsExpressChinaClock } from './clock.js';
-import { jsExpressStage } from './status.js';
+import { jsExpressEnglish, jsExpressStage } from './status.js';
 
 export const PROVIDER = 'JS Express';
 // A reply is a few kilobytes; five hundred rows stay under 256 kB.
@@ -189,7 +189,7 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     return {
       ...(time ? { time } : { local_time: local }),
       ...(location ? { location } : {}),
-      description,
+      description: jsExpressEnglish(description) ?? description,
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     };
   });

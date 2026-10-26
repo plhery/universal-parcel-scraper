@@ -2,11 +2,12 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, DHLINK_API, DhlinkTracker } from './adapter.js';
 import { DHLINK_LAST_LEGS, normalizeDhlinkNumber, parseDhlink } from './parser.js';
-import { dhlinkStage, statusMap } from './status.js';
+import { dhlinkEnglish, dhlinkStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const WAREHOUSE = 'XYT9900000001US';
@@ -82,13 +83,24 @@ describe('DHLink HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(envelope));
     const { result } = await createTracker({ fetcher, providers: [], env: {} }).track({ number: WAREHOUSE, carrier: 'dhlink' }, { budgetMs: 3000 });
     expect(result.events.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
-      ['国内清关完成', 'in_transit', 'carrier_map'],
+      ['Customs export clearance completed', 'in_transit', 'carrier_map'],
       ['货物电子信息已经收到', 'in_transit', 'carrier_map'],
       ['Package departed from the warehouse', 'in_transit', 'carrier_map'],
       ['Shipping Label Created', 'accepted', 'carrier_map'],
       ['Package received & scanned at warehouse', 'accepted', 'carrier_map'],
       ['货物电子信息已经收到', 'registered', 'carrier_map'],
     ]);
+  });
+
+  it('shows DHLink’s own nodes in Chinese in English, and a wording in both languages in its English half', () => {
+    expect(dhlinkEnglish('国内清关完成')).toBe('Customs export clearance completed');
+    expect(dhlinkEnglish('Arriving at the airport - arranging flights/到达机场-安排航班中')).toBe('Arriving at the airport - arranging flights');
+    expect(dhlinkEnglish('到达机场-安排航班中')).toBe('Arriving at the airport - arranging flights');
+    for (const wording of ['Sample wording/国内清关完成', '已入库', 'Customs export clearance completed']) expect(dhlinkEnglish(wording), wording).toBeUndefined();
+    // The map stages the English as it does the Chinese.
+    for (const wording of ['国内清关完成', 'Arriving at the airport - arranging flights/到达机场-安排航班中']) {
+      expect(statusMap.stage(null, normalizeStatusWording(dhlinkEnglish(wording)!)), wording).toBe(statusMap.stage(null, normalizeStatusWording(wording)));
+    }
   });
 
   it('keeps one row per scan, preferring DHLink’s node and English, and drops the destination code from Chinese places', () => {

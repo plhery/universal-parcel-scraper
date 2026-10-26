@@ -53,6 +53,8 @@ delivers them. Tracked through the lookup its English tracking page makes.
 - JS Express's own rows and its partners' share the history in their partners' words. A
   destination courier's wording repeats the place with its province, as "Delivered (Sample Town,
   ON)": the adapter moves it into the location, so the wording stays the same from town to town.
+  JS Express's own status in Chinese shows the English its entry in
+  [statuses.json](statuses.json) gives, and takes over the row stored in Chinese.
 - Partners' records of the parcel's data and a courier's delivery forecast move nothing and have
   no stage.
 - A courier's announced return, such as Colissimo's "Il va être retourné à l'expéditeur", is an

@@ -37,7 +37,8 @@ page makes.
 - Each scan comes once per feed that relays it: DHLink's own, the post's in English and in
   Chinese, the line providers'. One feed can send a scan in two formats. Rows that share a
   clock are one scan; the adapter keeps the row with DHLink's node, else English, else a place,
-  else the longest wording.
+  else the longest wording. DHLink's own export clearance and airport rows in Chinese show the
+  English its nodes give them, and a wording in both languages shows its English half.
 - A row with a node is read by its code, else by the node's name. Other rows are read by
   DHLink's wordings, GOFO's relayed ones and China Post's Chinese ones, else by the shared
   rules, which read the other partners' relayed English. The hand-over to the US partner ("delivered to UPS/USPS/Fedex"),

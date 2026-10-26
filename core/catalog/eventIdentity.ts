@@ -25,6 +25,7 @@ import { sameInstantIdentityPolicy as jAndTAu } from '../../carriers/j-and-t-au/
 import { sameInstantIdentityPolicy as inpost } from '../../carriers/inpost/identity.js';
 import { sameInstantIdentityPolicy as jdLogistics } from '../../carriers/jd-logistics/identity.js';
 import { sameInstantIdentityPolicy as jrt } from '../../carriers/jrt/identity.js';
+import { sameInstantIdentityPolicy as jsExpress } from '../../carriers/js-express/identity.js';
 import { sameInstantIdentityPolicy as laPoste } from '../../carriers/la-poste/identity.js';
 import { sameInstantIdentityPolicy as lbcExpress } from '../../carriers/lbc-express/identity.js';
 import { sameInstantIdentityPolicy as linhan } from '../../carriers/linhan/identity.js';
@@ -105,7 +106,7 @@ export interface SameInstantIdentityPolicy {
 }
 
 const policies: ReadonlyMap<string, SameInstantIdentityPolicy> = new Map(
-  [aliexpress, amazonShipping, australiaPost, austrianPost, canadaPost, chinaPost, chronopost, ciblex, correosExpress, correosSpain, ctt, cttyex, dhl, dhlEcommerce, dhlExpress, dhlink, dpd, dpdGermany, dpdFrance, fedex, hermesGermany, imile, indiaPost, inpost, jAndTAu, jdLogistics, jrt, laPoste, lbcExpress, linhan, mondialRelay, mrw, nacex, nzPost, packeta, parcelforce, pitneyBowes, pocztaPolska, posMalaysia, postlogistics, postnord, postaSlovenije, posteItaliane, posti, royalMail, sfExpress, shouwu, speedpak, spxBr, sunYou, thhy, ups, usps, swissPost, vintedGo, yanwen, yto, yunExpress, ztoInternational, universal].map((policy) => [policy.sourceCarrierId, policy]),
+  [aliexpress, amazonShipping, australiaPost, austrianPost, canadaPost, chinaPost, chronopost, ciblex, correosExpress, correosSpain, ctt, cttyex, dhl, dhlEcommerce, dhlExpress, dhlink, dpd, dpdGermany, dpdFrance, fedex, hermesGermany, imile, indiaPost, inpost, jAndTAu, jdLogistics, jrt, jsExpress, laPoste, lbcExpress, linhan, mondialRelay, mrw, nacex, nzPost, packeta, parcelforce, pitneyBowes, pocztaPolska, posMalaysia, postlogistics, postnord, postaSlovenije, posteItaliane, posti, royalMail, sfExpress, shouwu, speedpak, spxBr, sunYou, thhy, ups, usps, swissPost, vintedGo, yanwen, yto, yunExpress, ztoInternational, universal].map((policy) => [policy.sourceCarrierId, policy]),
 );
 
 const wording = (scan: SameInstantScan) => scan.description.replace(/\s+/g, ' ').trim().toLowerCase();

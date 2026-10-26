@@ -230,6 +230,13 @@ describe('JS Express tracking adapter', () => {
     expect(announced.events?.map((event) => [event.stage, event.stage_source])).toEqual([[undefined, undefined], ['customs', 'carrier_map']]);
   });
 
+  it('shows its own status in Chinese in English, staged as the Chinese, and the map stages the English too', () => {
+    const waiting = parseJsExpress(withList([row('2026-05-03 09:00:00', 'FR', '到达待取')]), DELIVERED);
+    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'Arrived, awaiting collection' });
+    expect(waiting.events).toMatchObject([{ description: 'Arrived, awaiting collection', stage: 'ready_for_pickup', stage_source: 'carrier_map' }]);
+    expect(statusMap.stage(null, normalizeStatusWording('Arrived, awaiting collection'))).toBe('ready_for_pickup');
+  });
+
   it("keeps a Colissimo leg's announced return open until the parcel is back with its sender", () => {
     const announced = parseJsExpress(withList([
       row('2026-05-03 14:00:00', 'Sample Center', "Votre Colissimo n'a pas pu vous être livré en raison d'un problème d'adresse. Il va être retourné à l'expéditeur.")]), DELIVERED);

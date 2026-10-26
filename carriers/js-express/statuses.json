@@ -50,6 +50,6 @@
     {"wording": "Votre Colissimo n'a pas pu vous être livré en raison d'un problème d'adresse. Il va être retourné à l'expéditeur.", "stage": "exception", "language": "fr", "confirmedBy": "live", "note": "A return announced: the parcel is not back with its sender yet."},
     {"wording": "Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "note": "Colissimo's sort into the delivery round, as La Poste reads its code MD1."},
     {"wording": "Votre colis est livré à son expéditeur à la suite d'un retour.", "stage": "returned", "language": "fr", "confirmedBy": "live"},
-    {"wording": "到达待取", "stage": "ready_for_pickup", "language": "zh", "confirmedBy": "live", "note": "JS Express's own status in Chinese, arrived and awaiting collection, with the country for its place."}
+    {"wording": "到达待取", "stage": "ready_for_pickup", "english": "Arrived, awaiting collection", "language": "zh", "confirmedBy": "live", "note": "JS Express's own status in Chinese, arrived and awaiting collection, with the country for its place."}
   ]
 }

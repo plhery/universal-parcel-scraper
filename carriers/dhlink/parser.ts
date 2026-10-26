@@ -6,7 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryTimeZone, firstOccurrence, isoTime, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { dhlinkStage, FLIGHT_BOOKED } from './status.js';
+import { dhlinkEnglish, dhlinkStage, FLIGHT_BOOKED } from './status.js';
 
 export const PROVIDER = 'DHLink';
 // A long history is a few dozen kilobytes.
@@ -174,7 +174,7 @@ function projectRow(row: unknown, readAt: number): Scan | 'ahead' | null {
   const staged = dhlinkStage(code, name, description);
   // The clock is set once the scan's rows are pooled.
   const event: CarrierEvent = {
-    description,
+    description: dhlinkEnglish(description) ?? description,
     ...(location ? { location } : {}),
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
