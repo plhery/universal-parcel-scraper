@@ -167,6 +167,13 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // the way, after the courier's collection and again on each round trip, and its hand-over to the courier for delivery.
   if (/^accepted at the logistics cent(?:er|re)[.!]?$/i.test(description)) return 'in_transit';
   if (/^handed over for delivery[.!]?$/i.test(description)) return 'out_for_delivery';
+  // Česká pošta's English, as aggregators relay it and its own map reads it: the sender's data, the posting, the
+  // way to the delivery office, an item left for collection at a post office or Balíkovna, and one sent back unclaimed.
+  if (/^receipt of data about consignment[.!]?$/i.test(description)) return 'registered';
+  if (/^the consignment was sent for transportation[.!]?$/i.test(description)) return 'accepted';
+  if (/^the consignment (?:left the logistics hub|is being prepared for delivery)[.!]?$/i.test(description)) return 'in_transit';
+  if (/^the consignment was deposited(?: - addressee not at home| to balíkovna)[.!]?$/iu.test(description)) return 'ready_for_pickup';
+  if (/^the consignment was sent back(?: to the sender)? - the consignment was not picked up by the addressee\b/i.test(description)) return 'exception';
   // Sender pre-advice such as Quickpac's "Shipment recorded by sender (data delivered)".
   if (/being prepared by the sender|recorded by (?:the )?(?:foreign )?sender|\bdata delivered\b|en route to .*awaiting processing/i.test(description)) return 'registered';
   // The bare word also appears in handoffs, forecasts and negations ("delivered

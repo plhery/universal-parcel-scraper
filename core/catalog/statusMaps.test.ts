@@ -10,6 +10,7 @@ import type { CarrierEvent } from '../result/index.js';
 import type { CarrierStatusMap } from '../status/statusMap.js';
 import { classifyWording } from '../status/wording.js';
 import { STATUS_MAPS } from './statusMaps.js';
+import ceskaPosta from '../../carriers/ceska-posta/statuses.json' with { type: 'json' };
 
 const carriers = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../carriers');
 const answer = (carrier: string, providerCode: string | null, description: string) => statusMapAnswer({ carrier, providerCode, description });
@@ -1536,6 +1537,17 @@ describe("universal providers' answers", () => {
     expect(answer('inpost', null, 'Accepted at the Logistics Centre')).toEqual(mapped('in_transit'));
     // A hand-over to the airline or the recipient's side is still no round.
     expect(answer('unknown', null, 'Handed over to airline')).not.toEqual(mapped('out_for_delivery'));
+  });
+
+  it("read Česká pošta's English as its own map does when an aggregator relays it", () => {
+    // Its whole-answer notices and the courier's position beside an attempt are not relayed as steps.
+    const relayed = ceskaPosta.entries.filter((entry) => entry.language === 'en' && !['-3', '-4', 'QB'].includes(entry.code));
+    expect(relayed.length).toBeGreaterThan(10);
+    for (const entry of relayed) {
+      const expected = 'stage' in entry && entry.stage ? mapped(entry.stage) : expect.objectContaining({ kind: 'intentional_gap' });
+      expect(answer('unknown', null, entry.wording), entry.wording).toEqual(expected);
+      expect(answer('ceska-posta', entry.code, entry.wording), entry.wording).toEqual(expected);
+    }
   });
 
   it("close the aggregators' whole scans no shared rule reads, and nothing like them", () => {
