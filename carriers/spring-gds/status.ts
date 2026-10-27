@@ -71,13 +71,15 @@ export function postNLStatus(category: unknown, description?: unknown): Classifi
 }
 
 /**
- * Labels of PostNL's domestic tracker the shared wording rules read wrong,
- * lowercase without final punctuation. Its observations carry no category.
+ * Labels of PostNL's domestic tracker seen on parcels, lowercase without final
+ * punctuation: those the shared wording rules read wrong, and its sorting scan.
+ * Its observations carry no category.
  */
 const DOMESTIC_STAGE = new Map<string, Stage>([
   ['shipment expected, but not yet arrived or processed at postnl', 'registered'],
   ['shipment received by postnl', 'accepted'],
   ['driver is en route', 'out_for_delivery'],
+  ['shipment sorted in sorting centre', 'in_transit'],
 ]);
 
 /** The stage of one domestic tracker observation, or undefined when unmapped. */

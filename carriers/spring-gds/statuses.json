@@ -247,6 +247,14 @@
       "confirmedBy": "source",
       "firstSeen": "2026-10-24",
       "note": "A label of PostNL's domestic tracker; the shared wording rules read it as in transit."
+    },
+    {
+      "wording": "Shipment sorted in sorting centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "A label of PostNL's domestic tracker, with observation code J06: the parcel sorted at a sorting centre."
     }
   ]
 }
