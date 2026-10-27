@@ -42,6 +42,8 @@ recipient's postcode.
 - The timeline prints `DD/MM/YYYY` with no clock, so each scan keeps its day alone in
   `local_time` and the catalog marks its scans as dated by day by design. `dateKey()`
   rejects impossible dates. Same-day events keep page order.
+- The status banner can lag the timeline. A banner repeating an older row's wording while the
+  newest row says something else gives way to the newest row, as the status and its text.
 - Wording only, no status codes. Exception and return phrases are checked before
   delivery ones, because "nous avons tenté de livrer" contains "livrer".
 - "subi un retard" maps to `failed_attempt`.

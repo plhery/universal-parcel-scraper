@@ -251,6 +251,21 @@ describe('Colis Privé HTML normalization', () => {
     expect(pickup.events).toEqual([expect.objectContaining({ stage: 'ready_for_pickup' })]);
   });
 
+  it('gives way to the newest row when the banner repeats an older one', () => {
+    const rows: Array<[string, string]> = [
+      ['27/10/2026', 'Votre colis est en cours de distribution par le livreur'],
+      ['27/10/2026', 'Votre colis est arrivé sur notre agence régionale de distribution'],
+      ['26/10/2026', 'Votre colis va être pris en charge par Colis Privé'],
+    ];
+    const lagging = parseColisPriveTrackingHtml(trackingPage({ status: 'Votre colis va être pris en charge par Colis Privé', rows }),
+      PUBLIC_SYNTHETIC_CREDENTIAL);
+    expect(lagging).toMatchObject({ status: 'out_for_delivery', last_status_text: 'Votre colis est en cours de distribution par le livreur' });
+    // A banner of its own, or one the newest row repeats, stands.
+    for (const status of ['Votre colis est en cours de livraison', 'Votre colis est en cours de distribution par le livreur']) {
+      expect(parseColisPriveTrackingHtml(trackingPage({ status, rows }), PUBLIC_SYNTHETIC_CREDENTIAL).last_status_text).toBe(status);
+    }
+  });
+
   it('rejects mismatched, incomplete, and malformed success pages', () => {
     expect(() => parseColisPriveTrackingHtml(
       trackingPage({ shipment: '123 456 789 012' }),

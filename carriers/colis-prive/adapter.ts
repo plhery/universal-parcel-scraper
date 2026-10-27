@@ -174,7 +174,14 @@ export function parseColisPriveTrackingHtml(
   parsedEvents.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
   const events = parsedEvents.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
 
-  const current = classifyStatus(statusText);
+  // The banner can lag the timeline: one that repeats an older row's wording
+  // while the newest row says something else gives way to that row.
+  const [newest, ...older] = parsedEvents;
+  const shown = comparableText(statusText);
+  const lagging = newest?.event.stage && comparableText(newest.event.description ?? '') !== shown
+    && older.some(({ event }) => comparableText(event.description ?? '') === shown);
+  const summary = lagging ? newest.event.description! : statusText;
+  const current = classifyStatus(summary);
   const status = current.status !== 'unknown'
     ? current.status
     : parsedEvents.find((event) => event.status !== 'unknown')?.status ?? 'unknown';
@@ -186,7 +193,7 @@ export function parseColisPriveTrackingHtml(
     && Date.parse(`${planned}T00:00:00Z`) >= latestDay ? planned : null;
   return {
     status,
-    last_status_text: statusText,
+    last_status_text: summary,
     last_update: null,
     ...(events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),
     expected_delivery: expected,
