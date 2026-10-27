@@ -61,6 +61,12 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^(?:The shipment has reached DHL terminal\.|Przesyłka dotarła do oddziału nadawczego DHL Parcel\.)$/i, 'accepted'],
   // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan.
   [/^The shipment has reached DHL terminal in [^.]{0,80}\. Planned date of delivery to: \d{2}-\d{2}-\d{4}\.$/i, 'in_transit'],
+  // A parcel sent abroad: its first terminal, named without a delivery day, then the way out.
+  [/^The shipment has reached DHL terminal in [^.]{0,80}\.$/i, 'accepted'],
+  [/^The shipment left the origin country\.?$/i, 'in_transit'],
+  [/^The shipment has arrived at gateway in destination country\.$/i, 'in_transit'],
+  [/^The shipment has arrived at delivery depot\.$/i, 'in_transit'],
+  [/^The shipment has been delivered to the recipient\.$/i, 'delivered'],
 ];
 
 /** The stage of one history scan's wording, once the recipient's acknowledgement is cut off. */

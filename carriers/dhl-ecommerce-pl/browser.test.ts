@@ -47,6 +47,16 @@ describe('DHL Poland browser history', () => {
     payload.events[2]!.description = 'The shipment has reached DHL terminal in Example. Planned date of delivery to: 04-03-2026.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[2]?.stage).toBe('in_transit');
   });
+  it('reads the scans of a parcel sent abroad', () => {
+    const payload = history();
+    payload.events[0]!.description = 'The shipment has been delivered to the recipient.';
+    payload.events[1]!.description = 'The shipment has arrived at gateway in destination country.';
+    payload.events[2]!.description = 'The shipment left the origin country';
+    payload.events.push({ date: '02.03.2026', time: '15:06', location: '', description: 'The shipment has reached DHL terminal in .' });
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.map(event => event.stage)).toEqual(['delivered', 'in_transit', 'in_transit', 'accepted']);
+    payload.events[0]!.description = 'The shipment has arrived at delivery depot.';
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]?.stage).toBe('in_transit');
+  });
   it('keeps unknown and informational wording without guessing a stage', () => {
     const payload = history(); payload.events[0]!.description = 'The recipient was informed about the date of delivery.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).not.toHaveProperty('stage');
