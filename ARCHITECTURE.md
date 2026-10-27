@@ -114,7 +114,9 @@ detection rule claims, as on a GLS notification card. Such a number is never rea
 pasted text, and the universal providers refuse it. Detection and recognition read the number
 as typed, so a separator a rule needs, such as the dash in a PostLogistics reference, still
 counts; adapters and providers get the normalized number. Normalization reads a letter O in an
-S10 serial as a zero when the check digit then holds, since the serial holds only digits. A
+S10 serial as a zero when the check digit then holds, since the serial holds only digits. It
+drops the slashes of a NO LIMIT shipment number, which reads the same without them, and NO
+LIMIT's adapter puts them back for its form. A
 postcode the carrier does not read goes to the enabled fallbacks only, since ParcelsApp and
 17TRACK can ask for one.
 A number whose shape fits several carriers, or only

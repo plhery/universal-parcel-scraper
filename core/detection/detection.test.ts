@@ -306,6 +306,20 @@ describe('normalization', () => {
     }
   });
 
+  it('drops the slashes of a NO LIMIT shipment number, which reads the same without them', () => {
+    for (const typed of ['P/40017/LSMP/2026', ' p/40017/lsmp/2026 ', 'P40017/LSMP/2026', 'P 40017 LSMP 2026']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe('P40017LSMP2026');
+      expect(validTrackingNumber(typed), typed).toBe(true);
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'no-limit', confidence: 'high', candidates: ['no-limit'] });
+    }
+    expect(parseTrackingInput('Numer przesyłki: P/40017/LSMP/2026, dostawa jutro')).toMatchObject({ source: 'text', trackingNumber: 'P/40017/LSMP/2026', carrier: 'no-limit' });
+    // Another layout keeps its slashes, and stays no number.
+    for (const typed of ['P/40017/SMP/2026', 'P//LSMP/2026', 'P/40017/LSMP/1999', 'Q/40017/LSMP/2026']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+      expect(validTrackingNumber(typed), typed).toBe(false);
+    }
+  });
+
   it('accepts one underscore inside a number, as Better Trucks writes its BTS_ numbers', () => {
     expect(normalizeTrackingNumber(' bts_0123smpl002 ')).toBe('BTS_0123SMPL002');
     expect(validTrackingNumber(' bts_0123smpl002 ')).toBe(true);

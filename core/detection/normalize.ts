@@ -1,4 +1,5 @@
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
+import { noLimitShipmentNumber } from './noLimit.js';
 import { hasS10CheckDigit } from './s10CheckDigit.js';
 
 /**
@@ -18,11 +19,14 @@ import { hasS10CheckDigit } from './s10CheckDigit.js';
  * An S10 serial holds only digits, so a letter O in it ("CIO…NL") is a zero
  * typed as a letter when the check digit then holds. No carrier issues "JDO1"
  * and sixteen digits either: it is a DHL Express piece, JD01, with its zero
- * typed as a letter.
+ * typed as a letter. A NO LIMIT shipment number, P/1234/LABC/2026, reads the
+ * same without its slashes, which are dropped.
  */
 export function normalizeTrackingNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (/^\(00\)\d{18}$/.test(value)) return `00${value.slice(4)}`;
+  const shipment = value.includes('/') ? noLimitShipmentNumber(value) : undefined;
+  if (shipment) return shipment;
   const piece = /^(J?JD)O(1\d{16}J?)$/.exec(value);
   if (piece) return `${piece[1]}0${piece[2]}`;
   const serial = /^([A-Z]{2})([\dO]{9})([A-Z]{2})$/.exec(value);

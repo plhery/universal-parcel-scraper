@@ -22253,6 +22253,34 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "no-limit": {
+    "displayName": "No Limit",
+    "color": "#ffd900",
+    "aliases": [
+      "Nolimit",
+      "No Limit Logistics"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "no-limit",
+      "localClocks": true
+    },
+    "canaryUrl": "https://follow.nolimit.pl/Defaulteng.aspx",
+    "trackingUrlTemplate": "https://follow.nolimit.pl/",
+    "trackingSearchUrl": "https://follow.nolimit.pl/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^P\\d{1,6}L[A-Z]{3}20\\d{2}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "noest": {
     "displayName": "NOEST Express",
     "color": "#003462",
@@ -33777,6 +33805,7 @@ export const CARRIER_IDS = [
   "nim-express",
   "nipost",
   "nippon-express",
+  "no-limit",
   "noest",
   "nord-wheel",
   "norsk-global",
@@ -34591,6 +34620,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nim-express": [],
   "nipost": ["nipost-s10"],
   "nippon-express": [],
+  "no-limit": ["no-limit-1"],
   "noest": [],
   "nord-wheel": [],
   "norsk-global": ["norsk-global-pkg"],

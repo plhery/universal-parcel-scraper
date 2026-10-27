@@ -393,6 +393,7 @@ import { adapter as nimExpress } from '../carriers/nim-express/adapter.js';
 import { adapter as ninjaVan } from '../carriers/ninja-van/adapter.js';
 import { adapter as nipost } from '../carriers/nipost/adapter.js';
 import { adapter as nipponExpress } from '../carriers/nippon-express/adapter.js';
+import { adapter as noLimit } from '../carriers/no-limit/adapter.js';
 import { adapter as noest } from '../carriers/noest/adapter.js';
 import { adapter as norskGlobal } from '../carriers/norsk-global/adapter.js';
 import { adapter as northline } from '../carriers/northline/adapter.js';
@@ -1030,6 +1031,7 @@ export const REGISTRY: RegistryDefinition = {
     "ninja-van": ninjaVan,
     "nipost": nipost,
     "nippon-express": nipponExpress,
+    "no-limit": noLimit,
     "noest": noest,
     "norsk-global": norskGlobal,
     "northline": northline,
@@ -1765,6 +1767,7 @@ export const REGISTRY: RegistryDefinition = {
     "ninja-van": "ninja-van",
     "nipost": "nipost",
     "nippon-express": "nippon-express",
+    "no-limit": "no-limit",
     "noest": "noest",
     "nord-wheel": "universal",
     "norsk-global": "norsk-global",

@@ -402,6 +402,7 @@ import { statusMap as nimExpress } from '../../carriers/nim-express/status.js';
 import { statusMap as ninjaVan } from '../../carriers/ninja-van/status.js';
 import { statusMap as nipost } from '../../carriers/nipost/status.js';
 import { statusMap as nipponExpress } from '../../carriers/nippon-express/status.js';
+import { statusMap as noLimit } from '../../carriers/no-limit/status.js';
 import { statusMap as noest } from '../../carriers/noest/status.js';
 import { statusMap as norskGlobal } from '../../carriers/norsk-global/status.js';
 import { statusMap as northline } from '../../carriers/northline/status.js';
@@ -700,7 +701,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, 'maritime-ontario': maritimeOntario, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, mayiyinfu,
   'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, 'micro-express': microExpress,
   'midland-transport': midlandTransport, 'mng-kargo': mngKargo, 'mondial-relay': mondialRelay, 'mongol-infinity-post': mongolInfinityPost, 'morning-global': morningGlobal, 'mrl-global': mrlGlobal, mrw, mtscn, mylerz, nacex, naqel, nationex,
-  'next-level-delivery': nextLevelDelivery, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, noest, 'norsk-global': norskGlobal,
+  'next-level-delivery': nextLevelDelivery, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,
   northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna,
   'old-dominion': oldDominion, 'olva-courier': olvaCourier, omgo, omniva,
   'one-world-express': oneWorldExpress, ontrac, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, paack, 'pack-man': packMan, packeta, packlink, packs,
