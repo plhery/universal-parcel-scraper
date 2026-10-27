@@ -2,6 +2,7 @@
   "carrier": "dpd-uk",
   "entries": [
     { "wording": "We've received your order details, but have not yet received your parcel", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-08" },
+    { "wording": "We've received your order details, and we're expecting your parcel shortly", "language": "en", "stage": "registered", "confirmedBy": "live" },
     { "wording": "We have your parcel and it's on its way to our depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "We have your parcel and it's on its way to you", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Your parcel is at our depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08" },

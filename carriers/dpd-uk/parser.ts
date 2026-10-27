@@ -69,6 +69,7 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   "we have your parcel and it's on its way to you": 'in_transit',
   'we have x-rayed your parcel as part of our normal security procedures': 'in_transit',
   "we've received your order details, but have not yet received your parcel": 'registered',
+  "we've received your order details, and we're expecting your parcel shortly": 'registered',
 };
 
 /**
