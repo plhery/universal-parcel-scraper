@@ -127,14 +127,8 @@
         "url": "https://www.poczta-polska.pl/en/sledzenie-przesylek/"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska",
-          "swiss-post-cargo",
-          "usps",
-          "nz-post"
-        ]
+        "carrier": "poczta-polska",
+        "confidence": "high"
       },
       "note": "Official reference example with the widget’s appended check digit, not a real shipment."
     },
@@ -292,14 +286,8 @@
         "service": "registered business letter"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska",
-          "swiss-post-cargo",
-          "usps",
-          "nz-post"
-        ]
+        "carrier": "poczta-polska",
+        "confidence": "high"
       },
       "note": "Barcode whose Poczta Polska tracking page the Wayback Machine archived. Poczta Polska's tracker returns its history: two failed deliveries, the return, and the sender's collection at a post office."
     },
@@ -310,15 +298,65 @@
       "derivedFrom": "donated_real",
       "shapeConfirmed": "2026-10-23",
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska",
-          "bpost",
-          "ecoscooting"
-        ]
+        "carrier": "poczta-polska",
+        "confidence": "high"
       },
       "note": "Made-up SSCC under Poczta Polska's GS1 prefix, entered without the barcode's 00, in the shape of a parcel Poczta Polska's tracker answers under the whole barcode."
+    },
+    {
+      "number": "459007731134862958",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220329155552/https://emonitoring.poczta-polska.pl/?numer=459007731134862958",
+        "date": "2022-03-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      },
+      "note": "Typed into Poczta Polska's tracker without the 00 its label prints apart, as the Wayback Machine archived it."
+    },
+    {
+      "number": "00559007730000939814",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251016094422/http://emonitoring.poczta-polska.pl/?numer=00559007730000939814",
+        "date": "2025-10-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "00259007738012753571",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251016135013/http://emonitoring.poczta-polska.pl/?numer=00259007738012753571",
+        "date": "2025-10-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      }
     }
   ]
 }

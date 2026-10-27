@@ -23,9 +23,9 @@ adapter puts it back; the service answers that parcel only under the whole barco
 
 Local detection checks complete numeric barcodes against the
 [widget's check-digit calculation](https://emonitoring.poczta-polska.pl/widget/widget.tracking.min.js).
-Only barcodes under Poczta Polska's GS1 prefix `5900773` are prioritized, with
-or without their `00`; other SSCCs belong to their shippers. Passing checks
-prioritize a candidate without confirming a shipment. Shorter aliases have no
+A barcode under Poczta Polska's own GS1 company prefix `5900773` whose check
+digit holds, with or without its `00`, selects Poczta Polska, since the post
+issues them; other SSCCs belong to their shippers. Shorter aliases have no
 check digit to validate and remain shape-based suggestions.
 
 ## Notes

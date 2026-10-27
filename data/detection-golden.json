@@ -1352,21 +1352,10 @@
   },
   {
     "input": "00159007733123456789",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "poczta-polska",
+    "confidence": "high",
     "candidates": [
-      "poczta-polska",
-      "swiss-post-cargo",
-      "usps",
-      "nz-post"
-    ],
-    "preferred": [
       "poczta-polska"
-    ],
-    "asked": [
-      "poczta-polska",
-      "swiss-post-cargo",
-      "nz-post"
     ]
   },
   {
@@ -1467,6 +1456,14 @@
     "asked": [
       "hermes-de",
       "brt"
+    ]
+  },
+  {
+    "input": "00259007738012753571",
+    "carrier": "poczta-polska",
+    "confidence": "high",
+    "candidates": [
+      "poczta-polska"
     ]
   },
   {
@@ -2688,6 +2685,14 @@
     ]
   },
   {
+    "input": "00559007730000939814",
+    "carrier": "poczta-polska",
+    "confidence": "high",
+    "candidates": [
+      "poczta-polska"
+    ]
+  },
+  {
     "input": "005731156836",
     "carrier": "unknown",
     "confidence": "low",
@@ -2934,21 +2939,10 @@
   },
   {
     "input": "00759007734752893152",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "poczta-polska",
+    "confidence": "high",
     "candidates": [
-      "poczta-polska",
-      "swiss-post-cargo",
-      "usps",
-      "nz-post"
-    ],
-    "preferred": [
       "poczta-polska"
-    ],
-    "asked": [
-      "poczta-polska",
-      "swiss-post-cargo",
-      "nz-post"
     ]
   },
   {
@@ -18266,17 +18260,9 @@
   },
   {
     "input": "159007730000000011",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "poczta-polska",
+    "confidence": "high",
     "candidates": [
-      "poczta-polska",
-      "bpost",
-      "ecoscooting"
-    ],
-    "preferred": [
-      "poczta-polska"
-    ],
-    "asked": [
       "poczta-polska"
     ]
   },
@@ -40464,6 +40450,14 @@
       "poczta-polska"
     ],
     "asked": [
+      "poczta-polska"
+    ]
+  },
+  {
+    "input": "459007731134862958",
+    "carrier": "poczta-polska",
+    "confidence": "high",
+    "candidates": [
       "poczta-polska"
     ]
   },

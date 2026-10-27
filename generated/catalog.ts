@@ -4871,15 +4871,13 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^00\\d5900773\\d{10}$",
-        "confidence": "low",
-        "checksum": "poczta-polska",
-        "preferred": true
+        "confidence": "high",
+        "checksum": "poczta-polska"
       },
       {
         "pattern": "^\\d5900773\\d{10}$",
-        "confidence": "low",
-        "checksum": "gs1",
-        "preferred": true
+        "confidence": "high",
+        "checksum": "gs1"
       },
       {
         "pattern": "^PX\\d{10}$",

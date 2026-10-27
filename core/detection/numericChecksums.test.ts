@@ -111,8 +111,7 @@ describe('numeric checksum candidates', () => {
   it('checks full Polish barcodes while preserving aliases without a check digit', () => {
     for (const number of ['00159007731234567899', '00059007730000000007']) {
       expect(isValidPocztaPolskaBarcode(number)).toBe(true);
-      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['poczta-polska'] });
-      expect(recognitionAskedCarriers(number)[0]).toBe('poczta-polska');
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
     }
     for (const number of ['12345678901234567891', '1234567890123456789', '123456789012345678900', '12345678901234567890\n']) {
       expect(isValidPocztaPolskaBarcode(number)).toBe(false);
@@ -121,12 +120,12 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('12345678901234567890').preferred).not.toContain('poczta-polska');
     expect(detectCarrierMatch('1234567890123456789').candidates).toContain('poczta-polska');
     expect(detectCarrierMatch('PX1234567890')).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
-    // The same barcode without its 00 is asked of Poczta Polska first; a wrong check digit or another
-    // company prefix in 18 digits is not.
+    // Poczta Polska's own company prefix selects it, with or without the 00; a wrong check digit or
+    // another company prefix in 18 digits does not.
     for (const number of ['159007731234567899', '059007730000000007']) {
-      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['poczta-polska'] });
-      expect(recognitionAskedCarriers(number)[0]).toBe('poczta-polska');
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
     }
+    expect(detectCarrierMatch('00159007731234567898').carrier).not.toBe('poczta-polska');
     for (const number of ['159007731234567898', '159007741234567898']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('poczta-polska');
     }

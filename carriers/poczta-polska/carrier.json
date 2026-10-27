@@ -89,16 +89,14 @@
     {
       "id": "poczta-polska-barcode",
       "pattern": "^00\\d5900773\\d{10}$",
-      "confidence": "low",
-      "checksum": "poczta-polska",
-      "preferred": true
+      "confidence": "high",
+      "checksum": "poczta-polska"
     },
     {
       "id": "poczta-polska-sscc",
       "pattern": "^\\d5900773\\d{10}$",
-      "confidence": "low",
-      "checksum": "gs1",
-      "preferred": true
+      "confidence": "high",
+      "checksum": "gs1"
     },
     {
       "id": "poczta-polska-2",
