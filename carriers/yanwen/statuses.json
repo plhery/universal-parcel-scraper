@@ -318,12 +318,28 @@
       "note": "The destination's customs release, beside Swiss Post's completed clearance at the same minute."
     },
     {
+      "wording": "Arrived at destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The destination post's arrival in its country, relayed in Yanwen's English after the batch handover."
+    },
+    {
       "wording": "Handled by local carrier",
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-21",
       "note": "The destination post's intake after the release from customs."
+    },
+    {
+      "wording": "Transport to delivery centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The destination post's transfer between its platforms toward the delivery office, relayed in Yanwen's English."
     },
     {
       "wording": "Arrived at delivery centre",
