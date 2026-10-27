@@ -251,6 +251,7 @@ import { adapter as goExpress } from '../carriers/go-express/adapter.js';
 import { adapter as go4 } from '../carriers/go4/adapter.js';
 import { adapter as gobolt } from '../carriers/gobolt/adapter.js';
 import { adapter as gofo } from '../carriers/gofo/adapter.js';
+import { adapter as gofoCa } from '../carriers/gofo-ca/adapter.js';
 import { adapter as gofoFr } from '../carriers/gofo-fr/adapter.js';
 import { adapter as gofoIt } from '../carriers/gofo-it/adapter.js';
 import { adapter as gofoNl } from '../carriers/gofo-nl/adapter.js';
@@ -883,6 +884,7 @@ export const REGISTRY: RegistryDefinition = {
     "go4": go4,
     "gobolt": gobolt,
     "gofo": gofo,
+    "gofo-ca": gofoCa,
     "gofo-fr": gofoFr,
     "gofo-it": gofoIt,
     "gofo-nl": gofoNl,
@@ -1572,6 +1574,7 @@ export const REGISTRY: RegistryDefinition = {
     "go4": "go4",
     "gobolt": "gobolt",
     "gofo": "gofo",
+    "gofo-ca": "gofo-ca",
     "gofo-fr": "gofo-fr",
     "gofo-it": "gofo-it",
     "gofo-nl": "gofo-nl",

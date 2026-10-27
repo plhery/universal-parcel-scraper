@@ -16011,6 +16011,44 @@
     ],
     "detectionRules": []
   },
+  "gofo-ca": {
+    "displayName": "GOFO Canada",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO CA"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-ca",
+      "recognitionRank": 471,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/ca/track",
+    "trackingUrlTemplate": "https://www.gofo.com/ca/track?searchID={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/ca(?:/|$)",
+        "params": [
+          "searchID"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^GFCA\\d{14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "gofo-fr": {
     "displayName": "GOFO France",
     "color": "#fc4c02",

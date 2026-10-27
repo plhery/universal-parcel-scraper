@@ -16013,6 +16013,44 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "gofo-ca": {
+    "displayName": "GOFO Canada",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO CA"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-ca",
+      "recognitionRank": 471,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/ca/track",
+    "trackingUrlTemplate": "https://www.gofo.com/ca/track?searchID={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/ca(?:/|$)",
+        "params": [
+          "searchID"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^GFCA\\d{14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "gofo-fr": {
     "displayName": "GOFO France",
     "color": "#fc4c02",
@@ -33434,6 +33472,7 @@ export const CARRIER_IDS = [
   "go-express",
   "go4",
   "gobolt",
+  "gofo-ca",
   "gofo-fr",
   "gofo-it",
   "gofo-nl",
@@ -34243,6 +34282,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "go-express": [],
   "go4": [],
   "gobolt": [],
+  "gofo-ca": ["gofo-ca-1"],
   "gofo-fr": ["gofo-fr-1","gofo-fr-2"],
   "gofo-it": ["gofo-it-1"],
   "gofo-nl": ["gofo-nl-1"],
