@@ -694,6 +694,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'ampm', number: 'IDTS00000000000000',
     route: /^https:\/\/grupoampm\.com\/rastreador\/\?tracking-id=IDTS00000000000000$/,
     marker: /N[úu]mero de gu[íi]a inv[áa]lido o sin informaci[óo]n|MOVIMIENTOS/i },
+  // The delivery note looks up the number in its address; an unknown one gets the note with every field empty.
+  { carrier: 'horoz', number: '00000000000000',
+    route: /^https:\/\/app3\.horoz\.com\.tr\/wsKurumsal\/_genel\/frmAtfDetay\.aspx\?Ptn=00000000000000$/,
+    marker: /ATF B[İI]LG[İI]LER[İI]/,
+    forwarding: { notFound: /ATF No\s*:\s*Atf Tipi\s*:/ } },
   // The page looks up the number in its address; an unknown one gets a notice under an empty form.
   { carrier: 'evdemo-lojistik', number: '000000000000',
     route: /^https:\/\/www\.evdemolojistik\.com\/takip\?kargo_kodu=000000000000$/,

@@ -285,6 +285,7 @@ import { statusMap as hermesDe } from '../../carriers/hermes-de/status.js';
 import { statusMap as hispapost } from '../../carriers/hispapost/status.js';
 import { statusMap as homexpress } from '../../carriers/homexpress/status.js';
 import { statusMap as hongkongPost } from '../../carriers/hongkong-post/status.js';
+import { statusMap as horoz } from '../../carriers/horoz/status.js';
 import { statusMap as houngAhLoun } from '../../carriers/houng-ah-loun/status.js';
 import { statusMap as hovership } from '../../carriers/hovership/status.js';
 import { statusMap as hrParcel } from '../../carriers/hr-parcel/status.js';
@@ -682,7 +683,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
   hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hispapost, homexpress, 'hongkong-post': hongkongPost,
-  'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'hunter-express': hunterExpress, hywl,
+  horoz, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'hunter-express': hunterExpress, hywl,
   'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-cargo': jntCargo,

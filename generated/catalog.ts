@@ -16961,7 +16961,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "horoz",
+      "localClocks": true
     },
     "canaryUrl": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmGonderiTakip.aspx",
     "trackingUrlTemplate": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmAtfDetay.aspx?Ptn={trackingNumber}",
