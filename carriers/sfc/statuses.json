@@ -26,6 +26,7 @@
     {"wording": "Shipment handed over to local ground transport for delivery hub transfer", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Transfered to local courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "The hand-over to the courier that delivers the parcel in the destination country, in SFC's spelling."},
     {"wording": "Local courier warehouse, received and ready for processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering courier's first scan of the parcel."},
+    {"wording": "Arrived at RDC centre", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "The delivering courier's regional distribution centre. The scan names no place."},
     {"wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "SFC's name for a scan relayed from the delivering courier."},
     {"wording": "Processing at facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "SFC's name for a scan relayed from the delivering courier."},
     {"wording": "Item out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "SFC's name for a relayed scan, followed in brackets by the courier's own text, which names the driver and gives a phone number."},

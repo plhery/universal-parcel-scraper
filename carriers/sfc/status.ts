@@ -30,6 +30,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['transfered to local courier', 'in_transit'],
   // The partner's first scan of the parcel; the shared rules read nothing in it.
   ['local courier warehouse, received and ready for processing', 'in_transit'],
+  // The courier's regional distribution centre, which names no place.
+  ['arrived at rdc centre', 'in_transit'],
   ['in transit', 'in_transit'],
   ['processing at facility', 'in_transit'],
   ['item out for delivery', 'out_for_delivery'],
