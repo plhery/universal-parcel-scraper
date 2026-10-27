@@ -13,9 +13,13 @@ through a universal provider's carrier name.
 ## Tracker
 
 The home page sends small-parcel and line numbers to `toms.yfhex.com:6055/track_query_c.aspx`
-and other services to the same page on port 6010 over HTTP. The tracker asks
-`Captcha/CaptchaHandler.ashx?action=IsNeedValidate` whether to show a picture check before it looks
-a number up, so a dedicated adapter needs to handle that check.
+and import parcels to the same page on port 6010 over HTTP. That page shows a new visitor a
+slider picture check, and the server refuses the lookup until the check is solved, so a dedicated
+adapter needs to handle that check.
+
+The home page's express lookup asks `api.yfhex.com:8443/getTracking?firstbillid=` without a check.
+It answers an empty list for a number it does not know. No public page shows a number it tracks, so
+its replies are unverified.
 
 ## Links
 
