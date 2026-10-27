@@ -2,13 +2,16 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { adapter, CanparTracker } from './adapter.js';
-import { parseCanpar } from './parser.js';
+import { adapter, CanparTracker, canparRequest } from './adapter.js';
+import { canparNumber, parseCanpar } from './parser.js';
 import { canparStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'C000000000000000000001';
 const OTHER = 'C000000000000000000002';
+const SHORT = 'D0000000000001';
+// The short barcode whole: the sender's shipper number after its letter.
+const WHOLE = 'D000000010000000000001';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 
 describe('Canpar parcel history', () => {
@@ -132,6 +135,59 @@ describe('Canpar parcel history', () => {
     expect(parseCanpar(value, NUMBER).events).toHaveLength(100);
     value.result[0].events = Array(501).fill(value.result[0].events[0]);
     expect(() => parseCanpar(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+});
+
+describe('Canpar numbers other than full barcodes', () => {
+  const answer = (barcode: string) => { const value = fixture(); value.result[0].barcode = barcode; return value; };
+
+  it('tells each kind of number by its shape and asks for it as the page does', () => {
+    expect(['C000000000000000000001', 'D00000001', SHORT, 'P000000001', 'R00000001', 'W00000001', 'W000000001']
+      .map(number => canparNumber(number).kind)).toEqual(['barcode', 'short', 'short', 'tag', 'tag', 'notice', 'notice']);
+    for (const number of ['D0000001', 'P00000001', 'R000000001', 'W0000001', 'W0000000001', 'A000000000000000000001']) {
+      expect(() => canparNumber(number)).toThrow(InvalidInputError);
+    }
+    const api = 'https://canship.canpar.com/api/CanparAddons';
+    expect(canparRequest(canparNumber('W00000001'), 'A1A1A1')).toEqual({ url: `${api}/trackByDeliveryNotice`, body: { delivery_notice: 'W00000001' } });
+    expect(canparRequest(canparNumber(SHORT), 'A1A1A1')).toEqual({ url: `${api}/trackByShortBarcodeAndPostalCode`, body: { barcode: SHORT, postal_code: 'A1A1A1' } });
+    for (const number of [SHORT, 'P000000001', 'R00000001', NUMBER]) {
+      expect(canparRequest(canparNumber(number))).toEqual({ url: `${api}/trackByBarcodeV2`, body: { barcode: number, track_shipment: false } });
+    }
+  });
+
+  it('sends the postal code with a short barcode only', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(answer(SHORT)));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    await instance.track({ number: SHORT, postcode: 'a1a 1a1' });
+    expect(JSON.parse(String(fetcher.mock.calls[0]![1]?.body))).toEqual({ barcode: SHORT, postal_code: 'A1A1A1' });
+    fetcher.mockImplementation(async () => Response.json(answer('P000000001')));
+    await instance.track({ number: 'P000000001', postcode: 'A1A 1A1' });
+    expect(JSON.parse(String(fetcher.mock.calls[1]![1]?.body))).toEqual({ barcode: 'P000000001', track_shipment: false });
+  });
+
+  it("takes a short barcode answered whole, and a notice's one parcel, under their own barcode", () => {
+    expect(parseCanpar(answer(SHORT), SHORT)).not.toHaveProperty('canonical_tracking_number');
+    expect(parseCanpar(answer(WHOLE), SHORT)).toMatchObject({ status: 'delivered', canonical_tracking_number: WHOLE });
+    expect(parseCanpar(answer(NUMBER), 'W00000001')).toMatchObject({ status: 'delivered', canonical_tracking_number: NUMBER });
+    expect(parseCanpar(answer('P000000001'), 'P000000001')).not.toHaveProperty('canonical_tracking_number');
+    for (const [barcode, number] of [['D000000010000000000002', SHORT], ['C000000010000000000001', SHORT], [NUMBER, SHORT],
+      [NUMBER, 'P000000001'], ['P000000001', 'W00000001'], [NUMBER, 'R00000001']]) {
+      expect(() => parseCanpar(answer(barcode!), number!)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
+  it('keeps a notice left for several parcels inconclusive', () => {
+    const value = answer(NUMBER); value.result.push({ ...value.result[0], barcode: OTHER });
+    expect(() => parseCanpar(value, 'W00000001')).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'several_parcels' }));
+    expect(() => parseCanpar(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('asks for the postal code when Canpar needs the shipper of a short barcode', () => {
+    const error = { result: null, error: 'Shipper num required|Numéro d\'expéditeur requis' };
+    expect(() => parseCanpar(error, SHORT)).toThrow(expect.objectContaining({ kind: 'input_required', field: 'postcode' }));
+    expect(() => parseCanpar(error, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: undefined }));
+    const unknown = { result: null, error: 'Please contact Customer Service.|Please contact Customer Service.' };
+    expect(() => parseCanpar(unknown, 'W00000001')).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: undefined }));
   });
 });
 
