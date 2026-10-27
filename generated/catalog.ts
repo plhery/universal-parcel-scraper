@@ -14413,7 +14413,8 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^[A-Z]{3}\\d{4}[A-Z]{2}\\d{11}$",
-        "confidence": "high"
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },
@@ -29433,6 +29434,42 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "starlinks-global": {
+    "displayName": "Starlinks Global",
+    "color": "#00a0af",
+    "aliases": [
+      "Starlinks Global Ltd"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "starlinks-global",
+      "localClocks": true
+    },
+    "canaryUrl": "https://starlinks.app/track",
+    "trackingUrlTemplate": "https://starlinks.app/track/{trackingNumber}",
+    "trackingSearchUrl": "https://starlinks.app/track",
+    "linkRules": [
+      {
+        "domains": [
+          "starlinks.app",
+          "www.starlinks.app"
+        ],
+        "path": "^/track/([^/?#]+)/?$",
+        "ownNumbersOnly": true
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{3}\\d{4}[A-Z]{2}\\d{11}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "steadfast": {
     "displayName": "Steadfast Courier",
     "color": "#00bf6f",
@@ -33979,6 +34016,7 @@ export const CARRIER_IDS = [
   "starex-az",
   "starken",
   "starlinks",
+  "starlinks-global",
   "steadfast",
   "stone3pl",
   "straightship",
@@ -34794,6 +34832,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "starex-az": [],
   "starken": [],
   "starlinks": ["starlinks-1"],
+  "starlinks-global": ["starlinks-global-1"],
   "steadfast": ["steadfast-1"],
   "stone3pl": ["stone3pl-s18"],
   "straightship": ["straightship-1","straightship-2"],

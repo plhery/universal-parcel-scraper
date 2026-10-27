@@ -58,7 +58,7 @@ Norsk answered, give `PKG` and twelve digits, from one counter across merchants.
 common prefix, so `norsk-global-pkg` only suggests Norsk and recognition asks it. A single
 archived lookup gives `NOR`, four digits, a country code and eleven digits: the layout of
 [FedEx International Connect](../fedex-international-connect/README.md)'s numbers, which Norsk's
-tracker finds as a partner's number, so detection names FIC for it. The samples and their sources are in [`numbers.json`](numbers.json).
+tracker finds as a partner's number, so detection asks FIC first. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

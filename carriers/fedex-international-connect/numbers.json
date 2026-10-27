@@ -15,8 +15,12 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "fedex-international-connect",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex-international-connect",
+          "starlinks-global"
+        ]
       },
       "note": "An archived lookup on FedEx International Connect's own tracker shows this FIC tracking number with its destination, service and the parcel's expected handover from the shipper."
     },
@@ -27,8 +31,12 @@
       "derivedFrom": "official_shape",
       "shapeConfirmed": "2026-10-25",
       "expect": {
-        "carrier": "fedex-international-connect",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex-international-connect",
+          "starlinks-global"
+        ]
       },
       "note": "Made-up number in the layout of FedEx International Connect's tracking numbers: three letters, four digits, a country code and eleven digits."
     }

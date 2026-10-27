@@ -45,7 +45,8 @@ Connect, so that name is not an alias. The adapter reads FIC's tracker.
 
 An FIC tracking number is three letters naming the shipper, four digits, the country the shipper
 sends from and eleven digits. FIC's tracker labels it "FIC Tracking Number", and archived lookups
-there show it behind many shippers' letters, so detection selects FIC for it.
+there show it behind many shippers' letters. Starlinks Global labels its parcels the same way, and
+neither tracker knows the other's, so the rule is low-confidence and puts FIC first.
 
 ## Links
 

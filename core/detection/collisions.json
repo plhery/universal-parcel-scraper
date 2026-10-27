@@ -6267,5 +6267,13 @@
       "tnt"
     ],
     "reason": "A PIN AG number carries no check digit, so about one in ten also passes the GS1 check the other sixteen-digit rules ask; the number stays a suggestion with PIN AG first."
+  },
+  {
+    "shape": "Three letters, four digits, a country code and eleven digits",
+    "carriers": [
+      "fedex-international-connect",
+      "starlinks-global"
+    ],
+    "reason": "FedEx International Connect and Starlinks Global both label a shipper's parcels with its three letters, four digits, the country it sends from and eleven digits, and each tracker knows only its own. Both rules are low-confidence; FIC's many shippers put it first. Direct tracking must confirm the carrier."
   }
 ]

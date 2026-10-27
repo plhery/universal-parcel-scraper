@@ -418,9 +418,12 @@ describe('Bringer Parcel Xpress references', () => {
 
 describe('FedEx International Connect numbers', () => {
   // Made-up numbers in FIC's layout: three letters, four digits, the sending country and eleven digits.
-  it('selects FedEx International Connect for its tracking number layout', () => {
+  // Starlinks Global labels its parcels the same way, so FIC only comes first.
+  it('puts FedEx International Connect first for its tracking number layout', () => {
     for (const number of ['ZZZ0000GB00000000017', 'ZZZ0000US00000000017', 'zzz 0000 gb 0000 0000 017']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'fedex-international-connect', confidence: 'high' });
+      expect(detectCarrierMatch(number), number).toMatchObject({
+        carrier: 'unknown', confidence: 'low', candidates: ['fedex-international-connect', 'starlinks-global'], preferred: ['fedex-international-connect'],
+      });
     }
     for (const number of ['ZZZ0000GB0000000001', 'ZZZ0000GB000000000017', 'ZZ00000GB00000000017', 'ZZZ00000B00000000017', 'ZZZ000GBB00000000017']) {
       expect(detectCarrierMatch(number).candidates ?? [detectCarrierMatch(number).carrier], number).not.toContain('fedex-international-connect');

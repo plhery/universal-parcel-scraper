@@ -1931,6 +1931,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'timely-titan', number: 'TT2600000000017CN',
     route: /^https:\/\/timelytitan\.com\/tracking\.html\?number=TT2600000000017CN$/,
     marker: /tracking not found|TimelyTitan All rights reserved/ },
+  // The tracking page serves the parcel at its number's address and says when it has none.
+  { carrier: 'starlinks-global', number: 'ASO1004GB04198255001',
+    route: /^https:\/\/starlinks\.app\/track\/ASO1004GB04198255001$/,
+    marker: /Shipment History|Parcel not found/ },
 ];
 
 /**

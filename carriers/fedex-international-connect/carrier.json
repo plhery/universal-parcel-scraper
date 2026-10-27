@@ -87,7 +87,8 @@
     {
       "id": "fedex-international-connect-1",
       "pattern": "^[A-Z]{3}\\d{4}[A-Z]{2}\\d{11}$",
-      "confidence": "high"
+      "confidence": "low",
+      "preferred": true
     }
   ]
 }
