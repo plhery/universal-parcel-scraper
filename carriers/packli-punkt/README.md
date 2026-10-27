@@ -18,6 +18,13 @@ digits only. No public source shows one, so the corpus is empty and no rule clai
 `paeckli-punkt.ch/paket-verfolgen/` with `packet` opens one parcel; the French, Italian and
 English tracking pages take the same parameter.
 
+## Why there is no adapter
+
+The tracking page answers a GET with server-rendered HTML, with no token or CAPTCHA. An unknown
+number gets "Paket noch nicht abgegeben", the page's wording for a parcel not yet dropped off,
+so that answer does not tell a missing number from a parcel still to be handed in. No public
+source shows a parcel number, so a found reply has not been seen.
+
 ## Testing
 
 Provider live-test inputs and commands are in the

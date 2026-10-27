@@ -21,6 +21,11 @@ and the postcode as HTTP Basic credentials and answers JSON, with no session or 
 adapter needs the postcode as a carrier input first. An unauthorized reply then means a wrong
 number or postcode, not a missing parcel.
 
+The notification address `parcel.trunkrs.nl/{number}/{postcode}` serves a page that embeds the
+shipment as JSON: its current state with a code such as `SHIPMENT_DELIVERED`, delivery
+attempts, internal sorting notes and the delivery window, next to the recipient's name and
+address, which an adapter must not keep. A wrong pair redirects.
+
 ## Testing
 
 Provider live-test inputs and commands are in the

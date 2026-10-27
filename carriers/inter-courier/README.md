@@ -15,6 +15,12 @@ rule claims them.
 The tracking page at `intercourier.pt/pt/tracking` (or `/en/tracking`) is a GET form that reads
 a `tracking` parameter and opens one parcel.
 
+## Why there is no adapter
+
+The tracking page answers a GET with server-rendered HTML, with no token or CAPTCHA. An unknown
+number, the form's examples included, gets "Não encontrámos correspondências para o código de
+envio". No public page shows a current shipment number, so a found reply has not been seen.
+
 ## Testing
 
 Provider live-test inputs and commands are in the

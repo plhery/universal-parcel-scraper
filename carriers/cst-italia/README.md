@@ -18,6 +18,14 @@ rule matches them.
 
 The tracking page sends the number to the site by script, so no address opens one parcel.
 
+## Why there is no adapter
+
+The tracking page posts the number as `idSpedizione` to `/ajax-tracking` on the same site, with
+no token or CAPTCHA; the page's reCAPTCHA is commented out. The page reads a JSON list of scans,
+each with `DataConsegna`, `OraConsegna` and `Causale`. That service answers every number, a CST
+number or not, with `IdDescrizione` 99 and a database error naming an ambiguous column, so an
+adapter needs it to answer again and a current number to confirm its reply.
+
 ## Testing
 
 Provider live-test inputs and commands are in the
