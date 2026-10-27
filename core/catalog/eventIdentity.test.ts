@@ -862,7 +862,7 @@ describe('same-instant identity policies', () => {
 
   it('matches UPS location enrichment only with unchanged wording and a known stage', () => {
     const policy = sameInstantIdentityPolicy('ups', { supportsScanMatching: true });
-    expect(policy?.storedSources).toEqual(['ups']);
+    expect(policy).toMatchObject({ storedSources: ['ups'], matchWallClock: true });
     const stored = { stage: 'accepted', description: 'Package collected', location: '', providerCode: '' };
     const incoming = { ...stored, description: 'PACKAGE  COLLECTED', location: 'Example City, France' };
     expect(policy?.matches?.(incoming, stored)).toBe(true);

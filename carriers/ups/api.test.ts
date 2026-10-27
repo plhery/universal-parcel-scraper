@@ -165,6 +165,20 @@ describe('UPS API reply', () => {
     expect(policy?.matches?.({ ...api[0]!, location: 'DES MOINES, IA, United States' }, { ...page[0]!, location: 'Des Moines, IA, United States' })).toBe(true);
   });
 
+  it("dates a scan on its place's clock when UPS states the offset the place keeps in the other season", () => {
+    const place = { location: { address: { city: 'DIJON', stateProvince: '', countryCode: 'FR' } }, date: '20261027' };
+    const events = parseUPSApiResponse(apiFixture((item) => {
+      item.activity = [
+        activity('KB', 'DELIVERED', { ...place, time: '173950', gmtDate: '20261027', gmtTime: '15:39:50', gmtOffset: '+02:00' }),
+        activity('KB', 'DELIVERED', { ...place, time: '173950', gmtDate: undefined, gmtTime: undefined, gmtOffset: '+02:00' }),
+      ];
+    }), TRACKING_NUMBER).events;
+    expect(events?.map(({ time, local_time, time_zone }) => ({ time, local_time, time_zone }))).toEqual([
+      { time: '2026-10-27T17:39:50+01:00', local_time: '2026-10-27T17:39:50', time_zone: 'Europe/Paris' },
+      { time: '2026-10-27T17:39:50+01:00', local_time: '2026-10-27T17:39:50', time_zone: 'Europe/Paris' },
+    ]);
+  });
+
   it('keeps a scan in UTC unless its local reading agrees with the stated offset, and the clock UPS gives without a UTC pair', () => {
     const times = parseUPSApiResponse(apiFixture((item) => {
       item.activity = [

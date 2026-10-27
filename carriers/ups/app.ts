@@ -23,9 +23,11 @@ function sameTown(incoming: string, stored: string): boolean {
 
 // UPS can add a location later. Its wording distinguishes scans sharing a clock,
 // unless both carry an activity code: the official API words a scan without the
-// page's second sentence and writes its town in capitals.
+// page's second sentence and writes its town in capitals. A scan UPS stated on the
+// offset its place keeps in the other season, which a release dates on the place's
+// clock, keeps its row.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
-  sourceCarrierId: 'ups', storedSources: ['ups'], requireProviderCode: false,
+  sourceCarrierId: 'ups', storedSources: ['ups'], requireProviderCode: false, matchWallClock: true,
   matches(incoming, stored) {
     if (incoming.stage === '' || incoming.stage === 'unknown' || !sameActivity(incoming, stored)) return false;
     if (incoming.providerCode && stored.providerCode) return sameTown(incoming.location, stored.location);

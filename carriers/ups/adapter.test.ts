@@ -189,6 +189,35 @@ describe('UPS structured response', () => {
     expect(new Set(times!.map((time) => Date.parse(time!)))).toEqual(new Set([Date.parse('2026-08-04T04:05:09Z')]));
   });
 
+  it("dates a scan on its place's clock when UPS states the offset the place keeps in the other season", () => {
+    const delivered = (location: string, date: string, time: string, gmtDate: string, gmtTime: string, gmtOffset: string) => ({
+      actCode: 'KB', activityScan: 'DELIVERED', location, date, time, gmtDate, gmtTime, gmtOffset,
+    });
+    const events = parseUPSTrackingResponse(withScans([
+      // France keeps +01:00 after the clocks go back, and the United Kingdom +00:00.
+      delivered('DIJON, FR', '10/27/2026', '5:39 P.M.', '20261027', '15:39:50', '+02:00'),
+      delivered('EXAMPLE CITY, GB', '10/27/2026', '5:39 P.M.', '20261027', '16:39:50', '+01:00'),
+      // The United Kingdom keeps +01:00 after the clocks go forward.
+      delivered('EXAMPLE CITY, GB', '03/30/2026', '5:39 P.M.', '20260330', '17:39:50', '+00:00'),
+      // Offsets the place keeps then.
+      delivered('DIJON, FR', '08/04/2026', '5:39 P.M.', '20260804', '15:39:50', '+02:00'),
+      delivered('DIJON, FR', '10/27/2026', '5:39 P.M.', '20261027', '16:39:50', '+01:00'),
+      // The Canary Islands keep Madrid's winter offset in summer, so Spain's clock is not deduced.
+      delivered('LAS PALMAS, ES', '08/04/2026', '5:39 P.M.', '20260804', '16:39:50', '+01:00'),
+      // A country spanning several zones names none.
+      delivered('EXAMPLE CITY, US', '10/27/2026', '5:39 P.M.', '20261027', '22:39:50', '-05:00'),
+    ]), TRACKING_NUMBER, new Date('2026-10-28T00:00:00Z')).events;
+    expect(events?.map(({ time, local_time, time_zone, time_zone_basis }) => ({ time, local_time, time_zone, time_zone_basis }))).toEqual([
+      { time: '2026-10-27T17:39:50+01:00', local_time: '2026-10-27T17:39:50', time_zone: 'Europe/Paris', time_zone_basis: 'place' },
+      { time: '2026-10-27T17:39:50+00:00', local_time: '2026-10-27T17:39:50', time_zone: 'Europe/London', time_zone_basis: 'place' },
+      { time: '2026-03-30T17:39:50+01:00', local_time: '2026-03-30T17:39:50', time_zone: 'Europe/London', time_zone_basis: 'place' },
+      { time: '2026-08-04T17:39:50+02:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+      { time: '2026-10-27T17:39:50+01:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+      { time: '2026-08-04T17:39:50+01:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+      { time: '2026-10-27T17:39:50-05:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+    ]);
+  });
+
   it('lets the newest scan code outrank the progress token', () => {
     // A Ground Saver delay: UPS's token reads Exception, the parcel is moving.
     const delayed = parseUPSTrackingResponse(withScans([

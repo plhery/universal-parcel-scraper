@@ -129,6 +129,13 @@ rendered status, after that wait.
   A local pair without an offset stays `local_time`, a scan dated by its day alone, as some
   drop-offs are, keeps that day as `local_time`, and other text stays `provider_time_text`;
   no zone is guessed. Some label scans come with no clock and get none.
+- UPS can state the offset a place keeps in the other season. After the clocks went back it
+  dated deliveries in France on the summer offset: each reached its answer an hour after the
+  instant that offset gives, and the wall clock was the place's. A scan whose offset its
+  place's zone cannot have at that wall clock, but has at another time of year, keeps the wall
+  clock as `local_time` and is dated in that zone (`time_zone_basis` `place`). Only countries
+  with one civil time have a zone here, without Spain and Portugal, whose islands keep the
+  mainland's other-season offset. The scan keeps its stored row (`matchWallClock`).
 - UPS enters some departures and loadings on the delivery vehicle at their planned time,
   before they happen. A scan dated more than five minutes after the lookup is held back until
   it is due (`plannedScans`).

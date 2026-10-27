@@ -11,7 +11,7 @@ import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/resu
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { calendarDay } from '../../core/time/index.js';
+import { calendarDay, countryCode, countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPSApiClient, upsApiCredentials, upsApiNotFound, upsApiNotices, type UPSApiCredentials } from './api.js';
@@ -334,12 +334,40 @@ function text(value: unknown, maxLength?: number): string {
   return clean(typeof value === 'string' ? decodeEntities(value) : value, maxLength);
 }
 
-type ScanClock = Pick<CarrierEvent, 'time'> & { local_time?: string; provider_time_text?: string };
+type ScanClock = Pick<CarrierEvent, 'time' | 'local_time' | 'time_zone' | 'time_zone_basis'> & { provider_time_text?: string };
 
 /** UPS's offset of a scan's place, in minutes. */
 function statedOffset(stated: string): number | null {
   const offset = /^([+-])(0\d|1[0-4]):([0-5]\d)$/.exec(stated);
   return offset ? (offset[1] === '-' ? -1 : 1) * (Number(offset[2]) * 60 + Number(offset[3])) : null;
+}
+
+/**
+ * The zone of a scan's place, from its country's code or English name, when the country keeps one
+ * civil time. Spain and Portugal have none here: their islands keep a clock an hour from the
+ * mainland's, the offset the mainland keeps in the other season.
+ */
+function placeZone(country: string): string | null {
+  const code = countryCode(country);
+  return code && code !== 'ES' && code !== 'PT' ? countryTimeZone(code) : null;
+}
+
+/**
+ * A scan UPS states on its place's offset for the other season, one the place's zone does not
+ * keep at that wall clock but keeps at another time of the year, dated on the place's clock.
+ * After the clocks went back, UPS dated deliveries in France on the summer offset: each reached
+ * its answer an hour after the instant that offset gives, and the wall clock was the place's.
+ * The scan keeps that wall clock, and the instant says its zone is the place's.
+ */
+function placeClock(wall: string, offset: number, zone: string | null): ScanClock | null {
+  if (!zone) return null;
+  const readings = DateTime.fromISO(wall, { zone }).getPossibleOffsets();
+  if (!readings.length || readings.some((reading) => reading.offset === offset)) return null;
+  const year = Number(wall.slice(0, 4));
+  const seasons = [1, 7].map((month) => DateTime.utc(year, month, 1).setZone(zone).offset);
+  if (seasons[0] === seasons[1] || !seasons.includes(offset)) return null;
+  const time = firstOccurrence(DateTime.fromISO(wall, { zone })).toISO({ suppressMilliseconds: true });
+  return time ? { time, local_time: wall, time_zone: zone, time_zone_basis: 'place' } : null;
 }
 
 /** The UTC pair, `gmtDate` (YYYYMMDD) and `gmtTime` (HH:MM:SS; the API's schema also shows HMMSS), as an ISO wall clock. */
@@ -356,29 +384,35 @@ function utcPair(activity: JsonObject): string | null {
  * the second, is written on that offset when the local pair reads the same
  * minute on it, so the scan keeps its place's clock; otherwise it stays in
  * UTC. A zero offset is written as UTC was, `+00:00`. Without the UTC pair,
- * the local pair and its offset become the time, and no zone is ever guessed.
- * A local pair without an offset stays a `local_time`, a scan UPS dates by
- * its day alone, as it does some drop-offs, keeps that day, other text stays
- * as UPS wrote it, and a scan with no clock at all, like some label scans,
- * gets none. The page's reply and the official API write the local pair
- * differently and the rest alike, so one scan gets one time from either.
+ * the local pair and its offset become the time. An offset the place cannot
+ * have at that time of year gives way to the place's zone (`placeClock`);
+ * otherwise no zone is guessed. A local pair without an offset stays a
+ * `local_time`, a scan UPS dates by its day alone, as it does some drop-offs,
+ * keeps that day, other text stays as UPS wrote it, and a scan with no clock
+ * at all, like some label scans, gets none. The page's reply and the official
+ * API write the local pair differently and the rest alike, so one scan gets
+ * one time from either.
  */
-function scanClock(activity: JsonObject, local: string | null, day: string | null, raw: string): ScanClock {
+function scanClock(activity: JsonObject, local: string | null, day: string | null, raw: string, zone: string | null): ScanClock {
   const stated = cleanScalar(activity.gmtOffset);
   const offset = statedOffset(stated);
   const utc = utcPair(activity);
   if (utc) {
-    const shown = offset ? DateTime.fromISO(utc, { zone: 'utc' }).setZone(FixedOffsetZone.instance(offset)) : null;
-    return { time: shown?.isValid && local && shown.toFormat("yyyy-MM-dd'T'HH:mm") === local.slice(0, 16)
-      ? shown.toISO({ suppressMilliseconds: true }) : `${utc}+00:00` };
+    const shown = offset === null ? null : DateTime.fromISO(utc, { zone: 'utc' }).setZone(FixedOffsetZone.instance(offset));
+    if (!shown?.isValid || !local || shown.toFormat("yyyy-MM-dd'T'HH:mm") !== local.slice(0, 16)) return { time: `${utc}+00:00` };
+    return placeClock(shown.toFormat("yyyy-MM-dd'T'HH:mm:ss"), offset!, zone)
+      ?? { time: offset ? shown.toISO({ suppressMilliseconds: true }) : `${utc}+00:00` };
   }
-  if (local) return /^[+-]\d{2}:\d{2}$/.test(stated) ? { time: `${local}${stated}` } : { local_time: local };
+  if (local) {
+    if (offset === null) return /^[+-]\d{2}:\d{2}$/.test(stated) ? { time: `${local}${stated}` } : { local_time: local };
+    return placeClock(local, offset, zone) ?? { time: `${local}${stated}` };
+  }
   if (day) return { local_time: day };
   return raw ? { provider_time_text: raw } : {};
 }
 
-/** The clock of a scan in the page's reply, whose local pair reads `08/04/2026` and `9:12 A.M.`. */
-function activityClock(activity: JsonObject): ScanClock {
+/** The clock of a scan in the page's reply, whose local pair reads `08/04/2026` and `9:12 A.M.`, at a place such as `ZUERICH, CH`. */
+function activityClock(activity: JsonObject, place: string): ScanClock {
   const localDate = cleanScalar(activity.date);
   const localTime = cleanScalar(activity.time);
   const dateMatch = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(localDate);
@@ -388,7 +422,7 @@ function activityClock(activity: JsonObject): ScanClock {
     ? `${dateMatch[3]}-${dateMatch[1]}-${dateMatch[2]}T${String(hour % 12 + (timeMatch[3]!.toUpperCase() === 'P' ? 12 : 0)).padStart(2, '0')}:${timeMatch[2]}:00`
     : null;
   const day = dateMatch && !localTime ? calendarDay(Number(dateMatch[3]), Number(dateMatch[1]), Number(dateMatch[2])) : null;
-  return scanClock(activity, local, day, clean(`${localDate} ${localTime}`));
+  return scanClock(activity, local, day, clean(`${localDate} ${localTime}`), placeZone(place.split(',').at(-1)!.trim()));
 }
 
 /** The clock of a scan in the official API's reply, whose local pair reads `20260804` and `091204`. */
@@ -399,7 +433,9 @@ function apiActivityClock(activity: JsonObject): ScanClock {
   const timeMatch = /^([01]\d|2[0-3])([0-5]\d)([0-5]\d)$/.exec(localTime);
   const day = dateMatch ? calendarDay(Number(dateMatch[1]), Number(dateMatch[2]), Number(dateMatch[3])) : null;
   const local = day && timeMatch ? `${day}T${timeMatch[1]}:${timeMatch[2]}:${timeMatch[3]}` : null;
-  return scanClock(activity, local, localTime ? null : day, clean(`${localDate} ${localTime}`));
+  const address = isRecord(activity.location) && isRecord(activity.location.address) ? activity.location.address : {};
+  return scanClock(activity, local, localTime ? null : day, clean(`${localDate} ${localTime}`),
+    placeZone(cleanScalar(address.countryCode || address.country, 8)));
 }
 
 const MONTHS: Record<string, number> = {
@@ -479,7 +515,7 @@ export function parseUPSTrackingResponse(
       const code = cleanScalar(raw.actCode, 8).toUpperCase();
       const stage = code ? upsActivityStage(code) : upsUncodedScanStage(description);
       events.push({
-        ...activityClock(raw),
+        ...activityClock(raw, text(raw.location)),
         location: pagePlace(text(raw.location)),
         description,
         ...(/^[A-Z0-9]{1,4}$/.test(code) ? { provider_code: code } : {}),
