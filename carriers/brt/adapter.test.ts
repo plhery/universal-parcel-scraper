@@ -469,7 +469,12 @@ describe('BRT origin legs', () => {
       expect(stages(parseBrt(edit($ => $('.table_stato_dati tr').slice(5).each((_, row) => { $(row).children('td').eq(2).text(origin); })), NUMBER)), origin)
         .toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'registered']);
     }
-    // Collected at one of BRT's own depots, or at a depot only a later scan names a partner at, it is the acceptance.
+    // Wherever BRT records the collection: the partner accepted the parcel abroad.
+    expect(stages(parseBrt(edit($ => {
+      $('.table_stato_dati tr').slice(1, 6).remove();
+      $('.table_stato_dati tr').last().children('td').eq(2).text('DPD SAMPLE (990)');
+    }), NUMBER))).toEqual(['in_transit', 'registered']);
+    // Collected in a shipment that starts at one of BRT's own depots, or at a depot only a later scan names a partner at, it is the acceptance.
     expect(collected('TEST ORIGIN (991)')).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     expect(stages(parseBrt(html, NUMBER)).slice(-2)).toEqual(['accepted', 'registered']);
     expect(stages(parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').eq(2).text('DPD SAMPLE (990)')), NUMBER)).slice(-2))

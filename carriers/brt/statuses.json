@@ -12,7 +12,7 @@
       "language": "en",
       "stage": "accepted",
       "confirmedBy": "live",
-      "note": "At a partner's import depot (CHR-…, DPD…) it is BRT's hand-over from the partner that brought the parcel from abroad, and the adapter reads it as in transit."
+      "note": "In a shipment that starts at a partner's import depot (CHR-…, DPD…) it is BRT's hand-over from the partner that brought the parcel from abroad, wherever it is recorded, and the adapter reads it as in transit."
     },
     {
       "wording": "DEPARTED",
