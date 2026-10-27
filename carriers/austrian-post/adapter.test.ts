@@ -313,6 +313,13 @@ describe('Austrian Post public tracking', () => {
     expect(statusMap.stage('TRA', 'konsolidierung für export')).toBe('in_transit');
     expect(austrianPostEventStatus('TRA', '', 'Transit')?.stage).toBe('in_transit');
     expect(statusMap.stage('TRA', 'transit')).toBe('in_transit');
+    // The arrival's code yields to a return or a delivery round its wording names, as the scan does.
+    expect(statusMap.stage('IMP', 'sendung im zielland angekommen')).toBe('in_transit');
+    expect(statusMap.stage('IMP', '')).toBe('in_transit');
+    expect(austrianPostEventStatus('IMP', '', 'Rücksendung an den Absender')?.stage).toBe('returned');
+    expect(statusMap.stage('IMP', 'rücksendung an den absender')).toBeUndefined();
+    expect(austrianPostEventStatus('IMP', '', 'Sendung in Zustellung')?.stage).toBe('out_for_delivery');
+    expect(statusMap.stage('IMP', 'sendung in zustellung')).toBeUndefined();
     // A code alone says nothing the reason could not change.
     expect(statusMap.stage('IZ', 'sendung in zustellung')).toBeUndefined();
     expect(austrianPostEventStatus('IZ', 'BH', '')?.stage).toBe('failed_attempt');

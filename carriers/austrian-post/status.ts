@@ -56,13 +56,15 @@ const WORDINGS: Readonly<Record<string, ClassifiedStatus | undefined>> = {
   eingeworfen: SUMMARY.ZU,
 };
 const byWording = (text: string) => WORDINGS[text.trim().toLowerCase()];
+const RETURNING = /\b(?:rücksendung|zurückgesandt|return to sender)\b/i;
+const OUT_FOR_DELIVERY = /\b(?:in zustellung|out for delivery)\b/i;
 
 export function austrianPostEventStatus(code: string, reason: string, text: string): ClassifiedStatus | undefined {
   if (reason === 'ZA' || reason === 'ZPB' || DELIVERED.test(text) || byWording(text)?.stage === 'delivered') return SUMMARY.ZU;
   if (['BH', 'BN', 'HB', 'NZ', '2055', '2065'].includes(reason)) return { status: 'exception', stage: 'failed_attempt' };
   if (['EAW', 'HO', 'UPB', '2034'].includes(reason)) return SUMMARY.EB;
-  if (/\b(?:rücksendung|zurückgesandt|return to sender)\b/i.test(text)) return SUMMARY.RE;
-  if (code === 'AZT' || /\b(?:in zustellung|out for delivery)\b/i.test(text)) return SUMMARY.IZ;
+  if (RETURNING.test(text)) return SUMMARY.RE;
+  if (code === 'AZT' || OUT_FOR_DELIVERY.test(text)) return SUMMARY.IZ;
   // IMP is the arrival in the destination country, which the page files under distribution.
   if (code === 'BEI' || code === 'PUG' || code === 'IMP' || transitScan(code, text)) return SUMMARY.IV;
   // Unmapped scan codes retain their wording for the host's classifier.
@@ -79,12 +81,14 @@ function transitScan(code: string, text: string): boolean {
  * their stage from the reason as well (an IZ scan with reason BH is a missed
  * delivery), so the map answers only scans the reason cannot change: a
  * delivery's wording, the transit scans, the arrival in the destination
- * country (IMP), with or without wording, and the wordings above.
+ * country (IMP), with or without wording unless it names a return or a
+ * delivery round, which outrank the code, and the wordings above.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     if (DELIVERED.test(wording)) return 'delivered';
-    if (code === 'IMP' || (code && transitScan(code, wording))) return 'in_transit';
+    if (code === 'IMP' && !RETURNING.test(wording) && !OUT_FOR_DELIVERY.test(wording)) return 'in_transit';
+    if (code && transitScan(code, wording)) return 'in_transit';
     return byWording(wording)?.stage;
   },
   gaps: [],
