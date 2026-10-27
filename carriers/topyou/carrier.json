@@ -1,0 +1,42 @@
+{
+  "id": "topyou",
+  "displayName": "TopYou",
+  "aliases": [
+    "通邮",
+    "通邮集团",
+    "深圳市通邮物流科技（集团）股份有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#045cd7"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.szty56.com/",
+    "searchUrl": "https://track.szty56.com/",
+    "canaryUrl": "https://track.szty56.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "topyou-1",
+      "pattern": "^TYZR[A-Z]\\d{10}YQ$",
+      "confidence": "high"
+    }
+  ]
+}

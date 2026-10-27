@@ -30548,6 +30548,34 @@
     ],
     "detectionRules": []
   },
+  "topyou": {
+    "displayName": "TopYou",
+    "color": "#045cd7",
+    "aliases": [
+      "通邮",
+      "通邮集团",
+      "深圳市通邮物流科技（集团）股份有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.szty56.com/",
+    "trackingUrlTemplate": "https://track.szty56.com/",
+    "trackingSearchUrl": "https://track.szty56.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^TYZR[A-Z]\\d{10}YQ$",
+        "confidence": "high"
+      }
+    ]
+  },
   "torrestir": {
     "displayName": "Torrestir",
     "color": "#417c47",

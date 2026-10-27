@@ -333,4 +333,14 @@ describe('Chinese fulfilment warehouse numbers', () => {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('pengyou');
     }
   });
+
+  it('names TopYou for TYZR, a letter, ten digits and YQ, and only that layout', () => {
+    for (const number of ['TYZRZ0000000017YQ', 'tyzrz 0000 0000 17 yq']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'topyou', confidence: 'high' });
+    }
+    for (const number of ['TYZRZ000000001YQ', 'TYZRZ00000000017YQ', 'TYZR00000000017YQ', 'TYZXZ0000000017YQ', 'TYZRZ0000000017YX']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('topyou');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('topyou');
+    }
+  });
 });

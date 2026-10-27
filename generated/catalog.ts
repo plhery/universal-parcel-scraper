@@ -30550,6 +30550,34 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "topyou": {
+    "displayName": "TopYou",
+    "color": "#045cd7",
+    "aliases": [
+      "通邮",
+      "通邮集团",
+      "深圳市通邮物流科技（集团）股份有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.szty56.com/",
+    "trackingUrlTemplate": "https://track.szty56.com/",
+    "trackingSearchUrl": "https://track.szty56.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^TYZR[A-Z]\\d{10}YQ$",
+        "confidence": "high"
+      }
+    ]
+  },
   "torrestir": {
     "displayName": "Torrestir",
     "color": "#417c47",
@@ -33843,6 +33871,7 @@ export const CARRIER_IDS = [
   "tnt-it",
   "today-kr",
   "toptrans",
+  "topyou",
   "torrestir",
   "total-express",
   "tp-logistics-th",
@@ -34653,6 +34682,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tnt-it": ["tnt-it-1","tnt-it-check"],
   "today-kr": [],
   "toptrans": [],
+  "topyou": ["topyou-1"],
   "torrestir": ["torrestir-1"],
   "total-express": ["total-express-awb"],
   "tp-logistics-th": ["tp-logistics-th-1"],

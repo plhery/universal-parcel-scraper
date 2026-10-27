@@ -1993,6 +1993,7 @@ export const REGISTRY: RegistryDefinition = {
     "tnt-it": "tnt-it",
     "today-kr": "today-kr",
     "toptrans": "toptrans",
+    "topyou": "universal",
     "torrestir": "torrestir",
     "total-express": "total-express",
     "tp-logistics-th": "universal",
