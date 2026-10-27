@@ -154,6 +154,14 @@ describe('DPD Portugal tracking adapter', () => {
       last_status_text: 'SAMPLE EVENT', last_update_local: '2026-10-15T09:00:00' });
   });
 
+  it('leaves out the expected delivery day, which is dated when DPD set it', () => {
+    const forecast = history(['714', '20-10-2026', '16:25', 'DATA PREVISTA DE ENTREGA'], ['INB', '20-10-2026', '16:09', 'ENTRADA EM ARMAZÉM']);
+    expect(parseDpdPt(forecast, DELIVERED)).toMatchObject({ last_status_text: 'ENTRADA EM ARMAZÉM', last_update_local: '2026-10-20T16:09:00' });
+    expect(stages(forecast)).toEqual([['INB', 'in_transit']]);
+    expect(() => parseDpdPt(history(['714', '20-10-2026', '16:25', 'DATA PREVISTA DE ENTREGA']), DELIVERED))
+      .toThrowError(expect.objectContaining({ name: 'NoHistoryError' }));
+  });
+
   it('reads the page’s notice for an unknown number as not found, and an empty table as no history', async () => {
     expect(() => parseDpdPt(page('not-found'), UNKNOWN)).toThrowError(expect.objectContaining({ kind: 'not_found' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(page('not-found')));

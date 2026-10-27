@@ -2,6 +2,7 @@ import type { AdapterEnvironment, AdapterFactory } from '../../core/adapter/inde
 import { carrierErrorKind, IndeterminateError, NotFoundError } from '../../core/errors/index.js';
 import { fillPartialAnswer } from '../../core/result/partial.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { DPDTracker, type DPDAbroad } from '../dpd/adapter.js';
 import { adapter as dpdAt } from '../dpd-at/adapter.js';
 import { DPDFranceTracker } from '../dpd-fr/adapter.js';
@@ -18,9 +19,10 @@ const GUEST_RESERVE_MS = 20_000;
 /** A unit's lookup, made from the environment. None opens a browser, so a lookup here never does. */
 type Unit = (environment: AdapterEnvironment) => DpdGroupLookup;
 
+// A unit's wall clocks are dated as its own lookup dates them, not on Germany's clock.
 const adapterUnit = (factory: AdapterFactory): Unit => (environment) => {
   const unit = factory({ ...environment, recorder: NOOP_RECORDER });
-  return (number, context) => unit.track({ number }, context);
+  return async (number, context) => dateLocalClocks(unit.id, await unit.track({ number }, context));
 };
 
 /**

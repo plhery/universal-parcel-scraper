@@ -43,13 +43,15 @@ export const DPD_PT_DELIVERY = 'POD';
 export const DPD_PT_RETURN = '424';
 /** The pickup point's own scan; its comment names the point. */
 export const DPD_PT_POINT_RECEIPT = '002';
+/** The expected delivery day, dated when DPD set it rather than with the day: the history leaves it out. */
+export const DPD_PT_FORECAST = '714';
 
 // Messages to the recipient and requests for a new delivery or address: no
 // movement, so the parcel keeps its stage.
 const NOTICES: ReadonlyMap<string, string> = new Map([
   ['706', 'A message giving the recipient a delivery window; it moves nothing.'],
   ['709', 'A message telling the recipient of the next delivery; it moves nothing.'],
-  ['714', 'The expected delivery day; it moves nothing.'],
+  ['714', 'The expected delivery day, which the history leaves out; it moves nothing.'],
   ['741', 'A request for a new delivery; the scans after it show what happened.'],
   ['743', 'A request to change the address; the scans after it show what happened.'],
 ]);

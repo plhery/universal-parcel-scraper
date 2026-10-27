@@ -6,7 +6,7 @@ import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, 
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
-import { DPD_PT_COLLECTION, DPD_PT_DELIVERY, DPD_PT_POINT_RECEIPT, DPD_PT_RETURN, dpdPtStage, isDpdPtNotice } from './status.js';
+import { DPD_PT_COLLECTION, DPD_PT_DELIVERY, DPD_PT_FORECAST, DPD_PT_POINT_RECEIPT, DPD_PT_RETURN, dpdPtStage, isDpdPtNotice } from './status.js';
 
 export const PROVIDER = 'DPD Portugal';
 // The page is under 50 kB with a long history.
@@ -108,6 +108,8 @@ export function parseDpdPt(html: string, raw: string): CarrierResult {
     const description = clean(cells.eq(3).text(), 200);
     if (!CODE.test(code)) throw new SchemaError(PROVIDER, 'DPD Portugal returned an invalid scan code');
     if (!description) throw new SchemaError(PROVIDER, 'DPD Portugal returned a scan without wording');
+    // Its day and time are when DPD set the expected day: as a step it would show a day the parcel was not due.
+    if (code === DPD_PT_FORECAST) continue;
     // The comment column mixes the receiver's name, delivery windows, depot
     // and pickup point codes and references; only a pickup point's name is read.
     const comment = code === DPD_PT_POINT_RECEIPT ? clean(cells.eq(4).text(), 120) : '';
@@ -117,6 +119,7 @@ export function parseDpdPt(html: string, raw: string): CarrierResult {
     seen.add(key);
     scans.push({ code, comment, event: { local_time, description, provider_code: code } });
   }
+  if (!scans.length) throw new NoHistoryError(PROVIDER);
 
   // Oldest first: a collection and a delivery take their stage from the scans
   // before them, and a notice keeps the stage of the scan before it.

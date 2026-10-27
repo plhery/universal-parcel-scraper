@@ -26,7 +26,11 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
    answers when it holds more scans and is not behind the group's milestones,
    else the group's milestones, as a truncated history. Either answers when the
    other fails, and the answer keeps the link of the source that gave it. No
-   unit opens a browser: DPD France's page is read by a direct request.
+   unit opens a browser: DPD France's page is read by a direct request. A
+   unit's clocks without a zone are dated as its own lookup dates them, so DPD
+   Portugal's scans, which name no place, are on Lisbon's clock rather than
+   Germany's. Scans an earlier release dated on Germany's clock keep their rows
+   (`matchWallClock`).
 
 Either German service answers when the other fails, except for a parcel the
 guest API does not know (a 404, or a 400 typed `PARCEL_NOT_FOUND` without a

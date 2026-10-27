@@ -196,7 +196,8 @@ describe('DPD Germany scan identity', () => {
   const guest = { stage: 'in_transit', description: 'At delivery center', location: '', providerCode: 'AT_DELIVERY_CENTER' };
 
   it('lets a scan from one service take over the other service\'s row for it, less than a minute away', () => {
-    expect(policy).toMatchObject({ storedSources: ['dpd-de'], requireProviderCode: false, matchEachScan: true, matchWithinMinute: true });
+    expect(policy).toMatchObject({ storedSources: ['dpd-de'], requireProviderCode: false, matchEachScan: true, matchWithinMinute: true,
+      matchWallClock: true });
     expect(matches(guest, app)).toBe(true);
     expect(matches(app, guest)).toBe(true);
     expect(matches({ ...guest, location: 'MUSTERSTADT, DE' }, app)).toBe(true);

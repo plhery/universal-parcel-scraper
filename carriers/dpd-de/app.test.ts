@@ -473,12 +473,15 @@ describe('DPD Germany tiers', () => {
   ];
   /** The guest protocol's typed refusal for a number it has no parcel for. */
   const unknownParcel = () => Response.json({ error: 'ParcelException', exceptionType: 'PARCEL_NOT_FOUND' }, { status: 400 });
-  function tiers(replies: Response[]) {
+  /** The app service, the guest protocol's replies in turn, and the pages of other hosts. */
+  function tiers(replies: Response[], pages: Record<string, string> = {}) {
     const app = service();
     const steps: Array<[string, string]> = [];
     const guestCalls: string[] = [];
     const fetcher = ((url: string | URL, init?: RequestInit) => {
       if (String(url) === DPD_DE_APP_API) return app.fetcher(url, init);
+      const page = pages[new URL(String(url)).host];
+      if (page !== undefined) return Promise.resolve(new Response(page, { headers: { 'Content-Type': 'text/html; charset=utf-8' } }));
       guestCalls.push(String(url));
       return Promise.resolve(replies.shift() ?? new Response('', { status: 500 }));
     }) as typeof fetch;
@@ -779,6 +782,18 @@ describe('DPD Germany tiers', () => {
     expect(await tracking.track({ number: NUMBER })).toMatchObject({ status: 'delivered' });
     expect(steps).toEqual([['app', 'indeterminate'], ['abroad', 'ok']]);
     expect(guestCalls.map(url => new URL(url).searchParams.get('businessUnit')).filter(Boolean)).toEqual(['DPD-BE']);
+  });
+
+  it("dates the scans of a unit abroad on that unit's clock", async () => {
+    const portugal = readFileSync(new URL('../dpd-pt/fixtures/delivered.html', import.meta.url), 'utf8').replaceAll('09990000000101', NUMBER);
+    const { app, opened, steps, tracking } = tiers([new Response('', { status: 500 })], { 'tracking.dpd.pt': portugal });
+    await opened();
+    app.replies.getTrackingScanList = [() => xml(fixture('scans').replaceAll('Musterstadt (DE)', 'Musterville (PT)'))];
+    const result = await tracking.track({ number: NUMBER });
+    expect(steps).toEqual([['app', 'indeterminate'], ['abroad', 'ok']]);
+    // DPD Portugal's delivery, on Lisbon's clock, an hour behind Berlin's in March.
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'POD', local_time: '2026-03-05T11:30:00', time: '2026-03-05T11:30:00+00:00',
+      time_zone: 'Europe/Lisbon' });
   });
 
   it.each([

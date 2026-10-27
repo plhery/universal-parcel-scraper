@@ -21,6 +21,8 @@ function matches(incoming: SameInstantScan, stored: SameInstantScan): boolean {
     && (location === saved || !location || !saved);
 }
 
+// A unit abroad's scans, which a release dates on that unit's clock rather than Germany's, keep their rows.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'dpd-de', storedSources: ['dpd-de'], requireProviderCode: false, matchEachScan: true, matches, matchWithinMinute: true,
+  matchWallClock: true,
 };
