@@ -71,6 +71,11 @@ Correos de Chile (`correos-chile`) are separate carriers.
   sync records it.
 - Times come split as `fecEvento` (`DD/MM/YYYY`) and `horEvento` (`HH:MM:SS`, midnight when
   absent) and are read as `Europe/Madrid`.
+- A unit code opens with its province's two digits, as the office locator lists them. When the
+  envelope's `codired` is on the Canary Islands (35 or 38), the delivery unit's scans carry the
+  islands' wall clock and are read as `Atlantic/Canary`: `G` and `H` codes but the collection
+  `HI10002V`, `L0`, `O13` and the delivery. Once the parcel is handed back to its sender, the
+  envelope may name the sender's unit, so they stay on Madrid's clock.
 - The catalog zone is `Europe/Madrid` too. ParcelsApp ("Spain Post") and Ship24 ("Correos de
   España") relay the same wall clocks without a real offset, so they are read on that clock and
   land on the instants the adapter gives, except an origin post's scans (below).
@@ -114,8 +119,9 @@ Correos de Chile (`correos-chile`) are separate carriers.
   street, postcode and town, but answers 401 without the client keys correos.es sends, and no
   agreement covers those.
 - An office the locator does not place within 10 km of its name keeps its name alone.
-- Canary Islands scans are read as Madrid time and can be one hour off: events carry no
-  locality to key `Atlantic/Canary` on.
+- Events carry no unit of their own. Canary Islands scans before the delivery unit, such as an
+  admission or a sort on the islands, are read as Madrid time and can be one hour off, as are
+  relays' copies of the delivery unit's scans.
 - On an item bound abroad, the destination post's scans (`F010000V` to the delivery) are read as
   Madrid time too: the reply does not name the destination.
 

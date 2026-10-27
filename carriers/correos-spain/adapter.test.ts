@@ -181,6 +181,33 @@ describe('Correos Spain response parsing', () => {
     expect(sameInstantIdentityPolicy('correos-spain', { supportsScanMatching: true })).toMatchObject({ relabelledFrom: 'Europe/Madrid' });
   });
 
+  it("reads a Canary Islands delivery unit's scans on the islands' clock", () => {
+    const eventos = [
+      event('A010000V', '20/10/2026', '10:00:00', 'Admitido'),
+      event('P040000V', '21/10/2026', '22:15:00', 'Clasificado'),
+      event('G01L010V', '23/10/2026', '07:40:00', 'Alta en unidad de reparto'),
+      event('H020000V', '23/10/2026', '09:05:00', 'En reparto'),
+      event('I01H210V', '26/10/2026', '11:30:00', 'Entregado'),
+    ];
+    const times = (codired: unknown, rows = eventos) => parseCorreosSpainTrackingResponse([envelope({ codired, eventos: rows })], TRACKING_NUMBER)
+      .events?.map((item) => [item.provider_code, item.time]);
+    // The unit code opens with its province: 35 and 38 are the islands. Scans before the delivery unit stay on Madrid's clock.
+    expect(times('3500010')).toEqual([
+      ['I01H210V', '2026-10-26T11:30:00+00:00'],
+      ['H020000V', '2026-10-23T09:05:00+01:00'],
+      ['G01L010V', '2026-10-23T07:40:00+01:00'],
+      ['P040000V', '2026-10-21T22:15:00+02:00'],
+      ['A010000V', '2026-10-20T10:00:00+02:00'],
+    ]);
+    expect(times(3800010)?.[0]).toEqual(['I01H210V', '2026-10-26T11:30:00+00:00']);
+    for (const codired of ['2800001', '350001', undefined]) expect(times(codired)?.[0]).toEqual(['I01H210V', '2026-10-26T11:30:00+01:00']);
+    // The collection from a sender's address is not the delivery unit's.
+    expect(times('3500010', [event('HI10002V', '20/10/2026', '09:00:00', 'Envío recogido')])).toEqual([['HI10002V', '2026-10-20T09:00:00+02:00']]);
+    // Once handed back to the sender, the envelope may name the sender's unit.
+    const returned = [...eventos.slice(0, 3), event('I020000V', '27/10/2026', '12:00:00', 'Entregado al remitente')];
+    expect(times('3500010', returned)?.find(([code]) => code === 'G01L010V')).toEqual(['G01L010V', '2026-10-23T07:40:00+02:00']);
+  });
+
   it("tells relayed copies of an origin post's scans by Correos's summaries", () => {
     const zone = (wording: string, number = 'RR123456785IN') => correosOriginZone(number, { wording });
     expect(zone('En oficina de cambio')).toBe('Asia/Kolkata');

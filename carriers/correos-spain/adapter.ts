@@ -8,7 +8,7 @@ import { zonedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { isCorreosExpressCode } from '../correos-express/status.js';
-import { CORREOS_HOME_ZONE, correosOriginZone } from './clock.js';
+import { CORREOS_HOME_ZONE, correosOriginZone, correosUnitZone } from './clock.js';
 import { classifyCorreosSpainStatus, correosSpainEnglishSummary, NOTICE_CODES } from './status.js';
 
 // Protocol provenance:
@@ -46,12 +46,11 @@ const STAMP_FORMAT = 'dd/MM/yyyy HH:mm:ss';
 /**
  * When a scan happened. Correos splits it into fecEvento (DD/MM/YYYY) and
  * horEvento (HH:MM:SS, midnight when absent), a wall clock, read in Spanish
- * time: mainland Spain is Europe/Madrid, and Canary Islands scans stamped the
- * same way can be off by one hour, as events carry no locality. An origin
- * post's scan on an item from abroad has that post's wall clock (clock.ts):
- * it is read in `origin`, that post's zone, or kept as a wall clock when
- * `origin` is null, as the post's country keeps several. `timestamp` orders
- * the scans, on Madrid's reading for a wall clock.
+ * time: Europe/Madrid. A Canary Islands delivery unit's scans, and an origin
+ * post's scans on an item from abroad, have their own wall clock (clock.ts):
+ * they are read in `origin`, that zone, or kept as a wall clock when `origin`
+ * is null, as the post's country keeps several. `timestamp` orders the scans,
+ * on Madrid's reading for a wall clock.
  */
 function parsedTime(dateValue: unknown, timeValue: unknown, origin: string | null | undefined): { time?: string; local_time?: string; timestamp: number } | null {
   const date = clean(dateValue, 16);
@@ -154,13 +153,17 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   }
   const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number }> = [];
   const seen = new Set<string>();
-  const codes: string[] = [];
-  (Array.isArray(rawEvents) ? rawEvents : []).filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
+  const rows = (Array.isArray(rawEvents) ? rawEvents : []).filter(isRecord).slice(0, 500);
+  const codes = rows.map((rawEvent) => clean(rawEvent.codEvento, 32).toLocaleUpperCase('en-US')).filter(Boolean);
+  // codired is the unit holding the parcel, whose address the office locator gives.
+  const officeCode = cleanScalar(envelope.codired, 16);
+  const unitZone = correosUnitZone(officeCode, codes);
+  rows.forEach((rawEvent, index) => {
     const code = clean(rawEvent.codEvento, 32).toLocaleUpperCase('en-US');
-    if (code) codes.push(code);
     // desTextoResumen is worded in the language codIdioma names.
     const description = clean(rawEvent.desTextoResumen, 500) || correosSpainEnglishSummary(code) || code;
-    const time = parsedTime(rawEvent.fecEvento, rawEvent.horEvento, correosOriginZone(requested, { code }));
+    const origin = correosOriginZone(requested, { code });
+    const time = parsedTime(rawEvent.fecEvento, rawEvent.horEvento, origin === undefined ? unitZone(code) : origin);
     if (!time || !description) return;
     const identity = `${time.time ?? time.local_time}\u0000${description}\u0000${code}`;
     if (seen.has(identity)) return;
@@ -202,7 +205,6 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   // the envelope. The office is only a pickup signal when the parcel is
   // actually awaiting collection; weight/dims are operational parcel data.
   const office = clean(envelope.nom_codired, 300) || null;
-  const officeCode = cleanScalar(envelope.codired, 16);
   const grams = Number(envelope.peso);
   const weightKg = Number.isFinite(grams) && grams > 0 ? Math.round((grams / 1000) * 1000) / 1000 : null;
   const dims = [envelope.largo, envelope.ancho, envelope.alto].map((value) => Number(value));
@@ -217,7 +219,6 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
     ...(weightKg != null ? { weight_kg: weightKg } : {}),
     ...(dimensionsText ? { dimensions_text: dimensionsText } : {}),
   };
-  // codired is the unit holding the parcel, whose address the office locator gives.
   const waiting = latest?.event.stage === 'ready_for_pickup' && office;
   const pickupExtras = waiting ? { pickup_point: office } : {};
   const pickupOffice = waiting && /^\d{1,16}$/.test(officeCode) ? officeCode : '';
