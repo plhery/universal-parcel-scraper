@@ -70,12 +70,28 @@ describe('Poste Italiane tracking normalization', () => {
     );
   });
 
-  it('suggests Poste first for GF and eleven digits, a Poste Delivery Express parcel its tracker follows', () => {
-    expect(detectCarrierMatch('GF00000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['poste-italiane'] });
-    expect(recognitionAskedCarriers('GF00000000001')[0]).toBe('poste-italiane');
-    expect(normalizePosteItalianeTrackingNumber('gf 00000000001')).toBe('GF00000000001');
-    for (const raw of ['GF0000000001', 'GF000000000001', 'GX00000000001']) {
+  it('claims the Poste Delivery Web and Express codes of parcels booked online, and nothing near them', () => {
+    for (const number of ['GF00000000001', 'EF60000000001', 'EG00000000001', 'JG00000000001', 'LF40000000001']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'poste-italiane', confidence: 'high' });
+      expect(normalizePosteItalianeTrackingNumber(number.toLowerCase().replace(/^(..)/, '$1 ')), number).toBe(number);
+    }
+    for (const raw of ['GF0000000001', 'GF000000000001', 'GX00000000001', 'LG00000000001', 'EH00000000001', 'JG000000000001']) {
       expect(detectCarrierMatch(raw).candidates, raw).not.toContain('poste-italiane');
+    }
+  });
+
+  it('suggests Poste first for a Deliverybox code, whose ninth digit is no S10 check, and claims Posta1 codes', () => {
+    expect(detectCarrierMatch('XZ000000004IT')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['poste-italiane'], preferred: ['poste-italiane'] });
+    expect(recognitionAskedCarriers('XZ000000004IT')[0]).toBe('poste-italiane');
+    expect(normalizePosteItalianeTrackingNumber('xz 000 000 004 it')).toBe('XZ000000004IT');
+    for (const raw of ['XR000000004IT', 'XZ000000004FR', 'XZ00000004IT']) {
+      expect(detectCarrierMatch(raw).candidates, raw).not.toContain('poste-italiane');
+    }
+    for (const number of ['2IVC0000A00001', '2IVC0000000001']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'poste-italiane', confidence: 'high' });
+    }
+    for (const raw of ['2IVC000000001', '2IVC00000AA001', '2IVD0000000001']) {
+      expect(detectCarrierMatch(raw).carrier, raw).not.toBe('poste-italiane');
     }
   });
 

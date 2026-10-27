@@ -2948,7 +2948,15 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
+        "pattern": "^2IVC\\d{4}[0-9A-Z]\\d{5}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^JF\\d{11}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^(?:E[FG]|JG|LF)\\d{11}$",
         "confidence": "high"
       },
       {
@@ -2972,6 +2980,11 @@ export const CARRIER_CATALOG = {
         "preferred": true
       },
       {
+        "pattern": "^X[A-QSVXZ]\\d{9}IT$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
         "pattern": "^(?:\\d{6}[A-Z]\\d{6}|[139]C\\d{4}[A-Z]\\d{6}|\\d{3}[A-Z]\\d{8}[A-Z])$",
         "confidence": "low"
       },
@@ -2985,8 +2998,7 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^GF\\d{11}$",
-        "confidence": "low",
-        "preferred": true
+        "confidence": "high"
       },
       {
         "pattern": "^\\d{12}$",
@@ -33809,7 +33821,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nacex": ["nacex-1"],
   "ctt": ["ctt-1"],
   "ctt-express": ["ctt-express-3","ctt-express-1","ctt-express-2"],
-  "poste-italiane": ["poste-italiane-1","poste-italiane-2","poste-italiane-plate","poste-italiane-3","poste-italiane-4","poste-italiane-delivery-europe","poste-italiane-international-express","poste-italiane-own","poste-italiane-s10","poste-italiane-sda-domestic","poste-italiane-promopacco","poste-italiane-d","poste-italiane-gf","poste-italiane-registered"],
+  "poste-italiane": ["poste-italiane-1","poste-italiane-2","poste-italiane-plate","poste-italiane-3","poste-italiane-posta1","poste-italiane-4","poste-italiane-delivery-web","poste-italiane-delivery-europe","poste-italiane-international-express","poste-italiane-own","poste-italiane-s10","poste-italiane-deliverybox","poste-italiane-sda-domestic","poste-italiane-promopacco","poste-italiane-d","poste-italiane-gf","poste-italiane-registered"],
   "brt": ["brt-1","brt-shipment-number","brt-parcel-id","brt-customer-parcel-id"],
   "ecoscooting": ["ecoscooting-postcode-label","ecoscooting-postcode","ecoscooting-1","ecoscooting-2","ecoscooting-without-cn","ecoscooting-shein-package"],
   "tipsa": ["tipsa-1","tipsa-2"],

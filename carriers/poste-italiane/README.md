@@ -76,11 +76,16 @@ Italiane for a number issued abroad.
   code `J`, Poste's UPU operator code `ITA` and the thirteen-character code. Poste's tracker
   follows the whole plate and echoes it, so `poste-italiane-plate` claims it at high confidence.
   Aggregators can read the `JJ` as DHL's.
-- Complaints against Poste Italiane quote `JF` and eleven digits for parcels sent through
-  MyPoste and Poste Delivery Web, and Poste's tracker names them Promo Pacco.
-- Poste's tracker follows `GF` and eleven digits as Poste Delivery Express parcels from their
-  acceptance at a post office. One parcel shows the shape and no public sample is known, so it
-  only suggests Poste Italiane (`poste-italiane-gf`), ahead of La Poste's thirteen characters.
+- Parcels booked online through Poste Delivery Web, Poste Delivery Web Express and MyPoste carry
+  two letters and eleven digits. Poste's FAQ gives `JG` and `EG` examples, and complaints and the
+  communications regulator quote `EF`, `GF`, `JF` and `LF` codes. Poste's tracker names `JF`
+  parcels Promo Pacco and follows `GF` parcels from their acceptance at a post office. La Poste's
+  thirteen characters share the shape but no corpus number uses these prefixes, so detection
+  claims them for Poste Italiane.
+- Poste Deliverybox Express boxes carry `X`, a letter, nine digits and `IT`, and their ninth digit
+  is no S10 check digit. The shape only suggests Poste Italiane (`poste-italiane-deliverybox`) and
+  leaves out the X prefixes Chronopost uses.
+- Posta1 letters carry `2IVC` and ten characters.
 - PROMOPACCO PLUS parcels carry `F`, three digits, `D` and eight digits. Poste's tracker
   follows them, but no public sample is known, so the shape only suggests Poste Italiane
   (`poste-italiane-promopacco`) and recognition asks it.
