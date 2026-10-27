@@ -61,7 +61,8 @@ Tracked through the lookup its tracking page makes.
 - No delivery estimate, service, sender, recipient or proof of delivery.
 - The delivering partner and its number are not named: the reply leaves them empty.
 - A copy listed without the scan it copies keeps the offset it carries, which can be the
-  destination's on Beijing's wall clock.
+  destination's on Beijing's wall clock. The app's scan-identity policy lets that scan take the
+  copy's row over once JCEX lists it.
 - Other JCEX number layouts are not looked up until one is seen.
 
 ## Numbers

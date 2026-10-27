@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../app.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -175,6 +176,18 @@ describe('JCEX HTTP adapter', () => {
     const descriptions = result.events!.map((event) => event.description);
     expect(descriptions).toEqual(expect.arrayContaining(['Synthetic pickup scan', 'Synthetic own scan']));
     expect(descriptions).not.toContain('Synthetic reworded scan');
+  });
+
+  it('lets the scan a stored copy repeats take the copy\'s row over, by its instant on Beijing\'s clock or its wording and place', () => {
+    const policy = sameInstantIdentityPolicy('jcex', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['jcex'], requireProviderCode: false, matchEachScan: true,
+      relabelledFrom: 'Asia/Shanghai', matchWallClock: true });
+    const scan = { stage: 'in_transit', description: 'Consignment Received At Transit Point', location: 'IT, Sampleville, Lazio', providerCode: 'InTransit_PickedUp' };
+    expect(policy?.matches?.(scan, { ...scan, description: ' consignment received at  transit point ' })).toBe(true);
+    for (const other of [{ ...scan, location: 'IT, Exampletown, Lombardy' }, { ...scan, description: 'Package has been picked up by the service provider.' },
+      { ...scan, providerCode: 'InTransit_Other' }]) {
+      expect(policy?.matches?.(scan, other)).toBe(false);
+    }
   });
 
   it('keeps a copy\'s offset when JCEX lists no scan it copies', () => {
