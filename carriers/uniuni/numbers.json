@@ -387,10 +387,29 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "uniuni",
+        "confidence": "high"
       },
       "note": "A UniUni tracking link archived by the Wayback Machine. UniUni's tracker returns its history."
+    },
+    {
+      "number": "UR06250000000000351",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://help.ship.uniuni.com/en/api/endpoints/tracking/track",
+        "date": "2026-10-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "uniuni",
+        "confidence": "high"
+      },
+      "note": "The tracking ID example in UniUni's seller-platform tracking API documentation, whose schema requires UR and 17 digits."
     }
   ]
 }

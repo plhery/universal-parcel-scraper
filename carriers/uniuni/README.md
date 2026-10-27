@@ -35,8 +35,10 @@ until delivery, so code 202 on such a row is read by its wording: it otherwise
 means out for delivery. The app's review asks the same map by code (`statusMap`)
 and leaves 202 open, since a stored row does not say whose scan it is. The parcel's country, the United States or Canada, is the
 destination.
-Detection claims the `UUS`, `UUSC`, `4C…US` and `U9999` formats and suggests
-UniUni for other `U` and fifteen-digit references, which Canadian parcels carry.
+Detection claims the `UUS`, `UUSC`, `4C…US` and `U9999` formats, and `UR` with
+seventeen digits, the tracking ID of UniUni's seller platform, which its tracker
+follows; a `URB` batch ID names no parcel. It suggests UniUni for other `U` and
+fifteen-digit references, which Canadian parcels carry.
 Cross-border shippers' references of two letters, two digits, `CAA0`, a letter
 and nine digits only suggest UniUni: Intelcom's tracker accepts them too. Detection
 names UniUni when that letter is `U`: every public one is on UniUni's tracker and

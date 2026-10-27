@@ -791,6 +791,16 @@ describe('FAN Courier AWBs', () => {
   });
 });
 
+describe('Sameday tracker links', () => {
+  it('reads an AWB from the Romanian and Bulgarian trackers\' parameter and fragment', () => {
+    for (const url of ['https://sameday.ro/status-colet/?awb=1ZZZ000000001', 'https://sameday.ro/status-colet/?lang=en&awb=1ZZZ000000001',
+      'https://sameday.bg/status-na-pratkata/?awb=1ZZZ000000001', 'https://sameday.ro/#awb=1ZZZ000000001']) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: '1ZZZ000000001', carrier: 'sameday', source: 'link' });
+    }
+    expect(parseTrackingInput('https://sameday.ro/easybox/').source).toBe('none');
+  });
+});
+
 describe('PIN AG numbers', () => {
   it('lists PIN AG first for sixteen digits opening 0100, without naming it', () => {
     expect(detectCarrierMatch('0100800000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['pin-ag'] });

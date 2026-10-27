@@ -94,6 +94,11 @@
       "confidence": "high"
     },
     {
+      "id": "uniuni-9",
+      "pattern": "^UR\\d{17}$",
+      "confidence": "high"
+    },
+    {
       "id": "uniuni-5",
       "pattern": "^U(?!9999)\\d{15}$",
       "confidence": "low"

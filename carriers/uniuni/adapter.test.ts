@@ -6,6 +6,7 @@ import { adapter, UniuniTracker } from './adapter.js';
 import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser.js';
 import { uniuniStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 
 const NUMBER = 'UUS0000000000000001';
 const OTHER = 'UUS0000000000000002';
@@ -45,6 +46,18 @@ describe('UniUni confirmed parcel formats', () => {
     for (const number of ['U99990000000001', 'U9999000000000001', 'U99990000000000A', `X${U9999_NUMBER}`]) {
       expect(new RegExp(rule.pattern).test(number), number).toBe(false);
       expect(new RegExp(suggestion.pattern).test(number), number).toBe(false);
+      expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(InvalidInputError);
+    }
+  });
+
+  it('claims the UR tracking IDs of its seller platform, not its URB batch IDs', () => {
+    const rule = metadata.detection.find((candidate: { id: string }) => candidate.id === 'uniuni-9');
+    expect(rule.confidence).toBe('high');
+    expect(detectCarrierMatch('UR00000000000000001')).toMatchObject({ carrier: 'uniuni', confidence: 'high' });
+    expect(normalizeUniuniRecognitionNumber('ur-00000000 000000001')).toBe('UR00000000000000001');
+    for (const number of ['URB0000000000000001', 'UR0000000000000001', 'UR000000000000000001', 'UR0000000000000000A']) {
+      expect(new RegExp(rule.pattern).test(number), number).toBe(false);
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('uniuni');
       expect(() => normalizeUniuniRecognitionNumber(number), number).toThrow(InvalidInputError);
     }
   });
@@ -299,7 +312,7 @@ describe('UniUni direct retrieval', () => {
   it('recognizes only supported formats, exact absence and dated activity while preserving uncertain failures', async () => {
     const fetcher = vi.fn<typeof fetch>();
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
-    for (const number of ['123', 'TRACKING000000001', 'YT0000000000000000', 'UR00000000000000000']) {
+    for (const number of ['123', 'TRACKING000000001', 'YT0000000000000000', 'UR0000000000000000']) {
       await expect(instance.recognize!(number)).resolves.toEqual({ known: false });
     }
     expect(fetcher).not.toHaveBeenCalled();

@@ -3546,6 +3546,10 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
+        "pattern": "^UR\\d{17}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^U(?!9999)\\d{15}$",
         "confidence": "low"
       },
@@ -26905,7 +26909,18 @@ export const CARRIER_CATALOG = {
     },
     "canaryUrl": "https://sameday.ro/",
     "trackingSearchUrl": "https://sameday.ro/status-colet/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "sameday.ro",
+          "sameday.bg"
+        ],
+        "params": [
+          "awb"
+        ],
+        "fragment": "^awb=([A-Za-z0-9]+)"
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^1[A-Z]{3,5}\\d{9,12}$",
@@ -33906,7 +33921,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "canpar": ["canpar-1"],
   "ontrac": ["ontrac-5","ontrac-1","ontrac-2","ontrac-3","ontrac-4"],
   "speedx": ["speedx-1","speedx-2"],
-  "uniuni": ["uniuni-1","uniuni-2","uniuni-3","uniuni-4","uniuni-5","uniuni-7","uniuni-6","uniuni-8"],
+  "uniuni": ["uniuni-1","uniuni-2","uniuni-3","uniuni-4","uniuni-9","uniuni-5","uniuni-7","uniuni-6","uniuni-8"],
   "landmark-global": ["landmark-global-1"],
   "old-dominion": ["old-dominion-1","old-dominion-2","old-dominion-3"],
   "spee-dee": ["spee-dee-1","spee-dee-2"],

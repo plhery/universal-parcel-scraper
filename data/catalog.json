@@ -3544,6 +3544,10 @@
         "confidence": "high"
       },
       {
+        "pattern": "^UR\\d{17}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^U(?!9999)\\d{15}$",
         "confidence": "low"
       },
@@ -26903,7 +26907,18 @@
     },
     "canaryUrl": "https://sameday.ro/",
     "trackingSearchUrl": "https://sameday.ro/status-colet/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "sameday.ro",
+          "sameday.bg"
+        ],
+        "params": [
+          "awb"
+        ],
+        "fragment": "^awb=([A-Za-z0-9]+)"
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^1[A-Z]{3,5}\\d{9,12}$",

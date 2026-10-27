@@ -55,6 +55,8 @@ HTML, 403 and 429 replies and malformed JSON are never read as not found.
   shows them on its own tracker. Its anonymous JSON, `dashboard.pactic.com/api/Meta/tracking?waybill=`,
   lists Pactic's status codes, its own hub steps among them, with dates on no stated clock, so
   the adapter reads Sameday's history instead.
+- A pasted link to either country site names Sameday with the number in its `awb` parameter
+  or in the `#awb=` fragment the site's tracker writes.
 
 ## Limitations
 

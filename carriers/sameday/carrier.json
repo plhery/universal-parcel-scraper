@@ -58,7 +58,18 @@
       "service_name"
     ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "sameday.ro",
+        "sameday.bg"
+      ],
+      "params": [
+        "awb"
+      ],
+      "fragment": "^awb=([A-Za-z0-9]+)"
+    }
+  ],
   "detection": [
     {
       "id": "sameday-1",
