@@ -54,11 +54,19 @@ const pause = (ms, signal) => new Promise(resolve => {
   timer = setTimeout(done, ms); signal.addEventListener('abort', done, { once: true });
   if (signal.aborted) done();
 });
-async function within(operation, ms, fallback = null) {
-  let timer;
-  try { return await Promise.race([Promise.resolve().then(operation).catch(() => fallback),
-    new Promise(resolve => { timer = setTimeout(resolve, Math.max(1, ms), fallback); })]); }
-  finally { clearTimeout(timer); }
+async function within(operation, ms, fallback = null, signal) {
+  let timer, aborted;
+  try {
+    if (signal?.aborted) return fallback;
+    return await Promise.race([Promise.resolve().then(operation).catch(() => fallback),
+      new Promise(resolve => { timer = setTimeout(resolve, Math.max(1, ms), fallback); }),
+      ...(signal ? [new Promise(resolve => {
+        aborted = () => resolve(fallback);
+        signal.addEventListener('abort', aborted, { once: true });
+        if (signal.aborted) aborted();
+      })] : []),
+    ]);
+  } finally { clearTimeout(timer); if (aborted) signal.removeEventListener('abort', aborted); }
 }
 
 /** One official puzzle. Abstention makes no history request and does not refresh it. */
@@ -69,6 +77,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
   const started = Date.now(), ending = new AbortController();
   const combined = signal ? AbortSignal.any([signal, ending.signal]) : ending.signal;
   const left = () => Math.max(1, maxTimeout - (Date.now() - started));
+  const during = (operation, ms, fallback = null) => within(operation, ms, fallback, combined);
   const entries = [], pending = new Set(), allowed = new WeakSet();
   let context, page, timer, navigationStatus = 0, needVerify, session = '', sessionCount = 0;
   let accepting = true, requests = 0, blocked = 0, clicked = false, analysis = 'not_started', outcome = 'unprepared', lastResponse = 0;
@@ -83,7 +92,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     const endpoint = target.origin + target.pathname;
     if (endpoint === VERIFY || endpoint === SESSION) {
       void (async () => {
-        const bytes = await within(() => response.body(), Math.min(5000, left()));
+        const bytes = await during(() => response.body(), Math.min(5000, left()));
         if (!accepting || response.status() !== 200 || !bytes || bytes.length > 32_000) return;
         let data;
         try { data = JSON.parse(bytes.toString('utf8')); } catch { return; }
@@ -101,7 +110,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     entries.push(entry); pending.add(entry);
     void (async () => {
       try {
-        const bytes = await within(() => response.body(), Math.min(5000, left()));
+        const bytes = await during(() => response.body(), Math.min(5000, left()));
         if (!accepting) return;
         if (!bytes || bytes.length > MAX_BODY) { entry.truncated = true; entry.error = 'JD domestic response unreadable'; return; }
         let payload;
@@ -122,7 +131,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
   try {
     if (!Number.isFinite(maxTimeout) || maxTimeout < 5000 || combined.aborted) { outcome = 'budget'; return result(); }
     timer = setTimeout(() => ending.abort(), Math.max(1, maxTimeout - 1000));
-    const created = await within(async () => {
+    const created = await during(async () => {
       const target = await handle.browser.newContext();
       if (!accepting || combined.aborted) {
         await within(() => target.close(), 1000);
@@ -130,11 +139,11 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
       }
       return target;
     }, left());
-    if (!created) { outcome = 'browser_failed'; return result(); }
+    if (!created) { outcome = combined.aborted ? 'budget' : 'browser_failed'; return result(); }
     context = created; handle.noteTemporaryContext?.();
-    page = await within(() => context.newPage(), left());
+    page = await during(() => context.newPage(), left());
     if (!page || combined.aborted) { outcome = 'budget'; return result(); }
-    if (!await within(async () => { await installPolicy?.(page); return true; }, left(), false) || combined.aborted) {
+    if (!await during(async () => { await installPolicy?.(page); return true; }, left(), false) || combined.aborted) {
       outcome = 'budget'; return result();
     }
     await page.route(candidate => [TRACK, PROXY].includes(candidate.origin + candidate.pathname), async route => {
@@ -159,7 +168,8 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     page.on('response', onResponse); page.on('requestfailed', onFailed);
     // The official mounted hook reads this query and starts its own search,
     // guest session and verification callback. No page-state mutation is needed.
-    const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: Math.min(20000, left()) });
+    const navigation = await during(() => page.goto(url, { waitUntil: 'domcontentloaded', timeout: Math.min(20000, left()) }), left());
+    if (combined.aborted) { outcome = 'budget'; return result(); }
     navigationStatus = navigation?.status() ?? 0;
     if (navigationStatus !== 200) { outcome = 'navigation'; return result(); }
     const readyUntil = Date.now() + Math.min(10000, left() - 1000);
@@ -170,7 +180,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
       const puzzleUntil = Date.now() + Math.min(10000, left() - 1000);
       while (!combined.aborted && Date.now() < puzzleUntil && !blocked) {
         if (sessionCount > 1) { outcome = 'guest_session_changed'; return result(); }
-        puzzle = await within(() => page.evaluate(jdDisplayedPuzzle), Math.min(1000, left()));
+        puzzle = await during(() => page.evaluate(jdDisplayedPuzzle), Math.min(1000, left()));
         if (puzzle && sessionCount === 1) break;
         await pause(80, combined);
       }
@@ -179,10 +189,10 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
         if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable'].includes(value)) analysis = value;
       });
       if (!point || combined.aborted) { outcome = combined.aborted ? 'budget' : 'unreadable'; return result(); }
-      const geometry = await within(() => page.evaluate(jdIconGeometry, { challenge: puzzle, point }), Math.min(1000, left()));
+      const geometry = await during(() => page.evaluate(jdIconGeometry, { challenge: puzzle, point }), Math.min(1000, left()));
       if (!geometry) { outcome = 'stale_puzzle'; return result(); }
       clicked = true;
-      await within(() => page.mouse.click(geometry.x, geometry.y), Math.min(3000, left()));
+      await during(() => page.mouse.click(geometry.x, geometry.y), Math.min(3000, left()));
     }
     while (!combined.aborted && left() > 1000) {
       if (blocked) { outcome = 'verification_refused'; return result(); }

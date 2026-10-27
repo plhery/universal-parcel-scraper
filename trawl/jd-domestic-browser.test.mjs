@@ -58,7 +58,7 @@ function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, 
     installPolicy: async () => {}, locate: async (input, _signal, budget, report) => {
       state.plans++; assert.deepEqual(input, puzzle); assert.ok(budget <= 3000); report(plan ? 'planned' : 'unreadable'); return plan;
     }, onVerification: event => state.captures.push(event) };
-  return { state, options };
+  return { state, options, tab };
 }
 
 test('the helper is scoped to exact domestic identifiers and both official capture endpoints', () => {
@@ -125,4 +125,33 @@ test('a spent budget or cancelled caller opens no browser', async () => {
     const active = fixture(), result = await runJdDomestic({ ...active.options, ...extra });
     assert.equal(active.state.contexts, 0); assert.equal(result.capturedResponses[0].error, 'jd-domestic-budget');
   }
+});
+
+test('cancelling a pending navigation returns promptly and closes its context', async () => {
+  const active = fixture(), abort = new AbortController();
+  let release, entered;
+  const begun = new Promise(resolve => { entered = resolve; });
+  active.tab.goto = async () => { entered(); return new Promise(resolve => { release = () => resolve({ status: () => 200 }); }); };
+  const lookup = runJdDomestic({ ...active.options, signal: abort.signal });
+  await begun; abort.abort();
+  const result = await Promise.race([lookup, new Promise(resolve => setTimeout(resolve, 150, null))]);
+  release(); await lookup;
+  assert.ok(result, 'Cancellation must not wait for the navigation timeout');
+  assert.equal(active.state.closed, 1); assert.equal(active.state.requests, 0);
+});
+
+test('a context created after caller cancellation is closed without opening a page', async () => {
+  const active = fixture(), abort = new AbortController();
+  const original = active.options.handle.browser.newContext;
+  let release, entered;
+  const begun = new Promise(resolve => { entered = resolve; });
+  active.options.handle.browser.newContext = () => {
+    entered(); return new Promise(resolve => { release = async () => resolve(await original()); });
+  };
+  const lookup = runJdDomestic({ ...active.options, signal: abort.signal });
+  await begun; abort.abort();
+  const result = await Promise.race([lookup, new Promise(resolve => setTimeout(resolve, 150, null))]);
+  await release(); await lookup; await new Promise(resolve => setImmediate(resolve));
+  assert.ok(result); assert.equal(active.state.closed, 1);
+  assert.equal(active.state.started, 0); assert.equal(active.state.requests, 0);
 });
