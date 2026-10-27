@@ -1,6 +1,6 @@
 # Project instructions
 
-- This is open source. Keep secrets, private tracking numbers, postcodes, capability URLs and internal testing details out of repository files, comments, commit messages and issues. A public corpus number keeps a postcode it embeds, such as a routing barcode's ZIP code. Use synthetic fixtures and private live-test inputs outside Git.
+- This is open source. Keep secrets, private tracking numbers, private postcodes, capability URLs and internal testing details out of repository files, comments, commit messages and issues. A public number may keep a postcode it embeds, such as a routing barcode's ZIP code, or one published online with it; cite the page that gives both. Use synthetic fixtures and private live-test inputs outside Git.
 - After a requested change, validate, stage the relevant files, commit and push directly to `main`. Do not create a branch or pull request unless explicitly requested.
 - Before pushing, confirm no secrets or unrelated generated artifacts are included.
 - Never import from an app or framework. Browser exports must remain free of Node runtime imports. Resolve assets against their module, not the consumer's working directory.

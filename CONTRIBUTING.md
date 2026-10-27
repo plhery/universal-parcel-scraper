@@ -110,8 +110,9 @@ id or input. The maintainers write it when they merge, so a carrier needs no pul
 ## Keep parcels private
 
 This repository is public. Keep recipient details, capability links, private tracking
-numbers and postcodes out of Git, issues and logs. A public sample number keeps a postcode it
-embeds. Fixtures are synthetic, and so are the numbers in bug reports.
+numbers and private postcodes out of Git, issues and logs. A public sample number keeps a
+postcode it embeds or one published online with it. Fixtures are synthetic, and so are the
+numbers in bug reports.
 
 ## Docs
 

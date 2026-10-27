@@ -90,5 +90,6 @@ synthetic identities, and leave out recipient details and access credentials. Op
 page keys and capability URLs stay outside Git even when a search engine indexes them.
 
 A public number keeps a postcode it embeds, such as a USPS 420 routing barcode or a Russian
-Post domestic number, and so does a source address that only carries that number. A postcode
-anywhere else, such as a query parameter of its own or a note, stays out.
+Post domestic number. It may also keep a postcode published online with it, such as a
+tracking link's postcode parameter, when its source is the page that gives both. A postcode
+from a private lookup stays out.
