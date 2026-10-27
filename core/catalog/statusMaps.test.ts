@@ -296,6 +296,7 @@ describe('status map answers', () => {
     expect(answer('imile', 'NEW_UNSEEN_CODE', 'Synthetic scan')).toEqual(unknown);
     // A numeric code is iMile's own, whatever Cainiao's map would say of its wording.
     expect(answer('imile', '1003', 'User not at home')).toEqual(mapped('failed_attempt'));
+    expect(answer('imile', '1003', 'Refuse to accept')).toEqual(mapped('failed_attempt'));
     expect(answer('imile', '1003', 'Traffic, Strike, Bad weather')).toEqual(mapped('failed_attempt'));
     expect(answer('dhlink', null, 'Package received and scanned at warehouse')).toEqual(mapped('accepted'));
     expect(answer('globalpost', null, 'Departed from Origin Country')).toEqual(mapped('in_transit'));

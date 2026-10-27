@@ -70,6 +70,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['user not at home', 'failed_attempt'],
   ['wrong address', 'failed_attempt'],
   ['<bad address>', 'failed_attempt'],
+  // The recipient refused the parcel at the door.
+  ['refuse to accept', 'failed_attempt'],
   // A recipient iMile cannot reach, on the delivery run before the return starts.
   ['need to return', 'exception'],
   ['lost order', null],
