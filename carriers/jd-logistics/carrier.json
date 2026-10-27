@@ -16,9 +16,11 @@
     "mode": "automatic",
     "adapter": "jd-logistics",
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
-    "localClocks": true
+    "localClocks": true,
+    "browser": true
   },
   "capabilities": [
     "history",

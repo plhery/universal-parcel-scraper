@@ -1,9 +1,8 @@
 # JD Logistics
 
-Tracks international waybills through the official international website's anonymous feed.
-Chinese domestic waybills use a separate service and can fall back to enabled universal providers.
-Detection still selects JD Logistics for them: JD followed by thirteen characters, of which at
-most the first two are letters, as in the JDV and JDX series.
+Tracks international waybills through the international website's anonymous feed. When that
+feed holds no history, the JDAZ and JDJ domestic series can use the public domestic tracker
+through TRAWL. A series is a route suggestion; the response must confirm the whole identifier.
 
 ## How it works
 
@@ -11,7 +10,26 @@ One JSON POST queries the website's international tracking proxy. The parent ref
 match the requested number and contain one waybill with dated scans. Multiple pieces are
 rejected because selecting one could return another parcel's progress.
 
-Each scan keeps its operation code as its provider code and takes its stage from it
+For the domestic series, an inconclusive international answer can continue through `trawl`.
+The helper opens the official order-search page in a fresh context and uses its own search,
+guest session and service-selected verification branch. Its single-icon worker makes one
+bounded attempt. An uncertain match stops without clicking, refreshing the puzzle or sending
+a history request. Accepted verification must still belong to the original guest session;
+only then may the page query `trackNoPin`. The helper also permits the normal proxy request
+when the service itself selects the branch without verification.
+
+Domestic replies require exactly one matching `rawWaybillCode` and an explicit `exists`.
+Only a bound `exists:false` is not found. Empty or refused replies stay inconclusive, and
+browser failure or abstention leaves enabled providers available. No phone, login, map,
+attachment or proof-of-delivery route is entered. HTTP recognition never starts this browser
+step; browser recognition is a separate opt-in.
+
+The domestic page displays `createTime`, otherwise `trackDay` with `trackTime`. An epoch or
+explicit offset keeps its instant. A clock without an offset stays local, in the carrier's
+order; the page's language does not establish its zone. Contact and recipient clauses are
+removed from scan wording. A capped history is marked incomplete so richer history can fill it.
+
+For international history, each scan keeps its operation code as its provider code and takes its stage from it
 (`status.ts`); a scan with an unknown code is classified by its wording. An order shipped from
 JD's own warehouse abroad is accepted there while it is picked and weighed, then handed to a
 last-mile partner such as GOFO, whose steps JD relays. GOFO's label comes under a code JD has
@@ -41,12 +59,13 @@ in JD's order; any local clock keeps JD's order, newest first.
 
 ## Limitations
 
-Chinese domestic waybills, such as the JDAZ series, answer an empty list here. An empty answer
-is inconclusive with the reason `portal_not_found`: JD's own answer, not an outage, and no proof
-that the parcel does not exist. Domestic tracking on jdl.com (`api.jdl.com`,
-`waybillQuery/needVerify` then `waybillQuery/trackWaybill`) shows JD's click captcha before any
-history. A scan without an epoch is not dated from its declared zone alone. Proof-of-delivery
-images and recipient verification are excluded.
+Domestic recovery needs the TRAWL image with the JD helper. Its conservative matcher supports
+one observed image geometry and declines other puzzles; it does not promise verification on
+every lookup. Public unattended history has been observed for JDJ, while JDAZ coverage remains
+unproved. Domestic clocks without a stated offset remain unresolved. Other domestic service
+variants can require recipient inputs and are not followed. The international feed's empty
+answer remains inconclusive with `portal_not_found`, never proof that a parcel does not exist.
+A scan without an epoch is not dated from its declared zone alone.
 
 ## Testing
 

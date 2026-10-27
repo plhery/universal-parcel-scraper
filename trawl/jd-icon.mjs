@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 let active = 0;
 const image = value => typeof value === 'string' && value.length <= 200_000
-  && /^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/=]+$/.test(value);
+  && /^data:image\/(?:png|jpeg|jpg);base64,[A-Za-z0-9+/=]+$/.test(value);
 
 /** A bounded offline plan, not proof that the official widget accepted it. */
 export function locateJdIcon(challenge, signal, timeoutMs, onAnalysis = () => {}) {
@@ -48,6 +48,9 @@ export function jdIconGeometry({ challenge, point }) {
   const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
   if (scenes.length !== 1 || tips.length !== 1) return null;
   const scene = scenes[0], tip = tips[0];
+  const shown = element => element.getClientRects().length > 0 && getComputedStyle(element).visibility === 'visible'
+    && getComputedStyle(element).opacity === '1';
+  if (!shown(scene) || !shown(tip)) return null;
   if (!scene.complete || !tip.complete || scene.src !== challenge?.scene || tip.src !== challenge?.tip
     || scene.naturalWidth !== 275 || scene.naturalHeight !== 170 || tip.naturalWidth !== 108 || tip.naturalHeight !== 36) return null;
   const rect = scene.getBoundingClientRect(), prompt = tip.getBoundingClientRect();

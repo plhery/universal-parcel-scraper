@@ -24,6 +24,9 @@ COPY wanbexpress-browser.mjs /app/packages/tiers/src/utils/wanbexpress-browser.m
 COPY xpo-browser.mjs /app/packages/tiers/src/utils/xpo-browser.mjs
 COPY magyar-posta-browser.mjs /app/packages/tiers/src/utils/magyar-posta-browser.mjs
 COPY magyar-posta-app.mjs /app/packages/tiers/src/utils/magyar-posta-app.mjs
+COPY jd-domestic-browser.mjs /app/packages/tiers/src/utils/jd-domestic-browser.mjs
+COPY jd-icon.mjs /app/packages/tiers/src/utils/jd-icon.mjs
+COPY jd-icon.py /app/packages/tiers/src/utils/jd-icon.py
 COPY asendia-browser.mjs /app/packages/tiers/src/utils/asendia-browser.mjs
 COPY recaptcha-audio.mjs /app/packages/tiers/src/utils/recaptcha-audio.mjs
 COPY dhl-poland-native.mjs /app/packages/tiers/src/utils/dhl-poland-native.mjs

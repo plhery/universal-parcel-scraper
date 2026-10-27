@@ -3,6 +3,8 @@ import { EventEmitter } from 'node:events';
 import childProcess from 'node:child_process';
 import { syncBuiltinESMExports } from 'node:module';
 import { test } from 'node:test';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { jdIconGeometry, locateJdIcon } from './jd-icon.mjs';
 
 const challenge = { scene: 'data:image/png;base64,AA==', tip: 'data:image/png;base64,AQ==' };
@@ -32,6 +34,13 @@ test('the worker receives only images and returns a bounded point without arbitr
   assert.deepEqual(inputs, [challenge]);
   assert.deepEqual(result, { x: 40.5, y: 50 });
   assert.deepEqual(outcomes, ['planned']);
+});
+
+test('the official jpg data-URL spelling reaches the image decoder without relaxing byte validation', async t => {
+  const { inputs } = worker(t, '{"x":40,"y":50}');
+  const jpg = { scene: challenge.scene.replace('/png;', '/jpg;'), tip: challenge.tip.replace('/png;', '/jpg;') };
+  assert.deepEqual(await locateJdIcon(jpg, new AbortController().signal, 1000), { x: 40, y: 50 });
+  assert.deepEqual(inputs, [jpg]);
 });
 
 test('malformed, uncertain and out-of-bounds worker replies cannot become clicks', async t => {
@@ -70,10 +79,12 @@ function page(t) {
     getBoundingClientRect: () => ({ x: 20, y: 30, width: 550, height: 340 }) };
   const tip = { complete: true, src: challenge.tip, naturalWidth: 108, naturalHeight: 36,
     getBoundingClientRect: () => ({ width: 216, height: 72 }) };
-  const old = { document: globalThis.document, location: globalThis.location };
+  const old = { document: globalThis.document, location: globalThis.location, getComputedStyle: globalThis.getComputedStyle };
   globalThis.location = { origin: 'https://www.jdl.com', pathname: '/orderSearch/' };
   globalThis.document = { querySelectorAll: selector => selector === 'img.tip_pic' ? [tip] : [scene] };
-  t.after(() => { for (const key of ['document', 'location']) {
+  globalThis.getComputedStyle = image => ({ visibility: 'visible', opacity: image.opacity ?? '1' });
+  scene.getClientRects = tip.getClientRects = () => [{}];
+  t.after(() => { for (const key of ['document', 'location', 'getComputedStyle']) {
     if (old[key] === undefined) delete globalThis[key]; else globalThis[key] = old[key];
   } });
   return { scene, tip };
@@ -83,6 +94,9 @@ test('click geometry binds both images, their layout, visibility and official pa
   const { scene, tip } = page(t), point = { x: 40, y: 50 };
   assert.deepEqual(jdIconGeometry({ challenge, point }), { x: 100, y: 130 });
   for (const target of [scene, tip]) {
+    target.opacity = '0.5';
+    assert.equal(jdIconGeometry({ challenge, point }), null);
+    target.opacity = '1';
     const source = target.src;
     target.src = 'data:image/png;base64,Ag==';
     assert.equal(jdIconGeometry({ challenge, point }), null);
@@ -98,4 +112,9 @@ test('click geometry binds both images, their layout, visibility and official pa
   assert.equal(jdIconGeometry({ challenge, point }), null);
   location.origin = 'https://example.test';
   assert.equal(jdIconGeometry({ challenge, point }), null);
+});
+
+const python = process.env.JD_ICON_PYTHON ?? '/opt/zto-ocr/bin/python';
+test('the actual worker handles synthetic single icons and refuses ambiguity', { skip: !existsSync(python) }, () => {
+  childProcess.execFileSync(python, ['-B', fileURLToPath(new URL('./jd-icon.test.py', import.meta.url))], { timeout: 15000 });
 });
