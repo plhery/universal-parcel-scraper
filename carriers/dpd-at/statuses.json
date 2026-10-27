@@ -95,6 +95,15 @@
       "note": "The Pickup parcelshop took the parcel over."
     },
     {
+      "code": "ERROR/LOAD_ERROR",
+      "wording": "Unfortunately, parcel was loaded incorrectly and will be delivered soon.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "Loaded onto the wrong vehicle at the depot. DPD takes the parcel through its network again, so another depot scans it before its delivery."
+    },
+    {
       "code": "RECEIVER_PICKUP",
       "wording": "Paket durch Empfänger abgeholt",
       "stage": "delivered",
