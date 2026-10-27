@@ -13,6 +13,8 @@ const labels: Record<string, ClassifiedStatus> = {
   'COLLECTED AT BRT LOCKER': { status: 'delivered', stage: 'delivered' },
   'ARRIVED AT BRT-FERMOPOINT': { status: 'in_transit', stage: 'ready_for_pickup' },
   'COLLECTED AT BRT-FERMOPOINT': { status: 'delivered', stage: 'delivered' },
+  // The partner abroad that delivers the parcel has left it at its parcel shop.
+  'TO COLLECT AT THE PARCEL SHOP': { status: 'in_transit', stage: 'ready_for_pickup' },
   'UNKNOWN/INCOMPLETE CONSIGNEE': { status: 'exception', stage: 'failed_attempt' },
   // BRT's Italian page names it MANIFESTAZIONE PUBBLICA: a public demonstration holds the parcel up.
   TURMOIL: { status: 'exception', stage: 'exception' },

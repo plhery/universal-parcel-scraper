@@ -92,8 +92,9 @@ it. The newest scan, when dated, gives the last update
 and, for a delivery, the delivery instant. Source order determines current
 status even when the newest clock is unresolved.
 
-Arrival at a locker or BRT-fermopoint means ready for pickup; collection from
-it means delivery. A shipment returned to its sender ends with a delivery scan
+Arrival at a locker or BRT-fermopoint, or at the parcel shop of the partner
+abroad that delivers, means ready for pickup; collection from a locker or
+BRT-fermopoint means delivery. A shipment returned to its sender ends with a delivery scan
 at the origin depot; after a return scan that delivery reads as returned.
 The English page's TURMOIL is the scan the Italian page names MANIFESTAZIONE
 PUBBLICA, a public demonstration holding the parcel up: an exception until a

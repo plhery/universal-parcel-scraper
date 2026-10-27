@@ -63,6 +63,13 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "To collect at the parcel shop",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The partner abroad that delivers the parcel has left it at its parcel shop."
+    },
+    {
       "wording": "UNKNOWN/INCOMPLETE CONSIGNEE",
       "language": "en",
       "stage": "failed_attempt",
