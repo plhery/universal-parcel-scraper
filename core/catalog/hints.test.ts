@@ -210,7 +210,8 @@ describe('carrier names reported by universal providers', () => {
     // Carriers whose scans are instants, followed by their home country.
     ['BRT (IT)', 'brt'], ['Bpost Belgium', 'bpost'], ['Royal Mail (UK)', 'royal-mail'],
     // Names providers give these carriers' own parcels.
-    ['Poland Post', 'poczta-polska'], ['Pocztex', 'poczta-polska'], ['New Zealand Post', 'nz-post'],
+    ['Poland Post', 'poczta-polska'], ['Pocztex', 'poczta-polska'], ['Allegro Pocztex', 'poczta-polska'],
+    ['Pocztex Kurier', 'poczta-polska'], ['DHL Poland', 'dhl-ecommerce-pl'], ['New Zealand Post', 'nz-post'],
     ['Norway Post', 'bring-posten'], ['Amazon Swiship', 'amazon-shipping'], ['PostNord Denmark', 'postnord'],
     ['DHL Freight Active Tracing', 'dhl-freight'], ['Spring Global Mail', 'spring-gds'],
     ['CTT Express Tracking', 'ctt-express'], ['Sameday Bulgaria', 'sameday'],

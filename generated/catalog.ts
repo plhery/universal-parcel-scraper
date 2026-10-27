@@ -4836,7 +4836,9 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "Polish Post",
       "Poland Post",
-      "Pocztex"
+      "Pocztex",
+      "Allegro Pocztex",
+      "Pocztex Kurier"
     ],
     "countries": [
       "PL"
@@ -11347,7 +11349,8 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "DHL Parcel Poland",
       "DHL Parcel Polska",
-      "DHL eCommerce Polska"
+      "DHL eCommerce Polska",
+      "DHL Poland"
     ],
     "countries": [
       "PL"
