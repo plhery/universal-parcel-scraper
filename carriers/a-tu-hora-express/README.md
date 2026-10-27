@@ -28,9 +28,9 @@ makes.
 
 ## Notes
 
-- Without a postcode, a 10- or 16-digit code ends at `input_required` before any request, so
-  the facade's enabled fallbacks answer. The catalog declares no postcode requirement, so the
-  facade does not pass the caller's postcode on; `trackCarrier` and the adapter take one.
+- The catalog declares an optional postcode for a 10- or 16-digit code, so a consumer can ask
+  the reader for it. Without one, such a code ends at `input_required` before any request, and
+  the facade's enabled fallbacks answer.
 - Each scan's status code stages it. Incidents share one code and are worded `Incidencia - `
   and their reason, which decides between a failed attempt and an exception; a reason the map
   and the shared rules do not read is an exception. "Pendiente de realizar" comes with a failed
@@ -50,8 +50,6 @@ makes.
 
 ## Limitations
 
-- Through `createTracker`, only the 24-digit label reaches the adapter: a 10- or 16-digit code
-  needs a postcode the facade does not pass on.
 - Scan towns are often empty. No service name or pickup point.
 
 ## Numbers

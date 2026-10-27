@@ -315,6 +315,10 @@ describe('A Tu Hora Express HTTP adapter', () => {
     await expect(tracker.track({ number: DELIVERED, carrier: 'a-tu-hora-express' }, { budgetMs: 3000 }))
       .rejects.toMatchObject({ attempts: [{ source: 'a-tu-hora-express', kind: 'input_required' }] });
     expect(fetcher).not.toHaveBeenCalled();
+    // The catalog's optional postcode reaches the adapter with a shorter code.
+    await expect(tracker.track({ number: DELIVERED, carrier: 'a-tu-hora-express', postcode: POSTCODE }, { budgetMs: 3000 }))
+      .resolves.toMatchObject({ source: 'a-tu-hora-express', result: { current_stage: 'delivered' } });
+    expect(fetcher.mock.calls.some(([url]) => String(url) === aTuHoraLookupUrl(DELIVERED, POSTCODE))).toBe(true);
   });
 });
 
