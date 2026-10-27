@@ -1457,35 +1457,30 @@
       "events": [
         {
           "provider_time_text": "23 Feb 2026, 09:20:00 AM",
-          "location": "",
           "description": "Item arrived at delivery office",
           "stage": "in_transit",
           "provider_code": "EMG"
         },
         {
           "provider_time_text": "22 Feb 2026, 03:46:00 PM",
-          "location": "",
           "description": "Your parcel is being transported to the next facility",
           "stage": "in_transit",
           "provider_code": "TN035"
         },
         {
           "provider_time_text": "22 Feb 2026, 10:43:00 AM",
-          "location": "",
           "description": "Your parcel has arrived at destination facility for Processing",
           "stage": "in_transit",
           "provider_code": "TN030"
         },
         {
           "provider_time_text": "21 Feb 2026, 12:04:38 PM",
-          "location": "",
           "description": "Your parcel is being transported to destination country",
           "stage": "in_transit",
           "provider_code": "TN008"
         },
         {
           "provider_time_text": "21 Feb 2026, 10:37:37 AM",
-          "location": "",
           "description": "Your parcel has arrived at our facility for sorting",
           "stage": "in_transit",
           "provider_code": "TN001"
@@ -1979,7 +1974,6 @@
           "time": "2026-01-03T12:00:00Z",
           "provider_code": "submitted",
           "description": "Submitted",
-          "location": "",
           "stage": "registered"
         }
       ]
@@ -2034,7 +2028,6 @@
           "time": "2026-01-03T12:00:00+01:00",
           "provider_code": "PRE_NOTIFIED",
           "description": "Shipment information received",
-          "location": "",
           "stage": "registered"
         }
       ]
@@ -2851,7 +2844,6 @@
           "time": "2026-01-03T12:00:00Z",
           "provider_code": "submitted",
           "description": "Submitted",
-          "location": "",
           "stage": "registered"
         }
       ]
@@ -2913,25 +2905,21 @@
         {
           "local_time": "2026-04-28",
           "provider_time_text": "28-04-2026",
-          "location": "",
           "description": "Colis en transit sur notre plateforme parisienne.",
           "stage": "in_transit"
         },
         {
           "time": "2026-04-21T19:07:00+02:00",
-          "location": "",
           "description": "Colis en transit entre les sites Relais Colis.",
           "stage": "in_transit"
         },
         {
           "time": "2026-04-20T12:19:00+02:00",
-          "location": "",
           "description": "Votre colis est pris en charge par le Relais Colis",
           "stage": "in_transit"
         },
         {
           "time": "2026-04-19T15:25:00+02:00",
-          "location": "",
           "description": "Votre colis a été annoncé.",
           "stage": "registered"
         }
@@ -2953,7 +2941,6 @@
           "provider_time_text": "23/01/2026 invalid clock",
           "description": "Delivered",
           "provider_status": "Colis Livré",
-          "location": "",
           "stage": "delivered"
         },
         {
@@ -2987,21 +2974,18 @@
           "time": "2026-01-09T15:37:00+01:00",
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
-          "location": "",
           "stage": "in_transit"
         },
         {
           "time": "2026-01-09T15:37:00+01:00",
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
-          "location": "",
           "stage": "in_transit"
         },
         {
           "time": "2026-01-09T08:17:00+01:00",
           "description": "Ciblex tracking update",
-          "provider_status": "COLIS NON REMIS",
-          "location": ""
+          "provider_status": "COLIS NON REMIS"
         }
       ]
     }
@@ -3017,8 +3001,7 @@
         {
           "provider_time_text": "23/01/2026 invalid clock",
           "description": "Ciblex tracking update",
-          "provider_status": "Nouvelle formulation inconnue",
-          "location": ""
+          "provider_status": "Nouvelle formulation inconnue"
         },
         {
           "time": "2026-01-23T05:55:02+01:00",
@@ -3051,21 +3034,18 @@
           "time": "2026-01-09T15:37:00+01:00",
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
-          "location": "",
           "stage": "in_transit"
         },
         {
           "time": "2026-01-09T15:37:00+01:00",
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
-          "location": "",
           "stage": "in_transit"
         },
         {
           "time": "2026-01-09T08:17:00+01:00",
           "description": "Ciblex tracking update",
-          "provider_status": "COLIS NON REMIS",
-          "location": ""
+          "provider_status": "COLIS NON REMIS"
         }
       ]
     }
@@ -3295,35 +3275,30 @@
         },
         {
           "provider_time_text": "23 Feb 2026, 09:20:00 AM",
-          "location": "",
           "description": "Item arrived at delivery office",
           "stage": "in_transit",
           "provider_code": "EMG"
         },
         {
           "provider_time_text": "22 Feb 2026, 03:46:00 PM",
-          "location": "",
           "description": "Your parcel is being transported to the next facility",
           "stage": "in_transit",
           "provider_code": "TN035"
         },
         {
           "provider_time_text": "22 Feb 2026, 10:43:00 AM",
-          "location": "",
           "description": "Your parcel has arrived at destination facility for Processing",
           "stage": "in_transit",
           "provider_code": "TN030"
         },
         {
           "provider_time_text": "21 Feb 2026, 12:04:38 PM",
-          "location": "",
           "description": "Your parcel is being transported to destination country",
           "stage": "in_transit",
           "provider_code": "TN008"
         },
         {
           "provider_time_text": "21 Feb 2026, 10:37:37 AM",
-          "location": "",
           "description": "Your parcel has arrived at our facility for sorting",
           "stage": "in_transit",
           "provider_code": "TN001"

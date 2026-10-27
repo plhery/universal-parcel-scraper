@@ -467,9 +467,9 @@ describe('Cainiao projection', () => {
     expect(event).toMatchObject({ location: 'PARIS 12E ARRONDISSEMENT', description: 'Package delivered' });
     expect(locatePlace(event!.location, { countries: ['FR'] })).toMatchObject({ country: 'FR', precision: 'city' });
     for (const place of ['HUB 12', 'PARIS 75012', 'GOFO', 'PARIS 99E ARRONDISSEMENT']) {
-      expect(project(place).events?.[0]?.location).toBe('');
+      expect(project(place).events?.[0]?.location).toBeUndefined();
     }
-    expect(project('PARIS 12E ARRONDISSEMENT', 'PARIS 12E ARRONDISSEMENT').events?.[0]?.location).toBe('');
+    expect(project('PARIS 12E ARRONDISSEMENT', 'PARIS 12E ARRONDISSEMENT').events?.[0]?.location).toBeUndefined();
   });
 
   it.each(['LP00000000000001', 'lp 00000000000001'])('does not advertise the queried number as a handoff: %s', (copyRealMailNo) => {

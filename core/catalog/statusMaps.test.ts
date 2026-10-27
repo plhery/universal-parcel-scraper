@@ -215,9 +215,9 @@ describe('status map answers', () => {
     expect(answer('allegro-one', null, 'recipient has refused to accept')).toEqual(mapped('failed_attempt'));
   });
 
-  it("answers Helthjem's missed night round by its event code, not its delivering state", () => {
+  it("answers Helthjem's night booking and missed night round by their event codes, not their delivering state", () => {
     expect(answer('helthjem', 'DELIVERING/057', 'Budet fikk ikke med seg pakken din ut i natt.')).toEqual(mapped('in_transit'));
-    expect(answer('helthjem', 'DELIVERING/113', 'Planlagt levering natt til 24. oktober!')).toEqual(mapped('out_for_delivery'));
+    expect(answer('helthjem', 'DELIVERING/113', 'Planlagt levering natt til 24. oktober!')).toEqual(mapped('in_transit'));
   });
 
   it("answers DPD Germany's full pickup point, its line haul and its failed notice by their codes", () => {

@@ -40,7 +40,7 @@ describe('Bring consumer parcel projection', () => {
       sender_name: 'Example Shop AS', destination_country: 'NO', service_name: 'Home Delivery Parcel' });
     expect(result).not.toHaveProperty('pickup_point'); expect(result).not.toHaveProperty('canonical_tracking_number');
     expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'ready_for_pickup', 'accepted', 'registered']);
-    expect(parseBring(payload(), 'RR000000005NO').events).toEqual(result.events);
+    expect(normalizeCarrierResult(parseBring(payload(), 'RR000000005NO')).events).toEqual(result.events);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|description.*signature|Address|recipient|pickup.code/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location),
