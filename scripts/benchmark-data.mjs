@@ -23,22 +23,27 @@ export function readResults(file) {
   return existsSync(file) ? readFileSync(file, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line)) : [];
 }
 
-/** The list with each number's source, from the carrier's corpus unless the list gives one. */
+/**
+ * The list with each number's source, from the carrier's corpus unless the list gives one.
+ * A network the catalog names as another carrier's alias is tracked by that carrier.
+ */
 export function loadBenchmark(root) {
   const read = (name) => JSON.parse(readFileSync(path.join(root, name), 'utf8'));
   const results = new Map(readResults(path.join(root, 'benchmark', 'results.jsonl')).map((record) => [keyOf(record), record]));
   return read('benchmark/carriers.json').carriers.map((entry) => {
     const folder = path.join(root, 'carriers', entry.carrier);
-    const catalog = existsSync(path.join(folder, 'carrier.json'));
-    const corpus = catalog && existsSync(path.join(folder, 'numbers.json')) ? read(`carriers/${entry.carrier}/numbers.json`).records : [];
+    const own = existsSync(path.join(folder, 'carrier.json'));
+    const tracker = own ? entry.carrier : entry.aliasOf ?? null;
+    const catalog = tracker !== null && existsSync(path.join(root, 'carriers', tracker, 'carrier.json'));
+    const corpus = own && existsSync(path.join(folder, 'numbers.json')) ? read(`carriers/${entry.carrier}/numbers.json`).records : [];
     const numbers = entry.numbers.map((item) => {
       const record = corpus.find((candidate) => candidate.number === item.number);
       const answers = Object.fromEntries(SOURCES.map((source) => [source, results.get(keyOf({ carrier: entry.carrier, number: item.number, source }))]));
       return { ...item, source: item.source ?? record?.source ?? null, record: record ?? null, answers };
     });
-    const definition = catalog ? read(`carriers/${entry.carrier}/carrier.json`) : null;
+    const definition = catalog ? read(`carriers/${tracker}/carrier.json`) : null;
     const name = entry.name ?? definition?.displayName ?? entry.carrier;
-    return { ...entry, name, catalog, adapter: definition?.tracking?.adapter ?? null, numbers };
+    return { ...entry, name, catalog, tracker: catalog ? tracker : null, adapter: definition?.tracking?.adapter ?? null, numbers };
   });
 }
 
@@ -132,12 +137,12 @@ const median = (values) => {
 export function renderBenchmark(entries, root) {
   const counts = summarize(entries);
   const link = (entry) => entry.catalog
-    ? `[${entry.name}](../carriers/${entry.carrier}/${existsSync(path.join(root, 'carriers', entry.carrier, 'README.md')) ? 'README.md' : 'carrier.json'})`
+    ? `[${entry.name}](../carriers/${entry.tracker}/${existsSync(path.join(root, 'carriers', entry.tracker, 'README.md')) ? 'README.md' : 'carrier.json'})`
     : entry.name;
   const answers = entries.flatMap((entry) => entry.numbers.flatMap((number) => Object.values(number.answers).filter(Boolean)));
   const checked = answers.map((answer) => answer.checked).filter(Boolean).sort();
   const summary = [
-    `${counts.carriers} carriers, ${counts.carriers - counts.listed} of them in the catalog, checked between ${checked[0] ?? '—'} and ${checked.at(-1) ?? '—'}.`,
+    `${counts.carriers} carriers, ${counts.listed ? `${counts.carriers - counts.listed} of them` : 'all'} in the catalog, checked between ${checked[0] ?? '—'} and ${checked.at(-1) ?? '—'}.`,
     '',
     '| Source | Carriers with history | Full | Partial | Undated only | Median answer |',
     '| --- | ---: | ---: | ---: | ---: | ---: |',

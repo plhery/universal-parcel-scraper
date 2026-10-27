@@ -67,7 +67,8 @@ function routing(check) {
   const stored = readFileSync(coveragePath, 'utf8');
   const coverage = JSON.parse(stored);
   let written = 0;
-  for (const entry of loadBenchmark(root).filter((item) => item.catalog)) {
+  // An alias's numbers stay out of its tracking carrier's evidence.
+  for (const entry of loadBenchmark(root).filter((item) => item.tracker === item.carrier)) {
     const references = benchmarkReferences(entry);
     if (!references.length) continue;
     let item = coverage.carriers.find((candidate) => candidate.carrier === entry.carrier);
@@ -99,7 +100,7 @@ function probe() {
     return args.includes('--unrun') ? !answer : true;
   };
   const cases = loadBenchmark(root).filter((entry) => !carriers || carriers.includes(entry.carrier))
-    .flatMap((entry) => entry.numbers.map((number) => ({ carrier: entry.carrier, number: number.number, postcode: number.postcode ?? null,
+    .flatMap((entry) => entry.numbers.map((number) => ({ carrier: entry.carrier, adapter: entry.tracker, number: number.number, postcode: number.postcode ?? null,
       public: true, sources: sources.filter((source) => pending(number, source)) })))
     .filter((item) => item.sources.length);
   if (!cases.length) return console.log('Nothing to ask.');

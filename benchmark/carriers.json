@@ -246,6 +246,7 @@
     {
       "carrier": "yodel",
       "name": "Yodel",
+      "aliasOf": "inpost",
       "group": "United Kingdom and Ireland",
       "numbers": [
         {
@@ -470,6 +471,7 @@
     {
       "carrier": "sda",
       "name": "SDA",
+      "aliasOf": "poste-italiane",
       "group": "Italy",
       "numbers": [
         {

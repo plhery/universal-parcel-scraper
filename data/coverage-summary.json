@@ -5,7 +5,7 @@
   "referenceCarriers": 100,
   "comparison": {
     "combined": 92,
-    "direct": 86,
+    "direct": 88,
     "providers": {
       "ParcelsApp": 71,
       "Postal Ninja": 32,

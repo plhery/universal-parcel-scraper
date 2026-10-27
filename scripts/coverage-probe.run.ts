@@ -24,6 +24,8 @@ import type { UniversalSource } from '../providers/shared/result.js';
 
 interface ProbeCase {
   carrier: string; number: string; postcode?: string | null; reference?: number;
+  /** The catalog carrier whose adapter answers for `direct`, when not `carrier`. */
+  adapter?: string | null;
   /** A public number, kept in its records. */
   public?: boolean;
   /** Only these sources, for a recheck of some. */
@@ -91,7 +93,7 @@ async function probe(item: ProbeCase, source: Source, registry: AdapterRegistry,
   try {
     let result: CarrierResult;
     if (source === 'direct') {
-      const adapter = registry.for(item.carrier);
+      const adapter = registry.for(item.adapter ?? item.carrier);
       if (!adapter) return { ...base, outcome: 'no_adapter', ms: 0 };
       result = await adapter.track({ number: normalizeTrackingNumber(item.number), postcode: item.postcode ?? null, timezone: null });
     } else if (source === 'UPU' && !isValidS10TrackingNumber(item.number)) {

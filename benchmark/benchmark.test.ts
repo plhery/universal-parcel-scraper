@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 
 interface Source { url: string; date?: string }
 interface BenchmarkNumber { number: string; source?: Source; postcode?: string; review?: Record<string, string>; note?: string }
-interface BenchmarkCarrier { carrier: string; name?: string; group: string; numbers: BenchmarkNumber[] }
+interface BenchmarkCarrier { carrier: string; name?: string; aliasOf?: string; group: string; numbers: BenchmarkNumber[] }
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(directory, '..');
@@ -48,8 +48,15 @@ describe('carrier benchmark', () => {
         }
       }
       if (!inCatalog(entry.carrier)) expect(entry.name, entry.carrier).toBeTruthy();
+      if (entry.aliasOf) {
+        // The catalog files this network's parcels under another carrier, by this name.
+        expect(inCatalog(entry.carrier), entry.carrier).toBe(false);
+        expect(inCatalog(entry.aliasOf), entry.aliasOf).toBe(true);
+        const definition = JSON.parse(readFileSync(path.join(root, 'carriers', entry.aliasOf, 'carrier.json'), 'utf8')) as { aliases?: string[] };
+        expect(definition.aliases, entry.carrier).toContain(entry.name);
+      }
     }
-    expect(carriers.filter((entry) => !inCatalog(entry.carrier)).length).toBeLessThanOrEqual(15);
+    expect(carriers.filter((entry) => !inCatalog(entry.carrier) && !entry.aliasOf).length).toBeLessThanOrEqual(15);
   });
 
   it('keeps one answer per listed number and source', () => {
