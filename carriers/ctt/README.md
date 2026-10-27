@@ -59,6 +59,7 @@ carrier.
     code starting `00`, as in `009999 - (PL) …`) and the acceptance CTT records with no
     place up to a minute before it are on Madrid's clock: CTT Express's own tracker dates
     that arrival two hours before the digits CTT shows.
+  - The shipment record CTT Express sends, which CTT places in Madrid, is on Madrid's clock.
   - Any other scan is CTT's, on Portugal's clock.
   - Any other offset is taken as sent. Wall times sort among instants by their digits.
 - The app identity policy in [app.ts](app.ts) requires the same instant and `StateId` before

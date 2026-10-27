@@ -186,6 +186,8 @@ describe('CTT response parsing', () => {
         ['Accepted', '2026-10-20T19:12:26+02:00'],
         ['Information received', '2026-10-08T11:04:51+01:00'],
       ]);
+      // The shipment record CTT Express sends, which CTT places in Madrid, keeps Madrid's clock too.
+      expect(scanAt('2026-10-08T09:55:27Z', 'Madrid')).toBe('2026-10-08T09:55:27+02:00');
       // A code of CTT's own sites, or a Ponto CTT, stays on Portugal's clock.
       expect(scanAt('2026-10-20T19:12:27Z', '000000 - (PC) Ponto CTT Example')).toBe('2026-10-20T19:12:27+01:00');
       expect(scanAt('2026-10-20T19:12:27Z', '0099999 - (CO) C.O. EXAMPLE')).toBe('2026-10-20T19:12:27+01:00');

@@ -40,6 +40,13 @@ export function portugalZone(location: string): string {
  */
 const CTT_EXPRESS_AGENCY = /^00\d{4}\s+-\s+\(/;
 
+/**
+ * Madrid, which CTT names on the shipment record CTT Express sends it. The record keeps
+ * Madrid's wall clock: CTT Express's own tracker dates it two hours before CTT's digits in
+ * summer time.
+ */
+const MADRID = /^madrid$/i;
+
 /** Whether a location names one of CTT Express's agencies, not one of CTT's own sites. */
 export function isCttExpressAgency(location: string): boolean {
   return CTT_EXPRESS_AGENCY.test(location) && !CTT_SITE.test(location);
@@ -48,13 +55,14 @@ export function isCttExpressAgency(location: string): boolean {
 /**
  * The clock a CTT scan's location itself names: the country of the office of
  * exchange leading it, when that is Portugal or one of `countries` (the
- * parcel's), else Portugal's for one of CTT's own sites. Null when the
- * location does not say.
+ * parcel's), Madrid's for Madrid, else Portugal's for one of CTT's own sites.
+ * Null when the location does not say.
  */
 export function cttSiteZone(location: string, countries: readonly (string | null)[]): string | null {
   const office = OFFICE.exec(location)?.[1];
   if (office === 'PT' || (office && countries.includes(office))) {
     return office === 'PT' ? portugalZone(location) : countryTimeZone(office);
   }
+  if (MADRID.test(location.trim())) return 'Europe/Madrid';
   return CTT_SITE.test(location) ? portugalZone(location) : null;
 }
