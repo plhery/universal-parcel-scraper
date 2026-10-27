@@ -12,6 +12,7 @@ import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'JCZ9900000001DH';
 const HANDED_OVER = 'JCZ9900000002DH';
+const RELAYED = 'JCZ9900000003DH';
 const UNKNOWN = 'JCZ9999999999DH';
 const READ = Date.parse('2026-05-01T00:00:00Z');
 
@@ -81,7 +82,8 @@ describe('JCEX HTTP adapter', () => {
       // The timeline JCEX wrote after the receipt, on :21 every time, is set aside.
       // The origin warehouse's receipt, which the shared rules would read as a parcel waiting for collection; it comes twice.
       ['2026-04-11T01:09:38+08:00', 'InTransit_Other', 'in_transit', 'CN'],
-      ['2026-04-08T12:01:25', 'InfoReceived', 'registered', null],
+      // JCEX's order data, filed under neither a country nor a place, is on Beijing's clock.
+      ['2026-04-08T12:01:25+08:00', 'InfoReceived', 'registered', null],
     ]);
     // The recipient's city and postcode and the shipment's reference are never read.
     expect(JSON.stringify(result)).not.toMatch(/SAMPLEVILLE|99999|9900000000001/);
@@ -103,7 +105,7 @@ describe('JCEX HTTP adapter', () => {
       ['2026-10-16T22:22:29+08:00', 'InTransit_Departure', 'in_transit', 'SH, CN'],
       ['2026-10-09T09:14:17+08:00', 'InTransit_Departure', 'in_transit', 'SH, CN'],
       ['2026-10-07T19:55:12+08:00', 'InTransit_PickedUp', 'accepted', 'GUANG ZHOU'],
-      ['2026-10-06T10:21:14', 'InfoReceived', 'registered', null],
+      ['2026-10-06T10:21:14+08:00', 'InfoReceived', 'registered', null],
       // Colissimo's announcement, at the time JCEX received the order on France's clock.
       ['2026-10-06T04:21:14', 'InTransit_Other', 'registered', 'FR'],
     ]);
@@ -133,16 +135,45 @@ describe('JCEX HTTP adapter', () => {
     expect([0, 3, 9].map((index) => result.events![index]!.local_time)).toEqual(['2026-04-20T10:05:00', '2026-04-18T13:07:00', '2026-04-11T01:09:38']);
   });
 
-  it('reads a place that opens with its country code on that country\'s clock, whatever the row\'s country', () => {
-    const result = parseJcex(changed('delivered', (content) => {
-      // A partner's row JCEX files under China with China's offset, beside one under the partner's own.
-      Object.assign(content.trackDetails[0]!, { countryCode: 'CN', timeZone: '+08:00', location: 'IT,Exampletown,Lombardy,00000' });
-      Object.assign(content.trackDetails[1]!, { countryCode: 'IT', timeZone: '+02:00', location: 'IT,Exampletown,Lombardy,00000' });
-    }), NUMBER, READ);
-    expect(result.events!.slice(0, 2).map((event) => [event.time ?? null, event.local_time ?? null, event.location])).toEqual([
-      [null, '2026-04-20T10:05:00', 'IT, Exampletown, Lombardy'],
-      ['2026-04-20T06:44:00+02:00', null, 'IT, Exampletown, Lombardy'],
+  it('drops the copies JCEX dates on Beijing\'s clock and keeps the offsets of the scans it relays', () => {
+    const departed = 'Package has departed from a particular location in carrier network.';
+    const label = 'Package has been created and is ready for pickup at the shippers location. This is a pre-transit status event code.';
+    const result = parseJcex(fixture('relayed'), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-09-22T09:15:20Z',
+      delivered_at: '2026-09-22T09:15:20Z', destination_country: 'IT' });
+    expect(result.events!.map((event) => [event.time ?? event.local_time, event.description, event.location ?? null])).toEqual([
+      // The partner's scans keep UTC, wherever their place and country.
+      ['2026-09-22T09:15:20Z', 'Delivered', 'SAMPLECITY, IT'],
+      ['2026-09-22T06:40:10Z', 'Package is out for delivery.', 'IT, Sampleville, Lazio'],
+      // JCEX's copies go: under China's offset at the same instant, under Italy's six hours late.
+      ['2026-09-22T00:30:05Z', 'Consignment Received At Transit Point', 'IT, Sampleville, Lazio'],
+      ['2026-09-20T19:12:44Z', departed, 'IT, Exampletown, Lombardy'],
+      // Yanwen's scans in the destination keep its offset, and its words rather than JCEX's.
+      ['2026-09-20T15:40:31+01:00', 'Batch delivery to carrier', null],
+      ['2026-09-18T12:05:00+01:00', 'Port of destination - Arrival', null],
+      // A scan both list on Beijing's clock stays in both words.
+      ['2026-09-17T23:30:00+08:00', 'Port of departure - Departure', 'SH, CN'],
+      ['2026-09-17T23:30:00+08:00', 'Depart from international airport', 'CN'],
+      // The partner prints its label seconds after JCEX takes the order in.
+      ['2026-09-16T14:10:02Z', label, null],
+      ['2026-09-16T22:09:56+08:00', 'Processing information input', null],
     ]);
+    expect(JSON.stringify(result)).not.toMatch(/SAMPLEVILLE|99999|XYZ0000000003|00000"/);
+  });
+
+  it('keeps a copy\'s offset when JCEX lists no scan it copies', () => {
+    const result = parseJcex(changed('relayed', (content) => {
+      content.trackDetails = content.trackDetails.filter((row) => row.timeZone !== '+00:00');
+    }), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
+    expect(result.events!.slice(0, 2).map((event) => [event.time ?? null, event.local_time ?? null, event.description])).toEqual([
+      ['2026-09-22T08:30:05+08:00', null, 'Consignment Received At Transit Point'],
+      ['2026-09-21T03:12:44+02:00', null, 'Package has departed from a particular location in carrier network.'],
+    ]);
+  });
+
+  it('reads JCEX\'s order data on Beijing\'s clock, whatever offset it carries', () => {
+    const result = parseJcex(changed('delivered', (content) => { content.trackDetails.at(-1)!.timeZone = '-05:00'; }), NUMBER, READ);
+    expect(result.events!.at(-1)).toMatchObject({ time: '2026-04-08T12:01:25+08:00', provider_code: 'InfoReceived' });
   });
 
   it('holds back rows written ahead of their time', () => {

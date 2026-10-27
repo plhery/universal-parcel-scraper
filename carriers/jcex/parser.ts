@@ -16,8 +16,10 @@ export const JCEX_MAX_BYTES = 512 * 1024;
 const NUMBER = /^JCZ\d{10}DH$/;
 const WALL_CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
-// JCEX works on Hangzhou's clock; a row kept as a wall clock is read in it only to set aside future rows and its timeline.
+// JCEX works on Hangzhou's clock and writes its own rows on it; a row kept as
+// a wall clock is read in it only to set aside future rows and its timeline.
 const HOME_ZONE = 'Asia/Shanghai';
+const HOME_OFFSET = '+08:00';
 // A US place as USPS writes it: "TOWN, ST 00000", or a facility naming its state before its kind.
 const US_STATE = /,\s*([A-Z]{2})\b/;
 const US_FACILITY_STATE = /\s([A-Z]{2})\s*(?:\(USPS\)|(?:(?:NETWORK|REGIONAL|INTERNATIONAL)\s+)?DISTRIBUTION\s+CENTER)$/;
@@ -57,20 +59,22 @@ function placeOf(location: string): string {
 /**
  * The zone a row's place keeps. A bare country code is the place, even when
  * the row's country is another: JCEX files its Hong Kong hub's rows under the
- * destination with the destination's offset. A place that opens with a
- * country's code, and has no other two-letter part, is in that country too:
- * JCEX files some of an Italian partner's rows under China with China's
- * offset. Its hub's "SH, CN" opens with Shanghai's code. A US place settles a
- * zone through its state.
+ * destination with the destination's offset. A US place settles a zone
+ * through its state.
  */
 function placeZone(location: string, country: string): string | null {
-  const [opening, ...rest] = location.split(', ');
-  const code = (part: string | undefined) => part !== undefined && /^[A-Z]{2}$/.test(part);
-  const place = code(location) && countryCode(location) ? location
-    : rest.length && code(opening) && !rest.some(code) && countryCode(opening) ? opening! : country;
+  const place = /^[A-Z]{2}$/.test(location) && countryCode(location) ? location : country;
   if (place !== 'US') return countryTimeZone(place);
   if (place === location) return null;
   return usStateTimeZone(US_STATE.exec(location)?.[1] ?? US_FACILITY_STATE.exec(location)?.[1]);
+}
+
+/** A wall clock's instant under an offset, when the offset reads it back unchanged. */
+function labelledTime(local: string, label: string): ParsedTime | null {
+  if (!OFFSET.test(label)) return null;
+  const placed = DateTime.fromISO(`${local}${label}`, { setZone: true });
+  if (!placed.isValid || placed.toFormat("yyyy-MM-dd'T'HH:mm:ss") !== local) return null;
+  return { iso: placed.toISO({ suppressMilliseconds: true }), timestamp: placed.toMillis() };
 }
 
 /**
@@ -81,22 +85,79 @@ function placeZone(location: string, country: string): string | null {
  */
 function placedTime(local: string, label: string, location: string, country: string): ParsedTime | null {
   const zone = placeZone(location, country);
-  if (!zone || !OFFSET.test(label)) return null;
-  const placed = DateTime.fromISO(`${local}${label}`, { setZone: true });
-  if (!placed.isValid || placed.toFormat("yyyy-MM-dd'T'HH:mm:ss") !== local
-    || DateTime.fromMillis(placed.toMillis(), { zone }).offset !== placed.offset) return null;
-  return { iso: placed.toISO({ suppressMilliseconds: true }), timestamp: placed.toMillis() };
+  const time = zone ? labelledTime(local, label) : null;
+  if (!zone || !time) return null;
+  return DateTime.fromMillis(time.timestamp, { zone }).offset === DateTime.fromISO(time.iso, { setZone: true }).offset ? time : null;
 }
 
-/** A row's clock: its instant where its place settles it, else its wall clock. */
-function clockOf(row: Record<string, unknown>, location: string, country: string): { clock: { time: string } | { local_time: string }; local: string; at: number } {
+/** A row as JCEX lists it, before its clock is settled. */
+interface Row {
+  readonly index: number;
+  readonly description: string;
+  readonly location: string;
+  readonly country: string;
+  readonly code: string;
+  readonly label: string;
+  /** Its wall clock. */
+  readonly local: string;
+  /** Its wall clock's instant on Beijing's clock. */
+  readonly home: number;
+}
+
+function rowOf(row: unknown, index: number): Row | null {
+  if (!isRecord(row)) throw new SchemaError(PROVIDER, 'JCEX returned an invalid scan');
+  const description = text(row, 'eventDetailEn') || text(row, 'eventDetailCn');
+  if (!description) return null;
   const wall = WALL_CLOCK.exec(text(row, 'eventTime', 64));
   const local = wall ? `${wall[1]}T${wall[2]}` : '';
   const home = local ? firstOccurrence(DateTime.fromISO(local, { zone: HOME_ZONE })) : null;
   // Luxon rolls 24:00:00 over to the next day; only a clock that reads back unchanged is kept.
   if (!home?.isValid || home.toFormat("yyyy-MM-dd'T'HH:mm:ss") !== local) throw new SchemaError(PROVIDER, 'JCEX returned an invalid scan time');
-  const time = placedTime(local, text(row, 'timeZone', 16), location, country);
-  return time ? { clock: { time: time.iso }, local, at: time.timestamp } : { clock: { local_time: local }, local, at: home.toMillis() };
+  return { index, description, location: placeOf(text(row, 'location', 200)), country: text(row, 'countryCode', 8).toUpperCase(),
+    code: text(row, 'platformEventCode', 64), label: text(row, 'timeZone', 16), local, home: home.toMillis() };
+}
+
+/**
+ * JCEX lists a scan it relays from Yanwen or the delivering partner a second
+ * time as its own row, on Beijing's wall clock under China's offset or the
+ * destination's: a row whose wall clock, on Beijing's clock, is the instant
+ * another row of the same code states under an offset other than China's.
+ * The copies are dropped, and the offsets they were dated from are the
+ * relaying sources' own: every row under one keeps it, wherever its place.
+ */
+function relayedCopies(rows: readonly Row[]): { copies: Set<Row>; offsets: Set<string> } {
+  const stated = new Map<string, Row[]>();
+  for (const row of rows) {
+    const time = row.code && row.label !== HOME_OFFSET ? labelledTime(row.local, row.label) : null;
+    if (!time) continue;
+    const key = JSON.stringify([row.code, time.timestamp]);
+    stated.set(key, [...(stated.get(key) ?? []), row]);
+  }
+  const copies = new Set<Row>();
+  const relayed = new Set<Row>();
+  for (const row of rows) {
+    const sources = stated.get(JSON.stringify([row.code, row.home]))?.filter((other) => other !== row) ?? [];
+    if (!sources.length) continue;
+    copies.add(row);
+    sources.forEach((source) => relayed.add(source));
+  }
+  return { copies, offsets: new Set([...relayed].filter((row) => !copies.has(row)).map((row) => row.label)) };
+}
+
+/**
+ * A row's clock. A row filed under neither a country nor a place is JCEX's
+ * own order data, on Beijing's clock whatever offset it carries. A row under
+ * a relaying source's offset keeps it. Others take their instant where their
+ * place settles it, else keep their wall clock.
+ */
+function clockOf(row: Row, offsets: ReadonlySet<string>): { clock: { time: string } | { local_time: string }; at: number; order: number } {
+  const time = !row.country && !row.location ? labelledTime(row.local, HOME_OFFSET)
+    : offsets.has(row.label) ? labelledTime(row.local, row.label) : placedTime(row.local, row.label, row.location, row.country);
+  if (time) return { clock: { time: time.iso }, at: time.timestamp, order: time.timestamp };
+  // A wall clock is ordered on its place's clock where the place keeps one.
+  const zone = placeZone(row.location, row.country);
+  const placed = zone ? firstOccurrence(DateTime.fromISO(row.local, { zone })) : null;
+  return { clock: { local_time: row.local }, at: row.home, order: placed?.isValid ? placed.toMillis() : row.home };
 }
 
 function stageOf(code: string, description: string): { stage: Stage; source: string } | undefined {
@@ -106,23 +167,17 @@ function stageOf(code: string, description: string): { stage: Stage; source: str
   return worded.source === 'none' ? undefined : { stage: worded.stage, source: worded.source };
 }
 
-function projectRow(row: unknown): { key: string; local: string; at: number; event: CarrierEvent } | null {
-  if (!isRecord(row)) throw new SchemaError(PROVIDER, 'JCEX returned an invalid scan');
-  const description = text(row, 'eventDetailEn') || text(row, 'eventDetailCn');
-  if (!description) return null;
-  const location = placeOf(text(row, 'location', 200));
-  const country = text(row, 'countryCode', 8).toUpperCase();
-  const { clock, local, at } = clockOf(row, location, country);
-  const code = text(row, 'platformEventCode', 64);
-  const staged = stageOf(code, description);
+function projectRow(row: Row, offsets: ReadonlySet<string>): { at: number; order: number; index: number; event: CarrierEvent } {
+  const { clock, at, order } = clockOf(row, offsets);
+  const staged = stageOf(row.code, row.description);
   const event: CarrierEvent = {
     ...clock,
-    description,
-    ...(location ? { location } : {}),
-    ...(code ? { provider_code: code } : {}),
+    description: row.description,
+    ...(row.location ? { location: row.location } : {}),
+    ...(row.code ? { provider_code: row.code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { key: JSON.stringify([local, text(row, 'timeZone', 16), code, description, location]), local, at, event };
+  return { at, order, index: row.index, event };
 }
 
 /**
@@ -182,21 +237,22 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   if (!own.includes(number)) throw new IndeterminateError(PROVIDER, 'JCEX answered for another shipment');
 
   const seen = new Set<string>();
-  const projected: { local: string; at: number; index: number; event: CarrierEvent }[] = [];
-  rows.forEach((row, index) => {
-    const scan = projectRow(row);
-    if (!scan || seen.has(scan.key)) return;
-    seen.add(scan.key);
-    projected.push({ local: scan.local, at: scan.at, index, event: scan.event });
+  const listed = rows.map(rowOf).filter((row): row is Row => {
+    const key = row && JSON.stringify([row.local, row.label, row.code, row.description, row.location]);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
   });
+  const { copies, offsets } = relayedCopies(listed);
+  const projected = listed.filter((row) => !copies.has(row)).map((row) => projectRow(row, offsets));
   // Neither a row dated after the read nor a row of the timeline JCEX writes is a scan.
   const written = timeline(projected.map(({ at }) => at));
   const ahead = projected.filter(({ at }) => at > readAt || written.has(at));
   // Rows come newest first, but JCEX puts its own milestone, such as the
   // handover to the delivering partner, on top: the rows are ordered by their
-  // places' wall clocks, and rows on one clock keep the reply's order.
+  // clocks, and rows at one time keep the reply's order.
   const events = projected.filter((scan) => !ahead.includes(scan))
-    .sort((a, b) => (a.local === b.local ? a.index - b.index : a.local < b.local ? 1 : -1)).map(({ event }) => event);
+    .sort((a, b) => b.order - a.order || a.index - b.index).map(({ event }) => event);
   // The rows written ahead are named, so that a provider's copies of them are not taken for scans.
   if (!events.length) {
     throw new NoHistoryError(PROVIDER, 'JCEX has no scans for the waybill yet', ahead.length

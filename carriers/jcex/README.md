@@ -31,15 +31,19 @@ Tracked through the lookup its tracking page makes.
   handover rows seen are transit. Rows seen under a code too broad for them, such as
   Colissimo's failed visit under `Exception_Other`, are mapped one by one.
 - Rows come newest first, but JCEX puts its own milestone, such as that handover, on top. The
-  rows are ordered by their places' wall clocks, and rows on one clock keep the reply's order.
-- A row is read on the clock its place keeps: its country's when the country has one, and in
-  the United States its state's when the place names one, as USPS writes it. A row whose place
-  is a bare country code keeps that country's clock: JCEX files its Hong Kong hub's rows under
-  the destination with the destination's offset. So does a place that opens with its country's
-  code and has no other two-letter part: JCEX files some of an Italian partner's rows under China
-  with China's offset, and its hub's "SH, CN" opens with Shanghai's code. An offset
-  the place does not keep at that time, and a place without one clock, keep the wall clock:
-  Colissimo's rows come on France's clock with China's offset.
+  rows are ordered by their clocks, and rows at one time keep the reply's order.
+- JCEX writes its own rows on Beijing's clock, under China's offset or the destination's. It
+  lists a scan it relays from Yanwen or the delivering partner twice: as the source's row under
+  the source's offset, and as its own copy, the same instant on Beijing's clock under the same
+  code. The copy is dropped, and the source's offset holds for every row under it, wherever its
+  place. The order data, filed under neither a country nor a place, is on Beijing's clock
+  whatever offset it carries.
+- Other rows are read on the clock their place keeps: its country's when the country has one,
+  and in the United States its state's when the place names one, as USPS writes it. A row whose
+  place is a bare country code keeps that country's clock: JCEX files its Hong Kong hub's rows
+  under the destination with the destination's offset. An offset the place does not keep at
+  that time, and a place without one clock, keep the wall clock: Colissimo's rows come on
+  France's clock with China's offset.
 - The newest scan's instant, when it has one, is the last update, and a delivered scan's is the
   delivery time. Rows dated after the read are dropped.
 - Seconds after it takes a parcel in, JCEX writes a timeline up to the delivering partner: rows
@@ -53,6 +57,8 @@ Tracked through the lookup its tracking page makes.
 
 - No delivery estimate, service, sender, recipient or proof of delivery.
 - The delivering partner and its number are not named: the reply leaves them empty.
+- A copy listed without the scan it copies keeps the offset it carries, which can be the
+  destination's on Beijing's wall clock.
 - Other JCEX number layouts are not looked up until one is seen.
 
 ## Numbers
