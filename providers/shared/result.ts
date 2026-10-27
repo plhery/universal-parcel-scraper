@@ -260,6 +260,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // the sender's confirmation that the shipment is being prepared.
   if (/^item has passed a checkpoint[.!]?$/i.test(value)) return 'in_transit';
   if (/^confirmation of preparation of the shipment received[.!]?$/i.test(value)) return 'registered';
+  // Landmark Global's hand-over to the postal operator that carries the parcel on, as its own map reads it:
+  // the shared rules would read "deposited" as a delivery.
+  if (/^item deposited to (?:the )?local postal operator[.!]?$/i.test(value)) return 'in_transit';
   // Correios Brazil's scans in an aggregator's English or Correios' Portuguese for an item posted abroad. Correios'
   // receipt follows the posting and the export, so it is transit here; the recipient still owes customs their tax number.
   // Anjun words the sender's data the same way, under its code "forecast", which its own map reads as a registration.

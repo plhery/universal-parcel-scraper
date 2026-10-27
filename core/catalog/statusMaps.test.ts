@@ -1659,7 +1659,7 @@ describe("universal providers' answers", () => {
       ['Package is received at a Straightship station (Exampleton, ON)', 'in_transit'],
       ['Received at Origin Warehouse', 'in_transit'],
       ['In viaggio', 'in_transit'], ['In viaggio verso il centro', 'in_transit'], ['Item has passed a checkpoint', 'in_transit'],
-      ['Confirmation of preparation of the shipment received', 'registered'],
+      ['Confirmation of preparation of the shipment received', 'registered'], ['Item deposited to local postal operator', 'in_transit'],
       ['Item posted', 'accepted'], ['Item in transfer - please wait', 'in_transit'],
       ['Item received at the export unit in the country of origin', 'in_transit'],
       ['Item received by the Brazilian Post', 'in_transit'], ["Need to inform recipient's CPF/CNPJ", 'customs'],
