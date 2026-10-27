@@ -257,6 +257,16 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, description: 'Your parcel is out for delivery.' }, stored)).toBe(false);
   });
 
+  it("lets a DPD UK round notice that dropped its hour, or a scan without its driver's name, take over its stored row", () => {
+    const policy = sameInstantIdentityPolicy('dpd-uk', { supportsScanMatching: true });
+    const round = { stage: 'out_for_delivery', description: 'Your parcel will be with you today between 14:18 and 15:18', location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...round, description: 'Your parcel will be with you today' }, round)).toBe(true);
+    expect(policy?.matches?.({ ...round, description: 'Your parcel has been delivered' }, round)).toBe(false);
+    const missed = { stage: 'failed_attempt', description: "We missed you. Your driver Sample won't be back today but we'll be back Wed 28 October with your parcel", location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...missed, description: "We missed you. Your driver won't be back today but we'll be back Wed 28 October with your parcel" }, missed)).toBe(true);
+    expect(policy?.matches?.({ ...missed, description: "We missed you. Your driver won't be back today but we'll be back Thu 29 October with your parcel" }, missed)).toBe(false);
+  });
+
   it('lets a NACEX platform scan whose town lost its "PLAT" take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('nacex', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'En tránsito', location: 'PLATTESTVILLE', providerCode: '' };

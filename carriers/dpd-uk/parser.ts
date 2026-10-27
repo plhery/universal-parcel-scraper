@@ -8,6 +8,7 @@ import { classifyWording, languageStageStatus } from '../../core/status/index.js
 import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+import { dpdUkWording, withoutDriverName } from './wording.js';
 
 export const PROVIDER = 'DPD UK';
 
@@ -72,22 +73,23 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   "we've received your order details, and we're expecting your parcel shortly": 'registered',
 };
 
+// A round that missed the recipient, with the day of the next one.
+const MISSED = /^we missed you\. your driver won't be back today but we'll be back [a-z]{3} \d{1,2} [a-z]+ with your parcel$/;
+
 /**
  * A scan's or the current summary's stage. The summary appends the time of its scan, and the
  * round's notice the hour it gives for the delivery.
  */
 export function classifyDpdUkWording(description: string) {
-  const wording = description.toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim()
-    .replace(/ at (?:[01]?\d|2[0-3]):[0-5]\d on [a-z]{3} \d{1,2} [a-z]+ \d{4}$/, '').replace(/[.!]+$/, '')
-    .replace(/^(your parcel will be with you today) between (?:[01]?\d|2[0-3]):[0-5]\d and (?:[01]?\d|2[0-3]):[0-5]\d$/, '$1');
+  const wording = dpdUkWording(withoutDriverName(description));
   // A sender's cancellation goes on to name the sender to contact.
   const stage = Object.hasOwn(VERIFIED_WORDING, wording) ? VERIFIED_WORDING[wording]
-    : /^your delivery has been cancelled\b/.test(wording) ? 'exception' : undefined;
+    : /^your delivery has been cancelled\b/.test(wording) ? 'exception' : MISSED.test(wording) ? 'failed_attempt' : undefined;
   return stage ? { stage, source: 'carrier_map' } : classifyWording(description);
 }
 
 function publicDescription(value: unknown): string {
-  const text = clean(value, 1000);
+  const text = withoutDriverName(clean(value, 1000));
   // A sender return is a shipment stage, rather than a recipient's identity.
   if (/\bdelivered (?:back )?to (?:the )?(?:sender|shipper)\b/i.test(text)) return text;
   return text.replace(/(\bdelivered)\s+(?:to\s+.+|and\s+signed\s+(?:for\s+)?by\s+.+|signed\s+(?:for\s+)?by\s+.+)$/i, '$1');

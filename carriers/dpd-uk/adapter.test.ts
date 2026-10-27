@@ -111,6 +111,7 @@ describe('DPD UK public history projection', () => {
     ['Your parcel will be with you today ', 'out_for_delivery'],
     ['Your parcel will be with you today between 9:05 and 10:05.', 'out_for_delivery'],
     ['Your delivery has been cancelled, please contact Example Merchant for further details', 'exception'],
+    ["We missed you. Your driver Sample won’t be back today but we'll be back Thu 05 November with your parcel", 'failed_attempt'],
   ])('reads the current summary %s', (summary, stage) => {
     const payload = fixture(); payload.detail.data.trackingStatusCurrent = summary;
     expect(project(payload)).toMatchObject({ current_stage: stage, current_stage_source: 'carrier_map' });
@@ -199,6 +200,17 @@ describe('DPD UK public history projection', () => {
     payload.detail.data.trackingStatusCurrent = 'The parcel has been delivered back to the sender';
     payload.history.data[0].eventText = 'The parcel has been delivered back to the sender';
     expect(project(payload).current_stage).toBe('returned');
+  });
+
+  it("leaves out the driver's name a scan gives", () => {
+    const payload = fixture();
+    payload.detail.data.trackingStatusCurrent = "We missed you. Your driver PRIVATE SYNTHETIC won't be back today but we'll be back Wed 28 October with your parcel";
+    payload.history.data[0].eventText = payload.detail.data.trackingStatusCurrent;
+    const result = project(payload);
+    expect(result).toMatchObject({ current_stage: 'failed_attempt', current_stage_source: 'carrier_map',
+      last_status_text: "We missed you. Your driver won't be back today but we'll be back Wed 28 October with your parcel" });
+    expect(result.events?.[0]).toMatchObject({ stage: 'failed_attempt', description: result.last_status_text });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 
   it('maps the observed partner wording without assigning numeric codes', () => {

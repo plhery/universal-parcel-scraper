@@ -16,6 +16,7 @@
     { "wording": "Your delivery has been cancelled", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "Goes on to ask the recipient to contact the named sender." },
     { "wording": "Your parcel will be with you today", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Your parcel will be with you today between 14:18 and 15:18", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "The round's notice with its delivery hour; any hours." },
+    { "wording": "We missed you. Your driver won't be back today but we'll be back Wed 28 October with your parcel", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "A round that missed the recipient, with the day of the next; any day. The driver's name the sentence gives is left out." },
     { "wording": "The parcel is on the vehicle for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Your parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "The parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-08" },
