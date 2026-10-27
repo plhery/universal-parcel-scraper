@@ -196,6 +196,10 @@ describe('Vinted Go HTTP adapter', () => {
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1790000000000011')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
+    // Vinted Go answers any old-looking number with an expired history, so that answer
+    // never claims another carrier's sixteen digits.
+    fetcher.mockResolvedValueOnce(reply('expired', 404));
+    await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'history_expired' });
   });
 
   it('rejects numbers Vinted Go does not issue and pre-aborted lookups without a request', async () => {
