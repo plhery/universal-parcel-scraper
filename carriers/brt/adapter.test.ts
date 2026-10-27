@@ -4,7 +4,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { normalizeCarrierResult, type CarrierEvent, type CarrierResult } from '../../core/result/index.js';
 import { BrtTracker, adapter, type BrtOriginLookup } from './adapter.js';
-import { brtOriginPartner, normalizeBrtNumber, parseBrt, partnerShipment, stagedDpdLeg, withOriginLeg } from './parser.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
+import { isBrtCarrierDepot } from './depot.js';
+import { normalizeBrtNumber, parseBrt, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg } from './parser.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { classifyBrtStatus, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -444,12 +446,74 @@ describe('BRT origin legs', () => {
   const preAdvice = (clock: string) => scan('SHIPPING INFO SENT TO BRT', clock, 'registered');
 
   it('names the partner of a shipment whose oldest scan is at its import depot', () => {
-    const from = (location: string) => brtOriginPartner({ events: [{ location: 'TEST DEPOT (990)' }, { location }] });
+    const at = (row: number, location: string) => readBrt(edit($ => $('.table_stato_dati tr').eq(row).children('td').eq(2).text(location)), NUMBER);
+    const from = (location: string) => at(-1, location).partner;
     expect(from('CHR-FR SAMPLE (998)')).toBe('chronopost');
     expect(from('DPD SAMPLE (990)')).toBe('dpd');
     expect(from('DPD-ROV-SAMPLE (991)')).toBe('dpd');
+    expect(from('DPD-COLISSIMO (999)')).toBe('dpd');
     for (const location of ['TEST DEPOT (990)', 'DPDSAMPLE (990)', 'SAMPLE DPD (990)', '']) expect(from(location), location).toBeNull();
-    expect(brtOriginPartner({ events: [{ location: 'DPD SAMPLE (990)' }, { location: 'TEST DEPOT (990)' }] })).toBeNull();
+    expect(at(1, 'DPD SAMPLE (990)').partner).toBeNull();
+  });
+
+  it('reads BRT\'s collection from a partner that brought the parcel from abroad as its hand-over, in transit', () => {
+    const stages = (result: CarrierResult) => result.events!.map(event => event.stage);
+    // Collected, and still at the partner's import depot.
+    const collected = (origin: string) => parseBrt(edit($ => {
+      $('.table_stato_dati tr').slice(1, 6).remove();
+      $('.table_stato_dati tr').slice(1).each((_, row) => { $(row).children('td').eq(2).text(origin); });
+    }), NUMBER);
+    for (const origin of ['CHR-FR SAMPLE (998)', 'DPD SAMPLE (990)', 'DPD-COLISSIMO (999)']) {
+      expect(collected(origin), origin).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'COLLECTED' });
+      expect(stages(collected(origin)), origin).toEqual(['in_transit', 'registered']);
+      expect(stages(parseBrt(edit($ => $('.table_stato_dati tr').slice(5).each((_, row) => { $(row).children('td').eq(2).text(origin); })), NUMBER)), origin)
+        .toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'registered']);
+    }
+    // Collected at one of BRT's own depots, or at a depot only a later scan names a partner at, it is the acceptance.
+    expect(collected('TEST ORIGIN (991)')).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(stages(parseBrt(html, NUMBER)).slice(-2)).toEqual(['accepted', 'registered']);
+    expect(stages(parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').eq(2).text('DPD SAMPLE (990)')), NUMBER)).slice(-2))
+      .toEqual(['accepted', 'registered']);
+    // The partner's leg comes below BRT's hand-over.
+    const leg = withOriginLeg(collected('DPD SAMPLE (990)'), { status: 'in_transit', events: [
+      { description: 'Sample transit', stage: 'in_transit', time: '2026-01-12T20:00:00Z' },
+      { description: 'Sample intake', stage: 'accepted', time: '2026-01-12T08:00:00Z' }] });
+    expect(leg.events!.map(event => [event.description, event.stage])).toEqual([['COLLECTED', 'in_transit'], ['Sample transit', 'in_transit'],
+      ['Sample intake', 'accepted'], ['SHIPPING INFO SENT TO BRT', 'registered']]);
+  });
+
+  it('gives no place to a depot named by carriers alone, and lets the scans stored there keep their rows', () => {
+    const page = (origin: string) => edit($ => $('.table_stato_dati tr').slice(5).each((_, row) => { $(row).children('td').eq(2).text(origin); }));
+    const result = readBrt(page('DPD-COLISSIMO (999)'), NUMBER);
+    expect(result.partner).toBe('dpd');
+    expect(result.result.events!.map(event => event.location)).toEqual([...Array(4).fill('TEST DEPOT (990)'), undefined, undefined, undefined]);
+    // Its clocks stay wall clocks, as at the partner's other depots that name no country.
+    expect(clocks(result.result.events).slice(-2)).toEqual(['local 2026-01-13T18:00:00', 'local 2026-01-10T14:57:00']);
+    for (const place of ['DPD-COLISSIMO (999)', 'DPD COLISSIMO (999)', ' GLS-BRT (999) ']) expect(isBrtCarrierDepot(place), place).toBe(true);
+    for (const place of ['DPD IRLANDA (991)', 'CHR-FR SAMPLE (998)', 'DPD-ROV-AUSTRIA (991)', 'DPDSAMPLE (990)', 'TEST DEPOT (990)', 'DPD-COLISSIMO', 'DPD', '']) {
+      expect(isBrtCarrierDepot(place), place).toBe(false);
+      expect(parseBrt(page(place), NUMBER).events!.at(-1)!.location, place).toBe(place || undefined);
+    }
+    // What an earlier release stored: the scans at that depot as its place, the collection as the acceptance.
+    const policy = sameInstantIdentityPolicy('brt', { supportsScanMatching: true })!;
+    expect(policy).toMatchObject({ storedSources: ['brt'], requireProviderCode: false, matchEachScan: true, matchWallClock: true });
+    const scan = (event: CarrierEvent) => ({ stage: event.stage ?? '', description: event.description ?? '', location: event.location ?? '', providerCode: '' });
+    const scans = result.result.events!.map(scan);
+    const stored = parseBrt(page('DPD-COLISSIMO (999)'), NUMBER).events!.map(scan).map((row, index) =>
+      index < 4 ? row : { ...row, location: 'DPD-COLISSIMO (999)', stage: row.description === 'COLLECTED' ? 'accepted' : row.stage });
+    expect(stored.slice(-2).map(row => row.stage)).toEqual(['accepted', 'registered']);
+    for (const [index, row] of stored.entries()) {
+      expect(scans.filter(incoming => policy.matches!(incoming, row)), String(index)).toEqual([scans[index]]);
+    }
+    // Another scan, another stage, a place kept or a stored place that is a town is no such row.
+    const [handover, data] = scans.slice(-2) as [ReturnType<typeof scan>, ReturnType<typeof scan>];
+    const row = stored.at(-2)!;
+    for (const other of [{ ...row, description: 'DEPARTED' }, { ...row, stage: 'registered' }, { ...row, location: 'TEST DEPOT (990)' }]) {
+      expect(policy.matches!(handover, other)).toBe(false);
+    }
+    expect(policy.matches!({ ...handover, stage: 'accepted' }, { ...row, stage: 'in_transit' })).toBe(false);
+    expect(policy.matches!({ ...handover, location: 'TEST DEPOT (990)' }, row)).toBe(false);
+    expect(policy.matches!(data, { ...stored.at(-1)!, stage: 'accepted' })).toBe(false);
   });
 
   it('puts the partner\'s scans before BRT\'s first scan beyond its shipping data under BRT\'s, in time order', () => {

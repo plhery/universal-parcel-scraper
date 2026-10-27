@@ -5,9 +5,11 @@ import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { brandCarrierIds } from '../../core/catalog/hints.js';
 import { isBrtCustomerParcelId, isBrtTrackingNumber } from '../../core/detection/brt.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierId } from '../../generated/catalog.js';
 import { calendarDay, countryCode, countryTimeZone, isoTime, sharedClockZone } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { DEPOT, isBrtCarrierDepot } from './depot.js';
 import { classifyBrtStatus, DPD_INTAKE, DPD_TRANSIT } from './status.js';
 
 export function normalizeBrtNumber(raw: string): string {
@@ -110,8 +112,6 @@ export function brtParcelListNames(html: string, number: string): boolean {
 // BRT's depots in Italy keep Italian civil time: DPD's tracking of the same
 // parcels gives their scans the same clocks with Italy's offset.
 const HOME_ZONE = 'Europe/Rome';
-// A depot as the scan table names it, with BRT's three-digit code: "SAMPLETOWN (999)".
-const DEPOT = /^(.+) \(\d{3}\)$/;
 
 /**
  * The zones of the countries a depot's name gives. The DPD network's depots
@@ -214,11 +214,38 @@ function dpdNetwork(place: string): string | undefined {
     ? brandCarrierIds('DPD').find((id) => CARRIER_DEFINITIONS[id as CarrierId]?.countries?.[0] === country) : undefined;
 }
 
+/** A partner that brings parcels to BRT from abroad under BRT's own code. */
+export type BrtOriginPartner = 'chronopost' | 'dpd';
+
+/**
+ * The partner that brought a shipment to BRT, named by the depot of its oldest
+ * scan: Chronopost's import depots open with `CHR-` and the DPD network's with
+ * `DPD`. A shipment that started at one of BRT's own depots has none.
+ */
+function brtOriginPartner(place: string): BrtOriginPartner | null {
+  return /^CHR-/.test(place) ? 'chronopost' : /^DPD\b/.test(place) ? 'dpd' : null;
+}
+
+/**
+ * A label's reading in a shipment. Where a partner brought the parcel from
+ * abroad, BRT's collection is its hand-over from that partner, which had
+ * already accepted and moved the parcel: in transit.
+ */
+function brtStatus(label: string, partner: BrtOriginPartner | null): ClassifiedStatus | undefined {
+  const mapped = classifyBrtStatus(label);
+  return mapped?.stage === 'accepted' && partner ? { status: 'in_transit', stage: 'in_transit' } : mapped;
+}
+
 /**
  * Projects one BRT detail page. A parcel ID's page does not repeat the ID, so
  * it is only read together with the shipment's parcel list naming that ID.
  */
 export function parseBrt(html: string, raw: string, parcelList?: string): CarrierResult {
+  return readBrt(html, raw, parcelList).result;
+}
+
+/** One BRT detail page with the partner that brought the shipment to BRT, if any. */
+export function readBrt(html: string, raw: string, parcelList?: string): { result: CarrierResult; partner: BrtOriginPartner | null } {
   const number = normalizeBrtNumber(raw);
   const $ = load(html);
   const metadata = shipmentTables($);
@@ -253,15 +280,17 @@ export function parseBrt(html: string, raw: string, parcelList?: string): Carrie
   const arrival = metadata.find('tr').filter((_, node) => rowLabel($, node) === 'Filiale di arrivo').children('td');
   const deliveredHome = arrival.length === 2 && clean(arrival.last().text(), 80) !== '';
   const origin = scans.at(-1)!.location;
+  const broughtBy = brtOriginPartner(origin);
   const events = scans.map(({ date, clock, location, label }): CarrierEvent => {
-    const mapped = classifyBrtStatus(label);
+    const mapped = brtStatus(label, broughtBy);
     const zones = clockZones(location, deliveredHome || location === origin);
     return { description: mapped?.status === 'delivered' ? 'Delivered' : label, provider_status: label,
-      ...(mapped ? { stage: mapped.stage } : {}), ...(location ? { location } : {}), ...scanClock(date, clock, zones) };
+      ...(mapped ? { stage: mapped.stage } : {}), ...(location && !isBrtCarrierDepot(location) ? { location } : {}),
+      ...scanClock(date, clock, zones) };
   });
   // Source order also carries undated scans and clocks of several zones, so scans are never sorted.
   const latest = events[0]!;
-  let mapped = classifyBrtStatus(String(latest.provider_status));
+  let mapped = brtStatus(String(latest.provider_status), broughtBy);
   // A shipment sent back reads DELIVERED once it reaches its sender again.
   if (mapped?.stage === 'delivered' && events.slice(1).some((event) => event.stage === 'returned')) {
     mapped = { status: 'exception', stage: 'returned' };
@@ -277,27 +306,14 @@ export function parseBrt(html: string, raw: string, parcelList?: string): Carrie
   const dpdRow = metadata.find('tr').filter((_, node) => rowLabel($, node) === 'Parcel number dpd').children('td');
   const dpdNumber = dpdRow.length === 2 ? clean(dpdRow.last().text(), 40) : '';
   const partner = !deliveredHome && !/^DPD\b/.test(origin) && parcels.length === 1 && parcels[0]![1] === '1'
-    && /^\d{14}$/.test(dpdNumber) ? dpdNetwork(latest.location ?? '') : undefined;
-  return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
+    && /^\d{14}$/.test(dpdNumber) ? dpdNetwork(scans[0]!.location) : undefined;
+  return { result: { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
     ...(mapped?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(Number.isFinite(weight) && weight > 0 && weight <= 100_000 ? { weight_kg: weight } : {}),
     ...(partner ? { delivery_carrier: partner, delivery_tracking_number: dpdNumber } : {}),
-    events: events.slice(0, 100) };
-}
-
-/** A partner that brings parcels to BRT from abroad under BRT's own code. */
-export type BrtOriginPartner = 'chronopost' | 'dpd';
-
-/**
- * The partner that brought a shipment to BRT, named by the depot of its oldest
- * scan: Chronopost's import depots open with `CHR-` and the DPD network's with
- * `DPD`. A shipment that started at one of BRT's own depots has none.
- */
-export function brtOriginPartner(result: CarrierResult): BrtOriginPartner | null {
-  const place = result.events?.at(-1)?.location ?? '';
-  return /^CHR-/.test(place) ? 'chronopost' : /^DPD\b/.test(place) ? 'dpd' : null;
+    events: events.slice(0, 100) }, partner: broughtBy };
 }
 
 // The fields of a result's current status.

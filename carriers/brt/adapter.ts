@@ -6,7 +6,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { ChronopostTracker } from '../chronopost/adapter.js';
 import { DPDTracker } from '../dpd/adapter.js';
-import { brtOriginPartner, brtParcelListPath, normalizeBrtNumber, parseBrt, partnerShipment, stagedDpdLeg, withOriginLeg, type BrtOriginPartner } from './parser.js';
+import { brtParcelListPath, normalizeBrtNumber, parseBrt, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg, type BrtOriginPartner } from './parser.js';
 
 const BASE = 'https://vas.brt.it/vas/';
 /** The time kept for BRT's own answer when a partner's lookup runs out. */
@@ -43,8 +43,7 @@ export class BrtTracker {
         return decodeText(bytes, charset?.startsWith('utf') ? 'utf-8' : 'windows-1252');
       };
       if (number.length === 14) {
-        const result = parseBrt(await page(`${BASE}sped_det_new.htm?brtCode=${number}&lang=en`), number);
-        const partner = brtOriginPartner(result);
+        const { result, partner } = readBrt(await page(`${BASE}sped_det_new.htm?brtCode=${number}&lang=en`), number);
         const lookup = partner && this.options.origins?.[partner];
         const budget = Math.floor(deadline - performance.now() - ORIGIN_RESERVE_MS);
         if (!lookup || budget <= 0) return result;

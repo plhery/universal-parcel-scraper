@@ -41,6 +41,15 @@ answers a partner's scan, which has a code, by that partner's map. It leaves the
 scans DPD had before it took the parcel in out on purpose, and has no answer for the
 hand-over and intake, whose stage the scans before them decide.
 
+BRT's COLLECTED at such an import depot is its hand-over from the partner, which had
+already accepted and moved the parcel, so it is in transit, with or without the partner's
+leg. Only a collection at one of BRT's own depots is the acceptance, which is what the
+status map answers for the wording. A depot named by carriers alone, as `DPD-COLISSIMO`
+is after the parcels Colissimo hands the DPD network, names no place, so its scans have
+no location. The app's scan-identity policy lets a row stored with that place keep its
+identity when its instant and wording agree, and its stage too, or the acceptance read
+now as the hand-over.
+
 Until BRT has processed such a BRTcode it answers TIS0564 and names no partner.
 Tracking then asks Chronopost, then DPD, under the same code. BRT is the DPD
 group's network in Italy, so a partner's answer stands for BRT's only when it
