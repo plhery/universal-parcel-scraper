@@ -71,6 +71,9 @@ from the group tracker's `?match=`. GLS Portugal's links take the same forms on
 - A reference with characters other than letters and digits cannot be looked up.
 - A shipment forwarded or returned under a new number is not followed.
 - No scan location, service name or sender name.
+- The service refuses searches from some networks, such as a data centre in Germany, with
+  HTTP 403 and `Expedition search forbidden`, which is a challenge. Enabled universal
+  providers remain available.
 
 ## Testing
 
