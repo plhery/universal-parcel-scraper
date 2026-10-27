@@ -554,8 +554,32 @@ describe('the detection engine', () => {
     ['numero di tracciamento 12345678', '12345678'],
     ['n.º de rastreio 12345678', '12345678'],
     ['Numer przesyłki 12345678', '12345678'],
+    ['Número de rastreo: 12345678', '12345678'],
+    ['Número de guía 12345678', '12345678'],
+    ['Guía: 12345678', '12345678'],
+    ['WAYBILL 1234567890', '1234567890'],
+    ['AWB No. 1234567890', '1234567890'],
   ])('leaves a label word out of a short entry: %s', (input, number) => {
     expect(parseTrackingInput(input)).toMatchObject({ trackingNumber: number, source: 'text' });
+  });
+
+  it('reads a waybill named in a message', () => {
+    for (const input of ['Your DHL waybill 1234567890 is ready', 'Waybill No. 1234567890 has shipped', 'Tu número de guía es 1234567890']) {
+      expect(parseTrackingInput(input)).toMatchObject({ trackingNumber: '1234567890', source: 'text' });
+    }
+  });
+
+  it('reads no Amazon number from a word before ten digits, and still reads Amazon\'s capitals before them', () => {
+    for (const input of ['Su número de seguimiento es 1234567890', 'Tracking No. 1234567890', 'TRACKING NO. 1234567890', 'Your parcel No. 1234567890 has shipped']) {
+      expect(parseTrackingInput(input)).toMatchObject({ trackingNumber: '1234567890', carrier: 'unknown', source: 'text' });
+    }
+    for (const input of ['Track it 1234567890 today', 'Order No. 1234567890']) {
+      expect(parseTrackingInput(input).carrier).not.toBe('amazon-logistics');
+    }
+    for (const [input, number] of [['Tracking ID: DE1234567890', 'DE1234567890'], ['Your parcel: FR 0000-000001', 'FR 0000-000001'],
+      ['Your parcel TBA 1234 5678 9012 is on its way', 'TBA 1234 5678 9012']] as const) {
+      expect(parseTrackingInput(input)).toMatchObject({ trackingNumber: number, carrier: 'amazon-logistics', source: 'text' });
+    }
   });
 
   it('reads no entry with a word in it whole', () => {

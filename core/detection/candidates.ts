@@ -10,8 +10,14 @@ import { AMAZON_NUMBER_PATTERN } from './amazon.js';
 import { detectCarrierMatch } from './detect.js';
 import { validTrackingNumberInText } from './valid.js';
 
+const AMAZON_TEXT_PATTERN = AMAZON_NUMBER_PATTERN.slice(1, -1).replaceAll('[0-9]', '(?:[\\s.-]*[0-9])');
+
 export const TRACKING_CANDIDATE_PATTERNS = [
-  new RegExp(`\\b${AMAZON_NUMBER_PATTERN.slice(1, -1).replaceAll('[0-9]', '(?:[\\s.-]*[0-9])')}\\b`, 'gi'),
+  // Amazon's digits can be printed in groups. A country's two letters set apart from them are
+  // capitals and no abbreviation: "es" in "Su número de seguimiento es 1234567890" and "No." in
+  // "Tracking No. 1234567890" are words, not Amazon's.
+  new RegExp(`\\b(?![A-Z]{2}[\\s.-])${AMAZON_TEXT_PATTERN}\\b`, 'gi'),
+  new RegExp(`\\b(?![A-Z]{2}\\.)${AMAZON_TEXT_PATTERN}\\b`, 'g'),
   // NACEX agency/shipment composites keep their slash boundary (never stripped).
   /\b\d{4}\/\d{8}\b/g,
   /\b\d{26}\b/g,
@@ -42,13 +48,14 @@ export function recognizedNumberInText(raw: string): string | undefined {
 const LABEL_SUFFIX = String.raw`(?:numbers?(?!\p{L})|no\.|(?:no|id)(?![\p{L}0-9.]))`;
 // Other languages name the parcel or its tracking, with a word for its number
 // before or after: "numéro de suivi", "Sendung Nr.", "número de envío", "numer
-// przesyłki", or join the two: "Sendungsnummer", "zendingnummer".
-const PARCEL_WORDS = String.raw`suivi|colis|envoi|sendung|paket|pakket|zending|seguimiento|env[ií]o|paquete`
+// przesyłki", or join the two: "Sendungsnummer", "zendingnummer". A courier's
+// label names its waybill: "Waybill No.", "AWB", "número de guía".
+const PARCEL_WORDS = String.raw`suivi|colis|envoi|sendung|paket|pakket|zending|seguimiento|rastreo|env[ií]o|paquete|gu[ií]a`
   + String.raw`|tracciamento|spedizione|pacco|rastreio|rastreamento|encomenda|przesy[lł]k[ai]|paczk[ai]`;
 const NUMBER_WORDS = String.raw`num[eé]ro|n[uú]mero|numer|nummer|nr\.?|n\.?\s?[°º]`;
 const LABELLED_NUMBER = new RegExp(
   String.raw`(?:track(?:ing)?(?:\s*${LABEL_SUFFIX}|(?!\p{L}))`
-  + String.raw`|(?:parcel|shipment)(?:\s+(?:tracking(?!\p{L})|${LABEL_SUFFIX})|(?!\p{L}))`
+  + String.raw`|(?:parcel|shipment|waybill|awb)(?:\s+(?:tracking(?!\p{L})|${LABEL_SUFFIX})|(?!\p{L}))`
   + String.raw`|(?:(?:${NUMBER_WORDS})\s*(?:(?:de|du|di|del|do|da)\s+|d')?)?(?:${PARCEL_WORDS})(?!\p{L})(?:\s*(?:${NUMBER_WORDS}))?`
   + String.raw`|\p{L}*(?:sendungs|paket|tracking|zending)nummer)`
   + String.raw`(?:\s+(?:is|est|es|ist|lautet|è|é|jest)(?:\s+(?:le|el|il|o))?(?![\p{L}0-9]))?\s*[:#-]?\s*`
