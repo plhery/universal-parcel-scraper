@@ -104,6 +104,15 @@
       "note": "Loaded onto the wrong vehicle at the depot. DPD takes the parcel through its network again, so another depot scans it before its delivery."
     },
     {
+      "code": "ERROR/DELIVERY_ERROR",
+      "wording": "Unfortunately, parcel was not delivered.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The round did not deliver the parcel. It comes back to the depot, which scans it again before another round."
+    },
+    {
       "code": "RECEIVER_PICKUP",
       "wording": "Paket durch Empfänger abgeholt",
       "stage": "delivered",

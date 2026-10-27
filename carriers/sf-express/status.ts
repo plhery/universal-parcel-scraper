@@ -28,7 +28,7 @@ const CODES = new Map<string, ClassifiedStatus>([
   ...['14', '30', '31', '36', '105', '106', '88', '89', '205', '201', '206', '646', '202', '626']
     .map((code) => [code, TRANSIT] as const),
   // In transit, on the road, on a flight or at a stopover, departed or arrived.
-  ...['98', '208', '649', '310', '115', '116', '302', '305'].map((code) => [code, TRANSIT] as const),
+  ...['98', '208', '649', '310', '115', '116', '302', '305', '570'].map((code) => [code, TRANSIT] as const),
   // An international leg: departed from or arrived at a transit place on a flight, and waiting at one.
   ...['10', '11', '1105', '1106'].map((code) => [code, TRANSIT] as const),
   ...['605', '16'].map((code) => [code, { stage: 'customs', status: 'in_transit' } as const] as const),

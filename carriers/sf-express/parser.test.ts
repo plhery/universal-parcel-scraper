@@ -106,6 +106,7 @@ describe('SF Express public route parsing', () => {
       ['116', '', 'in_transit', 'in_transit'], // A flight's stopover
       ['302', '', 'in_transit', 'in_transit'], // Departed for the next centre
       ['305', '', 'in_transit', 'in_transit'], // Arrived at a centre
+      ['570', '', 'in_transit', 'in_transit'], // Vehicle departed, between two centres
       ['605', '', 'customs', 'in_transit'], // Under customs clearance
       ['16', '', 'customs', 'in_transit'], // Under customs clearance, please wait
       ['10', '', 'in_transit', 'in_transit'], // Departed from a transit place on a flight

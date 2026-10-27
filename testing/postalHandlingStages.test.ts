@@ -14,6 +14,7 @@ describe('postal handling labels in universal histories', () => {
     ['Item is ready for delivery in destination country', 'in_transit'],
     ['Item in process in office of exchange', 'in_transit'],
     ['Item in process in office of exchange. The item is being processed in the international terminal.', 'in_transit'],
+    ['Acceptance of incoming shipment at the exchange office', 'in_transit'],
     ['Item received for transport', 'accepted'],
     ['Your package has been dropped off by the sender at our postal partner in its country of origin.', 'accepted'],
     ['The item is on its way to the destination country.', 'in_transit'],

@@ -428,9 +428,12 @@ export function trackingLanguageStage(description: string): Stage | undefined {
     || /^hand(?:ed )?over to (?:the )?(?:last|final)[- ]mile(?: (?:carrier|courier|(?:delivery )?partner|provider))?$/.test(text)) return 'in_transit';
   // Posting/collection by the carrier, not recipient pickup or data submission.
   if (/^(?:the |your )?(?:item|package|parcel|shipment) (?:has been |was |is )?(?:received for transport|(?:dropped off|deposited) by (?:the )?sender (?:at|with) (?:our |the |a )?postal partner)\b/.test(text)) return 'accepted';
-  // A vehicle load and a gateway scan prove handling, but do not name the delivery round.
+  // A vehicle load and a gateway scan prove handling, but do not name the delivery round. So does an
+  // office of exchange taking in mail from abroad, as a provider words Magyar Posta's "A bejövő
+  // küldemény átvétele a kicserélőben".
   if (/^(?:load vehicle|scan ok gateway)$/.test(text)
-    || /^(?:the )?item in process in office of exchange\b/.test(text)) return 'in_transit';
+    || /^(?:the )?item in process in office of exchange\b/.test(text)
+    || /^acceptance of (?:the )?incoming (?:shipment|item|mail) at the exchange office$/.test(text)) return 'in_transit';
   // Speedy's scans as providers relay them: its courier's collection, then an
   // office's receipt and a handover to a partner abroad, as its own map reads them.
   if (/^courier pick up$/.test(text)) return 'accepted';

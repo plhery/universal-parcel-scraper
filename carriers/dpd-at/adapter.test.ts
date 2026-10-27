@@ -282,7 +282,7 @@ describe('DPD Austria status vocabulary', () => {
     // The numeric codes are DPD's group tracker's scan types, which this adapter does not read.
     const states = (statuses.entries as { code?: string; wording: string; stage?: string }[])
       .filter((entry) => entry.stage && /^[A-Z_]+(?:\/[A-Z_]+)?$/.test(entry.code ?? ''));
-    expect(states).toHaveLength(14);
+    expect(states).toHaveLength(15);
     for (const entry of states) {
       expect(statusMap.stage(entry.code!, entry.wording.toLowerCase()), entry.code).toBe(entry.stage);
       expect(dpdAtStage(entry.code!, entry.wording)?.stage, entry.code).toBe(entry.stage);
@@ -292,7 +292,7 @@ describe('DPD Austria status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'dpd-at', providerCode: 'SYNTHETIC', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     // A hand-over says nothing without where to; it falls to the shared wording rules.
     expect(statusMap.stage('HANDOVER', 'paket übergeben')).toBeUndefined();
-    // Of myDPD's errors only the misload is known.
+    // Of myDPD's errors only the misload and the failed delivery are known.
     expect(statusMap.stage('ERROR/SYNTHETIC', 'synthetic note')).toBeUndefined();
     expect(dpdAtStage('IN_DELIVERY/SYNTHETIC', 'In Zustellung')).toEqual({ stage: 'out_for_delivery', source: 'carrier_map' });
     expect(dpdAtStage('SYNTHETIC', 'Synthetic note')).toBeNull();

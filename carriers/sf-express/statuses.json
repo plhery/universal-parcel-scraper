@@ -303,6 +303,13 @@
       "note": "Official Taiwan routes opCode; the remark says the shipment arrived at an operation centre."
     },
     {
+      "code": "570",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "Official Taiwan routes opCode; the remark reads \"Vehicle departed\", between a centre's departure and the next centre's arrival."
+    },
+    {
       "code": "605",
       "stage": "customs",
       "confirmedBy": "live",

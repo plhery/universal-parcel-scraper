@@ -23,6 +23,7 @@ const QUALIFIED: ReadonlyMap<string, Stage> = new Map([
   ['HANDOVER/SHOP', 'ready_for_pickup'], // Left at a Pickup parcelshop for collection, after an attempt.
   ['TAKEOVER/SHOP', 'ready_for_pickup'], // Taken over by the Pickup parcelshop it was left at.
   ['ERROR/LOAD_ERROR', 'in_transit'], // Loaded onto the wrong vehicle: it goes through DPD's network again.
+  ['ERROR/DELIVERY_ERROR', 'failed_attempt'], // Not delivered on the round: it goes back to the depot.
 ]);
 
 /** The stage myDPD's names give a provider code. */

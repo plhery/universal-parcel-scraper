@@ -125,6 +125,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The local courier's delivery round."
+    },
+    {
+      "wording": "Delivered by post man",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The local post's delivery to the recipient."
     }
   ]
 }
