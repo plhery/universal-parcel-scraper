@@ -1255,6 +1255,12 @@
     "reason": "Nine digits are printed by many carriers, and EuroExpress publishes no prefix or check that would set its shipment codes apart."
   },
   {
+    "carrier": "eushipments",
+    "pattern": "^\\d{8}$",
+    "kind": "collision",
+    "reason": "euShipments finds an order by the last-mile courier's number, and the eight digits seen share their shape with other carriers' numbers, so the shape cannot name euShipments."
+  },
+  {
     "carrier": "evdemo-lojistik",
     "pattern": "^1(?:0[1-9]|[12]\\d|3[01])(?:0[1-9]|1[0-2])\\d{7}$",
     "kind": "by_design",

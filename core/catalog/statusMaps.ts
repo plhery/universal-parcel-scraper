@@ -206,6 +206,7 @@ import { statusMap as estes } from '../../carriers/estes/status.js';
 import { statusMap as estesForwarding } from '../../carriers/estes-forwarding/status.js';
 import { statusMap as eurodis } from '../../carriers/eurodis/status.js';
 import { statusMap as euroexpressBa } from '../../carriers/euroexpress-ba/status.js';
+import { statusMap as eushipments } from '../../carriers/eushipments/status.js';
 import { statusMap as evdemoLojistik } from '../../carriers/evdemo-lojistik/status.js';
 import { statusMap as evri } from '../../carriers/evri/status.js';
 import { statusMap as evriUk } from '../../carriers/evri-uk/status.js';
@@ -672,7 +673,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
   'early-bird': earlyBird, 'easy-mail': easyMail,
   'ecms-express': ecmsExpress, econt, ecoscooting, ecourier, 'egypt-post': egyptPost, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,
-  envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, eurodis, 'euroexpress-ba': euroexpressBa,
+  envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, eurodis, 'euroexpress-ba': euroexpressBa, eushipments,
   'evdemo-lojistik': evdemoLojistik, evri, 'evri-uk': evriUk, evropat, ewe, exelot,
   'exline-kz': exlineKz, exmate, 'express-one': expressOne, 'fan-courier': fanCourier, 'far-international': farInternational, 'fargo-courier': fargoCourier, 'fargo-uz': fargoUz, fastdrop,
   fastfrate, fedex, 'fedex-freight': fedexFreight, 'fedex-international-connect': fedexInternationalConnect, 'fedex-pl': fedexPl, fermopoint, 'fg-delivery': fgDelivery, 'first-line': firstLine,

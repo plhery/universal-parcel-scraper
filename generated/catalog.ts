@@ -13733,6 +13733,32 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "eushipments": {
+    "displayName": "euShipments",
+    "color": "#0a8fcf",
+    "aliases": [
+      "eu Shipments"
+    ],
+    "countries": [
+      "BG",
+      "RO",
+      "HR",
+      "SI",
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "eushipments",
+      "localClocks": true
+    },
+    "canaryUrl": "https://eushipments.com/tracking",
+    "trackingUrlTemplate": "https://eushipments.com/tracking",
+    "trackingSearchUrl": "https://eushipments.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "evdemo-lojistik": {
     "displayName": "Evdemo Lojistik",
     "color": "#e3590f",
@@ -33482,6 +33508,7 @@ export const CARRIER_IDS = [
   "eurodis",
   "euroexpress-ba",
   "europochta",
+  "eushipments",
   "evdemo-lojistik",
   "evri-uk",
   "evropat",
@@ -34294,6 +34321,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "eurodis": [],
   "euroexpress-ba": [],
   "europochta": ["europochta-1"],
+  "eushipments": [],
   "evdemo-lojistik": [],
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
   "evropat": [],

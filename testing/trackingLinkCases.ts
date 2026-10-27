@@ -1935,6 +1935,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  eushipments: 'euShipments\' tracking page takes the number only in its form, which posts it to a handler, so no address opens one order',
   'ecms-express': 'Opening a numbered tracking link requires an arithmetic picture CAPTCHA; the adapter solves the separate guest API flow.',
   'israel-post': 'The public tracking page blocks requests before the tracking form; the adapter uses the native guest API.',
   zto: 'the domestic tracking page asks for Dingxiang verification before returning a shipment; the link opens the search form',

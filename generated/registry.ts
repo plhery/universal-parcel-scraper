@@ -197,6 +197,7 @@ import { adapter as estes } from '../carriers/estes/adapter.js';
 import { adapter as estesForwarding } from '../carriers/estes-forwarding/adapter.js';
 import { adapter as eurodis } from '../carriers/eurodis/adapter.js';
 import { adapter as euroexpressBa } from '../carriers/euroexpress-ba/adapter.js';
+import { adapter as eushipments } from '../carriers/eushipments/adapter.js';
 import { adapter as evdemoLojistik } from '../carriers/evdemo-lojistik/adapter.js';
 import { adapter as evri } from '../carriers/evri/adapter.js';
 import { adapter as evriUk } from '../carriers/evri-uk/adapter.js';
@@ -832,6 +833,7 @@ export const REGISTRY: RegistryDefinition = {
     "estes-forwarding": estesForwarding,
     "eurodis": eurodis,
     "euroexpress-ba": euroexpressBa,
+    "eushipments": eushipments,
     "evdemo-lojistik": evdemoLojistik,
     "evri": evri,
     "evri-uk": evriUk,
@@ -1513,6 +1515,7 @@ export const REGISTRY: RegistryDefinition = {
     "eurodis": "eurodis",
     "euroexpress-ba": "euroexpress-ba",
     "europochta": "universal",
+    "eushipments": "eushipments",
     "evdemo-lojistik": "evdemo-lojistik",
     "evri": "evri",
     "evri-uk": "evri-uk",
