@@ -71,6 +71,7 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   'we have x-rayed your parcel as part of our normal security procedures': 'in_transit',
   "we've received your order details, but have not yet received your parcel": 'registered',
   "we've received your order details, and we're expecting your parcel shortly": 'registered',
+  'your parcel has been dropped off at a dpd pickup shop': 'accepted',
 };
 
 // A round that missed the recipient, with the day of the next one.
