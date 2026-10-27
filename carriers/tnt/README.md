@@ -26,7 +26,8 @@ postcode or account is required.
   check. `WW` is no country, so no post issues the code. A country code in place of `WW`,
   as ExpressConnect's examples also print, stays with the generic postal carrier: posts
   issue `G` series codes too.
-- A tnt.com tracking link names TNT for the consignment in its `cons` parameter.
+- A tnt.com tracking link names TNT for the consignment in its `cons` parameter. The
+  Spanish, French and Swiss Italian sites give the tracking page its own path.
 - tnt.com lists every consignment that carried the number, since numbers are reused.
   Only consignments whose own number matches are read, and the one with the most recent
   scan is the parcel. References, signatories and addresses are not kept, except the

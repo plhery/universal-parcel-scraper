@@ -707,6 +707,9 @@ describe('carrier links limited to some pages of their host', () => {
     for (const page of [
       'https://www.tnt.com/express/it_it/site/shipping-tools/tracking.html?searchType=con&cons=',
       'https://www.tnt.com/express/en_gb/site/shipping-tools/tracking.html?respCountry=gb&respLang=en&searchType=CON&cons=',
+      'https://www.tnt.com/express/es_es/site/herramientas-envio/seguimiento.html?searchType=CON&cons=',
+      'https://www.tnt.com/express/fr_fr/site/outils-expedition/suivi.html?searchType=con&cons=',
+      'https://www.tnt.com/express/it_ch/site/strumenti-spedizione/tracking.html?searchType=con&cons=',
     ]) {
       for (const number of ['123456785', 'GE123456785WW']) {
         expect(parseTrackingInput(`${page}${number}`)).toMatchObject({ trackingNumber: number, carrier: 'tnt', confidence: 'high', source: 'link' });
