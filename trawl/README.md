@@ -54,6 +54,12 @@ with its phase retained in a `china-post.verification` warning.
 The `china-post.form-reload` warning records whether the form recovered and
 a bound scan reply arrived, without identifiers or page content. Its two-scan guest window stays marked
 incomplete; the helper enters no phone digits and signs into no account.
+JD's standalone single-icon helper segments the opaque prompt and requires shape
+and colour to match in the same rotated pose, with a margin over other locations.
+It declines ambiguous images and layouts outside its supported geometry. Its worker
+has a deadline and concurrency limit; click geometry binds both displayed images.
+The tracking caller owns the original guest session, official widget acceptance and
+whole-waybill history binding. A planned click alone is not accepted verification.
 DHL Poland uses TRAWL's native checkbox and audio solver.
 Poste Italiane uses that solver only after its tracking API requests a CAPTCHA. Its page
 submits the issued token and the helper captures the matching history, keeping the earlier
