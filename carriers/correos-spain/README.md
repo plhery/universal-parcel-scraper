@@ -32,9 +32,10 @@ Correos de Chile (`correos-chile`) are separate carriers.
 
 - Detection covers checksum-valid `…ES` S10 numbers, `PR` + 15 digits + `C`, and the
   23-character codes: a product prefix (`P…` parcels such as `PQ`, `PK`, `PH`; `D…`
-  returns; `CD` certified letters), a 4-character label code, 16 digits and a check letter.
-  The last seven digits are the package number and the destination postcode. Correos
-  Express's all-digit 23-character numbers don't match. The adapter itself accepts any code
+  returns; `CD` certified letters; others such as `L3`, `UX` and `VE` on Correos's tracker), a
+  4-character label code, 16 digits and a check letter. The prefixes vary, so the check letter
+  gates the rule. The last seven digits are the package number and the destination postcode.
+  Correos Express's all-digit 23-character numbers don't match. The adapter itself accepts any code
   and lets the envelope decide.
 - The localizador serves the whole Correos group. An all-digit number whose coded scans are all
   Correos Express situation codes (`X…`) is refused as invalid input: Correos's own codes carry

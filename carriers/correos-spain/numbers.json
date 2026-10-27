@@ -499,10 +499,238 @@
         "reportedRole": "shipment_tracking"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "correos-spain",
+        "confidence": "high"
       },
-      "note": "Public report names this carrier; shipment identity remains unconfirmed."
+      "note": "A code its sender quotes in a public complaint against Correos. It carries the L3 prefix of the codes archived from Correos's tracker, and its last letter passes Correos's check."
+    },
+    {
+      "number": "CX00A00217339570130009D",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240923113626/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=CX00A00217339570130009D",
+        "date": "2024-09-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "L326SP0422013750108070Y",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240402221728/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=L326SP0422013750108070Y",
+        "date": "2024-04-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "L34RNM0415204990119180L",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230718213608/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=L34RNM0415204990119180L",
+        "date": "2023-07-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "L36CF50495052550128070L",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230423013535/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=L36CF50495052550128070L",
+        "date": "2023-04-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "L38BF90707754330128070W",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240715174428/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=L38BF90707754330128070W",
+        "date": "2024-07-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "L39EXQ0438935290128070D",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250123104340/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=L39EXQ0438935290128070D",
+        "date": "2025-01-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "L3A3BA0735641560128070R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251013170410/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=L3A3BA0735641560128070R",
+        "date": "2025-10-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "UX7AX80446656360126003S",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210421222707/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=UX7AX80446656360126003S",
+        "date": "2021-04-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "UX7K9K0475340990138650W",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20211102142853/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=UX7K9K0475340990138650W",
+        "date": "2021-11-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "VD0CRA0000641420028660G",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250210161045/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=VD0CRA0000641420028660G",
+        "date": "2025-02-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "VD0DQI0000928450028002J",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20241107152338/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=VD0DQI0000928450028002J",
+        "date": "2024-11-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
+    },
+    {
+      "number": "VE55E14128101281058759J",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210427183819/https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number=VE55E14128101281058759J",
+        "date": "2021-04-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this code on Correos's own tracker. Its last letter passes Correos's check."
     }
   ]
 }

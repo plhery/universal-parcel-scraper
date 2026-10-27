@@ -5095,7 +5095,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^(?:[PD][A-Z]|CD)[A-Z0-9]{4}\\d{16}[A-Z]$",
+        "pattern": "^[A-Z][A-Z0-9]{5}\\d{16}[A-Z]$",
         "confidence": "high",
         "checksum": "correos-spain"
       },

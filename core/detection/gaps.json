@@ -747,12 +747,6 @@
     "reason": "AGBC issues some registered numbers in the S10 layout whose check digit does not validate; generic postal detection skips them and national posts get no S10 rule."
   },
   {
-    "carrier": "correos-spain",
-    "pattern": "^L[A-Z0-9]{22}$",
-    "kind": "open",
-    "reason": "A public report uses a checksum-valid L reference, but the service and complete family remain unconfirmed."
-  },
-  {
     "carrier": "courier-center",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

@@ -26,4 +26,13 @@ describe('Correos check letter', () => {
       expect(detectCarrierMatch(code).candidates).not.toContain('correos-spain');
     }
   });
+
+  it('claims a 23-character code under any product letters when its check letter holds', () => {
+    for (const code of ['L300ZZ0000000010100000T', 'UX00ZZ0000000010100000T', 'VE00ZZ0000000010100000M']) {
+      expect(detectCarrierMatch(code), code).toMatchObject({ carrier: 'correos-spain', confidence: 'high' });
+    }
+    for (const code of ['L300ZZ0000000010100000R', 'VE00ZZ0000000010100000Y', '9X00ZZ0000000010100000H']) {
+      expect(detectCarrierMatch(code).candidates, code).not.toContain('correos-spain');
+    }
+  });
 });
