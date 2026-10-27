@@ -254,6 +254,14 @@
       "note": "The last-mile carrier's sorting scan after its arrival one, before it accepts the parcel for delivery; Yanwen gives it the code of its batch handover."
     },
     {
+      "wording": "Your shipment has departed from the transit origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The last-mile carrier's departure from its transit hub, Cainiao's TRANSFER_DEPART, relayed after Yanwen's batch handover."
+    },
+    {
       "wording": "Manifest created",
       "language": "en",
       "stage": "in_transit",
