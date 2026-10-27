@@ -1711,6 +1711,7 @@
     {
       "number": "JG000052122659",
       "role": "quarantined",
+      "quarantine": true,
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/spedizione-jg000052122659/cf9d7e7af51a9bbdc2",

@@ -31686,6 +31686,22 @@
     ]
   },
   {
+    "input": "2IVC0000A00001",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "2IVC0032427011",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
     "input": "2L01615507571",
     "carrier": "la-poste",
     "confidence": "high",
@@ -71262,6 +71278,14 @@
     ]
   },
   {
+    "input": "CX00A00217339570130009D",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
     "input": "CX712034439LV",
     "carrier": "latvijas-pasts",
     "confidence": "high",
@@ -73141,10 +73165,50 @@
     "candidates": []
   },
   {
+    "input": "EF00001257029",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "EF60000081634",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "EF60000395359",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "EF60000507826",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
     "input": "EFE45711066",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "EG00000102369",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
   },
   {
     "input": "EG009234467HK",
@@ -75598,18 +75662,18 @@
   },
   {
     "input": "GF00000000001",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "poste-italiane",
+    "confidence": "high",
     "candidates": [
-      "poste-italiane",
-      "la-poste"
-    ],
-    "preferred": [
       "poste-italiane"
-    ],
-    "asked": [
-      "poste-italiane",
-      "la-poste"
+    ]
+  },
+  {
+    "input": "GF00000821723",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
     ]
   },
   {
@@ -78314,11 +78378,57 @@
     ]
   },
   {
+    "input": "JF99985120573",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
     "input": "JFV247545960",
     "carrier": "purolator",
     "confidence": "high",
     "candidates": [
       "purolator"
+    ]
+  },
+  {
+    "input": "JG00000104876",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "JG00004602179",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "JG00004602183",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
+    ]
+  },
+  {
+    "input": "JG000052122659",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "JG00005481191",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
     ]
   },
   {
@@ -79934,10 +80044,60 @@
     ]
   },
   {
+    "input": "L326SP0422013750108070Y",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "L34RNM0415204990119180L",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
     "input": "L35HNS0712389090108070V",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "L36CF50495052550128070L",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "L38BF90707754330128070W",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "L39EXQ0438935290128070D",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "L3A3BA0735641560128070R",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
   },
   {
     "input": "L511058521",
@@ -80524,6 +80684,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "LF40001066130",
+    "carrier": "poste-italiane",
+    "confidence": "high",
+    "candidates": [
+      "poste-italiane"
     ]
   },
   {
@@ -93162,6 +93330,22 @@
     ]
   },
   {
+    "input": "UX7AX80446656360126003S",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "UX7K9K0475340990138650W",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
     "input": "UX911572560FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -93375,6 +93559,22 @@
     "candidates": []
   },
   {
+    "input": "VD0CRA0000641420028660G",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
+    "input": "VD0DQI0000928450028002J",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
+    ]
+  },
+  {
     "input": "VD2090015682",
     "carrier": "unknown",
     "confidence": "low",
@@ -93400,6 +93600,14 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "VE55E14128101281058759J",
+    "carrier": "correos-spain",
+    "confidence": "high",
+    "candidates": [
+      "correos-spain"
     ]
   },
   {
@@ -94108,6 +94316,20 @@
     ]
   },
   {
+    "input": "XA737635351IT",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "poste-italiane"
+    ],
+    "preferred": [
+      "poste-italiane"
+    ],
+    "asked": [
+      "poste-italiane"
+    ]
+  },
+  {
     "input": "XAO050055268",
     "carrier": "purolator",
     "confidence": "high",
@@ -94201,6 +94423,20 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "XQ001582388IT",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "poste-italiane"
+    ],
+    "preferred": [
+      "poste-italiane"
+    ],
+    "asked": [
+      "poste-italiane"
     ]
   },
   {
@@ -94340,6 +94576,20 @@
     "confidence": "high",
     "candidates": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "XZ001680614IT",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "poste-italiane"
+    ],
+    "preferred": [
+      "poste-italiane"
+    ],
+    "asked": [
+      "poste-italiane"
     ]
   },
   {
