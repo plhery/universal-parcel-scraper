@@ -44,6 +44,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "LS004",
+      "wording": "Arrivé au site de prise en charge",
+      "language": "fr",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The parcel reaches the site that takes it in, after the sender's preparation: GOFO's first scan of it."
+    },
+    {
       "code": "100",
       "wording": "Votre colis est en cours de préparation par l'expéditeur",
       "language": "fr",
