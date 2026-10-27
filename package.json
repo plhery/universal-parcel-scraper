@@ -1,6 +1,6 @@
 {
   "name": "universal-parcel-scraper",
-  "version": "0.761.0",
+  "version": "0.761.1",
   "description": "Self-hosted parcel tracking: carrier detection, dedicated scrapers and optional universal providers.",
   "type": "module",
   "license": "Apache-2.0",
@@ -57,6 +57,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "prepare": "npm run build",
+    "version": "npm run build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "test": "vitest run",

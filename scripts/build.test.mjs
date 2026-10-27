@@ -46,4 +46,17 @@ test('build derives source and shipped OpenAPI versions from the manifest, inclu
       assert.deepEqual(JSON.parse(readFileSync(path.join(root, file), 'utf8')), expected, file);
     }
   }
+  // Release builds first, then npm assigns the final prerelease version.
+  const scripts = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts;
+  writeFileSync(path.join(root, 'package.json'), JSON.stringify({ type: 'module', version: '1.2.4-main.17',
+    scripts: { build: scripts.build, version: scripts.version } }));
+  const result = spawnSync(process.platform === 'win32' ? 'npm.cmd' : 'npm',
+    ['version', '1.2.5-main.18', '--no-git-tag-version', '--ignore-scripts=false'],
+    { cwd: root, encoding: 'utf8', shell: process.platform === 'win32',
+      env: { ...process.env, PATH: `${path.join(root, 'bin')}${path.delimiter}${process.env.PATH}` } });
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  for (const file of ['server/openapi.json', 'dist/server/openapi.json']) {
+    assert.deepEqual(JSON.parse(readFileSync(path.join(root, file), 'utf8')),
+      { ...document, info: { ...document.info, version: '1.2.5-main.18' } }, file);
+  }
 });

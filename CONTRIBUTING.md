@@ -146,7 +146,8 @@ when either fails. A dispatch on a commit they have not run on fails until they 
 it. After rerunning a failed run of either, rerun the release run's failed jobs.
 
 Raise `package.json` and `package-lock.json` together. `npm run build` writes that version
-into the source OpenAPI document and its packaged copy.
+into the source OpenAPI document and its packaged copy. The `npm version` hook rebuilds
+after assigning the final version, including prereleases.
 
 The TRAWL image is published with its upstream and patch source archives, under its AGPL
 license.
