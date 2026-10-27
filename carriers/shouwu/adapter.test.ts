@@ -104,7 +104,7 @@ describe('Shouwu International HTTP adapter', () => {
     }), DELIVERED);
     // In Transit covers the delivery round, Preparing the warehouse taking the parcel.
     expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1776327314, 'Out for Delivery'), trace(1775990469, 'Departed from origin airport')]))
-      .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'wording:language' });
+      .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'carrier_map' });
     expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1775990469, 'Departed from origin airport')]))
       .toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
     // The handover to a carrier starts In Transit; the order scan before it is the registration.
@@ -129,7 +129,7 @@ describe('Shouwu International HTTP adapter', () => {
     // A status the map does not know, or none, leaves the newest staged scan; a late booking record is no step back.
     for (const status of ['TRACE_STATUS_SAMPLE', null]) {
       expect(staged(status, [trace(1776361152, 'Shipment information received'), trace(1776327314, 'Out for Delivery')]), String(status))
-        .toMatchObject({ current_stage: 'out_for_delivery', current_stage_source: 'wording:language', last_status_text: 'Shipment information received' });
+        .toMatchObject({ current_stage: 'out_for_delivery', current_stage_source: 'carrier_map', last_status_text: 'Shipment information received' });
       const unstaged = staged(status, [trace(1776361152, 'Sample Status Note')]);
       expect(unstaged, String(status)).toMatchObject({ status: 'unknown', last_status_text: 'Sample Status Note' });
       expect(unstaged, String(status)).not.toHaveProperty('current_stage');

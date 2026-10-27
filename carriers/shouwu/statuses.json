@@ -118,6 +118,13 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The local courier's delivery round."
     }
   ]
 }
