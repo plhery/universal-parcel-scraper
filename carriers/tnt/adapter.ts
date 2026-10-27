@@ -2,6 +2,7 @@
 import { load } from 'cheerio';
 import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { tntConsignmentCheckDigit } from '../../core/detection/numericChecksums.js';
 import { ChallengeError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { countryCode, explicitOffsetTime, zonedTime } from '../../core/time/index.js';
@@ -21,11 +22,15 @@ export function normalizeTntFranceNumber(raw: string): string {
   return number;
 }
 
-/** A consignment's nine digits; a label can print them between the UPU-style letters GE and WW. */
+/**
+ * A consignment's nine digits; a label can print them between the UPU-style letters GE and WW.
+ * tnt.com completes an eight-digit serial with its Mod 11 check digit, so this does too.
+ */
 export function normalizeTntExpressNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
   const consignment = /^GE(\d{9})WW$/.exec(number)?.[1] ?? number;
-  if (!/^\d{9}$/.test(consignment)) throw new InvalidInputError(EXPRESS_PROVIDER, 'TNT direct tracking requires a 9-digit consignment or a 16-digit TNT France consignment');
+  if (/^\d{8}$/.test(consignment)) return consignment + tntConsignmentCheckDigit(consignment);
+  if (!/^\d{9}$/.test(consignment)) throw new InvalidInputError(EXPRESS_PROVIDER, 'TNT direct tracking requires an 8- or 9-digit consignment or a 16-digit TNT France consignment');
   return consignment;
 }
 
@@ -189,14 +194,16 @@ export class TntExpressTracker {
     const url = new URL(EXPRESS_ENDPOINT);
     url.search = new URLSearchParams({ con: number, searchType: 'CON', locale: 'en_GB', channel: 'OPENTRACK' }).toString();
     const { bytes } = await fetchTnt(url, 'application/json', EXPRESS_PROVIDER, context, this.options);
-    return parseTntExpressResponse(parseJsonBytes(bytes, EXPRESS_PROVIDER), number);
+    const result = parseTntExpressResponse(parseJsonBytes(bytes, EXPRESS_PROVIDER), number);
+    return /^\d{8}$/.test(normalizeTrackingNumber(rawNumber)) ? { ...result, canonical_tracking_number: number } : result;
   }
 }
 
 export const adapter: AdapterFactory = (environment) => {
   const france = new TntFranceTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   const express = new TntExpressTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
-  // TNT France consignments have 16 digits; tnt.com rejects them.
+  // TNT France consignments have 16 digits; tnt.com rejects them. An eight-digit serial is tracked
+  // but never recognized: tnt.com lists a consignment for almost any serial, since TNT reuses them.
   const lookup = (number: string, context?: TrackingContext) => /^\d{16}$/.test(normalizeTrackingNumber(number))
     ? france.fetch(number, context) : express.fetch(number, context);
   return {

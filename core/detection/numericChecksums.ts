@@ -29,11 +29,15 @@ export function isValidSaiaPro(value: string): boolean {
 export function isValidTntConsignmentNumber(value: string): boolean {
   if (value.length !== 9 || !/^\d{9}$/.test(value)) return false;
   const check = Number(value[8]);
-  if (Number(value.slice(0, 8)) % 7 === check) return true;
+  return Number(value.slice(0, 8)) % 7 === check || tntConsignmentCheckDigit(value.slice(0, 8)) === check;
+}
+
+/** The Mod 11 check digit of a consignment's eight-digit serial, the one tnt.com adds to a serial typed alone. */
+export function tntConsignmentCheckDigit(serial: string): number {
   const weights = [8, 6, 4, 2, 3, 5, 9, 7];
-  const sum = weights.reduce((total, weight, index) => total + Number(value[index]) * weight, 0);
+  const sum = weights.reduce((total, weight, index) => total + Number(serial[index]) * weight, 0);
   const digit = 11 - sum % 11;
-  return (digit === 11 ? 5 : digit === 10 ? 0 : digit) === check;
+  return digit === 11 ? 5 : digit === 10 ? 0 : digit;
 }
 
 /** Mod 11 with weights 2 to 7 repeating from the right; a result of 10 or 11 becomes 0. */

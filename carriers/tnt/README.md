@@ -11,6 +11,8 @@ postcode or account is required.
 
 - 9 digits: `https://www.tnt.com/api/v3/shipment?con={number}&searchType=CON&locale=en_GB&channel=OPENTRACK`.
   A `notFound` entry for the number is a clean not-found, which recognition uses.
+- 8 digits: the same request for the serial and its Mod 11 check digit, which is what
+  tnt.com looks up when given the serial alone. The 9 digits become the canonical number.
 - `GE`, 9 digits and `WW`: the same request for the 9 digits. ExpressConnect's guide and
   tnt.it's tracking guide print consignments this way, with or without the letters.
 - 16 digits: the national consignment detail page on tnt.fr. tnt.com rejects these
@@ -26,6 +28,10 @@ postcode or account is required.
   check. `WW` is no country, so no post issues the code. A country code in place of `WW`,
   as ExpressConnect's examples also print, stays with the generic postal carrier: posts
   issue `G` series codes too.
+- TNT's help pages speak of 8- or 9-digit numbers: the serial with or without its check digit.
+  Eight digits have no check to filter on and tnt.com lists a consignment for almost any
+  serial, so detection has no 8-digit rule and recognition never asks for one; only a reader's
+  or provider's choice of TNT tracks it.
 - A tnt.com tracking link names TNT for the consignment in its `cons` parameter. The
   Spanish, French and Swiss Italian sites give the tracking page its own path.
 - tnt.com lists every consignment that carried the number, since numbers are reused.

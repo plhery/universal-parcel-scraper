@@ -49,8 +49,9 @@ describe('TNT France public tracking', () => {
     expect(() => normalizeTntFranceNumber('123456789')).toThrow(expect.objectContaining({ kind: 'invalid_input', message: expect.stringContaining('16-digit') }));
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => new URL(String(url)).hostname === 'www.tnt.fr'
       ? new Response(fixture()) : new Response(JSON.stringify(express())));
+    // tnt.com lists a consignment for almost any eight-digit serial, so recognition never asks it.
     await expect(tracker(fetcher).recognize!('12345678')).resolves.toEqual({ known: false });
-    await expect(tracker(fetcher).track({ number: '12345678' })).rejects.toMatchObject({ kind: 'invalid_input' });
+    await expect(tracker(fetcher).track({ number: '1234567' })).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
     await tracker(fetcher).track({ number: EXPRESS_NUMBER });
     await tracker(fetcher).track({ number: NUMBER });
@@ -178,6 +179,15 @@ describe('TNT international public tracking', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
     fetcher.mockResolvedValueOnce(new Response('', { status: 404 }));
     await expect(new TntExpressTracker({ fetcher }).fetch(EXPRESS_NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+  });
+
+  it('completes an eight-digit serial with its Mod 11 check digit, as tnt.com does', async () => {
+    expect(normalizeTntExpressNumber('10000000')).toBe('100000003');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(express()).replaceAll(EXPRESS_NUMBER, '100000003')));
+    await expect(tracker(fetcher).track({ number: '1000 0000' })).resolves.toMatchObject({ canonical_tracking_number: '100000003', status: expect.any(String) });
+    expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('con')).toBe('100000003');
+    const nine = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(express())));
+    await expect(tracker(nine).track({ number: EXPRESS_NUMBER })).resolves.not.toHaveProperty('canonical_tracking_number');
   });
 
   it('recognizes a nine-digit number only from a matching consignment', async () => {
