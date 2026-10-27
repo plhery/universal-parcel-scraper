@@ -79,6 +79,12 @@ export async function fetchBounded(
     allowHttpStatuses?: readonly number[];
     /** One retry for replayable reads only; never retry parsing or validation. */
     retryTransient?: boolean;
+    /**
+     * When the lookup ends, on `performance.now()`'s clock. A retry whose wait
+     * reaches it is not made: the first failure stands at once rather than
+     * when the lookup's signal ends the wait.
+     */
+    deadline?: number;
   },
 ): Promise<{ response: Response; bytes: Uint8Array }> {
   const maxBytes = options.maxBytes ?? DEFAULT_MAX_BYTES;
@@ -106,7 +112,8 @@ export async function fetchBounded(
       options.provider, response.status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined, diagnostics,
       requestDiagnostics(url, init, options.timeoutMs ?? 15_000));
     if (options.retryTransient && attempt === 0
-      && TRANSIENT_HTTP_STATUSES.has(response.status) && delay !== null) {
+      && TRANSIENT_HTTP_STATUSES.has(response.status) && delay !== null
+      && (options.deadline === undefined || performance.now() + delay < options.deadline)) {
       await cancelQuietly(response.body);
       if (await pausedBeforeRetry(delay, init.signal)) continue;
       // The body is gone, but the status the provider gave is still the answer.

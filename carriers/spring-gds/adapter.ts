@@ -11,7 +11,8 @@
  * then accepts a batch tracking request with it. The tracker keeps the token
  * for its later lookups. Both calls replay once after a transport failure or an
  * HTTP 502/503/504, and an HTTP 429 only when it supplies a short, valid
- * `Retry-After`. A 429 left standing names the wait PostNL asked for.
+ * `Retry-After` that ends before the lookup does. A 429 left standing names the
+ * wait PostNL asked for.
  *
  * The response echoes the requested barcodes, so the item whose `item` equals
  * the requested number is the only one read. PostNL answers an unknown barcode
@@ -340,7 +341,7 @@ export class PostNLTracker {
   }
 
   /** The shared visitor token, or a new one once it is close to expiring. */
-  private async visitorToken(signal: AbortSignal): Promise<{ value: string; reused: boolean }> {
+  private async visitorToken(signal: AbortSignal, deadline: number): Promise<{ value: string; reused: boolean }> {
     const requestedAt = this.now().getTime();
     if (this.cachedToken && requestedAt < this.cachedToken.expiresAt) return { value: this.cachedToken.value, reused: true };
     this.cachedToken = null;
@@ -352,6 +353,7 @@ export class PostNLTracker {
         timeoutMs: TOKEN_TIMEOUT_MS,
         maxBytes: 50_000,
         retryTransient: true,
+        deadline,
         fetcher: this.fetcher,
       },
     );
@@ -370,7 +372,7 @@ export class PostNLTracker {
   }
 
   /** The tracking request. A token PostNL refuses with HTTP 401 is not kept. */
-  private async track(trackingNumber: string, accessToken: string, signal: AbortSignal): Promise<Uint8Array> {
+  private async track(trackingNumber: string, accessToken: string, signal: AbortSignal, deadline: number): Promise<Uint8Array> {
     const { bytes } = await fetchBounded(
       TRACK_URL,
       {
@@ -384,6 +386,7 @@ export class PostNLTracker {
         timeoutMs: TRACK_TIMEOUT_MS,
         maxBytes: 1_000_000,
         retryTransient: true,
+        deadline,
         fetcher: this.fetcher,
       },
     ).catch((error: unknown) => {
@@ -394,14 +397,14 @@ export class PostNLTracker {
   }
 
   /** The domestic tracker's answer for a 3S barcode and the country and postcode of its delivery address. */
-  private async domestic(trackingNumber: string, address: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+  private async domestic(trackingNumber: string, address: string, signal: AbortSignal, timeoutMs: number, deadline: number): Promise<CarrierResult> {
     const key = `${encodeURIComponent(trackingNumber)}-${address}`;
     let bytes: Uint8Array;
     try {
       ({ bytes } = await fetchBounded(
         `${DOMESTIC_URL}/${key}?language=en`,
         { method: 'GET', headers: { Accept: 'application/json', 'Accept-Language': 'en-US,en;q=0.9', 'User-Agent': this.userAgent }, signal },
-        { provider: 'PostNL domestic tracking', timeoutMs, maxBytes: 1_000_000, retryTransient: true, fetcher: this.fetcher },
+        { provider: 'PostNL domestic tracking', timeoutMs, maxBytes: 1_000_000, retryTransient: true, deadline, fetcher: this.fetcher },
       ));
     } catch (error) {
       if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {
@@ -415,16 +418,16 @@ export class PostNLTracker {
   }
 
   /** The international tracker's answer, with the visitor token it needs. */
-  private async international(trackingNumber: string, signal: AbortSignal): Promise<CarrierResult> {
+  private async international(trackingNumber: string, signal: AbortSignal, deadline: number): Promise<CarrierResult> {
     try {
-      const token = await this.visitorToken(signal);
+      const token = await this.visitorToken(signal, deadline);
       let bytes: Uint8Array;
       try {
-        bytes = await this.track(trackingNumber, token.value, signal);
+        bytes = await this.track(trackingNumber, token.value, signal, deadline);
       } catch (error) {
         // A shared token PostNL no longer accepts is replaced once.
         if (!token.reused || !(error instanceof UpstreamHttpError) || error.status !== 401) throw error;
-        bytes = await this.track(trackingNumber, (await this.visitorToken(signal)).value, signal);
+        bytes = await this.track(trackingNumber, (await this.visitorToken(signal, deadline)).value, signal, deadline);
       }
       signal.throwIfAborted();
       return parsePostNLTrackingResponse(parseJsonBytes(bytes, 'PostNL tracking'), trackingNumber, this.now());
@@ -449,15 +452,15 @@ export class PostNLTracker {
         enabled: domestic,
         // Half of the budget at most, so the international tracker can still be asked.
         run: ({ signal, remainingMs }) => this.domestic(trackingNumber, address!, signal,
-          Math.max(1, Math.floor(Math.min(DOMESTIC_TIMEOUT_MS, remainingMs / 2)))),
+          Math.max(1, Math.floor(Math.min(DOMESTIC_TIMEOUT_MS, remainingMs / 2))), performance.now() + remainingMs),
       },
       {
         id: 'direct',
         // The international tracker shows parcels the domestic one does not.
         recovers: () => true,
-        run: async ({ signal, previousError }) => {
+        run: async ({ signal, remainingMs, previousError }) => {
           try {
-            return await this.international(trackingNumber, signal);
+            return await this.international(trackingNumber, signal, performance.now() + remainingMs);
           } catch (error) {
             if (!(error instanceof InputRequiredError) || !supplied) throw error;
             if (!address) {

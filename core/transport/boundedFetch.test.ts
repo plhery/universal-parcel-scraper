@@ -92,6 +92,21 @@ describe('bounded carrier request retries', () => {
     expect(fetcher.mock.calls[1]?.[1]?.signal).not.toBe(fetcher.mock.calls[0]?.[1]?.signal);
   });
 
+  it('fails at once when the wait Retry-After asks for reaches the lookup\'s end', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValue(new Response('Too many requests', { status: 429, headers: { 'Retry-After': '46' } }));
+    const result = fetchBounded(URL, {}, { ...OPTIONS, fetcher, deadline: performance.now() + 25_000 });
+    await expect(result).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 429, retryAfterMs: 46_000 });
+    expect(fetcher).toHaveBeenCalledOnce();
+    // A wait that ends before the lookup does is still made.
+    fetcher.mockReset().mockResolvedValueOnce(new Response('', { status: 429, headers: { 'Retry-After': '6' } }))
+      .mockResolvedValueOnce(new Response('tracking data'));
+    const retried = fetchBounded(URL, {}, { ...OPTIONS, fetcher, deadline: performance.now() + 25_000 });
+    await vi.advanceTimersByTimeAsync(6_000);
+    expect(decodeText((await retried).bytes)).toBe('tracking data');
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
   it('accepts an HTTP-date Retry-After without retrying early', async () => {
     vi.setSystemTime(new Date('2026-09-07T14:00:00Z'));
     const fetcher = vi.fn<typeof fetch>()

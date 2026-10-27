@@ -31,8 +31,9 @@ it; everything user-facing says PostNL.
    - `postnl.post/api/v1/tracking-items` takes the barcode with that token. The answer echoes
      a batch; only the item whose `item` equals the requested number is read.
    - Each call replays once after a transport failure or HTTP 502/503/504, and after a 429
-     only when it carries a short, valid `Retry-After`. Both calls share a cancellable
-     deadline; other errors are not retried. A 429 left standing is a rate limit whose
+     only when it carries a short, valid `Retry-After` that ends before the lookup does;
+     a longer wait fails the lookup at once, leaving the rest of the host's budget to other
+     sources. Both calls share a cancellable deadline; other errors are not retried. A 429 left standing is a rate limit whose
      message names the call and the wait PostNL asked for, or that it named none, so a
      host's log shows whether waiting longer would have served the lookup.
    - Unknown barcode: an ordinary item with no events and "barcode was not found" in

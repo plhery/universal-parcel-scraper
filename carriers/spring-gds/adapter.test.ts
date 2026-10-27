@@ -527,6 +527,16 @@ describe('PostNL complete lookup budget', () => {
     expect(fetcher).toHaveBeenCalledOnce();
   });
 
+  it('fails at once when PostNL asks for a wait longer than the lookup has left', async () => {
+    const fetcher = vi.fn<typeof fetch>(async (url) => String(url).endsWith('/tracking-items')
+      ? new Response('', { status: 429, headers: { 'Retry-After': '46' } }) : jsonResponse({ access_token: 'visitor-token' }));
+    const started = performance.now();
+    const error = await new PostNLTracker({ fetcher }).fetch(POSTNL_WRONG_NUMBER, { budgetMs: 25_000 }).catch((caught: unknown) => caught);
+    expect(error).toMatchObject({ kind: 'rate_limited', message: 'PostNL tracking refused the request with HTTP 429, asking to wait 46 s', retryAfterMs: 46_000 });
+    expect(performance.now() - started).toBeLessThan(5_000);
+    expect(fetcher.mock.calls.filter(([url]) => String(url).endsWith('/tracking-items'))).toHaveLength(1);
+  });
+
   it.each([
     ['120', 'tracking', 'PostNL tracking refused the request with HTTP 429, asking to wait 120 s', 120_000],
     [null, 'authentication', 'PostNL authentication refused the request with HTTP 429, without saying how long to wait', undefined],
