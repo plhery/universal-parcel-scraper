@@ -2333,7 +2333,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:20|52|6[2456]|8[02])\\d{22}$",
+        "pattern": "^(?:20|52|6[2-6]|8[02])\\d{22}$",
         "confidence": "low",
         "preferred": true
       },

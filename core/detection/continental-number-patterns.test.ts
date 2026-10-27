@@ -54,7 +54,7 @@ describe('continental shipment candidates', () => {
   });
 
   it('lists InPost first for the 24-digit prefixes its tracker answers, beside the other 24-digit carriers', () => {
-    for (const number of ['200000000000000000000001', '520000000000000000000001', '620000000000000000000001', '800000000000000000000001']) {
+    for (const number of ['200000000000000000000001', '520000000000000000000001', '620000000000000000000001', '630000000000000000000001', '800000000000000000000001']) {
       const detected = detectCarrierMatch(number);
       expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['inpost'] });
       expect(detected.candidates).toEqual(expect.arrayContaining(['austrian-post', 'bpost', 'ciblex']));
@@ -62,7 +62,7 @@ describe('continental shipment candidates', () => {
       expect(recognitionCandidates(number)[0]!.carrier).toBe('inpost');
     }
     // Express One prints 60 too.
-    for (const number of ['600000000000000000000001', '010000000000000000000001', '000000000000000000000001', '560000000000000000000001', '630000000000000000000001', '81000000000000000000001', '8000000000000000000000001']) {
+    for (const number of ['600000000000000000000001', '010000000000000000000001', '000000000000000000000001', '560000000000000000000001', '610000000000000000000001', '680000000000000000000001', '81000000000000000000001', '8000000000000000000000001']) {
       expect(detectCarrierMatch(number).preferred).not.toContain('inpost');
     }
     expect(recognitionCandidates('010000000000000000000001', { countryHint: 'AT' })[0]!.carrier).toBe('austrian-post');

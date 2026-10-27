@@ -429,6 +429,58 @@
         ]
       },
       "note": "Made-up number with the first two digits of parcels InPost's tracker answered. Detection lists InPost first for them."
+    },
+    {
+      "number": "630710456880381131954548",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20190104133530id_/https://api-shipx-pl.easypack24.net/v1/tracking/630710456880381131954548",
+        "date": "2019-01-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "InPost Paczkomat"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "inpost",
+          "ciblex",
+          "bpost",
+          "austrian-post"
+        ]
+      },
+      "note": "InPost's own tracking API answered for it, as an archived reply shows: a locker parcel returned to its sender."
+    },
+    {
+      "number": "632437537911500122716494",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20190925134552id_/https://api-shipx-pl.easypack24.net/v1/tracking/632437537911500122716494",
+        "date": "2019-09-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "InPost Paczkomat"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "inpost",
+          "ciblex",
+          "bpost",
+          "austrian-post"
+        ]
+      },
+      "note": "InPost's own tracking API answered for it, as an archived reply shows: an Allegro locker parcel, delivered."
     }
   ]
 }
