@@ -740,6 +740,31 @@
       "note": "An archived Belgian tracking link with brand code V1. Mondial Relay's tracker finds it with that brand and no postcode: a parcel from Portugal collected at a Belgian relay."
     },
     {
+      "number": "27877219",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260915072137/https://www.mondialrelay.com/en-gb/parcel-tracking/?country=PT&ens=V1VINTPT&exp=27877219",
+        "date": "2026-09-15",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Delivery in Portugal"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived international tracking link with brand code V1 and country PT. Mondial Relay's tracker finds it with that brand and no postcode: a parcel delivered in Portugal, whose recipient postcode it holds as four digits, a hyphen and three digits. The website finds it by that postcode only in that form, the app also without the hyphen, and neither by its first four digits."
+    },
+    {
       "number": "90092508",
       "role": "shipment",
       "evidence": "public_shipment_report",

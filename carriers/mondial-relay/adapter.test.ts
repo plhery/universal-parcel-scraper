@@ -3,8 +3,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
 import { NotFoundError } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import {
+  adapter,
   MondialRelayTracker,
   mondialRelayTrackingUrl,
   normalizeMondialRelayCredential,
@@ -122,6 +124,31 @@ describe('Mondial Relay tracking input', () => {
       expect(normalizeMondialRelayCredential(OFFICIAL_PDF_SHIPMENT, typed)).toEqual({ shipment: OFFICIAL_PDF_SHIPMENT, postcode: sent });
     },
   );
+
+  // Synthetic postcodes in Portugal's shape (four digits, then three), which Mondial Relay holds hyphenated.
+  it.each([
+    ['1000-001', '', '1000-001'],
+    ['1000001', '', '1000-001'],
+    ['1000 001', 'PT', '1000-001'],
+    ['1000001', ' pt ', '1000-001'],
+    ['1000001', 'IL', '1000001'],
+    ['1000', 'BE', '1000'],
+    ['75001', 'PT', '75001'],
+  ])('sends a Portuguese postcode as Mondial Relay holds it: %s from %j', (typed, country, sent) => {
+    expect(normalizeMondialRelayCredential(OFFICIAL_PDF_SHIPMENT, typed, country)).toEqual({ shipment: OFFICIAL_PDF_SHIPMENT, postcode: sent });
+  });
+
+  it('asks again for a Portuguese postcode given by its first four digits, before any request', async () => {
+    expect(() => normalizeMondialRelayCredential(OFFICIAL_PDF_SHIPMENT, '1000', 'PT'))
+      .toThrow(expect.objectContaining({ kind: 'input_required', reason: 'postcode_mismatch' }));
+    // The brand forms are found without a postcode, so theirs is not checked.
+    expect(normalizeMondialRelayCredential(SYNTHETIC_TEN_DIGIT_BOUNDARY, '1000', 'PT')).toMatchObject({ postcode: '' });
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
+    const tracker = adapter({ trawl: new TrawlClient('http://trawl.internal:8191'), browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(tracker.track({ number: OFFICIAL_PDF_SHIPMENT, postcode: '1000', postcodeCountry: 'PT' }, {}))
+      .rejects.toMatchObject({ kind: 'input_required', reason: 'postcode_mismatch' });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
 
   it('asks the 10- and 12-digit forms without a postcode, even one typed for them', () => {
     for (const postcode of ['', OFFICIAL_PAGE_POSTCODE]) {
@@ -594,6 +621,20 @@ describe('Mondial Relay web session', () => {
     expect(bootstrapRequest.maxTimeout).toBeLessThanOrEqual(2_000);
     expect(trackingRequest.maxTimeout).toBeGreaterThan(0);
     expect(trackingRequest.maxTimeout).toBeLessThanOrEqual(bootstrapRequest.maxTimeout);
+  });
+
+  it('asks the website with a Portuguese postcode in the form it holds, 1234-567', async () => {
+    const reply = (payload: unknown) => new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json' } });
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(reply({ tier: 3, statusCode: 200, url: TRACKING_PAGE, html: VUE_PAGE, body: numericByteObject(tokenPage()) }))
+      .mockResolvedValueOnce(reply({
+        tier: 3, statusCode: 200, url: apiUrl(OFFICIAL_PDF_SHIPMENT, '1000-001'), html: VUE_PAGE,
+        body: numericByteObject(JSON.stringify(syntheticSuccessFixture())),
+      }));
+    const tracker = adapter({ trawl: new TrawlClient('http://trawl.internal:8191'), browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(tracker.track({ number: OFFICIAL_PDF_SHIPMENT, postcode: '1000 001', postcodeCountry: 'PT' }, { budgetMs: 2_000 }))
+      .resolves.toMatchObject({ tracking_source: 'browser-session-response' });
+    expect(JSON.parse(String(fetcher.mock.calls[1]![1]?.body)).url).toBe(apiUrl(OFFICIAL_PDF_SHIPMENT, '1000-001'));
   });
 
   it.each(['numeric-object', 'buffer'] as const)('uses TRAWL %s bodies for the token/API sequence', async (format) => {

@@ -244,6 +244,14 @@ describe('Mondial Relay app step', () => {
     expect(calls.every(call => !call.url.href.startsWith('http://trawl'))).toBe(true);
   });
 
+  it('searches the app with a Portuguese postcode as the website takes it, hyphenated', async () => {
+    const { calls, client } = service();
+    await expect(new MondialRelayTracker({ app: client, trawl: null }).fetch(SHIPMENT, '1000001', {}, 'PT'))
+      .resolves.toMatchObject({ tracking_source: 'mobile-app-response' });
+    const search = calls.find(call => call.url.pathname.endsWith('search'))!;
+    expect(Object.fromEntries(search.url.searchParams)).toEqual({ shipmentUid: SHIPMENT, postcode: '1000-001' });
+  });
+
   it('asks the app for a label barcode without the stored postcode', async () => {
     // The checksummed public sample barcode from adapter.test.ts: brand 12, shipment 12345678.
     const barcode = '12123456780101006623123454';

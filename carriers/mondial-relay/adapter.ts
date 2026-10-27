@@ -35,6 +35,9 @@ const DEFAULT_DIRECT_TIMEOUT_MS = 10_000;
 const ZONE = 'Europe/Paris';
 const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires a 26-digit label barcode, a 10- or 12-digit shipment '
   + 'number, an 8-digit shipment number with the recipient postcode, or an InPost Spain number (FV and eight digits)';
+// Portugal's postcodes: four digits, then three. Mondial Relay holds them as 1234-567.
+const PORTUGUESE_POSTCODE = /^(\d{4})[ -]?(\d{3})$/;
+const PORTUGUESE_MESSAGE = 'Mondial Relay finds a parcel for Portugal only by its whole seven-digit postcode (1234-567)';
 
 interface MondialRelayCredential {
   shipment: string;
@@ -66,15 +69,34 @@ function plausibleFrenchPostcode(value: string): boolean {
 }
 
 /**
+ * The postcode as Mondial Relay holds it. A Portuguese one has seven digits and
+ * is held as 1234-567: the website matches it only in that form, and neither
+ * source matches its first four digits alone, so those are asked again. No other
+ * country the network serves has seven-digit postcodes, so seven digits given
+ * without a country are read as Portuguese too. Any other postcode goes as typed.
+ */
+function heldPostcode(postcode: string, country: string): string {
+  if (country && country !== 'PT') return postcode;
+  const portuguese = PORTUGUESE_POSTCODE.exec(postcode);
+  if (portuguese) return `${portuguese[1]}-${portuguese[2]}`;
+  if (country === 'PT' && /^\d{4}$/.test(postcode)) {
+    throw new InputRequiredError('Mondial Relay', 'the recipient postcode', PORTUGUESE_MESSAGE, { reason: 'postcode_mismatch' });
+  }
+  return postcode;
+}
+
+/**
  * The shipment and the postcode Mondial Relay is asked with. The postcode is
- * compared with the recipient's as typed, in any country's format: the country
- * sent alongside only picks the reply's language. Only an 8-digit shipment
+ * compared with the recipient's, in any country's format: the country sent
+ * alongside only picks the reply's language. `postcodeCountry` is the country
+ * the postcode is from, when the caller knows it. Only an 8-digit shipment
  * needs it; the 10- and 12-digit forms carry the brand and are found without
  * one, so a postcode typed for them is not sent.
  */
 export function normalizeMondialRelayCredential(
   rawShipment: string,
   rawPostcode = '',
+  postcodeCountry = '',
 ): MondialRelayCredential {
   let shipment = rawShipment.trim().replace(/[\s.-]/g, '');
   let postcode = deliveryPostcodeText(rawPostcode);
@@ -100,7 +122,7 @@ export function normalizeMondialRelayCredential(
   // 12-digit one adds the parcel sequence), and the API echoes the shipment.
   return shipment.length > 8
     ? { shipment, postcode: '', canonicalShipment: shipment.slice(2, 10) }
-    : { shipment, postcode };
+    : { shipment, postcode: heldPostcode(postcode, postcodeCountry.trim().toUpperCase()) };
 }
 
 /** A number as InPost Spain's page is asked it, when it is one of InPost Spain's own. */
@@ -401,14 +423,14 @@ export class MondialRelayTracker {
     }
   }
 
-  async fetch(rawShipment: string, rawPostcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
+  async fetch(rawShipment: string, rawPostcode = '', context: TrackingContext = {}, postcodeCountry = ''): Promise<CarrierResult> {
     // InPost Spain's own numbers are tracked on its page alone, with no browser or account.
     const inpost = inpostSpainNumber(rawShipment);
     if (inpost) return this.#inpostSpain(inpost, context);
     // One lookup at a time: the page token and the API call have to stay on the
     // same solved browser identity, and the app's access token is renewed once.
     return takeTurn(this.#serialize, 'Mondial Relay', context,
-      (left) => this.#lookup(normalizeMondialRelayCredential(rawShipment, rawPostcode), left));
+      (left) => this.#lookup(normalizeMondialRelayCredential(rawShipment, rawPostcode, postcodeCountry), left));
   }
 
   /**
@@ -536,7 +558,7 @@ export const adapter: AdapterFactory = (environment) => {
     // Cloudflare refuses every non-browser client of the website; the app step needs an account.
     // InPost Spain's own numbers are read from its page, retried once when it cannot be reached.
     steps: ['app', 'trawl', 'inpost-es', 'retry'],
-    track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context),
+    track: (input, context) => tracker.fetch(input.number, input.postcode ?? '', context, input.postcodeCountry ?? ''),
     recognize: (number, context) => tracker.recognize(number, context),
   };
 };

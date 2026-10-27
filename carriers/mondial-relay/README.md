@@ -53,8 +53,9 @@ Without the app step or a browser service (`FLARESOLVERR_URL`) the lookup fails
 at once with a `ChallengeError`. Lookups are serialized per adapter instance
 (`singleFlight`) so the token and the API call stay on one browser identity. Errors: warning
 reply → `NotFoundError`; no token → `ChallengeError`; 8-digit shipment without
-a postcode → `InputRequiredError`; malformed number → `InvalidInputError`; a reply
-for another shipment → `SchemaError`.
+a postcode, or with only the first four digits of a Portuguese one →
+`InputRequiredError`; malformed number → `InvalidInputError`; a reply for another
+shipment → `SchemaError`.
 
 ## Notes
 
@@ -64,11 +65,18 @@ for another shipment → `SchemaError`.
   postcode: the website hides its field for them and finds them with none or a
   wrong one, so a postcode typed for them is not sent. The API echoes only the
   8-digit shipment.
-- The postcode is compared with the recipient's as typed, in any country's
-  format: a Belgian recipient gives a Belgian one. `codePays` only picks the
-  reply's language (the same parcel is found under `fr`, `be`, `pt` or none)
-  and stays `fr`, which the parsers read. A wrong postcode, whatever its shape,
-  is a "no parcel" warning.
+- The postcode is compared with the recipient's, in any country's format: a
+  Belgian recipient gives a Belgian one. `codePays` only picks the reply's
+  language (the same parcel is found under `fr`, `be`, `pt` or none) and stays
+  `fr`, which the parsers read. A wrong postcode, whatever its shape, is a "no
+  parcel" warning.
+- A Portuguese postcode is held as `1234-567`. The website finds the parcel only
+  in that form and the app also without the hyphen, so seven digits are sent
+  hyphenated. Neither finds it by the first four digits alone: given as
+  Portugal's (`postcodeCountry`), those are asked again before any request
+  (`input_required`, reason `postcode_mismatch`). No other country the network
+  serves has seven-digit postcodes, so seven digits without a country count as
+  Portuguese.
 - 26-digit label barcodes need no postcode. Both modulo-11 check digits and the
   parcel sequence are validated; the first 12 digits are the public alias used
   for links and lookups.
@@ -180,7 +188,8 @@ eight-digit shipment number; the brand remains part of the identity.
 
 ## Limitations
 
-- French recipient postcodes only; other destination countries are untested.
+- Postcodes from countries other than France and Portugal go as typed and are
+  untested.
 - Scans at a relay or locker have no location: the website names the relay on
   drop-off and collection scans, but the app does not, and one scan would then
   differ by source.
