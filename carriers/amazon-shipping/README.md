@@ -12,6 +12,9 @@ check proves the tracker knows it.
    (15 s timeout, 2 MB cap). The origin comes from the number's prefix
    (`core/catalog/amazon.ts`): `IT`, `ES` and `UK`/`GB` have their own `track.amazon.*`
    host, `TBA`, `TBC` and `TBM` use `.com`, every other European prefix uses `track.amazon.fr`.
+   `track.amazon.com` is Amazon's North American tracker. Its page lists only the US, so the
+   European tracker's list of sites (GB, IT, IN, FR, ES) leaves it out, and the European hosts
+   answer not found for TBA parcels it knows. Canada and Mexico have no tracker host of their own.
 
 Checks, before any history is read:
 
