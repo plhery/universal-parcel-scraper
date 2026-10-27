@@ -28,7 +28,8 @@ Tracked through the lookup its tracking page makes.
   as a parcel waiting for collection. Rows without a code are read by their wording.
 - JCEX files its handover to the delivering partner's depot as delivered too, so
   `Delivered_Other` counts only with wording the shared rules read as a delivery, and the
-  handover rows seen are transit. Rows seen under a code too broad for them, such as
+  handover rows seen are transit. So are the delivering partner's collection and its receipt at
+  each transit point, which it files as a pick-up although JCEX took the parcel in long before. Rows seen under a code too broad for them, such as
   Colissimo's failed visit under `Exception_Other`, are mapped one by one.
 - Rows come newest first, but JCEX puts its own milestone, such as that handover, on top. The
   rows are ordered by their clocks, and rows at one time keep the reply's order.
@@ -36,7 +37,9 @@ Tracked through the lookup its tracking page makes.
   lists a scan it relays from Yanwen or the delivering partner twice: as the source's row under
   the source's offset, and as its own copy, the same instant on Beijing's clock under the same
   code. The copy is dropped, and the source's offset holds for every row under it, wherever its
-  place. The order data, filed under neither a country nor a place, is on Beijing's clock
+  place. A scan relayed on Beijing's clock comes twice too, once in JCEX's own words under the
+  bare place `CN`, sometimes under another code; that row is dropped and the source's words
+  stay. The order data, filed under neither a country nor a place, is on Beijing's clock
   whatever offset it carries.
 - Other rows are read on the clock their place keeps: its country's when the country has one,
   and in the United States its state's when the place names one, as USPS writes it. A row whose

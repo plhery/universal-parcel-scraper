@@ -151,14 +151,30 @@ describe('JCEX HTTP adapter', () => {
       // Yanwen's scans in the destination keep its offset, and its words rather than JCEX's.
       ['2026-09-20T15:40:31+01:00', 'Batch delivery to carrier', null],
       ['2026-09-18T12:05:00+01:00', 'Port of destination - Arrival', null],
-      // A scan both list on Beijing's clock stays in both words.
+      // A scan JCEX words again on Beijing's clock under the bare country code keeps the source's words.
       ['2026-09-17T23:30:00+08:00', 'Port of departure - Departure', 'SH, CN'],
-      ['2026-09-17T23:30:00+08:00', 'Depart from international airport', 'CN'],
       // The partner prints its label seconds after JCEX takes the order in.
       ['2026-09-16T14:10:02Z', label, null],
       ['2026-09-16T22:09:56+08:00', 'Processing information input', null],
     ]);
     expect(JSON.stringify(result)).not.toMatch(/SAMPLEVILLE|99999|XYZ0000000003|00000"/);
+    // The partner's receipt on the way is no acceptance: JCEX took the parcel in long before.
+    expect(result.events!.find((event) => event.description === 'Consignment Received At Transit Point')?.stage).toBe('in_transit');
+  });
+
+  it('drops JCEX\'s rewording of a scan on Beijing\'s clock under any code, and keeps its own row at another time', () => {
+    const result = parseJcex(changed('relayed', (content) => {
+      const departure = content.trackDetails.find((row) => row.eventDetailEn === 'Port of departure - Departure')!;
+      const row = (eventTime: string, platformEventCode: string, eventDetailEn: string, location: string) => ({
+        ...departure, eventTime, platformEventCode, eventDetailEn, eventDetailCn: eventDetailEn, location });
+      content.trackDetails.push(
+        row('2026-09-17 10:00:00', 'InTransit_Other', 'Synthetic pickup scan', 'SH,SH,CN'),
+        row('2026-09-17 10:00:00', 'InTransit_PickedUp', 'Synthetic reworded scan', 'CN'),
+        row('2026-09-17 12:00:00', 'InTransit_Other', 'Synthetic own scan', 'CN'));
+    }), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
+    const descriptions = result.events!.map((event) => event.description);
+    expect(descriptions).toEqual(expect.arrayContaining(['Synthetic pickup scan', 'Synthetic own scan']));
+    expect(descriptions).not.toContain('Synthetic reworded scan');
   });
 
   it('keeps a copy\'s offset when JCEX lists no scan it copies', () => {

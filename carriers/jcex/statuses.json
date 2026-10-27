@@ -12,6 +12,8 @@
     {"code": "InTransit_CustomsProcessing", "wording": "under clearance", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Import customs in the destination."},
     {"code": "InTransit_CustomsReleased", "wording": "CUSTOMS CLEARANCE COMPLETE", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "InTransit_Other", "wording": "CONSIGNMENT RECEIVED BY OVERSEAS FORWARDER", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering partner takes the parcel in the destination."},
+    {"code": "InTransit_PickedUp", "wording": "Package has been picked up by the service provider.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "The delivering partner collects the parcel in the destination, long after JCEX took it in."},
+    {"code": "InTransit_PickedUp", "wording": "Consignment Received At Transit Point", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "The delivering partner's receipt at each of its depots on the way, long after JCEX took the parcel in."},
     {"code": "InTransit_Other", "wording": "SHIPMENT RECEIVED BY TRANSPORTATION FACILITY", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "InTransit_Other", "wording": "In Transit to Next Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from USPS."},
     {"code": "InTransit_Other", "wording": "ARRIVAL AT POST OFFICE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from USPS: the delivering post office has the parcel."},

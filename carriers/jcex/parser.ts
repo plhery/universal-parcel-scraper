@@ -145,6 +145,18 @@ function relayedCopies(rows: readonly Row[]): { copies: Set<Row>; offsets: Set<s
 }
 
 /**
+ * JCEX also lists a scan it relays on Beijing's clock a second time in its own
+ * words, filed under the bare country code: a row on China's offset whose
+ * place is `CN`, at the wall clock another row on China's offset states with
+ * another place or none. Those copies go too, and the source's words stay.
+ */
+function rewordedCopies(rows: readonly Row[]): Set<Row> {
+  const home = rows.filter((row) => row.label === HOME_OFFSET);
+  const stated = new Set(home.filter((row) => row.location !== 'CN').map((row) => row.local));
+  return new Set(home.filter((row) => row.location === 'CN' && stated.has(row.local)));
+}
+
+/**
  * A row's clock. A row filed under neither a country nor a place is JCEX's
  * own order data, on Beijing's clock whatever offset it carries. A row under
  * a relaying source's offset keeps it. Others take their instant where their
@@ -244,7 +256,8 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
     return true;
   });
   const { copies, offsets } = relayedCopies(listed);
-  const projected = listed.filter((row) => !copies.has(row)).map((row) => projectRow(row, offsets));
+  const reworded = rewordedCopies(listed);
+  const projected = listed.filter((row) => !copies.has(row) && !reworded.has(row)).map((row) => projectRow(row, offsets));
   // Neither a row dated after the read nor a row of the timeline JCEX writes is a scan.
   const written = timeline(projected.map(({ at }) => at));
   const ahead = projected.filter(({ at }) => at > readAt || written.has(at));
