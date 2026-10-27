@@ -790,3 +790,16 @@ describe('FAN Courier AWBs', () => {
     }
   });
 });
+
+describe('PIN AG numbers', () => {
+  it('lists PIN AG first for sixteen digits opening 0100, without naming it', () => {
+    expect(detectCarrierMatch('0100800000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['pin-ag'] });
+    expect(detectCarrierMatch('0100800000000001').candidates[0]).toBe('pin-ag');
+    for (const number of ['0101800000000001', '010080000000001', '01008000000000001']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('pin-ag');
+    }
+    expect(parseTrackingInput('https://sendungsverfolgung.pin-ag.de/?sendung=0100800000000001')).toMatchObject({
+      trackingNumber: '0100800000000001', carrier: 'pin-ag', source: 'link',
+    });
+  });
+});

@@ -3436,6 +3436,97 @@
     ]
   },
   {
+    "input": "0100823022421737",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pin-ag",
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "preferred": [
+      "pin-ag"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "0100825007324406",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pin-ag",
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "preferred": [
+      "pin-ag"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "0100825013458399",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pin-ag",
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "preferred": [
+      "pin-ag"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "0100825019891198",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pin-ag",
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "preferred": [
+      "pin-ag"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "0100825028333010",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pin-ag",
+      "dhl-ecommerce",
+      "correos-express",
+      "canada-post",
+      "tnt",
+      "evri-uk"
+    ],
+    "preferred": [
+      "pin-ag"
+    ],
+    "asked": [
+      "correos-express",
+      "evri-uk",
+      "canada-post",
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "0101-2157708",
     "carrier": "unknown",
     "confidence": "low",
@@ -92445,6 +92536,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "TUSK0COA8D56NUP0",
+    "carrier": "tusk-logistics",
+    "confidence": "high",
+    "candidates": [
+      "tusk-logistics"
     ]
   },
   {

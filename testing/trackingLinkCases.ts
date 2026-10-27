@@ -1287,6 +1287,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.bgpost\.bg\/(?:en\/)?postal-services\/track-package\?itemid=ZZ000000014BG$/,
     marker: /ПРОСЛЕДЯВАНЕ НА ПРАТКА|ITEM TRACKING/i },
   // The page looks the number up and answers an unknown one with its not-found notice.
+  // The page asks its API for the number in its address and says when it has no delivery status.
+  { carrier: 'pin-ag', number: '0100800000000001',
+    route: /^https:\/\/sendungsverfolgung\.pin-ag\.de\/\?sendung=0100800000000001$/,
+    marker: /kein Zustellstatus|Sendungsnummer/i },
   { carrier: 'better-trucks', number: 'BTPA0000000ZZ01',
     route: /^https:\/\/tracking\.bettertrucks\.com\/tracking\?trackingNumber=BTPA0000000ZZ01$/,
     marker: /Shipment can.t be found|Enter your tracking number/i },

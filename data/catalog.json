@@ -24561,6 +24561,44 @@
     ],
     "detectionRules": []
   },
+  "pin-ag": {
+    "displayName": "PIN AG",
+    "color": "#003366",
+    "aliases": [
+      "PIN Mail",
+      "PIN Mail AG",
+      "PIN Mail Berlin"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "link-only",
+      "adapter": null
+    },
+    "canaryUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "trackingUrlTemplate": "https://sendungsverfolgung.pin-ag.de/?sendung={trackingNumber}",
+    "trackingSearchUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "linkRules": [
+      {
+        "domains": [
+          "sendungsverfolgung.pin-ag.de"
+        ],
+        "params": [
+          "sendung"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^0100\\d{12}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "pitney-bowes": {
     "displayName": "Pitney Bowes",
     "color": "#3e53a4",
@@ -31061,6 +31099,38 @@
       }
     ],
     "detectionRules": []
+  },
+  "tusk-logistics": {
+    "displayName": "Tusk Logistics",
+    "color": "#0f7a47",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "trackingUrlTemplate": "https://shipmenttracking.tusklogistics.com/?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.tusklogistics.com/track-your-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "shipmenttracking.tusklogistics.com"
+        ],
+        "params": [
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TUSK[0-9A-Z]{12}$",
+        "confidence": "high"
+      }
+    ]
   },
   "tws-express": {
     "displayName": "TWS Express Courier",

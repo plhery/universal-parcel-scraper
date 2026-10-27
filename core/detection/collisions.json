@@ -6246,5 +6246,26 @@
       "yunda"
     ],
     "reason": "Foxpost gives its home deliveries numbers starting 66639 without saying how long they are; the other carriers take thirteen digits of any kind. Foxpost leads, and direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Sixteen digits opening 0100",
+    "carriers": [
+      "dhl-ecommerce",
+      "pin-ag",
+      "tnt"
+    ],
+    "reason": "PIN AG's numbers are sixteen digits opening 0100, a length DHL eCommerce's and TNT's low rules accept too. None is high, so the number stays a suggestion with PIN AG first."
+  },
+  {
+    "shape": "Sixteen digits opening 0100 whose last digit is the GS1 check",
+    "carriers": [
+      "canada-post",
+      "correos-express",
+      "dhl-ecommerce",
+      "evri-uk",
+      "pin-ag",
+      "tnt"
+    ],
+    "reason": "A PIN AG number carries no check digit, so about one in ten also passes the GS1 check the other sixteen-digit rules ask; the number stays a suggestion with PIN AG first."
   }
 ]

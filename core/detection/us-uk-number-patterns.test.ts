@@ -427,3 +427,15 @@ describe('FedEx International Connect numbers', () => {
     }
   });
 });
+
+describe('Tusk Logistics labels', () => {
+  it('names Tusk for TUSK and twelve letters or digits, and reads it from its tracking link', () => {
+    expect(detectCarrierMatch('TUSK0ZZZ00000001')).toMatchObject({ carrier: 'tusk-logistics', confidence: 'high' });
+    for (const number of ['TUSK0ZZZ0000001', 'TUSK0ZZZ000000001', 'TUSC0ZZZ00000001']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('tusk-logistics');
+    }
+    expect(parseTrackingInput('https://shipmenttracking.tusklogistics.com/?trackingNumber=TUSK0ZZZ00000001')).toMatchObject({
+      trackingNumber: 'TUSK0ZZZ00000001', carrier: 'tusk-logistics', confidence: 'high', source: 'link',
+    });
+  });
+});

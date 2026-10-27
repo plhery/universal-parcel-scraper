@@ -1,0 +1,52 @@
+{
+  "id": "pin-ag",
+  "displayName": "PIN AG",
+  "aliases": [
+    "PIN Mail",
+    "PIN Mail AG",
+    "PIN Mail Berlin"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#003366"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "link-only",
+    "adapter": null,
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://sendungsverfolgung.pin-ag.de/?sendung={trackingNumber}",
+    "searchUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "canaryUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "sendungsverfolgung.pin-ag.de"
+      ],
+      "params": [
+        "sendung"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "pin-ag-1",
+      "pattern": "^0100\\d{12}$",
+      "confidence": "low",
+      "preferred": true
+    }
+  ]
+}

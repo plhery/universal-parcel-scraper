@@ -24563,6 +24563,44 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "pin-ag": {
+    "displayName": "PIN AG",
+    "color": "#003366",
+    "aliases": [
+      "PIN Mail",
+      "PIN Mail AG",
+      "PIN Mail Berlin"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "link-only",
+      "adapter": null
+    },
+    "canaryUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "trackingUrlTemplate": "https://sendungsverfolgung.pin-ag.de/?sendung={trackingNumber}",
+    "trackingSearchUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "linkRules": [
+      {
+        "domains": [
+          "sendungsverfolgung.pin-ag.de"
+        ],
+        "params": [
+          "sendung"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^0100\\d{12}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "pitney-bowes": {
     "displayName": "Pitney Bowes",
     "color": "#3e53a4",
@@ -31064,6 +31102,38 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "tusk-logistics": {
+    "displayName": "Tusk Logistics",
+    "color": "#0f7a47",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "trackingUrlTemplate": "https://shipmenttracking.tusklogistics.com/?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.tusklogistics.com/track-your-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "shipmenttracking.tusklogistics.com"
+        ],
+        "params": [
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TUSK[0-9A-Z]{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "tws-express": {
     "displayName": "TWS Express Courier",
     "color": "#FFED00",
@@ -33550,6 +33620,7 @@ export const CARRIER_IDS = [
   "pickupp-sg",
   "pigeon-express",
   "pilot-freight",
+  "pin-ag",
   "pitney-bowes",
   "pitt-ohio",
   "pmm",
@@ -33714,6 +33785,7 @@ export const CARRIER_IDS = [
   "tst-cf-express",
   "tufesa",
   "tusass",
+  "tusk-logistics",
   "tws-express",
   "ubi-smart-parcel",
   "ues-uy",
@@ -34357,6 +34429,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pickupp-sg": ["pickupp-sg-1"],
   "pigeon-express": [],
   "pilot-freight": [],
+  "pin-ag": ["pin-ag-1"],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
   "pitt-ohio": [],
   "pmm": [],
@@ -34521,6 +34594,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tst-cf-express": [],
   "tufesa": [],
   "tusass": [],
+  "tusk-logistics": ["tusk-logistics-1"],
   "tws-express": ["tws-express-1"],
   "ubi-smart-parcel": ["ubi-smart-parcel-1"],
   "ues-uy": ["ues-uy-1"],
