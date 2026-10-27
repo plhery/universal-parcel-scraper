@@ -145,7 +145,8 @@ Both wait for the CI and secret scanning workflows to pass on the same commit, a
 when either fails. A dispatch on a commit they have not run on fails until they are dispatched on
 it. After rerunning a failed run of either, rerun the release run's failed jobs.
 
-Raising the version sets it in `package.json`, `package-lock.json` and `server/openapi.json`.
+Raise `package.json` and `package-lock.json` together. `npm run build` writes that version
+into the source OpenAPI document and its packaged copy.
 
 The TRAWL image is published with its upstream and patch source archives, under its AGPL
 license.
