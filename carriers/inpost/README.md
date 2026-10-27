@@ -27,6 +27,9 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
   event's stage; the two are independent in the payload.
 - A drop-off at a locker or a courier collection reads as accepted, a parcel handed to the
   courier for delivery as out for delivery, and a refusal as a failed attempt.
+- A parcel stored in a nearby locker while its own is full is ready for pickup there, since
+  the same code opens it. When that storage expires it is in transit again, on its way to
+  the chosen locker.
 - An unmapped code gets no stage: the phase prefix does not decide it. The result is
   `unknown` with the raw wording kept, and the sync records it for review.
 - Scans keep their wording and their code (`provider_code`). The parcel app's review asks the
