@@ -140,13 +140,13 @@ describe('Mondial Relay tracking input', () => {
 
   it('asks again for a Portuguese postcode given by its first four digits, before any request', async () => {
     expect(() => normalizeMondialRelayCredential(OFFICIAL_PDF_SHIPMENT, '1000', 'PT'))
-      .toThrow(expect.objectContaining({ kind: 'input_required', reason: 'postcode_mismatch' }));
+      .toThrow(expect.objectContaining({ kind: 'input_required', reason: 'postcode_incomplete' }));
     // The brand forms are found without a postcode, so theirs is not checked.
     expect(normalizeMondialRelayCredential(SYNTHETIC_TEN_DIGIT_BOUNDARY, '1000', 'PT')).toMatchObject({ postcode: '' });
     const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
     const tracker = adapter({ trawl: new TrawlClient('http://trawl.internal:8191'), browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(tracker.track({ number: OFFICIAL_PDF_SHIPMENT, postcode: '1000', postcodeCountry: 'PT' }, {}))
-      .rejects.toMatchObject({ kind: 'input_required', reason: 'postcode_mismatch' });
+      .rejects.toMatchObject({ kind: 'input_required', reason: 'postcode_incomplete' });
     expect(fetcher).not.toHaveBeenCalled();
   });
 

@@ -74,7 +74,7 @@ shipment → `SchemaError`.
   in that form and the app also without the hyphen, so seven digits are sent
   hyphenated. Neither finds it by the first four digits alone: given as
   Portugal's (`postcodeCountry`), those are asked again before any request
-  (`input_required`, reason `postcode_mismatch`). No other country the network
+  (`input_required`, reason `postcode_incomplete`). No other country the network
   serves has seven-digit postcodes, so seven digits without a country count as
   Portuguese.
 - 26-digit label barcodes need no postcode. Both modulo-11 check digits and the

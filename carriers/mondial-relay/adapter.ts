@@ -80,7 +80,7 @@ function heldPostcode(postcode: string, country: string): string {
   const portuguese = PORTUGUESE_POSTCODE.exec(postcode);
   if (portuguese) return `${portuguese[1]}-${portuguese[2]}`;
   if (country === 'PT' && /^\d{4}$/.test(postcode)) {
-    throw new InputRequiredError('Mondial Relay', 'the recipient postcode', PORTUGUESE_MESSAGE, { reason: 'postcode_mismatch' });
+    throw new InputRequiredError('Mondial Relay', 'the recipient postcode', PORTUGUESE_MESSAGE, { reason: 'postcode_incomplete' });
   }
   return postcode;
 }
