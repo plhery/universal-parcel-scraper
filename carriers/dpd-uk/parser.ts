@@ -71,10 +71,14 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   "we've received your order details, but have not yet received your parcel": 'registered',
 };
 
-/** A scan's or the current summary's stage. The summary appends the time of its scan. */
+/**
+ * A scan's or the current summary's stage. The summary appends the time of its scan, and the
+ * round's notice the hour it gives for the delivery.
+ */
 export function classifyDpdUkWording(description: string) {
   const wording = description.toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim()
-    .replace(/ at (?:[01]?\d|2[0-3]):[0-5]\d on [a-z]{3} \d{1,2} [a-z]+ \d{4}$/, '').replace(/[.!]+$/, '');
+    .replace(/ at (?:[01]?\d|2[0-3]):[0-5]\d on [a-z]{3} \d{1,2} [a-z]+ \d{4}$/, '').replace(/[.!]+$/, '')
+    .replace(/^(your parcel will be with you today) between (?:[01]?\d|2[0-3]):[0-5]\d and (?:[01]?\d|2[0-3]):[0-5]\d$/, '$1');
   // A sender's cancellation goes on to name the sender to contact.
   const stage = Object.hasOwn(VERIFIED_WORDING, wording) ? VERIFIED_WORDING[wording]
     : /^your delivery has been cancelled\b/.test(wording) ? 'exception' : undefined;

@@ -1,6 +1,8 @@
 import type { Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { statusMap as dpd } from '../dpd/status.js';
+import { isDpdPtNotice } from '../dpd-pt/status.js';
+import dpdPtStatuses from '../dpd-pt/statuses.json' with { type: 'json' };
 
 /**
  * The German app's scans carry wording only. The shared classifier misreads several of these,
@@ -50,18 +52,24 @@ export function dpdDeShopCollectionStage(wording: string, waited: boolean, previ
   return undefined;
 }
 
+// DPD Portugal's notices on the parcels it delivers, which the German lookup relays with their codes.
+const PORTUGUESE_NOTICES = dpdPtStatuses.entries.filter((entry) => isDpdPtNotice(entry.code))
+  .map(({ code, wording, note }) => ({ code, wording: normalizeStatusWording(wording), note: `DPD Portugal's notice: ${note}` }));
+
 const NORMALIZED_SCANS = new Map(Object.entries(DPD_DE_APP_SCANS).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
 
 /**
  * What the map says about one scan: the app's scans by their wording, the guest API's by DPD's
  * codes. The guest API's codes left unmapped on purpose stay so; the Swiss page's labels do not
  * apply, since German lookups never read that page. A shop's collections take their stage from
- * the scans before them, so the map leaves them without one.
+ * the scans before them, so the map leaves them without one. DPD Portugal's notices on a parcel
+ * it delivers keep their code and wording.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => code ? dpd.stage(code, wording) : NORMALIZED_SCANS.get(dpdDeScanKey(wording)),
   gaps: [
     ...dpd.gaps.filter(gap => gap.code !== undefined),
     ...[NOT_COLLECTED, DRIVER_PICKUP].map(wording => ({ wording: normalizeStatusWording(wording), note: SHOP_COLLECTION_NOTE })),
+    ...PORTUGUESE_NOTICES,
   ],
 };

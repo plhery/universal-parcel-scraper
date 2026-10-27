@@ -60,7 +60,8 @@ page makes.
   scan's instant, when it has one, is the last update.
 - A row still after the read at UTC+14, the earliest instant it can stand for, is dropped, and
   the delivered count is then not trusted. So is the flight DHLink books the parcel on
-  (`预计配载航班…`, "Expected flight on …"): it is written before the flight and is no scan.
+  (`预计配载航班…`, "Expected flight on …" or "Estimated loading flight time …"): it is written
+  before the flight and is no scan.
 - The reply gives the last leg's number (`lastTurnNo`) but no partner, so the partner comes from
   the number's whole layout in an explicit table: `SWX` and eighteen digits is SwiftX, `GFUS`
   and fourteen digits is GOFO, and fourteen digits from depots 0600 to 0619 is DPD

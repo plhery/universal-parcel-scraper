@@ -262,6 +262,14 @@
       "note": "The last-mile carrier's departure from its transit hub, Cainiao's TRANSFER_DEPART, relayed after Yanwen's batch handover."
     },
     {
+      "wording": "Your shipment has arrived at the transit destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The last-mile carrier's arrival after its transit hub, relayed after its departure from the transit origin."
+    },
+    {
       "wording": "Manifest created",
       "language": "en",
       "stage": "in_transit",

@@ -109,6 +109,7 @@ describe('DPD UK public history projection', () => {
     ['Your parcel is waiting for you at home (left in safe place) at 15:48 on Tue 16 Jun 2026', 'delivered'],
     ['The parcel has been delivered at 10:52 on Wed 05 Aug 2026', 'delivered'],
     ['Your parcel will be with you today ', 'out_for_delivery'],
+    ['Your parcel will be with you today between 9:05 and 10:05.', 'out_for_delivery'],
     ['Your delivery has been cancelled, please contact Example Merchant for further details', 'exception'],
   ])('reads the current summary %s', (summary, stage) => {
     const payload = fixture(); payload.detail.data.trackingStatusCurrent = summary;

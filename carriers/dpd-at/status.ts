@@ -38,7 +38,20 @@ export function dpdAtStage(code: string, wording: string): ClassifiedWording | n
   return worded.source === 'none' ? null : worded;
 }
 
+/** A driver's collection from a Pickup parcelshop. */
+export const DPD_AT_SHOP_COLLECTION = 'DRIVER_PICKUP/SHOP';
+
+/**
+ * A driver's collection from a Pickup parcelshop. After the parcel waited at a
+ * Pickup point for its recipient it starts the way back. Otherwise the driver
+ * takes on the parcel the sender dropped there: its acceptance, or a hand-over
+ * in transit after DPD moved it already.
+ */
+export function dpdAtShopCollectionStage(waited: boolean, previous: Stage | undefined): Stage {
+  return waited ? 'exception' : previous && previous !== 'registered' ? 'in_transit' : 'accepted';
+}
+
 export const statusMap: CarrierStatusMap = {
   stage: (code) => (code ? dpdAtMappedStage(code) : undefined),
-  gaps: [],
+  gaps: [{ code: DPD_AT_SHOP_COLLECTION, note: 'Its stage depends on the scans before it: the sender\'s drop-off collected, or after the parcel waited at a Pickup point for its recipient, the start of its way back.' }],
 };

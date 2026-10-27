@@ -10,6 +10,7 @@
     {"code": "OFD", "wording": "EM DISTRIBUIÇÃO", "stage": "out_for_delivery", "language": "pt", "confirmedBy": "portal"},
     {"code": "706", "wording": "HORÁRIO DE ENTREGA ENVIADA AO DESTINATÁRIO", "language": "pt", "confirmedBy": "portal", "note": "A message giving the recipient a delivery window, which the comment column shows; it is not a scan."},
     {"code": "709", "wording": "MENSAGEM \"A PROXIMA ENTREGA\" ENVIADA", "language": "pt", "confirmedBy": "portal", "note": "A message telling the recipient of the next delivery; it is not a scan."},
+    {"code": "714", "wording": "DATA PREVISTA DE ENTREGA", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "The expected delivery day, relayed by DPD Germany beside the depot's intake; it is not a scan."},
     {"code": "500", "wording": "ENDEREÇO DO DESTINATÁRIO INCORRECTO OU DESCONHECIDO", "stage": "failed_attempt", "language": "pt", "confirmedBy": "portal", "note": "Not delivered because the address is wrong or unknown; the parcel went out again."},
     {"code": "501", "wording": "ENDEREÇO DO DESTINATÁRIO INCOMPLETO OU ILEGÍVEL", "stage": "failed_attempt", "language": "pt", "confirmedBy": "portal", "note": "Not delivered because the address is incomplete or unreadable."},
     {"code": "506", "wording": "AUSÊNCIA DO DESTINATÁRIO", "stage": "failed_attempt", "language": "pt", "confirmedBy": "portal", "note": "The recipient was not in."},

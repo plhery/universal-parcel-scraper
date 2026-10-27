@@ -59,6 +59,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Arrived at delivery centre', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has been processed at sorting center and ready for shipping', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has departed from the transit origin', { status: 'in_transit', stage: 'in_transit' }],
+  ['Your shipment has arrived at the transit destination', { status: 'in_transit', stage: 'in_transit' }],
   ['Parcel dispatched to be delivered', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Your shipment is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // Nova Poshta's leg in Ukraine, from the flight out of Hong Kong through customs at the border

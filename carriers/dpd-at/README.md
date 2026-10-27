@@ -39,7 +39,9 @@ Austria.
   list.
 - A scan's description is its state's text. The state's name (`NAB`) is the provider code and
   stages it, with the qualifier the page uses for a Pickup station or the recipient's chosen
-  place after a slash (`HANDOVER/BOX`).
+  place after a slash (`HANDOVER/BOX`). A driver's collection from a Pickup parcelshop
+  (`DRIVER_PICKUP/SHOP`) is the sender's drop-off collected, an acceptance or a hand-over in
+  transit; after the parcel waited at a Pickup point for its recipient it starts the way back.
 - Once the postcode is verified, the page adds details to some scans: the Pickup shop, who
   took the parcel, where it was left. The adapter reads none of them, nor the sender and
   recipient fields, which are empty without the postcode.

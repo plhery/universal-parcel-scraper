@@ -49,6 +49,7 @@ export const DPD_PT_POINT_RECEIPT = '002';
 const NOTICES: ReadonlyMap<string, string> = new Map([
   ['706', 'A message giving the recipient a delivery window; it moves nothing.'],
   ['709', 'A message telling the recipient of the next delivery; it moves nothing.'],
+  ['714', 'The expected delivery day; it moves nothing.'],
   ['741', 'A request for a new delivery; the scans after it show what happened.'],
   ['743', 'A request to change the address; the scans after it show what happened.'],
 ]);

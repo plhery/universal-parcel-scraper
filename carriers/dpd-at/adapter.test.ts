@@ -90,6 +90,17 @@ describe('DPD Austria HTTP adapter', () => {
     expect(result.events![2]).toMatchObject({ description: 'Empfänger leider nicht angetroffen.' });
   });
 
+  it('reads a driver’s collection from a shop as the acceptance, a hand-over in transit, or the way back after the parcel waited there', () => {
+    const collection = (entry: Scan, datetime: string) => ({ ...entry, datetime, state: { ...entry.state, datetime, name: 'DRIVER_PICKUP', additionalInfo: 'SHOP',
+      text: 'Parcel was picked up by driver from Pickup parcel shop', textShort: 'Picked up by driver' } });
+    const stages = (entries: (entries: Scan[]) => Scan[]) => parseDpdAt(changed('in-transit', (parcel) => {
+      parcel.lifecycle.entries = entries(parcel.lifecycle.entries);
+    }), IN_TRANSIT).events!.filter((event) => event.provider_code === 'DRIVER_PICKUP/SHOP').map((event) => event.stage);
+    expect(stages(([order]) => [order!, collection(order!, '20260601150000')])).toEqual(['accepted']);
+    expect(stages(([order, first]) => [order!, first!, collection(order!, '20260602160000')])).toEqual(['in_transit']);
+    expect(stages((entries) => [...entries, collection(entries[0]!, '20260611090000')])).toEqual(['exception']);
+  });
+
   it('keeps a wall clock local where the country’s clock differs from Vienna’s or is not known', () => {
     const reading = readDpdAt(changed('in-transit', (parcel) => {
       const entries = parcel.lifecycle.entries;
@@ -269,7 +280,8 @@ describe('DPD Austria numbers', () => {
 describe('DPD Austria status vocabulary', () => {
   it('records every state the map knows with the stage it gives', () => {
     // The numeric codes are DPD's group tracker's scan types, which this adapter does not read.
-    const states = (statuses.entries as { code?: string; wording: string; stage: string }[]).filter((entry) => /^[A-Z_]+(?:\/[A-Z]+)?$/.test(entry.code ?? ''));
+    const states = (statuses.entries as { code?: string; wording: string; stage?: string }[])
+      .filter((entry) => entry.stage && /^[A-Z_]+(?:\/[A-Z]+)?$/.test(entry.code ?? ''));
     expect(states).toHaveLength(13);
     for (const entry of states) {
       expect(statusMap.stage(entry.code!, entry.wording.toLowerCase()), entry.code).toBe(entry.stage);
@@ -282,5 +294,8 @@ describe('DPD Austria status vocabulary', () => {
     expect(statusMap.stage('HANDOVER', 'paket übergeben')).toBeUndefined();
     expect(dpdAtStage('IN_DELIVERY/SYNTHETIC', 'In Zustellung')).toEqual({ stage: 'out_for_delivery', source: 'carrier_map' });
     expect(dpdAtStage('SYNTHETIC', 'Synthetic note')).toBeNull();
+    // A driver's collection from a shop takes its stage from the scans before it.
+    expect(statusMapAnswer({ carrier: 'dpd-at', providerCode: 'DRIVER_PICKUP/SHOP', description: 'Parcel was picked up by driver from Pickup parcel shop' }))
+      .toMatchObject({ kind: 'intentional_gap' });
   });
 });

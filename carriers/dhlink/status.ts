@@ -20,6 +20,8 @@ const NODE_CODES: ReadonlyMap<string, Stage> = new Map([
   // A US line's rail, the same nodes with WC ahead.
   ['WCTQ001', 'in_transit'],
   ['QG001', 'in_transit'],
+  // Import clearance done, before the last-mile partner takes the parcel.
+  ['QG002', 'in_transit'],
   ['JH001', 'in_transit'],
   ['J013', 'out_for_delivery'],
   ['DE002', 'out_for_delivery'],
@@ -59,6 +61,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['flight arrival', 'in_transit'],
   // Import clearance is done and the parcel moves on.
   ['customs clearance completed', 'in_transit'],
+  ['customs import clearance completed, awaiting pickup by local carrier', 'in_transit'],
   // The hand-over to the US partner, first announced, then made.
   ['ups/usps/fedex', 'in_transit'],
   ['货物已交ups/usps/fedex,the goods have been delivered to ups/usps/fedex', 'in_transit'],
@@ -115,6 +118,15 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^目的港已提货/, 'in_transit'],
   [/^离开【[^】]*】处理中心$/, 'in_transit'],
   [/^送交出口海关$/, 'customs'],
+  // A line's own rows in Chinese, most with its English after them: the collection point and the
+  // operation centre, the warehouse's intake and customs' release before the flight, then the
+  // destination warehouse and the hand-over to the local carrier.
+  [/^到达收货点$/, 'accepted'],
+  [/^货物离开操作中心$/, 'in_transit'],
+  [/^进仓时间[:：]/, 'in_transit'],
+  [/^通关放行[;；]/, 'in_transit'],
+  [/^货物已交仓[,，]/, 'in_transit'],
+  [/^包裹交接给本地物流商处理/, 'in_transit'],
   [/安排投递$/, 'out_for_delivery'],
   [/已妥投$/, 'delivered'],
   // USPS's attempt, relayed after the post office's place.
@@ -143,7 +155,7 @@ export function dhlinkEnglish(wording: string): string | undefined {
 }
 
 /** The flight DHLink books the parcel on, written before it: no scan, so the adapter drops the row. */
-export const FLIGHT_BOOKED = /^预计配载航班\d{1,2}月\d{1,2}日/;
+export const FLIGHT_BOOKED = /^预计配载航班(?:\d{1,2}月\d{1,2}日|时间[:：])/;
 
 /**
  * A row's stage: its node, by code then by name, DHLink's map of the wording,

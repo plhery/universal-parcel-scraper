@@ -79,6 +79,14 @@
       "note": "Left at a Pickup parcelshop for the recipient to collect, after a failed attempt."
     },
     {
+      "code": "DRIVER_PICKUP/SHOP",
+      "wording": "Parcel was picked up by driver from Pickup parcel shop",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "A driver collected the parcel from a Pickup parcelshop. Its stage depends on the scans before it: the sender's drop-off collected is its acceptance, or a hand-over in transit; after the parcel waited at a Pickup point for its recipient, it starts the way back."
+    },
+    {
       "code": "TAKEOVER/SHOP",
       "wording": "Takeover by Pickup parcel shop",
       "stage": "ready_for_pickup",

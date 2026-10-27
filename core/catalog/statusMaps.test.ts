@@ -1737,6 +1737,8 @@ describe("universal providers' answers", () => {
     // Colis Privé's notices as ParcelsApp relays them.
     expect(answer('unknown', null, 'Consignee notified: by email')).toEqual(gap);
     expect(answer('unknown', null, 'Your package will be delivered to another pickup point. You will be informed of the address and hours by email.')).toEqual(gap);
+    // DPD Poland's messages to the recipient as ParcelsApp relays them.
+    for (const wording of ['Email notification', 'SMS notification']) expect(answer('unknown', null, wording)).toEqual(gap);
     for (const wording of ['Shipment parameters updated', 'Tax ID. Form received', 'Keine weiteren Details erforderlich', 'Filiale / Agentur',
       'Benachrichtigt', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Received.', 'Shipped', 'Driver assigned',
       'Parcel is with the driver', 'Not received from retailer', 'Pickup document attached', 'Delivery branch. Rescheduling',

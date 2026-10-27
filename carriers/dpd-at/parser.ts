@@ -7,7 +7,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryTimeZone, sharedClockZone, zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { dpdAtStage } from './status.js';
+import { DPD_AT_SHOP_COLLECTION, dpdAtShopCollectionStage, dpdAtStage } from './status.js';
 
 export const PROVIDER = 'DPD Austria';
 // A long history is under ten kilobytes.
@@ -139,11 +139,16 @@ export function readDpdAt(payload: unknown, raw: string): DpdAtReading {
   const places = new Map<string, string>();
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
+  let previous: Stage | undefined;
+  let waited = false;
   for (const scan of scans) {
     const country = countryOf(scan);
     if (scan.place) places.set(scan.depot, country ? `${scan.place}, ${country}` : scan.place);
     const location = scan.place ? places.get(scan.depot)! : (scan.depot && places.get(scan.depot)) || '';
-    const staged = dpdAtStage(scan.code, scan.description);
+    const staged = scan.code.toUpperCase() === DPD_AT_SHOP_COLLECTION
+      ? { stage: dpdAtShopCollectionStage(waited, previous), source: 'carrier_map' as const } : dpdAtStage(scan.code, scan.description);
+    if (staged) previous = staged.stage;
+    if (staged?.stage === 'ready_for_pickup') waited = true;
     const key = JSON.stringify([scan.wall, scan.code, scan.description, location]);
     if (seen.has(key)) continue;
     seen.add(key);

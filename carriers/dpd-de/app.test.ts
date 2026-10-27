@@ -404,6 +404,9 @@ describe('DPD Germany app projection', () => {
     for (const wording of ['the consignee did not collect the parcel.', 'pick-up from the pickup parcelshop by dpd driver']) {
       expect(statusMapAnswer({ carrier: 'dpd-de', description: wording })).toMatchObject({ kind: 'intentional_gap' });
     }
+    // DPD Portugal's notices, relayed on a parcel it delivers, keep their code and wording.
+    expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: '714', description: 'DATA PREVISTA DE ENTREGA' })).toMatchObject({ kind: 'intentional_gap' });
+    expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: '714', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
   });
 
   it.each([

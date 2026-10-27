@@ -245,11 +245,13 @@ describe('DHLink HTTP adapter', () => {
 
   it('drops the flight DHLink books the parcel on, which it writes before the flight', () => {
     const whole = parseDhlink(fixture('usps-relayed'), LINE, LATER);
-    const booked = parseDhlink(changed('usps-relayed', (parcel) => {
-      for (const row of parcel.trackinfoList.slice(18, 20)) row.info = '预计配载航班1月13日,Expected flight on January 13th';
-    }), LINE, LATER);
-    expect(booked.events).toHaveLength(whole.events!.length - 1);
-    expect(booked.events!.some((event) => /预计配载航班|expected flight/i.test(event.description ?? ''))).toBe(false);
+    for (const wording of ['预计配载航班1月13日,Expected flight on January 13th', '预计配载航班时间：01-13；Estimated loading flight time:01-13']) {
+      const booked = parseDhlink(changed('usps-relayed', (parcel) => {
+        for (const row of parcel.trackinfoList.slice(18, 20)) row.info = wording;
+      }), LINE, LATER);
+      expect(booked.events).toHaveLength(whole.events!.length - 1);
+      expect(booked.events!.some((event) => /预计配载航班|flight (?:on|time)/i.test(event.description ?? ''))).toBe(false);
+    }
   });
 
   it('reads DHLink’s delivered count when the last feed’s wording says less', () => {
