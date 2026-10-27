@@ -1927,6 +1927,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'yfhex', number: 'ZZ0000000000',
     route: /^https:\/\/toms\.yfhex\.com:6055\/track_query_c\.aspx\?track_number=ZZ0000000000$/,
     marker: /专线及小包查询|Parcel \/ Line Query/ },
+  // The page fills its form with `?number=` and says when it has no such parcel.
+  { carrier: 'timely-titan', number: 'TT2600000000017CN',
+    route: /^https:\/\/timelytitan\.com\/tracking\.html\?number=TT2600000000017CN$/,
+    marker: /tracking not found|TimelyTitan All rights reserved/ },
 ];
 
 /**

@@ -30395,6 +30395,52 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "timely-titan": {
+    "displayName": "Timely Titan Express",
+    "color": "#00bcd4",
+    "aliases": [
+      "Timely Titan",
+      "TimelyTitan",
+      "Timely Titan International",
+      "TT Express",
+      "泰坦国际速递",
+      "Titan泰坦国际速递"
+    ],
+    "countries": [
+      "NL",
+      "BE",
+      "LU",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "timely-titan",
+      "localClocks": true
+    },
+    "canaryUrl": "https://timelytitan.com/tracking.html",
+    "trackingUrlTemplate": "https://timelytitan.com/tracking.html?number={trackingNumber}",
+    "trackingSearchUrl": "https://timelytitan.com/tracking.html",
+    "linkRules": [
+      {
+        "domains": [
+          "timelytitan.com",
+          "www.timelytitan.com"
+        ],
+        "pathPattern": "^/tracking\\.html$",
+        "params": [
+          "number"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TT\\d{13}CN$",
+        "confidence": "high"
+      }
+    ]
+  },
   "tirupati-courier": {
     "displayName": "Shree Tirupati Courier",
     "color": "#f4791f",
@@ -33931,6 +33977,7 @@ export const CARRIER_IDS = [
   "tforce-logistics",
   "thhy",
   "tiki",
+  "timely-titan",
   "tirupati-courier",
   "tmm-express",
   "tnt-it",
@@ -34744,6 +34791,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tforce-logistics": ["tforce-logistics-1"],
   "thhy": ["thhy-1"],
   "tiki": [],
+  "timely-titan": ["timely-titan-1"],
   "tirupati-courier": [],
   "tmm-express": [],
   "tnt-it": ["tnt-it-1","tnt-it-check"],

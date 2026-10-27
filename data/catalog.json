@@ -30393,6 +30393,52 @@
     ],
     "detectionRules": []
   },
+  "timely-titan": {
+    "displayName": "Timely Titan Express",
+    "color": "#00bcd4",
+    "aliases": [
+      "Timely Titan",
+      "TimelyTitan",
+      "Timely Titan International",
+      "TT Express",
+      "泰坦国际速递",
+      "Titan泰坦国际速递"
+    ],
+    "countries": [
+      "NL",
+      "BE",
+      "LU",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "timely-titan",
+      "localClocks": true
+    },
+    "canaryUrl": "https://timelytitan.com/tracking.html",
+    "trackingUrlTemplate": "https://timelytitan.com/tracking.html?number={trackingNumber}",
+    "trackingSearchUrl": "https://timelytitan.com/tracking.html",
+    "linkRules": [
+      {
+        "domains": [
+          "timelytitan.com",
+          "www.timelytitan.com"
+        ],
+        "pathPattern": "^/tracking\\.html$",
+        "params": [
+          "number"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TT\\d{13}CN$",
+        "confidence": "high"
+      }
+    ]
+  },
   "tirupati-courier": {
     "displayName": "Shree Tirupati Courier",
     "color": "#f4791f",

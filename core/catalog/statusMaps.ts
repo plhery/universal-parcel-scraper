@@ -581,6 +581,7 @@ import { statusMap as thailandPost } from '../../carriers/thailand-post/status.j
 import { statusMap as theCourierGuy } from '../../carriers/the-courier-guy/status.js';
 import { statusMap as thhy } from '../../carriers/thhy/status.js';
 import { statusMap as tiki } from '../../carriers/tiki/status.js';
+import { statusMap as timelyTitan } from '../../carriers/timely-titan/status.js';
 import { statusMap as tipsa } from '../../carriers/tipsa/status.js';
 import { statusMap as tirupatiCourier } from '../../carriers/tirupati-courier/status.js';
 import { statusMap as tmmExpress } from '../../carriers/tmm-express/status.js';
@@ -724,7 +725,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'spx-ph': spxPh, 'spx-th': spxTh, 'spx-tw': spxTw, 'spx-vn': spxVn, 'st-courier': stCourier, 'stallion-express': stallionExpress, 'starex-az': starexAz, starken, sto, stone3pl, straightship, 'sundarban-courier': sundarbanCourier, sunyou, swiftx, 'swiss-post': swissPost, 'swiss-post-cargo': swissPostCargo,
   't-cat': tCat, 't-group': tGroup, 'tanzania-posts': tanzaniaPosts, taxydema, 'tci-express': tciExpress, 'tcs-pakistan': tcsPakistan, tdn, tealca,
   'team-express-ae': teamExpressAe, 'team-global-express': teamGlobalExpress, 'team-worldwide': teamWorldwide, techlink, teleship, 'tfm-express': tfmExpress, 'tforce-freight': tforceFreight,
-  'thailand-post': thailandPost, 'the-courier-guy': theCourierGuy, thhy, tiki, tipsa, 'tirupati-courier': tirupatiCourier, 'tmm-express': tmmExpress, tnt, 'tnt-it': tntIt, 'today-kr': todayKr, toptrans, topyou, torrestir, 'total-express': totalExpress,
+  'thailand-post': thailandPost, 'the-courier-guy': theCourierGuy, thhy, tiki, 'timely-titan': timelyTitan, tipsa, 'tirupati-courier': tirupatiCourier, 'tmm-express': tmmExpress, tnt, 'tnt-it': tntIt, 'today-kr': todayKr, toptrans, topyou, torrestir, 'total-express': totalExpress,
   trackon, 'tracx-logis': tracxLogis, transaher, transcorp, transmission, tsjy, 'tst-cf-express': tstCfExpress, tufesa, 'tws-express': twsExpress,
   'ubi-smart-parcel': ubiSmartParcel, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,

@@ -572,6 +572,7 @@ import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as thhy } from '../carriers/thhy/adapter.js';
 import { adapter as tiki } from '../carriers/tiki/adapter.js';
+import { adapter as timelyTitan } from '../carriers/timely-titan/adapter.js';
 import { adapter as tipsa } from '../carriers/tipsa/adapter.js';
 import { adapter as tirupatiCourier } from '../carriers/tirupati-courier/adapter.js';
 import { adapter as tmmExpress } from '../carriers/tmm-express/adapter.js';
@@ -1208,6 +1209,7 @@ export const REGISTRY: RegistryDefinition = {
     "the-courier-guy": theCourierGuy,
     "thhy": thhy,
     "tiki": tiki,
+    "timely-titan": timelyTitan,
     "tipsa": tipsa,
     "tirupati-courier": tirupatiCourier,
     "tmm-express": tmmExpress,
@@ -1993,6 +1995,7 @@ export const REGISTRY: RegistryDefinition = {
     "the-courier-guy": "the-courier-guy",
     "thhy": "thhy",
     "tiki": "tiki",
+    "timely-titan": "timely-titan",
     "tipsa": "tipsa",
     "tirupati-courier": "tirupati-courier",
     "tmm-express": "tmm-express",
