@@ -121,6 +121,17 @@ describe('tracking HTTP API', () => {
     expect(track.mock.calls[2]![0]).toMatchObject({ language: 'de-CH' });
   });
 
+  it("keeps the postcode's country in the cache identity and forwards it to the tracker", async () => {
+    const track = vi.fn().mockResolvedValue(answer);
+    const url = await started({ tracker: tracker(track) });
+    for (const postcodeCountry of [undefined, 'ES', 'BE', 'ES']) {
+      expect((await post(url, { ...input, ...(postcodeCountry ? { postcodeCountry } : {}) })).status).toBe(200);
+    }
+    expect(track).toHaveBeenCalledTimes(3);
+    expect(track.mock.calls[1]![0]).toMatchObject({ postcodeCountry: 'ES' });
+    expect(track.mock.calls[2]![0]).toMatchObject({ postcodeCountry: 'BE' });
+  });
+
   it('expires cached responses and honors the carrier minimum refresh', async () => {
     let time = 0;
     const track = vi.fn().mockResolvedValue({ ...answer, carrier: 'gls-de' });

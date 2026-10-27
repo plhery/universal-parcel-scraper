@@ -614,6 +614,16 @@ describe('PostNL domestic tracker', () => {
     expect(String(fetcher.mock.calls[0]![0])).toBe(`https://jouw.postnl.nl/track-and-trace/api/trackAndTrace/${barcode}-NL-1234AB?language=en`);
   });
 
+  it("asks the domestic tracker with another country's postcode given with that country, as PostNL's page does", async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse(reply(collo())));
+    const tracker = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    for (const [postcode, postcodeCountry, key] of [['28001', 'es', 'ES-28001'], ['00-950', 'PL', 'PL-00950'], ['1234 ab', 'NL', 'NL-1234AB']]) {
+      await expect(tracker.track({ number: barcode, postcode, postcodeCountry }, {})).resolves.toMatchObject({ status: 'out_for_delivery' });
+      expect(String(fetcher.mock.lastCall![0])).toBe(`https://jouw.postnl.nl/track-and-trace/api/trackAndTrace/${barcode}-${key}?language=en`);
+    }
+    expect(fetcher).toHaveBeenCalledTimes(3);
+  });
+
   it('asks the international tracker when the domestic one finds nothing, and keeps the postcode out of errors', async () => {
     const intl = jsonResponse({ data: { items: [{ item: barcode, events: [{ category: 'Processing', datetime_local: '2026-05-11T12:00:00Z', country_code: 'NL' }] }] } });
     const found = vi.fn<typeof fetch>().mockImplementation(async (url) => (domesticUrl(url) ? jsonResponse({ colli: {} })
@@ -639,6 +649,8 @@ describe('PostNL domestic tracker', () => {
     const tracker = new PostNLTracker({ fetcher });
     await expect(tracker.fetch(barcode)).rejects.toMatchObject({ kind: 'input_required', field: 'postcode' });
     await expect(tracker.fetch(barcode, {}, '10115')).rejects.toMatchObject({ kind: 'input_required', reason: 'postcode_mismatch' });
+    await expect(tracker.fetch(barcode, {}, '10115', 'NL')).rejects.toMatchObject({ kind: 'input_required', reason: 'postcode_mismatch' });
+    await expect(tracker.fetch(barcode, {}, '10/115', 'DE')).rejects.toMatchObject({ kind: 'input_required', reason: 'postcode_mismatch' });
     expect(fetcher.mock.calls.some(([url]) => domesticUrl(url))).toBe(false);
   });
 });

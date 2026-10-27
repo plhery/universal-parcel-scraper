@@ -9,9 +9,11 @@ it; everything user-facing says PostNL.
 
 ## How it works
 
-1. `domestic`: only for a 13- or 15-character `3S` barcode given with a Dutch postcode. A GET
-   to `jouw.postnl.nl/track-and-trace/api/trackAndTrace/{barcode}-NL-{postcode}`, the request
-   PostNL's own tracking page makes, with the postcode sent without its space.
+1. `domestic`: only for a 13- or 15-character `3S` barcode given with a Dutch postcode, or with
+   another country's postcode and that country (`postcodeCountry`). A GET to
+   `jouw.postnl.nl/track-and-trace/api/trackAndTrace/{barcode}-{country}-{postcode}`, the request
+   PostNL's own tracking page makes, with the postcode sent without spaces or hyphens: the page
+   splits that key on hyphens.
    - The reply keys parcels by barcode under `colli`; only the entry whose `barcode` equals
      the requested number is read. An empty `colli` answers an unknown barcode and a wrong
      postcode alike, so it stays inconclusive and the next step runs. So does any other
@@ -43,8 +45,9 @@ it; everything user-facing says PostNL.
      refused. HTTP 404/410 means the endpoint is unavailable, not the parcel missing.
    - "Barcode was not found" for a 13- or 15-character `3S` barcode asks for the delivery
      postcode: PostNL's international tracker does not hold parcels sent within the
-     Netherlands. With a Dutch postcode the domestic tracker has already been asked, so the
-     lookup stays inconclusive; another postcode is reported as not matching.
+     Netherlands. With a postcode it takes, the domestic tracker has already been asked, so
+     the lookup stays inconclusive; a postcode that is not Dutch and comes without its country
+     is reported as not matching.
 
 ## Notes
 
@@ -114,8 +117,10 @@ it; everything user-facing says PostNL.
   `Retry-After` can meet the same quota; the lookup then fails as a rate limit.
 - A `3S` parcel sent within the Netherlands is only on PostNL's domestic tracker, which shows
   it only with its delivery postcode. Without one, the lookup asks for it and other sources
-  are asked. Only Dutch postcodes are sent: a parcel bound abroad keeps to the international
-  tracker.
+  are asked. The domestic tracker also shows parcels PostNL delivers abroad, under the
+  destination country and postcode. A postcode is read as Dutch unless its country comes with
+  it, so a parcel bound abroad is looked up there only when the consumer knows the
+  postcode's country.
 - The endpoints are undocumented and can change without notice.
 
 ## Testing

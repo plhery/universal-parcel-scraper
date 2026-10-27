@@ -171,7 +171,7 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     const detected = detectCarrierMatch(input.number);
     input = { ...input, carrier: input.carrier ?? (detected.confidence === 'high' ? detected.carrier : undefined) };
     // Without a carrier, the printed form decides which carriers recognition asks.
-    const key = createHash('sha256').update(JSON.stringify([number, input.carrier ?? detected.candidates, input.postcode, input.trackingUrl, input.countryHint, input.language])).digest('hex');
+    const key = createHash('sha256').update(JSON.stringify([number, input.carrier ?? detected.candidates, input.postcode, input.postcodeCountry, input.trackingUrl, input.countryHint, input.language])).digest('hex');
     const previous = cache.get(key);
     if (previous && previous.until > now()) {
       if (previous.error) throw previous.error;
@@ -255,13 +255,13 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       if (request.method !== 'POST') { json(response, 405, { error: 'Use POST' }); return; }
       const input = await body(request);
       const allowed = path === '/v1/detect' ? ['text'] : path === '/v1/recognize' ? ['number','budgetMs']
-        : ['number','carrier','postcode','trackingUrl','countryHint','language','budgetMs'];
+        : ['number','carrier','postcode','postcodeCountry','trackingUrl','countryHint','language','budgetMs'];
       if (Object.keys(input).some(key => !allowed.includes(key))) throw new HttpError(400, 'Unknown request field');
       if (path === '/v1/detect') { json(response, 200, tracker.detect(input.text as string)); return; }
       if (input.budgetMs !== undefined && (typeof input.budgetMs !== 'number' || !Number.isInteger(input.budgetMs) || input.budgetMs < 1 || input.budgetMs > 120_000)) throw new HttpError(400, 'Invalid lookup budget');
       if (path === '/v1/recognize') { json(response, 200, await admitted(() => tracker.recognize(input.number as string, { budgetMs: input.budgetMs as number | undefined }))); return; }
       const result = await tracked({ number: input.number as string, carrier: input.carrier as string | undefined,
-        postcode: input.postcode as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined, countryHint: input.countryHint as string | null | undefined,
+        postcode: input.postcode as string | null | undefined, postcodeCountry: input.postcodeCountry as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined, countryHint: input.countryHint as string | null | undefined,
         language: input.language as string | null | undefined }, input.budgetMs);
       json(response, 200, result);
     } catch (error) {

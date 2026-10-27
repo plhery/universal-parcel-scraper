@@ -22,6 +22,12 @@ export interface TrackingInput {
   trackingUrl?: string | null;
   /** The delivery postcode for carriers that need one; part of the tracking credential. */
   postcode?: string | null;
+  /**
+   * The country of `postcode` as an ISO 3166-1 alpha-2 code, for a postcode
+   * the consumer knows is from outside the carrier's home country. Without
+   * one, an adapter reads the postcode as its home country's.
+   */
+  postcodeCountry?: string | null;
   /** @deprecated Accepted for compatibility; no adapter or provider reads it. */
   countryHint?: string | null;
   /**

@@ -42,6 +42,8 @@ export interface ParcelInput {
   number: string;
   carrier?: string;
   postcode?: string | null;
+  /** The postcode's country as an ISO 3166-1 alpha-2 code, for a postcode from outside the carrier's home country. */
+  postcodeCountry?: string | null;
   /** @deprecated Accepted for compatibility; it no longer affects a lookup. */
   countryHint?: string | null;
   trackingUrl?: string | null;
@@ -226,6 +228,9 @@ export function createTracker(options: TrackerOptions = {}) {
     }
     if (input.countryHint != null && typeof input.countryHint !== 'string') throw new TypeError('Invalid country hint');
     if (input.postcode != null && typeof input.postcode !== 'string') throw new TypeError('Invalid postcode');
+    if (input.postcodeCountry != null && (typeof input.postcodeCountry !== 'string' || !/^\s*[A-Za-z]{2}\s*$/.test(input.postcodeCountry))) {
+      throw new TypeError('Invalid postcode country');
+    }
     if (input.trackingUrl != null && typeof input.trackingUrl !== 'string') throw new TypeError('Invalid tracking URL');
     if (input.language != null && (typeof input.language !== 'string' || input.language.length > 35)) throw new TypeError('Invalid language');
     const language = input.language ? { language: input.language } : {};
@@ -254,7 +259,8 @@ export function createTracker(options: TrackerOptions = {}) {
       }
     }
     const adapter = input.source ? undefined : registry.for(carrier);
-    const directInput = { number, postcode: fields.postcode, trackingUrl: fields.trackingUrl, ...language };
+    const postcodeCountry = fields.postcode && input.postcodeCountry ? { postcodeCountry: input.postcodeCountry.trim().toUpperCase() } : {};
+    const directInput = { number, postcode: fields.postcode, ...postcodeCountry, trackingUrl: fields.trackingUrl, ...language };
     const directBudget = () => Math.min(remaining() + DEADLINE_SLACK_MS, 60_000);
     // A carrier that enters some scans at their planned time shows them once they are due.
     const due = (answer: CarrierResult) => adapter?.plannedScans ? dueScans(answer, carrier) : answer;

@@ -63,6 +63,14 @@ describe('standalone tracker', () => {
     }
   });
 
+  it("refuses a postcode country that is not a two-letter code", async () => {
+    const lookup = vi.fn().mockResolvedValue({ status: 'in_transit', events: [{ time: '2026-01-02T12:00:00Z', description: 'In transit' }] });
+    const tracker = createTracker({ registry: registry(lookup), providers: [] });
+    for (const postcodeCountry of [42, 'ESP', 'E1']) {
+      await expect(tracker.track({ number, postcodeCountry: postcodeCountry as string })).rejects.toThrow('Invalid postcode country');
+    }
+  });
+
   it('records a single-step lookup once, leaving it to an adapter that records its own steps', async () => {
     const lookups: string[] = [];
     const recorder = { step() {}, lookup: ({ carrier }: { carrier: string }) => { lookups.push(carrier); } };

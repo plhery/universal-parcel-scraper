@@ -19,7 +19,8 @@
  *
  * A 3S barcode sent within the Netherlands is not there: PostNL's domestic
  * tracker on jouw.postnl.nl shows it, given the barcode, the country and the
- * delivery postcode. With a Dutch postcode that tracker is asked first.
+ * delivery postcode. With a Dutch postcode, or another country's postcode
+ * given with that country, that tracker is asked first.
  */
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { DateTime } from 'luxon';
@@ -58,6 +59,8 @@ const READABLE_3S = /^3S[A-Z]{4}\d{9}$/;
 // The 3S barcodes the domestic tracker may hold, and the Dutch postcode it takes them with.
 const THREE_S = /^(?=.{13}$|.{15}$)3S[A-Z]{1,4}\d+$/;
 const DUTCH_POSTCODE = /^([1-9]\d{3}) ?([A-Z]{2})$/;
+// A postcode abroad, as the tracking page sends it: the page splits its key on hyphens.
+const FOREIGN_POSTCODE = /^[A-Z0-9]{2,10}$/;
 const DOMESTIC_MESSAGE = 'PostNL shows a parcel sent within the Netherlands only with its delivery postcode';
 // PostNL's own records (the pre-advice, the shipper's data) name no country and
 // keep Amsterdam time. See this folder's README for the evidence.
@@ -293,6 +296,20 @@ function rateLimited(error: UpstreamHttpError): RateLimitedError {
     { cause: error, status: 429 });
 }
 
+/**
+ * The country and postcode the domestic tracker's key ends with: a Dutch postcode without its
+ * space, or another country's without spaces or hyphens. Null for a postcode without a country
+ * that is not Dutch.
+ */
+function domesticAddress(postcode: string, country: string): string | null {
+  if (!country || country === 'NL') {
+    const dutch = DUTCH_POSTCODE.exec(postcode);
+    return dutch ? `NL-${dutch[1]}${dutch[2]}` : null;
+  }
+  const compact = postcode.replace(/[\s-]+/g, '');
+  return /^[A-Z]{2}$/.test(country) && FOREIGN_POSTCODE.test(compact) ? `${country}-${compact}` : null;
+}
+
 /** The same failure without the request details fetchBounded attaches: the address holds the postcode. */
 function withoutPostcode(error: unknown): unknown {
   if (error instanceof UpstreamHttpError) return new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
@@ -376,9 +393,9 @@ export class PostNLTracker {
     return bytes;
   }
 
-  /** The domestic tracker's answer for a 3S barcode and its Dutch delivery postcode, sent without its space. */
-  private async domestic(trackingNumber: string, postcode: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
-    const key = `${encodeURIComponent(trackingNumber)}-NL-${postcode}`;
+  /** The domestic tracker's answer for a 3S barcode and the country and postcode of its delivery address. */
+  private async domestic(trackingNumber: string, address: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+    const key = `${encodeURIComponent(trackingNumber)}-${address}`;
     let bytes: Uint8Array;
     try {
       ({ bytes } = await fetchBounded(
@@ -420,18 +437,18 @@ export class PostNLTracker {
     }
   }
 
-  async fetch(trackingNumber: string, context: TrackingContext = {}, postcode?: string | null): Promise<CarrierResult> {
+  async fetch(trackingNumber: string, context: TrackingContext = {}, postcode?: string | null, country?: string | null): Promise<CarrierResult> {
     const budget = context.budgetMs ?? LOOKUP_TIMEOUT_MS;
     if (!Number.isFinite(budget) || budget <= 0) throw new TypeError('PostNL timeout must be positive');
     const supplied = postcode?.trim().toUpperCase() ?? '';
-    const dutch = DUTCH_POSTCODE.exec(supplied);
-    const domestic = THREE_S.test(comparableIdentifier(trackingNumber)) && dutch !== null;
+    const address = supplied ? domesticAddress(supplied, country?.trim().toUpperCase() ?? '') : null;
+    const domestic = THREE_S.test(comparableIdentifier(trackingNumber)) && address !== null;
     return runSteps({ carrier: 'spring-gds', budgetMs: budget, signal: context.signal, recorder: this.recorder }, [
       {
         id: 'domestic',
         enabled: domestic,
         // Half of the budget at most, so the international tracker can still be asked.
-        run: ({ signal, remainingMs }) => this.domestic(trackingNumber, `${dutch![1]}${dutch![2]}`, signal,
+        run: ({ signal, remainingMs }) => this.domestic(trackingNumber, address!, signal,
           Math.max(1, Math.floor(Math.min(DOMESTIC_TIMEOUT_MS, remainingMs / 2)))),
       },
       {
@@ -443,8 +460,8 @@ export class PostNLTracker {
             return await this.international(trackingNumber, signal);
           } catch (error) {
             if (!(error instanceof InputRequiredError) || !supplied) throw error;
-            if (!dutch) {
-              throw new InputRequiredError(PROVIDER, 'postcode', 'PostNL\'s domestic tracker takes a Dutch delivery postcode', { reason: 'postcode_mismatch' });
+            if (!address) {
+              throw new InputRequiredError(PROVIDER, 'postcode', 'PostNL\'s domestic tracker takes a Dutch delivery postcode, or another country\'s with that country', { reason: 'postcode_mismatch' });
             }
             // The domestic tracker's own failure, unless it found nothing either.
             if (previousError instanceof CarrierError && !(previousError instanceof IndeterminateError && previousError.reason === 'portal_not_found')) {
@@ -468,10 +485,10 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'spring-gds',
     recordsSteps: true,
-    // The domestic tracker runs only for a 3S barcode with a Dutch postcode. The
+    // The domestic tracker runs only for a 3S barcode with a postcode it can take. The
     // international visitor token and lookup are one step: both are keyless HTTP
     // on the same host, and each replays once inside the step.
     steps: ['domestic', 'direct'],
-    track: (input, context) => tracker.fetch(input.number, context, input.postcode),
+    track: (input, context) => tracker.fetch(input.number, context, input.postcode, input.postcodeCountry),
   };
 };
