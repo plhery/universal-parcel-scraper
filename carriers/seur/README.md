@@ -44,6 +44,11 @@ Universal providers name SEUR for some twelve-digit numbers, which its lookup al
 Tracking accepts them so the lookup can confirm the provider's naming. Twelve digits fit many
 carriers' rules, so no rule suggests SEUR for them and recognition never asks it.
 
+A pickup request's reference is `REC` and twelve digits, the `collectionRef` of SEUR's
+business API, which tracks it only for the account that booked the pickup. It names a pickup,
+not a parcel, and the public lookup answers the published ones as unknown numbers, so no rule
+claims it and tracking refuses it.
+
 The no-history error also covers recent or out-of-range identifiers and remains
 inconclusive, with the reason `portal_not_found` so a consumer can tell it from
 an outage. Empty replies, redirects and generic HTTP errors are inconclusive
