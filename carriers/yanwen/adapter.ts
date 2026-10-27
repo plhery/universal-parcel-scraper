@@ -63,6 +63,21 @@ function eventTime(day: string, raw: string): string {
 }
 
 /**
+ * Yanwen relays La Poste's scans of a parcel bound for France on UTC's wall
+ * clock under France's offset, with no copy on the local clock: its "Arrived
+ * at destination" at 13:34:37 [GMT+02] is La Poste's 15:34:37+02:00. A
+ * relayed scan, placed and without an icon, under France's offset at the
+ * instant its wall clock gives in UTC, is read that way and keeps its offset.
+ */
+function onFrenchUtcClock(event: CarrierEvent): CarrierEvent {
+  const shown = DateTime.fromISO(event.time!, { setZone: true });
+  if (!event.location || event.provider_code || !shown.offset) return event;
+  const utc = DateTime.fromISO(shown.toISO({ includeOffset: false })!, { zone: 'utc' });
+  if (utc.setZone('Europe/Paris').offset !== shown.offset) return event;
+  return { ...event, time: utc.setZone(shown.zone).toISO({ suppressMilliseconds: true })! };
+}
+
+/**
  * Some partner histories come twice: on the local wall clock and on the UTC
  * wall clock under the same offset, which puts US scans hours late. A scan with
  * the same wording, icon and offset exactly that offset away, in the same place
@@ -130,7 +145,13 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
       const classified = yanwenStatus(description, code);
       scanned.push({ time, description, location, ...(code ? { provider_code: code } : {}), ...(classified ? { stage: classified.stage } : {}) });
     }
-    const events = withoutUtcCopies(scanned);
+    const columns = block.children('.cx_top_nr').children('.colFlex');
+    if (columns.length !== 5) throw new SchemaError('Yanwen', 'Yanwen returned an invalid parcel summary');
+    columns.find('a').remove();
+    const country = clean(columns.eq(3).text(), 8).toUpperCase();
+    const local = withoutUtcCopies(scanned);
+    // Without a local copy beside them, La Poste's scans came on UTC's wall clock alone.
+    const events = country === 'FR' && local.length === scanned.length ? local.map(onFrenchUtcClock) : local;
     const latest = events[0]!;
     const scan = yanwenStatus(latest.description!, latest.provider_code);
     // The category gives the status when the newest scan's wording is new. A
@@ -140,15 +161,11 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     const status = scan?.status ?? category?.status ?? 'unknown';
     const stage = scan?.stage ?? category?.stage;
     const delivery = status === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
-    const columns = block.children('.cx_top_nr').children('.colFlex');
-    if (columns.length !== 5) throw new SchemaError('Yanwen', 'Yanwen returned an invalid parcel summary');
-    columns.find('a').remove();
     const deliveryNumber = clean(columns.eq(1).text(), 64).toUpperCase();
     if (parcel !== number && deliveryNumber !== number) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
     const handoff = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
     const notes = block.find('.addNotes p').toArray().map((line) => clean($(line).text(), 300));
     const partner = handoff ? distributor(notes, handoff) : undefined;
-    const country = clean(columns.eq(3).text(), 8).toUpperCase();
     results.push({ status, ...(stage ? { current_stage: stage } : {}),
       last_status_text: latest.description, last_update: latest.time,
       ...(delivery ? { delivered_at: delivery.time } : {}), ...(parcel !== number ? { canonical_tracking_number: parcel } : {}),

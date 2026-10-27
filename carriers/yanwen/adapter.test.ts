@@ -24,10 +24,11 @@ function reworded(wording: string, keepIcon = false) {
 
 type Row = [day: string, clock: string, place: string, wording: string, icon?: string];
 
-/** The fixture with both timelines replaced by these rows, newest first, and the category given. */
-function history(rows: Row[], category?: string) {
+/** The fixture with both timelines replaced by these rows, newest first, and the category and destination given. */
+function history(rows: Row[], category?: string, country?: string) {
   const $ = load(fixture());
   if (category) $('input[name=wcdhA]').attr('status', category);
+  if (country) $('.cx_top_nr').each((_, element) => { $(element).children('.colFlex').eq(3).text(country); });
   $('.czhaodl dl').html(rows.map(([day, clock, where, wording, icon]) => `<dt>${day}</dt><dd><p class="timePoint">${clock}</p>`
     + `<div class="cz_c"><img src="${icon ? `/static/img/${icon}.png` : NONE_ICON}"></div>`
     + `<div class="cz_r">${where ? `<h6>[${where}]</h6>` : ''}<h6>${wording}</h6></div></dd>`).join(''));
@@ -196,6 +197,27 @@ describe('Yanwen result projection', () => {
       ['2026-03-03', '10:00:00 [GMT+08]', 'Example facility', 'Arrived at domestic terminal station'],
       ['2026-03-03', '02:00:00 [GMT+08]', '', 'Arrived at domestic terminal station'],
     ]).events?.map((event) => [event.time, event.location])).toEqual([['2026-03-03T10:00:00+08:00', 'Example facility']]);
+  });
+
+  it("reads La Poste's relayed scans of a parcel bound for France on UTC's wall clock", () => {
+    const rows: Row[] = [
+      ['2026-10-26', '18:40:00 [GMT+01]', 'EXAMPLE PLATFORM', 'Transport to delivery centre'],
+      ['2026-10-23', '13:34:37 [GMT+02]', 'EXAMPLE HUB', 'Arrived at destination'],
+      ['2026-10-22', '22:53:59 [GMT+01]', '', 'Batch delivery to carrier', 'LH40'],
+      ['2026-10-22', '09:05:00 [GMT+01]', '', 'Pick up by local carrier at destination port'],
+      ['2026-10-20', '11:42:17 [GMT+08]', 'Example facility', 'Arrived at domestic terminal station'],
+      ['2026-10-20', '00:48:27 [GMT+00]', 'Example manifest', 'Manifest created'],
+    ];
+    const times = (country?: string, scans = rows) => history(scans, undefined, country).events?.map((event) => event.time);
+    // Placed scans without an icon under France's offset; Yanwen's own scans and other offsets stay.
+    expect(times('FR')).toEqual(['2026-10-26T19:40:00+01:00', '2026-10-23T15:34:37+02:00', '2026-10-22T22:53:59+01:00',
+      '2026-10-22T09:05:00+01:00', '2026-10-20T11:42:17+08:00', '2026-10-20T00:48:27Z']);
+    expect(times('IT')?.slice(0, 2)).toEqual(['2026-10-26T18:40:00+01:00', '2026-10-23T13:34:37+02:00']);
+    // France was on +02:00 on 22 October: a +01:00 stamp then is not France's offset.
+    expect(times('FR', [['2026-10-22', '14:00:00 [GMT+01]', 'EXAMPLE HUB', 'Arrived at destination']])).toEqual(['2026-10-22T14:00:00+01:00']);
+    // A history that also came on the local clock already lost its UTC copies.
+    expect(times('FR', [['2026-10-23', '15:34:37 [GMT+02]', 'EXAMPLE HUB', 'Arrived at destination'],
+      ['2026-10-23', '13:34:37 [GMT+02]', 'EXAMPLE HUB', 'Arrived at destination']])).toEqual(['2026-10-23T15:34:37+02:00']);
   });
 
   it('keeps repeated scans that are not one UTC copy of another', () => {
