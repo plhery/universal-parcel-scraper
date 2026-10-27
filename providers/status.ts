@@ -85,6 +85,9 @@ export const statusMap: CarrierStatusMap = {
     wording: 'forecast of last-mile delivery by carrier',
     note: "Cainiao's order data sent ahead to the last-mile carrier, in Postal Ninja's words: not a scan, so it keeps the stage the parcel already had.",
   }, {
+    code: 'LAST_MILE_ASN_NOTIFY',
+    note: "Cainiao's order data sent ahead to the last-mile carrier, relayed with Cainiao's code in any words: not a scan, so it keeps the stage the parcel already had.",
+  }, {
     wording: 'consignee notified: by email',
     note: "Colis Privé's note that it emailed the recipient, as ParcelsApp relays it: not a scan, so it keeps the stage the parcel already had.",
   }, {
