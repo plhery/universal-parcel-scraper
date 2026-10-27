@@ -4,10 +4,10 @@
   "countries": 135,
   "referenceCarriers": 100,
   "comparison": {
-    "combined": 92,
-    "direct": 88,
+    "combined": 95,
+    "direct": 91,
     "providers": {
-      "ParcelsApp": 71,
+      "ParcelsApp": 72,
       "Postal Ninja": 32,
       "17TRACK": 73,
       "Ship24": 57,

@@ -11,17 +11,17 @@
   <path d="M480.5 44V282" stroke="#3a382e"/>
   <path d="M690.5 44V282" stroke="#3a382e"/>
   <text x="0" y="65.5" fill="#fffaf0" font-weight="600">This project, all fallbacks enabled</text>
-  <path d="M270 52h382a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-382z" fill="#f3cf48"/>
-  <text x="664" y="65.5" fill="#fffaf0" font-weight="600">92</text>
+  <path d="M270 52h395a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-395z" fill="#f3cf48"/>
+  <text x="677" y="65.5" fill="#fffaf0" font-weight="600">95</text>
   <text x="0" y="99.5" fill="#fffaf0" font-weight="600">This project, dedicated adapters alone</text>
-  <path d="M270 86h366a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-366z" fill="#f3cf48"/>
-  <text x="648" y="99.5" fill="#fffaf0" font-weight="600">88</text>
+  <path d="M270 86h378a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-378z" fill="#f3cf48"/>
+  <text x="660" y="99.5" fill="#fffaf0" font-weight="600">91</text>
   <text x="0" y="133.5" fill="#fffaf0">17TRACK</text>
   <path d="M270 120h303a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-303z" fill="#6b6859"/>
   <text x="585" y="133.5" fill="#fffaf0">73</text>
   <text x="0" y="167.5" fill="#fffaf0">ParcelsApp</text>
-  <path d="M270 154h294a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-294z" fill="#6b6859"/>
-  <text x="576" y="167.5" fill="#fffaf0">71</text>
+  <path d="M270 154h298a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-298z" fill="#6b6859"/>
+  <text x="580" y="167.5" fill="#fffaf0">72</text>
   <text x="0" y="201.5" fill="#fffaf0">Ship24</text>
   <path d="M270 188h235a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-235z" fill="#6b6859"/>
   <text x="517" y="201.5" fill="#fffaf0">57</text>

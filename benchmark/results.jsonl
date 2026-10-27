@@ -34,18 +34,18 @@
 {"carrier":"mondial-relay","number":"89112087","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":2367}
 {"carrier":"mondial-relay","number":"89112087","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":8189}
 {"carrier":"mondial-relay","number":"89112087","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
-{"carrier":"colis-prive","number":"431 001 411 698","source":"direct","checked":"2026-10-27","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":0}
-{"carrier":"colis-prive","number":"431 001 411 698","source":"Ship24","checked":"2026-10-10","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":9351}
-{"carrier":"colis-prive","number":"431 001 411 698","source":"ParcelsApp","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":3410}
-{"carrier":"colis-prive","number":"431 001 411 698","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":3032}
-{"carrier":"colis-prive","number":"431 001 411 698","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":19048}
-{"carrier":"colis-prive","number":"431 001 411 698","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
-{"carrier":"colis-prive","number":"WT0004403087","source":"direct","checked":"2026-10-27","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":0}
-{"carrier":"colis-prive","number":"WT0004403087","source":"Ship24","checked":"2026-10-10","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":1205}
-{"carrier":"colis-prive","number":"WT0004403087","source":"ParcelsApp","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":59}
-{"carrier":"colis-prive","number":"WT0004403087","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":3041}
-{"carrier":"colis-prive","number":"WT0004403087","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":7814}
-{"carrier":"colis-prive","number":"WT0004403087","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
+{"carrier":"colis-prive","number":"DG0013200753","source":"direct","checked":"2026-10-27","outcome":"history","rows":5,"undated":5,"wall":5,"wallLatest":"2026-10-20","latest":null,"latestStage":null,"reported":[],"ms":542}
+{"carrier":"colis-prive","number":"DG0013200753","source":"Ship24","checked":"2026-10-27","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":2401}
+{"carrier":"colis-prive","number":"DG0013200753","source":"ParcelsApp","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":216}
+{"carrier":"colis-prive","number":"DG0013200753","source":"17TRACK","checked":"2026-10-27","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":2408}
+{"carrier":"colis-prive","number":"DG0013200753","source":"Postal Ninja","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":6271}
+{"carrier":"colis-prive","number":"DG0013200753","source":"UPU","checked":"2026-10-27","outcome":"n/a","ms":0}
+{"carrier":"colis-prive","number":"P50019442050","source":"direct","checked":"2026-10-27","outcome":"history","rows":11,"undated":11,"wall":11,"wallLatest":"2026-10-17","latest":null,"latestStage":null,"reported":[],"ms":555}
+{"carrier":"colis-prive","number":"P50019442050","source":"Ship24","checked":"2026-10-27","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":1644}
+{"carrier":"colis-prive","number":"P50019442050","source":"ParcelsApp","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":5052}
+{"carrier":"colis-prive","number":"P50019442050","source":"17TRACK","checked":"2026-10-27","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":3811}
+{"carrier":"colis-prive","number":"P50019442050","source":"Postal Ninja","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":10372}
+{"carrier":"colis-prive","number":"P50019442050","source":"UPU","checked":"2026-10-27","outcome":"n/a","ms":0}
 {"carrier":"dpd-fr","number":"10084004615036","source":"direct","checked":"2026-10-15","outcome":"history","rows":10,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-08-25T10:18:00+02:00","latestStage":"delivered","reported":[],"ms":9816}
 {"carrier":"dpd-fr","number":"10084004615036","source":"Ship24","checked":"2026-10-10","outcome":"history","rows":10,"undated":0,"latest":"2026-08-25T08:18:00.000Z","latestStage":"delivered","reported":["DPD France"],"ms":7578}
 {"carrier":"dpd-fr","number":"10084004615036","source":"ParcelsApp","checked":"2026-10-10","outcome":"history","rows":5,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-08-25T08:18:00.000Z","latestStage":"delivered","reported":["DPD France","myBRT.it"],"ms":107}
@@ -580,18 +580,18 @@
 {"carrier":"dhl-ecommerce-es","number":"CC502655557DE","source":"17TRACK","checked":"2026-10-10","outcome":"history","rows":9,"undated":0,"latest":"2026-09-08T07:31:00.000Z","latestStage":"delivered","reported":["Correos Spain","DHL Paket"],"ms":13384}
 {"carrier":"dhl-ecommerce-es","number":"CC502655557DE","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":11403}
 {"carrier":"dhl-ecommerce-es","number":"CC502655557DE","source":"UPU","checked":"2026-10-10","outcome":"no_history","error":"NotFoundError(not_found)","ms":21}
-{"carrier":"paack","number":"534000021265325582","source":"direct","checked":"2026-10-27","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":0}
-{"carrier":"paack","number":"534000021265325582","source":"Ship24","checked":"2026-10-10","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":119}
-{"carrier":"paack","number":"534000021265325582","source":"ParcelsApp","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":100}
-{"carrier":"paack","number":"534000021265325582","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"NotFoundError(not_found)","ms":4115}
-{"carrier":"paack","number":"534000021265325582","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":4571}
-{"carrier":"paack","number":"534000021265325582","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
-{"carrier":"paack","number":"00100909086360120251130131718","source":"direct","checked":"2026-10-27","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":0}
-{"carrier":"paack","number":"00100909086360120251130131718","source":"Ship24","checked":"2026-10-10","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":125}
-{"carrier":"paack","number":"00100909086360120251130131718","source":"ParcelsApp","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":16099}
-{"carrier":"paack","number":"00100909086360120251130131718","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":2877}
-{"carrier":"paack","number":"00100909086360120251130131718","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":5538}
-{"carrier":"paack","number":"00100909086360120251130131718","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
+{"carrier":"paack","number":"534000021263149358","source":"direct","checked":"2026-10-27","outcome":"history","rows":9,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-08-05T14:04:17.000Z","latestStage":"delivered","reported":[],"ms":551}
+{"carrier":"paack","number":"534000021263149358","source":"Ship24","checked":"2026-10-27","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":138}
+{"carrier":"paack","number":"534000021263149358","source":"ParcelsApp","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":197}
+{"carrier":"paack","number":"534000021263149358","source":"17TRACK","checked":"2026-10-27","outcome":"no_history","error":"NotFoundError(not_found)","ms":15148}
+{"carrier":"paack","number":"534000021263149358","source":"Postal Ninja","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":5153}
+{"carrier":"paack","number":"534000021263149358","source":"UPU","checked":"2026-10-27","outcome":"n/a","ms":0}
+{"carrier":"paack","number":"PK415000000000221343","source":"direct","checked":"2026-10-27","outcome":"history","rows":8,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-07-24T11:25:53.000Z","latestStage":"delivered","reported":[],"ms":381}
+{"carrier":"paack","number":"PK415000000000221343","source":"Ship24","checked":"2026-10-27","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":126}
+{"carrier":"paack","number":"PK415000000000221343","source":"ParcelsApp","checked":"2026-10-27","outcome":"history","rows":23,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-07-24T09:25:53.000Z","latestStage":"delivered","reported":["GlobalEco","Evri","Speedaf","Paack"],"ms":2280}
+{"carrier":"paack","number":"PK415000000000221343","source":"17TRACK","checked":"2026-10-27","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":2764}
+{"carrier":"paack","number":"PK415000000000221343","source":"Postal Ninja","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":6347}
+{"carrier":"paack","number":"PK415000000000221343","source":"UPU","checked":"2026-10-27","outcome":"n/a","ms":0}
 {"carrier":"ecoscooting","number":"CNPRT19501971234009605248","source":"direct","checked":"2026-10-15","outcome":"history","rows":6,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-09-28T15:52:05Z","latestStage":"delivered","reported":[],"ms":2104}
 {"carrier":"ecoscooting","number":"CNPRT19501971234009605248","source":"Ship24","checked":"2026-10-10","outcome":"history","rows":6,"undated":0,"latest":"2026-09-28T15:52:05.000Z","latestStage":"delivered","reported":["Cainiao"],"ms":2799}
 {"carrier":"ecoscooting","number":"CNPRT19501971234009605248","source":"ParcelsApp","checked":"2026-10-10","outcome":"history","rows":6,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-09-28T15:52:05.000Z","latestStage":"delivered","reported":["EcoScooting"],"ms":107}
@@ -604,18 +604,18 @@
 {"carrier":"ecoscooting","number":"289700000110328320","source":"17TRACK","checked":"2026-10-10","outcome":"history","rows":14,"undated":0,"latest":"2026-09-28T16:04:51.000Z","latestStage":"delivered","reported":["Ecoscooting"],"ms":22139}
 {"carrier":"ecoscooting","number":"289700000110328320","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":4261}
 {"carrier":"ecoscooting","number":"289700000110328320","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
-{"carrier":"gls-es","number":"1306462516","source":"direct","checked":"2026-10-27","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":0}
-{"carrier":"gls-es","number":"1306462516","source":"Ship24","checked":"2026-10-10","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":896}
-{"carrier":"gls-es","number":"1306462516","source":"ParcelsApp","checked":"2026-10-10","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":1685}
-{"carrier":"gls-es","number":"1306462516","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":7932}
-{"carrier":"gls-es","number":"1306462516","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":9456}
-{"carrier":"gls-es","number":"1306462516","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
-{"carrier":"gls-es","number":"1267649789","source":"direct","checked":"2026-10-27","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":0}
-{"carrier":"gls-es","number":"1267649789","source":"Ship24","checked":"2026-10-10","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":12437}
-{"carrier":"gls-es","number":"1267649789","source":"ParcelsApp","checked":"2026-10-10","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":1528}
-{"carrier":"gls-es","number":"1267649789","source":"17TRACK","checked":"2026-10-10","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":8259}
-{"carrier":"gls-es","number":"1267649789","source":"Postal Ninja","checked":"2026-10-10","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":9357}
-{"carrier":"gls-es","number":"1267649789","source":"UPU","checked":"2026-10-10","outcome":"n/a","ms":0}
+{"carrier":"gls-es","number":"1363341326","source":"direct","checked":"2026-10-27","outcome":"history","rows":5,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-10-15T15:59:00Z","latestStage":"delivered","reported":[],"ms":363}
+{"carrier":"gls-es","number":"1363341326","source":"Ship24","checked":"2026-10-27","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":7182}
+{"carrier":"gls-es","number":"1363341326","source":"ParcelsApp","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":293}
+{"carrier":"gls-es","number":"1363341326","source":"17TRACK","checked":"2026-10-27","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":3007}
+{"carrier":"gls-es","number":"1363341326","source":"Postal Ninja","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":9290}
+{"carrier":"gls-es","number":"1363341326","source":"UPU","checked":"2026-10-27","outcome":"n/a","ms":0}
+{"carrier":"gls-es","number":"1361030847","source":"direct","checked":"2026-10-27","outcome":"history","rows":5,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-10-07T10:50:00Z","latestStage":"delivered","reported":[],"ms":171}
+{"carrier":"gls-es","number":"1361030847","source":"Ship24","checked":"2026-10-27","outcome":"no_history","error":"UpstreamHttpError(not_found)","ms":955}
+{"carrier":"gls-es","number":"1361030847","source":"ParcelsApp","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":211}
+{"carrier":"gls-es","number":"1361030847","source":"17TRACK","checked":"2026-10-27","outcome":"no_history","error":"SeventeenTrackNoHistoryError(indeterminate)[no_history]","ms":2205}
+{"carrier":"gls-es","number":"1361030847","source":"Postal Ninja","checked":"2026-10-27","outcome":"no_history","error":"NoHistoryError(indeterminate)","ms":7630}
+{"carrier":"gls-es","number":"1361030847","source":"UPU","checked":"2026-10-27","outcome":"n/a","ms":0}
 {"carrier":"inpost","number":"200000046672400966269614","source":"direct","checked":"2026-10-15","outcome":"history","rows":20,"undated":0,"wall":0,"wallLatest":null,"latest":"2026-10-07T12:05:24.808+02:00","latestStage":"returned","reported":[],"ms":230}
 {"carrier":"inpost","number":"200000046672400966269614","source":"Ship24","checked":"2026-10-10","outcome":"history","rows":19,"undated":0,"latest":"2026-10-07T10:05:24.000Z","latestStage":"returned","reported":["InPost Paczkomaty"],"ms":707}
 {"carrier":"inpost","number":"200000046672400966269614","source":"ParcelsApp","checked":"2026-10-10","outcome":"postcode_prompt","error":"InputRequiredError(input_required)","ms":1787}

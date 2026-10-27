@@ -351,6 +351,68 @@
         ]
       },
       "note": "A public OCU complaint addressed to GLS Spain gives it as the tracking number."
+    },
+    {
+      "number": "1363341326",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261015112347/https://mygls.gls-spain.es/e/1363341326/36637",
+        "date": "2026-10-15",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "gls-es"
+        ]
+      },
+      "note": "An archived MyGLS tracking link, which carries this number and the delivery postcode. GLS Spain's own tracking showed the parcel's history with that postcode."
+    },
+    {
+      "number": "1361030847",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261007075846/https://mygls.gls-spain.es/e/1361030847/30520",
+        "date": "2026-10-07",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "gls-es"
+        ]
+      },
+      "note": "An archived MyGLS tracking link, which carries this number and the delivery postcode. GLS Spain's own tracking showed the parcel's history with that postcode."
     }
   ]
 }

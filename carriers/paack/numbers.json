@@ -31,13 +31,13 @@
         "dateKind": "capture"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "paack",
         "confidence": "high"
       },
-      "note": "The Carrier Tracking number on an Evri International parcel whose archived GlobalEco page names Paack 48H as its carrier, captured before its first scan. Paack's own page needs the delivery postcode, so it was not checked there."
+      "note": "The Carrier Tracking number on an Evri International parcel whose archived GlobalEco page names Paack 48H as its carrier, captured before its first scan. An archived Paack tracking link gives it with the delivery postcode, and Paack's own page showed its history with that postcode."
     },
     {
       "number": "00100909086360120251130131718",
@@ -194,6 +194,30 @@
         ]
       },
       "note": "A complaint to Paack quotes it as one of two SHEIN orders Paack delivered to someone else."
+    },
+    {
+      "number": "534000021263149358",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260804120811/https://mydeliveries.paack.app/tracking/order?tracking_number=534000021263149358&postal_code=1958-001",
+        "date": "2026-08-04",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "paack",
+          "bpost",
+          "ecoscooting"
+        ]
+      },
+      "note": "An archived Paack tracking link, which carries this label number and the delivery postcode. Paack's own page showed the parcel's history with that postcode."
     }
   ]
 }

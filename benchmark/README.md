@@ -19,6 +19,10 @@ Each carrier has up to two public numbers. A catalog carrier's come from its
 [corpus](../CORPUS.md), the most recent ones its folder records. The others cite their
 public source in carriers.json. Never add a private number.
 
+A carrier that shows history only with the delivery postcode needs a number whose source
+gives the postcode too, such as an archived tracking link that carries both. The number then
+lists that postcode, and every source is asked with it.
+
 Public numbers age out: a carrier keeps a parcel's history for months, not years, so a
 negative on an old number says little. Replace a number no source follows any more, and
 rerun every source on the replacement.
@@ -48,6 +52,11 @@ as no history, not a prompt. Four numbers got one on 2026-10-10: DPD France
 `LD-2C7WLM`, which 17TRACK took for GLS. No source had any of them. To ask again, with a
 postcode if one turns up: `node scripts/benchmark.mjs probe --carriers
 dpd-fr,geodis,the-courier-guy --sources 17TRACK`.
+
+A number listed with its postcode fails at 17TRACK as `postcode_not_submitted` when 17TRACK
+shows no postcode form for it: the browser service had nowhere to enter the postcode, so the
+answer is not read as a negative. Those numbers were asked again without the postcode, and
+17TRACK's no history from that lookup is what the tables show.
 
 ## Running it
 
@@ -86,15 +95,15 @@ source follows any more is marked stale there.
 
 | Source | Carriers with history | Full | Partial | Undated only | Median answer |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| This project, all fallbacks enabled | 92 | | | | |
-| This project, dedicated adapters alone | 88 | 84 | 4 | 0 | 0.5 s |
+| This project, all fallbacks enabled | 95 | | | | |
+| This project, dedicated adapters alone | 91 | 87 | 4 | 0 | 0.5 s |
 | Ship24 | 57 | 47 | 10 | 3 | 0.9 s |
-| ParcelsApp | 71 | 69 | 2 | 0 | 1.7 s |
+| ParcelsApp | 72 | 70 | 2 | 0 | 1.6 s |
 | 17TRACK | 73 | 70 | 3 | 0 | 6.1 s |
-| Postal Ninja | 32 | 28 | 4 | 28 | 6.9 s |
+| Postal Ninja | 32 | 28 | 4 | 28 | 6.8 s |
 | UPU | 11 | 11 | 0 | 0 | 0.0 s |
 
-8 carriers have no number any source still follows.
+5 carriers have no number any source still follows.
 <!-- /GENERATED:summary -->
 
 ## Carriers
@@ -107,7 +116,7 @@ source follows any more is marked stale there.
 | [La Poste / Colissimo](../carriers/la-poste/README.md) | ✓ 7 | ✓ 7 | ✓ 7 | ✓ 7 | No history | N/A |
 | [Chronopost](../carriers/chronopost/README.md) | ✓ 20 | No history | ✓ 25 | ✓ 20 | No history | No history |
 | [Mondial Relay](../carriers/mondial-relay/README.md) | ✓ 15 | No history | Postcode prompt | No history | No history | N/A |
-| [Colis Privé](../carriers/colis-prive/README.md) | Postcode prompt | No history | No history | No history | No history | N/A |
+| [Colis Privé](../carriers/colis-prive/README.md) | ✓ 11 | No history | No history | No history | No history | N/A |
 | [DPD France](../carriers/dpd-fr/README.md) | ✓ 10 | ✓ 10 | ✓ 5 | ✓ 5 | No history | N/A |
 | [GLS France](../carriers/gls-fr/README.md) | ✓ 15 | No history | ✓ 31 | ✓ 15 | ✓ 8 | N/A |
 | [Relais Colis](../carriers/relais-colis/README.md) | ✓ 4 | No history | ✓ 4 | ✓ 3 | No history | N/A |
@@ -193,9 +202,9 @@ source follows any more is marked stale there.
 | [CTT Portugal](../carriers/ctt/README.md) | ✓ 9 | ✓ 9 | ✓ 9 | ✓ 9 | Undated | ✓ 2 |
 | [CTT Express](../carriers/ctt-express/README.md) | ✓ 11 | ✓ 8 | ✓ 32 | ✓ 4 | Undated | N/A |
 | [DHL eCommerce Iberia](../carriers/dhl-ecommerce-es/README.md) | ✓ 11 | ✓ 11 | ✓ 20 | ✓ 11 | No history | No history |
-| [Paack](../carriers/paack/README.md) | Postcode prompt | No history | No history | No history | No history | N/A |
+| [Paack](../carriers/paack/README.md) | ✓ 9 | No history | ✓ 23 | No history | No history | N/A |
 | [Ecoscooting](../carriers/ecoscooting/README.md) | ✓ 14 | ✓ 6 | ✓ 13 | ✓ 14 | Undated | N/A |
-| [GLS Spain](../carriers/gls-es/README.md) | Postcode prompt | No history | Postcode prompt | No history | No history | N/A |
+| [GLS Spain](../carriers/gls-es/README.md) | ✓ 5 | No history | No history | No history | No history | N/A |
 
 ### Central and Eastern Europe
 
@@ -282,8 +291,8 @@ source follows any more is marked stale there.
 | Chronopost | `015750676972097` | [2026-07-17](https://web.archive.org/web/20260717114015/https://www.chronopost.fr/tracking-no-cms/suivi-page?listeNumerosLT=015750676972097&langue=en) | 2026-10-15 | ✓ 20 | No history | ✓ 25 | ✓ 20 | No history | N/A |
 | Mondial Relay | `8565131824` | [2026-05-26](https://web.archive.org/web/20260526110712/https://www.mondialrelay.fr/suivi-de-colis?codeMarque=M1&numeroExpedition=8565131824&language=FR) | 2026-10-15 | ✓ 15 | No history | Postcode prompt | No history | No history | N/A |
 | Mondial Relay | `89112087` | [2026-07-27](https://web.archive.org/web/20260727103710/https://www.mondialrelay.fr/suivi-de-colis?codeMarque=MR&numeroExpedition=89112087&language=FR) | 2026-10-15 | Postcode prompt | No history | No history | No history | No history | N/A |
-| Colis Privé | `431 001 411 698` | [2026-09-25](https://www.trustpilot.com/reviews/6ab69eff549e166662e257d4) | 2026-10-27 | Postcode prompt | No history | No history | No history | No history | N/A |
-| Colis Privé | `WT0004403087` | [2026-09-23](https://www.trustpilot.com/reviews/6ab3c577c2d2ef2146c930ae) | 2026-10-27 | Postcode prompt | No history | No history | No history | No history | N/A |
+| Colis Privé | `DG0013200753` | [2026-10-17](https://web.archive.org/web/20261017213329/https://www.colisprive.com/moncolis/pages/DetailColis.aspx?numColis=DG001320075369007) | 2026-10-27 | ✓ 5 | No history | No history | No history | No history | N/A |
+| Colis Privé | `P50019442050` | [2026-10-14](https://web.archive.org/web/20261014185049/https://www.colisprive.com/moncolis/pages/DetailColis.aspx?numColis=P5001944205075019) | 2026-10-27 | ✓ 11 | No history | No history | No history | No history | N/A |
 | DPD France | `10084004615036` | [2026-08-26](https://www.trustpilot.com/reviews/6a8eff71916b1b8a60cbc2b4) | 2026-10-15 | ✓ 10 | ✓ 10 | ✓ 5 | ✓ 5 | No history | N/A |
 | DPD France | `250067589253957` | [2022-07-28](https://web.archive.org/web/20220728183621/https://trace.dpd.fr/en/trace/250067589253957) | 2026-10-15 | No history | No history | No history | No history | No history | N/A |
 | GLS France | `ZX678O9N` | [2026-10-05](https://fr.trustpilot.com/reviews/6ac419b6850d07587d737214) | 2026-10-15 | ✓ 15 | No history | ✓ 31 | ✓ 15 | ✓ 10, partial (a third of the rows or fewer) | N/A |
@@ -373,12 +382,12 @@ source follows any more is marked stale there.
 | CTT Express | `0008180008189706230861` | [2026-09-29](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/pedido-rechazado-/50f816f3d235552efe) | 2026-10-15 | ✓ 8 | ✓ 8 | ✓ 8 | ✓ 4 | Undated | N/A |
 | DHL eCommerce Iberia | `CA732400595DE` | [2026-10-06](https://es.trustpilot.com/reviews/6ac49bcee7e7b3a98bf827c6) | 2026-10-15 | ✓ 10 | ✓ 11 | ✓ 20 | ✓ 11 | No history | No history |
 | DHL eCommerce Iberia | `CC502655557DE` | [2026-09-07](https://es.trustpilot.com/reviews/6a9eaa3163863b88e9e12967) | 2026-10-15 | ✓ 11 | ✓ 9 | ✓ 19 | ✓ 9 | No history | No history |
-| Paack | `534000021265325582` | [2026-09-22](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/dos-semanas-despues!!!!/3a0638ce2147eda441) | 2026-10-27 | Postcode prompt | No history | No history | No history | No history | N/A |
-| Paack | `00100909086360120251130131718` | [2025-12-23](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/mucho-retraso-en-entrega/3e6c4a88d9208bdbc4) | 2026-10-27 | Postcode prompt | No history | No history | No history | No history | N/A |
+| Paack | `534000021263149358` | [2026-08-04](https://web.archive.org/web/20260804120811/https://mydeliveries.paack.app/tracking/order?tracking_number=534000021263149358&postal_code=1958-001) | 2026-10-27 | ✓ 9 | No history | No history | No history | No history | N/A |
+| Paack | `PK415000000000221343` | [2026-07-20](https://web.archive.org/web/20260720185840/https://mydeliveries.paack.app/tracking/order?postal_code=92400&tracking_number=PK415000000000221343&profile_mismatch=1) | 2026-10-27 | ✓ 8 | No history | ✓ 23 | No history | No history | N/A |
 | Ecoscooting | `CNPRT19501971234009605248` | [2026-09-29](https://www.deco.proteste.pt/reclamar/todas-as-reclamacoes/falsa-entrega/70a3a590891f3a8160) | 2026-10-15 | ✓ 6 | ✓ 6 | ✓ 6 | ✓ 6 | Undated | N/A |
 | Ecoscooting | `289700000110328320` | [2026-09-28](https://www.trustpilot.com/reviews/6aba48d1c0ccd119e8896bf1) | 2026-10-15 | ✓ 14 | No history | ✓ 13 | ✓ 14 | No history | N/A |
-| GLS Spain | `1306462516` | [2026-06-15](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/falso-E2-80-9Causente-E2-80-9D/ea40105494d3662590) | 2026-10-27 | Postcode prompt | No history | Postcode prompt | No history | No history | N/A |
-| GLS Spain | `1267649789` | [2026-04-15](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/falsedad-documental-en-seguimi/a163713e4e9a3f743e) | 2026-10-27 | Postcode prompt | No history | Postcode prompt | No history | No history | N/A |
+| GLS Spain | `1363341326` | [2026-10-15](https://web.archive.org/web/20261015112347/https://mygls.gls-spain.es/e/1363341326/36637) | 2026-10-27 | ✓ 5 | No history | No history | No history | No history | N/A |
+| GLS Spain | `1361030847` | [2026-10-07](https://web.archive.org/web/20261007075846/https://mygls.gls-spain.es/e/1361030847/30520) | 2026-10-27 | ✓ 5 | No history | No history | No history | No history | N/A |
 | InPost | `200000046672400966269614` | [2026-10-07](https://pl.trustpilot.com/reviews/6ac5fdcadc41c15304ea1acc) | 2026-10-15 | ✓ 20 | ✓ 19 | Postcode prompt | ✓ 21, partial (stops early) | No history | N/A |
 | InPost | `200000033661600038871668` | [2026-10-07](https://pl.trustpilot.com/reviews/6ac5fdcadc41c15304ea1acc) | 2026-10-15 | ✓ 13 | ✓ 13 | Postcode prompt | ✓ 14 | No history | N/A |
 | Poczta Polska | `CP265970733PL` | [2026-09-22](https://www.chinapostaltracking.com/qa/blocked-since-july-161167/) | 2026-10-15 | ✓ 5, partial (a third of the rows or fewer) | ✓ 10, partial (stops early) | ✓ 19 | ✓ 21 | Undated | ✓ 6 |

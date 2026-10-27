@@ -2800,8 +2800,7 @@
           }
         },
         {
-          "note": "Benchmark number 431 001 411 698",
-          "stale": true,
+          "note": "Benchmark number DG0013200753",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",
@@ -2811,8 +2810,7 @@
           }
         },
         {
-          "note": "Benchmark number WT0004403087",
-          "stale": true,
+          "note": "Benchmark number P50019442050",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",
@@ -2891,8 +2889,7 @@
           }
         },
         {
-          "note": "Benchmark number 534000021265325582",
-          "stale": true,
+          "note": "Benchmark number 534000021263149358",
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",
@@ -2902,11 +2899,10 @@
           }
         },
         {
-          "note": "Benchmark number 00100909086360120251130131718",
-          "stale": true,
+          "note": "Benchmark number PK415000000000221343",
           "results": {
             "Ship24": "no_history",
-            "ParcelsApp": "no_history",
+            "ParcelsApp": 23,
             "17TRACK": "no_history",
             "Postal Ninja": "no_history",
             "UPU": "n/a"
@@ -4193,22 +4189,20 @@
       "sample": "No adapter",
       "references": [
         {
-          "note": "Benchmark number 1306462516",
-          "stale": true,
+          "note": "Benchmark number 1363341326",
           "results": {
             "Ship24": "no_history",
-            "ParcelsApp": "postcode_prompt",
+            "ParcelsApp": "no_history",
             "17TRACK": "no_history",
             "Postal Ninja": "no_history",
             "UPU": "n/a"
           }
         },
         {
-          "note": "Benchmark number 1267649789",
-          "stale": true,
+          "note": "Benchmark number 1361030847",
           "results": {
             "Ship24": "no_history",
-            "ParcelsApp": "postcode_prompt",
+            "ParcelsApp": "no_history",
             "17TRACK": "no_history",
             "Postal Ninja": "no_history",
             "UPU": "n/a"

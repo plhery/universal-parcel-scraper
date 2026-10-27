@@ -41,10 +41,12 @@
       "group": "France",
       "numbers": [
         {
-          "number": "431 001 411 698"
+          "number": "DG0013200753",
+          "postcode": "69007"
         },
         {
-          "number": "WT0004403087"
+          "number": "P50019442050",
+          "postcode": "75019"
         }
       ]
     },
@@ -624,10 +626,16 @@
       "group": "Spain and Portugal",
       "numbers": [
         {
-          "number": "534000021265325582"
+          "number": "534000021263149358",
+          "postcode": "1958-001"
         },
         {
-          "number": "00100909086360120251130131718"
+          "number": "PK415000000000221343",
+          "postcode": "92400",
+          "source": {
+            "url": "https://web.archive.org/web/20260720185840/https://mydeliveries.paack.app/tracking/order?postal_code=92400&tracking_number=PK415000000000221343&profile_mismatch=1",
+            "date": "2026-07-20"
+          }
         }
       ]
     },
@@ -649,18 +657,12 @@
       "group": "Spain and Portugal",
       "numbers": [
         {
-          "number": "1306462516",
-          "source": {
-            "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/falso-E2-80-9Causente-E2-80-9D/ea40105494d3662590",
-            "date": "2026-06-15"
-          }
+          "number": "1363341326",
+          "postcode": "36637"
         },
         {
-          "number": "1267649789",
-          "source": {
-            "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/falsedad-documental-en-seguimi/a163713e4e9a3f743e",
-            "date": "2026-04-15"
-          }
+          "number": "1361030847",
+          "postcode": "30520"
         }
       ]
     },

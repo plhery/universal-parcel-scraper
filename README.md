@@ -33,9 +33,9 @@ its own as a command, a Node library or an HTTP server.
 ## Benchmark
 
 <!-- GENERATED:coverage -->
-In a benchmark of 100 carriers picked for shoppers in Europe, run on public tracking numbers anyone can recheck, dedicated adapters return history for **88**, rising to **92** with all fallbacks enabled. The best single aggregator returns 73. Histories whose scans cannot be placed in time, which the library does not use, would add 28 for Postal Ninja and 3 for Ship24.
+In a benchmark of 100 carriers picked for shoppers in Europe, run on public tracking numbers anyone can recheck, dedicated adapters return history for **91**, rising to **95** with all fallbacks enabled. The best single aggregator returns 73. Histories whose scans cannot be placed in time, which the library does not use, would add 28 for Postal Ninja and 3 for Ship24.
 
-<img src="docs/assets/coverage.svg" alt="Carriers with tracking history: This project, all fallbacks enabled 92, This project, dedicated adapters alone 88, 17TRACK 73, ParcelsApp 71, Ship24 57, Postal Ninja 32, UPU 11." width="760">
+<img src="docs/assets/coverage.svg" alt="Carriers with tracking history: This project, all fallbacks enabled 95, This project, dedicated adapters alone 91, 17TRACK 73, ParcelsApp 72, Ship24 57, Postal Ninja 32, UPU 11." width="760">
 <!-- /GENERATED:coverage -->
 
 [Method, carriers and every number's results](benchmark/README.md)

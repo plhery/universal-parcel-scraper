@@ -168,7 +168,7 @@ carrier's evidence shows its history.
 | [SunYou](../carriers/sunyou/README.md) | Yes | No history | No history | No history | No history | No history | N/A |
 | [Omniva](../carriers/omniva/README.md) | Yes | No adapter | ✓ 1 | ✓ 1 | No history | Undated | No history |
 | [GLS Italy](../carriers/gls-it/README.md) | Yes | No adapter | ✓ 10 | ✓ 11 | ✓ 11 | No history | N/A |
-| [GLS Spain](../carriers/gls-es/README.md) | Yes | No adapter | No history | Postcode prompt | No history | No history | N/A |
+| [GLS Spain](../carriers/gls-es/README.md) | Yes | No adapter | No history | No history | No history | No history | N/A |
 | [Speedy](../carriers/speedy/README.md) | Yes | No adapter | No history | ✓ 21 | No history | No history | N/A |
 | [FAN Courier](../carriers/fan-courier/README.md) | Yes | No adapter | No history | No history | No history | No history | N/A |
 | [Sameday](../carriers/sameday/README.md) | Yes | No adapter | No history | No history | No history | Undated | N/A |
