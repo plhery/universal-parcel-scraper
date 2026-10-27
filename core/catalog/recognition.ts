@@ -12,6 +12,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import { CHECKSUMS } from '../detection/checksums.js';
 import { detectCarrierMatch } from '../detection/detect.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
+import { isPhoneNumber } from '../detection/phone.js';
 import { ruleFits } from '../detection/rules.js';
 import { AUTOMATIC_CARRIER_IDS, CARRIER_DEFINITIONS, carrierAdapter, requiredRequirements } from './definitions.js';
 import { carrierBrand } from './networks.js';
@@ -90,6 +91,8 @@ export function recognitionCandidates(
   number: string,
   options: RecognitionOptions = {},
 ): RecognitionCandidate[] {
+  // A mobile number of the caller's country is no carrier's to confirm.
+  if (isPhoneNumber(number, options.countryHint)) return [];
   const detected = detectCarrierMatch(number);
   const unknownPostalCarrier = detected.carrier === 'intl-post';
   if (detected.confidence !== 'low' && !unknownPostalCarrier) return [];

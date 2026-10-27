@@ -66,6 +66,7 @@
       "inferStage",
       "isAmazonTrackingNumber",
       "isPartialAnswer",
+      "isPhoneNumber",
       "isPlaceholderNumber",
       "isPlanzerSharedTrackingNumber",
       "isValidCorreosSpainCheckLetter",

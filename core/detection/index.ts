@@ -28,6 +28,7 @@ export { isValidMondialRelayBarcode } from './mondialRelay.js';
 export { isValidDhlExpressWaybill, isValidPocztaPolskaBarcode, isValidSscc, isValidTntConsignmentNumber } from './numericChecksums.js';
 export { formatTrackingNumber, isPlanzerSharedTrackingNumber, normalizeTrackingNumber } from './normalize.js';
 export { parseTrackingInput } from './parse.js';
+export { isPhoneNumber } from './phone.js';
 export { isPlaceholderNumber } from './placeholder.js';
 export { isValidS10TrackingNumber, supportsSwissPostHandoff } from './s10.js';
 export { isValidUspsPackageBarcode, uspsPackageIdentifier } from './usps.js';

@@ -73,6 +73,14 @@ who asks, and providers merge them into one history. The registry's adapters and
 `invalid_input` with reason `placeholder_number`, and recognition answers unknown. Detection
 still reads their shape, and `isPlaceholderNumber` lets a consumer refuse one at its own form.
 
+A phone number typed as a tracking number is read with the reader's country:
+`isPhoneNumber(number, country)` holds a mobile number written as it is dialled there, such as
+Paraguay's 0 and nine digits from an operator's range. Only formats no carrier serving that
+country issues are listed, and a number that a rule of such a carrier, or of one without a
+country, accepts with its check digit is never a phone number. Recognition asks no carrier about
+one for that country hint, and a consumer can hold one back at its own form. Without a country,
+or for a country with no listed format, nothing is a phone number.
+
 Shared text helpers accept strings and, for scalar codes and identifiers, finite numbers.
 Provider identifiers are normalized whole before comparison; display-text limits must not
 erase a different identifier's suffix. Numeric identifiers require an exact, nonnegative integer.
