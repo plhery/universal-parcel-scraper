@@ -2708,10 +2708,9 @@
     "shape": "9{16} that fails the GS1 check",
     "carriers": [
       "dhl-ecommerce",
-      "evri-uk",
       "tnt"
     ],
-    "reason": "Without a GS1 check digit Canada Post and Correos Express drop out; the remaining 16-digit candidates stay a low-confidence suggestion."
+    "reason": "Without a GS1 check digit Canada Post, Correos Express and Evri UK drop out; the remaining 16-digit candidates stay a low-confidence suggestion."
   },
   {
     "shape": "9{13} starting with 1 or 250 that fails the Ukrposhta check",
@@ -4212,11 +4211,10 @@
     "shape": "Sixteen digits starting 17 or 18 that pass the Luhn check",
     "carriers": [
       "dhl-ecommerce",
-      "evri-uk",
       "tnt",
       "vinted-go"
     ],
-    "reason": "DHL eCommerce, Evri and TNT accept any sixteen digits, so they also take Vinted Go's parcel numbers; all are low-confidence, so the number stays a suggestion."
+    "reason": "DHL eCommerce and TNT accept any sixteen digits, so they also take Vinted Go's parcel numbers; all are low-confidence, so the number stays a suggestion."
   },
   {
     "shape": "Twenty-two digits starting with a 20YYMMDD date",
@@ -5664,7 +5662,6 @@
     "carriers": [
       "a-tu-hora-express",
       "dhl-ecommerce",
-      "evri-uk",
       "tnt"
     ],
     "reason": "A Tu Hora Express pads its shipment codes with six leading zeros to sixteen digits, a length these carriers' low rules also accept, so recognition asks each of them."

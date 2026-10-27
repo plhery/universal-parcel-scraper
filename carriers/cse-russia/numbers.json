@@ -202,8 +202,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "The archived reply of CSE's own tracking API at lk.cse.ru shows a waybill in transit from Moscow."

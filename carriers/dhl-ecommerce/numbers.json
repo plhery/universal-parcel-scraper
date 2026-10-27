@@ -28,8 +28,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Official documentation example, not a real shipment. The source attributes it to DHL eCommerce, which stays one candidate among several."
@@ -412,8 +411,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Archived from a DHL eCommerce tracking link. Webtrack no longer lists it."

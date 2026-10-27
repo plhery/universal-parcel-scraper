@@ -19,8 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup on Midland's own tracker shows a Midland Courier ground parcel's history from pickup to delivery."
@@ -43,8 +42,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup on Midland's own tracker shows a Midland Courier ground parcel that was created but not yet scanned."

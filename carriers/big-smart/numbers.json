@@ -45,8 +45,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived reply of Big Smart's tracking API, looked up by the alternative tracking number the reply lists, gives this as Big Smart's tracking number and shows 13 events ending On Road."
@@ -69,8 +68,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived reply of Big Smart's tracking API, looked up by the alternative tracking number the reply lists, gives this as Big Smart's tracking number and shows 5 events ending At Station."

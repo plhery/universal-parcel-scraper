@@ -118,8 +118,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack, which no rule claims."

@@ -13763,7 +13763,7 @@ export const CARRIER_CATALOG = {
       "mode": "automatic",
       "adapter": "evri-uk",
       "recognitionRank": 615,
-      "recognitionPattern": "^(?:[HT][0-9A-Z]{5}|C00HHA)\\d{10}$",
+      "recognitionPattern": "^(?:(?:[HT][0-9A-Z]{5}|C00HHA)\\d{10}|\\d{16})$",
       "browser": true
     },
     "canaryUrl": "https://www.evri.com/track-a-parcel",
@@ -13792,7 +13792,8 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^\\d{16}$",
-        "confidence": "low"
+        "confidence": "low",
+        "checksum": "gs1"
       },
       {
         "pattern": "^C00HHA\\d{10}$",

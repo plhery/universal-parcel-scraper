@@ -152,8 +152,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup on APC's own tracker; the capture was not opened, as the tracker draws its results by script. APC's tracking lookup answers it as a delivered parcel."
@@ -176,8 +175,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup on APC's own tracker; the capture was not opened, as the tracker draws its results by script. APC's tracking lookup answers it as a delivered parcel."
@@ -200,8 +198,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A review on APC Postal Logistics' Trustpilot page gives it with the ParcelConnect Priority DDU service."
@@ -224,8 +221,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "TrackingMore's APC Postal Logistics page lists it as an APC tracking number example."

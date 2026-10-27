@@ -19,8 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Hound Express's API documentation for delivery partners uses it as the guide number in its successful-delivery and nobody-home examples."
@@ -43,8 +42,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Hound Express's API documentation for delivery partners uses it as the guide number in its refused-delivery and delayed-departure examples."

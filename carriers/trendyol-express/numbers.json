@@ -19,8 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Looked up on Trendyol's own cargo tracker, as an archived address shows; the capture was not opened."
@@ -43,8 +42,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Looked up on Trendyol's own cargo tracker, as an archived address shows; the capture was not opened."
@@ -93,8 +91,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Complaint on Şikayetvar's Trendyol Express page quoting it as the number of a shipment handled by a Trendyol Express branch."
@@ -117,8 +114,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Customer complaint on Şikayetvar quoting it as the Trendyol Express tracking number of a Dolap sale, separately from the order number. Trendyol's cargo tracker knew it."
@@ -141,8 +137,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Customer complaint on Şikayetvar's Trendyol Express page quoting it as the shipment number of a Dolap sale sent with Trendyol Express. Trendyol's cargo tracker knew it."
@@ -165,8 +160,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Customer complaint on Şikayetvar quoting it as the tracking number of a Dolap order carried by Trendyol Express. Trendyol's cargo tracker knew it."

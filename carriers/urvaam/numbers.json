@@ -19,8 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup on Urvaam's own tracking address carries this number; the opened capture shows only the page shell, so the parcel history was not visible."
@@ -43,8 +42,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this number for a parcel shown as delivered but not received."
@@ -67,8 +65,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this number in its title for an undelivered parcel."
@@ -91,8 +88,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this number with its pasted Urvaam tracking history."
@@ -115,8 +111,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this as the parcel's tracking number."
@@ -139,8 +134,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this as the parcel's tracking number."
@@ -163,8 +157,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this as the parcel's tracking number."
@@ -187,8 +180,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this as the parcel's tracking number."
@@ -211,8 +203,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this as the parcel's tracking number."
@@ -235,8 +226,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this as the parcel's tracking number."
@@ -259,8 +249,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint filed against Urvaam gives this number, which the customer calls the order number, in the same sixteen-digit layout."

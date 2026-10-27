@@ -305,11 +305,12 @@ describe('Evri UK recognition', () => {
     expect(calls).toHaveLength(0);
   });
 
-  it('is asked about lettered barcodes only, beside Evri International', () => {
+  it('is asked about lettered barcodes beside Evri International, and about all-digit ones with a GS1 check digit', () => {
     // Made-up barcodes whose last digit passes the check.
     expect(recognitionAskedCarriers('H00AAA0000000006')).toEqual(['evri-uk', 'evri']);
     expect(recognitionAskedCarriers('C00HHA0000000000')).toEqual(['evri-uk']);
-    expect(recognitionAskedCarriers('1234567890123452')).not.toContain('evri-uk');
+    expect(recognitionAskedCarriers('1234567890123452')).toContain('evri-uk');
+    expect(recognitionAskedCarriers('1234567890123453')).not.toContain('evri-uk');
   });
 });
 

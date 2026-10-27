@@ -19,8 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "Archived lookup on Kargoist's own tracker; the opened capture shows the parcel under this customer barcode with its history up to delivery."

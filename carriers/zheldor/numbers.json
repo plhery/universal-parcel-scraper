@@ -19,8 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup of this ЭР number on JDE's own tracker address; the opened capture shows only the tracker page, because the history loads by script after a captcha, so the history was not visible."
@@ -43,8 +42,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup of this ЭР number, typed in groups of four, on JDE's own tracker address; the opened capture shows only the tracker page, so the history was not visible."
@@ -67,8 +65,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "An archived lookup of this ЭР number, typed without dashes, on JDE's own tracker address; the capture was not opened, so the history was not visible."

@@ -27,6 +27,15 @@ describe('Evri service routing', () => {
     expect(detectCarrierMatch('COOHHA0000000001').candidates).not.toContain('evri-uk');
   });
 
+  it('asks the domestic service about an all-digit barcode whose GS1 check digit holds, without choosing it', () => {
+    expect(detectCarrierMatch('9000000000000003')).toMatchObject({
+      carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['evri-uk']), preferred: [],
+    });
+    expect(recognitionAskedCarriers('9000000000000003', { countryHint: 'GB' })[0]).toBe('evri-uk');
+    expect(recognitionAskedCarriers('9000000000000003')).toContain('evri-uk');
+    expect(detectCarrierMatch('9000000000000001').candidates).not.toContain('evri-uk');
+  });
+
   it.each([16, 17, 18, 19])('preserves Hermes recognition outside the Evri overlap: H plus %i digits', digits => {
     expect(detectCarrierMatch(`H${'0'.repeat(digits)}`)).toMatchObject({ carrier: 'hermes-de', confidence: 'high' });
   });

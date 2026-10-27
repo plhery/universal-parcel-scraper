@@ -299,8 +299,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "The carrier response calls this a waybill, while the original complaint calls it a Lazada order number. Identifier role remains disputed. The original complaint is https://mediakonsumen.com/2023/09/02/surat-pembaca/selisih-ongkir-yang-gak-ngotak."

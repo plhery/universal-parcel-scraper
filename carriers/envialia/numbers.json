@@ -17,8 +17,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint addressed to Envialia gives it as the tracking number."
@@ -39,8 +38,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "The same OCU complaint addressed to Envialia gives it as a second tracking number."
@@ -61,8 +59,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A public OCU complaint about an Envialia delivery gives it as the tracking number."
@@ -111,8 +108,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "ParcelPanel's Envialia page offered it as a sample to try on 11 Oct 2026; Envialia's tracking knows it."

@@ -152,8 +152,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "A Portal da Queixa complaint against Vasp Expresso gives it as the shipment number; it has the volume-barcode layout, a thirteen-digit service number followed by a three-digit volume counter."

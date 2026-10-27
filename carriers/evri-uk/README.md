@@ -39,8 +39,10 @@ without confirming a parcel, the page is not opened.
 Recognition sends the guest API's reference lookup alone and never opens the
 page. A barcode it resolves is known. No parcel, a barcode the service rejects
 for its last digit, and a parcel it redirects to Evri International are
-unknown; several parcels under one barcode stay inconclusive. All-digit
-barcodes are only suggested.
+unknown; several parcels under one barcode stay inconclusive. An all-digit
+barcode is suggested and asked about only when its last digit is its GS1 check
+digit, as on every archived one; other carriers' sixteen digits pass the same
+check, so it is never chosen.
 
 The browser's automation flag and installed-version User-Agent are configured
 for this carrier because the protected key request rejects the default

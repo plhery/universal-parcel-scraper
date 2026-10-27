@@ -37,8 +37,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
-          "tnt",
-          "evri-uk"
+          "tnt"
         ]
       },
       "note": "TrackingMore lists it as an example on its DSV page; it is not described as a live shipment."
