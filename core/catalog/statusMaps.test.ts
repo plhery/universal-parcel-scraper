@@ -1749,6 +1749,8 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'Forecast of last-mile delivery by carrier')).toEqual(gap);
     // The same notice relayed with Cainiao's code, whatever its words.
     for (const wording of ['Last-mile delivery forecast', 'Carrier update']) expect(answer('unknown', 'LAST_MILE_ASN_NOTIFY', wording), wording).toEqual(gap);
+    // Poste Italiane's acceptance as ParcelsApp relays it, without its verb.
+    expect(answer('unknown', null, 'From one of our operators')).toEqual(gap);
     // Colis Privé's notices as ParcelsApp relays them.
     expect(answer('unknown', null, 'Consignee notified: by email')).toEqual(gap);
     expect(answer('unknown', null, 'Your package will be delivered to another pickup point. You will be informed of the address and hours by email.')).toEqual(gap);
