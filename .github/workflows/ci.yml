@@ -24,10 +24,10 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm run build
       - run: npm test
       - run: npm run test:scripts
       - run: npm run test:generated
-      - run: npm run build
       - run: npm run test:package
       - run: npm audit --omit=dev
   container:
