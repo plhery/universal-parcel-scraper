@@ -44,6 +44,8 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // A partner's manifest as the parcel leaves Yanwen's facility, then the destination leg's
   // release from customs, intake and arrival at the delivery office.
   ['Manifest created', { status: 'in_transit', stage: 'in_transit' }],
+  // DHL's own line once Yanwen's facility has sent the parcel on to it.
+  ['The shipment is in transit to DHL', { status: 'in_transit', stage: 'in_transit' }],
   // A destination partner's own record: its order before the parcel leaves China, then
   // its intake and transfer scans after Yanwen's batch handover at the destination port.
   ['Shipment created', { status: 'pending', stage: 'registered' }],

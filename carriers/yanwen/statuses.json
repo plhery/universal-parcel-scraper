@@ -270,6 +270,14 @@
       "note": "Placed at Asendia Hong Kong as the parcel left Yanwen's facility, after Yanwen's pickup scan: the partner's record of the hand-over, not a pre-advice."
     },
     {
+      "wording": "The shipment is in transit to DHL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "DHL's line after Yanwen's facility outbound, as the parcel goes on to DHL."
+    },
+    {
       "wording": "Shipment created",
       "language": "en",
       "stage": "registered",
