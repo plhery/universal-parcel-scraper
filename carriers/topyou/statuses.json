@@ -1,4 +1,12 @@
 {
   "carrier": "topyou",
-  "entries": []
+  "entries": [
+    {"code": "5", "wording": "Arrived at the first mile sorting center", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in TopYou's hands, at its warehouse in China."},
+    {"code": "10", "wording": "Departed from the first mile sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "15", "wording": "Arrived at airport of the original country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "15", "wording": "Departed from Airport to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "15", "wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "20", "wording": "Departed from customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Released by the destination country's customs. The tracker leaves the country after \"of\" empty, which the adapter drops."},
+    {"code": "15", "wording": "At U.S. Postal Service facility, Accepted by U.S. Postal Service", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS takes the parcel over from TopYou's line in the United States, after the flight; it is no first acceptance."}
+  ]
 }

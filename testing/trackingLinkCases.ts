@@ -113,6 +113,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'omgo', number: 'OMGO0000000000001',
     route: /^https:\/\/omgoexpress\.cn\/track-package\//,
     marker: /Track Your Package|Enter tracking number\(s\)/i, forwarding: 'none' },
+  // The tracker reads numbers from its form only.
+  { carrier: 'topyou', number: 'TYZRZ0000000009YQ',
+    route: /^https:\/\/track\.szty56\.com\//,
+    marker: /通邮集团|查\s*询/, forwarding: 'none' },
   { carrier: 'ecoscooting', number: '000000000000000000',
     route: /^https:\/\/ecoscooting\.com\/tracking\//,
     marker: /Enter tracking number|No data found/i },

@@ -427,6 +427,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "tnt": 880,
   "tnt-it": 645,
   "today-kr": 712,
+  "topyou": 58,
   "torrestir": 866,
   "total-express": 975,
   "trackon": 821,

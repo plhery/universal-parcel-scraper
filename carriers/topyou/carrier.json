@@ -18,18 +18,52 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "topyou",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 58
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "location",
+    "delivered_at",
+    "weight",
+    "destination_country",
+    "delivery_tracking_number",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://track.szty56.com/",
     "searchUrl": "https://track.szty56.com/",
     "canaryUrl": "https://track.szty56.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "location",
+      "delivered_at",
+      "weight",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "service_name"
+    ]
   },
   "links": [],
   "detection": [

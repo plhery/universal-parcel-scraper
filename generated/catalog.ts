@@ -30565,7 +30565,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "topyou",
+      "recognitionRank": 58,
+      "localClocks": true
     },
     "canaryUrl": "https://track.szty56.com/",
     "trackingUrlTemplate": "https://track.szty56.com/",
