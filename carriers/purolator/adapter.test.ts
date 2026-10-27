@@ -43,6 +43,8 @@ describe('Purolator direct tracking', () => {
       ['9000', 'Shipment delivered', 'delivered', 'delivered'],
       ['3000', 'Shipper created a label', 'pending', 'registered'],
       ['2300', 'Picked up by Purolator', 'in_transit', 'accepted'],
+      ['2385', 'Picking up from shipper location - pending arrival and induction at Purolator', 'in_transit', 'accepted'],
+      ['1310', 'Arrived at sort facility', 'in_transit', 'in_transit'],
       ['0510', 'Delayed in transit due to rail delay', 'in_transit', 'in_transit'],
       ['7810', 'Cleared customs', 'in_transit', 'in_transit'],
       ['6500', 'Address correction required - resolution in progress', 'exception', 'exception'],

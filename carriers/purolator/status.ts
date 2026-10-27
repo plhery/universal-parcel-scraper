@@ -8,12 +8,15 @@ const codes: Record<string, ClassifiedStatus> = {
   '3010': { status: 'pending', stage: 'registered' },
   '2300': { status: 'in_transit', stage: 'accepted' },
   '2380': { status: 'in_transit', stage: 'accepted' },
+  // The driver's collection at the shipper's site, before the terminal records the pickup (2380).
+  '2385': { status: 'in_transit', stage: 'accepted' },
   '0200': { status: 'in_transit', stage: 'in_transit' },
   '0300': { status: 'in_transit', stage: 'in_transit' },
   // Delays from a missed connection or a late train; the parcel keeps moving.
   '0500': { status: 'in_transit', stage: 'in_transit' },
   '0510': { status: 'in_transit', stage: 'in_transit' },
   '1300': { status: 'in_transit', stage: 'in_transit' },
+  '1310': { status: 'in_transit', stage: 'in_transit' },
   '4020': { status: 'in_transit', stage: 'in_transit' },
   '4060': { status: 'in_transit', stage: 'in_transit' },
   '7220': { status: 'in_transit', stage: 'in_transit' },

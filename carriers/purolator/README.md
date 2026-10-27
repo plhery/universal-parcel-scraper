@@ -21,7 +21,8 @@ challenge; that failure is reported for routing fallback.
 Scans retain the provider's newest-first order. Cross-country scan clocks without offsets
 remain local wall times in the host's direct history archive. They provide no verified instant
 for freshness checks or the dated timeline. Each scan uses its own event code; unrecognized
-codes keep their wording without inheriting an older milestone. Pickup availability is
+codes keep their wording without inheriting an older milestone. The driver's collection at the
+shipper's site, hours before the terminal records the pickup, is already accepted. Pickup availability is
 distinct from parcel delivery. Shipment-level weight is retained only for a single-piece
 shipment. The estimated delivery day is kept while the parcel is on its way and dropped
 once a newer day's scan arrives or the parcel is delivered, returned or waiting at a
