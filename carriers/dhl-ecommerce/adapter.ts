@@ -429,13 +429,14 @@ function trackingApiUrl(number: string): string {
 
 /**
  * The UTAPI answers that end the browser step: no DHL shipment with the number, or only
- * shipments another DHL service carries, such as DHL Paket's.
+ * shipments another DHL service carries, such as DHL Paket's. The second is DHL eCommerce's
+ * answer that it holds no shipment under the number, not an outage.
  */
 function utapiAnswer(payload: unknown): Error | undefined {
   if (isMissingShipment(payload)) return new NotFoundError(PROVIDER);
   if (isRecord(payload) && Array.isArray(payload.shipments) && payload.shipments.length > 0 && payload.shipments.every(
     (shipment) => isRecord(shipment) && typeof shipment.service === 'string' && shipment.service !== 'ecommerce',
-  )) return new IndeterminateError(PROVIDER, 'Another DHL service carries the shipment');
+  )) return new IndeterminateError(PROVIDER, 'Another DHL service carries the shipment', { reason: 'portal_not_found' });
   return undefined;
 }
 

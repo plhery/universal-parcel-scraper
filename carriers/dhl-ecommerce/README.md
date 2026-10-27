@@ -95,8 +95,9 @@ eCommerce's alone. Detection keeps the postal answer, and recognition asks Webtr
 Webtrack has regional coverage. The global route needs local Chromium because
 UTAPI challenges direct requests; the page passes the challenge and repeats the
 lookup. UTAPI's not-found reply ends the step as not found, and a shipment only
-another DHL service carries, such as a DHL Paket parcel, ends it as inconclusive.
-Other error replies still end as a timeout. Sender names and estimates are
+another DHL service carries, such as a DHL Paket parcel or a Deutsche Post item,
+ends it as inconclusive with the reason `portal_not_found`: DHL eCommerce answered
+that it holds no shipment under the number. Other error replies still end as a timeout. Sender names and estimates are
 returned only when the chosen source publishes them.
 
 ## Testing

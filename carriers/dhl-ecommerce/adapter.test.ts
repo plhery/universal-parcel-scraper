@@ -317,7 +317,7 @@ describe('DHL eCommerce fetching', () => {
     });
     await expect(new DHLEcommerceTracker({ executablePath: '/test/chromium' }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
     const answer = browser.mock.calls[0]![1].responseErrors![browser.mock.calls[0]![1].responseUrl]!;
-    expect(answer({ shipments: [paket] })).toMatchObject({ kind: 'indeterminate', message: 'Another DHL service carries the shipment' });
+    expect(answer({ shipments: [paket] })).toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found', message: 'Another DHL service carries the shipment' });
     for (const payload of [shipment(), { shipments: [ecommerce, paket] }, { shipments: [] }, { title: 'Not Found', status: 404 }]) {
       expect(answer(payload)).toBeUndefined();
     }
