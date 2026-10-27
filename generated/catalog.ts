@@ -1331,7 +1331,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^(?:86[56]|87[05]|88[05])\\d{11}[0-9A-Z]$",
+        "pattern": "^(?:86[3-6]|87[05]|88[05])\\d{11}[0-9A-Z]$",
         "confidence": "high",
         "checksum": "dpd"
       },
@@ -1340,7 +1340,7 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       },
       {
-        "pattern": "^(?:86[56]|87[05]|88[05])\\d{11}$",
+        "pattern": "^(?:86[3-6]|87[05]|88[05])\\d{11}$",
         "confidence": "low"
       },
       {

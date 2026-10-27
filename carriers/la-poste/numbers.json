@@ -586,6 +586,150 @@
         "confidence": "high"
       },
       "note": "La Poste's tracker returns its history as an international registered letter."
+    },
+    {
+      "number": "86301319525422",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230701121418/https://www.laposte.fr/outils/suivre-vos-envois?code=86301319525422",
+        "date": "2023-07-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "la-poste",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk"
+        ]
+      },
+      "note": "An archived lookup of this Smart Data number on La Poste's tracker. It is typed without its key character."
+    },
+    {
+      "number": "86301320047616P",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231018092443/https://www.laposte.fr/outils/suivre-vos-envois?code=86301320047616P",
+        "date": "2023-10-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this Smart Data number on La Poste's tracker. Its last character passes the key."
+    },
+    {
+      "number": "863013200519942",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231025151758/https://www.laposte.fr/outils/suivre-vos-envois?code=863013200519942",
+        "date": "2023-10-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this Smart Data number on La Poste's tracker. Its last character passes the key."
+    },
+    {
+      "number": "86301644788494",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231204092917/https://www.laposte.fr/outils/suivre-vos-envois?code=86301644788494",
+        "date": "2023-12-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "la-poste",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk"
+        ]
+      },
+      "note": "An archived lookup of this Smart Data number on La Poste's tracker. It is typed without its key character."
+    },
+    {
+      "number": "86400198822275U",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240709161230/https://www.laposte.fr/outils/suivre-vos-envois?code=86400198822275U",
+        "date": "2024-07-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this Smart Data number on La Poste's tracker. Its last character passes the key."
+    },
+    {
+      "number": "86450255720686Q",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240801174314/https://www.laposte.fr/outils/suivre-vos-envois?code=86450255720686Q",
+        "date": "2024-08-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "An archived lookup of this Smart Data number on La Poste's tracker. Its last character passes the key."
     }
   ]
 }

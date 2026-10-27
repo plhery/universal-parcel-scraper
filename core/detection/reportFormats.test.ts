@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { detectCarrierMatch, parseTrackingInput, validTrackingNumber } from './index.js';
 
 describe('evidence-backed tracking formats', () => {
-  it.each(['87001234567890I', '88001234567890V'])('keeps the tracked-mail key in %s', (number) => {
+  it.each(['87001234567890I', '88001234567890V', '86301234567890D', '86401234567890V'])('keeps the tracked-mail key in %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'la-poste', confidence: 'high' });
     expect(parseTrackingInput(`Suivi : ${number}`)).toMatchObject({
       trackingNumber: number, carrier: 'la-poste', confidence: 'high', source: 'text',
@@ -12,7 +12,7 @@ describe('evidence-backed tracking formats', () => {
   });
 
   it('bounds the tracked-mail rule to its evidenced prefixes and length', () => {
-    for (const number of ['89001234567890A', '8800123456789A', '880012345678901A']) {
+    for (const number of ['89001234567890A', '86201234567890I', '8800123456789A', '880012345678901A']) {
       expect(detectCarrierMatch(number).carrier).not.toBe('la-poste');
     }
   });
