@@ -14,6 +14,10 @@ const codes: Record<string, ClassifiedStatus> = {
   // Actual "Nuevo reparto" scan, grouped with 1500 by the official widget.
   '2400': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   '2310': { status: 'in_transit', stage: 'ready_for_pickup' },
+  // "Recogerán en Delegación": the delivery failed and the recipient is to collect the parcel
+  // from the delivery office. It comes at the delivery partner's failed attempt, before the
+  // parcel is ready to collect.
+  '2900': { status: 'exception', stage: 'failed_attempt' },
   // The widget explicitly says the parcel is on its way back to the sender.
   '2500': { status: 'exception', stage: 'exception' },
   '2700': { status: 'exception', stage: 'returned' },

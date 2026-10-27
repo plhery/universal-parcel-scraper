@@ -116,6 +116,20 @@ describe('CTT Express direct tracking', () => {
     expect(parseCttExpress(unknown, NUMBER).current_stage).toBeUndefined();
   });
 
+  it('reads a delivery the recipient is to collect from the office as a failed attempt, with no estimate', () => {
+    const payload = clone();
+    const row = payload.data.shipping_history.events[0]!;
+    payload.data.committed_delivery_datetime = '2026-01-04';
+    payload.data.shipping_history.events = [
+      { ...row, code: '1500', description: 'En reparto', event_date: '2026-01-03T09:00:00.004+00:00' },
+      { ...row, code: '2900', description: 'Recogerán en Delegación', event_date: '2026-01-03T14:00:00.005+00:00' },
+    ];
+    const result = normalizeCarrierResult(parseCttExpress(payload, NUMBER));
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Recogerán en Delegación',
+      last_update: '2026-01-03T14:00:00.005Z', expected_delivery: null });
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([['2900', 'failed_attempt'], ['1500', 'out_for_delivery']]);
+  });
+
   it('maps older V1 source independently and does not claim completed return or failed pickup acceptance', () => {
     for (const [code, wording] of [['0600', 'Recogida fallida'], ['2500', 'En devolución']] as const) {
       const payload = clone();

@@ -11,6 +11,7 @@
     { "code": "1700", "wording": "Almacenado temporalmente", "language": "es", "stage": "exception", "confirmedBy": "live", "note": "Held at the depot after a failed delivery, until a new round or a return." },
     { "code": "2400", "wording": "Nuevo reparto", "language": "es", "stage": "out_for_delivery", "confirmedBy": "live" },
     { "code": "2310", "wording": "Disponible en Punto Collectt Express", "language": "es", "stage": "ready_for_pickup", "confirmedBy": "live" },
+    { "code": "2900", "wording": "Recogerán en Delegación", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "note": "The delivery failed and the recipient is to collect the parcel from the delivery office; CTT Portugal's failed attempt for the same delivery comes at the same moment, its pickup availability after." },
     { "code": "2500", "wording": "En devolución", "language": "es", "stage": "exception", "confirmedBy": "live" },
     { "code": "2700", "wording": "Devuelto a remitente", "language": "es", "stage": "returned", "confirmedBy": "live" },
     { "code": "2100", "wording": "El envío fue entregado correctamente", "language": "es", "stage": "delivered", "confirmedBy": "portal" },

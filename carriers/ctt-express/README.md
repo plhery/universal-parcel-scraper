@@ -35,7 +35,10 @@ delivery day replaces the committed one. The weight is the one measured in the
 network, else the one the sender declared. A parcel that entered from another
 postal network keeps that network's S10 number as its international number. CTT Portugal
 tracks its own numbers, those ending in `PT`, so such a number also names CTT Portugal as the
-delivery partner and the tracker asks it about the parcel.
+delivery partner and the tracker asks it about the parcel. On a parcel CTT Portugal delivers, the
+scans CTT Express relays from it (out for delivery, a failed attempt, availability at a pickup
+point) come an hour before CTT Portugal's own: CTT Express reads Lisbon's wall clock as Madrid's.
+The reply does not mark those scans, so they keep the instant it gives.
 Customer service cases are skipped: they are not scans and carry the
 recipient's contact details. Other measurements, contact information and
 free-form delivery comments are excluded.
