@@ -174,9 +174,12 @@ const POSTCODE_RUN = /(^|[^\p{L}\p{N}])\d{4,6}(?![\p{L}\p{N}])/gu;
 // A signatory's name follows these markers.
 const SIGNATORY = /(?:签收人|signed (?:for )?by|signatory)[\s\S]*$/i;
 
+// The interface replies in GBK, which has no room for some spaces: one between two words arrives as `?`.
+const LOST_SPACE = /(?<=\p{L})\?(?=\p{L})/gu;
+
 /** Scan text without a signatory or a postcode. */
 export function hualeiScanText(value: string, maxLength = 500): string {
-  return clean(value.replace(SIGNATORY, '').replace(POSTCODE_RUN, '$1'), maxLength)
+  return clean(value.replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_RUN, '$1'), maxLength)
     .replace(/^[\s,，:：;；/]+|[\s,，:：;；/]+$/g, '');
 }
 

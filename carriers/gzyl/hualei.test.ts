@@ -149,6 +149,9 @@ describe('Hualei track interface', () => {
     expect(hualeiScanText('Arrived at EXAMPLETOWN 0000 hub, signed by Synthetic Clerk')).toBe('Arrived at EXAMPLETOWN hub');
     expect(hualeiScanText('已签收，签收人：测试')).toBe('已签收');
     expect(hualeiScanText('EXAMPLETOWN, 75001')).toBe('EXAMPLETOWN');
+    // A space GBK could not carry arrives as a question mark between two words.
+    expect(hualeiScanText('Customs?clearance?completed')).toBe('Customs clearance completed');
+    expect(hualeiScanText('Where is it? Arrived')).toBe('Where is it? Arrived');
     // Longer runs, codes and clocks are not postcodes.
     expect(hualeiScanText('Flight CA123 at 10:30, bag 1234567')).toBe('Flight CA123 at 10:30, bag 1234567');
   });

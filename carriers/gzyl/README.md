@@ -57,6 +57,8 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   every record seen; no live record has named a channel yet. The page names no channel or service.
 - Recipient, sender, address, postcode, weight, fee, signature, signatory and delivery photo
   fields are never read; postcodes and signatories are cut from scan text.
+- GBK has no room for some spaces, so a space between two words can arrive as `?`; scan text reads
+  it as the space it was.
 
 ## Limitations
 
