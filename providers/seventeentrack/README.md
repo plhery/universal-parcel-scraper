@@ -94,7 +94,10 @@ carrier.
   `undated_event_count`, and so are rows whose `time_raw` has no date: 17TRACK can fill their
   `time_iso` with a placeholder such as `01.01.2000, 00:00` (DPD Germany's rows for a parcel
   from abroad). A malformed non-empty timestamp is a schema error. Retrieval time is never
-  used as a scan time.
+  used as a scan time. A row the carrier dates by its day alone keeps that day as `local_time`,
+  with no time: one whose `time_raw` has a date and no time, which 17TRACK still shows at
+  midnight, and the sender's information (`InfoReceived`) at exactly midnight, as Swiss Post's
+  "Creation date" and GLS Italy's "created by the sender" come.
 - 17TRACK sometimes adds the offset itself (`time_raw.timezone` is null), and it can be
   wrong: for one parcel, the China Post leg put `+08:00` on the same wall clock that
   USPS reported at `-07:00`. Each event keeps `provider_time_iso`, `time_provenance`

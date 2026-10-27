@@ -270,6 +270,29 @@ describe('17TRACK result parsing', () => {
       .toThrow('invalid tracking event');
   });
 
+  it('keeps the day of a row the carrier dates by its day alone, on any leg, instead of a midnight', () => {
+    const reply = (key: number, name: string, events: Record<string, unknown>[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name }, events }] } } }] });
+    const created = (time: string | null, timezone: string | null, sub_status = 'InfoReceived', description = 'Creation date') => ({
+      time_iso: '2026-10-26T00:00:00+01:00', time_utc: '2026-10-25T23:00:00Z', time_raw: { date: '2026-10-26', time, timezone },
+      description, location: null, stage: null, sub_status });
+    // Swiss Post's creation date: a raw clock with no time, or information received at midnight.
+    for (const row of [created(null, '+01:00'), created('', '+01:00'), created('00:00:00', '+01:00'), created(null, null, 'InTransit_Other', 'Sorted')]) {
+      const [event] = parse17TrackResponse(reply(19251, 'Swiss Post', [row]), number).events ?? [];
+      expect(event).toMatchObject({ local_time: '2026-10-26', provider_time_iso: '2026-10-26T00:00:00+01:00' });
+      expect(event?.time).toBeUndefined();
+    }
+    // GLS Italy's "created by the sender", which its own page dates by its day, under an offset 17TRACK adds.
+    const gls = parse17TrackResponse(reply(100024, 'GLS (IT)', [created('00:00:00', null, 'InfoReceived',
+      'La spedizione e\' stata creata dal mittente, attendiamo che ci venga affidata.')]), number);
+    expect(gls.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-10-26']);
+    // A scan at midnight, and information received at another time, keep their clock.
+    expect(parse17TrackResponse(reply(19251, 'Swiss Post', [created('00:00:00', '+01:00', 'InTransit_Other', 'Sorted')]), number)
+      .events?.[0]?.time).toBe('2026-10-25T23:00:00.000Z');
+    expect(parse17TrackResponse(reply(19251, 'Swiss Post', [{ ...created('00:00:01', '+01:00'), time_iso: '2026-10-26T00:00:01+01:00',
+      time_utc: '2026-10-25T23:00:01Z' }]), number).events?.[0]?.time).toBe('2026-10-25T23:00:01.000Z');
+  });
+
   it('counts a scan 17TRACK dates with a placeholder because its raw clock has no date', () => {
     const placeholder = { ...postalScan('OutForDelivery_Other', 'Parcel out for delivery'), time_iso: '01.01.2000, 00:00', time_utc: null,
       time_raw: { date: null, time: null, timezone: null } };

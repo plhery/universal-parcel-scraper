@@ -252,6 +252,19 @@ function dayAlone(raw: Record<string, unknown>): string | null {
 }
 
 /**
+ * The day of a row the carrier dates by its day alone, on any leg: its raw clock has a date and
+ * no time, which 17TRACK still shows at midnight; or it is the sender's information
+ * (`InfoReceived`) at midnight, as Swiss Post's "Creation date" and GLS Italy's
+ * "created by the sender" come, which GLS Italy's own page dates by its day.
+ */
+function undatedClock(raw: Record<string, unknown>): string | null {
+  const clock = isRecord(raw.time_raw) ? raw.time_raw : null;
+  if (!clock || typeof clock.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(clock.date)) return null;
+  if (clock.time == null || clock.time === '') return clock.date;
+  return clock.time === '00:00:00' && raw.sub_status === 'InfoReceived' ? clock.date : null;
+}
+
+/**
  * 17TRACK's carrier 3101, Correos de Chile, shows Correos de Chile's wall
  * clocks (`time_raw` has no zone) and labels them -04:00, Chile's offset
  * outside summer time, in summer too: a scan Correos de Chile's page shows at
@@ -547,8 +560,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // The place such a leg writes after its wording is the location where 17TRACK gives none.
       const trailing = !english && !parsed.location && BRACKETED_PLACES.has(reported.key) ? trailingPlace(parsed.description ?? '') : undefined;
       if (trailing) Object.assign(parsed, { description: trailing.wording, location: trailing.place });
-      const day = usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
-        : brt && BRT_ROUND.test(text(raw.description).trim()) ? dayAlone(raw) : null;
+      const day = undatedClock(raw) ?? (usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
+        : brt && BRT_ROUND.test(text(raw.description).trim()) ? dayAlone(raw) : null);
       if (day) {
         const local: CarrierEvent = { ...parsed, local_time: day };
         delete local.time;
