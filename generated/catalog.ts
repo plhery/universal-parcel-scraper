@@ -24597,8 +24597,11 @@ export const CARRIER_CATALOG = {
     "selectable": true,
     "timezone": "Europe/Berlin",
     "tracking": {
-      "mode": "link-only",
-      "adapter": null
+      "mode": "automatic",
+      "adapter": "pin-ag",
+      "recognitionRank": 121,
+      "recognitionServedCountriesOnly": true,
+      "localClocks": true
     },
     "canaryUrl": "https://sendungsverfolgung.pin-ag.de/",
     "trackingUrlTemplate": "https://sendungsverfolgung.pin-ag.de/?sendung={trackingNumber}",

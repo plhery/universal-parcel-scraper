@@ -443,6 +443,7 @@ import { statusMap as pengyou } from '../../carriers/pengyou/status.js';
 import { statusMap as pfcExpress } from '../../carriers/pfc-express/status.js';
 import { statusMap as phlpost } from '../../carriers/phlpost/status.js';
 import { statusMap as pilotFreight } from '../../carriers/pilot-freight/status.js';
+import { statusMap as pinAg } from '../../carriers/pin-ag/status.js';
 import { statusMap as pitneyBowes } from '../../carriers/pitney-bowes/status.js';
 import { statusMap as pittOhio } from '../../carriers/pitt-ohio/status.js';
 import { statusMap as planzer } from '../../carriers/planzer/status.js';
@@ -700,7 +701,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'one-world-express': oneWorldExpress, ontrac, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, paack, 'pack-man': packMan, packeta, packlink, packs,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelpoint, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress,
-  'pdq-chile': pdqChile, pecom, pengyou, 'pfc-express': pfcExpress, phlpost, 'pilot-freight': pilotFreight,
+  'pdq-chile': pdqChile, pecom, pengyou, 'pfc-express': pfcExpress, phlpost, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,
