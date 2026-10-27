@@ -10,8 +10,8 @@ const STATES: ReadonlyMap<string, { readonly stage: Stage; readonly label: strin
   // The shop announced the parcel; Helthjem does not have it yet.
   ['REGISTERED', { stage: 'registered', label: 'Pakken er registrert' }],
   ['IN_TRANSIT', { stage: 'in_transit', label: 'På vei til mottaker' }],
-  // Booked on the coming night's round, which the scan announces. A night
-  // missed is filed here too; its event code tells it apart.
+  // On the round. A booking on the coming night's round and a night missed
+  // are filed here too; their event codes tell them apart.
   ['DELIVERING', { stage: 'out_for_delivery', label: 'Leveres' }],
   ['DELIVERED', { stage: 'delivered', label: 'Levert' }],
   // A home delivery sent on to a pickup point instead.
@@ -30,8 +30,11 @@ const STATES: ReadonlyMap<string, { readonly stage: Stage; readonly label: strin
 
 /** Scans whose event code says more than their state. */
 const EVENTS: ReadonlyMap<string, Stage> = new Map([
+  // "Planlagt levering natt til 24. oktober!": the parcel is booked on the
+  // coming night's round, announced the day before. No courier has it yet.
+  ['DELIVERING/113', 'in_transit'],
   // "Budet fikk ikke med seg pakken din ut i natt": the night's courier did
-  // not take the parcel out, so it waits for a later round. Filed as delivering.
+  // not take the parcel out, so it waits for a later round.
   ['DELIVERING/057', 'in_transit'],
 ]);
 

@@ -45,6 +45,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['TA', 'Colis en cours de livraison par le livreur', 'out_for_delivery'],
   ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
   ['AB', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
+  // The courier left the parcel at another pickup point than the one planned, where it waits.
+  ['AB', 'Colis mis à disposition dans un point de retrait différent de celui prévu', 'ready_for_pickup'],
   // The same arrival at the pickup point, also written under SD and under MD.
   ['SD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
   ['MD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],

@@ -51,6 +51,10 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['package received & scanned at warehouse', 'accepted'],
   ['package received and scanned at warehouse', 'accepted'],
   ['parcel handed over to carrier,waiting for transportation', 'accepted'],
+  // A line's collection point and its domestic warehouse, before export.
+  ['the goods arrive at the receiving point', 'accepted'],
+  ["package received & scanned at carrier's domestic warehouse.", 'accepted'],
+  ["package depart carrier's domestic warehouse.", 'in_transit'],
   // China Post's receipt (中国邮政 已收取邮件).
   ['package received', 'accepted'],
   ['the package has sent from the warehouse', 'in_transit'],
@@ -119,12 +123,17 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^离开【[^】]*】处理中心$/, 'in_transit'],
   [/^送交出口海关$/, 'customs'],
   // A line's own rows in Chinese, most with its English after them: the collection point and the
-  // operation centre, the warehouse's intake and customs' release before the flight, then the
-  // destination warehouse and the hand-over to the local carrier.
+  // operation centre, the warehouse's intake and customs' release before the flight, the flight,
+  // import clearance once the dispatch is unpacked, then the destination warehouse and the
+  // hand-over to the local carrier.
   [/^到达收货点$/, 'accepted'],
   [/^货物离开操作中心$/, 'in_transit'],
   [/^进仓时间[:：]/, 'in_transit'],
   [/^通关放行[;；]/, 'in_transit'],
+  [/^航班起飞[,，]/, 'in_transit'],
+  [/^航班已落地[;；]/, 'in_transit'],
+  [/^拆板清关中[;；]/, 'customs'],
+  [/^清关完成[,，]交仓中/, 'in_transit'],
   [/^货物已交仓[,，]/, 'in_transit'],
   [/^包裹交接给本地物流商处理/, 'in_transit'],
   [/安排投递$/, 'out_for_delivery'],

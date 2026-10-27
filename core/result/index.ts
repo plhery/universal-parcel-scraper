@@ -243,6 +243,8 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
       }
     }
     const event = { ...rawEvent };
+    // A blank place is no place.
+    if (typeof event.location === 'string' && !event.location.trim()) delete event.location;
     if (event.point !== undefined) {
       const point = isRecord(event.point) ? eventPoint(event.point.latitude, event.point.longitude) : null;
       if (point) event.point = point;

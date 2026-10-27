@@ -65,7 +65,7 @@ describe('Helthjem tracking adapter', () => {
       ['2026-03-12T03:41:20+01:00', 'DELIVERED/013', 'delivered', null],
       ['2026-03-12T03:40:55+01:00', 'DELIVERED/013', 'delivered', null],
       ['2026-03-11T22:10:05+01:00', 'IN_TRANSIT/003', 'in_transit', 'Sampleby'],
-      ['2026-03-11T17:04:02+01:00', 'DELIVERING/113', 'out_for_delivery', null],
+      ['2026-03-11T17:04:02+01:00', 'DELIVERING/113', 'in_transit', null],
       ['2026-03-11T17:02:30+01:00', 'IN_TRANSIT/002', 'in_transit', 'Exampletown'],
       ['2026-03-11T17:02:10+01:00', 'IN_TRANSIT/003', 'in_transit', 'ExampletownSorter'],
       ['2026-03-08T21:15:37+01:00', 'REGISTERED/001', 'registered', null],
@@ -74,14 +74,22 @@ describe('Helthjem tracking adapter', () => {
     expect(result.events![3]!.description).toBe('Planlagt levering natt til 12. mars!');
   });
 
-  it('reads a parcel on the night’s round from the parcel’s state', () => {
+  it('reads a parcel booked on the night’s round as in transit until the night, from its booking', () => {
     const result = parseHelthjem(edited('delivered', parcel => {
       parcel.status = 'DELIVERING';
       parcel.events = parcel.events.slice(2);
     }), DELIVERED);
-    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Pakken er under transport.',
+    // The booking comes the day before the round: no courier has the parcel yet.
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Pakken er under transport.',
       last_update: '2026-03-11T22:10:05+01:00', expected_delivery: '2026-03-12' });
     expect(result.delivered_at).toBeUndefined();
+    // A scan on the round itself, which no reply showed, would be out for delivery.
+    const round = parseHelthjem(edited('delivered', parcel => {
+      parcel.status = 'DELIVERING';
+      parcel.events = [{ apiKey: '999', status: 'DELIVERING', createdAt: '2026-03-12T01:00:00+01:00', location: null, message: null },
+        ...parcel.events.slice(2)];
+    }), DELIVERED);
+    expect(round).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: null });
   });
 
   it('reads a night the courier did not take the parcel out as a delay, and the night a booking names', () => {
@@ -96,14 +104,14 @@ describe('Helthjem tracking adapter', () => {
     expect(rows(result).slice(0, 3)).toEqual([
       ['2026-03-12T02:24:28+01:00', 'DELIVERING/057', 'in_transit', null],
       ['2026-03-11T22:10:05+01:00', 'IN_TRANSIT/003', 'in_transit', 'Sampleby'],
-      ['2026-03-11T17:04:02+01:00', 'DELIVERING/113', 'out_for_delivery', null],
+      ['2026-03-11T17:04:02+01:00', 'DELIVERING/113', 'in_transit', null],
     ]);
     const rebooked = parseHelthjem(edited('delivered', parcel => {
       parcel.status = 'DELIVERING';
       parcel.events = [{ apiKey: '113', status: 'DELIVERING', createdAt: '2026-03-12T10:04:02+01:00', location: null,
         message: { content: 'Planlagt levering natt til 13. mars!' } }, missed, ...parcel.events.slice(2)];
     }), DELIVERED);
-    expect(rebooked).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: '2026-03-13' });
+    expect(rebooked).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-03-13' });
     // A booking in December for a night in January names the coming year's.
     const newYear = parseHelthjem(edited('delivered', parcel => {
       parcel.status = 'DELIVERING';
@@ -117,7 +125,7 @@ describe('Helthjem tracking adapter', () => {
         parcel.status = 'DELIVERING';
         parcel.events = [{ apiKey: '113', status: 'DELIVERING', createdAt: '2026-04-29T10:04:02+02:00', location: null, message: { content } }];
       }), DELIVERED);
-      expect(unread).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: null });
+      expect(unread).toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
     }
   });
 
@@ -350,7 +358,8 @@ describe('Helthjem status vocabulary', () => {
     for (const code of ['constructor', 'toString', '__proto__', '013', '']) expect(statusMap.stage(code, ''), code).toBeUndefined();
     expect(statusMap.stage(null, 'levert')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'helthjem', providerCode: 'DELIVERING/113', description: 'Planlagt levering natt til 12. mars!' }))
-      .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'helthjem', providerCode: 'DELIVERING/999', description: 'Leveres' })).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     expect(statusMapAnswer({ carrier: 'helthjem', providerCode: 'DELIVERING/057', description: 'Budet fikk ikke med seg pakken din ut i natt.' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'helthjem', providerCode: 'WEIGHED/999', description: 'Synthetic scan' })).toEqual({ kind: 'unknown' });

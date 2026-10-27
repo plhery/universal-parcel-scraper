@@ -84,6 +84,18 @@ describe('result completeness flags', () => {
   });
 });
 
+describe('event places', () => {
+  it('drop a blank place and keep a named one', () => {
+    const events = normalizeCarrierResult({ status: 'in_transit', events: [
+      { time: '2026-01-02T10:00:00Z', description: 'In transport', location: ' ' },
+      { time: '2026-01-02T09:00:00Z', description: 'In transport', location: '' },
+      { time: '2026-01-02T08:00:00Z', description: 'Posting', location: 'Sampletown' },
+    ] }).events!;
+    expect(events.map((event) => event.location ?? null)).toEqual([null, null, 'Sampletown']);
+    expect(events[0]).not.toHaveProperty('location');
+  });
+});
+
 describe('a summary without a stage', () => {
   const scans = [
     { time: '2026-01-05T10:00:00+01:00', description: 'Synthetic customs step the carrier left unstaged' },

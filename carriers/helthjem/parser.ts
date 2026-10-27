@@ -151,15 +151,16 @@ export function parseHelthjem(payload: unknown, rawNumber: string): CarrierResul
   const newest = events[0];
 
   // The page headlines the parcel's state; the newest scan stands in without
-  // one, and for it when the scan's event code says more than their state.
-  const stateStage = !state ? undefined
-    : scans[0]?.state === state && newest?.stage ? newest.stage as Stage : helthjemStage(state);
+  // one, and the newest scan in that state for it, since its event code can
+  // say more than the state.
+  const own = state ? scans.find(scan => scan.state === state)?.event.stage as Stage | undefined : undefined;
+  const stateStage = !state ? undefined : own ?? helthjemStage(state);
   if (!newest && !state) throw new IndeterminateError(PROVIDER, 'Helthjem returned a parcel without a state or scans');
   const stage = stateStage ?? (newest?.stage as Stage | undefined);
   const delivered = stage === 'delivered' ? deliveredAt(events) : undefined;
   // The night a booking names, while no scan but a terminal's has followed it.
   const booking = scans.find(scan => scan.state !== 'IN_TRANSIT')?.event;
-  const night = booking && stage === 'out_for_delivery' ? bookedNight(booking) : null;
+  const night = booking && stage === 'in_transit' ? bookedNight(booking) : null;
   // The point a parcel waits at, or was collected from, by its name alone.
   const point = state === 'READY_FOR_PICKUP' || state === 'PICKED_UP'
     ? (isRecord(parcel.servicePoint) ? clean(parcel.servicePoint.name, 160) : '') : '';
