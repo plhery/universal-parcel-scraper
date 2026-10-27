@@ -46,7 +46,9 @@ const WORDING: ReadonlyMap<string, Stage> = new Map([['waybill generated', 'regi
   ['label creation', 'registered'], ['manifest created', 'in_transit']]);
 const LABEL_FOR = /^waybill generated for [a-z0-9]+$|^order information has been transmitted to [a-z][a-z .-]{0,30}$/;
 // Scans a partner relays without a code, by `normalizeStatusWording` wording.
+// A partner's order made before it has the parcel is a label, not a receipt.
 const UNCODED: ReadonlyMap<string, Stage> = new Map([
+  ['order creation, order submitted, pending to receive.', 'registered'],
   ['your shipment has departed from the transit origin', 'in_transit'],
   ['your shipment has arrived at the transit destination', 'in_transit'],
 ]);

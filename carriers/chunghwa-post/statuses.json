@@ -50,6 +50,15 @@
       "note": "International tracking scan from the public EB500200 query."
     },
     {
+      "code": "6",
+      "wording": "離開進口局",
+      "stage": "in_transit",
+      "language": "zh-Hant",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "A departure from an office on the item's way, seen before its arrival at the outward office of exchange."
+    },
+    {
       "code": "C",
       "wording": "已出口－資料詳如右方",
       "stage": "in_transit",

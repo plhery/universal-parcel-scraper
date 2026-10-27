@@ -269,7 +269,8 @@ describe('4PX result projection', () => {
 
   it('stages the transit scans a partner relays without a code, and only those', () => {
     for (const [tkDesc, expected] of [['Your shipment has arrived at the transit destination', 'in_transit'],
-      ['Your shipment has departed from the transit origin', 'in_transit'], ['Task assigned', undefined]] as const) {
+      ['Your shipment has departed from the transit origin', 'in_transit'], ['Order creation, order submitted, pending to receive.', 'registered'],
+      ['Task assigned', undefined]] as const) {
       const payload = fixture(); Object.assign(payload.data[0].tracks[0], { tkCode: '', tkDesc });
       expect(parse(payload, NUMBER).events?.[0]?.stage, tkDesc).toBe(expected);
     }

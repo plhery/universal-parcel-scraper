@@ -4,7 +4,7 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 const WORDING = new Map<string, Stage>([
   ['交寄郵件', 'accepted'], ['運輸途中', 'in_transit'], ['安排投遞中', 'in_transit'],
   ['郵件投遞中', 'out_for_delivery'], ['到達出口互換局', 'in_transit'], ['已出口－資料詳如右方', 'in_transit'],
-  ['郵袋接收', 'in_transit'], ['到達寄達國互換局', 'in_transit'], ['海關查驗', 'customs'],
+  ['郵袋接收', 'in_transit'], ['到達寄達國互換局', 'in_transit'], ['海關查驗', 'customs'], ['離開進口局', 'in_transit'],
 ]);
 export function chunghwaPostStage(wording: string): ClassifiedWording | null {
   const stage = WORDING.get(wording);

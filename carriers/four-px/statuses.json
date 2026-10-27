@@ -261,6 +261,14 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "wording": "Order creation, order submitted, pending to receive.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "Relayed without a code: a partner's order for a parcel it has not received yet."
+    },
+    {
       "wording": "Your shipment has departed from the transit origin",
       "language": "en",
       "stage": "in_transit",

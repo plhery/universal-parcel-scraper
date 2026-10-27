@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, ChunghwaPostTracker, normalizeChunghwaPostNumber, parseChunghwaPost } from './adapter.js';
 import { ChunghwaPostOcr } from './ocr.js';
+import { statusMap } from './status.js';
 
 const NUMBER = 'EE000000005TW';
 const fixture = () => [{ header: { OutputType: 'Screen' }, body: { cptCheck: true, incorrectList: [], iType: 1,
@@ -47,6 +48,18 @@ describe('Chunghwa Post international tracking', () => {
     // An item still in Taiwan is dated by its newest scan.
     items.splice(0, 2);
     expect(parseChunghwaPost(payload, NUMBER)).toMatchObject({ last_update: '2026-01-02T10:43:19Z', last_update_local: '2026-01-02T18:43:19' });
+  });
+
+  it('stages the international scans by their wording', () => {
+    const payload = fixture();
+    (payload[0]!.body.host_rs as { ITEM: unknown[] }).ITEM = [
+      { EVCODE: 'L', STATUS: '到達出口互換局', DATIME: '20260102085353', BRHNAT: '郵件處理中心', BRHNO: '000002' },
+      { EVCODE: '6', STATUS: '離開進口局', DATIME: '20260101232400', BRHNAT: '郵件處理中心', BRHNO: '000002' },
+      { EVCODE: 'A', STATUS: '交寄郵件', DATIME: '20260101160803', BRHNAT: '郵局', BRHNO: '000003' },
+    ];
+    expect(parseChunghwaPost(payload, NUMBER).events!.map((event) => [event.stage, event.stage_source]))
+      .toEqual([['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['accepted', 'carrier_map']]);
+    expect(statusMap.stage('6', '離開進口局')).toBe('in_transit');
   });
 
   it('requires accepted verification and repeated identity, and recognizes only the matching absence message', () => {
