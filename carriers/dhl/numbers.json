@@ -328,12 +328,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl",
-          "australia-post"
-        ]
+        "carrier": "dhl",
+        "confidence": "high"
       },
       "note": "JJD and eighteen digits, typed into DHL's tracking page and archived by the Wayback Machine. DHL's recipient page returned a parcel delivered in the Netherlands."
     },

@@ -78826,14 +78826,10 @@
   },
   {
     "input": "JJD149150000000340699",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "dhl",
+    "confidence": "high",
     "candidates": [
-      "dhl",
-      "australia-post"
-    ],
-    "asked": [
-      "australia-post"
+      "dhl"
     ]
   },
   {

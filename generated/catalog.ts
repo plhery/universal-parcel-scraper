@@ -4562,7 +4562,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?!MA\\d{19}$)(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
+        "pattern": "^(?!MA\\d{19}$|JJD\\d{18}$)(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
         "confidence": "high"
       },
       {
