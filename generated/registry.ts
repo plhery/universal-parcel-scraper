@@ -2056,6 +2056,7 @@ export const REGISTRY: RegistryDefinition = {
     "yanwen": "yanwen",
     "yc-delivery": "universal",
     "ycs-logistics": "ycs-logistics",
+    "yfhex": "universal",
     "yilong-logistics": "yilong-logistics",
     "yimidida": "universal",
     "yto": "yto",

@@ -1914,6 +1914,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shouwu', number: 'SWECN000000000001YQ',
     route: /^https:\/\/admin\.shshouwu\.com\/track\.html\?q=SWECN000000000001YQ$/,
     marker: /守务国际包裹追踪|We seem can't identify the number/ },
+  // The small-parcel tracker writes the number in `?track_number=` into its query box as it serves the page.
+  { carrier: 'yfhex', number: 'ZZ0000000000',
+    route: /^https:\/\/toms\.yfhex\.com:6055\/track_query_c\.aspx\?track_number=ZZ0000000000$/,
+    marker: /专线及小包查询|Parcel \/ Line Query/ },
 ];
 
 /**

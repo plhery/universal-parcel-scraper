@@ -30,6 +30,8 @@ describe('brand networks', () => {
     expect(carrierIdFromName('Zhongling')).toBe('z-leading');
     expect(carrierIdFromName('Pengyou')).toBe('pengyou');
     expect(carrierIdFromName('TopYou')).toBe('topyou');
+    // Universal providers name YFHEX by its short name.
+    expect(carrierIdFromName('YFH')).toBe('yfhex');
     // DHL names SmartPosti, Posti's Baltic parcel network, by its former name.
     expect(carrierIdFromName('Itella')).toBe('posti');
     // GLS Portugal's shipments are GLS Spain's service's.
@@ -271,6 +273,7 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('中领国际')).toBe('z-leading');
     expect(carrierIdFromName('捧友')).toBe('pengyou');
     expect(carrierIdFromName('通邮')).toBe('topyou');
+    expect(carrierIdFromName('原飞航')).toBe('yfhex');
     expect(carrierIdFromName('中華郵政')).toBe('chunghwa-post');
     expect(carrierIdFromName('CJ대한통운')).toBe('cj-logistics');
     // "ТММ Express" and "ΕΛΤΑ Courier" are aliases; their Latin words name no carrier.

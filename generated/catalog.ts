@@ -32691,6 +32691,41 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "yfhex": {
+    "displayName": "YFHEX",
+    "color": "#00a2e9",
+    "aliases": [
+      "YFH",
+      "YFHEX Logistics",
+      "原飞航",
+      "原飛航物流",
+      "深圳市原飞航物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.yfhex.com/",
+    "trackingUrlTemplate": "https://toms.yfhex.com:6055/track_query_c.aspx?track_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.yfhex.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "toms.yfhex.com"
+        ],
+        "pathPattern": "^/track_query_c\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "yilong-logistics": {
     "displayName": "Yilong Logistics",
     "color": "#ec0307",
@@ -33927,6 +33962,7 @@ export const CARRIER_IDS = [
   "yalidine",
   "yc-delivery",
   "ycs-logistics",
+  "yfhex",
   "yilong-logistics",
   "yimidida",
   "yurtici-kargo",
@@ -34738,6 +34774,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yalidine": ["yalidine-1"],
   "yc-delivery": [],
   "ycs-logistics": [],
+  "yfhex": [],
   "yilong-logistics": ["yilong-logistics-1"],
   "yimidida": [],
   "yurtici-kargo": [],
