@@ -19,6 +19,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean as cleanText, fetchBounded, parseJsonBytes, UpstreamHttpError, UpstreamNetworkError, userAgentOf } from '../../core/transport/index.js';
 import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { isMissingShipment } from '../dhl-express/api.js';
 import { partnerHasParcel, stageFor, statusFor } from './status.js';
 
 const PROVIDER = 'DHL eCommerce';
@@ -426,6 +427,18 @@ function trackingApiUrl(number: string): string {
   return url.toString();
 }
 
+/**
+ * The UTAPI answers that end the browser step: no DHL shipment with the number, or only
+ * shipments another DHL service carries, such as DHL Paket's.
+ */
+function utapiAnswer(payload: unknown): Error | undefined {
+  if (isMissingShipment(payload)) return new NotFoundError(PROVIDER);
+  if (isRecord(payload) && Array.isArray(payload.shipments) && payload.shipments.length > 0 && payload.shipments.every(
+    (shipment) => isRecord(shipment) && typeof shipment.service === 'string' && shipment.service !== 'ecommerce',
+  )) return new IndeterminateError(PROVIDER, 'Another DHL service carries the shipment');
+  return undefined;
+}
+
 export interface DHLEcommerceTrackerOptions extends Omit<UniversalBrowserOptions, 'signal'> {
   budgetMs?: number;
   recorder?: StepRecorder;
@@ -502,8 +515,10 @@ export class DHLEcommerceTracker {
 
   private async browser(number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
     try {
+      const api = trackingApiUrl(number);
       return await scrapeUniversalPage({ executablePath: this.options.executablePath, timeoutMs, signal }, {
-        name: PROVIDER, url: dhlEcommerceTrackingUrl(number), responseUrl: trackingApiUrl(number),
+        name: PROVIDER, url: dhlEcommerceTrackingUrl(number), responseUrl: api,
+        responseErrors: { [api]: utapiAnswer }, errorStatuses: [404],
       }, parseDHLEcommerceResponse);
     } catch (error) {
       // The challenge can also reach the page itself; name it so the host

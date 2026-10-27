@@ -307,6 +307,21 @@ describe('DHL eCommerce fetching', () => {
     expect(steps).toEqual(['direct', 'browser']);
     expect(lookups).toEqual(['browser']);
   });
+
+  it('ends the global step when UTAPI has no shipment or only another DHL service\'s', async () => {
+    const ecommerce = shipment().shipments[0]!;
+    const paket = { ...ecommerce, service: 'parcel-de' };
+    const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage').mockImplementation(async (_options, spec) => {
+      expect(spec.errorStatuses).toEqual([404]);
+      throw spec.responseErrors![spec.responseUrl]!({ title: 'No result found', status: 404, detail: 'No shipment with given tracking number found.' })!;
+    });
+    await expect(new DHLEcommerceTracker({ executablePath: '/test/chromium' }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
+    const answer = browser.mock.calls[0]![1].responseErrors![browser.mock.calls[0]![1].responseUrl]!;
+    expect(answer({ shipments: [paket] })).toMatchObject({ kind: 'indeterminate', message: 'Another DHL service carries the shipment' });
+    for (const payload of [shipment(), { shipments: [ecommerce, paket] }, { shipments: [] }, { title: 'Not Found', status: 404 }]) {
+      expect(answer(payload)).toBeUndefined();
+    }
+  });
 });
 
 describe('DHL eCommerce Webtrack', () => {

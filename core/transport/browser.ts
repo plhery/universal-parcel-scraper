@@ -18,6 +18,8 @@ export async function scrapeUniversalPage(
     submit?: (page: Page) => Promise<void>;
     /** Explicit terminal replies from the lookup flow, including its submission endpoint. */
     responseErrors?: Readonly<Record<string, (payload: unknown) => Error | undefined>>;
+    /** Statuses besides 200 and 201 whose JSON `responseErrors` reads, such as a not-found reply. */
+    errorStatuses?: readonly number[];
   },
   parse: (payload: unknown) => CarrierResult,
 ): Promise<CarrierResult> {
@@ -61,7 +63,8 @@ export async function scrapeUniversalPage(
             rejectHistory(new UpstreamHttpError(spec.name, 429, delay));
             return;
           }
-          if (![200, 201].includes(response.status())) return;
+          const success = [200, 201].includes(response.status());
+          if (!success && !(inspect && spec.errorStatuses?.includes(response.status()))) return;
           if (++received > 20) { rejectHistory(new IndeterminateError(spec.name, `${spec.name} returned too many polling responses`)); return; }
           try {
             if (Number(response.headers()['content-length'] ?? 0) > 2_000_000) return;
@@ -70,7 +73,7 @@ export async function scrapeUniversalPage(
             const payload: unknown = JSON.parse(body.toString('utf8'));
             const error = inspect?.(payload);
             if (error) { rejectHistory(error); return; }
-            if (url === spec.responseUrl) resolveHistory(parse(payload));
+            if (url === spec.responseUrl && success) resolveHistory(parse(payload));
           } catch {
             // Initial polling, challenges and unrelated shipments are not history.
           }
