@@ -20,6 +20,18 @@
     {"wording": "the instruction data for this shipment have been provided by the sender to dhl electronically", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL, which delivers the last leg: the label's data has reached it. JRT copies DHL's rows in lower case."},
     {"wording": "the shipment has been processed in the parcel center of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL's hub after the hand-off."},
     {"wording": "unloaded from movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL."},
-    {"wording": "loaded to movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL."}
+    {"wording": "loaded to movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL."},
+    {"wording": "The instruction data for this shipment have been provided by the sender to DHL electronically.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "DHL's label data, copied with its case and full stop, before JRT's first scan."},
+    {"wording": "快件操作完成", "language": "zh", "english": "Shipment departed from facility", "stage": "in_transit", "confirmedBy": "live", "note": "The English is HuaHan's, whose API documentation gives it for this summary of the departure scan."},
+    {"wording": "Sending to the airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arriving at the airport - arranging flights", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the airport while a flight is booked."},
+    {"wording": "Flight is expected to take off on …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting at the airport for the booked flight, whose day is read as an ellipsis."},
+    {"wording": "Flight has flown", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Dismantling and picking up goods in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Landed; the pallets are broken down and the goods collected for clearance."},
+    {"wording": "Customs clearance of the cargo is in progress", "language": "en", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The goods have been handed over to the carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the carrier that delivers the last leg."},
+    {"wording": "The shipment has been posted by the sender at the retail outlet", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from DHL: JRT hands the parcel in at a Deutsche Post outlet for the last leg, so the parcel is already on its way."}
   ]
 }
