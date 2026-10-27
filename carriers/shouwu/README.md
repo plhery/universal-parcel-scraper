@@ -42,7 +42,8 @@ numbers `shouwu-1` offers.
   wording and place (`identity.ts`). The page reads the first ten digits, so the adapter reads
   milliseconds as the same second.
 - A scan's place is `traceLocation`, which the page leaves out and Shouwu's own back office shows
-  before the wording. Anything with a digit, as an address or a postcode has, is dropped.
+  before the wording. A country's code it opens with, as in `CN,` before a sort facility, is left
+  out. Anything with a digit, as an address or a postcode has, is dropped.
 - The destination is `order.countryCodeTwo`. The scan's leg (`traceType`), the status text
   (`traceStatusDesc`) and the destination's name are not read.
 - The request carries the page's `x-locale`, `zh-cn` unless a visitor chose another language.

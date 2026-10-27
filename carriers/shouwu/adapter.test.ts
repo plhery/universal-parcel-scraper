@@ -312,6 +312,19 @@ describe('Shouwu International stored scans', () => {
       expect(policy?.matches?.(scan, other)).toBe(false);
     }
   });
+
+  it('reads a place without the country\'s code it opens with, and lets the row stored with that code keep its identity', () => {
+    const coded = changed((traces) => {
+      traces.splice(0, traces.length, trace(1775900000, 'Package processing completed', 'CN,SWE Sample Sort Facility'));
+    });
+    expect(parseShouwu(coded, DELIVERED).events!.map((event) => event.location)).toEqual(['SWE Sample Sort Facility']);
+    const policy = sameInstantIdentityPolicy('shouwu', { supportsScanMatching: true });
+    const scan = { stage: 'accepted', description: 'Package processing completed', location: 'SWE Sample Sort Facility', providerCode: '' };
+    expect(policy?.matches?.(scan, { ...scan, location: 'CN,SWE Sample Sort Facility' })).toBe(true);
+    for (const other of [{ ...scan, location: 'CN,SWE Other Sort Facility' }, { ...scan, location: 'CN,SWE Sample Sort Facility', description: 'Arrival processing center' }]) {
+      expect(policy?.matches?.(scan, other)).toBe(false);
+    }
+  });
 });
 
 describe('Shouwu International numbers', () => {

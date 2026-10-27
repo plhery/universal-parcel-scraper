@@ -6,6 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
+import { withoutCountryCode } from './place.js';
 
 export const PROVIDER = 'Shouwu International';
 // One parcel's reply is a few kilobytes.
@@ -67,7 +68,7 @@ function scanClock(row: Record<string, unknown>): { seconds: number; wall: strin
 
 /** The facility or town a scan names, at most; anything that could be an address is dropped. */
 function place(row: Record<string, unknown>): string {
-  const name = text(row, 'traceLocation', 120);
+  const name = withoutCountryCode(text(row, 'traceLocation', 120));
   return PLACE.test(name) ? name : '';
 }
 
