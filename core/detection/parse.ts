@@ -81,11 +81,12 @@ const ALTERNATIVE = new RegExp(`^(?:${ALTERNATIVE_WORDS})$`, 'i');
 // ("N° de suivi", "número de seguimiento", "numero di tracciamento"), Polish
 // after the word ("numer przesyłki"), and the tracking word can stand alone
 // ("Suivi"), as can a courier's word for its waybill ("AWB", "Guía"). An
-// abbreviated "No." can follow the label ("AWB No."), and "N°" can touch its digits.
+// abbreviated "No." can follow the label ("AWB No."). "N°", "Waybill" and
+// "Tracking" can touch their digits; no carrier's number starts with those words.
 const TRACKED = 'suivi|seguimiento|rastreo|tracciamento|rastreio|rastreamento|tracking|waybill|awb|guía|guia';
 const LABEL = new RegExp('^(?:\\p{L}+\\s+)?(?:(?:\\p{L}*(?:code|nummer)|number|numer|numero|número|numéro|nr|n\\.?[°º]|kod|codice|codigo|código)'
   + `(?:\\s+(?:(?:de|du|del|di|do|da)\\s+(?:${TRACKED}|colis|envío|envio|spedizione)|przesyłki|paczki))?|${TRACKED})`
-  + '(?:\\s+(?:no|nr)\\.)?(?:[.:#\\s]+|(?<=[°º]))(?=\\d)', 'iu');
+  + '(?:\\s+(?:no|nr)\\.)?(?:[.:#\\s]+|(?<=[°º]|waybill|tracking))(?=\\d)', 'iu');
 // A label of another number: an order's, a customer's, an invoice's, a phone's or a voucher's.
 const OTHER_NUMBER = /order|bestell|auftrag|commande|pedido|ordine|zam[oó]wieni|kunden|customer|client|rechnung|invoice|factur|telefon|phone|gutschein|voucher|coupon|rabatt|promo/iu;
 // A word among the groups of an entry. The letters a number prints apart are

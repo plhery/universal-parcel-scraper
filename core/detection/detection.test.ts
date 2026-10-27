@@ -558,6 +558,8 @@ describe('the detection engine', () => {
     ['Número de guía 12345678', '12345678'],
     ['Guía: 12345678', '12345678'],
     ['WAYBILL 1234567890', '1234567890'],
+    ['WAYBILL1234567890', '1234567890'],
+    ['Tracking1234567890', '1234567890'],
     ['AWB No. 1234567890', '1234567890'],
   ])('leaves a label word out of a short entry: %s', (input, number) => {
     expect(parseTrackingInput(input)).toMatchObject({ trackingNumber: number, source: 'text' });
@@ -597,7 +599,7 @@ describe('the detection engine', () => {
 
   it('keeps a short entry whole when its letters are no label word, or touch the digits', () => {
     // Letters a carrier prints apart from its digits stay on the number.
-    for (const input of ['QZX 123456', 'ABCD 1234567', 'LP 00123456789012', '1111 2222 3333 4444', '1Z 999 AA1 01 2345 6784', 'abholcode123456']) {
+    for (const input of ['QZX 123456', 'ABCD 1234567', 'LP 00123456789012', '1111 2222 3333 4444', '1Z 999 AA1 01 2345 6784', 'abholcode123456', 'AWB1234567890']) {
       expect(parseTrackingInput(input)).toMatchObject({ trackingNumber: input, source: 'number' });
     }
   });
