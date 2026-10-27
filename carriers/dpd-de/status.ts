@@ -34,14 +34,34 @@ export const DPD_DE_APP_SCANS: Readonly<Record<string, Stage>> = {
 /** The key a scan's wording is mapped under: a booked collection's date becomes an ellipsis. */
 export const dpdDeScanKey = (wording: string) => wording.replace(/^(Pickup ordered for:) \d{2}\.\d{2}\.\d{4}$/i, '$1 …');
 
+const NOT_COLLECTED = 'The consignee did not collect the parcel.';
+const DRIVER_PICKUP = 'Pick-up from the Pickup parcelshop by DPD driver';
+const SHOP_COLLECTION_NOTE = 'Its stage depends on the scans before it. DPD writes it both when a driver collects a parcel the sender dropped at a Pickup shop and when the recipient left one there uncollected: after the parcel waited at the shop for its recipient it starts the way back.';
+
+/**
+ * A Pickup shop's scans as DPD collects a parcel from it. After the parcel waited
+ * at the shop for its recipient they start its way back, under way as the return's
+ * own scans are. Otherwise the driver takes on the parcel the sender dropped there,
+ * and the shop's note that no recipient collected it moves nothing.
+ */
+export function dpdDeShopCollectionStage(wording: string, waited: boolean, previous: Stage | undefined): Stage | undefined {
+  if (wording === NOT_COLLECTED) return waited ? 'exception' : undefined;
+  if (wording === DRIVER_PICKUP) return waited ? 'exception' : previous && previous !== 'registered' ? 'in_transit' : 'accepted';
+  return undefined;
+}
+
 const NORMALIZED_SCANS = new Map(Object.entries(DPD_DE_APP_SCANS).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
 
 /**
  * What the map says about one scan: the app's scans by their wording, the guest API's by DPD's
  * codes. The guest API's codes left unmapped on purpose stay so; the Swiss page's labels do not
- * apply, since German lookups never read that page.
+ * apply, since German lookups never read that page. A shop's collections take their stage from
+ * the scans before them, so the map leaves them without one.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => code ? dpd.stage(code, wording) : NORMALIZED_SCANS.get(dpdDeScanKey(wording)),
-  gaps: dpd.gaps.filter(gap => gap.code !== undefined),
+  gaps: [
+    ...dpd.gaps.filter(gap => gap.code !== undefined),
+    ...[NOT_COLLECTED, DRIVER_PICKUP].map(wording => ({ wording: normalizeStatusWording(wording), note: SHOP_COLLECTION_NOTE })),
+  ],
 };

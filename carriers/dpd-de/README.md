@@ -149,9 +149,14 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
 - Scans carry English wording without codes. Each known wording is mapped
   whole in [status.ts](status.ts), because the shared classifier misreads
   several of them. A collection the sender booked is still registration; the
-  recipient's collection from a Pickup station or shop is the delivery. Its
-  `statusMap` answers for both services: the app's scans by wording, the guest
-  API's by DPD's codes. A return names itself in its scans:
+  recipient's collection from a Pickup station or shop is the delivery. DPD
+  words a driver's collection from a shop, and the shop's note that no
+  recipient collected the parcel, the same for a parcel the sender dropped
+  there as for one its recipient left: after the parcel waited at the shop for
+  its recipient they start the return, otherwise the driver takes the parcel on
+  and the note moves nothing. Its `statusMap` answers for both services: the
+  app's scans by wording, the guest API's by DPD's codes, and leaves those two
+  scans without a stage. A return names itself in its scans:
   it stays an exception under way and becomes returned at the sender, and the
   progress rail's return state keeps the result in the exception status. An
   announced delivery day is read as an estimate, without becoming a scan or

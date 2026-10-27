@@ -67,6 +67,20 @@
       "note": "Seen in the German app's scan list, which carries wording only."
     },
     {
+      "wording": "The consignee did not collect the parcel.",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "A Pickup shop's scan as DPD collects a parcel from it, written also for a parcel the sender dropped at the shop. After the parcel waited at the shop for its recipient it starts the way back; otherwise it moves nothing."
+    },
+    {
+      "wording": "Pick-up from the Pickup parcelshop by DPD driver",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "A driver collects the parcel from a Pickup shop: after the parcel waited there for its recipient it starts the way back, otherwise the driver takes on the parcel the sender dropped there."
+    },
+    {
       "wording": "Transfer to DPD Pickup station by DPD driver.",
       "language": "en",
       "stage": "in_transit",

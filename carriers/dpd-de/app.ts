@@ -1,13 +1,13 @@
 import { DateTime } from 'luxon';
 import { CarrierError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
-import type { ClassifiedStatus } from '../../core/status/index.js';
+import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 import { calendarDay, isoTime, zonedTime } from '../../core/time/index.js';
 import type { XmlNode } from '../../core/transport/xml.js';
 import {
   children, DpdAppService, DpdOtherCountryError, invalid, one, optional, PostcodeRejected, scalar, SessionExpired, type DpdDePartner,
 } from './service.js';
-import { DPD_DE_APP_SCANS, dpdDeScanKey } from './status.js';
+import { DPD_DE_APP_SCANS, dpdDeScanKey, dpdDeShopCollectionStage } from './status.js';
 
 /** The app's progress rail: one coarse state for the whole parcel. */
 export const DPD_DE_APP_RAIL: Readonly<Record<string, ClassifiedStatus>> = {
@@ -118,6 +118,9 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
   let placed = '';
   let announced: string | null = null;
   let shop: ReturnType<typeof shopOf>;
+  // Oldest first: whether the parcel waited at a shop for its recipient, and the stage before.
+  let waited = false;
+  let previous: Stage | undefined;
   for (const row of rows) {
     const wording = scalar(row, 'StatusText', 500);
     if (!wording) invalid();
@@ -135,8 +138,9 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
     const clock = zonedTime(`${day} ${time}`, 'dd.MM.yyyy HH:mm', place?.[2] === 'DE' ? 'Europe/Berlin' : 'UTC');
     if (!clock) invalid();
     const key = dpdDeScanKey(wording);
-    const stage = Object.hasOwn(DPD_DE_APP_SCANS, key) ? DPD_DE_APP_SCANS[key] : undefined;
-    if (stage === 'ready_for_pickup') shop = shopOf(row);
+    const stage = Object.hasOwn(DPD_DE_APP_SCANS, key) ? DPD_DE_APP_SCANS[key] : dpdDeShopCollectionStage(key, waited, previous);
+    if (stage === 'ready_for_pickup') [shop, waited] = [shopOf(row), true];
+    previous = stage ?? previous;
     const event: CarrierEvent = {
       ...(place?.[2] === 'DE' ? { time: clock.iso } : { local_time: clock.iso.slice(0, 19), provider_time_text: `${day} ${time}` }),
       ...(place ? { location: `${place[1]}, ${place[2]}` } : {}),

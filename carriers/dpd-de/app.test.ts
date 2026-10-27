@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { IndeterminateError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
@@ -380,6 +381,28 @@ describe('DPD Germany app projection', () => {
       expect((await collected.result).events?.[0]).toMatchObject({ description: wording, stage: 'delivered', stage_source: 'carrier_map' });
       expect((await collected.result).pickup_point).toBeUndefined();
       expect(collected.calls.map(call => call.operation)).not.toContain('getParcelShopByID');
+    }
+  });
+
+  it('reads a shop\'s collection by the scans before it', async () => {
+    const collection: Row[] = [
+      ['06.01.2026', '07:18', 'The consignee did not collect the parcel.', 'Musterstadt (DE)'],
+      ['06.01.2026', '10:39', 'Pick-up from the Pickup parcelshop by DPD driver', 'Musterstadt (DE)'],
+    ];
+    // The sender's parcel, taken on from the shop it was dropped at.
+    const dropped = await track('ON_THE_ROAD', [['05.01.2026', '12:31', 'Parcel handed to Pickup parcelshop by consignor.', 'Musterstadt (DE)'], ...collection]);
+    expect(stages(dropped)).toEqual([
+      ['Pick-up from the Pickup parcelshop by DPD driver', 'in_transit'],
+      ['The consignee did not collect the parcel.', undefined],
+      ['Parcel handed to Pickup parcelshop by consignor.', 'accepted'],
+    ]);
+    // A parcel its recipient left at the shop starts its way back.
+    expect(stages(await track('ON_THE_ROAD', [...atShop, ...collection]))?.slice(0, 2)).toEqual([
+      ['Pick-up from the Pickup parcelshop by DPD driver', 'exception'],
+      ['The consignee did not collect the parcel.', 'exception'],
+    ]);
+    for (const wording of ['the consignee did not collect the parcel.', 'pick-up from the pickup parcelshop by dpd driver']) {
+      expect(statusMapAnswer({ carrier: 'dpd-de', description: wording })).toMatchObject({ kind: 'intentional_gap' });
     }
   });
 
