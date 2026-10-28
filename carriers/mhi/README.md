@@ -29,7 +29,8 @@ through its tracking page.
 - The courier the tracking link's address names becomes the delivery carrier, with the number
   beside the link. The link carries the recipient's postcode, so it is not kept.
 - An untracked item can show the number the destination's post gives it, kept as the delivery
-  tracking number when it passes its check.
+  tracking number when it passes its check. The suffix of that number names the post's country,
+  kept as the destination country, so the hand-off asks that post even when the reader is there.
 - The page names the service, tracked or untracked.
 
 ## Limitations

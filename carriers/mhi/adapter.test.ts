@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
@@ -103,9 +104,13 @@ describe('MHI HTTP adapter', () => {
     const untracked = text('untracked.html');
     const result = parseMhi(untracked, POSTED);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', service_name: 'Untracked',
-      last_update_local: '2026-02-03T11:20:00', delivery_tracking_number: 'UF000000014SE' });
+      last_update_local: '2026-02-03T11:20:00', delivery_tracking_number: 'UF000000014SE', destination_country: 'SE' });
     expect(result.events).toHaveLength(1);
     expect(result).not.toHaveProperty('delivery_carrier');
+    // The post that gave the number is asked, even by a reader in its own country.
+    const australian = parseMhi(untracked.replace('UF000000014SE', 'RR000000014AU'), POSTED);
+    expect(australian).toMatchObject({ delivery_tracking_number: 'RR000000014AU', destination_country: 'AU' });
+    expect(deliveryHandoff('mhi', POSTED, australian, 'AU')).toEqual({ carrier: 'australia-post', number: 'RR000000014AU', basis: 'destination' });
     // The dashed and the compact forms are one number.
     expect(parseMhi(untracked, 'MHI-999-P000000017')).toMatchObject({ delivery_tracking_number: 'UF000000014SE' });
     // A number that fails its check, or one the page does not offer as the post's, is none.

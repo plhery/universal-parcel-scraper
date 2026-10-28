@@ -68,14 +68,18 @@ function onwardCourier($: CheerioAPI, number: string): Pick<CarrierResult, 'deli
   return { delivery_carrier: partner, ...(reference !== number ? { delivery_tracking_number: reference } : {}) };
 }
 
-/** An untracked item's number at the destination's post, which the page offers in place of a courier. */
-function localPostNumber($: CheerioAPI): Pick<CarrierResult, 'delivery_tracking_number'> {
+/**
+ * An untracked item's number at the destination's post, which the page offers
+ * in place of a courier. The post that gave it serves the country its suffix
+ * names, so that is where the item goes.
+ */
+function localPostNumber($: CheerioAPI): Pick<CarrierResult, 'delivery_tracking_number' | 'destination_country'> {
   const offered = $('.tracking-type-container').children('div').toArray()
     .some((element) => /\blocal poster number\b/i.test(text($, element)));
   if (!offered) return {};
   const numbers = $('.tracking-type-container .bg').toArray().map((element) => text($, element).toUpperCase())
     .filter((value) => isValidS10TrackingNumber(value));
-  return numbers.length === 1 ? { delivery_tracking_number: numbers[0]! } : {};
+  return numbers.length === 1 ? { delivery_tracking_number: numbers[0]!, destination_country: numbers[0]!.slice(-2) } : {};
 }
 
 /**
