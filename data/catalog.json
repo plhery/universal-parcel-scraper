@@ -14319,6 +14319,36 @@
     ],
     "detectionRules": []
   },
+  "express-one-bg": {
+    "displayName": "Express One Bulgaria",
+    "color": "#f58220",
+    "aliases": [
+      "Express One BG",
+      "Експрес Уан"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "express-one-bg",
+      "localClocks": true
+    },
+    "canaryUrl": "https://expressone.bg/en/tracking",
+    "trackingUrlTemplate": "https://expressone.bg/en/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://expressone.bg/en/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "expressone.bg"
+        ],
+        "path": "^/(?:(?:bg|en)/)?tracking/(\\d+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fan-courier": {
     "displayName": "FAN Courier",
     "color": "#0f2345",

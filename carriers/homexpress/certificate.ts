@@ -1,6 +1,7 @@
 /**
  * Sectigo Public Server Authentication CA DV R36, the intermediate that issues
- * HOMEXPRESS's certificate and that its server leaves out of the chain it sends.
+ * HOMEXPRESS's and Express One Bulgaria's certificates and that their servers
+ * leave out of the chains they send.
  * It is signed by Sectigo Public Server Authentication Root R46, which Node
  * trusts, and expires in March 2036.
  */

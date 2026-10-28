@@ -74,6 +74,15 @@ describe('euShipments HTTP adapter', () => {
     expect(odd.events![0]).not.toHaveProperty('stage');
   });
 
+  it('hands an order to Express One Bulgaria by its tracking link', () => {
+    // Express One's courier number is the order's own eight digits.
+    const expressOne = text('delivered.html').replace('> Econt<', '> Express One<').replaceAll(COURIER, ORDER)
+      .replaceAll('https://www.econt.com/services/track-shipment/', 'https://expressone.bg/en/tracking/');
+    const result = parseEushipments(expressOne, ORDER);
+    expect(result).toMatchObject({ delivery_carrier: 'express-one-bg' });
+    expect(result).not.toHaveProperty('delivery_tracking_number');
+  });
+
   it('hands off only to a courier its link names, for the number in the link', () => {
     const swap = (from: string, to: string) => parseEushipments(text('delivered.html').replaceAll(from, to), ORDER);
     // The same number as asked is no second number.

@@ -14321,6 +14321,36 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "express-one-bg": {
+    "displayName": "Express One Bulgaria",
+    "color": "#f58220",
+    "aliases": [
+      "Express One BG",
+      "Експрес Уан"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "express-one-bg",
+      "localClocks": true
+    },
+    "canaryUrl": "https://expressone.bg/en/tracking",
+    "trackingUrlTemplate": "https://expressone.bg/en/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://expressone.bg/en/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "expressone.bg"
+        ],
+        "path": "^/(?:(?:bg|en)/)?tracking/(\\d+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fan-courier": {
     "displayName": "FAN Courier",
     "color": "#0f2345",
@@ -34067,6 +34097,7 @@ export const CARRIER_IDS = [
   "exline-kz",
   "exmate",
   "express-one",
+  "express-one-bg",
   "fan-courier",
   "far-international",
   "fargo-courier",
@@ -34890,6 +34921,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "exline-kz": [],
   "exmate": ["exmate-1"],
   "express-one": [],
+  "express-one-bg": [],
   "fan-courier": ["fan-courier-1"],
   "far-international": ["far-international-1"],
   "fargo-courier": ["fargo-courier-1"],

@@ -210,6 +210,7 @@ import { adapter as exelot } from '../carriers/exelot/adapter.js';
 import { adapter as exlineKz } from '../carriers/exline-kz/adapter.js';
 import { adapter as exmate } from '../carriers/exmate/adapter.js';
 import { adapter as expressOne } from '../carriers/express-one/adapter.js';
+import { adapter as expressOneBg } from '../carriers/express-one-bg/adapter.js';
 import { adapter as fanCourier } from '../carriers/fan-courier/adapter.js';
 import { adapter as farInternational } from '../carriers/far-international/adapter.js';
 import { adapter as fargoCourier } from '../carriers/fargo-courier/adapter.js';
@@ -856,6 +857,7 @@ export const REGISTRY: RegistryDefinition = {
     "exline-kz": exlineKz,
     "exmate": exmate,
     "express-one": expressOne,
+    "express-one-bg": expressOneBg,
     "fan-courier": fanCourier,
     "far-international": farInternational,
     "fargo-courier": fargoCourier,
@@ -1548,6 +1550,7 @@ export const REGISTRY: RegistryDefinition = {
     "exline-kz": "exline-kz",
     "exmate": "exmate",
     "express-one": "express-one",
+    "express-one-bg": "express-one-bg",
     "fan-courier": "fan-courier",
     "far-international": "far-international",
     "fargo-courier": "fargo-courier",

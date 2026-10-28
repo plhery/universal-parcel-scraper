@@ -817,6 +817,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/tracking\.expressone\.hu\/\?plc_number=999999999999000000000000$/,
     marker: /Company ID \(5 digits\)|Cégkód \(5 jegyű\)/,
     shipmentNotFound: { status: 404, marker: /The requested package is currently unavailable in our system|A keresett csomag jelenleg nem elérhető/ } },
+  // The page fills its field in from the address; the visitor still presses Track, which posts the form.
+  { carrier: 'express-one-bg', number: '10000017',
+    route: /^https:\/\/expressone\.bg\/en\/tracking\/10000017$/,
+    marker: /Enter a bill of lading number or multiple numbers, separated by a comma/ },
   // The page prefills the number from its address and asks for the delivery or collection postcode.
   { carrier: 'xdp', number: 'ZDBZZZ000000',
     route: /^https:\/\/xdp\.co\.uk\/track\/ZDBZZZ000000\/?$/,

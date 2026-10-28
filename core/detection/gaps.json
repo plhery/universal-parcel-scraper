@@ -1309,6 +1309,18 @@
     "reason": "Twenty-four digits are shared by bpost, Ciblex and InPost, and the postcode the number ends in does not single out Express One."
   },
   {
+    "carrier": "express-one-bg",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "Express One Bulgaria's bills of lading are bare eight-digit serials, the shape many carriers print, so nothing in the number points to it."
+  },
+  {
+    "carrier": "express-one-bg",
+    "pattern": "^\\d{24}$",
+    "kind": "by_design",
+    "reason": "Express One Bulgaria's package barcodes are twenty-four digits ending in the destination's postcode, as Express One Hungary's, bpost's, Ciblex's and InPost's are, so the shape cannot name it."
+  },
+  {
     "carrier": "fargo-uz",
     "pattern": "^(?:\\d{9}|\\d{14}|TEZ\\d{6})$",
     "kind": "by_design",
