@@ -242,6 +242,15 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
     }
   });
+
+  it('asks DHLink about YHKJ tracking numbers on its line to Britain without naming it from the shape', () => {
+    expect(detectCarrierMatch('YHKJ1000000017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
+    expect(detectCarrierMatch('yhkj 1000 0000 17')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
+    expect(recognitionAskedCarriers('YHKJ1000000017')).toEqual(['dhlink']);
+    for (const number of ['YHKJ100000017', 'YHKJ10000000017', 'YHKX1000000017', 'YHKJ1000000017CN']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
+    }
+  });
 });
 
 describe('wave seven South-East Asian courier rules', () => {

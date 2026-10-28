@@ -118,6 +118,11 @@
       "id": "dhlink-ktdwe",
       "pattern": "^KTDWE\\d{10}$",
       "confidence": "low"
+    },
+    {
+      "id": "dhlink-yhkj",
+      "pattern": "^YHKJ\\d{10}$",
+      "confidence": "low"
     }
   ]
 }

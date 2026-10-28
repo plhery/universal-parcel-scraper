@@ -151,6 +151,21 @@
         ]
       },
       "note": "Made-up number in the shape of KTD's tracking numbers DHLink's lookup finds as the parcel's tracking number, on a US line SwiftX delivers."
+    },
+    {
+      "number": "YHKJ1000000017",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-10-28",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhlink"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked to Britain, which DHLink's tracker answered under that tracking number: YHKJ and ten digits."
     }
   ]
 }

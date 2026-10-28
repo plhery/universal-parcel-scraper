@@ -11821,6 +11821,10 @@
       {
         "pattern": "^KTDWE\\d{10}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^YHKJ\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
