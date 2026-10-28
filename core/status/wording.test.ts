@@ -681,6 +681,9 @@ describe('classifyWording', () => {
       ['notificado - el envío ha sido registrado.', 'registered'],
       ['El paquete fue registrado', 'registered'],
       ['The shipment has been registered', 'registered'],
+      // GEODIS's notice of the sender's data, unlike a parcel transferred on.
+      ['Transferred Data', 'registered'],
+      ['Transferred to next facility', 'in_transit'],
       // Correos: left for admission, pre-registered, admitted.
       ['depositado para admisión. envío depositado por remitente en taquilla citypaq para admisión por correos', 'registered'],
       ['Entregado en CityPaq para admisión', 'registered'],
