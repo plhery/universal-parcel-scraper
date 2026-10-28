@@ -9345,6 +9345,26 @@
     ],
     "detectionRules": []
   },
+  "cheetah-delivery": {
+    "displayName": "Cheetah Delivery",
+    "color": "#f8d448",
+    "aliases": [
+      "Chita Delivery",
+      "צ'יטה שליחויות"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "chilexpress": {
     "displayName": "Chilexpress",
     "color": "#ffb81c",
@@ -17385,6 +17405,29 @@
     ],
     "detectionRules": []
   },
+  "hfd": {
+    "displayName": "HFD",
+    "color": "#284697",
+    "aliases": [
+      "HFD/e-Post",
+      "e-Post Israel",
+      "HFD Israel",
+      "HFD שליחויות ולוגיסטיקה",
+      "אי פוסט"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hi-trans": {
     "displayName": "Hi-Trans Express",
     "color": "#c82027",
@@ -24506,6 +24549,37 @@
         "confidence": "low"
       }
     ]
+  },
+  "parcel-one": {
+    "displayName": "PARCEL.ONE",
+    "color": "#344b6a",
+    "aliases": [
+      "PARCEL.ONE GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://parcel.one/en/tracking/",
+    "trackingUrlTemplate": "https://parcel.one/tracking?trackno={trackingNumber}",
+    "trackingSearchUrl": "https://parcel.one/en/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "parcel.one"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?tracking/?$",
+        "params": [
+          "trackno"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "parcelpoint": {
     "displayName": "ParcelPoint",
@@ -32741,6 +32815,52 @@
       }
     ],
     "detectionRules": []
+  },
+  "veho": {
+    "displayName": "Veho",
+    "color": "#e84931",
+    "aliases": [
+      "Veho Tech",
+      "Veho Technologies"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.shipveho.com/",
+    "trackingUrlTemplate": "https://track.shipveho.com/#/trackingid/{trackingNumber}",
+    "trackingSearchUrl": "https://track.shipveho.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.shipveho.com"
+        ],
+        "params": [
+          "trackingId"
+        ]
+      },
+      {
+        "domains": [
+          "track.shipveho.com"
+        ],
+        "fragment": "^/(?:trackingid|barcode)/([^/?#]+)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^VH[A-Z0-9]{12}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^VEHO[A-Z]{3}\\d{9}$",
+        "confidence": "low"
+      }
+    ]
   },
   "veloces": {
     "displayName": "Veloces",

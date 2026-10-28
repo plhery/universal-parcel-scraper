@@ -9347,6 +9347,26 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "cheetah-delivery": {
+    "displayName": "Cheetah Delivery",
+    "color": "#f8d448",
+    "aliases": [
+      "Chita Delivery",
+      "צ'יטה שליחויות"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "chilexpress": {
     "displayName": "Chilexpress",
     "color": "#ffb81c",
@@ -17387,6 +17407,29 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "hfd": {
+    "displayName": "HFD",
+    "color": "#284697",
+    "aliases": [
+      "HFD/e-Post",
+      "e-Post Israel",
+      "HFD Israel",
+      "HFD שליחויות ולוגיסטיקה",
+      "אי פוסט"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hi-trans": {
     "displayName": "Hi-Trans Express",
     "color": "#c82027",
@@ -24508,6 +24551,37 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "parcel-one": {
+    "displayName": "PARCEL.ONE",
+    "color": "#344b6a",
+    "aliases": [
+      "PARCEL.ONE GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://parcel.one/en/tracking/",
+    "trackingUrlTemplate": "https://parcel.one/tracking?trackno={trackingNumber}",
+    "trackingSearchUrl": "https://parcel.one/en/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "parcel.one"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?tracking/?$",
+        "params": [
+          "trackno"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "parcelpoint": {
     "displayName": "ParcelPoint",
@@ -32744,6 +32818,52 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "veho": {
+    "displayName": "Veho",
+    "color": "#e84931",
+    "aliases": [
+      "Veho Tech",
+      "Veho Technologies"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.shipveho.com/",
+    "trackingUrlTemplate": "https://track.shipveho.com/#/trackingid/{trackingNumber}",
+    "trackingSearchUrl": "https://track.shipveho.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.shipveho.com"
+        ],
+        "params": [
+          "trackingId"
+        ]
+      },
+      {
+        "domains": [
+          "track.shipveho.com"
+        ],
+        "fragment": "^/(?:trackingid|barcode)/([^/?#]+)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^VH[A-Z0-9]{12}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^VEHO[A-Z]{3}\\d{9}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "veloces": {
     "displayName": "Veloces",
     "color": "#fd026f",
@@ -34554,6 +34674,7 @@ export const CARRIER_IDS = [
   "ceska-posta",
   "ceva-logistics",
   "chazki",
+  "cheetah-delivery",
   "chilexpress",
   "chit-chats",
   "chronodiali",
@@ -34753,6 +34874,7 @@ export const CARRIER_IDS = [
   "hepsijet",
   "hercules-freight",
   "hermes-at",
+  "hfd",
   "hi-trans",
   "hispapost",
   "homexpress",
@@ -34937,6 +35059,7 @@ export const CARRIER_IDS = [
   "pannon-xp",
   "paperfly",
   "paquetexpress",
+  "parcel-one",
   "parcelpoint",
   "pargo",
   "passport",
@@ -35142,6 +35265,7 @@ export const CARRIER_IDS = [
   "uzbekistan-post",
   "valmo",
   "vasp-expresso",
+  "veho",
   "veloces",
   "venipak",
   "vestovoy",
@@ -35390,6 +35514,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ceska-posta": ["ceska-posta-1","ceska-posta-s10"],
   "ceva-logistics": [],
   "chazki": [],
+  "cheetah-delivery": [],
   "chilexpress": [],
   "chit-chats": ["chit-chats-1"],
   "chronodiali": ["chronodiali-1"],
@@ -35589,6 +35714,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hepsijet": [],
   "hercules-freight": [],
   "hermes-at": [],
+  "hfd": [],
   "hi-trans": [],
   "hispapost": [],
   "homexpress": [],
@@ -35773,6 +35899,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pannon-xp": ["pannon-xp-1"],
   "paperfly": ["paperfly-1","paperfly-2","paperfly-3"],
   "paquetexpress": ["paquetexpress-1"],
+  "parcel-one": [],
   "parcelpoint": [],
   "pargo": ["pargo-1"],
   "passport": ["passport-1"],
@@ -35978,6 +36105,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "uzbekistan-post": ["uzbekistan-post-s10"],
   "valmo": ["valmo-1"],
   "vasp-expresso": [],
+  "veho": ["veho-1","veho-2"],
   "veloces": [],
   "venipak": ["venipak-1"],
   "vestovoy": [],

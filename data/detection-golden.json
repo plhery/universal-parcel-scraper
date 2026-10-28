@@ -37776,6 +37776,22 @@
     ]
   },
   {
+    "input": "3981228230182",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post"
+    ],
+    "asked": [
+      "la-poste",
+      "delhivery"
+    ]
+  },
+  {
     "input": "399118350012",
     "carrier": "unknown",
     "confidence": "low",
@@ -94683,6 +94699,14 @@
     ]
   },
   {
+    "input": "VEHOATL000021976",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "veho"
+    ]
+  },
+  {
     "input": "VFU00184405015",
     "carrier": "unknown",
     "confidence": "none",
@@ -94710,6 +94734,14 @@
     "confidence": "high",
     "candidates": [
       "vinted-go"
+    ]
+  },
+  {
+    "input": "VH100000000017",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "veho"
     ]
   },
   {

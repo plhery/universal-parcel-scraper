@@ -442,3 +442,23 @@ describe('Tusk Logistics labels', () => {
     });
   });
 });
+
+describe('Veho tracking ids and label barcodes', () => {
+  it('suggests Veho for VH tracking ids and VEHO facility barcodes without naming it', () => {
+    for (const number of ['VH100000000017', 'VHA1B2C3D4E5F6', 'VEHOABC100000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['veho'] });
+    }
+    for (const number of ['VH10000000017', 'VH1000000000017', 'VEHOAB1100000017', 'VEHOABC10000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('veho');
+    }
+  });
+
+  it('reads Veho tracking links from the query and from the page route', () => {
+    for (const link of [
+      'https://track.shipveho.com/#/trackingid/VH100000000017',
+      'https://track.shipveho.com/?trackingId=VH100000000017',
+    ]) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: 'VH100000000017', carrier: 'veho', source: 'link' });
+    }
+  });
+});
