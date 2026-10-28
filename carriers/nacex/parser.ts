@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay } from '../../core/time/index.js';
@@ -18,6 +18,34 @@ function headingDay(text: string): string | null {
   const match = /^(\d{1,2}) (\p{L}{3,10}) (\d{4})$/u.exec(text);
   const month = match ? MONTHS.get(match[2]!.toLocaleLowerCase('es-ES')) : undefined;
   return match && month ? calendarDay(Number(match[3]), month, Number(match[1])) : null;
+}
+
+/**
+ * The block above the history: "FECHA DE ENTREGA" with "Hora entrega" once delivered,
+ * "FECHA ESTIMADA DE ENTREGA" with "Hora máxima", the latest time, before. Its date has no year.
+ */
+const SUMMARY_FORMS = [
+  { delivered: true, heading: 'FECHA DE ENTREGA', parts: '.fecha_entrega', label: 'Hora entrega' },
+  { delivered: false, heading: 'FECHA ESTIMADA DE ENTREGA', parts: '.fecha_objetivo', label: 'Hora máxima' },
+];
+
+function summaryDate($: CheerioAPI): { delivered: boolean; monthDay: string; month: number; day: number; clock: string } | null {
+  const block = $('.sg_fondo_estado');
+  const heading = clean(block.contents().filter((_, node) => node.nodeType === 3).map((_, node) => $(node).text()).get().join(' '), 80);
+  const form = SUMMARY_FORMS.find(candidate => candidate.heading === heading);
+  const parts = form ? block.children(form.parts) : undefined;
+  if (block.length !== 1 || !form || parts?.length !== 2 || clean(parts.eq(1).find('span').text(), 40) !== form.label) return null;
+  const date = /^(\d{2})\/(\d{2})$/.exec(clean(parts.eq(0).find('font').text(), 20));
+  const clock = /^(?:[01]\d|2[0-3]):[0-5]\d$/.exec(clean(parts.eq(1).find('font').text(), 20))?.[0];
+  return date && clock ? { delivered: form.delivered, monthDay: `${date[2]}-${date[1]}`, month: Number(date[2]), day: Number(date[1]), clock } : null;
+}
+
+/** The day of `month` and `day` nearest `near`, a day of the history. */
+function nearestDay(near: string, month: number, day: number): string | null {
+  const year = Number(near.slice(0, 4));
+  const distance = (candidate: string) => Math.abs(Date.parse(candidate) - Date.parse(near));
+  return [year - 1, year, year + 1].map(candidate => calendarDay(candidate, month, day)).filter(candidate => candidate !== null)
+    .sort((a, b) => distance(a) - distance(b))[0] ?? null;
 }
 
 const AGENCY_CODE = /\s*\(\d{4}(?:-\d{1,3})?\)$/;
@@ -148,7 +176,18 @@ export function parseNacex(html: string, raw: string): CarrierResult {
   if (mapped?.stage === 'delivered' && latestPhysical?.mapped?.stage !== 'delivered') {
     throw new SchemaError('NACEX', 'NACEX current status contradicts its latest shipment scan');
   }
+  // The block above the history times the delivery on the newest scan's day, on a wall clock
+  // in no stated zone. Before it, its estimate counts from the newest scan's day on, unless
+  // an incident holds the parcel.
+  const block = summaryDate($);
+  const newestDay = /^\d{4}-\d{2}-\d{2}$/.test(events[0]!.local_time ?? '') ? events[0]!.local_time! : null;
+  if (block?.delivered && newestDay?.slice(5) === block.monthDay && scans[0]!.mapped?.stage === 'delivered' && !scans[0]!.notice) {
+    events[0]!.local_time = `${newestDay}T${block.clock}:00`;
+  }
+  const estimate = block && !block.delivered && newestDay && current?.stage !== 'exception'
+    ? nearestDay(newestDay, block.month, block.day) : null;
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: mapped?.status === 'delivered' ? 'Delivered' : summaryLabel,
-    last_update: null, ...(events[0]!.local_time ? { last_update_local: events[0]!.local_time } : {}), events: events.slice(0, 100) };
+    last_update: null, ...(events[0]!.local_time ? { last_update_local: events[0]!.local_time } : {}),
+    ...(estimate && estimate >= newestDay! ? { expected_delivery: estimate } : {}), events: events.slice(0, 100) };
 }

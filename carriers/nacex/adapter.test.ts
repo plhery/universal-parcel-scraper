@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { NacexTracker, adapter } from './adapter.js';
 import { nacexPlace } from './identity.js';
 import { normalizeNacexNumber, parseNacex, validateNacexBootstrap } from './parser.js';
@@ -58,6 +59,44 @@ describe('NACEX direct tracking', () => {
       expect(event).toMatchObject({ provider_time_text: text });
       expect(event?.local_time).toBeUndefined();
     }
+  });
+
+  it('times the delivery and keeps the estimate from the block above the history', () => {
+    const block = (heading: string, date: string, label: string, clock: string, part = 'fecha_entrega') => `<div class="sg_fondo_estado">${heading}<br>`
+      + `<div class="text_capitalize ${part}"><div><span>Friday</span><br><font size="+1"> ${date}</font></div></div>`
+      + `<div class="div_hr_vertical"><hr class="hr_vertical"></div><div class="${part}"><div><span>${label}</span><br><font size="+1"> ${clock}</font></div></div></div>`;
+    const delivered = (markup: string) => parseNacex(edit($ => { $('#tabla_estado').after(markup); }), NUMBER);
+    const result = normalizeCarrierResult(delivered(block('FECHA DE ENTREGA', '16/01', 'Hora entrega', '17:02')));
+    expect(result).toMatchObject({ status: 'delivered', last_update_local: '2026-01-16T17:02:00' });
+    expect(result.events?.[0]).toMatchObject({ stage: 'delivered', local_time: '2026-01-16T17:02:00' });
+    expect(result.events?.slice(1).every(event => /^\d{4}-\d{2}-\d{2}$/.test(String(event.local_time)))).toBe(true);
+    expect(result.expected_delivery ?? undefined).toBeUndefined();
+    expect(result.delivered_at).toBeUndefined();
+    // No place names a zone: the delivery takes the home clock of NACEX's first country.
+    expect(dateLocalClocks('nacex', result).events?.[0]).toMatchObject({ local_time: '2026-01-16T17:02:00', time_zone: 'Europe/Madrid', time_zone_basis: 'carrier' });
+    // The time binds only to a delivery on the block's day, in its delivered form.
+    for (const markup of [block('FECHA DE ENTREGA', '15/01', 'Hora entrega', '17:02'), block('FECHA DE ENTREGA', '16/01', 'Hora máxima', '17:02'),
+      block('FECHA DE ENTREGA', '16/01', 'Hora entrega', '25:00'), block('FECHA DE ENTREGA', '16-01', 'Hora entrega', '17:02'),
+      block('FECHA', '16/01', 'Hora entrega', '17:02'), block('FECHA DE ENTREGA', '16/01', 'Hora entrega', '17:02').repeat(2)]) {
+      expect(delivered(markup).events?.[0]!.local_time).toBe('2026-01-16');
+    }
+    const progress = (date: string, newest = '15 January 2026', status = 'En reparto', part = 'fecha_objetivo') => parseNacex(edit($ => {
+      $('#tabla_estado').after(block('FECHA ESTIMADA DE ENTREGA', date, 'Hora máxima', '19:00', part));
+      $('#tabla_estado tr').eq(1).children('td').last().text(status);
+      $('#table_historico').html(`<tr><td class="sg_hist_fecha" colspan="2">${newest}</td></tr>`
+        + `<tr><td class="sg_hist_desc"><b>${status}</b><br>9901 - TEST LOCALITY</td></tr>`);
+    }), NUMBER);
+    expect(progress('15/01')).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-01-15', last_update_local: '2026-01-15' });
+    expect(progress('15/01').events?.[0]!.local_time).toBe('2026-01-15');
+    expect(progress('19/01').expected_delivery).toBe('2026-01-19');
+    expect(progress('02/01', '31 December 2026').expected_delivery).toBe('2027-01-02');
+    // An estimate the history has passed is stale.
+    expect(progress('14/01').expected_delivery).toBeUndefined();
+    expect(progress('31/02').expected_delivery).toBeUndefined();
+    expect(progress('15/01', undefined, undefined, 'fecha_entrega').expected_delivery).toBeUndefined();
+    // An incident closed without success keeps the estimate it missed, which no longer holds.
+    expect(progress('15/01', undefined, 'Solucionado sin OK')).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(progress('15/01', undefined, 'Solucionado sin OK').expected_delivery).toBeUndefined();
   });
 
   it('validates composite input and both summary and expanded detail identity', () => {

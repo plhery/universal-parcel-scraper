@@ -13,12 +13,20 @@ external link shows a reduced view; it is used for public links, not retrieval.
 ## Notes
 
 Public scans sit under calendar headings without a clock or zone. Each scan keeps
-its heading's day as a date-only `local_time`, with no invented clock, midnight or
-delivery instant; a heading that is not a date stays provider text. The headings name
+its heading's day as a date-only `local_time`, with no invented clock or midnight; a
+heading that is not a date stays provider text. The headings name
 the month in the request's language, English without one. Scans retain
 their source order, including repeated descriptions on the same day. Unknown
 current wording cannot inherit an older delivery. A delivered summary must agree
 with the newest mapped physical scan; contradictory responses are rejected.
+
+The block above the history dates the delivery without a year: "FECHA DE ENTREGA" and
+"Hora entrega". The delivery scan takes that time as a wall clock when the block's day
+is its own; the zone is deduced from the places of the scans around it. Before delivery
+the block shows "FECHA ESTIMADA DE ENTREGA" with a latest time, "Hora máxima". Its day,
+in the year nearest the history, is `expected_delivery` from the newest scan's day on,
+except while an incident holds the parcel. The latest time has no stated zone and is
+not kept.
 
 A shipment booked online is accepted at the agency's web channel (`WEB` as
 its place) and notified the same day, before or after that acceptance; NACEX

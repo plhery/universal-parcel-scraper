@@ -39,13 +39,15 @@
       "status",
       "history",
       "location",
+      "eta",
       "recipient",
       "proof_of_delivery"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "eta"
     ],
     "discarded": [
       "recipient",
