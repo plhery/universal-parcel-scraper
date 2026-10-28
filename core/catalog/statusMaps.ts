@@ -390,6 +390,7 @@ import { statusMap as mayiyinfu } from '../../carriers/mayiyinfu/status.js';
 import { statusMap as mdsCollivery } from '../../carriers/mds-collivery/status.js';
 import { statusMap as meest } from '../../carriers/meest/status.js';
 import { statusMap as meihooPegasus } from '../../carriers/meihoo-pegasus/status.js';
+import { statusMap as mesoGlobal } from '../../carriers/meso-global/status.js';
 import { statusMap as mhi } from '../../carriers/mhi/status.js';
 import { statusMap as messengerCz } from '../../carriers/messenger-cz/status.js';
 import { statusMap as metropolitanWarehouse } from '../../carriers/metropolitan-warehouse/status.js';
@@ -712,7 +713,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'line-clear': lineClear, lingdong, linhan, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
   'lotte-global': lotteGlobal, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,
   'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, 'maritime-ontario': maritimeOntario, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, mayiyinfu,
-  'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,
+  'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'meso-global': mesoGlobal, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,
   'midland-transport': midlandTransport, 'mng-kargo': mngKargo, 'mondial-relay': mondialRelay, 'mongol-infinity-post': mongolInfinityPost, 'morning-global': morningGlobal, 'mrl-global': mrlGlobal, mrw, mtscn, mylerz, nacex, naqel, nationex,
   'next-level-delivery': nextLevelDelivery, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,
   northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna,

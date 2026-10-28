@@ -381,6 +381,7 @@ import { adapter as mayiyinfu } from '../carriers/mayiyinfu/adapter.js';
 import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
 import { adapter as meest } from '../carriers/meest/adapter.js';
 import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js';
+import { adapter as mesoGlobal } from '../carriers/meso-global/adapter.js';
 import { adapter as messengerCz } from '../carriers/messenger-cz/adapter.js';
 import { adapter as metropolitanWarehouse } from '../carriers/metropolitan-warehouse/adapter.js';
 import { adapter as mhi } from '../carriers/mhi/adapter.js';
@@ -1032,6 +1033,7 @@ export const REGISTRY: RegistryDefinition = {
     "mds-collivery": mdsCollivery,
     "meest": meest,
     "meihoo-pegasus": meihooPegasus,
+    "meso-global": mesoGlobal,
     "messenger-cz": messengerCz,
     "metropolitan-warehouse": metropolitanWarehouse,
     "mhi": mhi,
@@ -1774,6 +1776,7 @@ export const REGISTRY: RegistryDefinition = {
     "mds-collivery": "mds-collivery",
     "meest": "meest",
     "meihoo-pegasus": "meihoo-pegasus",
+    "meso-global": "meso-global",
     "messenger-cz": "messenger-cz",
     "method": "universal",
     "metropolitan-warehouse": "metropolitan-warehouse",

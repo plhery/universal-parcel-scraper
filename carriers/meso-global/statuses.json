@@ -1,0 +1,12 @@
+{
+  "carrier": "meso-global",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "Shipment information received", "stage": "registered", "confirmedBy": "source", "note": "The Hualei platform's own row on the order's creation time: the shipment data has arrived. As a universal provider relays it."},
+    {"wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "source", "note": "The first scan in Meso-global's hands, at its warehouse. As a universal provider relays it."},
+    {"wording": "出仓", "language": "zh", "english": "Left the warehouse", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
+    {"wording": "预计…飞", "language": "zh", "english": "Flight booked", "stage": "in_transit", "confirmedBy": "source", "note": "The row names the day the flight is expected to leave, as month-day; the key replaces it with an ellipsis and the English leaves it out, since it is still to come. As a universal provider relays it."},
+    {"wording": "已飞未落地", "language": "zh", "english": "Flight departed, not yet landed", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
+    {"wording": "一程已落地 二程预计…飞", "language": "zh", "english": "First flight landed, connecting flight booked", "stage": "in_transit", "confirmedBy": "source", "note": "The first leg has landed; the row names the day the second is expected to leave, which the key replaces with an ellipsis. As a universal provider relays it."},
+    {"wording": "二程已飞未落地", "language": "zh", "english": "Connecting flight departed, not yet landed", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."}
+  ]
+}

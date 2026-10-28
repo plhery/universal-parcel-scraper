@@ -21998,6 +21998,37 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "meso-global": {
+    "displayName": "Meso-global",
+    "color": "#3b73e3",
+    "aliases": [
+      "Meso Global",
+      "中际跨境",
+      "深圳市中际跨境供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "meso-global"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "mesoglobal.cc"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "messenger-cz": {
     "displayName": "Messenger",
     "color": "#fedf05",
@@ -34557,6 +34588,7 @@ export const CARRIER_IDS = [
   "mds-collivery",
   "meest",
   "meihoo-pegasus",
+  "meso-global",
   "messenger-cz",
   "method",
   "metropolitan-warehouse",
@@ -35385,6 +35417,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mds-collivery": [],
   "meest": ["meest-1"],
   "meihoo-pegasus": ["meihoo-pegasus-1"],
+  "meso-global": [],
   "messenger-cz": [],
   "method": [],
   "metropolitan-warehouse": ["metropolitan-warehouse-1"],

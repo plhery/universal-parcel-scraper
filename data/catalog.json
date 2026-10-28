@@ -21996,6 +21996,37 @@
       }
     ]
   },
+  "meso-global": {
+    "displayName": "Meso-global",
+    "color": "#3b73e3",
+    "aliases": [
+      "Meso Global",
+      "中际跨境",
+      "深圳市中际跨境供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "meso-global"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "mesoglobal.cc"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "messenger-cz": {
     "displayName": "Messenger",
     "color": "#fedf05",
