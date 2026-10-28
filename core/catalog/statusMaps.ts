@@ -434,6 +434,7 @@ import { statusMap as packMan } from '../../carriers/pack-man/status.js';
 import { statusMap as packeta } from '../../carriers/packeta/status.js';
 import { statusMap as packlink } from '../../carriers/packlink/status.js';
 import { statusMap as packs } from '../../carriers/packs/status.js';
+import { statusMap as pactic } from '../../carriers/pactic/status.js';
 import { statusMap as pakistanPost } from '../../carriers/pakistan-post/status.js';
 import { statusMap as palletways } from '../../carriers/palletways/status.js';
 import { statusMap as panduLogistics } from '../../carriers/pandu-logistics/status.js';
@@ -711,7 +712,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'next-level-delivery': nextLevelDelivery, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,
   northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna,
   'old-dominion': oldDominion, 'olva-courier': olvaCourier, omgo, omniva,
-  'one-world-express': oneWorldExpress, ontrac, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, paack, 'pack-man': packMan, packeta, packlink, packs,
+  'one-world-express': oneWorldExpress, ontrac, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelpoint, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress,
   'pdq-chile': pdqChile, pecom, pengyou, 'pfc-express': pfcExpress, phlpost, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,

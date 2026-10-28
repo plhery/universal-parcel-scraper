@@ -1952,6 +1952,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'quick-rabbit', number: 'PKG00620251019000305561',
     route: /^https:\/\/web\.quickrabbit\.es\/es\/tracking\?ref=PKG00620251019000305561$/,
     marker: /Devuelto al Remitente|Returned to Sender/ },
+  { carrier: 'pactic', number: 'C0001260302091512000017',
+    route: /^https:\/\/dashboard\.pactic\.com\/tracking\?waybill=C0001260302091512000017$/,
+    marker: /No such tracking ID can be found in our system|Eine solche Sendungsnummer ist in unserem System nicht vorhanden/ },
 ];
 
 /**

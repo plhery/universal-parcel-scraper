@@ -23811,6 +23811,57 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "pactic": {
+    "displayName": "Pactic",
+    "color": "#390084",
+    "aliases": [
+      "Allpacka"
+    ],
+    "countries": [
+      "HU",
+      "RO",
+      "PL",
+      "AT",
+      "BG",
+      "CZ",
+      "DE",
+      "GR",
+      "HR",
+      "IT",
+      "SI",
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pactic",
+      "recognitionRank": 71,
+      "localClocks": true
+    },
+    "canaryUrl": "https://dashboard.pactic.com/tracking",
+    "trackingUrlTemplate": "https://dashboard.pactic.com/tracking?waybill={trackingNumber}",
+    "trackingSearchUrl": "https://dashboard.pactic.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "dashboard.pactic.com"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?(?:tracking|csomagkovetes)/?$",
+        "params": [
+          "waybill",
+          "waybillNumber"
+        ],
+        "ownNumbersOnly": true
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^C\\d{6}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])(?:[01]\\d|2[0-3])[0-5]\\d[0-5]\\d\\d{6}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "pakistan-post": {
     "displayName": "Pakistan Post",
     "color": "#ed1b24",
@@ -34260,6 +34311,7 @@ export const CARRIER_IDS = [
   "packli-punkt",
   "packlink",
   "packs",
+  "pactic",
   "pakistan-post",
   "palletways",
   "pandu-logistics",
@@ -35082,6 +35134,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "packli-punkt": [],
   "packlink": ["packlink-1"],
   "packs": [],
+  "pactic": ["pactic-1"],
   "pakistan-post": ["pakistan-post-1","pakistan-post-s10"],
   "palletways": [],
   "pandu-logistics": [],

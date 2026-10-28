@@ -313,6 +313,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "pack-man": 862,
   "packeta": 665,
   "packlink": 981,
+  "pactic": 71,
   "pakistan-post": 928,
   "pandu-logistics": 683,
   "paperfly": 742,
