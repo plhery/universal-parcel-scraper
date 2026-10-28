@@ -26239,6 +26239,48 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "quick-rabbit": {
+    "displayName": "Quick Rabbit",
+    "color": "#f6851f",
+    "aliases": [
+      "Quick Rabbit Logistic"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "quick-rabbit",
+      "recognitionRank": 68
+    },
+    "canaryUrl": "https://web.quickrabbit.es/es/tracking",
+    "trackingUrlTemplate": "https://web.quickrabbit.es/es/tracking?ref={trackingNumber}",
+    "trackingSearchUrl": "https://web.quickrabbit.es/es/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "web.quickrabbit.es",
+          "quickrabbit.es"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?tracking/?$",
+        "params": [
+          "ref"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PKG\\d{3}20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{9}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^PKG\\d{5}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])ES\\d{13}[A-Z]$",
+        "confidence": "low"
+      }
+    ]
+  },
   "quicksilver-sa": {
     "displayName": "Quicksilver",
     "color": "#805fa4",
@@ -34097,6 +34139,7 @@ export const CARRIER_IDS = [
   "pullman-cargo",
   "pushpak-courier",
   "quantium-solutions",
+  "quick-rabbit",
   "quicksilver-sa",
   "quiqup",
   "qwintry",
@@ -34917,6 +34960,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pullman-cargo": [],
   "pushpak-courier": [],
   "quantium-solutions": [],
+  "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2"],
   "quicksilver-sa": ["quicksilver-sa-1"],
   "quiqup": [],
   "qwintry": ["qwintry-1"],

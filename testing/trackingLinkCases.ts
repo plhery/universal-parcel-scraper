@@ -1946,6 +1946,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'boxtal', number: '2301136016MONRW3S7FR',
     route: /^https:\/\/shipping\.boxtal\.com\/fr\/fr\/suivi\/suivre-mon-envoi\?reference=2301136016MONRW3S7FR$/,
     marker: /Livré|En cours d'acheminement|Delivered|In transit/ },
+  { carrier: 'quick-rabbit', number: 'PKG00620251019000305561',
+    route: /^https:\/\/web\.quickrabbit\.es\/es\/tracking\?ref=PKG00620251019000305561$/,
+    marker: /Devuelto al Remitente|Returned to Sender/ },
 ];
 
 /**

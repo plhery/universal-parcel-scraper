@@ -484,6 +484,7 @@ import { statusMap as ptt } from '../../carriers/ptt/status.js';
 import { statusMap as pullmanCargo } from '../../carriers/pullman-cargo/status.js';
 import { statusMap as purolator } from '../../carriers/purolator/status.js';
 import { statusMap as quantiumSolutions } from '../../carriers/quantium-solutions/status.js';
+import { statusMap as quickRabbit } from '../../carriers/quick-rabbit/status.js';
 import { statusMap as quicksilverSa } from '../../carriers/quicksilver-sa/status.js';
 import { statusMap as quiqup } from '../../carriers/quiqup/status.js';
 import { statusMap as qwintry } from '../../carriers/qwintry/status.js';
@@ -719,7 +720,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,
   postnord, posturinn, ppl, 'precision-deliveries': precisionDeliveries,
   'pro-carrier': proCarrier, 'prompt-xpress': promptXpress, proships, 'pts-worldwide-express': ptsWorldwideExpress, ptt, 'pullman-cargo': pullmanCargo, purolator, 'quantium-solutions': quantiumSolutions,
-  'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, redx, 'relais-colis': relaisColis, relaytech,
+  'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, redx, 'relais-colis': relaisColis, relaytech,
   rivigo, 'rl-carriers': rlCarriers, roadrunner, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, sagawa, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
   'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, shouwu,

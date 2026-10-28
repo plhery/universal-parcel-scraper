@@ -475,6 +475,7 @@ import { adapter as ptt } from '../carriers/ptt/adapter.js';
 import { adapter as pullmanCargo } from '../carriers/pullman-cargo/adapter.js';
 import { adapter as purolator } from '../carriers/purolator/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
+import { adapter as quickRabbit } from '../carriers/quick-rabbit/adapter.js';
 import { adapter as quicksilverSa } from '../carriers/quicksilver-sa/adapter.js';
 import { adapter as quiqup } from '../carriers/quiqup/adapter.js';
 import { adapter as qwintry } from '../carriers/qwintry/adapter.js';
@@ -1118,6 +1119,7 @@ export const REGISTRY: RegistryDefinition = {
     "pullman-cargo": pullmanCargo,
     "purolator": purolator,
     "quantium-solutions": quantiumSolutions,
+    "quick-rabbit": quickRabbit,
     "quicksilver-sa": quicksilverSa,
     "quiqup": quiqup,
     "qwintry": qwintry,
@@ -1886,6 +1888,7 @@ export const REGISTRY: RegistryDefinition = {
     "purolator": "purolator",
     "pushpak-courier": "universal",
     "quantium-solutions": "quantium-solutions",
+    "quick-rabbit": "quick-rabbit",
     "quickpac": "planzer",
     "quicksilver-sa": "quicksilver-sa",
     "quiqup": "quiqup",
