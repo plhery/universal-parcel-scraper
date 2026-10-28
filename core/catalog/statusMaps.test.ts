@@ -1640,6 +1640,9 @@ describe("universal providers' answers", () => {
       // KTD's steps as ParcelsApp relays them.
       ["Package received and scanned at the carrier's local warehouse.", 'accepted'], ["Package leaves the carrier's local warehouse", 'in_transit'],
       ['Your item has left the East China warehouse', 'in_transit'], ['Export declaration completed', 'in_transit'], ['Take off', 'in_transit'],
+      // Correos Express's way to the destination town, as Ship24 words it.
+      ['En route to the destination location, Your shipment is now out for delivery to the destination facilities on one of our vehicles. You will receive it on the scheduled delivery date.', 'in_transit'],
+      ['En route to the destination location', 'in_transit'],
       ['Manifested - Out for Pickup', 'registered'], ['Manifested', 'registered'],
       ['Awaiting your Vinted parcel', 'registered'], ['Expecting Your Parcel', 'registered'],
       ['Parcel received by Relay', 'accepted'], ['Received Your Parcel', 'accepted'], ['Collection Complete', 'delivered'],
