@@ -73,22 +73,31 @@ describe('Quick Rabbit HTTP adapter', () => {
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'quick-rabbit', step: 'direct', outcome: 'ok' }));
   });
 
-  it('reads the timeline newest first, with the page’s labels and instants, without the courier’s position', () => {
+  it('reads the timeline newest first, with the page’s labels and Madrid’s clock, without the courier’s position', () => {
     const result = parseQuickRabbit(delivered(), CODE);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'Delivered to Recipient', last_update: '2026-03-05T11:02:08Z', delivered_at: '2026-03-05T11:02:08Z',
+      last_status_text: 'Delivered to Recipient', last_update: '2026-03-05T11:02:08+01:00', delivered_at: '2026-03-05T11:02:08+01:00',
       expected_delivery: null });
     expect(result.events!.map((event) => [event.time, event.provider_code, event.description, event.stage])).toEqual([
-      ['2026-03-05T11:02:08Z', 'DELIVERED_RECIPIENT', 'Delivered to Recipient', 'delivered'],
-      ['2026-03-05T07:36:31Z', 'RECEIVED_DRIVER', 'Driver Has Package', 'out_for_delivery'],
-      ['2026-03-04T19:24:32Z', 'READY_FOR_ROUTE', 'Ready for Route Assignment', 'in_transit'],
-      ['2026-03-04T16:46:19Z', 'SORTING_ENTRY', 'Entered Sorting Center', 'in_transit'],
-      ['2026-03-01T05:50:39Z', 'DOCUMENTED', 'Documented', 'registered'],
+      ['2026-03-05T11:02:08+01:00', 'DELIVERED_RECIPIENT', 'Delivered to Recipient', 'delivered'],
+      ['2026-03-05T07:36:31+01:00', 'RECEIVED_DRIVER', 'Driver Has Package', 'out_for_delivery'],
+      ['2026-03-04T19:24:32+01:00', 'READY_FOR_ROUTE', 'Ready for Route Assignment', 'in_transit'],
+      ['2026-03-04T16:46:19+01:00', 'SORTING_ENTRY', 'Entered Sorting Center', 'in_transit'],
+      ['2026-03-01T05:50:39+01:00', 'DOCUMENTED', 'Documented', 'registered'],
     ]);
     const serialized = JSON.stringify(result);
     // The estimate stays even after delivery or a return, so it is not read; nor are the city, the reference or the position.
     for (const value of ['2026-03-09', 'Synthetic City', REFERENCE, '40.0000001', '-3.0000001', 'latitude']) expect(serialized, value).not.toContain(value);
     expect(result.canonical_tracking_number).toBeUndefined();
+  });
+
+  it('reads the digits the page shows as Madrid’s wall clock, in summer and after the change', () => {
+    // The page shows each status's digits in UTC: its "Z" labels the wall clock it shows.
+    const reply = delivered();
+    reply.timeline.at(-1)!.date = '2026-10-25T23:07:00.000Z';
+    reply.timeline.at(-2)!.date = '2026-07-01T10:00:00.000Z';
+    expect(parseQuickRabbit(reply, CODE).events!.slice(0, 2).map((event) => event.time))
+      .toEqual(['2026-10-25T23:07:00+01:00', '2026-07-01T10:00:00+02:00']);
   });
 
   it('finds the parcel by the shipper’s reference too, and names its tracking code', () => {

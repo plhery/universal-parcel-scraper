@@ -21,10 +21,12 @@ points. Tracked through the lookup its tracking page makes.
 
 ## Notes
 
-- Each status is an enumeration name, a category and an instant. The page shows a label for
-  each name from its translations; the adapter keeps the English label, with the name as the
-  provider code, and the status map files the names under stages. A name the page does not
-  label yet is staged by its category and worded from its name.
+- Each status is an enumeration name, a category and a time labelled UTC. The page shows that
+  time's digits as they come, read in UTC, so they are the wall clock the carrier shows; the
+  adapter reads them on Madrid's clock.
+- The page labels each status name from its translations. The adapter keeps the English label,
+  with the name as the provider code, and the status map files the names under stages. A name
+  the page does not label yet is staged by its category and worded from its name.
 - Notes on the parcel, such as customer service contacts, address or date changes, repairs,
   compensations and operational incidents, move nothing, so they give no stage. The same goes
   for a reactivation, which only reopens the record, and for a pick-up whose label does not say

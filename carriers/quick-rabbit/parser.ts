@@ -2,6 +2,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { mislabeledLocalTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { quickRabbitStage, quickRabbitWording } from './status.js';
 
@@ -14,6 +15,9 @@ const CODE = /^[A-Z0-9]{6,40}$/;
 // A status or category name, as the tracker's enumerations write them.
 const NAME = /^[A-Z][A-Z0-9_]{1,80}$/;
 const INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})$/;
+// The tracking page shows a status's digits as they come, read in UTC, so their "Z" is a label on
+// the wall clock it shows: they are read on Madrid's clock, the one the carrier works on.
+const ZONE = 'Europe/Madrid';
 const MAX_EVENTS = 300;
 
 /** A tracking code as the tracker matches it; anything else is not one Quick Rabbit gives. */
@@ -45,11 +49,12 @@ function scan(row: unknown, index: number): Scan {
   if (!code) throw new SchemaError(PROVIDER, 'Quick Rabbit returned a status without its name');
   const category = name(row.status_category, 'status category');
   const at = typeof row.date === 'string' && INSTANT.test(row.date) ? Date.parse(row.date) : Number.NaN;
-  if (!Number.isFinite(at)) throw new SchemaError(PROVIDER, 'Quick Rabbit returned an invalid status time');
+  const time = Number.isFinite(at) ? mislabeledLocalTime(row.date, ZONE)?.iso : undefined;
+  if (!time) throw new SchemaError(PROVIDER, 'Quick Rabbit returned an invalid status time');
   const staged = quickRabbitStage(code, category);
   // The courier's position beside a status can be the recipient's door, so it is not kept.
   const event: CarrierEvent = {
-    time: new Date(at).toISOString().replace('.000Z', 'Z'),
+    time,
     description: quickRabbitWording(code),
     provider_code: code,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
@@ -60,7 +65,7 @@ function scan(row: unknown, index: number): Scan {
 /**
  * The tracker's reply for one tracking code: the parcel's code, the shipper's
  * reference, its current status, and its timeline of statuses, each an
- * enumeration name with its category and an instant. A code it does not know
+ * enumeration name with its category and a wall clock. A code it does not know
  * gets HTTP 404 with "Package not found", which the adapter reads before this.
  */
 export function parseQuickRabbit(payload: unknown, raw: string): CarrierResult {
