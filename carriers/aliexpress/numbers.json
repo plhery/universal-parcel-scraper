@@ -1021,6 +1021,21 @@
       "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to Italy."
     },
     {
+      "number": "9C0000J000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "observed_request",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress",
+          "poste-italiane"
+        ]
+      },
+      "note": "Synthetic code in SDA's layout with a J, as on AliExpress parcels to Italy whose code Cainiao's tracker answered for before Poste Italiane knew it."
+    },
+    {
       "number": "000D00000001F",
       "role": "shipment",
       "evidence": "synthetic",

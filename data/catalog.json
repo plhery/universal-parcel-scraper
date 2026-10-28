@@ -282,6 +282,10 @@
         "confidence": "low"
       },
       {
+        "pattern": "^9C\\d{4}J\\d{6}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^RTZ5P\\d{2}D\\d{8}$",
         "confidence": "low"
       },

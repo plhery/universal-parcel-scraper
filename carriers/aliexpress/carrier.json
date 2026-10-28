@@ -149,6 +149,11 @@
       "confidence": "low"
     },
     {
+      "id": "aliexpress-9c-j",
+      "pattern": "^9C\\d{4}J\\d{6}$",
+      "confidence": "low"
+    },
+    {
       "id": "aliexpress-rtz",
       "pattern": "^RTZ5P\\d{2}D\\d{8}$",
       "confidence": "low"
