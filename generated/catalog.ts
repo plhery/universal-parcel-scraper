@@ -12679,6 +12679,42 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "e-commerce-international": {
+    "displayName": "E-Commerce International",
+    "color": "#12399c",
+    "aliases": [
+      "E-com International",
+      "ecommerce-system.com"
+    ],
+    "countries": [
+      "PL",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "e-commerce-international"
+    },
+    "canaryUrl": "https://ecommerce-system.com/track",
+    "trackingUrlTemplate": "https://ecommerce-system.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://ecommerce-system.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "ecommerce-system.com",
+          "www.ecommerce-system.com"
+        ],
+        "path": "^/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PL15\\d{9}UA$",
+        "confidence": "high"
+      }
+    ]
+  },
   "early-bird": {
     "displayName": "Early Bird",
     "color": "#dd7f4a",
@@ -33640,6 +33676,7 @@ export const CARRIER_IDS = [
   "dsv",
   "dx",
   "dynalogic",
+  "e-commerce-international",
   "early-bird",
   "easy-mail",
   "ecms-express",
@@ -34457,6 +34494,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dsv": ["dsv-stt"],
   "dx": ["dx-1"],
   "dynalogic": [],
+  "e-commerce-international": ["e-commerce-international-1"],
   "early-bird": ["early-bird-1"],
   "easy-mail": [],
   "ecms-express": ["ecms-express-1"],

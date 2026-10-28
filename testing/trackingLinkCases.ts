@@ -1940,6 +1940,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'mhi', number: 'MHI154W100134524859',
     route: /^https:\/\/www\.trackmail\.co\.uk\/\?Tracking=MHI154W100134524859&command=Track$/,
     marker: /Tracking History|No details found for Tracking Code/ },
+  { carrier: 'e-commerce-international', number: 'PL15132382072UA',
+    route: /^https:\/\/ecommerce-system\.com\/track\/PL15132382072UA$/,
+    marker: /Śledzenie przesyłki|Shipment tracking/ },
 ];
 
 /**

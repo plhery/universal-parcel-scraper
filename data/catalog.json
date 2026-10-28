@@ -12677,6 +12677,42 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "e-commerce-international": {
+    "displayName": "E-Commerce International",
+    "color": "#12399c",
+    "aliases": [
+      "E-com International",
+      "ecommerce-system.com"
+    ],
+    "countries": [
+      "PL",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "e-commerce-international"
+    },
+    "canaryUrl": "https://ecommerce-system.com/track",
+    "trackingUrlTemplate": "https://ecommerce-system.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://ecommerce-system.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "ecommerce-system.com",
+          "www.ecommerce-system.com"
+        ],
+        "path": "^/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PL15\\d{9}UA$",
+        "confidence": "high"
+      }
+    ]
+  },
   "early-bird": {
     "displayName": "Early Bird",
     "color": "#dd7f4a",

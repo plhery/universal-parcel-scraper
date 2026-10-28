@@ -173,6 +173,7 @@ import { adapter as dsv } from '../carriers/dsv/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as dx } from '../carriers/dx/adapter.js';
 import { adapter as dynalogic } from '../carriers/dynalogic/adapter.js';
+import { adapter as eCommerceInternational } from '../carriers/e-commerce-international/adapter.js';
 import { adapter as earlyBird } from '../carriers/early-bird/adapter.js';
 import { adapter as easyMail } from '../carriers/easy-mail/adapter.js';
 import { adapter as ecmsExpress } from '../carriers/ecms-express/adapter.js';
@@ -813,6 +814,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": dtdc,
     "dx": dx,
     "dynalogic": dynalogic,
+    "e-commerce-international": eCommerceInternational,
     "early-bird": earlyBird,
     "easy-mail": easyMail,
     "ecms-express": ecmsExpress,
@@ -1495,6 +1497,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": "dtdc",
     "dx": "dx",
     "dynalogic": "dynalogic",
+    "e-commerce-international": "e-commerce-international",
     "early-bird": "early-bird",
     "easy-mail": "easy-mail",
     "ecms-express": "ecms-express",

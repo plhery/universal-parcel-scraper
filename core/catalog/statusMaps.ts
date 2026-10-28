@@ -182,6 +182,7 @@ import { statusMap as dsv } from '../../carriers/dsv/status.js';
 import { statusMap as dtdc } from '../../carriers/dtdc/status.js';
 import { statusMap as dx } from '../../carriers/dx/status.js';
 import { statusMap as dynalogic } from '../../carriers/dynalogic/status.js';
+import { statusMap as eCommerceInternational } from '../../carriers/e-commerce-international/status.js';
 import { statusMap as earlyBird } from '../../carriers/early-bird/status.js';
 import { statusMap as easyMail } from '../../carriers/easy-mail/status.js';
 import { statusMap as ecmsExpress } from '../../carriers/ecms-express/status.js';
@@ -675,7 +676,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'dhl-freight': dhlFreight, dhlink, direx, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
-  'early-bird': earlyBird, 'easy-mail': easyMail,
+  'e-commerce-international': eCommerceInternational, 'early-bird': earlyBird, 'easy-mail': easyMail,
   'ecms-express': ecmsExpress, econt, ecoscooting, ecourier, 'egypt-post': egyptPost, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,
   envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, eurodis, 'euroexpress-ba': euroexpressBa, eushipments,
   'evdemo-lojistik': evdemoLojistik, evri, 'evri-uk': evriUk, evropat, ewe, exelot,
