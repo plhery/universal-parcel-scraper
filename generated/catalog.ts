@@ -9604,7 +9604,8 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^68800[125]\\d{8}(?:\\d{2})?$",
-        "confidence": "low"
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },

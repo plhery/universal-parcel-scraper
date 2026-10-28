@@ -51831,11 +51831,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "city-express-rs",
       "dpd",
       "ciblex",
       "seur",
       "brt",
-      "city-express-rs",
       "dhl-ecommerce-uk",
       "dpd-be",
       "dpd-de",
@@ -51844,12 +51844,15 @@
       "dpd-pt",
       "dpd-uk"
     ],
+    "preferred": [
+      "city-express-rs"
+    ],
     "asked": [
+      "city-express-rs",
       "dpd-be",
       "dpd",
       "dpd-nl",
-      "dpd-de",
-      "seur"
+      "dpd-de"
     ]
   },
   {
@@ -51857,19 +51860,22 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "city-express-rs",
       "dhl-ecommerce",
       "correos-express",
       "canada-post",
       "tnt",
-      "city-express-rs",
       "evri-uk"
     ],
+    "preferred": [
+      "city-express-rs"
+    ],
     "asked": [
+      "city-express-rs",
       "correos-express",
       "evri-uk",
       "canada-post",
-      "tnt",
-      "city-express-rs"
+      "tnt"
     ]
   },
   {

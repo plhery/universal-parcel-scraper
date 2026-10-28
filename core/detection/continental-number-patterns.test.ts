@@ -413,18 +413,17 @@ describe('FedEx Poland domestic numbers', () => {
   });
 });
 
-describe('FAN Courier AWBs', () => {
-  // Synthetic numbers in FAN Courier's layouts; none is a real parcel.
-  it('suggests FAN Courier first for its 7000 series, and beside other carriers for 2 and 4', () => {
-    const detected = detectCarrierMatch('7000000000001');
-    expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fan-courier'] });
-    expect(detected.candidates[0]).toBe('fan-courier');
-    for (const number of ['2000000000001', '4000000000001']) {
-      expect(detectCarrierMatch(number).candidates, number).toContain('fan-courier');
-      expect(detectCarrierMatch(number).preferred, number).not.toContain('fan-courier');
+describe('City Express shipment and parcel numbers', () => {
+  // Synthetic numbers in City Express's layout; none is a real parcel.
+  it('suggests City Express first for its centre codes, and asks it first', () => {
+    for (const number of ['68800500000001', '6880010000000216', '68800200000003']) {
+      const detected = detectCarrierMatch(number);
+      expect(detected, number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['city-express-rs'] });
+      expect(detected.candidates[0], number).toBe('city-express-rs');
+      expect(recognitionAskedCarriers(number)[0], number).toBe('city-express-rs');
     }
-    for (const number of ['7001000000001', '700000000001', '70000000000001']) {
-      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fan-courier');
+    for (const number of ['68800300000001', '6880040000000216', '688005000000011', '6880050000000']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('city-express-rs');
     }
   });
 });
@@ -805,6 +804,16 @@ describe('FAN Courier AWBs', () => {
     }
     for (const number of ['3012345678901', '7001123456785', '201234567890', '20123456789012']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fan-courier');
+    }
+  });
+
+  it('suggests FAN Courier first for its 7000 series wherever the parcel comes from, but not for 2 and 4', () => {
+    const detected = detectCarrierMatch('7000123456785');
+    expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fan-courier'] });
+    expect(detected.candidates[0]).toBe('fan-courier');
+    expect(recognitionAskedCarriers('7000123456785')[0]).toBe('fan-courier');
+    for (const number of ['2012345678901', '4098765432104']) {
+      expect(detectCarrierMatch(number).preferred, number).not.toContain('fan-courier');
     }
   });
 

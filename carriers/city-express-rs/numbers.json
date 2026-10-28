@@ -18,11 +18,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "city-express-rs",
           "dpd",
           "ciblex",
           "seur",
           "brt",
-          "city-express-rs",
           "dhl-ecommerce-uk",
           "dpd-be",
           "dpd-de",
@@ -51,11 +51,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "city-express-rs",
           "dhl-ecommerce",
           "correos-express",
           "canada-post",
           "tnt",
-          "city-express-rs",
           "evri-uk"
         ]
       },

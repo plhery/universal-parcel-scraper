@@ -51,8 +51,9 @@ through the lookup its tracking page makes.
 City Express shipment numbers are a centre code, 688 001, 688 002 or 688 005, and eight
 digits; a parcel within the shipment adds two more digits. Its tracker prints them in groups
 and asks for the centre and the eight digits in separate fields. `city-express-rs-1` claims the
-fourteen- and sixteen-digit forms that start with one of these centre codes, and recognition
-asks the tracker about them. The eight digits alone are a length other carriers print too and
+fourteen- and sixteen-digit forms that start with one of these centre codes. No other carrier's
+sample starts with them, so the rule puts City Express first, and recognition asks its tracker
+before the carriers whose rules take any fourteen or sixteen digits. The eight digits alone are a length other carriers print too and
 stay unclaimed. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
