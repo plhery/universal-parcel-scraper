@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://inpost.pl/sledzenie-przesylek?number={trackingNumber}",
     "searchUrl": "https://inpost.pl/sledzenie-przesylek",
+    "helpUrl": "https://inpost.pl/kontakt",
     "canaryUrl": "https://inposteasy.com/",
     "shows": [
       "status",

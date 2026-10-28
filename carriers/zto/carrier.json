@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.zto.com/",
     "searchUrl": "https://www.zto.com/check",
+    "helpUrl": "https://www.zto.com/introduce/about/contact",
     "canaryUrl": "https://www.zto.com/check",
     "shows": [
       "status",

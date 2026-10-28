@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://allegro.pl/allegrodelivery/sledzenie-paczki?numer={trackingNumber}",
     "searchUrl": "https://allegro.pl/allegrodelivery/sledzenie-paczki",
+    "helpUrl": "https://allegro.pl/pomoc/dla-kupujacych/problemy-transakcyjne/co-mozesz-zrobic-gdy-czekasz-na-przesylke-zbyt-dlugo-xG71gn36qC4",
     "canaryUrl": "https://allegro.pl/allegrodelivery/sledzenie-paczki",
     "shows": [
       "status",

@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://sameday.ro/status-colet/",
+    "helpUrl": "https://sameday.ro/contact/",
     "canaryUrl": "https://sameday.ro/",
     "shows": [
       "status",

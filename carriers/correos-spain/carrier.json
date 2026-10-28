@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.correos.es/es/es/herramientas/localizador/envios/detalle?tracking-number={trackingNumber}",
     "searchUrl": "https://www.correos.es/es/es/herramientas/localizador/envios/detalle",
+    "helpUrl": "https://www.correos.es/es/es/atencion-al-cliente/tu-consulta-tu-reclamacion",
     "canaryUrl": "https://www.correos.es/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   },
   "capabilities": [],
   "portal": {
+    "helpUrl": "https://info.pochta.ru/support/popular-questions/tracking/products-location",
     "canaryUrl": "https://www.pochta.ru/",
     "shows": [],
     "scraped": [],

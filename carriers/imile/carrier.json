@@ -44,6 +44,7 @@
   "portal": {
     "url": "https://www.imile.com/en/track?waybillNo={trackingNumber}",
     "searchUrl": "https://www.imile.com/en/track",
+    "helpUrl": "https://help.imile.com/",
     "canaryUrl": "https://www.imile.com/en/track",
     "shows": [
       "status",

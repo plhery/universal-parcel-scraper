@@ -50,6 +50,7 @@
   "portal": {
     "url": "https://colisprive.com/moncolis/pages/DetailColis.aspx?numColis={trackingNumber}&lang=fr",
     "searchUrl": "https://colisprive.com/moncolis/pages/DetailColis.aspx",
+    "helpUrl": "https://colisprive.fr/aide/mon-colis-a-du-retard/",
     "canaryUrl": "https://colisprive.com/moncolis/pages/DetailColis.aspx",
     "shows": [
       "status",

@@ -59,6 +59,7 @@
   "portal": {
     "url": "https://www.speedaf.com/cn-en/send-parcel?tradeNo={trackingNumber}",
     "searchUrl": "https://www.speedaf.com/cn-en/send-parcel",
+    "helpUrl": "https://www.speedaf.com/ng-en/service/support",
     "canaryUrl": "https://www.speedaf.com/cn-en/send-parcel",
     "shows": [
       "status",

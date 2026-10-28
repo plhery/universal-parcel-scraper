@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.ups.com/track?tracknum={trackingNumber}",
     "searchUrl": "https://www.ups.com/track",
+    "helpUrl": "https://www.ups.com/gb/en/support/contact-us",
     "canaryUrl": "https://www.ups.com/assets/resources/webcontent/en_US/terms_service.pdf",
     "shows": [
       "status",

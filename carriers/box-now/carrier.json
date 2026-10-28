@@ -40,6 +40,7 @@
   ],
   "portal": {
     "searchUrl": "https://boxnow.cy/track",
+    "helpUrl": "https://www.boxnow.gr/get-in-touch",
     "canaryUrl": "https://boxnow.cy/track",
     "shows": [
       "status",

@@ -93,6 +93,12 @@ export function trackingLink(carrierId: CarrierId, template: string | undefined)
   return link;
 }
 
+function hiddenLeg(pattern: string | undefined) {
+  if (!pattern) return undefined;
+  const numbers = new RegExp(pattern);
+  return (trackingNumber: string) => numbers.test(normalizeTrackingNumber(trackingNumber));
+}
+
 function builtCarrierInfo(id: CarrierId, carrier: CarrierDefinition): CarrierInfo {
   return {
     id,
@@ -103,6 +109,8 @@ function builtCarrierInfo(id: CarrierId, carrier: CarrierDefinition): CarrierInf
     color: carrier.color,
     trackingUrl: trackingLink(id, carrier.trackingUrlTemplate),
     trackingSearchUrl: carrier.trackingSearchUrl,
+    helpUrl: carrier.helpUrl,
+    hidesDestinationLeg: hiddenLeg(carrier.hidesDestinationLeg),
     capabilities: {
       tracking: {
         mode: carrier.tracking.mode,

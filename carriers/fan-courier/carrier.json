@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.fancourier.ro/awb-tracking/?tracking={trackingNumber}",
     "searchUrl": "https://www.fancourier.ro/awb-tracking/",
+    "helpUrl": "https://www.fancourier.ro/contact/",
     "canaryUrl": "https://www.fancourier.ro/awb-tracking/",
     "shows": [
       "status",

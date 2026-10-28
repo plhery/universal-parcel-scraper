@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.posta.sk/sledovanie-zasielok#parcel={trackingNumber}",
     "searchUrl": "https://www.posta.sk/sledovanie-zasielok",
+    "helpUrl": "https://www.posta.sk/podpora/kontakty",
     "canaryUrl": "https://www.posta.sk/sledovanie-zasielok",
     "shows": [
       "status",

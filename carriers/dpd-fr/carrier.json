@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://trace.dpd.fr/fr/trace/{trackingNumber}",
     "searchUrl": "https://trace.dpd.fr/fr/trace",
+    "helpUrl": "https://www.dpd.com/fr/fr/contact/service-clients/",
     "canaryUrl": "https://trace.dpd.fr/fr/trace",
     "shows": [
       "status",

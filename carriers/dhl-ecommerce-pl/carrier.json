@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://mojdhl.pl/tracking?paczki={trackingNumber}",
     "searchUrl": "https://mojdhl.pl/tracking",
+    "helpUrl": "https://www.dhl.com/pl-pl/ecommerce/dla-ciebie/obsluga/kontakt/sledzenie.html",
     "canaryUrl": "https://mojdhl.pl/tracking",
     "shows": [
       "status",

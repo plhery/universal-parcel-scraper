@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://cyp.acscourier.net/en/quick-access/non-registered-users/track-and-trace/?trackingNumber={trackingNumber}",
     "searchUrl": "https://cyp.acscourier.net/en/quick-access/non-registered-users/track-and-trace/",
+    "helpUrl": "https://www.acscourier.net/el/exypiretisi/kentro-pliroforisis/epikoinoneste-mazi-mas/",
     "canaryUrl": "https://cyp.acscourier.net/en/quick-access/non-registered-users/track-and-trace/",
     "shows": [
       "status",

@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.orangeconnex.com/tracking",
     "searchUrl": "https://www.orangeconnex.com/tracking",
+    "helpUrl": "https://www.ebay.com/help/buying/returns-refunds/get-help-item-hasnt-arrived?id=4042",
     "canaryUrl": "https://www.orangeconnex.com/tracking",
     "shows": [
       "status",

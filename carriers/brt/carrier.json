@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://vas.brt.it/vas/sped_det_new.htm?brtCode={trackingNumber}&lang=en",
     "searchUrl": "https://services.brt.it/en/tracking",
+    "helpUrl": "https://www.brt.it/it/servizio-clienti/contattaci/",
     "canaryUrl": "https://services.brt.it/en/tracking",
     "shows": [
       "status",

@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.royalmail.com/track-your-item#/tracking-results/{trackingNumber}",
     "searchUrl": "https://www.royalmail.com/track-your-item",
+    "helpUrl": "https://www.parcelforce.com/contact-us",
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "shows": [
       "status",

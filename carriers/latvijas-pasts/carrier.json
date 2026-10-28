@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://mans.pasts.lv/track?locale=lv-LV&id={trackingNumber}",
     "searchUrl": "https://www.pasts.lv/izsekot-sutijumu",
+    "helpUrl": "https://pasts.lv/klientu-atbalsts",
     "canaryUrl": "https://www.pasts.lv/izsekot-sutijumu",
     "shows": [
       "status",

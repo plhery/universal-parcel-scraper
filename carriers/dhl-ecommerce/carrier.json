@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://www.dhl.com/ch-en/home/tracking.html?tracking-id={trackingNumber}&submit=1",
     "searchUrl": "https://www.dhl.com/ch-en/home/tracking.html",
+    "helpUrl": "https://webtrack.dhlecs.com/support/customer-service",
     "canaryUrl": "https://www.dhl.com/ch-en/home/tracking.html",
     "shows": [
       "status",

@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.jingdonglogistics.com/Tracking?waybillCodes={trackingNumber}",
     "searchUrl": "https://www.jingdonglogistics.com/Tracking",
+    "helpUrl": "https://www.jingdonglogistics.com/contact",
     "canaryUrl": "https://www.jingdonglogistics.com/Tracking",
     "shows": [
       "status",

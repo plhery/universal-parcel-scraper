@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://gls-group.com/IT/it/servizi-online/ricerca-spedizioni/?match={trackingNumber}&type=NAT",
     "searchUrl": "https://gls-group.com/IT/it/servizi-online/ricerca-spedizioni/",
+    "helpUrl": "https://gls-group.com/IT/it/servizi-online/contatti/",
     "canaryUrl": "https://gls-group.com/IT/it/servizi-online/ricerca-spedizioni/",
     "shows": [
       "status",

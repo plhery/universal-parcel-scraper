@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://myspeedpost.com/track?n={trackingNumber}&sync=true",
     "searchUrl": "https://myspeedpost.com/track",
+    "helpUrl": "https://www.indiapost.gov.in/help&Support/contactus",
     "canaryUrl": "https://myspeedpost.com/track",
     "shows": [
       "status",

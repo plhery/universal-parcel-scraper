@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.anpost.com/Post-Parcels/Track/History?item={trackingNumber}",
     "searchUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
+    "helpUrl": "https://www.anpost.com/contactus",
     "canaryUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
     "shows": [
       "status",

@@ -54,6 +54,7 @@
   "portal": {
     "url": "https://www.dpdgroup.com/ch/mydpd/my-parcels/incoming?parcelNumber={trackingNumber}",
     "searchUrl": "https://www.dpd.com/ch/de/",
+    "helpUrl": "https://www.dpd.com/ch/de/supportcenter/anliegen-schildern/",
     "canaryUrl": "https://www.dpdgroup.com/ch/mydpd/my-parcels/incoming",
     "shows": [
       "status",

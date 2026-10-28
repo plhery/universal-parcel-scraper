@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.jtexpress.au/tracking?q={trackingNumber}",
     "searchUrl": "https://www.jtexpress.au/tracking",
+    "helpUrl": "https://www.jtexpress.au/contact",
     "canaryUrl": "https://www.jtexpress.au/tracking",
     "shows": [
       "status",

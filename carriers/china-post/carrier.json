@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.ems.com.cn/mailtracking/you_jian_cha_xun.html",
     "searchUrl": "https://www.ems.com.cn/mailtracking/you_jian_cha_xun.html",
+    "helpUrl": "https://english.chinapost.com.cn/en/category/1408/3925-1.htm",
     "canaryUrl": "https://ec.ems.com.cn/ect-web/mail/getGisTraces/checkMail",
     "shows": [
       "status",

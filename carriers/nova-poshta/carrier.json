@@ -43,6 +43,7 @@
   "portal": {
     "url": "https://novaposhta.ua/en/tracking/{trackingNumber}",
     "searchUrl": "https://novaposhta.ua/en/tracking/",
+    "helpUrl": "https://novaposhta.ua/more/common-questions/",
     "canaryUrl": "https://novaposhta.ua/en/tracking/",
     "shows": [
       "status",

@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.tnt.it/tracking/getTrack.html?wt=1&consigNos={trackingNumber}",
     "searchUrl": "https://www.tnt.it/tracking/Tracking.do",
+    "helpUrl": "https://www.tnt.com/express/it_it/site/support/numero-unico.html",
     "canaryUrl": "https://www.tnt.it/tracking/Tracking.do",
     "shows": [
       "status",

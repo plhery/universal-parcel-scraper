@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.uniuni.com/tracking/?no={trackingNumber}",
     "searchUrl": "https://www.uniuni.com/tracking/",
+    "helpUrl": "https://www.uniuni.com/support/",
     "canaryUrl": "https://www.uniuni.com/tracking/",
     "shows": [
       "status",

@@ -54,6 +54,8 @@
   "portal": {
     "url": "https://postnl.post/track?barcodes={trackingNumber}",
     "searchUrl": "https://postnl.post/track",
+    "helpUrl": "https://www.postnl.nl/en/customer-service/",
+    "hidesDestinationLeg": "^[0-9]{18}$",
     "canaryUrl": "https://postnl.post/",
     "shows": [
       "status",

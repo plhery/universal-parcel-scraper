@@ -54,6 +54,7 @@
   "portal": {
     "url": "https://gls-group.eu/EU/en/parcel-tracking?match={trackingNumber}",
     "searchUrl": "https://gls-group.eu/EU/en/parcel-tracking",
+    "helpUrl": "https://www.gls-pakete.de/glossar-privat/kontaktmoeglichkeiten",
     "canaryUrl": "https://gls-group.eu/EU/en/parcel-tracking",
     "shows": [
       "status",

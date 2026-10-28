@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://tracktrace.dpd.com.pl/EN/parcelDetails?typ=1&p1={trackingNumber}",
     "searchUrl": "https://tracktrace.dpd.com.pl/EN/findParcel",
+    "helpUrl": "https://www.dpd.com/pl/pl/obsluga-klienta/",
     "canaryUrl": "https://tracktrace.dpd.com.pl/EN/findParcel",
     "shows": [
       "status",

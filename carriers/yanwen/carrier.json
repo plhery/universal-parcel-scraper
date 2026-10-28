@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://track.yw56.com.cn/en/index",
     "searchUrl": "https://www.yw56.com.cn/en/",
+    "helpUrl": "https://www.yw56.com.cn/webfile/ContactUs/",
     "canaryUrl": "https://track.yw56.com.cn/en/index",
     "shows": [
       "status",

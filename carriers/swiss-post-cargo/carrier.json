@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://apv.swisspost-cargo.com/public/trackandtrace/{trackingNumber}",
     "searchUrl": "https://apv.swisspost-cargo.com/public/trackandtrace/",
+    "helpUrl": "https://www.swisspost-cargo.com/ch-de/hilfe-und-kontakt",
     "canaryUrl": "https://apv.swisspost-cargo.com/public/trackandtrace",
     "shows": [
       "status",

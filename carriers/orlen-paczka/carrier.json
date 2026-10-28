@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.orlenpaczka.pl/sledz-paczke/?numer={trackingNumber}",
     "searchUrl": "https://www.orlenpaczka.pl/sledz-paczke/",
+    "helpUrl": "https://www.orlenpaczka.pl/kontakt/",
     "canaryUrl": "https://www.orlenpaczka.pl/sledz-paczke/",
     "shows": [
       "status",

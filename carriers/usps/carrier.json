@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://tools.usps.com/tracking/{trackingNumber}",
     "searchUrl": "https://tools.usps.com/tracking/",
+    "helpUrl": "https://www.usps.com/help/missing-mail.htm",
     "canaryUrl": "https://www.usps.com/",
     "shows": [
       "status",

@@ -47,6 +47,7 @@
   "portal": {
     "url": "https://mailamericas.com/tracking?number_id={trackingNumber}",
     "searchUrl": "https://mailamericas.com/",
+    "helpUrl": "https://mailamericas.com/help-center",
     "canaryUrl": "https://mailamericas.com/tracking",
     "shows": [
       "status",

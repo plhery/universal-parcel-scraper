@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.ontrac.com/tracking/?number={trackingNumber}",
     "searchUrl": "https://www.ontrac.com/tracking/",
+    "helpUrl": "https://www.ontrac.com/support/",
     "canaryUrl": "https://www.ontrac.com/tracking/",
     "shows": [
       "status",

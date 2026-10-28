@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.mrw.es/seguimiento",
     "searchUrl": "https://www.mrw.es/seguimiento",
+    "helpUrl": "https://www.mrw.es/empresa_mensajeria_urgente/MRW_contacto_paqueteria.asp",
     "canaryUrl": "https://www.mrw.es/seguimiento/",
     "shows": [
       "status",

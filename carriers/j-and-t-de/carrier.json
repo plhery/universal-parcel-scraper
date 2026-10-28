@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.jtexpress.de/tracking?q={trackingNumber}",
     "searchUrl": "https://www.jtexpress.de/tracking",
+    "helpUrl": "https://www.jtexpress.de/contact",
     "canaryUrl": "https://www.jtexpress.de/tracking",
     "shows": [
       "status",

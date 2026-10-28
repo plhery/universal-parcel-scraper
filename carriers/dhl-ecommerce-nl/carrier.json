@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://my.dhlecommerce.nl/home/tracktrace/{trackingNumber}",
     "searchUrl": "https://my.dhlecommerce.nl/home/tracktrace/",
+    "helpUrl": "https://www.dhlecommerce.nl/nl/consument/support/ontvangen/pakket-vertraagd-zoek",
     "canaryUrl": "https://my.dhlecommerce.nl/home/tracktrace",
     "shows": [
       "status",

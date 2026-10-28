@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://spx.com.br/track?{trackingNumber}",
     "searchUrl": "https://spx.com.br/track",
+    "helpUrl": "https://help.shopee.com.br/portal/4/article/141507",
     "canaryUrl": "https://spx.com.br/track",
     "shows": [
       "status",

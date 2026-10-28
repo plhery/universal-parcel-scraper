@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://s.correosexpress.com/",
     "searchUrl": "https://s.correosexpress.com/",
+    "helpUrl": "https://www.correosexpress.es/es/atencion-al-cliente/contacto/atencion-al-cliente",
     "canaryUrl": "https://s.correosexpress.com/",
     "shows": [
       "status",

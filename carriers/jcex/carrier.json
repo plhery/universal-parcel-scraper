@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://track.jcex.com/?nums={trackingNumber}",
     "searchUrl": "https://track.jcex.com/",
+    "helpUrl": "https://enjc.jcex.com/bangzhuzhongxin/lianxiwomen/index.html",
     "canaryUrl": "https://track.jcex.com/",
     "shows": [
       "status",

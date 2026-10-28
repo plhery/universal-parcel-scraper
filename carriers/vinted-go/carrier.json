@@ -43,6 +43,7 @@
   "portal": {
     "url": "https://vintedgo.com/en/tracking/{trackingNumber}?region=europe",
     "searchUrl": "https://vintedgo.com/en/tracking?region=europe",
+    "helpUrl": "https://vintedgo.com/fr/faq?country=fr&region=europe",
     "canaryUrl": "https://vintedgo.com/en/tracking",
     "shows": [
       "status",

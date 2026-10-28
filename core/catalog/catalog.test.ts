@@ -34,8 +34,17 @@ describe('the derived CARRIERS record', () => {
     expect(CARRIERS['swiss-post'].trackingUrl?.('RA123456785CH'))
       .toBe('https://service.post.ch/ekp-web/ui/entry/search/RA123456785CH');
     expect(CARRIERS['swiss-post'].trackingSearchUrl).toBe('https://www.post.ch/de/empfangen/sendung-verfolgen');
+    expect(CARRIERS['swiss-post'].helpUrl).toBe('https://www.post.ch/de/hilfe-und-kontakt/empfangen');
     expect(SELECTABLE_CARRIERS.every((carrier) => carrier.capabilities.selectable)).toBe(true);
     expect(tracksAutomatically('swiss-post')).toBe(true);
+  });
+
+  it('says which numbers a carrier tracks no further than its own country', () => {
+    // PostNL's tracker names no carrier in the destination country for Spring's 18-digit numbers;
+    // an S10 number goes on to the destination post under the same number.
+    expect(CARRIERS['spring-gds'].hidesDestinationLeg?.('100000000000000001')).toBe(true);
+    expect(CARRIERS['spring-gds'].hidesDestinationLeg?.('RR123456785NL')).toBe(false);
+    expect(CARRIERS['swiss-post'].hidesDestinationLeg).toBeUndefined();
   });
 
   it('translates the placeholder carrier names and falls back to the unknown carrier', () => {
@@ -226,6 +235,8 @@ describe('tracking links', () => {
     // post.ch moves its search page to the language the parameter names.
     expect(localizedCarrierUrl('swiss-post', CARRIERS['swiss-post'].trackingSearchUrl!, 'fr'))
       .toBe('https://www.post.ch/de/empfangen/sendung-verfolgen?lang=fr');
+    expect(localizedCarrierUrl('swiss-post', CARRIERS['swiss-post'].helpUrl!, 'it'))
+      .toBe('https://www.post.ch/de/hilfe-und-kontakt/empfangen?lang=it');
     expect(localizedCarrierUrl('swiss-post', 'https://service.post.ch/x')).toBe('https://service.post.ch/x');
     expect(localizedCarrierUrl('dhl', 'https://www.dhl.com/x', 'fr')).toBe('https://www.dhl.com/x');
   });

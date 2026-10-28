@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.evri.com/track/parcel/{trackingNumber}/details",
     "searchUrl": "https://www.evri.com/track-a-parcel",
+    "helpUrl": "https://www.evri.com/help-and-support/help-centre/receiving/awaiting-delivery/tracking-status",
     "canaryUrl": "https://www.evri.com/track-a-parcel",
     "shows": [
       "status",

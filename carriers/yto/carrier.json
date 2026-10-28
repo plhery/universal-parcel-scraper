@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.yto.net.cn/ytoExpress/waybill/search",
     "searchUrl": "https://www.yto.net.cn/ytoExpress/waybill/search",
+    "helpUrl": "https://www.ytoglobal.com/rich/question/",
     "canaryUrl": "https://www.yto.net.cn/ytoExpress/waybill/search",
     "shows": [
       "status",

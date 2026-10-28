@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://fds2tracking.emea.fedex.com/#/preview?packages={trackingNumber}&trackingKey={trackingNumber}",
     "searchUrl": "https://fds2tracking.emea.fedex.com/",
+    "helpUrl": "https://www.fedex.com/customer-support/pl-pl",
     "canaryUrl": "https://fds2tracking.emea.fedex.com/",
     "shows": [
       "status",

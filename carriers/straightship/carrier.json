@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.straightship.com/track-your-shipment/tracking-id/{trackingNumber}/",
     "searchUrl": "https://www.straightship.com/",
+    "helpUrl": "https://www.straightship.com/new/contact.html",
     "canaryUrl": "https://www.straightship.com/",
     "shows": [
       "status",

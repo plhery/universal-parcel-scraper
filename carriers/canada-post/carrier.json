@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.canadapost-postescanada.ca/track-reperage/en/search?searchFor={trackingNumber}",
     "searchUrl": "https://www.canadapost-postescanada.ca/track-reperage/en/search",
+    "helpUrl": "https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-status-not-updating.page",
     "canaryUrl": "https://www.canadapost-postescanada.ca/track-reperage/en/home",
     "shows": [
       "status",

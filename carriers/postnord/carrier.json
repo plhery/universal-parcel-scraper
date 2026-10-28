@@ -43,6 +43,7 @@
   "portal": {
     "url": "https://tracking.postnord.com/en/?id={trackingNumber}",
     "searchUrl": "https://tracking.postnord.com/en/",
+    "helpUrl": "https://www.postnord.se/kundservice-faq/",
     "canaryUrl": "https://tracking.postnord.com/en/",
     "shows": [
       "status",

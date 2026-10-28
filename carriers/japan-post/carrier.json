@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://trackings.post.japanpost.jp/services/srv/search/direct?reqCodeNo1={trackingNumber}&locale=en",
     "searchUrl": "https://trackings.post.japanpost.jp/services/srv/search/input?locale=en",
+    "helpUrl": "https://www.post.japanpost.jp/question/",
     "canaryUrl": "https://trackings.post.japanpost.jp/services/srv/search",
     "shows": [
       "status",

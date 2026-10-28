@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.post.at/en/s/track-and-trace-search",
     "searchUrl": "https://www.post.at/en/s/track-and-trace-search",
+    "helpUrl": "https://www.post.at/k/c/kontakt",
     "canaryUrl": "https://www.post.at/en/s/track-and-trace-search",
     "shows": [
       "status",

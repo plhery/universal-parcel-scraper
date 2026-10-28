@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.yanwenexpress.com/tracking.html?label={trackingNumber}",
     "searchUrl": "https://www.yanwenexpress.com/tracking.html",
+    "helpUrl": "https://www.yanwenexpress.com/contactus.html",
     "canaryUrl": "https://www.yanwenexpress.com/tracking.html",
     "shows": [
       "status",

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://shipping-tracking.production.cloud2.cttexpress.com/?sc={trackingNumber}",
     "searchUrl": "https://shipping-tracking.production.cloud2.cttexpress.com/",
+    "helpUrl": "https://www.cttexpress.com/envios/incidencias",
     "canaryUrl": "https://shipping-tracking.production.cloud2.cttexpress.com/",
     "shows": [
       "status",

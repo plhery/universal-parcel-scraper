@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://track.bpost.cloud/",
     "searchUrl": "https://track.bpost.cloud/",
+    "helpUrl": "https://www.bpost.be/nl/faq/mijn-pakje-lijkt-ergens-vast-te-zitten-het-beweegt-al-een-tijdje-niet-meer-op-track-trace",
     "canaryUrl": "https://track.bpost.cloud/",
     "shows": [
       "status",

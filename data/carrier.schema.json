@@ -237,6 +237,16 @@
           "type": "string",
           "pattern": "^https://[^\\s{}]+$"
         },
+        "helpUrl": {
+          "description": "The carrier's official page where someone receiving a parcel gets help or reaches its customer service. Linked when a parcel stops moving. Left out when the carrier has no such page.",
+          "type": "string",
+          "pattern": "^https://[^\\s{}]+$"
+        },
+        "hidesDestinationLeg": {
+          "description": "Regular expression: numbers whose journey in the destination country the portal does not show, as it names no carrier there. Linked readers are told so when such a parcel stops moving.",
+          "type": "string",
+          "minLength": 1
+        },
         "siteName": {
           "description": "Name of the site the portal URL points at, when it is not the carrier itself.",
           "type": "string",

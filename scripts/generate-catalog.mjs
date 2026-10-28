@@ -216,6 +216,8 @@ function contractEntry(carrier) {
   if (carrier.portal.url !== undefined) entry.trackingUrlTemplate = carrier.portal.url;
   if (carrier.portal.searchUrl !== undefined) entry.trackingSearchUrl = carrier.portal.searchUrl;
   if (carrier.portal.siteName !== undefined) entry.trackingSiteName = carrier.portal.siteName;
+  if (carrier.portal.helpUrl !== undefined) entry.helpUrl = carrier.portal.helpUrl;
+  if (carrier.portal.hidesDestinationLeg !== undefined) entry.hidesDestinationLeg = carrier.portal.hidesDestinationLeg;
   entry.linkRules = carrier.links;
   entry.detectionRules = carrier.detection.map(contractDetectionRule);
   return entry;

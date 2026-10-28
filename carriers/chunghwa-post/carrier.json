@@ -52,7 +52,8 @@
       "eta",
       "weight"
     ],
-    "searchUrl": "https://postserv.post.gov.tw/pstmail/main_mail.html"
+    "searchUrl": "https://postserv.post.gov.tw/pstmail/main_mail.html",
+    "helpUrl": "https://www.post.gov.tw/post/internet/Customer_service/default.jsp"
   },
   "links": [
     {

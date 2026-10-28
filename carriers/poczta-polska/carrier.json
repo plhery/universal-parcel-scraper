@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://emonitoring.poczta-polska.pl/?lang=en&numer={trackingNumber}",
     "searchUrl": "https://emonitoring.poczta-polska.pl/?lang=en",
+    "helpUrl": "https://www.poczta-polska.pl/kontakt/",
     "canaryUrl": "https://emonitoring.poczta-polska.pl/",
     "shows": [
       "status",

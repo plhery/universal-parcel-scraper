@@ -55,6 +55,7 @@
   "portal": {
     "url": "https://tracking.dpd.de/status/en_US/parcel/{trackingNumber}",
     "searchUrl": "https://www.dpd.com/de/en/empfangen/sendungsverfolgung-und-live-tracking/",
+    "helpUrl": "https://www.dpd.com/de/de/support/empfaenger/",
     "canaryUrl": "https://tracking.dpd.de/status/en_US/parcel/",
     "shows": [
       "status",

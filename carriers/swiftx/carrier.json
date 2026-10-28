@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://swiftx-express.com/track?trackingNumber={trackingNumber}",
     "searchUrl": "https://swiftx-express.com/",
+    "helpUrl": "https://swiftx-express.com/customer-service",
     "canaryUrl": "https://swiftx-express.com/",
     "shows": [
       "status",

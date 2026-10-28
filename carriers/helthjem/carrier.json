@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://helthjem.no/sporing/{trackingNumber}",
     "searchUrl": "https://helthjem.no/sporing",
+    "helpUrl": "https://helthjem.no/kontakt-oss",
     "canaryUrl": "https://helthjem.no/sporing",
     "shows": [
       "status",

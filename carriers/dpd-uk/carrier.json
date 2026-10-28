@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://track.dpd.co.uk/?reference={trackingNumber}",
     "searchUrl": "https://track.dpd.co.uk/",
+    "helpUrl": "https://www.dpd.co.uk/content/how-can-we-help/contact.jsp",
     "canaryUrl": "https://track.dpd.co.uk/",
     "shows": [
       "status",

@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.js-exp.com/index.php?catid=19",
+    "helpUrl": "https://www.js-exp.com/EN/index.php?page=35",
     "canaryUrl": "https://www.js-exp.com/",
     "shows": [
       "history",

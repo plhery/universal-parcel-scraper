@@ -75,6 +75,10 @@ export interface CarrierInfo {
   trackingUrl?: (trackingNumber: string) => string;
   /** The carrier's public page for typing a tracking number in, linked when the number is hidden. */
   trackingSearchUrl?: string;
+  /** The carrier's official help and contact page for someone receiving a parcel, linked when it stops moving. */
+  helpUrl?: string;
+  /** Whether the carrier's tracking leaves out the number's journey in the destination country. */
+  hidesDestinationLeg?: (trackingNumber: string) => boolean;
   capabilities: CarrierCapabilities;
 }
 
@@ -145,6 +149,9 @@ export interface CarrierDefinition {
   };
   trackingUrlTemplate?: string;
   trackingSearchUrl?: string;
+  helpUrl?: string;
+  /** Regular expression matched against the normalized number. */
+  hidesDestinationLeg?: string;
   linkRules: readonly RawTrackingLinkRule[];
   detectionRules: readonly DetectionRule[];
 }

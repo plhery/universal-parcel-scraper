@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://epgtrack.com/{trackingNumber}",
     "searchUrl": "https://epgtrack.com/",
+    "helpUrl": "https://epostglobalshipping.com/contact-support",
     "canaryUrl": "https://epgtrack.com/",
     "shows": [
       "status",

@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.royalmail.com/portal/rm/track?trackNumber={trackingNumber}",
     "searchUrl": "https://www.royalmail.com/portal/rm/track",
+    "helpUrl": "https://help.royalmail.com/personal/s/article/My-tracking-message-looks-wrong",
     "canaryUrl": "https://www.royalmail.com/track-your-item",
     "shows": [
       "status",
