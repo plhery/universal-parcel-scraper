@@ -82,6 +82,10 @@ export interface CarrierResult extends JsonObject {
   last_update?: string | null;
   expected_delivery?: string | null;
   expected_delivery_from?: string | null;
+  /**
+   * Who sent the parcel. Null when the name the carrier gives is not its sender, as the account
+   * a return goes back to: a name an earlier answer gave no longer stands. Absent says nothing.
+   */
   sender_name?: string | null;
   receiver_name?: string | null;
   /**

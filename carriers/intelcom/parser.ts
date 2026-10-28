@@ -95,12 +95,16 @@ export function parseIntelcom(payload: unknown, rawNumber: string): CarrierResul
   if (!Array.isArray(history) || history.length > 1000) throw new SchemaError(PROVIDER, 'Intelcom returned an invalid history');
   const events = history.map(scan);
   if (!events.length && !latest.time) throw new IndeterminateError(PROVIDER, 'Intelcom returned no dated shipment activity');
+  // A return collected from the customer goes to the client, which is then its recipient, not its sender:
+  // null drops the client an earlier check named.
+  const collected = [latestRaw, ...(history as unknown[])].some(row => isRecord(row) && row.task_type === 'last_mile_pickup');
+  const client = typeof result.client_code === 'string' && Object.hasOwn(SHOWN_CLIENTS, result.client_code) ? SHOWN_CLIENTS[result.client_code] : undefined;
   const output: CarrierResult = { status: latest.stage ? languageStageStatus(latest.stage as Stage) : 'unknown',
     last_status_text: latest.description!, last_update: latest.time ?? null,
     ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
     ...(latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...estimate(result, latestRaw, latest.time ? Date.parse(latest.time) : null),
-    ...(typeof result.client_code === 'string' && Object.hasOwn(SHOWN_CLIENTS, result.client_code) ? { sender_name: SHOWN_CLIENTS[result.client_code] } : {}),
+    ...(collected ? { sender_name: null } : client ? { sender_name: client } : {}),
     ...(events.length ? { events: events.slice(0, 100) } : { summary_only: true, events: [] }) };
   return output;
 }

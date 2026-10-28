@@ -10,7 +10,7 @@ Observed Canadian status codes establish milestones even when the English label 
 
 A return collected from the customer has its own codes. The service flags a collected return as delivered, which the adapter does not take as a delivery.
 
-The delivery estimate is the one the tracking page shows: a time window once a driver has the parcel, otherwise a day, taken in the timezone of the service's own estimate. There is none for pickups, problems, deliveries or a window that has passed. The sender is the client the tracking page names, and it names only some clients.
+The delivery estimate is the one the tracking page shows: a time window once a driver has the parcel, otherwise a day, taken in the timezone of the service's own estimate. There is none for pickups, problems, deliveries or a window that has passed. The sender is the client the tracking page names, and it names only some clients. A return collected from the customer names none, since the client is its recipient; its `sender_name` is null, so a name an earlier check gave is dropped.
 
 ## Limitations
 

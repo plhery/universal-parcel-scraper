@@ -75,6 +75,14 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   'your parcel has been dropped off at a dpd pickup shop': 'accepted',
 };
 
+// A parcel its sender hands in at a Pickup shop: the order record of a label that waits for it, and
+// the drop-off. The account that booked such a label did not send it; on a return or donation label
+// it is the recipient.
+const HANDED_IN = new Set([
+  "we've received your order details, and we're expecting your parcel shortly",
+  'your parcel has been dropped off at a dpd pickup shop',
+]);
+
 // A round that missed the recipient, with the day of the next one.
 const MISSED = /^we missed you\. your driver won't be back today but we'll be back [a-z]{3} \d{1,2} [a-z]+ with your parcel$/;
 
@@ -159,6 +167,8 @@ export function parseDpdUkHistory(detailPayload: unknown, historyPayload: unknow
     seen.add(key); return true;
   }).slice(0, 100);
   const latest = retained[0]!;
+  // A parcel handed in by its sender names none: null drops the account an earlier check named.
+  const handedIn = events.some(event => HANDED_IN.has(dpdUkWording(event.description!)));
   const summary = publicDescription(detail.trackingStatusCurrent);
   const summaryClassification = classifyDpdUkWording(summary);
   const current = summary ? summaryClassification : classifyDpdUkWording(latest.description!);
@@ -166,6 +176,6 @@ export function parseDpdUkHistory(detailPayload: unknown, historyPayload: unknow
     ...(current.source !== 'none' ? { current_stage: current.stage, current_stage_source: current.source } : {}),
     last_status_text: summary || latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
-    ...(sender ? { sender_name: sender } : {}),
+    ...(handedIn ? { sender_name: null } : sender ? { sender_name: sender } : {}),
     ...(current.stage === 'delivered' && latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}), events: retained };
 }

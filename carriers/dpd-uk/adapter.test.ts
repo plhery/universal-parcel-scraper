@@ -31,7 +31,7 @@ describe('DPD UK public history projection', () => {
     const result = project(fixture('partner'));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null, last_update_local: '2026-08-04T11:20:00' });
     expect(result.delivered_at).toBeUndefined();
-    expect(result.sender_name).toBeUndefined();
+    expect(result).toHaveProperty('sender_name', null);
     expect(result.events?.map(event => [event.time, event.local_time])).toEqual([
       [undefined, '2026-08-04T11:20:00'],
       [undefined, '2026-08-04T07:40:00'],
@@ -96,6 +96,18 @@ describe('DPD UK public history projection', () => {
     expect(project(payload).sender_name).toBeUndefined();
     delete payload.detail.data.shipperDetails;
     expect(project(payload).sender_name).toBeUndefined();
+  });
+
+  it('names no sender for a parcel its sender hands in at a Pickup shop, whose account may be its recipient', () => {
+    const payload = fixture();
+    const record = payload.history.data.at(-1);
+    record.eventText = "We've received your order details, and we're expecting your parcel shortly";
+    expect(project(payload)).toHaveProperty('sender_name', null);
+    record.eventText = "We've received your order details, but have not yet received your parcel";
+    payload.history.data.splice(-1, 0, { eventDate: '2026-01-05 16:54:00', eventLocation: 'DPD', eventText: 'Your parcel has been dropped off at a DPD Pickup Shop' });
+    expect(project(payload)).toHaveProperty('sender_name', null);
+    payload.history.data.splice(-2, 1);
+    expect(project(payload).sender_name).toBe('Example Merchant');
   });
 
   it('files every recorded wording under its stage', () => {

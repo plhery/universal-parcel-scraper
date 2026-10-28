@@ -159,7 +159,8 @@ describe('Intelcom estimates, returns and senders', () => {
       row(200, 2, 'We\'re on our way!', 1767448800000), row(0, 1, 'Pickup requested by merchant.', 1767362400000)];
     const payload = { success: true, data: { code: 'found', result: { tracking_id: NUMBER, client_code: 'AMAZON', last_status: rows[0]!, status_list: rows } } };
     const result = parseIntelcom(payload, NUMBER);
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', sender_name: 'AMAZON' });
+    // The client the return goes to is not its sender.
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', sender_name: null });
     expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'accepted', 'registered', 'registered']);
     expect(result).not.toHaveProperty('delivered_at');
     payload.data.result.last_status = rows[1]!;

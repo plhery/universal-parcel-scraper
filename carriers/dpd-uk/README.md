@@ -19,7 +19,10 @@ before reading history under the returned handle.
 - Each scan row names the DPD network, a partner network abroad or the
   sender that recorded it, never a place, so events carry no location.
 - The sender is the account that booked the parcel, under the name the page
-  shows.
+  shows. A parcel its sender hands in at a Pickup shop, which its order record
+  or its drop-off shows, names none: the account did not send it, and on a
+  return or donation label it is the recipient. The result then holds
+  `sender_name: null`, so a name an earlier check gave is dropped.
 - A cancellation by the sender is an exception, and a missed round, which names
   the day of the next, a failed attempt.
 - Scans leave out the driver's name a sentence gives. The round's notice gives
