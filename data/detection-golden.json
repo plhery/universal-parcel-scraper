@@ -5520,10 +5520,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "hermes-de",
       "dpd",
       "dpd-fr",
       "ciblex",
-      "hermes-de",
       "seur",
       "brt",
       "dhl-ecommerce-uk",
@@ -5533,6 +5533,9 @@
       "dpd-nl",
       "dpd-pt",
       "dpd-uk"
+    ],
+    "preferred": [
+      "hermes-de"
     ],
     "asked": [
       "hermes-de",
@@ -5547,10 +5550,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "hermes-de",
       "dpd",
       "dpd-fr",
       "ciblex",
-      "hermes-de",
       "seur",
       "brt",
       "dhl-ecommerce-uk",
@@ -5560,6 +5563,9 @@
       "dpd-nl",
       "dpd-pt",
       "dpd-uk"
+    ],
+    "preferred": [
+      "hermes-de"
     ],
     "asked": [
       "hermes-de",
@@ -5574,10 +5580,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "hermes-de",
       "dpd",
       "dpd-fr",
       "ciblex",
-      "hermes-de",
       "seur",
       "brt",
       "dhl-ecommerce-uk",
@@ -5587,6 +5593,9 @@
       "dpd-nl",
       "dpd-pt",
       "dpd-uk"
+    ],
+    "preferred": [
+      "hermes-de"
     ],
     "asked": [
       "hermes-de",
@@ -5601,10 +5610,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "hermes-de",
       "dpd",
       "dpd-fr",
       "ciblex",
-      "hermes-de",
       "seur",
       "brt",
       "dhl-ecommerce-uk",
@@ -5614,6 +5623,9 @@
       "dpd-nl",
       "dpd-pt",
       "dpd-uk"
+    ],
+    "preferred": [
+      "hermes-de"
     ],
     "asked": [
       "hermes-de",
@@ -5628,10 +5640,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "hermes-de",
       "dpd",
       "dpd-fr",
       "ciblex",
-      "hermes-de",
       "seur",
       "brt",
       "dhl-ecommerce-uk",
@@ -5641,6 +5653,9 @@
       "dpd-nl",
       "dpd-pt",
       "dpd-uk"
+    ],
+    "preferred": [
+      "hermes-de"
     ],
     "asked": [
       "hermes-de",

@@ -360,10 +360,10 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "hermes-de",
           "dpd",
           "dpd-fr",
           "ciblex",
-          "hermes-de",
           "seur",
           "brt",
           "dhl-ecommerce-uk",

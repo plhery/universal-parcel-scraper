@@ -35,6 +35,9 @@ tracking page shows them in the visitor's zone like Hermes's own.
 - Barcodes shared with Evri remain ambiguous across services. Longer Hermes
   barcodes retain their existing recognition. Numeric detection uses the
   published checksum as a preference, since other carriers can pass it too.
+  Fourteen digits from `022` that pass it are the Hermes network's: no other
+  carrier's sample starts that way, so `hermes-de-022` puts Hermes Germany
+  first for them wherever the parcel comes from.
 - A 14-digit number that fails that checksum and still finds a Hermes parcel
   is a reference when the parcel comes back under another barcode, which
   `canonical_tracking_number` names; detection leaves references out on

@@ -360,6 +360,16 @@ describe('the detection engine', () => {
     expect(detectCarrierMatch('12345678901234').candidates).not.toContain('hermes-de');
   });
 
+  it('suggests Hermes first for fourteen digits from 022 with a passing Hermes digit, wherever the parcel comes from', () => {
+    for (const number of ['02200000000002', '02270000000012', '02299999999992']) {
+      const detected = detectCarrierMatch(number);
+      expect(detected, number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['hermes-de'] });
+      expect(detected.candidates?.[0], number).toBe('hermes-de');
+      for (const countryHint of [undefined, 'DE', 'IT']) expect(recognitionAskedCarriers(number, { countryHint })[0], number).toBe('hermes-de');
+    }
+    for (const number of ['02200000000003', '02300000000009']) expect(detectCarrierMatch(number).preferred ?? [], number).not.toContain('hermes-de');
+  });
+
   it('offers Hermes for a barcode starting 0 typed after another zero, and asks it first in Germany', () => {
     expect(detectCarrierMatch('001234567890128')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch('001234567890128').candidates).toContain('hermes-de');

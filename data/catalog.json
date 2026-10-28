@@ -2003,6 +2003,12 @@
         "confidence": "high"
       },
       {
+        "pattern": "^022\\d{11}$",
+        "confidence": "low",
+        "checksum": "hermes",
+        "preferred": true
+      },
+      {
         "pattern": "^\\d{14}$",
         "confidence": "low",
         "checksum": "hermes"
