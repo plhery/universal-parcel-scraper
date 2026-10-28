@@ -30,7 +30,7 @@ export function yanwenTrackingUrl(raw: string): string {
 
 // Partner scans can carry the delivery postcode: a Canadian one before the
 // town, a US ZIP after the state. A location keeps its town and region only,
-// and a partner's "Not Available" is none.
+// and a partner's "Not Available" or bare "AA", a code no country holds, is none.
 const POSTCODE = /^(?:[A-Z]\d[A-Z] ?\d[A-Z]\d|\d{5}(?:-\d{4})?)$/i;
 // GOFO's European delivery scans say whether a PIN was used and give a door
 // number; neither belongs in the wording.

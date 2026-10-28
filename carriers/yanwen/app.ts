@@ -3,7 +3,7 @@ import { matchesDroppedLocation, matchesLocationEnrichment } from '../../core/ca
 
 /** Whether a relayed scan's place is a partner's placeholder ("Not Available"), which names no place. */
 export function isYanwenPlaceholder(location: string): boolean {
-  return /^not available$/i.test(location.replace(/\s+/g, ' ').trim());
+  return /^(?:not available|AA)$/i.test(location.replace(/\s+/g, ' ').trim());
 }
 
 // A relayed scan stored without a place can take it from the UTC copy the

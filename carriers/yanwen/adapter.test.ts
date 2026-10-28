@@ -165,9 +165,12 @@ describe('Yanwen result projection', () => {
     expect(result.events?.slice(0, 3).map((event) => event.location)).toEqual(['Example Town, ZZ', 'EXAMPLE TOWN, ZZ', 'Example Town, ZZ, US']);
     $('.czhaodl').each((_, timeline) => { $(timeline).find('dd').eq(0).find('h6').first().text('[Not Available]'); });
     expect(parse($.html(), NUMBER).events?.[0]!.location).toBe('');
+    $('.czhaodl').each((_, timeline) => { $(timeline).find('dd').eq(0).find('h6').first().text('[AA]'); });
+    expect(parse($.html(), NUMBER).events?.[0]!.location).toBe('');
     // A scan stored with the placeholder as its place keeps its row.
     const incoming = { stage: 'in_transit', description: 'Arrived at delivery centre', location: '', providerCode: '' };
     expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: 'Not Available' })).toBe(true);
+    expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: 'AA' })).toBe(true);
     expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: 'Example Town' })).toBe(false);
     expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: 'Not Available', description: 'Delivered' })).toBe(false);
     expect(result.last_status_text).toBe('Delivered in the mailbox. If you have any questions, please contact Example.');

@@ -50,9 +50,9 @@ The parcel summary provides the last-mile reference. The notes name its
 distributor and site; that carrier becomes `delivery_carrier` when the catalog
 knows it and its own detection offers the reference. Contact numbers and the
 customer's order number are not read. Scan locations keep the town and region
-without Canadian postcodes or US ZIP codes, a partner's "Not Available" is no
-place, and relayed wording drops GOFO's PIN and door-number fragments. Scans
-stored with that placeholder as their place keep their row.
+without Canadian postcodes or US ZIP codes, a partner's "Not Available" or
+bare "AA" is no place, and relayed wording drops GOFO's PIN and door-number
+fragments. Scans stored with such a placeholder as their place keep their row.
 
 Run `npm run test:carriers:live -- carriers/yanwen`.
 Set `YANWEN_TRACKING_NUMBER` outside the repository to check a real parcel.
