@@ -56,10 +56,10 @@ describe('Vinted Go HTTP adapter', () => {
   it('reads a collected parcel newest first, with its locker but without its address, deadline or questions', () => {
     const result = parseVintedGo(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'Delivered', last_update: '2026-09-24T15:02:10.250Z', delivered_at: '2026-09-24T15:02:10.250Z',
-      expected_delivery: null, pickup_point: 'Example Market' });
+      last_status_text: 'Parcel was collected by the recipient', last_update: '2026-09-24T15:02:10.100Z',
+      delivered_at: '2026-09-24T15:02:10.100Z', expected_delivery: null, pickup_point: 'Example Market' });
+    // The bare "Delivered" written within a second of the collection is the same collection.
     expect(result.events!.map((event) => [event.time, event.provider_code, event.stage, event.location ?? null])).toEqual([
-      ['2026-09-24T15:02:10.250Z', 'delivery/delivered', 'delivered', null],
       ['2026-09-24T15:02:10.100Z', 'delivery/delivered', 'delivered', null],
       ['2026-09-23T10:15:00Z', 'delivery/ready_for_pickup', 'ready_for_pickup', null],
       ['2026-09-23T06:40:30.500Z', 'delivery/in_transit', 'in_transit', null],
@@ -149,7 +149,10 @@ describe('Vinted Go HTTP adapter', () => {
   });
 
   it('drops repeated scans, orders equal clocks as the reply does and rejects a changed reply', () => {
-    expect(parseVintedGo(fixture('delivered'), DELIVERED).events).toHaveLength(9);
+    expect(parseVintedGo(fixture('delivered'), DELIVERED).events).toHaveLength(8);
+    const later = fixture('delivered');
+    rows(later)[0]!.timestamp = '2026-09-24T15:02:11.100Z';
+    expect(parseVintedGo(later, DELIVERED).events).toHaveLength(9);
     for (const change of [
       (payload: Record<string, unknown>) => { rows(payload)[2]!.timestamp = '2026-09-23 10:15'; },
       (payload: Record<string, unknown>) => { rows(payload)[2]!.message = ''; },
@@ -192,7 +195,7 @@ describe('Vinted Go HTTP adapter', () => {
 
   it('recognizes a known parcel and the unknown-number answer, and asks nothing for a number Vinted Go does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('delivered')).mockResolvedValueOnce(unknown());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-24T15:02:10.250Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-24T15:02:10.100Z' });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1790000000000011')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

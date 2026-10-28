@@ -124,6 +124,16 @@ function handover(scans: readonly Scan[], number: string): Pick<CarrierResult, '
 }
 
 /**
+ * A collection written a second time: the service follows "Parcel was collected
+ * by the recipient" with a bare "Delivered" under the same milestone within a
+ * second. The first line says more, so the second is left out.
+ */
+function collectedAgain(scan: Scan, older: Scan | undefined): boolean {
+  return Boolean(older) && scan.group === 'delivered' && older!.group === 'delivered' && scan.state === older!.state
+    && scan.at - older!.at < 1000 && /^delivered$/i.test(scan.event.description);
+}
+
+/**
  * The reply of `GET /public/v3/tracking_events/{number}`. It does not echo the
  * number: the scans belong to the one in the request's path. The pickup
  * point's address, its id, the pickup deadline, banners and questions in the
@@ -151,13 +161,14 @@ export function parseVintedGo(payload: unknown, raw: string, readAt = Date.now()
   if (!scans.length) throw new SchemaError(PROVIDER, 'Vinted Go returned only scans dated after the lookup');
   // The reply lists scans newest first. Instants order them; equal ones keep its order.
   scans.sort((left, right) => right.at - left.at || left.index - right.index);
-  const newest = scans[0]!.event;
+  const listed = scans.filter((scan, index) => !collectedAgain(scan, scans[index + 1]));
+  const newest = listed[0]!.event;
   const current = newest.stage
     ? { stage: newest.stage as Stage, source: 'carrier_map' }
     : classifyWording(newest.description, 'in_transit');
   const known = current.source !== 'none';
   const stage = known ? current.stage : undefined;
-  const point = pickupPoint(scans, stage);
+  const point = pickupPoint(listed, stage);
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: current.source } : {}),
@@ -166,9 +177,9 @@ export function parseVintedGo(payload: unknown, raw: string, readAt = Date.now()
     expected_delivery: null,
     ...(stage === 'delivered' ? { delivered_at: newest.time } : {}),
     ...(point ? { pickup_point: point } : {}),
-    ...handover(scans, number),
-    events: scans.slice(0, MAX_EVENTS).map((scan) => scan.event),
-    ...(scans.length > MAX_EVENTS ? { history_truncated: true } : {}),
+    ...handover(listed, number),
+    events: listed.slice(0, MAX_EVENTS).map((scan) => scan.event),
+    ...(listed.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };
 }
 
