@@ -379,6 +379,10 @@ describe('status map answers', () => {
     expect(answer('ups', 'AG', 'Package is in transit to a UPS facility')).toEqual(mapped('accepted'));
     expect(answer('dhl-express', 'EM', 'Supplementary information has been received and merged with applicable shipment data'))
       .toEqual(mapped('registered'));
+    // A delivery booked for a later round is no round yet.
+    expect(answer('dhl-express', null, 'Shipment is scheduled for delivery')).toEqual(mapped('in_transit'));
+    // Huaya's tracker announces the shipment to the destination carrier after the flight's hand-over.
+    expect(answer('huaya-express', null, 'Shipment Announced')).toEqual(mapped('in_transit'));
   });
 
   it("answers DHL by its wording in English and German, and leaves a forecast and unknown wording open", () => {

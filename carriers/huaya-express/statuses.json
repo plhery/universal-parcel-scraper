@@ -5,6 +5,7 @@
     {"wording": "Package departed from the warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
     {"wording": "Customs export clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
     {"wording": "Package handed over to airline", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
+    {"wording": "Shipment Announced", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Huaya's tracker writes it after the hand-over to the airline: the shipment announced to the destination carrier, not the order data."},
     {"wording": "Package in transit to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
     {"wording": "Package arrived at destination country", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
     {"wording": "Customs import clearance completed, awaiting pickup by local carrier", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it; the local carrier has not taken the parcel yet."},
