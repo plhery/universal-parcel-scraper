@@ -1,12 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, ALLEGRO_ONE_ENDPOINT, AllegroOneTracker } from './adapter.js';
 import { normalizeAllegroOneNumber, parseAllegroOne } from './parser.js';
-import { allegroOneStage, statusMap } from './status.js';
+import { ALLEGRO_ONE_POLISH, allegroOneStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const DELIVERED = 'A0ZZ000001';
@@ -38,6 +39,41 @@ describe('Allegro One HTTP adapter', () => {
     expect(init?.method ?? 'GET').toBe('GET');
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'allegro-one', step: 'direct', outcome: 'ok' }));
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
+  });
+
+  it('asks for Polish for a Polish reader and for English for anyone else', async () => {
+    const fetcher = vi.fn<typeof fetch>(async () => reply(text('delivered')));
+    const instance = carrier(fetcher);
+    for (const [language, asked] of [['pl', 'pl-PL'], ['pl-PL', 'pl-PL'], ['de', 'en-US'], [null, 'en-US']] as const) {
+      await instance.track({ number: DELIVERED, language });
+      expect((fetcher.mock.calls.at(-1)?.[1]?.headers as Record<string, string>)['Accept-Language']).toBe(asked);
+    }
+  });
+
+  it('reads a reply in Polish as it reads the same reply in English', () => {
+    const polish = new Map(Object.entries(ALLEGRO_ONE_POLISH).map(([wording, english]) => [english, wording]));
+    for (const [name, number] of [['delivered', DELIVERED], ['ready', READY], ['returned', RETURNED], ['in-transit', TRANSIT],
+      ['delivery', DELIVERY], ['sent-back', SENT_BACK]] as const) {
+      const english = fixture(name);
+      const translated = { status: english.status.map((row) => ({ ...row, description: polish.get(String(row.description)) })) };
+      expect(translated.status.every((row) => row.description), name).toBe(true);
+      const read = (reply: unknown) => {
+        const result = parseAllegroOne(reply, number);
+        return { ...result, last_status_text: undefined, events: result.events!.map((event) => ({ ...event, description: undefined })) };
+      };
+      expect(read(translated), name).toEqual(read(english));
+    }
+  });
+
+  it('lets a scan worded in the other language take over its stored row', () => {
+    const policy = sameInstantIdentityPolicy('allegro-one', { supportsScanMatching: true });
+    const english = { stage: 'ready_for_pickup', description: 'Parcel is awaiting pick-up', location: '', providerCode: '' };
+    const polish = { ...english, description: 'Przesyłka oczekuje na odbiór' };
+    expect(policy).toMatchObject({ storedSources: ['allegro-one'], requireProviderCode: false, matchEachScan: true });
+    expect(policy?.matches?.(polish, english)).toBe(true);
+    expect(policy?.matches?.(english, polish)).toBe(true);
+    expect(policy?.matches?.({ ...polish, description: 'Czas na odbiór został przedłużony' }, english)).toBe(false);
+    expect(policy?.matches?.(polish, { ...english, description: 'Time for pick-up has been extended' })).toBe(false);
   });
 
   it('reads a delivered parcel newest first and drops a repeated scan', () => {

@@ -1,4 +1,4 @@
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -20,16 +20,21 @@ export function allegroOneTrackingUrl(raw: string): string {
   return `${ALLEGRO_ONE_ENDPOINT}?packageNo=${encodeURIComponent(normalizeAllegroOneNumber(raw))}`;
 }
 
+/**
+ * The languages the service words its scans in, as `Accept-Language` asks:
+ * `pl-PL`, `*` or a bare `en` gets Polish and `en-US` English.
+ */
+const LANGUAGES = { en: 'en-US', pl: 'pl-PL' } as const;
+
 export class AllegroOneTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
-  async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  /** `language` words the scans; the status map reads both. */
+  async fetch(raw: string, context: TrackingContext = {}, language: keyof typeof LANGUAGES = 'en'): Promise<CarrierResult> {
     const url = allegroOneTrackingUrl(raw);
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
-      // The scans are worded in the language asked for: Polish for `pl-PL` or
-      // `*`, English for `en-US`. The status map reads English.
       const { response, bytes } = await fetchBounded(url, { signal, headers: {
-        Accept: MEDIA_TYPE, 'Accept-Language': 'en-US', 'User-Agent': userAgentOf(this.options.userAgent),
+        Accept: MEDIA_TYPE, 'Accept-Language': LANGUAGES[language], 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: ALLEGRO_ONE_MAX_BYTES, redirect: 'manual',
         allowHttpStatuses: [...REDIRECTS, 400, 404, 406, 410], fetcher: this.options.fetcher });
       // A refused request, a retired route ("Feature unavailable") or a move says nothing about the parcel.
@@ -58,7 +63,7 @@ export const adapter: AdapterFactory = (environment) => {
   const tracker = new AllegroOneTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
     id: 'allegro-one', recordsSteps: true, steps: ['direct', 'retry'],
-    track: (input, context) => tracker.fetch(input.number, context),
+    track: (input, context) => tracker.fetch(input.number, context, readerLanguage(input, ['pl']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeAllegroOneNumber(number))),
   };

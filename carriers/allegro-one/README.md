@@ -8,9 +8,9 @@ through the service Allegro's tracking page asks on Allegro's edge gateway.
 ## How it works
 
 1. `direct`: one `GET https://edge.allegro.pl/ad/tracking?packageNo={number}` with
-   `Accept: application/vnd.allegro.internal.v1+json` and `Accept-Language: en-US`. The Allegro
-   Delivery tracking page, which the links open, asks this service; it needs no cookies, key,
-   account or browser. The reply lists the parcel's scans, each a UTC instant and a wording: an
+   `Accept: application/vnd.allegro.internal.v1+json` and `Accept-Language: pl-PL` for a lookup
+   whose `language` is Polish, `en-US` for any other. The Allegro Delivery tracking page, which
+   the links open, asks this service; it needs no cookies, key, account or browser. The reply lists the parcel's scans, each a UTC instant and a wording: an
    older parcel's newest first, a newer one's oldest first.
 2. `retry`: one more try when the request fails to reach Allegro or hangs. The first try gets
    half of the budget.
@@ -40,9 +40,11 @@ through the service Allegro's tracking page asks on Allegro's edge gateway.
   alike. The edge gateway does not.
 - The gateway answers only Allegro's own media type; another `Accept` gets HTTP 406.
 - The service words scans in English for `en-US` and in Polish for `pl-PL`, a bare `en` or `*`,
-  which Node's fetch sends by default. The stage map reads the English wording.
-- The service sends no status code, so the map stages each wording. A scan the map does not know
-  is left to the shared wording rules.
+  which Node's fetch sends by default. Instants and their order are the same in both.
+- The service sends no status code, so the map stages each wording: the English one, and each
+  Polish one by the English the service gives the same scan. A scan the map does not know is left
+  to the shared wording rules. A scan stored in one language takes the other's wording in place:
+  at its instant, a wording that translates the stored one identifies it.
 - The older Allegro One page asked `/one/tracking`, which answers the same numbers but leaves out
   a newer parcel's sorting-centre scans, so it is not used.
 - Allegro Delivery's partner scans come through the same service, in the same wording.
