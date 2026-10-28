@@ -95,9 +95,9 @@ describe('FIRST LINE HTTP adapter', () => {
     expect(() => parseFirstLine(text('export.txt'), EXPORT, Date.parse('2026-10-15T00:00:00Z'))).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
   });
 
-  it('reads the tracker’s notice as not found, and a refused session as nothing about the waybill', async () => {
-    expect(() => parseFirstLine(text('not-found.txt'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
-    await expect(carrier(site(() => html(text('not-found.txt')))).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
+  it('reads the tracker’s notice as no answer about the waybill, which another forwarder may hold, and a refused session as nothing', async () => {
+    expect(() => parseFirstLine(text('not-found.txt'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'portal_not_found' }));
+    await expect(carrier(site(() => html(text('not-found.txt')))).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
     expect(() => parseFirstLine(text('not-found.txt').replace('未找到此单号信息', '系统繁忙'), UNKNOWN))
       .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     await expect(carrier(site(() => html(text('refused.txt')))).track({ number: DELIVERED }))

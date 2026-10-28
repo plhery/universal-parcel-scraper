@@ -15,7 +15,7 @@ describe('FIRST LINE live retrieval', () => {
     expect(answer.result.events.every((event) => event.local_time && event.description)).toBe(true);
   });
 
-  it.skipIf(!process.env.FIRST_LINE_UNKNOWN_NUMBER)('reads the lookup’s answer for an unknown number as not found', async () => {
-    await expect(direct().track({ number: process.env.FIRST_LINE_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'not_found' });
+  it.skipIf(!process.env.FIRST_LINE_UNKNOWN_NUMBER)('reads the lookup’s answer for an unknown number as the tracker not knowing it', async () => {
+    await expect(direct().track({ number: process.env.FIRST_LINE_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
   });
 });

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { classifyWording, languageStageStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -120,7 +120,10 @@ export function parseFirstLine(body: string, raw: string, readAt = Date.now()): 
   const shipment = shipmentFor(html, number);
   const message = /<div class="track_result_errmsg"[^>]*>(.*?)<\/div>/s.exec(shipment);
   if (message) {
-    if (textFromHtml(message[1]) === NOT_FOUND) throw new NotFoundError(PROVIDER);
+    // Another of the 1ST group's forwarders can hold a 1ST waybill this tracker does not know.
+    if (textFromHtml(message[1]) === NOT_FOUND) {
+      throw new IndeterminateError(PROVIDER, 'FIRST LINE does not know the waybill, which another 1ST forwarder may hold', { reason: 'portal_not_found' });
+    }
     throw new IndeterminateError(PROVIDER, 'FIRST LINE did not list the waybill’s scans');
   }
   const rows = [...shipment.matchAll(/<li>(.*?)<\/li>/gs)].map((row) => row[1]!);

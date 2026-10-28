@@ -19,9 +19,11 @@ The tracker answers plain HTTP only. No account, key, CAPTCHA or browser is need
 ## Notes
 
 - The reply is `ok{FGF}` and an HTML list: a header row with the number and its newest scan,
-  then each scan as a clock, a place and the wording, six non-breaking spaces apart. An unknown
-  number's block says 未找到此单号信息 instead. A lookup without the session cookies, or with a
-  spent signature, answers `error{FGF}` and 身份验证失败, which says nothing about the waybill.
+  then each scan as a clock, a place and the wording, six non-breaking spaces apart. A waybill
+  the tracker does not know says 未找到此单号信息 instead. Another of the group's forwarders can
+  hold it, so that answer is inconclusive, with the reason `portal_not_found`. A lookup without
+  the session cookies, or with a spent signature, answers `error{FGF}` and 身份验证失败, which says
+  nothing about the waybill.
 - Scan times are wall clocks without an offset, each on its facility's clock: Shenzhen's, Hong
   Kong's, then the destination's, where the delivering partner's scans are relayed. Rows in
   China and Hong Kong, and the shipper's order data ("Forecast has been received"), which names
@@ -37,8 +39,12 @@ The tracker answers plain HTTP only. No account, key, CAPTCHA or browser is need
 ## Limitations
 
 The tracker names no delivery partner, last-mile number or destination country, and the
-places' postcodes are dropped. It does not know every 1ST waybill: one it answers as unknown
-can still be in transit, and the providers that relay 1ST's rows track it.
+places' postcodes are dropped. It does not know every 1ST waybill: it answers 1ST06 waybills but not
+1ST18 ones, which the providers that relay 1ST's rows track from the order data to the
+delivery, in the English of another forwarder's system. No public tracker of the
+group answers those: the group's own query at `1st56.com/group/tracking/` is gone (HTTP 404),
+摆渡一下's tracker at ferryboatlogistics.com, the same software as FIRST LINE's without the
+signature, does not know them, and 一代国际's at 1st168.com needs an account.
 
 ## Numbers
 
