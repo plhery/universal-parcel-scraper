@@ -156,6 +156,13 @@
       "note": "A last-mile partner's label."
     },
     {
+      "wording": "Your shipment has arrived at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The destination network's sorting centre takes the parcel in, coded 2 (Shipping), before the delivery carrier accepts it."
+    },
+    {
       "code": "1",
       "wording": "Shipping",
       "language": "en",

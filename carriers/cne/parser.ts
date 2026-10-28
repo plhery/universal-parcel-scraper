@@ -22,6 +22,7 @@ const WORDING: Readonly<Record<string, Stage>> = {
   'Pickup from airport': 'in_transit', 'Arrived At The Delivery Company': 'in_transit',
   // Last-mile labels the shared rules miss; the courier's van takes the parcel on board.
   'On Board with Courier': 'out_for_delivery', 'Parcel Unloaded From Container': 'in_transit',
+  'Your shipment has arrived at sorting center': 'in_transit',
   // Arrival in the destination country, before its sorting and customs, not at the delivery office.
   'Arrived at destination': 'in_transit',
 };
