@@ -127,8 +127,8 @@ describe('Stone3PL', () => {
 
   it("moves the parcel on through the ports, both clearances and the hand-over to the last-mile carrier", () => {
     expect(['Arrived at domestic terminal station', 'Port of departure', 'International shipment release - Export', 'Port of departure - Departure',
-      'Port of destination - Arrival', 'International shipment release - Import', 'Pick up by local carrier at destination port']
-      .map(stone3plStage)).toEqual(Array(7).fill('in_transit'));
+      'Port of destination - Arrival', 'International shipment release - Import', 'Pick up by local carrier at destination port',
+      'Batch delivery to carrier'].map(stone3plStage)).toEqual(Array(8).fill('in_transit'));
   });
 
   it('works through the public tracker with universal providers disabled', async () => {
