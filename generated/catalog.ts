@@ -15345,6 +15345,28 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "flyt-express": {
+    "displayName": "Flyt Express",
+    "color": "#004385",
+    "aliases": [
+      "FLYT",
+      "Flyt Logistics",
+      "飞特物流",
+      "广州飞特物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "followmont": {
     "displayName": "Followmont Transport",
     "color": "#022160",
@@ -19379,6 +19401,39 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "joom-logistics": {
+    "displayName": "Joom Logistics",
+    "color": "#2d2f43",
+    "aliases": [
+      "Joom Logistics Limited"
+    ],
+    "countries": [
+      "HK",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://joomlogistics.com/en/track",
+    "trackingUrlTemplate": "https://joomlogistics.com/en/track?id={trackingNumber}",
+    "trackingSearchUrl": "https://joomlogistics.com/en/track",
+    "linkRules": [
+      {
+        "domains": [
+          "joomlogistics.com",
+          "logistics.joom.com"
+        ],
+        "pathPattern": "^/[a-z]{2}/track/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "jordan-post": {
     "displayName": "Jordan Post",
@@ -30604,6 +30659,42 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "takesend": {
+    "displayName": "Take Send",
+    "color": "#6638b6",
+    "aliases": [
+      "Takesend Logistics",
+      "泰嘉物流",
+      "深圳市泰嘉物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "k5.takesend.com"
+        ],
+        "pathPattern": "^/WebTrack$",
+        "params": [
+          "bills"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TS2\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{7}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "tamdis": {
     "displayName": "Tamdis",
     "color": "#0c2d6b",
@@ -33710,6 +33801,45 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ydh": {
+    "displayName": "YDH",
+    "color": "#015db9",
+    "aliases": [
+      "YDH Express",
+      "YDH Cross Border",
+      "义达跨境",
+      "义达"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.ydhex.com/track_query.aspx",
+    "trackingUrlTemplate": "https://track.ydhex.com/track_query.aspx?track_number={trackingNumber}",
+    "trackingSearchUrl": "https://track.ydhex.com/track_query.aspx",
+    "linkRules": [
+      {
+        "domains": [
+          "track.ydhex.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^YDH\\d{10}(?:YQ|AZ)$",
+        "confidence": "high"
+      }
+    ]
+  },
   "yfhex": {
     "displayName": "YFHEX",
     "color": "#00a2e9",
@@ -34571,6 +34701,7 @@ export const CARRIER_IDS = [
   "flippost",
   "fliway",
   "flyking",
+  "flyt-express",
   "followmont",
   "forward-air",
   "forza-delivery",
@@ -34676,6 +34807,7 @@ export const CARRIER_IDS = [
   "jifan",
   "jitsu",
   "jne",
+  "joom-logistics",
   "jordan-post",
   "jrs-express",
   "jrt",
@@ -34955,6 +35087,7 @@ export const CARRIER_IDS = [
   "swiftx",
   "t-cat",
   "t-group",
+  "takesend",
   "tamdis",
   "tanzania-posts",
   "taxydema",
@@ -35037,6 +35170,7 @@ export const CARRIER_IDS = [
   "yalidine",
   "yc-delivery",
   "ycs-logistics",
+  "ydh",
   "yfhex",
   "yilong-logistics",
   "yimidida",
@@ -35403,6 +35537,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "flippost": [],
   "fliway": [],
   "flyking": [],
+  "flyt-express": [],
   "followmont": [],
   "forward-air": [],
   "forza-delivery": ["forza-delivery-1"],
@@ -35508,6 +35643,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jifan": ["jifan-1"],
   "jitsu": [],
   "jne": ["jne-1"],
+  "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
@@ -35787,6 +35923,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiftx": ["swiftx-1"],
   "t-cat": [],
   "t-group": ["t-group-1"],
+  "takesend": ["takesend-1"],
   "tamdis": [],
   "tanzania-posts": [],
   "taxydema": [],
@@ -35869,6 +36006,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yalidine": ["yalidine-1"],
   "yc-delivery": [],
   "ycs-logistics": [],
+  "ydh": ["ydh-1"],
   "yfhex": [],
   "yilong-logistics": ["yilong-logistics-1"],
   "yimidida": [],

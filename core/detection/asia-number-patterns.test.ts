@@ -388,6 +388,37 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
+  it('names YDH for YDH, ten digits and YQ or AZ, and reads its tracking link', () => {
+    for (const number of ['YDH1000000017YQ', 'YDH1000000017AZ', 'ydh 1000 0000 17 yq']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'ydh', confidence: 'high' });
+    }
+    for (const number of ['YDH100000017YQ', 'YDH10000000017YQ', 'YDX1000000017YQ', 'YDH1000000017CN']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('ydh');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('ydh');
+    }
+    expect(parseTrackingInput('https://track.ydhex.com/track_query.aspx?track_number=YDH1000000017YQ')).toMatchObject({
+      trackingNumber: 'YDH1000000017YQ', carrier: 'ydh', source: 'link',
+    });
+  });
+
+  it('suggests Take Send for TS, a registration date and seven digits without naming it', () => {
+    for (const number of ['TS2609040000017', 'ts 260904 0000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['takesend'] });
+    }
+    for (const number of ['TS2613040000017', 'TS2609320000017', 'TS260904000017', 'TS26090400000017', 'TX2609040000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('takesend');
+    }
+    expect(parseTrackingInput('http://k5.takesend.com:8180/WebTrack?action=list&language=en&bills=TS2609040000017')).toMatchObject({
+      trackingNumber: 'TS2609040000017', carrier: 'takesend', source: 'link',
+    });
+  });
+
+  it('reads Joom Logistics tracking links on both of its hosts', () => {
+    for (const link of ['https://joomlogistics.com/en/track?id=ZZ000000000HK', 'https://logistics.joom.com/de/track/?id=ZZ000000000HK']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: 'ZZ000000000HK', carrier: 'joom-logistics', source: 'link' });
+    }
+  });
+
   it('names TopYou for TYZR, a letter, ten digits and YQ, and only that layout', () => {
     for (const number of ['TYZRZ0000000017YQ', 'tyzrz 0000 0000 17 yq']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'topyou', confidence: 'high' });
