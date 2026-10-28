@@ -31,8 +31,10 @@ numbers carry a PH prefix.
   Scans without a Portuguese line keep their English tracking name.
 - Rows flagged hidden, which the page leaves out, are left out too.
 - Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres keep the place and
-  coordinates the reply gives. Pickups, deliveries and the return to the seller would name the
-  seller's or the recipient's town, so they keep none. Facility addresses are not kept.
+  coordinates the reply gives. Pickups, postings, deliveries and the return to the seller would
+  name the seller's or the recipient's town, so they keep none: the town a posting's wording
+  names after it ("Pedido postado Cidade Exemplo - SP") leaves the wording, and a row stored with
+  it keeps its row. Facility addresses are not kept.
 - Some facility wordings name their centre, origin or port after a colon ("Seu pedido saiu do
   centro logístico: Cidade Exemplo - SP"). The name leaves the wording, so it reads the same from
   town to town, and is the scan's place when the reply gives none: a departure from a logistics

@@ -29,6 +29,15 @@ const PLACED = [
   /^(O pedido chegou ao centro) de\s*:\s*(\S.*?)( e segue para a próxima etapa\.?)$/i,
 ];
 
+// A posting names the town of the point where the seller dropped the parcel off after its
+// wording ("Pedido postado Cidade Exemplo - SP"): the seller's town, which a pickup keeps none of.
+const POSTED = /^(Pedido postado)\s+\S.*\s-\s[A-Z]{2}$/i;
+
+/** A posting's wording without the town of its drop-off point. */
+export function spxBrPostedText(wording: string): string {
+  return wording.replace(POSTED, '$1');
+}
+
 /** A number for SPX Brazil's tracker; anything else is not one it issues. */
 export function normalizeSpxBrNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
@@ -80,7 +89,7 @@ function projectRow(row: Record<string, unknown>): CarrierEvent | null {
   if (!time) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an invalid scan time');
   const facility = FACILITY.test(code);
   // The reply's place stands; a place named only in the wording stands in for it.
-  const named = facility ? spxBrPlacedText(description) : { description, location: '' };
+  const named = facility ? spxBrPlacedText(description) : { description: spxBrPostedText(description), location: '' };
   const place = facility && isRecord(row.current_location) ? row.current_location : null;
   const location = (place ? clean(text(place, 'location_name'), 120) : '') || clean(named.location, 120);
   const point = place && location ? eventPoint(place.lat, place.lng) : null;

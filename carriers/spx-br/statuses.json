@@ -41,6 +41,14 @@
       "note": "Hidden on the public page. A failed pickup leaves the parcel with its seller."
     },
     {
+      "code": "F098",
+      "wording": "Pedido postado",
+      "language": "pt",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The seller's drop-off at a point in Brazil, before SPX collects the parcel from it. The wording goes on to name the point's town, which is left out."
+    },
+    {
       "code": "F099",
       "wording": "Pickup From Cross Border Seller",
       "language": "en",

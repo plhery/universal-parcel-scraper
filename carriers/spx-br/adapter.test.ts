@@ -150,6 +150,16 @@ describe('SPX Express Brazil HTTP adapter', () => {
     ]) expect(policy?.matches?.(incoming, different)).toBe(false);
     const arrival = { ...incoming, description: 'O pedido chegou ao centro e segue para a próxima etapa.', providerCode: 'F510' };
     expect(policy?.matches?.(arrival, { ...arrival, description: 'O pedido chegou ao centro de : Cidade Exemplo - SP e segue para a próxima etapa.' })).toBe(true);
+
+    // A posting names the town of its drop-off point, the seller's town: it leaves the wording and is no place.
+    const posted = parseSpxBr(changed('delivered', (tracking) => {
+      Object.assign(tracking.records.find((record) => record.tracking_code === 'F000')!, { tracking_code: 'F098', description: 'Pedido postado Cidade Exemplo - SP' });
+    }), DELIVERED).events!.find((event) => event.provider_code === 'F098')!;
+    expect(posted).toMatchObject({ description: 'Pedido postado', stage: 'accepted', stage_source: 'carrier_map' });
+    expect(posted.location).toBeUndefined();
+    const posting = { stage: 'accepted', description: 'Pedido postado', location: '', providerCode: 'F098' };
+    expect(policy?.matches?.(posting, { ...posting, description: 'Pedido postado Cidade Exemplo - SP' })).toBe(true);
+    expect(policy?.matches?.(posting, { ...posting, description: 'Pedido postado Cidade Exemplo - SP', providerCode: 'F100' })).toBe(false);
   });
 
   it('takes whoever received the parcel out of the wording', () => {

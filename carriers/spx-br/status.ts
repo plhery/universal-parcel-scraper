@@ -12,6 +12,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['F000', 'registered'], // The seller is preparing the parcel.
   ['F001', 'registered'], // A pickup at the seller that collected nothing.
   ['F004', 'registered'], // A driver is assigned to the pickup.
+  ['F098', 'accepted'], // Posted by the seller at a drop-off point in Brazil.
   ['F099', 'accepted'], // Collected from a seller abroad.
   ['F100', 'accepted'], // Collected from a seller in Brazil.
   ['F200', 'in_transit'], ['F202', 'in_transit'], ['F206', 'in_transit'], ['F207', 'in_transit'], ['F210', 'in_transit'],
