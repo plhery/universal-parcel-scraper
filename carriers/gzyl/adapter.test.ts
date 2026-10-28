@@ -43,12 +43,12 @@ describe('GZYL tracking adapter', () => {
       expected_delivery: null, service_name: 'Synthetic Line PD', destination_country: 'CH',
     });
     expect(result.events).toEqual([
-      { time: '2026-03-05T09:31:20+08:00', description: 'local carrier Agent Import customs clearance', stage: 'customs', stage_source: 'carrier_map' },
-      { time: '2026-03-04T14:40:05+08:00', description: 'Item arrives at destination airport', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-03T14:02:11+08:00', description: 'Departing from the airport', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-03T08:55:39+08:00', description: 'Goods leave the operation center', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-02T15:07:14+08:00', description: 'Arrive at the cross border receiving point', stage: 'accepted', stage_source: 'carrier_map' },
-      { time: '2026-03-01T22:36:51+08:00', description: 'Order information received', stage: 'registered', stage_source: 'carrier_map' },
+      { time: '2026-03-05T09:31:20+08:00', description: 'local carrier Agent Import customs clearance', stage: 'customs', stage_source: 'carrier_map', written_at: '2026-03-05T09:31:20+08:00' },
+      { time: '2026-03-04T14:40:05+08:00', description: 'Item arrives at destination airport', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-04T14:40:05+08:00' },
+      { time: '2026-03-03T14:02:11+08:00', description: 'Departing from the airport', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-03T14:02:11+08:00' },
+      { time: '2026-03-03T08:55:39+08:00', description: 'Goods leave the operation center', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-03T08:55:39+08:00' },
+      { time: '2026-03-02T15:07:14+08:00', description: 'Arrive at the cross border receiving point', stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-02T15:07:14+08:00' },
+      { time: '2026-03-01T22:36:51+08:00', description: 'Order information received', stage: 'registered', stage_source: 'carrier_map', written_at: '2026-03-01T22:36:51+08:00' },
     ]);
   });
 

@@ -43,6 +43,8 @@ export interface CarrierEvent extends JsonObject {
    * map uses it only where it agrees with the town in `location`.
    */
   point?: EventPoint;
+  /** When the carrier's system wrote the scan, with that system's offset, where its reply says. */
+  written_at?: string;
 }
 
 export interface EventPoint extends JsonObject {

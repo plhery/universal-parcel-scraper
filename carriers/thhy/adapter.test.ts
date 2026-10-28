@@ -38,8 +38,8 @@ describe('Tianhui Hengyuan tracking adapter', () => {
     expect(result.canonical_tracking_number).toBeUndefined();
     expect(result.events).toEqual([
       // Its departure, worded only in Chinese, shows the English of the platform's other tenants.
-      { time: '2026-03-02T16:30:57+08:00', description: 'Goods leave the operation center', location: 'GZ', provider_code: 'SHIPMENT', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-02T16:15:01+08:00', description: 'Arrived at the receiving point', location: 'GZ', provider_code: 'ARRIVAL', stage: 'accepted', stage_source: 'carrier_map' },
+      { time: '2026-03-02T16:30:57+08:00', description: 'Goods leave the operation center', location: 'GZ', provider_code: 'SHIPMENT', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-02T16:30:57+08:00' },
+      { time: '2026-03-02T16:15:01+08:00', description: 'Arrived at the receiving point', location: 'GZ', provider_code: 'ARRIVAL', stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-02T16:15:01+08:00' },
     ]);
     const custom = fixture('track') as [{ data: [{ trackDetails: { track_kind: string }[] }] }];
     custom[0].data[0].trackDetails = custom[0].data[0].trackDetails.filter((row) => row.track_kind === 'CO_C_CR');

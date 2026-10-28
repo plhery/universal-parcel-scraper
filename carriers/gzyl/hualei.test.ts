@@ -112,6 +112,16 @@ describe('Hualei track interface', () => {
     }
   });
 
+  it('keeps when the platform wrote each row, which only the track interface says', () => {
+    const late = edited((record) => { for (const row of record.trackDetails) row.track_createdate = '2026-03-05 18:00:00'; });
+    const events = parseHualeiTrack(late, NUMBER, GZYL, READ_AT)!.events!;
+    expect(events.map((event) => event.written_at)).toEqual(events.map(() => '2026-03-05T18:00:00+08:00'));
+    // A creation time it cannot read, or the page, which shows none, leaves the scans without one.
+    const unread = edited((record) => { for (const row of record.trackDetails) row.track_createdate = 'soon'; });
+    expect(parseHualeiTrack(unread, NUMBER, GZYL, READ_AT)!.events!.some((event) => 'written_at' in event)).toBe(false);
+    expect(parseHualeiPage(page('page'), NUMBER, GZYL, READ_AT).events!.some((event) => 'written_at' in event)).toBe(false);
+  });
+
   it('counts identical rows once, keeps the reply’s order on one clock, and bounds the history', () => {
     const repeated = edited((record) => {
       record.trackDetails = [row('2026-03-03 10:00:00', 'Second'), row('2026-03-03 10:00:00', 'First'), row('2026-03-03 10:00:00', 'Second')];

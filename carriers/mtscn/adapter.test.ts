@@ -46,10 +46,10 @@ describe('Meiteshun Logistics tracking adapter', () => {
       service_name: 'Synthetic Small Parcel', destination_country: 'US' });
     // Rows written within twelve hours of their own clock stand.
     expect(result.events).toEqual([
-      { time: '2026-03-02T12:56:49+08:00', description: 'item inbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map' },
+      { time: '2026-03-02T12:56:49+08:00', description: 'item inbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-02T05:40:40+08:00' },
       {
         time: '2026-03-01T18:16:00+08:00', description: 'The package has been collected and is ready to be sent to the distribution center',
-        stage: 'accepted', stage_source: 'carrier_map',
+        stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-02T05:40:40+08:00',
       },
     ]);
     // Every row ahead: the order exists, with nothing to show yet.
@@ -65,15 +65,15 @@ describe('Meiteshun Logistics tracking adapter', () => {
     });
     expect(result.events).toHaveLength(9);
     expect(result.events!.slice(0, 2)).toEqual([
-      { time: '2026-03-19T09:10:22+08:00', description: 'Arriving at the mail processing center', location: 'Exampleshire, US', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-15T14:22:36+08:00', description: 'Customs clearance completed', location: 'US', stage: 'in_transit', stage_source: 'carrier_map' },
+      { time: '2026-03-19T09:10:22+08:00', description: 'Arriving at the mail processing center', location: 'Exampleshire, US', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-19T09:10:22+08:00' },
+      { time: '2026-03-15T14:22:36+08:00', description: 'Customs clearance completed', location: 'US', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-15T14:22:36+08:00' },
     ]);
     expect(result.events!.slice(-3)).toEqual([
-      { time: '2026-03-02T20:02:32+08:00', description: 'item outbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-02T12:56:49+08:00', description: 'item inbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map' },
+      { time: '2026-03-02T20:02:32+08:00', description: 'item outbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-02T20:02:32+08:00' },
+      { time: '2026-03-02T12:56:49+08:00', description: 'item inbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-02T12:56:49+08:00' },
       {
         time: '2026-03-01T18:16:00+08:00', description: 'The package has been collected and is ready to be sent to the distribution center',
-        stage: 'accepted', stage_source: 'carrier_map',
+        stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-01T18:16:00+08:00',
       },
     ]);
     expect(result.canonical_tracking_number).toBeUndefined();
@@ -86,11 +86,11 @@ describe('Meiteshun Logistics tracking adapter', () => {
     const result = parseMtscnTrack(asWritten(fixture('track')), NUMBER, AFTER)!;
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered', last_update: '2026-03-27T21:51:15+08:00' });
     expect(result.events!.slice(0, 3)).toEqual([
-      { time: '2026-03-27T21:51:15+08:00', description: 'Delivered', location: 'Sampletown', stage: 'delivered', stage_source: 'carrier_map' },
-      { time: '2026-03-25T14:22:41+08:00', description: 'package is on the way', location: 'Sampletown, US', stage: 'in_transit', stage_source: 'carrier_map' },
+      { time: '2026-03-27T21:51:15+08:00', description: 'Delivered', location: 'Sampletown', stage: 'delivered', stage_source: 'carrier_map', written_at: '2026-03-27T21:51:15+08:00' },
+      { time: '2026-03-25T14:22:41+08:00', description: 'package is on the way', location: 'Sampletown, US', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-25T14:22:41+08:00' },
       {
         time: '2026-03-22T14:36:40+08:00', description: 'Arrive at the sorting and distribution center', location: 'Sampletown, US',
-        stage: 'in_transit', stage_source: 'carrier_map',
+        stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-22T14:36:40+08:00',
       },
     ]);
     expect(result.events!.every((event) => event.stage_source === 'carrier_map')).toBe(true);

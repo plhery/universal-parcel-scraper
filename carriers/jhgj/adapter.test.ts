@@ -45,7 +45,7 @@ describe('Jiuhao International tracking adapter', () => {
 
   it('holds back the script written at the order’s creation, and reads the delivery written after it', () => {
     expect(parseJhgjTrack(fixture('track'), NUMBER, AFTER)!.events).toEqual([
-      { local_time: '2026-03-01T21:10:05', description: '广州处理中心已收寄', location: '广州市', stage: 'accepted', stage_source: 'carrier_map' },
+      { local_time: '2026-03-01T21:10:05', description: '广州处理中心已收寄', location: '广州市', stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-01T19:00:00+08:00' },
     ]);
     const result = parseJhgjTrack(fixture('track-delivered'), NUMBER, AFTER)!;
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update_local: '2026-03-20T11:20:00' });
@@ -63,12 +63,12 @@ describe('Jiuhao International tracking adapter', () => {
     expect(result.events).toHaveLength(10);
     expect(result.events!.every((event) => event.local_time && !event.time && event.stage_source === 'carrier_map')).toBe(true);
     expect(result.events!.slice(0, 2)).toEqual([
-      { local_time: '2026-03-13T08:42:36', description: 'Arrive at Airport', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-03-12T14:45:18', description: '启运', location: 'HK International Airport', stage: 'in_transit', stage_source: 'carrier_map' },
+      { local_time: '2026-03-13T08:42:36', description: 'Arrive at Airport', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-13T08:42:36+08:00' },
+      { local_time: '2026-03-12T14:45:18', description: '启运', location: 'HK International Airport', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-12T14:45:18+08:00' },
     ]);
     expect(result.events!.slice(-2)).toEqual([
-      { local_time: '2026-03-02T13:20:11', description: '邮件已完成分拣，准备发出', location: '广州市', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-03-01T21:10:05', description: '广州处理中心已收寄', location: '广州市', stage: 'accepted', stage_source: 'carrier_map' },
+      { local_time: '2026-03-02T13:20:11', description: '邮件已完成分拣，准备发出', location: '广州市', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-02T13:20:11+08:00' },
+      { local_time: '2026-03-01T21:10:05', description: '广州处理中心已收寄', location: '广州市', stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-01T21:10:05+08:00' },
     ]);
     expect(result.events!.find((event) => event.description === '出口海关/放行')).toMatchObject({ stage: 'in_transit' });
     expect(result).not.toHaveProperty('canonical_tracking_number');
@@ -82,11 +82,11 @@ describe('Jiuhao International tracking adapter', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered', last_update_local: '2026-03-20T11:20:00' });
     expect(result.events).toHaveLength(16);
     expect(result.events!.slice(0, 5)).toEqual([
-      { local_time: '2026-03-20T11:20:00', description: 'Delivered', location: 'Sampletown', stage: 'delivered', stage_source: 'carrier_map' },
-      { local_time: '2026-03-19T09:58:41', description: 'Out for Delivery', location: 'Sampletown', stage: 'out_for_delivery', stage_source: 'carrier_map' },
-      { local_time: '2026-03-18T13:25:19', description: 'Arrive at the mail processing center', location: 'Sampletown', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-03-17T13:44:02', description: 'Customs clearance completed', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-03-16T15:50:44', description: 'The import customs keep it for inspection', stage: 'customs', stage_source: 'carrier_map' },
+      { local_time: '2026-03-20T11:20:00', description: 'Delivered', location: 'Sampletown', stage: 'delivered', stage_source: 'carrier_map', written_at: '2026-03-20T11:20:00+08:00' },
+      { local_time: '2026-03-19T09:58:41', description: 'Out for Delivery', location: 'Sampletown', stage: 'out_for_delivery', stage_source: 'carrier_map', written_at: '2026-03-19T09:58:41+08:00' },
+      { local_time: '2026-03-18T13:25:19', description: 'Arrive at the mail processing center', location: 'Sampletown', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-18T13:25:19+08:00' },
+      { local_time: '2026-03-17T13:44:02', description: 'Customs clearance completed', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-17T13:44:02+08:00' },
+      { local_time: '2026-03-16T15:50:44', description: 'The import customs keep it for inspection', stage: 'customs', stage_source: 'carrier_map', written_at: '2026-03-16T15:50:44+08:00' },
     ]);
     expect(JSON.stringify(result)).not.toMatch(/00-000|Synthetic (?:Recipient|Shipper)|SYNTHETIC SIGNER|Example Street|SHOP-REF|JH-TEST|0\.8/);
     await expect(track(vi.fn<typeof fetch>().mockResolvedValue(json(fixture('track-delivered'))))).resolves.toMatchObject({ status: 'delivered' });

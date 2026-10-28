@@ -54,9 +54,9 @@ describe('Lingdong International tracking adapter', () => {
     });
     expect(result.events).toEqual([
       { time: '2026-03-04T21:58:03+08:00', description: 'Shipment departed from facility', location: 'SHENZHEN', provider_code: 'SHIPMENT',
-        stage: 'in_transit', stage_source: 'carrier_map' },
+        stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-04T21:58:03+08:00' },
       { time: '2026-03-03T07:58:04+08:00', description: 'Shipment arrived at facility', location: 'SHENZHEN', provider_code: 'ARRIVAL',
-        stage: 'accepted', stage_source: 'carrier_map' },
+        stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-03T07:58:04+08:00' },
     ]);
     expect(result.canonical_tracking_number ?? result.delivery_tracking_number).toBeUndefined();
     const text = JSON.stringify(result);

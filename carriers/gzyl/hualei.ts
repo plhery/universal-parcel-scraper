@@ -191,6 +191,12 @@ export interface HualeiRow {
   readonly clock: string; readonly content: string; readonly location: string; readonly code: string; readonly written?: string;
 }
 
+/** When the platform wrote a row, on its own clock, which only the track interface says. */
+function writtenAt(row: HualeiRow): string | undefined {
+  const match = CLOCK.exec(row.written ?? '');
+  return match ? isoTime(`${match[1]}T${match[2]}`, HUALEI_ZONE)?.iso : undefined;
+}
+
 /** Whether a row was written well before its own clock, as part of a timeline written ahead. */
 function writtenAhead(row: HualeiRow, local: string): boolean {
   const match = CLOCK.exec(row.written ?? '');
@@ -240,11 +246,14 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number)
     seen.add(key);
     const staged = stageOf(tenant, row.code, description);
     const english = wording ? tenant.english?.(row.code || null, normalizeStatusWording(wording)) : undefined;
+    const written = writtenAt(row);
     kept.push({ clock: local, index, ...(english ? { english } : {}), event: {
       ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : local }), description,
       ...(location ? { location } : {}),
       ...(row.code ? { provider_code: row.code } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
+      // Kept with the scan, so that stored rows show which clock a row abroad is on.
+      ...(written ? { written_at: written } : {}),
     } });
   });
   const { repeats } = tenant;

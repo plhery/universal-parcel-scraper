@@ -48,12 +48,12 @@ describe('Yilong Logistics tracking adapter', () => {
       last_update: '2026-03-05T08:12:26+08:00', service_name: 'Synthetic Line', destination_country: 'US',
     });
     expect(result.events).toEqual([
-      { time: '2026-03-05T08:12:26+08:00', description: 'Package handed over to airline', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-04T23:12:16+08:00', description: 'Customs export clearance completed', stage: 'in_transit', stage_source: 'carrier_map' },
+      { time: '2026-03-05T08:12:26+08:00', description: 'Package handed over to airline', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-05T08:12:26+08:00' },
+      { time: '2026-03-04T23:12:16+08:00', description: 'Customs export clearance completed', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-04T23:12:16+08:00' },
       { time: '2026-03-03T19:32:51+08:00', description: 'Package departed from the warehouse', location: 'Shenzhen', provider_code: 'SHIPMENT',
-        stage: 'in_transit', stage_source: 'carrier_map' },
+        stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-03T19:32:51+08:00' },
       { time: '2026-03-03T05:00:18+08:00', description: 'Package received and scanned at warehouse', location: 'Shenzhen', provider_code: 'ARRIVAL',
-        stage: 'accepted', stage_source: 'carrier_map' },
+        stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-03T05:00:18+08:00' },
     ]);
     expect(result.canonical_tracking_number ?? result.delivery_tracking_number).toBeUndefined();
     const text = JSON.stringify(result);

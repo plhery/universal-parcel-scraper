@@ -45,8 +45,8 @@ describe('Mayi Yinfu tracking adapter', () => {
     expect(result.events).toHaveLength(17);
     expect(result.events!.every((event) => Boolean(event.local_time) !== Boolean(event.time) && event.stage)).toBe(true);
     expect(result.events!.slice(1, 3)).toEqual([
-      { time: '2026-03-18T14:12:00+08:00', description: 'The international shipment has been processed in the export parcel center', location: 'DE', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-17T11:47:00+08:00', description: 'The international shipment has been processed in the parcel center of origin', location: 'DE', stage: 'in_transit', stage_source: 'carrier_map' },
+      { time: '2026-03-18T14:12:00+08:00', description: 'The international shipment has been processed in the export parcel center', location: 'DE', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-18T14:12:00+08:00' },
+      { time: '2026-03-17T11:47:00+08:00', description: 'The international shipment has been processed in the parcel center of origin', location: 'DE', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-17T11:47:00+08:00' },
     ]);
     // DHL's rows with a country, and the rows in China, are on Beijing time. The forwarder's rows
     // abroad, its warehouse rows and the rows without a place keep their wall clocks. The scripted
@@ -60,7 +60,7 @@ describe('Mayi Yinfu tracking adapter', () => {
       ['2026-03-04T19:10:00', null], ['2026-03-04T17:26:45', null], ['2026-03-04T13:20:00', null],
     ]);
     expect(result.events!.find((event) => event.provider_code === 'ARRIVAL')).toEqual({
-      local_time: '2026-03-04T22:51:19', description: '已入库,到达收货点', location: 'SAMPLECITY', provider_code: 'ARRIVAL', stage: 'accepted', stage_source: 'carrier_map',
+      local_time: '2026-03-04T22:51:19', description: '已入库,到达收货点', location: 'SAMPLECITY', provider_code: 'ARRIVAL', stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-04T22:51:19+08:00',
     });
     // The airport rows' translation reads "delivered"; the step they lead with is a hand-over to the airport.
     const airport = result.events!.filter((event) => /^货物已交机场|^The goods have been delivered to the airport$/.test(event.description!));
@@ -97,7 +97,7 @@ describe('Mayi Yinfu tracking adapter', () => {
       last_update: '2026-03-23T12:15:00+08:00', delivered_at: '2026-03-23T12:15:00+08:00' });
     expect(result.last_update_local).toBeUndefined();
     expect(result.events![0]).toEqual({ time: '2026-03-23T12:15:00+08:00', description: 'The shipment has been delivered', location: 'ES',
-      stage: 'delivered', stage_source: expect.stringMatching(/^wording:/) });
+      stage: 'delivered', stage_source: expect.stringMatching(/^wording:/), written_at: '2026-03-23T12:15:00+08:00' });
   });
 
   it('keeps the wall clocks whose zone the record does not settle', () => {
