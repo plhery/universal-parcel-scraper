@@ -201,6 +201,12 @@ step exists for future protocol changes.
   zone, Pacific, in step 1. Its labels ("Shipping Label
   Created") take GMT-07:00, which its own tracker gives them in every season. The rendered
   page prints no location, so it places no site.
+- On a parcel to the US, DHLink's feed can hold a partner's scan twice: its own row on
+  China's clock and the partner's copy on its US wall clock, as the
+  [DHLink adapter](../../carriers/dhlink/README.md) reads them. ParcelsApp files both under
+  DHLink, and read on China's clock, a copy of SwiftX's label came 15 hours early. A DHLink
+  scan whose US reading is the instant of another DHLink scan with the same wording is that
+  copy and is dropped.
 - Wall clocks: the dates of USPS, Canada Post, GOFO's US scans, SpeedPAK, EMS, Cainiao,
   EcoScooting, 4PX, MailAmericas and FIRST LINE abroad are each scan's local clock under a label that is
   never its instant (checked 2026-10-10 scan for scan: USPS's page and the "at 8:25 am" in

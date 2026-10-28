@@ -1729,6 +1729,21 @@ describe('ParcelsApp result parsing', () => {
     expect(scans('America/Los_Angeles')).toEqual(expected);
   });
 
+  it("drops a partner's copy that DHLink relays on its US wall clock beside its own row on China's", () => {
+    // Live shape: DHLink's feed has SwiftX's label at SwiftX's digits and at DHLink's,
+    // the same instant; read on China's clock, the copy came 15 hours early.
+    const ktd = 'KTDWE0000000000';
+    const own = { date: '2026-10-09T10:32:09Z', status: 'Shipping Label Created', carrier: 0, location: 'SYSTEM, United States' };
+    const copy = { ...own, date: '2026-10-08T19:32:09Z' };
+    const warehouse = { date: '2026-10-09T00:33:06Z', status: 'Package received & scanned at warehouse', carrier: 0 };
+    const times = (states: Record<string, unknown>[], destinationCode = 'US') => parseParcelsAppResponse({ carriers: ['DHLink'],
+      originCode: 'CN', destinationCode, states }, ktd, identity(ktd), 'Asia/Shanghai').events?.map(({ time }) => time);
+    expect(times([own, warehouse, copy])).toEqual(['2026-10-09T02:32:09.000Z', '2026-10-08T16:33:06.000Z']);
+    // Alone, or on a parcel to another country, a row keeps its clock.
+    expect(times([warehouse, copy])).toEqual(['2026-10-08T16:33:06.000Z', '2026-10-08T11:32:09.000Z']);
+    expect(times([own, warehouse, copy], 'MX')).toHaveLength(3);
+  });
+
   it('reads SwiftX\'s listed sites in their zone, its labels on GMT-07:00 in every season and its other scans on Pacific time', () => {
     const swx = 'SWX000000000000000001';
     const times = (states: Record<string, unknown>[]) =>

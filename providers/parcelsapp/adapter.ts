@@ -33,6 +33,7 @@ import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '.
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
+import { DHLINK_RECORD_ZONE, usClockCopy } from '../../carriers/dhlink/clock.js';
 import { FIRST_LINE_CHINA_ZONE, firstLineInChina } from '../../carriers/first-line/clock.js';
 import { hrvatskaPostaForeignZone } from '../../carriers/hrvatska-posta/parser.js';
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
@@ -1483,6 +1484,25 @@ function placeholderDates(dates: readonly unknown[]): Set<string> {
  */
 const CARRIER_FAILURES = new Set(['DOWN', 'BUSY', 'PARSER', 'CAPTCHA', 'MAINTENANCE']);
 
+/**
+ * On a parcel to the US, DHLink's feed holds a partner's scan twice: its own
+ * row on China's clock and the partner's copy on the partner's US wall clock
+ * (carriers/dhlink). ParcelsApp files both under DHLink, where the copy, read
+ * on China's clock, would come hours early: it goes when a US reading of its
+ * clock gives the instant of DHLink's row with the same wording.
+ */
+function dropDhlinkCopies(entries: { name: unknown; date: unknown; wording: string }[]): void {
+  const dhlink = entries.filter(({ name }) => typeof name === 'string' && carrierIdFromName(name) === 'dhlink');
+  const copies = new Set(dhlink.filter((copy) => {
+    const wall = mislabeledWallTime(copy.date);
+    return wall && dhlink.some((own) => {
+      const time = own !== copy && own.wording === copy.wording ? mislabeledLocalTime(own.date, DHLINK_RECORD_ZONE) : null;
+      return time && usClockCopy(wall, time.timestamp);
+    });
+  }));
+  if (copies.size) entries.splice(0, entries.length, ...entries.filter((entry) => !copies.has(entry)));
+}
+
 function parseHistory(payload: unknown, trackingNumber: string, timezone: string | null = null): CarrierResult {
   if (isRecord(payload) && payload.error === 'RELOAD') throw new ChallengeError(SOURCE);
   if (isRecord(payload) && (payload.error === 'NO_DATA' || payload.error === 'NO_TRACKER')) {
@@ -1532,6 +1552,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     const scan = carrierScan(carrier, status) ?? airportHandOver(carrier, status, state.location, destination);
     entries.push({ ...state, raw, scan, wording: scan?.wording ?? status });
   }
+  if (destination === 'US') dropDhlinkCopies(entries);
   // Another carrier's copy of a scan placed in its state or province (Cainiao
   // relaying UniUni's "Delivered" at the same minute, with no place) takes
   // that scan's zone, so the two stay one scan. A copy of a GOFO scan with an
