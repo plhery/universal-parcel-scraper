@@ -52,6 +52,18 @@ export function isCttExpressAgency(location: string): boolean {
   return CTT_EXPRESS_AGENCY.test(location) && !CTT_SITE.test(location);
 }
 
+/** The acceptance CTT records with no place as a CTT Express agency takes a parcel in comes up to this long before. */
+const AGENCY_INTAKE_MS = 60_000;
+
+/**
+ * Whether a CTT scan with no place, at `at`, is that acceptance: at most a minute before one of
+ * `agencyScans`, the agencies' scans. Both are wall clocks read as UTC, only to compare them.
+ * It is on Madrid's clock, as the agency's scan is.
+ */
+export function agencyIntake(at: number, agencyScans: readonly number[]): boolean {
+  return agencyScans.some((agency) => agency - at >= 0 && agency - at <= AGENCY_INTAKE_MS);
+}
+
 /**
  * The clock a CTT scan's location itself names: the country of the office of
  * exchange leading it, when that is Portugal or one of `countries` (the

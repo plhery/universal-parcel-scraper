@@ -13,7 +13,7 @@ import {
   parseJsonBytes,
 } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { cttSiteZone, isCttExpressAgency, portugalZone } from './clock.js';
+import { agencyIntake, cttSiteZone, isCttExpressAgency, portugalZone } from './clock.js';
 import { classifyCttStatus } from './status.js';
 
 // Protocol provenance:
@@ -106,8 +106,6 @@ const DESTINATION_EVENT = /^(?:EM[D-I]|ED[A-H])$/;
 /** UPU events an origin post records: from posting to dispatch from its office of exchange. */
 const ORIGIN_EVENT = /^(?:EM[A-C]|EX[A-DX])$/;
 const WALL_CLOCK = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,3})?(?:Z|\+00:?00)?$/i;
-/** The acceptance CTT records with no place as a CTT Express agency takes a parcel in comes up to this long before. */
-const AGENCY_INTAKE_MS = 60_000;
 
 /** A scan's wall clock read as UTC, only to compare it with another's. */
 function wallMillis(value: unknown): number {
@@ -178,7 +176,7 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
     const partner = abroad && DESTINATION_EVENT.test(code) ? abroad : origin && ORIGIN_EVENT.test(code) ? origin : null;
     const at = wallMillis(rawEvent.DateTime);
     const spanish = isCttExpressAgency(location)
-      || (!location && agencyScans.some((agency) => agency - at >= 0 && agency - at <= AGENCY_INTAKE_MS));
+      || (!location && agencyIntake(at, agencyScans));
     const clock = scanClock(rawEvent.DateTime, location, partner, spanish);
     if (!clock || !description) return;
     const identity = `${clock.time ?? clock.local_time}\u0000${description}\u0000${Number.isSafeInteger(stateId) ? stateId : ''}`;

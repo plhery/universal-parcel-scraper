@@ -22,6 +22,7 @@ import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
+import { agencyIntake, cttSiteZone, isCttExpressAgency } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
 import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
@@ -112,6 +113,12 @@ function rawClock(raw: Record<string, unknown>): string | null {
     && typeof clock.time === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(clock.time) ? `${clock.date}T${clock.time}` : null;
 }
 
+/** A scan's clock as the carrier wrote it, read as UTC only to compare it with another's. */
+function wallMillis(raw: Record<string, unknown>): number {
+  const wall = rawClock(raw);
+  return wall ? Date.parse(`${wall}Z`) : Number.NaN;
+}
+
 /** The offset-less clock of a scan whose offset 17TRACK added itself. */
 function facilityWall(raw: Record<string, unknown>): string | null {
   return isRecord(raw.time_raw) && raw.time_raw.timezone === null ? rawClock(raw) : null;
@@ -179,6 +186,15 @@ const OUTBOUND = /\((?:salida|recibido por EDI)\)$/i;
  * country on several clocks they keep their wall clock.
  */
 const CORREOS_SPAIN = 19181;
+
+/**
+ * 17TRACK's carrier 16101, CTT, shows CTT's wall clocks and puts Portugal's
+ * offset on them. A CTT Express agency's scan in Spain, and the acceptance CTT
+ * records with no place as the agency takes the parcel in, came on Lisbon's
+ * clock, an hour after CTT's own tracker dates them on Madrid's. A row is read
+ * on the clock its place names, as CTT's adapter reads it (carriers/ctt/clock.ts).
+ */
+const CTT = 16101;
 
 /**
  * 17TRACK's carrier 19251, Swiss Post, whose leg relays the destination post's
@@ -282,10 +298,10 @@ function undatedClock(raw: Record<string, unknown>): string | null {
  */
 const CORREOS_CHILE = 3101;
 
-/** The recipient's country, the only field of the address read. */
-function recipientCountry(shipment: Record<string, unknown>): string | null {
-  const country = isRecord(shipment.shipping_info) && isRecord(shipment.shipping_info.recipient_address)
-    ? shipment.shipping_info.recipient_address.country : null;
+/** The recipient's or the sender's country, the only field of the address read. */
+function recipientCountry(shipment: Record<string, unknown>, address = 'recipient_address'): string | null {
+  const country = isRecord(shipment.shipping_info) && isRecord(shipment.shipping_info[address])
+    ? shipment.shipping_info[address].country : null;
   return typeof country === 'string' && /^[A-Z]{2}$/.test(country) ? country : null;
 }
 
@@ -525,6 +541,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const handedOver = reported.key === FIC ? ficHandover(provider.events) : '';
     const delivering = handedOver ? countryTimeZone(recipientCountry(shipment)) : null;
     const labelled = labelZone(reported);
+    const ctt = reported.key === CTT;
+    const countries = ctt ? [recipientCountry(shipment, 'shipper_address'), recipientCountry(shipment)] : [];
+    const agencyScans = ctt ? provider.events.flatMap((raw: unknown) => isRecord(raw) && isCttExpressAgency(text(raw.location))
+      ? [wallMillis(raw)] : []) : [];
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
@@ -541,13 +561,16 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const polish = !poland ? null : departed && (rawClock(raw) ?? '') > departed ? partner : 'Europe/Warsaw';
       // FIC's partner's scan from the handover on, unless placed in Britain, on the recipient's clock.
       const handed = delivering && (rawClock(raw) ?? '') >= handedOver && locationCountry(raw.location) !== 'GB' ? delivering : null;
-      // A facility's clock, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's, Quick Rabbit's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
-      const read = facility || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || own || chile || shiprocket || daiPost || quickRabbit
+      // CTT's scan on the clock its place names, or Madrid's for the acceptance as a CTT Express agency takes the parcel in.
+      const site = !ctt ? null : cttSiteZone(text(raw.location), countries)
+        ?? (!text(raw.location) && agencyIntake(wallMillis(raw), agencyScans) ? 'Europe/Madrid' : null);
+      // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's, Quick Rabbit's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
+      const read = facility || site || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || own || chile || shiprocket || daiPost || quickRabbit
         || sent !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland ? null : seasonZone(raw, labelled, now);
       const wall = relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null;
-      const zone = !wall ? null : season ?? (hywl ? relayed : relayed ?? facility ?? own ?? (sent !== undefined ? sent : abroad.has(index) ? abroad.get(index) ?? null
+      const zone = !wall ? null : season ?? (hywl ? relayed : relayed ?? facility ?? site ?? own ?? (sent !== undefined ? sent : abroad.has(index) ? abroad.get(index) ?? null
         : exchange ? origin : utc ? 'UTC' : polish ? polish : handed ? handed
         : nz ? 'Pacific/Auckland' : quickRabbit ? 'Europe/Madrid' : chile ? facilityZone(text(raw.location)) ?? 'America/Santiago'
         : shiprocket ? (placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null)

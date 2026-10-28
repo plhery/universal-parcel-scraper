@@ -374,6 +374,27 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply(100999, [row('2026-10-25', '23:07:00')]), number).events?.[0]?.time).toBe('2026-10-26T03:07:00.000Z');
   });
 
+  it('reads CTT\'s rows at a CTT Express agency, and the acceptance as it takes the parcel in, on Madrid\'s clock', () => {
+    const row = (date: string, time: string, description: string, location: string | null) => ({
+      time_iso: `${date}T${time}+00:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, events: unknown[]) => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, shipping_info: { shipper_address: { country: 'ES' }, recipient_address: { country: 'PT' } },
+        tracking: { providers: [{ provider: { key, name: 'CTT', country: 'PT' }, events }] } } }] });
+    const times = (key: number, events: unknown[]) => parse17TrackResponse(reply(key, events), number).events?.map((event) => event.time);
+    expect(times(16101, [row('2026-10-28', '03:17:09', 'Em trânsito, Chegou ao centro operacional', 'C.O. EXAMPLE'),
+      row('2026-10-27', '11:00:05', 'Em trânsito, Chegou ao centro operacional', '009999 - (PL) EXAMPLE AGENCY'),
+      row('2026-10-27', '11:00:04', 'Aceite, O envio foi aceite. O processo de envio foi iniciado', null),
+      row('2026-10-27', '09:13:40', 'Informação recebida, A informação sobre o envio foi recebida.', null)]))
+      .toEqual(['2026-10-28T03:17:09.000Z', '2026-10-27T10:00:05.000Z', '2026-10-27T10:00:04.000Z', '2026-10-27T09:13:40.000Z']);
+    // In summer too, where 17TRACK labels the row with the offset Portugal keeps on the day it looks.
+    expect(times(16101, [row('2026-10-22', '16:27:53', 'Em trânsito, Chegou ao centro operacional', '009999 - (PL) EXAMPLE AGENCY'),
+      row('2026-10-22', '16:27:52', 'Aceite, O envio foi aceite. O processo de envio foi iniciado', null)]))
+      .toEqual(['2026-10-22T14:27:53.000Z', '2026-10-22T14:27:52.000Z']);
+    // Another feed keeps 17TRACK's reading.
+    expect(times(100999, [row('2026-10-27', '11:00:05', 'In transit', '009999 - (PL) EXAMPLE AGENCY')])).toEqual(['2026-10-27T11:00:05.000Z']);
+  });
+
   it('reads Huiyi Logistics\' rows in China on Beijing\'s clock, not as their "+00:00", and keeps the others\' wall clocks', () => {
     const row = (time: string, location: string) => ({
       time_iso: `2026-05-07T${time}+00:00`, time_utc: `2026-05-07T${time}Z`, time_raw: { date: '2026-05-07', time, timezone: '+00:00' },

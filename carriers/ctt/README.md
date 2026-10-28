@@ -61,8 +61,8 @@ carrier.
     that arrival two hours before the digits CTT shows.
   - The shipment record CTT Express sends, which CTT places in Madrid, is on Madrid's clock.
   - Any other scan is CTT's, on Portugal's clock.
-  - Ship24's and ParcelsApp's copies keep CTT's digits, so a location they relay takes the
-    same clock: a CTT Express agency's scan is Madrid's there too.
+  - Ship24's, ParcelsApp's and 17TRACK's copies keep CTT's digits, so a location they relay
+    takes the same clock: a CTT Express agency's scan is Madrid's there too.
   - Any other offset is taken as sent. Wall times sort among instants by their digits.
 - The app identity policy in [app.ts](app.ts) requires the same instant and `StateId` before
   updating a stored scan. Its `relabelledFrom: 'UTC'` lets a scan on its own clock take over
