@@ -38,7 +38,9 @@ delivery.
 
 Scans carry English wording and no code. The adapter maps the wording; "Arrival in" is followed
 by the station's name, so it is read by its opening words. Wording the map does not know goes to
-the shared wording rules. A text message to the recipient keeps the stage of the scan before it.
+the shared wording rules. "Item deposited at ELTA" is the sender handing the item in at a post
+office, so the map reads it as accepted where the shared rules would read a delivery. A text
+message to the recipient keeps the stage of the scan before it.
 Scan clocks are wall times without an offset and are kept as local times.
 
 The pickup point is the station, a post office or a courier agency, named by the scan that made

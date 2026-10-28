@@ -7,7 +7,12 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
  * out with a courier or waiting at a post office.
  */
 export const ELTA_SCANS: Readonly<Record<string, Stage>> = {
+  // The sender's label, then the item handed in at a post office, which the shared rules read as delivered.
+  'Label printed by customer': 'registered',
+  'Item deposited at ELTA': 'accepted',
   'Shipment in transit': 'in_transit',
+  // At Athens airport's hub, before the item leaves Greece.
+  'Arrival at the airport': 'in_transit',
   'With Courier for delivery': 'out_for_delivery',
   // The courier's attempt: the notice left and its reason, at the same minute.
   'Notification of attempted delivery': 'failed_attempt',
