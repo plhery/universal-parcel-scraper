@@ -167,6 +167,13 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "note": "Landmark hands the parcel to the destination's postal operator for the last mile, as a provider relayed it. Not a delivery."
+    },
+    {
+      "wording": "Package scanned at carrier facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A scan at a carrier's facility, seen after Landmark's processing; read as its other facility scans are."
     }
   ]
 }

@@ -19,7 +19,9 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
     // Evri's depot handing the parcel to its courier, who confirms receipt before delivering.
     'Out For Delivery To Courier',
     // The hand-over to the destination's postal operator for the last mile, which the shared rules read as a delivery.
-    'Item deposited to local postal operator'].map(wording => [wording, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
+    'Item deposited to local postal operator',
+    // A carrier's facility, seen after Landmark's processing.
+    'Package scanned at carrier facility'].map(wording => [wording, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
 ]);
 
 export function landmarkStatus(wording: string): ClassifiedStatus | undefined { return WORDINGS.get(wording); }
