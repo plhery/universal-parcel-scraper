@@ -23,7 +23,7 @@ const NAME_ALIASES: Readonly<Record<string, string>> = {
   ups: 'ups', swisspost: 'swiss-post', laposte: 'la-poste', colissimo: 'la-poste',
   dhlecommerce: 'dhl-ecommerce', cainiao: 'aliexpress', postnl: 'spring-gds',
   asendiausa: 'asendia', asendiaunitedstates: 'asendia', finlandpost: 'posti', spainpost: 'correos-spain',
-  portugalctt: 'ctt', portugalpostportugalctt: 'ctt',
+  portugalctt: 'ctt', portugalpostportugalctt: 'ctt', postennorgenorwaypost: 'bring-posten',
   italypost: 'poste-italiane', italysda: 'poste-italiane', deutschepostdhlpaket: 'dhl', austriapost: 'austrian-post',
   evri: 'evri-uk', chilepost: 'correos-chile', chilecorreos: 'correos-chile', correoschilecorreoschile: 'correos-chile',
   // La Poste's names for its delivery partners abroad, in French or as the postal union lists them.

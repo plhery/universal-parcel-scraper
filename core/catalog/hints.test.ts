@@ -212,7 +212,8 @@ describe('carrier names reported by universal providers', () => {
     ['UPS', 'ups'], ['La Poste (Colissimo)', 'la-poste'], ['Chronopost France', 'chronopost'],
     ['Chronopost (France)', 'chronopost'], ['Posti Finland', 'posti'], ['Swiss Post CH', 'swiss-post'],
     ['Finland Post', 'posti'], ['Spain Post', 'correos-spain'], ['Portugal CTT', 'ctt'],
-    ['Portugal Post - Portugal CTT', 'ctt'], ['Italy Post', 'poste-italiane'], ['Italy SDA', 'poste-italiane'],
+    ['Portugal Post - Portugal CTT', 'ctt'], ['Posten Norge - Norway Post', 'bring-posten'], ['Italy Post', 'poste-italiane'],
+    ['Italy SDA', 'poste-italiane'],
     ['SDA Express Courier', 'poste-italiane'], ['4PX Express', 'four-px'], ['Asendia United States', 'asendia'],
     ['Deutsche Post - DHL Paket', 'dhl'], ['DHL eCommerce Global Mail', 'dhl-ecommerce'],
     ['Correos de España', 'correos-spain'], ['Correos Spain', 'correos-spain'], ['Austria Post', 'austrian-post'],
@@ -257,7 +258,7 @@ describe('carrier names reported by universal providers', () => {
   it.each([
     'La Poste', 'La Poste (Colissimo)', 'Chronopost France', 'FedEx', 'India Post', 'Posti', 'UPS',
     'Chronopost Portugal', 'Correos Chile', 'Royal Mail (UK)', 'DHL', 'DHL Express', 'GLS Italy', 'DPD UK',
-    'Finland Post', 'Spain Post', 'Portugal CTT', 'Portugal Post - Portugal CTT', 'Italy Post', 'Deutsche Post - DHL Paket', 'Correos de España', 'Correos Spain',
+    'Finland Post', 'Spain Post', 'Portugal CTT', 'Portugal Post - Portugal CTT', 'Posten Norge - Norway Post', 'Italy Post', 'Deutsche Post - DHL Paket', 'Correos de España', 'Correos Spain',
     'Austria Post', 'Brazil Post', 'South Africa Post Office', 'Zhongling', 'CTT',
   ])('knows %s from the catalog', (name) => {
     expect(isKnownCarrierName(name)).toBe(true);
