@@ -533,6 +533,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'jifan', number: 'JFGJ000000017CN',
     route: /^https:\/\/www\.szjf56\.cn\/index\/tracknumber\/track\?nos=JFGJ000000017CN$/,
     marker: /Powered By 吉凡物流|查询结果为2个月内的包裹/ },
+  // An unknown invoice gets the bare search form.
+  { carrier: 'fastbox', number: 'FB2610010000000017',
+    route: /^https:\/\/fastbox\.co\.kr\/DHUB\/tracking\.php\?fb_invoice_no=FB2610010000000017$/,
+    marker: /FB Invoice No\./ },
   // The page reads the number from its address into its search tags and looks it up on load.
   // The tracker looks the number up and lists it with its status.
   { carrier: 'jcex', number: 'JCZ9999999999DH',

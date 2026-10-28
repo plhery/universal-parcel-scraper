@@ -1567,6 +1567,7 @@ export const REGISTRY: RegistryDefinition = {
     "far-international": "far-international",
     "fargo-courier": "fargo-courier",
     "fargo-uz": "fargo-uz",
+    "fastbox": "universal",
     "fastdrop": "fastdrop",
     "fastfrate": "fastfrate",
     "fedex": "fedex",

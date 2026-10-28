@@ -359,6 +359,16 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
+  it('names Fastbox for FB, a date and ten digits, and only that layout', () => {
+    for (const number of ['FB2610010000000017', 'fb 261001 0000 000 017', 'FB1712310000000010']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'fastbox', confidence: 'high' });
+    }
+    for (const number of ['FB261001000000017', 'FB26100100000000017', 'FB2613010000000017', 'FB2610320000000017', 'FB2600010000000017', 'FC2610010000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fastbox');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('fastbox');
+    }
+  });
+
   it('names TopYou for TYZR, a letter, ten digits and YQ, and only that layout', () => {
     for (const number of ['TYZRZ0000000017YQ', 'tyzrz 0000 0000 17 yq']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'topyou', confidence: 'high' });

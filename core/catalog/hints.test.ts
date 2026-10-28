@@ -32,6 +32,7 @@ describe('brand networks', () => {
     expect(carrierIdFromName('Pengyou')).toBe('pengyou');
     expect(carrierIdFromName('Jifan')).toBe('jifan');
     expect(carrierIdFromName('YBWL')).toBe('youbang-express');
+    expect(carrierIdFromName('FASTBOX')).toBe('fastbox');
     // ParcelsApp and Ship24 name North Macedonia's post as Macedonia Post.
     expect(carrierIdFromName('Macedonia Post')).toBe('posta-north-macedonia');
     expect(carrierIdFromName('TopYou')).toBe('topyou');

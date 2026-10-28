@@ -14652,6 +14652,44 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "fastbox": {
+    "displayName": "Fastbox",
+    "color": "#f47f39",
+    "aliases": [
+      "FASTBOX",
+      "패스트박스"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://fastbox.co.kr/en/",
+    "trackingUrlTemplate": "https://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no={trackingNumber}",
+    "trackingSearchUrl": "https://fastbox.co.kr/en/",
+    "linkRules": [
+      {
+        "domains": [
+          "fastbox.co.kr",
+          "www.fastbox.co.kr"
+        ],
+        "pathPattern": "^/DHUB/tracking\\.php$",
+        "params": [
+          "fb_invoice_no"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^FB\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{10}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "fastdrop": {
     "displayName": "Fastdrop",
     "color": "#5dbbd1",
@@ -34504,6 +34542,7 @@ export const CARRIER_IDS = [
   "far-international",
   "fargo-courier",
   "fargo-uz",
+  "fastbox",
   "fastdrop",
   "fastfrate",
   "fedex-freight",
@@ -35335,6 +35374,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "far-international": ["far-international-1"],
   "fargo-courier": ["fargo-courier-1"],
   "fargo-uz": [],
+  "fastbox": ["fastbox-1"],
   "fastdrop": [],
   "fastfrate": [],
   "fedex-freight": [],
