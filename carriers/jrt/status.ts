@@ -10,8 +10,13 @@ const FLIGHT_DAY = /^(货物已交机场,预计)\d{1,2}(号的航班 goods deliv
 // The English row of a booked flight names its day.
 const TAKE_OFF_DAY = /^(flight is expected to take off on )[a-z]+ \d{1,2}$/;
 
+// The newer English rows name the flight's days as month.day: "expected to depart on 10.27 and land on 10.27".
+const FLIGHT_DATES = /^(the flight is expected to depart on )\d{1,2}\.\d{1,2}( and land on )\d{1,2}\.\d{1,2}$/;
+const LANDING_DATE = /^(the flight has departed and is expected to )\d{1,2}\.\d{1,2}( land)$/;
+
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
-export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…');
+export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
+  .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2');
 
 /**
  * The stage JRT's map gives a row, by its whole `normalizeStatusWording` wording:

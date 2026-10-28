@@ -100,6 +100,8 @@ describe('JRT tracking adapter', () => {
     const answer = (description: string) => statusMapAnswer({ carrier: 'jrt', providerCode: null, description });
     expect(answer('货物已交机场,预计18号的航班 Goods delivered to airport, scheduled on flight of the 18th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Flight is expected to take off on September 11')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('The flight has departed and is expected to 1.3 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     for (const description of [
@@ -108,6 +110,7 @@ describe('JRT tracking adapter', () => {
       '货物已交机场,预计18号的航班 Goods delivered to airport, scheduled on flight of the 18th CA000',
       '货物已交机场,预计号的航班 Goods delivered to airport, scheduled on flight of the th',
       'loaded to movement / tour vehicle again',
+      'The flight is expected to depart on soon and land on 10.27',
     ]) expect(answer(description), description).toEqual({ kind: 'unknown' });
   });
 

@@ -32,6 +32,10 @@
     {"wording": "Customs clearance of the cargo is in progress", "language": "en", "stage": "customs", "confirmedBy": "live"},
     {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "The goods have been handed over to the carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the carrier that delivers the last leg."},
-    {"wording": "The shipment has been posted by the sender at the retail outlet", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from DHL: JRT hands the parcel in at a Deutsche Post outlet for the last leg, so the parcel is already on its way."}
+    {"wording": "The shipment has been posted by the sender at the retail outlet", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from DHL: JRT hands the parcel in at a Deutsche Post outlet for the last leg, so the parcel is already on its way."},
+    {"wording": "The flight is expected to depart on … and land on …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting at the airport for the booked flight, whose days, month.day, are read as an ellipsis."},
+    {"wording": "The flight has departed and is expected to … land", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In the air; the landing day, month.day, is read as an ellipsis."},
+    {"wording": "The flight has arrived and is awaiting dismantling", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The NOA has been received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The airline's notice of arrival, after the landing and before the pickup and customs clearance."}
   ]
 }
