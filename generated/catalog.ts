@@ -19232,7 +19232,7 @@ export const CARRIER_CATALOG = {
   },
   "jifan": {
     "displayName": "Jifan",
-    "color": "#305a96",
+    "color": "#c81011",
     "aliases": [
       "Jifan International Logistics",
       "吉凡国际物流",
@@ -33764,7 +33764,7 @@ export const CARRIER_CATALOG = {
   },
   "youbang-express": {
     "displayName": "YouBang Express",
-    "color": "#3e6ad8",
+    "color": "#fb5008",
     "aliases": [
       "YBWL",
       "佑邦国际物流",
