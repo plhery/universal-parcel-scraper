@@ -242,6 +242,32 @@ describe('JCEX HTTP adapter', () => {
       writtenAhead: ['2026-04-11T01:09:45+08:00', '2026-04-11T13:45:45+08:00', '2026-04-12T03:15:45+08:00'] });
   });
 
+  it('sets aside a timeline written after a receipt however many scans fall between its rows', () => {
+    // The timeline runs to the destination's customs while the warehouse's own rows, on another second, come between.
+    const listed: [string, string, string][] = [
+      ['2026-04-11 01:09:45', 'Departed from sort facility', 'InTransit_Other'],
+      ['2026-04-11 01:09:45', 'Picked up by shipping partner', 'InTransit_Other'],
+      ['2026-04-11 13:45:45', 'Hand over to airline', 'InTransit_Other'],
+      ['2026-04-11 20:53:39', 'warehouse and scanning is complete', 'InTransit_PickedUp'],
+      ['2026-04-12 03:15:45', 'Departed from origin country', 'InTransit_Departure'],
+      ['2026-04-12 10:23:39', 'Waiting for warehouse to send out', 'InTransit_Other'],
+      ['2026-04-12 14:15:45', 'Arrived at destination hub', 'InTransit_Arrival'],
+      ['2026-04-12 16:23:39', 'The package has been sorted and sent from the warehouse', 'InTransit_Other'],
+    ];
+    const result = parseJcex(changed('delivered', (content) => {
+      content.trackDetails.splice(9, 3, ...listed.map(([eventTime, eventDetailEn, platformEventCode]) =>
+        ({ ...content.trackDetails[12]!, eventTime, eventDetailEn, platformEventCode })));
+    }), NUMBER, Date.parse('2026-04-13T00:00:00Z'));
+    // Rows on one second that follow no receipt count only three or more in a row.
+    expect(result.events!.map((event) => [event.time, event.description])).toEqual([
+      ['2026-04-12T16:23:39+08:00', 'The package has been sorted and sent from the warehouse'],
+      ['2026-04-12T10:23:39+08:00', 'Waiting for warehouse to send out'],
+      ['2026-04-11T20:53:39+08:00', 'warehouse and scanning is complete'],
+      ['2026-04-11T01:09:38+08:00', 'Arrive at the delivery point'],
+      ['2026-04-08T12:01:25+08:00', 'Shipment order info received'],
+    ]);
+  });
+
   it('reads a row without a code by its wording, and one with a code the map lacks by the shared rules', () => {
     const result = parseJcex(changed('delivered', (content) => {
       content.trackDetails[0]!.platformEventCode = 'Synthetic_Other';
@@ -346,5 +372,9 @@ describe('JCEX status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'InTransit_Other', description: 'Synthetic note' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Exception_Returned', description: 'Synthetic note' })).toEqual({ kind: 'mapped', stage: 'returned' });
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'SYNTHETIC', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
+    // Rows filed without a code: the line haul leaving China, and USPS's arrival with its name left out.
+    for (const description of ['China, Departure from the starting port', 'Arrived at  Facility']) {
+      expect(statusMapAnswer({ carrier: 'jcex', providerCode: '', description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
   });
 });

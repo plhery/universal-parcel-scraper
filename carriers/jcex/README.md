@@ -51,8 +51,11 @@ Tracked through the lookup its tracking page makes.
   delivery time. Rows dated after the read are dropped.
 - Seconds after it takes a parcel in, JCEX writes a timeline up to the delivering partner: rows
   on one second of the minute, each a whole number of six minutes after the one before. Three
-  or more such rows in a row are no scans and are dropped too. An order with nothing else names
-  their clocks, so that a provider's copies of them are set aside as well.
+  or more such rows in a row are no scans and are dropped too. So are three or more starting
+  within a minute after the receipt, whatever scans fall between them: such a timeline can put
+  the parcel through the destination's customs while the warehouse in China is still handling
+  it. An order with nothing else names their clocks, so that a provider's copies of them are set
+  aside as well.
 - The recipient's province, city and postcode, the postcodes in the rows' places, the
   shipment's reference and the delivery estimate are never read.
 

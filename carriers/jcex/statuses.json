@@ -21,6 +21,8 @@
     {"code": "Delivered_Other", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"},
     {"wording": "InTransit_Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The Hong Kong hub's departure, worded as the platform's sub-status and filed without a code."},
     {"wording": "Departed USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from USPS without a code."},
+    {"wording": "Arrived at  Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-28", "note": "Relayed from USPS without a code, its name left out; a copy with USPS's longer text comes under a code."},
+    {"wording": "China, Departure from the starting port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-28", "note": "The line haul leaving China, written without a code or a country."},
     {"code": "InTransit_PickedUp", "wording": "到达收货点(包裹已入库)", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "JCEX's collection point in Guangzhou receives the parcel."},
     {"code": "InTransit_Other", "wording": "货物离开操作中心(包裹已出库)", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
     {"code": "InTransit_Departure", "wording": "Flight dispatched（航班已飞）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},

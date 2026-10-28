@@ -29,6 +29,8 @@ const MAX_EVENTS = 100;
 // second of the minute, each a whole number of six minutes after the one before.
 const TIMELINE_STEP_MS = 6 * 60_000;
 const TIMELINE_ROWS = 3;
+// How soon after the receipt its first rows come.
+const TIMELINE_START_MS = 60_000;
 
 /** A JCEX waybill number; anything else is a number its tracker is not asked for. */
 export function normalizeJcexNumber(raw: string): string {
@@ -193,24 +195,30 @@ function projectRow(row: Row, offsets: ReadonlySet<string>): { at: number; order
 }
 
 /**
- * The instants of the timeline JCEX writes: three or more successive instants
- * on one second of the minute other than :00, each a whole number of six
- * minutes after the one before.
+ * The instants of the timeline JCEX writes: three or more instants on one
+ * second of the minute other than :00, each a whole number of six minutes
+ * after the one before. They come in a row, or start within a minute after
+ * the receipt, when the scans that follow can fall between them.
  */
 function timeline(instants: readonly number[]): Set<number> {
+  const sorted = [...new Set(instants)].sort((a, b) => a - b);
   const written = new Set<number>();
+  const add = (run: readonly number[]) => { if (run.length >= TIMELINE_ROWS) run.forEach((at) => written.add(at)); };
   let run: number[] = [];
-  const close = () => { if (run.length >= TIMELINE_ROWS) run.forEach((at) => written.add(at)); };
-  for (const at of [...new Set(instants)].sort((a, b) => a - b)) {
+  for (const at of sorted) {
     const last = run.at(-1);
     if (last !== undefined && (at - last) % TIMELINE_STEP_MS === 0) {
       run.push(at);
       continue;
     }
-    close();
+    add(run);
     run = at % 60_000 ? [at] : [];
   }
-  close();
+  add(run);
+  sorted.forEach((start, index) => {
+    const receipt = index > 0 && start - sorted[index - 1]! < TIMELINE_START_MS;
+    if (receipt && start % 60_000) add(sorted.slice(index).filter((at) => (at - start) % TIMELINE_STEP_MS === 0));
+  });
   return written;
 }
 
