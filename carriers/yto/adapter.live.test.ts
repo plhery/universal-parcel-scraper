@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IndeterminateError } from '../../core/errors/index.js';
+import { NoHistoryError } from '../../core/errors/index.js';
 import { YtoTracker } from './adapter.js';
 
 describe('YTO live compatibility', () => {
@@ -10,7 +10,7 @@ describe('YTO live compatibility', () => {
     expect(result.events?.every(event => event.description && event.provider_code && (event.time || event.provider_time_text))).toBe(true);
   });
 
-  it.skipIf(!process.env.YTO_TRACKING_NUMBER)('keeps an identity-only synthetic response indeterminate', async () => {
-    await expect(new YtoTracker().fetch('YT0000000000001')).rejects.toBeInstanceOf(IndeterminateError);
+  it.skipIf(!process.env.YTO_TRACKING_NUMBER)('reads an identity-only synthetic response as no history', async () => {
+    await expect(new YtoTracker().fetch('YT0000000000001')).rejects.toBeInstanceOf(NoHistoryError);
   });
 });

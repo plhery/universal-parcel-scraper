@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { NoHistoryError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
@@ -34,6 +35,11 @@ describe('YTO domestic parser', () => {
     for (const value of [[], [{ waybillNo: NUMBER }], [{ waybillNo: NUMBER, waybillProcessInfo: [] }]]) {
       expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     }
+    // The number echoed without scans, as for a waybill not scanned yet, is no history.
+    for (const value of [[{ waybillNo: NUMBER, personalOrder: false, signPic: false }], [{ waybillNo: NUMBER, waybillProcessInfo: [] }]]) {
+      expect(() => parseYto(value, NUMBER)).toThrow(NoHistoryError);
+    }
+    expect(() => parseYto([], NUMBER)).not.toThrow(NoHistoryError);
     for (const value of [null, {}, [{ waybillNo: NUMBER, waybillProcessInfo: {} }]]) {
       expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     }

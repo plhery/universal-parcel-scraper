@@ -27,7 +27,8 @@ direct scans. ParcelsApp's UTC-labelled China clocks are read in the catalog tim
 
 ## Limitations
 
-An echoed number with no scans is inconclusive. Archived histories and international
+An echoed number with no scans, as YTO answers for a waybill not scanned yet, is no history
+(`NoHistoryError`): inconclusive, not a failure of the lookup. Archived histories and international
 YTO Global shipments use separate website flows and are outside this adapter's scope.
 
 ## Testing

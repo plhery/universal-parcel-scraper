@@ -1,6 +1,6 @@
 import { returnedTrackingNumber } from '../../core/detection/returned.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -27,11 +27,11 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
     throw new SchemaError(PROVIDER, 'YTO returned missing or ambiguous shipment identity');
   }
   const item = payload[0];
-  // The feed can echo any well-shaped number without returning a history.
-  // This also happens for archived waybills; it proves no parcel absence.
-  if (item.waybillProcessInfo === undefined) throw new IndeterminateError(PROVIDER, 'YTO returned no shipment history');
+  // The feed echoes any well-shaped number without a history, a waybill not scanned yet as one
+  // it never issued, and so do archived waybills: no history, which proves no parcel absence.
+  if (item.waybillProcessInfo === undefined) throw new NoHistoryError(PROVIDER, 'YTO returned no shipment history');
   if (!Array.isArray(item.waybillProcessInfo) || item.waybillProcessInfo.length > 1000) throw new SchemaError(PROVIDER);
-  if (!item.waybillProcessInfo.length) throw new IndeterminateError(PROVIDER, 'YTO returned no shipment history');
+  if (!item.waybillProcessInfo.length) throw new NoHistoryError(PROVIDER, 'YTO returned no shipment history');
 
   const events: CarrierEvent[] = [];
   const history: unknown[] = item.waybillProcessInfo;
