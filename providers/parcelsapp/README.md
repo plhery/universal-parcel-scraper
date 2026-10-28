@@ -609,7 +609,9 @@ step exists for future protocol changes.
   is a country name) becomes `destination_country`, which routing uses to propose the
   destination's post for a postal number. A country only read off a reference ("CNPRT")
   dates scans but is not reported. Sender and estimate fields are not kept, and neither
-  are ParcelsApp's `Estimated delivery` rows, a forecast dated ahead of the read.
+  are ParcelsApp's `Estimated delivery` rows, a forecast dated ahead of the read. Nor is
+  GEODIS Poland's "Transferred Data" under "Pekaes": its tracker's summary before the first
+  scan, which ParcelsApp dates ten minutes after each of its reads.
 
 ## Limitations
 

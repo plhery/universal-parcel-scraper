@@ -2101,6 +2101,18 @@ describe('ParcelsApp result parsing', () => {
     expect(parsed.last_status_text).toBe('Departed from destination import office');
   });
 
+  it('leaves out GEODIS Poland\'s summary, which ParcelsApp dates after each of its reads', () => {
+    // GEODIS Poland's own tracker gives the status with no scan; ParcelsApp's date moves with its reads.
+    const summary = { date: '2026-10-28T16:55:00Z', status: 'Transferred Data', carrier: 0 };
+    expect(() => parseParcelsAppResponse({ carriers: ['Pekaes'], states: [summary] }, number, identity()))
+      .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseParcelsAppHtml(rendered(carrierRow('28 Oct 2026', '16:55', 'Transferred Data', 'Pekaes')), number))
+      .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    const parsed = parseParcelsAppResponse({ carriers: ['Pekaes'], states: [summary,
+      { date: '2026-10-28T09:30:00Z', status: 'Shipment picked up', carrier: 0 }] }, number, identity());
+    expect(parsed.events?.map((event) => [event.description, event.time])).toEqual([['Shipment picked up', '2026-10-28T08:30:00.000Z']]);
+  });
+
   it('reads FIRST LINE\'s scans in China on Beijing\'s clock with its own map, and its partner\'s in the destination on theirs', () => {
     // 17TRACK's copies of the Chinese rows have Beijing's instants; GOFO's own scans give California's clock.
     const scan = (date: string, status: string, carrier: number, location?: string) => ({ date, status, carrier, ...(location ? { location } : {}) });

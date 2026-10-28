@@ -1428,6 +1428,14 @@ function replyOrigin(payload: Record<string, unknown>, number: string): string |
 const FORECAST = /^estimated delivery$/i;
 
 /**
+ * GEODIS Poland's summary status before its first scan, which ParcelsApp
+ * relays under "Pekaes" dated ten minutes after its own read on Warsaw's
+ * clock, a new date each time it reads the tracker again: no scan.
+ */
+const PEKAES_SUMMARY = /^transferred data$/i;
+const summaryRow = (name: unknown, status: string) => nameKey(name) === 'pekaes' && PEKAES_SUMMARY.test(status);
+
+/**
  * ParcelsApp relays some carriers' labels twice over, TIPSA's as
  * "ENTREGADOENTREGADO". Only a label made of two identical halves is collapsed.
  */
@@ -1518,7 +1526,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       continue;
     }
     const status = relayedLabel(raw.status);
-    if (FORECAST.test(status)) continue;
+    if (FORECAST.test(status) || summaryRow(stateCarrierName(payload, raw), status)) continue;
     const state = readState(payload, raw, status, timezone, number, inNorthAmerica, destination, origin);
     const carrier = typeof state.name === 'string' ? carrierIdFromName(state.name) : undefined;
     const scan = carrierScan(carrier, status) ?? airportHandOver(carrier, status, state.location, destination);
@@ -1685,6 +1693,7 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
     if (!time) return;
     const name = row.find('.event-content .carrier').first().text().replace(/\s+/g, ' ').trim();
     if (name && !carriers.includes(name)) carriers.push(name);
+    if (summaryRow(name, description)) return;
     // The page prints a state without a date as "aN Inv NaN" at "aN:aN":
     // counted, as in the JSON reply.
     if (date.includes('NaN')) {
