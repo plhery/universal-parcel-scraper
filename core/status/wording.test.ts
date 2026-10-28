@@ -904,6 +904,8 @@ describe('classifyWording', () => {
       ['Prepared for last mile handover', 'in_transit'],
       ['Parcel was dropped off at the parcel shop', 'accepted'], ['create, Shipment order created', 'registered'],
       ['Create. Shipment order created', 'registered'], ['Handover to airline', 'in_transit'],
+      ['Shipping Order Created.', 'registered'], ['Parcel received by in ORD01.', 'in_transit'], ['到达收货点', 'accepted'],
+      ['The goods leave the operation center', 'in_transit'], ['Goods leaving the operation center', 'in_transit'],
       ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],
       ['Takeover by pickup parcel shop_shop', 'ready_for_pickup'], ['Parcel handed over to DPD at the Pickup parcel shop', 'accepted'],
       ['Has been put into storage', 'accepted'], ['Has left the warehouse', 'in_transit'],

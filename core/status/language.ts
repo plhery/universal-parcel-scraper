@@ -376,8 +376,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/\bletrejott a rendszerunkben\b.*\bfelado meg nem adta at\b/.test(text)) return 'registered';
   if (/preparation chez.*expediteur|preparation.*expediteur|preparazione.*mittente|being prepared.*sender|(?:shipper|sender)(?: that)? (?:they are|is|are) preparing|beim absender.*vorbereitet|warehouse of the sender|shippers warehouse|entrepot de l'expediteur|lager des absenders|magazzino del mittente|demande d'envoi.*prise en compte|collection request.*(?:received|recorded)|^(?:the |your )?collection (?:has been |was )?registered$|abholauftrag.*erfasst|richiesta.*ritiro.*registrata/.test(text)) return 'registered';
   // The sender's order or data reached the carrier, not the parcel: "Order submitted, pending to
-  // receive", Royal Mail's "Sender preparing item", "Sender despatching item" and "Sender has despatched item", "Shipping info sent to BRT".
-  if (/\border submitted(?:,| and)? pending (?:to )?rece(?:iv|ipt)|\bshipment data uploaded\b|^sender preparing item\b|^sender (?:has despatched|despatching) item$|^shipping info(?:rmation)? sent to (?!(?:the |your? )?(?:recipient|customer|consignee|addressee|buyer)\b)|\bwe have received your shipment information\b|\bhemos recibido la informacion de su envio\b|\bwe will pick up (?:the|your) (?:package|parcel) from the sender\b|^booked for collection$|\bpending shipping by (?:the )?(?:seller|sender|shipper|merchant)\b|\bshipment order created\b/.test(text)) return 'registered';
+  // receive", Royal Mail's "Sender preparing item", "Sender despatching item" and "Sender has despatched item", "Shipping info sent to BRT",
+  // and a line's "Shipping Order Created".
+  if (/\border submitted(?:,| and)? pending (?:to )?rece(?:iv|ipt)|\bshipment data uploaded\b|^sender preparing item\b|^sender (?:has despatched|despatching) item$|^shipping info(?:rmation)? sent to (?!(?:the |your? )?(?:recipient|customer|consignee|addressee|buyer)\b)|\bwe have received your shipment information\b|\bhemos recibido la informacion de su envio\b|\bwe will pick up (?:the|your) (?:package|parcel) from the sender\b|^booked for collection$|\bpending shipping by (?:the )?(?:seller|sender|shipper|merchant)\b|\bship(?:ment|ping) order created\b/.test(text)) return 'registered';
   // A Shenzhen forwarder's pre-advice from the shipper, before its warehouse has the parcel.
   if (/^forecast has been received$/.test(text)) return 'registered';
   // The carrier has not had the parcel yet: "Shipment not yet received or
@@ -463,12 +464,14 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // finish it: the parcel is still with the sender, between the label and the drop-off.
   if (/^attempted but unfinished drop[- ]?off at (?:the |a )?locker$/.test(text)) return 'registered';
   // A partner network taking the parcel over mid-journey, as ParcelsApp relays it between a post's export
-  // scans and the destination's freight scans.
-  if (/^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:(?:has been|was) )?received by (?:the |a |our )?partner carrier$/.test(text)) return 'in_transit';
+  // scans and the destination's freight scans, and a line's US hub after the flight ("Parcel received by in
+  // JFK01.").
+  if (/^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:(?:has been|was) )?received by (?:the |a |our )?partner carrier$|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?received by in [a-z]{3}\d{2}\.?$/.test(text)) return 'in_transit';
   // MeiHoo Pegasus's scans at its operation centre, as 17TRACK relays them after the order: the centre handling
-  // the package's data, which does not say it has the parcel, then the parcel about to leave the centre.
+  // the package's data, which does not say it has the parcel, then the parcel about to leave the centre. The
+  // Hualei platform's lines word the departure "Goods leave the operation center".
   if (/^operation cent(?:er|re) is processing (?:the )?(?:package|parcel|shipment) information$/.test(text)) return 'registered';
-  if (/^preparing to leave (?:the )?(?:[a-z]+ ){0,3}operation cent(?:er|re)$/.test(text)) return 'in_transit';
+  if (/^(?:preparing to leave|(?:the )?goods leav(?:e|ing)) (?:the )?(?:[a-z]+ ){0,3}operation cent(?:er|re)$/.test(text)) return 'in_transit';
   // PostNL's international scans as providers relay them without its categories, read as Spring GDS's map reads
   // them: the item prepared before its bulk handover, then PostNL's acceptance centre taking it in.
   if (/^(?:the )?item is ready for shipment$/.test(text)) return 'registered';
@@ -497,8 +500,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Taken in by the carrier: Royal Mail's "Item received by Royal Mail", a parcel shop's or a warehouse's
   // receipt, a forwarder's ("<company> has received the goods, <town>, <country>."), the sender's drop-off at a
   // SEUR pickup point, a collection carried out, and its English "Has been put into storage". A bare "Item
-  // received" names no receiver and stays unread.
-  if (/^item received by royal mail$|\btaken over by one of our operators\b|\bwe've received your (?:parcel|package|item) at the parcel ?shop\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:was|has been) dropped off at (?:the |a )?parcel ?shop$|^(?![^,]*\b(?:recipient|consignee|receiver|customer|addressee|buyer|pick ?up point|parcel ?shop|locker|destination)\b)[a-z][\w&' -]{0,40} has received the goods(?:, [^,]{1,40}){0,2}\.?$|^the shipment has been deposited at a seur pickup point$|^(?:the |your )?collection (?:has been |was )?(?:carried out|completed)$|^已入库|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has been |was )?put into storage$/.test(text)) return 'accepted';
+  // received" names no receiver and stays unread. The Hualei platform's arrival at a line's receiving point
+  // (到达收货点) is a receipt too.
+  if (/^到达收货点|^item received by royal mail$|\btaken over by one of our operators\b|\bwe've received your (?:parcel|package|item) at the parcel ?shop\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:was|has been) dropped off at (?:the |a )?parcel ?shop$|^(?![^,]*\b(?:recipient|consignee|receiver|customer|addressee|buyer|pick ?up point|parcel ?shop|locker|destination)\b)[a-z][\w&' -]{0,40} has received the goods(?:, [^,]{1,40}){0,2}\.?$|^the shipment has been deposited at a seur pickup point$|^(?:the |your )?collection (?:has been |was )?(?:carried out|completed)$|^已入库|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has been |was )?put into storage$/.test(text)) return 'accepted';
   // Royal Mail's sender drop-offs at a parcel locker and a postbox, as providers relay them.
   if (/^sender advised item dropped off at parcel locker$|^dropped off at postbox$/.test(text)) return 'accepted';
   // Poste Italiane's drop-off at a Punto Poste or a Punto Poste-Locker in English ("presa in carico presso il Punto Poste").
