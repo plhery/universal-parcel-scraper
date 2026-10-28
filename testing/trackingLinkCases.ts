@@ -529,6 +529,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/recipient\.gojitsu\.com\/(?:noredirect\/ZZ00ZZ00ZZ00ZZ01|404)$/,
     marker: /Sorry, tracking ID not found!/,
     forwarding: { notFound: /Sorry, tracking ID not found!/ } },
+  // The tracking page writes `?nos=` into its query box as it serves the page.
+  { carrier: 'jifan', number: 'JFGJ000000017CN',
+    route: /^https:\/\/www\.szjf56\.cn\/index\/tracknumber\/track\?nos=JFGJ000000017CN$/,
+    marker: /Powered By 吉凡物流|查询结果为2个月内的包裹/ },
   // The page reads the number from its address into its search tags and looks it up on load.
   // The tracker looks the number up and lists it with its status.
   { carrier: 'jcex', number: 'JCZ9999999999DH',
