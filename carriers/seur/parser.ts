@@ -1,5 +1,6 @@
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { ClassifiedStatus } from '../../core/status/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -76,17 +77,20 @@ export function parseSeur(value: unknown, raw: string): CarrierResult {
       provider_group: group, provider_code: code, ...(mapped ? { stage: mapped.stage } : {}), ...scanTime(row.fecha) };
   });
   const delay = (event: CarrierEvent) => isSeurDelay(event.provider_code!, String(event.provider_group), String(event.provider_status));
-  // Oldest first: a delay notice keeps the stage of the scan before it.
+  // Oldest first: a delay notice keeps the stage of the scan before it. SEUR delays a shipment on
+  // its way, so a notice with no stage before it, which may be all SEUR lists, is in transit.
   let previous: string | undefined;
   for (const event of [...events].reverse()) {
     if (!delay(event)) previous = event.stage ?? previous;
-    else if (previous) Object.assign(event, { stage: previous, stage_source: 'none' });
+    else Object.assign(event, { stage: previous ?? 'in_transit', stage_source: 'none' });
   }
   // The official widget consumes situaciones[0]; unresolved clocks retain that position.
   // Its status is the newest scan's other than a delay notice.
   const latest = events[0]!;
   const current = events.find((event) => !delay(event));
-  const mapped = current && classifySeurStatus(current.provider_code!, String(current.provider_group), String(current.provider_status));
+  const mapped: ClassifiedStatus | undefined = current
+    ? classifySeurStatus(current.provider_code!, String(current.provider_group), String(current.provider_status))
+    : { status: 'in_transit', stage: 'in_transit' };
   const weight = value.peso;
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,

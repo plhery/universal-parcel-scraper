@@ -13,8 +13,9 @@ The returned search identifier must exactly match and have nonempty history.
 ## Notes
 
 Current status follows the first native scan other than a delay notice. A
-delay notice (LI300, LI582, LI557) is no movement: the row keeps the stage of the
-scan before it. Only observed code, group and wording combinations are mapped,
+delay notice (LI300, LI582, LI557, LI587) is no movement: the row keeps the stage of the
+scan before it. SEUR delays a shipment on its way, so a notice with no stage before it, at
+times all SEUR lists, reads as in transit. Only observed code, group and wording combinations are mapped,
 so planned delivery or unfamiliar codes do not inherit an older terminal state.
 A code seen without its group takes the group of a code with the same wording. SEUR marks its scan clocks as UTC, but they
 are Spanish wall clocks: DPD gives the same scans the same digits with Madrid's

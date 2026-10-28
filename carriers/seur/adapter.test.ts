@@ -36,7 +36,7 @@ describe('SEUR simplified anonymous tracking', () => {
   });
 
   it('keeps the stage a parcel had through each delay notice', () => {
-    for (const code of ['LI300', 'LI582', 'LI557']) {
+    for (const code of ['LI300', 'LI582', 'LI557', 'LI587']) {
       const body = copy();
       const delay = { fecha: '2026-01-24T10:00:00Z', cod_situacion: code, grupo_situacion: 'EN DEMORA',
         descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording };
@@ -44,10 +44,10 @@ describe('SEUR simplified anonymous tracking', () => {
       const result = parseSeur(body, NUMBER);
       expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update_local: '2026-01-24T10:00:00' });
       expect(result.events?.[0]).toMatchObject({ provider_code: code, stage: 'in_transit', stage_source: 'none' });
-      // A delay before any staged scan has no stage to keep.
+      // A delay that is all SEUR lists is a shipment on its way.
       body.situaciones = [delay] as typeof body.situaciones;
-      expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'unknown' });
-      expect(parseSeur(body, NUMBER).events?.[0]?.stage).toBeUndefined();
+      expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+      expect(parseSeur(body, NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'none' });
     }
   });
 

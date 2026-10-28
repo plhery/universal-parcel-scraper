@@ -120,6 +120,15 @@
       "note": "LI582's wording under another code, read like it. The parcel seen with it moved on from the origin's receipt to an agreed delivery day."
     },
     {
+      "code": "LI587",
+      "wording": "EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA. DISCULPA LAS MOLESTIAS",
+      "language": "es",
+      "confirmedBy": "live",
+      "unmapped": true,
+      "firstSeen": "2026-10-28",
+      "note": "LI582's wording without its last full stop, under another code, read like it. The parcel seen with it listed it alone."
+    },
+    {
       "code": "LI511",
       "wording": "EL ENVÍO ESTÁ PENDIENTE DE LLEGAR A DESTINO. EN CUANTO SE RECIBA, ACTUALIZAREMOS LA SITUACIÓN.",
       "language": "es",
