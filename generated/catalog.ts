@@ -19249,7 +19249,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jifan",
+      "localClocks": true
     },
     "canaryUrl": "https://www.szjf56.cn/",
     "trackingUrlTemplate": "https://www.szjf56.cn/index/tracknumber/track?nos={trackingNumber}",

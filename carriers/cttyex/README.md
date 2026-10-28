@@ -24,6 +24,7 @@ cross-border e-commerce parcels from China. Tracked through the lookup its track
 - A redirect or a 404 is a moved route. A browser check in place of the reply is a challenge, and
   any other reply that is not the expected JSON is a schema failure.
 - Recognition makes the same request.
+- [Jifan's](../jifan/README.md) tracker is the same system, and its adapter shares this parser.
 
 ## Notes
 
