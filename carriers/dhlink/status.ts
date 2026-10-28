@@ -83,6 +83,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['departed destination hub', 'in_transit'],
   // Its last-mile warehouse, then the delivery round.
   ['arrived at warehouse', 'in_transit'],
+  // The flight landed in the destination country.
+  ['package arrived at destination country', 'in_transit'],
   // The last-mile partner's depot taking in the parcel the line handed over.
   ['shipment received in depot', 'in_transit'],
   ['out for delivery', 'out_for_delivery'],
@@ -115,8 +117,9 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^已交承运商运输$/, 'in_transit'],
   [/已出口直封$/, 'in_transit'],
   [/^出口海关\/放行$/, 'in_transit'],
-  // China's export clearance done ("domestic clearance"), as its QG001 node words it in English.
+  // China's export clearance done ("domestic clearance"), as its QG001 node words it in English, and its export declaration.
   [/^国内清关完成$/, 'in_transit'],
+  [/^出口申报完成$/, 'in_transit'],
   // At the airport waiting for a flight, in Chinese with DHLink's English.
   [/^arriving at the airport - arranging flights\b|^到达机场-安排航班中$/, 'in_transit'],
   [/^到达寄达地(?:处理中心)?$/, 'in_transit'],
