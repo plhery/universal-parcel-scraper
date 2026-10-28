@@ -46,9 +46,10 @@ Tracking accepts them so the lookup can confirm the provider's naming. Twelve di
 carriers' rules, so no rule suggests SEUR for them and recognition never asks it.
 
 A pickup request's reference is `REC` and twelve digits, the `collectionRef` of SEUR's
-business API, which tracks it only for the account that booked the pickup. It names a pickup,
-not a parcel, and the public lookup answers the published ones as unknown numbers, so no rule
-claims it and tracking refuses it.
+business API. The public lookup searches it as it does a shipment's number, and a universal
+provider shows SEUR's scans for one, from the collection on, so tracking takes it and can
+confirm a provider naming SEUR. The published ones are old and answer as unknown numbers. It
+names a pickup, not a parcel, so no rule claims it and recognition does not ask SEUR.
 
 The no-history error also covers recent or out-of-range identifiers and remains
 inconclusive, with the reason `portal_not_found` so a consumer can tell it from

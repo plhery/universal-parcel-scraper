@@ -96,7 +96,9 @@ describe('SEUR simplified anonymous tracking', () => {
   it('requires exact identity, nonempty single-piece history and the supported numeric shapes', () => {
     for (const n of ['9900002', '990000000002', '99000000000002', '990000000000000000002', '9900000000000000000002']) expect(normalizeSeurNumber(n)).toBe(n);
     expect(normalizeSeurNumber('990 0002')).toBe(NUMBER);
-    for (const n of ['', '123', '99000002', 'AA9900002', NUMBER + '?', NUMBER + '/']) expect(() => normalizeSeurNumber(n)).toThrow(InvalidInputError);
+    // A pickup's reference, which a provider can name SEUR for.
+    expect(normalizeSeurNumber('rec990000000001')).toBe('REC990000000001');
+    for (const n of ['', '123', '99000002', 'AA9900002', 'REC99000000001', 'RE990000000001', NUMBER + '?', NUMBER + '/']) expect(() => normalizeSeurNumber(n)).toThrow(InvalidInputError);
     for (const bad of [{ ...fixture, identificador_busqueda: '9900003' }, { ...fixture, identificador_busqueda: fixture.clave_envio },
       { ...fixture, clave_envio: '' }, { ...fixture, clave_envio: null }, { ...fixture, situaciones: {} }, {}, null, [fixture]]) {
       expect(() => parseSeur(bad, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));

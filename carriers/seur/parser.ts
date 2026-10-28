@@ -7,10 +7,12 @@ import { isRecord } from '../../core/types.js';
 import { classifySeurStatus, isSeurDelay } from './status.js';
 
 export function normalizeSeurNumber(raw: string): string {
-  const number = raw.replace(/\s/g, '');
+  const number = raw.replace(/\s/g, '').toUpperCase();
   // Twenty-two digits is a sender's reference, which the lookup also finds, as
-  // it finds twelve digits a provider names SEUR for.
-  if (!/^(?:\d{7}|\d{12}|\d{14}|\d{21}|\d{22})$/.test(number)) throw new InvalidInputError('SEUR', 'SEUR requires a seven, twelve, fourteen, twenty-one or twenty-two digit identifier');
+  // it finds twelve digits a provider names SEUR for, and a pickup's REC reference.
+  if (!/^(?:\d{7}|\d{12}|\d{14}|\d{21}|\d{22}|REC\d{12})$/.test(number)) {
+    throw new InvalidInputError('SEUR', 'SEUR requires a seven, twelve, fourteen, twenty-one or twenty-two digit identifier, or a pickup reference');
+  }
   return number;
 }
 
