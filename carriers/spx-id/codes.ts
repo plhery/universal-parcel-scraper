@@ -36,6 +36,21 @@ export const SPX_CODES: ReadonlyMap<string, Stage> = new Map([
   ['F999', 'returned'], // Back with the seller.
 ]);
 
+/**
+ * The rows SPX flags hidden that its trackers still read; every network's page leaves out all
+ * of them. Most are SPX's bookkeeping: the number's creation, a driver assigned, packing,
+ * relabelling, loading a truck minutes before the departure the page shows. These are
+ * milestones no shown row stands for: a pickup that collected nothing, import clearance, the
+ * arrival at the last-mile hub, and the way back of a return, which a page shows only once the
+ * seller is about to get the parcel.
+ */
+export const SPX_HIDDEN_MILESTONES: ReadonlySet<string> = new Set(['F001', 'F370', 'F599', 'F671', 'F677']);
+
+/** Whether a row the page leaves out is one of SPX's milestones. */
+export function isSpxHiddenMilestone(row: Record<string, unknown>): boolean {
+  return typeof row.tracking_code === 'string' && SPX_HIDDEN_MILESTONES.has(row.tracking_code.trim().toUpperCase());
+}
+
 /** A network's status map, and the stage it gives one scan of its replies. */
 export interface SpxStatusMap extends CarrierStatusMap {
   /** The stage the map gives a code. */

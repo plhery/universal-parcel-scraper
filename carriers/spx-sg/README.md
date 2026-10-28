@@ -26,7 +26,10 @@ cover Shopee's networks in other countries.
 
 - Each scan's `actual_time` is Unix seconds, so every scan is an exact instant. Parcels from
   abroad are scanned in other zones, so no wall clock is derived.
-- Rows flagged hidden, which the page leaves out, are left out too, as are repeated rows.
+- Rows flagged hidden, which the page leaves out, are mostly SPX's bookkeeping and are left out
+  too. A pickup that collected nothing, import clearance, the arrival at the last-mile hub and
+  a return's way back are kept: no row the page shows stands for them, and a return's first
+  shown row comes days after the parcel turned back. Repeated rows are left out.
 - Scans at SPX's warehouses, forwarders, ports and sorting centres keep the place and
   coordinates the reply gives; facility addresses are not kept. Pickups, deliveries and the
   hand-over to the local partner keep none.

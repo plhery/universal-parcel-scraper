@@ -28,7 +28,10 @@ networks. `spx-ph` and `spx-br` cover the Philippine and Brazilian networks.
   abroad are scanned in other zones, so no wall clock is derived.
 - `th` is the page's own language. Its lines name no one. Scans without a line keep their
   English tracking name.
-- Rows flagged hidden, which the page leaves out, are left out too.
+- Rows flagged hidden, which the page leaves out, are mostly SPX's bookkeeping and are left out
+  too. A pickup that collected nothing, import clearance, the arrival at the last-mile hub and
+  a return's way back are kept: no row the page shows stands for them, and a return's first
+  shown row comes days after the parcel turned back.
 - Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres keep the place and
   coordinates the reply gives. The line-haul end names the place the truck left, so it keeps
   none, nor do drop-offs, pickups, deliveries and the final return, which can name the

@@ -15,7 +15,7 @@ import { epochSecondsTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import type { CarrierId } from '../../generated/catalog.js';
-import type { SpxStatusMap } from './codes.js';
+import { isSpxHiddenMilestone, type SpxStatusMap } from './codes.js';
 
 export interface SpxNetwork {
   readonly id: CarrierId;
@@ -81,8 +81,8 @@ function text(provider: string, row: Record<string, unknown>, key: string): stri
 
 function projectRow(network: SpxNetwork, row: Record<string, unknown>): CarrierEvent | null {
   const { provider } = network;
-  // The tracker leaves out the rows it flags hidden.
-  if (row.display_flag === 0) return null;
+  // The tracker leaves out the rows SPX flags hidden; its milestones among them stay.
+  if (row.display_flag === 0 && !isSpxHiddenMilestone(row)) return null;
   const code = text(provider, row, 'tracking_code').trim().toUpperCase();
   if (code && !CODE.test(code)) throw new SchemaError(provider, `${provider} returned an invalid tracking code`);
   // A scan without a line of its own keeps its English tracking name.

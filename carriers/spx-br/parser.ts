@@ -5,6 +5,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { epochSecondsTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+import { isSpxHiddenMilestone } from '../spx-id/codes.js';
 import { spxBrStage } from './status.js';
 
 export const PROVIDER = 'SPX Express Brazil';
@@ -15,12 +16,6 @@ const NUMBER = /^BR\d{12}[0-9A-Z]$/;
 // The order index's own count of parcels under the number: none.
 const UNKNOWN = /GetLogisticOrderIndexMap[\s\S]*\bfind \[0\]/;
 const CODE = /^[A-Z0-9_]{1,16}$/;
-// The page leaves out the rows SPX flags hidden. Most are SPX's bookkeeping: the number's
-// creation, a driver assigned, packing, relabelling, loading a truck minutes before the
-// departure the page shows. These are milestones no shown row stands for: a pickup that
-// collected nothing, import clearance, the arrival at the last-mile hub, and the way back of a
-// return, which the page shows only once the seller is about to get the parcel.
-const HIDDEN_MILESTONES: ReadonlySet<string> = new Set(['F001', 'F370', 'F599', 'F671', 'F677']);
 const MAX_ROWS = 1000;
 const MAX_EVENTS = 100;
 // Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres, on
@@ -83,8 +78,8 @@ function text(row: Record<string, unknown>, key: string): string {
 }
 
 function projectRow(row: Record<string, unknown>): CarrierEvent | null {
-  const hiddenCode = typeof row.tracking_code === 'string' ? row.tracking_code.trim().toUpperCase() : '';
-  if (row.display_flag === 0 && !HIDDEN_MILESTONES.has(hiddenCode)) return null;
+  // The page leaves out the rows SPX flags hidden; its milestones among them stay.
+  if (row.display_flag === 0 && !isSpxHiddenMilestone(row)) return null;
   const code = text(row, 'tracking_code').trim().toUpperCase();
   if (code && !CODE.test(code)) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an invalid tracking code');
   // A few scans have no line of their own; their English tracking name stands in.

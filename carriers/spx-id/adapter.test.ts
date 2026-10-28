@@ -111,6 +111,38 @@ describe('SPX Express Indonesia HTTP adapter', () => {
     expect(unmapped).toMatchObject({ last_status_text: 'Pemberitahuan sintetis', current_stage: 'out_for_delivery' });
   });
 
+  it('reads the way back of a return the page hides, and leaves out the rest of what it hides', () => {
+    const row = (code: string, time: number, description: string, flag: number, place = '') => ({
+      tracking_code: code, tracking_name: 'Synthetic', description, actual_time: time, display_flag: flag,
+      ...(place ? { current_location: { location_name: place, lng: '106.8', lat: '-6.2' } } : {}),
+    });
+    const result = parseSpxId(changed('delivered', (tracking) => {
+      tracking.records = [
+        row('F680', 1_779_300_000, 'Pesanan telah melewati batas pengiriman dan akan dikembalikan ke Penjual.', 1),
+        row('F677', 1_779_180_000, 'Pesanan dikirim dari Kota Contoh, Hub Contoh ke kota asal.', 0, 'Hub Contoh'),
+        row('F672', 1_779_172_100, 'Pengembalian pesanan dikonfirmasi untuk dikirim ke lokasi selanjutnya.', 0, 'Hub Contoh'),
+        row('F671', 1_779_172_001, 'Pengembalian pesanan tiba di lokasi sortir Kota Contoh, Hub Contoh.', 0, 'Hub Contoh'),
+        row('F599', 1_779_172_000, 'Pesanan diproses di lokasi transit Kota Contoh, Hub Contoh.', 0, 'Hub Contoh'),
+        row('F650', 1_779_170_700, 'Pengiriman ditunda karena Pesanan ditolak pembeli.', 0),
+        row('F600', 1_779_170_400, 'Pesanan dalam proses pengantaran.', 0),
+        row('F598', 1_779_170_300, 'Kurir sudah ditugaskan. Pesanan akan dikirim.', 0, 'Hub Contoh'),
+        row('F650', 1_779_170_000, 'Pengiriman ditunda karena Pesanan ditolak pembeli.', 1),
+        ...tracking.records.slice(1),
+      ];
+    }), DELIVERED);
+    expect(result.events!.slice(0, 6).map((event) => [event.provider_code, event.stage, event.location ?? null])).toEqual([
+      ['F680', 'returned', null],
+      ['F677', 'returned', 'Hub Contoh'],
+      ['F671', 'returned', 'Hub Contoh'],
+      ['F599', 'in_transit', 'Hub Contoh'],
+      ['F650', 'failed_attempt', null],
+      ['F600', 'out_for_delivery', null],
+    ]);
+    expect(result.events!.filter((event) => event.provider_code === 'F650')).toHaveLength(1);
+    expect(result.events!.map((event) => event.provider_code)).not.toContain('F672');
+    expect(result).toMatchObject({ current_stage: 'returned' });
+  });
+
   it('takes whoever received the parcel out of a delivery’s wording only', () => {
     expect(spxDeliveryWording('Pesanan tiba di alamat tujuan. diterima oleh Yang bersangkutan.')).toBe('Pesanan tiba di alamat tujuan.');
     expect(spxDeliveryWording('[Hub Contoh] Your parcel has been delivered [Orang Contoh] ')).toBe('[Hub Contoh] Your parcel has been delivered');
@@ -136,8 +168,10 @@ describe('SPX Express Indonesia HTTP adapter', () => {
       .toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
     expect(() => parseSpxId(changed('delivered', (tracking) => { tracking.records = []; }), DELIVERED))
       .toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
-    expect(() => parseSpxId(changed('delivered', (tracking) => { for (const row of tracking.records) row.display_flag = 0; }), DELIVERED))
-      .toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
+    expect(() => parseSpxId(changed('delivered', (tracking) => {
+      tracking.records = tracking.records.filter((row) => row.tracking_code !== 'F599');
+      for (const row of tracking.records) row.display_flag = 0;
+    }), DELIVERED)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
   });
 
   it('counts a shipment only when it names the number asked, or a Shopee number for an SPX number', () => {

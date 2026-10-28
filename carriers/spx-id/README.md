@@ -29,7 +29,10 @@ the five Southeast Asian order lookups share.
   spans three zones, so no wall clock is derived.
 - `id` is the page's own language. Its delivery line ends with who took the parcel, which is
   dropped. Scans without a line keep their English tracking name.
-- Rows flagged hidden, which the page leaves out, are left out too.
+- Rows flagged hidden, which the page leaves out, are mostly SPX's bookkeeping and are left out
+  too. A pickup that collected nothing, import clearance, the arrival at the last-mile hub and
+  a return's way back are kept: no row the page shows stands for them, and a return's first
+  shown row comes days after the parcel turned back.
 - Scans at SPX's hubs and sorting centres keep the place and coordinates the reply gives. The
   line-haul end names the place the truck left, so it keeps none, nor do pickups, deliveries
   and the final return, which can name the seller's or the recipient's area. Facility
