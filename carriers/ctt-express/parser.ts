@@ -3,7 +3,7 @@ import { isCttExpressTrackingNumber } from '../../core/detection/cttExpress.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
+import { calendarDay, explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { classifyCttExpressStatus } from './status.js';
@@ -17,7 +17,9 @@ export function normalizeCttExpressNumber(raw: string): string {
   return number;
 }
 
-function scanClock(value: unknown): { time?: string; local_time?: string; provider_time_text?: string } {
+type ScanClock = { time?: string; local_time?: string; provider_time_text?: string; time_zone?: string; time_zone_basis?: string };
+
+function scanClock(value: unknown): ScanClock {
   const raw = clean(value, 64);
   if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/.test(raw)) {
     const instant = explicitOffsetTime(raw);
@@ -28,6 +30,22 @@ function scanClock(value: unknown): { time?: string; local_time?: string; provid
     if (wall.isValid) return { local_time: wall.toISO({ includeOffset: false, suppressMilliseconds: true }) };
   }
   return raw ? { provider_time_text: raw } : {};
+}
+
+/**
+ * The delivery steps CTT Express relays from CTT Portugal on a parcel CTT Portugal delivers: out
+ * for delivery, a failed attempt, the delivery and availability at a pickup point. CTT Express
+ * dates them at Lisbon's wall clock with Madrid's offset: CTT Portugal's own rows of the same
+ * scans, with its offsets, are an hour later to the second, in winter and in summer. Its own
+ * scans before the hand-over keep the instant it gives.
+ */
+const PORTUGAL_LEG = new Set(['1500', '1600', '2100', '2310', '2900']);
+
+function lisbonClock(clock: ScanClock): ScanClock {
+  if (!clock.time) return clock;
+  const local = DateTime.fromISO(clock.time).setZone('Europe/Madrid').toISO({ includeOffset: false, suppressMilliseconds: true });
+  const time = local ? isoTime(local, 'Europe/Lisbon') : null;
+  return local && time ? { local_time: local, time: time.iso, time_zone: 'Europe/Lisbon', time_zone_basis: 'carrier' } : clock;
 }
 
 export function parseCttExpress(payload: unknown, number: string): CarrierResult {
@@ -49,6 +67,11 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   // Official label specification: 22 shipment digits + 3 parcel-counter digits.
   const packageCode = requested.length === 25 ? requested : `${requested}001`;
   if (history.item_code !== packageCode) throw new SchemaError('CTT Express', 'CTT Express returned a different package');
+  // A parcel that entered from another postal network keeps its first number.
+  // CTT Portugal tracks its own numbers, which also name its leg of the parcel.
+  const prime = clean(data.prime_shipping_code, 32);
+  const postal = isValidS10TrackingNumber(prime);
+  const portugal = postal && prime.endsWith('PT');
   const events: CarrierEvent[] = [];
   const rows: unknown[] = history.events;
   // Newest provider positions win equal-clock ties. Preserve duplicates until
@@ -63,7 +86,7 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
     const code = clean(row.code, 16);
     const description = clean(row.description, 500);
     if (!/^\d{4}$/.test(code) || !description) throw new SchemaError('CTT Express', 'CTT Express returned an incomplete scan');
-    const clock = scanClock(row.event_date);
+    const clock = portugal && PORTUGAL_LEG.has(code) ? lisbonClock(scanClock(row.event_date)) : scanClock(row.event_date);
     const mapped = classifyCttExpressStatus(code);
     events.push({ provider_code: code, description, ...clock, ...(mapped ? { stage: mapped.stage } : {}) });
   }
@@ -105,15 +128,11 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   // The weight measured in the network, else the one the sender declared.
   const weight = [data.final_weight, data.declared_weight]
     .find((value): value is number => typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= 100_000);
-  // A parcel that entered from another postal network keeps its first number.
-  // CTT Portugal tracks its own numbers, which also name its leg of the parcel.
-  const prime = clean(data.prime_shipping_code, 32);
-  const postal = isValidS10TrackingNumber(prime);
   return { status: returned ? 'exception' : mapped?.status ?? 'unknown', ...(latest.stage ? { current_stage: latest.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: expected, ...(mapped?.status === 'delivered' && !returned && latest.time ? { delivered_at: latest.time } : {}),
     ...(weight !== undefined ? { weight_kg: weight } : {}),
     ...(postal ? { international_tracking_number: prime } : {}),
-    ...(postal && prime.endsWith('PT') ? { delivery_carrier: 'ctt', delivery_tracking_number: prime } : {}),
+    ...(portugal ? { delivery_carrier: 'ctt', delivery_tracking_number: prime } : {}),
     events: unique.slice(0, 100) };
 }

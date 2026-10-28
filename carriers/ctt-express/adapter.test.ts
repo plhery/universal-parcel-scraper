@@ -238,6 +238,32 @@ describe('CTT Express direct tracking', () => {
     expect(result.events?.map((event) => event.provider_code)).toEqual(['1500', '1600']);
   });
 
+  it('reads the delivery steps CTT Express relays from CTT Portugal on Lisbon\'s clock, and its own scans as given', () => {
+    // CTT Portugal's own rows of the same scans are an hour after the instants CTT Express gives, to the second.
+    const payload = clone();
+    const [first] = payload.data.shipping_history.events;
+    const scan = (code: string, description: string, event_date: string) => ({ ...first!, code, description, event_date, detail: {} });
+    const read = () => parseCttExpress(payload, NUMBER).events?.map((event) => [event.provider_code, event.time, event.local_time, event.time_zone]);
+    payload.data.shipping_history.events = [scan('1000', 'Enviado', '2026-10-26T11:48:52.580+00:00'),
+      scan('1500', 'En reparto', '2026-10-27T08:35:34.004+00:00'), scan('2900', 'Recogerán en Delegación', '2026-10-27T14:00:41.005+00:00'),
+      scan('2310', 'Disponible en Punto Collectt Express', '2026-10-27T15:17:05.008+00:00')] as typeof payload.data.shipping_history.events;
+    Object.assign(payload.data, { prime_shipping_code: 'RR123456785PT' });
+    expect(read()).toEqual([
+      ['2310', '2026-10-27T16:17:05.008+00:00', '2026-10-27T16:17:05.008', 'Europe/Lisbon'],
+      ['2900', '2026-10-27T15:00:41.005+00:00', '2026-10-27T15:00:41.005', 'Europe/Lisbon'],
+      ['1500', '2026-10-27T09:35:34.004+00:00', '2026-10-27T09:35:34.004', 'Europe/Lisbon'],
+      ['1000', '2026-10-26T11:48:52.580Z', undefined, undefined],
+    ]);
+    // In summer too: Lisbon's 14:24 is 13:24Z, which CTT Express gives as 12:24Z.
+    payload.data.shipping_history.events = [scan('1500', 'En reparto', '2026-07-21T07:18:36.004+00:00'),
+      scan('2100', 'Entregado', '2026-07-21T12:24:18.008+00:00')] as typeof payload.data.shipping_history.events;
+    expect(parseCttExpress(payload, NUMBER)).toMatchObject({ status: 'delivered', delivered_at: '2026-07-21T14:24:18.008+01:00',
+      last_update_local: '2026-07-21T14:24:18.008' });
+    // Without CTT Portugal's number, CTT Express delivers the parcel itself and its scans keep their instants.
+    Object.assign(payload.data, { prime_shipping_code: 'RR123456785CN' });
+    expect(read()).toEqual([['2100', '2026-07-21T12:24:18.008Z', undefined, undefined], ['1500', '2026-07-21T07:18:36.004Z', undefined, undefined]]);
+  });
+
   it('skips customer service cases, stages depot holds and returns, and reads the rescheduled day, weight and first number', () => {
     const payload = clone();
     const [first] = payload.data.shipping_history.events;
