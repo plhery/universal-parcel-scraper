@@ -14670,7 +14670,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Seoul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fastbox",
+      "localClocks": true
     },
     "canaryUrl": "https://fastbox.co.kr/en/",
     "trackingUrlTemplate": "https://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no={trackingNumber}",

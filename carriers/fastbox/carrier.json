@@ -17,18 +17,59 @@
   "timezone": "Asia/Seoul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fastbox",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no={trackingNumber}",
     "searchUrl": "https://fastbox.co.kr/en/",
     "canaryUrl": "https://fastbox.co.kr/en/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin_country",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin_country",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_name",
+      "recipient_address"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "offset_timestamps",
+      "service_name",
+      "sender_name"
+    ]
   },
   "links": [
     {
