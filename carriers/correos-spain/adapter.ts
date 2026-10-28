@@ -1,5 +1,5 @@
 
-import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { lookupBudget, readerLanguage, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isCorreosSpainExpeditionCode } from '../../core/detection/correosSpain.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -160,7 +160,8 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   const unitZone = correosUnitZone(officeCode, codes);
   rows.forEach((rawEvent, index) => {
     const code = clean(rawEvent.codEvento, 32).toLocaleUpperCase('en-US');
-    // desTextoResumen is worded in the language codIdioma names.
+    // desTextoResumen is worded in the language codIdioma names. A code the
+    // reply leaves without one, as the English does HI10002V, takes its English.
     const description = clean(rawEvent.desTextoResumen, 500) || correosSpainEnglishSummary(code) || code;
     const origin = correosOriginZone(requested, { code });
     const time = parsedTime(rawEvent.fecEvento, rawEvent.horEvento, origin === undefined ? unitZone(code) : origin);
@@ -270,6 +271,12 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   };
 }
 
+/**
+ * The languages the localizador words its scans in. It answers any other
+ * `codIdioma`, Catalan, Galician or Basque included, in Spanish.
+ */
+export type CorreosSpainLanguage = 'EN' | 'ES' | 'PT' | 'FR';
+
 export class CorreosSpainTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
@@ -286,7 +293,8 @@ export class CorreosSpainTracker {
     }
   }
 
-  async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
+  /** `language` is the `codIdioma` that words the scans. */
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}, language: CorreosSpainLanguage = 'EN'): Promise<CarrierResult> {
     const trackingNumber = normalizeCorreosSpainTrackingNumber(rawTrackingNumber);
     const expedition = isCorreosSpainExpeditionCode(trackingNumber);
     // The default budget covers each request, its pause and its one transient retry, and the office's address.
@@ -316,9 +324,9 @@ export class CorreosSpainTracker {
       if (found.response.status === 204) throw new NotFoundError('Correos');
       parcel = parseCorreosSpainExpeditionResponse(parseJsonBytes(found.bytes, 'Correos tracking'), trackingNumber);
     }
-    // The localizador words its scans in Spanish, whatever Accept-Language says, unless codIdioma asks for English.
+    // The localizador words its scans in the language codIdioma names, whatever Accept-Language says.
     const { bytes } = await request(`${TRACKING_ENDPOINT}/${encodeURIComponent(parcel)}`
-      + '?codAplicacion=60&codCanal=3&codIdioma=EN&indUltEvento=N');
+      + `?codAplicacion=60&codCanal=3&codIdioma=${language}&indUltEvento=N`);
     // A code the search returns as its own parcel is tracked as any parcel code.
     const { result, office } = parseTracking(parseJsonBytes(bytes, 'Correos tracking'), parcel,
       parcel === trackingNumber ? undefined : trackingNumber);
@@ -370,6 +378,7 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'correos-spain',
     steps: ['direct'],
-    track: (input, context) => tracker.fetch(input.number, context),
+    track: (input, context) => tracker.fetch(input.number, context,
+      (readerLanguage(input, ['es', 'pt', 'fr']) ?? 'en').toUpperCase() as CorreosSpainLanguage),
   };
 };

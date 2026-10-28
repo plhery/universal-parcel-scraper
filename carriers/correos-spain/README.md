@@ -7,8 +7,10 @@ Correos de Chile (`correos-chile`) are separate carriers.
 ## How it works
 
 1. `direct`: one `GET https://localizador.correos.es/canonico/eventos_envio_servicio/{code}`
-   with the web channel's parameters (`codAplicacion=60&codCanal=3&codIdioma=EN&indUltEvento=N`).
-   No cookies, token or account. The HTTP status is always 200; the envelope decides:
+   with the web channel's parameters (`codAplicacion=60&codCanal=3&indUltEvento=N`) and
+   `codIdioma`: `ES`, `PT` or `FR` for a lookup whose `language` is Spanish, Portuguese or
+   French, `EN` for any other. No cookies, token or account. The HTTP status is always 200;
+   the envelope decides:
    - The body is a single-element array, or a bare object for some error bodies. The echoed
      `codEnvio` must match.
    - `error.codError` `0` is a real answer. Any other code (e.g. `3`, "Sin Trazabilidad en
@@ -55,14 +57,15 @@ Correos de Chile (`correos-chile`) are separate carriers.
 - Only `codEvento` is mapped, never the `desTextoResumen` prose. Each event keeps it as
   `provider_code`, so the app reviews an unmapped scan by its code. `statusMap` answers by code,
   and by wording only for `G01L020V`, which the queue held before events kept their code.
-- The localizador words its scans in Spanish whatever `Accept-Language` says, unless `codIdioma`
-  is `EN`, so the adapter asks for English. Codes and clocks are the same in both. A scan stored in
-  Spanish takes the English wording in place: at its instant, its code identifies it. In English
-  the failed attempt `H06P010V` reads "In delivery", like the out-for-delivery codes. So does
-  `H01C120V`, seen while the parcel waits at a post office for collection: it keeps the stage of
-  the scan before it and never becomes the summary.
+- The localizador words its scans in the language `codIdioma` names, whatever `Accept-Language`
+  says: English, Spanish, Portuguese or French, and Spanish for any other code, Catalan, Galician
+  and Basque included. Codes and clocks are the same in each. A scan stored in one language takes
+  another's wording in place: at its instant, its code identifies it. In English the failed
+  attempt `H06P010V` reads "In delivery", like the out-for-delivery codes. So does `H01C120V`,
+  seen while the parcel waits at a post office for collection: it keeps the stage of the scan
+  before it and never becomes the summary.
   The collection from a pickup request's address, `HI10002V`, has no English summary, so the
-  adapter words it from the Spanish one.
+  adapter gives it one worded from the Spanish, in any reply that leaves it without one.
 - `A090000V` ("Pre-registered") is the sender's pre-registration and stays `registered`;
   `A010000V` ("Accepted") is Correos taking the parcel in, `accepted`.
 - `L010000V`, `I010000V`, `X120000V` and `EOL.9001` come from a community integration and

@@ -2,12 +2,14 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { IndeterminateError, NotFoundError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import {
   normalizeCorreosSpainTrackingNumber,
   correosSpainTrackingUrl,
   parseCorreosSpainExpeditionResponse,
   parseCorreosSpainTrackingResponse,
   CorreosSpainTracker,
+  adapter,
 } from './adapter.js';
 import { correosOriginZone } from './clock.js';
 import { classifyCorreosSpainStatus } from './status.js';
@@ -151,8 +153,8 @@ describe('Correos Spain response parsing', () => {
       last_status_text: 'At recipient’s disposal', pickup_point: 'OFICINA EXAMPLE' });
   });
 
-  it('rewords a scan stored in Spanish in place, matched by its instant and code', () => {
-    // The localizador's Spanish and English replies carry the same codes and clocks.
+  it('rewords a scan stored in another language in place, matched by its instant and code', () => {
+    // The localizador's replies in every language carry the same codes and clocks.
     expect(sameInstantIdentityPolicy('correos-spain', { supportsScanMatching: true }))
       .toMatchObject({ storedSources: ['correos-spain'], requireProviderCode: true });
   });
@@ -451,6 +453,15 @@ describe('CorreosSpainTracker fetch', () => {
     expect(seen).toEqual([
       'https://localizador.correos.es/canonico/eventos_envio_servicio/PR123456789012345C?codAplicacion=60&codCanal=3&codIdioma=EN&indUltEvento=N',
     ]);
+  });
+
+  it("asks for the reader's language when the localizador words scans in it, and English otherwise", async () => {
+    const fetcher = vi.fn<typeof fetch>(async () => response([envelope()]));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    for (const [language, asked] of [['es', 'ES'], ['es-ES', 'ES'], ['pt-BR', 'PT'], ['fr', 'FR'], ['ca', 'EN'], ['de', 'EN'], [null, 'EN']] as const) {
+      await instance.track({ number: TRACKING_NUMBER, language });
+      expect(new URL(String(fetcher.mock.calls.at(-1)?.[0])).searchParams.get('codIdioma')).toBe(asked);
+    }
   });
 
   it('resolves an expedition code through the public search, then tracks its parcel', async () => {
