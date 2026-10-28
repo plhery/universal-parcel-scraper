@@ -101,6 +101,12 @@ describe('shared provider result', () => {
       .filter((scan) => scan !== null), 'ParcelsApp')).toMatchObject({ current_stage: 'customs' });
   });
 
+  it('leaves out a bracketed time with no words, which names no scan', () => {
+    expect(event('2026-01-07T10:52:13+08:00', '( 10：23)', 'InTransit')).toBeNull();
+    expect(localEvent('2026-01-07T10:52:13', '(10:23)')).toBeNull();
+    expect(event('2026-01-07T10:52:13+08:00', 'Departed (10:23)', 'InTransit')).toMatchObject({ stage: 'in_transit' });
+  });
+
   it("reads Sameday's Bulgarian steps before it has the parcel, as ParcelsApp relays them", () => {
     expect(event('2026-01-07T12:45:00+02:00', 'Скоро ще вземем пратката Ви от подателя.'))
       .toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
