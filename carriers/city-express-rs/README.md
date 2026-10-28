@@ -35,7 +35,8 @@ through the lookup its tracking page makes.
   scans have not shown yet, and whether one parcel's delivery ends a shipment of several.
 - The English page sets the session's language, so the wording is English. The Serbian wording
   of the same statuses, and the older layout without parcel numbers, are read too.
-- Each scan's date and minute have no zone, so they stay `local_time`.
+- Each scan's date and minute have no zone. They stay `local_time` and are read in the catalog
+  zone, Belgrade's, since City Express delivers only in Serbia.
 - The reply also names the sender's and recipient's postcodes and towns, the sender's
   references, the parcel count and, in some layouts, the sending date and weight. None of it is
   kept.
