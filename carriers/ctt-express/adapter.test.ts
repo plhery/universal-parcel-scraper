@@ -87,6 +87,19 @@ describe('CTT Express direct tracking', () => {
     expect(steps).toMatchObject([{ step: 'direct', outcome: expect.not.stringMatching(/^ok$/) }, { step: 'retry', outcome: 'ok', fallbackFrom: 'direct' }]);
   });
 
+  it('reads an empty body twice in a row as no shipment under the number', async () => {
+    // Live shape: the tracker answers a number it has no shipment under with HTTP 200 and no body.
+    const empty = vi.fn<typeof fetch>(async () => new Response('', { headers: { 'Content-Type': 'application/json' } }));
+    await expect(new CttExpressTracker({ fetcher: empty }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
+    expect(empty).toHaveBeenCalledTimes(2);
+    // Once, beside a failed request or before a history, it is no answer.
+    const failed = vi.fn<typeof fetch>().mockRejectedValueOnce(new TypeError('fetch failed'))
+      .mockResolvedValueOnce(new Response('', { headers: { 'Content-Type': 'application/json' } }));
+    await expect(new CttExpressTracker({ fetcher: failed }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    const recovered = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('')).mockResolvedValueOnce(json(fixture));
+    await expect(new CttExpressTracker({ fetcher: recovered }).fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'ready_for_pickup' });
+  });
+
   it('keeps an unreadable body a schema failure and reads a definite answer once', async () => {
     const unreadable = vi.fn<typeof fetch>(async () => new Response('<html></html>'));
     await expect(new CttExpressTracker({ fetcher: unreadable }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });

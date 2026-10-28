@@ -19,7 +19,8 @@
     "mode": "automatic",
     "adapter": "ctt-express",
     "steps": [
-      "direct"
+      "direct",
+      "retry"
     ],
     "recognition": {
       "rank": 790
