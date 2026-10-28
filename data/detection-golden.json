@@ -94425,6 +94425,14 @@
     ]
   },
   {
+    "input": "VD307149723551",
+    "carrier": "viadireta",
+    "confidence": "high",
+    "candidates": [
+      "viadireta"
+    ]
+  },
+  {
     "input": "VDC39298794N",
     "carrier": "unknown",
     "confidence": "low",
@@ -94433,6 +94441,30 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "VDVD161225074709",
+    "carrier": "viadireta",
+    "confidence": "high",
+    "candidates": [
+      "viadireta"
+    ]
+  },
+  {
+    "input": "VDVD200126002349",
+    "carrier": "viadireta",
+    "confidence": "high",
+    "candidates": [
+      "viadireta"
+    ]
+  },
+  {
+    "input": "VDVD200526010401",
+    "carrier": "viadireta",
+    "confidence": "high",
+    "candidates": [
+      "viadireta"
     ]
   },
   {

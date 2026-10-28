@@ -32522,6 +32522,49 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "viadireta": {
+    "displayName": "ViaDireta",
+    "color": "#0d3a6d",
+    "aliases": [
+      "Via Directa"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "viadireta",
+      "recognitionRank": 72,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.viadireta.pt/tracking",
+    "trackingUrlTemplate": "https://www.viadireta.pt/tracking?codigo={trackingNumber}",
+    "trackingSearchUrl": "https://www.viadireta.pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.viadireta.pt",
+          "viadireta.pt"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "codigo"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^VD\\d{12}$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^VDVD(?:0[1-9]|[12]\\d|3[01])(?:0[1-9]|1[0-2])\\d{8}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "viettel-post": {
     "displayName": "Viettel Post",
     "color": "#ee0033",
@@ -34671,6 +34714,7 @@ export const CARRIER_IDS = [
   "venipak",
   "vestovoy",
   "via-cargo",
+  "viadireta",
   "viettel-post",
   "vimenpaq",
   "vinted-go",
@@ -35498,6 +35542,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "venipak": ["venipak-1"],
   "vestovoy": [],
   "via-cargo": [],
+  "viadireta": ["viadireta-1","viadireta-2"],
   "viettel-post": ["viettel-post-1"],
   "vimenpaq": [],
   "vinted-go": ["vinted-go-1","vinted-go-vgs","vinted-go-uw"],

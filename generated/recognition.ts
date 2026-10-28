@@ -452,6 +452,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "vasp-expresso": 885,
   "venipak": 240,
   "via-cargo": 936,
+  "viadireta": 72,
   "vimenpaq": 713,
   "vinted-go": 410,
   "vozovoz": 569,

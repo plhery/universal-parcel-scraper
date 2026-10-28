@@ -1969,6 +1969,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'logisimple', number: '000000000017',
     route: /^https:\/\/portal\.logisimple\.pt\/pt\/tracking\?tracking=000000000017$/,
     marker: /TRK#000000000017|Não encontrámos correspondências para o código de envio/ },
+  // The server renders the page, keeps the number in its form and shows its try-again notice for a made-up one.
+  { carrier: 'viadireta', number: 'VD900000000017',
+    route: /^https:\/\/www\.viadireta\.pt\/tracking\?codigo=VD900000000017$/,
+    marker: /ainda não está a ser possível verificar o estado da sua encomenda|not yet possible to check the status of your order|Envio Nº|Shipment No\./ },
 ];
 
 /**

@@ -629,6 +629,7 @@ import { statusMap as vaspExpresso } from '../../carriers/vasp-expresso/status.j
 import { statusMap as veloces } from '../../carriers/veloces/status.js';
 import { statusMap as venipak } from '../../carriers/venipak/status.js';
 import { statusMap as viaCargo } from '../../carriers/via-cargo/status.js';
+import { statusMap as viadireta } from '../../carriers/viadireta/status.js';
 import { statusMap as viettelPost } from '../../carriers/viettel-post/status.js';
 import { statusMap as vimenpaq } from '../../carriers/vimenpaq/status.js';
 import { statusMap as vintedGo } from '../../carriers/vinted-go/status.js';
@@ -742,7 +743,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   trackon, 'tracx-logis': tracxLogis, transaher, transcorp, transmission, tsjy, 'tst-cf-express': tstCfExpress, tufesa, 'tws-express': twsExpress,
   'ubi-smart-parcel': ubiSmartParcel, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
-  'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veloces, venipak, 'via-cargo': viaCargo, 'viettel-post': viettelPost,
+  'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wanbexpress, whistl, winit, 'xde-logistics': xdeLogistics, xdp, xlcourier, 'xpo-ltl': xpoLtl, xpressbees,
   yamato, yanwen, 'ycs-logistics': ycsLogistics, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zeleris, 'zr-express': zrExpress,

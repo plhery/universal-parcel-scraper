@@ -620,6 +620,7 @@ import { adapter as vaspExpresso } from '../carriers/vasp-expresso/adapter.js';
 import { adapter as veloces } from '../carriers/veloces/adapter.js';
 import { adapter as venipak } from '../carriers/venipak/adapter.js';
 import { adapter as viaCargo } from '../carriers/via-cargo/adapter.js';
+import { adapter as viadireta } from '../carriers/viadireta/adapter.js';
 import { adapter as viettelPost } from '../carriers/viettel-post/adapter.js';
 import { adapter as vimenpaq } from '../carriers/vimenpaq/adapter.js';
 import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
@@ -1270,6 +1271,7 @@ export const REGISTRY: RegistryDefinition = {
     "veloces": veloces,
     "venipak": venipak,
     "via-cargo": viaCargo,
+    "viadireta": viadireta,
     "viettel-post": viettelPost,
     "vimenpaq": vimenpaq,
     "vinted-go": vintedGo,
@@ -2080,6 +2082,7 @@ export const REGISTRY: RegistryDefinition = {
     "venipak": "venipak",
     "vestovoy": "universal",
     "via-cargo": "via-cargo",
+    "viadireta": "viadireta",
     "viettel-post": "viettel-post",
     "vimenpaq": "vimenpaq",
     "vinted-go": "vinted-go",
