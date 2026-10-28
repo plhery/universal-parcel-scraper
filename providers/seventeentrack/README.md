@@ -154,6 +154,9 @@ carrier.
   [DAI Post adapter](../../carriers/dai-post/README.md) reads it, in its country's zone where
   that keeps one clock. A scan in Australia or the US, or the label data, is counted in
   `undated_event_count`, and when it is the reply's latest scan the reply is inconclusive.
+- Quick Rabbit's leg (carrier key 101309) shows the clocks Quick Rabbit's page shows, and
+  17TRACK labels them `-04:00`. Its rows are read on Madrid's clock, as the
+  [Quick Rabbit adapter](../../carriers/quick-rabbit/README.md) reads them.
 - NZ Post's leg (carrier key 14061) shows NZ Post's wall clocks, and 17TRACK labels them
   with New Zealand's offset on the day it looks: in October it put `+13:00` on August
   scans, when New Zealand kept `+12:00` (checked 2026-10-10). That leg's `time_raw` is read

@@ -220,6 +220,13 @@ const HYWL = 192109;
 const DAI_POST = 100790;
 
 /**
+ * 17TRACK's carrier 101309, Quick Rabbit, shows the clocks Quick Rabbit's page shows, Madrid's,
+ * and labels them -04:00: a delivery the page shows at 23:07 came as 23:07-04:00, five hours
+ * late. Its rows are read on Madrid's clock, as Quick Rabbit's adapter reads them.
+ */
+const QUICK_RABBIT = 101309;
+
+/**
  * 17TRACK's carrier 21051, USPS, shows USPS's wall clocks, each the scanning
  * facility's. A row given to the second can name USPS's zone in `time_raw`,
  * and keeps it. A row given to the minute has no zone, and 17TRACK puts on it
@@ -507,6 +514,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const shiprocket = reported.key === SHIPROCKET;
     const hywl = reported.key === HYWL;
     const daiPost = reported.key === DAI_POST;
+    const quickRabbit = reported.key === QUICK_RABBIT;
     const usps = reported.key === USPS;
     const brt = reported.key === BRT;
     const chile = reported.key === CORREOS_CHILE;
@@ -533,14 +541,15 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const polish = !poland ? null : departed && (rawClock(raw) ?? '') > departed ? partner : 'Europe/Warsaw';
       // FIC's partner's scan from the handover on, unless placed in Britain, on the recipient's clock.
       const handed = delivering && (rawClock(raw) ?? '') >= handedOver && locationCountry(raw.location) !== 'GB' ? delivering : null;
-      // A facility's clock, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
-      const read = facility || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || own || chile || shiprocket || daiPost || sent !== undefined;
+      // A facility's clock, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's, Quick Rabbit's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
+      const read = facility || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || own || chile || shiprocket || daiPost || quickRabbit
+        || sent !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland ? null : seasonZone(raw, labelled, now);
       const wall = relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null;
       const zone = !wall ? null : season ?? (hywl ? relayed : relayed ?? facility ?? own ?? (sent !== undefined ? sent : abroad.has(index) ? abroad.get(index) ?? null
         : exchange ? origin : utc ? 'UTC' : polish ? polish : handed ? handed
-        : nz ? 'Pacific/Auckland' : chile ? facilityZone(text(raw.location)) ?? 'America/Santiago'
+        : nz ? 'Pacific/Auckland' : quickRabbit ? 'Europe/Madrid' : chile ? facilityZone(text(raw.location)) ?? 'America/Santiago'
         : shiprocket ? (placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null)
         : daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location))));
       const placed = wall && zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;

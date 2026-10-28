@@ -361,6 +361,19 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-05-07T20:22:51.000Z');
   });
 
+  it('reads Quick Rabbit\'s rows on Madrid\'s clock, not under the -04:00 17TRACK adds', () => {
+    const row = (date: string, time: string, timezone: string | null = null) => ({
+      time_iso: `${date}T${time}${timezone ?? '-04:00'}`, time_utc: null, time_raw: { date, time, timezone },
+      description: 'Delivered', location: null, stage: null, sub_status: 'Delivered_Other' });
+    const reply = (key: number, events: unknown[]) => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'Delivered' }, tracking: { providers: [{ provider: { key, name: 'QUICK RABBIT' }, events }] } } }] });
+    const parsed = parse17TrackResponse(reply(101309, [row('2026-10-25', '23:07:00'), row('2026-10-23', '01:11:36')]), number);
+    expect(parsed.events?.map((event) => event.time)).toEqual(['2026-10-25T22:07:00.000Z', '2026-10-22T23:11:36.000Z']);
+    expect(parsed.events?.[0]).toMatchObject({ provider_time_iso: '2026-10-25T23:07:00-04:00', time_provenance: 'provider_inferred' });
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, [row('2026-10-25', '23:07:00')]), number).events?.[0]?.time).toBe('2026-10-26T03:07:00.000Z');
+  });
+
   it('reads Huiyi Logistics\' rows in China on Beijing\'s clock, not as their "+00:00", and keeps the others\' wall clocks', () => {
     const row = (time: string, location: string) => ({
       time_iso: `2026-05-07T${time}+00:00`, time_utc: `2026-05-07T${time}Z`, time_raw: { date: '2026-05-07', time, timezone: '+00:00' },
