@@ -20823,6 +20823,39 @@
       }
     ]
   },
+  "logisimple": {
+    "displayName": "Logisimple",
+    "color": "#e27900",
+    "aliases": [
+      "Logisimple, Lda.",
+      "Logisimple - Transportes, Montagens e Mudanças"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "logisimple",
+      "localClocks": true
+    },
+    "canaryUrl": "https://portal.logisimple.pt/pt/tracking",
+    "trackingUrlTemplate": "https://portal.logisimple.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://portal.logisimple.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.logisimple.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "logistiq": {
     "displayName": "Logistiq",
     "color": "#2e65f3",

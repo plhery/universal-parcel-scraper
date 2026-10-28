@@ -358,6 +358,7 @@ import { adapter as linhan } from '../carriers/linhan/adapter.js';
 import { adapter as lionParcel } from '../carriers/lion-parcel/adapter.js';
 import { adapter as logen } from '../carriers/logen/adapter.js';
 import { adapter as loggi } from '../carriers/loggi/adapter.js';
+import { adapter as logisimple } from '../carriers/logisimple/adapter.js';
 import { adapter as logistiq } from '../carriers/logistiq/adapter.js';
 import { adapter as logoix } from '../carriers/logoix/adapter.js';
 import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js';
@@ -1007,6 +1008,7 @@ export const REGISTRY: RegistryDefinition = {
     "lion-parcel": lionParcel,
     "logen": logen,
     "loggi": loggi,
+    "logisimple": logisimple,
     "logistiq": logistiq,
     "logoix": logoix,
     "loomis-express": loomisExpress,
@@ -1744,6 +1746,7 @@ export const REGISTRY: RegistryDefinition = {
     "lion-parcel": "lion-parcel",
     "logen": "logen",
     "loggi": "loggi",
+    "logisimple": "logisimple",
     "logistiq": "logistiq",
     "logoix": "logoix",
     "loomis-express": "loomis-express",

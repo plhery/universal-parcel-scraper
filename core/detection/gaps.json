@@ -2233,6 +2233,12 @@
     "reason": "Eleven digits with a mod-7 check digit are shared with Japan Post and several other carriers, and nothing in the number points to Logen."
   },
   {
+    "carrier": "logisimple",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Logisimple's shipment codes are twelve bare digits, a length many carriers share, so no rule claims them."
+  },
+  {
     "carrier": "logistiq",
     "pattern": "^[A-Z]{7,9}\\d{9}$",
     "kind": "by_design",

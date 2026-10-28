@@ -20825,6 +20825,39 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "logisimple": {
+    "displayName": "Logisimple",
+    "color": "#e27900",
+    "aliases": [
+      "Logisimple, Lda.",
+      "Logisimple - Transportes, Montagens e Mudanças"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "logisimple",
+      "localClocks": true
+    },
+    "canaryUrl": "https://portal.logisimple.pt/pt/tracking",
+    "trackingUrlTemplate": "https://portal.logisimple.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://portal.logisimple.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.logisimple.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "logistiq": {
     "displayName": "Logistiq",
     "color": "#2e65f3",
@@ -34345,6 +34378,7 @@ export const CARRIER_IDS = [
   "lion-parcel",
   "logen",
   "loggi",
+  "logisimple",
   "logistiq",
   "logoix",
   "loomis-express",
@@ -35171,6 +35205,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lion-parcel": ["lion-parcel-1"],
   "logen": [],
   "loggi": ["loggi-1"],
+  "logisimple": [],
   "logistiq": [],
   "logoix": ["logoix-1"],
   "loomis-express": ["loomis-express-1","loomis-express-2"],
