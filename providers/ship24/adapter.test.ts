@@ -311,6 +311,18 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
       '2026-05-21T21:08:01.000Z', '2026-05-21T12:35:30.000Z', '2026-05-21T09:04:13.000Z']);
   });
 
+  it('reads 17FEIA\'s rows as its adapter does: the warehouse on Beijing, a relayed scan on its country\'s clock, the flight on its wall clock', () => {
+    expect(feed('feia-tracking', 'FEIA', [['2026-10-23T11:43:00', 'Example Town (NL)', 'Delivered., 成功签收'],
+      ['2026-10-22T01:30:00', 'Example Town (DE)', 'In transit., 运输途中'],
+      ['2026-10-18T11:45:00', undefined, 'Broker picked up Shipment and delivered to warehouse., OTHER'],
+      ['2026-10-16T20:05:00', undefined, 'Flight has departed., 航班已起飞'],
+      ['2026-10-14T18:00:00', undefined, 'Order dispatched from warehouse., OTHER'],
+      ['2026-10-12T16:33:42', 'Example Town', 'Warehouse receipt., 仓库收货'],
+      ['2026-09-21T21:16:14', undefined, 'Item information received., OTHER']])).toEqual([
+      '2026-10-23T09:43:00.000Z', '2026-10-21T23:30:00.000Z', 'local 2026-10-18T11:45:00', 'local 2026-10-16T20:05:00',
+      '2026-10-14T10:00:00.000Z', '2026-10-12T08:33:42.000Z', '2026-09-21T13:16:14.000Z']);
+  });
+
   it('takes the offset of any other feed as sent', () => {
     expect(feed('example-tracking', 'Example Courier', [['2026-10-10T12:43:21-05:00', 'EXAMPLE TOWN ON']])).toEqual(['2026-10-10T17:43:21.000Z']);
   });

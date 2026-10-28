@@ -7,6 +7,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryTimeZone, firstOccurrence, usStateTimeZone, type ParsedTime } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { SEVENTEENFEIA_HOME_ZONE } from './clock.js';
 import { DELAY_LABEL, ESTIMATE_LABEL, seventeenFeiaStage } from './status.js';
 
 export const PROVIDER = '17FEIA';
@@ -17,7 +18,7 @@ const NUMBER = /^FEI[A-Z]{2}\d{10}[A-Z]{2}$/;
 const WALL_CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
 // 17FEIA's backend keeps the order data on Beijing time; a row kept as a wall clock is read in it only to hold back future ones.
-const HOME_ZONE = 'Asia/Shanghai';
+const HOME_ZONE = SEVENTEENFEIA_HOME_ZONE;
 /**
  * 17FEIA's steps at its warehouse in China before the flight. The backend
  * writes them on Beijing time, as it writes the warehouse's receipt; the

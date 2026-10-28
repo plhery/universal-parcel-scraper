@@ -94,6 +94,10 @@ No account, cookie, fingerprint or issued token is used.
 - `inpost-uk-tracking` gives UTC instants with no offset: InPost's hub dates the same
   scans with one, and Collect+'s copies say `+01:00` on London's summer clock. They are
   read as UTC, not as wall clocks.
+- `feia-tracking` gives 17FEIA's wall clocks, and drops the label and country of its order
+  data and warehouse steps. They are read as 17FEIA's adapter reads them: those steps on
+  Beijing time, a relayed scan on the clock of the country its place ends with (`(DE)`),
+  and the flight's and customs' milestones as wall clocks.
 - `swiss-post-tracking` puts Swiss Post's offset on the destination post's scans it relays
   (arrival, customs, sorting and delivery, with no location), which are at that office's
   clock ([Swiss Post](../../carriers/swiss-post/README.md)). On a parcel to a country with

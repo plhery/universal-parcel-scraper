@@ -27,6 +27,7 @@ import {
 } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
+import { seventeenFeiaCopyZone } from '../../carriers/17feia/clock.js';
 import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
 import { gofoScanZone } from '../../carriers/gofo/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
@@ -174,7 +175,9 @@ interface Journey {
  *   (`processTimeZone`), and names its station (`processLocation`) without a state;
  * - PostNL's say Z on postnl.post's `datetime_local`;
  * - Amazon UK's say Z on the marketplace's clock, which Amazon shows without one;
- * - CTT's say Z, as CTT's own tracker does (carriers/ctt/clock.ts).
+ * - CTT's say Z, as CTT's own tracker does (carriers/ctt/clock.ts);
+ * - 17FEIA's say Z on the wall clocks its own rows keep, and drop the country
+ *   of its order data and warehouse steps (carriers/17feia/clock.ts).
  */
 interface Feed {
   /** Ship24's crawler code, which keeps one feed's scans together. */
@@ -194,6 +197,8 @@ interface Feed {
   own?: string;
   /** The feed's scans whose offset is real after all, by their wording and an empty location. */
   stated?: (status: string) => boolean;
+  /** A scan nothing places keeps its wall clock instead of borrowing a neighbour's or the courier's. */
+  walls?: true;
 }
 
 const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
@@ -205,6 +210,8 @@ const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
   'amazon-uk-tracking': { home: () => 'Europe/London' },
   'portugal-ctt-tracking': { place: (location, journey) => cttSiteZone(location, [journey.origin, journey.destination]), home: portugalZone },
   '4px-tracking': { shift: 'Asia/Shanghai' },
+  // A status is 17FEIA's words, then its label or "OTHER".
+  'feia-tracking': { place: (location, _journey, status) => seventeenFeiaCopyZone(status.replace(/,\s*[^,]*$/, ''), location), walls: true },
 };
 
 function feedOf(scan: Record<string, unknown>): Feed | null {
@@ -434,7 +441,7 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
   }
   const events = readings.map((reading): CarrierEvent => {
     const { event, wall, feed } = reading;
-    const zone = reading.zone ?? (wall && feed ? borrowedZone(readings, reading, journey) ?? namedZone(journey, wall) ?? feed.own ?? null : null);
+    const zone = reading.zone ?? (wall && feed && !feed.walls ? borrowedZone(readings, reading, journey) ?? namedZone(journey, wall) ?? feed.own ?? null : null);
     const instant = wall && zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;
     if (!instant?.isValid) return event;
     const timed: CarrierEvent = { ...event, time: instant.toUTC().toISO() };
