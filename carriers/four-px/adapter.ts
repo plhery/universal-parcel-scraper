@@ -74,6 +74,28 @@ function laPosteTransitCopy(raw: Record<string, unknown>, description: string, c
 // reads two hours before the measurement, at the same seconds.
 const ASENDIA = /^asendia hong kong$/i;
 
+// 4PX can list a partner's scan twice: on the partner's clock, and with UTC digits under
+// the same offset, the offset earlier at the same seconds. A partner's order made as the
+// facility measures the parcel reads one second after the measurement on the partner's
+// clock, and hours before the pickup in UTC digits. A scan whose digits are its twin's UTC
+// time is that copy, and is left out.
+function twin(digits: string, raw: Record<string, unknown>): string {
+  return JSON.stringify([digits, clean(raw.tkTimezone, 64), clean(raw.tkDesc, 1000), clean(raw.tkLocation, 200), clean(raw.tkCode, 64)]);
+}
+
+/** How a UTC-digit copy of each scan with an offset other than zero would read. */
+function utcCopies(tracks: unknown[]): Set<string> {
+  const copies = new Set<string>();
+  for (const raw of tracks) {
+    if (!isRecord(raw)) continue;
+    const offset = /^UTC([+-]\d{2}:\d{2})$/.exec(clean(raw.tkTimezone, 64))?.[1];
+    const at = offset && !/^[+-]00:00$/.test(offset)
+      ? DateTime.fromISO(`${clean(raw.tkDateStr, 64).replace(' ', 'T')}${offset}`, { zone: 'UTC' }) : null;
+    if (at?.isValid) copies.add(twin(at.toFormat('yyyy-MM-dd HH:mm:ss'), raw));
+  }
+  return copies;
+}
+
 /** The offset 4PX's own facility scans (`FPX_C_…`) carry, if any. */
 function facilityZone(tracks: unknown[]): string | undefined {
   return tracks.map((raw) => (isRecord(raw) && clean(raw.tkCode, 64).startsWith('FPX_C_') ? clean(raw.tkTimezone, 64) : ''))
@@ -113,11 +135,13 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const seen = new Set<string>();
   let pickupPoint: string | undefined;
   const facility = facilityZone(item.tracks);
+  const copies = utcCopies(item.tracks);
   const country = clean(item.ctEndCode, 8).toUpperCase();
   for (const raw of item.tracks) {
     if (!isRecord(raw)) throw new SchemaError('4PX');
     const wording = clean(raw.tkDesc, 1000);
     if (!wording) throw new SchemaError('4PX', '4PX returned an empty scan');
+    if (copies.has(twin(clean(raw.tkDateStr, 64), raw))) continue;
     const shop = shopRecord(wording);
     if (shop) {
       pickupPoint ??= shop.point;

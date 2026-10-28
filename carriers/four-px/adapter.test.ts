@@ -116,6 +116,22 @@ describe('4PX result projection', () => {
     expect(events.find((event) => event.description === 'Label creation')?.stage).toBe('registered');
   });
 
+  it("leaves out a partner's scan listed again with UTC digits under the same offset", () => {
+    const payload = fixture();
+    const tracks = payload.data[0].tracks;
+    // A partner's order made as the facility measures the parcel at 14:30:03 +08:00, on its clock and in UTC digits.
+    const order = (tkDateStr: string) => ({ ...tracks.at(-6), tkCode: '', tkDesc: 'Order creation, order submitted, pending to receive.',
+      tkDateStr, tkTimezone: 'UTC+11:00', tkLocation: '' });
+    payload.data[0].tracks = [...tracks.slice(0, 20), order('2026-03-08 17:30:04'), ...tracks.slice(20, 23), order('2026-03-08 06:30:04'),
+      ...tracks.slice(23)];
+    const orders = () => parse(payload, NUMBER).events!.filter((event) => event.description?.startsWith('Order creation'))
+      .map((event) => event.time);
+    expect(orders()).toEqual(['2026-03-08T17:30:04+11:00']);
+    // Without its twin, a scan keeps the offset it is labelled with.
+    payload.data[0].tracks.splice(20, 1);
+    expect(orders()).toEqual(['2026-03-08T06:30:04+11:00']);
+  });
+
   it('reads a scan whose zone is named rather than offset', () => {
     const payload = fixture();
     payload.data[0].tracks[0].tkTimezone = 'UTCAmerica/Vancouver';

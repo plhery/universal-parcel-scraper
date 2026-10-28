@@ -30,6 +30,11 @@ there has been compared with La Poste's own scans. Asendia Hong Kong's label and
 manifest carry Asendia's UTC digits, as Yanwen relays them, under the
 destination's offset: a label made as 4PX's facility measures the parcel reads
 two hours before the measurement, at the same seconds. They are read as UTC.
+4PX can list a partner's scan twice, on the partner's clock and with UTC digits under
+the same offset, the offset earlier at the same seconds: a partner's order made as the
+facility measures the parcel reads one second after the measurement in the first, and
+hours before the pickup in the second. The copy whose digits are its twin's UTC time is
+left out; a scan without such a twin keeps its offset.
 
 Event codes map to stages. `FPX_O_IR` and `FPX_O_IRI` relay whatever step a
 partner reported, from a label to an arrival abroad, so their wording decides.
