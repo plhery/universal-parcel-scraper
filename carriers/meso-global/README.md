@@ -34,8 +34,10 @@ so the reply's fields are known from the platform.
 
 ## Numbers
 
-No public page shows a whole Meso-global number, so there is no detection rule. Parcels reach it
-through a universal provider's carrier name.
+Its numbers are ZJKJ, the initials of its Chinese name 中际跨境 (Zhongji Kuajing), and ten digits. A
+parcel the app tracked has that layout and Meso-global's tracker answers it, and no other carrier's
+rule takes it, so `meso-global-1` has high confidence. No public page shows a whole Meso-global
+number, so the corpus holds a synthetic one.
 
 ## Links
 

@@ -369,6 +369,16 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
+  it('names Meso-global for ZJKJ and ten digits, and only that layout', () => {
+    for (const number of ['ZJKJ1000000017', 'zjkj 1000 0000 17']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'meso-global', confidence: 'high' });
+    }
+    for (const number of ['ZJKJ100000017', 'ZJKJ10000000017', 'ZJKX1000000017', 'ZJKJ1000000017CN']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('meso-global');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('meso-global');
+    }
+  });
+
   it('names TopYou for TYZR, a letter, ten digits and YQ, and only that layout', () => {
     for (const number of ['TYZRZ0000000017YQ', 'tyzrz 0000 0000 17 yq']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'topyou', confidence: 'high' });

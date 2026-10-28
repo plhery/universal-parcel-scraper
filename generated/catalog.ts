@@ -22133,7 +22133,12 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^ZJKJ\\d{10}$",
+        "confidence": "high"
+      }
+    ]
   },
   "messenger-cz": {
     "displayName": "Messenger",
@@ -35567,7 +35572,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mds-collivery": [],
   "meest": ["meest-1"],
   "meihoo-pegasus": ["meihoo-pegasus-1"],
-  "meso-global": [],
+  "meso-global": ["meso-global-1"],
   "messenger-cz": [],
   "method": [],
   "metropolitan-warehouse": ["metropolitan-warehouse-1"],

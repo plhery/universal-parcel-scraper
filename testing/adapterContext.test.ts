@@ -78,7 +78,6 @@ const corpus = new Map(loadNumberCorpusFiles().map((file) => [file.carrier, file
 const UNSAMPLED: Readonly<Record<string, readonly string[]>> = {
   'dpd-hu': ['16400000000001'],
   homexpress: ['TMS00000000000'],
-  'meso-global': ['ZZZZ0000000001'],
   'mongol-infinity-post': ['1000000'],
   'speed-and-safe': ['00000000'],
 };

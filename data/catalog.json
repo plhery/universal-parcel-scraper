@@ -22131,7 +22131,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^ZJKJ\\d{10}$",
+        "confidence": "high"
+      }
+    ]
   },
   "messenger-cz": {
     "displayName": "Messenger",

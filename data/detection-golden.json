@@ -96633,6 +96633,14 @@
     ]
   },
   {
+    "input": "ZJKJ1000000017",
+    "carrier": "meso-global",
+    "confidence": "high",
+    "candidates": [
+      "meso-global"
+    ]
+  },
+  {
     "input": "ZL53533553",
     "carrier": "unknown",
     "confidence": "low",
