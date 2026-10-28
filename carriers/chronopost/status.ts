@@ -46,6 +46,7 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
   ['AB', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
   // The courier left the parcel at another pickup point than the one planned, where it waits.
+  // Before the parcel has moved, it is the sender's drop-off at another point (see the parser).
   ['AB', 'Colis mis à disposition dans un point de retrait différent de celui prévu', 'ready_for_pickup'],
   // The same arrival at the pickup point, also written under SD and under MD.
   ['SD', 'Colis mis à disposition au point de retrait', 'ready_for_pickup'],
@@ -85,6 +86,11 @@ export function isReturnToSender(code: string, label: string): boolean {
 /** The courier's drop-off scan, which can follow the pickup point's own arrival scan. */
 export function isPickupDropOff(code: string, label: string): boolean {
   return code === 'RB' && label === 'Colis en cours de livraison au point de retrait';
+}
+
+/** A pickup point's scan of a parcel at another point than the one planned. */
+export function isOtherPickupPoint(code: string, label: string): boolean {
+  return code === 'AB' && label === 'Colis mis à disposition dans un point de retrait différent de celui prévu';
 }
 
 /** Partner events can reuse codes; the observed wording must agree with the code. */

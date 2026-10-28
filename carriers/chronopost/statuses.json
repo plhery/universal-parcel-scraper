@@ -317,7 +317,7 @@
       "stage": "ready_for_pickup",
       "confirmedBy": "live",
       "firstSeen": "2026-10-27",
-      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The parcel waits at another pickup point than the one planned.",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The parcel waits at another pickup point than the one planned. Before the parcel has moved, the parser reads it as the sender's drop-off at another point, accepted.",
       "wording": "Colis mis à disposition dans un point de retrait différent de celui prévu",
       "language": "fr"
     },

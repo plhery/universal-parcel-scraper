@@ -369,6 +369,21 @@ describe('Chronopost direct tracking', () => {
       { provider_code: 'TA', stage: 'out_for_delivery', stage_source: 'carrier_map' }]);
   });
 
+  it("reads a pickup point's scan at another point than planned, before the parcel moves, as the sender's drop-off", () => {
+    const dropped = scan('DB', '2026-06-26T20:47:47+02:00', "Colis déposé par l'expéditeur");
+    const otherPoint = (at: string) => scan('AB', at, 'Colis mis à disposition dans un point de retrait différent de celui prévu', relay);
+    const toCourier = scan('TT', '2026-06-27T10:59:06+02:00', 'Colis remis par le relais Pickup au chauffeur');
+    const result = parseChronopostTrackingXml(history(prepared, dropped, otherPoint('2026-06-27T10:59:02+02:00'), toCourier), number);
+    expect(result).toMatchObject({ current_stage: 'in_transit' });
+    expect(result.pickup_point).toBeUndefined();
+    expect(result.events?.slice(0, 2)).toMatchObject([
+      { provider_code: 'TT', stage: 'in_transit' }, { provider_code: 'AB', stage: 'accepted', stage_source: 'carrier_map' }]);
+    // On its way to the recipient, the parcel waits there.
+    const sorted = scan('SD', '2026-06-28T06:25:00+02:00', "Tri effectué dans l'agence de distribution");
+    expect(parseChronopostTrackingXml(history(prepared, dropped, toCourier, sorted, otherPoint('2026-06-28T11:07:04+02:00')), number))
+      .toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'EXAMPLE RELAY\n1 EXAMPLE STREET\n00000 EXAMPLE CITY' });
+  });
+
   it('shows a scan once when Chronopost writes it again, under another code or the same', () => {
     const arrival = (code: string, at: string) => scan(code, at, 'Colis mis à disposition au point de retrait', relay);
     const result = parseChronopostTrackingXml(history(prepared, arrival('SD', '2026-06-27T07:56:46+02:00'),

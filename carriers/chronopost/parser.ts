@@ -3,17 +3,18 @@ import { dpdParcelNumber, isValidDpdParcelNumber } from '../../core/detection/dp
 import { isAnotherPostItemAtChronopost } from '../../core/detection/chronopost.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay, countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
 import { isChronopostService } from './identity.js';
-import { chronopostStage, isChronopostNotification, isPickupDropOff, isReturnToSender } from './status.js';
+import { chronopostStage, isChronopostNotification, isOtherPickupPoint, isPickupDropOff, isReturnToSender } from './status.js';
 
 export const CHRONOPOST_MAX_BYTES = 2_000_000;
 const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
 export const CHRONOPOST_NAMESPACE = 'http://cxf.tracking.soap.chronopost.fr/';
 const MAX_EVENTS = 500;
+const UNMOVED: ReadonlySet<Stage> = new Set(['pending', 'registered', 'accepted']);
 // The DPD networks that look a Geopost reference up for a parcel Chronopost
 // sends to their country.
 const GEOPOST_PARTNERS: ReadonlyMap<string, string> = new Map([['DE', 'dpd-de'], ['PT', 'dpd-pt']]);
@@ -209,6 +210,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     return { event, mapped, notification: isChronopostNotification(description), index, redelivery,
       appointment: start === undefined && end === undefined ? undefined : appointmentWindow(start ?? '', end ?? ''),
       dropOff: isPickupDropOff(code, description), returnStart: isReturnToSender(code, description),
+      otherPoint: isOtherPickupPoint(code, description),
       // A delivery point is a relay only when the scan names how it is collected.
       pickup: relay ? relayPoint(relay) : collection && point ? relayPoint(point) : '' };
   });
@@ -230,7 +232,10 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     // Once the parcel starts back to the sender, the scans that follow are the return's,
     // and a delivery reaches the sender.
     returning ||= scan.returnStart;
-    const mapped = returning && scan.mapped.stage === 'delivered' ? { ...scan.mapped, stage: 'returned' as const } : scan.mapped;
+    // Before the parcel has moved, a pickup point's scan of it at another point than the one
+    // planned is the sender's drop-off there: the point hands the parcel to the courier next.
+    const mapped: ClassifiedWording = scan.otherPoint && UNMOVED.has(stage) ? { stage: 'accepted' as const, source: 'carrier_map' }
+      : returning && scan.mapped.stage === 'delivered' ? { ...scan.mapped, stage: 'returned' as const } : scan.mapped;
     if (!kept && mapped.source !== 'none') {
       stage = mapped.stage;
       stageSource = mapped.source;
