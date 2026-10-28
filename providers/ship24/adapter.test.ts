@@ -269,6 +269,13 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
       ['2026-05-11T08:54:09Z', undefined]])).toEqual(['2026-05-11T10:42:39.000Z', '2026-05-11T07:54:09.000Z']);
   });
 
+  it('reads CTT\'s Z at a CTT Express agency in Spain as Madrid\'s clock, as CTT\'s own adapter does', () => {
+    expect(feed('portugal-ctt-tracking', 'Portugal CTT', [['2026-10-28T03:17:09Z', '9999999 - (CO) C.O. EXAMPLE'],
+      ['2026-10-27T11:00:05Z', '009999 - (PL) CENTRO DE TRATAMIENTO ADUANERO']],
+    { origin_country_code: 'ES', destination_country_code: 'PT' }))
+      .toEqual(['2026-10-28T03:17:09.000Z', '2026-10-27T10:00:05.000Z']);
+  });
+
   it('reads InPost UK\'s offset-less clocks as UTC, the instants of Collect+\'s London offsets', () => {
     // Live shape (2026-10-16): one parcel's scans from both feeds, an hour apart on the digits.
     const scan = (timestamp: string, status: string, crawler: string) => ({ timestamp, status, courier: { crawler_code: crawler } });

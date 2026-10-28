@@ -13,8 +13,8 @@ import { countryTimeZone, regionHasTown } from '../../core/time/index.js';
 
 /** A UPU office of exchange leading a location: "PTLISA - (OUTRO) LISBOA". */
 const OFFICE = /^([A-Z]{2})[A-Z0-9]{4}(?=\s+-\s)/;
-/** CTT's own sites: a sorting or delivery centre (CDP), a shop or a postal point. */
-const CTT_SITE = /\b(?:CTT|CDP|centro operacional|centro de distribui[cç][aã]o)\b/i;
+/** CTT's own sites: a sorting centre, also written C.O., a delivery centre (CDP), a shop or a postal point. */
+const CTT_SITE = /\b(?:CTT|CDP|centro operacional|centro de distribui[cç][aã]o)\b|\bC\.O\.(?!\S)/i;
 /** A Portuguese postcode; 9500 to 9999 are the Azores. */
 const POSTCODE = /(?<!\d)(\d{4})(?:-\d{3})?(?!\d)/;
 
@@ -55,14 +55,15 @@ export function isCttExpressAgency(location: string): boolean {
 /**
  * The clock a CTT scan's location itself names: the country of the office of
  * exchange leading it, when that is Portugal or one of `countries` (the
- * parcel's), Madrid's for Madrid, else Portugal's for one of CTT's own sites.
- * Null when the location does not say.
+ * parcel's), Madrid's for Madrid or one of CTT Express's agencies, else
+ * Portugal's for one of CTT's own sites. Null when the location does not say.
+ * Providers' copies of CTT's scans keep CTT's digits, so they take the same clocks.
  */
 export function cttSiteZone(location: string, countries: readonly (string | null)[]): string | null {
   const office = OFFICE.exec(location)?.[1];
   if (office === 'PT' || (office && countries.includes(office))) {
     return office === 'PT' ? portugalZone(location) : countryTimeZone(office);
   }
-  if (MADRID.test(location.trim())) return 'Europe/Madrid';
+  if (MADRID.test(location.trim()) || isCttExpressAgency(location)) return 'Europe/Madrid';
   return CTT_SITE.test(location) ? portugalZone(location) : null;
 }

@@ -1962,6 +1962,11 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-09-14T08:48:52Z', status: 'In transit. Left the origin country.', carrier: 0, location: 'PTLISB - (OUTRO) LISBON PROV' },
       { date: '2026-09-13T12:30:00Z', status: 'Accepted.', carrier: 0, location: 'EXAMPLE PLACE' },
     ])).toEqual(['2026-09-16T09:40:00.000Z', '2026-09-14T07:48:52.000Z', '2026-09-13T11:30:00.000Z']);
+    // From Spain, a CTT Express agency's scan is on Madrid's clock and a CTT sorting centre's on Lisbon's.
+    expect(times('ES', 'PT', [
+      { date: '2026-10-28T03:17:09Z', status: 'Chegou ao centro operacional', carrier: 0, location: '9999999 - (CO) C.O. EXAMPLE' },
+      { date: '2026-10-27T11:00:05Z', status: 'Chegou ao centro operacional', carrier: 0, location: '009999 - (PL) CENTRO DE TRATAMIENTO ADUANERO' },
+    ])).toEqual(['2026-10-28T03:17:09.000Z', '2026-10-27T10:00:05.000Z']);
   });
 
   it('reads Royal Mail\'s relays of its partners\' scans abroad on Central European time', () => {
