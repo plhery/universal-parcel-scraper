@@ -11,6 +11,7 @@
 import { DateTime } from 'luxon';
 import { trackingLanguageStage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
+import { CHINESE_CITIES, CHINESE_PROVINCES } from './china.js';
 import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
@@ -91,6 +92,26 @@ function postcodeCountry(location: string): string | undefined {
   return code ? ENGLISH_REGIONS.of(code) ?? '' : '';
 }
 
+// Countries whose places can be written in Chinese characters.
+const HAN_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW', 'JP', 'KR', 'SG']);
+
+/**
+ * A place without a country a feed added: the destination's, which lines
+ * append to their warehouses in China ("广州,US") and ParcelsApp spells out
+ * ("Shanghai, United States"), or a country given twice ("Example State,
+ * United States, United States").
+ */
+function withoutAddedCountry(location: string): string {
+  const parts = location.split(',').map((part) => part.trim());
+  const country = parts.length > 1 ? countryCode(parts.at(-1)) : null;
+  if (!country) return location;
+  const doubled = parts.length > 2 && countryCode(parts.at(-2)) === country;
+  const key = (part: string) => part.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const chinese = !HAN_COUNTRIES.has(country) && parts.slice(0, -1).some((part) => /\p{Script=Han}/u.test(part)
+    || CHINESE_PROVINCES.has(key(part)) || CHINESE_CITIES.has(key(part)));
+  return doubled || chinese ? parts.slice(0, -1).join(', ') : location;
+}
+
 /** The place a status given as a location names in 【】 or before its airport, '' when it names none, or undefined for any other location. */
 function statusPlace(location: string): string | undefined {
   const status = STATUS_PLACE.exec(location);
@@ -105,11 +126,11 @@ function statusPlace(location: string): string | undefined {
  * area, a "Country" label or a status given before the place, unless it is a
  * label or placeholder ("--") that names no place, holds private delivery
  * details or is Posti's "abroad" label. A postcode given alone is the country
- * its code names, if any.
+ * its code names, if any. A country a feed added goes (`withoutAddedCountry`).
  */
 export function place(value: unknown): string {
   const read = text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, '');
-  const location = statusPlace(read) ?? postcodeCountry(read) ?? read;
+  const location = statusPlace(read) ?? postcodeCountry(read) ?? withoutAddedCountry(read);
   return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !hasPrivateDeliveryDetails(location) && !isPostiAbroadLabel(location)
     ? location : '';
 }

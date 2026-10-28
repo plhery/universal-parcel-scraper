@@ -72,7 +72,8 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   signature is dropped, and a delivered event's text becomes `Delivered`. Recipient
   fields are never read. A place leaves out a branch's postcode, and a postcode given
   alone as a place, as UPU posting scans relay it, becomes the country its code names
-  or no place.
+  or no place. A place loses a country given twice, and the destination's country a line
+  appends to its warehouse in China ("Shanghai, United States").
 - One wording-to-stage vocabulary serves all providers. Unmatched wording stays
   `pending` and never inherits the shipment's stage. [status.ts](status.ts) declares it,
   with 17TRACK's sub-statuses, as the status map `statusMapAnswer()` asks for the scans the

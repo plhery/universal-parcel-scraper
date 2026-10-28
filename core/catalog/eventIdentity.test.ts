@@ -252,6 +252,15 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: 'Latvia' }, stored)).toBe(false);
   });
 
+  it('lets a universal copy that lost a country a feed added take over its stored row', () => {
+    const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
+    const warehouse = { stage: 'in_transit', description: 'Package handed over to airline', location: 'Shanghai, United States', providerCode: '' };
+    expect(policy?.matches?.({ ...warehouse, location: 'Shanghai' }, warehouse)).toBe(true);
+    const hub = { stage: 'in_transit', description: 'Package picked up by last-mile carrier', location: 'Example State, United States, United States', providerCode: '' };
+    expect(policy?.matches?.({ ...hub, location: 'Example State, United States' }, hub)).toBe(true);
+    expect(policy?.matches?.({ ...hub, location: 'Other State, United States' }, hub)).toBe(false);
+  });
+
   it('lets a universal copy that lost a "Country" label take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item in transfer - please wait', location: 'Country, EXAMPLELAND', providerCode: '' };

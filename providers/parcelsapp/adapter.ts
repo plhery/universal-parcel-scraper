@@ -40,6 +40,7 @@ import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
+import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
 import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
 import { event, isNotice, localEvent, numberOf, place as reportedPlace, result, type UniversalSource } from '../shared/result.js';
 import { carrierScan, markLaterReceipts, markReturnLeg, type CarrierScan } from '../shared/scans.js';
@@ -648,20 +649,6 @@ const POSTAL_ORIGIN_LEG = wordings([
 ]);
 // The posting itself, UPU's "Posting/Collection" and EMS's "Posted" (EMA).
 const POSTAL_POSTING = wordings(['posting/collection', 'posted']);
-
-// Mainland China's provinces, regions and municipalities, as China Post's scans name them.
-const CHINESE_PROVINCES = new Set([
-  'anhui', 'beijing', 'chongqing', 'fujian', 'gansu', 'guangdong', 'guangxi', 'guizhou', 'hainan', 'hebei', 'heilongjiang', 'henan',
-  'hubei', 'hunan', 'innermongolia', 'jiangsu', 'jiangxi', 'jilin', 'liaoning', 'ningxia', 'qinghai', 'shaanxi', 'shandong',
-  'shanghai', 'shanxi', 'sichuan', 'tianjin', 'tibet', 'xinjiang', 'xizang', 'yunnan', 'zhejiang',
-]);
-// Mainland cities of China Post's provincial and export processing centres, which its scans can name alone.
-const CHINESE_CITIES = new Set([
-  'changchun', 'changsha', 'chengdu', 'dalian', 'dongguan', 'foshan', 'fuzhou', 'guangzhou', 'guiyang', 'haikou', 'hangzhou', 'harbin',
-  'hefei', 'hohhot', 'huizhou', 'jinan', 'jinhua', 'kunming', 'lanzhou', 'lhasa', 'nanchang', 'nanjing', 'nanning', 'ningbo', 'putian',
-  'qingdao', 'quanzhou', 'shantou', 'shenyang', 'shenzhen', 'shijiazhuang', 'suzhou', 'taiyuan', 'urumqi', 'wenzhou', 'wuhan', 'wuxi',
-  'xiamen', 'xian', 'xining', 'yinchuan', 'yiwu', 'zhengzhou', 'zhongshan',
-]);
 
 /**
  * Whether a China Post scan is on Beijing's clock: its place is written in
