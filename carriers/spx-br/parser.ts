@@ -15,6 +15,12 @@ const NUMBER = /^BR\d{12}[0-9A-Z]$/;
 // The order index's own count of parcels under the number: none.
 const UNKNOWN = /GetLogisticOrderIndexMap[\s\S]*\bfind \[0\]/;
 const CODE = /^[A-Z0-9_]{1,16}$/;
+// The page leaves out the rows SPX flags hidden. Most are SPX's bookkeeping: the number's
+// creation, a driver assigned, packing, relabelling, loading a truck minutes before the
+// departure the page shows. These are milestones no shown row stands for: a pickup that
+// collected nothing, import clearance, the arrival at the last-mile hub, and the way back of a
+// return, which the page shows only once the seller is about to get the parcel.
+const HIDDEN_MILESTONES: ReadonlySet<string> = new Set(['F001', 'F370', 'F599', 'F671', 'F677']);
 const MAX_ROWS = 1000;
 const MAX_EVENTS = 100;
 // Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres, on
@@ -52,7 +58,8 @@ const NAMED = /\b(entregue)\s+(?:a|ao|à|para)\s+\[[^\]]*\][\s\S]*$/i;
 
 /** A scan's wording without the name of whoever took the parcel. */
 export function spxBrWording(text: string): string {
-  return clean(clean(text, 1000).replace(RECEIVER, '').replace(NAMED, '$1'), 500).replace(/[\s,;:]+$/, '');
+  // A line whose template left its place empty ("está a caminho .") ends on a spaced stop.
+  return clean(clean(text, 1000).replace(RECEIVER, '').replace(NAMED, '$1'), 500).replace(/[\s,;:]+$/, '').replace(/\s+\.$/, '.');
 }
 
 /**
@@ -76,8 +83,8 @@ function text(row: Record<string, unknown>, key: string): string {
 }
 
 function projectRow(row: Record<string, unknown>): CarrierEvent | null {
-  // The tracker leaves out the rows it flags hidden.
-  if (row.display_flag === 0) return null;
+  const hiddenCode = typeof row.tracking_code === 'string' ? row.tracking_code.trim().toUpperCase() : '';
+  if (row.display_flag === 0 && !HIDDEN_MILESTONES.has(hiddenCode)) return null;
   const code = text(row, 'tracking_code').trim().toUpperCase();
   if (code && !CODE.test(code)) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an invalid tracking code');
   // A few scans have no line of their own; their English tracking name stands in.

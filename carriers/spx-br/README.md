@@ -29,7 +29,10 @@ numbers carry a PH prefix.
   recipient's name in brackets after a delivery, and the buyer's line adds who received the
   parcel. The adapter reads the `pt` line and still drops a clause naming who received it.
   Scans without a Portuguese line keep their English tracking name.
-- Rows flagged hidden, which the page leaves out, are left out too.
+- The page leaves out the rows SPX flags hidden. Most are bookkeeping and stay out. A pickup
+  that collected nothing, import clearance, the arrival at the last-mile hub and a return's way
+  back are kept: no row the page shows stands for them, and a return's first shown row comes
+  days after the parcel turned back.
 - Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres keep the place and
   coordinates the reply gives. Pickups, postings, deliveries and the return to the seller would
   name the seller's or the recipient's town, so they keep none: the town a posting's wording

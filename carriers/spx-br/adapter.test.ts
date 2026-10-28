@@ -44,13 +44,15 @@ describe('SPX Express Brazil HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
-  it('keeps the visible scans of a delivery once, as instants, without the recipient or the seller’s town', () => {
+  it('keeps the scans of a delivery once, as instants, without the recipient or the seller’s town', () => {
     const result = parseSpxBr(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Pedido entregue', last_update: '2026-05-19T12:53:20Z', delivered_at: '2026-05-19T12:53:20Z' });
     expect(result.events!.map((event) => [event.time, event.provider_code, event.stage, event.location ?? null])).toEqual([
       ['2026-05-19T12:53:20Z', 'F980', 'delivered', null],
       ['2026-05-19T08:26:40Z', 'F600', 'out_for_delivery', null],
+      // The page hides the arrival at the last-mile hub.
+      ['2026-05-19T03:43:20Z', 'F599', 'in_transit', 'Porto Modelo - RJ'],
       // A departure names its centre only in its wording.
       ['2026-05-18T16:46:40Z', 'F540', 'in_transit', 'Vila Amostra - SP'],
       ['2026-05-17T19:33:20Z', 'F515', 'in_transit', 'Vila Amostra - SP'],
@@ -60,11 +62,13 @@ describe('SPX Express Brazil HTTP adapter', () => {
       ['2026-05-17T03:26:40Z', 'F440', 'in_transit', 'Cidade Exemplo - SP'],
       // The pickup names the seller's town, which is not kept.
       ['2026-05-17T01:06:40Z', 'F100', 'accepted', null],
+      // A pickup that collected nothing, which the page hides; its bookkeeping stays out.
+      ['2026-05-16T22:20:00Z', 'F001', 'registered', null],
       ['2026-05-16T14:00:00Z', 'F000', 'registered', null],
     ]);
-    expect(result.events![6]).toMatchObject({ point: { latitude: -23.5, longitude: -46.6 },
+    expect(result.events![7]).toMatchObject({ point: { latitude: -23.5, longitude: -46.6 },
       description: 'Seu pedido chegou ao centro logístico' });
-    expect(result.events![2]).not.toHaveProperty('point');
+    expect(result.events![3]).not.toHaveProperty('point');
     expect(result.events!.every((event) => !('local_time' in event))).toBe(true);
     expect(JSON.stringify(result)).not.toMatch(/Pessoa Exemplo|Recebido|Vendedor|Rua |Avenida|R101|1000000000000000001/);
   });
@@ -115,8 +119,28 @@ describe('SPX Express Brazil HTTP adapter', () => {
     expect(unmapped).toMatchObject({ last_status_text: 'Aviso sintético', current_stage: 'customs' });
   });
 
+  it('reads the way back of a return the page hides, before the return it shows', () => {
+    const hidden = (code: string, time: number, description: string) =>
+      ({ tracking_code: code, tracking_name: 'Hidden', description, actual_time: time, display_flag: 0 });
+    const result = parseSpxBr(changed('delivered', (tracking) => {
+      tracking.records = tracking.records.slice(3);
+      tracking.records.unshift(hidden('F677', 1_779_160_000, 'Pedido de devolução está a caminho .'),
+        hidden('F674', 1_779_150_000, 'Parcel has been loaded to truck, to leave   soon'),
+        hidden('F671', 1_779_140_000, 'Pedido de devolução chegou no centro logístico: Cidade Exemplo - SP'),
+        hidden('F370', 1_779_130_000, 'Pedido está sendo processado pela alfândega de importação'));
+    }), DELIVERED);
+    expect(result.events!.slice(0, 4).map((event) => [event.provider_code, event.stage, event.description, event.location ?? null])).toEqual([
+      ['F677', 'returned', 'Pedido de devolução está a caminho.', null],
+      ['F671', 'returned', 'Pedido de devolução chegou no centro logístico', 'Cidade Exemplo - SP'],
+      ['F370', 'customs', 'Pedido está sendo processado pela alfândega de importação', null],
+      ['F540', 'in_transit', 'Seu pedido saiu do centro logístico', 'Vila Amostra - SP'],
+    ]);
+    expect(result).toMatchObject({ current_stage: 'returned', last_status_text: 'Pedido de devolução está a caminho.' });
+  });
+
   it('reads the centre, origin or port a wording names as its place, and keeps a row stored with it in the wording', () => {
-    expect(parseSpxBr(fixture('delivered'), DELIVERED).events!.slice(2, 7).map((event) => [event.description, event.location])).toEqual([
+    expect(parseSpxBr(fixture('delivered'), DELIVERED).events!.slice(2, 8).map((event) => [event.description, event.location])).toEqual([
+      ['Seu pedido chegou ao último centro logístico', 'Porto Modelo - RJ'],
       ['Seu pedido saiu do centro logístico', 'Vila Amostra - SP'],
       ['O pedido está em separação no centro logístico, novas atualizações em até 1 dia.', 'Vila Amostra - SP'],
       ['O pedido chegou ao centro e segue para a próxima etapa.', 'Vila Amostra - SP'],
@@ -180,8 +204,10 @@ describe('SPX Express Brazil HTTP adapter', () => {
       .toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
     expect(() => parseSpxBr(changed('delivered', (tracking) => { tracking.records = []; }), DELIVERED))
       .toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
-    expect(() => parseSpxBr(changed('delivered', (tracking) => { for (const row of tracking.records) row.display_flag = 0; }), DELIVERED))
-      .toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
+    expect(() => parseSpxBr(changed('delivered', (tracking) => {
+      tracking.records = tracking.records.filter((row) => !['F001', 'F599'].includes(String(row.tracking_code)));
+      for (const row of tracking.records) row.display_flag = 0;
+    }), DELIVERED)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
   });
 
   it('counts a shipment only when it names the number asked', () => {
@@ -200,7 +226,7 @@ describe('SPX Express Brazil HTTP adapter', () => {
       (tracking: Tracking) => { tracking.records = Array.from({ length: 1001 }, () => tracking.records[0]!); },
       (tracking: Tracking) => { tracking.records[0] = 'scan' as never; },
       (tracking: Tracking) => { tracking.records[0]!.actual_time = '1779200000'; },
-      (tracking: Tracking) => { tracking.records[0]!.actual_time = 1_779_200_000_000; },
+      (tracking: Tracking) => { tracking.records[0]!.actual_time = 1_779_110_000_000; },
       (tracking: Tracking) => { delete tracking.records[0]!.actual_time; },
       (tracking: Tracking) => { tracking.records[0]!.description = ['Pedido entregue']; },
       (tracking: Tracking) => { tracking.records[0]!.tracking_code = 'F 980'; },
