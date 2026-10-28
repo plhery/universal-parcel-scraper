@@ -55,12 +55,13 @@ page makes.
   the clock of a row scanned in China. A scan with a place in China is read on Beijing time.
   So is every scan of a parcel whose last leg is GOFO or SwiftX: DHLink relays their scans on
   its own clock, however late it records them. GOFO's own feed gives the same instants, and
-  SwiftX's rounds and deliveries are recorded before a US reading of their clocks. A partner's
-  copy of a scan DHLink records can come too, on the partner's US clock, as SwiftX's hub scans
-  do; a scan whose US reading is the instant of another with the same wording is that copy and
-  is dropped. Otherwise a
-  scan a USPS office names with its state and ZIP code is read on that state's time, unless the
-  state spans several zones. A scan recorded before its clock could have struck at the
+  SwiftX's rounds and deliveries are recorded before a US reading of their clocks. DHLink's own
+  row of GOFO's pickup (`TQ001`) is the exception when it names GOFO's hub: it is GOFO's
+  arrival there, at the hub's wall clock. A partner's copy of a scan DHLink records can come
+  too, on the partner's US clock, as SwiftX's hub scans do; a scan whose US reading is the
+  instant of another with the same wording is that copy and is dropped. Otherwise a scan a USPS
+  office names with its state and ZIP code, or that pickup, is read on that state's time, unless
+  the state spans several zones. A scan recorded before its clock could have struck at the
   destination, even in the destination's easternmost zone, keeps DHLink's own Beijing time. Any
   other scan could be on either clock and keeps its wall clock in `local_time`; the newest
   scan's instant, when it has one, is the last update.

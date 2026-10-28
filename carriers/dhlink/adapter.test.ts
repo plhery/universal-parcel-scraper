@@ -215,6 +215,20 @@ describe('DHLink HTTP adapter', () => {
       ['2026-03-10T16:10:56+08:00', null, 'in_transit', 'SAMPLE HUB, US'], ['2026-03-10T05:10:56+08:00', null, 'in_transit', 'SAMPLEVILLE, US']]);
     // Elsewhere it is not.
     expect(relayed(hub, 'GB', 'SWX990000000000000001').events).toHaveLength(3);
+    // DHLink's pickup node on a GOFO line gives GOFO's hub scan on the hub's clock; the line's own rows stay on Beijing time.
+    const pickup = (place: string, createDate = '2026-03-11 07:19:00') => ({ ...row('2026-03-10 11:38:05', createDate, place,
+      'Package picked up by last-mile carrier'), nodeCode: 'TQ001', nodeName: 'Last mile pickup' });
+    const cleared = row('2026-03-10 13:55:22', '2026-03-11 10:02:00', 'none', 'Customs import clearance completed, awaiting pickup by local carrier');
+    expect(timeline(relayed([cleared, pickup('SAMPLEVILLE, IL, US')], 'US', 'GFUS99000000000001').events)).toEqual([
+      ['2026-03-10T13:55:22+08:00', null, 'in_transit', null], ['2026-03-10T11:38:05-05:00', 'TQ001', 'in_transit', 'SAMPLEVILLE, IL, US']]);
+    expect(relayed([pickup('SAMPLEVILLE, IL 99901, US')], 'US', 'GFUS99000000000001').last_update).toBe('2026-03-10T11:38:05-05:00');
+    // A state split between zones leaves the wall clock, and a pickup recorded before its hub's clock struck is on Beijing time.
+    expect(relayed([pickup('SAMPLEVILLE, IN, US')], 'US', 'GFUS99000000000001'))
+      .toMatchObject({ last_update: null, last_update_local: '2026-03-10T11:38:05' });
+    expect(relayed([pickup('SAMPLEVILLE, IL, US', '2026-03-10 11:40:00')], 'US', 'GFUS99000000000001').last_update).toBe('2026-03-10T11:38:05+08:00');
+    // A pickup naming no hub, and SwiftX's, are on Beijing time.
+    expect(relayed([pickup('none')], 'US', 'GFUS99000000000001').last_update).toBe('2026-03-10T11:38:05+08:00');
+    expect(relayed([pickup('SAMPLEVILLE, IL, US')], 'US', 'SWX990000000000000001').last_update).toBe('2026-03-10T11:38:05+08:00');
     // A scan recorded before even Beijing's reading of its clock is no Beijing clock.
     expect(relayed([row('2026-03-10 18:00:00', '2026-03-10 15:00:00', 'none', 'Delivered')], 'US', 'GFUS99000000000001').last_update).toBeNull();
     // Without such a partner, the office's state gives the clock.
