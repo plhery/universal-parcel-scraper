@@ -2,10 +2,11 @@
 
 Tracks individual US parcels through the official anonymous tracking service.
 Other regional services have separate scope: links to gofo.com's `/us` pages
-and gofoexpress.com name this carrier. The French, Italian and Dutch portals name
-[GOFO France](../gofo-fr/README.md), [GOFO Italy](../gofo-it/README.md) and
-[GOFO Netherlands](../gofo-nl/README.md). [GOFO Canada](../gofo-ca/README.md) runs
-this service at its own path and shares the adapter's tracker and parser.
+and gofoexpress.com name this carrier. The French, Italian, Dutch and Spanish
+portals name [GOFO France](../gofo-fr/README.md), [GOFO Italy](../gofo-it/README.md),
+[GOFO Netherlands](../gofo-nl/README.md) and [GOFO Spain](../gofo-es/README.md).
+[GOFO Canada](../gofo-ca/README.md) runs this service at its own path and shares
+the adapter's tracker and parser.
 The shared home page leaves the national service ambiguous.
 
 ## How it works

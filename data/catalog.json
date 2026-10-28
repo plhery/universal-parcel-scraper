@@ -16347,6 +16347,44 @@
       }
     ]
   },
+  "gofo-es": {
+    "displayName": "GOFO Spain",
+    "color": "#fc4c02",
+    "aliases": [
+      "GOFO ES"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gofo-es",
+      "recognitionRank": 465,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gofo.com/es/",
+    "trackingUrlTemplate": "https://www.gofo.com/es/tracking-results/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.gofo.com/es/tracking-results/",
+    "linkRules": [
+      {
+        "domains": [
+          "gofo.com"
+        ],
+        "pathPattern": "^/es(?:/|$)",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GF|CI)ES\\d{13,14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "gofo-fr": {
     "displayName": "GOFO France",
     "color": "#fc4c02",

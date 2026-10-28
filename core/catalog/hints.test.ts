@@ -8,12 +8,13 @@ describe('brand networks', () => {
   it('lists the catalog networks of a bare or group brand name', () => {
     expect(new Set(brandCarrierIds('DPD Group'))).toEqual(new Set(['dpd', 'dpd-fr', 'dpd-de', 'dpd-uk', 'dpd-pl', 'dpd-ie', 'dpd-za', 'dpd-be', 'dpd-nl', 'dpd-pt', 'dpd-at', 'dpd-ro', 'dpd-hu']));
     expect(brandCarrierIds('gls')).toEqual(expect.arrayContaining(['gls-ch', 'gls-de', 'gls-fr']));
-    expect(brandCarrierIds('GOFO')).toEqual(expect.arrayContaining(['gofo', 'gofo-fr', 'gofo-it', 'gofo-nl']));
+    expect(brandCarrierIds('GOFO')).toEqual(expect.arrayContaining(['gofo', 'gofo-fr', 'gofo-it', 'gofo-nl', 'gofo-es']));
     expect(carrierIdFromName('GOFO')).toBeUndefined();
     expect(carrierIdFromName('GOFO France')).toBe('gofo-fr');
     expect(carrierIdFromName('GOFO Italy')).toBe('gofo-it');
     expect(carrierIdFromName('GOFO Netherlands')).toBe('gofo-nl');
     expect(carrierIdFromName('CIRRO E-Commerce')).toBe('gofo-nl');
+    expect(carrierIdFromName('GOFO Spain')).toBe('gofo-es');
     // Early Bird's former name, and the 3PL brand that tracks through Shree Maruti's tracker.
     expect(carrierIdFromName('Morgontidig Distribution')).toBe('early-bird');
     expect(carrierIdFromName('MTD')).toBeUndefined();
@@ -126,7 +127,7 @@ describe('delivery partner evidence', () => {
     ['', 'https://www.gofo.com/us/track?searchID=GFUS01000000000001', 'gofo'],
     ['', 'https://www.gofo.com/fr/', 'gofo-fr'],
     ['', 'https://www.gofo.com/it/', 'gofo-it'],
-    ['', 'https://www.gofo.com/es/', undefined],
+    ['', 'https://www.gofo.com/es/', 'gofo-es'],
     ['', 'https://www.gofo.com/usa/', undefined],
     ['', 'https://gls-group.eu/FR/fr/suivi-colis', 'gls-fr'],
     ['', 'https://gls-group.eu/EU/en/parcel-tracking', 'gls-de'],

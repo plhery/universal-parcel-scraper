@@ -18,6 +18,7 @@ describe.each([
   { id: 'gofo-fr' as const, region: 'fr', zone: 'Europe/Paris', number: 'GFFR00000000000001' },
   { id: 'gofo-it' as const, region: 'it', zone: 'Europe/Rome', number: 'GFIT00000000000001' },
   { id: 'gofo-nl' as const, region: 'nl', zone: 'Europe/Amsterdam', number: 'GFNL00000000000001' },
+  { id: 'gofo-es' as const, region: 'es', zone: 'Europe/Madrid', number: 'GFES00000000000001' },
 ])('$id routing', ({ id, region, zone, number }) => {
   it('detects only its national network and routes ordinary tracking to its own direct HTTP adapter', async () => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: id, confidence: 'high' });

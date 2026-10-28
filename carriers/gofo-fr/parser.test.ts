@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { NoHistoryError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { normalizeGofoSpainNumber, parseGofoSpain } from '../gofo-es/parser.js';
+import { gofoSpainStage } from '../gofo-es/status.js';
 import { normalizeGofoItalyNumber, parseGofoItaly } from '../gofo-it/parser.js';
 import { gofoItalyStage } from '../gofo-it/status.js';
 import { normalizeGofoNetherlandsNumber, parseGofoNetherlands } from '../gofo-nl/parser.js';
@@ -13,6 +15,7 @@ const cases = [
   { region: 'fr', number: 'GFFR00000000000001', parse: parseGofoFrance, normalize: normalizeGofoFranceNumber, stage: gofoFranceStage, delivery: 'Livré', count: 7 },
   { region: 'it', number: 'GFIT00000000000001', parse: parseGofoItaly, normalize: normalizeGofoItalyNumber, stage: gofoItalyStage, delivery: 'Consegnato', count: 10 },
   { region: 'nl', number: 'GFNL00000000000001', parse: parseGofoNetherlands, normalize: normalizeGofoNetherlandsNumber, stage: gofoNetherlandsStage, delivery: 'Bezorgd', count: 9 },
+  { region: 'es', number: 'GFES00000000000001', parse: parseGofoSpain, normalize: normalizeGofoSpainNumber, stage: gofoSpainStage, delivery: 'Entregado', count: 10 },
 ];
 const fixture = (region: string) => JSON.parse(readFileSync(new URL(`../gofo-${region}/fixtures/delivered.json`, import.meta.url), 'utf8'));
 const item = (value: ReturnType<typeof fixture>) => value.data[0];
@@ -26,7 +29,7 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
       expected_delivery: null, delivered_at: region === 'fr' ? '2026-01-04T12:00:00+01:00' : '2026-01-05T12:00:00+01:00' });
     expect(result.events).toHaveLength(count);
     expect(result.events?.[0]).toMatchObject({ description: delivery, provider_code: '205', stage_source: 'carrier_map' });
-    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|weight|proof|pin|civico|deurnummer|reference/i);
+    expect(JSON.stringify(result)).not.toMatch(/PRIVATE|weight|proof|pin|civico|deurnummer|puerta|reference/i);
   });
 
   it('accepts only the complete official national families', () => {
@@ -34,7 +37,7 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
       const candidate = prefix + region.toUpperCase() + '0'.repeat(digits - 1) + '1';
       expect(normalize(candidate.toLowerCase())).toBe(candidate);
     }
-    for (const candidate of ['GFUS00000000000001', region === 'nl' ? 'GFIT00000000000001' : 'GFNL00000000000001', 'GFES00000000000001', `${number}0`, number.slice(0, -2), `${number}&other=1`]) {
+    for (const candidate of ['GFUS00000000000001', region === 'nl' ? 'GFIT00000000000001' : 'GFNL00000000000001', region === 'es' ? 'GFFR00000000000001' : 'GFES00000000000001', `${number}0`, number.slice(0, -2), `${number}&other=1`]) {
       expect(() => normalize(candidate)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
   });
@@ -119,7 +122,7 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
     const catalogue = JSON.parse(readFileSync(new URL(`../gofo-${region}/statuses.json`, import.meta.url), 'utf8')) as { entries: { code: string; wording: string; stage: string }[] };
     for (const entry of catalogue.entries) expect(stage(entry.code, entry.wording)).toBe(entry.stage);
     expect(stage('203', 'Preparing')).toBe('in_transit'); expect(stage('204', 'Returned to sorting centre')).toBe('exception');
-    expect(stage('206', { fr: 'Alerte', it: 'Avviso', nl: 'Waarschuwing' }[region]!)).toBe('exception');
+    expect(stage('206', { fr: 'Alerte', it: 'Avviso', nl: 'Waarschuwing', es: 'Alerta' }[region]!)).toBe('exception');
     if (region !== 'nl') expect(parse(fixture(region), number).events?.find(event => event.provider_code === '206')?.stage).toBe('failed_attempt');
     expect(stage('257', 'Returned')).toBe('returned'); expect(stage('__proto__', 'Unknown')).toBeUndefined();
     expect(stage('205', 'Not delivered')).toBeUndefined();
@@ -136,6 +139,8 @@ it("leaves no place for a GOFO hub's code or the country alone, and keeps a Fren
   };
   for (const hub of ['FI-ARS', 'GOFO-NA']) expect(placeOf('it', hub)).toBeUndefined();
   for (const hub of ['75-LED', 'FR']) expect(placeOf('fr', hub)).toBeUndefined();
+  for (const hub of ['GOFO-MD', 'ES']) expect(gofoPlace(hub, 'ES')).toBe('');
+  expect(gofoPlace('Madrid,Madrid', 'ES')).toBe('Madrid,Madrid');
   expect(placeOf('fr', 'ST-LO')).toBe('St-Lo');
 });
 

@@ -74,6 +74,10 @@ describe('status map answers', () => {
     expect(answer('gofo-nl', '205', 'Bezorgd in de brievenbus')).toEqual(mapped('delivered'));
     expect(answer('gofo-nl', '205', 'Consegnato')).toEqual(unknown);
     expect(answer('gofo-nl', '206', 'Waarschuwing')).toEqual(mapped('exception'));
+    expect(answer('gofo-es', '205', 'Entregado por En el buzón, PIN: No')).toEqual(mapped('delivered'));
+    expect(answer('gofo-es', '205', 'Consegnato')).toEqual(unknown);
+    expect(answer('gofo-es', '206', 'Entrega fallida')).toEqual(mapped('failed_attempt'));
+    expect(answer('gofo-es', '206', 'Alerta')).toEqual(mapped('exception'));
     expect(answer('omgo', null, 'Completed Unloading at Delivery Location')).toEqual(mapped('in_transit'));
     expect(answer('omgo', null, 'Tendered for Delivery')).toEqual(mapped('in_transit'));
     expect(answer('tnt', 'RES', 'Shipment delivered in good condition')).toEqual(mapped('delivered'));

@@ -57,13 +57,13 @@ function scanClock(value: unknown, provider: string): Pick<CarrierEvent, 'time'>
   return { time: instant.iso };
 }
 
-const DELIVERED: Record<GofoRegion, string> = { FR: 'Livré', IT: 'Consegnato', NL: 'Bezorgd' };
+const DELIVERED: Record<GofoRegion, string> = { FR: 'Livré', IT: 'Consegnato', NL: 'Bezorgd', ES: 'Entregado' };
 // GOFO can name a hub by a code rather than a town: "GOFO-" and its province's letters
 // ("GOFO-NA" near Naples), or in Italy the province's letters and the hub's own ("FI-ARS"
 // in Florence's) and in France the department's number and the hub's ("75-LED"). A French
 // town can be written alike ("ST-LO"). Such a code, or the country alone, is no place.
 const HUB_CODES: Record<GofoRegion, RegExp> = {
-  FR: /^(?:GOFO|\d{2})-[A-Z0-9]{2,4}$/, IT: /^(?:GOFO|[A-Z]{2})-[A-Z0-9]{2,4}$/, NL: /^GOFO-[A-Z0-9]{2,4}$/,
+  FR: /^(?:GOFO|\d{2})-[A-Z0-9]{2,4}$/, IT: /^(?:GOFO|[A-Z]{2})-[A-Z0-9]{2,4}$/, NL: /^GOFO-[A-Z0-9]{2,4}$/, ES: /^GOFO-[A-Z0-9]{2,4}$/,
 };
 // Lowercase between the words of a French town's name: "Champagne-sur-Seine", "L'Isle-d'Abeau".
 const FRENCH_PARTICLES = new Set(['au', 'aux', 'd', 'de', 'des', 'du', 'en', 'et', 'l', 'la', 'le', 'les', 'lès', 'lez', 'sous', 'sur']);

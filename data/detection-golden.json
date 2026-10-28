@@ -69765,6 +69765,22 @@
     ]
   },
   {
+    "input": "CIES00000000000001",
+    "carrier": "gofo-es",
+    "confidence": "high",
+    "candidates": [
+      "gofo-es"
+    ]
+  },
+  {
+    "input": "CIES0000000000001",
+    "carrier": "gofo-es",
+    "confidence": "high",
+    "candidates": [
+      "gofo-es"
+    ]
+  },
+  {
     "input": "CIFR00000000000001",
     "carrier": "gofo-fr",
     "confidence": "high",
@@ -76239,6 +76255,30 @@
     "confidence": "high",
     "candidates": [
       "gofo-ca"
+    ]
+  },
+  {
+    "input": "GFES0000000000001",
+    "carrier": "gofo-es",
+    "confidence": "high",
+    "candidates": [
+      "gofo-es"
+    ]
+  },
+  {
+    "input": "GFES26222137816984",
+    "carrier": "gofo-es",
+    "confidence": "high",
+    "candidates": [
+      "gofo-es"
+    ]
+  },
+  {
+    "input": "GFES26222140488459",
+    "carrier": "gofo-es",
+    "confidence": "high",
+    "candidates": [
+      "gofo-es"
     ]
   },
   {
