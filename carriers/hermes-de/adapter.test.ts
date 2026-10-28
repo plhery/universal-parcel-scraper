@@ -95,10 +95,20 @@ describe('Hermes Germany', () => {
           historyText: 'Die Sendung wurde vom Absender im PaketShop Example Kiosk, Beispielweg 1, 12345 Musterhausen abgegeben.' },
         // Only a ParcelShop row's address is read.
         { parcelStatus: 'DELIVERED_NEIGHBOUR', timestamp: at(3), historyText: 'Zugestellt an Beispielweg 3, 12345 Musterhausen.' },
+        { parcelStatus: 'TAKEN_OVER_BY_HERMES', timestamp: at(4),
+          historyText: 'Die Sendung wurde von Hermes in Neu-Beispielburg übernommen und wird für den weiteren Versand vorbereitet.' },
+        { parcelStatus: 'ARRIVED_IN_DESTINATION_REGION', timestamp: at(5), historyText: 'Die Sendung ist in der Zielregion Musterstadt angekommen.' },
+        { parcelStatus: 'PARCELSHOP_COLLECTED_BY_CUSTOMER', timestamp: at(6),
+          historyText: 'Die Sendung wurde im Hermes PaketShop Example Kiosk, Beispielweg 1, 12345 Bad Beispiel am See erfolgreich abgeholt.' },
+        { parcelStatus: 'INTERNATIONAL_ARRIVED_IN_COUNTRY', timestamp: at(7),
+          historyText: 'Die Sendung ist im Zielland Spanien angekommen und wird für den weiteren Versand vorbereitet.' },
+        { parcelStatus: 'INTERNATIONAL_SORTED', timestamp: at(8), historyText: 'Die Sendung wurde in EXEMPLEVILLE für den Weiterversand vorbereitet (Frankreich).' },
       ],
     }], NUMBER);
-    expect(german.events?.map((event) => event.location ?? null).reverse())
-      .toEqual(['Beispielburg, Germany', 'Musterhausen, Germany', null]);
+    expect(german.events?.map((event) => event.location ?? null).reverse()).toEqual([
+      'Beispielburg, Germany', 'Musterhausen, Germany', null, 'Neu-Beispielburg, Germany', 'Musterstadt, Germany',
+      'Bad Beispiel am See, Germany', 'Spanien', 'EXEMPLEVILLE, Frankreich',
+    ]);
   });
 
   it('ignores the pre-announcement preference booking', () => {
@@ -181,6 +191,16 @@ describe('Hermes Germany', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledWith(`https://api.my-deliveries.de/tnt/v2/shipments/search/${NUMBER}`,
       expect.objectContaining({ cache: 'no-store', redirect: 'error', headers: expect.objectContaining({ 'X-Language': 'en' }) }));
+  });
+
+  it('asks for German for a German reader and English for anyone else', async () => {
+    const fetcher = vi.fn<typeof fetch>(async () => new Response(JSON.stringify(delivered())));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    for (const [language, asked] of [['de', 'de'], ['de-AT', 'de'], ['fr', 'en'], [null, 'en']] as const) {
+      await instance.track({ number: NUMBER, language });
+      const headers = fetcher.mock.calls.at(-1)?.[1]?.headers as Record<string, string>;
+      expect(headers['X-Language']).toBe(asked);
+    }
   });
 
   it('reads a delivery at the address as a delivery', () => {

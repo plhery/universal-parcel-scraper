@@ -1,6 +1,6 @@
 
 import { DateTime } from 'luxon';
-import { lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { lookupBudget, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { carrierLinkRules, matchesDomain } from '../../core/catalog/linkRules.js';
 import { isValidHermesParcelNumber, normalizeTrackingNumber, parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
@@ -76,21 +76,25 @@ function parcelShop(parcel: Record<string, unknown>, latest: { metadata?: Milest
   return [name, clean(address.street, 120), town].filter(Boolean).join('\n');
 }
 
-// Rows carry no location field, but their wording names the depot, the
-// destination region or country, or the ParcelShop's address.
+// Rows carry no location field, but their wording, in English or German,
+// names the depot, the destination region or country, or the ParcelShop's address.
 const DEPOT_PLACES = [
   /\btaken over by Hermes in (.+?) and is prepared\b/i,
   /\bprepared in (.+?) for further shipping\b/i,
   /\barrived in the destination region (.+?)\.?$/i,
+  /^Die Sendung wurde von Hermes in (.+?) übernommen\b/i,
   /^Die Sendung wurde in (.+?) für den Weiterversand vorbereitet\b/i,
+  /\bin der Zielregion (.+?) angekommen\b/i,
 ];
 const COUNTRY_PLACES = [
   /\barrived in the destination country (.+?)(?: and is prepared\b|\.?$)/i,
   /\bfor further shipping \(([^()]+)\)/i,
+  /\bim Zielland (.+?) angekommen\b/i,
+  /\bfür den Weiterversand vorbereitet \(([^()]+)\)/i,
 ];
 // The town after the postcode closing a ParcelShop's address, before the
-// collection deadline the ready-for-pickup wording appends.
-const SHOP_TOWN = /,\s*\d{5}\s+([^\d,]+?)(?:\s+max\.\s.*|\s+abgegeben)?\.?\s*$/;
+// collection deadline the ready-for-pickup wording appends or the German verb.
+const SHOP_TOWN = /,\s*\d{5}\s+([^\d,]+?)(?:\s+max\.\s.*|\s+abgegeben|\s+erfolgreich abgeholt)?\.?\s*$/;
 
 /**
  * Where a row's wording puts the parcel. Hermes's own depots and ParcelShops
@@ -269,16 +273,18 @@ export class HermesGermanyTracker {
     this.#userAgent = userAgentOf(userAgent);
   }
 
-  /** `references` takes a reference's parcel; recognition, which claims the number, asks for the barcode itself. */
-  async fetch(trackingNumber: string, context: TrackingContext = {}, references = false): Promise<CarrierResult> {
+  /**
+   * `references` takes a reference's parcel; recognition, which claims the number, asks for the barcode itself.
+   * `language` words the scans: German, or English as the page's English route asks.
+   */
+  async fetch(trackingNumber: string, context: TrackingContext = {}, references = false, language: 'de' | 'en' = 'en'): Promise<CarrierResult> {
     const number = normalizeHermesGermanyNumber(trackingNumber);
     const budget = lookupBudget(context, this.timeoutMs);
     const { response, bytes } = await fetchBounded(`${API}${encodeURIComponent(number)}`, {
       signal: budget.signal,
       headers: {
         Accept: 'application/json',
-        // The service words its scans in German unless asked otherwise, as the page's English route does.
-        'X-Language': 'en',
+        'X-Language': language,
         Referer: 'https://www.myhermes.de/',
         'User-Agent': this.#userAgent,
       },
@@ -300,7 +306,7 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'hermes-de',
     steps: ['direct'],
-    track: (input, context) => tracker.fetch(input.number, context, true),
+    track: (input, context) => tracker.fetch(input.number, context, true, readerLanguage(input, ['de']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context)),
   };
 };

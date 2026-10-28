@@ -9,8 +9,10 @@ service the public page calls. Hermes Einrichtungs-Service (furniture) is
 ## How it works
 
 1. `direct`: `GET https://api.my-deliveries.de/tnt/v2/shipments/search/{number}`
-   with `X-Language: en`, as the page's English route asks; `de` words the scans
-   in German. HTTP 404 is a clean not-found; any other error status
+   with `X-Language: de` for a lookup whose `language` is German and `en`, as the
+   page's English route asks, for any other. Codes, clocks and places are the same
+   in both, and a scan stored in one language takes the other's wording in place,
+   matched by its code. HTTP 404 is a clean not-found; any other error status
    stays an upstream error.
 
 The response must contain exactly one parcel whose `barcode` equals the
@@ -105,11 +107,14 @@ tracking page shows them in the visitor's zone like Hermes's own.
 - Display text is `historyText`, with the mapped milestone description as
   fallback. The row's `status` field only holds generic buckets
   (`HAPPY`/`FINISHED`).
-- Rows have no location field, so the place comes from the wording: the depot
-  that took the parcel over or prepared it, the destination region, the
-  destination country abroad, or the town of a ParcelShop's address on a
-  ParcelShop row. Hermes's own depots and ParcelShops are in Germany, so their
-  places end with it. No other address in the wording is read.
+- Rows have no location field, so the place comes from the wording, in either
+  language: the depot that took the parcel over or prepared it, the destination
+  region, the destination country abroad, or the town of a ParcelShop's address
+  on a ParcelShop row. Hermes's own depots and ParcelShops are in Germany, so
+  their places end with it. No other address in the wording is read. A
+  partner's German rows are read like its English ones, the country in brackets
+  after "für den Weiterversand vorbereitet" or after "im Zielland"; no live
+  German partner row has been seen.
 - The postcode-protected endpoint that returns the delivery address is never
   called: the app doesn't store addresses and this carrier needs no postcode
   otherwise.
