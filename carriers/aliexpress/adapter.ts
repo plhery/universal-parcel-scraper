@@ -35,6 +35,7 @@ import {
   CAINIAO_STATUS,
   cainiaoActionCode,
   cainiaoActionStage,
+  cainiaoScanStage,
   cainiaoStageByStatus,
 } from './status.js';
 import { placedWording, placeName } from './place.js';
@@ -251,7 +252,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   const carriers = carrierNames(trackingModule, details);
   const events = details.slice(0, MAX_EVENTS_TO_RETURN).map((event): CarrierEvent => {
     const code = cainiaoActionCode(event.actionCode);
-    const stage = cainiaoActionStage(code);
+    const stage = cainiaoScanStage(code);
     const placed = placedWording(scanWording(event), carriers);
     return {
       ...scanClock(event),

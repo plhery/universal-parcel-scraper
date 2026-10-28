@@ -66,8 +66,8 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
 
 /**
  * Sub categories that move nothing: notes on the record, the sender's or
- * Parcelhub's own actions and claim advice. A parcel keeps the stage of the
- * scan before them.
+ * Parcelhub's own actions and claim advice. They read as pending, and a parcel
+ * keeps the stage of the scan before them.
  */
 const QUIET: ReadonlyMap<string, string> = new Map([
   ['information', 'A note on the record, such as a weight Whistl captured or a new final-mile number; it moves nothing.'],
@@ -102,20 +102,24 @@ export function whistlQuiet(code: string): boolean {
   return QUIET.has(keyOf(code));
 }
 
+/** The stage the map gives a Parcelhub sub category: a quiet one is pending. */
+function mappedStage(code: string): Stage | undefined {
+  return whistlCodeStage(code) ?? (whistlQuiet(code) ? 'pending' : undefined);
+}
+
 /**
  * A scan's stage from its sub category, else from the shared wording rules for
- * a sub category the list does not have. A quiet one gets none.
+ * a sub category the list does not have.
  */
 export function whistlStage(code: string, wording: string): ClassifiedWording | null {
-  const mapped = whistlCodeStage(code);
+  const mapped = mappedStage(code);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
-  if (whistlQuiet(code)) return null;
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
 
 export const statusMap: CarrierStatusMap = {
   codeKey: keyOf,
-  stage: (code) => (code ? whistlCodeStage(code) : undefined),
-  gaps: [...QUIET].map(([code, note]) => ({ code, note })),
+  stage: (code) => (code ? mappedStage(code) : undefined),
+  gaps: [],
 };

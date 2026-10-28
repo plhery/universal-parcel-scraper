@@ -91,7 +91,7 @@ describe('status map answers', () => {
     expect(answer('gofo', '205', 'Synthetic scan')).toEqual(unknown);
     expect(answer('gofo', '202', 'Arrived at GOFO Regional Origin Hub')).toEqual(mapped('accepted'));
     expect(answer('gofo', '202', 'Arrived at GOFO Regional Hub')).toEqual(mapped('in_transit'));
-    expect(answer('aliexpress', 'GTMS_ORDER_INFO_UPDATE', 'Delivery details updated')).toEqual(gap);
+    expect(answer('aliexpress', 'GTMS_ORDER_INFO_UPDATE', 'Delivery details updated')).toEqual(mapped('pending'));
     // Without a code, UPS's map reads only the rendered page's banner.
     expect(answer('ups', null, 'Delivered')).toEqual(mapped('delivered'));
     expect(answer('ups', null, 'Arrived at Facility')).toEqual(unknown);
@@ -293,7 +293,7 @@ describe('status map answers', () => {
     expect(answer('imile', 'PU_PICKUP_SUCCESS', 'Received by logistics company')).toEqual(mapped('accepted'));
     expect(answer('imile', 'CC_EX_START', 'Export customs clearance started')).toEqual(mapped('customs'));
     expect(answer('imile', 'LH_DEPART', 'Departed from departure country/region')).toEqual(mapped('in_transit'));
-    expect(answer('imile', 'GTMS_ORDER_INFO_UPDATE', 'Delivery details updated')).toEqual(gap);
+    expect(answer('imile', 'GTMS_ORDER_INFO_UPDATE', 'Delivery details updated')).toEqual(mapped('pending'));
     expect(answer('imile', 'NEW_UNSEEN_CODE', 'Synthetic scan')).toEqual(unknown);
     // A numeric code is iMile's own, whatever Cainiao's map would say of its wording.
     expect(answer('imile', '1003', 'User not at home')).toEqual(mapped('failed_attempt'));

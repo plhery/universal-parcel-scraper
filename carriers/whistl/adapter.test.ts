@@ -52,7 +52,7 @@ describe('Whistl tracking adapter', () => {
       service_name: 'Standard Parcel DDU', delivery_tracking_number: FINAL_MILE });
     expect(result).not.toHaveProperty('delivery_carrier');
     expect(result).not.toHaveProperty('canonical_tracking_number');
-    // The repeated scan once; notes keep no stage of their own.
+    // The repeated scan once; notes read as pending.
     expect(rows(result)).toEqual([
       ['2026-06-18T12:43:52', 'Delivered', undefined, 'delivered'],
       ['2026-06-18T07:38:20', 'Shipment is Out for Delivery', undefined, 'out_for_delivery'],
@@ -61,9 +61,9 @@ describe('Whistl tracking adapter', () => {
       ['2026-06-15T11:07:00', 'Shipment Arrived to Destination Hub and Prepared to be Out For Delivery', undefined, 'in_transit'],
       ['2026-06-11T08:26:07', 'Handed over to Delivery Carrier', 'WHISTL TESTPORT', 'in_transit'],
       ['2026-06-10T15:53:05', 'Item receipted and processed by Whistl', 'WHISTL TESTTOWN', 'accepted'],
-      ['2026-06-10T15:53:05', 'Item Processed by Whistl - Weight Captured', undefined, undefined],
+      ['2026-06-10T15:53:05', 'Item Processed by Whistl - Weight Captured', undefined, 'pending'],
       ['2026-06-10T11:08:10', 'Parcel Created', undefined, 'registered'],
-      ['2026-06-10T11:08:10', `Final Mile Tracking Number changed to: ${FINAL_MILE}`, undefined, undefined],
+      ['2026-06-10T11:08:10', `Final Mile Tracking Number changed to: ${FINAL_MILE}`, undefined, 'pending'],
       ['2026-06-10T10:08:11', 'Shipment Created', undefined, 'registered'],
     ]);
     expect(result.events!.map(event => event.provider_code)).toContain('with Whistl');
@@ -141,6 +141,7 @@ describe('Whistl tracking adapter', () => {
       .replace('Delivered  A RECIPIENT ', 'Item weight updated   '), OWN);
     expect(noted).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Item weight updated',
       last_update_local: '2026-06-18T12:43:52' });
+    expect(noted.events![0]).toMatchObject({ provider_code: 'Item Weight Changed', stage: 'pending', stage_source: 'carrier_map' });
     // A sub category the list does not have falls back on the wording.
     const worded = parseWhistl(recode(page('partner'), 'Out for delivery', 'Courier Update').replace('Due to be delivered today   ', 'Out for delivery   '), SHIPMENT);
     expect(worded.events![1]).toMatchObject({ provider_code: 'Courier Update', stage: 'out_for_delivery', stage_source: expect.stringMatching(/^wording:/) });
@@ -272,15 +273,15 @@ describe('Whistl tracking adapter', () => {
 
 describe('Whistl status vocabulary', () => {
   it('records every sub category the list knows with the stage the map gives it, and the status map answers by code alone', () => {
-    const quiet = statuses.entries.filter(entry => !('stage' in entry));
-    expect(quiet.map(entry => entry.code.toLowerCase()).sort()).toEqual(statusMap.gaps.map(gap => gap.code).sort());
+    expect(statusMap.gaps).toEqual([]);
     for (const entry of statuses.entries) {
-      const stage = 'stage' in entry ? entry.stage : undefined;
-      expect(whistlCodeStage(entry.code), entry.code).toBe(stage);
-      expect(whistlQuiet(entry.code), entry.code).toBe(stage === undefined);
-      expect(whistlStage(entry.code, entry.wording), entry.code).toEqual(stage ? { stage, source: 'carrier_map' } : null);
+      const quiet = whistlQuiet(entry.code);
+      // A quiet sub category reads as pending, which no movement has.
+      expect(whistlCodeStage(entry.code), entry.code).toBe(quiet ? undefined : entry.stage);
+      expect(entry.stage === 'pending', entry.code).toBe(quiet);
+      expect(whistlStage(entry.code, entry.wording), entry.code).toEqual({ stage: entry.stage, source: 'carrier_map' });
       expect(statusMapAnswer({ carrier: 'whistl', providerCode: entry.code, description: entry.wording }), entry.code)
-        .toEqual(stage ? { kind: 'mapped', stage } : { kind: 'intentional_gap', note: expect.any(String) });
+        .toEqual({ kind: 'mapped', stage: entry.stage });
     }
     expect(statusMapAnswer({ carrier: 'whistl', providerCode: null, description: 'Delivered' })).toEqual({ kind: 'unknown' });
     for (const code of ['constructor', 'toString', 'Return', 'Delivered elsewhere']) {

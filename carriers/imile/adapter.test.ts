@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, IMILE_API, IMILE_PAGE, IMILE_SIGNING, ImileTracker, imileSignature, scriptSigning, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
-import { imileWording, normalizeImileNumber, parseImile } from './parser.js';
+import { imileSummary, imileWording, normalizeImileNumber, parseImile } from './parser.js';
 import { imileStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -514,6 +514,12 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     expect(merged).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
       last_status_text: 'Departed from departure country/region', last_update: '2026-05-17T09:20:00+08:00', destination_country: 'SA' });
     expect(merged).not.toHaveProperty('last_update_local');
+    // A notice of Cainiao's is pending and moves nothing: the scan before it gives the stage.
+    expect(cainiaoScans(cainiaoFrom('LAST_MILE_ASN_NOTIFY'), DELIVERED)[0]).toMatchObject({ provider_code: 'LAST_MILE_ASN_NOTIFY', stage: 'pending' });
+    expect(imileSummary([
+      { time: '2026-05-15T00:30:00+08:00', description: 'Carrier update', provider_code: 'LAST_MILE_ASN_NOTIFY', stage: 'pending', stage_source: 'carrier_map' },
+      { time: '2026-05-14T23:50:00+08:00', description: 'Departed from sorting center', provider_code: 'SC_OUTBOUND_SUCCESS', stage: 'in_transit', stage_source: 'carrier_map' },
+    ])).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Carrier update' });
   });
 
   it('keeps only the Cainiao scans older than iMile’s at any offset when iMile’s clocks have no zone', () => {

@@ -374,6 +374,7 @@
       "code": "Information",
       "wording": "Item Processed by Whistl - Weight Captured",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "live",
       "note": "A note on the record: a weight or format Whistl captured, the delivering carrier's readiness or a new final-mile tracking number. It moves nothing."
     },
@@ -381,96 +382,112 @@
       "code": "Item Weight Changed",
       "wording": "Item Weight Changed",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Tracking Status Overdue",
       "wording": "Tracking Status Overdue",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Part Delivered",
       "wording": "Part Delivered",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Recipient will collect",
       "wording": "Recipient will collect",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Delayed By Request",
       "wording": "Delayed By Request",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Customer Action",
       "wording": "Customer Action",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Reroute requested",
       "wording": "Reroute requested",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Recall requested",
       "wording": "Recall requested",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "POD requested",
       "wording": "POD requested",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Claim submitted",
       "wording": "Claim submitted",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Label reprinted",
       "wording": "Label reprinted",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Assigned to Customer Services",
       "wording": "Assigned to Customer Services",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Disputed Delivery",
       "wording": "Disputed Delivery",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Non-Compliance",
       "wording": "Non-Compliance",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Carriage",
       "wording": "Carriage",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     },
     {
       "code": "Advised To Claim - Delayed",
       "wording": "Advised To Claim - Delayed",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "official-doc"
     }
   ]

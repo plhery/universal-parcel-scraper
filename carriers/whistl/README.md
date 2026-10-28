@@ -39,8 +39,9 @@ asked about only when Whistl is chosen or a link names it.
 Each scan has a status category and a sub category from Parcelhub's published tracking event
 list; the map reads the sub category, the same for Whistl's scans and the ones relayed from
 another carrier. Notes such as a captured weight or a new final-mile number, the sender's
-requests and claim advice move nothing. A sub category the list does not have goes to the
-shared wording rules with the scan's wording.
+requests and claim advice move nothing: they read as pending, so a consumer does not stage
+them by their wording, and the parcel keeps the stage of the scan before them. A sub category
+the list does not have goes to the shared wording rules with the scan's wording.
 
 The description cell prints the scan's wording, its depot when it has one and the signatory.
 The adapter keeps the wording and the depot's name and never reads the signatory, the depot's

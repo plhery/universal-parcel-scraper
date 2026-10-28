@@ -152,7 +152,7 @@ export function parseWhistl(html: string, rawNumber: string): CarrierResult {
     let stage: Stage = classified.stage;
     if (stage === 'accepted' && moved) stage = 'in_transit';
     if (stage === 'delivered' && returning) stage = 'returned';
-    if (!['registered', 'accepted', 'exception'].includes(stage)) moved = true;
+    if (!['registered', 'accepted', 'exception', 'pending'].includes(stage)) moved = true;
     if (stage === 'returned') returning = true;
     Object.assign(event, { stage, stage_source: classified.source });
   }

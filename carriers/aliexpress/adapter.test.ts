@@ -351,7 +351,7 @@ describe('Cainiao projection', () => {
     expect(time(scan('2026-06-10 07:40:16', 1781048416947, 'CET'))).toBe('2026-06-10 07:40:16');
   });
 
-  it("leaves Cainiao's notice to the last-mile courier without a stage, the parcel at its newest scan", () => {
+  it("reads Cainiao's notice to the last-mile courier as pending, the parcel at its newest scan", () => {
     const scan = (actionCode: string, timeStr: string, desc = '', standerdDesc = 'Carrier update') => ({ actionCode, timeStr, timeZone: 'GMT+8', desc, standerdDesc });
     const departed = scan('SC_OUTBOUND_SUCCESS', '2026-06-10 07:39:39', '', 'Departed from sorting center');
     const forecast = scan('LAST_MILE_ASN_NOTIFY', '2026-06-10 07:40:16', 'Last-mile delivery forecast');
@@ -361,7 +361,7 @@ describe('Cainiao projection', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Last-mile delivery forecast',
       last_update: '2026-06-10T07:40:16+08:00' });
     expect(result.events?.map((event) => [event.provider_code, event.description, event.stage])).toEqual([
-      ['LAST_MILE_ASN_NOTIFY', 'Last-mile delivery forecast', undefined],
+      ['LAST_MILE_ASN_NOTIFY', 'Last-mile delivery forecast', 'pending'],
       ['SC_OUTBOUND_SUCCESS', 'Departed from sorting center', 'in_transit'],
     ]);
     // Worded only by the placeholder, after export customs started, it leaves the parcel in customs.
@@ -370,7 +370,7 @@ describe('Cainiao projection', () => {
       latestTrace: placeholder, detailList: [placeholder, scan('CC_EX_START', '2026-06-10 08:00:00', '', 'Export customs clearance started'), departed],
     }] }, 'LP00000000000001');
     expect(customs).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Carrier update' });
-    expect(customs.events?.[0]).not.toHaveProperty('stage');
+    expect(customs.events?.[0]).toMatchObject({ stage: 'pending' });
   });
 
   it('keeps a flight out dated at midnight as its day', () => {

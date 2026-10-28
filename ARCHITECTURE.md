@@ -348,7 +348,9 @@ row the app stored in the carrier's wording. A wording without known English kee
 
 A carrier can declare a `statusMap` next to its map in `status.ts`: the stage its map gives
 one provider code and wording, and the codes and wordings it leaves without a stage on
-purpose, each with a note. [statusMaps.ts](core/catalog/statusMaps.ts) registers them by
+purpose, each with a note. A scan of the carrier's own that moves nothing, such as a note on
+the record or a request, is mapped to `pending` rather than left without a stage: a consumer
+reads a scan without one by its wording or as in transit. [statusMaps.ts](core/catalog/statusMaps.ts) registers them by
 adapter, so Delivengo reads La Poste's. `statusMapAnswer()` in the app entry asks them the
 way the app keys the wording it reviews: carrier, provider code, and the wording in
 `normalizeStatusWording()` form. It answers `mapped` with the stage, `intentional_gap` with

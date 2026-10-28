@@ -412,17 +412,19 @@
       "code": "LAST_MILE_ASN_NOTIFY",
       "wording": "Last-mile delivery forecast",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "live",
       "firstSeen": "2026-10-25",
-      "note": "No stage: Cainiao's advance notice of the parcel to the courier that delivers it, written after a scan and carrying no date. Its standard wording is the placeholder \"Carrier update\"."
+      "note": "Cainiao's advance notice of the parcel to the courier that delivers it, written after a scan and carrying no date; it moves nothing. Its standard wording is the placeholder \"Carrier update\"."
     },
     {
       "code": "LAST_MILE_ASN_NOTIFY",
       "wording": "Carrier update",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "No stage: the same notice with the placeholder alone, without wording of its own."
+      "note": "The same notice with the placeholder alone, without wording of its own."
     },
     {
       "code": "GTMS_DO_DEPART",
@@ -643,6 +645,7 @@
       "code": "SC_TRANS_INBOUND_FAILURE",
       "wording": "Carrier update",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "live",
       "firstSeen": "2026-10-16",
       "note": "A transit sorting center's inbound that did not go through. Cainiao words it only \"Carrier update\", so it keeps the stage the parcel had: no movement, and not an exception."
@@ -687,9 +690,10 @@
       "code": "GTMS_ORDER_INFO_UPDATE",
       "wording": "Delivery details updated",
       "language": "en",
+      "stage": "pending",
       "confirmedBy": "live",
       "firstSeen": "2026-10-14",
-      "note": "No stage: the order's delivery details changed, which moves no parcel."
+      "note": "The order's delivery details changed, which moves no parcel."
     },
     {
       "code": "LABEL_CREATED",
