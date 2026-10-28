@@ -734,11 +734,22 @@ describe('carrier links limited to some pages of their host', () => {
       'https://www.tnt.com/express/es_es/site/herramientas-envio/seguimiento.html?searchType=CON&cons=',
       'https://www.tnt.com/express/fr_fr/site/outils-expedition/suivi.html?searchType=con&cons=',
       'https://www.tnt.com/express/it_ch/site/strumenti-spedizione/tracking.html?searchType=con&cons=',
+      'https://www.tnt.com/express/es_es/site/herramientas-envio/seguimiento.html?cons=',
     ]) {
-      for (const number of ['123456785', 'GE123456785WW']) {
+      // tnt.com completes an eight-digit serial with its check digit, as the adapter does.
+      for (const number of ['123456785', 'GE123456785WW', '12345678']) {
         expect(parseTrackingInput(`${page}${number}`)).toMatchObject({ trackingNumber: number, carrier: 'tnt', confidence: 'high', source: 'link' });
       }
       expect(parseTrackingInput(`${page}123456789`).carrier).not.toBe('tnt');
+      expect(parseTrackingInput(`${page}1234567`).carrier).not.toBe('tnt');
+    }
+    // The page's share link.
+    expect(parseTrackingInput('https://www.tnt.com/track?cons=12345678&searchType=CON&source=share'))
+      .toMatchObject({ trackingNumber: '12345678', carrier: 'tnt', confidence: 'high', source: 'link' });
+    // A search by the sender's reference holds no consignment number.
+    for (const number of ['12345678', '123456785']) {
+      expect(parseTrackingInput(`https://www.tnt.com/express/es_es/site/herramientas-envio/seguimiento.html?searchType=REF&cons=${number}`).carrier).not.toBe('tnt');
+      expect(parseTrackingInput(`https://www.tnt.com/track?cons=${number}&searchType=ref`).carrier).not.toBe('tnt');
     }
   });
 

@@ -32,7 +32,10 @@ postcode or account is required.
   Eight digits have no check to filter on and tnt.com lists a consignment for almost any
   serial, so detection has no 8-digit rule and recognition never asks for one; only a reader's
   or provider's choice of TNT tracks it.
-- A tnt.com tracking link names TNT for the consignment in its `cons` parameter. The
+- A tnt.com tracking link, or the `/track` link the page shares, names TNT for the
+  consignment in its `cons` parameter, an 8-digit serial included: the reader chose TNT, and
+  the adapter completes the serial as tnt.com does. A link searching by reference
+  (`searchType=REF`) holds the sender's reference, so its number is left to detection. The
   Spanish, French and Swiss Italian sites give the tracking page its own path.
 - tnt.com lists every consignment that carried the number, since numbers are reused.
   Only consignments whose own number matches are read, and the one with the most recent

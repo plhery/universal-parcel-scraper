@@ -60,10 +60,15 @@
       "domains": [
         "tnt.com"
       ],
-      "pathPattern": "^/express/[a-z]{2}_[a-z]{2}/site/(?:shipping-tools/tracking|herramientas-envio/seguimiento|outils-expedition/suivi|strumenti-spedizione/tracking)\\.html$",
-      "params": [
-        "cons"
+      "pathPattern": "^/(?:track|express/[a-z]{2}_[a-z]{2}/site/(?:shipping-tools/tracking|herramientas-envio/seguimiento|outils-expedition/suivi|strumenti-spedizione/tracking)\\.html)$",
+      "query": "^(?!(?:.*&)?searchType=ref(?:&|$))(?:.*&)?cons=(\\d{8})(?=&|$)"
+    },
+    {
+      "domains": [
+        "tnt.com"
       ],
+      "pathPattern": "^/(?:track|express/[a-z]{2}_[a-z]{2}/site/(?:shipping-tools/tracking|herramientas-envio/seguimiento|outils-expedition/suivi|strumenti-spedizione/tracking)\\.html)$",
+      "query": "^(?!(?:.*&)?searchType=ref(?:&|$))(?:.*&)?cons=([^&]+)",
       "ownNumbersOnly": true
     }
   ],
