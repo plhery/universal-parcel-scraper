@@ -1275,6 +1275,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dayone', number: 'DOT0990000000000001',
     route: /^https:\/\/www\.dayonetrack\.com\/track\?trackNo=DOT0990000000000001(?:#\/(?:track\?trackNo=DOT0990000000000001(?:&lang=[a-zA-Z-]+)?)?)?$/,
     marker: /Tracked number|The order information has not been updated yet|订单信息尚未更新/ },
+  { carrier: 'dealersend', number: 'DSLAF9000000001YQ',
+    route: /^https:\/\/dealer-send\.com\/en-US\/track-my-shipment\?trackingNumber=DSLAF9000000001YQ$/,
+    marker: /Track My Shipment/ },
   // The page fills its form with the reference and looks it up on load.
   { carrier: 'sendle', number: 'QSS990000001',
     route: /^https:\/\/www\.sendle\.com\/tracking\?ref=QSS990000001$/,

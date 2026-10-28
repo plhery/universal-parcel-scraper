@@ -11179,6 +11179,47 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "dealersend": {
+    "displayName": "DealerSend",
+    "color": "#d71d4f",
+    "aliases": [
+      "Dealer Send",
+      "Dealer Send Logistics",
+      "Dealer Send Logistics Limited"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dealersend",
+      "recognitionRank": 69,
+      "localClocks": true
+    },
+    "canaryUrl": "https://dealer-send.com/en-US/track-my-shipment",
+    "trackingUrlTemplate": "https://dealer-send.com/en-US/track-my-shipment?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://dealer-send.com/en-US/track-my-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "dealer-send.com",
+          "www.dealer-send.com"
+        ],
+        "pathPattern": "^/(?:(?:en-US|zh-HK|zh-CN)/)?track-my-shipment/?$",
+        "params": [
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^DSLAF\\d{10}YQ$",
+        "confidence": "high"
+      }
+    ]
+  },
   "dellin": {
     "displayName": "Delovye Linii",
     "color": "#fcaf17",
@@ -33901,6 +33942,7 @@ export const CARRIER_IDS = [
   "daylight-transport",
   "dayone",
   "dayton-freight",
+  "dealersend",
   "dellin",
   "delnext",
   "deppon",
@@ -34722,6 +34764,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "daylight-transport": [],
   "dayone": ["dayone-1"],
   "dayton-freight": [],
+  "dealersend": ["dealersend-1"],
   "dellin": [],
   "delnext": [],
   "deppon": [],

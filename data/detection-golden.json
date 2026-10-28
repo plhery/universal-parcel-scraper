@@ -72575,6 +72575,30 @@
     ]
   },
   {
+    "input": "DSLAF1021401768YQ",
+    "carrier": "dealersend",
+    "confidence": "high",
+    "candidates": [
+      "dealersend"
+    ]
+  },
+  {
+    "input": "DSLAF1022425992YQ",
+    "carrier": "dealersend",
+    "confidence": "high",
+    "candidates": [
+      "dealersend"
+    ]
+  },
+  {
+    "input": "DSLAF1026220361YQ",
+    "carrier": "dealersend",
+    "confidence": "high",
+    "candidates": [
+      "dealersend"
+    ]
+  },
+  {
     "input": "DT0905255BZNFQ",
     "carrier": "pathao-courier",
     "confidence": "high",

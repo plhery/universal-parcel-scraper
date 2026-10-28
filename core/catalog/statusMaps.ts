@@ -141,6 +141,7 @@ import { statusMap as danskeFragtmaend } from '../../carriers/danske-fragtmaend/
 import { statusMap as dayone } from '../../carriers/dayone/status.js';
 import { statusMap as daylightTransport } from '../../carriers/daylight-transport/status.js';
 import { statusMap as dayRoss } from '../../carriers/day-ross/status.js';
+import { statusMap as dealersend } from '../../carriers/dealersend/status.js';
 import { statusMap as daytonFreight } from '../../carriers/dayton-freight/status.js';
 import { statusMap as dachser } from '../../carriers/dachser/status.js';
 import { statusMap as dao } from '../../carriers/dao/status.js';
@@ -675,7 +676,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
   'courier-center': courierCenter, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'day-ross': dayRoss,
-  dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, delhivery, dellin, delnext, deppon, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
+  dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, dellin, delnext, deppon, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
