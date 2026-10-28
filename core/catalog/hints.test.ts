@@ -30,6 +30,8 @@ describe('brand networks', () => {
     // Universal providers name Z-Leading after its Chinese name.
     expect(carrierIdFromName('Zhongling')).toBe('z-leading');
     expect(carrierIdFromName('Pengyou')).toBe('pengyou');
+    expect(carrierIdFromName('Jifan')).toBe('jifan');
+    expect(carrierIdFromName('YBWL')).toBe('youbang-express');
     expect(carrierIdFromName('TopYou')).toBe('topyou');
     // Universal providers name YFHEX by its short name.
     expect(carrierIdFromName('YFH')).toBe('yfhex');

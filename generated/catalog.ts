@@ -19230,6 +19230,45 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "jifan": {
+    "displayName": "Jifan",
+    "color": "#305a96",
+    "aliases": [
+      "Jifan International Logistics",
+      "吉凡国际物流",
+      "深圳市吉凡国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.szjf56.cn/",
+    "trackingUrlTemplate": "https://www.szjf56.cn/index/tracknumber/track?nos={trackingNumber}",
+    "trackingSearchUrl": "https://www.szjf56.cn/",
+    "linkRules": [
+      {
+        "domains": [
+          "szjf56.cn",
+          "www.szjf56.cn"
+        ],
+        "pathPattern": "^/index/tracknumber/track$",
+        "params": [
+          "nos"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JFGJ\\d{9}CN$",
+        "confidence": "high"
+      }
+    ]
+  },
   "jitsu": {
     "displayName": "Jitsu",
     "color": "#4dc480",
@@ -33723,6 +33762,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "youbang-express": {
+    "displayName": "YouBang Express",
+    "color": "#3e6ad8",
+    "aliases": [
+      "YBWL",
+      "佑邦国际物流",
+      "深圳市佑邦国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "119.29.254.121"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^YB\\d{10}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "yurtici-kargo": {
     "displayName": "Yurtiçi Kargo",
     "color": "#0069b3",
@@ -34543,6 +34618,7 @@ export const CARRIER_IDS = [
   "jet-logistic",
   "jetline-couriers",
   "jhgj",
+  "jifan",
   "jitsu",
   "jne",
   "jordan-post",
@@ -34909,6 +34985,7 @@ export const CARRIER_IDS = [
   "yfhex",
   "yilong-logistics",
   "yimidida",
+  "youbang-express",
   "yurtici-kargo",
   "ywe",
   "yypost",
@@ -35372,6 +35449,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jet-logistic": [],
   "jetline-couriers": [],
   "jhgj": ["jhgj-1"],
+  "jifan": ["jifan-1"],
   "jitsu": [],
   "jne": ["jne-1"],
   "jordan-post": ["jordan-post-s10"],
@@ -35738,6 +35816,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yfhex": [],
   "yilong-logistics": ["yilong-logistics-1"],
   "yimidida": [],
+  "youbang-express": ["youbang-express-1"],
   "yurtici-kargo": [],
   "ywe": ["ywe-1"],
   "yypost": ["yypost-1"],

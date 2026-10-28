@@ -341,6 +341,24 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
+  it('names Jifan for JFGJ, nine digits and CN, with or without an S10 check digit', () => {
+    for (const number of ['JFGJ000000017CN', 'JFGJ000000010CN', 'jfgj 000 000 017 cn']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'jifan', confidence: 'high' });
+    }
+    for (const number of ['JFGJ00000017CN', 'JFGJ0000000017CN', 'JFGX000000017CN', 'JFGJ000000017CX']) {
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('jifan');
+    }
+  });
+
+  it('suggests YouBang Express for YB, ten digits and CN, and only that layout', () => {
+    for (const number of ['YB0000000017CN', 'yb 0000 0000 17 cn']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['youbang-express'] });
+    }
+    for (const number of ['YB000000017CN', 'YB00000000017CN', 'YC0000000017CN', 'YB0000000017CX']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('youbang-express');
+    }
+  });
+
   it('names TopYou for TYZR, a letter, ten digits and YQ, and only that layout', () => {
     for (const number of ['TYZRZ0000000017YQ', 'tyzrz 0000 0000 17 yq']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'topyou', confidence: 'high' });
