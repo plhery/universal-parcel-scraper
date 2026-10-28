@@ -83,6 +83,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['departed destination hub', 'in_transit'],
   // Its last-mile warehouse, then the delivery round.
   ['arrived at warehouse', 'in_transit'],
+  // The last-mile partner's depot taking in the parcel the line handed over.
+  ['shipment received in depot', 'in_transit'],
   ['out for delivery', 'out_for_delivery'],
   // China Post hands the dispatch to the airline after taking the parcel.
   ['handed over to airlines', 'in_transit'],
