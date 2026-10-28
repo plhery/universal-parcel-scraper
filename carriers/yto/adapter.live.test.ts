@@ -11,6 +11,6 @@ describe('YTO live compatibility', () => {
   });
 
   it.skipIf(!process.env.YTO_TRACKING_NUMBER)('reads an identity-only synthetic response as no history', async () => {
-    await expect(new YtoTracker().fetch('YT0000000000001')).rejects.toBeInstanceOf(NoHistoryError);
+    await expect(new YtoTracker().fetch('YT9000000000007')).rejects.toBeInstanceOf(NoHistoryError);
   });
 });
