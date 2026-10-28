@@ -497,8 +497,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^item received by royal mail$|\btaken over by one of our operators\b|\bwe've received your (?:parcel|package|item) at the parcel ?shop\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:was|has been) dropped off at (?:the |a )?parcel ?shop$|^(?![^,]*\b(?:recipient|consignee|receiver|customer|addressee|buyer|pick ?up point|parcel ?shop|locker|destination)\b)[a-z][\w&' -]{0,40} has received the goods(?:, [^,]{1,40}){0,2}\.?$|^the shipment has been deposited at a seur pickup point$|^(?:the |your )?collection (?:has been |was )?(?:carried out|completed)$|^已入库|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has been |was )?put into storage$/.test(text)) return 'accepted';
   // Royal Mail's sender drop-offs at a parcel locker and a postbox, as providers relay them.
   if (/^sender advised item dropped off at parcel locker$|^dropped off at postbox$/.test(text)) return 'accepted';
-  // Poste Italiane's drop-off at a Punto Poste in English ("presa in carico presso il Punto Poste").
-  if (/^(?:the )?shipment has been taken over at the post office point$/.test(text)) return 'accepted';
+  // Poste Italiane's drop-off at a Punto Poste or a Punto Poste-Locker in English ("presa in carico presso il Punto Poste").
+  if (/^(?:the )?shipment has been taken over at the post (?:office|locker) point$/.test(text)) return 'accepted';
   // TNT Italy's drop-off at a FedEx Location, awaiting the courier, as providers relay it.
   if (/^spedizione affidata a una fedex location\b/.test(text)) return 'accepted';
   // The sender's drop-off at a parcel shop in German, which names the shop and its address before the verb:

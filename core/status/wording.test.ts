@@ -872,6 +872,7 @@ describe('classifyWording', () => {
       ['Sender advised item dropped off at parcel locker', 'accepted'], ['Dropped off at Postbox', 'accepted'],
       ['The shipment has been taken over by one of our operators at the post office.', 'accepted'],
       ['The shipment has been taken over at the post office point', 'accepted'],
+      ['The shipment has been taken over at the Post-Locker point.', 'accepted'],
       ["We've received your parcel at the ParcelShop and will be collecting it shortly", 'accepted'],
       ['已入库,到达收货点', 'accepted'], ['国内清关中', 'customs'],
       ['Cross docked. Crossdock', 'in_transit'], ['Flight 202 is taking off and is expected to land on the 9th', 'in_transit'],
