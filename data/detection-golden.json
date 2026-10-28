@@ -79964,6 +79964,22 @@
     ]
   },
   {
+    "input": "JTUK100004930604",
+    "carrier": "j-and-t-uk",
+    "confidence": "high",
+    "candidates": [
+      "j-and-t-uk"
+    ]
+  },
+  {
+    "input": "JTUK100012934232",
+    "carrier": "j-and-t-uk",
+    "confidence": "high",
+    "candidates": [
+      "j-and-t-uk"
+    ]
+  },
+  {
     "input": "JVGL0099999999",
     "carrier": "dhl-ecommerce-nl",
     "confidence": "high",

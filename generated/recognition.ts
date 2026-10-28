@@ -234,6 +234,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "j-and-t": 530,
   "j-and-t-au": 698,
   "j-and-t-cargo": 910,
+  "j-and-t-uk": 701,
   "janio": 811,
   "japan-post": 4,
   "jeebly": 805,

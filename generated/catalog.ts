@@ -18780,6 +18780,46 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "j-and-t-uk": {
+    "displayName": "J&T Express UK",
+    "color": "#e60000",
+    "aliases": [
+      "J&T Express (UK)",
+      "J&T Express UK Ltd",
+      "J&T UK"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "j-and-t-uk",
+      "recognitionRank": 701
+    },
+    "canaryUrl": "https://www.jtexpress.uk/tracking",
+    "trackingUrlTemplate": "https://www.jtexpress.uk/tracking?q={trackingNumber}",
+    "trackingSearchUrl": "https://www.jtexpress.uk/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.jtexpress.uk",
+          "jtexpress.uk"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JTUK\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "jadlog": {
     "displayName": "Jadlog",
     "color": "#dc0032",
@@ -34250,6 +34290,7 @@ export const CARRIER_IDS = [
   "j-and-t-de",
   "j-and-t-middle-east",
   "j-and-t-mx",
+  "j-and-t-uk",
   "jadlog",
   "jamaica-post",
   "janio",
@@ -35075,6 +35116,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "j-and-t-de": ["j-and-t-de-1"],
   "j-and-t-middle-east": ["j-and-t-middle-east-1"],
   "j-and-t-mx": ["j-and-t-mx-1"],
+  "j-and-t-uk": ["j-and-t-uk-1"],
   "jadlog": [],
   "jamaica-post": [],
   "janio": ["janio-1"],

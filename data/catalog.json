@@ -18778,6 +18778,46 @@
       }
     ]
   },
+  "j-and-t-uk": {
+    "displayName": "J&T Express UK",
+    "color": "#e60000",
+    "aliases": [
+      "J&T Express (UK)",
+      "J&T Express UK Ltd",
+      "J&T UK"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "j-and-t-uk",
+      "recognitionRank": 701
+    },
+    "canaryUrl": "https://www.jtexpress.uk/tracking",
+    "trackingUrlTemplate": "https://www.jtexpress.uk/tracking?q={trackingNumber}",
+    "trackingSearchUrl": "https://www.jtexpress.uk/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.jtexpress.uk",
+          "jtexpress.uk"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JTUK\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "jadlog": {
     "displayName": "Jadlog",
     "color": "#dc0032",

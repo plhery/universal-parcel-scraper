@@ -1,9 +1,9 @@
 /**
- * The lookup the tracking pages of J&T's Australian and German networks make
- * on J&T's "official" platform: the same signed request, app id, key and
+ * The lookup the tracking pages of J&T's Australian, German and UK networks
+ * make on J&T's "official" platform: the same signed request, app id, key and
  * reply, on each network's host. Each network passes its address, country
- * header, waybill layout and status map; `j-and-t-de` shares this module with
- * `j-and-t-au`.
+ * header, waybill layout and status map; `j-and-t-de` and `j-and-t-uk` share
+ * this module with `j-and-t-au`.
  */
 import { createHash } from 'node:crypto';
 import { DateTime } from 'luxon';
