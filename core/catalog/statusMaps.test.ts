@@ -864,6 +864,7 @@ describe('status map answers', () => {
     expect(answer('correios-br', 'OEC/01', 'Objeto saiu para entrega ao destinatário')).toEqual(mapped('out_for_delivery'));
     expect(answer('correios-br', 'BDE/20', 'Carteiro não atendido')).toEqual(mapped('failed_attempt'));
     expect(answer('correios-br', 'FC/16', 'Necessidade de informar CPF/CNPJ do destinatário')).toEqual(mapped('customs'));
+    expect(answer('correios-br', 'FC/40', 'Objeto em processo de identificação do código de classificação do produto')).toEqual(mapped('customs'));
     expect(answer('correios-br', 'PAR/18', 'Objeto recebido na unidade de exportação no país de origem')).toEqual(mapped('in_transit'));
     expect(answer('correios-br', 'XX/99', 'Objeto em trânsito')).toEqual(unknown);
     expect(answer('correios-br', null, 'Objeto entregue ao destinatário')).toEqual(unknown);
@@ -1636,6 +1637,9 @@ describe("universal providers' answers", () => {
       ['Delivery has been made at the destination port', 'in_transit'], ['目的港已提货 Delivery has been made at the destination port', 'in_transit'],
       ['目的港已提货', 'in_transit'], ['The shipment was left at a drop-off location', 'delivered'], ['Order information has been sent to DPD.', 'registered'],
       ['Package received & scanned at warehouse', 'accepted'],
+      // KTD's steps as ParcelsApp relays them.
+      ["Package received and scanned at the carrier's local warehouse.", 'accepted'], ["Package leaves the carrier's local warehouse", 'in_transit'],
+      ['Your item has left the East China warehouse', 'in_transit'], ['Export declaration completed', 'in_transit'], ['Take off', 'in_transit'],
       ['Manifested - Out for Pickup', 'registered'], ['Manifested', 'registered'],
       ['Awaiting your Vinted parcel', 'registered'], ['Expecting Your Parcel', 'registered'],
       ['Parcel received by Relay', 'accepted'], ['Received Your Parcel', 'accepted'], ['Collection Complete', 'delivered'],
@@ -1703,6 +1707,7 @@ describe("universal providers' answers", () => {
       'Courier collection complete', 'Collection complete from sender',
       'Export scan pending', 'Awaiting export scan', 'Received in warehouse Example', 'Item deposited',
       'Parcel was dropped off at the locker by the courier', 'International shipment release pending', 'Package is received at a station',
+      "Package received at the carrier's local warehouse for return", 'Take off the label', 'Export declaration completed for the return',
       // A store receipt that is a drop-off or a collection, and a retailer's order sent to its store.
       'Received at Example Store', 'Your order has been shipped from Example center to the store']) {
       expect(answer('unknown', null, wording), wording).toEqual(unknown);

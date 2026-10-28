@@ -221,6 +221,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // ParcelsApp's words and in Postal Ninja's.
   if (/^package finished[.!]?$|^package is ready for shipping from the warehouse[.!]?$/i.test(value)) return 'registered';
   if (/^export declaration in progress[.!]?$/i.test(value)) return 'customs';
+  // KTD's steps as ParcelsApp relays them: the first carrier's local warehouse taking the parcel in and
+  // sending it on to KTD's warehouse, the parcel leaving that, its export cleared and its flight taking off.
+  if (/^package received and scanned at the carrier['’]s local warehouse[.!]?$/i.test(value)) return 'accepted';
+  if (/^package leaves the carrier['’]s local warehouse[.!]?$|^your item has left the [a-z ]{1,40} warehouse[.!]?$|^export declaration completed[.!]?$|^take ?off[.!]?$/i.test(value)) return 'in_transit';
   // MRW's own wording for a parcel left at one of its pickup points, relayed by a provider,
   // and for its pickup from the sender still to come, as MRW's own map reads them.
   if (/^depositado en punto mrw[.!]?$/i.test(value)) return 'ready_for_pickup';
