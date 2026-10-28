@@ -204,6 +204,18 @@ describe('SF Express public route parsing', () => {
     expect(events[0]).not.toHaveProperty('location');
   });
 
+  it('names the place a remark waits in transit at without brackets, and no place for a country given twice', () => {
+    const value = copy(); const routes = value.result[0]!.routes;
+    routes[2]!.remark = 'Shipment in transit at AU,SAMPLE TOWN, please wait in patience';
+    routes[3]!.remark = 'Shipment in transit at AU,AU, please wait in patience';
+    routes[1]!.remark = 'The shipment has arrived at the transit place【AU,AU】, flight arrival';
+    const events = parse(value, NUMBER).events!;
+    expect(events[3]).toMatchObject({ description: 'Shipment in transit at AU,SAMPLE TOWN, please wait in patience', location: 'AU,SAMPLE TOWN' });
+    expect(events[2]).toMatchObject({ description: 'Shipment in transit at AU,AU, please wait in patience' });
+    expect(events[2]).not.toHaveProperty('location');
+    expect(events[4]).not.toHaveProperty('location');
+  });
+
   it('bounds retained and inspected scans, deduplicates exact repeats and sorts like the portal', () => {
     const value = copy(); value.result[0]!.routes.reverse(); value.result[0]!.routes.push(value.result[0]!.routes[0]!);
     expect(parse(value, NUMBER).events).toHaveLength(6);

@@ -72,12 +72,15 @@ const COURIER = /\s+by\s+[^()（）]{1,40}?(?=\s*[（(]\s*(?:contact (?:number|p
 const withoutContact = (text: string): string => CONTACT.test(text) ? text.replace(COURIER, ' by the courier').replace(CONTACT, '') : text;
 
 // A remark names the site of its scan in its first brackets: "The shipment has arrived at 【A】",
-// "Shipment loaded at 【A】, prepare to send to 【B】". A remark about a courier or whoever signed
-// may name a person there instead.
+// "Shipment loaded at 【A】, prepare to send to 【B】", or without brackets while it waits in transit:
+// "Shipment in transit at AU,TOWN, please wait in patience". A remark about a courier or whoever
+// signed may name a person there instead, and a country code given twice, "AU,AU", is no place.
 const PERSON = /courier|deliver(?:y|er) ?(?:man|person|staff)|sign(?:ed|er)|recipient|收派员|快递员|派件员|配送员|签收|簽收|联系|聯繫/iu;
+const IN_TRANSIT_AT = /\bin transit at\s+([^【】]*?\p{L}[^【】]*?)\s*[,，]\s*please wait/iu;
+const COUNTRY_TWICE = /^([A-Z]{2})\s*[,，]\s*\1$/iu;
 function scanSite(remark: string): string | undefined {
-  const site = /【([^【】]*\p{L}[^【】]*)】/u.exec(remark)?.[1]?.trim();
-  return site && site.length <= 100 && !PERSON.test(remark) ? site : undefined;
+  const site = (/【([^【】]*\p{L}[^【】]*)】/u.exec(remark) ?? IN_TRANSIT_AT.exec(remark))?.[1]?.trim();
+  return site && site.length <= 100 && !COUNTRY_TWICE.test(site) && !PERSON.test(remark) ? site : undefined;
 }
 
 /** Parse the anonymous Taiwan routes endpoint, never a logged-in waybill detail. */
