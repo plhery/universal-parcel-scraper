@@ -212,13 +212,17 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   // Royal Mail also sorts the history; upstream order is not guaranteed.
   // A partial comparator can move resolved scans across unresolved overseas
   // clocks. Preserve provider order unless every scan denotes an instant.
+  let receiptAccepted = false;
   if (events.every(event => event.time)) {
     events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
     // Mail a sender hands in at a parcel hub or a mail centre, or a collection
     // one of them receives first, has no acceptance scan before that receipt,
     // which the summary then calls "We've got it".
     const first = [...events].reverse().find(event => event.stage !== 'registered' && event.stage !== 'pending');
-    if (first?.stage === 'in_transit' && FIRST_RECEIPTS.has(first.provider_code ?? '')) first.stage = 'accepted';
+    if (first?.stage === 'in_transit' && FIRST_RECEIPTS.has(first.provider_code ?? '')) {
+      first.stage = 'accepted';
+      receiptAccepted = true;
+    }
   }
   const trimmed = events.slice(0, MAX_EVENTS_TO_RETURN);
   const summaryCategory = cleanScalar(summary.statusCategory);
@@ -229,11 +233,12 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   const lastClock = abroad.get(lastText);
   const lastTime = lastClock ? ('time' in lastClock ? lastClock.time : null) : eventTime(lastText);
   // A summary category groups several scans: "Ready for Delivery" covers the delivery office's
-  // receipt and the day's round. When it repeats the newest scan, a round or customs scan's code
-  // places the parcel further along. Receipts stay under "We've got it", the acceptance.
+  // receipt and the day's round, "We've got it" the acceptance and the mail centre's receipt after
+  // a drop-off. When it repeats the newest scan, a round, customs or receipt scan's code places the
+  // parcel further along. Receipts after a first receipt, the acceptance itself, stay under it.
   const summaryStage = royalMailSummaryStage(summaryCategory, statusText) ?? undefined;
   const newest = trimmed[0];
-  const repeated = newest?.stage_source === 'carrier_map' && newest.stage !== 'in_transit'
+  const repeated = newest?.stage_source === 'carrier_map' && !(receiptAccepted && newest.stage === 'in_transit')
     && (Boolean(lastTime) && lastTime === newest.time
       || events.every(event => event.time) && cleanScalar(summary.lastEventCode, 64) === newest.provider_code);
   const stage = repeated && furtherAlong(summaryStage, newest.stage) ? newest.stage : summaryStage;

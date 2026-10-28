@@ -321,6 +321,20 @@ describe('Royal Mail structured response', () => {
     expect(piece('EVDAC', 'We\'ve got it').events?.map(event => event.stage)).toEqual(['accepted', 'registered']);
     expect(piece('EVDAV', 'We\'ve got it').events?.map(event => event.stage)).toEqual(['accepted', 'registered']);
     expect(piece('EVIAV', 'In transit').events?.map(event => event.stage)).toEqual(['in_transit', 'registered']);
+    expect(piece('EVDAV', 'We\'ve got it').current_stage).toBe('accepted');
+  });
+
+  it('stages a mail centre receipt after a drop-off in transit under "We\'ve got it"', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'We\'ve got it', statusDescription: '**We\'ve got it**', lastEventCode: 'EVDAV', lastEventDateTime: '2026-01-06T07:14:46+00:00' },
+      events: [
+        { eventCode: 'EVDAV', eventName: '**Item Received**', eventDateTime: '2026-01-06T07:14:46+00:00', locationName: 'Example MC' },
+        { eventCode: 'LOPPA', eventName: '**Sender advised item dropped off at parcel locker**', eventDateTime: '2026-01-04T20:18:37+00:00' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => event.stage)).toEqual(['in_transit', 'accepted']);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'We\'ve got it' });
   });
 
   it('reads scans abroad on their country\'s clock instead of the UK label', () => {
