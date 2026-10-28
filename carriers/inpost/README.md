@@ -47,7 +47,9 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
   something.
 - At most 20 events are returned, newest first.
 - `JJD`/`JD` + 16 digits and bare 24-digit numbers are low confidence: `JJD` collides with
-  DHL and needs a domain hint or an explicit pick.
+  DHL and needs a domain hint or an explicit pick. `JJD` and sixteen digits is the plate
+  Yodel, InPost's UK network, prints, and no DHL sample has that length, so `inpost-2` puts
+  InPost first for it, with DHL beside it.
 - bpost, Ciblex and Austrian Post print 24 digits too. Detection lists InPost first, ahead of
   the country hint, for the leading digits its tracker has answered, and keeps the others as
   candidates.

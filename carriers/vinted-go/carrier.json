@@ -94,9 +94,10 @@
   "detection": [
     {
       "id": "vinted-go-1",
-      "pattern": "^1[78]\\d{14}$",
+      "pattern": "^(?:17|18)\\d{14}$",
       "confidence": "low",
-      "checksum": "luhn"
+      "checksum": "luhn",
+      "preferred": true
     },
     {
       "id": "vinted-go-vgs",

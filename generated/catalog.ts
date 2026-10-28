@@ -2383,7 +2383,8 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^JJD\\d{16}$",
-        "confidence": "low"
+        "confidence": "low",
+        "preferred": true
       },
       {
         "pattern": "^JD\\d{16}$",
@@ -23784,7 +23785,8 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^210\\d{10}$",
         "confidence": "low",
-        "checksum": "gs1"
+        "checksum": "gs1",
+        "preferred": true
       }
     ]
   },
@@ -32828,9 +32830,10 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^1[78]\\d{14}$",
+        "pattern": "^(?:17|18)\\d{14}$",
         "confidence": "low",
-        "checksum": "luhn"
+        "checksum": "luhn",
+        "preferred": true
       },
       {
         "pattern": "^VGS\\d{13,14}$",

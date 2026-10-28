@@ -77,7 +77,8 @@
       "id": "orlen-paczka-1",
       "pattern": "^210\\d{10}$",
       "confidence": "low",
-      "checksum": "gs1"
+      "checksum": "gs1",
+      "preferred": true
     }
   ]
 }

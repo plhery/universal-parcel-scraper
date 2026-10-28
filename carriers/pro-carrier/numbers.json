@@ -127,8 +127,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "dhl",
-          "inpost"
+          "inpost",
+          "dhl"
         ]
       },
       "note": "An archived lookup on Pro Carrier's tracker shows it as the tracking number of a parcel to the US handed to SpeedX; JJD labels belong to DHL and InPost UK, so its issuer is unsettled."

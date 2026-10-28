@@ -19651,8 +19651,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "vinted-go",
       "dhl-ecommerce",
-      "tnt",
+      "tnt"
+    ],
+    "preferred": [
       "vinted-go"
     ],
     "asked": [
@@ -20095,8 +20098,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "vinted-go",
       "dhl-ecommerce",
-      "tnt",
+      "tnt"
+    ],
+    "preferred": [
       "vinted-go"
     ],
     "asked": [
@@ -20110,8 +20116,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "vinted-go",
       "dhl-ecommerce",
-      "tnt",
+      "tnt"
+    ],
+    "preferred": [
       "vinted-go"
     ],
     "asked": [
@@ -20125,8 +20134,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "vinted-go",
       "dhl-ecommerce",
-      "tnt",
+      "tnt"
+    ],
+    "preferred": [
       "vinted-go"
     ],
     "asked": [
@@ -20188,8 +20200,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "vinted-go",
       "dhl-ecommerce",
-      "tnt",
+      "tnt"
+    ],
+    "preferred": [
       "vinted-go"
     ],
     "asked": [
@@ -20203,8 +20218,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "vinted-go",
       "dhl-ecommerce",
-      "tnt",
+      "tnt"
+    ],
+    "preferred": [
       "vinted-go"
     ],
     "asked": [
@@ -24752,12 +24770,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24772,11 +24793,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "correos-chile",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24790,12 +24814,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24810,13 +24837,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "ukrposhta",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24850,13 +24880,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "ukrposhta",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24872,13 +24905,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "ukrposhta",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24945,12 +24981,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -24965,12 +25004,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "ukrposhta",
       "correos-chile",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -25011,11 +25053,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "correos-chile",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -25037,12 +25082,15 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "orlen-paczka",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
       "korea-post",
-      "fan-courier",
+      "fan-courier"
+    ],
+    "preferred": [
       "orlen-paczka"
     ],
     "asked": [
@@ -79223,7 +79271,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "dhl",
+      "inpost",
+      "dhl"
+    ],
+    "preferred": [
       "inpost"
     ],
     "asked": [
@@ -79235,7 +79286,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "dhl",
+      "inpost",
+      "dhl"
+    ],
+    "preferred": [
       "inpost"
     ],
     "asked": [
@@ -79247,7 +79301,10 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "dhl",
+      "inpost",
+      "dhl"
+    ],
+    "preferred": [
       "inpost"
     ],
     "asked": [

@@ -21,8 +21,9 @@ same lookup. The official app (`pl.orlen.paczka`) talks to a separate API at
 
 Lookups archived from the tracker since 2021 show thirteen digits starting `210` and ending in
 a GS1 check digit, the series rising over time. `orlen-paczka-1` suggests ORLEN Paczka for that
-layout at low confidence, because several carriers match thirteen digits broadly; its check
-digit puts ORLEN Paczka first among the carriers asked to recognize it. The adapter takes
+layout at low confidence, because several carriers match thirteen digits broadly. Delovye
+Linii's numbers can start `210` too, but none archived passes the check, so a passing check
+digit puts ORLEN Paczka first wherever the parcel comes from. The adapter takes
 thirteen characters starting `2` or `3`, as the tracker's script does, and rejects a `210`
 number whose check digit fails. The script also takes seven- and ten-digit sending codes,
 the sender's drop-off codes rather than parcel numbers; the adapter does not look them up.

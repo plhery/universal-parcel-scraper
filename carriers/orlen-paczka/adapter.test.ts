@@ -147,10 +147,11 @@ describe('ORLEN Paczka HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
-  it('is asked first among the carriers sharing the number shape when its check digit passes', () => {
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
-    expect(detectCarrierMatch(NUMBER).candidates).toContain('orlen-paczka');
-    expect(recognitionAskedCarriers(NUMBER)[0]).toBe('orlen-paczka');
+  it('is suggested and asked first among the carriers sharing the number shape when its check digit passes', () => {
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['orlen-paczka'] });
+    expect(detectCarrierMatch(NUMBER).candidates?.[0]).toBe('orlen-paczka');
+    for (const countryHint of [undefined, 'PL', 'FR']) expect(recognitionAskedCarriers(NUMBER, { countryHint })[0]).toBe('orlen-paczka');
+    expect(detectCarrierMatch('2109999000004').candidates ?? []).not.toContain('orlen-paczka');
   });
 
   it('recognizes dated history and explicit absence, and leaves a withheld number inconclusive', async () => {

@@ -85,6 +85,20 @@ describe('French carrier number candidates', () => {
     }
   });
 
+  it('suggests Vinted Go first for sixteen digits from 17 or 18 with a passing Luhn digit, wherever the parcel comes from', () => {
+    for (const number of ['1790000000000010', '1771234567890124', '1800000000000026']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['vinted-go'] });
+      expect(detectCarrierMatch(number).candidates?.[0], number).toBe('vinted-go');
+      for (const countryHint of [undefined, 'GB', 'US']) {
+        expect(recognitionCandidates(number, { countryHint })[0], number).toMatchObject({ carrier: 'vinted-go', preferred: true });
+      }
+    }
+    // A failed check digit, or another start, is not Vinted Go's.
+    for (const number of ['1790000000000011', '1600000000000010']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('vinted-go');
+    }
+  });
+
   it('suggests Vinted Go first for three letters, a digit, UW, a digit and nine letters or digits only', () => {
     for (const number of ['FMP1UW2ABCDEFGHI', 'ABC1UW2DEFGHI34J', 'FMP1UW2ABCDEFGH1', 'FMX1UW2ABCDEFGHI']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['vinted-go'] });

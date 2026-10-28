@@ -18,13 +18,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -46,12 +46,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "correos-chile",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -73,13 +73,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -101,14 +101,14 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "ukrposhta",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -130,14 +130,14 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "ukrposhta",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -159,14 +159,14 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "ukrposhta",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -188,13 +188,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -216,13 +216,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "ukrposhta",
           "correos-chile",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -244,12 +244,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "correos-chile",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the capture was not opened."
@@ -271,13 +271,13 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "orlen-paczka",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
           "korea-post",
-          "fan-courier",
-          "orlen-paczka"
+          "fan-courier"
         ]
       },
       "note": "Looked up on ORLEN Paczka's own tracker, as an archived address shows; the tracker returns its history."

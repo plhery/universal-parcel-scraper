@@ -165,9 +165,9 @@ describe('Royal Mail domestic references', () => {
 });
 
 describe('JJD licence plates', () => {
-  it('suggests InPost beside DHL for the plate length Yodel prints', () => {
+  it('suggests InPost first, beside DHL, for the plate length Yodel prints', () => {
     const yodel = 'JJD0002000000000001';
-    expect(detectCarrierMatch(yodel)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhl', 'inpost'] });
+    expect(detectCarrierMatch(yodel)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['inpost', 'dhl'], preferred: ['inpost'] });
     expect(recognitionCandidates(yodel).map(candidate => candidate.carrier)).toEqual(['inpost']);
   });
 

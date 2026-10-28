@@ -43,7 +43,7 @@ how a consumer learns that DHL holds one behind a postcode.
   as DHL Paket. The adapter of another network, such as
   [Poland's](../dhl-ecommerce-pl/README.md), reads one when its carrier is named.
   A plate of `JJD` and sixteen digits is the length Yodel, now InPost's UK
-  network, prints, so it only suggests DHL beside [InPost](../inpost/README.md).
+  network, prints, so it only suggests DHL after [InPost](../inpost/README.md).
 - A plate typed without its `(J)`, as `JD` and eighteen digits outside the
   `JD01` range, is still DHL Paket's: DHL's global tracking lists that form as
   the piece of a DHL Paket shipment. It only suggests DHL, because this

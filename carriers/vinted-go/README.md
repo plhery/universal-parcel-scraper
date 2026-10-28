@@ -56,7 +56,8 @@ and a Luhn check digit. The service answers a number whose check fails as unknow
 age, and judges the age of one whose check passes from its first thirteen digits. The adapter
 takes sixteen digits starting `1` that pass the check. `vinted-go-1` suggests Vinted Go at low
 confidence for those starting `17` or `18`, because DHL eCommerce, Evri and TNT accept any
-sixteen digits.
+sixteen digits. Other carriers' samples in that range fail the check, so a passing one puts
+Vinted Go first wherever the parcel comes from.
 
 Vinted Go also issues `VGS` and thirteen or fourteen digits, with no timestamp or check digit,
 and the service answers both lengths like the others. The adapter takes them, and `vinted-go-vgs`

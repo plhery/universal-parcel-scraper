@@ -89,7 +89,8 @@
     {
       "id": "inpost-2",
       "pattern": "^JJD\\d{16}$",
-      "confidence": "low"
+      "confidence": "low",
+      "preferred": true
     },
     {
       "id": "inpost-3",
