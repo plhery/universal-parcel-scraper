@@ -1,5 +1,5 @@
 
-import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, lookupBudget, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -153,6 +153,9 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
   };
 }
 
+/** The languages the hub words its scans in for a reader. */
+type InpostLanguage = 'pl' | 'en';
+
 export class InpostTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
@@ -169,13 +172,13 @@ export class InpostTracker {
     }
   }
 
-  async fetch(rawTrackingNumber: string, context: TrackingContext = {}, enrich = true): Promise<CarrierResult> {
+  async fetch(rawTrackingNumber: string, context: TrackingContext = {}, enrich = true, language: InpostLanguage = 'en'): Promise<CarrierResult> {
     const trackingNumber = normalizeInpostTrackingNumber(rawTrackingNumber);
     // The default budget covers the request, the pause and the one transient retry.
     const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
     return runSteps({ carrier: 'inpost', budgetMs: budget.remainingMs(), signal: budget.signal, recorder: this.recorder }, [{
       id: 'direct',
-      run: ({ signal, remainingMs }) => this.fetchHub(trackingNumber, { signal, budgetMs: remainingMs }, enrich),
+      run: ({ signal, remainingMs }) => this.fetchHub(trackingNumber, { signal, budgetMs: remainingMs }, enrich, language),
     }, {
       id: 'shipx',
       // Recognition and UK layouts keep the hub's broader scope.
@@ -196,16 +199,16 @@ export class InpostTracker {
     }]);
   }
 
-  private async fetchHub(trackingNumber: string, context: TrackingContext, enrich: boolean): Promise<CarrierResult> {
+  private async fetchHub(trackingNumber: string, context: TrackingContext, enrich: boolean, language: InpostLanguage): Promise<CarrierResult> {
     const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
     // The hub words every parcel in Polish, whatever its country or Accept-Language,
-    // unless the query names a language.
-    const url = `${TRACKING_ENDPOINT}/${encodeURIComponent(trackingNumber)}?language=en`;
+    // unless the query names a language: a Polish reader gets that, anyone else English.
+    const url = `${TRACKING_ENDPOINT}/${encodeURIComponent(trackingNumber)}${language === 'pl' ? '' : '?language=en'}`;
     const { response, bytes } = await fetchBounded(url, {
       signal: budget.signal,
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Language': language === 'pl' ? 'pl-PL,pl;q=0.9' : 'en-US,en;q=0.9',
         'User-Agent': this.userAgent,
       },
     }, {
@@ -244,7 +247,7 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'inpost',
     steps: ['direct', 'shipx'],
     recordsSteps: true,
-    track: (input, context) => tracker.fetch(input.number, context),
+    track: (input, context) => tracker.fetch(input.number, context, true, readerLanguage(input, ['pl']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context, false), () => accepted(() => normalizeInpostTrackingNumber(number))),
   };
 };

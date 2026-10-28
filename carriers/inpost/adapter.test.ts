@@ -3,10 +3,12 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { carrierInfo } from '../../core/catalog/index.js';
 import { SchemaError, InvalidInputError } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import {
   normalizeInpostTrackingNumber,
   parseInpostTrackingResponse,
   InpostTracker,
+  adapter,
 } from './adapter.js';
 import { classifyInpostStatus } from './status.js';
 import { parseInpostPickup } from './pickup.js';
@@ -191,6 +193,8 @@ describe('InPost response parsing', () => {
     const english = { stage: 'accepted', description: 'Collected by the Courier', location: '', providerCode: '' };
     expect(policy?.storedSources).toEqual(['inpost']);
     expect(policy?.matches?.(english, { ...english, description: 'Odebrana przez Kuriera' })).toBe(true);
+    // A Polish reader's answer takes over the English rows the same way.
+    expect(policy?.matches?.({ ...english, description: 'Odebrana przez Kuriera' }, english)).toBe(true);
     expect(policy?.matches?.(english, { ...english, description: 'Przesyłka utworzona', stage: 'registered' })).toBe(false);
     expect(policy?.matches?.(english, { ...english, location: 'Exampletown (PL)' })).toBe(false);
   });
@@ -250,6 +254,16 @@ describe('InpostTracker fetch', () => {
     expect(result.status).toBe('delivered');
     expect(seen).toEqual([`https://inposteasy.com/api/tracking/${TRACKING_NUMBER}?language=en`,
       `https://api-shipx-pl.easypack24.net/v1/tracking/${TRACKING_NUMBER}`]);
+  });
+
+  it('asks the hub in Polish for a Polish reader and in English for anyone else', async () => {
+    const fetcher = vi.fn<typeof fetch>(async () => response(parcel()));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    for (const [language, url] of [['pl', ''], ['pl-PL', ''], ['de', '?language=en'], [null, '?language=en']] as const) {
+      await instance.track({ number: TRACKING_NUMBER, language });
+      const hub = fetcher.mock.calls.map(([input]) => String(input)).filter((seen) => seen.startsWith('https://inposteasy.com/'));
+      expect(hub.at(-1)).toBe(`https://inposteasy.com/api/tracking/${TRACKING_NUMBER}${url}`);
+    }
   });
 
   it('maps 404 to not-found and surfaces other failures distinctly', async () => {
