@@ -56,10 +56,10 @@ export function hasPrivateDeliveryDetails(description: string): boolean {
 }
 
 // Labels providers put where a place belongs: a feed's system user ("US, SYSTEM, SYSTEM"),
-// an order system's data centre, a line-haul agent, GLS Italy's unnamed sorting hub and
-// China Post's "目的国" ("destination country"), which its feed gives an airline's arrival
-// where it names no country's code.
-const NOT_PLACES = /^(?:(?:[A-Z]{2}, )?system(?:, system)*|(?:uni )?data cent(?:er|re)|linehaul agent|centro di smistamento(?: - hub)?|目的国)$/i;
+// an order system's data centre, a line-haul agent, GLS Italy's unnamed sorting hub, Poczta
+// Polska's "International Postal System" for a scan relayed from abroad and China Post's "目的国"
+// ("destination country"), which its feed gives an airline's arrival where it names no country's code.
+const NOT_PLACES = /^(?:(?:[A-Z]{2}, )?system(?:, system)*|(?:uni )?data cent(?:er|re)|linehaul agent|centro di smistamento(?: - hub)?|international postal system|目的国)$/i;
 // Poste Italiane delivers "dalla sede operativa di" the depot's town, which providers also translate.
 const DEPOT_PREFIX = /^(?:dalla sede operativa di|from the operational headquarters in)\s+/i;
 // Royal Mail appends a Post Office branch's postcode in brackets ("Example Post Office [ZZ9 9ZZ]"), which providers copy.
