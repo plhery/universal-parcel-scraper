@@ -691,6 +691,16 @@ describe('carrier links limited to some pages of their host', () => {
       'https://track.thecourierguy.co.za/?ref=',
       'https://track.thecourierguy.co.za/track/?ref=',
     ], 'https://portal.thecourierguy.co.za/request-invoice?ref='],
+    ['ppl', '29000000001', [
+      'https://www.ppl.cz/?form=track-and-trace&shipmentId=',
+      'https://www.ppl.cz/vyhledat-zasilku?shipmentId=',
+      'https://www.ppl.cz/en/track-a-shipment?shipmentId=',
+    ], 'https://www.ppl.cz/zasilky?shipmentId='],
+    ['fukuyama', '12345678901', [
+      'https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/',
+      'https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/',
+      'https://corp.fukutsu.co.jp/situation/tracking_no_hunt/',
+    ], 'https://seikyu.fukuyama-tsuun.com/corp/'],
   ])('%s', (carrier, number, pages, other) => {
     // A reference detection alone does not recognize shows that the rule read it.
     for (const page of pages) {

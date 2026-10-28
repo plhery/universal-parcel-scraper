@@ -13,7 +13,7 @@ a ParcelShop or ParcelBox. DHL's other networks have their own carrier ids.
 
 ## Access
 
-The key comes from the widget configuration on `https://www.ppl.cz/vyhledat-zasilku`, the
+The key comes from the widget configuration of PPL's tracking form, the
 same for every visitor. DHL's gateway allows it only for PPL's tracking service. Node's fetch
 cannot read that page: its `Content-Security-Policy` header is folded over several lines,
 which the strict HTTP parser rejects. So the key is not read at run time; it is included with
@@ -55,9 +55,10 @@ read.
 
 ## Links
 
-PPL's tracker opens one parcel at `www.ppl.cz/vyhledat-zasilku?shipmentId={number}`: the page
-reads the number from the address and runs the search itself. The English site puts the same
-parameter on `/en/track-a-shipment` and `/en/parcel-detail`.
+PPL's home page opens its search form on one parcel at
+`www.ppl.cz/?form=track-and-trace&shipmentId={number}`: the page reads the number from the address
+and runs the search itself. The former `/vyhledat-zasilku`, which redirects there, and the English
+`/en/track-a-shipment` and `/en/parcel-detail` take the same parameter.
 
 ## Testing
 

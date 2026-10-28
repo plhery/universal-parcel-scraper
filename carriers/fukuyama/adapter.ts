@@ -8,7 +8,7 @@ import { fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { decodeFukuyamaPage, FUKUYAMA_MAX_BYTES, normalizeFukuyamaNumber, parseFukuyama, PROVIDER } from './parser.js';
 
 /** The tracker's page for one number, which the tracking form on the home page opens. */
-export const FUKUYAMA_TRACKING = 'https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/';
+export const FUKUYAMA_TRACKING = 'https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/';
 const REDIRECTS = [301, 302, 303, 307, 308];
 
 export class FukuyamaTracker {

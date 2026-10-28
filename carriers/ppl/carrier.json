@@ -33,9 +33,9 @@
     "pickup_point"
   ],
   "portal": {
-    "url": "https://www.ppl.cz/vyhledat-zasilku?shipmentId={trackingNumber}",
-    "searchUrl": "https://www.ppl.cz/vyhledat-zasilku",
-    "canaryUrl": "https://www.ppl.cz/vyhledat-zasilku",
+    "url": "https://www.ppl.cz/?form=track-and-trace&shipmentId={trackingNumber}",
+    "searchUrl": "https://www.ppl.cz/?form=track-and-trace",
+    "canaryUrl": "https://www.ppl.cz/",
     "shows": [
       "status",
       "history",
@@ -79,7 +79,7 @@
       "domains": [
         "ppl.cz"
       ],
-      "pathPattern": "^/(?:vyhledat-zasilku|en/track-a-shipment|en/parcel-detail)/?$",
+      "pathPattern": "^/(?:(?:vyhledat-zasilku|en/track-a-shipment|en/parcel-detail)/?)?$",
       "params": [
         "shipmentId"
       ]

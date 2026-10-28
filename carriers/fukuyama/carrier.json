@@ -37,9 +37,9 @@
     "offset_timestamps"
   ],
   "portal": {
-    "url": "https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/{trackingNumber}",
-    "searchUrl": "https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt",
-    "canaryUrl": "https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt",
+    "url": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/{trackingNumber}",
+    "searchUrl": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt",
+    "canaryUrl": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt",
     "shows": [
       "status",
       "history",
@@ -75,6 +75,12 @@
     ]
   },
   "links": [
+    {
+      "domains": [
+        "seikyu.fukuyama-tsuun.com"
+      ],
+      "path": "^/corp/tracking_no_hunt/([^/?#]+)/?$"
+    },
     {
       "domains": [
         "corp.fukutsu.co.jp"

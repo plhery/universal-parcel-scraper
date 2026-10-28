@@ -629,10 +629,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'acs-courier', number: '9000000063',
     route: /^https:\/\/cyp\.acscourier\.net\/en\/quick-access\/non-registered-users\/track-and-trace\/\?trackingNumber=/,
     marker: /Track and trace|Shipment not found/i },
-  // The page reads the number from its address and looks it up on load.
+  // The home page opens its search form on the number from its address and looks it up on load;
+  // for an unknown number it shows only the form.
   { carrier: 'ppl', number: '29000000001',
-    route: /^https:\/\/www\.ppl\.cz\/vyhledat-zasilku\?shipmentId=/,
-    marker: /Zásilka nenalezena|Shipment not found/i },
+    route: /^https:\/\/www\.ppl\.cz\/\?form=track-and-trace&shipmentId=29000000001$/,
+    marker: /Zásilka nenalezena|Shipment not found|Vyhledat zásilku/i },
   // The page fills its field in and looks the voucher up on load.
   { carrier: 'geniki-taxydromiki', number: '9999999999',
     route: /^https:\/\/taxydromiki\.com\/track\/9999999999\/?$/,
@@ -1254,7 +1255,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /No parcel found|Track Parcel/i },
   // The page looks the number up and prints it in groups; for an unknown one it says it has no data.
   { carrier: 'fukuyama', number: '12345678901',
-    route: /^https:\/\/corp\.fukutsu\.co\.jp\/corp\/recieve\/tracking_no_hunt\/12345678901$/,
+    route: /^https:\/\/seikyu\.fukuyama-tsuun\.com\/corp\/tracking_no_hunt\/12345678901$/,
     marker: /お荷物配達状況詳細|該当データはありません/,
     forwarding: { notFound: /該当データはありません/ } },
   // The co-op's form on Yamato System Development's tracker looks the number up and lists it, with its state.
@@ -1269,9 +1270,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'linhan', number: 'LHGJ99000001CD',
     route: /^https:\/\/www\.linhan56\.com\/index\/tracknumber\/track\?nos=LHGJ99000001CD$/,
     marker: /快件跟踪|跟踪\(Track\)/ },
-  // The page moves the number into its hash route, looks it up on load and lists it, with a notice while it has no data.
+  // The page moves the number into its hash route, through a bare `#/` first, looks it up on load
+  // and lists it, with a notice while it has no data.
   { carrier: 'dayone', number: 'DOT0990000000000001',
-    route: /^https:\/\/www\.dayonetrack\.com\/track\?trackNo=DOT0990000000000001(?:#\/track\?trackNo=DOT0990000000000001(?:&lang=[a-zA-Z-]+)?)?$/,
+    route: /^https:\/\/www\.dayonetrack\.com\/track\?trackNo=DOT0990000000000001(?:#\/(?:track\?trackNo=DOT0990000000000001(?:&lang=[a-zA-Z-]+)?)?)?$/,
     marker: /Tracked number|The order information has not been updated yet|订单信息尚未更新/ },
   // The page fills its form with the reference and looks it up on load.
   { carrier: 'sendle', number: 'QSS990000001',

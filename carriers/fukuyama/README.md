@@ -5,7 +5,7 @@ and delivers from its own branches across Japan. Tracked through its tracking pa
 
 ## How it works
 
-1. `direct`: one `GET https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/{number}`, the
+1. `direct`: one `GET https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/{number}`, the
    page the tracking form on the home page opens. The site renders it on its server: a summary
    with the number, the parcel count, the weight and the current state, then one row per
    milestone with its day, its branch and the branch's phone number. It needs no cookie, token,
@@ -58,8 +58,9 @@ length tells Fukuyama apart and no rule claims them. The samples and their sourc
 
 ## Links
 
-`corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/{number}` opens one parcel, and so do links to
-the former `corp.fukutsu.co.jp/situation/tracking_no_hunt/{number}`.
+`seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/{number}` opens one parcel, and so do links to
+the former `corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/{number}` and
+`corp.fukutsu.co.jp/situation/tracking_no_hunt/{number}`, which redirect there.
 
 ## Testing
 

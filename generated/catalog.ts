@@ -15131,10 +15131,16 @@ export const CARRIER_CATALOG = {
       "recognitionRank": 939,
       "localClocks": true
     },
-    "canaryUrl": "https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt",
-    "trackingUrlTemplate": "https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt/{trackingNumber}",
-    "trackingSearchUrl": "https://corp.fukutsu.co.jp/corp/recieve/tracking_no_hunt",
+    "canaryUrl": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt",
+    "trackingUrlTemplate": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/{trackingNumber}",
+    "trackingSearchUrl": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt",
     "linkRules": [
+      {
+        "domains": [
+          "seikyu.fukuyama-tsuun.com"
+        ],
+        "path": "^/corp/tracking_no_hunt/([^/?#]+)/?$"
+      },
       {
         "domains": [
           "corp.fukutsu.co.jp"
@@ -25674,15 +25680,15 @@ export const CARRIER_CATALOG = {
       "adapter": "ppl",
       "recognitionRank": 608
     },
-    "canaryUrl": "https://www.ppl.cz/vyhledat-zasilku",
-    "trackingUrlTemplate": "https://www.ppl.cz/vyhledat-zasilku?shipmentId={trackingNumber}",
-    "trackingSearchUrl": "https://www.ppl.cz/vyhledat-zasilku",
+    "canaryUrl": "https://www.ppl.cz/",
+    "trackingUrlTemplate": "https://www.ppl.cz/?form=track-and-trace&shipmentId={trackingNumber}",
+    "trackingSearchUrl": "https://www.ppl.cz/?form=track-and-trace",
     "linkRules": [
       {
         "domains": [
           "ppl.cz"
         ],
-        "pathPattern": "^/(?:vyhledat-zasilku|en/track-a-shipment|en/parcel-detail)/?$",
+        "pathPattern": "^/(?:(?:vyhledat-zasilku|en/track-a-shipment|en/parcel-detail)/?)?$",
         "params": [
           "shipmentId"
         ]
