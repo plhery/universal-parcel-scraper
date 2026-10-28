@@ -113,6 +113,11 @@
       "id": "dhlink-yf",
       "pattern": "^YF\\d{10}CN$",
       "confidence": "low"
+    },
+    {
+      "id": "dhlink-ktdwe",
+      "pattern": "^KTDWE\\d{10}$",
+      "confidence": "low"
     }
   ]
 }

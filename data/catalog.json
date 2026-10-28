@@ -11733,6 +11733,10 @@
       {
         "pattern": "^YF\\d{10}CN$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^KTDWE\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
@@ -19735,7 +19739,7 @@
     "detectionRules": [
       {
         "pattern": "^KTDWE\\d{10}$",
-        "confidence": "high"
+        "confidence": "low"
       }
     ]
   },

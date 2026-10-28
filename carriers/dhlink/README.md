@@ -18,7 +18,8 @@ page makes.
   finds it only when it is also the tracking number, as on DHLink's own line; the last leg's
   number finds nothing. A line provider's number can be the tracking number: `XZG`, nine
   digits and `WL` is one; `YLUS` and ten digits, `QH`, twelve digits and `FS`, and `YF`, ten
-  digits and `CN`, on US lines GOFO delivers, and `EYT`, ten digits and `HZ`, on one SwiftX delivers, are others. Their rules are low confidence, so
+  digits and `CN`, on US lines GOFO delivers, and `EYT`, ten digits and `HZ`, and KTD's `KTDWE`
+  and ten digits, on lines SwiftX delivers, are others. Their rules are low confidence, so
   DHLink is asked before it is named. Providers name XZG for its numbers, so XZG is an
   alias and their hint asks DHLink.
 - The parcel counts only when the number asked is its tracking number or its DHLink number:

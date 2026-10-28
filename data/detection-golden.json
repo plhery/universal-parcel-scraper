@@ -80579,11 +80579,27 @@
     ]
   },
   {
-    "input": "KTDWE9900000001",
-    "carrier": "ktd",
-    "confidence": "high",
+    "input": "KTDWE0000000001",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
+      "dhlink",
       "ktd"
+    ],
+    "asked": [
+      "dhlink"
+    ]
+  },
+  {
+    "input": "KTDWE9900000001",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhlink",
+      "ktd"
+    ],
+    "asked": [
+      "dhlink"
     ]
   },
   {

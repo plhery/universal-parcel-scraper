@@ -157,10 +157,9 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
-  it('names KTD for KTDWE and ten digits without a recognition lookup, and only that layout', () => {
+  it('suggests KTD after DHLink for KTDWE and ten digits, and only that layout', () => {
     for (const number of ['KTDWE0000000017', 'ktdwe 00000 00017']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'ktd', confidence: 'high', candidates: ['ktd'] });
-      expect(recognitionCandidates(number), number).toEqual([]);
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'ktd'] });
     }
     for (const number of ['KTDWE000000017', 'KTDWE00000000017', 'KTDWA0000000017', 'KTD0000000017', 'KTDWE0000000017CN']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('ktd');
@@ -232,6 +231,14 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(detectCarrierMatch('yf 0000 0000 01 cn')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
     expect(recognitionAskedCarriers('YF0000000001CN')).toEqual(['dhlink']);
     for (const number of ['YF000000001CN', 'YF00000000001CN', 'YF0000000001CX', 'YX0000000001CN', 'YF0000000001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
+    }
+  });
+
+  it('asks DHLink about KTD\'s KTDWE tracking numbers on its SwiftX line before a provider names KTD', () => {
+    expect(detectCarrierMatch('KTDWE0000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'ktd'] });
+    expect(recognitionAskedCarriers('KTDWE0000000001')).toEqual(['dhlink']);
+    for (const number of ['KTDWE000000001', 'KTDWE00000000001', 'KTDWA0000000001', 'KTD0000000001', 'KTDWE0000000001CN']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
     }
   });

@@ -36,7 +36,7 @@
     {
       "id": "ktd-1",
       "pattern": "^KTDWE\\d{10}$",
-      "confidence": "high"
+      "confidence": "low"
     }
   ]
 }

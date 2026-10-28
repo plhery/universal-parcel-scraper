@@ -11735,6 +11735,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^YF\\d{10}CN$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^KTDWE\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
@@ -19737,7 +19741,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^KTDWE\\d{10}$",
-        "confidence": "high"
+        "confidence": "low"
       }
     ]
   },
@@ -35021,7 +35025,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill","dhl-express-piece","dhl-express-piece-label","dhl-express-piece-label-after"],
   "dhl-freight": ["dhl-freight-2"],
-  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf"],
+  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe"],
   "direct-couriers": [],
   "direct-freight-express": [],
   "direx": [],

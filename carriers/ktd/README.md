@@ -7,9 +7,10 @@ with FBA lines, dedicated small-parcel lines and air freight.
 
 ## Numbers
 
-Its parcels carry KTDWE and ten digits, the shape a universal provider files under KTD. No
-other carrier uses the prefix, so detection selects KTD: a parcel need not wait for a provider
-to name it, and recognition, which asks only carriers with an adapter, could not. No tracker of
+Its parcels carry KTDWE and ten digits, the shape a universal provider files under KTD. On
+its US line the number is also the tracking number at DHLink, which hands the parcel to SwiftX,
+and DHLink's lookup finds it. So the rule only suggests KTD, after DHLink: recognition asks
+DHLink, and a parcel DHLink does not know waits for a provider to name KTD. No tracker of
 跨通达 confirms the shape. 快通达国际快递 also goes by KTD, but its own numbers are KTD and ten
 digits, without WE. No public number has been found, so the corpus holds a synthetic one.
 

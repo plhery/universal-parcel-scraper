@@ -8,10 +8,14 @@
       "derivedFrom": "donated_real",
       "shapeConfirmed": "2026-10-24",
       "expect": {
-        "carrier": "ktd",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhlink",
+          "ktd"
+        ]
       },
-      "note": "Made-up number in the shape of the parcels a universal provider files under KTD. No tracker of the carrier confirms it, and no other carrier uses the prefix."
+      "note": "Made-up number in the shape of the parcels a universal provider files under KTD. No tracker of the carrier confirms it; DHLink's lookup finds such numbers on its US line SwiftX delivers."
     }
   ]
 }
