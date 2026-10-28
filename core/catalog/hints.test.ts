@@ -261,7 +261,7 @@ describe('carrier names reported by universal providers', () => {
     'La Poste', 'La Poste (Colissimo)', 'Chronopost France', 'FedEx', 'India Post', 'Posti', 'UPS',
     'Chronopost Portugal', 'Correos Chile', 'Royal Mail (UK)', 'DHL', 'DHL Express', 'GLS Italy', 'DPD UK',
     'Finland Post', 'Spain Post', 'Portugal CTT', 'Portugal Post - Portugal CTT', 'Posten Norge - Norway Post', 'Italy Post', 'Deutsche Post - DHL Paket', 'Correos de España', 'Correos Spain',
-    'Austria Post', 'Brazil Post', 'South Africa Post Office', 'Zhongling', 'CTT',
+    'Austria Post', 'Brazil Post', 'South Africa Post Office', 'Zhongling', 'CTT', 'Cirro',
   ])('knows %s from the catalog', (name) => {
     expect(isKnownCarrierName(name)).toBe(true);
   });
@@ -270,6 +270,12 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('CTT')).toBeUndefined();
     expect(carrierIdFromName('Portugal CTT')).toBe('ctt');
     expect(carrierIdFromName('CTT Express')).toBe('ctt-express');
+  });
+
+  it('knows plain Cirro without naming one of its networks', () => {
+    expect(carrierIdFromName('Cirro')).toBeUndefined();
+    expect(carrierIdFromName('CIRRO Parcel France')).toBe('gofo-fr');
+    expect(carrierIdFromName('CIRRO E-Commerce')).toBe('gofo-nl');
   });
 
   it('reads a name typed without its accents as the accented catalog name', () => {
