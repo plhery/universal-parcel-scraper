@@ -9,8 +9,12 @@ Tracks Chinese domestic waybills through the official website's consumer feed.
    challenge token. The adapter uses each scan's operation code and preserves the
    feed's newest-first order.
 2. `retry`: a read that fails to reach the site, or hangs, runs once more within the
-   budget. The first read gets half of the budget. An HTTP status or a reply is never
-   sent again.
+   budget, on www.ytoexpress.com, YTO's other domain for the same site. The first read
+   gets half of the budget. An HTTP status or a reply is never sent again.
+
+www.yto.net.cn resolves to a CDN edge that changes every minute, and some edges take no
+connection from abroad, so a retry on the same name meets the same dead edge.
+www.ytoexpress.com, under YTO's own certificate, serves the same feed from YTO's addresses.
 
 ## Notes
 

@@ -190,7 +190,10 @@ describe('YTO domestic retrieval', () => {
       .mockResolvedValueOnce(new Response(JSON.stringify(fixture())));
     const recorder = { ...NOOP_RECORDER, step: vi.fn() };
     await expect(new YtoTracker({ fetcher, recorder }).fetch(NUMBER, { budgetMs: 2000 })).resolves.toMatchObject({ current_stage: 'delivered' });
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    // On the other domain, which no CDN edge serves.
+    expect(fetcher.mock.calls.map(([url]) => url)).toEqual(['https://www.yto.net.cn/ec/order/gwWaybillInfoList',
+      'https://www.ytoexpress.com/ec/order/gwWaybillInfoList']);
+    expect(fetcher.mock.calls[1]![1]).toMatchObject({ method: 'POST', body: JSON.stringify([NUMBER]) });
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'retry', outcome: 'ok' }));
   });
 
