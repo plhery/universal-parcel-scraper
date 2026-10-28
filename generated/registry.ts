@@ -375,6 +375,7 @@ import { adapter as meest } from '../carriers/meest/adapter.js';
 import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js';
 import { adapter as messengerCz } from '../carriers/messenger-cz/adapter.js';
 import { adapter as metropolitanWarehouse } from '../carriers/metropolitan-warehouse/adapter.js';
+import { adapter as mhi } from '../carriers/mhi/adapter.js';
 import { adapter as microExpress } from '../carriers/micro-express/adapter.js';
 import { adapter as midlandTransport } from '../carriers/midland-transport/adapter.js';
 import { adapter as mngKargo } from '../carriers/mng-kargo/adapter.js';
@@ -1014,6 +1015,7 @@ export const REGISTRY: RegistryDefinition = {
     "meihoo-pegasus": meihooPegasus,
     "messenger-cz": messengerCz,
     "metropolitan-warehouse": metropolitanWarehouse,
+    "mhi": mhi,
     "micro-express": microExpress,
     "midland-transport": midlandTransport,
     "mng-kargo": mngKargo,
@@ -1745,6 +1747,7 @@ export const REGISTRY: RegistryDefinition = {
     "messenger-cz": "messenger-cz",
     "method": "universal",
     "metropolitan-warehouse": "metropolitan-warehouse",
+    "mhi": "mhi",
     "micro-express": "micro-express",
     "midland-transport": "midland-transport",
     "mng-kargo": "mng-kargo",

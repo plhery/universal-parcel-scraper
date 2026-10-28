@@ -21568,6 +21568,46 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "mhi": {
+    "displayName": "MHI",
+    "color": "#00075c",
+    "aliases": [
+      "Mail Handling International"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mhi",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.trackmail.co.uk/",
+    "trackingUrlTemplate": "https://www.trackmail.co.uk/?Tracking={trackingNumber}&command=Track",
+    "trackingSearchUrl": "https://www.trackmail.co.uk/",
+    "linkRules": [
+      {
+        "domains": [
+          "trackmail.co.uk",
+          "www.trackmail.co.uk"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "Tracking",
+          "tracking"
+        ],
+        "ownNumbersOnly": true
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^MHI\\d{3}(?:W\\d{12}|WBB\\d{9}|P\\d{9}|\\d{12})$",
+        "confidence": "high"
+      }
+    ]
+  },
   "micro-express": {
     "displayName": "Micro Express",
     "color": "#e73100",
@@ -33828,6 +33868,7 @@ export const CARRIER_IDS = [
   "messenger-cz",
   "method",
   "metropolitan-warehouse",
+  "mhi",
   "micro-express",
   "midland-transport",
   "mng-kargo",
@@ -34644,6 +34685,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "messenger-cz": [],
   "method": [],
   "metropolitan-warehouse": ["metropolitan-warehouse-1"],
+  "mhi": ["mhi-1"],
   "micro-express": ["micro-express-1"],
   "midland-transport": [],
   "mng-kargo": [],

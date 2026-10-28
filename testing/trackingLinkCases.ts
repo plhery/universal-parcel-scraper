@@ -1937,6 +1937,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'starlinks-global', number: 'ASO1004GB04198255001',
     route: /^https:\/\/starlinks\.app\/track\/ASO1004GB04198255001$/,
     marker: /Shipment History|Parcel not found/ },
+  { carrier: 'mhi', number: 'MHI154W100134524859',
+    route: /^https:\/\/www\.trackmail\.co\.uk\/\?Tracking=MHI154W100134524859&command=Track$/,
+    marker: /Tracking History|No details found for Tracking Code/ },
 ];
 
 /**

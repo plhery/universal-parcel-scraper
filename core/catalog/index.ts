@@ -12,6 +12,7 @@ import { ecoscootingReference } from '../../carriers/ecoscooting/number.js';
 import { FLIPPOST_ONE_LAYOUT, flippostWaybills } from '../../carriers/flippost/number.js';
 import { normalizeGogoXpressNumber } from '../../carriers/gogo-xpress/number.js';
 import { inpostUkTrackingUrl } from '../../carriers/inpost/number.js';
+import { MHI_LAYOUT, mhiPrintedNumber } from '../../carriers/mhi/number.js';
 import { NOEST_LAYOUT, noestRequestNumber } from '../../carriers/noest/number.js';
 import { normalizePackManNumber } from '../../carriers/pack-man/number.js';
 import { PAPERFLY_LAYOUT, paperflyRequestNumber } from '../../carriers/paperfly/number.js';
@@ -55,6 +56,8 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
   if (carrierId === 'gogo-xpress' && /^(?=\d*[A-Z])[A-Z0-9]{12}$/.test(normalized)) return normalizeGogoXpressNumber(normalized);
   // ZR Express's page finds a number only with a dash between its three blocks.
   if (carrierId === 'zr-express' && ZR_EXPRESS_LAYOUT.test(normalized)) return zrExpressRequestNumber(normalized);
+  // MHI's tracker finds a P series number only with its label's dashes.
+  if (carrierId === 'mhi' && MHI_LAYOUT.test(normalized)) return mhiPrintedNumber(normalized);
   // NOEST's page finds a number only in capitals with a hyphen between its three blocks.
   if (carrierId === 'noest' && NOEST_LAYOUT.test(normalized)) return noestRequestNumber(normalized);
   // Paperfly's page finds a number only with the hyphens between its parts.

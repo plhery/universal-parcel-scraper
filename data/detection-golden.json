@@ -82915,6 +82915,38 @@
     ]
   },
   {
+    "input": "MHI154100090031208",
+    "carrier": "mhi",
+    "confidence": "high",
+    "candidates": [
+      "mhi"
+    ]
+  },
+  {
+    "input": "MHI154W100134524859",
+    "carrier": "mhi",
+    "confidence": "high",
+    "candidates": [
+      "mhi"
+    ]
+  },
+  {
+    "input": "MHI260WBB104947540",
+    "carrier": "mhi",
+    "confidence": "high",
+    "candidates": [
+      "mhi"
+    ]
+  },
+  {
+    "input": "MHI280P016364521",
+    "carrier": "mhi",
+    "confidence": "high",
+    "candidates": [
+      "mhi"
+    ]
+  },
+  {
     "input": "ML545911751MH",
     "carrier": "unknown",
     "confidence": "low",

@@ -72,6 +72,12 @@ describe('the derived CARRIERS record', () => {
     expect(trackingNumberForLink('zr-express', '00-000000-zr')).toBe('00-000000-ZR');
     expect(trackingNumberForLink('zr-express', 'SAMPLE')).toBe('SAMPLE');
     expect(CARRIERS['zr-express'].trackingUrl?.('00000000ZR')).toBe('https://www.zrexpress.net/suivi?tn=00-000000-ZR');
+    // MHI's tracker finds a P series number only with its label's dashes, and the other series without them.
+    expect(trackingNumberForLink('mhi', 'mhi999p000000017')).toBe('MHI-999-P000000017');
+    expect(trackingNumberForLink('mhi', 'MHI-999-P000000017')).toBe('MHI-999-P000000017');
+    expect(trackingNumberForLink('mhi', 'MHI999W000000000017')).toBe('MHI999W000000000017');
+    expect(trackingNumberForLink('mhi', 'SAMPLE')).toBe('SAMPLE');
+    expect(CARRIERS.mhi.trackingUrl?.('MHI999P000000017')).toBe('https://www.trackmail.co.uk/?Tracking=MHI-999-P000000017&command=Track');
     expect(trackingNumberForLink('noest', 'abc12300000000')).toBe('ABC-123-00000000');
     expect(trackingNumberForLink('noest', 'ABC-123-00000000')).toBe('ABC-123-00000000');
     expect(trackingNumberForLink('noest', 'SAMPLE')).toBe('SAMPLE');
