@@ -176,6 +176,9 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (/^the consignment was sent back(?: to the sender)? - the consignment was not picked up by the addressee\b/i.test(description)) return 'exception';
   // Sender pre-advice such as Quickpac's "Shipment recorded by sender (data delivered)".
   if (/being prepared by the sender|recorded by (?:the )?(?:foreign )?sender|\bdata delivered\b|en route to .*awaiting processing/i.test(description)) return 'registered';
+  // 17FEIA's customs broker taking the parcel to its warehouse after the flight, as Ship24 relays it with
+  // 17FEIA's label or "OTHER" and as 17FEIA's map reads it.
+  if (/^broker picked up shipment and delivered to warehouse\.(?:,\s*\S+)?$/i.test(description)) return 'customs';
   // The bare word also appears in handoffs, forecasts and negations ("delivered
   // to airline", "expected to be delivered", "not yet delivered"); those follow
   // the language rules instead of reading as a delivery.

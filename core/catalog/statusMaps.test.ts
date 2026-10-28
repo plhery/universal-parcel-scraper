@@ -1647,6 +1647,9 @@ describe("universal providers' answers", () => {
       // Correos Express's way to the destination town, as Ship24 words it.
       ['En route to the destination location, Your shipment is now out for delivery to the destination facilities on one of our vehicles. You will receive it on the scheduled delivery date.', 'in_transit'],
       ['En route to the destination location', 'in_transit'],
+      // 17FEIA's customs broker, as Ship24 relays it with 17FEIA's label or "OTHER".
+      ['Broker picked up Shipment and delivered to warehouse., OTHER', 'customs'],
+      ['Broker picked up Shipment and delivered to warehouse., 清关行提货到仓', 'customs'],
       ['Manifested - Out for Pickup', 'registered'], ['Manifested', 'registered'],
       ['Awaiting your Vinted parcel', 'registered'], ['Expecting Your Parcel', 'registered'],
       ['Parcel received by Relay', 'accepted'], ['Received Your Parcel', 'accepted'], ['Collection Complete', 'delivered'],
