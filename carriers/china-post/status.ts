@@ -69,6 +69,8 @@ const STATES: Readonly<Record<string, ClassifiedStatus>> = {
   '待取件': { status: 'in_transit', stage: 'ready_for_pickup' },
   '已签收': DELIVERED,
   '派件异常': EXCEPTION,
+  // The web preview's label for a failed delivery, which the relayed feeds give as 投递失败.
+  '派送异常': { status: 'exception', stage: 'failed_attempt' },
   '邮件异常': EXCEPTION,
   '退回寄件人': RETURNED,
   '待退回': RETURNED,

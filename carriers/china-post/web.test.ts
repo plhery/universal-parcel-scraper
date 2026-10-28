@@ -26,6 +26,9 @@ describe('China Post public web preview', () => {
       scans: [{ ...scan, time: '2030-01-01 23:00', code: 'O_098', state: '未知状态' }, { ...scan, code: 'O_099', state: '待取件' }] })), number);
     expect(result).toMatchObject({ current_stage: 'ready_for_pickup', last_status_text: 'Awaiting collection' });
     expect(result.events!.map(row => [row.description, row.stage])).toEqual([['Awaiting collection', 'ready_for_pickup'], ['未知状态', undefined]]);
+    // Its label for a failed delivery.
+    expect(parseChinaPostWebPreview(page(entry({ success: true, match: true, scans: [{ ...scan, code: 'O_098', state: '派送异常' }] })), number))
+      .toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Delivery failed' });
   });
 
   it('binds the request, every scan and the final response', () => {

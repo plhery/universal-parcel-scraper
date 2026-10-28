@@ -357,6 +357,15 @@
       "note": "State label from the app's own state table; consulted only for scan codes without a mapping. The English is a plain rendering."
     },
     {
+      "wording": "派送异常",
+      "language": "zh",
+      "english": "Delivery failed",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "State label of the web preview's newest scan on an item whose relayed feeds give its latest scans as failed deliveries (投递失败); consulted only for scan codes without a mapping. The English is a plain rendering."
+    },
+    {
       "wording": "邮件异常",
       "language": "zh",
       "english": "Problem with the item",
