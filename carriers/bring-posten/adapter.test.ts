@@ -237,6 +237,9 @@ describe('Bring bounded anonymous retrieval', () => {
   it('marks the portal\'s own not-found answer, which stays inconclusive', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ error: 'No shipments found', errorState: 'NOT_FOUND' }, { status: 404 }));
     await expect(new BringTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    // The same answer as plain text.
+    fetcher.mockResolvedValue(new Response('NOT FOUND', { status: 404, headers: { 'Content-Type': 'text/plain;charset=UTF-8' } }));
+    await expect(new BringTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
   });
 
   it('asks about S10 mail from abroad and recognizes the numbers its lookup takes', async () => {

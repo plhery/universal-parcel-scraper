@@ -17,12 +17,14 @@ export class BringTracker {
       const { response, bytes } = await fetchBounded(`https://sporing.bring.no/sporing/json/${number}?lang=en`,
         { signal, headers: { Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } }, { provider: 'Bring',
           timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000, allowHttpStatuses: [404, 410], fetcher: this.options.fetcher });
+      const body = decodeText(bytes);
       let payload: unknown;
-      try { payload = JSON.parse(decodeText(bytes)); } catch { payload = undefined; }
-      // The consumer's negative response does not identify the requested parcel.
+      try { payload = JSON.parse(body); } catch { payload = undefined; }
+      // The consumer's negative response does not identify the requested parcel. The portal's own
+      // not-found comes as JSON or as the bare text "NOT FOUND", which it now sends for an unknown number.
       if (response.status === 404 || response.status === 410) {
-        throw new IndeterminateError('Bring', 'No identity-bound parcel history',
-          isRecord(payload) && payload.errorState === 'NOT_FOUND' ? { reason: 'portal_not_found' } : undefined);
+        const notFound = isRecord(payload) ? payload.errorState === 'NOT_FOUND' : body.trim() === 'NOT FOUND';
+        throw new IndeterminateError('Bring', 'No identity-bound parcel history', notFound ? { reason: 'portal_not_found' } : undefined);
       }
       if (payload === undefined) throw new SchemaError('Bring');
       return parseBring(payload, raw);

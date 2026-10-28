@@ -50,8 +50,9 @@ so the adapter does not read it.
 Status wording comes from public event and cause codes. Free-text descriptions,
 addresses, pickup codes and proof images are excluded. Weight and dimensions have
 explicit units. The consumer's negative response does not name the number, so
-it remains inconclusive; the portal's not-found answer carries the reason
-`portal_not_found`, so a consumer can tell it from an outage.
+it remains inconclusive; the portal's not-found answer, JSON or the bare text
+`NOT FOUND`, carries the reason `portal_not_found`, so a consumer can tell it
+from an outage.
 
 ## Live test
 
