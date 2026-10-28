@@ -41,7 +41,9 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
 - Each scan is classified by its own `opCode`. Code `202` (已出库) sits in the frontend's warehouse
   "delivered" group but means warehouse dispatch, not delivery. Codes `8000` and `70` depend on
   their `stayWhyCode`: the frontend groups `70` with reasons 5, 7 and 65 with the delivery round,
-  and its other reasons are a failed attempt or a parcel left at a pickup point. Unknown
+  and its other reasons are a failed attempt or a parcel left at a pickup point. With another
+  reason, its remark that the parcel waits at a warehouse for inspection and acceptance is the
+  delivery round too: the receiving warehouse checks it before it signs. Unknown
   combinations stay unclassified. Code
   `99` is read by its remark: "being returned" is a return and "being forwarded" a parcel sent on,
   and its other remarks stay unclassified.

@@ -466,6 +466,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-20",
       "note": "Official Taiwan routes opCode 99 with this remark: the parcel is sent on to another address."
+    },
+    {
+      "code": "70",
+      "wording": "The shipment has arrived at the warehouse and is waiting for inspection and acceptance. Please wait patiently.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "Official Taiwan routes opCode 70 with this remark: the courier waits at a receiving warehouse that inspects the parcel before it accepts it, then signs."
     }
   ]
 }

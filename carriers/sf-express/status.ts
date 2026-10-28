@@ -15,6 +15,11 @@ const UNDELIVERED = new Map<string, ClassifiedStatus>([
   ['4', { stage: 'failed_attempt', status: 'exception' }],
   ['222', { stage: 'ready_for_pickup', status: 'out_for_delivery' }],
 ]);
+// Without a reason it knows, code 70 is read by its remark: the courier waits at a receiving
+// warehouse that inspects the parcel before it accepts it, the step before the delivery.
+const UNDELIVERED_REMARKS: readonly (readonly [RegExp, ClassifiedStatus])[] = [
+  [/^The shipment has arrived at the warehouse and is waiting for inspection and acceptance\b/i, { stage: 'out_for_delivery', status: 'out_for_delivery' }],
+];
 const SUMMARY = new Map<string, ClassifiedStatus>([['2', EXCEPTION], ['3', TRANSIT], ['4', RETURNED], ['5', EXCEPTION], ['6', EXCEPTION], ['99', TRANSIT], ['100', DELIVERED]]);
 
 // The official Taiwan frontend's operation-code groups, plus codes observed in
@@ -41,12 +46,12 @@ const NOTICES: readonly (readonly [RegExp, ClassifiedStatus])[] = [
   [/^The shipment is being forwarded\.?$/i, TRANSIT],
 ];
 
-/** Codes 8000 and 70 are ambiguous without their reason, and 99 without its remark; do not default them to signed. */
+/** Codes 8000 and 70 are ambiguous without their reason, 70 and 99 without their remark; do not default them to signed. */
 export function sfExpressEventStatus(code: string, reason: string, remark = ''): ClassifiedStatus | undefined {
   if (code === '8000') {
     return REASONS.get(reason);
   }
-  if (code === '70') return UNDELIVERED.get(reason);
+  if (code === '70') return UNDELIVERED.get(reason) ?? UNDELIVERED_REMARKS.find(([wording]) => wording.test(remark.trim()))?.[1];
   if (code === '99') return NOTICES.find(([wording]) => wording.test(remark.trim()))?.[1];
   return CODES.get(code);
 }
