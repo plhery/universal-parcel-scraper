@@ -87,6 +87,12 @@
   ],
   "detection": [
     {
+      "id": "fan-courier-2",
+      "pattern": "^7000\\d{9}$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
       "id": "fan-courier-1",
       "pattern": "^(?:[24]\\d{12}|7000\\d{9})$",
       "confidence": "low"

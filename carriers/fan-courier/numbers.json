@@ -198,11 +198,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fan-courier",
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda",
-          "fan-courier"
+          "yunda"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker, as an archived address shows; FAN Courier's tracking returns its history."
@@ -224,11 +224,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fan-courier",
           "la-poste",
           "correos-chile",
           "delhivery",
-          "yunda",
-          "fan-courier"
+          "yunda"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker, as an archived address shows; FAN Courier's tracking returns its history."

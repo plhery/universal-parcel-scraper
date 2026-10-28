@@ -18,11 +18,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows Polish branch scans, a rescheduled delivery and delivery to the recipient."
@@ -44,12 +44,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows a refused delivery in Warsaw and the return to the sender."
@@ -98,12 +98,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows a three-piece shipment between Polish branches and a refused delivery."
@@ -125,12 +125,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows collection in Warsaw and delivery the next day."
@@ -152,12 +152,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived reply of the tracking service behind FedEx Poland's domestic tracking page: collection from the sender and scans at two Polish branches."
@@ -179,12 +179,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived reply of the tracking service behind FedEx Poland's domestic tracking page: hub scans on the day of dispatch."
@@ -206,12 +206,12 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex-pl",
           "la-poste",
           "correos-chile",
           "delhivery",
           "yunda",
-          "korea-post",
-          "fedex-pl"
+          "korea-post"
         ]
       },
       "note": "Archived reply of the tracking service behind FedEx Poland's domestic tracking page: branch scans and the shipment out for delivery."

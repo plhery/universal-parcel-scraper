@@ -54,7 +54,10 @@ them with scans at Polish branches. They start with 6 and end in a GS1 check dig
 `fedex-pl-1` suggests FedEx Poland for that layout. Other carriers' thirteen-digit numbers can
 share it, so the rule stays low and recognition asks FedEx Poland's tracker, which knows only
 its own shipments. The passing check digit puts FedEx Poland first unless the reader's country
-is another candidate's home. FedEx's worldwide tracking does not take thirteen digits.
+is another candidate's home. Most lookups archived on the former and current trackers are in
+the `623` series, which no other carrier's sample shares, so `fedex-pl-2` puts FedEx Poland
+first for it with a passing check digit, wherever the parcel comes from. FedEx's worldwide
+tracking does not take thirteen digits.
 
 ## Links
 

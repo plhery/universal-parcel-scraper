@@ -49433,10 +49433,13 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49449,11 +49452,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49467,11 +49473,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49485,11 +49494,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49503,11 +49515,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49521,11 +49536,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49539,11 +49557,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -49557,11 +49578,14 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fedex-pl",
       "la-poste",
       "correos-chile",
       "delhivery",
       "yunda",
-      "korea-post",
+      "korea-post"
+    ],
+    "preferred": [
       "fedex-pl"
     ],
     "asked": [
@@ -52459,16 +52483,19 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fan-courier",
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda",
+      "yunda"
+    ],
+    "preferred": [
       "fan-courier"
     ],
     "asked": [
+      "fan-courier",
       "la-poste",
-      "delhivery",
-      "fan-courier"
+      "delhivery"
     ]
   },
   {
@@ -52562,16 +52589,19 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fan-courier",
       "la-poste",
       "correos-chile",
       "delhivery",
-      "yunda",
+      "yunda"
+    ],
+    "preferred": [
       "fan-courier"
     ],
     "asked": [
+      "fan-courier",
       "la-poste",
-      "delhivery",
-      "fan-courier"
+      "delhivery"
     ]
   },
   {

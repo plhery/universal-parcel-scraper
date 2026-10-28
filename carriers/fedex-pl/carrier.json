@@ -115,6 +115,13 @@
   ],
   "detection": [
     {
+      "id": "fedex-pl-2",
+      "pattern": "^623\\d{10}$",
+      "confidence": "low",
+      "checksum": "gs1",
+      "preferred": true
+    },
+    {
       "id": "fedex-pl-1",
       "pattern": "^6\\d{12}$",
       "confidence": "low",

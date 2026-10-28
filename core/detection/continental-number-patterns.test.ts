@@ -402,6 +402,31 @@ describe('FedEx Poland domestic numbers', () => {
       expect(parseTrackingInput(url).carrier, url).not.toBe('fedex-pl');
     }
   });
+
+  it('suggests FedEx Poland first for its 623 series with a passing check digit', () => {
+    for (const number of ['6230000000005', '6231000000019']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fedex-pl'] });
+      expect(detectCarrierMatch(number).candidates[0], number).toBe('fedex-pl');
+    }
+    expect(detectCarrierMatch('6010000000003').preferred).not.toContain('fedex-pl');
+    expect(detectCarrierMatch('6230000000006').candidates ?? []).not.toContain('fedex-pl');
+  });
+});
+
+describe('FAN Courier AWBs', () => {
+  // Synthetic numbers in FAN Courier's layouts; none is a real parcel.
+  it('suggests FAN Courier first for its 7000 series, and beside other carriers for 2 and 4', () => {
+    const detected = detectCarrierMatch('7000000000001');
+    expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fan-courier'] });
+    expect(detected.candidates[0]).toBe('fan-courier');
+    for (const number of ['2000000000001', '4000000000001']) {
+      expect(detectCarrierMatch(number).candidates, number).toContain('fan-courier');
+      expect(detectCarrierMatch(number).preferred, number).not.toContain('fan-courier');
+    }
+    for (const number of ['7001000000001', '700000000001', '70000000000001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fan-courier');
+    }
+  });
 });
 
 describe('Nova Global and ShipEntegra numbers', () => {

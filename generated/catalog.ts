@@ -14479,6 +14479,11 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
+        "pattern": "^7000\\d{9}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
         "pattern": "^(?:[24]\\d{12}|7000\\d{9})$",
         "confidence": "low"
       }
@@ -14823,6 +14828,12 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^623\\d{10}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      },
       {
         "pattern": "^6\\d{12}$",
         "confidence": "low",
@@ -35227,7 +35238,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "exmate": ["exmate-1"],
   "express-one": [],
   "express-one-bg": [],
-  "fan-courier": ["fan-courier-1"],
+  "fan-courier": ["fan-courier-2","fan-courier-1"],
   "far-international": ["far-international-1"],
   "fargo-courier": ["fargo-courier-1"],
   "fargo-uz": [],
@@ -35235,7 +35246,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fastfrate": [],
   "fedex-freight": [],
   "fedex-international-connect": ["fedex-international-connect-1"],
-  "fedex-pl": ["fedex-pl-1"],
+  "fedex-pl": ["fedex-pl-2","fedex-pl-1"],
   "fercam": ["fercam-1"],
   "fermopoint": ["fermopoint-1"],
   "fg-delivery": ["fg-delivery-fgd","fg-delivery-1"],

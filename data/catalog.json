@@ -14477,6 +14477,11 @@
     ],
     "detectionRules": [
       {
+        "pattern": "^7000\\d{9}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
         "pattern": "^(?:[24]\\d{12}|7000\\d{9})$",
         "confidence": "low"
       }
@@ -14821,6 +14826,12 @@
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^623\\d{10}$",
+        "confidence": "low",
+        "checksum": "gs1",
+        "preferred": true
+      },
       {
         "pattern": "^6\\d{12}$",
         "confidence": "low",
