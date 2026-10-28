@@ -18,6 +18,11 @@ its form. The captured POST and the returned history must both name the
 waybill. Recipient acknowledgements, form tokens and self-service links are
 excluded before the browser response leaves the service.
 
+The history page words its scans in English or Polish, as the `lang` it is
+opened with (`en-gb` or `pl-pl`) says, and keeps that language in a cookie for
+the form. The helper opens it only with `lang=en-gb`, so every lookup reads
+English history whatever its `language`.
+
 The browser step includes the API confirmation. If history retrieval fails,
 `direct` returns the confirmed summary with the browser failure recorded.
 Without TRAWL, `direct` asks only the API. A connection failure can retry the

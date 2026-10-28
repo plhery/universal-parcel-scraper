@@ -9,7 +9,7 @@ import fixture from './fixtures/delivered.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 import { DhlEcommercePlTracker, adapter, solveDhlEcommercePlChallenge } from './adapter.js';
 import { normalizeDhlEcommercePlNumber, parseDhlEcommercePl, parseDhlEcommercePlChallenge, parseDhlEcommercePlRejection } from './parser.js';
-import { dhlEcommercePlStatus } from './status.js';
+import { dhlEcommercePlStatus, dhlPolandScanStage, statusMap } from './status.js';
 
 const NUMBER = 'JJD000039999999000000000000';
 const WAYBILL = '99999999990';
@@ -112,10 +112,14 @@ describe('DHL eCommerce Poland parser', () => {
     expect(() => normalizeDhlEcommercePlNumber('AD000000000000000')).toThrow(InvalidInputError);
   });
 
-  it('gives every recorded code its wording and a known stage', () => {
+  it('gives every recorded code its wording and a known stage, and every recorded scan its stage', () => {
     for (const entry of statuses.entries) {
       expect(STAGES).toContain(entry.stage);
-      expect(dhlEcommercePlStatus(entry.code, 'Unknown')).toEqual({ description: entry.wording, stage: entry.stage });
+      if ('code' in entry && entry.code) expect(dhlEcommercePlStatus(entry.code, 'Unknown')).toEqual({ description: entry.wording, stage: entry.stage });
+      else {
+        expect(dhlPolandScanStage(entry.wording), entry.wording).toBe(entry.stage);
+        expect(statusMap.stage(null, entry.wording.toLowerCase())).toBe(entry.stage);
+      }
     }
   });
 });

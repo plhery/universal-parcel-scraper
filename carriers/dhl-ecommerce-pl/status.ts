@@ -12,7 +12,9 @@ import statuses from './statuses.json' with { type: 'json' };
 
 interface Entry { wording: string; stage?: Stage }
 
-const CODES = new Map<string, Entry>(statuses.entries.map((entry) => [entry.code, { wording: entry.wording, stage: entry.stage as Stage }]));
+// The entries with a code are the API's statuses; the others are history scans.
+const CODES = new Map<string, Entry>(statuses.entries.flatMap((entry) => 'code' in entry && entry.code
+  ? [[entry.code, { wording: entry.wording, stage: entry.stage as Stage }] as const] : []));
 
 // The timeline steps with the English labels the page gives them. `None` is a
 // label that was created and not posted yet: it names no stage.
@@ -66,7 +68,7 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^The shipment left the origin country\.?$/i, 'in_transit'],
   [/^The shipment has arrived at gateway in destination country\.$/i, 'in_transit'],
   [/^The shipment has arrived at delivery depot\.$/i, 'in_transit'],
-  [/^The shipment has been delivered to the recipient\.$/i, 'delivered'],
+  [/^The shipment (?:has been|was) delivered to the recipient\.$/i, 'delivered'],
 ];
 
 /** The stage of one history scan's wording, once the recipient's acknowledgement is cut off. */
