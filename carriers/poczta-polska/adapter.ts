@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -8,6 +8,8 @@ import { normalizePocztaPolskaNumber, parsePocztaPolska } from './parser.js';
 
 const PORTAL = 'https://emonitoring.poczta-polska.pl/';
 const BASE = 'https://uss.poczta-polska.pl/uss/v2.0/tracking';
+/** The service words its scans in Polish or English. */
+type PocztaPolskaLanguage = 'PL' | 'EN';
 
 export function parsePocztaPolskaBootstrap(html: string): { endpoint: string; apiKey: string } {
   const widgets = load(html)('#widgetTracking');
@@ -22,7 +24,7 @@ export function parsePocztaPolskaBootstrap(html: string): { endpoint: string; ap
 export class PocztaPolskaTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
-  fetch(raw: string, context: TrackingContext = {}) {
+  fetch(raw: string, context: TrackingContext = {}, language: PocztaPolskaLanguage = 'EN') {
     const number = normalizePocztaPolskaNumber(raw);
     return runSteps({ carrier: 'poczta-polska', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
@@ -47,7 +49,7 @@ export class PocztaPolskaTracker {
       const { endpoint, apiKey } = parsePocztaPolskaBootstrap(decodeText(html));
       const { bytes } = await bounded(`${endpoint}/checkmailex`, { method: 'POST', headers: {
         Accept: 'application/json', 'Content-Type': 'application/json', API_KEY: apiKey,
-      }, body: JSON.stringify({ language: 'EN', number, addPostOfficeInfo: false }) }, 1_000_000);
+      }, body: JSON.stringify({ language, number, addPostOfficeInfo: false }) }, 1_000_000);
       let payload: unknown;
       try { payload = parseJsonBytes(bytes, 'poczta-polska'); }
       catch (cause) { throw new SchemaError('poczta-polska', 'Poczta Polska returned invalid tracking JSON', { cause }); }
@@ -58,6 +60,6 @@ export class PocztaPolskaTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new PocztaPolskaTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'poczta-polska', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'poczta-polska', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context, readerLanguage(input, ['pl']) ? 'PL' : 'EN'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizePocztaPolskaNumber(number))) };
 };

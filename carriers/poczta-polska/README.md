@@ -21,6 +21,13 @@ the official widget appends before lookup. Eighteen digits are the barcode's SSC
 without the GS1 application identifier `00` that labels print apart, so the
 adapter puts it back; the service answers that parcel only under the whole barcode.
 
+The service words its scans in Polish or English. A lookup whose `language` is
+Polish asks for Polish, any other for English. The Polish answer can give an
+item in delivery as another scan, under its own code, where the English gives
+`P_WD`. Stages come from codes, and the identity policy in
+[identity.ts](identity.ts) lets a scan worded in the other language take over
+its stored row by provider code, instant and office.
+
 Local detection checks complete numeric barcodes against the
 [widget's check-digit calculation](https://emonitoring.poczta-polska.pl/widget/widget.tracking.min.js).
 A barcode under Poczta Polska's own GS1 company prefix `5900773` whose check

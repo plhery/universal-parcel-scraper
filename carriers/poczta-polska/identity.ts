@@ -1,4 +1,4 @@
-import type { SameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
+import type { SameInstantIdentityPolicy, SameInstantScan } from '../../core/catalog/eventIdentity.js';
 import { matchesDroppedLocation } from '../../core/catalog/locationIdentity.js';
 
 // Offices that name a system or a unit with no address, not where the scan
@@ -12,9 +12,19 @@ export function isPocztaPolskaSystemOffice(name: string): boolean {
   return SYSTEMS.has(name.replace(/\s+/g, ' ').trim().toLocaleLowerCase('pl-PL'));
 }
 
+/**
+ * The service words a scan in Polish or English, as its reader reads: with the same
+ * code at the same office, it is the scan stored in the other language.
+ */
+function reworded(incoming: SameInstantScan, stored: SameInstantScan): boolean {
+  return incoming.providerCode !== '' && incoming.providerCode === stored.providerCode
+    && incoming.location.trim() === stored.location.trim();
+}
+
 // Scans stored with a system as their location lose it and keep their row.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'poczta-polska', storedSources: ['poczta-polska'], requireProviderCode: false,
   matchEachScan: true,
-  matches: (incoming, stored) => matchesDroppedLocation(incoming, stored, isPocztaPolskaSystemOffice),
+  matches: (incoming, stored) => reworded(incoming, stored)
+    || matchesDroppedLocation(incoming, stored, isPocztaPolskaSystemOffice),
 };

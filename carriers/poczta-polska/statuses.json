@@ -23,6 +23,13 @@
       "confirmedBy": "live"
     },
     {
+      "code": "P_WDML",
+      "wording": "W doręczeniu",
+      "language": "pl",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
       "code": "P_D",
       "wording": "Final delivery",
       "language": "en",

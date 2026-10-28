@@ -16,6 +16,8 @@ const CODES: Record<string, ClassifiedStatus> = {
   P_ZWOLDDOR: { status: 'in_transit', stage: 'customs' },
   P_WPUCPP: { status: 'in_transit', stage: 'customs' },
   P_WD: { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  // The Polish answer can give the scan of an item in delivery under this code where the English gives P_WD.
+  P_WDML: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   P_A: { status: 'exception', stage: 'failed_attempt' },
   P_PA: { status: 'exception', stage: 'failed_attempt' },
   P_KWD: { status: 'out_for_delivery', stage: 'ready_for_pickup' },

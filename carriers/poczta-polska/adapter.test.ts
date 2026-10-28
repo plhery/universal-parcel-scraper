@@ -188,6 +188,8 @@ describe('Poczta Polska identity-bound scans', () => {
     expect(parsePocztaPolska(unknown, NUMBER)).not.toHaveProperty('current_stage');
     expect(parsePocztaPolska(unknown, NUMBER).events?.[0]).not.toHaveProperty('stage');
     expect(classifyPocztaPolskaStatus('constructor')).toBeUndefined();
+    // The Polish answer's code for an item in delivery.
+    expect(classifyPocztaPolskaStatus('P_WDML')).toEqual(classifyPocztaPolskaStatus('P_WD'));
   });
 
   const scan = (code: string, name: string, state: string, time: string, office = 'Example Post Office') =>
@@ -345,6 +347,12 @@ describe('Poczta Polska public widget request', () => {
       body: JSON.stringify({ language: 'EN', number: NUMBER, addPostOfficeInfo: false }) });
     const headers = new Headers(init?.headers);
     expect(headers.get('API_KEY')).toBe('synthetic-public-widget-configuration-key');
+    // A Polish reader gets the scans in Polish; every other language reads English.
+    for (const [language, asked] of [['pl', 'PL'], ['pl-PL', 'PL'], ['de', 'EN'], [null, 'EN']] as const) {
+      fetcher.mockResolvedValueOnce(new Response(bootstrap)).mockResolvedValueOnce(new Response(JSON.stringify(payload())));
+      await instance.track({ number: NUMBER, language });
+      expect(JSON.parse(String(fetcher.mock.calls.at(-1)![1]?.body))).toMatchObject({ language: asked });
+    }
     expect(headers.has('Cookie')).toBe(false); expect(headers.has('Authorization')).toBe(false);
     expect(init?.signal).toBeInstanceOf(AbortSignal);
     for (const html of ['', bootstrap + bootstrap, bootstrap.replace('uss.poczta-polska.pl', 'untrusted.example'),

@@ -178,6 +178,17 @@ describe('same-instant identity policies', () => {
     }
   });
 
+  it('lets a Poczta Polska scan worded in the other language take over its stored row at the same office', () => {
+    const policy = sameInstantIdentityPolicy('poczta-polska', { supportsScanMatching: true });
+    const stored = { stage: 'delivered', description: 'Final delivery', location: 'Placówka Pocztowa Example Town', providerCode: 'P_D' };
+    expect(policy?.matches?.({ ...stored, description: 'Doręczona' }, stored)).toBe(true);
+    expect(policy?.matches?.(stored, { ...stored, description: 'Doręczona' })).toBe(true);
+    for (const different of [{ ...stored, providerCode: 'P_WD' }, { ...stored, location: 'Placówka Pocztowa Another Town' }]) {
+      expect(policy?.matches?.({ ...stored, description: 'Doręczona' }, different)).toBe(false);
+    }
+    expect(policy?.matches?.({ ...stored, providerCode: '' }, { ...stored, description: 'Doręczona', providerCode: '' })).toBe(false);
+  });
+
   it('lets a universal copy that lost Posti\'s "abroad" label take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item is in transport in destination country.', location: 'ULKOMAILLA', providerCode: '' };
