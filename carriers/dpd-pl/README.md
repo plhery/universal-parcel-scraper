@@ -10,8 +10,9 @@ and the United Kingdom have separate carrier ids.
    anonymous English session (`JSESSIONID`, with Cloudflare's `__cf_bm`) and
    checks the search form. A POST of the number to `/EN/findPackage` with
    `typ=1`, a parcel number search, returns the parcel block the page shows.
-   No account, postcode or CAPTCHA is needed, and each lookup opens its own
-   session.
+   A lookup whose `language` is Polish opens a Polish session at `/findParcel`
+   and posts to `/findPackage`. No account, postcode or CAPTCHA is needed, and
+   each lookup opens its own session.
 
 ## Notes
 
@@ -29,9 +30,17 @@ and the United Kingdom have separate carrier ids.
 - The reply must name the requested package in its hidden package field, its
   Package field and its package list. A parcel of several packages lists them
   all, each with its own history.
-- The session keeps the English page, whose wording is mapped whole in
-  [status.ts](status.ts). Changed columns or another language are a schema
-  error.
+- The session keeps its language, English or Polish, and both pages give the
+  same dates, times, depots and order of scans. A lookup whose `language` is
+  Polish asks for Polish, any other for English; recognition reads English.
+  The English wording is mapped whole in [status.ts](status.ts), and each
+  Polish wording by the English the page gives the same scan. The Polish page
+  tells a scan abroad apart where the English one words it as at home. A
+  Polish page with a wording the map has no English for is asked for again in
+  English, and stands if that fails. A scan stored in one language takes the
+  other's wording in place: at its instant, a wording that translates the
+  stored one identifies it. Changed columns, or a heading and columns in
+  different languages, are a schema error.
 - Mail, SMS and sent notifications are messages to the recipient: they keep
   the stage of the scan before them and never decide the status. The
   `statusMap` lists them as intentional gaps.
@@ -60,7 +69,7 @@ codes are not places, so events carry no location. The recipient, the pickup
 point and the parcel's other packages are not read, and the page shows no
 estimate, sender or weight. After "Sent outside Poland" the page goes on
 with the destination network's scans up to delivery; the destination
-country's own DPD tracker is not asked. Polish wording is not mapped.
+country's own DPD tracker is not asked.
 
 ## Testing
 

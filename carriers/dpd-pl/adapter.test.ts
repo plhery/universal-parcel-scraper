@@ -2,14 +2,15 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { detectCarrierMatch, isValidDpdParcelNumber, parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
-import { normalizeCarrierResult } from '../../core/result/index.js';
+import { normalizeCarrierResult, type CarrierEvent, type CarrierResult } from '../../core/result/index.js';
 import { DpdPlTracker, adapter } from './adapter.js';
 import { normalizeDpdPlNumber, parseDpdPl, validateDpdPlBootstrap } from './parser.js';
-import { dpdPlScanStage, isDpdPlCollection, isDpdPlNotice } from './status.js';
+import { DPD_PL_POLISH, dpdPlScanStage, isDpdPlCollection, isDpdPlNotice } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = '9999000000001U';
@@ -23,6 +24,12 @@ const absentInPolish = `<div class="single-package"><fieldset class="compact"><p
 const edit = (change: (document: ReturnType<typeof load>) => void) => { const $ = load(html, null, false); change($); return $.html(); };
 const history = (...rows: [string, string, string, string][]) => edit($ => $('tbody').html(rows
   .map(([day, time, description, depot]) => `<tr><td>${day}</td><td>${time}</td><td>${description}</td><td>${depot}</td></tr>`).join('')));
+// A page as the Polish session gives it: its heading, columns and labels in Polish.
+const inPolish = (body: string) => { const $ = load(body, null, false);
+  $('th').each((index, node) => { $(node).text(['Data', 'Godzina', 'Opis', 'Oddział'][index]!); });
+  $('h3').text('Historia przesyłki');
+  $('.form-group > .label').each((_, node) => { $(node).text(({ Parcel: 'Przesyłka', Package: 'Paczka' } as Record<string, string>)[$(node).text()] ?? $(node).text()); });
+  return $.html(); };
 const COOKIES = ['JSESSIONID=synthetic~session; Path=/; Secure; HttpOnly', '__cf_bm=synthetic.bot-score_1; HttpOnly; SameSite=None; Secure; Path=/'];
 const page = (cookies = COOKIES, body = landing) => {
   const headers = new Headers({ 'Content-Type': 'text/html;charset=UTF-8' });
@@ -126,8 +133,9 @@ describe('DPD Poland direct tracking', () => {
     expect(() => parseDpdPl(history(['2026-03-05', '14:30:00', '', 'ZZZ']), NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
-  it('rejects another language, changed columns and malformed rows, and bounds the history', () => {
+  it('rejects mixed languages, changed columns and malformed rows, and bounds the history', () => {
     for (const body of [edit($ => $('th').first().text('Data')), edit($ => $('h3').text('Historia przesyłki')),
+      inPolish(history(['2026-03-05', '14:02:11', 'Przesyłka doręczona', 'ZZZ'])).replace('>Paczka<', '>Package<'),
       history(['2026-03-05', '14:02:11', 'Parcel delivered', 'ZZZ']).replace('<td>ZZZ</td>', '<td>ZZZ</td><td>Extra</td>'),
       history(['05.03.2026', '14:02:11', 'Parcel delivered', 'ZZZ']), history(['2026-03-05', '14:02', 'Parcel delivered', 'ZZZ']),
       history(['2026-02-30', '14:02:11', 'Parcel delivered', 'ZZZ']),
@@ -289,5 +297,81 @@ describe('DPD Poland direct tracking', () => {
       await expect(new DpdPlTracker({ fetcher }).fetch(NUMBER, { budgetMs: 20.5 })).rejects.toMatchObject({ kind: 'budget' });
       expect(fetcher).toHaveBeenCalledTimes(step + 1);
     }
+  });
+});
+
+describe('DPD Poland in Polish', () => {
+  // A parcel's scans worded on each page, newest first, where both are seen.
+  const ROWS: [string, string, string, string, string][] = [
+    ['2026-07-06', '10:00:00', 'Mail notification', 'Powiadomienie mail', 'XX1'],
+    ['2026-07-06', '09:55:00', 'Parcel delivered<br>Recipient: PRIVATE_SYNTHETIC_NAME', 'Przesyłka doręczona <br>Odbiorca:&nbsp;PRIVATE_SYNTHETIC_NAME', 'ZZ1'],
+    ['2026-07-06', '08:00:00', 'Parcel dispatched to be delivered', 'Wydanie do doręczenia za granicą', ''],
+    ['2026-07-06', '07:00:00', 'Parcel received by DPD depot', 'Przyjęcie przesyłki w oddziale doręczenia za granicą', ''],
+    ['2026-07-05', '16:00:00', 'Parcel received by DPD depot', 'Przeładunek w sortowni za granicą', ''],
+    ['2026-07-04', '02:00:00', 'Sent outside Poland', 'Przekazano za granicę', 'ZZ2'],
+    ['2026-07-03', '18:00:00', 'Parcel received by DPD depot', 'Przyjęcie przesyłki w oddziale DPD', 'ZZ2'],
+    ['2026-07-03', '17:00:00', 'Parcel collected by courier', 'Przesyłka odebrana przez Kuriera', ''],
+    ['2026-07-03', '12:00:00', 'SMS notification', 'Powiadomienie SMS', 'XX1'],
+    ['2026-07-03', '11:00:00', 'Parcel dropped-off in pickup point', 'Nadanie przesyłki w punkcie Pickup', 'ZZ2/PL99001'],
+    ['2026-07-02', '10:00:00', 'Registered parcel data, parcel not dispatched yet', 'Zarejestrowano dane przesyłki, przesyłka jeszcze nienadana', ''],
+  ];
+  const english = history(...ROWS.map(([day, time, en, , depot]) => [day, time, en, depot] as [string, string, string, string]));
+  const polish = inPolish(history(...ROWS.map(([day, time, , pl, depot]) => [day, time, pl, depot] as [string, string, string, string])));
+  const unworded = (result: CarrierResult) => ({ ...result, last_status_text: undefined, events: result.events!.map(event => ({ ...event, description: undefined })) });
+  // A session opened in the language its path names, and the reply that language gives.
+  const fetcherFor = (replies: { en: () => Response; pl: () => Response }) => vi.fn<typeof fetch>(async (url) => {
+    const path = new URL(String(url)).pathname;
+    const answer = path.startsWith('/EN/') ? replies.en : replies.pl;
+    return path.endsWith('/findParcel') ? page() : answer();
+  });
+  const paths = (fetcher: ReturnType<typeof fetcherFor>) => fetcher.mock.calls.map(([url]) => new URL(String(url)).pathname);
+
+  it('reads the Polish page as it reads the English one', () => {
+    const fromEnglish = parseDpdPl(english, NUMBER);
+    const fromPolish = parseDpdPl(polish, NUMBER);
+    expect(unworded(fromPolish)).toEqual(unworded(fromEnglish));
+    expect(fromEnglish).toMatchObject({ status: 'delivered', last_status_text: 'Parcel delivered' });
+    expect(fromPolish).toMatchObject({ status: 'delivered', last_status_text: 'Przesyłka doręczona', delivered_at: '2026-07-06T09:55:00+02:00' });
+    expect(JSON.stringify(fromPolish)).not.toContain('PRIVATE_SYNTHETIC');
+    // Every Polish wording reads as its English twin, whatever scans surround it.
+    for (const [wording, twin] of Object.entries(DPD_PL_POLISH)) {
+      expect(dpdPlScanStage(wording), wording).toBe(dpdPlScanStage(twin));
+      expect(isDpdPlCollection(wording), wording).toBe(isDpdPlCollection(twin));
+      expect(isDpdPlNotice(wording), wording).toBe(isDpdPlNotice(twin));
+    }
+  });
+
+  it('asks for the Polish page for a Polish reader and for the English one otherwise', async () => {
+    for (const [language, asked] of [['pl', 'pl'], ['pl-PL', 'pl'], ['de', 'en'], [null, 'en']] as const) {
+      const fetcher = fetcherFor({ en: () => reply(english), pl: () => reply(polish) });
+      const result = await adapter(environment(fetcher)).track({ number: NUMBER, language });
+      expect(paths(fetcher)).toEqual(asked === 'pl' ? ['/findParcel', '/findPackage'] : ['/EN/findParcel', '/EN/findPackage']);
+      expect(result.last_status_text).toBe(asked === 'pl' ? 'Przesyłka doręczona' : 'Parcel delivered');
+    }
+  });
+
+  it('asks again in English when the Polish page has a wording the map has no English for', async () => {
+    const unread = inPolish(history(['2026-07-07', '09:00:00', 'Nowe zdarzenie syntetyczne', 'ZZ1'],
+      ...ROWS.map(([day, time, , pl, depot]) => [day, time, pl, depot] as [string, string, string, string])));
+    const fetcher = fetcherFor({ en: () => reply(english), pl: () => reply(unread) });
+    expect(await adapter(environment(fetcher)).track({ number: NUMBER, language: 'pl' })).toEqual(parseDpdPl(english, NUMBER));
+    expect(paths(fetcher)).toEqual(['/findParcel', '/findPackage', '/EN/findParcel', '/EN/findPackage']);
+    // Without the English page, the Polish one stands.
+    const failing = fetcherFor({ en: () => new Response('', { status: 503 }), pl: () => reply(unread) });
+    expect(await adapter(environment(failing)).track({ number: NUMBER, language: 'pl' })).toEqual(parseDpdPl(unread, NUMBER));
+  });
+
+  it('lets a scan worded in one language take over the row stored in the other', () => {
+    const policy = sameInstantIdentityPolicy('dpd-pl', { supportsScanMatching: true })!;
+    const scan = (event: CarrierEvent) => ({ stage: event.stage ?? '', description: event.description ?? '', location: event.location ?? '', providerCode: '' });
+    const fromEnglish = parseDpdPl(english, NUMBER).events!.map(scan);
+    const fromPolish = parseDpdPl(polish, NUMBER).events!.map(scan);
+    for (const [index, row] of fromEnglish.entries()) {
+      expect(policy.matches!(fromPolish[index]!, row), String(index)).toBe(true);
+      expect(policy.matches!(row, fromPolish[index]!), String(index)).toBe(true);
+    }
+    // At one instant, a notice and a movement stay apart.
+    expect(policy.matches!(fromPolish[0]!, fromEnglish[1]!)).toBe(false);
+    expect(policy.matches!({ ...fromPolish[1]!, description: 'Zwrot przesyłki' }, fromEnglish[1]!)).toBe(false);
   });
 });

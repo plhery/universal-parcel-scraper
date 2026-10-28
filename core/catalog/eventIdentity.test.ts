@@ -513,6 +513,24 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(german, center)).toBe(false);
   });
 
+  it('lets a DPD Poland scan worded in the other language take over its stored row by place', () => {
+    expect(sameInstantIdentityPolicy('dpd-pl')).toBeUndefined();
+    const policy = sameInstantIdentityPolicy('dpd-pl', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['dpd-pl'], requireProviderCode: false, matchEachScan: true });
+    const english = { stage: 'in_transit', description: 'Parcel received by DPD depot', location: '', providerCode: '' };
+    // The Polish page tells a depot abroad apart where the English one words it as at home.
+    for (const wording of ['Przyjęcie przesyłki w oddziale DPD', 'Przeładunek w sortowni za granicą']) {
+      const polish = { ...english, description: wording };
+      expect(policy?.matches?.(polish, english)).toBe(true);
+      expect(policy?.matches?.(english, polish)).toBe(true);
+      for (const different of [{ ...english, description: 'Parcel delivered' }, { ...english, location: 'Example Town' }]) {
+        expect(policy?.matches?.(polish, different)).toBe(false);
+      }
+    }
+    expect(policy?.matches?.({ ...english, description: 'Przesyłka doręczona' }, english)).toBe(false);
+    expect(policy?.matches?.(english, english)).toBe(false);
+  });
+
   it('lets a Posti scan whose status now ends with a full stop take over the row stored without it', () => {
     const policy = sameInstantIdentityPolicy('posti', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item has been registered The item can be registered several times.', location: 'EXAMPLE CITY', providerCode: '' };

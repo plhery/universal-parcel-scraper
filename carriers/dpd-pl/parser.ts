@@ -10,7 +10,11 @@ import { dpdPlScanStage, isDpdPlCollection, isDpdPlNotice } from './status.js';
 
 export const PROVIDER = 'DPD Poland';
 
-const HEADERS = ['Date', 'Time', 'Description', 'Depot'];
+// The history's heading, columns and package label on the English page and on the Polish one.
+const PAGES = [
+  { heading: 'Parcel history', columns: 'Date|Time|Description|Depot', pack: 'Package' },
+  { heading: 'Historia przesyłki', columns: 'Data|Godzina|Opis|Oddział', pack: 'Paczka' },
+];
 // The page's answer for a number it does not know, in English and in Polish.
 const ABSENT = [/^There is no trace for this parcel \(([^()]{1,40})\)$/, /^Wprowadzono błędny numer przesyłki \(([^()]{1,40})\)$/];
 // A Polish depot code, alone or with a pickup point, or a pickup point alone.
@@ -73,21 +77,21 @@ export function parseDpdPl(html: string, raw: string): CarrierResult {
     throw new IndeterminateError(PROVIDER, 'DPD Poland did not return parcel history');
   }
   if (table.length !== 1) throw new SchemaError(PROVIDER, 'DPD Poland returned ambiguous parcel history');
+  // The session sets the language, English or Polish, and the page's heading
+  // and columns are all in it.
+  const headers = table.find('thead th').map((_, node) => text($(node).text(), 40)).get().join('|');
+  const heading = text(root.find('h3').first().text(), 80);
+  const language = PAGES.find(page => page.columns === headers && page.heading === heading);
+  if (!language) throw new SchemaError(PROVIDER, 'DPD Poland history columns changed');
   // The package the history belongs to. A second package of a parcel keeps
   // the first one's number as the parcel's.
   const packages = root.find('input.js-waybill-paczki');
   const options = root.find('select[name="parcel"] option').map((_, node) => text($(node).attr('value'), 80)).get();
-  const shown = root.find('.form-group').filter((_, node) => text($(node).children('.label').first().text(), 80) === 'Package');
+  const shown = root.find('.form-group').filter((_, node) => text($(node).children('.label').first().text(), 80) === language.pack);
   if (packages.length !== 1 || text(packages.attr('value'), 80) !== number || root.find('input.js-waybill').length !== 1
     || shown.length !== 1 || text(shown.find('.input-text').text(), 80) !== number
     || (options.length && !options.includes(number))) {
     throw new SchemaError(PROVIDER, 'DPD Poland returned a different parcel');
-  }
-  // Wording is mapped in English. The session sets the language, so another
-  // one means the page did not keep it.
-  const headers = table.find('thead th').map((_, node) => text($(node).text(), 40)).get();
-  if (headers.join('|') !== HEADERS.join('|') || text(root.find('h3').first().text(), 80) !== 'Parcel history') {
-    throw new SchemaError(PROVIDER, 'DPD Poland history columns changed');
   }
   const rows = table.find('tbody > tr');
   if (!rows.length) throw new IndeterminateError(PROVIDER, 'DPD Poland returned empty parcel history');

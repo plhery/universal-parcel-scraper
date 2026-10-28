@@ -1,12 +1,17 @@
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, IndeterminateError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeDpdPlNumber, parseDpdPl, PROVIDER, validateDpdPlBootstrap } from './parser.js';
+import { dpdPlEnglish } from './status.js';
 
 const ORIGIN = 'https://tracktrace.dpd.com.pl';
 const COOKIE = /^(JSESSIONID|__cf_bm)=([A-Za-z0-9._~:=+/-]{1,512})(?:;|$)/;
+/** The path that opens a session in each language the page words scans in. */
+const LANGUAGES = { en: '/EN', pl: '' } as const;
+
+export type DpdPlLanguage = keyof typeof LANGUAGES;
 
 /** The session the search page opens. It holds the page's language, which the lookup answers in. */
 function sessionCookie(response: Response): string {
@@ -22,7 +27,11 @@ function sessionCookie(response: Response): string {
 export class DpdPlTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
-  fetch(raw: string, context: TrackingContext = {}) {
+  /**
+   * `language` words the scans. A Polish page with a wording the map has no
+   * English for is asked again in English, which the map reads in full.
+   */
+  fetch(raw: string, context: TrackingContext = {}, language: DpdPlLanguage = 'en') {
     const number = normalizeDpdPlNumber(raw);
     const budgetMs = context.budgetMs ?? 15_000;
     return runSteps({ carrier: 'dpd-pl', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER },
@@ -44,19 +53,31 @@ export class DpdPlTracker {
           if (response.status !== 200) throw new IndeterminateError(PROVIDER, 'DPD Poland tracking is unavailable');
           return { response, html: decodeText(bytes) };
         };
-        const page = await read('/EN/findParcel');
-        validateDpdPlBootstrap(page.html);
-        const reply = await read('/EN/findPackage', {
-          method: 'POST', body: new URLSearchParams({ q: number, typ: '1' }),
-          headers: { Cookie: sessionCookie(page.response), 'X-Requested-With': 'XMLHttpRequest' },
-        });
-        return parseDpdPl(reply.html, number);
+        const lookup = async (lang: DpdPlLanguage) => {
+          const page = await read(`${LANGUAGES[lang]}/findParcel`);
+          validateDpdPlBootstrap(page.html);
+          const reply = await read(`${LANGUAGES[lang]}/findPackage`, {
+            method: 'POST', body: new URLSearchParams({ q: number, typ: '1' }),
+            headers: { Cookie: sessionCookie(page.response), 'X-Requested-With': 'XMLHttpRequest' },
+          });
+          return parseDpdPl(reply.html, number);
+        };
+        const result = await lookup(language);
+        // A Polish wording the map cannot read in English may be a scan only the English wording stages.
+        if (language === 'pl' && !result.events?.every(event => dpdPlEnglish(event.description ?? ''))) {
+          return lookup('en').catch(() => {
+            context.signal?.throwIfAborted();
+            return result;
+          });
+        }
+        return result;
       } }]);
   }
 }
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new DpdPlTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'dpd-pl', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'dpd-pl', recordsSteps: true, steps: ['direct'],
+    track: (input, context) => tracker.fetch(input.number, context, readerLanguage(input, ['pl']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeDpdPlNumber(number))) };
 };
