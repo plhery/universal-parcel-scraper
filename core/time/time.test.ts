@@ -164,7 +164,7 @@ describe('time policies', () => {
   it('names a country in German, French, Italian, Spanish or Dutch, with or without accents', () => {
     for (const name of ['Schweiz', 'Suisse', 'Svizzera', 'Suiza', 'Zwitserland']) expect(countryCode(name), name).toBe('CH');
     for (const name of ['Österreich', 'OESTERREICH', 'osterreich', 'Autriche']) expect(countryCode(name), name).toBe('AT');
-    for (const name of ['Vereinigtes Königreich', 'Royaume-Uni', 'Regno Unito', 'Reino Unido', 'Verenigd Koninkrijk']) {
+    for (const name of ['Vereinigtes Königreich', 'Großbritannien', 'GROSSBRITANNIEN', 'Royaume-Uni', 'Regno Unito', 'Reino Unido', 'Verenigd Koninkrijk']) {
       expect(countryCode(name), name).toBe('GB');
     }
     for (const name of ['États-Unis', 'ETATS-UNIS', 'Stati Uniti', 'Estados  Unidos', 'Verenigde Staten']) expect(countryCode(name), name).toBe('US');

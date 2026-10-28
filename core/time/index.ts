@@ -227,9 +227,9 @@ for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl']) {
     }
   }
 }
-// Full, former or abbreviated English names carriers print, which Intl writes otherwise: Cainiao
-// names the United States "USA".
-for (const [name, code] of [['United States of America', 'US'], ['USA', 'US'], ['Czech Republic', 'CZ']] as const) {
+// Full, former or abbreviated names carriers print, which Intl writes otherwise: Cainiao names
+// the United States "USA", and DHL's German scans name the United Kingdom "Großbritannien".
+for (const [name, code] of [['United States of America', 'US'], ['USA', 'US'], ['Czech Republic', 'CZ'], ['Großbritannien', 'GB']] as const) {
   REGION_BY_NAME.set(regionKey(name), code);
 }
 

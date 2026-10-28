@@ -127,6 +127,33 @@ describe('DHL public tracking normalization', () => {
     ]);
   });
 
+  it('reads DHL’s German wording and country names as it reads its English', () => {
+    const payload = shipment({ zielland: 'Vereinigtes Königreich' });
+    const timeline = payload.sendungen[0]!.sendungsdetails.sendungsverlauf;
+    timeline.status = 'Die Sendung liegt zur Abholung in einem ParcelShop/in der Postfiliale bereit.';
+    timeline.datumAktuellerStatus = '2026-10-22T09:05:00+02:00';
+    timeline.events = [
+      { datum: '2026-10-19T11:29:06+02:00', ort: 'Deutschland', status: 'Die Sendung wurde abgeholt.' },
+      { datum: '2026-10-19T12:00:00+02:00', status: 'Die Sendung wurde von DHL abgeholt.' },
+      { datum: '2026-10-20T06:10:04+02:00', status: 'Die Sendung wird für die Verladung ins Zustellfahrzeug vorbereitet.' },
+      { datum: '2026-10-21T11:48:00+02:00', ort: 'Großbritannien',
+        status: "Die Sendung ist im Zielland/Zielgebiet  eingetroffen. (Homepage / online shipment tracking: <a href='https://parcels.example/'>parcels.example</a>)" },
+      { datum: '2026-10-22T09:05:00+02:00', ort: 'Großbritannien',
+        status: 'Die Sendung liegt zur Abholung in einem ParcelShop/in der Postfiliale bereit. Näheres zum Sendungsstatus finden Sie <a href="https://www.dhl.de/de/">hier</a>.' },
+    ];
+    const parsed = parseDHLTrackingResponse(payload, NUMBER);
+    expect(parsed).toMatchObject({ current_stage: 'ready_for_pickup', destination_country: 'GB', last_update: null, last_update_local: '2026-10-22T09:05:00' });
+    expect(parsed.events?.map(({ stage, time, local_time }) => [stage, time ?? local_time])).toEqual([
+      ['ready_for_pickup', '2026-10-22T09:05:00'],
+      ['in_transit', '2026-10-21T11:48:00'],
+      // Still at the delivery base: "processed in the delivery base" in English.
+      ['in_transit', '2026-10-20T06:10:04+02:00'],
+      ['accepted', '2026-10-19T12:00:00+02:00'],
+      ['accepted', '2026-10-19T11:29:06+02:00'],
+    ]);
+    expect(parsed.events?.[1]?.description).toBe('Die Sendung ist im Zielland/Zielgebiet eingetroffen.');
+  });
+
   it('produces every capability declared in carrier.json', () => {
     const checks: Record<string, (result: CarrierResult) => unknown> = {
       history: (result) => result.events?.length,
@@ -307,6 +334,17 @@ describe('DHL sessions and browser fallback', () => {
     expect(first.get('verfolgen-wg')).toBe('0');
     expect(first.get('cookie')).toContain('verfolgenCsrfToken=test-csrf');
     expect(new Headers(fetcher.mock.calls[2]![1]?.headers).get('verfolgen-CSRF-token')).toBe('rotated-csrf');
+  });
+
+  it('asks for German for a German reader and English for anyone else', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockImplementation(async (url) => (String(url).startsWith(CONFIG) ? config() : Response.json(shipment())));
+    const carrier = adapter({ fetcher: fetch, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+    for (const [language, asked] of [['de', 'de'], ['de-AT', 'de'], ['fr', 'en'], [null, 'en']] as const) {
+      await carrier.track({ number: NUMBER, language }, { budgetMs: 10_000 });
+      expect(new URL(String(fetcher.mock.calls.at(-1)![0])).searchParams.get('language')).toBe(asked);
+    }
+    expect(String(fetcher.mock.calls[0]![0])).toBe(CONFIG);
   });
 
   it('uses the configured private browser for a rejected session', async () => {

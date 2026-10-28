@@ -496,6 +496,23 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(incoming, incoming)).toBe(false);
   });
 
+  it('lets a DHL scan worded in the other language take over its stored row by stage and place', () => {
+    const policy = sameInstantIdentityPolicy('dhl', { supportsScanMatching: true });
+    const english = { stage: 'in_transit', description: 'The shipment has arrived in the destination country/destination area.', location: 'United Kingdom', providerCode: '' };
+    const german = { ...english, description: 'Die Sendung ist im Zielland/Zielgebiet eingetroffen.', location: 'Großbritannien' };
+    expect(policy?.matches?.(german, english)).toBe(true);
+    expect(policy?.matches?.(english, german)).toBe(true);
+    const delivered = { stage: 'delivered', description: 'The shipment has been successfully delivered', location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...delivered, description: 'Die Sendung wurde zugestellt.' }, delivered)).toBe(true);
+    for (const different of [{ ...english, stage: 'customs' }, { ...english, location: 'France' }, { ...german, description: 'Die Sendung ist im Paketzentrum eingetroffen.' }]) {
+      expect(policy?.matches?.(german, different)).toBe(false);
+    }
+    // DHL dates the arrival abroad and the scans after it at one instant: what they say tells them apart.
+    const center = { ...english, description: 'The shipment has arrived at the parcel center' };
+    expect(policy?.matches?.({ ...german, description: 'Die Sendung ist im Paketzentrum eingetroffen.' }, center)).toBe(true);
+    expect(policy?.matches?.(german, center)).toBe(false);
+  });
+
   it('lets a Posti scan whose status now ends with a full stop take over the row stored without it', () => {
     const policy = sameInstantIdentityPolicy('posti', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item has been registered The item can be registered several times.', location: 'EXAMPLE CITY', providerCode: '' };

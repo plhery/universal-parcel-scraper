@@ -2,9 +2,11 @@
  * DHL wording → product stage.
  *
  * DHL's public `/int-verfolgen/data` payload carries no status code: the
- * shipment history is free text in the language the page was requested in
- * (English here, with German wording still returned for domestic scans), so
- * this map is a wording classifier rather than a code table. Rules are
+ * shipment history is free text in the language the lookup asks for, English
+ * or German, so this map is a wording classifier rather than a code table. The
+ * German wording is not a translation of the English: DHL words some scans
+ * apart, such as a parcel being prepared for the delivery vehicle, which in
+ * English is processed in the delivery base. Rules are
  * ordered so that a negative, a forecast or a handoff wins before the broad
  * delivery words, and anything unrecognized keeps the caller's fallback
  * instead of inventing progress.
@@ -22,9 +24,11 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   // GENERATED equivalents of DHL's existing forecast behavior: a forecast retains
   // the structured progress fallback; it cannot establish delivery or pre-advice.
   if (/will be delivered|sera livr[ée]|wird\s+(?!zugestellt\b).+zugestellt|sar[àa] consegnat/.test(value)) return fallback;
+  // Still at the delivery base, "processed in the delivery base" in English: not yet on the vehicle.
+  if (/für die verladung ins zustellfahrzeug vorbereitet/.test(value)) return 'in_transit';
   const translated = trackingLanguageStage(text);
   if (translated) return translated;
-  if (/ready for (?:pickup|collection)|ready to (?:collect|pick up)|awaiting collection|abholbereit|zur abholung bereit/.test(value)) return 'ready_for_pickup';
+  if (/ready for (?:pickup|collection)|ready to (?:collect|pick up)|awaiting collection|abholbereit|zur abholung bereit|liegt zur abholung\b[^.]*\bbereit/.test(value)) return 'ready_for_pickup';
   if (/has been delivered|was delivered|successfully delivered|^delivered\b|erfolgreich zugestellt|wurde.*zugestellt/.test(value)) return 'delivered';
   if (/^being delivered[.!]?$|out for delivery|loaded (?:into|onto).*delivery vehicle|in das zustellfahrzeug geladen|in zustellung/.test(value)) return 'out_for_delivery';
   if (/customs clearance process\b[^.]*\bhas been completed\b/.test(value)) return 'in_transit';
@@ -33,8 +37,8 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   // A booked collection precedes "Pick-up was successful.", so it cannot be progress beyond it.
   if (/^pick-up has been scheduled\b/.test(value)) return 'registered';
   if (/will be transported to the destination country/.test(value)) return 'in_transit';
-  if (/pick-up was successful|accepted|handed (?:over|to)|has been posted by the sender|eingeliefert|übergeben/.test(value)) return 'accepted';
-  if (/processed|sorted|sorting|sortierung|bearbeitet|briefzentrum|paketzentrum|transit|transport|arrived|departed/.test(value)) return 'in_transit';
+  if (/pick-up was successful|accepted|handed (?:over|to)|has been posted by the sender|eingeliefert|übergeben|^die sendung wurde (?:von dhl )?abgeholt\b/.test(value)) return 'accepted';
+  if (/processed|sorted|sorting|sortierung|bearbeitet|briefzentrum|paketzentrum|transit|transport|arrived|eingetroffen|departed/.test(value)) return 'in_transit';
   return fallback;
 }
 

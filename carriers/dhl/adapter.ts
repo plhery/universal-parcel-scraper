@@ -21,7 +21,7 @@ import makeFetchCookie from 'fetch-cookie';
 import { DateTime } from 'luxon';
 import { Cookie, CookieJar } from 'tough-cookie';
 import {
-  lookupBudget, recognizeFromLookup,
+  lookupBudget, readerLanguage, recognizeFromLookup,
   type AdapterFactory, type LookupBudget, type Recognition, type TrackingContext,
 } from '../../core/adapter/index.js';
 import {
@@ -47,10 +47,14 @@ const ORIGIN = 'https://www.dhl.de';
 const DATA_PATH = '/int-verfolgen/data';
 const CONFIG_URL = `${ORIGIN}${DATA_PATH}/config?domain=de&language=en`;
 const TRACKING_PAGE = `${ORIGIN}/en/privatkunden/dhl-sendungsverfolgung.html`;
-// Where DHL's page sends the recipient's postcode for a record that asks for it.
+// Where DHL's page sends the recipient's postcode for a record that asks for it. Its answer
+// stays in English, the language its refusal of a wrong postcode is read in.
 const SHIPMENT_URL = `${ORIGIN}${DATA_PATH}/shipment?language=en`;
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
 const MAX_BYTES = 2_000_000;
+
+/** The languages DHL words its scans in; it answers any other in German. */
+type DHLLanguage = 'de' | 'en';
 
 /**
  * DHL status wording occasionally carries markup. Tags are dropped without a
@@ -287,7 +291,7 @@ class DHLSession {
     }
   }
 
-  async fetch(number: string, limits: Limits, postcode?: string | null): Promise<CarrierResult> {
+  async fetch(number: string, limits: Limits, postcode?: string | null, language: DHLLanguage = 'en'): Promise<CarrierResult> {
     if (!this.token) {
       const config = await this.request(CONFIG_URL, limits);
       if (typeof config.verfolgenCsrfToken !== 'string' || !config.verfolgenCsrfToken) throw new DHLSessionError();
@@ -295,7 +299,7 @@ class DHLSession {
       this.wg = typeof config.initialWG === 'number' ? String(config.initialWG) : '0';
     }
     const url = new URL(`${ORIGIN}${DATA_PATH}/search`);
-    url.search = new URLSearchParams({ piececode: number, noRedirect: 'true', language: 'en' }).toString();
+    url.search = new URLSearchParams({ piececode: number, noRedirect: 'true', language }).toString();
     const payload = await this.request(url, limits);
     const asked = postcode ? recipientPostcodeAsked(payload, number) : null;
     if (!asked) return parseDHLTrackingResponse(payload, number);
@@ -388,13 +392,15 @@ export class DHLTracker {
 
   /**
    * Lookups share one session, so two parcels never renew it at the same time. The recipient's
-   * postcode is sent only when DHL asks for it.
+   * postcode is sent only when DHL asks for it. `language` words the scans.
    */
-  async fetch(trackingNumber: string, context: TrackingContext = {}, postcode?: string | null): Promise<CarrierResult> {
+  async fetch(
+    trackingNumber: string, context: TrackingContext = {}, postcode?: string | null, language: DHLLanguage = 'en',
+  ): Promise<CarrierResult> {
     const number = normalizeDHLTrackingNumber(trackingNumber);
     const zip = postcode ? deliveryPostcodeText(postcode) : null;
     if (zip !== null && !DELIVERY_POSTCODE.test(zip)) throw new InvalidInputError(PROVIDER, 'DHL delivery postcode is invalid');
-    return takeTurn(this.serialize, 'dhl', context, (left) => this.lookup(number, left, zip));
+    return takeTurn(this.serialize, 'dhl', context, (left) => this.lookup(number, left, zip, language));
   }
 
   /**
@@ -417,7 +423,7 @@ export class DHLTracker {
     });
   }
 
-  private async lookup(number: string, context: TrackingContext, postcode: string | null): Promise<CarrierResult> {
+  private async lookup(number: string, context: TrackingContext, postcode: string | null, language: DHLLanguage): Promise<CarrierResult> {
     const { signal } = context;
     // The caller may have left while the lookup waited for its turn.
     signal?.throwIfAborted();
@@ -432,13 +438,13 @@ export class DHLTracker {
           id: 'direct',
           run: (step) => {
             ended = step.signal;
-            return this.direct(number, { signal: step.signal, deadline }, postcode);
+            return this.direct(number, { signal: step.signal, deadline }, postcode, language);
           },
         },
         {
           id: 'trawl', enabled: trawl !== null,
           recovers: (error) => renewable(error) && !over(ended, deadline),
-          run: (step) => this.browser(trawl!, number, { signal: step.signal, deadline }, postcode),
+          run: (step) => this.browser(trawl!, number, { signal: step.signal, deadline }, postcode, language),
         },
       ]);
     } catch (error) {
@@ -449,23 +455,25 @@ export class DHLTracker {
   }
 
   /** The direct session, renewing a stale one or an interrupted read once. */
-  private async direct(number: string, limits: Limits, postcode?: string | null): Promise<CarrierResult> {
+  private async direct(number: string, limits: Limits, postcode?: string | null, language: DHLLanguage = 'en'): Promise<CarrierResult> {
     if (this.session !== null && this.now() - this.sessionOpenedAt >= SESSION_MAX_AGE_MS) this.session = null;
     const cached = this.session !== null;
     const session = this.session ?? this.open(new DHLSession(this.directTimeoutMs, this.fetcher));
     try {
-      return await session.fetch(number, limits, postcode);
+      return await session.fetch(number, limits, postcode, language);
     } catch (error) {
       // A fresh session that was rejected outright needs a browser, not a
       // second identical attempt; a cached one may simply have expired.
       if (!renewable(error) || (!cached && !(error instanceof UpstreamNetworkError))) throw error;
       if (over(limits.signal, limits.deadline)) throw error;
-      return await this.open(new DHLSession(this.directTimeoutMs, this.fetcher)).fetch(number, limits, postcode);
+      return await this.open(new DHLSession(this.directTimeoutMs, this.fetcher)).fetch(number, limits, postcode, language);
     }
   }
 
   /** A solved browser session, replayed over HTTP with its cookies and user agent. */
-  private async browser(trawl: TrawlClient, number: string, limits: Limits, postcode: string | null): Promise<CarrierResult> {
+  private async browser(
+    trawl: TrawlClient, number: string, limits: Limits, postcode: string | null, language: DHLLanguage,
+  ): Promise<CarrierResult> {
     this.session = null;
     const timeoutMs = capped(this.timeoutMs, limits);
     const solved = await trawl.scrape(
@@ -474,7 +482,7 @@ export class DHLTracker {
     );
     const session = new DHLSession(this.directTimeoutMs, this.fetcher);
     await session.seed(solved.cookies, solved.userAgent);
-    const result = await session.fetch(number, limits, postcode);
+    const result = await session.fetch(number, limits, postcode, language);
     this.open(session);
     return result;
   }
@@ -487,7 +495,8 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'dhl',
     steps: ['direct', 'trawl'],
-    track: (input, context) => tracker.fetch(input.number, context, input.postcode),
+    // DHL words its scans in German or English: a German reader reads German, anyone else English.
+    track: (input, context) => tracker.fetch(input.number, context, input.postcode, readerLanguage(input, ['de']) ?? 'en'),
     recognize: (number, context) => tracker.recognizes(number, context),
   };
 };

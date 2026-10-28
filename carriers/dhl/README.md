@@ -9,8 +9,10 @@ such.
 
 1. `direct`: `GET /int-verfolgen/data/config` opens a cookie and CSRF session,
    then `GET /int-verfolgen/data/search?piececode=…` is sent with the
-   `verfolgen-CSRF-token` and `verfolgen-wg` headers DHL's own page sends. The
-   token rotates through a response header. The session is kept in memory and
+   `verfolgen-CSRF-token` and `verfolgen-wg` headers DHL's own page sends, and
+   `language=de` for a lookup whose `language` is German, `language=en` for any
+   other. DHL words its scans in German or English and answers any other
+   language in German. The token rotates through a response header. The session is kept in memory and
    replaced after 100 minutes. A rejected session (redirect, 401/403/419, or a
    non-JSON body) or an interrupted read gets one fresh session inside this
    step; a fresh session rejected outright goes straight to `trawl`.
@@ -26,6 +28,8 @@ When DHL holds several shipments under the number, the record asks for the
 recipient's postcode (`plzBenoetigt`). Given one, the adapter sends it as DHL's
 page does: a JSON `POST /int-verfolgen/data/shipment` with the number, the
 postcode and the record's `international` flag, which answers like `search`. It
+asks for English whatever the lookup's language, because a refused postcode is
+read by its English wording. It
 sends nothing when the record asks for the sender's postcode (`isShipperPlz`) or
 the shipping date, or names no shipment. The catalog offers the postcode,
 optional, for twelve-digit numbers: recognition asks DHL about those, so it is
@@ -91,7 +95,16 @@ how a consumer learns that DHL holds one behind a postcode.
 - DHL answers unknown numbers with explicit `sendungNichtGefunden` flags. An
   empty or unmatched `sendungen` array is a schema error, not "no data yet".
 - The endpoint has no status codes: stages come from English or German wording,
-  and the `istZugestellt` / `ruecksendung` flags outrank it.
+  and the `istZugestellt` / `ruecksendung` flags outrank it. The German wording
+  is DHL's own, not a translation of the English: a parcel being prepared for
+  the delivery vehicle, "processed in the delivery base" in English, is in
+  transit in both. Times are the same in both languages, and places are
+  countries named in the lookup's language.
+- A scan stored in one language takes the other's wording in place: at its
+  instant, the same stage and the same place, a country in either language,
+  identify it. Where DHL dates several such scans at one instant, as on a
+  parcel's arrival abroad, what they say tells them apart
+  ([identity.ts](identity.ts)).
 - A forecast ("will be delivered tomorrow", "wird … zugestellt") keeps the
   progress fallback. Mapping it to `delivered` would announce a delivery that
   hasn't happened; mapping it to `registered` would undo real progress.
@@ -123,7 +136,7 @@ how a consumer learns that DHL holds one behind a postcode.
   Lithuania and Latvia do not look up DHL's number, so no one is asked there
   until the arrival scan links the partner. Deutsche Post's letter-post items
   go to the destination's post.
-- `zielland`, the destination country DHL names in English, becomes
+- `zielland`, the destination country DHL names in the lookup's language, becomes
   `destination_country`, or `destination_country_name` when the name maps to no
   ISO code. Nothing else of the delivery address is read.
 - Links to dhl.com name DHL, except DHL's division pages and DHL eCommerce's
