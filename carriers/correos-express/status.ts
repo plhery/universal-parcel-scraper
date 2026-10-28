@@ -1,8 +1,13 @@
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
+/** The languages the tracking form words its scans in. */
+export type CorreosExpressLanguage = 'es' | 'pt';
+
 /** The fixed opening of a failed round's note, which the form shows without a label. */
 export const FAILED_ROUND = 'Su envío no ha podido ser entregado';
+/** The same opening on the Portuguese form. */
+export const FAILED_ROUND_PT = 'Não foi possivel entregar o seu envio';
 
 const labels: Record<string, ClassifiedStatus> = {
   INFORMADO: { status: 'pending', stage: 'registered' },
@@ -58,8 +63,39 @@ const SITUATIONS: Record<string, string> = {
 
 const key = (label: string) => label.normalize('NFD').replace(/\p{Diacritic}/gu, '').toUpperCase().replace(/\s+/g, ' ').trim();
 
-export function classifyCorreosExpressStatus(label: string): ClassifiedStatus | undefined {
+/**
+ * The Portuguese form's label for each Spanish label, by the Spanish one: the
+ * same scans with the same clocks and places. INFORMADO and ADMITIDO read the
+ * same in both.
+ */
+const PORTUGUESE: Record<string, string> = {
+  INFORMADO: 'INFORMADO',
+  ADMITIDO: 'ADMITIDO',
+  'EN RUTA A LOCALIDAD DE DESTINO': 'EM TRANSITO PARA A LOCALIDADE DE DESTINO',
+  'EN DESTINO': 'NO DESTINO',
+  'EN REPARTO': 'EM DISTRIBUIÇÃO',
+  [key(FAILED_ROUND)]: FAILED_ROUND_PT,
+  'ENTREGADO EN PUNTO DE CONVENIENCIA': 'ENTREGUE EM PONTO DE CONVENIÊNCIA',
+  'DISPONIBLE EN PUNTO DE CONVENIENCIA': 'DISPONÍVEL EM PONTO DE CONVENIÊNCIA',
+  ENTREGADO: 'ENTREGUE',
+  DEVUELTO: 'DEVOLVIDO',
+  'EN ALMACEN': 'EM ARMAZÉM',
+  'EN GESTION': 'A SER GERENCIADO',
+  'EL PERIODO DE RECOGIDA DEL ENVIO EN EL PUNTO DE CONVENIENCIA SELECCIONADO HA FINALIZADO Y SE PROCEDERA A SU DEVOLUCION A ORIGEN':
+    'O PRAZO PARA RETIRADA DA REMESSA NO PONTO DE CONVENIÊNCIA SELECIONADO TERMINOU E ELA SERÁ DEVOLVIDA À SUA ORIGEM',
+  'NUEVO REPARTO': 'EM REDISTRIBUIÇÃO',
+};
+const SPANISH: ReadonlyMap<string, string> = new Map(Object.entries(PORTUGUESE).map(([spanish, portuguese]) => [key(portuguese), spanish]));
+
+/** A label in the form comparable across languages: the Spanish label's, for a Portuguese one. */
+const spanishKey = (label: string) => {
   const name = key(label);
+  return SPANISH.get(name) ?? name;
+};
+
+/** The stage of a form label, Spanish or Portuguese. */
+export function classifyCorreosExpressStatus(label: string): ClassifiedStatus | undefined {
+  const name = spanishKey(label);
   return Object.hasOwn(labels, name) ? labels[name] : undefined;
 }
 
@@ -68,22 +104,41 @@ export function isCorreosExpressCode(code: string): boolean {
   return /^X\d{6}[VR]$/.test(code);
 }
 
-/** The label the form shows for a localizador code's situation, when the situation is known. */
-export function correosExpressCodeLabel(code: string): string | undefined {
+/**
+ * The label the form shows in `language` for a localizador code's situation,
+ * when the situation is known. A situation no Portuguese page has shown keeps
+ * its Spanish label.
+ */
+export function correosExpressCodeLabel(code: string, language: CorreosExpressLanguage = 'es'): string | undefined {
   const situation = code.slice(0, 3);
-  return isCorreosExpressCode(code) && Object.hasOwn(SITUATIONS, situation) ? SITUATIONS[situation] : undefined;
+  if (!isCorreosExpressCode(code) || !Object.hasOwn(SITUATIONS, situation)) return undefined;
+  const spanish = SITUATIONS[situation]!;
+  return language === 'pt' ? PORTUGUESE[key(spanish)] ?? spanish : spanish;
 }
 
-/** The situation a form label stands for, in a form comparable across labels; ESTACIONADO is the failed round's. */
+/**
+ * The situation a form label stands for, in a form comparable across labels and
+ * languages; ESTACIONADO is the failed round's.
+ */
 export function correosExpressSituationKey(label: string): string {
-  const name = key(label);
+  const name = spanishKey(label);
   return name === 'ESTACIONADO' ? key(FAILED_ROUND) : name;
 }
 
-/** The label a scan's description opens with: the description is the label, then any fixed explanation. */
+/** Whether a label is a failed round's fixed opening, in either language. */
+export function isCorreosExpressFailedRound(label: string): boolean {
+  return label === FAILED_ROUND || label === FAILED_ROUND_PT;
+}
+
+/**
+ * The label a scan's description opens with: the description is the label,
+ * then any fixed explanation. A failed round's note opens with its fixed
+ * opening, which the Portuguese localizador words its own way.
+ */
 export function correosExpressDescriptionLabel(description: string): string {
   const text = description.replace(/\s+/g, ' ').trim();
   if (/^su env[ií]o no ha podido ser entregado\b/iu.test(text)) return FAILED_ROUND;
+  if (/^(?:não foi poss[ií]vel entregar o seu envio|o seu envio não pôde ser entregue)\b/iu.test(text)) return FAILED_ROUND_PT;
   return text.split('.')[0]!.trim();
 }
 

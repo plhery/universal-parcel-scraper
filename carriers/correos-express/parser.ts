@@ -8,13 +8,18 @@ import { calendarDay, firstOccurrence, regionHasTown } from '../../core/time/ind
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import {
-  FAILED_ROUND, classifyCorreosExpressStatus, correosExpressCodeLabel, correosExpressSituationKey, isCorreosExpressCode,
+  FAILED_ROUND, FAILED_ROUND_PT, classifyCorreosExpressStatus, correosExpressCodeLabel, correosExpressSituationKey, isCorreosExpressCode,
+  isCorreosExpressFailedRound, type CorreosExpressLanguage,
 } from './status.js';
 
 const PROVIDER = 'Correos Express';
 const MONTHS: Record<string, number> = { ene: 1, feb: 2, mar: 3, abr: 4, may: 5, jun: 6, jul: 7, ago: 8, sep: 9, oct: 10, nov: 11, dic: 12 };
-const NO_HISTORY = 'Lo sentimos, no se ha encontrado ningún envío con el número indicado.';
-const FAILED_NOTE = /^\.?\s*Su env[ií]o no ha podido ser entregado\b/iu;
+/** The form's no-history message, in Spanish and in Portuguese. */
+const NO_HISTORY: ReadonlySet<string> = new Set(['Lo sentimos, no se ha encontrado ningún envío con el número indicado.',
+  'Desculpe, não foi encontrado nenhum envio com o número indicado.']);
+/** The history's column headings, which tell the page's language. */
+const COLUMNS: Readonly<Record<CorreosExpressLanguage, string>> = { es: 'Fechas/hora|Población|Estado', pt: 'Datas/hora|Cidade|Estado' };
+const FAILED_NOTE = /^\.?\s*(?:Su env[ií]o no ha podido ser entregado|Não foi poss[ií]vel entregar o seu envio)\b/iu;
 const MAX_SCANS = 500;
 const MAX_EVENTS = 100;
 const MADRID = 'Europe/Madrid';
@@ -44,9 +49,9 @@ const PORTUGAL: ReadonlySet<string> = new Set([
 
 /**
  * The sentences that explain a situation, the same for every shipment, as the
- * form and the localizador write them. Whatever else follows a label, such as
- * a pickup point's name and address, a reason that names the recipient or a
- * courier's note, is dropped.
+ * form and the localizador write them in Spanish and in Portuguese. Whatever
+ * else follows a label, such as a pickup point's name and address, a reason
+ * that names the recipient or a courier's note, is dropped.
  */
 const EXPLANATIONS: readonly string[] = [
   'Ya hemos recibido la información de su envío, en breve dispondremos de su mercancía',
@@ -72,15 +77,58 @@ const EXPLANATIONS: readonly string[] = [
   'Su envío se encuentra en el punto de conveniencia seleccionado y en breve recibirá las instrucciones para recogerlo',
   'Su envío ya está disponible en el punto de conveniencia seleccionado para poder ser recogido',
   'Tiempo de recogida finalizado en Punto de Conveniencia',
-].sort((left, right) => right.length - left.length);
+  // The Portuguese form's.
+  'Já recebemos as informações do seu envio, em breve teremos a sua mercadoria na nossa posse',
+  'Se precisar de informações adicionais, entre em contato com o expedidor',
+  'Seu envio está em trânsito para a localidade destino nos nossos veículos',
+  'Será entregue na data prevista',
+  'Seu envio está nas nossas instalações de destino e estamos a classificá-lo',
+  'Seu envio encontra-se em distribuição',
+  'Não foi possivel entregar o seu envio porque a morada de destino está incompleta ou incorreta',
+  'Não foi possivel entregar o seu envio porque não foi possivel localizar o destinatário no momento da entrega',
+  'Não foi possivel entregar o seu envio devido a uma incidencia logistica na nossa distribuição',
+  'Se deseja solicitar uma nova entrega por favor selecione Organizar Nova entrega',
+  'Se deseja solicitar uma nova entrega por favor selecione Organizar nova entrega',
+  'Já tomadas as ações necessárias e será entregue na data prevista',
+  'Seu envio foi entregue',
+  'Seu envio está em processo de gestão pelo nosso departamento de Apoio ao Cliente',
+  'Seu envio foi devolvido ao expedidor',
+  'Para mais informações por favor contacte o expedidor',
+  'Sua remessa está no ponto de conveniência selecionado e em breve você receberá instruções para retirá-la',
+  'Sua remessa já está disponível no ponto de conveniência selecionado para retirada',
+  'O tempo de coleta terminou em Ponto de Conveniência',
+  // The Portuguese localizador's.
+  'Já recebemos as informações do seu envio, em breve teremos a sua encomenda',
+  'Se precisar de mais informações, contacte o seu remetente',
+  'O seu envio está num dos nossos veículos a caminho da localidade de destino',
+  'O seu envio está num dos nossos veículos a ser transportado para a localidade de destino',
+  'Recebê-lo-á na data de entrega prevista',
+  'O seu envio está nas nossas instalações de destino e estamos a classificá-lo',
+  'O seu envio encontra-se em distribuição',
+  'O seu envio não pôde ser entregue porque a morada que temos está incompleta ou incorreta',
+  'O seu envio não pôde ser entregue porque o destinatário não foi encontrado no momento da entrega',
+  'O seu envio não pôde ser entregue devido a um problema logístico na nossa distribuição',
+  'Se deseja gerir uma nova entrega por favor prima a opção Gerir nova entrega',
+  'Já preparámos o seu envio e recebê-lo-á na data de entrega prevista',
+  'Acordo entrega flexível',
+  'O seu envio está entregue',
+  'O seu envio está em tratamento pelo serviço de Apoio ao cliente',
+  'O envio foi devolvido ao remetente',
+  'O seu envio encontra-se no ponto de conveniência selecionado e em breve receberá as instruções para o recolher',
+  'O seu envio já está disponível no ponto de conveniência selecionado para ser recolhido',
+].map((sentence) => sentence.normalize('NFC')).sort((left, right) => right.length - left.length);
 
-/** The fixed sentences a text opens with, each ended by a period; empty when it opens with anything else. */
+/**
+ * The fixed sentences a text opens with, each ended by a period; empty when it
+ * opens with anything else. The Portuguese form can leave the period out
+ * before the next text, which then opens with a capital.
+ */
 export function fixedExplanation(text: string): string {
   let rest = text.normalize('NFC').replace(/­/g, '').replace(/\s+/g, ' ').replace(/^[.\s]+/, '');
   const kept: string[] = [];
   while (rest) {
     const sentence = EXPLANATIONS.find((candidate) => rest.startsWith(candidate)
-      && (rest.length === candidate.length || rest[candidate.length] === '.'));
+      && (rest.length === candidate.length || rest[candidate.length] === '.' || /^\p{Lu}/u.test(rest.slice(candidate.length))));
     if (!sentence) break;
     kept.push(`${sentence}.`);
     rest = rest.slice(sentence.length).replace(/^[.\s]+/, '');
@@ -188,7 +236,7 @@ interface Scan {
 function described({ event, label, explanation, mapped }: Scan): CarrierEvent {
   const description = !mapped ? 'Tracking update' : mapped.status === 'delivered' ? 'Delivered'
     // A failed round's explanation opens with the label.
-    : label === FAILED_ROUND ? explanation || FAILED_ROUND : explanation ? `${label}. ${explanation}` : label;
+    : isCorreosExpressFailedRound(label) ? explanation || label : explanation ? `${label}. ${explanation}` : label;
   return { description, ...event };
 }
 
@@ -214,7 +262,7 @@ function grouped<T>(items: readonly T[], keyOf: (item: T) => string | undefined)
  * scan, so the admission row is never paired. A coded scan in a minute the
  * form does not show is added without a locality.
  */
-function enrich(scans: Scan[], feed: CorreosExpressFeed): Scan[] {
+function enrich(scans: Scan[], feed: CorreosExpressFeed, language: CorreosExpressLanguage): Scan[] {
   const used = new Set<CorreosExpressFeedScan>();
   const paired = new Set<Scan>();
   const pair = (rows: Map<string, Scan[]>, found: Map<string, CorreosExpressFeedScan[]>, coded: boolean) => {
@@ -236,7 +284,8 @@ function enrich(scans: Scan[], feed: CorreosExpressFeed): Scan[] {
     grouped(feed.scans.filter((scan) => !scan.code), minute), false);
   const shown = new Set(scans.map(minute));
   if (shown.has(undefined)) return scans;
-  const added = feed.scans.filter((scan) => !used.has(scan) && situation(scan) && !shown.has(minute(scan))).map(feedScan).reverse();
+  const added = feed.scans.filter((scan) => !used.has(scan) && situation(scan) && !shown.has(minute(scan)))
+    .map((scan) => feedScan(scan, language)).reverse();
   const merged = [...scans];
   for (const scan of added) {
     const index = merged.findIndex((other) => minute(other)! < minute(scan)!);
@@ -245,8 +294,9 @@ function enrich(scans: Scan[], feed: CorreosExpressFeed): Scan[] {
   return merged;
 }
 
-function feedScan(scan: CorreosExpressFeedScan): Scan {
-  const label = (scan.code && correosExpressCodeLabel(scan.code)) ?? '';
+/** A localizador scan as the form would show it in `language`. */
+function feedScan(scan: CorreosExpressFeedScan, language: CorreosExpressLanguage): Scan {
+  const label = (scan.code && correosExpressCodeLabel(scan.code, language)) ?? '';
   const mapped = label ? classifyCorreosExpressStatus(label) : undefined;
   return { label, explanation: mapped ? scan.explanation : '', mapped,
     event: { ...(mapped ? { provider_status: label, stage: mapped.stage } : {}), local_time: scan.local_time,
@@ -323,12 +373,23 @@ function project(events: CarrierEvent[], extra: CarrierResult = {}): CarrierResu
     expected_delivery: null, ...extra, events: events.slice(0, MAX_EVENTS) };
 }
 
+/** The tracking form's page read, and whether a row shows a label the map does not read. */
+export interface CorreosExpressRead {
+  result: CarrierResult;
+  unread: boolean;
+}
+
 /**
- * The tracking form's page, with the localizador's history when it names the
- * same shipment. A page that names no shipment is the form's negative only
- * with the server-selected no-history code and the matching request echo.
+ * The tracking form's page, in Spanish or Portuguese, with the localizador's
+ * history in the same language when it names the same shipment. A page that
+ * names no shipment is the form's negative only with the server-selected
+ * no-history code and the matching request echo.
  */
 export function parseCorreosExpress(html: string, raw: string, feed?: CorreosExpressFeed | null): CarrierResult {
+  return readCorreosExpress(html, raw, feed).result;
+}
+
+export function readCorreosExpress(html: string, raw: string, feed?: CorreosExpressFeed | null): CorreosExpressRead {
   const number = normalizeCorreosExpressNumber(raw);
   const $ = load(html);
   const tables = $('table.miyazaki');
@@ -341,7 +402,7 @@ export function parseCorreosExpress(html: string, raw: string, feed?: CorreosExp
     if (inputs.length && inputs.some((value) => value !== number)) throw new SchemaError(PROVIDER, 'Correos Express returned a different lookup');
     if (inputs.length === forms.length && errors.length === forms.length && forms.length >= 1 && forms.length <= 2
       && errors.every((code) => code === '2')
-      && $('.errorMessage2 .errorMessage').toArray().some((node) => clean($(node).text(), 300) === NO_HISTORY)) {
+      && $('.errorMessage2 .errorMessage').toArray().some((node) => NO_HISTORY.has(clean($(node).text(), 300)))) {
       throw new NotFoundError(PROVIDER);
     }
     throw new IndeterminateError(PROVIDER, 'Correos Express did not return shipment history');
@@ -354,13 +415,15 @@ export function parseCorreosExpress(html: string, raw: string, feed?: CorreosExp
     || $('#shippingNumber').length !== 1 || $('#shippingNumber').val() !== number) {
     throw new SchemaError(PROVIDER, 'Correos Express returned a different or ambiguous shipment');
   }
-  const headers = tables.find('thead th').map((_, node) => clean($(node).text(), 64)).get();
-  if (headers.join('|') !== 'Fechas/hora|Población|Estado') throw new SchemaError(PROVIDER, 'Correos Express history columns changed');
+  const headers = tables.find('thead th').map((_, node) => clean($(node).text(), 64)).get().join('|');
+  const language = (Object.keys(COLUMNS) as CorreosExpressLanguage[]).find((name) => COLUMNS[name] === headers);
+  if (!language) throw new SchemaError(PROVIDER, 'Correos Express history columns changed');
   const rows = tables.find('tbody tr');
   if (!rows.length) throw new IndeterminateError(PROVIDER, 'Correos Express returned an empty history');
   if (rows.length > MAX_SCANS) throw new SchemaError(PROVIDER, 'Correos Express returned too many scans');
   const scans: Scan[] = [];
   const seen = new Set<string>();
+  let unread = false;
   // The carrier renders newest first. Preserve its order when a newest clock
   // is unresolved; never promote an older dated delivery over that row.
   for (const row of rows.toArray()) {
@@ -374,7 +437,7 @@ export function parseCorreosExpress(html: string, raw: string, feed?: CorreosExp
     // phrase and then gives the reason, which can name the recipient; only a
     // fixed reason is kept.
     const failed = FAILED_NOTE.test(rawStatus);
-    const label = failed ? FAILED_ROUND : rawStatus.split('.')[0]!.trim();
+    const label = failed ? (language === 'pt' ? FAILED_ROUND_PT : FAILED_ROUND) : rawStatus.split('.')[0]!.trim();
     const explanation = fixedExplanation(failed ? rawStatus : rawStatus.slice(rawStatus.indexOf('.') + 1 || rawStatus.length));
     const clock = scanClock(cells.eq(0).text());
     const location = clean(cells.eq(1).text(), 200);
@@ -382,32 +445,35 @@ export function parseCorreosExpress(html: string, raw: string, feed?: CorreosExp
     const key = `${clock.local_time ?? clock.provider_time_text ?? ''}\u0000${rawStatus}\u0000${location}`;
     if (seen.has(key)) continue;
     seen.add(key);
+    unread ||= !mapped && label !== '';
     scans.push({ label, explanation: mapped ? explanation : '', mapped,
       event: { ...(mapped ? { provider_status: label, stage: mapped.stage } : {}), ...clock, ...(location ? { location } : {}) } });
   }
   // The localizador names a label's shipment; the form may name it too, and then both must agree.
   const bound = feed && (feed.shipment === number || (shipment ? feed.shipment === shipment : isLabelShipment(number, feed.shipment)));
-  const events = dated(bound ? enrich(scans, feed) : scans).map(described);
+  const events = dated(bound ? enrich(scans, feed, language) : scans).map(described);
   const latest = events[0]!;
   const mapped = latestStatus(latest);
-  const estimate = /Entrega prevista:\s*[\p{L}]+,?\s+(\d{1,2})\s+([\p{L}]{3})\s+(\d{4})/iu.exec(heading.text());
+  // The estimate is read in Spanish only: how the Portuguese page words one is not known.
+  const estimate = language === 'es' ? /Entrega prevista:\s*[\p{L}]+,?\s+(\d{1,2})\s+([\p{L}]{3})\s+(\d{4})/iu.exec(heading.text()) : null;
   const month = estimate && MONTHS[estimate[2]!.toLowerCase()];
   const day = estimate && month ? calendarDay(Number(estimate[3]), month, Number(estimate[1])) : null;
   // An instant is written in its scan's zone, so it opens with the scan's own day.
   const wall = latest.local_time ?? latest.time;
   const latestDay = typeof wall === 'string' ? wall.slice(0, 10) : null;
   const active = mapped && ['pending', 'in_transit', 'out_for_delivery'].includes(mapped.status);
-  return project(events, { expected_delivery: active && day && latestDay && day >= latestDay ? day : null,
-    ...(shipment ? { canonical_tracking_number: shipment } : {}) });
+  return { unread, result: project(events, { expected_delivery: active && day && latestDay && day >= latestDay ? day : null,
+    ...(shipment ? { canonical_tracking_number: shipment } : {}) }) };
 }
 
 /**
- * The localizador's history alone, for a shipment the form no longer shows.
- * The localizador serves the whole Correos group, so its history counts as
- * Correos Express's only when every coded scan has a Correos Express situation
- * code. Its scans have no locality.
+ * The localizador's history alone, for a shipment the form no longer shows,
+ * labelled as the form would label it in the language the localizador was
+ * asked in. The localizador serves the whole Correos group, so its history
+ * counts as Correos Express's only when every coded scan has a Correos Express
+ * situation code. Its scans have no locality.
  */
-export function correosExpressFeedResult(feed: CorreosExpressFeed, raw: string): CarrierResult {
+export function correosExpressFeedResult(feed: CorreosExpressFeed, raw: string, language: CorreosExpressLanguage = 'es'): CarrierResult {
   const number = normalizeCorreosExpressNumber(raw);
   const codes = feed.scans.flatMap((scan) => (scan.code ? [scan.code] : []));
   if (!codes.length || !codes.every(isCorreosExpressCode)) {
@@ -417,6 +483,6 @@ export function correosExpressFeedResult(feed: CorreosExpressFeed, raw: string):
   // Oldest first; of two scans in the same second the later one is newer.
   const ordered = [...distinct.values()].sort((left, right) => (left.scan.local_time < right.scan.local_time ? 1
     : left.scan.local_time > right.scan.local_time ? -1 : right.index - left.index));
-  const events = ordered.map(({ scan }) => described(feedScan(scan)));
+  const events = ordered.map(({ scan }) => described(feedScan(scan, language)));
   return project(events, feed.shipment === number ? {} : { canonical_tracking_number: feed.shipment });
 }

@@ -19,6 +19,18 @@ explanations to its rows. When the form fails, or answers for a shipment it has
 forgotten, the localizador's history answers alone, without localities or
 instants.
 
+The form (`s.correosexpress.com/SeguimientoSinCP/search`) words its scans in
+Spanish, and in Portuguese at `search-pt`, where correosexpress.pt's tracking
+box posts, with the same scans, clocks and places. It has no other language.
+A lookup whose `language` is Portuguese asks the form there and the localizador
+with `codIdioma=PT`; any other asks both in Spanish (`codIdioma=ES`). The localizador also words scans in English and French, but
+the form, which gives the localities, does not. The status map reads both
+languages. A Portuguese page with a label the map does not read is asked for
+again in Spanish, and stands if that fails. A localizador scan whose situation
+the map has no Portuguese label for keeps its Spanish one. Only the Spanish
+page's delivery estimate is read. A scan stored in one language takes the
+other's wording in place, at the same instant and place.
+
 ## Notes
 
 The form looks an input up as a shipment number and as a sender's own reference,
@@ -71,10 +83,11 @@ Only recognized status labels, the locality column and the fixed sentences the
 carrier explains each situation with are retained. Anything else after a label
 is dropped: a pickup point's name and address, a courier's note, a reason that
 names the recipient. A failed delivery round has no label, only a note that
-opens with "Su envío no ha podido ser entregado" and then gives the reason; it
-is a failed attempt, and the reason is kept only when it is one of the fixed
-ones. Other scans with missing or unrecognized labels remain neutral tracking
-updates, so an older delivery does not become current. Contact fields, the
+opens with "Su envío no ha podido ser entregado" ("Não foi possivel entregar o
+seu envio") and then gives the reason; it is a failed attempt, and the reason
+is kept only when it is one of the fixed ones. Other scans with missing or
+unrecognized labels remain neutral tracking updates, so an older delivery does
+not become current. Contact fields, the
 delivery PIN and proof of delivery are excluded, as are the localizador's
 recipient, reference, cash-on-delivery and parcel fields.
 

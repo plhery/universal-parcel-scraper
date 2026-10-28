@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../app.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import type { StepRecord } from '../../core/telemetry/index.js';
@@ -19,10 +20,12 @@ const OTHER = '9900000000000003';
 const LABEL = '99000000000000001999994', SHIPMENT = '9900000000000004';
 const FAILED_ROUND = 'Su envío no ha podido ser entregado';
 const FORM = 'https://s.correosexpress.com/SeguimientoSinCP/search';
+const FORM_PT = 'https://s.correosexpress.com/SeguimientoSinCP/search-pt';
 const FEED = 'https://localizador.correos.es/canonico/eventos_envio_servicio/';
 const html = readFileSync(new URL('./fixtures/history.html', import.meta.url), 'utf8');
 const explained = readFileSync(new URL('./fixtures/explained.html', import.meta.url), 'utf8');
 const failedRound = readFileSync(new URL('./fixtures/failed-round.html', import.meta.url), 'utf8');
+const portuguese = readFileSync(new URL('./fixtures/portuguese.html', import.meta.url), 'utf8');
 const feedText = readFileSync(new URL('./fixtures/feed.json', import.meta.url), 'utf8');
 type Envelope = Record<string, unknown> & { eventos: Record<string, unknown>[] | null };
 const feedPayload = (change: (envelope: Envelope) => void = () => {}) => {
@@ -617,5 +620,126 @@ describe('Correos Express retrieval', () => {
     const spent = await new CorreosExpressTracker({ fetcher: waiting }).fetch(NUMBER, { budgetMs: 20 }).catch((error: unknown) => error);
     expect(['budget', 'transport']).toContain(carrierErrorKind(spent));
     expect(waiting).toHaveBeenCalledTimes(4);
+  });
+});
+
+describe('Correos Express in Portuguese', () => {
+  const FAILED_ROUND_PT = 'Não foi possivel entregar o seu envio';
+  /** A localizador reply in Portuguese for the failed round's history: two scans the form shows and two it does not. */
+  const portugueseFeed = parseCorreosExpressFeed(feedPayload((envelope) => {
+    envelope.eventos = [
+      { fecEvento: '15/01/2026', horEvento: '07:02:31', codEvento: 'X060000V',
+        desTextoAmpliado: 'O seu envio está nas nossas instalações de destino e estamos a classificá-lo. Recebê-lo-á na data de entrega prevista.' },
+      { fecEvento: '15/01/2026', horEvento: '09:45:12', codEvento: 'X090060R',
+        desTextoAmpliado: 'O seu envio  não pôde ser entregue porque o destinatário não foi encontrado no momento da entrega. Se deseja gerir uma nova entrega por favor prima a opção Gerir nova entrega.' },
+      { fecEvento: '15/01/2026', horEvento: '10:30:00', codEvento: 'X140000V', desTextoAmpliado: 'PRIVATE_SYNTHETIC_NOTE' },
+      { fecEvento: '15/01/2026', horEvento: '11:00:05', codEvento: 'X080000V',
+        desTextoAmpliado: 'O seu envio encontra-se em distribuição. Recebê-lo-á na data de entrega prevista.PRIVATE_SYNTHETIC_NOTE' },
+    ];
+  }), NUMBER)!;
+  const NOT_DELIVERED = 'O seu envio não pôde ser entregue porque o destinatário não foi encontrado no momento da entrega. Se deseja gerir uma nova entrega por favor prima a opção Gerir nova entrega.';
+  const IN_DELIVERY = 'EM DISTRIBUIÇÃO. O seu envio encontra-se em distribuição. Recebê-lo-á na data de entrega prevista.';
+
+  it('reads the Portuguese page as the Spanish one: the same clocks, places and stages, worded in Portuguese', () => {
+    const spanish = normalizeCarrierResult(parseCorreosExpress(failedRound, NUMBER));
+    const result = normalizeCarrierResult(parseCorreosExpress(portuguese, NUMBER));
+    const facts = (read: typeof result) => read.events?.map(({ time, local_time, location, stage }) => [time ?? local_time, location, stage]);
+    expect(facts(result)).toEqual(facts(spanish));
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',
+      last_update: spanish.last_update, delivered_at: spanish.delivered_at, expected_delivery: null });
+    expect(result.events?.map(event => event.description)).toEqual(['Delivered',
+      'DISPONÍVEL EM PONTO DE CONVENIÊNCIA. Sua remessa já está disponível no ponto de conveniência selecionado para retirada.',
+      // The Portuguese form runs the pickup point's name straight on from the sentence.
+      'ENTREGUE EM PONTO DE CONVENIÊNCIA. Sua remessa está no ponto de conveniência selecionado e em breve você receberá instruções para retirá-la.',
+      FAILED_ROUND_PT,
+      'EM DISTRIBUIÇÃO. Seu envio encontra-se em distribuição. Será entregue na data prevista.',
+      'NO DESTINO. Seu envio está nas nossas instalações de destino e estamos a classificá-lo. Será entregue na data prevista.',
+      'EM TRANSITO PARA A LOCALIDADE DE DESTINO. Seu envio está em trânsito para a localidade destino nos nossos veículos. Será entregue na data prevista.',
+      'ADMITIDO',
+      'INFORMADO. Já recebemos as informações do seu envio, em breve teremos a sua mercadoria na nossa posse.']);
+    expect(result.events?.[3]).toMatchObject({ provider_status: FAILED_ROUND_PT, stage: 'failed_attempt' });
+    // Each description reads back to its scan's stage as the app keys it.
+    for (const { description, stage } of result.events!) expect(statusMap.stage(null, normalizeStatusWording(description!)), description).toBe(stage);
+    expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
+    for (const [label, status, stage] of [['A SER GERENCIADO', 'exception', 'exception'], ['DEVOLVIDO', 'exception', 'returned'],
+      ['EM ARMAZÉM', 'exception', 'exception'], ['EM REDISTRIBUIÇÃO', 'in_transit', 'in_transit'],
+      ['O PRAZO PARA RETIRADA DA REMESSA NO PONTO DE CONVENIÊNCIA SELECIONADO TERMINOU E ELA SERÁ DEVOLVIDA À SUA ORIGEM', 'exception', 'returned']] as const) {
+      const newest = parseCorreosExpress(edit($ => $('tbody tr').first().find('td').last().text(`${label}. PRIVATE_SYNTHETIC_NOTE`), portuguese), NUMBER);
+      expect(newest, label).toMatchObject({ status, current_stage: stage, last_status_text: label });
+    }
+    const negativePt = negative().replace('Lo sentimos, no se ha encontrado ningún envío con el número indicado.',
+      'Desculpe, não foi encontrado nenhum envio com o número indicado.');
+    expect(() => parseCorreosExpress(negativePt, NUMBER)).toThrowError(expect.objectContaining({ kind: 'not_found' }));
+  });
+
+  it('labels the Portuguese localizador\'s scans as the Portuguese page does, and a situation it has not shown in Spanish', () => {
+    for (const situation of ['01', '02', '04', '06', '08', '09', '10', '11', '12', '13', '17', '38', '39']) {
+      const label = correosExpressCodeLabel(`X${situation}0000V`, 'pt')!;
+      expect(classifyCorreosExpressStatus(label), situation).toEqual(classifyCorreosExpressStatus(correosExpressCodeLabel(`X${situation}0000V`)!));
+    }
+    expect(correosExpressCodeLabel('X140000V', 'pt')).toBe('CAMBIO DE DESTINO');
+    const result = normalizeCarrierResult(parseCorreosExpress(portuguese, NUMBER, portugueseFeed));
+    expect(result.events?.slice(3, 7).map(({ time, local_time, provider_code, stage, description }) => [time ?? local_time, provider_code, stage, description])).toEqual([
+      ['2026-01-15T11:00:05', 'X080000V', 'out_for_delivery', IN_DELIVERY],
+      ['2026-01-15T10:30:00', 'X140000V', 'in_transit', 'CAMBIO DE DESTINO'],
+      // The localizador gives the round its fixed reason, which the form's note left out.
+      ['2026-01-15T09:45:00+01:00', 'X090060R', 'failed_attempt', NOT_DELIVERED],
+      ['2026-01-15T07:30:00+01:00', undefined, 'out_for_delivery', 'EM DISTRIBUIÇÃO. Seu envio encontra-se em distribuição. Será entregue na data prevista.'],
+    ]);
+    expect(result.events?.[7]).toMatchObject({ provider_code: 'X060000V', description: expect.stringMatching(/^NO DESTINO\. Seu envio/) });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
+    const alone = normalizeCarrierResult(correosExpressFeedResult(portugueseFeed, NUMBER, 'pt'));
+    expect(alone).toMatchObject({ status: 'out_for_delivery', last_status_text: IN_DELIVERY });
+    expect(alone.events?.map(event => event.description)).toEqual([IN_DELIVERY, 'CAMBIO DE DESTINO', NOT_DELIVERED,
+      'NO DESTINO. O seu envio está nas nossas instalações de destino e estamos a classificá-lo. Recebê-lo-á na data de entrega prevista.']);
+    expect(statusMap.stage(null, normalizeStatusWording(NOT_DELIVERED))).toBe('failed_attempt');
+  });
+
+  it('lets a scan stored in one language take the other\'s wording in place, at the same place and situation', () => {
+    const policy = sameInstantIdentityPolicy('correos-express', { supportsScanMatching: true })!;
+    const scan = (description: string, stage: string, location = 'VALENCIA') => ({ description, stage, location, providerCode: '' });
+    for (const [spanish, translated, stage] of [
+      [`EN DESTINO. ${EXPLAINED.EN_DESTINO}`, 'NO DESTINO. Seu envio está nas nossas instalações de destino e estamos a classificá-lo. Será entregue na data prevista.', 'in_transit'],
+      ['EN REPARTO', 'EM DISTRIBUIÇÃO', 'out_for_delivery'],
+      [EXPLAINED.ADDRESS, 'Não foi possivel entregar o seu envio porque a morada de destino está incompleta ou incorreta.', 'failed_attempt'],
+      [FAILED_ROUND, NOT_DELIVERED, 'failed_attempt'],
+      ['ENTREGADO EN PUNTO DE CONVENIENCIA', 'ENTREGUE EM PONTO DE CONVENIÊNCIA', 'in_transit'],
+      ['NUEVO REPARTO. Concertación entrega flexible.', 'EM REDISTRIBUIÇÃO. Acordo entrega flexível.', 'in_transit'],
+    ] as const) {
+      expect(policy.matches!(scan(translated, stage), scan(spanish, stage)), translated).toBe(true);
+      expect(policy.matches!(scan(spanish, stage), scan(translated, stage)), spanish).toBe(true);
+    }
+    // Another situation or another place is another scan, and an unread label takes over nothing.
+    expect(policy.matches!(scan('EM DISTRIBUIÇÃO', 'out_for_delivery'), scan('EN DESTINO', 'in_transit'))).toBe(false);
+    expect(policy.matches!(scan('EM DISTRIBUIÇÃO', 'out_for_delivery'), scan('EN REPARTO', 'out_for_delivery', 'MADRID'))).toBe(false);
+    expect(policy.matches!(scan('Tracking update', ''), scan('EN REPARTO', 'out_for_delivery'))).toBe(false);
+  });
+
+  it('asks the form and the localizador in Portuguese for a Portuguese reader, and in Spanish for anyone else', async () => {
+    for (const [language, form, idioma] of [['pt', FORM_PT, 'PT'], ['pt-BR', FORM_PT, 'PT'], ['es-ES', FORM, 'ES'], ['ca', FORM, 'ES'],
+      ['en', FORM, 'ES'], [null, FORM, 'ES']] as const) {
+      const fetcher = routed(() => response(form === FORM_PT ? portuguese : failedRound));
+      const result = await adapter(environment(fetcher)).track({ number: NUMBER, language });
+      expect(urls(fetcher).sort(), String(language)).toEqual([form, `${FEED}${NUMBER}?codAplicacion=60&codCanal=3&codIdioma=${idioma}&indUltEvento=N`].sort());
+      expect(result).toMatchObject({ status: 'delivered', delivered_at: '2026-01-16T17:40:00+01:00' });
+    }
+  });
+
+  it('asks again in Spanish when the Portuguese page shows a label the map does not read, and keeps the Portuguese when that fails', async () => {
+    const unread = edit($ => $('tbody tr').eq(1).find('td').last().text('ESTADO SINTÉTICO. PRIVATE_SYNTHETIC_NOTE'), portuguese);
+    const answering = (page: string, spanish: () => Response) => vi.fn(async (url: string | URL | Request) => (String(url) === FORM_PT ? response(page)
+      : String(url) === FORM ? spanish() : json(noTrace()))) as unknown as typeof fetch;
+    const asked = answering(unread, () => response(failedRound));
+    const result = await adapter(environment(asked)).track({ number: NUMBER, language: 'pt' });
+    expect(result.events?.[1]).toMatchObject({ provider_status: 'DISPONIBLE EN PUNTO DE CONVENIENCIA', stage: 'ready_for_pickup' });
+    expect(urls(asked).filter(url => !url.startsWith(FEED))).toEqual([FORM_PT, FORM]);
+    expect(urls(asked).filter(url => url.startsWith(FEED)).map(url => new URL(url).searchParams.get('codIdioma'))).toEqual(['PT', 'ES']);
+    const kept = await adapter(environment(answering(unread, () => new Response('Unavailable', { status: 503 })))).track({ number: NUMBER, language: 'pt' });
+    expect(kept.events?.map(event => event.description).slice(0, 3)).toEqual(['Delivered', 'Tracking update',
+      'ENTREGUE EM PONTO DE CONVENIÊNCIA. Sua remessa está no ponto de conveniência selecionado e em breve você receberá instruções para retirá-la.']);
+    // A note without a label reads no better in Spanish, so it is not asked again.
+    const note = answering(edit($ => $('tbody tr').eq(1).find('td').last().text('. PRIVATE_SYNTHETIC_INCIDENT'), portuguese), () => response(failedRound));
+    expect((await adapter(environment(note)).track({ number: NUMBER, language: 'pt' })).events?.[1]).toMatchObject({ description: 'Tracking update' });
+    expect(urls(note).filter(url => !url.startsWith(FEED))).toEqual([FORM_PT]);
   });
 });
