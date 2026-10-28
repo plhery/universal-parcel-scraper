@@ -141,6 +141,33 @@ describe('HuaHan guest tracking', () => {
       .toEqual(['CC', 'CB', 'IA', 'YG', 'LD', 'QG', 'QF', 'BG', 'GG']);
   });
 
+  it('keeps the destination carrier\'s placed line for a scan also listed in generic words', () => {
+    const twice = fixture();
+    twice.data[0]!.Detail = [
+      { Occur_date: '2026-01-09 12:15:00', Status: 'CC', Comment: 'Delivered, Parcel was delivered successfully', track_area: '' },
+      { Occur_date: '2026-01-09 12:15:00', Status: 'CC', Comment: 'The parcel has been successfully delivered.', track_area: 'Sample Town' },
+      { Occur_date: '2026-01-09 05:44:00', Status: 'CB', Comment: 'Out for Delivery, Parcel is at courier, delivery expected soon.', track_area: '' },
+      { Occur_date: '2026-01-09 05:44:00', Status: '', Comment: 'A courier has the parcel.', track_area: 'Sample Town' },
+      { Occur_date: '2026-01-08 20:41:00', Status: 'IA', Comment: 'In Transit', track_area: '' },
+      { Occur_date: '2026-01-08 20:38:00', Status: 'IA', Comment: 'In Transit', track_area: '' },
+      { Occur_date: '2026-01-08 20:38:00', Status: 'IA', Comment: 'The parcel is in the central warehouse waiting to be processed.', track_area: 'Sample Hub' },
+      { Occur_date: '2026-01-08 20:38:00', Status: 'IA', Comment: 'The parcel was sorted.', track_area: 'Sample Hub' },
+      { Occur_date: '2026-01-06 14:03:50', Status: 'YG', Comment: 'Import Customs clearance completed', track_area: 'NL' },
+    ];
+    const result = parseHuahan(twice, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'delivered', last_status_text: 'The parcel has been successfully delivered.' });
+    expect(result.events!.map(event => [event.local_time, event.description, event.provider_code, event.stage])).toEqual([
+      ['2026-01-09T12:15:00', 'The parcel has been successfully delivered.', 'CC', 'delivered'],
+      ['2026-01-09T05:44:00', 'A courier has the parcel.', 'CB', 'out_for_delivery'],
+      ['2026-01-08T20:41:00', 'In Transit', 'IA', 'in_transit'],
+      // Two placed lines at the generic line's minute: none of them is its copy.
+      ['2026-01-08T20:38:00', 'In Transit', 'IA', 'in_transit'],
+      ['2026-01-08T20:38:00', 'The parcel is in the central warehouse waiting to be processed.', 'IA', 'in_transit'],
+      ['2026-01-08T20:38:00', 'The parcel was sorted.', 'IA', 'in_transit'],
+      ['2026-01-06T14:03:50', 'Import Customs clearance completed', 'YG', 'in_transit'],
+    ]);
+  });
+
   it('keeps pickup-point arrival distinct from delivery to the recipient', () => {
     const pickup = fixture();
     pickup.data[0]!.Status = 'Available for collection';

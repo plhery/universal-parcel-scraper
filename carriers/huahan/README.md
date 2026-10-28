@@ -26,6 +26,9 @@ to the destination carrier's scans.
   matched its partner's own tracker in French time. A destination country of one zone
   places those scans. HuaHan's own scans, in China and at the destination airport, stay
   local times.
+- The reply can list a destination carrier's scan twice at the same minute: in that carrier's
+  words at its place, and in HuaHan's generic words without one. The placed line stays, with
+  the generic line's code when it came without one, so it keeps the code's stage.
 
 ## Numbers
 

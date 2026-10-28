@@ -54,6 +54,37 @@ function clock(value: string): string {
   throw new SchemaError(PROVIDER, 'HuaHan returned an invalid scan clock');
 }
 
+interface Scan { local_time: string; description: string; code: string; location: string }
+
+/** The codes of the destination carrier's scans, relayed after the hand-off. */
+const PARTNER_CODES = new Set(['IA', 'CB', 'PB', 'CC']);
+
+/**
+ * A destination carrier's scan can be listed twice: in that carrier's words at
+ * its place, and in HuaHan's generic words ("Delivered, Parcel was delivered
+ * successfully") with no place, at the same minute under the same code. The
+ * placed line stays and takes the code when it was relayed without one. One to
+ * one: a generic line two placed lines could be, or a placed line two generic
+ * lines could be, stays apart.
+ */
+function withoutGenericCopies(scans: Scan[]): Scan[] {
+  const twins = (generic: Scan) => scans.filter((scan) => scan.location && scan.local_time === generic.local_time
+    && (!scan.code || scan.code === generic.code));
+  const candidates = new Map(scans.filter((scan) => !scan.location && PARTNER_CODES.has(scan.code))
+    .map((generic) => [generic, twins(generic)] as const));
+  const claims = new Map<Scan, number>();
+  for (const placed of candidates.values()) for (const scan of placed) claims.set(scan, (claims.get(scan) ?? 0) + 1);
+  const coded = new Map<Scan, string>();
+  for (const [generic, placed] of candidates) {
+    if (placed.length === 1 && claims.get(placed[0]!) === 1) coded.set(placed[0]!, generic.code);
+  }
+  return scans.flatMap((scan) => {
+    const placed = candidates.get(scan);
+    if (placed?.length === 1 && coded.has(placed[0]!)) return [];
+    return coded.has(scan) ? [{ ...scan, code: coded.get(scan)! }] : [scan];
+  });
+}
+
 /** The public form submits one whole waybill; aliases and partner numbers do not bind its reply. */
 export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   const number = normalizeHuahanNumber(raw);
@@ -73,15 +104,15 @@ export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   if (text(row, 'Error_code', 32) !== '0000') throw new IndeterminateError(PROVIDER, 'HuaHan did not confirm its tracking result');
   if (!Array.isArray(row.Detail) || row.Detail.length > 500) throw new SchemaError(PROVIDER, 'HuaHan returned an invalid history');
   if (!row.Detail.length) throw new NoHistoryError(PROVIDER);
-  const events: CarrierEvent[] = row.Detail.map((scan: unknown) => {
+  const scans: Scan[] = row.Detail.map((scan: unknown) => {
     if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'HuaHan returned an invalid scan');
     const description = text(scan, 'Comment');
     if (!description) throw new SchemaError(PROVIDER, 'HuaHan returned an empty scan');
-    const code = text(scan, 'Status', 32);
-    const location = text(scan, 'track_area', 200);
+    return { local_time: clock(text(scan, 'Occur_date', 32)), description, code: text(scan, 'Status', 32), location: text(scan, 'track_area', 200) };
+  });
+  const events: CarrierEvent[] = withoutGenericCopies(scans).map(({ local_time, description, code, location }) => {
     const staged = huahanStage(code, description);
-    return { local_time: clock(text(scan, 'Occur_date', 32)), description,
-      ...(code ? { provider_code: code } : {}), ...(location ? { location } : {}),
+    return { local_time, description, ...(code ? { provider_code: code } : {}), ...(location ? { location } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) };
   });
   // The page renders Detail in server order, newest first. Clocks from different facilities cannot be sorted as instants.
