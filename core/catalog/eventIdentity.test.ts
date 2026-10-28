@@ -257,7 +257,7 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, description: 'Your parcel is out for delivery.' }, stored)).toBe(false);
   });
 
-  it("lets a DPD UK round notice that dropped its hour, or a scan without its driver's name, take over its stored row", () => {
+  it("lets a DPD UK round notice that dropped its hour, a reworded depot scan, or a scan without its driver's name, take over its stored row", () => {
     const policy = sameInstantIdentityPolicy('dpd-uk', { supportsScanMatching: true });
     const round = { stage: 'out_for_delivery', description: 'Your parcel will be with you today between 14:18 and 15:18', location: '', providerCode: '' };
     expect(policy?.matches?.({ ...round, description: 'Your parcel will be with you today' }, round)).toBe(true);
@@ -265,6 +265,11 @@ describe('same-instant identity policies', () => {
     const missed = { stage: 'failed_attempt', description: "We missed you. Your driver Sample won't be back today but we'll be back Wed 28 October with your parcel", location: '', providerCode: '' };
     expect(policy?.matches?.({ ...missed, description: "We missed you. Your driver won't be back today but we'll be back Wed 28 October with your parcel" }, missed)).toBe(true);
     expect(policy?.matches?.({ ...missed, description: "We missed you. Your driver won't be back today but we'll be back Thu 29 October with your parcel" }, missed)).toBe(false);
+    // A depot scan as it arrives, once the parcel is ready for its round, and after.
+    const depot = { stage: 'in_transit', description: 'Your parcel has arrived at our depot', location: '', providerCode: '' };
+    expect(policy?.matches?.({ ...depot, description: 'Your parcel is at our depot ready for delivery' }, depot)).toBe(true);
+    expect(policy?.matches?.({ ...depot, description: 'Your parcel is at our depot' }, { ...depot, description: 'Your parcel is at our depot ready for delivery' })).toBe(true);
+    expect(policy?.matches?.({ ...depot, description: "We have your parcel and it's on its way to our depot" }, depot)).toBe(false);
   });
 
   it('lets a NACEX platform scan whose town lost its "PLAT" take over its stored row', () => {

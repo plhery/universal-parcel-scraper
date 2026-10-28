@@ -60,6 +60,7 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   'the parcel is on the vehicle for delivery': 'out_for_delivery',
   'your parcel is at our depot': 'in_transit',
   'your parcel has arrived at our depot': 'in_transit',
+  'your parcel is at our depot ready for delivery': 'in_transit',
   "your parcel has left our sortation facility and is on it's onwards journey": 'in_transit',
   'the parcel has arrived at the delivery depot': 'in_transit',
   'the parcel is in transit to its final destination': 'in_transit',

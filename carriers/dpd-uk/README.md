@@ -23,9 +23,10 @@ before reading history under the returned handle.
 - A cancellation by the sender is an exception, and a missed round, which names
   the day of the next, a failed attempt.
 - Scans leave out the driver's name a sentence gives. The round's notice gives
-  the hour of the delivery, then drops it once the round is over; the parcel
-  app's identity policy keeps one row for both wordings, and for a scan stored
-  with the driver's name.
+  the hour of the delivery, then drops it once the round is over. A depot scan
+  is reworded as the parcel moves on: it has arrived at the depot, then is there
+  ready for delivery, then is at the depot. The parcel app's identity policy
+  keeps one row for each such scan, and for a scan stored with the driver's name.
 - Fourteen digits is also the shape of other DPD networks and carriers.
   Detection suggests DPD UK first for numbers starting with 1550, the range
   its tracking pages show most, or 1597, the start a British retailer's courier
