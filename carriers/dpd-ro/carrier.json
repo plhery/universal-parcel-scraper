@@ -93,6 +93,17 @@
       "params": [
         "shipmentNumber"
       ]
+    },
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/ro(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
     }
   ],
   "detection": [

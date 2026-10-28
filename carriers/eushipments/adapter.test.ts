@@ -89,6 +89,18 @@ describe('euShipments HTTP adapter', () => {
     expect(parseEushipments(text('delivered.html').replace(/href="[^"]*"/, 'href="javascript:void(0)"'), ORDER)).not.toHaveProperty('delivery_carrier');
   });
 
+  it('names the other couriers its links point to', () => {
+    for (const [link, carrier] of [
+      [`https://www.speedy.bg/bg/track-shipment?shipmentNumber=${COURIER}`, 'speedy'],
+      [`https://boxnow.bg/track?track=${COURIER}`, 'box-now'],
+      [`https://gls-group.com/RO/en/parcel-tracking?match=${COURIER}`, 'gls-de'],
+      [`https://www.dpdgroup.com/ro/mydpd/my-parcels/search?parcelNumber=${COURIER}`, 'dpd-ro'],
+    ] as const) {
+      expect(parseEushipments(text('delivered.html').replace(/href="[^"]*"/, `href="${link}"`), ORDER))
+        .toMatchObject({ delivery_carrier: carrier, delivery_tracking_number: COURIER });
+    }
+  });
+
   it('reads the handler’s unknown-number error as not found, and its other errors as no answer', async () => {
     expect(() => parseEushipmentsError(JSON.parse(text('not-found.json')))).toThrow(expect.objectContaining({ kind: 'not_found' }));
     await expect(carrier(replying(() => json(text('not-found.json')))).track({ number: ORDER })).rejects.toMatchObject({ kind: 'not_found' });

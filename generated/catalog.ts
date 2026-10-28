@@ -1093,6 +1093,7 @@ export const CARRIER_CATALOG = {
           "dpdgroup.com",
           "dpd.com"
         ],
+        "pathPattern": "^/ch(?:/|$)",
         "params": [
           "parcelNumber",
           "parcelnumber"
@@ -1141,6 +1142,17 @@ export const CARRIER_CATALOG = {
           "trace.dpd.fr"
         ],
         "path": "^/(?:fr/trace|trace-particuliers)/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/fr(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
+        ]
       }
     ],
     "detectionRules": [
@@ -2039,7 +2051,7 @@ export const CARRIER_CATALOG = {
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/GROUP/",
+        "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|HU|IE|LU|NL|RO|RS|SI|SK)/",
         "params": [
           "match",
           "parcelNumber",
@@ -8273,7 +8285,21 @@ export const CARRIER_CATALOG = {
     },
     "canaryUrl": "https://boxnow.cy/track",
     "trackingSearchUrl": "https://boxnow.cy/track",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "boxnow.gr",
+          "boxnow.bg",
+          "boxnow.hr",
+          "boxnow.cy",
+          "boxnow.si"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?track/?$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^\\d{10}$",
@@ -11974,6 +12000,17 @@ export const CARRIER_CATALOG = {
         "params": [
           "ipn"
         ]
+      },
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/at(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
+        ]
       }
     ],
     "detectionRules": [
@@ -12000,7 +12037,19 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://www.dpd.com/be/en/receiving/track-trace/",
     "trackingUrlTemplate": "https://www.dpdgroup.com/be/mydpd/my-parcels/track?lang=en&parcelNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.dpd.com/be/en/receiving/track-trace/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/be(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^\\d{14}$",
@@ -12056,6 +12105,17 @@ export const CARRIER_CATALOG = {
         "params": [
           "parcelno"
         ]
+      },
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/de(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
+        ]
       }
     ],
     "detectionRules": [
@@ -12097,7 +12157,19 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://www.dpd.com/hu/hu/",
     "trackingUrlTemplate": "https://www.dpdgroup.com/hu/mydpd/my-parcels/search?lang=en&parcelNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.dpd.com/hu/hu/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/hu(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^\\d{14}$",
@@ -12156,7 +12228,19 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://www.dpd.com/nl/en/receiving/",
     "trackingUrlTemplate": "https://www.dpdgroup.com/nl/mydpd/my-parcels/search?lang=en&parcelNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.dpd.com/nl/en/receiving/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/nl(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^\\d{14}$",
@@ -12192,6 +12276,17 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/(?:EN/)?parcelDetails$",
         "params": [
           "p1"
+        ]
+      },
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/pl(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
         ]
       }
     ],
@@ -12243,6 +12338,17 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/(?:track-and-trace|en/getting-parcel/track-trace)/?$",
         "params": [
           "reference"
+        ]
+      },
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/pt(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
         ]
       }
     ],
@@ -12309,6 +12415,17 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/tracking/?$",
         "params": [
           "shipmentNumber"
+        ]
+      },
+      {
+        "domains": [
+          "dpdgroup.com",
+          "dpd.com"
+        ],
+        "pathPattern": "^/ro(?:/|$)",
+        "params": [
+          "parcelNumber",
+          "parcelnumber"
         ]
       }
     ],
@@ -29033,7 +29150,32 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://myspeedy.speedy.bg/pub/tracking/",
     "trackingUrlTemplate": "https://myspeedy.speedy.bg/pub/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://myspeedy.speedy.bg/pub/tracking/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "speedy.bg"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?track-shipment/?$",
+        "params": [
+          "shipmentNumber"
+        ]
+      },
+      {
+        "domains": [
+          "speedy.bg"
+        ],
+        "pathPattern": "^/begin\\.php$",
+        "params": [
+          "shipmentNumber"
+        ]
+      },
+      {
+        "domains": [
+          "myspeedy.speedy.bg"
+        ],
+        "path": "^/pub/tracking/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "spx-br": {

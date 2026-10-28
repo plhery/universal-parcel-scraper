@@ -125,6 +125,13 @@ The German national app has a separate
 [SOAP service](../dpd-de/README.md#app-service), which this adapter asks only
 for Pickup shops.
 
+## Links
+
+A link to DPD's group site, `www.dpdgroup.com` or `www.dpd.com`, with the number in
+`?parcelNumber=` names the network of the country its path starts with: `/ch/` names this
+carrier, and the other countries with a DPD network in the catalog name theirs. Any other
+country's path names none.
+
 ## Testing
 
 `npm run test:carriers:live -- carriers/dpd` checks the anonymous negative path.

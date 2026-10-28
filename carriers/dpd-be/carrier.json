@@ -48,7 +48,19 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/be(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
+    }
+  ],
   "detection": [
     {
       "id": "dpd-be-1",

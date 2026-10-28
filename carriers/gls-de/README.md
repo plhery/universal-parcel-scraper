@@ -60,8 +60,10 @@ to reach GLS, or hangs, is sent once more, as in gls-ch.
   Austria, which are asked about eleven digits only then. Otherwise GLS Germany
   is chosen: it is the more common network, and its tracker takes any country's
   postcode, so it reaches the history of either network's parcel. Group-wide `/EU/` and
-  `/GROUP/` links come here too, except a `/GROUP/` link whose number alone
-  names a carrier, such as GLS France's. GLS Switzerland is also reached
+  `/GROUP/` links come here too, as do links to the group tracker's pages for
+  countries without a GLS network of their own in the catalog, such as Romania
+  or Slovakia, except one whose number alone names a carrier, such as GLS
+  France's. GLS Switzerland is also reached
   through a `/CH/` link or by picking it. GLS France still comes first when it
   knows the number, whatever the caller's country: its own tracker answers only
   French parcels, with the history and no postcode.

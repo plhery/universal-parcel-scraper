@@ -54,8 +54,7 @@ sources are in [`numbers.json`](numbers.json).
 
 DPD Netherlands' tracking page opens one parcel at
 `www.dpdgroup.com/nl/mydpd/my-parcels/search` with the number in `?parcelNumber=`, and results
-link there. myDPD links are read as [DPD Switzerland](../dpd/README.md)'s, whose rules take
-the whole domain.
+link there. Such links, and others on the group site under `/nl/`, name DPD Netherlands.
 
 ## Testing
 

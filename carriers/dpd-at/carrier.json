@@ -90,6 +90,17 @@
       "params": [
         "ipn"
       ]
+    },
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/at(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
     }
   ],
   "detection": [

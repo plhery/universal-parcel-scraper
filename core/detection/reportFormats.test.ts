@@ -279,6 +279,11 @@ describe('evidence-backed tracking formats', () => {
       .toMatchObject({ trackingNumber: 'ZY0AB12C', carrier: 'gls-de', source: 'link' });
     expect(parseTrackingInput('https://gls-group.eu/CH/de/paketverfolgung?match=AALZJR'))
       .toMatchObject({ trackingNumber: 'AALZJR', carrier: 'gls-ch', source: 'link' });
+    // The group tracker's pages for countries without a GLS network of their own in the catalog ask the same service.
+    expect(parseTrackingInput('https://gls-group.com/RO/en/parcel-tracking?match=12345678901'))
+      .toMatchObject({ trackingNumber: '12345678901', carrier: 'gls-de', confidence: 'high', source: 'link' });
+    expect(parseTrackingInput('https://gls-group.com/SK/sk/sledovanie-zasielok?match=AALZJR'))
+      .toMatchObject({ trackingNumber: 'AALZJR', carrier: 'gls-de', source: 'link' });
   });
 
   it('offers UPS for an H waybill without selecting it', () => {

@@ -43,6 +43,12 @@ A delivery postponed to a later day and the contents-check scans have no stage: 
 not say whether a courier tried or the parcel moved. A route MySpeedy removed would answer the
 same 404 page as an unknown number. Partners other than ACS are not named.
 
+## Links
+
+Speedy's tracking page reads the number from `shipmentNumber` at
+`www.speedy.bg/{language}/track-shipment`, as its older `begin.php` page did, and MySpeedy's
+from its path at `myspeedy.speedy.bg/pub/tracking/{number}`. Such links name Speedy.
+
 ## Live test
 
 Set `SPEEDY_TRACKING_NUMBER` outside the repository and run

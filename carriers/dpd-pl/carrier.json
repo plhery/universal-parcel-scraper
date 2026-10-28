@@ -71,6 +71,17 @@
       "params": [
         "p1"
       ]
+    },
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/pl(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
     }
   ],
   "detection": [

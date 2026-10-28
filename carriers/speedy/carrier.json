@@ -78,6 +78,31 @@
       "sender_name"
     ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "speedy.bg"
+      ],
+      "pathPattern": "^/(?:[a-z]{2}/)?track-shipment/?$",
+      "params": [
+        "shipmentNumber"
+      ]
+    },
+    {
+      "domains": [
+        "speedy.bg"
+      ],
+      "pathPattern": "^/begin\\.php$",
+      "params": [
+        "shipmentNumber"
+      ]
+    },
+    {
+      "domains": [
+        "myspeedy.speedy.bg"
+      ],
+      "path": "^/pub/tracking/([^/?#]+)/?$"
+    }
+  ],
   "detection": []
 }

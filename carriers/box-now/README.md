@@ -49,6 +49,11 @@ A parcel put back into a locker to be returned is left without a stage: no reply
 whether it ends the delivery or starts a return to the sender. The trackers' home pages read a
 `?track=` query and look the number up, but the catalog has no link for it yet.
 
+## Links
+
+BOX NOW's sites for Greece, Bulgaria, Croatia, Cyprus and Slovenia open one parcel at `/track`
+with the number in `?track=`. Such links name BOX NOW.
+
 ## Live test
 
 Set `BOX_NOW_TRACKING_NUMBER` outside the repository and run

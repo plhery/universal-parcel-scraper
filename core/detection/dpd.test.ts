@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { carrierIdFromPartner } from '../catalog/hints.js';
 import { recognitionAskedCarriers } from '../catalog/recognition.js';
 import { dpdParcelNumber } from './dpd.js';
-import { detectCarrierMatch, isValidDpdParcelNumber } from './index.js';
+import { detectCarrierMatch, isValidDpdParcelNumber, parseTrackingInput } from './index.js';
 
 describe('DPD parcel number check character', () => {
   it('reads the fourteen digits with or without the printed character', () => {
@@ -35,5 +36,26 @@ describe('DPD parcel number check character', () => {
     for (const carrier of ['dpd', 'dpd-de', 'dpd-uk']) {
       expect(detectCarrierMatch('012345678901234').candidates).not.toContain(carrier);
     }
+  });
+});
+
+describe('DPD group site links', () => {
+  it('names the network of the country the link’s path gives', () => {
+    for (const [url, carrier] of [
+      ['https://www.dpdgroup.com/ch/mydpd/my-parcels/incoming?parcelNumber=01234567890123', 'dpd'],
+      ['https://www.dpdgroup.com/be/mydpd/my-parcels/track?parcelNumber=01234567890123', 'dpd-be'],
+      ['https://www.dpdgroup.com/nl/mydpd/my-parcels/search?parcelNumber=01234567890123', 'dpd-nl'],
+      ['https://www.dpdgroup.com/hu/mydpd/my-parcels/search?parcelNumber=01234567890123', 'dpd-hu'],
+      ['https://www.dpd.com/ro/ro/?parcelNumber=01234567890123', 'dpd-ro'],
+    ] as const) {
+      expect(parseTrackingInput(url)).toMatchObject({ trackingNumber: '01234567890123', carrier, confidence: 'high', source: 'link' });
+      expect(carrierIdFromPartner('', url)).toBe(carrier);
+    }
+  });
+
+  it('names no network for a country the catalog has none for', () => {
+    const url = 'https://www.dpdgroup.com/sk/mydpd/my-parcels/search?parcelNumber=01234567890123';
+    expect(parseTrackingInput(url).carrier).toBe('unknown');
+    expect(carrierIdFromPartner('', url)).toBeUndefined();
   });
 });

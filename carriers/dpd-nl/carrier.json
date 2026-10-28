@@ -50,7 +50,19 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/nl(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
+    }
+  ],
   "detection": [
     {
       "id": "dpd-nl-1",

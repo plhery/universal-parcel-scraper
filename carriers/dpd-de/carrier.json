@@ -94,6 +94,17 @@
       "params": [
         "parcelno"
       ]
+    },
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/de(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
     }
   ],
   "detection": [

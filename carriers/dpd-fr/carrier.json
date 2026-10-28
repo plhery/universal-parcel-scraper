@@ -67,6 +67,17 @@
         "trace.dpd.fr"
       ],
       "path": "^/(?:fr/trace|trace-particuliers)/([^/?#]+)/?$"
+    },
+    {
+      "domains": [
+        "dpdgroup.com",
+        "dpd.com"
+      ],
+      "pathPattern": "^/fr(?:/|$)",
+      "params": [
+        "parcelNumber",
+        "parcelnumber"
+      ]
     }
   ],
   "detection": [

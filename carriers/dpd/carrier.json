@@ -89,6 +89,7 @@
         "dpdgroup.com",
         "dpd.com"
       ],
+      "pathPattern": "^/ch(?:/|$)",
       "params": [
         "parcelNumber",
         "parcelnumber"

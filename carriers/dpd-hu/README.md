@@ -58,8 +58,8 @@ says why it holds no sample yet.
 ## Links
 
 DPD Hungary's tracking box opens one parcel at `www.dpdgroup.com/hu/mydpd/my-parcels/search`
-with the number in `?parcelNumber=`, and results link there. myDPD links are read as
-[DPD Switzerland](../dpd/README.md)'s, whose rules take the whole domain.
+with the number in `?parcelNumber=`, and results link there. Such links, and others on the
+group site under `/hu/`, name DPD Hungary.
 
 ## Testing
 

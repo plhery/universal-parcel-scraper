@@ -80,7 +80,21 @@
       "proof_of_delivery"
     ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "boxnow.gr",
+        "boxnow.bg",
+        "boxnow.hr",
+        "boxnow.cy",
+        "boxnow.si"
+      ],
+      "pathPattern": "^/(?:[a-z]{2}/)?track/?$",
+      "params": [
+        "track"
+      ]
+    }
+  ],
   "detection": [
     {
       "id": "box-now-1",

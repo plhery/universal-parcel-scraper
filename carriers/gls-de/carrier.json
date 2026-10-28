@@ -105,7 +105,7 @@
         "gls-group.eu",
         "gls-group.com"
       ],
-      "pathPattern": "^/GROUP/",
+      "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|HU|IE|LU|NL|RO|RS|SI|SK)/",
       "params": [
         "match",
         "parcelNumber",

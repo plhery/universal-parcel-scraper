@@ -62,8 +62,7 @@ recognition asks it. The samples and their sources are in [`numbers.json`](numbe
 
 DPD Belgium's tracking page opens one parcel at
 `www.dpdgroup.com/be/mydpd/my-parcels/track` with the number in `?parcelNumber=`, and results
-link there. myDPD links are read as [DPD Switzerland](../dpd/README.md)'s, whose rules take
-the whole domain.
+link there. Such links, and others on the group site under `/be/`, name DPD Belgium.
 
 ## Testing
 

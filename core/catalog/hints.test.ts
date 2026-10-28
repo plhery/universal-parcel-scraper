@@ -132,6 +132,13 @@ describe('delivery partner evidence', () => {
     ['', 'https://gls-group.eu/EU/en/parcel-tracking', 'gls-de'],
     ['', 'https://gls-group.eu/GROUP/en/parcel-tracking', 'gls-de'],
     ['', 'https://gls-group.eu/CH/de/paketverfolgung', 'gls-ch'],
+    ['', 'https://gls-group.com/BG/en/parcel-tracking?match=12345678901', 'gls-de'],
+    ['', 'https://gls-group.com/HR/hr/pracenje-paketa?match=12345678901', 'gls-de'],
+    ['', 'https://www.speedy.bg/bg/track-shipment?shipmentNumber=61234567890', 'speedy'],
+    ['', 'https://www.speedy.bg/begin.php?shipmentNumber=61234567890', 'speedy'],
+    ['', 'https://myspeedy.speedy.bg/pub/tracking/61234567890', 'speedy'],
+    ['', 'https://boxnow.bg/track?track=9000000001', 'box-now'],
+    ['', 'https://boxnow.gr/en/track?track=9000000001', 'box-now'],
     ['', 'https://gls-group.eu/', undefined],
     // A carrier's own host: its tracking pages and home page name it, its other pages none.
     ['', 'https://vas.brt.it/vas/sped_det_show.hsm', 'brt'],
