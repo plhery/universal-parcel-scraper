@@ -434,6 +434,92 @@ describe('BRT direct tracking', () => {
   });
 });
 
+describe('BRT in Italian', () => {
+  // The fixture's history with each scan labelled as given, newest first.
+  const labelled = (...labels: string[]) => edit($ => $('.table_stato_dati tr').slice(1).each((index, row) => {
+    $(row).children('td').last().text(labels[index]!);
+  }));
+  const ENGLISH = ['COLLECTED AT BRT-fermopoint', 'ARRIVED AT BRT-fermopoint', 'FOR DELIVERY', 'ARRIVED AT DEPOT', 'DEPARTED', 'COLLECTED', 'SHIPPING INFO SENT TO BRT'];
+  const ITALIAN = ['RITIRATA AL BRT-fermopoint', 'ARRIVATA AL BRT-fermopoint', 'IN CONSEGNA', 'ARRIVATA IN FILIALE', 'PARTITA', 'RITIRATA', 'DATI SPEDIZ. TRASMESSI A BRT'];
+  const english = labelled(...ENGLISH);
+  const italian = labelled(...ITALIAN);
+  const unworded = (result: CarrierResult) => ({ ...result, last_status_text: undefined,
+    events: result.events!.map(event => ({ ...event, description: undefined, provider_status: undefined })) });
+  const languageOf = (url: unknown, init?: RequestInit) => new URL(String(url)).searchParams.get('lang') ?? new URLSearchParams(String(init?.body)).get('lang');
+
+  it('reads the Italian page as it reads the English one', () => {
+    const fromEnglish = parseBrt(english, NUMBER);
+    const fromItalian = parseBrt(italian, NUMBER);
+    expect(unworded(fromItalian)).toEqual(unworded(fromEnglish));
+    expect(fromEnglish).toMatchObject({ status: 'delivered', last_status_text: 'Delivered' });
+    expect(fromItalian).toMatchObject({ status: 'delivered', last_status_text: 'Consegnata' });
+    expect(fromItalian.events!.map(event => event.provider_status)).toEqual(ITALIAN);
+    for (const [en, it] of [['NOTICE OF ATTEMPTED DELIVERY', 'Destin.Assente:LASCIATO AVVISO'], ['UNKNOWN/INCOMPLETE CONSIGNEE', 'DESTINATAR.SCONOSC./INCOMPLETO'],
+      ['TURMOIL', 'MANIFESTAZIONE PUBBLICA'], ['Redirect to BRT-fermopoint', 'REINDIRIZZATA A BRT-fermopoint']]) {
+      expect(unworded(parseBrt(labelled(it!, ...ITALIAN.slice(1)), NUMBER))).toEqual(unworded(parseBrt(labelled(en!, ...ENGLISH.slice(1)), NUMBER)));
+    }
+    const returned = parseBrt(labelled('CONSEGNATA', 'RESO MITTENTE', ...ITALIAN.slice(2)), NUMBER);
+    expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Consegnata' });
+  });
+
+  it('asks for the Italian page for an Italian reader and for the English one otherwise', async () => {
+    const fetcher = vi.fn<typeof fetch>(async (url, init) => response(languageOf(url, init) === 'it' ? italian : english));
+    const instance = adapter(environment(fetcher));
+    for (const [language, asked] of [['it', 'it'], ['it-IT', 'it'], ['de', 'en'], [null, 'en']] as const) {
+      fetcher.mockClear();
+      const result = await instance.track({ number: NUMBER, postcode: null, language });
+      expect(fetcher).toHaveBeenCalledTimes(1);
+      expect(String(fetcher.mock.calls[0]![0])).toBe(`https://vas.brt.it/vas/sped_det_new.htm?brtCode=${NUMBER}&lang=${asked}`);
+      expect(result.last_status_text).toBe(asked === 'it' ? 'Consegnata' : 'Delivered');
+    }
+    const shipmentPage = (page: string) => changed(page, $ => {
+      const identity = $('.table_dati_spedizione tr').eq(1).children('td');
+      identity.first().text('N. spedizione'); identity.last().text(SHIPMENT);
+    });
+    const posts = vi.fn<typeof fetch>(async (url, init) => response(shipmentPage(languageOf(url, init) === 'it' ? italian : english)));
+    expect(await adapter(environment(posts)).track({ number: SHIPMENT, postcode: null, language: 'it' })).toMatchObject({ last_status_text: 'Consegnata' });
+    const [url, init] = posts.mock.calls[0]!;
+    expect(String(url)).toBe('https://vas.brt.it/vas/sped_det_show.hsm?lang=it');
+    expect(new URLSearchParams(String(init?.body)).get('lang')).toBe('it');
+  });
+
+  it('asks again in English when the Italian page has a label the map has no English for', async () => {
+    const unread = labelled('NUOVO EVENTO SINTETICO', ...ITALIAN.slice(1));
+    const fetcher = vi.fn<typeof fetch>(async (url, init) => response(languageOf(url, init) === 'it' ? unread : english));
+    expect(await adapter(environment(fetcher)).track({ number: NUMBER, postcode: null, language: 'it' })).toEqual(parseBrt(english, NUMBER));
+    expect(fetcher.mock.calls.map(([url, init]) => languageOf(url, init))).toEqual(['it', 'en']);
+    // Without the English page, the Italian one stands.
+    const failing = vi.fn<typeof fetch>(async (url, init) => languageOf(url, init) === 'it' ? response(unread) : new Response('', { status: 503 }));
+    expect(await adapter(environment(failing)).track({ number: NUMBER, postcode: null, language: 'it' })).toEqual(parseBrt(unread, NUMBER));
+  });
+
+  it('reads the Italian page\'s negative and its not-found-or-processing reply as it reads the English ones', () => {
+    const negativeInItalian = negative().replace(`Parcel Label number ${NUMBER} not found`, `Parcel label number ${NUMBER} non trovato`);
+    expect(() => parseBrt(negativeInItalian, NUMBER)).toThrowError(expect.objectContaining({ kind: 'not_found' }));
+    expect(() => parseBrt(negativeInItalian.replaceAll(NUMBER, OTHER), NUMBER)).not.toThrowError(expect.objectContaining({ kind: 'not_found' }));
+    const processing = notFoundPage.replace('Shipment not found or still being processed in our systems. Correct the entered parameter or wait and then repeat the search',
+      'Spedizione non trovata oppure ancora in elaborazione nei nostri sistemi. Correggere il parametro immesso oppure attendere e ripetere successivamente la ricerca');
+    for (const number of [SHIPMENT, NUMBER, PARCEL_ID]) {
+      expect(() => parseBrt(processing, number)).toThrowError(expect.objectContaining({ kind: 'indeterminate', reason: 'portal_not_found' }));
+    }
+    expect(() => parseBrt(processing.replace('TIS0564 ', ''), PARCEL_ID)).toThrowError(expect.objectContaining({ reason: 'portal_not_found' }));
+    expect(() => parseBrt(processing.replace('TIS0564 ', ''), SHIPMENT)).not.toThrowError(expect.objectContaining({ reason: 'portal_not_found' }));
+  });
+
+  it('lets a scan labelled in one language take over the row stored with the other\'s label', () => {
+    const policy = sameInstantIdentityPolicy('brt', { supportsScanMatching: true })!;
+    const scan = (event: CarrierEvent) => ({ stage: event.stage ?? '', description: event.description ?? '', location: event.location ?? '', providerCode: '' });
+    const fromEnglish = parseBrt(english, NUMBER).events!.map(scan);
+    const fromItalian = parseBrt(italian, NUMBER).events!.map(scan);
+    for (const [index, row] of fromEnglish.entries()) {
+      expect(fromItalian.filter(incoming => policy.matches!(incoming, row)), String(index)).toEqual([fromItalian[index]]);
+      expect(fromEnglish.filter(incoming => policy.matches!(incoming, fromItalian[index]!)), String(index)).toEqual([row]);
+    }
+    expect(policy.matches!({ ...fromItalian[4]!, location: 'OTHER DEPOT (992)' }, fromEnglish[4]!)).toBe(false);
+    expect(policy.matches!(fromItalian[4]!, { ...fromEnglish[4]!, providerCode: 'X1' })).toBe(false);
+  });
+});
+
 describe('BRT origin legs', () => {
   const scan = (description: string, clock: string, stage?: string): CarrierEvent => ({ description, ...(stage ? { stage } : {}),
     ...(clock.length > 19 ? { time: clock } : { local_time: clock }) });

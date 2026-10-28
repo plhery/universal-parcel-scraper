@@ -10,7 +10,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import { calendarDay, countryCode, countryTimeZone, isoTime, sharedClockZone } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { DEPOT, isBrtCarrierDepot } from './depot.js';
-import { classifyBrtStatus, DPD_INTAKE, DPD_TRANSIT } from './status.js';
+import { brtEnglishLabel, classifyBrtStatus, DPD_INTAKE, DPD_TRANSIT } from './status.js';
 
 export function normalizeBrtNumber(raw: string): string {
   const number = raw.replace(/\s/g, '').toUpperCase();
@@ -52,9 +52,13 @@ function scanTables($: CheerioAPI) {
 }
 
 // BRT's reply for a shipment number it has not found, which also answers a
-// shipment it has not processed yet. The parcel ID search replies without the code.
-const NOT_FOUND_OR_PROCESSING = 'Shipment not found or still being processed in our systems. '
-  + 'Correct the entered parameter or wait and then repeat the search';
+// shipment it has not processed yet, in English and in Italian. The parcel ID
+// search replies without the code.
+const NOT_FOUND_OR_PROCESSING = [
+  'Shipment not found or still being processed in our systems. Correct the entered parameter or wait and then repeat the search',
+  'Spedizione non trovata oppure ancora in elaborazione nei nostri sistemi. '
+    + 'Correggere il parametro immesso oppure attendere e ripetere successivamente la ricerca',
+];
 
 /** The error the portal reports under its "Errori riscontrati" heading, or '' when it reports none. */
 function portalError($: CheerioAPI): string {
@@ -69,8 +73,10 @@ function portalError($: CheerioAPI): string {
 /** Explains a page without shipment details: BRT's own negative or not-found reply, else inconclusive. */
 function throwPortalError($: CheerioAPI, number: string): never {
   const error = portalError($);
-  if (number.length === 14 && error === `TIS0868 Parcel Label number ${number} not found`) throw new NotFoundError('BRT');
-  if (error === `TIS0564 ${NOT_FOUND_OR_PROCESSING}` || (isBrtParcelId(number) && error === NOT_FOUND_OR_PROCESSING)) {
+  if (number.length === 14 && [`TIS0868 Parcel Label number ${number} not found`, `TIS0868 Parcel label number ${number} non trovato`].includes(error)) {
+    throw new NotFoundError('BRT');
+  }
+  if (NOT_FOUND_OR_PROCESSING.some((reply) => error === `TIS0564 ${reply}` || (isBrtParcelId(number) && error === reply))) {
     throw new IndeterminateError('BRT', 'BRT has not found the shipment or not processed it yet', { reason: 'portal_not_found' });
   }
   throw new IndeterminateError('BRT', 'BRT did not return shipment history');
@@ -270,7 +276,8 @@ export function readBrt(html: string, raw: string, parcelList?: string): { resul
     const cells = $(row).children('td');
     if (cells.length !== 4) throw new SchemaError('BRT', 'BRT returned an incomplete scan');
     const label = clean(cells.eq(3).text(), 160);
-    if (!label || !/^[\p{L}][\p{L}\p{N}\s().,'/-]{1,159}$/u.test(label)) throw new SchemaError('BRT', 'BRT returned an invalid scan label');
+    // The Italian page labels a missed delivery `Destin.Assente:LASCIATO AVVISO`.
+    if (!label || !/^[\p{L}][\p{L}\p{N}\s().,:'/-]{1,159}$/u.test(label)) throw new SchemaError('BRT', 'BRT returned an invalid scan label');
     return { date: clean(cells.eq(0).text(), 40), clock: clean(cells.eq(1).text(), 24), location: clean(cells.eq(2).text(), 120), label };
   });
   if (!scans.length) throw new NoHistoryError('BRT', 'BRT lists the shipment without scans');
@@ -284,7 +291,9 @@ export function readBrt(html: string, raw: string, parcelList?: string): { resul
   const events = scans.map(({ date, clock, location, label }): CarrierEvent => {
     const mapped = brtStatus(label, broughtBy);
     const zones = clockZones(location, deliveredHome || location === origin);
-    return { description: mapped?.status === 'delivered' ? 'Delivered' : label, provider_status: label,
+    // A delivery reads as BRT's DELIVERED, or as its CONSEGNATA on the Italian page.
+    const delivered = brtEnglishLabel(label) ? 'Consegnata' : 'Delivered';
+    return { description: mapped?.status === 'delivered' ? delivered : label, provider_status: label,
       ...(mapped ? { stage: mapped.stage } : {}), ...(location && !isBrtCarrierDepot(location) ? { location } : {}),
       ...scanClock(date, clock, zones) };
   });

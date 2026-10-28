@@ -15,6 +15,14 @@ progress view and requires recipient verification for more details; the linked
 event portal supplies the scan history without that extra input.
 Detection and adapter eligibility use the same catalog shapes.
 
+The page labels scans in Italian or English, as its `lang` asks, with the same
+dates, times and places. A lookup whose `language` is Italian asks for `lang=it`,
+any other for `lang=en`; recognition reads English. The status map reads both
+labels. An Italian page with a label the map has no English for, such as a
+locker's scans, is asked for again in English, and stands if that fails. A
+delivery reads `Consegnata` in Italian and `Delivered` in English. A scan stored
+with one language's label takes the other's in place, at the same instant and place.
+
 Fifteen-digit parcel IDs, printed on the parcel label, go through the form's
 parcel search, which only covers about the last two months. Its result page does
 not repeat the parcel ID, so a second request reads the shipment's own parcel
@@ -94,7 +102,7 @@ status even when the newest clock is unresolved.
 
 Arrival at a locker or BRT-fermopoint, or at the parcel shop of the partner
 abroad that delivers, means ready for pickup; collection from a locker or
-BRT-fermopoint means delivery. A shipment returned to its sender ends with a delivery scan
+BRT-fermopoint means delivery. A notice left after a missed delivery is a failed attempt. A shipment returned to its sender ends with a delivery scan
 at the origin depot; after a return scan that delivery reads as returned.
 The English page's TURMOIL is the scan the Italian page names MANIFESTAZIONE
 PUBBLICA, a public demonstration holding the parcel up: an exception until a
@@ -110,10 +118,10 @@ the shipping data, a newer partner scan gives the current status.
 Recipient details, sender references and shipment identifiers other than the
 requested identifier and that DPD number are excluded from the result.
 
-A negative requires the portal's matching parcel-label error. BRT answers a
+A negative requires the portal's matching parcel-label error, in either language. BRT answers a
 shipment number it has not found with its TIS0564 error, "Shipment not found or
-still being processed", and the parcel search gives the same sentence without the
-code. It also answers a shipment not processed yet and a parcel ID older than the
+still being processed" ("Spedizione non trovata oppure ancora in elaborazione"),
+and the parcel search gives the same sentence without the code. It also answers a shipment not processed yet and a parcel ID older than the
 search reaches, so these exact replies stay inconclusive with the reason
 `portal_not_found`, unless a partner shows a BRTcode bound for Italy. A shipment shown with an empty scan table is a `NoHistoryError`.
 Empty replies, redirects and generic HTTP errors remain inconclusive.

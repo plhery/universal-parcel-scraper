@@ -16,15 +16,48 @@ const labels: Record<string, ClassifiedStatus> = {
   // The partner abroad that delivers the parcel has left it at its parcel shop.
   'TO COLLECT AT THE PARCEL SHOP': { status: 'in_transit', stage: 'ready_for_pickup' },
   'UNKNOWN/INCOMPLETE CONSIGNEE': { status: 'exception', stage: 'failed_attempt' },
-  // BRT's Italian page names it MANIFESTAZIONE PUBBLICA: a public demonstration holds the parcel up.
+  // The courier found no one in and left a notice.
+  'NOTICE OF ATTEMPTED DELIVERY': { status: 'exception', stage: 'failed_attempt' },
+  // A public demonstration holds the parcel up.
   TURMOIL: { status: 'exception', stage: 'exception' },
   'RETURNED TO SENDER': { status: 'exception', stage: 'returned' },
   DELIVERED: { status: 'delivered', stage: 'delivered' },
 };
 
+/**
+ * The labels BRT's Italian page gives the scans its English page labels so,
+ * as both pages show them. The Italian of a locker's scans and of the parcel
+ * shop abroad has not been seen.
+ */
+const ITALIAN: Readonly<Record<string, string>> = {
+  'DATI SPEDIZ. TRASMESSI A BRT': 'SHIPPING INFO SENT TO BRT',
+  RITIRATA: 'COLLECTED',
+  PARTITA: 'DEPARTED',
+  'ARRIVATA IN FILIALE': 'ARRIVED AT DEPOT',
+  'IN CONSEGNA': 'FOR DELIVERY',
+  'ARRIVATA AL BRT-FERMOPOINT': 'ARRIVED AT BRT-FERMOPOINT',
+  'RITIRATA AL BRT-FERMOPOINT': 'COLLECTED AT BRT-FERMOPOINT',
+  'DESTINATAR.SCONOSC./INCOMPLETO': 'UNKNOWN/INCOMPLETE CONSIGNEE',
+  'MANIFESTAZIONE PUBBLICA': 'TURMOIL',
+  'RESO MITTENTE': 'RETURNED TO SENDER',
+  CONSEGNATA: 'DELIVERED',
+  'DESTIN.ASSENTE:LASCIATO AVVISO': 'NOTICE OF ATTEMPTED DELIVERY',
+  // The map stages neither label.
+  'REINDIRIZZATA A BRT-FERMOPOINT': 'REDIRECT TO BRT-FERMOPOINT',
+};
+
+const key = (label: string) => label.replace(/\s+/g, ' ').trim().toUpperCase();
+
+/** The English label of a label BRT's Italian page gives, upper-cased; undefined for any other. */
+export function brtEnglishLabel(label: string): string | undefined {
+  const italian = key(label);
+  return Object.hasOwn(ITALIAN, italian) ? ITALIAN[italian] : undefined;
+}
+
+/** A label's reading, in English or Italian. */
 export function classifyBrtStatus(label: string): ClassifiedStatus | undefined {
-  const key = label.toUpperCase().trim();
-  return Object.hasOwn(labels, key) ? labels[key] : undefined;
+  const english = brtEnglishLabel(label) ?? key(label);
+  return Object.hasOwn(labels, english) ? labels[english] : undefined;
 }
 
 /** In the DPD leg that brought a parcel to BRT, the scans whose stage the scans before them decide (`stagedDpdLeg`). */

@@ -76,11 +76,18 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "NOTICE OF ATTEMPTED DELIVERY",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The courier found no one in and left a notice."
+    },
+    {
       "wording": "TURMOIL",
       "language": "en",
       "stage": "exception",
       "confirmedBy": "live",
-      "note": "BRT's Italian page names the same scan MANIFESTAZIONE PUBBLICA: a public demonstration holds the parcel up. Later scans move it on."
+      "note": "A public demonstration holds the parcel up. Later scans move it on."
     },
     {
       "wording": "RETURNED TO SENDER",
@@ -88,6 +95,90 @@
       "stage": "returned",
       "confirmedBy": "live",
       "note": "A later DELIVERED is the delivery back to the sender, so the shipment reads as returned."
+    },
+    {
+      "wording": "DATI SPEDIZ. TRASMESSI A BRT",
+      "language": "it",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for SHIPPING INFO SENT TO BRT."
+    },
+    {
+      "wording": "RITIRATA",
+      "language": "it",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for COLLECTED."
+    },
+    {
+      "wording": "PARTITA",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for DEPARTED."
+    },
+    {
+      "wording": "ARRIVATA IN FILIALE",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for ARRIVED AT DEPOT."
+    },
+    {
+      "wording": "IN CONSEGNA",
+      "language": "it",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for FOR DELIVERY."
+    },
+    {
+      "wording": "ARRIVATA AL BRT-fermopoint",
+      "language": "it",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for ARRIVED AT BRT-fermopoint."
+    },
+    {
+      "wording": "RITIRATA AL BRT-fermopoint",
+      "language": "it",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for COLLECTED AT BRT-fermopoint."
+    },
+    {
+      "wording": "DESTINATAR.SCONOSC./INCOMPLETO",
+      "language": "it",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for UNKNOWN/INCOMPLETE CONSIGNEE."
+    },
+    {
+      "wording": "Destin.Assente:LASCIATO AVVISO",
+      "language": "it",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for NOTICE OF ATTEMPTED DELIVERY."
+    },
+    {
+      "wording": "MANIFESTAZIONE PUBBLICA",
+      "language": "it",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for TURMOIL."
+    },
+    {
+      "wording": "RESO MITTENTE",
+      "language": "it",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for RETURNED TO SENDER."
+    },
+    {
+      "wording": "CONSEGNATA",
+      "language": "it",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for DELIVERED."
     }
   ]
 }

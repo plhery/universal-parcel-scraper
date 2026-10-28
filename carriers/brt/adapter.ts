@@ -1,4 +1,4 @@
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -6,7 +6,8 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { ChronopostTracker } from '../chronopost/adapter.js';
 import { DPDTracker } from '../dpd/adapter.js';
-import { brtParcelListPath, normalizeBrtNumber, parseBrt, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg, type BrtOriginPartner } from './parser.js';
+import { brtParcelListPath, normalizeBrtNumber, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg, type BrtOriginPartner } from './parser.js';
+import { brtEnglishLabel } from './status.js';
 
 const BASE = 'https://vas.brt.it/vas/';
 /** The time kept for BRT's own answer when a partner's lookup runs out. */
@@ -15,12 +16,19 @@ const ORIGIN_RESERVE_MS = 500;
 /** A partner's lookup of the number BRT tracks a parcel under. */
 export type BrtOriginLookup = (number: string, context: TrackingContext) => Promise<CarrierResult>;
 
+/** The languages BRT's pages label scans in. */
+export type BrtLanguage = 'en' | 'it';
+
 export class BrtTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string;
     /** The lookups of partners that bring parcels from abroad, by the BRTcode they share. */
     origins?: Partial<Record<BrtOriginPartner, BrtOriginLookup>> } = {}) {}
 
-  fetch(raw: string, context: TrackingContext = {}) {
+  /**
+   * `language` labels the scans. A page in Italian with a label the map has no
+   * English for is asked again in English, which the map reads in full.
+   */
+  fetch(raw: string, context: TrackingContext = {}, language: BrtLanguage = 'en') {
     const number = normalizeBrtNumber(raw);
     const budgetMs = context.budgetMs ?? 15_000;
     return runSteps({ carrier: 'brt', budgetMs, signal: context.signal,
@@ -42,27 +50,36 @@ export class BrtTracker {
         if (charset && !['utf-8', 'utf8', 'iso-8859-1', 'windows-1252'].includes(charset)) throw new SchemaError('BRT', 'BRT response encoding changed');
         return decodeText(bytes, charset?.startsWith('utf') ? 'utf-8' : 'windows-1252');
       };
-      if (number.length === 14) {
-        const { result, partner } = readBrt(await page(`${BASE}sped_det_new.htm?brtCode=${number}&lang=en`), number);
-        const lookup = partner && this.options.origins?.[partner];
-        const budget = Math.floor(deadline - performance.now() - ORIGIN_RESERVE_MS);
-        if (!lookup || budget <= 0) return result;
-        // The partner's leg adds to BRT's answer, which stands without it.
-        const leg = await lookup(number, { signal, budgetMs: budget }).catch(() => {
+      const shipment = async (lang: BrtLanguage) => {
+        if (number.length === 14) return readBrt(await page(`${BASE}sped_det_new.htm?brtCode=${number}&lang=${lang}`), number);
+        if (number.length === 12) {
+          return readBrt(await page(`${BASE}sped_det_show.hsm?lang=${lang}`,
+            { Nspediz: number, referer: 'sped_numspe_par.htm', RicercaNumeroSpedizione: 'Ricerca', lang }), number);
+        }
+        // A parcel ID goes through the form's customer parcel ID search. Its
+        // result does not repeat the ID, so the shipment's parcel list must name it.
+        const detail = await page(`${BASE}sped_det_show.hsm?lang=${lang}`, { referer: 'sped_numspe_par.htm', ChiSono: number,
+          ClienteMittente: '', DataInizio: '', DataFine: '', RicercaChiSono: 'Ricerca', lang });
+        return readBrt(detail, number, await page(new URL(brtParcelListPath(detail, number), BASE).href));
+      };
+      let read = await shipment(language);
+      // An Italian label the map cannot read in English may be a scan only the English labels stage.
+      if (language === 'it' && !read.result.events?.every((event) => brtEnglishLabel(String(event.provider_status)))) {
+        read = await shipment('en').catch(() => {
           context.signal?.throwIfAborted();
-          return null;
+          return read;
         });
-        return leg ? withOriginLeg(result, leg) : result;
       }
-      if (number.length === 12) {
-        return parseBrt(await page(`${BASE}sped_det_show.hsm?lang=en`,
-          { Nspediz: number, referer: 'sped_numspe_par.htm', RicercaNumeroSpedizione: 'Ricerca', lang: 'en' }), number);
-      }
-      // A parcel ID goes through the form's customer parcel ID search. Its
-      // result does not repeat the ID, so the shipment's parcel list must name it.
-      const detail = await page(`${BASE}sped_det_show.hsm?lang=en`, { referer: 'sped_numspe_par.htm', ChiSono: number,
-        ClienteMittente: '', DataInizio: '', DataFine: '', RicercaChiSono: 'Ricerca', lang: 'en' });
-      return parseBrt(detail, number, await page(new URL(brtParcelListPath(detail, number), BASE).href));
+      const { result, partner } = read;
+      const lookup = number.length === 14 && partner && this.options.origins?.[partner];
+      const budget = Math.floor(deadline - performance.now() - ORIGIN_RESERVE_MS);
+      if (!lookup || budget <= 0) return result;
+      // The partner's leg adds to BRT's answer, which stands without it.
+      const leg = await lookup(number, { signal, budgetMs: budget }).catch(() => {
+        context.signal?.throwIfAborted();
+        return null;
+      });
+      return leg ? withOriginLeg(result, leg) : result;
     } }, {
       id: 'partner',
       // A BRTcode BRT has not processed names no partner yet. Chronopost or the
@@ -100,6 +117,7 @@ export const adapter: AdapterFactory = environment => {
     chronopost: (number, context) => chronopost.fetch(number, context),
     dpd: (number, context) => dpd.fetch(number, '', context).then(stagedDpdLeg),
   } });
-  return { id: 'brt', recordsSteps: true, steps: ['direct', 'partner'], track: (input, context) => tracking.fetch(input.number, context),
+  return { id: 'brt', recordsSteps: true, steps: ['direct', 'partner'],
+    track: (input, context) => tracking.fetch(input.number, context, readerLanguage(input, ['it']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeBrtNumber(number))) };
 };
