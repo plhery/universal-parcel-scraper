@@ -25947,7 +25947,8 @@ export const CARRIER_CATALOG = {
       "Пошта на Северна Македонија",
       "North Macedonia Post",
       "Macedonian Post",
-      "Makedonska Pošta"
+      "Makedonska Pošta",
+      "Macedonia Post"
     ],
     "countries": [
       "MK"
