@@ -404,7 +404,9 @@ function speedafZone(payload: Record<string, unknown>, date: unknown, destinatio
  * its sites by airport code, and a site listed here gives its zone: its EWR
  * hub's digits, read on Eastern time, have to the second the instants of
  * DHLink's copies of the same scans, which DHLink dates on China's clock, and
- * its New Jersey warehouse's those SwiftX's own tracker gives. A delivery or
+ * its New Jersey warehouse's those SwiftX's own tracker gives. Its ORD hub,
+ * at Chicago O'Hare, is on Central time: KTD files its scans at the same
+ * digits under the hub's town and state. A delivery or
  * failed delivery names the recipient's town and no site ("US, EXAMPLE TOWN"):
  * SwiftX's tracker gives it the offset of the warehouse that sent the parcel
  * out, so it takes the zone of the newest listed site scanned before it.
@@ -412,7 +414,9 @@ function speedafZone(payload: Record<string, unknown>, date: unknown, destinatio
  * Created", at "US, SYSTEM, SYSTEM") carry GMT-07:00 in every season in its
  * own tracker, and keep that clock wherever they are.
  */
-const SWIFTX_SITES: ReadonlyMap<string, string> = new Map([['EWR HUB', 'America/New_York'], ['EWR_NJ WAREHOUSE', 'America/New_York']]);
+const SWIFTX_SITES: ReadonlyMap<string, string> = new Map([
+  ['EWR HUB', 'America/New_York'], ['EWR_NJ WAREHOUSE', 'America/New_York'], ['ORD HUB', 'America/Chicago'],
+]);
 const SWIFTX_LABEL = /^shipping label created$/i;
 const SWIFTX_LABEL_CLOCK = 'UTC-7';
 function swiftxListedZone(location: string): string | null {
@@ -885,9 +889,11 @@ function brandNetworkZones(payload: Record<string, unknown>, name: string, numbe
  * that of the US state or Canadian province its place names for certain
  * ("New York, United States"), else the single clock of the country it
  * names. One with no place, only a town or a country of several clocks keeps
- * its wall clock.
+ * its wall clock. KTD's dates do this too: it files SwiftX's hub scans at
+ * SwiftX's digits under the hub's town and state, and its flight's take-off
+ * in Shanghai and landing in Chicago, which China's clock put 75 minutes apart.
  */
-const PLACE_CLOCK_LINES = new Set(['js-express', 'ecms-express']);
+const PLACE_CLOCK_LINES = new Set(['js-express', 'ecms-express', 'ktd']);
 function placeClockLine(carrier: string, status: string, location: string): string | null {
   const china = carrier === 'js-express' ? jsExpressChinaClock(status, location) : undefined;
   if (china !== undefined) return china;

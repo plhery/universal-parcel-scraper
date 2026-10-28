@@ -193,7 +193,9 @@ step exists for future protocol changes.
   country and town, with no state ("US, EXAMPLE TOWN, EWR HUB"), and a site the adapter
   lists gives its zone: read on Eastern time, the EWR hub's digits have to the second the
   instants of DHLink's copies of the same scans, which DHLink dates on China's clock, and
-  the New Jersey warehouse's those of SwiftX's own tracker. A delivery names the recipient's
+  the New Jersey warehouse's those of SwiftX's own tracker. The ORD hub, at Chicago O'Hare,
+  is on Central time, where KTD's copies under the hub's town and state put the same
+  digits. A delivery names the recipient's
   town and no site; SwiftX's tracker gives it the offset of the warehouse that sent it out,
   so it takes the newest listed site's zone before it. Other sites keep SwiftX's catalog
   zone, Pacific, in step 1. Its labels ("Shipping Label
@@ -328,13 +330,15 @@ step exists for future protocol changes.
   own adapter reads it. Read on Zagreb's clock, a British office's scans came out an hour
   early. A scan without an office, which can be the destination post's, keeps its wall
   clock as there; the other scans take Zagreb's clock.
-- JS Express's and ECMS's dates are the clock of each scan's place, not the China time of
-  their catalog zone. JS Express's own feed gives the same digits with China's offset at
+- JS Express's, ECMS's and KTD's dates are the clock of each scan's place, not the China time
+  of their catalog zone. JS Express's own feed gives the same digits with China's offset at
   its Chinese warehouse, the Netherlands' at Schiphol and the destination courier's at the
   courier's scans: read on China's clock, its scans at Schiphol came six hours early, and a
   landing at JFK under five hours after the flight left China. ECMS's own tracker gives
   them each facility's offset, Japan's at Narita, where China's clock put them an hour
-  after ECMS's own rows. A scan in China takes Beijing's clock, except a JS Express
+  after ECMS's own rows. KTD files SwiftX's hub scans at SwiftX's digits under the hub's
+  town and state, and on China's clock its flight from Shanghai landed in Chicago 75
+  minutes after take-off. A scan in China takes Beijing's clock, except a JS Express
   flight's departure filed there, which keeps its wall clock as in JS Express's own
   adapter. A scan elsewhere takes the clock of the US state or Canadian province its place
   names for certain, else the single clock of the country it names; one with no place,

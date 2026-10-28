@@ -903,6 +903,24 @@ describe('ParcelsApp result parsing', () => {
     });
   });
 
+  it("reads KTD's scans on their place's clock, so its copies of SwiftX's hub scans stay one with them", () => {
+    // Live shape: KTD files SwiftX's scan at SwiftX's digits, and its flight's take-off and
+    // landing on their own places' clocks. On China's clock the flight took 75 minutes.
+    const result = parseParcelsAppResponse({ carriers: ['KTD', 'SwiftX'], originCode: 'CN', destinationCode: 'US', states: [
+      { date: '2026-10-27T03:10:56Z', status: 'Arrived at Origin Hub', carrier: 1, location: 'US, EXAMPLE TOWN, ORD HUB' },
+      { date: '2026-10-27T03:10:56Z', status: 'Arrived at Origin Hub', carrier: 0, location: 'EXAMPLE TOWN, Illinois, United States' },
+      { date: '2026-10-17T03:30:00Z', status: 'Arrived at the airport', carrier: 0, location: 'Chicago' },
+      { date: '2026-10-17T02:15:00Z', status: 'Take off', carrier: 0, location: 'Shanghai' },
+    ] }, number, identity(), 'UTC');
+    expect(result.events?.map((scan) => [scan.description, scan.time ?? `local ${scan.local_time}`])).toEqual([
+      // SwiftX's ORD hub and the state KTD names both give Central time.
+      ['Arrived at Origin Hub', '2026-10-27T08:10:56.000Z'],
+      // A town alone keeps its wall clock for the places step.
+      ['Arrived at the airport', 'local 2026-10-17T03:30:00.000'],
+      ['Take off', '2026-10-16T18:15:00.000Z'],
+    ]);
+  });
+
   it('reads Asendia scans filed under another name in their place\'s clock, not as UTC', () => {
     // Live shape (2026-09-30): an eBay shipment whose Asendia scans ParcelsApp
     // files under "EasyShip", on local clocks. Ship24's instants agree.
