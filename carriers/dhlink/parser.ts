@@ -24,6 +24,10 @@ const RECORD_ZONE = 'Asia/Shanghai';
 const EASTERNMOST: Readonly<Record<string, string>> = { US: 'America/New_York' };
 // Some scanners run early.
 const CLOCK_SKEW_MS = 3_600_000;
+// The clocks of the contiguous US, where GOFO and SwiftX deliver.
+const US_ZONES = ['America/New_York', 'America/Chicago', 'America/Denver', 'America/Phoenix', 'America/Los_Angeles'];
+// Stages of a parcel on its way, after which a receipt is no new acceptance.
+const MOVED = new Set(['in_transit', 'customs', 'out_for_delivery']);
 // A US post office: its state, then the ZIP code ("NY 10001", "NY;10001", "NY, US 10001").
 const US_OFFICE = /\b([A-Z]{2})(?:[ ,;]+US)?[ ,;]+\d{5}(?:-\d{4})?\b/;
 // States whose places keep different clocks, so a state does not settle a clock's zone.
@@ -249,13 +253,26 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
   const destination = text(entry, 'destCountryCode', 8).toUpperCase();
   const last = lastLeg(entry);
   // Newest first, as the tracking page lists them; the clocks sort as written.
-  const events = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
-    .map((scan): CarrierEvent => {
+  const dated = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
+    .map((scan) => {
       const zone = scanZone(scan, destination, last?.leg.beijingClock === true);
-      const time = zone ? isoTime(scan.stamp, zone)?.iso : undefined;
-      return { ...(time ? { time } : { local_time: scan.stamp }), ...scan.event };
+      return { scan, time: zone ? isoTime(scan.stamp, zone) : null };
     });
+  // Beside DHLink's own record of a partner's scan on Beijing time, the partner's copy can come
+  // on its US wall clock: the same wording, at the instant of DHLink's row on a US reading.
+  const copies = last?.leg.beijingClock && destination === 'US' ? dated.filter(({ scan }) => dated.some((other) =>
+    other.scan !== scan && other.time && other.scan.event.description === scan.event.description
+    && US_ZONES.some((zone) => isoTime(scan.stamp, zone)?.timestamp === other.time!.timestamp))) : [];
+  const events = dated.filter((entry) => !copies.includes(entry))
+    .map(({ scan, time }): CarrierEvent => ({ ...(time ? { time: time.iso } : { local_time: scan.stamp }), ...scan.event }));
   if (!events.length) throw new IndeterminateError(PROVIDER, 'DHLink has no scans for the parcel yet');
+  // A receipt after DHLink moved the parcel on, at another warehouse or the post a line hands it
+  // to, takes the parcel along its way: no step back.
+  let moved = false;
+  for (const event of [...events].reverse()) {
+    if (event.stage === 'accepted' && moved) Object.assign(event, { stage: 'in_transit', stage_source: 'carrier_map' });
+    else if (event.stage && MOVED.has(event.stage)) moved = true;
+  }
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

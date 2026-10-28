@@ -68,6 +68,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['customs import clearance completed, awaiting pickup by local carrier', 'in_transit'],
   // The hand-over to the US partner, first announced, then made.
   ['ups/usps/fedex', 'in_transit'],
+  // On its way to the last-mile partner after import clearance, on a US line SwiftX delivers.
+  ['in transit to service provider', 'in_transit'],
   ['货物已交ups/usps/fedex,the goods have been delivered to ups/usps/fedex', 'in_transit'],
   // GOFO's scans in its own words, which DHLink relays on a US line GOFO delivers.
   ['shipping label created', 'registered'],

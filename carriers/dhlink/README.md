@@ -48,12 +48,16 @@ page makes.
 - A line on the Hualei platform writes an order row (`货物电子信息已经收到`) when the parcel's data
   reaches it, and a partner a label. Before any scan they are registered; written after DHLink
   took the parcel they are no step back, as for every carrier
-  ([ARCHITECTURE.md](../../ARCHITECTURE.md#status-model)).
+  ([ARCHITECTURE.md](../../ARCHITECTURE.md#status-model)). A receipt after the parcel moved on,
+  such as China Post's once the warehouse sent it off, is transit.
 - Clocks have no offset. DHLink records each row on Beijing time (`createDate`), seconds after
   the clock of a row scanned in China. A scan with a place in China is read on Beijing time.
   So is every scan of a parcel whose last leg is GOFO or SwiftX: DHLink relays their scans on
   its own clock, however late it records them. GOFO's own feed gives the same instants, and
-  SwiftX's rounds and deliveries are recorded before a US reading of their clocks. Otherwise a
+  SwiftX's rounds and deliveries are recorded before a US reading of their clocks. A partner's
+  copy of a scan DHLink records can come too, on the partner's US clock, as SwiftX's hub scans
+  do; a scan whose US reading is the instant of another with the same wording is that copy and
+  is dropped. Otherwise a
   scan a USPS office names with its state and ZIP code is read on that state's time, unless the
   state spans several zones. A scan recorded before its clock could have struck at the
   destination, even in the destination's easternmost zone, keeps DHLink's own Beijing time. Any

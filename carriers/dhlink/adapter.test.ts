@@ -92,6 +92,15 @@ describe('DHLink HTTP adapter', () => {
     ]);
   });
 
+  it('reads a receipt after DHLink moved the parcel on as no step back', () => {
+    const row = (trackTime: string, info: string) => ({ trackTime, createDate: null, place: null, info, nodeCode: null, nodeName: null });
+    const result = parseDhlink(changed('swiftx-at-warehouse', (parcel) => {
+      parcel.trackinfoList.push(row('2026-03-02 14:30:00', '中国邮政 已收取邮件'), row('2026-03-02 18:58:00', '中国邮政 已收取邮件'));
+    }), WAREHOUSE, LATER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(timeline(result.events).map((entry) => entry[2])).toEqual(['in_transit', 'in_transit', 'accepted', 'accepted']);
+  });
+
   it('shows DHLink’s own nodes in Chinese in English, and a wording in both languages in its English half', () => {
     expect(dhlinkEnglish('国内清关完成')).toBe('Customs export clearance completed');
     expect(dhlinkEnglish('Arriving at the airport - arranging flights/到达机场-安排航班中')).toBe('Arriving at the airport - arranging flights');
@@ -119,7 +128,8 @@ describe('DHLink HTTP adapter', () => {
       ['2026-02-10T12:15:28+08:00', null, 'in_transit', 'Sampleport'],
       ['2026-02-09T02:47:17+08:00', null, 'in_transit', 'Sampleport'],
       ['2026-02-09T01:06:58+08:00', null, 'customs', 'Sampleport'],
-      ['2026-02-08T13:00:03+08:00', null, 'accepted', 'Sampletown'],
+      // China Post's receipt, after the warehouse sent the parcel off: no step back.
+      ['2026-02-08T13:00:03+08:00', null, 'in_transit', 'Sampletown'],
       ['2026-02-07T14:43:38+08:00', null, 'in_transit', '示例省'],
       ['2026-02-07T14:37:38+08:00', null, 'accepted', '示例市'],
       ['2026-02-06T23:11:47+08:00', 'EUBJ007', 'accepted', '示例市'],
@@ -197,6 +207,14 @@ describe('DHLink HTTP adapter', () => {
       expect(timeline(relayed(late, 'US', lastTurnNo).events), lastTurnNo).toEqual([
         ['2026-03-09T21:30:00+08:00', null, 'in_transit', 'SAMPLEVILLE, GA'], ['2026-03-09T08:00:00+08:00', null, 'registered', null]]);
     }
+    // SwiftX's copy of a scan DHLink records on Beijing time, on its Chicago clock, is the same scan.
+    const hub = [row('2026-03-10 16:10:56', '2026-03-10 16:11:30', 'SAMPLE HUB, US', 'Arrived at Origin Hub'),
+      row('2026-03-10 03:10:56', '2026-03-10 16:12:00', 'SAMPLEVILLE, US', 'Arrived at Origin Hub'),
+      row('2026-03-10 05:10:56', '2026-03-10 16:12:00', 'SAMPLEVILLE, US', 'Arrived at Origin Hub')];
+    expect(timeline(relayed(hub, 'US', 'SWX990000000000000001').events)).toEqual([
+      ['2026-03-10T16:10:56+08:00', null, 'in_transit', 'SAMPLE HUB, US'], ['2026-03-10T05:10:56+08:00', null, 'in_transit', 'SAMPLEVILLE, US']]);
+    // Elsewhere it is not.
+    expect(relayed(hub, 'GB', 'SWX990000000000000001').events).toHaveLength(3);
     // A scan recorded before even Beijing's reading of its clock is no Beijing clock.
     expect(relayed([row('2026-03-10 18:00:00', '2026-03-10 15:00:00', 'none', 'Delivered')], 'US', 'GFUS99000000000001').last_update).toBeNull();
     // Without such a partner, the office's state gives the clock.
