@@ -72,14 +72,20 @@ const COURIER = /\s+by\s+[^()（）]{1,40}?(?=\s*[（(]\s*(?:contact (?:number|p
 const withoutContact = (text: string): string => CONTACT.test(text) ? text.replace(COURIER, ' by the courier').replace(CONTACT, '') : text;
 
 // A remark names the site of its scan in its first brackets: "The shipment has arrived at 【A】",
-// "Shipment loaded at 【A】, prepare to send to 【B】", or without brackets while it waits in transit:
-// "Shipment in transit at AU,TOWN, please wait in patience". A remark about a courier or whoever
-// signed may name a person there instead, and a country code given twice, "AU,AU", is no place.
+// "Shipment loaded at 【A】, prepare to send to 【B】". Some name it without them: one waiting in
+// transit, "Shipment in transit at AU,TOWN, please wait in patience", and an operation centre's
+// departure (302) and arrival (305), "The shipment has departed from A ,has been sent to B" and
+// "The shipment has arrived atA". A remark about a courier or whoever signed may name a person
+// there instead, and a country code given twice, "AU,AU", is no place.
 const PERSON = /courier|deliver(?:y|er) ?(?:man|person|staff)|sign(?:ed|er)|recipient|收派员|快递员|派件员|配送员|签收|簽收|联系|聯繫/iu;
 const IN_TRANSIT_AT = /\bin transit at\s+([^【】]*?\p{L}[^【】]*?)\s*[,，]\s*please wait/iu;
+const CENTRE: ReadonlyMap<string, RegExp> = new Map([
+  ['302', /\bdeparted from\s*([^【】,，]*?\p{L}[^【】,，]*?)\s*[,，]\s*has been sent to\b/iu],
+  ['305', /\barrived at\s*([^【】,，]*?\p{L}[^【】,，]*?)\s*$/iu],
+]);
 const COUNTRY_TWICE = /^([A-Z]{2})\s*[,，]\s*\1$/iu;
-function scanSite(remark: string): string | undefined {
-  const site = (/【([^【】]*\p{L}[^【】]*)】/u.exec(remark) ?? IN_TRANSIT_AT.exec(remark))?.[1]?.trim();
+function scanSite(remark: string, code: string): string | undefined {
+  const site = (/【([^【】]*\p{L}[^【】]*)】/u.exec(remark) ?? IN_TRANSIT_AT.exec(remark) ?? CENTRE.get(code)?.exec(remark))?.[1]?.trim();
   return site && site.length <= 100 && !COUNTRY_TWICE.test(site) && !PERSON.test(remark) ? site : undefined;
 }
 
@@ -117,7 +123,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     if (!/^[A-Z0-9_-]{1,64}$/.test(code)) throw new SchemaError(PROVIDER, 'SF Express returned an invalid operation code');
     const status = sfExpressEventStatus(code, reason, text);
     const description = status?.status === 'delivered' ? 'Delivered' : withoutContact(englishSites(withoutAddresses(text)));
-    const site = status?.status === 'delivered' ? undefined : scanSite(description);
+    const site = status?.status === 'delivered' ? undefined : scanSite(description, code);
     const event: CarrierEvent = { time, provider_code: code, description,
       ...(site ? { location: site } : {}),
       ...(status ? { stage: status.stage } : {}),

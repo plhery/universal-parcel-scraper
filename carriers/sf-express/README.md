@@ -71,7 +71,8 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   name when each is the only one at that instant.
 - A scan's `location` is the first site its remark names in brackets ("arrived at 【…】",
   "loaded at 【…】, prepare to send to 【…】"), or the place a remark waits at without them ("in
-  transit at AU,TOWN, please wait"): SF gives no other. A remark about a courier or a signature
+  transit at AU,TOWN, please wait"), or the operation centre an unbracketed departure (302) or
+  arrival (305) names: SF gives no other. A Chinese name stays as SF writes it. A remark about a courier or a signature
   may name a person there, so it gets none, and neither does a delivered scan or a country code
   given twice ("AU,AU").
 - Not used: [SF International](https://www.sf-international.com/us/en/support/querySupport/waybill)

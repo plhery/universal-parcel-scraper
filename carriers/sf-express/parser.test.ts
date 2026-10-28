@@ -214,6 +214,14 @@ describe('SF Express public route parsing', () => {
     expect(events[2]).toMatchObject({ description: 'Shipment in transit at AU,AU, please wait in patience' });
     expect(events[2]).not.toHaveProperty('location');
     expect(events[4]).not.toHaveProperty('location');
+    // An operation centre's departure and arrival name it without brackets; another code's remark names none so.
+    Object.assign(routes[2]!, { opCode: '302', remark: 'The shipment has departed from 样本国际件操作中心 ,has been sent to CN Sample Province Sample Parcels Center' });
+    Object.assign(routes[3]!, { opCode: '305', remark: 'The shipment has arrived atCN Sample Province Sample Parcels Center' });
+    Object.assign(routes[1]!, { opCode: '31', remark: 'The shipment has arrived at the next station' });
+    const centres = parse(value, NUMBER).events!;
+    expect(centres[3]).toMatchObject({ description: routes[2]!.remark, location: '样本国际件操作中心' });
+    expect(centres[2]).toMatchObject({ description: routes[3]!.remark, location: 'CN Sample Province Sample Parcels Center' });
+    expect(centres[4]).not.toHaveProperty('location');
   });
 
   it('bounds retained and inspected scans, deduplicates exact repeats and sorts like the portal', () => {
