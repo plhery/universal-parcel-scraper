@@ -258,9 +258,15 @@ describe('carrier names reported by universal providers', () => {
     'La Poste', 'La Poste (Colissimo)', 'Chronopost France', 'FedEx', 'India Post', 'Posti', 'UPS',
     'Chronopost Portugal', 'Correos Chile', 'Royal Mail (UK)', 'DHL', 'DHL Express', 'GLS Italy', 'DPD UK',
     'Finland Post', 'Spain Post', 'Portugal CTT', 'Portugal Post - Portugal CTT', 'Italy Post', 'Deutsche Post - DHL Paket', 'Correos de España', 'Correos Spain',
-    'Austria Post', 'Brazil Post', 'South Africa Post Office', 'Zhongling',
+    'Austria Post', 'Brazil Post', 'South Africa Post Office', 'Zhongling', 'CTT',
   ])('knows %s from the catalog', (name) => {
     expect(isKnownCarrierName(name)).toBe(true);
+  });
+
+  it('knows plain CTT without naming Portugal\'s post or CTT Express', () => {
+    expect(carrierIdFromName('CTT')).toBeUndefined();
+    expect(carrierIdFromName('Portugal CTT')).toBe('ctt');
+    expect(carrierIdFromName('CTT Express')).toBe('ctt-express');
   });
 
   it('reads a name typed without its accents as the accented catalog name', () => {

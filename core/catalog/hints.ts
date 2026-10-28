@@ -12,8 +12,9 @@ export { carrierBrand };
 const key = (name: string) => name.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase()
   .replace(/[^\p{L}0-9]/gu, '').replace(/(?![a-z])\p{Script=Latin}/gu, '');
 
-// These brands have several regional/service adapters.
-const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'gofo', 'post'];
+// These brands have several regional/service adapters. Providers write plain
+// "CTT" for both Portugal's post and CTT Express.
+const AMBIGUOUS_BRANDS = ['dhl', 'dpd', 'gls', 'hermes', 'gofo', 'post', 'ctt'];
 // An alias also gives the name its carrier's clock, which moves the stored
 // instants, and so the event ids, of past scans under that name. Providers
 // name Evri International in full or by its GlobalEco tracker; plain "Evri"
