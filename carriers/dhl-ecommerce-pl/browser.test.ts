@@ -44,6 +44,9 @@ describe('DHL Poland browser history', () => {
     payload.events[1]!.description = 'With delivery courier. Expected delivery hours: 08:00-12:00.';
     payload.events[2]!.description = 'The shipment has reached DHL terminal in . Planned date of delivery to: 04-03-2026.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.slice(1).map(event => event.stage)).toEqual(['out_for_delivery', 'in_transit']);
+    // A terminal the page leaves unnamed reads without the empty slot.
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[2]?.description)
+      .toBe('The shipment has reached DHL terminal. Planned date of delivery to: 04-03-2026.');
     payload.events[2]!.description = 'The shipment has reached DHL terminal in Example. Planned date of delivery to: 04-03-2026.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[2]?.stage).toBe('in_transit');
   });
@@ -54,6 +57,7 @@ describe('DHL Poland browser history', () => {
     payload.events[2]!.description = 'The shipment left the origin country';
     payload.events.push({ date: '02.03.2026', time: '15:06', location: '', description: 'The shipment has reached DHL terminal in .' });
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.map(event => event.stage)).toEqual(['delivered', 'in_transit', 'in_transit', 'accepted']);
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[3]?.description).toBe('The shipment has reached DHL terminal.');
     payload.events[0]!.description = 'The shipment has arrived at delivery depot.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]?.stage).toBe('in_transit');
   });

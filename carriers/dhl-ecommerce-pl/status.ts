@@ -60,7 +60,7 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^(?:The shipment is handled in Sorting Center|Przesyłka jest obsługiwana w Centrum Sortowania)\.?$/i, 'in_transit'],
   [/^(?:The shipment has reached DHL terminal\.|Przesyłka dotarła do oddziału nadawczego DHL Parcel\.)$/i, 'accepted'],
   // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan.
-  [/^The shipment has reached DHL terminal in [^.]{0,80}\. Planned date of delivery to: \d{2}-\d{2}-\d{4}\.$/i, 'in_transit'],
+  [/^The shipment has reached DHL terminal(?: in [^.]{0,80})?\. Planned date of delivery to: \d{2}-\d{2}-\d{4}\.$/i, 'in_transit'],
   // A parcel sent abroad: its first terminal, named without a delivery day, then the way out.
   [/^The shipment has reached DHL terminal in [^.]{0,80}\.$/i, 'accepted'],
   [/^The shipment left the origin country\.?$/i, 'in_transit'],

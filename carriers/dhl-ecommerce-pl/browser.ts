@@ -26,7 +26,9 @@ export function parseDhlPolandHistory(payload: unknown, waybill: string): Carrie
     const date = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(row.date);
     const day = date && calendarDay(Number(date[3]), Number(date[2]), Number(date[1]));
     if (!day || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(row.time)) throw new SchemaError(PROVIDER, 'DHL Poland returned an invalid scan clock');
-    const description = clean(row.description, 500).replace(/\s*(?:The (?:shipment|parcel) (?:was )?received by|Przesyłka odebrana przez)\b[\s\S]*$/i, '').trim();
+    const description = clean(row.description, 500).replace(/\s*(?:The (?:shipment|parcel) (?:was )?received by|Przesyłka odebrana przez)\b[\s\S]*$/i, '').trim()
+      // A terminal the page leaves unnamed has an empty slot.
+      .replace(/^(The shipment has reached DHL terminal) in \./i, '$1.');
     if (!description) throw new SchemaError(PROVIDER, 'DHL Poland returned an empty scan');
     const stage = dhlPolandScanStage(description);
     const location = clean(row.location, 200);
