@@ -584,8 +584,9 @@ describe('PostNL domestic tracker', () => {
       ['J05', 'out_for_delivery'], ['J01', 'in_transit'], ['B01', 'accepted'], ['A01', 'registered'],
     ]);
     expect(JSON.stringify(result)).not.toMatch(/Synthetic|1234AB/);
-    // The sorting scan, by the label the domestic tracker gives it.
+    // The sorting scan and the pre-advice before PostNL has the shipment, by the labels the domestic tracker gives them.
     expect(statusMap.stage('J06', 'shipment sorted in sorting centre')).toBe('in_transit');
+    expect(statusMap.stage('M02', 'Not yet processed by PostNL')).toBe('registered');
   });
 
   it('dates the delivery the observations leave out, and only when PostNL says it happened', () => {

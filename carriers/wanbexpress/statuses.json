@@ -82,6 +82,13 @@
       "confirmedBy": "live"
     },
     {
+      "code": "LastMileInTransit",
+      "wording": "In transit along Poste Italiane’s logistic network",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
       "code": "LastMileOutForDelivery",
       "wording": "Parcel is out for delivery.",
       "language": "en",

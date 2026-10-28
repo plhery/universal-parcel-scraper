@@ -233,6 +233,14 @@
       "note": "A label of PostNL's domestic tracker; the shared wording rules read it as in transit."
     },
     {
+      "wording": "Not yet processed by PostNL",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "A label of PostNL's domestic tracker, with observation code M02, after the shipment was expected and before PostNL has it."
+    },
+    {
       "wording": "Shipment received by PostNL",
       "language": "en",
       "stage": "accepted",

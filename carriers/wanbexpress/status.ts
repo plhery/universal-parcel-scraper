@@ -6,7 +6,7 @@ const STAGES: Readonly<Record<string, Stage>> = {
   OriginalWarehouseProcess: 'in_transit', OriginalWarehouseDeparture: 'in_transit',
   LinehaulAgencyReceive: 'in_transit', LinehaulAgencyDeparture: 'in_transit', LinehaulDeparture: 'in_transit',
   LinehaulArrival: 'in_transit', CustomsCleared: 'in_transit', SupplierAndLastMileReceive: 'in_transit',
-  LastMileOutForDelivery: 'out_for_delivery', LastMileDelivered: 'delivered',
+  LastMileInTransit: 'in_transit', LastMileOutForDelivery: 'out_for_delivery', LastMileDelivered: 'delivered',
 };
 
 export const statusMap: CarrierStatusMap = {
