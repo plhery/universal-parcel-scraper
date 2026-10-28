@@ -2755,7 +2755,7 @@ export const CARRIER_CATALOG = {
       "mode": "automatic",
       "adapter": "seur",
       "recognitionRank": 870,
-      "recognitionPattern": "^(?:\\d{14}|\\d{21,22})$",
+      "recognitionPattern": "^(?:\\d{14}|\\d{21,22}|REC\\d{12})$",
       "localClocks": true
     },
     "canaryUrl": "https://www.seur.com/miseur/mis-envios",
@@ -2789,6 +2789,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^20\\d{2}(?:0[1-9]|[12]\\d|3[01])(?:0[1-9]|1[0-2])\\d{14}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^REC\\d{12}$",
         "confidence": "low"
       }
     ]
@@ -35050,7 +35054,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "postnord": ["postnord-1","postnord-2","postnord-5","postnord-3"],
   "posti": ["posti-1","posti-2","posti-3"],
   "correos-express": ["correos-express-1","correos-express-2"],
-  "seur": ["seur-1","seur-2","seur-3","seur-4"],
+  "seur": ["seur-1","seur-2","seur-3","seur-4","seur-5"],
   "mrw": ["mrw-1","mrw-2"],
   "nacex": ["nacex-1"],
   "ctt": ["ctt-1"],

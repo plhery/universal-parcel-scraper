@@ -21,7 +21,7 @@
     ],
     "recognition": {
       "rank": 870,
-      "pattern": "^(?:\\d{14}|\\d{21,22})$"
+      "pattern": "^(?:\\d{14}|\\d{21,22}|REC\\d{12})$"
     },
     "localClocks": true
   },
@@ -91,6 +91,11 @@
     {
       "id": "seur-4",
       "pattern": "^20\\d{2}(?:0[1-9]|[12]\\d|3[01])(?:0[1-9]|1[0-2])\\d{14}$",
+      "confidence": "low"
+    },
+    {
+      "id": "seur-5",
+      "pattern": "^REC\\d{12}$",
       "confidence": "low"
     }
   ]

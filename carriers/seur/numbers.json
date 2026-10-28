@@ -108,7 +108,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
       },
       "note": "REC is a pickup-booking reference family; the source labels this identifier as tracking but its parcel relationship is unconfirmed.",
       "quarantine": true
@@ -660,6 +663,21 @@
         ]
       },
       "note": "Tracking number in a complaint about a locker drop-off; SEUR's tracker returns its history."
+    },
+    {
+      "number": "REC000000000017",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-10-28",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Made-up pickup reference in the shape of a parcel the app tracked, which SEUR's own lookup confirmed."
     }
   ]
 }

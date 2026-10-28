@@ -27,6 +27,16 @@ describe('continental shipment candidates', () => {
     }
   });
 
+  it("offers SEUR a pickup's REC reference and asks it, and only that layout", () => {
+    for (const number of ['REC000000000017', 'rec 0000 0000 0017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['seur'] });
+      for (const countryHint of [undefined, 'ES', 'PT']) expect(recognitionAskedCarriers(number, { countryHint }), number).toEqual(['seur']);
+    }
+    for (const number of ['REC00000000017', 'REC0000000000017', 'RE0000000000017', 'RECX00000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('seur');
+    }
+  });
+
   it('asks BRT about EOB customer parcel IDs without naming BRT from the shape', () => {
     expect(isBrtTrackingNumber('EOB99099100000000015')).toBe(true);
     expect(detectCarrierMatch('EOB99099100000000015')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['brt'], preferred: [] });
