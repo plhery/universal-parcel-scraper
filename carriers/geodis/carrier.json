@@ -1,7 +1,9 @@
 {
   "id": "geodis",
   "displayName": "GEODIS",
-  "aliases": [],
+  "aliases": [
+    "France Express"
+  ],
   "region": {
     "countries": [
       "FR"
@@ -74,6 +76,13 @@
         "noSuivi",
         "trackingNumber"
       ]
+    },
+    {
+      "domains": [
+        "espace-client.geodis.com",
+        "espace-client.france-express.com"
+      ],
+      "fragment": "^/[a-z]{2}/suivi/([^/?#]+)"
     }
   ],
   "detection": [

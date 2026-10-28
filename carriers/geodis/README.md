@@ -4,6 +4,10 @@ French express and distribution network. Covers the anonymous recipient lookup (
 destinataire") for French last-mile `1G…` shipments. Freight and account portals are out of
 scope.
 
+France Express, the GEODIS group's network of express agencies, has the same recipient app at
+espace-client.france-express.com, with the same interface behind it, so its name and links route
+here.
+
 ## How it works
 
 1. `direct`: one bounded signed

@@ -5,7 +5,8 @@
     "SP EXPRESS",
     "SP Express Sp. z o.o.",
     "Świat Przesyłek",
-    "Swiat Przesylek"
+    "Swiat Przesylek",
+    "Royal Shipments"
   ],
   "region": {
     "countries": [
@@ -87,7 +88,9 @@
       "domains": [
         "sp.express",
         "en.sp.express",
-        "swiatprzesylek.pl"
+        "swiatprzesylek.pl",
+        "royalshipments.com",
+        "www.royalshipments.com"
       ],
       "path": "^/tt/([^/?#]+)/?$"
     },

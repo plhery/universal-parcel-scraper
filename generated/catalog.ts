@@ -1578,6 +1578,9 @@ export const CARRIER_CATALOG = {
   "geodis": {
     "displayName": "GEODIS",
     "color": "#3100e6",
+    "aliases": [
+      "France Express"
+    ],
     "countries": [
       "FR"
     ],
@@ -1601,6 +1604,13 @@ export const CARRIER_CATALOG = {
           "noSuivi",
           "trackingNumber"
         ]
+      },
+      {
+        "domains": [
+          "espace-client.geodis.com",
+          "espace-client.france-express.com"
+        ],
+        "fragment": "^/[a-z]{2}/suivi/([^/?#]+)"
       }
     ],
     "detectionRules": [
@@ -29530,7 +29540,8 @@ export const CARRIER_CATALOG = {
       "SP EXPRESS",
       "SP Express Sp. z o.o.",
       "Świat Przesyłek",
-      "Swiat Przesylek"
+      "Swiat Przesylek",
+      "Royal Shipments"
     ],
     "countries": [
       "PL"
@@ -29551,7 +29562,9 @@ export const CARRIER_CATALOG = {
         "domains": [
           "sp.express",
           "en.sp.express",
-          "swiatprzesylek.pl"
+          "swiatprzesylek.pl",
+          "royalshipments.com",
+          "www.royalshipments.com"
         ],
         "path": "^/tt/([^/?#]+)/?$"
       },

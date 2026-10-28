@@ -5,6 +5,9 @@ hub takes parcels from Polish senders and from Cainiao's economy flow and hands 
 networks for final delivery, so the history it shows often comes from those partners. Tracked
 through its tracker's own page.
 
+Royal Shipments was its English-language brand: royalshipments.com redirects to the tracker and
+keeps the `/tt/` path, so its name and links route here.
+
 ## How it works
 
 1. `direct`: one `GET https://en.sp.express/tt/{number}`, or `/tt-cainiao/{number}` for a

@@ -857,3 +857,26 @@ describe('PIN AG numbers', () => {
     });
   });
 });
+
+describe('networks whose links route to an existing carrier', () => {
+  it('reads France Express recipient links as GEODIS', () => {
+    for (const link of [
+      'https://espace-client.france-express.com/services/destinataires/#/fr/suivi/1G0000000000',
+      'https://espace-client.geodis.com/services/destinataires/#/fr/suivi/1G0000000000',
+    ]) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: '1G0000000000', carrier: 'geodis', source: 'link' });
+    }
+  });
+
+  it('reads Royal Shipments links as SP Express', () => {
+    expect(parseTrackingInput('https://royalshipments.com/tt/483260904000001')).toMatchObject({
+      trackingNumber: '483260904000001', carrier: 'sp-express', source: 'link',
+    });
+  });
+
+  it('reads PARCEL.ONE tracking links', () => {
+    for (const link of ['https://parcel.one/tracking?trackno=1000000000017', 'https://parcel.one/de/tracking/?trackno=1000000000017']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: '1000000000017', carrier: 'parcel-one', source: 'link' });
+    }
+  });
+});
