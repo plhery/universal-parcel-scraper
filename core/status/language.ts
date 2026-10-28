@@ -145,6 +145,7 @@ const CUSTOMS_PENDING = new RegExp([
   String.raw`\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless|as soon as|needs? to|has to|have to|yet to|waiting to|expected to|about to)\b(?: \w+){0,3}? (?:be |been |get |gets |is |are |has been |have been )?(?:released|cleared)\b${SENTENCE}*?\bcustoms\b`,
   String.raw`\b(?:customs|clearance)\b${SENTENCE}*?\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless|as soon as|needs? to|has to|have to|yet to|waiting to|expected to|about to|to)\b(?: \w+){0,2}? (?:be |been |get |gets |is |are |has been |have been )?(?:released|cleared|completed?|finished|done)\b`,
   String.raw`\b(?:be|being) (?:released|cleared) (?:from |by |through |out of )?(?:the )?${CUSTOMS_SIDE}customs\b|\bclearance (?:is )?(?:in progress|ongoing|under way|underway)\b|\b(?:be|being) customs cleared\b`,
+  String.raw`(?:\bnot|n't|\bnever|\b(?:yet|need|needs|has|have) to|\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless))\b(?: \w+){0,3}? (?:completed?|finished) (?:the |its )?${CUSTOMS_SIDE}customs clearance\b`,
   String.raw`dedouanement.*(?:non termine|pas termine)|\b(?:pas|non|jamais)\b(?: (?:encore|ete|etre|completement|totalement))* (?:dedouane|(?:sorti|libere)e?s? (?:de |par )?(?:la )?douane)|\b(?:sera|seront|serait|va etre|vont etre|doit etre|doivent etre|devra etre|devrait etre|pourra etre|en attente d'etre)(?: \w+){0,2}? (?:dedouane|libere)`,
   String.raw`zollabfertigung.*nicht abgeschlossen|nicht.*zoll.*freigegeben|\bnicht (?:\w+ )?verzollt\b|\b(?:wird|werden|muss|mussen|soll|sollen|kann|konnen)\b${SENTENCE}*?\bverzollt\b|\b(?:verzollung|zollabfertigung|zollfreigabe|zollkontrolle)\b${SENTENCE}*?\b(?:nicht|steht aus|ausstehend)\b`,
   String.raw`sdoganamento.*non completato|\bnon\b(?: \w+){0,3}? (?:sdoganat|uscit[oaie] dalla dogana|svincolat)|\b(?:sara|saranno|verra|verranno|deve essere|devono essere|dovra essere|in attesa di essere|attende di essere)(?: \w+){0,2}? sdoganat`,
@@ -155,6 +156,8 @@ const CUSTOMS_PENDING = new RegExp([
 /** Clearance completed or the parcel released, in each language. */
 const CUSTOMS_RELEASED = new RegExp([
   String.raw`\bclearance\b${SENTENCE}*?\b(?:complete|completed|finished|done|success|successful|successfully|concluded|granted|approved|obtained)\b`,
+  // Verb first: "Shipment completed the customs clearance process at destination".
+  String.raw`\b(?:completed|finished) (?:the |its )?${CUSTOMS_SIDE}customs clearance\b`,
   String.raw`\b(?:import|export) (?:procedures|formalities)\b${SENTENCE}*?\b(?:are|were|have been|has been) (?:now )?(?:complete|completed|finished|done)\b`,
   String.raw`(?:leaving|departed from|left|exited|exiting|out of|passed(?: through)?) (?:the )?${CUSTOMS_SIDE}customs\b(?! (?:to|for) (?:the )?(?:sender|shipper)\b)`,
   String.raw`completion of customs|released by (?:(?:the )?${CUSTOMS_SIDE}customs|a government agency|(?:the |a )?clearing agen(?:cy|t))|\breleased (?:from|out of|at) (?:the )?${CUSTOMS_SIDE}customs\b|\breturned from (?:the )?${CUSTOMS_SIDE}customs\b(?! to\b)`,

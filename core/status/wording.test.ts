@@ -300,14 +300,17 @@ describe('classifyWording', () => {
   it('reads verb-first clearance as completed and keeps negated or pending clearance in customs', () => {
     for (const wording of [
       'Your parcel cleared customs successfully', 'Cleared customs', 'Shipment cleared by customs',
-      'The parcel has been cleared through customs',
+      'The parcel has been cleared through customs', 'Shipment completed the customs clearance process at destination',
+      'Shipment completed customs clearance process.', 'The parcel has finished import customs clearance',
     ]) {
       expect(classifyWording(wording)).toEqual({ stage: 'in_transit', source: 'wording:language' });
     }
     for (const wording of [
       'The parcel has not cleared customs yet', 'Parcel has not yet been cleared through customs',
       "Shipment hasn't cleared customs", 'Your parcel will be cleared through customs',
-      'Parcel is being cleared by customs',
+      'Parcel is being cleared by customs', 'Shipment started the customs clearance process at destination',
+      'The parcel has not completed customs clearance', "Shipment hasn't completed the customs clearance process",
+      'The parcel moves on once it has completed customs clearance', 'Shipment is yet to complete customs clearance',
     ]) {
       expect(wordingStage(wording)).toBe('customs');
     }

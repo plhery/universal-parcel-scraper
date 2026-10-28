@@ -11,6 +11,8 @@
     {"code": "5", "wording": "Carrier received the shipment", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in TopYou's hands, worded for its newer waybills."},
     {"code": "10", "wording": "Shipment arrived at a carrier facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Under the code for leaving the first-mile warehouse, after TopYou received the parcel: movement, not its acceptance."},
     {"code": "15", "wording": "Shipment started the customs clearance process at origin", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Export clearance before the flight."},
-    {"code": "20", "wording": "Shipment arrived in the destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+    {"code": "20", "wording": "Shipment arrived in the destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "20", "wording": "Shipment started the customs clearance process at destination", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance, under the code for arriving in the destination country."},
+    {"code": "20", "wording": "Shipment completed the customs clearance process at destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared and on its way to the delivery carrier, not held in customs."}
   ]
 }
