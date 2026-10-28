@@ -17332,6 +17332,44 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "huaya-express": {
+    "displayName": "Huaya Express",
+    "color": "#e60013",
+    "aliases": [
+      "GZHY",
+      "Huaya Yuntong",
+      "华亚运通",
+      "华亚运通国际物流",
+      "华亚运通国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huaya-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "193.112.176.17"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^HYYT\\d{12}GZ$",
+        "confidence": "high"
+      }
+    ]
+  },
   "hunter-express": {
     "displayName": "Hunter Express",
     "color": "#f7aa3a",
@@ -33835,6 +33873,7 @@ export const CARRIER_IDS = [
   "hr-parcel",
   "hrvatska-posta",
   "huahan",
+  "huaya-express",
   "hunter-express",
   "hywl",
   "icc-worldwide",
@@ -34654,6 +34693,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hr-parcel": [],
   "hrvatska-posta": ["hrvatska-posta-own","hrvatska-posta-s10"],
   "huahan": ["huahan-1"],
+  "huaya-express": ["huaya-express-1"],
   "hunter-express": [],
   "hywl": ["hywl-1","hywl-2"],
   "icc-worldwide": [],
