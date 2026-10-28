@@ -93,6 +93,14 @@
       "note": "Waiting at a facility for its next linehaul or flight. The unified feed codes it SM; the mobile API sends the wording alone."
     },
     {
+      "wording": "Shipment is scheduled for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "A delivery booked for a later round, as after a failed attempt; the courier's round comes as its own scan."
+    },
+    {
       "wording": "Shipment has departed from a DHL facility",
       "language": "en",
       "stage": "in_transit",

@@ -20,6 +20,8 @@ const EXACT: ReadonlyMap<string, Stage> = new Map([
   ['shipment is in transit to destination', 'in_transit'],
   // Waiting at a facility for the next linehaul or flight: on its way, not held.
   ['scheduled to depart on the next planned movement', 'in_transit'],
+  // A delivery booked for a later round, as after a failed attempt: not yet with the courier.
+  ['shipment is scheduled for delivery', 'in_transit'],
   ['shipment is out with courier for delivery', 'out_for_delivery'],
   ['shipment is on hold', 'exception'],
   ['delivered', 'delivered'],
