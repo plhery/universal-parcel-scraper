@@ -8281,6 +8281,46 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "boxtal": {
+    "displayName": "Boxtal",
+    "color": "#1e5fa6",
+    "aliases": [
+      "Boxtal Connect",
+      "Boxtal Shipping"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "boxtal",
+      "localClocks": true
+    },
+    "canaryUrl": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi",
+    "trackingUrlTemplate": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi?reference={trackingNumber}",
+    "trackingSearchUrl": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi",
+    "linkRules": [
+      {
+        "domains": [
+          "boxtal.com",
+          "www.boxtal.com",
+          "shipping.boxtal.com"
+        ],
+        "pathPattern": "^/[a-z]{2}/[a-z]{2}/(?:app/)?(?:(?:suivi/)?suivre-mon-envoi|mon-suivi)/?$",
+        "params": [
+          "reference"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{4}[A-Z]{4}[A-Z0-9]{4}FR$",
+        "confidence": "high"
+      }
+    ]
+  },
   "bringer-parcel": {
     "displayName": "Bringer Parcel Xpress",
     "color": "#150773",
@@ -33566,6 +33606,7 @@ export const CARRIER_IDS = [
   "bosta",
   "botswana-post",
   "box-now",
+  "boxtal",
   "bringer-parcel",
   "bts-uz",
   "budbee",
@@ -34384,6 +34425,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bosta": [],
   "botswana-post": [],
   "box-now": ["box-now-1"],
+  "boxtal": ["boxtal-1"],
   "bringer-parcel": ["bringer-parcel-1"],
   "bts-uz": [],
   "budbee": [],

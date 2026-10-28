@@ -61,6 +61,7 @@ import { adapter as bookurier } from '../carriers/bookurier/adapter.js';
 import { adapter as borderExpress } from '../carriers/border-express/adapter.js';
 import { adapter as bosta } from '../carriers/bosta/adapter.js';
 import { adapter as boxNow } from '../carriers/box-now/adapter.js';
+import { adapter as boxtal } from '../carriers/boxtal/adapter.js';
 import { adapter as bpost } from '../carriers/bpost/adapter.js';
 import { adapter as bringPosten } from '../carriers/bring-posten/adapter.js';
 import { adapter as bringerParcel } from '../carriers/bringer-parcel/adapter.js';
@@ -702,6 +703,7 @@ export const REGISTRY: RegistryDefinition = {
     "border-express": borderExpress,
     "bosta": bosta,
     "box-now": boxNow,
+    "boxtal": boxtal,
     "bpost": bpost,
     "bring-posten": bringPosten,
     "bringer-parcel": bringerParcel,
@@ -1362,6 +1364,7 @@ export const REGISTRY: RegistryDefinition = {
     "bosta": "bosta",
     "botswana-post": "universal",
     "box-now": "box-now",
+    "boxtal": "boxtal",
     "bpost": "bpost",
     "bring-posten": "bring-posten",
     "bringer-parcel": "bringer-parcel",

@@ -70,6 +70,7 @@ import { statusMap as bookurier } from '../../carriers/bookurier/status.js';
 import { statusMap as borderExpress } from '../../carriers/border-express/status.js';
 import { statusMap as bosta } from '../../carriers/bosta/status.js';
 import { statusMap as boxNow } from '../../carriers/box-now/status.js';
+import { statusMap as boxtal } from '../../carriers/boxtal/status.js';
 import { statusMap as bpost } from '../../carriers/bpost/status.js';
 import { statusMap as bringPosten } from '../../carriers/bring-posten/status.js';
 import { statusMap as bringerParcel } from '../../carriers/bringer-parcel/status.js';
@@ -663,7 +664,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'apple-express': appleExpress, aramex, 'aramex-au': aramexAu,
   'aramex-nz': aramexNz, 'aras-kargo': arasKargo, 'arrow-xl': arrowXl, asendia, 'atlantic-courier': atlanticCourier, 'australia-post': australiaPost, 'austrian-post': austrianPost, averitt, aymakan, 'bangladesh-post': bangladeshPost,
   'barid-al-maghrib': baridAlMaghrib, belpost, 'best-overnite-express': bestOverniteExpress, 'better-trucks': betterTrucks, 'bex-express': bexExpress, 'bjs-home-delivery': bjsHomeDelivery, 'blue-dart': blueDart, 'blue-express': blueExpress, blueex, bombino,
-  bookurier, 'border-express': borderExpress, bosta, 'box-now': boxNow, bpost, 'bring-posten': bringPosten, 'bringer-parcel': bringerParcel, brt, 'bulgarian-posts': bulgarianPosts, 'burd-delivery': burdDelivery, bussgods,
+  bookurier, 'border-express': borderExpress, bosta, 'box-now': boxNow, boxtal, bpost, 'bring-posten': bringPosten, 'bringer-parcel': bringerParcel, brt, 'bulgarian-posts': bulgarianPosts, 'burd-delivery': burdDelivery, bussgods,
   byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'canada-post': canadaPost, canpar, cargus, 'castle-parcels': castleParcels, castores, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas,
   'central-transport': centralTransport, 'ceska-posta': ceskaPosta, 'ceva-logistics': cevaLogistics, chazki, chilexpress, 'china-post': chinaPost,
   'chit-chats': chitChats, chronodiali, chronopost, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,

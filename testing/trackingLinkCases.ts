@@ -1943,6 +1943,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'e-commerce-international', number: 'PL15132382072UA',
     route: /^https:\/\/ecommerce-system\.com\/track\/PL15132382072UA$/,
     marker: /Śledzenie przesyłki|Shipment tracking/ },
+  { carrier: 'boxtal', number: '2301136016MONRW3S7FR',
+    route: /^https:\/\/shipping\.boxtal\.com\/fr\/fr\/suivi\/suivre-mon-envoi\?reference=2301136016MONRW3S7FR$/,
+    marker: /Livré|En cours d'acheminement|Delivered|In transit/ },
 ];
 
 /**
