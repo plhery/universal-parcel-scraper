@@ -157,9 +157,10 @@ describe('ParcelsApp YTO scans', () => {
       ['2026-10-06T10:23:00Z', 'Item received', '20000 EXAMPLE TOWN'],
     ]);
     expect(parsed).toMatchObject({ current_stage: 'ready_for_pickup' });
-    expect(parsed.events?.map((event) => [event.description, event.stage, event.time])).toEqual([
-      ['The shipment has been handed over to the parcelstation', 'ready_for_pickup', '2026-10-14T03:46:00.000Z'],
-      ['Delivery attempt', 'failed_attempt', '2026-10-12T09:25:00.000Z'],
+    // A scan without an office can be the destination post's, on its clock: its wall clock stays.
+    expect(parsed.events?.map((event) => [event.description, event.stage, event.time ?? event.local_time])).toEqual([
+      ['The shipment has been handed over to the parcelstation', 'ready_for_pickup', '2026-10-14T05:46:00.000'],
+      ['Delivery attempt', 'failed_attempt', '2026-10-12T11:25:00.000'],
       ['Item received in destination country', 'in_transit', '2026-10-10T19:47:00.000Z'],
       ['Item received', 'in_transit', '2026-10-10T03:37:00.000Z'],
       ['Item sent', 'in_transit', '2026-10-09T01:08:00.000Z'],

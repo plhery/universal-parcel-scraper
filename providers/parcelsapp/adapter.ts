@@ -937,7 +937,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
     const location = scanLocation(name, state.location);
     return !location || firstLineInChina(location) ? FIRST_LINE_CHINA_ZONE : undefined;
   }
-  // Croatia Post relays a post abroad on that facility's clock, as its own tracker does.
+  // Croatia Post relays a post abroad on that facility's clock, as its own tracker does. A scan
+  // without an office can be that post's too, so it keeps its wall clock, as Hrvatska pošta's adapter reads it.
+  if (carrier === 'hrvatska-posta' && !scanLocation(name, state.location)) return null;
   const abroad = carrier === 'hrvatska-posta' ? hrvatskaPostaForeignZone(scanLocation(name, state.location)) : undefined;
   if (abroad !== undefined) return abroad;
   // Correos relays an origin post's scans on an item from abroad on that post's clock, or keeps their wall clock (null).
@@ -1101,8 +1103,8 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // iMile's page writes every scan on the recipient country's clock, wherever it happened, and
   // ParcelsApp has its digits; read on iMile's catalog zone they came out early. A destination
   // of one zone places them, and without one they keep their wall clock. So do China Post's
-  // copies of the destination post's scans (`chinaPostAbroad`), Croatia Post's
-  // scan at a facility abroad whose office code names no single clock, Correos's and Correo
+  // copies of the destination post's scans (`chinaPostAbroad`), Croatia Post's scan without an
+  // office or at a facility abroad whose office code names no single clock, Correos's and Correo
   // Uruguayo's copies of an origin post's scan from a country of several clocks, a scan of a
   // line on its place's clock that its place does not date (`PLACE_CLOCK_LINES`), and Pitney
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
@@ -1556,7 +1558,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     // nothing places. A scan at a US military post office, of a network no
     // table knows (`unknownNetwork`), of a bare brand on local clocks
     // (`localClockBrand`), of iMile for a destination of several zones, of
-    // Croatia Post at an office abroad that its code does not place, of UPU at
+    // Croatia Post without an office or at an office abroad that its code does not place, of UPU at
     // an office in the destination (`destinationOffice`) or of a line on its
     // place's clock that its place does not date (`PLACE_CLOCK_LINES`) keeps
     // its wall clock as its local time. Any other

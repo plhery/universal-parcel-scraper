@@ -326,7 +326,8 @@ step exists for future protocol changes.
   scan at a facility abroad, named by its UPU office code, is on that facility's clock when
   the code names a country keeping one, else it keeps its wall clock, as Hrvatska pošta's
   own adapter reads it. Read on Zagreb's clock, a British office's scans came out an hour
-  early. Its other scans take Zagreb's clock.
+  early. A scan without an office, which can be the destination post's, keeps its wall
+  clock as there; the other scans take Zagreb's clock.
 - JS Express's and ECMS's dates are the clock of each scan's place, not the China time of
   their catalog zone. JS Express's own feed gives the same digits with China's offset at
   its Chinese warehouse, the Netherlands' at Schiphol and the destination courier's at the

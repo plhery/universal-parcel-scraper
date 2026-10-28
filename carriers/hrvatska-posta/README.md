@@ -62,8 +62,8 @@ that summer time makes ambiguous stay local times.
 
 ParcelsApp relays the tracker under the name Croatia Post, with its wall clocks under a UTC
 label. The same map stages those scans, an item received abroad after it was sent is in transit
-there too, and a facility abroad takes its clock the same way. ParcelsApp's other Croatia Post
-scans are read on Zagreb's clock, those without an office too.
+there too, and a facility abroad takes its clock the same way. A scan without an office keeps
+its wall clock there too; ParcelsApp's other Croatia Post scans are read on Zagreb's clock.
 
 The pickup point is the post office or parcel locker where the item waits, named by the scan
 that made it ready for collection, while it waits there or once it was collected there. The
