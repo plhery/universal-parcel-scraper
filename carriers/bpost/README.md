@@ -64,10 +64,12 @@ reply also gives the item's creation as an instant (`key.tmmCreated`), and that
 is the pre-advice scan's clock read on Brussels time (`key.created` has the same
 digits as UTC). So a scan that names Belgium, and every scan of a national
 parcel (departure country and receiver both Belgium) even where it names no
-country, is read on Brussels time. So is a scan that names no place at all,
-bpost's own record of a partner's step: on a parcel delivered in Portugal,
-such scans matched CTT's instants on Brussels time, while the partner's scans
-that named their place kept Lisbon's wall clock. Other scans keep their local digits, as
+country, is read on Brussels time. So is a scan that names no place at all or a
+country alone, and, on a parcel sent abroad, a scan in the destination country
+that does not name the partner's office: these are bpost's own records of the
+partner's steps. On a parcel delivered in Portugal they matched CTT's instants on
+Brussels time, while the partner's scans relayed under its office, such as
+`PTLISL Portugal PT`, kept Lisbon's wall clock. Other scans keep their local digits, as
 does a clock the change to summer time skips, and the provider's order is kept;
 see [ROUTING.md](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) for unresolved
 history handling. Weight and dimensions have explicit units. Recipient and

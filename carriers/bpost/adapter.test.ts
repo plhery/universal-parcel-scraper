@@ -105,6 +105,19 @@ describe('bpost direct history', () => {
     placeless.items[0].events[3].location = { locationName: '', countryCode: '' };
     expect(parseBpost(placeless, NUMBER).events?.slice(2, 4).map((event) => event.time))
       .toEqual(['2026-01-03T10:00:00+01:00', '2026-01-02T12:00:00+01:00']);
+    // Sent abroad, the partner's scans relayed under its office keep its wall clock. bpost's own
+    // records of the partner's steps, naming the country alone or a town there, are on Brussels time.
+    const exported = payload();
+    exported.items[0].countryOfDepurture = 'BE';
+    exported.items[0].receiver = { countryCode: 'PT' };
+    exported.items[0].events[0].location = { locationName: 'PTLISL Portugal PT', countryCode: 'PT' };
+    exported.items[0].events[1].location = { locationName: '', countryCode: 'PT' };
+    exported.items[0].events[2].location = { locationName: 'Example town, 11', countryCode: 'PT' };
+    exported.items[0].events[3].location = { locationName: 'Example hub', countryCode: 'NL' };
+    const abroad = parseBpost(exported, NUMBER).events ?? [];
+    expect(abroad[0]).toMatchObject({ local_time: '2026-01-04T12:00:00', location: 'PTLISL Portugal PT, PT' });
+    expect(abroad.slice(1, 3).map((event) => event.time)).toEqual(['2026-01-03T12:00:00+01:00', '2026-01-03T10:00:00+01:00']);
+    expect(abroad[3]).toMatchObject({ local_time: '2026-01-02T12:00:00', location: 'Example hub, NL' });
     // The hour the change to summer time skips has no instant; the repeated one takes its first.
     const changes = payload();
     changes.items[0].events[0] = { ...changes.items[0].events[0], date: '2026-03-29', time: '02:30' };
