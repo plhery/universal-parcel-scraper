@@ -7,6 +7,10 @@
     {"code": "15", "wording": "Departed from Airport to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "15", "wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "20", "wording": "Departed from customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Released by the destination country's customs. The tracker leaves the country after \"of\" empty, which the adapter drops."},
-    {"code": "15", "wording": "At U.S. Postal Service facility, Accepted by U.S. Postal Service", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS takes the parcel over from TopYou's line in the United States, after the flight; it is no first acceptance."}
+    {"code": "15", "wording": "At U.S. Postal Service facility, Accepted by U.S. Postal Service", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS takes the parcel over from TopYou's line in the United States, after the flight; it is no first acceptance."},
+    {"code": "5", "wording": "Carrier received the shipment", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in TopYou's hands, worded for its newer waybills."},
+    {"code": "10", "wording": "Shipment arrived at a carrier facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Under the code for leaving the first-mile warehouse, after TopYou received the parcel: movement, not its acceptance."},
+    {"code": "15", "wording": "Shipment started the customs clearance process at origin", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Export clearance before the flight."},
+    {"code": "20", "wording": "Shipment arrived in the destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]
 }

@@ -188,6 +188,8 @@ describe('TopYou status vocabulary', () => {
   it('stages every wording in its map, with its code, the way the app asks', () => {
     for (const entry of statuses.entries) {
       expect(statusMap.stage(entry.code, entry.wording.toLowerCase()), entry.wording).toBe(entry.stage);
+      // The scan comes from TopYou's map, which the sync files as mapped, not from the shared rules.
+      expect(topyouStage(entry.code, entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
       expect(statusMapAnswer({ carrier: 'topyou', providerCode: entry.code, description: entry.wording }))
         .toEqual({ kind: 'mapped', stage: entry.stage });
     }
