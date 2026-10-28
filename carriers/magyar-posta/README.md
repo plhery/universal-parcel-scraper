@@ -38,6 +38,13 @@ its first start, and keeps it in memory with the numbers added under it. After f
 ones go to a fresh id. The key the app sends is the same for every install, so the adapter
 carries it.
 
+The browser service also retains up to a thousand successful guest registrations in memory for
+a day. After an adapter restart it uses one to fetch fresh scans without another widget; it
+keeps the guest id inside the service and caches no history. An empty guest list expires the
+registration and permits the usual verification. A refused, rate-limited or malformed read
+returns its failure without another addition. Retained reads remain available during the
+widget's refusal cooldown; a cache miss does not open another widget during it.
+
 While the app's API refuses that key or is gone, the `trawl` step uses the tracker instead. The
 helper [`magyar-posta-browser.mjs`](../../trawl/magyar-posta-browser.mjs) opens the tracker the
 public page frames, `www.posta.hu/ikrnyomkovproxy/`, in a fresh context. It fills the number in,
@@ -101,7 +108,7 @@ opening a browser.
 - Lookups need a TRAWL image that includes the helpers.
 - Adding a number needs Google to accept an audio answer from the server's address. Lookups
   then fall back to the universal providers.
-- The application id lives in memory, so a restart adds each number again.
+- A browser-service restart loses its retained guest registrations.
 - At most 100 scans are kept.
 
 ## Testing

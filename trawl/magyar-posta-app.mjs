@@ -21,6 +21,34 @@ const MAX_BODY = 1_000_000;
 const MAX_AUDIO = 2_000_000;
 const MAX_ANSWERS = 2;
 
+/** Only guest registrations live here; every hit still fetches the current scans. */
+export function magyarPostaRegistrations({ now = Date.now, limit = 1000, ttlMs = 24 * 60 * 60_000 } = {}) {
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 5000 || !Number.isFinite(ttlMs) || ttlMs <= 0) {
+    throw new TypeError('Invalid Magyar Posta registration limits');
+  }
+  const entries = new Map();
+  let refusedUntil = 0;
+  return {
+    refused() { return now() < refusedUntil; },
+    refuse() { refusedUntil = now() + 10 * 60_000; },
+    get(number) {
+      const entry = entries.get(number);
+      if (!entry) return null;
+      if (entry.until <= now()) { entries.delete(number); return null; }
+      entries.delete(number); entries.set(number, entry);
+      return entry.id;
+    },
+    set(number, id) {
+      if (!NUMBER.test(number) || !APPLICATION.test(id)) return;
+      entries.delete(number); entries.set(number, { id, until: now() + ttlMs });
+      while (entries.size > limit) entries.delete(entries.keys().next().value);
+    },
+    delete(number) { entries.delete(number); },
+  };
+}
+const registrations = magyarPostaRegistrations();
+const REGISTRATION_HEADER = 'x-magyar-posta-registration';
+
 // The app's widget page: an invisible widget executed at once. Its callback
 // leaves the token in the page, where the helper reads it.
 const WIDGET = `<!DOCTYPE html>
@@ -161,16 +189,18 @@ export function magyarPostaAppReply(text) {
   return JSON.stringify(kept);
 }
 
-/** Adds the number to the application id with the widget's token, as the app does. */
-async function post(fetcher, { applicationId, number }, token, timeoutMs, signal) {
+/** The app's token-free refresh or its addition after verification. */
+async function tracking(fetcher, { applicationId, number }, token, timeoutMs, signal) {
   const entry = { url: TRACKING, status: 0, body: null, headers: {}, truncated: false, base64Encoded: false, error: null,
     trackingNumberSubmitted: number };
-  const query = new URLSearchParams({ platform: 'android', preferredLanguage: 'hu', applicationId, _ts: String(Date.now()) });
+  const query = new URLSearchParams({ platform: 'android', preferredLanguage: 'hu', applicationId });
+  if (token === null) query.append('packages[0][packageId]', number);
+  else query.set('_ts', String(Date.now()));
   try {
-    const response = await fetcher(`${TRACKING}?${query}`, { method: 'POST', redirect: 'error',
+    const response = await fetcher(`${TRACKING}?${query}`, { method: token === null ? 'GET' : 'POST', redirect: 'error',
       signal: AbortSignal.any([signal, AbortSignal.timeout(Math.max(1, timeoutMs))]),
-      headers: { ...APP_HEADERS, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ packageId: number, 'g-recaptcha-response': token }) });
+      headers: { ...APP_HEADERS, ...(token !== null && { 'Content-Type': 'application/json' }) },
+      ...(token !== null && { body: JSON.stringify({ packageId: number, 'g-recaptcha-response': token }) }) });
     entry.status = response.status;
     entry.headers = Object.fromEntries(['content-type', 'retry-after'].map(key => [key, response.headers.get(key)])
       .filter(([, value]) => value).map(([key, value]) => [key, value.slice(0, 100)]));
@@ -185,21 +215,37 @@ async function post(fetcher, { applicationId, number }, token, timeoutMs, signal
   return entry;
 }
 
+function bound(entry, number, requireEvents = false) {
+  if (entry.status !== 200 || entry.error || entry.truncated || !entry.body) return false;
+  try {
+    const data = JSON.parse(entry.body).data;
+    return Array.isArray(data) && data.length === 1 && data[0]?.package_id === number
+      && (!requireEvents || data[0].events?.length > 0);
+  } catch { return false; }
+}
+
 /**
  * Add one number to the app's guest list after its invisible reCAPTCHA widget.
  * Every addition needs a fresh token, so each one opens its own context.
  */
-export async function runMagyarPostaApp({ url, handle, tier, maxTimeout, capture, installPolicy, transcribe, fetcher = globalThis.fetch }) {
+export async function runMagyarPostaApp({ url, handle, tier, maxTimeout, capture, installPolicy, transcribe, signal,
+  fetcher = globalThis.fetch, registrationCache = registrations, onRegistration = fields => console.warn(JSON.stringify({
+    level: 'warn', event: 'magyar-posta.registration', ...fields,
+  })) }) {
   const request = magyarPostaAppRequest(url, capture);
   if (!request) return undefined;
   const start = Date.now();
   const remaining = () => Math.max(1, Math.floor(maxTimeout - (Date.now() - start)));
   const ending = new AbortController();
-  let context, timer, expired = false, statusCode = 0;
+  const combined = signal ? AbortSignal.any([signal, ending.signal]) : ending.signal;
+  let context, timer, expired = false, statusCode = 0, cache = 'miss';
   const entries = [];
-  const result = () => ({ tier, status: 'success', durationMs: Date.now() - start,
-    // TRAWL requires a body or HTML to forward captures. The widget page is not needed.
-    effectiveUrl: url, html: '', body: new Uint8Array(), statusCode, cookies: [], capturedResponses: entries });
+  const result = () => {
+    for (const entry of entries) entry.headers['x-magyar-posta-registration-cache'] = 'memory';
+    return { tier, status: 'success', durationMs: Date.now() - start,
+      // TRAWL requires a body or HTML to forward captures. The widget page is not needed.
+      effectiveUrl: url, html: '', body: new Uint8Array(), statusCode, cookies: [], capturedResponses: entries };
+  };
   const close = async target => {
     let closed = false, cleanup;
     try { await Promise.race([
@@ -208,9 +254,42 @@ export async function runMagyarPostaApp({ url, handle, tier, maxTimeout, capture
     ]); } finally { clearTimeout(cleanup); if (!closed) handle.requestBrowserReplacement?.('Magyar Posta context cleanup failed'); }
   };
   try {
-    if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || typeof transcribe !== 'function') throw new Error('No browser budget');
+    if (!Number.isFinite(maxTimeout) || maxTimeout < 1) throw new Error('No browser budget');
     return await Promise.race([
       (async () => {
+        if (combined.aborted) return result();
+        const held = registrationCache.get(request.number);
+        if (held && remaining() > 8000) {
+          const entry = await tracking(fetcher, { ...request, applicationId: held }, null, Math.min(2500, remaining() - 6000), combined);
+          if (expired || combined.aborted) return result();
+          entry.headers[REGISTRATION_HEADER] = 'retained';
+          if (bound(entry, request.number)) {
+            // The retained guest id never leaves this service. The SDK must not
+            // remember its newly requested id as though it held this number.
+            entries.push(entry); statusCode = 200; cache = 'hit'; return result();
+          }
+          // Only an explicit empty list expires a registration. A refusal, rate
+          // limit or malformed reply keeps its failure instead of adding load.
+          let empty = false;
+          try { const data = JSON.parse(entry.body).data; empty = Array.isArray(data) && data.length === 0; } catch { /* Not an empty list. */ }
+          if (entry.status === 200 && !entry.error && !entry.truncated && empty) {
+            registrationCache.delete(request.number); cache = 'stale';
+          } else {
+            if (entry.status === 200 && !entry.error && !entry.truncated) {
+              registrationCache.delete(request.number);
+              entry.body = null; entry.error = 'Magyar Posta returned no bound cached history';
+            }
+            // The helper completed; the captured API reply owns its HTTP status
+            // and Retry-After, as an addition from the widget page does.
+            entries.push(entry); statusCode = 200; cache = 'failed'; return result();
+          }
+        }
+        if (registrationCache.refused()) {
+          cache = 'cooldown';
+          entries.push({ url: PAGE, status: 200, body: null, headers: {}, truncated: false, base64Encoded: false, error: REFUSAL });
+          statusCode = 200; return result();
+        }
+        if (typeof transcribe !== 'function') throw new Error('No speech-to-text');
         const created = await handle.browser.newContext();
         handle.noteTemporaryContext?.();
         if (expired) { await close(created); throw new Error('Late browser context'); }
@@ -227,13 +306,18 @@ export async function runMagyarPostaApp({ url, handle, tier, maxTimeout, capture
         if (expired || statusCode !== 200 || remaining() <= 8000) return result();
         const outcome = await verify(page, context, transcribe, Math.min(30000, remaining() - 6000), ending.signal);
         if (outcome === 'refused') {
+          registrationCache.refuse();
           // Its outcome, without the widget's tokens or text.
           entries.push({ url: PAGE, status: statusCode, body: null, headers: {}, truncated: false, base64Encoded: false, error: REFUSAL });
         }
         if (expired || outcome !== 'solved') return result();
         const token = await within(page.evaluate(() => document.getElementById('verification')?.value ?? ''), 1000, '');
         if (typeof token !== 'string' || !token || expired) return result();
-        entries.push(await post(fetcher, request, token, Math.min(15000, remaining() - 500), ending.signal));
+        const entry = await tracking(fetcher, request, token, Math.min(15000, remaining() - 500), ending.signal);
+        if (!expired && bound(entry, request.number, true)) {
+          registrationCache.set(request.number, request.applicationId);
+        }
+        entries.push(entry);
         return result();
       })(),
       new Promise((_, reject) => { timer = setTimeout(() => { expired = true; reject(new Error('Browser deadline')); }, maxTimeout); }),
@@ -246,5 +330,6 @@ export async function runMagyarPostaApp({ url, handle, tier, maxTimeout, capture
   } finally {
     expired = true; clearTimeout(timer); ending.abort();
     if (context) await close(context);
+    try { onRegistration({ cache, browserOpened: !!context, durationMs: Date.now() - start }); } catch { /* Telemetry cannot change tracking. */ }
   }
 }

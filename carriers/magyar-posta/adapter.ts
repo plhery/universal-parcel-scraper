@@ -84,7 +84,7 @@ export async function magyarPostaBrowser(trawl: TrawlClient, raw: string, signal
  * of the id return it.
  */
 export async function magyarPostaAppBrowser(trawl: TrawlClient, raw: string, applicationId: string, signal: AbortSignal,
-  remainingMs: number): Promise<CarrierResult> {
+  remainingMs: number, rememberApplication?: () => void, supportsRegistrationCache?: () => void): Promise<CarrierResult> {
   const number = normalizeMagyarPostaNumber(raw);
   const timeoutMs = Math.floor(remainingMs - 2000);
   if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
@@ -92,6 +92,9 @@ export async function magyarPostaAppBrowser(trawl: TrawlClient, raw: string, app
     captureResponses: [MAGYAR_POSTA_APP_TRACKING], maxTimeout: timeoutMs, settleTimeout: timeoutMs },
   { provider: PROVIDER, timeoutMs, signal, requireSolved: false, captureWindow: 'last', maxBytes: 2 * MAGYAR_POSTA_MAX_BYTES });
   signal.throwIfAborted();
+  if (page.capturedResponses.some(row => row.headers['x-magyar-posta-registration-cache'] === 'memory'
+    && ((row.url === MAGYAR_POSTA_APP_PAGE && row.error === REFUSED)
+      || (row.url === MAGYAR_POSTA_APP_TRACKING && row.trackingNumberSubmitted === number)))) supportsRegistrationCache?.();
   if (page.capturedResponses.some(row => row.url === MAGYAR_POSTA_APP_PAGE && row.error === REFUSED)) {
     throw new ChallengeError(PROVIDER, 'Google refused Magyar Posta\'s audio challenge', { reason: 'verification_refused' });
   }
@@ -100,21 +103,28 @@ export async function magyarPostaAppBrowser(trawl: TrawlClient, raw: string, app
   if (rows.length > 1) throw new ChallengeError(PROVIDER, 'Magyar Posta\'s app returned no single bound addition');
   // No addition left the widget page: its page failed, or the widget issued no token.
   if (!reply) throw httpFailure(page.statusCode) ?? new ChallengeError(PROVIDER, 'Magyar Posta\'s app widget issued no token');
+  if (reply.error === 'Magyar Posta returned no bound cached history') throw new SchemaError(PROVIDER, 'Magyar Posta returned unbound cached history');
   if (reply.error || reply.truncated || reply.base64Encoded) throw new TransportError(PROVIDER, 'Magyar Posta returned an incomplete app reply');
   const payload = reply.body === null ? null : magyarPostaAppJson(reply.body);
-  if (reply.status === 502 && typeof payload === 'object' && payload !== null && (payload as { message?: unknown }).message === UNADDED) {
+  if (reply.headers['x-magyar-posta-registration'] !== 'retained' && reply.status === 502
+    && typeof payload === 'object' && payload !== null && (payload as { message?: unknown }).message === UNADDED) {
     throw new UnaddedError(PROVIDER, 'Magyar Posta\'s app did not add the number');
   }
   const failure = magyarPostaAppFailure(reply.status, reply.headers['retry-after']);
   if (failure) throw failure;
   const result = parseMagyarPostaApp(payload, number);
   if (!result) throw new SchemaError(PROVIDER, 'Magyar Posta\'s app added the number without returning it');
+  // A retained registration belongs to the helper, not to this new app id.
+  // Its capability stays in the helper's memory rather than entering results.
+  if (reply.headers['x-magyar-posta-registration'] !== 'retained') rememberApplication?.();
   return result;
 }
 
 export class MagyarPostaTracker {
   /** Until when Google's refusal holds, for the app's widget and for the tracker's checkbox, which have their own keys. */
   #refusedUntil = { app: 0, web: 0 };
+  /** A helper with retained registrations checks those before its own widget cooldown. */
+  #registrationCache = false;
   /** The application id each added number is read under, oldest first. */
   #added = new Map<string, string>();
   /** The id new numbers go to, generated when first needed, and how many it took. */
@@ -169,7 +179,7 @@ export class MagyarPostaTracker {
         const id = await this.#applicationId(signal, remainingMs);
         const route = id ? 'app' : 'web';
         // Another solve soon after a refusal would hold a browser for the same answer.
-        if (Date.now() < this.#refusedUntil[route]) {
+        if (Date.now() < this.#refusedUntil[route] && !(route === 'app' && this.#registrationCache)) {
           throw new ChallengeError(PROVIDER, 'Google refused Magyar Posta\'s audio challenge recently', { reason: 'verification_refused' });
         }
         if (id && (this.#unadded.get(number) ?? 0) > Date.now()) {
@@ -180,9 +190,13 @@ export class MagyarPostaTracker {
         try {
           if (!id) return await magyarPostaBrowser(trawl, number, signal, left);
           const current = this.#current;
-          const result = await magyarPostaAppBrowser(trawl, number, id, signal, left);
-          if (current && this.#current === current) current.count++;
-          this.#remember(number, id);
+          let added = false;
+          const result = await magyarPostaAppBrowser(trawl, number, id, signal, left,
+            () => { added = true; }, () => { this.#registrationCache = true; });
+          if (added) {
+            if (current && this.#current === current) current.count++;
+            this.#remember(number, id);
+          }
           return result;
         } catch (error) {
           if (error instanceof ChallengeError && error.reason === 'verification_refused') this.#refusedUntil[route] = Date.now() + REFUSAL_MEMORY_MS;

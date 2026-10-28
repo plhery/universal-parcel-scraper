@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
-import type { TrawlClient } from '../../core/transport/trawl.js';
+import { TrawlClient } from '../../core/transport/trawl.js';
 import { adapter, MAGYAR_POSTA_APP_PAGE, MAGYAR_POSTA_APP_TRACKING, MAGYAR_POSTA_RESULT, MAGYAR_POSTA_SEARCH, MAGYAR_POSTA_TRACKER, MagyarPostaTracker,
   magyarPostaAppTrackingUrl, magyarPostaTrackingUrl } from './adapter.js';
 import { normalizeMagyarPostaNumber, parseMagyarPosta, parseMagyarPostaApp } from './parser.js';
@@ -248,6 +248,54 @@ describe('Magyar Posta app reply', () => {
 });
 
 describe('Magyar Posta app route', () => {
+  it('does not remember its new guest id when TRAWL used a retained registration', async () => {
+    const row = added(appFixture('app-delivered'), { headers: { 'x-magyar-posta-registration': 'retained' } });
+    const { scrape, api, tracker: active } = appTracker([row]);
+    const first = await active.fetch(PARCEL);
+    const second = await active.fetch(PARCEL);
+    expect(first.current_stage).toBe('delivered'); expect(second.current_stage).toBe('delivered');
+    expect(scrape).toHaveBeenCalledTimes(2);
+    expect(api.requests.filter(row => row.url.pathname.endsWith('/package/tracking'))).toHaveLength(0);
+    expect(JSON.stringify(second)).not.toContain(APPLICATION);
+    expect(second).not.toHaveProperty('headers');
+  });
+
+  it('lets a cache-aware helper serve a retained registration during its widget refusal cooldown', async () => {
+    const refused = { ...widgetRefused, headers: { 'x-magyar-posta-registration-cache': 'memory' } };
+    const { scrape, tracker: active } = appTracker([refused]);
+    await expect(active.fetch(PARCEL)).rejects.toMatchObject({ reason: 'verification_refused' });
+    scrape.mockResolvedValue({ tier: 3, statusCode: 200, capturedResponses: [added(appFixture('app-delivered'), {
+      headers: { 'x-magyar-posta-registration': 'retained', 'x-magyar-posta-registration-cache': 'memory' },
+    })] });
+    expect((await active.fetch(PARCEL)).current_stage).toBe('delivered');
+    expect(scrape).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps a retained GET failure distinct from an unadded POST and rejects an unbound cache reply', async () => {
+    const failed = appTracker([added({ message: 'Unsuccessful Action!' }, {
+      status: 502, headers: { 'x-magyar-posta-registration': 'retained' },
+    })]);
+    await expect(failed.tracker.fetch(PARCEL)).rejects.toMatchObject({ name: 'UpstreamHttpError', kind: 'indeterminate', status: 502 });
+    failed.scrape.mockResolvedValue({ tier: 3, statusCode: 200, capturedResponses: [added(appFixture('app-delivered'), {
+      headers: { 'x-magyar-posta-registration': 'retained' },
+    })] });
+    expect((await failed.tracker.fetch(PARCEL)).current_stage).toBe('delivered');
+    expect(failed.scrape).toHaveBeenCalledTimes(2);
+    const unbound = appTracker([added(null, { error: 'Magyar Posta returned no bound cached history' })]);
+    await expect(unbound.tracker.fetch(PARCEL)).rejects.toMatchObject({ kind: 'schema' });
+  });
+
+  it('preserves captured rate limits through the TRAWL HTTP envelope', async () => {
+    const api = appApi();
+    const trawl = new TrawlClient('http://browser.test', async () => json({
+      html: '', tier: 3, statusCode: 200, capturedResponses: [added(null, {
+        status: 429, headers: { 'retry-after': '7', 'x-magyar-posta-registration': 'retained' },
+      })],
+    }));
+    const active = new MagyarPostaTracker({ trawl, fetcher: api.fetcher as typeof fetch });
+    await expect(active.fetch(PARCEL)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 7000 });
+  });
+
   it('adds a number through the browser service, then reads it again without a token', async () => {
     const { scrape, api, tracker: active } = appTracker();
     expect((await active.fetch(PARCEL, { budgetMs: 40_000 })).current_stage).toBe('delivered');

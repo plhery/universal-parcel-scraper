@@ -68,7 +68,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
       solveCaptcha: (page, timeout, signal) => solveRecaptchaV2(page, timeout, AbortSignal.any([budget.signal, signal])) })
   }
   if (carrierPage && magyarPostaAppRequest(url, capture)) {
-    return await runMagyarPostaApp({ ...carrierRun,
+    return await runMagyarPostaApp({ ...carrierRun, signal: budget.signal,
       transcribe: (audio, signal) => transcribeMagyarPostaAudio(audio, AbortSignal.any([budget.signal, signal])) })
   }`;
   writeFileSync(path, 'import { attachTrackingCapture, reserveDeadline } from "../utils/tracking-capture.mjs"\n'

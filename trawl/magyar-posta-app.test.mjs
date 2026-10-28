@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { magyarPostaAppReply, magyarPostaAppRequest, runMagyarPostaApp } from './magyar-posta-app.mjs';
+import { magyarPostaAppReply, magyarPostaAppRequest, magyarPostaRegistrations, runMagyarPostaApp } from './magyar-posta-app.mjs';
 
 const number = 'PNZZZ00000013';
 const applicationId = '0a1b2c3d-0000-4000-8000-00000000000e';
@@ -71,6 +71,7 @@ function fixture({ verdict = 'accept', passive = false, blockedAtAudio = false, 
   const context = { newPage: async () => tab, close: async () => { state.closed++; },
     request: { get: async address => { state.clips++; state.heard.push(address); return { status: () => 200, body: async () => Buffer.from('synthetic audio') }; } } };
   const options = { url, capture, tier: 3, maxTimeout: 20000,
+    registrationCache: magyarPostaRegistrations(), onRegistration: () => {},
     handle: { browser: { newContext: async () => context } },
     installPolicy: async () => { state.policy++; },
     transcribe: async audio => { assert.match(audio, /^data:audio\/mpeg;base64,/); return ' synthetic words '; },
@@ -183,4 +184,123 @@ test('keeps only the reply\'s tracking fields', () => {
   for (const text of ['not json', '[]', 'null', '"text"']) assert.equal(magyarPostaAppReply(text), null);
   assert.deepEqual(JSON.parse(magyarPostaAppReply('{"data":[null,{"package_id":7,"events":"x"}]}')),
     { data: [{ package_id: 7, package_details: {}, delivery_info: {}, events: [] }] });
+});
+
+test('retains bounded guest registrations, with expiry and oldest-use eviction', () => {
+  let now = 100;
+  const cache = magyarPostaRegistrations({ now: () => now, ttlMs: 100, limit: 2 });
+  cache.set(number, applicationId);
+  cache.set('PNZZZ00000024', applicationId);
+  assert.equal(cache.get(number), applicationId);
+  cache.set('PNZZZ00000035', applicationId);
+  assert.equal(cache.get('PNZZZ00000024'), null);
+  assert.equal(cache.get(number), applicationId);
+  now = 200;
+  assert.equal(cache.get(number), null);
+  cache.set('bad', applicationId); cache.set(number, 'invalid');
+  assert.equal(cache.get(number), null);
+  assert.throws(() => magyarPostaRegistrations({ limit: 0 }), TypeError);
+});
+
+test('a fresh SDK uses a retained registration to fetch fresh scans without a widget or exposing its id', async () => {
+  const first = fixture();
+  await runMagyarPostaApp(first.options);
+  const next = fixture({ blockedAtAudio: true });
+  next.options.registrationCache = first.options.registrationCache;
+  const newId = '0a1b2c3d-0000-4000-8000-00000000000f';
+  next.options.url = url.replace(applicationId, newId);
+  next.options.handle.browser.newContext = () => { throw new Error('Must not open a browser'); };
+  delete next.options.transcribe;
+  const fresh = structuredClone(reply);
+  fresh.data[0].events.push({ ...fresh.data[0].events[0], date: '2026-03-04T12:20:14.000000Z' });
+  next.options.fetcher = async (address, init) => {
+    const query = new URL(address).searchParams;
+    assert.equal(init.method, 'GET'); assert.equal(init.body, undefined);
+    assert.equal(query.get('applicationId'), applicationId);
+    assert.equal(query.get('packages[0][packageId]'), number);
+    return new Response(JSON.stringify(fresh));
+  };
+  const diagnostics = [];
+  next.options.onRegistration = row => diagnostics.push(row);
+  const result = await runMagyarPostaApp(next.options);
+  assert.equal(JSON.parse(result.capturedResponses[0].body).data[0].events.length, 2);
+  assert.equal(result.capturedResponses[0].headers['x-magyar-posta-registration'], 'retained');
+  assert.equal(result.statusCode, 200);
+  assert.deepEqual(diagnostics.map(({ cache, browserOpened }) => ({ cache, browserOpened })), [{ cache: 'hit', browserOpened: false }]);
+  assert.equal(JSON.stringify(result).includes(applicationId), false);
+  assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
+});
+
+test('only an empty guest list permits one fresh verification; bad reads never trigger another solve', async () => {
+  const stale = fixture({ passive: true });
+  stale.options.registrationCache.set(number, applicationId);
+  let reads = 0, posts = 0;
+  stale.options.fetcher = async (address, init) => {
+    if (init.method === 'GET') { reads++; return new Response('{"data":[]}'); }
+    posts++; return new Response(JSON.stringify(reply));
+  };
+  const recovered = await runMagyarPostaApp(stale.options);
+  assert.equal(reads, 1); assert.equal(posts, 1); assert.equal(stale.state.closed, 1);
+  assert.equal(recovered.capturedResponses[0].status, 200);
+  assert.equal(stale.options.registrationCache.get(number), applicationId);
+
+  const wrong = structuredClone(reply); wrong.data[0].package_id = 'PNZZZ00000024';
+  for (const [status, body] of [[403, '<html>PRIVATE</html>'], [429, ''], [502, '{"message":"Unsuccessful Action!"}'],
+    [200, 'PRIVATE'], [200, JSON.stringify(wrong)], [200, JSON.stringify({ data: [reply.data[0], reply.data[0]] })]]) {
+    const failed = fixture(); failed.options.registrationCache.set(number, applicationId);
+    let calls = 0;
+    failed.options.fetcher = async (address, init) => {
+      calls++; assert.equal(init.method, 'GET'); return new Response(body, { status, headers: { 'retry-after': '30' } });
+    };
+    const result = await runMagyarPostaApp(failed.options);
+    assert.equal(calls, 1); assert.equal(failed.state.closed, 0); assert.equal(result.capturedResponses[0].status, status);
+    assert.equal(result.statusCode, 200);
+    assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
+    if (status === 429) assert.equal(result.capturedResponses[0].headers['retry-after'], '30');
+    if (status === 200) assert.ok(result.capturedResponses[0].error);
+  }
+});
+
+test('does not remember an unbound or scanless addition', async () => {
+  for (const data of [[], [{ ...reply.data[0], package_id: 'PNZZZ00000024' }], [{ ...reply.data[0], events: [] }]]) {
+    const active = fixture({ passive: true, body: JSON.stringify({ data }) });
+    await runMagyarPostaApp(active.options);
+    assert.equal(active.options.registrationCache.get(number), null);
+  }
+});
+
+test('cancels a cached read without opening verification or returning stale scans', async () => {
+  const active = fixture(); active.options.registrationCache.set(number, applicationId);
+  const ending = new AbortController(); active.options.signal = ending.signal;
+  active.options.fetcher = (address, { signal }) => new Promise((resolve, reject) => {
+    signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+    ending.abort(new Error('PRIVATE'));
+  });
+  const result = await runMagyarPostaApp(active.options);
+  assert.deepEqual(result.capturedResponses, []); assert.equal(active.state.closed, 0);
+  assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
+});
+
+test('a widget refusal still permits cached reads, while uncached lookups open no further widget', async () => {
+  const blocked = fixture({ blockedAtAudio: true });
+  blocked.options.registrationCache.set('PNZZZ00000024', applicationId);
+  await runMagyarPostaApp(blocked.options);
+  assert.equal(blocked.options.registrationCache.refused(), true);
+
+  const warm = fixture(); warm.options.registrationCache = blocked.options.registrationCache;
+  warm.options.url = url.replace(number, 'PNZZZ00000024');
+  const data = structuredClone(reply); data.data[0].package_id = 'PNZZZ00000024';
+  let reads = 0;
+  warm.options.fetcher = async (address, init) => {
+    reads++; assert.equal(init.method, 'GET'); return new Response(JSON.stringify(data));
+  };
+  const hit = await runMagyarPostaApp(warm.options);
+  assert.equal(reads, 1); assert.equal(warm.state.closed, 0);
+  assert.equal(hit.capturedResponses[0].headers['x-magyar-posta-registration'], 'retained');
+
+  const missing = fixture(); missing.options.registrationCache = blocked.options.registrationCache;
+  const denied = await runMagyarPostaApp(missing.options);
+  assert.equal(missing.state.closed, 0); assert.equal(missing.state.clips, 0); assert.equal(missing.state.posts.length, 0);
+  assert.equal(denied.capturedResponses[0].error, 'Google refused the audio challenge');
+  assert.equal(denied.capturedResponses[0].headers['x-magyar-posta-registration-cache'], 'memory');
 });
