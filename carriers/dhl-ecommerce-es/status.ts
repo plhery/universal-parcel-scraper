@@ -11,9 +11,14 @@ import type { Stage } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 import statuses from './statuses.json' with { type: 'json' };
 
-const CODES = new Map<string, Stage>(statuses.entries.map((entry) => [entry.code, entry.stage as Stage]));
+type Entry = { code?: string; wording: string; stage: string };
+const ENTRIES: readonly Entry[] = statuses.entries;
+const CODES = new Map<string, Stage>(ENTRIES.flatMap((entry) => entry.code ? [[entry.code, entry.stage as Stage]] : []));
+/** A scan sent without a code that is no depot scan: its wording alone says the stage. */
+const UNCODED = new Map<string, Stage>(ENTRIES.filter((entry) => !entry.code)
+  .map((entry) => [entry.wording.toLowerCase(), entry.stage as Stage]));
 /** Depot scans end in a preposition and are completed by the scan's town. */
-const MOVEMENTS = new Map<string, Stage>(statuses.entries.filter((entry) => entry.code === 'ZZZ')
+const MOVEMENTS = new Map<string, Stage>(ENTRIES.filter((entry) => entry.code === 'ZZZ')
   .map((entry) => [entry.wording.toLowerCase(), entry.stage as Stage]));
 
 // The shipment status enum of the tracking page: 0 is unset, 3 is the
@@ -36,7 +41,7 @@ export function dhlEcommerceEsStatus(code: string | undefined, wording: string):
   const known = MOVEMENTS.get(wording.toLowerCase());
   const movement = code === 'ZZZ' || (code === undefined && known !== undefined);
   // A pickup is the first movement; any other depot scan is transit.
-  const stage = movement ? known ?? 'in_transit' : code === undefined ? undefined : CODES.get(code);
+  const stage = movement ? known ?? 'in_transit' : code === undefined ? UNCODED.get(wording.toLowerCase()) : CODES.get(code);
   return { movement, ...(stage ? { stage } : {}) };
 }
 

@@ -132,6 +132,10 @@ describe('DHL eCommerce Iberia parser', () => {
     const accepted = parseDhlEcommerceEs(payload, NUMBER);
     expect(accepted).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'Picked up Valencia' });
     expect(accepted.events?.map((event) => event.stage)).toEqual(['accepted', 'accepted']);
+    // The delivering depot's receipt comes without a code and without its town in the wording.
+    payload.Tracking = [{ Date: '20/03/2026', Time: '08:50', Description: 'Shipment received at DHL Depot', Town: 'Valencia' } as typeof payload.Tracking[number]];
+    expect(parseDhlEcommerceEs(payload, NUMBER).events?.[0]).toMatchObject({ description: 'Shipment received at DHL Depot', stage: 'in_transit' });
+    expect(parseDhlEcommerceEs(payload, NUMBER).events?.[0]?.provider_code).toBeUndefined();
   });
 
   it('takes the stage of an unknown code from the shipment status', () => {

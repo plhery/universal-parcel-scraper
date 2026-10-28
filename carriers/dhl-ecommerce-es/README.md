@@ -29,7 +29,8 @@ the gateway behind its customer tracking page. German DHL Paket is
 - Scans carry a short code, kept in [statuses.json](statuses.json) with the
   stage each one means. English wording is requested and returned as sent.
   Depot scans end in a preposition and are completed with the scan's town, as
-  the page does. One sent without its code is recognized by that wording.
+  the page does. One sent without its code is recognized by that wording, and
+  so is the delivering depot's receipt, sent without a code.
 - A code missing from the list has no stage. The current stage then comes
   from the shipment's own status number.
 - A delivery stays the current stage when a notice follows it, but not when a

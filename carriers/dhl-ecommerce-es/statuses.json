@@ -2,6 +2,7 @@
   "carrier": "dhl-ecommerce-es",
   "entries": [
     {"code": "DOC", "wording": "Shipment data received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The row has no Code; DOC is its SolutionCode."},
+    {"wording": "Shipment received at DHL Depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-28", "note": "The row has no Code. Seen at the delivering depot between an arrival there and the round; no town is appended."},
     {"code": "BS", "wording": "Parcel dropped off at DHL ServicePoint", "language": "en", "stage": "accepted", "confirmedBy": "live"},
     {"code": "HS", "wording": "The shipment has been collected from the ServicePoint", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL collects a parcel its sender dropped off."},
     {"code": "ZZZ", "wording": "Arrived at", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The portal appends the row's Town."},
