@@ -230,6 +230,45 @@
       "note": "The handover to the last-mile carrier, not a delivery to the recipient."
     },
     {
+      "wording": "Processing at sort facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "The destination sorting, before import customs and again after the hand-over."
+    },
+    {
+      "wording": "Arrived at destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "The last-mile carrier's arrival in the country, relayed after the hand-over; not a delivery."
+    },
+    {
+      "wording": "Handled by local carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "The last-mile carrier's transit, relayed."
+    },
+    {
+      "wording": "Transport to delivery centre",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28"
+    },
+    {
+      "wording": "Arrived at delivery centre",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "The last-mile carrier's local sorting site, before the delivery round."
+    },
+    {
       "wording": "Departure from the international sorting center",
       "stage": "in_transit",
       "language": "en",

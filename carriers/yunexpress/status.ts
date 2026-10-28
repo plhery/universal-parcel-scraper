@@ -31,6 +31,12 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Departed from facility', { status: 'in_transit', stage: 'in_transit' }],
   // The hand-over to the destination's last-mile carrier, not to the recipient.
   ['Delivered to local carrier', { status: 'in_transit', stage: 'in_transit' }],
+  // The sorting before import customs, and the last-mile carrier's steps it relays up to the delivery round.
+  ['Processing at sort facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at destination', { status: 'in_transit', stage: 'in_transit' }],
+  ['Handled by local carrier', { status: 'in_transit', stage: 'in_transit' }],
+  ['Transport to delivery centre', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at delivery centre', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at sorting center', { status: 'in_transit', stage: 'in_transit' }],
   ['The package left sorting center', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at GOFO Regional Destination Facility', { status: 'in_transit', stage: 'in_transit' }],
