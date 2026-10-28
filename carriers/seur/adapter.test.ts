@@ -71,6 +71,16 @@ describe('SEUR simplified anonymous tracking', () => {
     expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered' });
   });
 
+  it('reads the pickup SEUR makes on a pickup reference as the parcel accepted', () => {
+    const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
+      descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
+    const body = copy();
+    body.situaciones = [scan('SX001', '2026-01-21T21:46:02Z'), scan('SX605', '2026-01-21T12:47:02Z')] as typeof body.situaciones;
+    const result = parseSeur(body, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(result.events?.map(e => e.stage)).toEqual(['accepted', 'accepted']);
+  });
+
   it('reads a delivery held by customs for its invoice through the codes SEUR scans it with', () => {
     const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
       descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });

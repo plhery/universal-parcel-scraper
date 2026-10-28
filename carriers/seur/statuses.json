@@ -18,6 +18,14 @@
       "note": "Its group was not kept: SX010's, with the same wording, is assumed."
     },
     {
+      "code": "SX605",
+      "wording": "LA RECOGIDA HA SIDO REALIZADA.",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The pickup made on a pickup reference, before SEUR's origin facility receives the parcel."
+    },
+    {
       "code": "SX001",
       "wording": "EL ENVÍO HA SIDO RECEPCIONADO EN LAS INSTALACIONES DE ORIGEN DE SEUR. COMIENZA EL TRÁNSITO A DESTINO",
       "language": "es",

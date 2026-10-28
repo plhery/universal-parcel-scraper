@@ -38,6 +38,8 @@ const observed: Record<string, { group: string; wording: string; mapped: Classif
   LI580: { group: 'EN ADUANAS', wording: 'EL ENVÍO ESTÁ EN GESTIÓN POR LA ADUANA. TRAMITANDO DESPACHO ADUANERO.', mapped: { status: 'in_transit', stage: 'customs' } },
   // Cleared and about to go out for delivery.
   LD223: { group: 'EN ADUANAS', wording: 'LA MERCANCÍA HA SIDO DESPACHADA Y PRÓXIMAMENTE SALDRÁ A REPARTO.', mapped: inTransit },
+  // The pickup made on a pickup reference, before SEUR's origin facility receives the parcel.
+  SX605: { group: 'EN TRÁNSITO', wording: 'LA RECOGIDA HA SIDO REALIZADA.', mapped: { status: 'in_transit', stage: 'accepted' } },
   SX001: { group: 'EN TRÁNSITO', wording: 'EL ENVÍO HA SIDO RECEPCIONADO EN LAS INSTALACIONES DE ORIGEN DE SEUR. COMIENZA EL TRÁNSITO A DESTINO', mapped: { status: 'in_transit', stage: 'accepted' } },
   SX010: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: { status: 'pending', stage: 'registered' } },
   SC999: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: { status: 'pending', stage: 'registered' } },
