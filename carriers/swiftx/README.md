@@ -44,6 +44,9 @@ page in place of the reply, rate limits and incomplete captures keep their own f
 - The provider code is the tracker's event code, mapped in [status.ts](status.ts). Other codes go
   to the shared wording rules. A failed pickup at the shipper moves nothing. `DELIVERY_FAILED` also
   marks an exception; with the wording "Package missing" it is one.
+- SwiftX's receipt at its origin hub or sorting center is in transit, not an acceptance: the line
+  that hands the parcel over has already carried it to the United States, and DHLink relays the
+  same scan in transit.
 - A failed delivery's wording carries the driver's note on a second line, then SwiftX's help line
   with its phone number and email. The note is kept and the help line is not.
 - Scans at SwiftX's hubs, stations and warehouses carry the town and state the reply gives for the

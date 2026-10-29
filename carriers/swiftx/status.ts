@@ -4,12 +4,15 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
 /**
  * A scan's provider code is the tracker's event code. SwiftX labels a parcel,
  * receives it at a hub from the shipper or its linehaul, moves it between hubs,
- * sorts it at a warehouse and delivers it from there.
+ * sorts it at a warehouse and delivers it from there. It takes over parcels a
+ * cross-border line has already carried to the United States, so its receipt
+ * is in transit, as the line relays it and as other last-mile carriers' hub
+ * receipts read.
  */
 const SCANS: Readonly<Record<string, Stage>> = {
   CREATED: 'registered',
-  PICKUP_ARRIVAL_SCAN: 'accepted',
-  SORTING_CENTER_SIGNED_SCAN: 'accepted',
+  PICKUP_ARRIVAL_SCAN: 'in_transit',
+  SORTING_CENTER_SIGNED_SCAN: 'in_transit',
   SORTING_CENTER_INBOUND_SCAN: 'in_transit',
   ORIGIN_HUB_DEPARTURE: 'in_transit',
   DISPATCH_SCAN: 'in_transit',

@@ -47,7 +47,7 @@ describe('SwiftX tracking reply', () => {
       ['2026-03-10T21:04:33-04:00', 'DESTINATION_HUB_DEPARTURE', 'in_transit', 'HARBOR CITY, NJ'],
       ['2026-03-10T09:27:48-04:00', 'TRANSFER_ARRIVAL_SCAN', 'in_transit', 'HARBOR CITY, NJ'],
       ['2026-03-07T02:19:11-08:00', 'ORIGIN_HUB_DEPARTURE', 'in_transit', 'WESTVALE, CA'],
-      ['2026-03-06T22:45:30-08:00', 'PICKUP_ARRIVAL_SCAN', 'accepted', 'WESTVALE, CA'],
+      ['2026-03-06T22:45:30-08:00', 'PICKUP_ARRIVAL_SCAN', 'in_transit', 'WESTVALE, CA'],
       ['2026-03-05T06:31:58-07:00', 'CREATED', 'registered', undefined],
     ]);
     expect(result.events![2]!.description).toBe('Delivery failed Note: Business was closed during delivery attempt. Please provide alternative delivery instructions.');
