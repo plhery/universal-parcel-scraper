@@ -9,8 +9,10 @@ national posts' S10 numbers and USPS barcodes among them, so no rule names it.
 ## Tracker
 
 The tracker at joomlogistics.com asks an open JSON interface that needs no account, key or
-CAPTCHA. It answers a number it knows with the whole history in UTC and the last-mile carrier's
-number when that differs, and an unknown one with HTTP 404. A dedicated adapter could read it.
+CAPTCHA. It answers a number it knows with the whole history and the last-mile carrier's number
+when that differs, and an unknown one with HTTP 404. Every time is labelled UTC, but the USPS
+scans it relays keep their wall clock under the Z: an "OUT FOR DELIVERY" at 06:10Z. A dedicated
+adapter could read it once it tells relayed scans from Joom Logistics' own.
 
 ## Links
 
