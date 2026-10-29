@@ -265,9 +265,9 @@ describe('Lietuvos paštas tracking adapter', () => {
     expect(fetcher.mock.calls.every(([url]) => String(url) === lietuvosPastasUrl(RETURNED))).toBe(true);
   });
 
-  it('is named for its own parcels and EMS items, offered for LP Express numbers and asked about its other S10 codes', () => {
+  it('is named for its own parcels, EMS items and LP Express parcels, offered for LP Express numbers and asked about its other S10 codes', () => {
     // Its tracker relays a parcel's arrival and customs abroad; PostPlus sends L series items under its code.
-    for (const number of ['CE900000019LT', 'EB900000019LT', 'CC900000019LT']) {
+    for (const number of ['CE900000019LT', 'EB900000019LT', 'CC900000019LT', RETURNED]) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'lietuvos-pastas', confidence: 'high', candidates: ['lietuvos-pastas'] });
       expect(recognitionAskedCarriers(number), number).toEqual([]);
     }
@@ -275,7 +275,9 @@ describe('Lietuvos paštas tracking adapter', () => {
     expect(detectCarrierMatch('CE900000019LV').candidates).not.toContain('lietuvos-pastas');
     expect(detectCarrierMatch(LOCKER)).toMatchObject({ carrier: 'unknown', candidates: expect.arrayContaining(['lietuvos-pastas']) });
     expect(recognitionAskedCarriers(LOCKER)).toContain('lietuvos-pastas');
-    for (const number of [RETURNED, ABROAD, NO_HISTORY]) {
+    expect(detectCarrierMatch('HC900000018LT')).toMatchObject({ carrier: 'unknown', candidates: ['lietuvos-pastas'] });
+    expect(detectCarrierMatch('HA900000019LT')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    for (const number of [ABROAD, NO_HISTORY]) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
       expect(recognitionAskedCarriers(number), number).toContain('lietuvos-pastas');
     }

@@ -31,7 +31,7 @@ S10 code with a valid check digit; anything else is invalid without a request.
 
 A code ending `LT` with a valid check digit is Lietuvos paštas's, LP Express parcels included.
 `lietuvos-pastas-own` names it for its parcels and EMS items, C and E series, whose arrival
-and customs abroad its tracker relays. The issuer of other S10 codes does not establish who
+and customs abroad its tracker relays, and for LP Express's HC parcels, which it delivers. The issuer of other S10 codes does not establish who
 delivers them: PostPlus, a consolidator, sends L series items under the code, and those
 items' rows end at the export. Detection keeps them with the generic postal carrier, and
 `lietuvos-pastas-s10` makes preflight ask Lietuvos paštas about them at low confidence.

@@ -112,7 +112,7 @@
   "detection": [
     {
       "id": "lietuvos-pastas-own",
-      "pattern": "^[CE][A-Z]\\d{9}LT$",
+      "pattern": "^(?:[CE][A-Z]|HC)\\d{9}LT$",
       "confidence": "high",
       "checksum": "s10"
     },

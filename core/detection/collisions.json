@@ -292,12 +292,12 @@
     "reason": "Chronopost's low-confidence rule accepts any S10 code with a passing check digit, so it overlaps Hongkong Post HK numbers; the country-specific high-confidence rule decides."
   },
   {
-    "shape": "C or E then A9{9}LT with a valid S10 check digit",
+    "shape": "C or E then A9{9}LT, or HC9{9}LT, with a valid S10 check digit",
     "carriers": [
       "chronopost",
       "lietuvos-pastas"
     ],
-    "reason": "Chronopost's low-confidence rule accepts any S10 code with a passing check digit, so it overlaps Lietuvos paštas's own parcels and EMS items; its high-confidence rule, for the items whose arrival and customs abroad its tracker relays, decides."
+    "reason": "Chronopost's low-confidence rule accepts any S10 code with a passing check digit, so it overlaps Lietuvos paštas's own parcels, EMS items and LP Express parcels; its high-confidence rule, for the items it follows to their delivery, decides."
   },
   {
     "shape": "YY9{9}CN with a valid S10 check digit",
@@ -4053,7 +4053,7 @@
       "intl-post",
       "lietuvos-pastas"
     ],
-    "reason": "On Lithuanian items not starting C or E, the issuer suffix, LP Express's HC included, suggests Lietuvos paštas but does not establish the delivering carrier: PostPlus sends L series items under it. The postal fallback remains selected until recognition confirms a direct carrier."
+    "reason": "On Lithuanian items not starting C, E or HC, the issuer suffix suggests Lietuvos paštas but does not establish the delivering carrier: PostPlus sends L series items under it. The postal fallback remains selected until recognition confirms a direct carrier."
   },
   {
     "shape": "210 and ten digits that pass the GS1 check and fail the Ukrposhta check",
