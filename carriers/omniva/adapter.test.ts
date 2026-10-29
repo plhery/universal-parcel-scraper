@@ -81,6 +81,23 @@ describe('Omniva tracking adapter', () => {
     ]);
   });
 
+  it('reads the UPU event that repeats Omniva’s own scan of the parcel machine as that scan', () => {
+    const waiting = (edh: string, keepStored = true) => parseOmniva(edited('collected', (payload) => {
+      delete payload.currentStateCode;
+      payload.events = payload.events.filter(row => row.eventCode !== 'TRT_SHIPMENT_DELIVERED' && row.eventCode !== 'TRT_SHIPMENT_ARRIVAL_PM_NOTIFICATION'
+        && (keepStored || row.eventCode !== 'TRT_SHIPMENT_STORED_IN_PM'));
+      payload.events.push({ eventCode: 'TRT_SHIPMENT_EDH', eventDate: edh, eventName: 'Shipment is ready for pickup at the post office', location: null });
+    }), COLLECTED);
+    const copied = waiting('2026-03-03T09:50:11.617Z');
+    expect(copied).toMatchObject({ current_stage: 'ready_for_pickup', last_update: '2026-03-03T09:50:11.500Z',
+      last_status_text: 'Shipment is ready for collection from the parcel machine', pickup_point: 'Example Centre parcel machine' });
+    expect(copied.events!.map(event => event.provider_code)).not.toContain('TRT_SHIPMENT_EDH');
+    // Without Omniva's own scan near it, the UPU event is the item's news.
+    for (const lone of [waiting('2026-03-03T12:00:00Z'), waiting('2026-03-03T09:50:11.617Z', false)]) {
+      expect(lone).toMatchObject({ current_stage: 'ready_for_pickup', last_status_text: 'Shipment is ready for pickup at the post office' });
+    }
+  });
+
   it('keeps a courier item’s failed attempt current past the notices and drops the recipient’s address and the reason', () => {
     const result = parseOmniva(JSON.parse(text('courier')), COURIER);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Delivery attempt made',

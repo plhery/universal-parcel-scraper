@@ -40,7 +40,7 @@
     { "code": "TRT_SHIPMENT_EDD", "wording": "Shipment is being processed at sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "TRT_SHIPMENT_EDF", "wording": "Shipment is on hold at the delivery depot", "language": "en", "confirmedBy": "portal", "note": "Held at the delivery depot, for a reason the event does not give. Listed in the trackers' event dictionary." },
     { "code": "TRT_SHIPMENT_EDG", "wording": "Shipment is on its way for final delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live" },
-    { "code": "TRT_SHIPMENT_EDH", "wording": "Shipment is ready for pickup at the post office", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "portal", "note": "Listed in the trackers' event dictionary." },
+    { "code": "TRT_SHIPMENT_EDH", "wording": "Shipment is ready for pickup at the post office", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "A UPU event for the sending post, without a site. Seen a tenth of a second after Omniva's own parcel machine scan, which the adapter reads instead." },
     { "code": "TRT_SHIPMENT_EDX", "wording": "Import process terminated", "language": "en", "stage": "exception", "confirmedBy": "portal", "note": "Listed in the trackers' event dictionary." },
     { "code": "TRT_SHIPMENT_EMA", "wording": "Shipment has been posted by the sender or collected by the postal service", "language": "en", "stage": "accepted", "confirmedBy": "live" },
     { "code": "TRT_SHIPMENT_EMB", "wording": "Arrival at outward Office of Exchange", "language": "en", "stage": "in_transit", "confirmedBy": "portal", "note": "Listed in the trackers' event dictionary." },

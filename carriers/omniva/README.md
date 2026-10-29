@@ -39,6 +39,11 @@ recipient keeps the stage of the scan before it, and a delivery after a return s
 the sender, so it reads as returned. The reply lists scans in no set order; they are sorted by
 clock. Clocks are UTC instants, which the trackers show in Tallinn time.
 
+Once a cross-border item waits at a parcel machine, Omniva also writes the UPU event for the
+sending post (`TRT_SHIPMENT_EDH`), a moment after its own scan, without a site and worded for a
+post office. Within minutes of Omniva's own scan of the site it repeats that scan and is dropped,
+so the item reads as waiting at the parcel machine. Alone, it is kept.
+
 A scan's site is kept by its English name, else its own, only when it is one of Omniva's or its
 partners' sites, such as a parcel machine, post office or terminal. Sender and recipient
 addresses, postcodes, internal workstation codes and the event parameters, such as notification

@@ -49,6 +49,14 @@ function placeOf(value: unknown): Place | null {
 
 interface Scan { readonly event: CarrierEvent; readonly at: number; readonly code: string; readonly place: Place | null; readonly index: number }
 
+// The UPU event Omniva writes for the sending post once a cross-border item
+// waits for collection, without a site and worded for a post office, and
+// Omniva's own scans of an item arriving at the site it is collected from.
+const UPU_AWAITING = 'TRT_SHIPMENT_EDH';
+const AWAITING = new Set(['TRT_SHIPMENT_STORED_IN_PM', 'TRT_SHIPMENT_ARRIVED_TO_FINAL_PO']);
+// It followed Omniva's own scan by a tenth of a second; within minutes it still repeats it.
+const UPU_COPY_MS = 15 * 60_000;
+
 /**
  * The tracking service's reply for one number: its scans in no set order,
  * each with an event code, English wording and a UTC clock, and the item's
@@ -66,7 +74,7 @@ export function parseOmniva(payload: unknown, rawNumber: string): CarrierResult 
   const stateCode = clean(payload.currentStateCode, 80);
   if (stateCode && !CODE.test(stateCode)) throw new SchemaError(PROVIDER, 'Omniva returned an invalid shipment state');
 
-  const scans: Scan[] = [];
+  const read: Scan[] = [];
   const seen = new Set<string>();
   rows.forEach((row, index) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Omniva returned an invalid scan');
@@ -79,8 +87,11 @@ export function parseOmniva(payload: unknown, rawNumber: string): CarrierResult 
     const identity = JSON.stringify(event);
     if (seen.has(identity)) return;
     seen.add(identity);
-    scans.push({ event, at: at.timestamp, code, place, index });
+    read.push({ event, at: at.timestamp, code, place, index });
   });
+  // Omniva's own scan of the site stands for the UPU event that repeats it.
+  const scans = read.filter(scan => scan.code !== UPU_AWAITING || scan.place || !read.some(own =>
+    AWAITING.has(own.code) && own.place && Math.abs(scan.at - own.at) <= UPU_COPY_MS));
   // Newest first; scans at the same instant follow the reply's order, reversed.
   scans.sort((left, right) => right.at - left.at || right.index - left.index);
 
