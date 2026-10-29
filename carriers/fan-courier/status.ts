@@ -25,6 +25,9 @@ const CODES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ...each(['S9', 'S35', 'S47'], 'in_transit'),
   // Taken over for delivery, then on the round.
   ...each(['C1', 'S1'], 'out_for_delivery'),
+  // Handed over on a delivery point, which FAN's documentation names for its FANbox lockers,
+  // PayPoints and offices: the parcel waits there, and its collection is the delivery.
+  ['S46', 'ready_for_pickup'],
   ['S2', 'delivered'],
   // A round that ended without a delivery: the recipient was notified or
   // could not be reached, the address was wrong or incomplete, or a later
@@ -44,8 +47,8 @@ export function fanCourierStage(code: string): Stage | undefined {
 
 /**
  * What the map says about one scan. Every scan carries its code, so wording
- * alone gets nothing. Codes whose meaning no source settles (S8, S38, S46,
- * S49) stay unknown, open for review.
+ * alone gets nothing. Codes whose meaning no source settles (S8, S38, S49)
+ * stay unknown, open for review.
  */
 export const statusMap: CarrierStatusMap = {
   stage: code => (code ? fanCourierStage(code) : undefined),

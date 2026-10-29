@@ -42,10 +42,10 @@ describe('FAN Courier events', () => {
 
   it('leaves a code the map does not know without a stage', () => {
     const value = fixture();
-    value.events.splice(9, 0, { id: 'S46', name: 'Shed delivery point', location: 'Sample Town', date: '2026-01-07 10:00:00' });
+    value.events.splice(9, 0, { id: 'S49', name: 'Activity suspended', location: 'Sample Town', date: '2026-01-07 10:00:00' });
     value.events.splice(10);
     const result = parseFanCourier(value, NUMBER);
-    expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Shed delivery point' });
+    expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Activity suspended' });
     expect(result).not.toHaveProperty('current_stage');
     expect(result.events?.[0]).not.toHaveProperty('stage');
   });
@@ -101,7 +101,8 @@ describe('FAN Courier events', () => {
     expect(statusMap.stage('C1', 'shipment taken over for delivery')).toBe('out_for_delivery');
     expect(statusMap.stage('S43', 'retur')).toBe('exception');
     expect(statusMap.stage(null, 'delivered')).toBeUndefined();
-    for (const code of ['S8', 'S38', 'S46', 'S49']) expect(statusMap.stage(code, 'any wording')).toBeUndefined();
+    for (const code of ['S8', 'S38', 'S49']) expect(statusMap.stage(code, 'any wording')).toBeUndefined();
+    expect(statusMap.stage('S46', 'shed delivery point')).toBe('ready_for_pickup');
     const statuses = JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')).entries as { code: string; stage?: string }[];
     for (const entry of statuses) expect(fanCourierStage(entry.code), entry.code).toBe(entry.stage);
   });

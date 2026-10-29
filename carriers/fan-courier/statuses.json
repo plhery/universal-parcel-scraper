@@ -124,9 +124,10 @@
       "code": "S46",
       "wording": "Shed delivery point",
       "language": "en",
+      "stage": "ready_for_pickup",
       "confirmedBy": "live",
       "firstSeen": "2026-10-11",
-      "note": "FAN Courier's documentation calls it handed over on the delivery point. Seen after a round, at two towns a minute apart, and followed by a delivery the next day elsewhere: whether the parcel waits at a pickup point is not settled, so it has no stage."
+      "note": "FAN Courier's API documentation calls it handed over on the delivery point, and names its FANbox lockers, PayPoints and offices delivery points. Seen during or after a round, followed by the delivery when the parcel is collected, hours or a day later."
     },
     {
       "code": "C0",

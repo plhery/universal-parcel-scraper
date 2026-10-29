@@ -32,7 +32,9 @@ without a request.
 - Events are mapped by code in [status.ts](status.ts). The codes and their names come from
   the event list in FAN Courier's API documentation; S56 (handed in at a FANbox or collect
   point) and S65 (held for the next transport abroad) are named only by the tracking page's
-  own code. Codes whose meaning no source settles, such as S46, keep no stage.
+  own code. S46, handed over on a delivery point, waits for collection: the documentation names
+  FANbox lockers, PayPoints and offices delivery points. Codes whose meaning no source settles,
+  such as S49, keep no stage.
 - A refusal or a return is an exception, not a return to the sender: the return travels under
   an AWB of its own, which the page shows and the adapter does not follow.
 - The page hides the events after the last delivery, and so does the adapter.
