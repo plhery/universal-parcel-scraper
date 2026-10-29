@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, SPEEDAF_API, SpeedafTracker } from './adapter.js';
@@ -250,6 +251,17 @@ describe('Speedaf HTTP adapter', () => {
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'speedaf' }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'speedaf', source: 'speedaf', result: { current_stage: 'delivered' } });
     expect(fetcher.mock.calls.some(([url]) => String(url) === SPEEDAF_API)).toBe(true);
+  });
+});
+
+describe('Speedaf numbers', () => {
+  it('only suggests Speedaf for IE and twelve digits, the layout it gives other countries’ parcels', () => {
+    for (const number of ['IE120000000017', 'ie 1200 0000 0017', 'IE120000000017T']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['speedaf'] });
+    }
+    for (const other of ['IE12000000017', 'IE1200000000170', 'IL120000000017']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('speedaf');
+    }
   });
 });
 

@@ -78722,6 +78722,17 @@
     ]
   },
   {
+    "input": "IE120000000017",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "speedaf"
+    ],
+    "asked": [
+      "speedaf"
+    ]
+  },
+  {
     "input": "IEG9246514",
     "carrier": "unknown",
     "confidence": "low",

@@ -65,7 +65,9 @@ Both rules take only a prefix for a country where Speedaf numbers have been seen
 detects the second layout with high confidence: no other carrier's numbers in the corpus or the
 harvested pages end in a letter after nine digits, and it otherwise overlaps only Colis Privé's
 rule for any twelve characters, whose numbers end in digits. `speedaf-12` only suggests
-Speedaf, because the same country-and-digits shape turns up in Instabox and Bring samples. The
+Speedaf, because the same country-and-digits shape turns up in Instabox and Bring samples. It
+takes `IE` too: Speedaf's site lists a customer service in Ireland and an Irish number in that
+layout has been seen, but no public page shows one, so the corpus holds a made-up number. The
 samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Testing
