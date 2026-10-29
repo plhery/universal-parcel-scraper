@@ -319,6 +319,15 @@
       "note": "Between the sorting center's intake and its outbound scan."
     },
     {
+      "code": "SC_EXCEPTION",
+      "wording": "Your shipment has an operational anomaly occurred at the sorting center. Issue is being resolved, updates will follow",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "A problem at the sorting center the carrier is resolving; the parcel moved on with later sorting-center scans."
+    },
+    {
       "code": "PU_PICKUP_SUCCESS",
       "wording": "Shipment picked up by carrier",
       "language": "en",

@@ -40,6 +40,22 @@
       "note": "The item stays at the distribution center, off every delivery round, until the information it lacks is found."
     },
     {
+      "wording": "Irregularity item : problem address",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Relayed from the post abroad, at the same minute as the return to Landmark Global: the address could not be delivered to."
+    },
+    {
+      "wording": "Returned to Landmark Global (bpost), Incorrect / illegible / incomplete address",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The post abroad sent the item back to Landmark Global, bpost's cross-border network, for its address: a return under way."
+    },
+    {
       "wording": "Item on it's way to bbox locker",
       "language": "en",
       "stage": "in_transit",

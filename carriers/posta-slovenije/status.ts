@@ -22,6 +22,8 @@ const CODES: Readonly<Record<string, Stage>> = {
   EMD: 'in_transit',
   EMF: 'in_transit',
   EMG: 'in_transit',
+  // UPU's final delivery to the recipient, after the inward events above.
+  EMI: 'delivered',
   // "Pošiljka bo predvidoma dostavljena danes": with the postman, on its way to the address.
   N: 'out_for_delivery',
   // On its way to the parcel locker the recipient chose.

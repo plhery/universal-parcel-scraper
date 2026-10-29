@@ -56,6 +56,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   // Sorting and consolidation between the sorting center's intake and its outbound scan.
   ['SC_SORTING', { status: 'in_transit', stage: 'in_transit' }],
   ['SC_CONSOLIDATION', { status: 'in_transit', stage: 'in_transit' }],
+  // An operational anomaly at the sorting center that the carrier says it is resolving.
+  ['SC_EXCEPTION', { status: 'exception', stage: 'exception' }],
   ['PU_PICKUP_SUCCESS', { status: 'in_transit', stage: 'accepted' }],
   ['CREATE_ORDER_CES', { status: 'pending', stage: 'registered' }],
 ]);

@@ -162,6 +162,9 @@ describe('bpost direct history', () => {
     held.items[0].events[0].key.EN.description = "Item arrived at the distribution center - Item can't be assigned to a delivery round - missing information";
     expect(parseBpost(held, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(parseBpost(held, NUMBER).events?.[0]).toMatchObject({ stage: 'exception' });
+    // An address the post abroad could not deliver to, and the item it sent back for it.
+    expect(classifyBpostStatus('Irregularity item : problem address')?.stage).toBe('exception');
+    expect(classifyBpostStatus('Returned to Landmark Global (bpost), Incorrect / illegible / incomplete address')?.stage).toBe('returned');
     for (const wording of ['__proto__', 'constructor', 'Delivery expected']) expect(classifyBpostStatus(wording)).toBeUndefined();
   });
 

@@ -23,6 +23,10 @@ const WORDINGS: Record<string, ClassifiedStatus> = {
   // The item stays at the distribution center, off every delivery round, until the information
   // it lacks is found: a hold the recipient should see, not a step in transit.
   "Item arrived at the distribution center - Item can't be assigned to a delivery round - missing information": { status: 'exception', stage: 'exception' },
+  // The post abroad could not deliver to the address it was given, and sent the item back to
+  // Landmark Global, bpost's cross-border network: the item is on its way back.
+  'Irregularity item : problem address': { status: 'exception', stage: 'exception' },
+  'Returned to Landmark Global (bpost), Incorrect / illegible / incomplete address': { status: 'exception', stage: 'returned' },
   'Your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days': { status: 'in_transit', stage: 'in_transit' },
   'Your item has been sorted': { status: 'in_transit', stage: 'in_transit' },
   // A return label's parcel sorted on its way to the shop that issued the label, which bpost
