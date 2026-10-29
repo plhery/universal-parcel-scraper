@@ -40,7 +40,12 @@ export class CorreiosTracker {
         return result;
       };
       // A fresh jar binds this parcel's CAPTCHA to this lookup, never another user.
-      await request(HOME, 100_000);
+      const home = await request(HOME, 100_000);
+      // The portal moved its query behind Cloudflare Turnstile, which only a browser passes: the
+      // query is then a POST its token must accompany, and the old one is refused with HTTP 405.
+      if (/\bcf-turnstile\b/.test(new TextDecoder().decode(home.bytes))) {
+        throw new ChallengeError('Correios', 'Correios requires a Turnstile browser check');
+      }
       for (let attempt = 0; attempt < 2; attempt += 1) {
         const image = await request(IMAGE, 100_000);
         if (!image.response.headers.get('content-type')?.toLowerCase().startsWith('image/png')) {

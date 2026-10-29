@@ -228,6 +228,12 @@ describe('Correios session and transport', () => {
     expect(p.fetcher).toHaveBeenCalledTimes(3);
   });
 
+  it('reports the portal behind Turnstile as a challenge before reading any CAPTCHA', async () => {
+    const fetcher = vi.fn(async () => new Response('<form id="form-rastreamento" method="post"><div id="captcha" class="cf-turnstile"></div></form>')) as unknown as typeof fetch;
+    await expect(new CorreiosTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', message: 'Correios requires a Turnstile browser check' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it('keeps endpoint absence inconclusive and preserves challenge, throttle and network errors', async () => {
     for (const [status, kind] of [[404, 'indeterminate'], [410, 'indeterminate'], [403, 'challenge'], [429, 'rate_limited'], [503, 'maintenance']] as const) {
       const fetcher = vi.fn(async () => new Response('unavailable', { status })) as unknown as typeof fetch;

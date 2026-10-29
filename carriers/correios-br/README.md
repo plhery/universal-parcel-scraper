@@ -10,6 +10,11 @@ recognizes this portal's image locally using a CPU worker reused until idle. One
 retry is allowed after unreadable text or an explicit rejected CAPTCHA. Changed
 image formats and exhausted attempts report a challenge for routing fallback.
 
+The portal now puts its query behind Cloudflare Turnstile: the page posts the number with a
+form token and the Turnstile answer, and refuses the old query with HTTP 405. A browser passes
+the check without interaction and gets the same JSON. Until the adapter reads it through the
+browser service, a page showing Turnstile is a challenge, so lookups fall back to the providers.
+
 ## Notes
 
 The response must echo the requested reference. Scan classification uses both the
