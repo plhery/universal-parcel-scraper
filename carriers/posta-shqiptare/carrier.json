@@ -68,6 +68,12 @@
   ],
   "detection": [
     {
+      "id": "posta-shqiptare-own",
+      "pattern": "^[CELR][A-Z]\\d{9}AL$",
+      "confidence": "high",
+      "checksum": "s10"
+    },
+    {
       "id": "posta-shqiptare-s10",
       "pattern": "^[A-Z]{2}\\d{9}AL$",
       "confidence": "low",

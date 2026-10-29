@@ -492,13 +492,12 @@
     "reason": "The Cypriot issuer suffix suggests Cyprus Post but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
   },
   {
-    "shape": "AA9{9}AL with a valid S10 check digit",
+    "shape": "C, E, L or R then A9{9}AL with a valid S10 check digit",
     "carriers": [
       "chronopost",
-      "intl-post",
       "posta-shqiptare"
     ],
-    "reason": "The Albanian issuer suffix suggests Posta Shqiptare but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
+    "reason": "Chronopost's low-confidence rule accepts any S10 code with a passing check digit, so it overlaps Posta Shqiptare's own items; its high-confidence rule, for the items whose foreign legs its tracker relays, decides."
   },
   {
     "shape": "AA9{9}LU with a valid S10 check digit",

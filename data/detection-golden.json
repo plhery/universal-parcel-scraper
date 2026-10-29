@@ -71239,14 +71239,10 @@
   },
   {
     "input": "CP214220554AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {
@@ -71302,14 +71298,10 @@
   },
   {
     "input": "CP339538880AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {
@@ -73869,26 +73861,18 @@
   },
   {
     "input": "EE200190509AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {
     "input": "EE200190512AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {
@@ -81711,38 +81695,26 @@
   },
   {
     "input": "LG010568652AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {
     "input": "LG014636582AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {
     "input": "LG014771021AL",
-    "carrier": "intl-post",
+    "carrier": "posta-shqiptare",
     "confidence": "high",
     "candidates": [
-      "intl-post"
-    ],
-    "asked": [
-      "posta-shqiptare",
-      "chronopost"
+      "posta-shqiptare"
     ]
   },
   {

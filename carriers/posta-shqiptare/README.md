@@ -24,9 +24,12 @@ page makes.
 
 The tracker takes UPU S10 item codes, two letters, nine digits and two letters. The adapter takes
 them with a valid check digit, from any country; anything else is invalid without a request.
-Posta Shqiptare's own codes end in `AL`, but the issuer of an S10 code does not establish who
-delivers it, so detection keeps such codes with the generic postal carrier and the low-confidence
-`posta-shqiptare-s10` rule makes preflight ask Posta Shqiptare about them.
+Posta Shqiptare's own codes end in `AL`. Detection names it for the parcels, EMS, registered and
+tracked-letter items it issues: `C`, `E`, `L` or `R` first, `AL` last and a passing check digit.
+Its tracker follows them abroad, relaying the foreign post's or courier's scans. Its other `AL`
+codes stay with the generic postal carrier, as the issuer of an S10 code does not establish who
+delivers it, and the low-confidence `posta-shqiptare-s10` rule makes preflight ask Posta Shqiptare
+about them.
 
 ## Notes
 

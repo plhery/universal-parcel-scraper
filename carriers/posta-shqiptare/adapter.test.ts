@@ -170,7 +170,12 @@ describe('Posta Shqiptare HTTP adapter', () => {
     expect(answer).toMatchObject({ carrier: 'posta-shqiptare', source: 'posta-shqiptare', result: { current_stage: 'delivered' } });
   });
 
-  it('is asked about Albanian S10 codes, which detection leaves with the postal fallback', () => {
+  it('is named for its own Albanian S10 codes and asked about the others', () => {
+    for (const number of ['CP123456785AL', 'EE123456785AL', 'LG123456785AL', 'RR123456785AL']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'posta-shqiptare', confidence: 'high', candidates: ['posta-shqiptare'] });
+      expect(recognitionAskedCarriers(number), number).toEqual([]);
+    }
+    expect(detectCarrierMatch('CP123456784AL').candidates).not.toContain('posta-shqiptare');
     expect(detectCarrierMatch(KNOWN)).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     expect(recognitionAskedCarriers(KNOWN)[0]).toBe('posta-shqiptare');
     expect(recognitionAskedCarriers('ZZ000000015AL')).not.toContain('posta-shqiptare');
