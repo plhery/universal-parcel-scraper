@@ -122,7 +122,8 @@ export function upsActivityStage(code: string): Stage | undefined {
 
 /**
  * Codes of notices that are no scan: the receiver's delivery instructions,
- * seen while UPS had only the label. The newest other scan decides the stage.
+ * seen while UPS had only the label. A notice keeps the stage of the scan
+ * before it, and the newest other scan decides the parcel's.
  */
 const NOTICE_CODES = new Set(['L0']);
 

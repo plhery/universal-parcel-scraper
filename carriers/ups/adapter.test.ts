@@ -274,14 +274,22 @@ describe('UPS structured response', () => {
     ], { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY);
     expect(instructed).toMatchObject({ status: 'pending', current_stage: 'registered',
       last_status_text: 'Shipper created a label, UPS has not received the package yet.', last_update: instructed.events?.[0]?.time });
-    expect(instructed.events?.map((event) => [event.provider_code, event.stage])).toEqual([['L0', undefined], ['MP', 'registered']]);
+    // The notice keeps the label's stage, so the app does not read it as news that the parcel moves.
+    expect(instructed.events?.map((event) => [event.provider_code, event.stage, event.stage_source]))
+      .toEqual([['L0', 'registered', 'none'], ['MP', 'registered', 'carrier_map']]);
     expect(statusMapAnswer({ carrier: 'ups', providerCode: 'L0', description: 'delivery instructions have been provided by the receiver.' }))
       .toMatchObject({ kind: 'intentional_gap', note: expect.stringContaining('keeps the stage of the scan before it') });
     // On a moving parcel the scan before it keeps the parcel in transit.
-    expect(parseUPSTrackingResponse(withScans([
+    const moving = parseUPSTrackingResponse(withScans([
       scan('L0', 'Delivery instructions have been provided by the receiver.', '20260806 18:00:00'),
       scan('AR', 'Arrived at Facility', '20260806 10:00:00'),
-    ], { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    ], { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY);
+    expect(moving).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(moving.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'none' });
+    // A notice with no scan before it has no stage to keep.
+    expect(parseUPSTrackingResponse(withScans([
+      scan('L0', 'Delivery instructions have been provided by the receiver.', '20260806 18:00:00'),
+    ]), TRACKING_NUMBER, TODAY).events?.[0]?.stage).toBeUndefined();
   });
 
   it("writes a delivery's place in capitals and codes as the page writes its other scans'", () => {

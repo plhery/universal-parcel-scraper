@@ -330,6 +330,22 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
 }
 
 /** A provider string with its HTML entities decoded, then cleaned. */
+/**
+ * A notice keeps the stage of the scan before it, which UPS lists after it
+ * (newest first), so the parcel app stores it as no step forward. A notice
+ * with no scan before it is left without a stage.
+ */
+function keepNoticeStages(events: CarrierEvent[]): void {
+  let previous: string | undefined;
+  for (const event of [...events].reverse()) {
+    if (isUpsNotice(event.provider_code)) {
+      if (previous) Object.assign(event, { stage: previous, stage_source: 'none' });
+    } else if (event.stage) {
+      previous = event.stage;
+    }
+  }
+}
+
 function text(value: unknown, maxLength?: number): string {
   return clean(typeof value === 'string' ? decodeEntities(value) : value, maxLength);
 }
@@ -523,6 +539,7 @@ export function parseUPSTrackingResponse(
       });
     }
   }
+  keepNoticeStages(events);
   const newest = events[0];
   // UPS lists the newest scan first. Its code outranks the coarse progress
   // token, which reads Exception for a mere delay. A notice is no scan.
@@ -680,6 +697,7 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
     });
   }
+  keepNoticeStages(events);
   // The API lists the newest scan first; its code outranks the status type. A notice is no scan.
   const newest = events[0];
   const decider = events.find((event) => !isUpsNotice(event.provider_code)) ?? newest;

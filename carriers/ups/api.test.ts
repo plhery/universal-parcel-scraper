@@ -239,6 +239,7 @@ describe('UPS API reply', () => {
     }), TRACKING_NUMBER);
     expect(instructed).toMatchObject({ status: 'pending', current_stage: 'registered',
       last_status_text: 'Shipper created a label, UPS has not received the package yet.' });
+    expect(instructed.events?.[0]).toMatchObject({ provider_code: 'L0', stage: 'registered', stage_source: 'none' });
     const delivered = parseUPSApiResponse(apiFixture((item) => {
       item.activity = [activity('FS', 'DELIVERED ', {}, 'D')];
       item.deliveryDate = [{ type: 'DEL', date: '20260804' }];
