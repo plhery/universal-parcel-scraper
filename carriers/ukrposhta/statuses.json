@@ -203,6 +203,55 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live"
+    },
+    {
+      "code": "17100",
+      "wording": "Acceptance",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "27200",
+      "wording": "Arrival at outward office of exchange",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "77600",
+      "wording": "Departure from outward office of exchange",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "60700",
+      "wording": "Arrival at inward office of exchange",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "80700",
+      "wording": "Transmission for customs control",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "80800",
+      "wording": "Released from customs for further delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "90800",
+      "wording": "Departure from inward office of exchange",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
     }
   ]
 }

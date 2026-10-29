@@ -38,6 +38,7 @@
     {"wording": "Изпращане на Вх.пратка в РСЦ/ОВ", "stage": "in_transit", "language": "bg", "confirmedBy": "live", "note": "The Bulgarian page's name for \"Send item to domestic location (Inb)\"."},
     {"wording": "Неуспешен опит за доставка", "stage": "failed_attempt", "language": "bg", "confirmedBy": "live", "note": "The Bulgarian page's name for \"Unsuccessful item delivery attempt (Inb)\"."},
     {"wording": "Получаване на пратка в станция за доставка", "stage": "ready_for_pickup", "language": "bg", "confirmedBy": "live", "note": "The Bulgarian page's name for \"Receive item at collection point for pick-up (Inb)\"."},
-    {"wording": "Доставена пратка", "stage": "delivered", "language": "bg", "confirmedBy": "live", "note": "The Bulgarian page's name for \"Deliver item (Inb)\"."}
+    {"wording": "Доставена пратка", "stage": "delivered", "language": "bg", "confirmedBy": "live", "note": "The Bulgarian page's name for \"Deliver item (Inb)\"."},
+    {"wording": "Създаване", "language": "bg", "confirmedBy": "live", "note": "Bulgarian Posts creating its record of an item from abroad, beside its intake: not a movement, so the item keeps the stage of the scan before it."}
   ]
 }

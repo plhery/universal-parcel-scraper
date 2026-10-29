@@ -6,7 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { bulgarianPostsStage } from './status.js';
+import { bulgarianPostsStage, isBulgarianPostsNotice } from './status.js';
 
 export const PROVIDER = 'Bulgarian Posts';
 // A long history is a few kilobytes.
@@ -140,9 +140,18 @@ export function parseBulgarianPosts(payload: unknown, rawNumber: string): Carrie
   // Newest first, as the reply runs oldest first by wall clock; a newest-first reply stays as it is.
   const clock = (event: CarrierEvent) => String(event.time ?? event.local_time).slice(0, 19);
   if (clock(events[0]!) <= clock(events.at(-1)!)) events.reverse();
+  // Oldest first: a notice keeps the stage of the scan before it.
+  let previous: Stage | undefined;
+  for (const event of [...events].reverse()) {
+    if (isBulgarianPostsNotice(event.description!.split(': ')[0]!)) {
+      if (previous) Object.assign(event, { stage: previous, stage_source: 'none' });
+      continue;
+    }
+    previous = (event.stage as Stage | undefined) ?? previous;
+  }
 
   const latest = events[0]!;
-  const current = events.find(event => event.stage);
+  const current = events.find(event => event.stage && event.stage_source !== 'none');
   const stage = current?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

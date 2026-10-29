@@ -85,6 +85,10 @@ describe('Pengyou tracking adapter', () => {
 
   it('maps every wording it lists by wording alone, and the app reads the map', () => {
     for (const entry of ENTRIES) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
+    expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: 'Delivered Sample Town ST' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    for (const description of ['Delivered to airline DC', 'Delivered Sample Town', 'Undelivered Sample Town ST']) {
+      expect(statusMap.stage(null, normalizeStatusWording(description)), description).toBeUndefined();
+    }
     expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
   });
 });

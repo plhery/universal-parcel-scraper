@@ -263,6 +263,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-27",
       "note": "A label of PostNL's domestic tracker, with observation code J06: the parcel sorted at a sorting centre."
+    },
+    {
+      "wording": "Shipment has been sorted",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "A label of PostNL's domestic tracker, with observation code J01: sorted after PostNL received the parcel, before the driver set out."
     }
   ]
 }

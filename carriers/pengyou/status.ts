@@ -8,14 +8,17 @@ const WORDINGS = new Map<string, Stage>(ENTRIES.map((entry) => [normalizeStatusW
 
 // The place Pengyou writes after a row's wording, in brackets: "[Shenzhen City]".
 const PLACE_TAIL = / \[[^\]]+\]$/;
+// The last-mile delivery, with the town and its two-letter state or province after it, unbracketed:
+// "Delivered Sample Town CA".
+const DELIVERED_AT = /^delivered (?!to )[a-z][a-z .'-]* [a-z]{2}$/;
 
 /**
  * The stage Pengyou's map gives a row, by its `normalizeStatusWording` wording,
- * read without the place in brackets after it. A row's kind code, when it has
+ * read without the place in brackets after it, or the town after a delivery. A row's kind code, when it has
  * one, groups many wordings and decides nothing.
  */
 export function pengyouStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.get(wording) ?? WORDINGS.get(wording.replace(PLACE_TAIL, ''));
+  return WORDINGS.get(wording) ?? WORDINGS.get(wording.replace(PLACE_TAIL, '')) ?? (DELIVERED_AT.test(wording) ? 'delivered' : undefined);
 }
 
 export const statusMap: CarrierStatusMap = { stage: pengyouStage, gaps: [] };

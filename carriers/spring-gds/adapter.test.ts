@@ -611,6 +611,7 @@ describe('PostNL domestic tracker', () => {
     expect(JSON.stringify(result)).not.toMatch(/Synthetic|1234AB/);
     // The sorting scan and the pre-advice before PostNL has the shipment, by the labels the domestic tracker gives them.
     expect(statusMap.stage('J06', 'shipment sorted in sorting centre')).toBe('in_transit');
+    expect(statusMap.stage('J01', 'Shipment has been sorted')).toBe('in_transit');
     expect(statusMap.stage('M02', 'Not yet processed by PostNL')).toBe('registered');
   });
 

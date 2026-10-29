@@ -26,6 +26,16 @@ const CODES: Record<string, ClassifiedStatus> = {
   '89000': { status: 'in_transit', stage: 'customs' },
   '89100': { status: 'in_transit', stage: 'in_transit' },
   '97700': { status: 'in_transit', stage: 'in_transit' },
+  // UPU's events on an item from abroad, as Ukrposhta copies them: posted (EMA), at the origin's
+  // outward office of exchange and leaving it (EMB, EMC), at Ukraine's inward office (EMD),
+  // presented to customs and released (EDB, EDC), and leaving the inward office (EMF).
+  '17100': { status: 'in_transit', stage: 'accepted' },
+  '27200': { status: 'in_transit', stage: 'in_transit' },
+  '77600': { status: 'in_transit', stage: 'in_transit' },
+  '60700': { status: 'in_transit', stage: 'in_transit' },
+  '80700': { status: 'in_transit', stage: 'customs' },
+  '80800': { status: 'in_transit', stage: 'in_transit' },
+  '90800': { status: 'in_transit', stage: 'in_transit' },
 };
 
 export function ukrposhtaStatus(code: string): ClassifiedStatus | undefined {

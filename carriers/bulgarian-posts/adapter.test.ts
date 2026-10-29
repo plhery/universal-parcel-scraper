@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, BULGARIAN_POSTS_API, BulgarianPostsTracker, bulgarianPostsLookupUrl } from './adapter.js';
 import { normalizeBulgarianPostsNumber, parseBulgarianPosts } from './parser.js';
-import { bulgarianPostsEventStage, bulgarianPostsStage, statusMap } from './status.js';
+import { bulgarianPostsEventStage, bulgarianPostsStage, isBulgarianPostsNotice, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const DELIVERED = 'ZZ000000014DE';
@@ -151,6 +151,18 @@ describe('Bulgarian Posts tracking adapter', () => {
     expect(abroad).not.toHaveProperty('delivered_at');
   });
 
+  it('keeps the stage of the scan before the record Bulgarian Posts creates, which never decides the parcel’s', () => {
+    const created = parseBulgarianPosts({ parcels: [
+      row('2026-05-01T08:00:00', 'BULGARIA, SAMPLE IE', 'Receive item at office of exchange (Inb)'),
+      row('2026-05-01T08:01:00', 'BULGARIA, SAMPLE IE', 'Създаване'),
+    ], bulpost: {} }, DELIVERED);
+    expect(created).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Създаване' });
+    expect(created.events![0]).toMatchObject({ description: 'Създаване', stage: 'in_transit', stage_source: 'none' });
+    const first = parseBulgarianPosts({ parcels: [row('2026-05-01T08:01:00', 'BULGARIA, SAMPLE IE', 'Създаване')], bulpost: {} }, DELIVERED);
+    expect(first.events![0]).not.toHaveProperty('stage');
+    expect(first.current_stage).toBeUndefined();
+  });
+
   it('reads the tracker’s empty list as missing, its wrong-code answer as invalid input and Bulpost’s items as inconclusive', async () => {
     expect(() => parseBulgarianPosts(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseBulgarianPosts(fixture('wrong-code'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
@@ -267,6 +279,11 @@ describe('Bulgarian Posts tracking adapter', () => {
 describe('Bulgarian Posts status vocabulary', () => {
   it('maps every wording it recorded to the stage recorded for it, with or without the detail beside it', () => {
     for (const entry of statuses.entries) {
+      if (!('stage' in entry)) {
+        expect(isBulgarianPostsNotice(entry.wording), entry.wording).toBe(true);
+        expect(statusMapAnswer({ carrier: 'bulgarian-posts', providerCode: null, description: entry.wording }).kind, entry.wording).toBe('intentional_gap');
+        continue;
+      }
       expect(bulgarianPostsEventStage(entry.wording), entry.wording).toBe(entry.stage);
       expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
       expect(statusMapAnswer({ carrier: 'bulgarian-posts', providerCode: null, description: entry.wording }), entry.wording)

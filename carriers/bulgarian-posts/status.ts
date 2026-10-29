@@ -58,6 +58,19 @@ const BULGARIAN: ReadonlyMap<string, Stage> = new Map([
   ['пратката е приета', 'in_transit'],
 ]);
 
+/**
+ * Bulgarian Posts creating its own record of an item, at the minute an item
+ * from abroad is taken in after its office of exchange: no movement.
+ */
+const NOTICES: ReadonlyMap<string, string> = new Map([
+  ['създаване', 'Bulgarian Posts creating its record of the item, beside its intake: not a movement, so it keeps the stage of the scan before it.'],
+]);
+
+/** Whether a scan's event name is a notice, which keeps the stage of the scan before it. */
+export function isBulgarianPostsNotice(name: string): boolean {
+  return NOTICES.has(normalizeStatusWording(name));
+}
+
 // The leg after an IPS event name, and anything the page puts after it.
 const LEG = /\s*\((?:otb|inb|domestic)\)[\s\S]*$/;
 
@@ -69,6 +82,7 @@ export function bulgarianPostsEventStage(name: string): Stage | undefined {
 
 /** A scan's stage from its event name, else the shared wording rules, else nothing, which keeps it visible for review. */
 export function bulgarianPostsStage(name: string): ClassifiedWording | null {
+  if (isBulgarianPostsNotice(name)) return null;
   const mapped = bulgarianPostsEventStage(name);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(name, 'in_transit');
@@ -81,5 +95,5 @@ export function bulgarianPostsStage(name: string): ClassifiedWording | null {
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? undefined : bulgarianPostsEventStage(wording.split(': ')[0]!)),
-  gaps: [],
+  gaps: [...NOTICES].map(([wording, note]) => ({ wording, note })),
 };

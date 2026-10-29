@@ -82,6 +82,7 @@ const DOMESTIC_STAGE = new Map<string, Stage>([
   ['shipment received by postnl', 'accepted'],
   ['driver is en route', 'out_for_delivery'],
   ['shipment sorted in sorting centre', 'in_transit'],
+  ['shipment has been sorted', 'in_transit'],
 ]);
 
 /** The stage of one domestic tracker observation, or undefined when unmapped. */
