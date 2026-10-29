@@ -215,6 +215,13 @@ describe('DHLink HTTP adapter', () => {
       ['2026-03-10T16:10:56+08:00', null, 'in_transit', 'SAMPLE HUB, US'], ['2026-03-10T05:10:56+08:00', null, 'in_transit', 'SAMPLEVILLE, US']]);
     // Elsewhere it is not.
     expect(relayed(hub, 'GB', 'SWX990000000000000001').events).toHaveLength(3);
+    // Without a known partner, a partner's US-clock copy of DHLink's pickup row, recorded on Beijing time, is the same scan.
+    const relayedPickup = [{ ...row('2026-03-11 02:57:21', '2026-03-11 02:58:00', 'none', 'Package picked up by last-mile carrier'),
+      nodeCode: 'TQ001', nodeName: 'Last mile pickup' }, row('2026-03-10 13:57:21', '2026-03-11 10:00:00', 'none', 'Package picked up by last-mile carrier')];
+    expect(timeline(relayed(relayedPickup).events)).toEqual([['2026-03-11T02:57:21+08:00', 'TQ001', 'in_transit', null]]);
+    // A row whose clock is not known to be Beijing's has no copy.
+    expect(relayed([relayedPickup[1]!, row('2026-03-10 14:57:21', '2026-03-11 10:00:00', 'none', 'Package picked up by last-mile carrier')])
+      .events).toHaveLength(2);
     // DHLink's pickup node on a GOFO line gives GOFO's hub scan on the hub's clock; the line's own rows stay on Beijing time.
     const pickup = (place: string, createDate = '2026-03-11 07:19:00') => ({ ...row('2026-03-10 11:38:05', createDate, place,
       'Package picked up by last-mile carrier'), nodeCode: 'TQ001', nodeName: 'Last mile pickup' });

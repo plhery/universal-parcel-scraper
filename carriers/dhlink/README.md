@@ -60,7 +60,9 @@ page makes.
   row of GOFO's pickup (`TQ001`) is the exception when it names GOFO's hub: it is GOFO's
   arrival there, at the hub's wall clock. A partner's copy of a scan DHLink records can come
   too, on the partner's US clock, as SwiftX's hub scans do; a scan whose US reading is the
-  instant of another with the same wording is that copy and is dropped. Otherwise a scan a USPS
+  instant of another with the same wording is that copy and is dropped. With another partner or
+  none known, that other row must be read on Beijing time, as a pickup row recorded at once
+  is. Otherwise a scan a USPS
   office names with its state and ZIP code, or that pickup, is read on that state's time, unless
   the state spans several zones. A scan recorded before its clock could have struck at the
   destination, even in the destination's easternmost zone, keeps DHLink's own Beijing time. Any

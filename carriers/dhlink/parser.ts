@@ -265,13 +265,14 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
   const dated = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
     .map((scan) => {
       const zone = scanZone(scan, destination, last?.leg.beijingClock === true && !(scan.hub && last.leg.hubClockPickup));
-      return { scan, time: zone ? isoTime(scan.stamp, zone) : null };
+      return { scan, zone, time: zone ? isoTime(scan.stamp, zone) : null };
     });
   // Beside DHLink's own record of a partner's scan on Beijing time, the partner's copy can come
   // on its US wall clock: the same wording, at the instant of DHLink's row on a US reading.
-  const copies = last?.leg.beijingClock && destination === 'US' ? dated.filter(({ scan }) => dated.some((other) =>
-    other.scan !== scan && other.time && other.scan.event.description === scan.event.description
-    && usClockCopy(scan.stamp, other.time.timestamp))) : [];
+  // Without a partner known to be relayed on Beijing time, DHLink's row must be read on it.
+  const copies = destination === 'US' ? dated.filter(({ scan }) => dated.some((other) =>
+    other.scan !== scan && other.time && (last?.leg.beijingClock || other.zone === RECORD_ZONE)
+    && other.scan.event.description === scan.event.description && usClockCopy(scan.stamp, other.time.timestamp))) : [];
   const events = dated.filter((entry) => !copies.includes(entry))
     .map(({ scan, time }): CarrierEvent => ({ ...(time ? { time: time.iso } : { local_time: scan.stamp }), ...scan.event }));
   if (!events.length) throw new IndeterminateError(PROVIDER, 'DHLink has no scans for the parcel yet');
