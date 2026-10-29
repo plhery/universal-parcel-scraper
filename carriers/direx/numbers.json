@@ -345,10 +345,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "gls-it"
+          "gls-it",
+          "post-one"
         ]
       },
-      "note": "An archived lookup on the tracker of PostOne, a separate brand of Direx S.A., shows this item number delivered by USPS; it is not known whether Direx's own tracker takes it."
+      "note": "An archived lookup on the tracker of Post One, another Bulgarian operator, shows this item number delivered by USPS; it is not known whether Direx's own tracker takes it."
     },
     {
       "number": "R4890757626",
@@ -368,10 +369,11 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "gls-it"
+          "gls-it",
+          "post-one"
         ]
       },
-      "note": "An archived lookup by the partner number on the tracker of PostOne, a separate brand of Direx S.A., shows this as the item number of a parcel delivered by Fastway in Ireland."
+      "note": "An archived lookup by the partner number on the tracker of Post One, another Bulgarian operator, shows this as the item number of a parcel delivered by Fastway in Ireland."
     }
   ]
 }

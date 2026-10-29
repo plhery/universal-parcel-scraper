@@ -462,3 +462,20 @@ describe('Veho tracking ids and label barcodes', () => {
     }
   });
 });
+
+describe('Polonez label numbers and Yamato Transport U.S.A. links', () => {
+  it('names Polonez for three letters, three digits, two letters and six digits', () => {
+    expect(detectCarrierMatch('ABC123LE000017')).toMatchObject({ carrier: 'polonez', confidence: 'high' });
+    for (const number of ['AB123LE000017', 'ABC12LE000017', 'ABC123L0000017', 'ABC123LE00001']) {
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('polonez');
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('polonez');
+    }
+  });
+
+  it('reads Yamato Transport U.S.A. tracking links without naming it for a bare slip', () => {
+    expect(parseTrackingInput('https://www.yamatoamerica.com/tracking/?slipnumber=100000000017')).toMatchObject({
+      trackingNumber: '100000000017', carrier: 'yamato-america', source: 'link',
+    });
+    expect(detectCarrierMatch('100000000017').candidates ?? []).not.toContain('yamato-america');
+  });
+});

@@ -47,8 +47,9 @@ with DHL Express waybills and many other carriers' numeric references, so no rul
 and the carrier has no recognition. The tracking page lists some item numbers in an HTML comment,
 and Direx's tracker answers them.
 
-PostOne, a separate brand of the same company with its own tracker, prints item numbers of R
-and ten digits. They stay in quarantine here; the adapter does not ask for them.
+[Post One](../post-one/README.md), another Bulgarian operator with its own tracker, prints item
+numbers of R and ten digits. Two of them stay in quarantine here; the adapter does not ask for
+them.
 
 ## Links
 

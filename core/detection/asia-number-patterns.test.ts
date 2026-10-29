@@ -429,3 +429,17 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 });
+
+describe('First Flight (Middle East) and DD Express links', () => {
+  it('reads a First Flight (Middle East) waybill from its tracking path', () => {
+    expect(parseTrackingInput('https://firstflightme.com/tracking/awb/10000017')).toMatchObject({
+      trackingNumber: '10000017', carrier: 'first-flight-me', source: 'link',
+    });
+  });
+
+  it('reads a DD Express tracking id from its tracker query', () => {
+    expect(parseTrackingInput('https://tracking.dd.express/?tracking_ids=DD100000017')).toMatchObject({
+      trackingNumber: 'DD100000017', carrier: 'dd-express', source: 'link',
+    });
+  });
+});

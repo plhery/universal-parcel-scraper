@@ -6283,5 +6283,13 @@
       "ktd"
     ],
     "reason": "KTD's numbers are also the tracking number on a DHLink line SwiftX delivers, and DHLink's lookup finds them. Both rules are low-confidence; DHLink, the one with a tracker, comes first and recognition asks it. A provider names KTD for the parcels DHLink does not know."
+  },
+  {
+    "shape": "^R\\d{10}$",
+    "carriers": [
+      "gls-it",
+      "post-one"
+    ],
+    "reason": "GLS Italy's low-confidence rule takes any letter and ten digits, so it overlaps Post One's R and ten digits; both stay suggestions."
   }
 ]

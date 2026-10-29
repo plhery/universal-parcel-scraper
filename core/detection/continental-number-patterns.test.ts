@@ -880,3 +880,45 @@ describe('networks whose links route to an existing carrier', () => {
     }
   });
 });
+
+describe('One by Allegro CZ, Post One, FámaFutár and TAS Courier', () => {
+  it('names One by Allegro CZ for a customer prefix with a letter and eight digits', () => {
+    for (const number of ['1A200000017', '1AB00000017', '12A00000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'wedo', confidence: 'high' });
+    }
+    for (const number of ['12300000017', '7D100000017', '7X100000017', '1A20000001', '1A2000000017', 'A1200000017']) {
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('wedo');
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('wedo');
+    }
+  });
+
+  it('reads One by Allegro CZ links, old WE|DO and IN TIME ones included', () => {
+    for (const link of [
+      'https://onedelivery.cz/sledovani-zasilky?numer=1A200000017',
+      'https://onedelivery.cz/?numer=1A200000017',
+      'https://trace.wedo.cz/index.php?orderNumber=1A200000017',
+      'http://trace.intime.cz/index.php?orderNumber=1A200000017',
+    ]) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: '1A200000017', carrier: 'wedo', source: 'link' });
+    }
+  });
+
+  it('suggests Post One for R and ten digits beside GLS Italy', () => {
+    expect(detectCarrierMatch('R1000000017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['post-one', 'gls-it']) });
+    for (const number of ['R100000017', 'R10000000017', 'RR1000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('post-one');
+    }
+    for (const link of ['https://postone.eu/en/track?code=R1000000017', 'https://postone.eu/track?code=R1000000017']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: 'R1000000017', carrier: 'post-one', source: 'link' });
+    }
+  });
+
+  it('reads FámaFutár and TAS Courier tracking links', () => {
+    expect(parseTrackingInput('https://famafutar.hu/tracking/#100000000000000000000017')).toMatchObject({
+      trackingNumber: '100000000000000000000017', carrier: 'famafutar', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.tascourier.gr/track?v=1000017')).toMatchObject({
+      trackingNumber: '1000017', carrier: 'tas-courier', source: 'link',
+    });
+  });
+});

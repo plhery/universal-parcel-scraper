@@ -11294,6 +11294,39 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "dd-express": {
+    "displayName": "DD Express",
+    "color": "#4ec1ea",
+    "aliases": [
+      "DD Cold Chain",
+      "DD Express Sdn Bhd",
+      "滴滴冷链物流"
+    ],
+    "countries": [
+      "MY",
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.dd.express/",
+    "trackingUrlTemplate": "https://tracking.dd.express/?tracking_ids={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.dd.express/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.dd.express"
+        ],
+        "params": [
+          "tracking_ids"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "dealersend": {
     "displayName": "DealerSend",
     "color": "#d71d4f",
@@ -14483,6 +14516,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "famafutar": {
+    "displayName": "FámaFutár",
+    "color": "#ff7f00",
+    "aliases": [
+      "Famafutar",
+      "FamaFutar",
+      "Fáma Futár",
+      "Fama Futar",
+      "Fáma Futárszolgálat",
+      "Fáma First",
+      "Fáma First Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://famafutar.hu/tracking/",
+    "trackingUrlTemplate": "https://famafutar.hu/tracking/#{trackingNumber}",
+    "trackingSearchUrl": "https://famafutar.hu/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "famafutar.hu",
+          "www.famafutar.hu"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "fragment": "^(\\d{24})$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fan-courier": {
     "displayName": "FAN Courier",
     "color": "#0f2345",
@@ -15055,6 +15124,38 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://www.firstdeliverygroup.com/suivi-de-colis/",
     "trackingSearchUrl": "https://www.firstdeliverygroup.com/suivi-de-colis/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "first-flight-me": {
+    "displayName": "First Flight (Middle East)",
+    "color": "#ee6818",
+    "aliases": [
+      "First Flight Couriers (Middle East)",
+      "First Flight Couriers (Middle East) L.L.C.",
+      "First Flight Couriers ME",
+      "First Flight ME"
+    ],
+    "countries": [
+      "AE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://firstflightme.com/",
+    "trackingUrlTemplate": "https://firstflightme.com/tracking/awb/{trackingNumber}",
+    "trackingSearchUrl": "https://firstflightme.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "firstflightme.com",
+          "www.firstflightme.com"
+        ],
+        "path": "^/tracking/awb/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "first-fly-express": {
@@ -25787,6 +25888,36 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "polonez": {
+    "displayName": "Polonez",
+    "color": "#e41d36",
+    "aliases": [
+      "Polonez Express",
+      "Polonez Parcel Service",
+      "Polonez America",
+      "Polonez America LLC"
+    ],
+    "countries": [
+      "US",
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://polonez.express/us-en/parcel-track",
+    "trackingUrlTemplate": "https://tracking-iframe.meest.com/t/en/{trackingNumber}",
+    "trackingSearchUrl": "https://polonez.express/us-en/parcel-track",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{3}\\d{3}[A-Z]{2}\\d{6}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "pony-express": {
     "displayName": "Pony Express",
     "color": "#008752",
@@ -26013,6 +26144,48 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "s10",
         "preferred": true
+      }
+    ]
+  },
+  "post-one": {
+    "displayName": "Post One",
+    "color": "#f7da19",
+    "aliases": [
+      "PostOne",
+      "POST ONE",
+      "Post One Group",
+      "Post One Group Ltd",
+      "Пост Уан",
+      "Пост Уан Груп"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://postone.eu/en",
+    "trackingUrlTemplate": "https://postone.eu/en/track?code={trackingNumber}",
+    "trackingSearchUrl": "https://postone.eu/en/products/view/track",
+    "linkRules": [
+      {
+        "domains": [
+          "postone.eu",
+          "www.postone.eu"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?track/?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^R\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
@@ -30837,6 +31010,40 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "tas-courier": {
+    "displayName": "TAS Courier",
+    "color": "#e9272b",
+    "aliases": [
+      "TAScourier",
+      "TAS Courier E.E.",
+      "TAS Courier ΕΕ"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tascourier.gr/track",
+    "trackingUrlTemplate": "https://www.tascourier.gr/track?v={trackingNumber}",
+    "trackingSearchUrl": "https://www.tascourier.gr/track",
+    "linkRules": [
+      {
+        "domains": [
+          "www.tascourier.gr",
+          "tascourier.gr"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "v"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "taxydema": {
     "displayName": "Taxydema",
     "color": "#fe5000",
@@ -33418,6 +33625,63 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "wedo": {
+    "displayName": "One by Allegro CZ",
+    "color": "#006d57",
+    "aliases": [
+      "WeDo (InTime)",
+      "WeDo",
+      "WE|DO",
+      "WE DO",
+      "WE|DO CZ",
+      "WE|DO CZ s.r.o.",
+      "IN TIME spedice",
+      "Uloženka",
+      "Ulozenka",
+      "One Kurýr",
+      "One Box CZ"
+    ],
+    "countries": [
+      "CZ"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Prague",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://onedelivery.cz/",
+    "trackingUrlTemplate": "https://onedelivery.cz/sledovani-zasilky?numer={trackingNumber}",
+    "trackingSearchUrl": "https://onedelivery.cz/sledovani-zasilky",
+    "linkRules": [
+      {
+        "domains": [
+          "onedelivery.cz",
+          "www.onedelivery.cz"
+        ],
+        "pathPattern": "^/(?:sledovani-zasilky/?)?$",
+        "params": [
+          "numer"
+        ]
+      },
+      {
+        "domains": [
+          "trace.wedo.cz",
+          "trace.intime.cz"
+        ],
+        "pathPattern": "^/index\\.php$",
+        "params": [
+          "orderNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?!7[DX]\\d)\\d(?:[A-Z][0-9A-Z]|\\d[A-Z])\\d{8}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "whistl": {
     "displayName": "Whistl",
     "color": "#fd4f00",
@@ -33877,6 +34141,41 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "yamato-america": {
+    "displayName": "Yamato Transport U.S.A.",
+    "color": "#fccf00",
+    "aliases": [
+      "Yamato America",
+      "Yamato Transport USA",
+      "Yamato USA",
+      "Yamato Transport U.S.A., Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.yamatoamerica.com/tracking/",
+    "trackingUrlTemplate": "https://www.yamatoamerica.com/tracking/?slipnumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.yamatoamerica.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.yamatoamerica.com",
+          "yamatoamerica.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "slipnumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "yc-delivery": {
     "displayName": "YC Delivery",
@@ -34738,6 +35037,7 @@ export const CARRIER_IDS = [
   "daylight-transport",
   "dayone",
   "dayton-freight",
+  "dd-express",
   "dealersend",
   "dellin",
   "delnext",
@@ -34813,6 +35113,7 @@ export const CARRIER_IDS = [
   "exmate",
   "express-one",
   "express-one-bg",
+  "famafutar",
   "fan-courier",
   "far-international",
   "fargo-courier",
@@ -34827,6 +35128,7 @@ export const CARRIER_IDS = [
   "fermopoint",
   "fg-delivery",
   "first-delivery-tn",
+  "first-flight-me",
   "first-fly-express",
   "first-line",
   "flash-express",
@@ -35102,10 +35404,12 @@ export const CARRIER_IDS = [
   "pitt-ohio",
   "pmm",
   "polaris-transport",
+  "polonez",
   "pony-express",
   "pos-indonesia",
   "post-haste",
   "post-luxembourg",
+  "post-one",
   "posta-faroe",
   "posta-kenya",
   "posta-moldovei",
@@ -35227,6 +35531,7 @@ export const CARRIER_IDS = [
   "takesend",
   "tamdis",
   "tanzania-posts",
+  "tas-courier",
   "taxydema",
   "tccs",
   "tci-express",
@@ -35295,6 +35600,7 @@ export const CARRIER_IDS = [
   "wahana",
   "wanbexpress",
   "ward-trucking",
+  "wedo",
   "whistl",
   "winion-logis",
   "winit",
@@ -35306,6 +35612,7 @@ export const CARRIER_IDS = [
   "xpo-ltl",
   "xpressbees",
   "yalidine",
+  "yamato-america",
   "yc-delivery",
   "ycs-logistics",
   "ydh",
@@ -35578,6 +35885,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "daylight-transport": [],
   "dayone": ["dayone-1"],
   "dayton-freight": [],
+  "dd-express": [],
   "dealersend": ["dealersend-1"],
   "dellin": [],
   "delnext": [],
@@ -35653,6 +35961,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "exmate": ["exmate-1"],
   "express-one": [],
   "express-one-bg": [],
+  "famafutar": [],
   "fan-courier": ["fan-courier-2","fan-courier-1"],
   "far-international": ["far-international-1"],
   "fargo-courier": ["fargo-courier-1"],
@@ -35667,6 +35976,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fermopoint": ["fermopoint-1"],
   "fg-delivery": ["fg-delivery-fgd","fg-delivery-1"],
   "first-delivery-tn": [],
+  "first-flight-me": [],
   "first-fly-express": [],
   "first-line": ["first-line-1"],
   "flash-express": ["flash-express-1"],
@@ -35942,10 +36252,12 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pitt-ohio": [],
   "pmm": [],
   "polaris-transport": ["polaris-transport-1"],
+  "polonez": ["polonez-1"],
   "pony-express": [],
   "pos-indonesia": ["pos-indonesia-1","pos-indonesia-s10"],
   "post-haste": [],
   "post-luxembourg": ["post-luxembourg-s10"],
+  "post-one": ["post-one-1"],
   "posta-faroe": [],
   "posta-kenya": [],
   "posta-moldovei": ["posta-moldovei-1"],
@@ -36067,6 +36379,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "takesend": ["takesend-1"],
   "tamdis": [],
   "tanzania-posts": [],
+  "tas-courier": [],
   "taxydema": [],
   "tccs": [],
   "tci-express": [],
@@ -36135,6 +36448,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wahana": [],
   "wanbexpress": ["wanbexpress-1"],
   "ward-trucking": [],
+  "wedo": ["wedo-1"],
   "whistl": ["whistl-1"],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],
@@ -36146,6 +36460,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpo-ltl": ["xpo-ltl-1"],
   "xpressbees": ["xpressbees-awb"],
   "yalidine": ["yalidine-1"],
+  "yamato-america": [],
   "yc-delivery": [],
   "ycs-logistics": [],
   "ydh": ["ydh-1"],
