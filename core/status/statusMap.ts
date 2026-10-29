@@ -12,7 +12,11 @@ export interface IntentionalStatusGap {
   readonly code?: string;
   /** The wording in `normalizeStatusWording` form. Without one, the gap covers every wording of its code. */
   readonly wording?: string;
-  /** Why the map leaves it without a stage. */
+  /**
+   * Why the map leaves it without a stage. A notice the adapter gives no stage
+   * says it keeps the stage of the scan before it: the parcel app restages the
+   * scans it stored on those words.
+   */
   readonly note: string;
 }
 

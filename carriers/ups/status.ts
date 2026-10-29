@@ -166,5 +166,5 @@ export function upsUncodedScanStage(text: string): Stage | undefined {
 /** What the map says about one scan: by its activity code, or by its wording without one. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? upsActivityStage(code) : upsBannerStage(wording) ?? upsUncodedScanStage(wording)),
-  gaps: [{ code: 'L0', note: "The receiver's delivery instructions, a notice and no scan: the newest other scan decides the stage." }],
+  gaps: [{ code: 'L0', note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." }],
 };
