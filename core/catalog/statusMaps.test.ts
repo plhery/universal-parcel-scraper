@@ -875,7 +875,10 @@ describe('status map answers', () => {
     expect(answer('correios-br', 'FC/40', 'Objeto em processo de identificação do código de classificação do produto')).toEqual(mapped('customs'));
     expect(answer('correios-br', 'PAR/18', 'Objeto recebido na unidade de exportação no país de origem')).toEqual(mapped('in_transit'));
     expect(answer('correios-br', 'XX/99', 'Objeto em trânsito')).toEqual(unknown);
-    expect(answer('correios-br', null, 'Objeto entregue ao destinatário')).toEqual(unknown);
+    // A universal provider's copy, without Correios's code, by the wording of a recorded code.
+    expect(answer('correios-br', null, 'Objeto entregue ao destinatário')).toEqual(mapped('delivered'));
+    expect(answer('correios-br', 'InfoReceived', 'Objeto postado')).toEqual(mapped('accepted'));
+    expect(answer('correios-br', null, 'Objeto em trânsito')).toEqual(unknown);
   });
 
   it("answers DHL eCommerce by the wording its adapter reads, and leaves what only UTAPI's status code stages open", () => {

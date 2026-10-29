@@ -1,5 +1,6 @@
-import type { ClassifiedStatus } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 // Subtypes distinguish delivery from address problems and cancelled dispatches.
 // BDE, BDI and BDR are the same delivery outcomes recorded by different units.
@@ -42,5 +43,22 @@ export function classifyCorreiosStatus(code: string): ClassifiedStatus | undefin
   return Object.hasOwn(codes, code) ? codes[code] : undefined;
 }
 
-/** What the map says about one scan: its code and subtype, as the parser stores them (`BDE/01`). */
-export const statusMap: CarrierStatusMap = { stage: (code) => (code ? classifyCorreiosStatus(code)?.stage : undefined), gaps: [] };
+/** The stage of each recorded wording through its code, left out where two codes word it alike with different stages. */
+const STAGE_BY_WORDING = new Map<string, Stage | undefined>();
+for (const { code, wording } of statuses.entries) {
+  const key = normalizeStatusWording(wording);
+  const stage = classifyCorreiosStatus(code)?.stage;
+  STAGE_BY_WORDING.set(key, STAGE_BY_WORDING.has(key) && STAGE_BY_WORDING.get(key) !== stage ? undefined : stage);
+}
+
+// Correios's code and subtype, as the parser stores them (`BDE/01`).
+const CORREIOS_CODE = /^[A-Z]{2,4}\/\d{2}$/;
+
+/**
+ * What the map says about one scan: its code, else, for a universal provider's copy without
+ * one or under the provider's own code, the wording Correios gives a recorded code.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => (code && CORREIOS_CODE.test(code) ? classifyCorreiosStatus(code)?.stage : STAGE_BY_WORDING.get(wording)),
+  gaps: [],
+};

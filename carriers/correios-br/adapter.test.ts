@@ -5,6 +5,7 @@ import { carrierErrorKind, InvalidInputError } from '../../core/errors/index.js'
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { CorreiosTracker } from './adapter.js';
 import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { classifyCorreiosStatus } from './status.js';
 
 const NUMBER = 'AA000000005BR';
@@ -44,6 +45,16 @@ describe('Correios parser', () => {
     expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
     for (const row of statuses.entries) expect(classifyCorreiosStatus(row.code)?.stage).toBe(row.stage);
     expect(classifyCorreiosStatus('BDE/99')).toBeUndefined();
+  });
+
+  it('reads a universal provider\'s copy by the wording Correios gives a recorded code', () => {
+    const answer = (providerCode: string | null, description: string) => statusMapAnswer({ carrier: 'correios-br', providerCode, description });
+    expect(answer('InfoReceived', 'Objeto postado')).toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(answer(null, 'Objeto recebido na unidade de exportação no país de origem')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer(null, 'Objeto entregue ao destinatário')).toEqual({ kind: 'mapped', stage: 'delivered' });
+    // Correios's own code decides, even an unrecorded one.
+    expect(answer('BDE/99', 'Objeto postado')).toEqual({ kind: 'unknown' });
+    expect(answer(null, 'Synthetic wording')).toEqual({ kind: 'unknown' });
   });
 
   it('requires one exact response identity and structurally complete bounded scans', () => {

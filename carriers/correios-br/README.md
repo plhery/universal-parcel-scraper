@@ -13,7 +13,9 @@ image formats and exhausted attempts report a challenge for routing fallback.
 ## Notes
 
 The response must echo the requested reference. Scan classification uses both the
-event code and subtype; delivery-related codes also describe failures. Scans keep
+event code and subtype; delivery-related codes also describe failures. A universal
+provider's copy, which carries no Correios code, is read by the wording Correios gives
+a recorded code, unless two codes word it alike with different stages. Scans keep
 the provider's newest-first order, including unresolved clocks. Valid explicit
 per-row IANA zones provide instants; missing, invalid or ambiguous zones retain
 local clocks. Error replies without identity, including period errors, remain
