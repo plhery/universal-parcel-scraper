@@ -640,6 +640,7 @@ import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
 import { adapter as yanwen } from '../carriers/yanwen/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
+import { adapter as ydh } from '../carriers/ydh/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
 import { adapter as yto } from '../carriers/yto/adapter.js';
 import { adapter as yunda } from '../carriers/yunda/adapter.js';
@@ -1294,6 +1295,7 @@ export const REGISTRY: RegistryDefinition = {
     "yamato": yamato,
     "yanwen": yanwen,
     "ycs-logistics": ycsLogistics,
+    "ydh": ydh,
     "yilong-logistics": yilongLogistics,
     "yto": yto,
     "yunda": yunda,
@@ -2124,7 +2126,7 @@ export const REGISTRY: RegistryDefinition = {
     "yanwen": "yanwen",
     "yc-delivery": "universal",
     "ycs-logistics": "ycs-logistics",
-    "ydh": "universal",
+    "ydh": "ydh",
     "yfhex": "universal",
     "yilong-logistics": "yilong-logistics",
     "yimidida": "universal",

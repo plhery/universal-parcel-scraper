@@ -33950,7 +33950,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ydh",
+      "localClocks": true
     },
     "canaryUrl": "https://track.ydhex.com/track_query.aspx",
     "trackingUrlTemplate": "https://track.ydhex.com/track_query.aspx?track_number={trackingNumber}",

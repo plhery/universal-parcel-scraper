@@ -1293,6 +1293,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dayone', number: 'DOT0990000000000001',
     route: /^https:\/\/www\.dayonetrack\.com\/track\?trackNo=DOT0990000000000001(?:#\/(?:track\?trackNo=DOT0990000000000001(?:&lang=[a-zA-Z-]+)?)?)?$/,
     marker: /Tracked number|The order information has not been updated yet|订单信息尚未更新/ },
+  // The tracker renders the number's history as it serves the page, or 暂无记录 for an unknown one.
+  { carrier: 'ydh', number: 'YDH0000000017YQ',
+    route: /^https:\/\/track\.ydhex\.com\/track_query\.aspx\?track_number=YDH0000000017YQ$/,
+    marker: /暂无记录|目的国家/ },
   { carrier: 'dealersend', number: 'DSLAF9000000001YQ',
     route: /^https:\/\/dealer-send\.com\/en-US\/track-my-shipment\?trackingNumber=DSLAF9000000001YQ$/,
     marker: /Track My Shipment/ },
