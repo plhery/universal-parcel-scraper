@@ -4,14 +4,16 @@ export const CAINIAO_CHINA_ZONE = 'Asia/Shanghai';
 /**
  * The wordings of Cainiao's steps in China, from the seller's to the
  * departing flight, and of its return warehouse. Its feed dates them on
- * China's clock wherever the parcel goes. Its later steps are on their site's
+ * China's clock wherever the parcel goes. So is the order's cancellation:
+ * on any clock west of UTC+7:36 it came after the check that first returned
+ * it, on a parcel to Portugal. Its later steps are on their site's
  * clock, which varies by parcel, so they are not listed: "Arrived at linehaul
  * office" came at China's digits on one parcel and Europe's on another. The
  * list holds Cainiao's English, as ParcelsApp relays it, and Postal Ninja's
  * translation of it, which keeps Cainiao's digits.
  */
 export const CAINIAO_CHINA_LEG: readonly string[] = [
-  'pending shipping by the seller', 'order received successfully', 'package finished', 'leave the warehouse',
+  'pending shipping by the seller', 'order received successfully', 'order has been cancelled', 'package finished', 'leave the warehouse',
   'departed from warehouse', 'accepted by carrier', 'shipment information received by warehouse electronically',
   'package ready for shipping from warehouse', 'package shipped out from warehouse',
   '(?:inbound|outbound) in sorting center', 'processing at sorting center', 'departed from sorting center',

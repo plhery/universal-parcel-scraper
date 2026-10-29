@@ -2416,6 +2416,19 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual(['2026-10-14T08:19:55.000Z', '2026-10-08T09:45:58.000Z']);
   });
 
+  it('reads Cainiao\'s cancellation of the order on China time, as its order', () => {
+    // Filed under EcoScooting, whose catalog clock is UTC: read as labeled, the cancellation
+    // came hours after the check that first returned it.
+    const result = parseParcelsAppResponse({ carriers: ['Cainiao', 'CACESA Logistics'], destinationCode: 'PT', states: [
+      { date: '2030-01-02T13:24:16Z', status: 'Order has been cancelled', carrier: 0 },
+      { date: '2030-01-02T11:39:08Z', status: 'Order received successfully', carrier: 0 },
+    ] }, number, identity(), 'UTC');
+    expect(result.events?.map((scan) => [scan.description, scan.time])).toEqual([
+      ['Order has been cancelled', '2030-01-02T05:24:16.000Z'],
+      ['Order received successfully', '2030-01-02T03:39:08.000Z'],
+    ]);
+  });
+
   it('keeps the UTC instants ParcelsApp gives Asendia USA scans wherever they happened', () => {
     // Live shape (2026-09-30): an Asendia USA return through Switzerland, filed
     // under Swiss Post. Asendia's A1 feed has the same instants, and Swiss
