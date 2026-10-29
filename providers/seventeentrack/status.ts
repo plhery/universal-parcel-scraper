@@ -19,8 +19,8 @@ export const SUB_STAGES: Record<string, Stage> = {
   Exception_Destroyed: 'exception', Exception_Cancel: 'exception',
 };
 
-// Correios Brazil's export unit abroad receiving the item, which 17TRACK files as information received.
-const SCANNED = /^objeto recebido na unidade de exporta(?:ção|cao) no pa(?:í|i)s de origem\.?$/i;
+// Correios Brazil's posting and its export unit abroad receiving the item, which 17TRACK files as information received.
+const SCANNED = /^objeto (?:postado|recebido na unidade de exporta(?:ção|cao) no pa(?:í|i)s de origem)\.?$/i;
 
 /**
  * The stage a scan's `sub_status` gives it over the stage its wording got

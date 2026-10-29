@@ -88,6 +88,8 @@ describe('17TRACK result parsing', () => {
   it('lets information received yield to a scan 17TRACK files under it', () => {
     expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', 'Objeto recebido na unidade de exportação no país de origem')]), number))
       .toMatchObject({ current_stage: 'in_transit', events: [{ stage: 'in_transit', provider_code: 'InfoReceived' }] });
+    expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', 'Objeto postado')]), number))
+      .toMatchObject({ current_stage: 'accepted', events: [{ stage: 'accepted', provider_code: 'InfoReceived' }] });
     // A notice keeps the code's stage, also where the shared rules read customs or movement in it.
     for (const description of ['Shipment information received', 'Order processed', 'Pre-advice received, customs declaration generated']) {
       expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', description)]), number))

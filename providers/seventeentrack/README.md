@@ -86,7 +86,8 @@ carrier.
 - Stages come from the exact `sub_status` map in [status.ts](status.ts) first. It works
   when `stage` is null or the description is Chinese, and a stage it gives is credited to
   the map (`carrier_map`). Then come the declared stage and the shared wording rules. `Exception_Returning` is not a completed return.
-  `InfoReceived` yields to Correios Brazil's export unit abroad receiving the item, a scan 17TRACK files under it.
+  `InfoReceived` yields to Correios Brazil's posting ("Objeto postado") and its export unit abroad receiving
+  the item, scans 17TRACK files under it.
   Shipment-level `Expired` is never a scan and never means lost.
 - Times: `time_utc`, else `time_iso`, and both must carry an offset. When both parse but name
   different instants, `time_iso`, the clock and offset 17TRACK shows, wins: on India Post's legs
