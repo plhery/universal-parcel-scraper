@@ -59,12 +59,16 @@ const WHOLE_MINUTE_UTC = /T\d{2}:\d{2}:00(?:\.0{1,9})?Z$/;
  * origin post's, Poczta Polska's posting at 08:23 UTC as 10:23Z. A post
  * delivering abroad relays instants: Deutsche Post's scans have the minute of
  * its own tracker's. With no destination, a foreign post's scan stays as labelled.
+ * A terminal's own scans carry milliseconds; one it has to the minute (`HUB`) is
+ * its wall clock too: an airport terminal's scans of mail from abroad at 15:28
+ * and 15:29 UTC were answered by 14:56.
  */
 function relayedWallCountry(raw: Record<string, unknown>, rawTime: string, destination: string | null): string | null {
   const location = isRecord(raw.location) ? raw.location : null;
   const country = location ? clean(location.countryCode, 8) : '';
-  if (!location || location.locationType !== 'UNDEF' || clean(location.name, 160) || !/^[A-Z]{2}$/.test(country)
-    || !WHOLE_MINUTE_UTC.test(rawTime)) return null;
+  if (!location || !/^[A-Z]{2}$/.test(country) || !WHOLE_MINUTE_UTC.test(rawTime)) return null;
+  if (clean(location.name, 160)) return location.locationType === 'HUB' && POSTNORD_COUNTRIES.has(country) ? country : null;
+  if (location.locationType !== 'UNDEF') return null;
   return POSTNORD_COUNTRIES.has(country) || (destination && country !== destination) ? country : null;
 }
 

@@ -158,6 +158,22 @@ describe('PostNord direct tracking', () => {
     expect(parsePostnord(value, NUMBER)).toMatchObject({ last_update: null, events: [{ local_time: '2026-10-24T21:19:00.000' }, { time: '2026-10-23T09:00:00+02:00' }] });
   });
 
+  it('reads a terminal\'s scan to the minute on its country\'s wall clock', () => {
+    const scan = (eventTime: string, locationType = 'HUB', name = 'SYNTHETIC BREVTERMINAL', countryCode = 'SE') =>
+      ({ eventDescription: 'The shipment item is under transportation.', eventTime, status: 'EN_ROUTE', location: { countryCode, locationType, name } });
+    const value = payload();
+    value.items[0].events = [
+      scan('2026-10-27T15:28:00.000Z'), scan('2026-10-27T15:29:00.000Z'),
+      scan('2026-10-27T16:55:06.665Z'), // to the millisecond: the terminal's instant
+      scan('2026-10-28T09:05:00.000Z', 'SLINGA', 'Synthetic Town'), // a round's scans come to the second
+      scan('2026-10-28T10:00:00.000Z', 'HUB', 'SYNTHETIC HUB', 'DE'),
+    ];
+    value.items[0].status = { code: 'EN_ROUTE', header: 'The shipment item is under transportation.' };
+    expect(parsePostnord(value, NUMBER).events?.map((event) => event.time)).toEqual([
+      '2026-10-28T10:00:00Z', '2026-10-28T09:05:00Z', '2026-10-27T16:55:06.665Z', '2026-10-27T15:29:00+01:00', '2026-10-27T15:28:00+01:00',
+    ]);
+  });
+
   it('removes only confirmed administrative OTHER rows after validation and treats notice-only replies as inconclusive', () => {
     const value = payload();
     value.items[0].events = [

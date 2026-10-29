@@ -30,7 +30,9 @@ Danish item's scans came two hours after its postcentre's, and Poczta Polska's p
 hours after Poczta Polska's own instant. They are read on the country's clock, or keep their
 wall clock in a country of several, and a twin labelled with the instant counts once. A post
 delivering abroad relays instants (Deutsche Post's have the minute of its own tracker's), and
-without a destination a foreign post's scan stays as labelled.
+without a destination a foreign post's scan stays as labelled. A terminal's own scans carry
+milliseconds; one it has to the minute (`locationType` HUB) is its wall clock too: an airport
+terminal's scans of mail from abroad were answered before their labelled UTC time.
 Each event uses its own code and, where the code covers several milestones, exact portal wording.
 The parcel app's review asks the same map (`statusMap`); a copy without a code gets a stage only
 from wording that names a milestone or a hold of its own.
