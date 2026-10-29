@@ -634,6 +634,7 @@ import { adapter as whistl } from '../carriers/whistl/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
+import { adapter as xingheFreight } from '../carriers/xinghe-freight/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
@@ -1289,6 +1290,7 @@ export const REGISTRY: RegistryDefinition = {
     "winit": winit,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
+    "xinghe-freight": xingheFreight,
     "xlcourier": xlcourier,
     "xpo-ltl": xpoLtl,
     "xpressbees": xpressbees,
@@ -2145,7 +2147,7 @@ export const REGISTRY: RegistryDefinition = {
     "x-trac": "universal",
     "xde-logistics": "xde-logistics",
     "xdp": "xdp",
-    "xinghe-freight": "universal",
+    "xinghe-freight": "xinghe-freight",
     "xlcourier": "xlcourier",
     "xpo-ltl": "xpo-ltl",
     "xpressbees": "xpressbees",

@@ -6,6 +6,7 @@ the Hualei (华磊) forwarder platform. [Tianhui Hengyuan](../thhy/README.md),
 [Mayi Yinfu](../mayiyinfu/README.md), [BYHD](../byhd/README.md) and
 [MeiHoo Pegasus](../meihoo-pegasus/README.md) run tenants of the same platform; they share the
 client in [hualei.ts](hualei.ts) and keep their own hosts and status maps.
+[Xinghe Freight](../xinghe-freight/README.md) tracks on GZYL's own tenant.
 
 ## How it works
 
