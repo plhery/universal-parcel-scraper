@@ -4178,6 +4178,12 @@
     "reason": "ATS Healthcare's shipment numbers are eight or nine digits, lengths many carriers share, so the shape cannot name ATS Healthcare."
   },
   {
+    "carrier": "rincos",
+    "pattern": "^82\\d{12}$",
+    "kind": "collision",
+    "reason": "Rincos tracking numbers are fourteen digits starting with 82, a length many carriers' rules accept, so the shape cannot name Rincos."
+  },
+  {
     "carrier": "centurion-transport",
     "pattern": "^[A-Z]{2}\\d{8}$",
     "kind": "open",

@@ -1862,7 +1862,10 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "Asendia Management",
       "Asendia UK",
-      "asendia.com"
+      "asendia.com",
+      "Asendia USA",
+      "Globegistics",
+      "Globegistics Inc."
     ],
     "countries": [
       "FR",
@@ -14866,6 +14869,37 @@ export const CARRIER_CATALOG = {
     "trackingSearchUrl": "https://domestictrack.ethio.post/PostGlobal/WebTrack/Track.aspx",
     "linkRules": [],
     "detectionRules": []
+  },
+  "ets-express": {
+    "displayName": "ETS Express",
+    "color": "#1c2187",
+    "aliases": [
+      "RETS",
+      "RETS Express",
+      "ETS·俄通收",
+      "俄通收",
+      "俄通收国际物流",
+      "俄通收国际货物代理运输有限公司"
+    ],
+    "countries": [
+      "CN",
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.ets-express.com/",
+    "trackingSearchUrl": "https://www.ets-express.com/inquiry.html",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^RETS\\d{12}UES$",
+        "confidence": "low"
+      }
+    ]
   },
   "eurodis": {
     "displayName": "EURODIS",
@@ -29200,6 +29234,41 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "rincos": {
+    "displayName": "Rincos",
+    "color": "#f37022",
+    "aliases": [
+      "RINCOS",
+      "RINCOS Co., Ltd.",
+      "린코스",
+      "주식회사 린코스"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.rincos.co.kr/",
+    "trackingUrlTemplate": "https://www.rincos.asia/out/TraceInfo_kr.do?SCGBN=20&P_VAL={trackingNumber}",
+    "trackingSearchUrl": "https://www.rincos.co.kr/tracking/tracking?lang=en",
+    "linkRules": [
+      {
+        "domains": [
+          "www.rincos.asia",
+          "rincos.asia"
+        ],
+        "pathPattern": "^/out/TraceInfo_(?:kr|en|jp|cn)\\.do$",
+        "params": [
+          "P_VAL"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "rivigo": {
     "displayName": "Rivigo",
     "color": "#f4162d",
@@ -37290,6 +37359,7 @@ export const CARRIER_IDS = [
   "estes",
   "estes-forwarding",
   "ethiopian-post",
+  "ets-express",
   "eurodis",
   "euroexpress-ba",
   "europochta",
@@ -37657,6 +37727,7 @@ export const CARRIER_IDS = [
   "redur",
   "redx",
   "relaytech",
+  "rincos",
   "rivigo",
   "rl-carriers",
   "roadie",
@@ -38199,6 +38270,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "estes": [],
   "estes-forwarding": [],
   "ethiopian-post": [],
+  "ets-express": ["ets-express-1"],
   "eurodis": [],
   "euroexpress-ba": [],
   "europochta": ["europochta-1"],
@@ -38566,6 +38638,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "redur": [],
   "redx": ["redx-1"],
   "relaytech": ["relaytech-1"],
+  "rincos": [],
   "rivigo": [],
   "rl-carriers": ["rl-carriers-1","rl-carriers-2"],
   "roadie": ["roadie-1","roadie-2"],

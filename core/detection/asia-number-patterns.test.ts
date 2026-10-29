@@ -567,3 +567,29 @@ describe('Inter Express Logistics and four Australian and New Zealand carriers',
     expect(carrierIdFromName('Kiwi Oversize')).toBe('kiwi-express');
   });
 });
+
+describe('ETS Express and Rincos', () => {
+  it('suggests ETS Express for its RETS code only', () => {
+    expect(detectCarrierMatch('RETS100000000017UES')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ets-express'] });
+    for (const number of ['RETS10000000017UES', 'RETS1000000000017UES', 'RETS100000000017US', 'RETX100000000017UES']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('ets-express');
+    }
+  });
+
+  it('leaves Rincos numbers to the carriers that share fourteen digits', () => {
+    expect(detectCarrierMatch('82100000000017').candidates ?? []).not.toContain('rincos');
+  });
+
+  it('reads their tracker links and names', () => {
+    for (const url of [
+      'https://www.rincos.asia/out/TraceInfo_kr.do?SCGBN=20&P_VAL=82100000000017',
+      'https://www.rincos.asia/out/TraceInfo_en.do?SCGBN=20&P_VAL=82100000000017',
+    ]) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: '82100000000017', carrier: 'rincos', source: 'link' });
+    }
+    expect(carrierIdFromName('RETS')).toBe('ets-express');
+    expect(carrierIdFromName('俄通收国际物流')).toBe('ets-express');
+    expect(carrierIdFromName('주식회사 린코스')).toBe('rincos');
+    expect(carrierIdFromName('Globegistics Inc.')).toBe('asendia');
+  });
+});
