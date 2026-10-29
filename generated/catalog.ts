@@ -27738,6 +27738,7 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "Posta Slovenije",
       "Slovenian Post",
+      "Slovenia Post",
       "Post of Slovenia"
     ],
     "countries": [

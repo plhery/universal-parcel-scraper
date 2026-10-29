@@ -238,6 +238,7 @@ describe('carrier names reported by universal providers', () => {
     // Names providers give these carriers' own parcels.
     ['Poland Post', 'poczta-polska'], ['Pocztex', 'poczta-polska'], ['Allegro Pocztex', 'poczta-polska'],
     ['Pocztex Kurier', 'poczta-polska'], ['DHL Poland', 'dhl-ecommerce-pl'], ['New Zealand Post', 'nz-post'],
+    ['Slovenia Post', 'posta-slovenije'],
     ['Norway Post', 'bring-posten'], ['Amazon Swiship', 'amazon-shipping'], ['PostNord Denmark', 'postnord'],
     ['DHL Freight Active Tracing', 'dhl-freight'], ['Spring Global Mail', 'spring-gds'],
     ['CTT Express Tracking', 'ctt-express'], ['Sameday Bulgaria', 'sameday'],
