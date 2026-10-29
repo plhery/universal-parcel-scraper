@@ -141,7 +141,8 @@ the replies already captured are still returned.
 
 TRAWL's reCAPTCHA audio solver stops as soon as Google's challenge frame shows its
 automated-traffic page or refuses an answer. It reads both from the frame's class names, so a
-widget in any language counts, and it requests no more audio from a refused address.
+widget in any language counts, and it requests no more audio in that solve. Nothing carries the
+refusal to the next lookup, which asks Google for audio again.
 
 ## Tests
 
