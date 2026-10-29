@@ -18,9 +18,11 @@
     "mode": "automatic",
     "adapter": "correios-br",
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
-    "localClocks": true
+    "localClocks": true,
+    "browser": true
   },
   "capabilities": [
     "history",

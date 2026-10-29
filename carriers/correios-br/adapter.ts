@@ -5,25 +5,29 @@ import { BudgetExceededError, ChallengeError, IndeterminateError, SchemaError } 
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import type { TrawlClient } from '../../core/transport/trawl.js';
+import { CORREIOS_PAGE, correiosBrowser } from './browser.js';
 import { CorreiosOcr } from './ocr.js';
 import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser.js';
 
 const ORIGIN = 'https://rastreamento.correios.com.br';
-const HOME = `${ORIGIN}/app/index.php`;
+const HOME = CORREIOS_PAGE;
 const IMAGE = `${ORIGIN}/core/securimage/securimage_show.php`;
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
 type Solver = (bytes: Uint8Array, signal: AbortSignal) => Promise<string>;
 
 export class CorreiosTracker {
   private readonly ocr = new CorreiosOcr();
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; solveCaptcha?: Solver } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; solveCaptcha?: Solver; trawl?: TrawlClient | null } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeCorreiosNumber(raw);
-    const budgetMs = context.budgetMs ?? 20_000;
+    const trawl = this.options.trawl ?? null;
+    const budgetMs = context.budgetMs ?? (trawl ? 45_000 : 20_000);
     return runSteps({ carrier: 'correios-br', budgetMs, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
-      const deadline = performance.now() + remainingMs;
+      // The page check is quick; the browser step needs the rest.
+      const deadline = performance.now() + (trawl ? Math.min(remainingMs, 10_000, Math.max(1, Math.floor(remainingMs * 0.3))) : remainingMs);
       const check = () => {
         signal.throwIfAborted();
         const left = deadline - performance.now();
@@ -67,13 +71,14 @@ export class CorreiosTracker {
         return parseCorreios(payload, number);
       }
       throw new ChallengeError('Correios', 'Correios rejected the text CAPTCHA');
-    } }]);
+    } }, { id: 'trawl', enabled: !!trawl, recovers: error => error instanceof ChallengeError,
+      run: ({ signal, remainingMs }) => correiosBrowser(trawl!, number, signal, remainingMs) }]);
   }
 
   close() { return this.ocr.close(); }
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new CorreiosTracker({ fetcher: environment.fetcher, recorder: environment.recorder });
-  return { id: 'correios-br', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  const tracker = new CorreiosTracker({ fetcher: environment.fetcher, recorder: environment.recorder, trawl: environment.trawl });
+  return { id: 'correios-br', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

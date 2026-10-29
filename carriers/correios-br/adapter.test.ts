@@ -3,6 +3,7 @@ import fixture from './fixtures/delivered.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 import { carrierErrorKind, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import type { TrawlCapturedResponse, TrawlClient } from '../../core/transport/trawl.js';
 import { CorreiosTracker } from './adapter.js';
 import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
@@ -232,6 +233,31 @@ describe('Correios session and transport', () => {
     const fetcher = vi.fn(async () => new Response('<form id="form-rastreamento" method="post"><div id="captcha" class="cf-turnstile"></div></form>')) as unknown as typeof fetch;
     await expect(new CorreiosTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', message: 'Correios requires a Turnstile browser check' });
     expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('asks the browser service for the reply its Turnstile search binds to the number, after a challenge only', async () => {
+    const API = 'https://rastreamento.correios.com.br/app/resultado.php';
+    const turnstile = () => vi.fn(async () => new Response('<div id="captcha" class="cf-turnstile"></div>')) as unknown as typeof fetch;
+    const browser = (...captured: Partial<TrawlCapturedResponse>[]) => ({ scrape: vi.fn(async () => ({ statusCode: 200,
+      capturedResponses: captured.map((row) => ({ url: API, status: 200, headers: {}, body: JSON.stringify(fixture), truncated: false,
+        base64Encoded: false, error: null, trackingNumberSubmitted: NUMBER, ...row })) })) });
+    const answered = browser({});
+    const result = await new CorreiosTracker({ fetcher: turnstile(), trawl: answered as unknown as TrawlClient }).fetch(NUMBER);
+    expect(result.status).toBe('delivered');
+    expect(answered.scrape).toHaveBeenCalledWith(expect.objectContaining({ url: `${HOME}?objetos=${NUMBER}`, captureResponses: [API], skipHttp: true }),
+      expect.objectContaining({ provider: 'Correios', requireSolved: false }));
+    for (const [captured, kind] of [[[], 'challenge'], [[{ trackingNumberSubmitted: 'BB000000005BR' }], 'challenge'],
+      [[{ status: 403, body: null }], 'challenge'], [[{ status: 429, body: null }], 'rate_limited'], [[{ truncated: true }], 'transport'],
+      [[{ body: '{"erro":true,"mensagem":"Objeto não encontrado"}' }], 'indeterminate'], [[{ body: '<html>' }], 'schema']] as const) {
+      const trawl = browser(...captured);
+      await expect(new CorreiosTracker({ fetcher: turnstile(), trawl: trawl as unknown as TrawlClient }).fetch(NUMBER)).rejects.toMatchObject({ kind });
+      expect(trawl.scrape).toHaveBeenCalledTimes(1);
+    }
+    // A refusal that is not Turnstile's is not the browser's to retry.
+    const unused = browser({});
+    const throttled = vi.fn(async () => new Response('busy', { status: 429 })) as unknown as typeof fetch;
+    await expect(new CorreiosTracker({ fetcher: throttled, trawl: unused as unknown as TrawlClient }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited' });
+    expect(unused.scrape).not.toHaveBeenCalled();
   });
 
   it('keeps endpoint absence inconclusive and preserves challenge, throttle and network errors', async () => {

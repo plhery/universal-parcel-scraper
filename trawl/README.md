@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics and ZTO. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics and ZTO. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 USPS also captures its tracking request's redirect to the official outage page.
@@ -20,7 +20,7 @@ The service reuses browser sessions, never parcel responses. FedEx keeps one ver
 per pooled browser and discards it on expiry, mismatch or failure. TRAWL's named sessions do not
 replace it: FedEx's API refuses the tracking call a kept session page makes for a tracking URL,
 and the untrusted input of a session eval never sends one. Australia Post,
-DHL Express, SF Express, WanbExpress, XPO, Asendia, DHL Poland, Magyar Posta and ZTO use fresh contexts.
+DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
 SF Express solves GeeTest's slider locally and asks for at most two other puzzles when it
 cannot read one.
 ZTO solves Dingxiang's slider and ordered-character challenge locally, with at most two
@@ -74,7 +74,10 @@ Its scoped native modules replace upstream raw debug logs with fixed events.
 It submits its history form after reCAPTCHA verification and returns only
 the waybill and scan fields, excluding recipient acknowledgements and verification tokens.
 Asendia waits for its own Turnstile callback to enable search and binds the captured POST
-to one whole identifier. Given a delivery postcode in the fragment, it opens the scans through the page's dialog; otherwise recipient verification leaves the current status only. XPO scopes the checkbox
+to one whole identifier. Given a delivery postcode in the fragment, it opens the scans through the page's dialog; otherwise recipient verification leaves the current status only.
+Correios Brazil opens its tracker's share link, waits for the page's Turnstile token and searches through
+the form, keeping the reply whose POST carried the whole S10 number without locker codes, receipts or
+recipient fields. XPO scopes the checkbox
 solver to its visible widget while the public client completes verification and tracking.
 Magyar Posta renders the Posta app's invisible reCAPTCHA Enterprise widget on the app's WebView
 origin, answers its audio challenge with TRAWL's speech-to-text and posts one number to the app's

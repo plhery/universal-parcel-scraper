@@ -11,9 +11,14 @@ retry is allowed after unreadable text or an explicit rejected CAPTCHA. Changed
 image formats and exhausted attempts report a challenge for routing fallback.
 
 The portal now puts its query behind Cloudflare Turnstile: the page posts the number with a
-form token and the Turnstile answer, and refuses the old query with HTTP 405. A browser passes
-the check without interaction and gets the same JSON. Until the adapter reads it through the
-browser service, a page showing Turnstile is a challenge, so lookups fall back to the providers.
+form token and the Turnstile answer, refuses the old query with HTTP 405 and a refused token
+with HTTP 403. The direct step stops at a page showing Turnstile, and the `trawl` step asks the
+browser service. It opens the portal's share link, `index.php?objetos=`, which fills in the
+number, waits for Turnstile's token, which a browser usually gets without interaction, and
+searches. The service keeps only the reply whose request carried the whole number, the same
+JSON the direct query read. Without a browser service, Turnstile is a challenge and lookups
+fall back to the providers. The portal answers a burst of lookups from one address with HTTP
+429, a rate limit rather than a missing parcel.
 
 ## Notes
 
@@ -37,5 +42,6 @@ the sending post lists again when it dispatches the item.
 
 ## Testing
 
-Set `CORREIOS_BR_TRACKING_NUMBER` to an authorized real reference and run
+Set `CORREIOS_BR_TRACKING_NUMBER` to an authorized real reference and `FLARESOLVERR_URL` to a
+browser service built from [trawl](../../trawl/README.md), then run
 `npm run test:carriers:live -- carriers/correios-br`.
