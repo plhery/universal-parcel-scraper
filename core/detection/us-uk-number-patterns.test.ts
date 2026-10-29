@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionCandidates } from '../catalog/recognition.js';
 import { settleRecognition, type RecognitionOutcome } from '../recognition/index.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
@@ -548,5 +549,20 @@ describe('Obibox numbers and links', () => {
         trackingNumber: 'XPABC1000000017_1', carrier: 'obibox', source: 'link',
       });
     }
+  });
+});
+
+describe('Piggy Express, Islandwide Express and Trans-Ontario Express', () => {
+  it('reads their tracker links and names', () => {
+    for (const [url, carrier] of [
+      ['https://piggyexp.com/track?tracking=PG1000000017', 'piggy-express'],
+      ['https://dsp-tracking.piggyship.com/?tracking=PG1000000017', 'piggy-express'],
+      ['https://www.islandwide.com/tracking?TrackingNumber=PG1000000017', 'islandwide-express'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: 'PG1000000017', carrier, source: 'link' });
+    }
+    expect(carrierIdFromName('PiggyShip')).toBe('piggy-express');
+    expect(carrierIdFromName('Islandwide')).toBe('islandwide-express');
+    expect(carrierIdFromName('Trans Ontario')).toBe('trans-ontario');
   });
 });

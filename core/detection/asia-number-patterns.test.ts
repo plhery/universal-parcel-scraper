@@ -505,3 +505,27 @@ describe('Dakota Cargo numbers, and Sentral Cargo links', () => {
     }
   });
 });
+
+describe('Kuayue Express waybills and links', () => {
+  it('names Kuayue Express for KY and thirteen digits, and only that layout', () => {
+    for (const number of ['KY1000000000017', 'ky 1000000000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'kuayue-express', confidence: 'high' });
+    }
+    for (const number of ['KY100000000017', 'KY10000000000017', 'KYE100000000017', 'KX1000000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('kuayue-express');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('kuayue-express');
+    }
+    expect(carrierIdFromName('跨越速运')).toBe('kuayue-express');
+    expect(carrierIdFromName('KY Express')).toBe('kuayue-express');
+  });
+
+  it('reads its search page, its frame and its mobile route page', () => {
+    for (const url of [
+      'https://www.ky-express.com/88.html?tab=3&orders=KY1000000000017',
+      'https://u.ky-express.com/diyServiceNews?tab=3&v=2.0&orders=KY1000000000017',
+      'https://ic-h5.kye-erp.com/waybill-route.html#/?isShowMarketing=1&waybillNo=KY1000000000017',
+    ]) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: 'KY1000000000017', carrier: 'kuayue-express', source: 'link' });
+    }
+  });
+});

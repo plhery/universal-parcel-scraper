@@ -5999,6 +5999,71 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "ace-lt": {
+    "displayName": "ACE Logistics Lithuania",
+    "color": "#004f7c",
+    "aliases": [
+      "ACE Logistics Lithuania UAB",
+      "ACE LT",
+      "aceSpeed",
+      "aceFlex"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.acelogistics.eu/lt/en/service/cargo-tracking/",
+    "trackingUrlTemplate": "https://www.acelogistics.eu/tracker/tracker_en.php?office=LT&cc=LT&ref={trackingNumber}",
+    "trackingSearchUrl": "https://www.acelogistics.eu/lt/en/service/cargo-tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.acelogistics.eu",
+          "acelogistics.eu"
+        ],
+        "pathPattern": "^/tracker/tracker(?:_[a-z]{2})?\\.php$",
+        "query": "^(?=(?:.*&)?office=LT(?:&|$))(?:.*&)?ref=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
+  "ace-lv": {
+    "displayName": "ACE Logistics Latvia",
+    "color": "#004f7c",
+    "aliases": [
+      "ACE Logistics Latvia SIA",
+      "ACE LV",
+      "AceB2C"
+    ],
+    "countries": [
+      "LV"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Riga",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.acelogistics.eu/lv/en/service/cargo-tracking/",
+    "trackingUrlTemplate": "https://www.acelogistics.eu/tracker/tracker_en.php?office=LV&cc=LV&ref={trackingNumber}",
+    "trackingSearchUrl": "https://www.acelogistics.eu/lv/en/service/cargo-tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.acelogistics.eu",
+          "acelogistics.eu"
+        ],
+        "pathPattern": "^/tracker/tracker(?:_[a-z]{2})?\\.php$",
+        "query": "^(?=(?:.*&)?office=LV(?:&|$))(?:.*&)?ref=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "aci-express-kr": {
     "displayName": "ACI Express",
     "color": "#db2e6e",
@@ -6289,6 +6354,29 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "airmee": {
+    "displayName": "Airmee",
+    "color": "#000000",
+    "aliases": [
+      "Airmee AB",
+      "Airmiz AB",
+      "Airmiz Denmark ApS"
+    ],
+    "countries": [
+      "SE",
+      "DK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Stockholm",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.airmee.com/",
+    "trackingSearchUrl": "https://tracking.airmee.com/#/shipment-search",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "airpak-express": {
     "displayName": "Airpak Express",
     "color": "#f5333f",
@@ -6472,6 +6560,40 @@ export const CARRIER_CATALOG = {
         "params": [
           "AWB",
           "ConNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "akis-express": {
+    "displayName": "AKIS Express",
+    "color": "#e53d51",
+    "aliases": [
+      "G.A.P. Akis Express",
+      "GAP Akis Express",
+      "G.A.P Akis Express Limited"
+    ],
+    "countries": [
+      "CY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Nicosia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gapakisexpress.com/track-your-packages/",
+    "trackingUrlTemplate": "https://gapakisexpress.com/track-your-packages/?tracking_num={trackingNumber}",
+    "trackingSearchUrl": "https://gapakisexpress.com/track-your-packages/",
+    "linkRules": [
+      {
+        "domains": [
+          "gapakisexpress.com",
+          "www.gapakisexpress.com"
+        ],
+        "pathPattern": "^/track-your-packages/?$",
+        "params": [
+          "tracking_num"
         ]
       }
     ],
@@ -10274,6 +10396,51 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "collicare": {
+    "displayName": "ColliCare",
+    "color": "#f89728",
+    "aliases": [
+      "ColliCare Logistics",
+      "ColliCare Logistics AS",
+      "ColliCare Norge"
+    ],
+    "countries": [
+      "NO",
+      "SE",
+      "DK",
+      "FI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Oslo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.collicare.no/track-and-trace",
+    "trackingUrlTemplate": "https://www.collicare.no/track-and-trace?s={trackingNumber}",
+    "trackingSearchUrl": "https://www.collicare.no/kundeservice/sporing",
+    "linkRules": [
+      {
+        "domains": [
+          "www.collicare.no",
+          "collicare.no"
+        ],
+        "pathPattern": "^/track-and-trace/?$",
+        "params": [
+          "s"
+        ]
+      },
+      {
+        "domains": [
+          "www.collicare.no",
+          "collicare.no"
+        ],
+        "pathPattern": "^/track-and-trace/?$",
+        "fragment": "^/s/([^/?&]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "connect-couriers": {
     "displayName": "Connect Couriers",
     "color": "#9c231b",
@@ -11304,6 +11471,11 @@ export const CARRIER_CATALOG = {
   "dai-post": {
     "displayName": "DAI Post",
     "color": "#008faf",
+    "aliases": [
+      "Parcel Right",
+      "ParcelRight",
+      "Parcel Right Pty Ltd"
+    ],
     "countries": [
       "AU",
       "NZ",
@@ -11329,6 +11501,22 @@ export const CARRIER_CATALOG = {
         "params": [
           "tracknbr"
         ]
+      },
+      {
+        "domains": [
+          "parcelright.com.au",
+          "www.parcelright.com.au"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "tracknbr"
+        ]
+      },
+      {
+        "domains": [
+          "parcelrig.ht"
+        ],
+        "path": "^/([0-9A-Z]{8,40})/?$"
       }
     ],
     "detectionRules": [
@@ -15980,6 +16168,41 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "fofr": {
+    "displayName": "FOFR",
+    "color": "#1a478a",
+    "aliases": [
+      "FOFR CZ",
+      "Systém FOFR",
+      "RSC Logistics",
+      "RSC Logistics, logistické družstvo"
+    ],
+    "countries": [
+      "CZ",
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Prague",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr",
+    "trackingUrlTemplate": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr?shipment_num={trackingNumber}",
+    "trackingSearchUrl": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr",
+    "linkRules": [
+      {
+        "domains": [
+          "objednavky.fofrcz.cz"
+        ],
+        "pathPattern": "^/sledovani-zasilek-fofr/?$",
+        "params": [
+          "shipment_num"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "followmont": {
     "displayName": "Followmont Transport",
     "color": "#022160",
@@ -19379,6 +19602,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "islandwide-express": {
+    "displayName": "Islandwide Express",
+    "color": "#cb1f11",
+    "aliases": [
+      "Islandwide",
+      "Island Wide Express",
+      "PJ Rosaly Enterprises",
+      "iWide",
+      "IWEX"
+    ],
+    "countries": [
+      "PR"
+    ],
+    "selectable": true,
+    "timezone": "America/Puerto_Rico",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.islandwide.com/tracking",
+    "trackingUrlTemplate": "https://www.islandwide.com/tracking?TrackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.islandwide.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.islandwide.com",
+          "islandwide.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "TrackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "israel-post": {
     "displayName": "Israel Post",
     "color": "#ca151d",
@@ -20797,6 +21056,67 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^KTDWE\\d{10}$",
         "confidence": "low"
+      }
+    ]
+  },
+  "kuayue-express": {
+    "displayName": "Kuayue Express",
+    "color": "#7e51e4",
+    "aliases": [
+      "KYE",
+      "KY Express",
+      "Kua Yue Express",
+      "KYE Group",
+      "跨越速运",
+      "跨越速运集团",
+      "跨越速运集团有限公司",
+      "跨越物流",
+      "跨越速递"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.ky-express.com/88.html",
+    "trackingUrlTemplate": "https://www.ky-express.com/88.html?tab=3&orders={trackingNumber}",
+    "trackingSearchUrl": "https://www.ky-express.com/88.html",
+    "linkRules": [
+      {
+        "domains": [
+          "www.ky-express.com",
+          "ky-express.com"
+        ],
+        "pathPattern": "^/88\\.html$",
+        "params": [
+          "orders"
+        ]
+      },
+      {
+        "domains": [
+          "u.ky-express.com"
+        ],
+        "pathPattern": "^/diyServiceNews/?$",
+        "params": [
+          "orders"
+        ]
+      },
+      {
+        "domains": [
+          "ic-h5.kye-erp.com"
+        ],
+        "pathPattern": "^/waybill-route\\.html$",
+        "fragment": "^/?\\?(?:[^&]*&)*waybillNo=([^&]+)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^KY\\d{13}$",
+        "confidence": "high"
       }
     ]
   },
@@ -25251,6 +25571,36 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "pallex": {
+    "displayName": "Pall-Ex",
+    "color": "#e41312",
+    "aliases": [
+      "Pallex",
+      "Pall-Ex UK",
+      "Pall-Ex (UK) Ltd",
+      "Pall-Ex Group"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mynexus.pallex.com/tracking",
+    "trackingSearchUrl": "https://mynexus.pallex.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "mynexus.pallex.com"
+        ],
+        "path": "^/NexusTracking/(\\d{16})/[^/]+/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "pandu-logistics": {
     "displayName": "Pandu Logistics",
     "color": "#052f66",
@@ -26385,6 +26735,51 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/?$",
         "params": [
           "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "piggy-express": {
+    "displayName": "Piggy Express",
+    "color": "#fe4646",
+    "aliases": [
+      "PiggyExp",
+      "PiggyExp Inc.",
+      "PiggyShip",
+      "Piggy Ship",
+      "小猪物流"
+    ],
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://piggyexp.com/track",
+    "trackingSearchUrl": "https://piggyexp.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "piggyexp.com",
+          "www.piggyexp.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "tracking"
+        ]
+      },
+      {
+        "domains": [
+          "dsp-tracking.piggyship.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tracking"
         ]
       }
     ],
@@ -33155,6 +33550,29 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "trans-ontario": {
+    "displayName": "Trans-Ontario Express",
+    "color": "#1f4aee",
+    "aliases": [
+      "Trans Ontario",
+      "Trans Ontario Express",
+      "TransOntario"
+    ],
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trace.transontario.com/",
+    "trackingSearchUrl": "https://trace.transontario.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transaher": {
     "displayName": "Transaher",
     "color": "#233b81",
@@ -34651,6 +35069,50 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "western-bid": {
+    "displayName": "Western Bid",
+    "color": "#284e51",
+    "aliases": [
+      "WestParcel",
+      "West Parcel",
+      "Western Bid, Inc.",
+      "Western Bid Europe",
+      "Вестерн Бід",
+      "Вест Парсел"
+    ],
+    "countries": [
+      "UA",
+      "PL",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.westparcel.com/",
+    "trackingUrlTemplate": "https://track.westparcel.com/?trackNumber={trackingNumber}",
+    "trackingSearchUrl": "https://track.westparcel.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.westparcel.com",
+          "track.westernbid.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "trackNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^WBX\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "whistl": {
     "displayName": "Whistl",
     "color": "#fd4f00",
@@ -35905,17 +36367,21 @@ export const CARRIER_IDS = [
   "aaa-cooper",
   "ab-courier",
   "abf-freight",
+  "ace-lt",
+  "ace-lv",
   "aci-express-kr",
   "acs-courier",
   "aeropost",
   "aex-paraguay",
   "afghan-post",
   "air-star-xpress",
+  "airmee",
   "airpak-express",
   "ait-home-delivery",
   "ait-worldwide",
   "ajex",
   "akash-ganga",
+  "akis-express",
   "aks-express",
   "alem-tat",
   "algerie-poste",
@@ -36010,6 +36476,7 @@ export const CARRIER_IDS = [
   "closer-logistics",
   "cne",
   "codexpress",
+  "collicare",
   "connect-couriers",
   "coordinadora",
   "copa-courier",
@@ -36151,6 +36618,7 @@ export const CARRIER_IDS = [
   "fliway",
   "flyking",
   "flyt-express",
+  "fofr",
   "followmont",
   "forward-air",
   "forza-delivery",
@@ -36240,6 +36708,7 @@ export const CARRIER_IDS = [
   "intex-paketdienst",
   "intime-bg",
   "iran-post",
+  "islandwide-express",
   "israel-post",
   "j-and-t-au",
   "j-and-t-br",
@@ -36278,6 +36747,7 @@ export const CARRIER_IDS = [
   "kolay-gelsin",
   "kronos-express",
   "ktd",
+  "kuayue-express",
   "kuehne-nagel",
   "kun-express",
   "kunyoung",
@@ -36390,6 +36860,7 @@ export const CARRIER_IDS = [
   "pactic",
   "pakistan-post",
   "palletways",
+  "pallex",
   "pandu-logistics",
   "pannon-xp",
   "paperfly",
@@ -36418,6 +36889,7 @@ export const CARRIER_IDS = [
   "pickupp",
   "pickupp-sg",
   "pigeon-express",
+  "piggy-express",
   "pilot-freight",
   "pin-ag",
   "pitney-bowes",
@@ -36588,6 +37060,7 @@ export const CARRIER_IDS = [
   "trackon",
   "tracx-logis",
   "trans-o-flex",
+  "trans-ontario",
   "transaher",
   "transcorp",
   "transmission",
@@ -36627,6 +37100,7 @@ export const CARRIER_IDS = [
   "wanbexpress",
   "ward-trucking",
   "wedo",
+  "western-bid",
   "whistl",
   "winion-logis",
   "winit",
@@ -36782,17 +37256,21 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aaa-cooper": [],
   "ab-courier": [],
   "abf-freight": [],
+  "ace-lt": [],
+  "ace-lv": [],
   "aci-express-kr": [],
   "acs-courier": ["acs-courier-1"],
   "aeropost": ["aeropost-1"],
   "aex-paraguay": [],
   "afghan-post": [],
   "air-star-xpress": [],
+  "airmee": [],
   "airpak-express": [],
   "ait-home-delivery": [],
   "ait-worldwide": [],
   "ajex": ["ajex-1"],
   "akash-ganga": [],
+  "akis-express": [],
   "aks-express": [],
   "alem-tat": [],
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],
@@ -36887,6 +37365,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "closer-logistics": [],
   "cne": ["cne-1"],
   "codexpress": [],
+  "collicare": [],
   "connect-couriers": [],
   "coordinadora": ["coordinadora-1"],
   "copa-courier": ["copa-courier-1"],
@@ -37028,6 +37507,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fliway": [],
   "flyking": [],
   "flyt-express": [],
+  "fofr": [],
   "followmont": [],
   "forward-air": [],
   "forza-delivery": ["forza-delivery-1"],
@@ -37117,6 +37597,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intex-paketdienst": [],
   "intime-bg": [],
   "iran-post": [],
+  "islandwide-express": [],
   "israel-post": ["israel-post-1","israel-post-s10"],
   "j-and-t-au": ["j-and-t-au-1"],
   "j-and-t-br": [],
@@ -37155,6 +37636,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kolay-gelsin": [],
   "kronos-express": [],
   "ktd": ["ktd-1"],
+  "kuayue-express": ["kuayue-express-1"],
   "kuehne-nagel": ["kuehne-nagel-1","kuehne-nagel-2"],
   "kun-express": ["kun-express-1"],
   "kunyoung": [],
@@ -37267,6 +37749,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pactic": ["pactic-1"],
   "pakistan-post": ["pakistan-post-1","pakistan-post-s10"],
   "palletways": [],
+  "pallex": [],
   "pandu-logistics": [],
   "pannon-xp": ["pannon-xp-1"],
   "paperfly": ["paperfly-1","paperfly-2","paperfly-3"],
@@ -37295,6 +37778,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pickupp": ["pickupp-1"],
   "pickupp-sg": ["pickupp-sg-1"],
   "pigeon-express": [],
+  "piggy-express": [],
   "pilot-freight": [],
   "pin-ag": ["pin-ag-1"],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
@@ -37465,6 +37949,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trackon": [],
   "tracx-logis": ["tracx-logis-1"],
   "trans-o-flex": [],
+  "trans-ontario": [],
   "transaher": ["transaher-1"],
   "transcorp": [],
   "transmission": ["transmission-1"],
@@ -37504,6 +37989,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wanbexpress": ["wanbexpress-1"],
   "ward-trucking": [],
   "wedo": ["wedo-1"],
+  "western-bid": ["western-bid-1"],
   "whistl": ["whistl-1"],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],

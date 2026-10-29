@@ -4,6 +4,10 @@ Tracks DAI Post, the cross-border network that delivers parcels from overseas sh
 Australia and New Zealand, and some in Singapore, through its public tracking page, without
 an account, a key or a browser. ePost Global and Asendia hand parcels over to it.
 
+Parcel Right is DAI Post's Australian delivery brand: its tracker on parcelright.com.au shows the
+same parcels from the same service, so its name and links, including the parcelrig.ht short
+links Passport hands out, open DAI Post.
+
 ## How it works
 
 1. `direct`: `GET https://daipost.com/track?tracknbr={number}` with the header `RSC: 1`.

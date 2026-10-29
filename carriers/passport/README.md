@@ -28,7 +28,8 @@ the merchant tracking page Passport's tracker opens.
   after the order, whose time the shipment carries; without it, the one that puts the day before
   the lookup.
 - The page labels every clock UTC. Passport's own rows, from the order to its origin processing
-  centre, are UTC, as are the rows it relays from UniUni and Parcel Right, which it converts.
+  centre, are UTC, as are the rows it relays from UniUni and Parcel Right (DAI Post's Australian
+  brand, named as DAI Post), which it converts.
   Other partners' rows, such as Royal Mail's and PostNL's, are their wall clocks under the UTC
   label, so they are kept in `local_time`.
 - Rows the page marks "Estimated" fill a milestone Passport did not scan, and are not read.

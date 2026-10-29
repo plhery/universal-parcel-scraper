@@ -1,7 +1,11 @@
 {
   "id": "dai-post",
   "displayName": "DAI Post",
-  "aliases": [],
+  "aliases": [
+    "Parcel Right",
+    "ParcelRight",
+    "Parcel Right Pty Ltd"
+  ],
   "region": {
     "countries": [
       "AU",
@@ -69,6 +73,22 @@
       "params": [
         "tracknbr"
       ]
+    },
+    {
+      "domains": [
+        "parcelright.com.au",
+        "www.parcelright.com.au"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "tracknbr"
+      ]
+    },
+    {
+      "domains": [
+        "parcelrig.ht"
+      ],
+      "path": "^/([0-9A-Z]{8,40})/?$"
     }
   ],
   "detection": [

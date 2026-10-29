@@ -1003,3 +1003,50 @@ describe('Sengi Express numbers for Malta', () => {
     expect(carrierIdFromName('SENGI Express')).toBe('sengi-express');
   });
 });
+
+describe('Western Bid numbers and links', () => {
+  it('suggests Western Bid for WBX and twelve digits, and only that layout', () => {
+    for (const number of ['WBX100000000017', 'wbx 100000000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['western-bid'] });
+    }
+    for (const number of ['WBX10000000017', 'WBX1000000000017', 'WB100000000017', 'WBY100000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('western-bid');
+    }
+    expect(carrierIdFromName('WestParcel')).toBe('western-bid');
+  });
+
+  it('reads both tracker hosts', () => {
+    for (const host of ['track.westparcel.com', 'track.westernbid.com']) {
+      expect(parseTrackingInput(`https://${host}/?trackNumber=WBX100000000017`)).toMatchObject({
+        trackingNumber: 'WBX100000000017', carrier: 'western-bid', source: 'link',
+      });
+    }
+  });
+});
+
+describe('ACE Logistics, FOFR, AKIS Express, ColliCare, Pall-Ex and Parcel Right links', () => {
+  it('files an ACE tracker address under its office', () => {
+    for (const [office, carrier] of [['LT', 'ace-lt'], ['LV', 'ace-lv']] as const) {
+      expect(parseTrackingInput(`https://www.acelogistics.eu/tracker/tracker_en.php?office=${office}&cc=${office}&ref=1234567`)).toMatchObject({
+        trackingNumber: '1234567', carrier, source: 'link',
+      });
+    }
+    expect(parseTrackingInput('https://www.acelogistics.eu/tracker/tracker_en.php?office=EE&ref=1234567').carrier ?? 'none').not.toMatch(/^ace-/);
+  });
+
+  it('reads the other trackers', () => {
+    for (const [url, number, carrier] of [
+      ['https://objednavky.fofrcz.cz/sledovani-zasilek-fofr?shipment_num=1000000017', '1000000017', 'fofr'],
+      ['https://gapakisexpress.com/track-your-packages/?tracking_num=AK1000017', 'AK1000017', 'akis-express'],
+      ['https://www.collicare.no/track-and-trace?s=70000000000000017', '70000000000000017', 'collicare'],
+      ['https://www.collicare.no/track-and-trace#/s/70000000000000017', '70000000000000017', 'collicare'],
+      ['https://mynexus.pallex.com/NexusTracking/1000000000000017/AB12CD', '1000000000000017', 'pallex'],
+      ['https://parcelright.com.au/track?tracknbr=NZC100000017', 'NZC100000017', 'dai-post'],
+      ['https://parcelrig.ht/NZC100000017', 'NZC100000017', 'dai-post'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+    expect(carrierIdFromName('Parcel Right')).toBe('dai-post');
+    expect(carrierIdFromName('Pall-Ex')).toBe('pallex');
+  });
+});

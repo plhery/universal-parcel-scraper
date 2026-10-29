@@ -69,8 +69,8 @@ describe('Passport tracking page', () => {
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'carrier_map',
       last_update: '2026-01-06T05:55:00Z', expected_delivery_from: '2026-01-07', expected_delivery: '2026-01-09',
       delivery_tracking_number: '00300000000000000017', destination_country: 'AU' });
-    // Parcel Right is no carrier of the catalog; Passport converts its clocks to UTC.
-    expect(result.delivery_carrier).toBeUndefined();
+    // Parcel Right is DAI Post's Australian brand; Passport converts its clocks to UTC.
+    expect(result.delivery_carrier).toBe('dai-post');
     expect(result.events?.map((event) => event.time)).toEqual(['2026-01-06T05:55:00Z', '2026-01-05T22:02:00Z', '2026-01-05T06:58:00Z',
       '2026-01-03T02:30:00Z', '2026-01-02T14:31:00Z', '2025-12-31T18:55:00Z', '2025-12-31T18:55:00Z', '2025-12-29T18:50:00Z',
       '2025-12-29T18:37:00Z', '2025-12-29T18:37:00Z']);
