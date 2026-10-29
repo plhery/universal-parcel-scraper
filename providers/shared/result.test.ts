@@ -36,6 +36,21 @@ describe('shared provider result', () => {
     expect(result(daily, '17TRACK').events).toHaveLength(5);
   });
 
+  it('drops a generic "On the way" beside a specific scan at its instant and place, as FedEx writes it', () => {
+    const at = (time: string, description: string, location: string) => ({ ...event(time, description)!, location });
+    const relayed = result([
+      at('2026-10-28T19:13:00Z', 'On the way', 'EXAMPLE CITY FR'),
+      at('2026-10-28T19:13:00Z', 'Departed FedEx hub', 'EXAMPLE CITY FR'),
+      at('2026-10-28T19:13:00Z', 'On the way', 'OTHER CITY FR'),
+      at('2026-10-28T08:00:00Z', 'On the way', 'EXAMPLE CITY FR'),
+    ], 'ParcelsApp');
+    expect(relayed.events?.map(({ description, location }) => [description, location])).toEqual([
+      ['On the way', 'OTHER CITY FR'],
+      ['Departed FedEx hub', 'EXAMPLE CITY FR'],
+      ['On the way', 'EXAMPLE CITY FR'],
+    ]);
+  });
+
   it("keeps no time for the seller's step when it is dated after the lookup", () => {
     const now = Date.now();
     const at = (offset: number) => new Date(now + offset).toISOString();

@@ -69,6 +69,8 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   events. Neither does a bracketed time or date with no words, nor an entry whose wording
   no rule reads and that is dated within five minutes of the lookup: providers stamp their
   notices with the moment they answer. A result made only of input prompts raises `input_required`.
+  A generic "On the way" beside a specific scan at the same instant and place, as FedEx
+  writes it, is a copy of that scan and is dropped.
 - `fetchSource()` treats a history in which no scan has an instant (only wall times with
   no known zone) as inconclusive: `indeterminate` with reason `undated_history`, so the
   chain moves on. UPU is exempt, because its local clocks are by design.

@@ -567,6 +567,8 @@ function scheduled(events: readonly CarrierEvent[]): Set<number> {
   return written;
 }
 
+const GENERIC_TRANSIT = /^on the way[.!]?$/i;
+
 function moment(value: CarrierEvent): string {
   return value.time ?? (typeof value.local_time === 'string' ? value.local_time : '');
 }
@@ -607,7 +609,12 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
     scans.set(key, !event.location && earlier?.location ? { ...event, location: earlier.location } : event);
   }
   const written = scheduled([...scans.values()]);
-  const kept = [...scans.values()].filter((event) => !written.has(instantOf(event) ?? NaN));
+  // A generic "On the way" beside a specific scan at its instant and place, as FedEx writes it
+  // beside "Departed FedEx hub", is a second copy of that scan.
+  const at = (event: CarrierEvent) => `${moment(event)}|${event.location ?? ''}`;
+  const specific = new Set([...scans.values()].filter((event) => !GENERIC_TRANSIT.test(event.description ?? '')).map(at));
+  const kept = [...scans.values()].filter((event) => !written.has(instantOf(event) ?? NaN)
+    && !(GENERIC_TRANSIT.test(event.description ?? '') && specific.has(at(event))));
   const unique = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
   if (!unique.length && written.size) {
     throw new NoHistoryError(source, `${source} relays only a timeline written to a schedule`, { reason: 'written_ahead' });

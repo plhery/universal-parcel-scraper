@@ -62,6 +62,9 @@ fallback')`.
 - A scan read from the API takes over, in place, the row the page's reply stored at the same
   instant with the same stage (and the reverse), so a parcel switching between them is not
   announced twice.
+- FedEx writes its generic "On the way" beside a specific scan at the same instant and place,
+  as beside "Departed FedEx hub". That copy is dropped; an "On the way" alone at its instant
+  or place stays.
 - The newest captured reply decides. A captured 401/403 is a `ChallengeError`, so routing
   applies cooldown and fallback; it is not hidden behind an older 200 from the same page.
 - A status without usable scans is a partial summary. Compatible history from an earlier

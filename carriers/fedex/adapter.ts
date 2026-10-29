@@ -310,6 +310,8 @@ interface FedExShipment {
   holdLocation: string;
 }
 
+const GENERIC_TRANSIT = 'On the way';
+
 function shipmentResult(shipment: FedExShipment, number: string): CarrierResult {
   const listed: ListedScan[] = [];
   const seen = new Set<string>();
@@ -330,7 +332,12 @@ function shipmentResult(shipment: FedExShipment, number: string): CarrierResult 
     seen.add(identity);
     listed.push({ event, index, day: clock.local_time ?? '' });
   }
-  const trimmed = newestFirst(listed).slice(0, MAX_EVENTS_TO_RETURN);
+  // FedEx writes its generic "On the way" beside a specific scan at the same instant and place, as
+  // beside "Departed FedEx hub": a second copy of that scan.
+  const at = (event: CarrierEvent) => JSON.stringify([event.time ?? event.local_time ?? '', event.location ?? '']);
+  const specific = new Set(listed.filter(({ event }) => event.description !== GENERIC_TRANSIT).map(({ event }) => at(event)));
+  const kept = listed.filter(({ event }) => event.description !== GENERIC_TRANSIT || !specific.has(at(event)));
+  const trimmed = newestFirst(kept).slice(0, MAX_EVENTS_TO_RETURN);
   const newest = trimmed[0];
   const { statusText: keyStatus, statusDetails } = shipment;
   const keyStatusCD = shipment.statusCode.toUpperCase();

@@ -228,6 +228,25 @@ describe('FedEx structured response', () => {
     ]);
   });
 
+  it('drops a generic "On the way" beside a specific scan at its instant and place', () => {
+    const payload = inTransitFixture();
+    const shipment = (payload.output as { packages: Record<string, unknown>[] }).packages[0]!;
+    const scan = (time: string, scanLocation: string, status: string, statusCD: string) =>
+      ({ date: '2026-10-28', time, gmtOffset: '+01:00', scanLocation, status, statusCD, scanDetails: '' });
+    shipment.scanEventList = [
+      scan('20:13:00', 'EXAMPLE CITY FR', 'On the way', 'IT'),
+      scan('20:13:00', 'EXAMPLE CITY FR', 'Departed FedEx hub', 'DP'),
+      scan('20:13:00', 'OTHER CITY FR', 'On the way', 'IT'),
+      scan('09:00:00', 'EXAMPLE CITY FR', 'On the way', 'IT'),
+    ];
+    const result = parseFedExTrackingResponse(payload, IN_TRANSIT_NUMBER);
+    expect(result.events?.map((event) => [event.description, event.location])).toEqual([
+      ['Departed FedEx hub', 'EXAMPLE CITY FR'],
+      ['On the way', 'OTHER CITY FR'],
+      ['On the way', 'EXAMPLE CITY FR'],
+    ]);
+  });
+
   it('keeps the day of a scan FedEx dates without a time, in its place, instead of a midnight', () => {
     const payload = inTransitFixture();
     const shipment = (payload.output as { packages: Record<string, unknown>[] }).packages[0]!;
