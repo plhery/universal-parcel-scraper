@@ -32,6 +32,14 @@
       "note": "The notice of the same attempt, an hour later, before the item is available at a pick-up point."
     },
     {
+      "wording": "Item arrived at the distribution center - Item can't be assigned to a delivery round - missing information",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The item stays at the distribution center, off every delivery round, until the information it lacks is found."
+    },
+    {
       "wording": "Item on it's way to bbox locker",
       "language": "en",
       "stage": "in_transit",

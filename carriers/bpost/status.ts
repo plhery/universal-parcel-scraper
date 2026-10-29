@@ -18,6 +18,9 @@ const WORDINGS: Record<string, ClassifiedStatus> = {
   // "delivery not achieved" comes at the same minute, then the item waits at a pick-up point.
   'Out for delivery - delivery not possible': { status: 'exception', stage: 'failed_attempt' },
   'Shipment presented without success. Addressee is informed.': { status: 'exception', stage: 'failed_attempt' },
+  // The item stays at the distribution center, off every delivery round, until the information
+  // it lacks is found: a hold the recipient should see, not a step in transit.
+  "Item arrived at the distribution center - Item can't be assigned to a delivery round - missing information": { status: 'exception', stage: 'exception' },
   'Your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days': { status: 'in_transit', stage: 'in_transit' },
   'Your item has been sorted': { status: 'in_transit', stage: 'in_transit' },
   // A return label's parcel sorted on its way to the shop that issued the label, which bpost

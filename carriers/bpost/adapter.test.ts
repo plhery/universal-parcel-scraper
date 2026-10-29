@@ -156,6 +156,11 @@ describe('bpost direct history', () => {
     for (const wording of ['Out for delivery - delivery not possible', 'Shipment presented without success. Addressee is informed.']) {
       expect(classifyBpostStatus(wording)?.stage).toBe('failed_attempt');
     }
+    // An item the distribution center cannot put on a round for missing information is held, not moving.
+    const held = payload();
+    held.items[0].events[0].key.EN.description = "Item arrived at the distribution center - Item can't be assigned to a delivery round - missing information";
+    expect(parseBpost(held, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(parseBpost(held, NUMBER).events?.[0]).toMatchObject({ stage: 'exception' });
     for (const wording of ['__proto__', 'constructor', 'Delivery expected']) expect(classifyBpostStatus(wording)).toBeUndefined();
   });
 
