@@ -940,3 +940,21 @@ describe('In Time Bulgaria, EMEX and Runner Express links', () => {
     expect(detectCarrierMatch('100000017').candidates ?? []).not.toContain('intime-bg');
   });
 });
+
+describe('JP HOME, CargoLine and Ambro Express links', () => {
+  it('reads their tracking links without naming them for a bare number', () => {
+    expect(parseTrackingInput('https://jphome.eu/suivi-de-livraison/?reference=10000017&zipcode=00000')).toMatchObject({
+      trackingNumber: '10000017', carrier: 'jp-home', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.agediss.com/fr/suivi/100000017/')).toMatchObject({
+      trackingNumber: '100000017', carrier: 'jp-home', source: 'link',
+    });
+    expect(parseTrackingInput('https://trackandtrace.cepra.de/Track/00100000000000000017/00000')).toMatchObject({
+      trackingNumber: '00100000000000000017', carrier: 'cargoline', source: 'link',
+    });
+    expect(parseTrackingInput('https://ambroexpress.pl/sledzenie-przesylek#AB10000000017')).toMatchObject({
+      trackingNumber: 'AB10000000017', carrier: 'ambro-express', source: 'link',
+    });
+    expect(detectCarrierMatch('10000017').candidates ?? []).not.toContain('jp-home');
+  });
+});

@@ -5566,6 +5566,29 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "3pe-express": {
+    "displayName": "3PE Express",
+    "color": "#005ba3",
+    "aliases": [
+      "3PE Express Inc",
+      "3PE",
+      "3peex"
+    ],
+    "countries": [
+      "CN",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.3peex.com/",
+    "trackingSearchUrl": "https://www.3peex.com/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "4-72": {
     "displayName": "4-72",
     "color": "#0033a0",
@@ -6306,6 +6329,31 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "ait-home-delivery": {
+    "displayName": "AIT Home Delivery",
+    "color": "#0055a5",
+    "aliases": [
+      "AIT Home Delivery UK",
+      "AIT Home Delivery UK Ltd",
+      "AIT Home Delivery GmbH",
+      "Panther Logistics"
+    ],
+    "countries": [
+      "GB",
+      "DE",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://aithomedelivery.com/en-gb/",
+    "trackingSearchUrl": "https://aithomedelivery.com/en-gb/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ait-worldwide": {
     "displayName": "AIT Worldwide Logistics",
     "color": "#0055a5",
@@ -6637,6 +6685,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "ambro-express": {
+    "displayName": "Ambro Express",
+    "color": "#123274",
+    "aliases": [
+      "AmbroExpress",
+      "Ambro Express Sp. z o.o. Sp. K.",
+      "Grupa Ambro"
+    ],
+    "countries": [
+      "PL",
+      "DE",
+      "AT",
+      "CZ",
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ambroexpress.pl/",
+    "trackingUrlTemplate": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",
+    "trackingSearchUrl": "https://ambroexpress.pl/sledzenie-przesylek",
+    "linkRules": [
+      {
+        "domains": [
+          "ambroexpress.pl",
+          "www.ambroexpress.pl"
+        ],
+        "pathPattern": "^/sledzenie-przesylek/?$",
+        "fragment": "^([A-Za-z0-9]{13})$"
+      }
+    ],
+    "detectionRules": []
+  },
   "ameex": {
     "displayName": "Ameex",
     "color": "#132f7d",
@@ -6727,6 +6811,52 @@ export const CARRIER_CATALOG = {
         "rawPattern": "^810-\\d{8}$"
       }
     ]
+  },
+  "ameriship": {
+    "displayName": "AmeriShip",
+    "color": "#c62029",
+    "aliases": [
+      "Stat Overnight",
+      "STAT Overnight Delivery",
+      "AmeriShip LLC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ameriship.com/",
+    "trackingUrlTemplate": "https://ameriship.com/track/?n={trackingNumber}",
+    "trackingSearchUrl": "https://ameriship.com/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "ameriship.com",
+          "www.ameriship.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "n"
+        ]
+      },
+      {
+        "domains": [
+          "ameriship.com",
+          "www.ameriship.com",
+          "statovernight.com",
+          "www.statovernight.com"
+        ],
+        "pathPattern": "^/tracking-results/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "ampm": {
     "displayName": "Grupo ampm",
@@ -8889,6 +9019,36 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "cargoline": {
+    "displayName": "CargoLine",
+    "color": "#f13e3c",
+    "aliases": [
+      "Cepra",
+      "CargoLine GmbH & Co. KG",
+      "Cepra Track & Trace"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cargoline.de/",
+    "trackingUrlTemplate": "https://trackandtrace.cepra.de/Track/{trackingNumber}",
+    "trackingSearchUrl": "https://trackandtrace.cepra.de/Track",
+    "linkRules": [
+      {
+        "domains": [
+          "trackandtrace.cepra.de"
+        ],
+        "path": "^/Track/(\\d{20})(?:/\\d{5})?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "cargus": {
     "displayName": "Cargus",
     "color": "#f68121",
@@ -9685,6 +9845,45 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": []
+  },
+  "city-air-express": {
+    "displayName": "City Air Express",
+    "color": "#ff0114",
+    "aliases": [
+      "CAE Delivers",
+      "City Air Express (N.I.) Ltd",
+      "City Air Express Ltd"
+    ],
+    "countries": [
+      "GB",
+      "IE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cityairexpress.com/",
+    "trackingUrlTemplate": "https://caebfs.netcourier.net/online/tracking/trackinginfo/{trackingNumber}",
+    "trackingSearchUrl": "https://www.cityairexpress.com/track-my-parcel",
+    "linkRules": [
+      {
+        "domains": [
+          "caebfs.netcourier.net",
+          "caeman.netcourier.net",
+          "caedub.netcourier.net",
+          "caelhr.netcourier.net"
+        ],
+        "path": "^/online/tracking/trackinginfo/([A-Za-z0-9-]{4,20})/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^MN\\d{6}$",
+        "confidence": "low"
+      }
+    ]
   },
   "city-express-rs": {
     "displayName": "City Express",
@@ -16336,6 +16535,40 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "gio-express": {
+    "displayName": "GIO Express",
+    "color": "#571216",
+    "aliases": [
+      "GIO Express Inc",
+      "GIO Express Inc.",
+      "GIO eCourier"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gioexpress.com/",
+    "trackingUrlTemplate": "https://gioexpress.com/tracking/?tracking={trackingNumber}&type=tracking",
+    "trackingSearchUrl": "https://gioexpress.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "gioexpress.com",
+          "www.gioexpress.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "globalpost": {
     "displayName": "GlobalPost",
     "color": "#11003a",
@@ -19846,6 +20079,53 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "jp-home": {
+    "displayName": "JP HOME",
+    "color": "#ff0025",
+    "aliases": [
+      "Agediss",
+      "Agediss by JP",
+      "AB Home",
+      "VIR by JP",
+      "JP Home Jacky Perrenot"
+    ],
+    "countries": [
+      "FR",
+      "BE",
+      "LU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jphome.eu/",
+    "trackingSearchUrl": "https://jphome.eu/suivi-de-livraison/",
+    "linkRules": [
+      {
+        "domains": [
+          "jphome.eu",
+          "www.jphome.eu"
+        ],
+        "pathPattern": "^/suivi-de-livraison/?$",
+        "params": [
+          "reference",
+          "commande",
+          "numero_commande",
+          "numero"
+        ]
+      },
+      {
+        "domains": [
+          "agediss.com",
+          "www.agediss.com"
+        ],
+        "path": "^/(?:[a-z]{2}/)?suivi/(\\d{8,9})/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "jrs-express": {
     "displayName": "JRS Express",
@@ -24355,6 +24635,29 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "overnite": {
+    "displayName": "OVERNITE",
+    "color": "#006f39",
+    "aliases": [
+      "Overnite.eu",
+      "overnite Transport Service GmbH",
+      "Overnite Waffenversand",
+      "Overnite Worldwide"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://overnite.eu/",
+    "trackingSearchUrl": "https://track.overnite.eu/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "overseas-express": {
     "displayName": "Overseas Express",
@@ -31177,6 +31480,37 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "sway": {
+    "displayName": "Sway",
+    "color": "#635ff5",
+    "aliases": [
+      "Returnmates",
+      "Sway (Returnmates)",
+      "ShipSway",
+      "Sway Delivery"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.shipsway.com/",
+    "trackingUrlTemplate": "https://track.shipsway.com/{trackingNumber}",
+    "trackingSearchUrl": "https://track.shipsway.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.shipsway.com"
+        ],
+        "path": "^/([A-Za-z0-9][A-Za-z0-9-]{5,39})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "swiftx": {
     "displayName": "SwiftX",
     "color": "#5e51d3",
@@ -35266,6 +35600,7 @@ export const CARRIER_IDS = [
   "17feia",
   "247express",
   "2go",
+  "3pe-express",
   "4-72",
   "4sides",
   "5post",
@@ -35283,6 +35618,7 @@ export const CARRIER_IDS = [
   "afghan-post",
   "air-star-xpress",
   "airpak-express",
+  "ait-home-delivery",
   "ait-worldwide",
   "ajex",
   "akash-ganga",
@@ -35291,9 +35627,11 @@ export const CARRIER_IDS = [
   "algerie-poste",
   "allegro-one",
   "am-home-delivery",
+  "ambro-express",
   "ameex",
   "american-west-express",
   "amerijet",
+  "ameriship",
   "ampm",
   "andreani",
   "anjun",
@@ -35347,6 +35685,7 @@ export const CARRIER_IDS = [
   "c3x",
   "cacesa",
   "campost",
+  "cargoline",
   "cargus",
   "castle-parcels",
   "castores",
@@ -35366,6 +35705,7 @@ export const CARRIER_IDS = [
   "chukou1",
   "chunghwa-post",
   "chunil",
+  "city-air-express",
   "city-express-rs",
   "citylink-express",
   "citymail",
@@ -35531,6 +35871,7 @@ export const CARRIER_IDS = [
   "ghn",
   "ghtk",
   "gig-logistics",
+  "gio-express",
   "globalpost",
   "gls-at",
   "gls-es",
@@ -35623,6 +35964,7 @@ export const CARRIER_IDS = [
   "jne",
   "joom-logistics",
   "jordan-post",
+  "jp-home",
   "jrs-express",
   "jrt",
   "js-express",
@@ -35738,6 +36080,7 @@ export const CARRIER_IDS = [
   "orian",
   "orlen-paczka",
   "osm-worldwide",
+  "overnite",
   "overseas-express",
   "ozon-logistics",
   "pack-man",
@@ -35905,6 +36248,7 @@ export const CARRIER_IDS = [
   "straightship",
   "sundarban-courier",
   "surat-kargo",
+  "sway",
   "swiftx",
   "t-cat",
   "t-group",
@@ -36124,6 +36468,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "17feia": ["17feia-1"],
   "247express": [],
   "2go": ["2go-1"],
+  "3pe-express": [],
   "4-72": ["4-72-s10"],
   "4sides": [],
   "5post": [],
@@ -36141,6 +36486,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "afghan-post": [],
   "air-star-xpress": [],
   "airpak-express": [],
+  "ait-home-delivery": [],
   "ait-worldwide": [],
   "ajex": ["ajex-1"],
   "akash-ganga": [],
@@ -36149,9 +36495,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],
   "allegro-one": ["allegro-one-1","allegro-one-2"],
   "am-home-delivery": [],
+  "ambro-express": [],
   "ameex": [],
   "american-west-express": [],
   "amerijet": ["amerijet-1"],
+  "ameriship": [],
   "ampm": [],
   "andreani": [],
   "anjun": ["anjun-aj"],
@@ -36205,6 +36553,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c3x": [],
   "cacesa": [],
   "campost": [],
+  "cargoline": [],
   "cargus": ["cargus-1","cargus-2"],
   "castle-parcels": [],
   "castores": [],
@@ -36224,6 +36573,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chukou1": ["chukou1-1"],
   "chunghwa-post": ["chunghwa-post-1"],
   "chunil": [],
+  "city-air-express": ["city-air-express-1"],
   "city-express-rs": ["city-express-rs-1"],
   "citylink-express": [],
   "citymail": ["citymail-1","citymail-2"],
@@ -36389,6 +36739,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ghn": [],
   "ghtk": ["ghtk-1"],
   "gig-logistics": [],
+  "gio-express": [],
   "globalpost": ["globalpost-1"],
   "gls-at": ["gls-at-1"],
   "gls-es": ["gls-es-1"],
@@ -36481,6 +36832,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jne": ["jne-1"],
   "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
+  "jp-home": [],
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1"],
@@ -36596,6 +36948,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "orian": [],
   "orlen-paczka": ["orlen-paczka-1"],
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
+  "overnite": [],
   "overseas-express": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2"],
   "pack-man": [],
@@ -36763,6 +37116,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "straightship": ["straightship-1","straightship-2"],
   "sundarban-courier": [],
   "surat-kargo": [],
+  "sway": [],
   "swiftx": ["swiftx-1"],
   "t-cat": [],
   "t-group": ["t-group-1"],

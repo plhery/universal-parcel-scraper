@@ -5617,6 +5617,17 @@
     "reason": "The GLS and Loggi low rules accept any eight-character code mixing letters and digits; copa-courier-1 adds Copa Courier for an H followed by seven digits."
   },
   {
+    "shape": "MN and six digits",
+    "carriers": [
+      "city-air-express",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "loggi"
+    ],
+    "reason": "City Air Express waybills of MN and six digits share the eight-character format of the three GLS networks and Loggi; all rules are low-confidence, so the number stays a suggestion."
+  },
+  {
     "shape": "B followed by eleven digits",
     "carriers": [
       "bjs-home-delivery",

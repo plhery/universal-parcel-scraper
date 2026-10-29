@@ -501,3 +501,33 @@ describe('Costco Logistics numbers, and RXO and Quality Post links', () => {
     });
   });
 });
+
+describe('City Air Express numbers, and AmeriShip, GIO Express and Sway links', () => {
+  it('suggests City Air Express for MN and six digits beside other lettered numbers', () => {
+    const match = detectCarrierMatch('MN000017');
+    expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(match.candidates).toContain('city-air-express');
+    for (const number of ['MN00001', 'MN0000170', 'MX000017', 'MNA00017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('city-air-express');
+    }
+    expect(parseTrackingInput('https://caebfs.netcourier.net/online/tracking/trackinginfo/MN000017')).toMatchObject({
+      trackingNumber: 'MN000017', carrier: 'city-air-express', source: 'link',
+    });
+  });
+
+  it('reads AmeriShip, Stat Overnight, GIO Express and Sway tracking links', () => {
+    expect(parseTrackingInput('https://ameriship.com/track/?n=ABC1000017')).toMatchObject({
+      trackingNumber: 'ABC1000017', carrier: 'ameriship', source: 'link',
+    });
+    expect(parseTrackingInput('https://statovernight.com/tracking-results/?tracking=ABC1000017')).toMatchObject({
+      trackingNumber: 'ABC1000017', carrier: 'ameriship', source: 'link',
+    });
+    expect(parseTrackingInput('https://gioexpress.com/tracking/?tracking=100017&type=tracking')).toMatchObject({
+      trackingNumber: '100017', carrier: 'gio-express', source: 'link',
+    });
+    expect(parseTrackingInput('https://track.shipsway.com/SWY-100000017')).toMatchObject({
+      trackingNumber: 'SWY-100000017', carrier: 'sway', source: 'link',
+    });
+    expect(parseTrackingInput('https://track.shipsway.com/api').carrier).not.toBe('sway');
+  });
+});
