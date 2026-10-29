@@ -32,8 +32,9 @@ const REGISTERED_TERMS = [
   'pre-shipment', 'preshipment', 'shipping label created', 'label created', 'shipping label printed',
   'acceptance pending', 'usps awaiting item', 'awaiting item', 'order received',
 ];
-// A facility arrival ("Arrived at USPS Facility") follows acceptance: it is transit.
-const ACCEPTED_TERMS = ['accepted', 'in possession of item', 'picked up', 'picked-up', 'tendered', 'shipment received'];
+// A facility arrival ("Arrived at USPS Facility") follows acceptance: it is transit. Incoming
+// international mail shows the origin post's posting as "Acceptance".
+const ACCEPTED_TERMS = ['accepted', 'acceptance', 'in possession of item', 'picked up', 'picked-up', 'tendered', 'shipment received'];
 const CUSTOMS_TERMS = ['customs', 'clearance'];
 const IN_TRANSIT_TERMS = [
   'in transit', 'on its way', 'in-transit', 'arrived', 'departed', 'departure',

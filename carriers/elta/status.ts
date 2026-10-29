@@ -11,8 +11,9 @@ export const ELTA_SCANS: Readonly<Record<string, Stage>> = {
   'Label printed by customer': 'registered',
   'Item deposited at ELTA': 'accepted',
   'Shipment in transit': 'in_transit',
-  // At Athens airport's hub, before the item leaves Greece.
+  // At Athens airport's hub, then readied there to leave Greece.
   'Arrival at the airport': 'in_transit',
+  'For dispatch abroad': 'in_transit',
   'With Courier for delivery': 'out_for_delivery',
   // The courier's attempt: the notice left and its reason, at the same minute.
   'Notification of attempted delivery': 'failed_attempt',
