@@ -45,8 +45,9 @@ The recipient's own steps (a customs declaration or a payment submitted online),
 office of exchange and forwardings between MaltaPost's own centres are not movements: they keep
 the stage the item had. The tracking page's progress bar ignores forwardings too.
 
-Clocks carry no offset and are Malta wall clocks, kept as local times. A foreign post's relayed
-events keep the clock MaltaPost gives them. Places are the post office or the country of a foreign
+Clocks carry no offset. MaltaPost's own scans are on Malta's clock and read in its zone, which
+the parcel's earlier scans abroad must not lend them. A foreign post's relayed events keep the
+wall clock MaltaPost gives them. Places are the post office or the country of a foreign
 event; MaltaPost's own name and a foreign office number are dropped. The pickup point is the
 MaltaPost office an item waits at, while it waits there or once it was collected there.
 

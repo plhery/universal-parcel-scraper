@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, firstOccurrence, regionHasTown, townKey } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -45,8 +45,9 @@ export function parseMrwSummary(html: string, raw: string): MrwSummary {
   const tables = $('#seguimientoEnvio table.zebra');
   if (!tables.length) {
     // The anonymous portal echoes even synthetic unknown references and does
-    // not distinguish them from shipments outside its lookup range.
-    throw new IndeterminateError('MRW', 'MRW returned no identifiable shipment');
+    // not distinguish them from shipments outside its lookup range: either way
+    // it holds no history for the number, which is not proof it never existed.
+    throw new NoHistoryError('MRW', 'MRW returned no identifiable shipment');
   }
   if (tables.length !== 1 || tables.find('thead th').map((_, el) => clean($(el).text(), 64)).get().join('|') !== SUMMARY_HEADERS) {
     throw new SchemaError('MRW', 'Summary table changed');

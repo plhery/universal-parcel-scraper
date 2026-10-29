@@ -54,9 +54,9 @@ describe('MRW anonymous tracking', () => {
       .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
-  it('keeps a query echo without a shipment table inconclusive', () => {
+  it('reads a query echo without a shipment table as no history', () => {
     expect(() => parseMrwSummary(fixture('unknown-summary'), '99999Z999999'))
-      .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+      .toThrowError(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
   });
 
   it('rejects changed form, wrong identity, ambiguous summaries and forged history links', () => {

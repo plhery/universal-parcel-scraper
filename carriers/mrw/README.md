@@ -13,8 +13,9 @@ respect the portal's rate limit and share one time budget.
 
 The portal sometimes returns a bound current summary with no history. That
 result is marked `summary_only` and contains no invented scans; the summary's
-date and hour still give the current status's wall clock. A page that echoes an
-unknown number without a shipment table is inconclusive.
+date and hour still give the current status's wall clock. A page that echoes the
+number without a shipment table means MRW has no history for it: the portal shows
+the same page for an unknown number and for a shipment outside its lookup range.
 
 The summary can lag the history: a delivery reopened and attempted again is
 listed above the delivery the summary still shows. The newest history row

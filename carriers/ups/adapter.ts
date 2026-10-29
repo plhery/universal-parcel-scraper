@@ -345,6 +345,22 @@ function keepNoticeStages(events: CarrierEvent[]): void {
   }
 }
 
+/** Stages a parcel reaches only on its delivery leg. */
+const DELIVERY_LEG: ReadonlySet<string> = new Set(['out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'delivered']);
+
+/**
+ * UPS scans a parcel it collects again after its delivery leg, from an access point to deliver it
+ * where the receiver asked or to send it back, with its acceptance codes ("Pickup Scan"): that
+ * collection is transit, not a second acceptance. Events are newest first.
+ */
+function laterPickupsInTransit(events: CarrierEvent[]): void {
+  let delivering = false;
+  for (const event of [...events].reverse()) {
+    if (event.stage === 'accepted' && delivering) event.stage = 'in_transit';
+    else if (event.stage && DELIVERY_LEG.has(event.stage)) delivering = true;
+  }
+}
+
 /** A provider string with its HTML entities decoded, then cleaned. */
 function text(value: unknown, maxLength?: number): string {
   return clean(typeof value === 'string' ? decodeEntities(value) : value, maxLength);
@@ -541,6 +557,7 @@ export function parseUPSTrackingResponse(
       });
     }
   }
+  laterPickupsInTransit(events);
   keepNoticeStages(events);
   const newest = events[0];
   // UPS lists the newest scan first. Its code outranks the coarse progress
@@ -701,6 +718,7 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
       ...(action ? { recipient_action: action } : {}),
     });
   }
+  laterPickupsInTransit(events);
   keepNoticeStages(events);
   // The API lists the newest scan first; its code outranks the status type. A notice is no scan.
   const newest = events[0];

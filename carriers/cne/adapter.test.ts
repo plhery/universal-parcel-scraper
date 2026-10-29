@@ -93,7 +93,8 @@ describe('CNE response projection', () => {
   });
 
   it('reads its own labels in any capitalisation, the arrival in the destination country and at its sorting centre as transit', () => {
-    for (const details of ['Arrived at destination', 'Arrived At Destination', 'ARRIVED AT CNE FACILITY', 'your shipment has arrived at sorting center']) {
+    for (const details of ['Arrived at destination', 'Arrived At Destination', 'ARRIVED AT CNE FACILITY', 'your shipment has arrived at sorting center',
+      'Your shipment is in process at sorting center']) {
       const payload = handoffFixture();
       payload.trackingEventList.push({ date: '2026-02-11 09:00:00', details, place: 'Example City', state: '2' });
       expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });

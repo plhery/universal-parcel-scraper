@@ -27,8 +27,8 @@ describe('MRW live anonymous tracking', () => {
     expect(result.last_update).toBeNull();
   });
 
-  it.skipIf(!process.env.MRW_UNKNOWN_NUMBER)('keeps ambiguous unknown tracking inconclusive', async () => {
+  it.skipIf(!process.env.MRW_UNKNOWN_NUMBER)('reads unknown tracking as no history', async () => {
     await expect(instance().track({ number: process.env.MRW_UNKNOWN_NUMBER! }))
-      .rejects.toMatchObject({ kind: 'indeterminate' });
+      .rejects.toMatchObject({ kind: 'indeterminate', name: 'NoHistoryError' });
   });
 });

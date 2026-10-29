@@ -75,6 +75,9 @@ describe('Lingdong International tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'lingdong', providerCode: 'ARRIVAL', description: 'Shipment arrived at facility' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
+    for (const description of ['预计10.28航班/Flight scheduled for October 28th', '预计1.2航班/Flight scheduled for January 2nd']) {
+      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     expect(carrier.portal).not.toHaveProperty('url');
   });
 });

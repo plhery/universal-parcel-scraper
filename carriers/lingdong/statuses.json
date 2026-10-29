@@ -3,6 +3,8 @@
   "entries": [
     {"code": "ARRIVAL", "wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in Lingdong's hands, at its Shenzhen warehouse."},
     {"code": "SHIPMENT", "wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "预计…航班/Flight scheduled for …", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the flight it is booked on, after leaving the warehouse; the flight's day, month.day and in English, is read as an ellipsis."},
+    {"wording": "航班已启运/Package in transit to destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The booked flight has left."},
     {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time."}
   ]
 }

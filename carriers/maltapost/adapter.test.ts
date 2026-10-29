@@ -26,6 +26,7 @@ const edited = (name: string, change: (payload: Reply) => void): Reply => {
   change(payload);
   return payload;
 };
+const MALTA_CLOCK = { time_zone: 'Europe/Malta', time_zone_basis: 'carrier' };
 const rows = (result: ReturnType<typeof parseMaltaPost>) =>
   result.events!.map(event => [event.local_time, event.provider_code, event.stage ?? null, event.location ?? null]);
 
@@ -45,11 +46,12 @@ describe('MaltaPost tracking adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
-  it('reads a SendOn item under either barcode, as wall clocks, with the recipient’s steps and holds keeping the stage', () => {
+  it('reads a SendOn item under either barcode, on Malta’s clock, with the recipient’s steps and holds keeping the stage', () => {
     const result = parseMaltaPost(JSON.parse(text('sendon')), SENDON);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'Item delivered/collected by recipient', last_update: null, last_update_local: '2026-03-13T11:42:07',
+      last_status_text: 'Item delivered/collected by recipient', last_update: '2026-03-13T11:42:07+01:00', last_update_local: '2026-03-13T11:42:07',
       expected_delivery: null });
+    expect(result.events![0]).toMatchObject({ time: '2026-03-13T11:42:07+01:00', time_zone: 'Europe/Malta', time_zone_basis: 'carrier' });
     // Brought to the door: no pickup point.
     expect(result.pickup_point).toBeUndefined();
     expect(rows(result)).toEqual([
@@ -68,7 +70,7 @@ describe('MaltaPost tracking adapter', () => {
       ['2026-03-04T20:12:18', 'Declaration', 'accepted', null],
       ['2026-03-04T16:58:00', 'EMA', 'accepted', null],
     ]);
-    expect(result.events!.every(event => event.time === undefined)).toBe(true);
+    expect(result.events!.every(event => event.time_zone === 'Europe/Malta' && event.time_zone_basis === 'carrier')).toBe(true);
     expect(result.events!.filter(event => event.stage_source === 'none').map(event => event.provider_code)).toEqual(['Payment', 'PRD', 'EDA/C', 'Declaration']);
     // The reason and the action follow the scan's wording, as on the tracking page.
     expect(result.events![6]!.description).toBe('Item held at inbound mail sorting centre. Awaiting payment of charges. Unsuccessful attempt-Recipient notified');
@@ -157,8 +159,8 @@ describe('MaltaPost tracking adapter', () => {
     expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Forwarded to the next processing centre' });
     expect(result.current_stage).toBeUndefined();
     expect(result.events!.slice(0, 2)).toEqual([
-      { local_time: '2026-02-23T09:00:00', description: 'Forwarded to the next processing centre', provider_code: 'FWD' },
-      { local_time: '2026-02-23T08:00:00', description: 'Item weighed at counter', provider_code: 'XYZ', location: 'Example Post Office' },
+      { ...MALTA_CLOCK, local_time: '2026-02-23T09:00:00', time: '2026-02-23T09:00:00+01:00', description: 'Forwarded to the next processing centre', provider_code: 'FWD' },
+      { ...MALTA_CLOCK, local_time: '2026-02-23T08:00:00', time: '2026-02-23T08:00:00+01:00', description: 'Item weighed at counter', provider_code: 'XYZ', location: 'Example Post Office' },
     ]);
     // A failed delivery with an action the map does not know is still a failed delivery.
     const action = edited('charges', payload => {
@@ -192,8 +194,8 @@ describe('MaltaPost tracking adapter', () => {
 
   it('recognizes a known item and the reply without a barcode, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('sendon'))).mockResolvedValueOnce(reply(text('not-found')));
-    // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(SENDON)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-13T11:42:07' });
+    // Malta's clock dates the last activity.
+    await expect(carrier(fetcher).recognize!(SENDON)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-13T10:42:07.000Z' });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
@@ -254,6 +256,16 @@ describe('MaltaPost tracking adapter', () => {
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: SENDON, carrier: 'maltapost' }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'maltapost', source: 'maltapost', result: { current_stage: 'delivered' } });
     expect(fetcher.mock.calls.every(([url]) => String(url).startsWith(`${MALTAPOST_ENDPOINT}?`))).toBe(true);
+  });
+
+  it('keeps its own scans on Malta’s clock after a posting abroad, whose wall clock takes its place’s zone', async () => {
+    const posted = edited('returned', payload => { payload.movements!.at(-1)!.location = 'CHINA'; });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(JSON.stringify(posted)));
+    const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: RETURNED, carrier: 'maltapost' }, { budgetMs: 3000 });
+    const events = answer.result.events;
+    expect(events.at(-1)).toMatchObject({ local_time: '2026-03-02T05:44:09', time_zone: 'Asia/Shanghai', time_zone_basis: 'place' });
+    expect(events.slice(0, -1).every(event => event.time_zone === 'Europe/Malta' && event.time_zone_basis === 'carrier')).toBe(true);
+    expect(events.at(-2)).toMatchObject({ local_time: '2026-03-13T14:10:28', time: '2026-03-13T14:10:28+01:00' });
   });
 
   it('is asked about Maltese S10 codes, which detection leaves with the postal fallback, and keeps its links', () => {

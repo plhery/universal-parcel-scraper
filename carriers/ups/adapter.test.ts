@@ -292,6 +292,22 @@ describe('UPS structured response', () => {
     ]), TRACKING_NUMBER, TODAY).events?.[0]?.stage).toBeUndefined();
   });
 
+  it('reads a pickup after the delivery leg, from an access point, as transit', () => {
+    const collected = parseUPSTrackingResponse(withScans([
+      scan('VM', "We will deliver the package to the original receiver's address as the receiver requested.", '20261029 18:38:47'),
+      scan('PU', 'Pickup Scan', '20261029 15:20:13'),
+      scan('2Q', 'Delivered to UPS Access Point™', '20261028 13:53:07'),
+      scan('5R', "We were unable to deliver your package. It's on the way to a secure UPS Access Point™ location.", '20261028 11:51:33'),
+      scan('OT', 'Out For Delivery Today', '20261028 07:50:33'),
+      scan('AR', 'Arrived at Facility', '20261027 10:23:00'),
+      scan('PU', 'Pickup Scan', '20261026 13:14:15'),
+    ]), TRACKING_NUMBER, TODAY);
+    expect(collected).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(collected.events?.map((event) => [event.provider_code, event.stage]))
+      .toEqual([['VM', 'in_transit'], ['PU', 'in_transit'], ['2Q', 'ready_for_pickup'], ['5R', 'failed_attempt'],
+        ['OT', 'out_for_delivery'], ['AR', 'in_transit'], ['PU', 'accepted']]);
+  });
+
   it("writes a delivery's place in capitals and codes as the page writes its other scans'", () => {
     const places = (...locations: string[]) => parseUPSTrackingResponse(withScans(locations.map((location, index) =>
       scan(index ? 'AR' : 'KB', index ? 'Arrived at Facility' : 'Delivered', `2026080${6 - index} 15:50:00`, location))), TRACKING_NUMBER, TODAY)

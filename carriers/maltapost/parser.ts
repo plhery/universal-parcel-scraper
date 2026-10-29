@@ -5,6 +5,7 @@ import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } fro
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { isoTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { isMaltaPostNotice, keepsMaltaPostStage, maltaPostStage, returnsToSender } from './status.js';
@@ -45,6 +46,17 @@ function clockOf(value: unknown): { wall: string; key: string } | null {
   return { wall, key: `${wall}.${(match[3] ?? '').padEnd(7, '0')}` };
 }
 
+const MALTA = 'Europe/Malta';
+
+/**
+ * MaltaPost's own scans are on Malta's clock, so they read in its zone. A foreign post's
+ * relayed scans keep the wall clock MaltaPost gives them: their zone is deduced from their place.
+ */
+function scanClock(wall: string, foreign: boolean): Pick<CarrierEvent, 'local_time' | 'time' | 'time_zone' | 'time_zone_basis'> {
+  const time = foreign ? null : isoTime(wall, MALTA);
+  return time ? { local_time: wall, time: time.iso, time_zone: MALTA, time_zone_basis: 'carrier' } : { local_time: wall };
+}
+
 /** A barcode the reply names, or '' when it names none. */
 function barcodeOf(value: unknown): string {
   if (value === undefined || value === null) return '';
@@ -78,9 +90,10 @@ function scanOf(row: unknown, index: number): Scan {
   const providerCode = ACTION.test(action) ? `${code}/${action.toUpperCase()}` : code;
   const place = clean(row.location, 120);
   const location = NO_PLACE.test(place) ? '' : place;
-  const event: CarrierEvent = { local_time: clock.wall, description: wordingOf(row) || code, provider_code: providerCode,
+  const foreign = row.isForeignMovement === true;
+  const event: CarrierEvent = { ...scanClock(clock.wall, foreign), description: wordingOf(row) || code, provider_code: providerCode,
     ...(location ? { location } : {}) };
-  return { event, key: clock.key, foreign: row.isForeignMovement === true, index };
+  return { event, key: clock.key, foreign, index };
 }
 
 /**
@@ -171,7 +184,7 @@ export function parseMaltaPost(payload: unknown, rawNumber: string): CarrierResu
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage && source ? { current_stage: stage, current_stage_source: source } : {}),
     last_status_text: decider.event.description!,
-    last_update: null,
+    last_update: scans[0]!.event.time ?? null,
     last_update_local: scans[0]!.event.local_time!,
     expected_delivery: null,
     ...(point ? { pickup_point: point } : {}),

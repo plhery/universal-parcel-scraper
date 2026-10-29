@@ -163,6 +163,13 @@
       "note": "The destination network's sorting centre takes the parcel in, coded 2 (Shipping), before the delivery carrier accepts it."
     },
     {
+      "wording": "Your shipment is in process at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The destination network's sorting centre handles the parcel, coded 2 (Shipping), after its arrival there."
+    },
+    {
       "code": "1",
       "wording": "Shipping",
       "language": "en",
