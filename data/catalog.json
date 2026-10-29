@@ -22612,6 +22612,10 @@
         "confidence": "low",
         "checksum": "s10",
         "preferred": true
+      },
+      {
+        "pattern": "^[A-Z]{5}\\d{9}MT$",
+        "confidence": "low"
       }
     ]
   },
@@ -29440,6 +29444,33 @@
         "pattern": "^QSS\\d{9}$",
         "confidence": "low",
         "preferred": true
+      }
+    ]
+  },
+  "sengi-express": {
+    "displayName": "Sengi Express",
+    "color": "#1a44a4",
+    "aliases": [
+      "Sengi",
+      "Seng Yi (Shenzhen) Global Supply Chain Management Co., Ltd."
+    ],
+    "countries": [
+      "CN",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.sengiexpress.com/",
+    "trackingSearchUrl": "https://portal.sengiexpress.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{5}\\d{9}MT$",
+        "confidence": "low"
       }
     ]
   },

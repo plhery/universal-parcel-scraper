@@ -22614,6 +22614,10 @@ export const CARRIER_CATALOG = {
         "confidence": "low",
         "checksum": "s10",
         "preferred": true
+      },
+      {
+        "pattern": "^[A-Z]{5}\\d{9}MT$",
+        "confidence": "low"
       }
     ]
   },
@@ -29442,6 +29446,33 @@ export const CARRIER_CATALOG = {
         "pattern": "^QSS\\d{9}$",
         "confidence": "low",
         "preferred": true
+      }
+    ]
+  },
+  "sengi-express": {
+    "displayName": "Sengi Express",
+    "color": "#1a44a4",
+    "aliases": [
+      "Sengi",
+      "Seng Yi (Shenzhen) Global Supply Chain Management Co., Ltd."
+    ],
+    "countries": [
+      "CN",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.sengiexpress.com/",
+    "trackingSearchUrl": "https://portal.sengiexpress.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{5}\\d{9}MT$",
+        "confidence": "low"
       }
     ]
   },
@@ -36463,6 +36494,7 @@ export const CARRIER_IDS = [
   "sendex",
   "sending",
   "sendle",
+  "sengi-express",
   "sentral-cargo",
   "serpost",
   "servientrega",
@@ -37167,7 +37199,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mainfreight": ["mainfreight-1"],
   "major-express": [],
   "makati-express": ["makati-express-1"],
-  "maltapost": ["maltapost-s10"],
+  "maltapost": ["maltapost-s10","maltapost-sengi"],
   "mandae": [],
   "maritime-ontario": [],
   "maruti-air": [],
@@ -37339,6 +37371,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sendex": [],
   "sending": ["sending-1"],
   "sendle": ["sendle-1"],
+  "sengi-express": ["sengi-express-1"],
   "sentral-cargo": [],
   "serpost": ["serpost-s10"],
   "servientrega": [],

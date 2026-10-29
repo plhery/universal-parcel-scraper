@@ -28,6 +28,10 @@ A code ending `MT` is MaltaPost's, but the issuer of an S10 code does not establ
 it, so detection keeps such codes with the generic postal carrier. A low-confidence rule makes
 preflight ask MaltaPost about them.
 
+[Sengi Express](../sengi-express/README.md) hands parcels for Malta to MaltaPost under its own
+number: five letters, nine digits and `MT`. ParcelsApp named MaltaPost beside Sengi for one, so a
+low-confidence rule shared with Sengi makes recognition ask MaltaPost about that layout too.
+
 ## Notes
 
 Each scan carries a UPU event code, MaltaPost's wording, a clock and a place. After a hold or a

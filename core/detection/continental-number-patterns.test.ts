@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionCandidates, recognitionAskedCarriers } from '../catalog/recognition.js';
 import { detectCarrierMatch, parseTrackingInput } from './index.js';
 import { isBrtTrackingNumber } from './brt.js';
@@ -983,5 +984,22 @@ describe('Avis Logistics, Depo and e-Cargo links', () => {
     expect(parseTrackingInput('https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search?searchKey=EC1000017')).toMatchObject({
       trackingNumber: 'EC1000017', carrier: 'e-cargo', source: 'link',
     });
+  });
+});
+
+describe('Sengi Express numbers for Malta', () => {
+  it('suggests MaltaPost and Sengi Express for five letters, nine digits and MT, and only that layout', () => {
+    for (const number of ['SNGXP100000017MT', 'sngxp 100000017 mt']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['maltapost', 'sengi-express'] });
+    }
+    for (const number of ['SNGX100000017MT', 'SNGXPQ100000017MT', 'SNGXP10000017MT', 'SNGXP1000000017MT', 'SNGXP100000017IT', 'SNGX1100000017MT']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('sengi-express');
+    }
+  });
+
+  it('asks MaltaPost about the number and names Sengi Express from a provider', () => {
+    expect(recognitionAskedCarriers('SNGXP100000017MT')).toEqual(['maltapost']);
+    expect(carrierIdFromName('Sengi')).toBe('sengi-express');
+    expect(carrierIdFromName('SENGI Express')).toBe('sengi-express');
   });
 });

@@ -1995,6 +1995,7 @@ export const REGISTRY: RegistryDefinition = {
     "sendex": "sendex",
     "sending": "sending",
     "sendle": "sendle",
+    "sengi-express": "universal",
     "sentral-cargo": "universal",
     "serpost": "serpost",
     "servientrega": "servientrega",

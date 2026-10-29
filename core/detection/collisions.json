@@ -6327,5 +6327,13 @@
       "spring-gds"
     ],
     "reason": "bpost and Ecoscooting take any eighteen digits at low confidence; spring-gds-1810 adds PostNL for the series its international tracker answered for Italy. All three stay suggestions, and recognition asks PostNL, the only one whose recognition takes the series."
+  },
+  {
+    "shape": "Five letters, nine digits and MT",
+    "carriers": [
+      "maltapost",
+      "sengi-express"
+    ],
+    "reason": "Sengi Express hands parcels for Malta to MaltaPost under its own number; ParcelsApp named both for one. Both rules are low-confidence: recognition asks MaltaPost, whose tracker takes foreign barcodes, and a provider names Sengi for the parcels MaltaPost does not know."
   }
 ]
