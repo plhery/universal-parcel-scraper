@@ -105,7 +105,9 @@ export function rtb56Wording(row: Record<string, unknown>, provider: string): { 
  * its offset gets its instant; any other scan keeps its wall clock. Some
  * tenants state China's offset for scans at the destination too, so a tenant
  * whose offsets were not seen to follow the scan's place keeps wall clocks.
- * With `codes`, a scan keeps its `track_code`, which the stage is asked with.
+ * With `codes`, a scan keeps its `track_code`, which the stage is asked with,
+ * and a row without a code repeating a coded scan's Chinese wording at its
+ * clock and place is that scan relayed.
  * The tracker orders the scans by their wall clocks, whatever their offsets;
  * when every scan has an instant they are ordered by it, equal ones in the
  * tracker's order. A row without wording says nothing, and a repeated one is
@@ -113,17 +115,22 @@ export function rtb56Wording(row: Record<string, unknown>, provider: string): { 
  */
 export function rtb56Scans(rows: unknown[], provider: string, stage: (wording: string, code: string) => ClassifiedWording | null,
   { offsets, codes = false }: { offsets: boolean; codes?: boolean }): CarrierEvent[] {
-  const seen = new Set<string>();
-  const scans: { event: CarrierEvent; at: number | null; index: number }[] = [];
-  for (const row of rows) {
+  const read = rows.flatMap((row) => {
     if (!isRecord(row)) throw new SchemaError(provider, `${provider} returned an invalid scan`);
     const clock = rtb56Clock(row, provider);
-    const local = clock.local;
     const instant = offsets ? clock.instant : undefined;
     const { description, location } = rtb56Wording(row, provider);
-    if (!description) continue;
+    if (!description) return [];
     const code = codes ? rtb56Text(row, 'track_code', provider, 16).toUpperCase() : '';
     if (code && !CODE.test(code)) throw new SchemaError(provider, `${provider} returned an invalid scan code`);
+    const twin = JSON.stringify([instant?.iso ?? clock.local, location, rtb56Text(row, 'track_description', provider)]);
+    return [{ local: clock.local, instant, description, location, code, twin }];
+  });
+  const coded = new Set(read.filter((scan) => scan.code).map((scan) => scan.twin));
+  const seen = new Set<string>();
+  const scans: { event: CarrierEvent; at: number | null; index: number }[] = [];
+  for (const { local, instant, description, location, code, twin } of read) {
+    if (!code && coded.has(twin)) continue;
     const key = JSON.stringify([instant?.iso ?? local, location, description, code]);
     if (seen.has(key)) continue;
     seen.add(key);

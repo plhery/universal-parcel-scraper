@@ -33,6 +33,8 @@ parcel abroad gives it its own number, which the tracker shows beside YDH's.
   Chinese or English, the partner's relayed in its language. A scan is staged by its code,
   else by the wording recorded in [statuses.json](statuses.json), then the shared rules. DD
   covers a delivery the partner could not make or put off, so its wording decides.
+- A partner's feed can repeat one of YDH's own scans without its code or English wording, at
+  the same clock. That copy is dropped.
 - A label or electronic information recorded after the parcel moved is no step back.
 - `channel_hawbcode`, the partner's number, becomes `delivery_tracking_number`, and the
   hand-off decides who is asked. The partner's name is not read: it can be a reseller rather

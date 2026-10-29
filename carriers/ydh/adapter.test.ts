@@ -74,17 +74,17 @@ describe('YDH HTTP adapter', () => {
       ['2026-03-17T07:24:00', 'CDG', 'AA', 'in_transit', 'carrier_map'],
       ['2026-03-16T17:30:00', 'PVG', 'DA', 'in_transit', 'carrier_map'],
       ['2026-03-15T18:10:00', 'PVG', 'TDDY', 'in_transit', 'carrier_map'],
-      // A scan without a code is staged by its wording.
+      // A scan without a code is staged by its wording, the Chinese without English.
       ['2026-03-15T10:33:00', 'PVG', undefined, 'in_transit', 'carrier_map'],
       ['2026-03-14T01:41:56', 'SAMPLE CITY', 'DF', 'in_transit', 'carrier_map'],
       // The row listed twice counts once.
       ['2026-03-13T19:22:12', 'SAMPLE CITY', 'AF', 'in_transit', 'carrier_map'],
+      // So does the scan relayed again without its code or English wording.
       ['2026-03-12T09:22:27', undefined, 'IR', 'registered', 'carrier_map'],
-      // Without English wording, the Chinese is read.
-      ['2026-03-12T09:22:27', undefined, undefined, 'registered', 'carrier_map'],
     ]);
     expect(result.events!.every((event) => !('time' in event))).toBe(true);
-    expect(result.events!.at(-1)).toMatchObject({ description: '快件电子信息已经收到' });
+    expect(result.events!.find((event) => event.local_time === '2026-03-15T10:33:00')).toMatchObject({ description: '出口报关' });
+    expect(result.events!.at(-1)).toMatchObject({ description: 'Shipment information received' });
     const json = JSON.stringify(result);
     for (const excluded of ['SAMPLEORDER0001', 'SAMPLE RECIPIENT', 'SAMPLE PARTNER', 'SAMPLE STAFF', '99999', '法国']) expect(json).not.toContain(excluded);
   });
@@ -94,6 +94,14 @@ describe('YDH HTTP adapter', () => {
       item.details = [scan('2026-03-14 02:21:05', 'Shipping Label Created'), scan('2026-03-13 19:22:12', 'Shipment arrived at facility', 'AF')];
     }), DELIVERED);
     expect(labelled).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Shipping Label Created' });
+    // A copy without the code is dropped wherever the reply lists it; the same wording at another clock is another scan.
+    const relayed = parseYdh(changed((item) => {
+      item.details = [scan('2026-03-12 09:22:27', '快件电子信息已经收到'),
+        { ...scan('2026-03-12 09:22:27', '快件电子信息已经收到', 'IR'), track_description_en: 'Shipment information received' },
+        scan('2026-03-11 09:22:27', '快件电子信息已经收到')];
+    }), DELIVERED);
+    expect(relayed.events!.map((event) => [event.local_time, event.provider_code])).toEqual([
+      ['2026-03-12T09:22:27', 'IR'], ['2026-03-11T09:22:27', undefined]]);
     const worded = parseYdh(changed((item) => {
       item.channel_hawbcode = null;
       item.details = [scan('2026-03-20 11:00:00', 'Delivered, signed by SAMPLE RECIPIENT', 'XX'), scan('2026-03-19 08:00:00', 'Sample Status Note')];
