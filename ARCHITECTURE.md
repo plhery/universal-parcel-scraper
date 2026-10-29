@@ -68,9 +68,10 @@ as 123456789, or a run of nine or more with one digit after it, as a check digit
 S10 item counts when its serial is one, which covers the UPU's own example. So does the
 word EXAMPLE with digits around it, such as an app's demo parcel.
 Many trackers keep test labels and stray scans under these numbers and show them to anyone
-who asks, and providers merge them into one history. The registry's adapters and
-`UniversalTracker.fetchSource()` refuse them before any request: a lookup fails as
-`invalid_input` with reason `placeholder_number`, and recognition answers unknown. Detection
+who asks, and providers merge them into one history. The registry's adapters,
+`UniversalTracker.fetchSource()` and `amazonShippingEligibility()` refuse them before any
+request: a lookup fails as `invalid_input` with reason `placeholder_number`, and recognition
+answers unknown. Detection
 still reads their shape, and `isPlaceholderNumber` lets a consumer refuse one at its own form.
 
 A phone number typed as a tracking number is read with the reader's country:

@@ -17,3 +17,13 @@ it('distinguishes a missing parcel from expired history through stable error rea
   expect(new AmazonShippingHistoryExpiredError()).toMatchObject({ kind: 'indeterminate', reason: 'history_expired' });
   expect(new AmazonShippingNotFoundError()).toMatchObject({ kind: 'not_found', reason: 'shipment_not_found' });
 });
+
+it('refuses a placeholder number without asking Amazon', async () => {
+  const fetch = vi.spyOn(AmazonShippingTracker.prototype, 'fetch');
+  for (const number of ['UK1234567890', 'uk 123 456 7890', 'FR0000000000', 'TBA000000000000']) {
+    await expect(amazonShippingEligibility(number), number).rejects.toMatchObject({
+      kind: 'invalid_input', provider: 'amazon-shipping', reason: 'placeholder_number',
+    });
+  }
+  expect(fetch).not.toHaveBeenCalled();
+});
