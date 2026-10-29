@@ -80,7 +80,7 @@ export function parsePinAg(reply: unknown, raw: string): CarrierResult {
     if (!code || !description) throw new SchemaError(PROVIDER, 'PIN AG returned a status without code or wording');
     const stamp = field(row, 'timeStamp', 64);
     const clock = STAMP.exec(stamp);
-    const mapped = pinAgStatus(stageName);
+    const mapped = pinAgStatus(stageName, code);
     const event: CarrierEvent = { description, provider_code: code,
       ...(clock ? { local_time: clock[1]! } : stamp ? { provider_time_text: stamp } : {}),
       ...(mapped ? { stage: mapped.stage } : {}) };
@@ -89,7 +89,8 @@ export function parsePinAg(reply: unknown, raw: string): CarrierResult {
   }
   events.reverse();
   const latest = events[0]!;
-  const mapped = pinAgStatus(field(reply.statuses.at(-1) as Record<string, unknown>, 'stage', 64));
+  const last = reply.statuses.at(-1) as Record<string, unknown>;
+  const mapped = pinAgStatus(field(last, 'stage', 64), field(last, 'statusCode', 32));
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null,
     events: events.slice(0, MAX_EVENTS) };

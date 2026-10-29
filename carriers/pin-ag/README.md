@@ -14,7 +14,10 @@ tracking page calls.
 
 - The reply does not echo the number: the statuses are those of the number in the request.
 - Each status names the step of the page's progress bar it belongs to (`stage`), which gives its
-  stage. Its wording is the page's label, HTML removed, else its short description.
+  stage. Its wording is the page's label, HTML removed, else its short description. The page
+  files `NON_FURTHER_TRACKABLE` under In Zustellung, but its label says the item was only
+  recorded at the sorting center and will be delivered without further updates, so it reads
+  in transit.
 - An unknown number, or one whose statuses PIN deleted after six months, gets HTTP 404 with the
   message "kein Zustellstatus gefunden": `NotFoundError`. So does a status coded
   `NOT_FOUND_HINT`, which the page treats the same way. HTTP 405 is an item type PIN does not
@@ -44,7 +47,8 @@ low and only lists PIN AG first.
 ## Limitations
 
 Only items PIN tracks have history: registered letters, parcels and Amazon parcels in Berlin.
-Standard letters do not. Statuses are deleted six months on. No delivery estimate, location,
+Standard letters do not, and an item PIN stops tracking at the sorting center never shows a
+delivery. Statuses are deleted six months on. No delivery estimate, location,
 weight, service, sender or recipient.
 
 ## Testing

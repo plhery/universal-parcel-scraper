@@ -12,8 +12,16 @@ const STAGES: Readonly<Record<string, ClassifiedStatus>> = {
   Unzustellbar: { status: 'exception', stage: 'exception' },
 };
 
-/** A status's reading from the step it names. */
-export function pinAgStatus(stage: string): ClassifiedStatus | undefined {
+// A status the page files under a step it does not mean. An item PIN will deliver without
+// tracking it further shows under In Zustellung while its label says it was only recorded at the
+// sorting center and will be delivered in the coming days.
+const CODES_OVER_STEPS: Readonly<Record<string, ClassifiedStatus>> = {
+  NON_FURTHER_TRACKABLE: { status: 'in_transit', stage: 'in_transit' },
+};
+
+/** A status's reading from its code when the step misleads, else from the step it names. */
+export function pinAgStatus(stage: string, code = ''): ClassifiedStatus | undefined {
+  if (Object.hasOwn(CODES_OVER_STEPS, code)) return CODES_OVER_STEPS[code];
   return Object.hasOwn(STAGES, stage) ? STAGES[stage] : undefined;
 }
 
