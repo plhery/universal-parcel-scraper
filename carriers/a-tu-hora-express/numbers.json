@@ -99,13 +99,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "tnt",
-          "a-tu-hora-express"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "On a public OCU complaint against A Tu Hora Express, the carrier asked for the tracking number starting with 000 and the customer replied with this one."
     },
@@ -123,13 +118,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "tnt",
-          "a-tu-hora-express"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this sixteen-digit tracking number for a parcel the customer says was never brought."
     },
@@ -147,16 +137,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "correos-express",
-          "canada-post",
-          "tnt",
-          "a-tu-hora-express",
-          "evri-uk"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this sixteen-digit tracking number."
     },
@@ -174,13 +156,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "tnt",
-          "a-tu-hora-express"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this sixteen-digit tracking number for an AliExpress parcel."
     },
@@ -198,13 +175,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "tnt",
-          "a-tu-hora-express"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this as the service number, with the parcel shown as Realizado con éxito on the tracker."
     },
@@ -222,13 +194,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "tnt",
-          "a-tu-hora-express"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this number for a Zara order whose tracking alternated between En reparto and an agency incident."
     },
@@ -246,13 +213,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhl-ecommerce",
-          "tnt",
-          "a-tu-hora-express"
-        ]
+        "carrier": "a-tu-hora-express",
+        "confidence": "high"
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this as the service number, separate from the shop's order number."
     },

@@ -58,9 +58,12 @@ The tracker takes a shipment code of 10, 16 or 24 digits and pads a ten-digit co
 leading zeros to the sixteen-digit form. Public consumer complaints give all three lengths. The
 24-digit form is the sixteen-digit number, `001` and the five-digit delivery postcode.
 
-`a-tu-hora-express-1` suggests the zero-padded sixteen-digit form and `a-tu-hora-express-2` the
-24-digit form. Both stay low because other carriers print numbers of the same lengths. Ten
-digits stay unclaimed: many carriers share that length. The samples and their sources are in
+`a-tu-hora-express-1` names the carrier for the zero-padded sixteen-digit form: no other
+carrier's sixteen-digit numbers are known to start with six zeros, and recognition cannot ask the
+tracker about it without the postcode, so naming the carrier is what lets a consumer offer the
+postcode field. `a-tu-hora-express-2` suggests the 24-digit form at low confidence, since other
+carriers print numbers of that length; it carries the postcode, so recognition asks the tracker
+about it. Ten digits stay unclaimed: many carriers share that length. The samples and their sources are in
 [`numbers.json`](numbers.json).
 
 ## Links

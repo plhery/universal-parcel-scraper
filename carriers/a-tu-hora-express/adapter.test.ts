@@ -323,11 +323,14 @@ describe('A Tu Hora Express HTTP adapter', () => {
 });
 
 describe('A Tu Hora Express numbers', () => {
-  it('suggests both forms without claiming them, and asks recognition only about the label', () => {
-    for (const number of [DELIVERED, DELIVERED_LABEL]) {
-      const detected = detectCarrierMatch(number);
-      expect(detected.candidates, number).toContain('a-tu-hora-express');
-      expect(detected.carrier === 'a-tu-hora-express' && detected.confidence === 'high', number).toBe(false);
+  it('names the carrier for the padded code, suggests the label, and asks recognition only about the label', () => {
+    expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'a-tu-hora-express', confidence: 'high', candidates: ['a-tu-hora-express'] });
+    // The label and a sixteen-digit number without the padding keep their other candidates.
+    const label = detectCarrierMatch(DELIVERED_LABEL);
+    expect(label.candidates).toContain('a-tu-hora-express');
+    expect(label.carrier === 'a-tu-hora-express' && label.confidence === 'high').toBe(false);
+    for (const number of ['0000019990000017', '1000009990000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('a-tu-hora-express');
     }
     expect(carrierDefinition('a-tu-hora-express').tracking).toMatchObject({ adapter: 'a-tu-hora-express', localClocks: true });
     const asked = (number: string) => recognitionCandidates(number).map(({ carrier }) => carrier);

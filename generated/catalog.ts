@@ -5835,7 +5835,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^0{6}\\d{10}$",
-        "confidence": "low"
+        "confidence": "high"
       },
       {
         "pattern": "^0{6}\\d{10}001\\d{5}$",

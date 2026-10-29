@@ -5690,7 +5690,7 @@
       "dhl-ecommerce",
       "tnt"
     ],
-    "reason": "A Tu Hora Express pads its shipment codes with six leading zeros to sixteen digits, a length these carriers' low rules also accept, so recognition asks each of them."
+    "reason": "A Tu Hora Express pads its shipment codes with six leading zeros to sixteen digits, a length these carriers' low rules also accept; none of them is known to print six leading zeros, so the padding names A Tu Hora Express."
   },
   {
     "shape": "^\\d{16}$",
@@ -5702,7 +5702,7 @@
       "evri-uk",
       "tnt"
     ],
-    "reason": "A Tu Hora Express pads its shipment codes with six leading zeros to sixteen digits, a length these carriers' low rules also accept, so recognition asks each of them."
+    "reason": "A Tu Hora Express pads its shipment codes with six leading zeros to sixteen digits, a length these carriers' low rules also accept; none of them is known to print six leading zeros, so the padding names A Tu Hora Express."
   },
   {
     "shape": "^\\d{24}$",

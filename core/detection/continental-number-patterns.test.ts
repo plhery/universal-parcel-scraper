@@ -636,11 +636,10 @@ describe('wave seven courier rules', () => {
 
 describe('wave eight courier rules', () => {
   // Synthetic numbers in each carrier's layout; none is a real parcel.
-  it('suggests A Tu Hora Express for its zero-padded sixteen and 24-digit codes without naming it', () => {
-    for (const number of ['0000001234567890', '000000123456789000112345']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
-      expect(detectCarrierMatch(number).candidates, number).toContain('a-tu-hora-express');
-    }
+  it('names A Tu Hora Express for its zero-padded sixteen digits and suggests it for the 24-digit label', () => {
+    expect(detectCarrierMatch('0000001234567890')).toMatchObject({ carrier: 'a-tu-hora-express', confidence: 'high', candidates: ['a-tu-hora-express'] });
+    expect(detectCarrierMatch('000000123456789000112345')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('000000123456789000112345').candidates).toContain('a-tu-hora-express');
     for (const number of ['0000011234567890', '000000123456789000212345', '00000012345678900011234']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('a-tu-hora-express');
     }

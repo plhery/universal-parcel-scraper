@@ -102,7 +102,7 @@
     {
       "id": "a-tu-hora-express-1",
       "pattern": "^0{6}\\d{10}$",
-      "confidence": "low"
+      "confidence": "high"
     },
     {
       "id": "a-tu-hora-express-2",
