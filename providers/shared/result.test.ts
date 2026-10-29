@@ -104,6 +104,7 @@ describe('shared provider result', () => {
   it('leaves out a bracketed time with no words, which names no scan', () => {
     expect(event('2026-01-07T10:52:13+08:00', '( 10：23)', 'InTransit')).toBeNull();
     expect(localEvent('2026-01-07T10:52:13', '(10:23)')).toBeNull();
+    expect(localEvent('2026-01-07T17:04:29', '(01.08)')).toBeNull();
     expect(event('2026-01-07T10:52:13+08:00', 'Departed (10:23)', 'InTransit')).toMatchObject({ stage: 'in_transit' });
   });
 

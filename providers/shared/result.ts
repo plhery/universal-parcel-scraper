@@ -458,8 +458,9 @@ const flightToCome = (label: string): boolean =>
   FLIGHT_ESTIMATE.test(label) || DHLINK_FLIGHT.test(label) || intelValleyFlight(label) || MAYIYINFU_FLIGHT.test(label);
 
 // A time or date in brackets with no words, as 17TRACK relays a Juxi Express row between the flight
-// being arranged at the airport and the departure: it says nothing happened, so it is no scan.
-const BARE_TIME = /^[(（]\s*\d{1,2}\s*[:：]\s*\d{1,2}\s*[)）]$/;
+// being arranged at the airport and the departure, and ParcelsApp one dated by month and day ("(10.20)")
+// between its departure and arrival: it says nothing happened, so it is no scan.
+const BARE_TIME = /^[(（]\s*\d{1,2}\s*[:：.．]\s*\d{1,2}\s*[)）]$/;
 
 function describe(description: unknown, stage?: unknown): { description: string; stage: Stage; stage_source: string } | null {
   // A copy of SunYou's departure drops the last-mile number, as SunYou's own result does.
