@@ -325,8 +325,10 @@ step exists for future protocol changes.
 - Poland Post's dates at a place, a Polish office or Poczta Polska's sender platform
   ("Electronic Sender"), carry the digits and offset of Poczta Polska's own tracker and are
   taken as given, whatever zone routing passes for a parcel filed under the line carrier
-  that sent it. Its relays from abroad, with no place or at the "International Postal
-  System", put Poland's offset on the other country's clock. Their digits are read as
+  that sent it. La Poste's scans it files at a country alone ("Country: Poland",
+  "PL99999") are no office's: their UTC digits are La Poste's clock, shifted into Poland's
+  offset, and are read on that country's clock. Its relays from abroad, with no place or
+  at the "International Postal System", put Poland's offset on the other country's clock. Their digits are read as
   written on the partner post's clock that Poczta Polska's own adapter uses: the post that
   issued an S10 number from abroad, else a destination abroad. With neither, they are read
   as before.

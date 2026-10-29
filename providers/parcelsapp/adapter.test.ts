@@ -1600,6 +1600,12 @@ describe('ParcelsApp result parsing', () => {
     expect(parseParcelsAppResponse(payload, polish, identity(polish)).events?.map((scan) => [scan.time, scan.location])).toEqual([
       ['2026-10-23T09:12:00.000Z', 'Poland'], ['2026-10-22T13:34:32.000Z', 'Placówka Pocztowa Example 1'], ['2026-10-22T13:34:00.000Z', 'Poland'],
     ]);
+    // The same scans can come with La Poste's clock shifted into Poland's offset; no office's offset dates them.
+    const [ready, posting, deposit] = payload.states;
+    const shifted = { ...payload, states: [{ ...ready, date: '2026-10-23T13:12:00+02:00' }, posting, { ...deposit, date: '2026-10-22T17:34:00+02:00' }] };
+    expect(parseParcelsAppResponse(shifted, polish, identity(polish)).events?.map((scan) => scan.time)).toEqual([
+      '2026-10-23T09:12:00.000Z', '2026-10-22T13:34:32.000Z', '2026-10-22T13:34:00.000Z',
+    ]);
   });
 
   it('reads Poland Post\'s relays of a partner post\'s scans as written, on that post\'s clock', () => {

@@ -802,11 +802,14 @@ const POLAND_POST_RELAY = /^International Postal System$/i;
  * have the digits and offset of Poczta Polska's own tracker. Its relays from
  * abroad, with no place or at the "International Postal System", put
  * Poland's offset on the other country's clock, which its tracker leaves
- * without one.
+ * without one. La Poste's scans it files at a country alone ("Country:
+ * Poland", "PL99999") have La Poste's clock as UTC digits shifted into
+ * Poland's offset: taken as given, they came two hours after La Poste's own.
  */
 function ownOffset(name: unknown, date: unknown, location = ''): string | null {
   const key = nameKey(name);
-  const own = key === 'gofoexpress' || (key === 'polandpost' && location !== '' && !POLAND_POST_RELAY.test(location));
+  const own = key === 'gofoexpress'
+    || (key === 'polandpost' && location !== '' && !POLAND_POST_RELAY.test(location) && !countryCode(location));
   const offset = own && typeof date === 'string' ? /[+-]\d{2}:\d{2}$/.exec(date.trim())?.[0] : undefined;
   return offset && !/^[+-]00:00$/.test(offset) ? offset : null;
 }
