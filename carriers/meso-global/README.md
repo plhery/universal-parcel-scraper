@@ -19,7 +19,7 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
 ## Notes
 
 - The status map lists the Chinese rows universal providers relay from the tracker, from the
-  shipment data to the connecting flight, with the English the adapter shows for them. Flight
+  shipment data to the import clearance, with the English the adapter shows for them. Flight
   rows name the day they expect the flight as month-day; the map reads them without it, and the
   English leaves it out, since it is still to come.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
