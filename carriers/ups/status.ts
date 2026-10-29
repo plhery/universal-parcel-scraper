@@ -121,6 +121,17 @@ export function upsActivityStage(code: string): Stage | undefined {
 }
 
 /**
+ * Codes of notices that are no scan: the receiver's delivery instructions,
+ * seen while UPS had only the label. The newest other scan decides the stage.
+ */
+const NOTICE_CODES = new Set(['L0']);
+
+/** Whether a scan's `actCode` is a notice the stage is not read from. */
+export function isUpsNotice(code: string | undefined): boolean {
+  return NOTICE_CODES.has((code ?? '').trim().toUpperCase());
+}
+
+/**
  * The milestone the rendered page's banner names. Apart from the scans below,
  * it is the only wording the adapter reads without an activity code. Scan
  * wording is otherwise not read without its code: "Arrived at Facility" is
@@ -155,5 +166,5 @@ export function upsUncodedScanStage(text: string): Stage | undefined {
 /** What the map says about one scan: by its activity code, or by its wording without one. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? upsActivityStage(code) : upsBannerStage(wording) ?? upsUncodedScanStage(wording)),
-  gaps: [],
+  gaps: [{ code: 'L0', note: "The receiver's delivery instructions, a notice and no scan: the newest other scan decides the stage." }],
 };

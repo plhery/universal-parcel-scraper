@@ -15,7 +15,7 @@ import { calendarDay, countryCode, countryTimeZone, firstOccurrence } from '../.
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPSApiClient, upsApiCredentials, upsApiNotFound, upsApiNotices, type UPSApiCredentials } from './api.js';
-import { UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsStatus, upsUncodedScanStage } from './status.js';
+import { isUpsNotice, UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsStatus, upsUncodedScanStage } from './status.js';
 import { decodeEntities } from './text.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
@@ -525,10 +525,11 @@ export function parseUPSTrackingResponse(
   }
   const newest = events[0];
   // UPS lists the newest scan first. Its code outranks the coarse progress
-  // token, which reads Exception for a mere delay.
-  const stage = newest?.stage as Stage | undefined;
+  // token, which reads Exception for a mere delay. A notice is no scan.
+  const decider = events.find((event) => !isUpsNotice(event.provider_code)) ?? newest;
+  const stage = decider?.stage as Stage | undefined;
   const currentName = isRecord(detail.currentMilestone) ? text(detail.currentMilestone.name) : '';
-  const statusText = newest?.description
+  const statusText = decider?.description
     || text(detail.packageStatus ?? detail.simplifiedText)
     || currentName
     || 'Tracking information received';
@@ -540,7 +541,7 @@ export function parseUPSTrackingResponse(
       events.length > 0,
     ));
   const delivered = stage ? stage === 'delivered' : status === 'delivered';
-  const deliveredAt = delivered ? newest?.time : undefined;
+  const deliveredAt = delivered ? decider?.time : undefined;
   const country = [detail.shipToAddress, detail.deliveryAddress]
     .map((address) => (isRecord(address) ? cleanScalar(address.country, 8).toUpperCase() : ''))
     .find((code) => /^[A-Z]{2}$/.test(code));
@@ -679,11 +680,12 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
     });
   }
-  // The API lists the newest scan first; its code outranks the status type.
+  // The API lists the newest scan first; its code outranks the status type. A notice is no scan.
   const newest = events[0];
-  const stage = newest?.stage as Stage | undefined;
+  const decider = events.find((event) => !isUpsNotice(event.provider_code)) ?? newest;
+  const stage = decider?.stage as Stage | undefined;
   const current = isRecord(detail.currentStatus) ? detail.currentStatus : {};
-  const statusText = newest?.description
+  const statusText = decider?.description
     || text(current.description)
     || text(current.simplifiedTextDescription)
     || 'Tracking information received';
@@ -692,7 +694,7 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
     ? UPS_STATUS_TYPE[type]!
     : upsStatus([current.description, current.simplifiedTextDescription, statusText].map((value) => text(value)).join(' '), events.length > 0));
   const delivered = stage ? stage === 'delivered' : status === 'delivered';
-  const deliveredAt = delivered ? newest?.time : undefined;
+  const deliveredAt = delivered ? decider?.time : undefined;
   const addresses = Array.isArray(detail.packageAddress) ? detail.packageAddress.filter(isRecord) : [];
   const destination = addresses.find((entry) => cleanScalar(entry.type).toUpperCase() === 'DESTINATION');
   const country = destination && isRecord(destination.address) ? cleanScalar(destination.address.countryCode, 8).toUpperCase() : '';

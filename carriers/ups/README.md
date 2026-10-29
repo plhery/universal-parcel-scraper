@@ -57,8 +57,8 @@ rendered status, after that wait.
 - Credentials UPS refuses (HTTP 400, 401 or 403 for a token, or a second 401 on a fresh
   token) fail the step at once for ten minutes, as a transport failure, instead of asking
   again on every lookup. Errors carry neither the credentials nor the token.
-- The status type (`D`, `I`, `P`, `M`, `X`) sets the status only when the newest scan's code
-  is unmapped.
+- The status type (`D`, `I`, `P`, `M`, `X`) sets the status only when the newest scan's code,
+  notices aside, is unmapped.
 - Lookups are serialized per adapter instance: the jar and XSRF token are shared, and two
   concurrent refreshes produce a session that belongs to neither.
 - Direct HTTP 401/403/419, or a page with no token, raise `UPSSessionRejected` (a
@@ -85,6 +85,8 @@ rendered status, after that wait.
   by its whole wording as the map records it.
 - The newest scan's code sets the current stage and status. `progressBarType`, then the
   prose, decide only when that code is unmapped. The token reads `Exception` for a mere delay.
+  The receiver's delivery instructions (`L0`) are a notice, not a scan: the scan before them
+  decides, so a parcel UPS has only the label for does not read in transit.
 - `pickup_point` names the access point only while the newest scan is `2Q` or `ZP`. Replies
   can carry an access point the parcel never reached. It is the business name, then the
   street and the town on their own lines when `upsAccessPoint.location` gives both, as the

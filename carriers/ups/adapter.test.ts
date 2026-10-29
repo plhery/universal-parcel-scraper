@@ -266,6 +266,24 @@ describe('UPS structured response', () => {
     });
   });
 
+  it("reads the receiver's delivery instructions as a notice, so the newest other scan decides", () => {
+    // Seen weeks after the label, while UPS had only the label: the progress token still read in transit.
+    const instructed = parseUPSTrackingResponse(withScans([
+      scan('L0', 'Delivery instructions have been provided by the receiver.', '20260930 23:11:14'),
+      scan('MP', 'Shipper created a label, UPS has not received the package yet. ', '20260909 10:43:57', 'United States'),
+    ], { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY);
+    expect(instructed).toMatchObject({ status: 'pending', current_stage: 'registered',
+      last_status_text: 'Shipper created a label, UPS has not received the package yet.', last_update: instructed.events?.[0]?.time });
+    expect(instructed.events?.map((event) => [event.provider_code, event.stage])).toEqual([['L0', undefined], ['MP', 'registered']]);
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: 'L0', description: 'delivery instructions have been provided by the receiver.' }))
+      .toMatchObject({ kind: 'intentional_gap' });
+    // On a moving parcel the scan before it keeps the parcel in transit.
+    expect(parseUPSTrackingResponse(withScans([
+      scan('L0', 'Delivery instructions have been provided by the receiver.', '20260806 18:00:00'),
+      scan('AR', 'Arrived at Facility', '20260806 10:00:00'),
+    ], { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
   it("writes a delivery's place in capitals and codes as the page writes its other scans'", () => {
     const places = (...locations: string[]) => parseUPSTrackingResponse(withScans(locations.map((location, index) =>
       scan(index ? 'AR' : 'KB', index ? 'Arrived at Facility' : 'Delivered', `2026080${6 - index} 15:50:00`, location))), TRACKING_NUMBER, TODAY)

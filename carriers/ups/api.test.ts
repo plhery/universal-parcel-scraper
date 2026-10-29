@@ -231,6 +231,14 @@ describe('UPS API reply', () => {
       expect(unmapped.status).toBe(status);
       expect(unmapped.current_stage).toBeUndefined();
     }
+    // The receiver's delivery instructions are a notice: the label before them decides.
+    const instructed = parseUPSApiResponse(apiFixture((item) => {
+      item.activity = [activity('L0', 'Delivery instructions have been provided by the receiver.', { gmtDate: '20260805' }, 'I'),
+        activity('MP', 'Shipper created a label, UPS has not received the package yet.', {}, 'M')];
+      item.currentStatus = { type: 'I', description: 'Delivery instructions have been provided by the receiver.', code: 'L0' };
+    }), TRACKING_NUMBER);
+    expect(instructed).toMatchObject({ status: 'pending', current_stage: 'registered',
+      last_status_text: 'Shipper created a label, UPS has not received the package yet.' });
     const delivered = parseUPSApiResponse(apiFixture((item) => {
       item.activity = [activity('FS', 'DELIVERED ', {}, 'D')];
       item.deliveryDate = [{ type: 'DEL', date: '20260804' }];
