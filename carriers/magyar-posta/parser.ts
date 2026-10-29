@@ -215,6 +215,22 @@ function history(events: CarrierEvent[], current: string, serviceName: string,
 }
 
 /**
+ * Why an addition's reply holds no item for the number, naming no number: an
+ * empty list, the package under its shipment's number, which a package number
+ * begins with, or other numbers. No such reply has been seen whole.
+ */
+export function magyarPostaAppMiss(payload: unknown, raw: string): string {
+  const number = normalizeMagyarPostaNumber(raw);
+  const items = isRecord(payload) && Array.isArray(payload.data) ? payload.data as unknown[] : [];
+  if (!items.length) return 'Magyar Posta\'s app added the number but listed no item';
+  const shipment = number.length === 26 ? number.slice(0, 13) : '';
+  if (shipment && items.some(item => isRecord(item) && returnedTrackingNumber(item.package_id) === shipment)) {
+    return 'Magyar Posta\'s app listed the package under its shipment\'s number';
+  }
+  return 'Magyar Posta\'s app added the number without returning it';
+}
+
+/**
  * The Posta app's guest reply: for each item added to an application id, its
  * scans with UTC instants and category names, the same wording as the
  * tracker, its current state and service. Null when the reply holds no item

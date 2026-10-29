@@ -112,6 +112,9 @@ opening a browser.
 - Adding a number needs Google to accept an audio answer from the server's address. Lookups
   then fall back to the universal providers.
 - A browser-service restart loses its retained guest registrations.
+- The app has added package numbers without listing them under the number. The schema error says
+  whether its reply listed no item, the shipment's number or other numbers, since no such reply
+  has been seen whole.
 - At most 100 scans are kept.
 
 ## Testing

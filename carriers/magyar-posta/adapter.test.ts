@@ -285,6 +285,19 @@ describe('Magyar Posta app route', () => {
     await expect(unbound.tracker.fetch(PARCEL)).rejects.toMatchObject({ kind: 'schema' });
   });
 
+  it('says what an addition’s reply held when no item is the number’s', async () => {
+    const pkg = `${PARCEL}0010000000000`;
+    const item = (appFixture('app-delivered').data as Record<string, unknown>[])[0]!;
+    for (const [data, message] of [
+      [[], 'listed no item'],
+      [[{ ...item, package_id: PARCEL }], 'listed the package under its shipment\'s number'],
+      [[{ ...item, package_id: LETTER }], 'added the number without returning it'],
+    ] as const) {
+      const { tracker: active } = appTracker([added({ data }, { trackingNumberSubmitted: pkg })]);
+      await expect(active.fetch(pkg)).rejects.toMatchObject({ kind: 'schema', message: expect.stringContaining(message) });
+    }
+  });
+
   it('preserves captured rate limits through the TRAWL HTTP envelope', async () => {
     const api = appApi();
     const trawl = new TrawlClient('http://browser.test', async () => json({

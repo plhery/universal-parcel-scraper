@@ -6,7 +6,8 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import type { TrawlClient } from '../../core/transport/trawl.js';
 import { MAGYAR_POSTA_APP_PAGE, MAGYAR_POSTA_APP_TRACKING, magyarPostaAppFailure, magyarPostaAppJson, magyarPostaApplicationId,
   magyarPostaAppTrackingUrl, readMagyarPostaApp } from './app.js';
-import { MAGYAR_POSTA_MAX_BYTES, magyarPostaTrackingUrl, normalizeMagyarPostaNumber, parseMagyarPosta, parseMagyarPostaApp, PROVIDER } from './parser.js';
+import { MAGYAR_POSTA_MAX_BYTES, magyarPostaAppMiss, magyarPostaTrackingUrl, normalizeMagyarPostaNumber, parseMagyarPosta, parseMagyarPostaApp,
+  PROVIDER } from './parser.js';
 
 export { MAGYAR_POSTA_APP_PAGE, MAGYAR_POSTA_APP_TRACKING, magyarPostaAppTrackingUrl } from './app.js';
 export { magyarPostaTrackingUrl, normalizeMagyarPostaNumber, parseMagyarPosta, parseMagyarPostaApp } from './parser.js';
@@ -113,7 +114,7 @@ export async function magyarPostaAppBrowser(trawl: TrawlClient, raw: string, app
   const failure = magyarPostaAppFailure(reply.status, reply.headers['retry-after']);
   if (failure) throw failure;
   const result = parseMagyarPostaApp(payload, number);
-  if (!result) throw new SchemaError(PROVIDER, 'Magyar Posta\'s app added the number without returning it');
+  if (!result) throw new SchemaError(PROVIDER, magyarPostaAppMiss(payload, number));
   // A retained registration belongs to the helper, not to this new app id.
   // Its capability stays in the helper's memory rather than entering results.
   if (reply.headers['x-magyar-posta-registration'] !== 'retained') rememberApplication?.();
