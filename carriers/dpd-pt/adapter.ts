@@ -4,20 +4,14 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
-import { fetchTrusting } from '../../core/transport/https.js';
-import { transportOf } from '../../core/transport/transportOf.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { RAPIDSSL_TLS_RSA_CA_G1 } from './certificate.js';
 import { DPD_PT_MAX_BYTES, normalizeDpdPtNumber, parseDpdPt, PROVIDER } from './parser.js';
 
 /** DPD Portugal's tracker; its search form sends the browser to this address with the reference. */
-export const DPD_PT_TRACKER = 'https://tracking.dpd.pt/track-and-trace';
+export const DPD_PT_TRACKER = 'https://tracking.dpd.pt/';
 const REDIRECTS = [301, 302, 303, 307, 308];
 // The page answers an unknown reference itself: a missing page is not a missing parcel.
 const GONE = [404, 410];
-// The tracker sends its certificate without the intermediate, which Node does not fetch itself.
-let trusting: typeof fetch | undefined;
-const trustingFetch = () => trusting ??= fetchTrusting([RAPIDSSL_TLS_RSA_CA_G1]);
 
 /** The tracker's page for one reference, in Portuguese. */
 export function dpdPtLookupUrl(number: string): string {
@@ -25,12 +19,7 @@ export function dpdPtLookupUrl(number: string): string {
 }
 
 export class DpdPtTracker {
-  readonly #fetcher: typeof fetch;
-
-  /** Over the global fetch, the tracker trusts the intermediate its certificate needs; a host's own fetcher is used as given. */
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {
-    this.#fetcher = transportOf(options.fetcher) === undefined ? trustingFetch() : options.fetcher!;
-  }
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeDpdPtNumber(raw);
@@ -38,7 +27,7 @@ export class DpdPtTracker {
       const { response, bytes } = await fetchBounded(dpdPtLookupUrl(number), { method: 'GET', signal, headers: {
         Accept: 'text/html', 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: DPD_PT_MAX_BYTES,
-        redirect: 'manual', fetcher: this.#fetcher, allowHttpStatuses: [...REDIRECTS, ...GONE] });
+        redirect: 'manual', fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, ...GONE] });
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'DPD Portugal redirected its tracking page', { status: response.status });
       if (GONE.includes(response.status)) throw new IndeterminateError(PROVIDER, 'DPD Portugal tracking page is unavailable', { status: response.status });
       return parseDpdPt(decodeText(bytes), number);

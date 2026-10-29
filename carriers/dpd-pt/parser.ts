@@ -13,6 +13,8 @@ export const PROVIDER = 'DPD Portugal';
 export const DPD_PT_MAX_BYTES = 1024 * 1024;
 
 const LABEL = 'Nº de encomenda';
+// The page words its notice in English or in Portuguese.
+const NOT_FOUND = ['No results were found for', 'Não encontrámos resultados para'];
 const HEADERS = ['Código', 'Data', 'Hora', 'Descrição', 'Comentário', 'Localização'];
 const CODE = /^[A-Z0-9]{1,8}$/;
 const DATE = /^(\d{2})-(\d{2})-(\d{4})$/;
@@ -81,12 +83,13 @@ export function parseDpdPt(html: string, raw: string): CarrierResult {
   }
   const heading = clean(label.text(), 80);
   if (!heading.startsWith(LABEL)) throw new SchemaError(PROVIDER, 'DPD Portugal changed its tracking heading');
-  if (heading.slice(LABEL.length).trim() !== number) throw new IndeterminateError(PROVIDER, 'DPD Portugal answered for another parcel');
+  if (heading.slice(LABEL.length).replace(/^\s*:/, '').trim() !== number) throw new IndeterminateError(PROVIDER, 'DPD Portugal answered for another parcel');
   const root = label.parent();
 
   const absent = root.find('.current-status-notfound');
   if (absent.length) {
-    if (clean(absent.find('strong').first().text(), 120) === `Não encontrámos resultados para ${number}`) throw new NotFoundError(PROVIDER);
+    const notice = clean(absent.find('strong').first().text(), 120);
+    if (NOT_FOUND.some(words => notice === `${words} ${number}`)) throw new NotFoundError(PROVIDER);
     throw new SchemaError(PROVIDER, 'DPD Portugal changed its not-found notice');
   }
   const table = root.find('table');

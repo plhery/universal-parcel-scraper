@@ -8,16 +8,15 @@ const UNKNOWN = process.env.DPD_PT_UNKNOWN_NUMBER;
 const direct = () => adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00$/;
 
-// Both run on Node's own roots: the adapter adds the intermediate the tracker does not send.
 describe('DPD Portugal live retrieval', () => {
   it.skipIf(!NUMBER)('retrieves the history of the requested parcel with providers disabled', async () => {
     const answer = await createTracker({ providers: [] }).track({ number: NUMBER!, carrier: 'dpd-pt' });
     expect(answer).toMatchObject({ carrier: 'dpd-pt', source: 'dpd-pt' });
     expect(answer.attempts[0]).toMatchObject({ source: 'dpd-pt', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every scan keeps the page's wall clock, without an offset, and its code.
-    expect(answer.result.events.every(event => event.description && event.provider_code && !event.time
-      && WALL_CLOCK.test(String(event.local_time)))).toBe(true);
+    // Every scan keeps the page's wall clock and its code; an instant is one the lookup deduced.
+    expect(answer.result.events.every(event => event.description && event.provider_code
+      && WALL_CLOCK.test(String(event.local_time)) && (!event.time || event.time_zone_basis))).toBe(true);
     await expect(direct().recognize!(NUMBER!)).resolves.toMatchObject({ known: true });
   }, 60_000);
 

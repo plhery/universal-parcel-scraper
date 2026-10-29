@@ -33,9 +33,9 @@
     "pickup_point"
   ],
   "portal": {
-    "url": "https://tracking.dpd.pt/track-and-trace?reference={trackingNumber}",
-    "searchUrl": "https://tracking.dpd.pt/track-and-trace",
-    "canaryUrl": "https://tracking.dpd.pt/track-and-trace",
+    "url": "https://tracking.dpd.pt/?reference={trackingNumber}",
+    "searchUrl": "https://tracking.dpd.pt/",
+    "canaryUrl": "https://tracking.dpd.pt/",
     "shows": [
       "status",
       "history",

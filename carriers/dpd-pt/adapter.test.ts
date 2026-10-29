@@ -7,16 +7,11 @@ import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { fetchTrusting } from '../../core/transport/https.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, DPD_PT_TRACKER, dpdPtLookupUrl, DpdPtTracker } from './adapter.js';
-import { RAPIDSSL_TLS_RSA_CA_G1 } from './certificate.js';
 import { normalizeDpdPtNumber, parseDpdPt } from './parser.js';
 import { dpdPtMappedStage, dpdPtStage, isDpdPtNotice, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
-
-const trusting = vi.hoisted(() => vi.fn<typeof fetch>());
-vi.mock('../../core/transport/https.js', () => ({ fetchTrusting: vi.fn(() => trusting) }));
 
 const DELIVERED = '09990000000101';
 const AT_POINT = '09990000000202';
@@ -49,18 +44,16 @@ describe('DPD Portugal tracking adapter', () => {
       headers: { Accept: 'text/html', 'User-Agent': 'SyntheticHost/1.0' } });
   });
 
-  it('reads the tracker over the global fetch trusting the intermediate it leaves out, and a host’s own fetcher as given', async () => {
-    trusting.mockImplementation(async () => reply(delivered));
-    await expect(new DpdPtTracker().fetch(DELIVERED)).resolves.toMatchObject({ status: 'delivered' });
-    await expect(createTracker({ providers: [], env: {} }).track({ number: DELIVERED, carrier: 'dpd-pt' }))
-      .resolves.toMatchObject({ source: 'dpd-pt' });
-    expect(trusting).toHaveBeenCalledTimes(2);
-    expect(fetchTrusting).toHaveBeenCalledWith([RAPIDSSL_TLS_RSA_CA_G1]);
-    const own = vi.fn<typeof fetch>().mockImplementation(async () => reply(delivered));
-    await expect(createTracker({ fetcher: own, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'dpd-pt' }))
-      .resolves.toMatchObject({ source: 'dpd-pt' });
-    expect(own).toHaveBeenCalledTimes(1);
-    expect(trusting).toHaveBeenCalledTimes(2);
+  it('asks the page the old address now redirects to, over the global fetch without a fetcher', async () => {
+    expect(dpdPtLookupUrl(DELIVERED)).toBe(`https://tracking.dpd.pt/?reference=${DELIVERED}`);
+    const global = vi.fn<typeof fetch>().mockImplementation(async () => reply(delivered));
+    vi.stubGlobal('fetch', global);
+    try {
+      await expect(new DpdPtTracker().fetch(DELIVERED)).resolves.toMatchObject({ status: 'delivered' });
+    } finally {
+      vi.unstubAllGlobals();
+    }
+    expect(String(global.mock.calls[0]![0])).toBe(dpdPtLookupUrl(DELIVERED));
   });
 
   it('reads a delivered history as wall clocks, newest first, without the receiver, the window, the map or the proof', () => {
@@ -167,8 +160,12 @@ describe('DPD Portugal tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(page('not-found')));
     await expect(carrier(fetcher).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     expect(fetcher).toHaveBeenCalledTimes(1);
-    expect(() => parseDpdPt(page('not-found').replace('Não encontrámos resultados', 'Erro'), UNKNOWN))
+    expect(() => parseDpdPt(page('not-found').replace('No results were found', 'Erro'), UNKNOWN))
       .toThrowError(expect.objectContaining({ kind: 'schema' }));
+    // The notice in Portuguese, under the heading without its colon, as the page wrote both before.
+    const portuguese = page('not-found').replace('No results were found for', 'Não encontrámos resultados para')
+      .replace('Nº de encomenda: ', 'Nº de encomenda');
+    expect(() => parseDpdPt(portuguese, UNKNOWN)).toThrowError(expect.objectContaining({ kind: 'not_found' }));
     // The page answers some references with an empty table and neither scans nor a notice.
     expect(() => parseDpdPt(history(), DELIVERED)).toThrowError(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
   });
@@ -183,10 +180,13 @@ describe('DPD Portugal tracking adapter', () => {
 
   it('binds the page to the whole number asked', () => {
     for (const other of [IN_TRANSIT, `${DELIVERED}Z`, DELIVERED.slice(1), '']) {
-      const body = edit($ => $('.reference-label span').text(`Nº de encomenda${other}`));
-      expect(() => parseDpdPt(body, DELIVERED), other).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+      for (const heading of [`Nº de encomenda: ${other}`, `Nº de encomenda${other}`]) {
+        const body = edit($ => $('.reference-label span').text(heading));
+        expect(() => parseDpdPt(body, DELIVERED), heading).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+      }
     }
-    const notice = page('not-found').replace(`resultados para ${UNKNOWN}`, `resultados para ${IN_TRANSIT}`);
+    expect(parseDpdPt(edit($ => $('.reference-label span').text(`Nº de encomenda${DELIVERED}`)), DELIVERED).status).toBe('delivered');
+    const notice = page('not-found').replace(`found for ${UNKNOWN}`, `found for ${IN_TRANSIT}`);
     expect(() => parseDpdPt(notice, UNKNOWN)).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 

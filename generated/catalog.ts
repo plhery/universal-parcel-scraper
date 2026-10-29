@@ -13175,9 +13175,9 @@ export const CARRIER_CATALOG = {
       "recognitionRank": 815,
       "localClocks": true
     },
-    "canaryUrl": "https://tracking.dpd.pt/track-and-trace",
-    "trackingUrlTemplate": "https://tracking.dpd.pt/track-and-trace?reference={trackingNumber}",
-    "trackingSearchUrl": "https://tracking.dpd.pt/track-and-trace",
+    "canaryUrl": "https://tracking.dpd.pt/",
+    "trackingUrlTemplate": "https://tracking.dpd.pt/?reference={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.dpd.pt/",
     "linkRules": [
       {
         "domains": [

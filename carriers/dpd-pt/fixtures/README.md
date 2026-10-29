@@ -1,7 +1,6 @@
 # Fixtures
 
-The files follow the Portuguese page `GET /track-and-trace?reference={number}` on
-`tracking.dpd.pt` returns, cut down to its search form and its answer: the heading naming the
+The files follow the Portuguese page `GET /?reference={number}` on `tracking.dpd.pt` returns, cut down to its search form and its answer: the heading naming the
 reference, the current status, the progress rail and the history table, newest scan first,
 with its code, day, time, wording, comment and map link.
 
