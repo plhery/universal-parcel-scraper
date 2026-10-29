@@ -101,6 +101,15 @@ describe('shared provider result', () => {
       .filter((scan) => scan !== null), 'ParcelsApp')).toMatchObject({ current_stage: 'customs' });
   });
 
+  it("leaves out a carrier's schedule, dated when it is due: a vessel's estimated departure and arrival, the cut-off, a flight's ETD or ETA", () => {
+    for (const label of ['Estimated Vessel Departure', 'Estimated Vessel Departure (Last Updated)', 'Estimated Vessel Arrival',
+      'Estimated Vessel Arrival (Last Updated)', 'CFS/CY Cut-Off Date', 'Flight ETD Sep 23.', 'Flight ETA Sep 25.']) {
+      expect(event('2026-12-10T11:00:00Z', label, 'InTransit')).toBeNull();
+    }
+    expect(event('2026-10-05T01:27:00Z', 'Actual Vessel Departure', 'InTransit')).toMatchObject({ stage: 'in_transit' });
+    expect(event('2026-10-06T08:03:00Z', 'Customer Booking Received', 'InTransit')).not.toBeNull();
+  });
+
   it('leaves out a bracketed time with no words, which names no scan', () => {
     expect(event('2026-01-07T10:52:13+08:00', '( 10：23)', 'InTransit')).toBeNull();
     expect(localEvent('2026-01-07T10:52:13', '(10:23)')).toBeNull();
