@@ -2,7 +2,8 @@
   "id": "mhi",
   "displayName": "MHI",
   "aliases": [
-    "Mail Handling International"
+    "Mail Handling International",
+    "Trackmail"
   ],
   "region": {
     "countries": [

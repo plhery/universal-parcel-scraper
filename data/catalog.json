@@ -1198,7 +1198,9 @@
     "aliases": [
       "InPost Spain",
       "InPost España",
-      "InPost (ES)"
+      "InPost (ES)",
+      "Punto Pack",
+      "PuntoPack"
     ],
     "countries": [
       "FR",
@@ -4424,6 +4426,10 @@
   "jd-logistics": {
     "displayName": "JD Logistics",
     "color": "#e1251b",
+    "aliases": [
+      "Jingdong Logistics",
+      "京东物流"
+    ],
     "countries": [
       "CN"
     ],
@@ -22435,7 +22441,8 @@
     "displayName": "MHI",
     "color": "#00075c",
     "aliases": [
-      "Mail Handling International"
+      "Mail Handling International",
+      "Trackmail"
     ],
     "countries": [
       "GB"
@@ -28901,7 +28908,8 @@
       "SWE",
       "守务国际",
       "上海守务国际",
-      "Shanghai Shouwu International"
+      "Shanghai Shouwu International",
+      "Shouwu Express"
     ],
     "countries": [
       "CN"
@@ -29218,7 +29226,8 @@
     "displayName": "Sky Express International",
     "color": "#0067aa",
     "aliases": [
-      "Sky Express International LLC"
+      "Sky Express International LLC",
+      "SkyEx"
     ],
     "countries": [
       "AE"

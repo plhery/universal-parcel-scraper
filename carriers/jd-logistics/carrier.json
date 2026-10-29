@@ -1,7 +1,10 @@
 {
   "id": "jd-logistics",
   "displayName": "JD Logistics",
-  "aliases": [],
+  "aliases": [
+    "Jingdong Logistics",
+    "京东物流"
+  ],
   "region": {
     "countries": [
       "CN"

@@ -1200,7 +1200,9 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "InPost Spain",
       "InPost España",
-      "InPost (ES)"
+      "InPost (ES)",
+      "Punto Pack",
+      "PuntoPack"
     ],
     "countries": [
       "FR",
@@ -4426,6 +4428,10 @@ export const CARRIER_CATALOG = {
   "jd-logistics": {
     "displayName": "JD Logistics",
     "color": "#e1251b",
+    "aliases": [
+      "Jingdong Logistics",
+      "京东物流"
+    ],
     "countries": [
       "CN"
     ],
@@ -22437,7 +22443,8 @@ export const CARRIER_CATALOG = {
     "displayName": "MHI",
     "color": "#00075c",
     "aliases": [
-      "Mail Handling International"
+      "Mail Handling International",
+      "Trackmail"
     ],
     "countries": [
       "GB"
@@ -28903,7 +28910,8 @@ export const CARRIER_CATALOG = {
       "SWE",
       "守务国际",
       "上海守务国际",
-      "Shanghai Shouwu International"
+      "Shanghai Shouwu International",
+      "Shouwu Express"
     ],
     "countries": [
       "CN"
@@ -29220,7 +29228,8 @@ export const CARRIER_CATALOG = {
     "displayName": "Sky Express International",
     "color": "#0067aa",
     "aliases": [
-      "Sky Express International LLC"
+      "Sky Express International LLC",
+      "SkyEx"
     ],
     "countries": [
       "AE"
