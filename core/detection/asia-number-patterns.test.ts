@@ -541,3 +541,29 @@ describe('Tonami and Okaken links and names', () => {
     expect(carrierIdFromName('Okayamaken Freight Transportation')).toBe('okaken');
   });
 });
+
+describe('Inter Express Logistics and four Australian and New Zealand carriers', () => {
+  it('suggests IEL for its own prefix with a valid month and day only', () => {
+    expect(detectCarrierMatch('IEL6012300017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['inter-express-logistics'] });
+    for (const number of ['IEL6132300017', 'IEL6013200017', 'IEL601230001', 'FCD6012300017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('inter-express-logistics');
+    }
+  });
+
+  it('reads their tracker links and names', () => {
+    for (const [url, number, carrier] of [
+      ['https://iel.co.th/tracking/?trackingNo=IEL6012300017', 'IEL6012300017', 'inter-express-logistics'],
+      ['https://iel.co.th/en/tracking/?trackingNo=IEL6012300017', 'IEL6012300017', 'inter-express-logistics'],
+      ['https://www.centurion.net.au/TrackAndTrace/?track=on&con=AB10000017', 'AB10000017', 'centurion-transport'],
+      ['https://my.kiwiexpress.co.nz/barcode/KO1000000017', 'KO1000000017', 'kiwi-express'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+    expect(carrierIdFromName('IEL - Inter Express Logistics')).toBe('inter-express-logistics');
+    expect(carrierIdFromName('อินเตอร์ เอ็กซ์เพรส โลจิสติกส์')).toBe('inter-express-logistics');
+    expect(carrierIdFromName('Centurion Transport Co')).toBe('centurion-transport');
+    expect(carrierIdFromName('AirRoad Pty Ltd')).toBe('airroad');
+    expect(carrierIdFromName('Janala Pty Limited')).toBe('cope-sensitive-freight');
+    expect(carrierIdFromName('Kiwi Oversize')).toBe('kiwi-express');
+  });
+});

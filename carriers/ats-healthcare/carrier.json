@@ -1,0 +1,47 @@
+{
+  "id": "ats-healthcare",
+  "displayName": "ATS Healthcare",
+  "aliases": [
+    "Andlauer Transportation Services",
+    "ATS Andlauer",
+    "ATS Healthcare - a UPS Healthcare Company"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#e41937"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",
+    "searchUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.atshealthcare.ca",
+        "atshealthcare.ca"
+      ],
+      "pathPattern": "^/quickTrackResult(?:\\.aspx)?$",
+      "params": [
+        "ship"
+      ]
+    }
+  ],
+  "detection": []
+}

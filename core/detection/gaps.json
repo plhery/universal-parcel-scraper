@@ -4170,5 +4170,23 @@
     "pattern": "^\\d{7,8}$",
     "kind": "collision",
     "reason": "XGS probill numbers are seven or eight digits, lengths many carriers share, so the shape cannot name XGS."
+  },
+  {
+    "carrier": "ats-healthcare",
+    "pattern": "^\\d{8,9}$",
+    "kind": "collision",
+    "reason": "ATS Healthcare's shipment numbers are eight or nine digits, lengths many carriers share, so the shape cannot name ATS Healthcare."
+  },
+  {
+    "carrier": "centurion-transport",
+    "pattern": "^[A-Z]{2}\\d{8}$",
+    "kind": "open",
+    "reason": "One archived consignment note from Centurion's older system is too few to fix its layout, and two letters and eight digits is a common shape."
+  },
+  {
+    "carrier": "inter-express-logistics",
+    "pattern": "^(?!IEL)[A-Z]{3}\\d{10}$",
+    "kind": "open",
+    "reason": "IEL numbers under prefixes other than its own appear to start with a customer's code; one archived number is too few to give them a rule."
   }
 ]

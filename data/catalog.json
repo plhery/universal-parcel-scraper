@@ -6427,6 +6427,31 @@
     ],
     "detectionRules": []
   },
+  "airroad": {
+    "displayName": "AirRoad",
+    "color": "#da1a32",
+    "aliases": [
+      "Air Road",
+      "AirRoad Group",
+      "AirRoad Pty Limited",
+      "AirRoad Pty Ltd",
+      "Airroad Direct",
+      "AirRoad Specialised"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://myclient.airroad.com.au/",
+    "trackingSearchUrl": "https://www.airroad.com.au/quick-track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ait-home-delivery": {
     "displayName": "AIT Home Delivery",
     "color": "#0055a5",
@@ -7693,6 +7718,40 @@
         "pathPattern": "^/track\\.php$",
         "params": [
           "awbno"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ats-healthcare": {
+    "displayName": "ATS Healthcare",
+    "color": "#e41937",
+    "aliases": [
+      "Andlauer Transportation Services",
+      "ATS Andlauer",
+      "ATS Healthcare - a UPS Healthcare Company"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "trackingUrlTemplate": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",
+    "trackingSearchUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "linkRules": [
+      {
+        "domains": [
+          "www.atshealthcare.ca",
+          "atshealthcare.ca"
+        ],
+        "pathPattern": "^/quickTrackResult(?:\\.aspx)?$",
+        "params": [
+          "ship"
         ]
       }
     ],
@@ -9663,6 +9722,41 @@
     ],
     "detectionRules": []
   },
+  "centurion-transport": {
+    "displayName": "Centurion",
+    "color": "#007cc3",
+    "aliases": [
+      "Centurion Transport",
+      "Centurion Transport Co",
+      "Centurion Transport Co. Pty Ltd",
+      "Centurion Transport Co Pty Ltd"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Perth",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.centurion.net.au/",
+    "trackingUrlTemplate": "https://www.centurion.net.au/TrackAndTrace/?track=on&con={trackingNumber}",
+    "trackingSearchUrl": "https://www.centurion.net.au/TrackAndTrace/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.centurion.net.au",
+          "centurion.net.au"
+        ],
+        "pathPattern": "^/TrackAndTrace/?$",
+        "params": [
+          "con"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ceska-posta": {
     "displayName": "Česká pošta",
     "color": "#002776",
@@ -10639,6 +10733,29 @@
         "confidence": "low"
       }
     ]
+  },
+  "cope-sensitive-freight": {
+    "displayName": "COPE Sensitive Freight",
+    "color": "#ed1c24",
+    "aliases": [
+      "COPE",
+      "Cope Sensitive Freight",
+      "COPE Transport",
+      "Janala Pty Limited"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cope.com.au/",
+    "trackingSearchUrl": "https://www.cope.com.au/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "corre": {
     "displayName": "CORRE",
@@ -19424,6 +19541,47 @@
     ],
     "detectionRules": []
   },
+  "inter-express-logistics": {
+    "displayName": "Inter Express Logistics",
+    "color": "#0271ba",
+    "aliases": [
+      "IEL",
+      "IEL - Inter Express Logistics",
+      "Inter Express Logistic",
+      "อินเตอร์ เอ็กซ์เพรส",
+      "อินเตอร์ เอ็กซ์เพรส โลจิสติกส์"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://iel.co.th/tracking/",
+    "trackingUrlTemplate": "https://iel.co.th/tracking/?trackingNo={trackingNumber}",
+    "trackingSearchUrl": "https://iel.co.th/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "iel.co.th",
+          "www.iel.co.th"
+        ],
+        "pathPattern": "^/(?:en/)?tracking/?$",
+        "params": [
+          "trackingNo"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^IEL\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{5}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "intereuropa": {
     "displayName": "Intereuropa",
     "color": "#1b5949",
@@ -21101,6 +21259,37 @@
         "params": [
           "tracking"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "kiwi-express": {
+    "displayName": "Kiwi Express",
+    "color": "#00a1df",
+    "aliases": [
+      "Kiwi Express Couriers",
+      "KiwiExpress",
+      "Kiwi Oversize",
+      "Kiwi Express Oversize"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.kiwiexpress.co.nz/",
+    "trackingUrlTemplate": "https://my.kiwiexpress.co.nz/barcode/{trackingNumber}",
+    "trackingSearchUrl": "https://www.kiwiexpress.co.nz/",
+    "linkRules": [
+      {
+        "domains": [
+          "my.kiwiexpress.co.nz"
+        ],
+        "path": "^/barcode/([^/]+)/?$"
       }
     ],
     "detectionRules": []
@@ -25182,6 +25371,47 @@
     ],
     "detectionRules": []
   },
+  "optima-overnight": {
+    "displayName": "Optima Overnight",
+    "color": "#1699d3",
+    "aliases": [
+      "Optima Courier",
+      "Optima Courier, Inc.",
+      "Optima Courier Inc",
+      "ShipOptima"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.shipoptima.com/pages/tracking",
+    "trackingUrlTemplate": "https://www.shipoptima.com/pages/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.shipoptima.com/pages/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "shipoptima.com",
+          "www.shipoptima.com"
+        ],
+        "pathPattern": "^/(?:pages/)?tracking(?:\\.html)?/?$",
+        "params": [
+          "tracking",
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^P\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "orian": {
     "displayName": "Orian",
     "color": "#d01b21",
@@ -26586,6 +26816,41 @@
       }
     ]
   },
+  "peninsula-truck-lines": {
+    "displayName": "Peninsula Truck Lines",
+    "color": "#025831",
+    "aliases": [
+      "Peninsula Truck Lines, Inc.",
+      "Peninsula Truck Lines Inc",
+      "Peninsula Truck"
+    ],
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.peninsulatruck.com/track/",
+    "trackingUrlTemplate": "https://www.peninsulatruck.com/track/?pro_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.peninsulatruck.com/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.peninsulatruck.com",
+          "peninsulatruck.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "pro_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "peqasus-az": {
     "displayName": "Peqasus",
     "color": "#3665b5",
@@ -27115,6 +27380,41 @@
         "pathPattern": "^/[Mm]y[Pp]itt[Oo]hio/Shipping/LTL/TraceRequest/?$",
         "params": [
           "pro"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "plycon": {
+    "displayName": "Plycon Transportation Group",
+    "color": "#193974",
+    "aliases": [
+      "Plycon",
+      "Plycon Van Lines",
+      "Plycon Vanlines",
+      "Plycon Van Lines, Inc.",
+      "Plycon Group"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.plyconvanlines.com/",
+    "trackingUrlTemplate": "https://track.plyconvanlines.com/singletrack.php?trackingnum={trackingNumber}",
+    "trackingSearchUrl": "https://track.plyconvanlines.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.plyconvanlines.com"
+        ],
+        "pathPattern": "^/singletrack\\.php$",
+        "params": [
+          "trackingnum"
         ]
       }
     ],
@@ -29070,6 +29370,48 @@
         "pathPattern": "^/LTLTrack/?$",
         "params": [
           "searchValues"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ross-express": {
+    "displayName": "Ross Express",
+    "color": "#bc010c",
+    "aliases": [
+      "Ross Express, LLC",
+      "Ross Express LLC",
+      "Ross Express, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.rossexpress.com/",
+    "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
+    "trackingSearchUrl": "https://www.rossexpress.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.carrierlogistics.com"
+        ],
+        "pathPattern": "^/scripts/rxic\\.pol/boldetail\\.htm$",
+        "params": [
+          "wpro1"
+        ]
+      },
+      {
+        "domains": [
+          "tracking.carrierlogistics.com"
+        ],
+        "pathPattern": "^/scripts/rxic\\.pol/facts\\.htm$",
+        "params": [
+          "pronum"
         ]
       }
     ],
@@ -35447,6 +35789,40 @@
     "detectionRules": [
       {
         "pattern": "^L\\d{17}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "whiz-delivery": {
+    "displayName": "Whiz Delivery",
+    "color": "#f94735",
+    "aliases": [
+      "WhizDelivery",
+      "Whiz Delivery Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.whizdelivery.ca/track",
+    "trackingUrlTemplate": "https://track.whizdelivery.ca/track/{trackingNumber}",
+    "trackingSearchUrl": "https://track.whizdelivery.ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "track.whizdelivery.ca"
+        ],
+        "path": "^/track/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SW[0-9A-F]{10}$",
         "confidence": "low"
       }
     ]

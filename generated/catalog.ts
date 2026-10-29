@@ -6429,6 +6429,31 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "airroad": {
+    "displayName": "AirRoad",
+    "color": "#da1a32",
+    "aliases": [
+      "Air Road",
+      "AirRoad Group",
+      "AirRoad Pty Limited",
+      "AirRoad Pty Ltd",
+      "Airroad Direct",
+      "AirRoad Specialised"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://myclient.airroad.com.au/",
+    "trackingSearchUrl": "https://www.airroad.com.au/quick-track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ait-home-delivery": {
     "displayName": "AIT Home Delivery",
     "color": "#0055a5",
@@ -7695,6 +7720,40 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/track\\.php$",
         "params": [
           "awbno"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ats-healthcare": {
+    "displayName": "ATS Healthcare",
+    "color": "#e41937",
+    "aliases": [
+      "Andlauer Transportation Services",
+      "ATS Andlauer",
+      "ATS Healthcare - a UPS Healthcare Company"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "trackingUrlTemplate": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",
+    "trackingSearchUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "linkRules": [
+      {
+        "domains": [
+          "www.atshealthcare.ca",
+          "atshealthcare.ca"
+        ],
+        "pathPattern": "^/quickTrackResult(?:\\.aspx)?$",
+        "params": [
+          "ship"
         ]
       }
     ],
@@ -9665,6 +9724,41 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "centurion-transport": {
+    "displayName": "Centurion",
+    "color": "#007cc3",
+    "aliases": [
+      "Centurion Transport",
+      "Centurion Transport Co",
+      "Centurion Transport Co. Pty Ltd",
+      "Centurion Transport Co Pty Ltd"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Perth",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.centurion.net.au/",
+    "trackingUrlTemplate": "https://www.centurion.net.au/TrackAndTrace/?track=on&con={trackingNumber}",
+    "trackingSearchUrl": "https://www.centurion.net.au/TrackAndTrace/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.centurion.net.au",
+          "centurion.net.au"
+        ],
+        "pathPattern": "^/TrackAndTrace/?$",
+        "params": [
+          "con"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ceska-posta": {
     "displayName": "Česká pošta",
     "color": "#002776",
@@ -10641,6 +10735,29 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "cope-sensitive-freight": {
+    "displayName": "COPE Sensitive Freight",
+    "color": "#ed1c24",
+    "aliases": [
+      "COPE",
+      "Cope Sensitive Freight",
+      "COPE Transport",
+      "Janala Pty Limited"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cope.com.au/",
+    "trackingSearchUrl": "https://www.cope.com.au/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "corre": {
     "displayName": "CORRE",
@@ -19426,6 +19543,47 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "inter-express-logistics": {
+    "displayName": "Inter Express Logistics",
+    "color": "#0271ba",
+    "aliases": [
+      "IEL",
+      "IEL - Inter Express Logistics",
+      "Inter Express Logistic",
+      "อินเตอร์ เอ็กซ์เพรส",
+      "อินเตอร์ เอ็กซ์เพรส โลจิสติกส์"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://iel.co.th/tracking/",
+    "trackingUrlTemplate": "https://iel.co.th/tracking/?trackingNo={trackingNumber}",
+    "trackingSearchUrl": "https://iel.co.th/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "iel.co.th",
+          "www.iel.co.th"
+        ],
+        "pathPattern": "^/(?:en/)?tracking/?$",
+        "params": [
+          "trackingNo"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^IEL\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{5}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "intereuropa": {
     "displayName": "Intereuropa",
     "color": "#1b5949",
@@ -21103,6 +21261,37 @@ export const CARRIER_CATALOG = {
         "params": [
           "tracking"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "kiwi-express": {
+    "displayName": "Kiwi Express",
+    "color": "#00a1df",
+    "aliases": [
+      "Kiwi Express Couriers",
+      "KiwiExpress",
+      "Kiwi Oversize",
+      "Kiwi Express Oversize"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.kiwiexpress.co.nz/",
+    "trackingUrlTemplate": "https://my.kiwiexpress.co.nz/barcode/{trackingNumber}",
+    "trackingSearchUrl": "https://www.kiwiexpress.co.nz/",
+    "linkRules": [
+      {
+        "domains": [
+          "my.kiwiexpress.co.nz"
+        ],
+        "path": "^/barcode/([^/]+)/?$"
       }
     ],
     "detectionRules": []
@@ -25184,6 +25373,47 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "optima-overnight": {
+    "displayName": "Optima Overnight",
+    "color": "#1699d3",
+    "aliases": [
+      "Optima Courier",
+      "Optima Courier, Inc.",
+      "Optima Courier Inc",
+      "ShipOptima"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.shipoptima.com/pages/tracking",
+    "trackingUrlTemplate": "https://www.shipoptima.com/pages/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.shipoptima.com/pages/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "shipoptima.com",
+          "www.shipoptima.com"
+        ],
+        "pathPattern": "^/(?:pages/)?tracking(?:\\.html)?/?$",
+        "params": [
+          "tracking",
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^P\\d{14}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "orian": {
     "displayName": "Orian",
     "color": "#d01b21",
@@ -26588,6 +26818,41 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "peninsula-truck-lines": {
+    "displayName": "Peninsula Truck Lines",
+    "color": "#025831",
+    "aliases": [
+      "Peninsula Truck Lines, Inc.",
+      "Peninsula Truck Lines Inc",
+      "Peninsula Truck"
+    ],
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.peninsulatruck.com/track/",
+    "trackingUrlTemplate": "https://www.peninsulatruck.com/track/?pro_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.peninsulatruck.com/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.peninsulatruck.com",
+          "peninsulatruck.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "pro_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "peqasus-az": {
     "displayName": "Peqasus",
     "color": "#3665b5",
@@ -27117,6 +27382,41 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/[Mm]y[Pp]itt[Oo]hio/Shipping/LTL/TraceRequest/?$",
         "params": [
           "pro"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "plycon": {
+    "displayName": "Plycon Transportation Group",
+    "color": "#193974",
+    "aliases": [
+      "Plycon",
+      "Plycon Van Lines",
+      "Plycon Vanlines",
+      "Plycon Van Lines, Inc.",
+      "Plycon Group"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.plyconvanlines.com/",
+    "trackingUrlTemplate": "https://track.plyconvanlines.com/singletrack.php?trackingnum={trackingNumber}",
+    "trackingSearchUrl": "https://track.plyconvanlines.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.plyconvanlines.com"
+        ],
+        "pathPattern": "^/singletrack\\.php$",
+        "params": [
+          "trackingnum"
         ]
       }
     ],
@@ -29072,6 +29372,48 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/LTLTrack/?$",
         "params": [
           "searchValues"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ross-express": {
+    "displayName": "Ross Express",
+    "color": "#bc010c",
+    "aliases": [
+      "Ross Express, LLC",
+      "Ross Express LLC",
+      "Ross Express, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.rossexpress.com/",
+    "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
+    "trackingSearchUrl": "https://www.rossexpress.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.carrierlogistics.com"
+        ],
+        "pathPattern": "^/scripts/rxic\\.pol/boldetail\\.htm$",
+        "params": [
+          "wpro1"
+        ]
+      },
+      {
+        "domains": [
+          "tracking.carrierlogistics.com"
+        ],
+        "pathPattern": "^/scripts/rxic\\.pol/facts\\.htm$",
+        "params": [
+          "pronum"
         ]
       }
     ],
@@ -35453,6 +35795,40 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "whiz-delivery": {
+    "displayName": "Whiz Delivery",
+    "color": "#f94735",
+    "aliases": [
+      "WhizDelivery",
+      "Whiz Delivery Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.whizdelivery.ca/track",
+    "trackingUrlTemplate": "https://track.whizdelivery.ca/track/{trackingNumber}",
+    "trackingSearchUrl": "https://track.whizdelivery.ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "track.whizdelivery.ca"
+        ],
+        "path": "^/track/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SW[0-9A-F]{10}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "winion-logis": {
     "displayName": "WINION LOGIS",
     "color": "#006ecd",
@@ -36706,6 +37082,7 @@ export const CARRIER_IDS = [
   "air-star-xpress",
   "airmee",
   "airpak-express",
+  "airroad",
   "ait-home-delivery",
   "ait-worldwide",
   "ajex",
@@ -36738,6 +37115,7 @@ export const CARRIER_IDS = [
   "asigna",
   "asyad-express",
   "atlantic-courier",
+  "ats-healthcare",
   "averitt",
   "avis-logistics",
   "aymakan",
@@ -36786,6 +37164,7 @@ export const CARRIER_IDS = [
   "cdl",
   "celeritas",
   "central-transport",
+  "centurion-transport",
   "ceska-posta",
   "ceva-logistics",
   "chazki",
@@ -36810,6 +37189,7 @@ export const CARRIER_IDS = [
   "connect-couriers",
   "coordinadora",
   "copa-courier",
+  "cope-sensitive-freight",
   "corre",
   "correo-argentino",
   "correo-uruguayo",
@@ -37032,6 +37412,7 @@ export const CARRIER_IDS = [
   "intel-valley",
   "intelcom",
   "inter-courier",
+  "inter-express-logistics",
   "intereuropa",
   "interlogistica",
   "internet-express",
@@ -37076,6 +37457,7 @@ export const CARRIER_IDS = [
   "kex",
   "kex-express-hk",
   "kit-tk",
+  "kiwi-express",
   "kolay-gelsin",
   "kronos-express",
   "ktd",
@@ -37180,6 +37562,7 @@ export const CARRIER_IDS = [
   "omniva",
   "one-world-express",
   "opt-nc",
+  "optima-overnight",
   "orian",
   "orlen-paczka",
   "osm-worldwide",
@@ -37215,6 +37598,7 @@ export const CARRIER_IDS = [
   "peddler",
   "pelican-express",
   "pengyou",
+  "peninsula-truck-lines",
   "peqasus-az",
   "pfc-express",
   "pflogistics",
@@ -37227,6 +37611,7 @@ export const CARRIER_IDS = [
   "pin-ag",
   "pitney-bowes",
   "pitt-ohio",
+  "plycon",
   "pmm",
   "polaris-transport",
   "polonez",
@@ -37275,6 +37660,7 @@ export const CARRIER_IDS = [
   "rl-carriers",
   "roadie",
   "roadrunner",
+  "ross-express",
   "royal-express-mm",
   "rozetka-delivery",
   "rpx-hk",
@@ -37439,6 +37825,7 @@ export const CARRIER_IDS = [
   "wedo",
   "western-bid",
   "whistl",
+  "whiz-delivery",
   "winion-logis",
   "winit",
   "x-express-ba",
@@ -37604,6 +37991,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],
+  "airroad": [],
   "ait-home-delivery": [],
   "ait-worldwide": [],
   "ajex": ["ajex-1"],
@@ -37636,6 +38024,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "asigna": [],
   "asyad-express": [],
   "atlantic-courier": [],
+  "ats-healthcare": [],
   "averitt": [],
   "avis-logistics": [],
   "aymakan": ["aymakan-1"],
@@ -37684,6 +38073,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cdl": ["cdl-1","cdl-2"],
   "celeritas": [],
   "central-transport": [],
+  "centurion-transport": [],
   "ceska-posta": ["ceska-posta-1","ceska-posta-s10"],
   "ceva-logistics": [],
   "chazki": [],
@@ -37708,6 +38098,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "connect-couriers": [],
   "coordinadora": ["coordinadora-1"],
   "copa-courier": ["copa-courier-1"],
+  "cope-sensitive-freight": [],
   "corre": ["corre-s10"],
   "correo-argentino": ["correo-argentino-s10"],
   "correo-uruguayo": ["correo-uruguayo-s10"],
@@ -37930,6 +38321,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intel-valley": ["intel-valley-1"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
   "inter-courier": [],
+  "inter-express-logistics": ["inter-express-logistics-1"],
   "intereuropa": ["intereuropa-1"],
   "interlogistica": [],
   "internet-express": [],
@@ -37974,6 +38366,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kex": [],
   "kex-express-hk": [],
   "kit-tk": [],
+  "kiwi-express": [],
   "kolay-gelsin": [],
   "kronos-express": [],
   "ktd": ["ktd-1"],
@@ -38078,6 +38471,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
   "one-world-express": ["one-world-express-1"],
   "opt-nc": [],
+  "optima-overnight": ["optima-overnight-1"],
   "orian": [],
   "orlen-paczka": ["orlen-paczka-1"],
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
@@ -38113,6 +38507,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "peddler": ["peddler-1","peddler-2"],
   "pelican-express": [],
   "pengyou": ["pengyou-1"],
+  "peninsula-truck-lines": [],
   "peqasus-az": [],
   "pfc-express": ["pfc-express-1"],
   "pflogistics": ["pflogistics-1"],
@@ -38125,6 +38520,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pin-ag": ["pin-ag-1"],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
   "pitt-ohio": [],
+  "plycon": [],
   "pmm": [],
   "polaris-transport": ["polaris-transport-1"],
   "polonez": ["polonez-1"],
@@ -38173,6 +38569,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rl-carriers": ["rl-carriers-1","rl-carriers-2"],
   "roadie": ["roadie-1","roadie-2"],
   "roadrunner": [],
+  "ross-express": [],
   "royal-express-mm": [],
   "rozetka-delivery": ["rozetka-delivery-rmp"],
   "rpx-hk": ["rpx-hk-1"],
@@ -38337,6 +38734,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wedo": ["wedo-1"],
   "western-bid": ["western-bid-1"],
   "whistl": ["whistl-1"],
+  "whiz-delivery": ["whiz-delivery-1"],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],
   "x-express-ba": [],

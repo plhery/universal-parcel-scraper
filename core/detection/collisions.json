@@ -6350,5 +6350,21 @@
       "sengi-express"
     ],
     "reason": "Sengi Express hands parcels for Malta to MaltaPost under its own number; ParcelsApp named both for one. Both rules are low-confidence: recognition asks MaltaPost, whose tracker takes foreign barcodes, and a provider names Sengi for the parcels MaltaPost does not know."
+  },
+  {
+    "shape": "P and fourteen digits",
+    "carriers": [
+      "optima-overnight",
+      "transmission"
+    ],
+    "reason": "Optima Overnight's tracking numbers are P and fourteen digits, which TransMission's T-or-P rule also takes; both rules are low confidence, so the number stays a suggestion."
+  },
+  {
+    "shape": "SW and ten hexadecimal characters",
+    "carriers": [
+      "colis-prive",
+      "whiz-delivery"
+    ],
+    "reason": "Colis Privé accepts any twelve-character alphanumeric, which takes Whiz Delivery's SW numbers; both rules are low confidence, so the number stays a suggestion."
   }
 ]

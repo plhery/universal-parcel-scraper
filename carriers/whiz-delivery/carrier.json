@@ -1,0 +1,48 @@
+{
+  "id": "whiz-delivery",
+  "displayName": "Whiz Delivery",
+  "aliases": [
+    "WhizDelivery",
+    "Whiz Delivery Inc."
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#f94735"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.whizdelivery.ca/track/{trackingNumber}",
+    "searchUrl": "https://track.whizdelivery.ca/track",
+    "canaryUrl": "https://track.whizdelivery.ca/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.whizdelivery.ca"
+      ],
+      "path": "^/track/([^/]+)/?$"
+    }
+  ],
+  "detection": [
+    {
+      "id": "whiz-delivery-1",
+      "pattern": "^SW[0-9A-F]{10}$",
+      "confidence": "low"
+    }
+  ]
+}

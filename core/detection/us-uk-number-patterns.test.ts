@@ -577,3 +577,43 @@ describe('Trexity, XGS and SAVAR Express links and names', () => {
     expect(carrierIdFromName('Trexity Inc.')).toBe('trexity');
   });
 });
+
+describe('Optima Overnight, Whiz Delivery and four other North American carriers', () => {
+  it('suggests Optima Overnight beside TransMission for P and fourteen digits', () => {
+    expect(detectCarrierMatch('P10000000000017')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('P10000000000017').candidates).toEqual(expect.arrayContaining(['optima-overnight', 'transmission']));
+    for (const number of ['P1000000000017', 'P100000000000017', 'T10000000000017', 'PX0000000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('optima-overnight');
+    }
+  });
+
+  it('suggests Whiz Delivery for SW and ten hexadecimal characters', () => {
+    for (const number of ['SW1A2B3C4D5E', 'sw 1a2b3c4d5e']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates, number).toContain('whiz-delivery');
+    }
+    for (const number of ['SW1A2B3C4D5G', 'SW1A2B3C4D5', 'SW1A2B3C4D5E6', 'SX1A2B3C4D5E']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('whiz-delivery');
+    }
+  });
+
+  it('reads their tracker links and names', () => {
+    for (const [url, number, carrier] of [
+      ['https://www.shipoptima.com/pages/tracking?tracking=P10000000000017', 'P10000000000017', 'optima-overnight'],
+      ['https://shipoptima.com/tracking/?trackingNumber=P10000000000017', 'P10000000000017', 'optima-overnight'],
+      ['https://track.whizdelivery.ca/track/SW1A2B3C4D5E', 'SW1A2B3C4D5E', 'whiz-delivery'],
+      ['https://track.plyconvanlines.com/singletrack.php?trackingnum=100000000000000000017', '100000000000000000017', 'plycon'],
+      ['https://www.peninsulatruck.com/track/?pro_number=100000017', '100000017', 'peninsula-truck-lines'],
+      ['https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1=1000017', '1000017', 'ross-express'],
+      ['https://www.atshealthcare.ca/quickTrackResult?ship=100000017', '100000017', 'ats-healthcare'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+    expect(carrierIdFromName('Optima Courier, Inc.')).toBe('optima-overnight');
+    expect(carrierIdFromName('Whiz Delivery Inc.')).toBe('whiz-delivery');
+    expect(carrierIdFromName('Plycon Van Lines')).toBe('plycon');
+    expect(carrierIdFromName('Peninsula Truck Lines, Inc.')).toBe('peninsula-truck-lines');
+    expect(carrierIdFromName('Ross Express LLC')).toBe('ross-express');
+    expect(carrierIdFromName('Andlauer Transportation Services')).toBe('ats-healthcare');
+  });
+});
