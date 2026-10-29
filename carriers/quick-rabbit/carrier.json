@@ -87,6 +87,11 @@
       "id": "quick-rabbit-2",
       "pattern": "^PKG\\d{5}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])ES\\d{13}[A-Z]$",
       "confidence": "low"
+    },
+    {
+      "id": "quick-rabbit-3",
+      "pattern": "^WT\\d{16}$",
+      "confidence": "low"
     }
   ]
 }

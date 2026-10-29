@@ -53,8 +53,13 @@ describe('Quick Rabbit numbers', () => {
     }
   });
 
-  it('leaves the shipper’s reference alone, though the tracker answers for it', () => {
-    expect(offers(REFERENCE.replace(/^XX/, 'WT'))).not.toContain('quick-rabbit');
+  it('only suggests Quick Rabbit for WT and sixteen digits, the shipper’s reference its tracker answers for', () => {
+    const reference = REFERENCE.replace(/^XX/, 'WT');
+    expect(detectCarrierMatch(reference)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['quick-rabbit'] });
+    expect(detectCarrierMatch(`wt ${reference.slice(2)}`)).toMatchObject({ confidence: 'low', candidates: ['quick-rabbit'] });
+    for (const other of [REFERENCE, reference.slice(0, -1), `${reference}0`, reference.replace(/^WT/, 'WX')]) {
+      expect(offers(other), other).not.toContain('quick-rabbit');
+    }
   });
 });
 

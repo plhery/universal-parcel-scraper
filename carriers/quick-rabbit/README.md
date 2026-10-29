@@ -49,8 +49,8 @@ confidence. A universal provider files under Quick Rabbit a longer code with the
 digits and a two-digit year, then ES, thirteen digits and a letter, and relays the tracker's
 status names for it. A single parcel shows that layout, so a low rule suggests Quick Rabbit and
 recognition asks the tracker; the corpus holds a made-up number in that shape. The shipper's
-reference, two letters and sixteen digits, also finds the parcel, but its owner is not known, so
-it gets no rule.
+reference, WT and sixteen digits, also finds the parcel. Its issuer is not known, so a low rule
+suggests Quick Rabbit and recognition asks the tracker.
 
 ## Links
 

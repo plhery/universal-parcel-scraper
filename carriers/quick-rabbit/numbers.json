@@ -109,9 +109,12 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "quick-rabbit"
+        ]
       },
-      "note": "The shipper’s reference, which the tracker also answers for; its owner is not known, so it gets no rule."
+      "note": "The shipper’s reference, which the tracker also answers for. Its issuer is not known, so a low rule suggests Quick Rabbit and recognition asks its tracker."
     }
   ]
 }

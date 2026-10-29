@@ -95674,8 +95674,13 @@
   {
     "input": "WT2527401177023677",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "quick-rabbit"
+    ],
+    "asked": [
+      "quick-rabbit"
+    ]
   },
   {
     "input": "WX6Z9T",

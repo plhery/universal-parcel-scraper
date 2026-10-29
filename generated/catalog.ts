@@ -27793,6 +27793,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^PKG\\d{5}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])ES\\d{13}[A-Z]$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^WT\\d{16}$",
+        "confidence": "low"
       }
     ]
   },
@@ -37060,7 +37064,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pushpak-courier": [],
   "quality-post": [],
   "quantium-solutions": [],
-  "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2"],
+  "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],
   "quicksilver-sa": ["quicksilver-sa-1"],
   "quiqup": [],
   "qwintry": ["qwintry-1"],

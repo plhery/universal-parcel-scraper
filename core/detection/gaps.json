@@ -3047,12 +3047,6 @@
     "reason": "Quantium reference numbers find a shipment on its own tracker, but universal providers track the tracking number, so detection does not route references."
   },
   {
-    "carrier": "quick-rabbit",
-    "pattern": "^WT\\d{16}$",
-    "kind": "by_design",
-    "reason": "WT and sixteen digits is the shipper’s reference the tracker also answers for; whoever issues it is not known."
-  },
-  {
     "carrier": "quiqup",
     "pattern": "^\\d{7,8}$",
     "kind": "by_design",
