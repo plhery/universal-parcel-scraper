@@ -266,6 +266,12 @@ const USPS_UNPLACED = /^(?:|US|USA|United States)$/i;
  */
 const BRT = 199997;
 const BRT_ROUND = /^for\s+delivery$/i;
+/**
+ * DHL eCommerce US's Webtrack adds an EN ROUTE row without a place, stamped with each request,
+ * which its adapter skips: it echoes the status. 17TRACK relays one each time it asks again.
+ */
+const DHL_ECOMMERCE_US = 7047;
+const DHL_ECOMMERCE_EN_ROUTE = /^en\s+route$/i;
 
 /** The day of a row 17TRACK shows at midnight, or without a clock, under an offset of its own. */
 function dayAlone(raw: Record<string, unknown>): string | null {
@@ -579,7 +585,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       let parsed: CarrierEvent | null;
       try { parsed = seventeenTrackEvent(raw, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
-      if (!parsed) continue;
+      if (!parsed || (reported.key === DHL_ECOMMERCE_US && !parsed.location && DHL_ECOMMERCE_EN_ROUTE.test(parsed.description ?? ''))) continue;
       // China Post words its labels in Chinese only, on its own leg and on a forwarder's that relays them: they
       // show in English where it is known, staged as the Chinese was, with the place left to the location, or
       // taken from the label's 【】 where none is given.

@@ -496,6 +496,17 @@ describe('17TRACK result parsing', () => {
     expect(brt.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-10-22', '2026-10-21T22:00:00.000Z']);
   });
 
+  it('leaves out the EN ROUTE row DHL eCommerce US stamps with each request', () => {
+    const row = (time: string, description: string, location: string | null) => ({ time_iso: `2026-10-29T${time}-04:00`, time_utc: null,
+      time_raw: { date: '2026-10-29', time, timezone: '-04:00' }, description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, events: unknown[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name: 'DHL eCommerce US', country: 'US' }, events }] } } }] });
+    const rows = [row('07:31:46', 'EN ROUTE', null), row('06:10:00', 'EN ROUTE', 'EXAMPLE CITY, US'), row('05:00:00', 'PROCESSED', null)];
+    expect(parse17TrackResponse(reply(7047, rows), number).events?.map((event) => event.description)).toEqual(['EN ROUTE', 'PROCESSED']);
+    // Another feed's EN ROUTE stays.
+    expect(parse17TrackResponse(reply(100999, rows), number).events).toHaveLength(3);
+  });
+
   it('reads Correos de Chile\'s scans on Santiago\'s clock, in summer time too', () => {
     // Public shape: Correos de Chile's wall clock in time_raw with no zone, under 17TRACK's -04:00.
     const row = (date: string, time: string, location: string | null) => ({ time_iso: `${date}T${time}-04:00`, time_utc: null,

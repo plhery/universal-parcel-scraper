@@ -216,6 +216,9 @@ carrier.
   late. India Post rows worded `Aircraft Departure` or `UPLIFT` are counted in
   `undated_event_count` instead of dated. The scans before one still describe the parcel,
   so the reply stays conclusive. India Post's own adapter places take-offs.
+- DHL eCommerce US's leg (carrier key 7047) adds an `EN ROUTE` row without a place each time
+  17TRACK asks Webtrack again, stamped with that moment. It echoes the status, so it is left
+  out, as [DHL eCommerce's adapter](../../carriers/dhl-ecommerce/README.md) leaves it out.
 - Original scan text is kept: the English interface does not translate descriptions. China
   Post's leg, and JHGJ's, which relays China Post's labels, show a label in the English the
   [China Post adapter](../../carriers/china-post/README.md) shows, its places left to the location,
