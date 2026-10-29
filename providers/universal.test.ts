@@ -278,6 +278,25 @@ describe('universal discovery chain', () => {
     expect(browserLookup).not.toHaveBeenCalled();
   });
 
+  it('sends a number of seven characters or fewer only with its carrier, whose shipment a provider would otherwise guess', async () => {
+    const providers = ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja'] as const;
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('no request expected'));
+    const tracker = new UniversalTracker({ providers: [...providers], enablePostalNinja: true, trawlUrl: 'http://browser.test', fetcher });
+    for (const typed of ['50417', 'AB12345', '5041 726']) {
+      for (const source of providers) {
+        for (const carrier of [undefined, null, 'unknown']) {
+          await expect(tracker.fetchSource(source, typed, 20_000, null, null, undefined, null, carrier))
+            .rejects.toMatchObject({ kind: 'indeterminate', provider: source, reason: 'short_number', name: 'NoHistoryError' });
+        }
+      }
+      await expect(tracker.fetch(typed)).rejects.toBeInstanceOf(UniversalTrackingError);
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    // With its carrier named, the number is sent.
+    await expect(tracker.fetchSource('Ship24', '50417', 20_000, null, null, undefined, null, 'seur')).rejects.not.toMatchObject({ reason: 'short_number' });
+    expect(fetcher).toHaveBeenCalled();
+  });
+
   it('treats a history without one dated scan as inconclusive and moves on', async () => {
     // No offset, courier or place: the scan keeps its wall time and has no instant.
     const undated = { data: { tracking_number: number, events: [{ timestamp: '2026-09-10T10:00:00', status: 'Delivered', dispatch_code_id: 7 }] } };

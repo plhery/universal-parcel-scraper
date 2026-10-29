@@ -435,7 +435,9 @@ The universal providers answer when no dedicated adapter can, and can complete a
 adapter's partial answer. Commercial ones run only when the caller names them, and UPU is the
 default. `universalPlan()` picks and orders the eligible providers from recorded evidence.
 [providers/COMPARISON.md](providers/COMPARISON.md) explains the order and
-[providers/COVERAGE.md](providers/COVERAGE.md) holds the evidence.
+[providers/COVERAGE.md](providers/COVERAGE.md) holds the evidence. A number of seven
+characters or fewer reaches them only with its carrier: a provider that guesses the carrier
+of a number that short can answer with another shipment at each lookup.
 
 A provider can relay a timeline a carrier wrote to a schedule. Rows a fixed time apart, each
 within a second of the one before, four or more, are no scans and are dropped. The step is an

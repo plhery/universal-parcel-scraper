@@ -20,7 +20,7 @@ import type { AdapterEnvironment, CarrierAdapter, TrackingContext } from '../cor
 import { normalizeTrackingNumber } from '../core/detection/normalize.js';
 import { isPlaceholderNumber } from '../core/detection/placeholder.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../core/detection/usps.js';
-import { BudgetExceededError, IndeterminateError, InvalidInputError } from '../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, InvalidInputError, NoHistoryError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { readLateRegistrations } from '../core/result/registration.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
@@ -48,6 +48,8 @@ import { universalSources, universalSourceBudget } from './plan.js';
  * round down to whole milliseconds, and none answers in less.
  */
 const MIN_SOURCE_BUDGET_MS = 50;
+/** The longest number providers are asked about only for a named carrier. */
+const SHORT_NUMBER_LENGTH = 7;
 
 const FACTORIES = {
   'Ship24': ship24Adapter,
@@ -144,6 +146,11 @@ export class UniversalTracker {
     // Providers merge other people's shipments under a placeholder such as 123456789.
     if (isPlaceholderNumber(number)) {
       throw new InvalidInputError(source, 'A placeholder number is not sent', { reason: 'placeholder_number' });
+    }
+    // Many carriers issue a number this short. A provider guesses which one from the number alone, and
+    // its guess can change from one lookup to the next, each time with another shipment's history.
+    if (number.length <= SHORT_NUMBER_LENGTH && (!carrier || carrier === 'unknown')) {
+      throw new NoHistoryError(source, 'A number this short is not sent without its carrier', { reason: 'short_number' });
     }
     const result = this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')
       ? await this.options.browserLookup(source, number)

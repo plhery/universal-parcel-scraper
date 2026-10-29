@@ -54,6 +54,10 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   A placeholder number, such as zeros or 123456789 (`isPlaceholderNumber`), is never
   sent either: providers merge other shipments under it, so `fetchSource()` throws
   `invalid_input` with reason `placeholder_number` before any request.
+  A number of seven characters or fewer is sent only with its carrier: many carriers issue
+  numbers that short, and a provider's guess of the carrier can change between lookups, each
+  time to another shipment's history. Without one, or with `unknown`, `fetchSource()` throws
+  `NoHistoryError` with reason `short_number` before any request.
 - A supplied postcode is passed to every provider; ParcelsApp and 17TRACK use it. The
   carrier's time zone is passed too. It is used only for scans with no trustworthy zone of
   their own. So is the carrier's catalog id: 17TRACK asks again for that carrier when its own
