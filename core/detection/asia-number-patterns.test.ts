@@ -369,9 +369,9 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
-  it('suggests Xinghe Freight for GZXH, ten digits and YQ, and only that layout', () => {
+  it('names Xinghe Freight for GZXH, its company code, ten digits and YQ, and only that layout', () => {
     for (const number of ['GZXH0000000017YQ', 'gzxh 0000 0000 17 yq']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['xinghe-freight'] });
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'xinghe-freight', confidence: 'high' });
     }
     for (const number of ['GZXH000000017YQ', 'GZXH00000000017YQ', 'GZYL0000000017YQ', 'GZXH0000000017YT']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('xinghe-freight');

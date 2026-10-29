@@ -77367,8 +77367,8 @@
   },
   {
     "input": "GZXH0000000017YQ",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "xinghe-freight",
+    "confidence": "high",
     "candidates": [
       "xinghe-freight"
     ]

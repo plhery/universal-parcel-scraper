@@ -34729,7 +34729,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^GZXH\\d{10}YQ$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },

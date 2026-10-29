@@ -9,8 +9,9 @@ Guangzhou forwarder whose site is xinghe-express.cn. Universal providers name it
 
 No public source shows a whole Xinghe Freight number. A parcel a universal provider files under
 GZXH has `GZXH`, ten digits and `YQ`, the layout of forwarders on the Hualei (华磊) platform, which
-open their waybills with their own code; the corpus holds a made-up number in that shape. One
-parcel is not enough for a high rule, so the rule stays low.
+open their waybills with their own code; the corpus holds a made-up number in that shape. `GZXH`
+is the company's code, the one universal providers file it under, so the rule names Xinghe
+Freight with high confidence.
 
 ## Tracker
 
