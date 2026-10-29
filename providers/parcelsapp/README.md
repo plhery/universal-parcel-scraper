@@ -138,6 +138,12 @@ step exists for future protocol changes.
   `carrierIdFromName` still treats these brands as ambiguous, so discovery and routing
   are unchanged.
 
+  A scan with no location that only step 5 or the label dates, and that comes out more
+  than an hour after the read, is on another clock: a Cainiao step on China's wall clock,
+  read on EcoScooting's UTC, came out hours ahead. It is left out until a read catches up
+  with it, in the rendered page too. A scan that its carrier's clock or its place dates
+  keeps its time, so that a wrong clock there still shows.
+
   Three kinds of scan with no zone keep their wall clock in `local_time` instead, with no
   instant. One names no carrier, or a network that
   neither the catalog nor the tables here know ("Example Parcel Co"): nothing says its

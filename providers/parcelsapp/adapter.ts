@@ -69,9 +69,10 @@ function emptyView(html: string): boolean {
   return $('.tracking-info.empty').length === 1 && !$('.tracking-info .parcel .parcel-attributes tr').length;
 }
 
-export function parseParcelsAppResponse(payload: unknown, trackingNumber: string, html: string, timezone: string | null = null): CarrierResult {
+export function parseParcelsAppResponse(payload: unknown, trackingNumber: string, html: string, timezone: string | null = null,
+  readAt = Date.now()): CarrierResult {
   if (!parcelsIdentity(html, numberOf(trackingNumber))) throw new SchemaError(SOURCE, 'ParcelsApp shipment identity missing');
-  return parseHistory(payload, trackingNumber, timezone);
+  return parseHistory(payload, trackingNumber, timezone, readAt);
 }
 
 /**
@@ -1418,6 +1419,21 @@ function replyOrigin(payload: Record<string, unknown>, number: string): string |
  */
 const FORECAST = /^estimated delivery$/i;
 
+// How far after the read a scan that only a guess dates may come out.
+const GUESS_LEAD_MS = 60 * 60 * 1_000;
+
+/**
+ * Whether a scan with no place that only routing's zone or ParcelsApp's label
+ * dates comes out more than an hour after the read. Its clock is another: a
+ * Cainiao step on China's wall clock, read on the UTC of EcoScooting's catalog,
+ * came out 7.6 hours ahead. It is held back until a read catches up with it.
+ * A scan its carrier's clock or its place dates keeps its time, so that the
+ * alert on scans dated ahead still shows a wrong clock there.
+ */
+function guessedAhead(event: CarrierEvent, location: string, zone: string | null, routing: string | null, readAt: number): boolean {
+  return !location && (!zone || zone === routing) && typeof event.time === 'string' && Date.parse(event.time) > readAt + GUESS_LEAD_MS;
+}
+
 /**
  * GEODIS Poland's summary status before its first scan, which ParcelsApp
  * relays under "Pekaes" dated ten minutes after its own read on Warsaw's
@@ -1493,7 +1509,7 @@ function dropDhlinkCopies(entries: { name: unknown; date: unknown; wording: stri
   if (copies.size) entries.splice(0, entries.length, ...entries.filter((entry) => !copies.has(entry)));
 }
 
-function parseHistory(payload: unknown, trackingNumber: string, timezone: string | null = null): CarrierResult {
+function parseHistory(payload: unknown, trackingNumber: string, timezone: string | null = null, readAt = Date.now()): CarrierResult {
   if (isRecord(payload) && payload.error === 'RELOAD') throw new ChallengeError(SOURCE);
   if (isRecord(payload) && (payload.error === 'NO_DATA' || payload.error === 'NO_TRACKER')) {
     throw new NoHistoryError(SOURCE, 'ParcelsApp has no usable shipment history');
@@ -1602,6 +1618,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       undated++;
       continue;
     }
+    if (parsed && guessedAhead(parsed, entry.location, zone, timezone, readAt)) continue;
     if (parsed) {
       // Some Chronopost rows put the service label in the location field.
       const location = reportedPlace(raw.location);
@@ -1677,7 +1694,7 @@ function browserCanRecover(error: unknown): boolean {
   return kind === null || kind === 'challenge' || kind === 'transport' || kind === 'schema';
 }
 
-export function parseParcelsAppHtml(html: string, trackingNumber: string, timezone: string | null = null): CarrierResult {
+export function parseParcelsAppHtml(html: string, trackingNumber: string, timezone: string | null = null, readAt = Date.now()): CarrierResult {
   if (!parcelsIdentity(html, numberOf(trackingNumber))) throw new SchemaError(SOURCE, 'ParcelsApp shipment identity missing');
   const $ = load(html);
   const nodes = $('.tracking-info .parcel .events > .event');
@@ -1753,6 +1770,7 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
     const parsed = day ? dayEvent(day, scan?.wording ?? description)
       : wall ? localEvent(wall, scan?.wording ?? description)
         : event((zone ? mislabeledLocalTime(state.date, zone)?.iso : undefined) ?? state.date, scan?.wording ?? description);
+    if (parsed && guessedAhead(parsed, '', zone, timezone, readAt)) continue;
     if (parsed) events.push(parsed);
     if (parsed) carried.push({ event: parsed, carrier: nameKey(name) });
     if (parsed && step) steps.add(parsed);

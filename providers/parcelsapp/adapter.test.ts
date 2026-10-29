@@ -2416,6 +2416,32 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual(['2026-10-14T08:19:55.000Z', '2026-10-08T09:45:58.000Z']);
   });
 
+  it('holds back a scan with no place that only a guess dates, until a read catches up with it', () => {
+    // On EcoScooting's catalog clock, UTC, a step on China's wall clock comes out hours after the read.
+    const payload = { carriers: ['Example Forwarder', 'DPD'], states: [
+      { date: '2030-01-02T13:24:16Z', status: 'Order closed' },
+      { date: '2030-01-02T13:10:00Z', status: 'Order closed', carrier: 0 },
+      { date: '2030-01-02T09:00:00Z', status: 'Delivered', carrier: 1, location: 'Example City, Germany' },
+      { date: '2030-01-02T06:30:00Z', status: 'Order registered' },
+      { date: '2030-01-02T03:39:08Z', status: 'Order received' },
+    ] };
+    const read = (at: string) => parseParcelsAppResponse(payload, number, identity(), 'UTC', Date.parse(at)).events?.map((scan) => [scan.description, scan.time]);
+    // Its carrier's clock or its place dates the German scan, which keeps its time; under an hour ahead is kept too.
+    expect(read('2030-01-02T05:47:58Z')).toEqual([
+      ['Delivered', '2030-01-02T08:00:00.000Z'],
+      ['Order registered', '2030-01-02T06:30:00.000Z'],
+      ['Order received', '2030-01-02T03:39:08.000Z'],
+    ]);
+    expect(read('2030-01-02T12:30:00Z')?.slice(0, 2)).toEqual([
+      ['Order closed', '2030-01-02T13:24:16.000Z'],
+      ['Order closed', '2030-01-02T13:10:00.000Z'],
+    ]);
+    // The rendered page holds it back too.
+    const html = rendered(row('02 Jan 2030', '13:24', 'Order closed') + row('02 Jan 2030', '03:39', 'Order received'));
+    expect(parseParcelsAppHtml(html, number, 'UTC', Date.parse('2030-01-02T05:47:58Z')).events?.map((scan) => scan.description)).toEqual(['Order received']);
+    expect(parseParcelsAppHtml(html, number, 'UTC', Date.parse('2030-01-02T12:30:00Z')).events).toHaveLength(2);
+  });
+
   it('reads Cainiao\'s cancellation of the order on China time, as its order', () => {
     // Filed under EcoScooting, whose catalog clock is UTC: read as labeled, the cancellation
     // came hours after the check that first returned it.
