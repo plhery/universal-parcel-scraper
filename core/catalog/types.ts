@@ -37,6 +37,11 @@ export interface CarrierInputRequirement {
    * some parcels of the shape and asks for those.
    */
   showsMore?: boolean;
+  /**
+   * The lookup reads the country the postcode is from (`postcodeCountry`), so it is worth naming
+   * beside the postcode. Unset where the carrier reads the postcode alone.
+   */
+  readsCountry?: boolean;
   label: string;
   type: 'text' | 'url';
   placeholder?: string;

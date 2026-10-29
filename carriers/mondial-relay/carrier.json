@@ -31,6 +31,7 @@
         "field": "postcode",
         "whenTrackingNumber": "^[0-9]{8}$",
         "validator": "internationalPostcode",
+        "readsCountry": true,
         "label": "Delivery postcode",
         "type": "text",
         "help": "8-digit Mondial Relay shipment numbers require the recipient postcode; longer numbers and label barcodes do not.",

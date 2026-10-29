@@ -138,6 +138,7 @@ function validateCarrierSemantics(carrier, adapterFolders) {
     }
     fields.add(requirement.field);
     if (requirement.showsMore && !requirement.optional) throw new Error(`${where} shows more only with an optional input`);
+    if (requirement.readsCountry && requirement.field !== 'postcode') throw new Error(`${where} reads a country only with a postcode`);
     if (requirement.whenTrackingNumber) new RegExp(requirement.whenTrackingNumber);
     if (requirement.pattern) new RegExp(requirement.pattern);
   }

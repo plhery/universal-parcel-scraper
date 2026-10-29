@@ -344,6 +344,10 @@
           "description": "With optional: the carrier shows more of the parcel with the input, whatever else answers, so a parcel saved without it is worth asking for it. Left out where the carrier needs it for only some parcels of the shape and asks for those.",
           "const": true
         },
+        "readsCountry": {
+          "description": "With a postcode: the lookup reads the country the postcode is from (postcodeCountry), so it is worth naming beside the postcode. Left out where the carrier reads the postcode alone.",
+          "const": true
+        },
         "label": {
           "type": "string",
           "minLength": 1
